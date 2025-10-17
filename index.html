@@ -1498,7 +1498,7 @@
 
                 <div class="example-box">
                     <h4>🎯 Real-World Example: Production Resilience</h4>
-                    <p>"I wake up and I run it through tests, right? Just like Blade Runner, I say how capable are you today? And if I did this [test] and this didn't fire, and if I expected it to fire... I basically in my head using the full stack can say: Oh, I need to go check and see if that agent is actually loading."</p>
+                    <p>Every morning, the developer runs diagnostic tests to verify system health - asking "how capable are you today?" like the Blade Runner test. If an expected test doesn't trigger, the modular architecture makes it immediately clear which layer has failed: is the agent not loading from storage? Is the Copilot routing broken? Or is there a Power Automate connection issue?</p>
                     <p><strong>The user can diagnose exactly which layer failed:</strong></p>
                     <ul>
                         <li>Assistant working, memory working, but agent not loading? → Storage Layer issue</li>
@@ -1633,7 +1633,7 @@ def handle_request(user_message, user_guid):
             <div class="highlight-box">
                 <h4>💡 Why Not Use Copilot Studio's Built-In AI Capabilities?</h4>
                 <p><strong>Problem:</strong> No access to the system message in Copilot Studio. Can't fully control the prompt engineering that makes agents work reliably.</p>
-                <p><strong>Key insight:</strong> "The architecture problem with Copilot Studio is you don't have access to the system message... If I didn't have access to the system message, I couldn't guarantee any agents would be useful."</p>
+                <p><strong>Key insight:</strong> The fundamental limitation of Copilot Studio's built-in AI is the lack of system message control. Without access to customize the system message, you cannot fine-tune the prompt engineering that makes agents perform reliably. This architectural constraint makes it impossible to guarantee agent usefulness when relying solely on Copilot Studio's native AI capabilities.</p>
                 <p><strong>Solution:</strong> Use Copilot Studio for what it's great at (channels, UI, routing) and keep intelligence in a custom Azure Function where you have full control.</p>
             </div>
 
@@ -1681,7 +1681,7 @@ def handle_request(user_message, user_guid):
                 <div class="example-box">
                     <h4>🎯 Real-World Example: The 60 Agent Test</h4>
                     <p><strong>Challenge:</strong> Generate 60 agents to prove the automation works.</p>
-                    <p><strong>Timeline:</strong> "Leadership said, 'Hey, here's this list of agents that I made-up.' And to prove out this automation, I basically said OK, I'm gonna generate these 60 agents and see how they turn out. And I went to lunch and I generated those 60."</p>
+                    <p><strong>Timeline:</strong> When leadership provided a list of 60 agents to test the automation capability, the developer generated all 60 production-ready agents during a lunch break - proving the system could scale agent creation from months to hours.</p>
                     <p><strong>Result:</strong> 60 production-ready agents in ~1 hour while eating lunch. Manual development would have taken months.</p>
                 </div>
 
@@ -1702,7 +1702,7 @@ def handle_request(user_message, user_guid):
 
                 <div class="highlight-box">
                     <h4>💡 Key Insight</h4>
-                    <p>"I'm not saying I don't want to do it [manual work]. I'm saying the manual no, no effort stuff. I stay in control of the taste. Taste is really important. Taste judgment. Is this useful? And you know, based on my experience, is this actually solving this problem?"</p>
+                    <p>It's not about avoiding manual work - it's about avoiding tedious, low-value manual tasks. What's critical is maintaining control over quality and judgment calls. Having good taste matters. The key questions are: Is this actually useful? Based on experience, does this truly solve the problem we're facing?</p>
                 </div>
 
                 <h4>The 6 Quality Gates:</h4>
@@ -1787,7 +1787,7 @@ def handle_request(user_message, user_guid):
                 <div class="example-box">
                     <h4>🎯 Real-World Example: The "Poke" Methodology</h4>
                     <p><strong>What is a "poke"?</strong> A deliberately lightweight MVP summary sent to the customer before any code is written.</p>
-                    <p><strong>The concept:</strong> "Give me the dialed down MVP that I'm going to send to the customer. And I was looking at this, this was called like a poke, right? So you poke them with 'this is what I think I heard.' Right. And that's exactly what your AI is going to build the prototype off of. But basically that poking them with their responses, that's also feedback for the agents."</p>
+                    <p><strong>The concept:</strong> Create a stripped-down MVP summary to send to the customer - a "poke" that says "this is what I think I heard." This lightweight validation serves two purposes: it confirms understanding before any code is written, and the customer's response provides feedback that informs what the AI will build. This early engagement catches misunderstandings before they become expensive mistakes.</p>
                     <p><strong>Why it works:</strong> Customer can respond with "Yes that's it" or "No, you misunderstood - here's what we actually need." Either way, you know BEFORE writing code.</p>
                 </div>
             </div>
@@ -1795,7 +1795,7 @@ def handle_request(user_message, user_guid):
             <div class="step-section">
                 <h3>🔄 Iterations ≠ Experience - It's About Cycles</h3>
                 <p><strong>Traditional Thinking:</strong> "I've been doing this for 10 years, so I have 10 years of experience."</p>
-                <p><strong>Reality:</strong> "It's not like how much experience you have. It's how many iterations have you had in that experience."</p>
+                <p><strong>Reality:</strong> Experience isn't measured by time spent - it's measured by the number of learning cycles completed. Ten years with few iterations is less valuable than two years with hundreds of rapid feedback loops.</p>
 
                 <div class="highlight-box">
                     <h4>💡 The Iteration Advantage</h4>
@@ -1910,7 +1910,7 @@ def handle_request(user_message, user_guid):
 
                 <div class="highlight-box">
                     <h4>💡 Discovery Philosophy</h4>
-                    <p>"We go in and we say, hey, what problems with your business? Like what are the biggest problems with your business, right? And that really puts the mindset shift in a different way."</p>
+                    <p>The approach is to start with open-ended business problem discovery: "What are the biggest problems with your business?" This question creates a crucial mindset shift - focusing on business pain points rather than technology solutions. By leading with problems instead of AI capabilities, you ensure the automation serves real business needs.</p>
                 </div>
 
                 <h4>Question 1: What are your biggest problems?</h4>
@@ -1918,13 +1918,13 @@ def handle_request(user_message, user_guid):
 
                 <div class="example-box">
                     <h4>🎯 Real-World Example: Retail Beverage Company Field Sales</h4>
-                    <p><strong>Customer's problem statement:</strong> "We have a problem of our delivery people - field sales. We have a problem of them answering the question: <strong>Where do we go? What order do we go to our stops? And what do we do when we get there?</strong>"</p>
+                    <p><strong>Customer's problem statement:</strong> Their field sales delivery people struggle with three critical questions every day: Where should we go? What order should we visit our stops? And what should we do when we get there?</p>
                     <p><strong>Why this is perfect:</strong> Specific, measurable, impacts daily operations. Not "we need AI" or "we want to innovate."</p>
                 </div>
 
                 <h4>Question 2: What data sources do you have?</h4>
                 <p><strong>Why this matters:</strong> AI without data is useless. Need to know what's realistic to access.</p>
-                <p><strong>Key quote:</strong> "What data sources do you need to pull data from to make this work? We always caveat that with: if you cannot give us the data, there's that really limits what we can do. AI without data is not very helpful."</p>
+                <p><strong>Key point:</strong> Identify what data sources are required to solve the problem, with a clear caveat up front: if data access isn't available, the project's potential is severely limited. AI systems need data to function effectively - this is a non-negotiable requirement that must be established during discovery.</p>
 
                 <ul>
                     <li><strong>CRM systems</strong>: Dynamics 365, Salesforce, custom systems</li>
@@ -1935,11 +1935,11 @@ def handle_request(user_message, user_guid):
 
                 <h4>Question 3: How do you solve this manually today?</h4>
                 <p><strong>Why this matters:</strong> The manual process is the blueprint for automation. You're scaling what they already do, not inventing something new.</p>
-                <p><strong>Key quote:</strong> "At its core, what we're doing is basically scaling up what the manual process is right now."</p>
+                <p><strong>Key point:</strong> The core principle is scaling and automating the existing manual process - not inventing an entirely new workflow. This approach reduces risk and increases adoption because users recognize their familiar process, just faster and more consistent.</p>
 
                 <div class="example-box">
                     <h4>🎯 Detailed Example: Job Matching Process</h4>
-                    <p><strong>Customer description:</strong> "We offer too many job opportunities... our main channel to talk to our applicants is WhatsApp. Once they go there, they need to chat to a bot that can show them the best job opportunities for them based on their resume, which can be their LinkedIn profile or an uploaded file."</p>
+                    <p><strong>Customer description:</strong> The company offers numerous job opportunities and uses WhatsApp as their primary applicant communication channel. They need a bot that can analyze applicant resumes (from LinkedIn or uploaded files) and match them with the most suitable job opportunities from their extensive catalog.</p>
                     <p><strong>Manual process breakdown:</strong></p>
                     <ol>
                         <li>Receive resume via WhatsApp</li>
@@ -2157,7 +2157,7 @@ analysis, and automated routing.</pre>
             <div class="highlight-box">
                 <h4>💡 Why This Gate Matters</h4>
                 <p><strong>Time saved:</strong> 15 minutes here prevents 3 weeks of building the wrong solution.</p>
-                <p><strong>Real impact:</strong> "The risk with traditional software development is you spend six months on a problem no one cares about. This is designed to make that go away."</p>
+                <p><strong>Real impact:</strong> Traditional software development risks spending months building solutions for problems that don't actually matter to stakeholders. The audit gate eliminates this risk by validating stakeholder commitment and problem importance before any development begins.</p>
             </div>
 
             <div class="nav-controls">
@@ -2208,7 +2208,7 @@ analysis, and automated routing.</pre>
 
                 <div class="highlight-box">
                     <h4>💡 The "Poke" Concept</h4>
-                    <p>"Give me the dialed down MVP that I'm going to send to the customer. And I was looking at this, this was called like a <strong>poke</strong>, right? So you poke them with 'this is what I think I heard.' Right. And that's exactly what your AI is going to build the prototype off of."</p>
+                    <p>The "poke" is a deliberately lightweight MVP summary sent to validate understanding: "This is what I think I heard - is this correct?" This simple document serves as both a customer validation checkpoint and the exact specification that guides AI prototype generation. Getting customer confirmation on the poke ensures the AI builds the right solution.</p>
                 </div>
 
                 <h4>Why "Poke" Instead of "Requirements Document"?</h4>
@@ -2332,7 +2332,7 @@ Tone: Professional but approachable. We're confirming we heard them correctly, n
                 <h4>💡 Why This Step is Critical</h4>
                 <p><strong>Time investment so far:</strong> 1 hour discovery call + 15 min audit + overnight automation = <strong>1.25 hours of human time</strong></p>
                 <p><strong>Potential time saved:</strong> If customer says "no that's not what we meant," you've saved 3-6 weeks of building the wrong thing</p>
-                <p><strong>Important principle:</strong> "That poking them with their responses, that's also feedback for the agents, right? So they could say, hey, our HR system is split between 3 instances... whatever they give on top of that poke, that is the first feedback cycle before the application's even thought about."</p>
+                <p><strong>Important principle:</strong> The customer's response to the poke becomes crucial feedback for agent development. Any additional details they provide - like "our HR system is actually split across 3 instances" - represents the first feedback cycle before a single line of code is written. This early correction prevents building on faulty assumptions.</p>
             </div>
 
             <div class="nav-controls">
@@ -2411,7 +2411,7 @@ Tone: Professional but approachable. We're confirming we heard them correctly, n
                         <li><strong>Option A:</strong> "Yes, we can add inventory checking to MVP" → Update poke, re-send</li>
                         <li><strong>Option B:</strong> "That's a great idea for Phase 2, but let's start with just route optimization to get you value faster" → Negotiate scope</li>
                     </ul>
-                    <p><strong>Key principle:</strong> "That might change the agents, right? So that might make it 6 agents to where there was 5 before where one is specialized in [the new requirement]."</p>
+                    <p><strong>Key principle:</strong> New requirements often change the agent architecture. What started as 5 agents might become 6 agents, with a new specialized agent handling the additional requirement. This modular flexibility allows you to adapt the design based on customer feedback without rearchitecting the entire system.</p>
                 </div>
 
                 <h4>Outcome 3: ❌ "This isn't what we need"</h4>
@@ -2467,7 +2467,7 @@ Tone: Professional but approachable. We're confirming we heard them correctly, n
                 <p><strong>Why:</strong> Every subsequent step builds on the assumption that the MVP is correct. If the MVP is wrong, everything downstream is wasted effort.</p>
                 <p><strong>Time invested through Step 4:</strong> ~2 hours of human time + 1-2 days of customer response time</p>
                 <p><strong>Risk eliminated:</strong> Building the wrong solution for 3-6 weeks = hundreds of hours saved</p>
-                <p><strong>Risk mitigation:</strong> "By Step 6, you have code locked in scope with customer sign-off... If they don't like it, you've only spent a few days, not months."</p>
+                <p><strong>Risk mitigation:</strong> By Step 6, you have working code with locked scope and customer approval on the requirements. If the customer ultimately decides the solution isn't right, you've only invested a few days rather than months - dramatically reducing the cost of failure.</p>
             </div>
 
             <div class="nav-controls">
@@ -2746,7 +2746,7 @@ class DynamicRoutePlanningAgent(BasicAgent):
 
             <div class="highlight-box">
                 <h4>💡 The 60 Agent Test</h4>
-                <p><strong>Real example:</strong> "Leadership said, 'Hey, here's this list of agents that I made-up.' And to prove out this automation, I basically said OK, I'm gonna generate these 60 agents and see how they turn out. <strong>And I went to lunch and I generated those 60.</strong>"</p>
+                <p><strong>Real example:</strong> When leadership provided a list of 60 agents to test the automation capability, the developer accepted the challenge and generated all 60 production-ready agents during a lunch break - demonstrating that the system could scale agent creation from months to hours.</p>
                 <p><strong>Result:</strong> Successfully generated all 60 agents. Most just need minor API endpoint customization.</p>
             </div>
 
@@ -2879,7 +2879,7 @@ class DynamicRoutePlanningAgent(BasicAgent):
                     </div>
                 </div>
 
-                <p><strong>Iterative refinement:</strong> "And you basically have a conversation with the AI of OK, consolidate these two agents, do this, do that, split these out, right? And you get these files."</p>
+                <p><strong>Iterative refinement:</strong> The code review process involves an interactive conversation with the AI: request consolidation of redundant agents, ask for functionality splits, adjust implementation details - iteratively refining until the agent files meet quality standards.</p>
             </div>
 
             <div class="step-section">
@@ -2978,7 +2978,7 @@ class DynamicRoutePlanningAgent(BasicAgent):
                         </li>
                         <li>Deployment completes in 5-10 minutes</li>
                     </ol>
-                    <p><strong>One-click deployment:</strong> "This Azure ARM template goes and creates all of the stuff you need in Azure. They don't even need to know about it."</p>
+                    <p><strong>One-click deployment:</strong> The Azure ARM template automatically provisions all required Azure infrastructure - Function App, Storage, App Insights, networking, and security configurations - without requiring manual Azure portal navigation. The deployment is fully automated and customer-facing users don't need to understand the underlying infrastructure.</p>
                 </div>
 
                 <h4>Step 7.2: Run Setup Script</h4>
@@ -2999,7 +2999,7 @@ cd copilot-agent-365
 # Click "Open in Codespaces" button
 # Runs automatically in cloud - no local install needed</code></pre>
 
-                <p><strong>Dynamic loading:</strong> "You basically just copy this script that piggybacks and dynamically loads all of the stuff... It'll download everything, pipe it, whatever it needs."</p>
+                <p><strong>Dynamic loading:</strong> The setup script automates the entire environment configuration process - downloading dependencies, installing Python packages, connecting to Azure services, and uploading default agents. It handles all the technical plumbing automatically, regardless of whether running locally or in cloud environments.</p>
 
                 <h4>Step 7.3: Deploy Your Agents</h4>
                 <p>Copy the approved agents from Step 6 into the deployment:</p>
@@ -3040,7 +3040,7 @@ cd copilot-agent-365
                     <li><strong>Publish:</strong> One-click publish to M365</li>
                 </ol>
 
-                <p><strong>M365 integration:</strong> "You download this solution and you put it into Power Platform and then you do the channels, right, and you basically expose it to M365."</p>
+                <p><strong>M365 integration:</strong> The process involves downloading the pre-built Copilot Studio solution, importing it into Power Platform, configuring the desired channels (Teams, Web, Outlook), and publishing - which exposes the agents across all Microsoft 365 interfaces where users work.</p>
 
                 <div class="example-box">
                     <h4>Example: Banking Customer Service Bot Deployment</h4>
@@ -3307,7 +3307,7 @@ Bot: "At Retail Store A (Store #4521):
 
 ✅ Customer sees: Vision AI, competitive analysis, actionable recommendations</code></pre>
 
-                    <p><strong>The process:</strong> "I'm going to deploy them with the prototype and I'm going to film this and I'm going to give this back to the customer and I'm going to see what they say."</p>
+                    <p><strong>The process:</strong> Deploy the agents with the working prototype, record a narrated video demonstration walking through all MVP scenarios, and deliver it to the customer for their review and feedback.</p>
                 </div>
 
                 <h4>Step 8.3: Show "Behind the Scenes" (Optional but Powerful)</h4>
@@ -3348,7 +3348,7 @@ Agent Calls (last 60 seconds):
                     </ol>
                     <p><strong>Customer sees:</strong> Simple conversation<br>
                     <strong>System does:</strong> Complex orchestration with data sources, agents, memory</p>
-                    <p><strong>The "waiter" pattern:</strong> "It's a waiter talking to the person, basically relaying these other conversations that are happening on the side... The person doesn't care, so the person doesn't need to know any of that context."</p>
+                    <p><strong>The "waiter" pattern:</strong> The LLM acts as an intermediary, managing conversations with specialized agents behind the scenes while presenting a simple, unified interface to the user. The end user doesn't see or need to understand the complex orchestration happening in the background - they just get clean, contextualized responses.</p>
                 </div>
             </div>
 
@@ -4691,7 +4691,7 @@ Team Member C completes Step 10 → Bot posts:
 
             <div class="highlight-box">
                 <h4>💡 Key to Scaling: Freeze Frame the Process</h4>
-                <p><strong>Process standardization:</strong> "I basically have to just freeze frame this process and then I can give these HTML files. And then I can just say here's the inputs, here's the outputs that you should audit in this way, and then here's the next stage that you put this process in."</p>
+                <p><strong>Process standardization:</strong> The key to scaling is documenting each station with crystal-clear specifications - defining exact inputs, expected outputs, audit criteria, and handoff procedures to the next stage. This "freeze frame" documentation allows team members to operate their stations autonomously with consistent quality.</p>
                 <p><strong>What this means:</strong> Each station has clear inputs, clear outputs, and clear quality criteria. No ambiguity, no "figure it out yourself."</p>
                 <p><strong>Result:</strong> Team Members A and B can run their stations autonomously while Team Member C focuses on deployment bottleneck</p>
             </div>
@@ -4712,7 +4712,7 @@ Team Member C completes Step 10 → Bot posts:
             <div class="step-section">
                 <h3>🎯 Objective</h3>
                 <p>Run 20+ customer projects simultaneously using the same automation workflow, same agents, same team.</p>
-                <p><strong>Scaling philosophy:</strong> "I'm I'm gonna run this process once I get it down... I could do infinite infinite MVPs for infinite customers as long as I have the data. At scale."</p>
+                <p><strong>Scaling philosophy:</strong> Once the standardized process is refined and documented, the framework can handle unlimited concurrent MVPs for unlimited customers - the only constraint being data access. The automation and standardization enable infinite horizontal scaling.</p>
             </div>
 
             <div class="step-section">
@@ -4917,7 +4917,7 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
 
             <div class="highlight-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none;">
                 <h4 style="color: white;">🎯 Strategic Shift: From Prototypes to Production</h4>
-                <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;">"We need to ground those ideas and turn them into real things that can be used on the next day by our field and team to achieve those goals, accelerate deals... Let's make sure those demos they land, they can be reproduced, they can be reused by the field." - Renato</p>
+                <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;">The strategic imperative is to transform conceptual ideas into production-ready solutions that field teams can deploy immediately. The focus is on creating demos that not only impress in presentations but can also be reliably reproduced and reused across multiple customer engagements to accelerate deal closure. - Renato</p>
             </div>
 
             <div class="step-section">
@@ -5111,6 +5111,10 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
             const targetSection = document.getElementById(sectionId);
             if (targetSection) {
                 targetSection.classList.add('active');
+                // Update URL hash without triggering scroll
+                if (window.location.hash !== '#' + sectionId) {
+                    history.replaceState(null, null, '#' + sectionId);
+                }
             }
 
             // Update sidebar active state
@@ -5378,11 +5382,26 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
             }
         });
 
+        // Handle hash navigation
+        function handleHashNavigation() {
+            const hash = window.location.hash.slice(1); // Remove the # symbol
+            if (hash && sections.includes(hash)) {
+                navigateToSection(hash);
+            } else {
+                navigateToSection('overview');
+            }
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             initializeTrack();
             initializeQuizzes();
-            navigateToSection('overview');
+            handleHashNavigation();
+        });
+
+        // Handle hash changes (when user clicks browser back/forward or hash changes)
+        window.addEventListener('hashchange', () => {
+            handleHashNavigation();
         });
     </script>
 </body>
