@@ -4,7 +4,7 @@ Main repository for the AI BAST (Business Applications Specialist Team) AI Agent
 
 ## Overview
 
-This framework enables rapid development and deployment of AI agents integrated with Microsoft 365, Teams, and Copilot Studio. It implements a structured 14-step process from customer discovery through production deployment, with built-in validation checkpoints to ensure customer alignment at every stage.
+This framework enables rapid development and deployment of AI agents integrated with Microsoft 365, Teams, and Copilot Studio. It implements the **Rapid Agent Prototype Pattern (RAPP)** - a structured 14-step process from customer discovery through production deployment, with built-in validation checkpoints to ensure customer alignment at every stage.
 
 ## Architecture
 
@@ -35,7 +35,7 @@ The system uses a three-layer architecture designed for scalability, flexibility
 ## Documentation
 
 The comprehensive framework documentation is available in `index.html`, covering:
-- Complete 14-step workflow from discovery to post-deployment
+- Complete Rapid Agent Prototype Pattern (RAPP) 14-step workflow from discovery to post-deployment
 - Architecture diagrams and business justifications
 - Audit checkpoints and validation gates
 - Team scaling and resource management

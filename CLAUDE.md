@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is the AI BAST (Business Applications Solution Technologies) Specialist Teal AI Agents Library - a Microsoft project for building and deploying AI agent automation capabilities integrated with Microsoft 365, Teams, and Copilot Studio.
 
-The framework implements a 14-step process from customer discovery through production deployment, with a focus on rapid MVP validation and iterative customer feedback.
+The framework implements the **Rapid Agent Prototype Pattern (RAPP)** - a 14-step process from customer discovery through production deployment, with a focus on rapid MVP validation and iterative customer feedback.
 
 ## Architecture
 
@@ -34,7 +34,7 @@ Agent files should follow the template pattern for consistency with the framewor
 ## Documentation
 
 The primary framework documentation is in `index.html` - a comprehensive production guide covering:
-- Complete 14-step workflow from discovery to post-deployment
+- Complete Rapid Agent Prototype Pattern (RAPP) 14-step workflow from discovery to post-deployment
 - Architecture diagrams and business justifications
 - Audit checkpoints and validation gates
 - Team scaling and resource management
