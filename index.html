@@ -1443,7 +1443,7 @@
                 <p><strong>Solution:</strong> Agents live in Azure File Storage at <code>memory/{user-guid}/agents/</code>. The Intelligence Layer dynamically loads them on each request. Drop in a new Python file, and it's live instantly.</p>
 
                 <div class="example-box">
-                    <h4>🎯 Real-World Example: Retail Beverage Company Field Sales</h4>
+                    <h4>🎯 Real-World Example: Field Sales Route Optimization</h4>
                     <p><strong>Scenario:</strong> Customer requests a change to route optimization logic at 2 PM.</p>
                     <p><strong>Traditional Approach:</strong> 3-5 days for code change → testing → approval → deployment.</p>
                     <p><strong>This Architecture:</strong></p>
@@ -1917,8 +1917,8 @@ def handle_request(user_message, user_guid):
                 <p><strong>Why this matters:</strong> Focuses on business value, not technology. Customer describes pain in their own language.</p>
 
                 <div class="example-box">
-                    <h4>🎯 Real-World Example: Retail Beverage Company Field Sales</h4>
-                    <p><strong>Customer's problem statement:</strong> Their field sales delivery people struggle with three critical questions every day: Where should we go? What order should we visit our stops? And what should we do when we get there?</p>
+                    <h4>🎯 Real-World Example: Field Sales Operations</h4>
+                    <p><strong>Customer's problem statement:</strong> Field sales representatives struggle with three critical questions every day: Where should we go? What order should we visit our stops? And what should we do when we get there?</p>
                     <p><strong>Why this is perfect:</strong> Specific, measurable, impacts daily operations. Not "we need AI" or "we want to innovate."</p>
                 </div>
 
@@ -2051,7 +2051,7 @@ def handle_request(user_message, user_guid):
             <div class="tool-card">
                 <h4>🤖 Automation Tool: Transcript-to-Project Agent</h4>
                 <p><strong>Type:</strong> M365 Copilot Studio Declarative Agent</p>
-                <p><strong>Location:</strong> <code>https://m365.cloud.microsoft:443/chat/?titleId=T_afded7db-f8c5-703a-5502-2cc9f31b66da&source=embedded-builder</code></p>
+                <p><strong>Location:</strong> <a href="https://m365.cloud.microsoft:443/chat/?titleId=T_afded7db-f8c5-703a-5502-2cc9f31b66da&source=embedded-builder" target="_blank">Open Transcript-to-Project Agent</a></p>
                 <p><strong>What it does:</strong> Extracts customer name, stakeholders, competing solutions, MVP use case, timeline, and generates structured JSON for project tracking.</p>
 
                 <h4>How to Use:</h4>
@@ -2225,8 +2225,8 @@ analysis, and automated routing.</pre>
 
                 <h4>Section 1: Problem Statement (2-3 sentences)</h4>
                 <div class="example-box">
-                    <h4>🎯 Example: Retail Beverage Company Field Sales</h4>
-                    <p>"Your field sales teams currently spend 2-3 hours per day planning routes manually and deciding which stores to visit in what order. This results in inefficient routes, missed high-priority accounts, and inconsistent store coverage. We heard that solving this routing problem would save each salesperson 10-15 hours per week."</p>
+                    <h4>🎯 Example: Field Sales Route Planning</h4>
+                    <p>"Your field sales teams currently spend 2-3 hours per day planning routes manually and deciding which accounts to visit in what order. This results in inefficient routes, missed high-priority accounts, and inconsistent coverage. We heard that solving this routing problem would save each salesperson 10-15 hours per week."</p>
                 </div>
 
                 <h4>Section 2: Proposed MVP Solution (3-4 bullet points)</h4>
@@ -2520,7 +2520,7 @@ Tone: Professional but approachable. We're confirming we heard them correctly, n
 
             <div class="tool-card">
                 <h4>🛠️ Development Tool: RAPP Agent Generator</h4>
-                <p><strong>Status:</strong>https://m365.cloud.microsoft/chat/?titleId=T_04778775-1214-29c8-3bc4-218e26088499&source=embedded-builder&auth=2</p>
+                <p><strong>Location:</strong> <a href="https://m365.cloud.microsoft/chat/?titleId=T_04778775-1214-29c8-3bc4-218e26088499&source=embedded-builder&auth=2" target="_blank">Open RAPP Agent Generator</a></p>
                 <p><strong>Planned Type:</strong> M365 Copilot Studio Declarative Agent</p>
                 <p><strong>Vision:</strong> Generate complete Python agent code following the BasicAgent pattern with JSON Schema metadata, error handling, and Azure integration.</p>
 
@@ -2543,7 +2543,7 @@ Tone: Professional but approachable. We're confirming we heard them correctly, n
                     </div>
                     <pre>Generate Python agents for this MVP:
 
-**Use Case:** Field sales route optimization for Retail Beverage Company
+**Use Case:** Field sales route optimization
 
 **Capabilities Needed:**
 1. Dynamic route planning based on account priority and location
@@ -3607,7 +3607,7 @@ scope a Phase 2 project with those additional capabilities. Sound good?"</code><
 
                 <div class="tool-card">
                     <h4>🤖 Automation Tool: Video Demo Generator</h4>
-                    <p><strong>Location:</strong> <code>https://m365.cloud.microsoft:443/chat/?titleId=T_9c21fece-1d32-64df-b68d-db4d0a3cc446&source=embedded-builder</code></p>
+                    <p><strong>Location:</strong> <a href="https://m365.cloud.microsoft:443/chat/?titleId=T_9c21fece-1d32-64df-b68d-db4d0a3cc446&source=embedded-builder" target="_blank">Open Video Demo Generator</a></p>
 
                     <h4>What It Does:</h4>
                     <p>Generates structured JSON demo configurations with:</p>
@@ -3653,8 +3653,8 @@ Include:
                     <h4>Input Prompt to Video Demo Generator:</h4>
                     <pre><code>Generate a demo JSON for Retail Customer's Field Sales AI Agent system.
 
-Industry: Retail / Beverage Distribution
-Use Case: Field sales reps need to know where to go, what order to visit stores,
+Industry: Field Sales
+Use Case: Field sales reps need to know where to go, what order to visit accounts,
 and what actions to take at each location. Currently done manually, taking 45
 minutes per day. AI agents solve this in real-time.
 
@@ -4913,11 +4913,11 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
         <!-- ROADMAP -->
         <div class="content-section" id="roadmap">
             <h1 class="section-title">Roadmap - EOY 2025</h1>
-            <p class="section-subtitle">Next release wave priorities based on Connect prep for Renato</p>
+            <p class="section-subtitle">Next release wave priorities and strategic focus areas</p>
 
             <div class="highlight-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none;">
                 <h4 style="color: white;">🎯 Strategic Shift: From Prototypes to Production</h4>
-                <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;">The strategic imperative is to transform conceptual ideas into production-ready solutions that field teams can deploy immediately. The focus is on creating demos that not only impress in presentations but can also be reliably reproduced and reused across multiple customer engagements to accelerate deal closure. - Renato</p>
+                <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;">The strategic imperative is to transform conceptual ideas into production-ready solutions that field teams can deploy immediately. The focus is on creating demos that not only impress in presentations but can also be reliably reproduced and reused across multiple customer engagements to accelerate deal closure.</p>
             </div>
 
             <div class="step-section">
@@ -4931,7 +4931,7 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
                 </div>
 
                 <div class="priority-card" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; padding: 25px; border-radius: 12px; margin-bottom: 20px;">
-                    <h4 style="color: white; margin-top: 0;">2. Unblock Blair & Andre - Documentation & Tools</h4>
+                    <h4 style="color: white; margin-top: 0;">2. Enable Team Members - Documentation & Tools</h4>
                     <p style="color: rgba(255,255,255,0.95);"><strong>What:</strong> Create "station-based" guide enabling team to work independently on 2+ process stations</p>
                     <p style="color: rgba(255,255,255,0.95);"><strong>Deliverables:</strong></p>
                     <ul style="color: rgba(255,255,255,0.95); margin-bottom: 15px;">
@@ -4939,7 +4939,7 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
                         <li>M365 agents for discovery calls and MVP generation</li>
                         <li>Clear input/output documentation for each station</li>
                     </ul>
-                    <p style="color: rgba(255,255,255,0.95);"><strong>Impact:</strong> Team scalability - enable Blair/Andre to handle 20+ customer engagements concurrently</p>
+                    <p style="color: rgba(255,255,255,0.95);"><strong>Impact:</strong> Team scalability - enable team members to handle 20+ customer engagements concurrently</p>
                     <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;"><strong>Key Requirement:</strong> "Less code-dependent, more tool-based" - team uses tools, not raw code</p>
                 </div>
 
@@ -4976,7 +4976,7 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
                         </tr>
                         <tr>
                             <td><strong>Video Automation</strong></td>
-                            <td>Implement speech-to-text solution for audio timing (Renato's suggestion: double API call for duration data)</td>
+                            <td>Implement speech-to-text solution for audio timing (double API call for duration data)</td>
                             <td>Automation Team</td>
                         </tr>
                         <tr>
@@ -5022,7 +5022,7 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
                     <div class="metric-card" style="background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%); padding: 20px; border-radius: 12px;">
                         <div class="metric-icon" style="font-size: 2rem; margin-bottom: 10px;">👥</div>
                         <h4 style="color: var(--primary); margin-bottom: 10px;">Team Independence</h4>
-                        <p style="margin-bottom: 5px;"><strong>Metric:</strong> Number of stations Blair/Andre can operate independently</p>
+                        <p style="margin-bottom: 5px;"><strong>Metric:</strong> Number of stations team members can operate independently</p>
                         <p style="margin-bottom: 0; color: var(--text-secondary);"><strong>Target:</strong> 2+ stations by end of cycle</p>
                     </div>
 
@@ -5055,7 +5055,7 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
                 <h4 style="color: var(--primary);">Results You Deliver:</h4>
                 <ul>
                     <li><strong>Business Impact:</strong> Accelerating deals through reproducible AI agent demos</li>
-                    <li><strong>Team Impact:</strong> Enabling Blair/Andre to scale from individual work to managing 20+ concurrent engagements</li>
+                    <li><strong>Team Impact:</strong> Enabling team members to scale from individual work to managing 20+ concurrent engagements</li>
                     <li><strong>Customer Impact:</strong> Moving from "amazing demos" to deployed, production-ready solutions</li>
                 </ul>
 
@@ -5079,7 +5079,7 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
 
             <div class="highlight-box" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none;">
                 <h4 style="color: white; margin-top: 0;">💡 Pro Tip for Connect</h4>
-                <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;">When writing your Connect, emphasize the shift from "200 amazing prototypes" to "2 production-ready tools the field can use tomorrow." This directly addresses Renato's feedback about moving from ideation to realization.</p>
+                <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;">When writing your Connect, emphasize the shift from "200 amazing prototypes" to "2 production-ready tools the field can use tomorrow." This directly addresses the strategic feedback about moving from ideation to realization.</p>
             </div>
         </div>
 
