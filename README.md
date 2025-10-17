@@ -1,5 +1,7 @@
 # AI BAST Agents Library
 
+> **📖 For Non-Technical Users:** View the full interactive documentation at [https://microsoft.github.io/aibast-agents-library/](https://microsoft.github.io/aibast-agents-library/)
+
 Main repository for the AI BAST (Business Applications Specialist Team) AI Agents Library - a Microsoft framework for building and deploying AI agent automation capabilities.
 
 ## Overview
