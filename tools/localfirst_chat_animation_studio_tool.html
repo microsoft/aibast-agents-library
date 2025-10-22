@@ -1,0 +1,4025 @@
+<!DOCTYPE html>
+<!-- saved from url=(0097)file:///Users/kodyw/Documents/GitHub/PersonalWorkingSpace/RepriseClone/chat-animation-studio.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Animation Studio - All-in-One</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .studio-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .studio-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 24px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .studio-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .studio-header .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-top: 4px;
+        }
+
+        /* Progress Steps */
+        .progress-steps {
+            display: flex;
+            padding: 24px 32px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e0e0e0;
+            overflow-x: auto;
+        }
+
+        .step {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 200px;
+        }
+
+        .step.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .step.completed {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .step.active .step-number {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .step.completed .step-number {
+            background: #4caf50;
+            color: white;
+        }
+
+        .step-info {
+            flex: 1;
+        }
+
+        .step-title {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .step-desc {
+            font-size: 11px;
+            opacity: 0.8;
+            margin-top: 2px;
+        }
+
+        /* Main Content */
+        .studio-content {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            min-height: calc(100vh - 240px);
+        }
+
+        /* Sidebar */
+        .studio-sidebar {
+            background: #fafafa;
+            padding: 24px;
+            border-right: 2px solid #e0e0e0;
+            overflow-y: auto;
+        }
+
+        .section {
+            margin-bottom: 24px;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: #555;
+        }
+
+        .input-group input,
+        .input-group textarea,
+        .input-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .input-group textarea {
+            min-height: 80px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-success {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #f44336;
+            color: white;
+        }
+
+        .upload-area {
+            border: 3px dashed #ddd;
+            border-radius: 8px;
+            padding: 32px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upload-area:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .upload-area.loaded {
+            border-color: #4caf50;
+            background: #e8f5e9;
+        }
+
+        /* Preview Area */
+        .studio-preview {
+            background: #fff;
+            padding: 24px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .preview-container {
+            width: 100%;
+            height: 100%;
+            background: #f5f5f5;
+            border-radius: 8px;
+            position: relative;
+            min-height: 600px;
+        }
+
+        .message-item {
+            display: flex;
+            margin: 16px 0;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-item.agent {
+            justify-content: flex-start;
+        }
+
+        .message-item.customer {
+            justify-content: flex-end;
+        }
+
+        .message-bubble {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            word-wrap: break-word;
+        }
+
+        .message-bubble.agent {
+            background: #f0f0f0;
+            color: #000;
+        }
+
+        .message-bubble.customer {
+            background: #667eea;
+            color: white;
+        }
+
+        .message-list {
+            padding: 16px;
+        }
+
+        .message-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .message-list-item:hover {
+            border-color: #667eea;
+        }
+
+        .message-list-item .type-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .message-list-item .type-badge.agent {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .message-list-item .type-badge.customer {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .message-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: #f5f5f5;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .icon-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Animation Controls */
+        .animation-controls {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: white;
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+
+        .animation-controls.active {
+            display: block;
+        }
+
+        .control-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .frame-counter {
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .speed-slider {
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        /* Style Designer */
+        .style-preview {
+            padding: 20px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            margin-top: 12px;
+        }
+
+        .style-property {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+
+        .style-property label {
+            font-size: 12px;
+            font-weight: 500;
+            color: #666;
+        }
+
+        .style-property input[type="color"] {
+            width: 60px;
+            height: 32px;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .style-property input[type="range"] {
+            width: 100%;
+        }
+
+        /* Background overlay */
+        .background-preview {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: #f5f5f5;
+        }
+
+        .chat-overlay {
+            position: absolute;
+            background: white;
+            border: 3px dashed #667eea;
+            border-radius: 8px;
+            padding: 16px;
+            cursor: move;
+            min-width: 300px;
+            min-height: 200px;
+        }
+
+        .overlay-handle {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #667eea;
+            border: 2px solid white;
+            border-radius: 50%;
+            bottom: -10px;
+            right: -10px;
+            cursor: nwse-resize;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            margin-top: 12px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+            padding: 24px;
+            background: #fafafa;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .nav-buttons button {
+            flex: 1;
+        }
+
+        /* Style Capture Modal */
+        .capture-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999999;
+        }
+
+        .capture-modal.active {
+            display: flex;
+        }
+
+        .capture-modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .capture-modal h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .captured-style-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .captured-style-item strong {
+            color: #667eea;
+        }
+
+        .capture-preview {
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .apply-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        /* Video Container for Presenter Mode */
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+            padding: 20px;
+            z-index: 10000;
+        }
+
+        .video-container.presenter-mode {
+            display: flex;
+        }
+
+        /* Screen Recording Frame */
+        .screen-frame {
+            width: 100%;
+            max-width: 1400px;
+            height: calc(100vh - 140px);
+            max-height: 900px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Admin Button */
+        .admin-button {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            z-index: 10001;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .admin-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        /* Step Indicator for Presenter Mode */
+        .step-indicator-presenter {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            z-index: 10001;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        .step-indicator-presenter.hidden {
+            display: none;
+        }
+
+        /* Hide elements in presenter mode */
+        body.presenter-mode {
+            overflow: hidden;
+        }
+
+        body.presenter-mode .studio-container {
+            height: 100vh;
+            max-width: none;
+            border-radius: 0;
+            margin: 0;
+        }
+
+        body.presenter-mode .studio-header .subtitle {
+            display: none;
+        }
+
+        /* Adjust studio container when in presenter mode frame */
+        .video-container .studio-container {
+            max-width: none;
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        .video-container .screen-frame .studio-container {
+            height: 100%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="studio-container">
+        <!-- Header -->
+        <div class="studio-header">
+            <div>
+                <h1>🎬 Chat Animation Studio</h1>
+                <div class="subtitle">Design → Compose → Animate → Export - All in One Place</div>
+            </div>
+            <div style="display: flex; gap: 12px;">
+                <button class="btn btn-secondary" onclick="clearAll()" style="width: auto; padding: 12px 24px; background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3);">
+                    🗑️ Clear All
+                </button>
+                <button class="btn btn-secondary" onclick="togglePresenterMode()" style="width: auto; padding: 12px 24px; background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3);">
+                    📹 Presenter Mode
+                </button>
+                <button class="btn btn-success" onclick="exportAnimation()" style="width: auto; padding: 12px 24px;">
+                    📥 Export Animation
+                </button>
+            </div>
+        </div>
+
+        <!-- Progress Steps -->
+        <div class="progress-steps">
+            <div class="step completed" data-step="1" onclick="goToStep(1)">
+                <div class="step-number">1</div>
+                <div class="step-info">
+                    <div class="step-title">Background</div>
+                    <div class="step-desc">Upload base HTML (optional)</div>
+                </div>
+            </div>
+            <div class="step completed" data-step="2" onclick="goToStep(2)">
+                <div class="step-number">2</div>
+                <div class="step-info">
+                    <div class="step-title">Message Styles</div>
+                    <div class="step-desc">Design agent &amp; customer bubbles</div>
+                </div>
+            </div>
+            <div class="step completed" data-step="3" onclick="goToStep(3)">
+                <div class="step-info">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Conversation</div>
+                    <div class="step-desc">Add messages</div>
+                </div>
+            </div>
+            <div class="step completed" data-step="4" onclick="goToStep(4)">
+                <div class="step-number">4</div>
+                <div class="step-info">
+                    <div class="step-title">Positioning</div>
+                    <div class="step-desc">Position overlay</div>
+                </div>
+            </div>
+            <div class="step completed" data-step="5" onclick="goToStep(5)">
+                <div class="step-number">5</div>
+                <div class="step-info">
+                    <div class="step-title">Preview</div>
+                    <div class="step-desc">Watch animation</div>
+                </div>
+            </div>
+            <div class="step active" data-step="6" onclick="goToStep(6)">
+                <div class="step-number">6</div>
+                <div class="step-info">
+                    <div class="step-title">Export &amp; Save</div>
+                    <div class="step-desc">Export frames or save project</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="studio-content">
+            <!-- Sidebar -->
+            <div class="studio-sidebar">
+                <!-- Step 1: Background -->
+                <div class="section" data-section="1">
+                    <div class="section-title">📁 Upload Background</div>
+                    <div class="info-box">
+                        Upload the HTML page where you want the chat to appear (e.g., M365 Copilot interface). Leave blank for a simple background.
+                    </div>
+                    <div class="upload-area loaded" id="backgroundUpload" onclick="document.getElementById('backgroundInput').click()">
+                        <div style="font-size: 48px; margin-bottom: 12px;">📄</div>
+                        <div style="font-weight: 600; margin-bottom: 8px;">Click to Upload Background HTML</div>
+                        <div style="font-size: 12px; color: #888;">Or drag and drop here</div>
+                    </div>
+                    <input type="file" id="backgroundInput" accept=".html" style="display: none;" onchange="loadBackground(event)">
+                    <div id="backgroundStatus" style="margin-top: 12px; font-size: 13px; color: #888;"><span style="color: #4caf50;">✓ Loaded: snapshot-1760370929454.html (interactive elements removed for clean display)</span></div>
+                </div>
+
+                <!-- Step 2: Message Styles -->
+                <div class="section" data-section="2">
+                    <div class="section-title">🎨 Design Message Styles</div>
+
+                    <div class="info-box">
+                        Design message styles or import from a saved configuration.
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;">
+                        <button class="btn btn-secondary" onclick="document.getElementById('styleImportInput').click()" style="font-size: 12px;">
+                            📥 Import Styles
+                        </button>
+                        <button class="btn btn-secondary" onclick="exportStyles()" style="font-size: 12px;">
+                            📤 Export Styles
+                        </button>
+                    </div>
+                    <input type="file" id="styleImportInput" accept=".json" style="display: none;" onchange="importStyles(event)">
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px;">
+                        <button class="btn btn-primary" onclick="enableStyleCapture()" id="styleCaptureBtn" style="font-size: 12px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            🎨 Capture Styles
+                        </button>
+                        <button class="btn btn-primary" onclick="enableTemplateCapture()" id="templateCaptureBtn" style="font-size: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            📦 Capture Template
+                        </button>
+                    </div>
+                    <div id="styleCaptureHint" style="display: none; padding: 12px; background: #fff3cd; border-left: 4px solid #ffc107; border-radius: 4px; font-size: 12px; margin-bottom: 16px;">
+                        <strong>Style Capture Mode Active</strong><br>
+                        Click any text element in the background preview to capture its styles.
+                    </div>
+                    <div id="templateCaptureHint" style="display: none; padding: 12px; background: #e3f2fd; border-left: 4px solid #2196f3; border-radius: 4px; font-size: 12px; margin-bottom: 16px;">
+                        <strong>Template Capture Mode Active</strong><br>
+                        Click on a complete message bubble to capture its entire HTML structure.
+                    </div>
+
+                    <h4 style="font-size: 14px; margin-bottom: 12px; color: #764ba2;">Agent Message</h4>
+
+                    <div style="background: #f8f9fa; padding: 12px; border-radius: 6px; margin-bottom: 16px;">
+                        <strong style="font-size: 12px; color: #666; display: block; margin-bottom: 8px;">Message Components</strong>
+                        <label style="display: flex; align-items: center; margin-bottom: 8px; cursor: pointer;">
+                            <input type="checkbox" id="agentShowAvatar" checked onchange="updateStylePreview()" style="margin-right: 8px;">
+                            <span style="font-size: 13px;">Show Avatar/Icon</span>
+                        </label>
+                        <label style="display: flex; align-items: center; margin-bottom: 8px; cursor: pointer;">
+                            <input type="checkbox" id="agentShowTitle" checked onchange="updateStylePreview()" style="margin-right: 8px;">
+                            <span style="font-size: 13px;">Show Agent Name/Title</span>
+                        </label>
+                        <label style="display: flex; align-items: center; cursor: pointer;">
+                            <input type="checkbox" id="agentShowActions" checked onchange="updateStylePreview()" style="margin-right: 8px;">
+                            <span style="font-size: 13px;">Show Action Buttons</span>
+                        </label>
+                    </div>
+
+                    <div class="style-property">
+                        <label>Background</label>
+                        <input type="color" id="agentBg" value="#ffffff" onchange="updateStylePreview()">
+                    </div>
+                    <div class="style-property">
+                        <label>Text Color</label>
+                        <input type="color" id="agentColor" value="#242424" onchange="updateStylePreview()">
+                    </div>
+                    <div class="style-property">
+                        <label>Border Radius</label>
+                        <input type="range" id="agentRadius" min="0" max="30" value="8" onchange="updateStylePreview()">
+                        <span id="agentRadiusVal">8px</span>
+                    </div>
+                    <div class="style-property">
+                        <label>Padding</label>
+                        <input type="range" id="agentPadding" min="8" max="30" value="16" onchange="updateStylePreview()">
+                        <span id="agentPaddingVal">16px</span>
+                    </div>
+
+                    <h4 style="font-size: 14px; margin: 20px 0 12px; color: #764ba2;">Customer Message</h4>
+
+                    <div style="background: #f8f9fa; padding: 12px; border-radius: 6px; margin-bottom: 16px;">
+                        <strong style="font-size: 12px; color: #666; display: block; margin-bottom: 8px;">Message Components</strong>
+                        <label style="display: flex; align-items: center; margin-bottom: 8px; cursor: pointer;">
+                            <input type="checkbox" id="customerShowAvatar" onchange="updateStylePreview()" style="margin-right: 8px;">
+                            <span style="font-size: 13px;">Show Avatar/Icon</span>
+                        </label>
+                        <label style="display: flex; align-items: center; margin-bottom: 8px; cursor: pointer;">
+                            <input type="checkbox" id="customerShowTitle" onchange="updateStylePreview()" style="margin-right: 8px;">
+                            <span style="font-size: 13px;">Show Customer Name/Title</span>
+                        </label>
+                        <label style="display: flex; align-items: center; cursor: pointer;">
+                            <input type="checkbox" id="customerShowActions" onchange="updateStylePreview()" style="margin-right: 8px;">
+                            <span style="font-size: 13px;">Show Action Buttons</span>
+                        </label>
+                    </div>
+
+                    <div class="style-property">
+                        <label>Background</label>
+                        <input type="color" id="customerBg" value="#f3f2f1" onchange="updateStylePreview()">
+                    </div>
+                    <div class="style-property">
+                        <label>Text Color</label>
+                        <input type="color" id="customerColor" value="#242424" onchange="updateStylePreview()">
+                    </div>
+                    <div class="style-property">
+                        <label>Border Radius</label>
+                        <input type="range" id="customerRadius" min="0" max="30" value="8" onchange="updateStylePreview()">
+                        <span id="customerRadiusVal">8px</span>
+                    </div>
+                    <div class="style-property">
+                        <label>Padding</label>
+                        <input type="range" id="customerPadding" min="8" max="30" value="16" onchange="updateStylePreview()">
+                        <span id="customerPaddingVal">16px</span>
+                    </div>
+
+                    <div class="style-preview" id="stylePreview">
+                        <div style="margin-bottom: 12px;">
+                            <div class="message-bubble agent" id="agentPreview" style="background-color: rgb(240, 240, 240); color: rgb(0, 0, 0); border-radius: 12px; padding: 12px 16px;">Agent message preview</div>
+                        </div>
+                        <div style="display: flex; justify-content: flex-end;">
+                            <div class="message-bubble customer" id="customerPreview" style="background-color: rgb(102, 126, 234); color: rgb(255, 255, 255); border-radius: 12px; padding: 12px 16px;">Customer message preview</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Conversation -->
+                <div class="section" data-section="3">
+                    <div class="section-title">💬 Build Conversation</div>
+
+                    <div class="info-box">
+                        <strong>Quick Start:</strong> Import a conversation JSON or add messages manually below.
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px;">
+                        <button class="btn btn-secondary" onclick="document.getElementById('conversationInput').click()">
+                            📥 Import JSON (Multiple)
+                        </button>
+                        <button class="btn btn-secondary" onclick="exportConversationJSON()">
+                            📤 Export JSON
+                        </button>
+                    </div>
+                    <input type="file" id="conversationInput" accept=".json" multiple style="display: none;" onchange="importConversationJSON(event)">
+
+                    <div id="conversationSelectorContainer" style="display: none; margin-bottom: 16px;">
+                        <div class="input-group">
+                            <label>📚 Loaded Conversations (<span id="loadedCount">0</span>)</label>
+                            <select id="conversationSelector" onchange="switchConversation(this.value)" style="width: 100%; padding: 10px 12px; border: 2px solid #e0e0e0; border-radius: 6px; font-size: 14px;">
+                                <option value="-1">Select a conversation...</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-secondary" onclick="clearAllConversations()" style="font-size: 12px; margin-top: 8px;">
+                            🗑️ Clear All Loaded Conversations
+                        </button>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Message Type</label>
+                        <select id="messageType">
+                            <option value="agent">Agent</option>
+                            <option value="customer">Customer</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Message Text</label>
+                        <textarea id="messageText" placeholder="Enter message content..."></textarea>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="addMessage()">➕ Add Message</button>
+
+                    <div style="margin-top: 20px;">
+                        <h4 style="font-size: 14px; margin-bottom: 12px; color: #764ba2;">Messages (<span id="messageCount">8</span>)</h4>
+                        <div class="message-list" id="messageList">
+                <div class="message-list-item">
+                    <div>
+                        <span class="type-badge customer">customer</span>
+                        <div style="margin-top: 6px; font-size: 13px; color: #666;">Consolidate all assets for the Henderson family an...</div>
+                    </div>
+                    <div class="message-actions">
+                        <button class="icon-btn" onclick="removeMessage(0)" title="Delete">🗑️</button>
+                    </div>
+                </div>
+            
+                <div class="message-list-item">
+                    <div>
+                        <span class="type-badge agent">agent</span>
+                        <div style="margin-top: 6px; font-size: 13px; color: #666;">Consolidating customer assets across all accounts ...</div>
+                    </div>
+                    <div class="message-actions">
+                        <button class="icon-btn" onclick="removeMessage(1)" title="Delete">🗑️</button>
+                    </div>
+                </div>
+            
+                <div class="message-list-item">
+                    <div>
+                        <span class="type-badge customer">customer</span>
+                        <div style="margin-top: 6px; font-size: 13px; color: #666;">What specific financial products should I recommen...</div>
+                    </div>
+                    <div class="message-actions">
+                        <button class="icon-btn" onclick="removeMessage(2)" title="Delete">🗑️</button>
+                    </div>
+                </div>
+            
+                <div class="message-list-item">
+                    <div>
+                        <span class="type-badge agent">agent</span>
+                        <div style="margin-top: 6px; font-size: 13px; color: #666;">Analyzing portfolio gaps and generating targeted p...</div>
+                    </div>
+                    <div class="message-actions">
+                        <button class="icon-btn" onclick="removeMessage(3)" title="Delete">🗑️</button>
+                    </div>
+                </div>
+            
+                <div class="message-list-item">
+                    <div>
+                        <span class="type-badge customer">customer</span>
+                        <div style="margin-top: 6px; font-size: 13px; color: #666;">Generate natural language summaries I can use to e...</div>
+                    </div>
+                    <div class="message-actions">
+                        <button class="icon-btn" onclick="removeMessage(4)" title="Delete">🗑️</button>
+                    </div>
+                </div>
+            
+                <div class="message-list-item">
+                    <div>
+                        <span class="type-badge agent">agent</span>
+                        <div style="margin-top: 6px; font-size: 13px; color: #666;">Creating clear, natural language summaries to faci...</div>
+                    </div>
+                    <div class="message-actions">
+                        <button class="icon-btn" onclick="removeMessage(5)" title="Delete">🗑️</button>
+                    </div>
+                </div>
+            
+                <div class="message-list-item">
+                    <div>
+                        <span class="type-badge customer">customer</span>
+                        <div style="margin-top: 6px; font-size: 13px; color: #666;">How will implementing these recommendations help m...</div>
+                    </div>
+                    <div class="message-actions">
+                        <button class="icon-btn" onclick="removeMessage(6)" title="Delete">🗑️</button>
+                    </div>
+                </div>
+            
+                <div class="message-list-item">
+                    <div>
+                        <span class="type-badge agent">agent</span>
+                        <div style="margin-top: 6px; font-size: 13px; color: #666;">Analyzing impact on organizational C-Suite objecti...</div>
+                    </div>
+                    <div class="message-actions">
+                        <button class="icon-btn" onclick="removeMessage(7)" title="Delete">🗑️</button>
+                    </div>
+                </div>
+            </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Positioning -->
+                <div class="section" data-section="4">
+                    <div class="section-title">📐 Position Overlay</div>
+
+                    <div class="info-box">
+                        Drag the chat overlay to position it on your background. Resize using the handle in the bottom-right corner.
+                    </div>
+
+                    <div class="input-group">
+                        <label>Overlay Background</label>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <input type="color" id="overlayBg" value="#ffffff" onchange="updateOverlayStyle()" style="flex: 0 0 60px;">
+                            <button class="btn btn-secondary" onclick="toggleColorPicker()" id="colorPickerBtn" style="flex: 1 1 0%; padding: 8px 12px; font-size: 13px;">🎨 Pick Color from Background</button>
+                        </div>
+                        <div id="colorPickerHint" style="display: none; margin-top: 8px; padding: 8px; background: rgb(255, 243, 205); border-left: 3px solid rgb(255, 193, 7); font-size: 12px; border-radius: 4px;">
+                            Click anywhere on the background to sample its color
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Overlay Opacity</label>
+                        <input type="range" id="overlayOpacity" min="0" max="100" value="100" onchange="updateOverlayStyle()">
+                        <span id="overlayOpacityVal">100%</span>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Border Radius</label>
+                        <input type="range" id="overlayRadius" min="0" max="30" value="8" onchange="updateOverlayStyle()">
+                        <span id="overlayRadiusVal">8px</span>
+                    </div>
+
+                    <button class="btn btn-secondary" onclick="resetOverlayPosition()">🔄 Reset Position</button>
+                </div>
+
+                <!-- Step 5: Preview -->
+                <div class="section" data-section="5">
+                    <div class="section-title">▶️ Animation Preview</div>
+
+                    <div class="info-box">
+                        Watch your chat conversation animate. Adjust speed and playback options below.
+                    </div>
+
+                    <div class="input-group">
+                        <label>Animation Speed</label>
+                        <input type="range" id="animSpeed" min="500" max="3000" value="1000" step="100" onchange="updateSpeed()">
+                        <span id="animSpeedVal">3.0s per message</span>
+                    </div>
+
+                    <div class="control-row">
+                        <button class="btn btn-primary" onclick="playAnimation()" id="playBtn">⏸️ Pause</button>
+                        <button class="btn btn-secondary" onclick="stopAnimation()">⏹ Stop</button>
+                    </div>
+
+                    <div class="control-row">
+                        <button class="btn btn-secondary" onclick="prevMessage()">⬅️ Prev</button>
+                        <button class="btn btn-secondary" onclick="nextMessage()">➡️ Next</button>
+                    </div>
+
+                    <div class="frame-counter" id="frameCounter">Frame 2 / 8</div>
+                </div>
+
+                <!-- Step 6: Export & Save -->
+                <div class="section active" data-section="6">
+                    <div class="section-title">💾 Export &amp; Save</div>
+
+                    <div class="info-box">
+                        <strong>Export Frames:</strong> Download HTML files for each animation frame.<br>
+                        <strong>Save Project:</strong> Save entire project to continue later.
+                    </div>
+
+                    <h4 style="font-size: 14px; margin-bottom: 12px; color: #764ba2;">Project Management</h4>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px;">
+                        <button class="btn btn-primary" onclick="document.getElementById('projectInput').click()">
+                            📂 Load Project
+                        </button>
+                        <button class="btn btn-primary" onclick="saveProject()">
+                            💾 Save Project
+                        </button>
+                    </div>
+                    <input type="file" id="projectInput" accept=".json" style="display: none;" onchange="loadProject(event)">
+
+                    <div class="success-box" id="projectStatus" style="display: block; margin-bottom: 16px;">✓ Project saved successfully! File: chat-animation-project-1760731127009.json</div>
+
+                    <h4 style="font-size: 14px; margin: 20px 0 12px; color: #764ba2;">Present &amp; Export</h4>
+
+                    <button class="btn btn-primary" onclick="openPresentationMode()" style="margin-bottom: 12px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        🎬 Present Mode (Screen Record)
+                    </button>
+
+                    <button class="btn btn-success" onclick="exportAnimation()" style="margin-bottom: 12px;">
+                        📥 Export All Frames
+                    </button>
+
+                    <div style="font-size: 12px; color: #666; line-height: 1.6; margin-top: 16px;">
+                        <strong>What's included in project file:</strong><br>
+                        • Background HTML<br>
+                        • All message styles<br>
+                        • Conversation messages<br>
+                        • Overlay position &amp; styling<br>
+                        • Animation settings
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preview Area -->
+            <div class="studio-preview">
+                <div class="preview-container" id="previewContainer">
+                <div style="padding: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center;">
+                    <div style="font-size: 64px; margin-bottom: 20px;">🎉</div>
+                    <h2 style="color: #667eea; margin-bottom: 16px;">Your Chat Animation is Ready!</h2>
+                    <div style="max-width: 600px; color: #666; line-height: 1.8; margin-bottom: 32px;">
+                        <p style="margin-bottom: 16px;">You've successfully created a chat animation with 8 messages.</p>
+                        <p style="margin-bottom: 16px;">Use the sidebar to <strong>save your project</strong> for later, or <strong>export frames</strong> to use in presentations.</p>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; width: 100%; max-width: 750px;">
+                        <div style="background: #fff0f6; padding: 24px; border-radius: 12px; border: 2px solid #f5576c;">
+                            <div style="font-size: 32px; margin-bottom: 8px;">🎬</div>
+                            <div style="font-weight: 600; color: #f5576c; margin-bottom: 8px;">Present Mode</div>
+                            <div style="font-size: 13px; color: #666;">Screen record your demo</div>
+                        </div>
+                        <div style="background: #f0f4ff; padding: 24px; border-radius: 12px; border: 2px solid #667eea;">
+                            <div style="font-size: 32px; margin-bottom: 8px;">💾</div>
+                            <div style="font-weight: 600; color: #667eea; margin-bottom: 8px;">Save Project</div>
+                            <div style="font-size: 13px; color: #666;">Reload anytime to continue editing</div>
+                        </div>
+                        <div style="background: #f0fff4; padding: 24px; border-radius: 12px; border: 2px solid #4caf50;">
+                            <div style="font-size: 32px; margin-bottom: 8px;">📥</div>
+                            <div style="font-weight: 600; color: #4caf50; margin-bottom: 8px;">Export Frames</div>
+                            <div style="font-size: 13px; color: #666;">8 HTML files ready</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 32px; padding: 20px; background: #fff3cd; border-left: 4px solid #ffc107; border-radius: 8px; max-width: 600px;">
+                        <div style="font-weight: 600; margin-bottom: 8px; color: #856404;">💡 Pro Tip</div>
+                        <div style="font-size: 13px; color: #856404; text-align: left;">
+                            Save your project before exporting frames! This way you can come back later to make changes without starting from scratch.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons">
+            <button class="btn btn-secondary" onclick="prevStep()" id="prevBtn">⬅️ Previous</button>
+            <button class="btn btn-primary" onclick="nextStep()" id="nextBtn">✓ Done</button>
+        </div>
+    </div>
+
+    <!-- Style Capture Modal -->
+    <div class="capture-modal" id="captureModal">
+        <div class="capture-modal-content">
+            <h2>🎨 Captured Styles</h2>
+            <div id="capturedStylesDisplay"></div>
+            <div class="capture-preview" id="capturePreview">
+                <div style="font-size: 13px; color: #888; margin-bottom: 8px;">Preview:</div>
+                <div id="capturePreviewText">Sample message text</div>
+            </div>
+            <div class="apply-buttons">
+                <button class="btn btn-primary" onclick="applyCapturedStyles('agent')">
+                    Apply to Agent Messages
+                </button>
+                <button class="btn btn-primary" onclick="applyCapturedStyles('customer')">
+                    Apply to Customer Messages
+                </button>
+            </div>
+            <button class="btn btn-secondary" onclick="closeCaptureModal()" style="margin-top: 12px;">
+                Cancel
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // State management
+        let currentStep = 1;
+        let backgroundHTML = null;
+        let messages = [];
+        let overlayPosition = { x: 50, y: 50, width: 600, height: 400 };
+        let animationInterval = null;
+        let currentFrame = 0;
+        let styleCaptureActive = false;
+        let capturedStyles = null;
+        let templateCaptureActive = false;
+        let capturedTemplate = null;
+
+        // Multi-conversation support
+        let loadedConversations = [];
+        let currentConversationIndex = -1;
+
+        // Initialize
+        window.addEventListener('load', () => {
+            updateStylePreview();
+            renderPreview();
+        });
+
+        // Clear all data and reset to fresh state
+        function clearAll() {
+            if (!confirm('Are you sure you want to clear everything and start fresh? This cannot be undone.')) {
+                return;
+            }
+
+            // Reset all state variables
+            currentStep = 1;
+            backgroundHTML = null;
+            messages = [];
+            overlayPosition = { x: 50, y: 50, width: 600, height: 400 };
+            animationInterval = null;
+            currentFrame = 0;
+
+            // Clear file inputs
+            document.getElementById('backgroundInput').value = '';
+            document.getElementById('conversationInput').value = '';
+
+            // Reset background upload UI
+            document.getElementById('backgroundUpload').classList.remove('loaded');
+            document.getElementById('backgroundStatus').innerHTML = '';
+
+            // Reset style controls to defaults (Copilot-style)
+            document.getElementById('agentBg').value = '#ffffff';
+            document.getElementById('agentColor').value = '#242424';
+            document.getElementById('agentRadius').value = '8';
+            document.getElementById('agentPadding').value = '16';
+
+            // Reset agent component checkboxes
+            document.getElementById('agentShowAvatar').checked = true;
+            document.getElementById('agentShowTitle').checked = true;
+            document.getElementById('agentShowActions').checked = true;
+
+            document.getElementById('customerBg').value = '#f3f2f1';
+            document.getElementById('customerColor').value = '#242424';
+            document.getElementById('customerRadius').value = '8';
+            document.getElementById('customerPadding').value = '12';
+
+            // Reset customer component checkboxes
+            document.getElementById('customerShowAvatar').checked = false;
+            document.getElementById('customerShowTitle').checked = false;
+            document.getElementById('customerShowActions').checked = false;
+
+            document.getElementById('overlayBg').value = '#ffffff';
+            document.getElementById('overlayOpacity').value = '100';
+            document.getElementById('overlayRadius').value = '8';
+
+            document.getElementById('animSpeed').value = '1000';
+
+            // Clear message input
+            document.getElementById('messageText').value = '';
+            document.getElementById('messageType').value = 'agent';
+
+            // Update all UI
+            updateMessageList();
+            updateStylePreview();
+            goToStep(1);
+
+            alert('✓ Everything cleared! Starting fresh.');
+        }
+
+        // Step navigation
+        function goToStep(step) {
+            currentStep = step;
+
+            // Update step indicators
+            document.querySelectorAll('.step').forEach((el, idx) => {
+                el.classList.remove('active');
+                if (idx + 1 < step) {
+                    el.classList.add('completed');
+                } else {
+                    el.classList.remove('completed');
+                }
+            });
+            document.querySelector(`.step[data-step="${step}"]`).classList.add('active');
+
+            // Update sections
+            document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+            document.querySelector(`.section[data-section="${step}"]`).classList.add('active');
+
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = step === 1;
+            document.getElementById('nextBtn').textContent = step === 6 ? '✓ Done' : 'Next ➡️';
+
+            // Render preview for current step
+            renderPreview();
+        }
+
+        function nextStep() {
+            if (currentStep < 6) {
+                goToStep(currentStep + 1);
+            } else {
+                // At final step, show success message
+                alert('✓ Project complete! Use the buttons above to save your project or export frames.');
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                goToStep(currentStep - 1);
+            }
+        }
+
+        // Background upload
+        function loadBackground(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                // AGGRESSIVE CLEANUP - Strip everything that could generate console errors!
+                let htmlContent = e.target.result;
+
+                // 1. Remove ALL script tags (inline, external, type="module", etc.)
+                htmlContent = htmlContent.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+
+                // 2. Remove noscript tags (not needed in sandbox)
+                htmlContent = htmlContent.replace(/<noscript\b[^<]*(?:(?!<\/noscript>)<[^<]*)*<\/noscript>/gi, '');
+
+                // 3. Remove meta refresh tags (cause sandbox redirect errors)
+                htmlContent = htmlContent.replace(/<meta[^>]*http-equiv=["']?refresh["']?[^>]*>/gi, '');
+
+                // 4. Remove ALL inline event handlers (onclick, onload, onerror, etc.)
+                htmlContent = htmlContent.replace(/\s+on\w+\s*=\s*["'][^"']*["']/gi, '');
+
+                // 5. Remove javascript: hrefs
+                htmlContent = htmlContent.replace(/href\s*=\s*["']javascript:[^"']*["']/gi, 'href="#"');
+
+                // 6. Remove problematic link preloads/prefetches that might cause errors
+                htmlContent = htmlContent.replace(/<link[^>]*rel=["']?(preload|prefetch|modulepreload)["']?[^>]*>/gi, '');
+
+                backgroundHTML = htmlContent;
+
+                document.getElementById('backgroundUpload').classList.add('loaded');
+                document.getElementById('backgroundStatus').innerHTML =
+                    `<span style="color: #4caf50;">✓ Loaded: ${file.name} (interactive elements removed for clean display)</span>`;
+                renderPreview();
+            };
+            reader.readAsText(file);
+        }
+
+        // Format message text to avoid wall of text
+        function formatMessageText(text) {
+            // Split by sentences (periods followed by space/newline)
+            const sentences = text.split(/\.\s+/);
+
+            // If there are more than 3 sentences, group into paragraphs
+            if (sentences.length > 3) {
+                const paragraphs = [];
+                for (let i = 0; i < sentences.length; i += 2) {
+                    const paragraph = sentences.slice(i, i + 2).join('. ');
+                    paragraphs.push(paragraph + (paragraph.endsWith('.') ? '' : '.'));
+                }
+                return paragraphs.map(p => `<p style="margin: 0 0 8px 0; line-height: 1.6;">${p}</p>`).join('');
+            }
+
+            // For shorter messages, just return with proper line height
+            return `<span style="line-height: 1.6;">${text}</span>`;
+        }
+
+        // Helper function to render a message with components
+        function renderMessageWithComponents(messageText, messageType, styles) {
+            const isAgent = messageType === 'agent';
+            const showAvatar = document.getElementById(`${messageType}ShowAvatar`)?.checked || false;
+            const showTitle = document.getElementById(`${messageType}ShowTitle`)?.checked || false;
+            const showActions = document.getElementById(`${messageType}ShowActions`)?.checked || false;
+
+            let html = `<div style="display: flex; align-items: flex-start; gap: 12px; max-width: 90%; ${!isAgent ? 'margin-left: auto; justify-content: flex-end;' : ''}">`;
+
+            // Avatar (left for agent, right for customer)
+            if (isAgent && showAvatar) {
+                html += `<div style="width: 32px; height: 32px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: 600;">AI</div>`;
+            }
+
+            html += `<div style="flex: 1; min-width: 0; ${!isAgent ? 'display: flex; flex-direction: column; align-items: flex-end;' : ''}">`;
+
+            // Title
+            if (showTitle) {
+                html += `<div style="font-size: 13px; font-weight: 600; color: #616161; margin-bottom: 4px;">${isAgent ? 'AI Assistant' : 'You'}</div>`;
+            }
+
+            // Message bubble
+            html += `<div style="background-color: ${styles.bg}; color: ${styles.color}; border-radius: ${styles.radius}px; padding: ${styles.padding}px; font-size: 14px;">${formatMessageText(messageText)}</div>`;
+
+            // Action buttons
+            if (showActions) {
+                if (isAgent) {
+                    html += `<div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;">
+                        <button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">👍</button>
+                        <button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">👎</button>
+                        <button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">🔊</button>
+                        <button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">📋</button>
+                    </div>`;
+                } else {
+                    html += `<div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;">
+                        <button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">✏️</button>
+                        <button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">🗑️</button>
+                    </div>`;
+                }
+            }
+
+            html += '</div>';
+
+            // Avatar (right for customer)
+            if (!isAgent && showAvatar) {
+                html += `<div style="width: 32px; height: 32px; background: #e0e0e0; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: #616161; font-size: 14px; font-weight: 600;">U</div>`;
+            }
+
+            html += '</div>';
+
+            return html;
+        }
+
+        // Style preview
+        function updateStylePreview() {
+            const agentBg = document.getElementById('agentBg').value;
+            const agentColor = document.getElementById('agentColor').value;
+            const agentRadius = document.getElementById('agentRadius').value;
+            const agentPadding = document.getElementById('agentPadding').value;
+
+            const customerBg = document.getElementById('customerBg').value;
+            const customerColor = document.getElementById('customerColor').value;
+            const customerRadius = document.getElementById('customerRadius').value;
+            const customerPadding = document.getElementById('customerPadding').value;
+
+            // Use helper function to render messages with components
+            const agentHTML = renderMessageWithComponents(
+                'Hi! Great to hear from you. How can I assist you today?',
+                'agent',
+                { bg: agentBg, color: agentColor, radius: agentRadius, padding: agentPadding }
+            );
+
+            const customerHTML = renderMessageWithComponents(
+                'hello',
+                'customer',
+                { bg: customerBg, color: customerColor, radius: customerRadius, padding: customerPadding }
+            );
+
+            // Update sidebar preview bubbles
+            const agentPreview = document.getElementById('agentPreview');
+            if (agentPreview) {
+                agentPreview.outerHTML = `<div id="agentPreview" class="message-bubble agent">${agentHTML}</div>`;
+            }
+
+            const customerPreview = document.getElementById('customerPreview');
+            if (customerPreview) {
+                customerPreview.outerHTML = `<div id="customerPreview" class="message-bubble customer">${customerHTML}</div>`;
+            }
+
+            // Update main preview (only exists in step 2)
+            const previewAgent = document.getElementById('previewAgent');
+            if (previewAgent) {
+                previewAgent.outerHTML = `<div id="previewAgent">${agentHTML}</div>`;
+            }
+
+            const previewCustomer = document.getElementById('previewCustomer');
+            if (previewCustomer) {
+                previewCustomer.outerHTML = `<div id="previewCustomer">${customerHTML}</div>`;
+            }
+
+            // Update value displays
+            document.getElementById('agentRadiusVal').textContent = agentRadius + 'px';
+            document.getElementById('agentPaddingVal').textContent = agentPadding + 'px';
+            document.getElementById('customerRadiusVal').textContent = customerRadius + 'px';
+            document.getElementById('customerPaddingVal').textContent = customerPadding + 'px';
+        }
+
+        // Message management
+        function addMessage() {
+            const type = document.getElementById('messageType').value;
+            const text = document.getElementById('messageText').value.trim();
+
+            if (!text) {
+                alert('Please enter message text');
+                return;
+            }
+
+            messages.push({ type, text });
+            document.getElementById('messageText').value = '';
+            updateMessageList();
+            renderPreview();
+        }
+
+        function removeMessage(index) {
+            messages.splice(index, 1);
+            updateMessageList();
+            renderPreview();
+        }
+
+        function updateMessageList() {
+            const list = document.getElementById('messageList');
+            document.getElementById('messageCount').textContent = messages.length;
+
+            if (messages.length === 0) {
+                list.innerHTML = '<div style="text-align: center; color: #888; padding: 20px; font-size: 13px;">No messages yet. Add your first message above.</div>';
+                return;
+            }
+
+            list.innerHTML = messages.map((msg, idx) => `
+                <div class="message-list-item">
+                    <div>
+                        <span class="type-badge ${msg.type}">${msg.type}</span>
+                        <div style="margin-top: 6px; font-size: 13px; color: #666;">${msg.text.substring(0, 50)}${msg.text.length > 50 ? '...' : ''}</div>
+                    </div>
+                    <div class="message-actions">
+                        <button class="icon-btn" onclick="removeMessage(${idx})" title="Delete">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        /**
+         * Import conversation JSON files (supports multiple files and formats)
+         * 
+         * Supported JSON formats:
+         * 
+         * 1. Demo Script Format (Agent Stacks):
+         * {
+         *   "metadata": { "agent_name": "Care Gap Closure", "stack_name": "..." },
+         *   "demoScript": [
+         *     { "type": "user", "content": "Hello" },
+         *     { "type": "agent", "content": "Hi there!" }
+         *   ]
+         * }
+         * 
+         * 2. Demo Narrative Format:
+         * {
+         *   "name": "Conversation Name",
+         *   "chatInteractions": [
+         *     {
+         *       "messages": [
+         *         { "type": "customer", "text": "Hello" },
+         *         { "type": "agent", "text": "Hi there!" }
+         *       ]
+         *     }
+         *   ],
+         *   "metadata": { "category": "sales" }
+         * }
+         * 
+         * 3. Simple Messages Format:
+         * {
+         *   "messages": [
+         *     { "type": "customer", "text": "Hello" },
+         *     { "type": "agent", "text": "Hi there!" }
+         *   ]
+         * }
+         * 
+         * 4. Direct Array Format:
+         * [
+         *   { "type": "customer", "text": "Hello" },
+         *   { "type": "agent", "text": "Hi there!" }
+         * ]
+         * 
+         * 5. Nested Structure (auto-detected):
+         * Any object containing an array of messages with type and text/content properties
+         * 
+         * Note: Both "text" and "content" fields are supported for message content
+         */
+        function importConversationJSON(event) {
+            const files = event.target.files;
+            if (!files || files.length === 0) return;
+
+            let filesProcessed = 0;
+            let successCount = 0;
+
+            // Process each file
+            Array.from(files).forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    try {
+                        const json = JSON.parse(e.target.result);
+                        let conversationMessages = [];
+                        let conversationName = file.name;
+
+                        console.log(`Processing ${file.name}, structure:`, Object.keys(json));
+
+                        // Helper function to format agentData into readable text
+                        function formatAgentData(agentData) {
+                            if (!agentData || typeof agentData !== 'object') return '';
+
+                            let formatted = '\n\n';
+
+                            // Add title with emoji
+                            if (agentData.title) {
+                                formatted += `📋 ${agentData.title}\n`;
+                            }
+
+                            // Add status
+                            if (agentData.status) {
+                                formatted += `Status: ${agentData.status}\n`;
+                            }
+
+                            // Process other fields
+                            for (const [key, value] of Object.entries(agentData)) {
+                                if (['title', 'status', 'stack_name', 'category', 'description'].includes(key)) {
+                                    continue; // Skip metadata fields
+                                }
+
+                                formatted += '\n';
+
+                                if (typeof value === 'object' && !Array.isArray(value)) {
+                                    // Handle nested objects (like details, profile, etc.)
+                                    formatted += `${key}:\n`;
+                                    for (const [subKey, subValue] of Object.entries(value)) {
+                                        formatted += `  • ${subKey}: ${subValue}\n`;
+                                    }
+                                } else if (Array.isArray(value)) {
+                                    // Handle arrays (like products, opportunities, etc.)
+                                    formatted += `${key}:\n`;
+                                    value.forEach(item => {
+                                        if (typeof item === 'object') {
+                                            formatted += '\n';
+                                            for (const [k, v] of Object.entries(item)) {
+                                                formatted += `  • ${k}: ${v}\n`;
+                                            }
+                                        } else {
+                                            formatted += `  • ${item}\n`;
+                                        }
+                                    });
+                                } else {
+                                    // Simple key-value
+                                    formatted += `• ${key}: ${value}\n`;
+                                }
+                            }
+
+                            return formatted;
+                        }
+
+                        // Check if it's a demoScript format (with content field instead of text)
+                        if (json.demoScript && Array.isArray(json.demoScript)) {
+                            // DemoScript format - map content to text, and include agentData if present
+                            json.demoScript.forEach(msg => {
+                                if (msg.type && msg.content) {
+                                    let fullText = msg.content;
+
+                                    // If message has agentData, format and append it
+                                    if (msg.agentData) {
+                                        fullText += formatAgentData(msg.agentData);
+                                    }
+
+                                    conversationMessages.push({
+                                        type: msg.type,
+                                        text: fullText
+                                    });
+                                }
+                            });
+
+                            // Try to use metadata.agent_name or stack_name as conversation name
+                            if (json.metadata) {
+                                conversationName = json.metadata.agent_name || json.metadata.stack_name || file.name;
+                            }
+                        }
+                        // Check if it's a demo narrative JSON (has chatInteractions)
+                        else if (json.chatInteractions && Array.isArray(json.chatInteractions)) {
+                            // Demo narrative format
+                            json.chatInteractions.forEach(interaction => {
+                                if (interaction.messages && Array.isArray(interaction.messages)) {
+                                    interaction.messages.forEach(msg => {
+                                        if (msg.type && msg.text) {
+                                            conversationMessages.push({
+                                                type: msg.type,
+                                                text: msg.text
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+
+                            conversationName = json.name || file.name;
+                        }
+                        // Check if it's a simple messages array format
+                        else if (json.messages && Array.isArray(json.messages)) {
+                            // Simple format
+                            json.messages.forEach(msg => {
+                                if (msg.type && (msg.text || msg.content)) {
+                                    conversationMessages.push({
+                                        type: msg.type,
+                                        text: msg.text || msg.content  // Support both text and content
+                                    });
+                                }
+                            });
+                        }
+                        // Check if the root itself is an array of messages
+                        else if (Array.isArray(json) && json.length > 0 && json[0].type && (json[0].text || json[0].content)) {
+                            // Direct array format
+                            json.forEach(msg => {
+                                if (msg.type && (msg.text || msg.content)) {
+                                    conversationMessages.push({
+                                        type: msg.type,
+                                        text: msg.text || msg.content  // Support both text and content
+                                    });
+                                }
+                            });
+                        }
+                        // Try to extract messages from any object with nested messages
+                        else if (typeof json === 'object') {
+                            // Search for messages arrays in the structure
+                            let foundMessages = false;
+                            
+                            // Check for nested structures
+                            Object.values(json).forEach(value => {
+                                if (Array.isArray(value) && value.length > 0 && value[0].type && (value[0].text || value[0].content)) {
+                                    value.forEach(msg => {
+                                        if (msg.type && (msg.text || msg.content)) {
+                                            conversationMessages.push({
+                                                type: msg.type,
+                                                text: msg.text || msg.content  // Support both text and content
+                                            });
+                                        }
+                                    });
+                                    foundMessages = true;
+                                }
+                            });
+
+                            if (!foundMessages) {
+                                console.error(`Invalid JSON format in ${file.name}. Found keys: ${Object.keys(json).join(', ')}`);
+                                console.log('JSON structure:', json);
+                                return;
+                            }
+                        }
+                        else {
+                            console.error(`Invalid JSON format in ${file.name}. Expected object or array.`);
+                            console.log('JSON content:', json);
+                            return;
+                        }
+
+                        // Add to loaded conversations
+                        if (conversationMessages.length > 0) {
+                            loadedConversations.push({
+                                name: conversationName,
+                                messages: conversationMessages,
+                                metadata: json.metadata || {},
+                                category: json.metadata?.category || 'general'
+                            });
+                            successCount++;
+                        }
+
+                    } catch (error) {
+                        console.error(`Error importing ${file.name}:`, error);
+                        console.error('Error details:', error.message);
+                        if (error instanceof SyntaxError) {
+                            console.error('File contains invalid JSON. Please check the file format.');
+                            console.error('First 500 characters:', e.target.result.substring(0, 500));
+                        }
+                    }
+
+                    filesProcessed++;
+
+                    // When all files are processed
+                    if (filesProcessed === files.length) {
+                        updateConversationSelector();
+
+                        // Auto-select the first conversation if this is the first batch
+                        if (loadedConversations.length > 0 && currentConversationIndex === -1) {
+                            switchConversation(0);
+                        }
+
+                        const failedCount = files.length - successCount;
+                        let message = `✓ Successfully imported ${successCount} conversation(s)`;
+                        if (failedCount > 0) {
+                            message += `\n⚠️ ${failedCount} file(s) failed to import (check console for details)`;
+                        }
+                        message += `\nTotal loaded: ${loadedConversations.length}`;
+                        
+                        alert(message);
+                        event.target.value = '';
+                    }
+                };
+                reader.readAsText(file);
+            });
+        }
+
+        // Update conversation selector dropdown
+        function updateConversationSelector() {
+            const selector = document.getElementById('conversationSelector');
+            const container = document.getElementById('conversationSelectorContainer');
+            const loadedCount = document.getElementById('loadedCount');
+
+            if (loadedConversations.length === 0) {
+                container.style.display = 'none';
+                return;
+            }
+
+            // Show the selector
+            container.style.display = 'block';
+            loadedCount.textContent = loadedConversations.length;
+
+            // Clear and rebuild options
+            selector.innerHTML = '<option value="-1">Select a conversation...</option>';
+
+            loadedConversations.forEach((conv, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = `${conv.name} (${conv.messages.length} messages)`;
+                if (index === currentConversationIndex) {
+                    option.selected = true;
+                }
+                selector.appendChild(option);
+            });
+        }
+
+        // Switch to a different conversation
+        function switchConversation(index) {
+            index = parseInt(index);
+
+            if (index < 0 || index >= loadedConversations.length) {
+                return;
+            }
+
+            currentConversationIndex = index;
+            const conversation = loadedConversations[index];
+
+            // Load the conversation messages
+            messages = [...conversation.messages];
+
+            // Update UI
+            updateMessageList();
+            renderPreview();
+            updateConversationSelector();
+
+            console.log(`Switched to conversation: ${conversation.name} (${messages.length} messages)`);
+        }
+
+        // Clear all loaded conversations
+        function clearAllConversations() {
+            if (loadedConversations.length === 0) {
+                alert('No conversations loaded.');
+                return;
+            }
+
+            if (!confirm(`Clear all ${loadedConversations.length} loaded conversations? This will not delete your current messages.`)) {
+                return;
+            }
+
+            loadedConversations = [];
+            currentConversationIndex = -1;
+            updateConversationSelector();
+
+            alert('✓ All loaded conversations cleared.');
+        }
+
+        // Export conversation JSON
+        function exportConversationJSON() {
+            if (messages.length === 0) {
+                alert('No messages to export. Add messages first.');
+                return;
+            }
+
+            const conversationJSON = {
+                version: "1.0",
+                timestamp: new Date().toISOString(),
+                messageCount: messages.length,
+                messages: messages.map(msg => ({
+                    type: msg.type,
+                    text: msg.text
+                }))
+            };
+
+            const jsonString = JSON.stringify(conversationJSON, null, 2);
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `conversation-${Date.now()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+
+            alert(`✓ Exported ${messages.length} messages to JSON`);
+        }
+
+        // Overlay styling
+        function updateOverlayStyle() {
+            const bg = document.getElementById('overlayBg').value;
+            const opacity = document.getElementById('overlayOpacity').value;
+            const radius = document.getElementById('overlayRadius').value;
+
+            document.getElementById('overlayOpacityVal').textContent = opacity + '%';
+            document.getElementById('overlayRadiusVal').textContent = radius + 'px';
+
+            renderPreview();
+        }
+
+        function resetOverlayPosition() {
+            overlayPosition = { x: 50, y: 50, width: 600, height: 400 };
+            renderPreview();
+        }
+
+        // Color picker functionality
+        let colorPickerActive = false;
+
+        function toggleColorPicker() {
+            colorPickerActive = !colorPickerActive;
+            const btn = document.getElementById('colorPickerBtn');
+            const hint = document.getElementById('colorPickerHint');
+
+            if (colorPickerActive) {
+                btn.style.background = '#ffc107';
+                btn.style.color = '#000';
+                btn.textContent = '✓ Color Picker Active - Click Background';
+                hint.style.display = 'block';
+                document.getElementById('previewContainer').style.cursor = 'crosshair';
+            } else {
+                btn.style.background = '';
+                btn.style.color = '';
+                btn.textContent = '🎨 Pick Color from Background';
+                hint.style.display = 'none';
+                document.getElementById('previewContainer').style.cursor = '';
+            }
+        }
+
+        function pickColorFromBackground(event) {
+            if (!colorPickerActive) return;
+            if (event.target.closest('.chat-overlay')) return; // Don't pick from overlay itself
+
+            // Get the iframe if background is loaded
+            const iframe = document.querySelector('#previewContainer iframe');
+            if (iframe) {
+                try {
+                    // Sample color from iframe background
+                    const iframeDoc = iframe.contentDocument;
+
+                    // Get coordinates relative to iframe
+                    const iframeRect = iframe.getBoundingClientRect();
+                    const x = event.clientX - iframeRect.left;
+                    const y = event.clientY - iframeRect.top;
+
+                    let element = iframeDoc.elementFromPoint(x, y);
+
+                    if (element) {
+                        // Traverse up the DOM tree to find first non-transparent background
+                        let foundColor = null;
+                        let currentElement = element;
+
+                        while (currentElement && !foundColor) {
+                            const computedStyle = iframeDoc.defaultView.getComputedStyle(currentElement);
+                            const bgColor = computedStyle.backgroundColor;
+
+                            // Check if color is not transparent
+                            if (bgColor && bgColor !== 'transparent' && bgColor !== 'rgba(0, 0, 0, 0)') {
+                                const rgb = bgColor.match(/\d+/g);
+                                if (rgb && rgb.length >= 3) {
+                                    // Check if alpha channel exists and is > 0
+                                    const alpha = rgb[3] ? parseFloat(rgb[3]) : 1;
+                                    if (alpha > 0) {
+                                        // Convert rgb to hex
+                                        const hex = '#' + rgb.slice(0, 3).map(x => {
+                                            const h = parseInt(x).toString(16);
+                                            return h.length === 1 ? '0' + h : h;
+                                        }).join('');
+
+                                        foundColor = hex;
+                                    }
+                                }
+                            }
+
+                            // Move up to parent element
+                            currentElement = currentElement.parentElement;
+                        }
+
+                        if (foundColor) {
+                            document.getElementById('overlayBg').value = foundColor;
+                            updateOverlayStyle();
+                            toggleColorPicker(); // Turn off picker after selection
+                        } else {
+                            alert('Could not find a solid background color. Try clicking a different area or manually select a color.');
+                            toggleColorPicker();
+                        }
+                    }
+                } catch (e) {
+                    console.error('Color picker error:', e);
+                    alert('Cannot sample color from this element. Try clicking a different area.');
+                    toggleColorPicker();
+                }
+            } else {
+                // Sample from default gradient background
+                alert('Upload a background HTML first to use color picker, or manually enter a color.');
+                toggleColorPicker();
+            }
+        }
+
+        // Preview rendering
+        function renderPreview() {
+            const container = document.getElementById('previewContainer');
+
+            if (currentStep === 1) {
+                // Step 1: Show background
+                if (backgroundHTML) {
+                    // Use sandbox to completely disable scripts - clean console!
+                    container.innerHTML = '<iframe sandbox="allow-same-origin" style="width: 100%; height: 100%; border: none; border-radius: 8px;"></iframe>';
+                    const iframe = container.querySelector('iframe');
+                    iframe.contentDocument.open();
+                    iframe.contentDocument.write(backgroundHTML);
+                    iframe.contentDocument.close();
+                } else {
+                    container.innerHTML = '<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #888;">No background uploaded. Using default background.</div>';
+                }
+            } else if (currentStep === 2) {
+                // Step 2: Show style preview OR background if capture mode is active
+                if ((styleCaptureActive || templateCaptureActive) && backgroundHTML) {
+                    // Show background for capture modes
+                    container.innerHTML = '<iframe sandbox="allow-same-origin" style="width: 100%; height: 100%; border: none; border-radius: 8px;"></iframe>';
+                    const iframe = container.querySelector('iframe');
+                    iframe.contentDocument.open();
+                    iframe.contentDocument.write(backgroundHTML);
+                    iframe.contentDocument.close();
+
+                    // Attach appropriate click handler immediately after writing content
+                    setTimeout(() => {
+                        try {
+                            if (iframe.contentDocument && iframe.contentDocument.body) {
+                                if (styleCaptureActive) {
+                                    iframe.contentDocument.body.style.cursor = 'crosshair';
+                                    iframe.contentDocument.addEventListener('click', captureStyleFromIframe);
+                                    console.log('Style capture click handler attached to iframe');
+                                } else if (templateCaptureActive) {
+                                    iframe.contentDocument.body.style.cursor = 'copy';
+                                    iframe.contentDocument.addEventListener('click', captureTemplateFromIframe);
+                                    console.log('Template capture click handler attached to iframe');
+                                }
+                            }
+                        } catch (e) {
+                            console.warn('Could not attach click handler to iframe:', e);
+                        }
+                    }, 100);
+                } else {
+                    // Show normal style preview
+                    container.innerHTML = `
+                        <div style="padding: 40px;">
+                            <h3 style="margin-bottom: 24px; color: #667eea;">Message Style Preview</h3>
+                            <div class="message-item agent">
+                                <div class="message-bubble agent" id="previewAgent">This is how agent messages will look</div>
+                            </div>
+                            <div class="message-item customer">
+                                <div class="message-bubble customer" id="previewCustomer">This is how customer messages will look</div>
+                            </div>
+                        </div>
+                    `;
+                    updateStylePreview();
+                }
+            } else if (currentStep === 3) {
+                // Step 3: Show conversation
+                renderConversationPreview();
+            } else if (currentStep === 4) {
+                // Step 4: Show positioning
+                renderPositioningPreview();
+            } else if (currentStep === 5) {
+                // Step 5: Show animation
+                renderAnimationPreview();
+            } else if (currentStep === 6) {
+                // Step 6: Show final summary
+                renderExportSummary();
+            }
+        }
+
+        function renderExportSummary() {
+            const container = document.getElementById('previewContainer');
+
+            const summary = `
+                <div style="padding: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center;">
+                    <div style="font-size: 64px; margin-bottom: 20px;">🎉</div>
+                    <h2 style="color: #667eea; margin-bottom: 16px;">Your Chat Animation is Ready!</h2>
+                    <div style="max-width: 600px; color: #666; line-height: 1.8; margin-bottom: 32px;">
+                        <p style="margin-bottom: 16px;">You've successfully created a chat animation with ${messages.length} message${messages.length !== 1 ? 's' : ''}.</p>
+                        <p style="margin-bottom: 16px;">Use the sidebar to <strong>save your project</strong> for later, or <strong>export frames</strong> to use in presentations.</p>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; width: 100%; max-width: 750px;">
+                        <div style="background: #fff0f6; padding: 24px; border-radius: 12px; border: 2px solid #f5576c;">
+                            <div style="font-size: 32px; margin-bottom: 8px;">🎬</div>
+                            <div style="font-weight: 600; color: #f5576c; margin-bottom: 8px;">Present Mode</div>
+                            <div style="font-size: 13px; color: #666;">Screen record your demo</div>
+                        </div>
+                        <div style="background: #f0f4ff; padding: 24px; border-radius: 12px; border: 2px solid #667eea;">
+                            <div style="font-size: 32px; margin-bottom: 8px;">💾</div>
+                            <div style="font-weight: 600; color: #667eea; margin-bottom: 8px;">Save Project</div>
+                            <div style="font-size: 13px; color: #666;">Reload anytime to continue editing</div>
+                        </div>
+                        <div style="background: #f0fff4; padding: 24px; border-radius: 12px; border: 2px solid #4caf50;">
+                            <div style="font-size: 32px; margin-bottom: 8px;">📥</div>
+                            <div style="font-weight: 600; color: #4caf50; margin-bottom: 8px;">Export Frames</div>
+                            <div style="font-size: 13px; color: #666;">${messages.length} HTML files ready</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 32px; padding: 20px; background: #fff3cd; border-left: 4px solid #ffc107; border-radius: 8px; max-width: 600px;">
+                        <div style="font-weight: 600; margin-bottom: 8px; color: #856404;">💡 Pro Tip</div>
+                        <div style="font-size: 13px; color: #856404; text-align: left;">
+                            Save your project before exporting frames! This way you can come back later to make changes without starting from scratch.
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = summary;
+        }
+
+        function renderConversationPreview() {
+            const container = document.getElementById('previewContainer');
+
+            if (messages.length === 0) {
+                container.innerHTML = '<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #888;">Add messages to see the conversation preview</div>';
+                return;
+            }
+
+            const agentBg = document.getElementById('agentBg').value;
+            const agentColor = document.getElementById('agentColor').value;
+            const agentRadius = document.getElementById('agentRadius').value;
+            const agentPadding = document.getElementById('agentPadding').value;
+
+            const customerBg = document.getElementById('customerBg').value;
+            const customerColor = document.getElementById('customerColor').value;
+            const customerRadius = document.getElementById('customerRadius').value;
+            const customerPadding = document.getElementById('customerPadding').value;
+
+            const messagesHTML = messages.map(msg => {
+                const isAgent = msg.type === 'agent';
+                const styles = {
+                    bg: isAgent ? agentBg : customerBg,
+                    color: isAgent ? agentColor : customerColor,
+                    radius: isAgent ? agentRadius : customerRadius,
+                    padding: isAgent ? agentPadding : customerPadding
+                };
+
+                return `
+                    <div class="message-item ${msg.type}" style="margin-bottom: 16px;">
+                        ${renderMessageWithComponents(msg.text, msg.type, styles)}
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = `
+                <div style="padding: 24px; overflow-y: auto; height: 100%;">
+                    ${messagesHTML}
+                </div>
+            `;
+        }
+
+        function renderPositioningPreview() {
+            const container = document.getElementById('previewContainer');
+            const overlayBg = document.getElementById('overlayBg').value;
+            const overlayOpacity = document.getElementById('overlayOpacity').value / 100;
+            const overlayRadius = document.getElementById('overlayRadius').value;
+
+            // Render background
+            let backgroundContent = '<div style="width: 100%; height: 100%; background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%); border-radius: 8px;"></div>';
+
+            if (backgroundHTML) {
+                // Sandbox disables scripts - clean console!
+                backgroundContent = `<iframe sandbox="allow-same-origin" style="width: 100%; height: 100%; border: none; border-radius: 8px; pointer-events: none;"></iframe>`;
+            }
+
+            container.innerHTML = backgroundContent;
+
+            if (backgroundHTML) {
+                const iframe = container.querySelector('iframe');
+                iframe.contentDocument.open();
+                iframe.contentDocument.write(backgroundHTML);
+                iframe.contentDocument.close();
+            }
+
+            // Add draggable overlay
+            const overlay = document.createElement('div');
+            overlay.className = 'chat-overlay';
+            overlay.style.left = overlayPosition.x + 'px';
+            overlay.style.top = overlayPosition.y + 'px';
+            overlay.style.width = overlayPosition.width + 'px';
+            overlay.style.height = overlayPosition.height + 'px';
+            overlay.style.background = overlayBg;
+            overlay.style.opacity = overlayOpacity;
+            overlay.style.borderRadius = overlayRadius + 'px';
+            // NO box-shadow - breaks the illusion of blending!
+
+            overlay.innerHTML = `
+                <div style="font-weight: 600; margin-bottom: 12px; color: #667eea;">Chat Overlay (Drag to reposition)</div>
+                <div style="font-size: 13px; color: #888;">Your chat messages will appear here</div>
+                <div class="overlay-handle"></div>
+            `;
+
+            container.appendChild(overlay);
+
+            // Make draggable
+            makeDraggable(overlay);
+            makeResizable(overlay);
+
+            // Add color picker click handler to container
+            container.addEventListener('click', pickColorFromBackground);
+        }
+
+        function renderAnimationPreview() {
+            const container = document.getElementById('previewContainer');
+
+            if (messages.length === 0) {
+                container.innerHTML = '<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #888;">Add messages in Step 3 to see the animation preview</div>';
+                return;
+            }
+
+            const overlayBg = document.getElementById('overlayBg').value;
+            const overlayOpacity = document.getElementById('overlayOpacity').value / 100;
+            const overlayRadius = document.getElementById('overlayRadius').value;
+
+            // Render background (same as Step 4)
+            let backgroundContent = '<div style="width: 100%; height: 100%; background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%); border-radius: 8px;"></div>';
+
+            if (backgroundHTML) {
+                backgroundContent = `<iframe sandbox="allow-same-origin" style="width: 100%; height: 100%; border: none; border-radius: 8px; pointer-events: none;"></iframe>`;
+            }
+
+            container.innerHTML = backgroundContent;
+
+            if (backgroundHTML) {
+                const iframe = container.querySelector('iframe');
+                iframe.contentDocument.open();
+                iframe.contentDocument.write(backgroundHTML);
+                iframe.contentDocument.close();
+            }
+
+            // Add animated overlay on top
+            const overlay = document.createElement('div');
+            overlay.id = 'animationOverlay';
+            overlay.style.cssText = `
+                position: absolute;
+                left: ${overlayPosition.x}px;
+                top: ${overlayPosition.y}px;
+                width: ${overlayPosition.width}px;
+                height: ${overlayPosition.height}px;
+                background: ${overlayBg};
+                opacity: ${overlayOpacity};
+                border-radius: ${overlayRadius}px;
+                overflow-y: auto;
+                z-index: 9999;
+                padding: 16px;
+            `;
+            // NO box-shadow - seamless blend with background!
+
+            overlay.innerHTML = '<div id="animationMessages"></div>';
+            container.appendChild(overlay);
+
+            currentFrame = 0;
+            updateAnimationFrame();
+        }
+
+        function updateAnimationFrame() {
+            const animContainer = document.getElementById('animationMessages');
+            if (!animContainer) {
+                console.error('Animation container not found');
+                return;
+            }
+
+            const visibleMessages = messages.slice(0, currentFrame + 1);
+
+            // Get style values
+            const agentBg = document.getElementById('agentBg')?.value || '#ffffff';
+            const agentColor = document.getElementById('agentColor')?.value || '#242424';
+            const agentRadius = document.getElementById('agentRadius')?.value || '8';
+            const agentPadding = document.getElementById('agentPadding')?.value || '16';
+
+            const customerBg = document.getElementById('customerBg')?.value || '#f3f2f1';
+            const customerColor = document.getElementById('customerColor')?.value || '#242424';
+            const customerRadius = document.getElementById('customerRadius')?.value || '8';
+            const customerPadding = document.getElementById('customerPadding')?.value || '12';
+
+            // Build messages HTML using the SAME helper function as Step 3
+            let messagesHTML = '';
+            for (let i = 0; i < visibleMessages.length; i++) {
+                const msg = visibleMessages[i];
+                const isAgent = msg.type === 'agent';
+                const styles = {
+                    bg: isAgent ? agentBg : customerBg,
+                    color: isAgent ? agentColor : customerColor,
+                    radius: isAgent ? agentRadius : customerRadius,
+                    padding: isAgent ? agentPadding : customerPadding
+                };
+
+                // Use the helper function that works in Step 3
+                const messageHTML = renderMessageWithComponents(msg.text, msg.type, styles);
+                messagesHTML += '<div class="message-item ' + msg.type + '" style="margin-bottom: 16px;">' + messageHTML + '</div>';
+            }
+
+            animContainer.innerHTML = messagesHTML;
+
+            // Scroll to bottom to show latest message
+            const overlay = document.getElementById('animationOverlay');
+            if (overlay) {
+                overlay.scrollTop = overlay.scrollHeight;
+            }
+
+            // Update frame counter
+            const frameCounter = document.getElementById('frameCounter');
+            if (frameCounter) {
+                frameCounter.textContent = 'Frame ' + (currentFrame + 1) + ' / ' + messages.length;
+            }
+        }
+
+        // Animation controls
+        function playAnimation() {
+            if (animationInterval) return;
+
+            const speed = parseInt(document.getElementById('animSpeed').value);
+            document.getElementById('playBtn').textContent = '⏸️ Pause';
+
+            animationInterval = setInterval(() => {
+                if (currentFrame < messages.length - 1) {
+                    currentFrame++;
+                    updateAnimationFrame();
+                } else {
+                    currentFrame = 0;
+                    updateAnimationFrame();
+                }
+            }, speed);
+        }
+
+        function stopAnimation() {
+            clearInterval(animationInterval);
+            animationInterval = null;
+            document.getElementById('playBtn').textContent = '▶️ Play';
+        }
+
+        function prevMessage() {
+            if (currentFrame > 0) {
+                currentFrame--;
+                updateAnimationFrame();
+            }
+        }
+
+        function nextMessage() {
+            if (currentFrame < messages.length - 1) {
+                currentFrame++;
+                updateAnimationFrame();
+            }
+        }
+
+        function updateSpeed() {
+            const speed = document.getElementById('animSpeed').value;
+            document.getElementById('animSpeedVal').textContent = (speed / 1000).toFixed(1) + 's per message';
+
+            if (animationInterval) {
+                stopAnimation();
+                playAnimation();
+            }
+        }
+
+        // Drag and resize functionality
+        function makeDraggable(element) {
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+
+            element.onmousedown = dragMouseDown;
+
+            function dragMouseDown(e) {
+                if (e.target.classList.contains('overlay-handle')) return;
+
+                e.preventDefault();
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                document.onmouseup = closeDragElement;
+                document.onmousemove = elementDrag;
+            }
+
+            function elementDrag(e) {
+                e.preventDefault();
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+
+                const newTop = element.offsetTop - pos2;
+                const newLeft = element.offsetLeft - pos1;
+
+                element.style.top = newTop + "px";
+                element.style.left = newLeft + "px";
+
+                overlayPosition.x = newLeft;
+                overlayPosition.y = newTop;
+            }
+
+            function closeDragElement() {
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
+        }
+
+        function makeResizable(element) {
+            const handle = element.querySelector('.overlay-handle');
+
+            handle.onmousedown = resizeMouseDown;
+
+            function resizeMouseDown(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const startX = e.clientX;
+                const startY = e.clientY;
+                const startWidth = element.offsetWidth;
+                const startHeight = element.offsetHeight;
+
+                document.onmousemove = resize;
+                document.onmouseup = stopResize;
+
+                function resize(e) {
+                    const newWidth = startWidth + (e.clientX - startX);
+                    const newHeight = startHeight + (e.clientY - startY);
+
+                    element.style.width = Math.max(300, newWidth) + 'px';
+                    element.style.height = Math.max(200, newHeight) + 'px';
+
+                    overlayPosition.width = Math.max(300, newWidth);
+                    overlayPosition.height = Math.max(200, newHeight);
+                }
+
+                function stopResize() {
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                }
+            }
+        }
+
+        // Export
+        function exportAnimation() {
+            if (messages.length === 0) {
+                alert('Please add at least one message before exporting');
+                return;
+            }
+
+            const agentBg = document.getElementById('agentBg').value;
+            const agentColor = document.getElementById('agentColor').value;
+            const agentRadius = document.getElementById('agentRadius').value;
+            const agentPadding = document.getElementById('agentPadding').value;
+
+            const customerBg = document.getElementById('customerBg').value;
+            const customerColor = document.getElementById('customerColor').value;
+            const customerRadius = document.getElementById('customerRadius').value;
+            const customerPadding = document.getElementById('customerPadding').value;
+
+            const overlayBg = document.getElementById('overlayBg').value;
+            const overlayOpacity = document.getElementById('overlayOpacity').value / 100;
+            const overlayRadius = document.getElementById('overlayRadius').value;
+
+            // Generate frames
+            for (let i = 0; i < messages.length; i++) {
+                const frameMessages = messages.slice(0, i + 1);
+
+                const messagesHTML = frameMessages.map(msg => {
+                    const isAgent = msg.type === 'agent';
+                    const bg = isAgent ? agentBg : customerBg;
+                    const color = isAgent ? agentColor : customerColor;
+                    const radius = isAgent ? agentRadius : customerRadius;
+                    const padding = isAgent ? agentPadding : customerPadding;
+
+                    return `
+                        <div style="display: flex; justify-content: ${isAgent ? 'flex-start' : 'flex-end'}; margin: 16px 0;">
+                            <div style="max-width: 70%; background: ${bg}; color: ${color}; border-radius: ${radius}px; padding: ${padding}px 16px; word-wrap: break-word;">
+                                ${msg.text}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                const chatHTML = `<div style="padding: 16px;">${messagesHTML}</div>`;
+
+                // Create composite frame
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(backgroundHTML || '<html><body style="background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%); margin: 0; padding: 0; width: 100vw; height: 100vh;"></body></html>', 'text/html');
+
+                const overlayDiv = doc.createElement('div');
+                overlayDiv.style.cssText = `
+                    position: absolute;
+                    left: ${overlayPosition.x}px;
+                    top: ${overlayPosition.y}px;
+                    width: ${overlayPosition.width}px;
+                    height: ${overlayPosition.height}px;
+                    background: ${overlayBg};
+                    opacity: ${overlayOpacity};
+                    border-radius: ${overlayRadius}px;
+                    overflow: auto;
+                    z-index: 9999;
+                `;
+                // NO box-shadow in exported frames - seamless blend!
+                overlayDiv.innerHTML = chatHTML;
+
+                doc.body.appendChild(overlayDiv);
+
+                const frameHTML = '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
+
+                // Download frame
+                const blob = new Blob([frameHTML], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `chat-frame-${String(i + 1).padStart(2, '0')}.html`;
+                a.click();
+                URL.revokeObjectURL(url);
+            }
+
+            alert(`✓ Exported ${messages.length} frames successfully!\n\nLoad them into the Static Page Animator to play the animation.`);
+        }
+
+        // Save entire project to JSON
+        function saveProject() {
+            const project = {
+                version: "1.0",
+                timestamp: new Date().toISOString(),
+                projectType: "chat-animation-studio",
+                background: {
+                    html: backgroundHTML
+                },
+                styles: {
+                    agent: {
+                        background: document.getElementById('agentBg').value,
+                        color: document.getElementById('agentColor').value,
+                        borderRadius: document.getElementById('agentRadius').value,
+                        padding: document.getElementById('agentPadding').value
+                    },
+                    customer: {
+                        background: document.getElementById('customerBg').value,
+                        color: document.getElementById('customerColor').value,
+                        borderRadius: document.getElementById('customerRadius').value,
+                        padding: document.getElementById('customerPadding').value
+                    },
+                    overlay: {
+                        background: document.getElementById('overlayBg').value,
+                        opacity: document.getElementById('overlayOpacity').value,
+                        borderRadius: document.getElementById('overlayRadius').value,
+                        position: overlayPosition
+                    }
+                },
+                conversation: {
+                    messages: messages,
+                    messageCount: messages.length
+                },
+                animation: {
+                    speed: document.getElementById('animSpeed').value
+                }
+            };
+
+            const jsonString = JSON.stringify(project, null, 2);
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `chat-animation-project-${Date.now()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+
+            const statusDiv = document.getElementById('projectStatus');
+            if (statusDiv) {
+                statusDiv.style.display = 'block';
+                statusDiv.innerHTML = `✓ Project saved successfully! File: chat-animation-project-${Date.now()}.json`;
+            }
+        }
+
+        // Load project from JSON
+        function loadProject(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const project = JSON.parse(e.target.result);
+
+                    // Validate project structure
+                    if (!project.projectType || project.projectType !== 'chat-animation-studio') {
+                        alert('Invalid project file. Please select a Chat Animation Studio project JSON.');
+                        return;
+                    }
+
+                    // Load background
+                    backgroundHTML = project.background.html || null;
+                    if (backgroundHTML) {
+                        document.getElementById('backgroundUpload').classList.add('loaded');
+                        document.getElementById('backgroundStatus').innerHTML =
+                            `<span style="color: #4caf50;">✓ Loaded from project: Background HTML</span>`;
+                    }
+
+                    // Load styles
+                    if (project.styles) {
+                        // Agent styles (Copilot-style defaults)
+                        if (project.styles.agent) {
+                            document.getElementById('agentBg').value = project.styles.agent.background || '#ffffff';
+                            document.getElementById('agentColor').value = project.styles.agent.color || '#242424';
+                            document.getElementById('agentRadius').value = project.styles.agent.borderRadius || '8';
+                            document.getElementById('agentPadding').value = project.styles.agent.padding || '16';
+                        }
+
+                        // Customer styles (Copilot-style defaults)
+                        if (project.styles.customer) {
+                            document.getElementById('customerBg').value = project.styles.customer.background || '#f3f2f1';
+                            document.getElementById('customerColor').value = project.styles.customer.color || '#242424';
+                            document.getElementById('customerRadius').value = project.styles.customer.borderRadius || '8';
+                            document.getElementById('customerPadding').value = project.styles.customer.padding || '12';
+                        }
+
+                        // Overlay styles
+                        if (project.styles.overlay) {
+                            document.getElementById('overlayBg').value = project.styles.overlay.background || '#ffffff';
+                            document.getElementById('overlayOpacity').value = project.styles.overlay.opacity || '100';
+                            document.getElementById('overlayRadius').value = project.styles.overlay.borderRadius || '8';
+                            if (project.styles.overlay.position) {
+                                overlayPosition = project.styles.overlay.position;
+                            }
+                        }
+                    }
+
+                    // Load conversation
+                    if (project.conversation && project.conversation.messages) {
+                        messages = project.conversation.messages;
+                    }
+
+                    // Load animation settings
+                    if (project.animation) {
+                        document.getElementById('animSpeed').value = project.animation.speed || '1000';
+                    }
+
+                    // Update all UI
+                    updateMessageList();
+                    updateStylePreview();
+                    updateSpeed();
+                    goToStep(1);
+
+                    const statusDiv = document.getElementById('projectStatus');
+                    if (statusDiv) {
+                        statusDiv.style.display = 'block';
+                        statusDiv.innerHTML = `✓ Project loaded successfully! ${messages.length} messages restored.`;
+                    }
+
+                    alert(`✓ Project loaded successfully!\n\n• ${messages.length} messages\n• ${backgroundHTML ? 'Background HTML' : 'No background'}\n• All styles restored\n\nYou can now continue editing or export.`);
+
+                    // Clear the file input
+                    event.target.value = '';
+                } catch (error) {
+                    alert(`Error loading project: ${error.message}`);
+                    console.error('Load error:', error);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Open presentation mode in new window for screen recording
+        // Style Capture Functionality
+        function enableStyleCapture() {
+            if (!backgroundHTML && currentStep === 2) {
+                alert('⚠️ Please upload a background HTML file in Step 1 first.\n\nThe style capturer needs a background to capture styles from.');
+                goToStep(1);
+                return;
+            }
+
+            styleCaptureActive = !styleCaptureActive;
+            const btn = document.getElementById('styleCaptureBtn');
+            const hint = document.getElementById('styleCaptureHint');
+            const previewContainer = document.getElementById('previewContainer');
+
+            if (styleCaptureActive) {
+                btn.textContent = '❌ Cancel Style Capture';
+                btn.style.background = '#f44336';
+                hint.style.display = 'block';
+                previewContainer.style.cursor = 'crosshair';
+
+                // Go to step 2 and render background
+                if (currentStep !== 2) {
+                    goToStep(2);
+                } else {
+                    // Already on step 2, just re-render to show background
+                    renderPreview();
+                }
+
+                // Attach click handler to preview container
+                previewContainer.addEventListener('click', captureStyleFromClick);
+            } else {
+                btn.textContent = '🎨 Capture Styles from Background';
+                btn.style.background = '';
+                hint.style.display = 'none';
+                previewContainer.style.cursor = '';
+                previewContainer.removeEventListener('click', captureStyleFromClick);
+
+                // Remove iframe listener if it exists
+                const iframe = document.querySelector('#previewContainer iframe');
+                if (iframe && iframe.contentDocument) {
+                    try {
+                        iframe.contentDocument.removeEventListener('click', captureStyleFromIframe);
+                        iframe.contentDocument.body.style.cursor = '';
+                    } catch (e) {
+                        // Ignore errors
+                    }
+                }
+
+                // Re-render to show normal step 2 preview
+                renderPreview();
+            }
+        }
+
+        function captureStyleFromClick(event) {
+            if (!styleCaptureActive) return;
+
+            // Get the iframe if background is loaded
+            const iframe = document.querySelector('#previewContainer iframe');
+            if (!iframe) {
+                alert('No background loaded to capture styles from.');
+                enableStyleCapture(); // Toggle off
+                return;
+            }
+
+            try {
+                const iframeDoc = iframe.contentDocument;
+                const iframeRect = iframe.getBoundingClientRect();
+                const x = event.clientX - iframeRect.left;
+                const y = event.clientY - iframeRect.top;
+
+                let element = iframeDoc.elementFromPoint(x, y);
+
+                if (!element) {
+                    alert('Could not find element at that position. Try clicking on a text element.');
+                    return;
+                }
+
+                // Get computed styles
+                const computedStyle = iframeDoc.defaultView.getComputedStyle(element);
+
+                // Extract relevant styles
+                const styles = {
+                    fontFamily: computedStyle.fontFamily,
+                    fontSize: computedStyle.fontSize,
+                    fontWeight: computedStyle.fontWeight,
+                    color: computedStyle.color,
+                    backgroundColor: computedStyle.backgroundColor,
+                    padding: computedStyle.padding,
+                    paddingTop: computedStyle.paddingTop,
+                    paddingRight: computedStyle.paddingRight,
+                    paddingBottom: computedStyle.paddingBottom,
+                    paddingLeft: computedStyle.paddingLeft,
+                    borderRadius: computedStyle.borderRadius,
+                    lineHeight: computedStyle.lineHeight,
+                    textAlign: computedStyle.textAlign,
+                    elementTag: element.tagName.toLowerCase(),
+                    elementText: element.textContent.substring(0, 50)
+                };
+
+                capturedStyles = styles;
+                showCaptureModal(styles);
+                enableStyleCapture(); // Turn off capture mode
+
+            } catch (error) {
+                console.error('Style capture error:', error);
+                alert('Error capturing styles. Make sure you clicked on an element in the background.');
+            }
+        }
+
+        // New function to capture styles directly from iframe clicks
+        function captureStyleFromIframe(event) {
+            console.log('captureStyleFromIframe called!', event.target);
+            event.preventDefault();
+            event.stopPropagation();
+
+            if (!styleCaptureActive) {
+                console.log('Style capture not active');
+                return;
+            }
+
+            try {
+                let element = event.target;
+                console.log('Capturing styles from element:', element.tagName, element.textContent.substring(0, 30));
+
+                if (!element) {
+                    alert('Could not find element. Try clicking on a text element.');
+                    return;
+                }
+
+                // Get the iframe document
+                const iframeDoc = element.ownerDocument;
+
+                // Helper function to check if color is transparent/empty
+                function isTransparentOrEmpty(color) {
+                    if (!color) return true;
+                    if (color === 'transparent') return true;
+                    if (color === 'rgba(0, 0, 0, 0)') return true;
+                    // Check if it's a fully transparent rgba
+                    const rgbaMatch = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+                    if (rgbaMatch && rgbaMatch[4] === '0') return true;
+                    return false;
+                }
+
+                // Walk up the DOM tree to find element with solid background
+                let targetElement = element;
+                let foundSolidBackground = false;
+                let maxDepth = 10; // Prevent infinite loop
+                let depth = 0;
+
+                while (targetElement && depth < maxDepth) {
+                    const style = iframeDoc.defaultView.getComputedStyle(targetElement);
+                    const bgColor = style.backgroundColor;
+
+                    if (!isTransparentOrEmpty(bgColor)) {
+                        foundSolidBackground = true;
+                        console.log('Found element with solid background:', targetElement.tagName, bgColor);
+                        element = targetElement; // Use this element for style capture
+                        break;
+                    }
+
+                    targetElement = targetElement.parentElement;
+                    depth++;
+                }
+
+                if (!foundSolidBackground) {
+                    console.warn('No element with solid background found, using original element');
+                    element = event.target; // Fall back to original
+                }
+
+                // Get computed styles from the selected element
+                const computedStyle = iframeDoc.defaultView.getComputedStyle(element);
+
+                // Extract relevant styles
+                const styles = {
+                    fontFamily: computedStyle.fontFamily,
+                    fontSize: computedStyle.fontSize,
+                    fontWeight: computedStyle.fontWeight,
+                    color: computedStyle.color,
+                    backgroundColor: computedStyle.backgroundColor,
+                    padding: computedStyle.padding,
+                    paddingTop: computedStyle.paddingTop,
+                    paddingRight: computedStyle.paddingRight,
+                    paddingBottom: computedStyle.paddingBottom,
+                    paddingLeft: computedStyle.paddingLeft,
+                    borderRadius: computedStyle.borderRadius,
+                    lineHeight: computedStyle.lineHeight,
+                    textAlign: computedStyle.textAlign,
+                    elementTag: element.tagName.toLowerCase(),
+                    elementText: element.textContent.substring(0, 50)
+                };
+
+                capturedStyles = styles;
+                showCaptureModal(styles);
+                enableStyleCapture(); // Turn off capture mode
+
+            } catch (error) {
+                console.error('Style capture error:', error);
+                alert('Error capturing styles: ' + error.message);
+            }
+        }
+
+        function showCaptureModal(styles) {
+            // Convert colors to hex if needed
+            function rgbToHex(rgb) {
+                if (rgb.startsWith('#')) return rgb;
+                const matches = rgb.match(/\d+/g);
+                if (!matches || matches.length < 3) return '#000000';
+                const r = parseInt(matches[0]);
+                const g = parseInt(matches[1]);
+                const b = parseInt(matches[2]);
+                return '#' + [r, g, b].map(x => {
+                    const h = x.toString(16);
+                    return h.length === 1 ? '0' + h : h;
+                }).join('');
+            }
+
+            const colorHex = rgbToHex(styles.color);
+            const bgColorHex = rgbToHex(styles.backgroundColor);
+
+            // Display captured styles
+            const displayHTML = `
+                <div class="captured-style-item">
+                    <strong>Element:</strong>
+                    <span>&lt;${styles.elementTag}&gt; "${styles.elementText}..."</span>
+                </div>
+                <div class="captured-style-item">
+                    <strong>Font Family:</strong>
+                    <span>${styles.fontFamily.split(',')[0]}</span>
+                </div>
+                <div class="captured-style-item">
+                    <strong>Font Size:</strong>
+                    <span>${styles.fontSize}</span>
+                </div>
+                <div class="captured-style-item">
+                    <strong>Font Weight:</strong>
+                    <span>${styles.fontWeight}</span>
+                </div>
+                <div class="captured-style-item">
+                    <strong>Text Color:</strong>
+                    <span>${colorHex} <span style="display: inline-block; width: 20px; height: 20px; background: ${colorHex}; border: 1px solid #ddd; border-radius: 3px; vertical-align: middle;"></span></span>
+                </div>
+                <div class="captured-style-item">
+                    <strong>Background:</strong>
+                    <span>${bgColorHex} <span style="display: inline-block; width: 20px; height: 20px; background: ${bgColorHex}; border: 1px solid #ddd; border-radius: 3px; vertical-align: middle;"></span></span>
+                </div>
+                <div class="captured-style-item">
+                    <strong>Padding:</strong>
+                    <span>${styles.padding}</span>
+                </div>
+                <div class="captured-style-item">
+                    <strong>Border Radius:</strong>
+                    <span>${styles.borderRadius}</span>
+                </div>
+                <div class="captured-style-item">
+                    <strong>Line Height:</strong>
+                    <span>${styles.lineHeight}</span>
+                </div>
+            `;
+
+            document.getElementById('capturedStylesDisplay').innerHTML = displayHTML;
+
+            // Update preview
+            const previewElement = document.getElementById('capturePreviewText');
+            previewElement.style.fontFamily = styles.fontFamily;
+            previewElement.style.fontSize = styles.fontSize;
+            previewElement.style.fontWeight = styles.fontWeight;
+            previewElement.style.color = styles.color;
+            previewElement.style.backgroundColor = styles.backgroundColor;
+            previewElement.style.padding = styles.padding;
+            previewElement.style.borderRadius = styles.borderRadius;
+            previewElement.style.lineHeight = styles.lineHeight;
+            previewElement.style.display = 'inline-block';
+
+            // Show modal
+            document.getElementById('captureModal').classList.add('active');
+        }
+
+        function closeCaptureModal() {
+            document.getElementById('captureModal').classList.remove('active');
+            capturedStyles = null;
+        }
+
+        // Template Capture Functionality
+        function enableTemplateCapture() {
+            if (!backgroundHTML && currentStep === 2) {
+                alert('⚠️ Please upload a background HTML file in Step 1 first.\n\nThe template capturer needs a background to capture from.');
+                goToStep(1);
+                return;
+            }
+
+            templateCaptureActive = !templateCaptureActive;
+            const btn = document.getElementById('templateCaptureBtn');
+            const hint = document.getElementById('templateCaptureHint');
+            const previewContainer = document.getElementById('previewContainer');
+
+            if (templateCaptureActive) {
+                // Turn off style capture if it's active
+                if (styleCaptureActive) {
+                    enableStyleCapture();
+                }
+
+                btn.textContent = '❌ Cancel Template Capture';
+                btn.style.background = '#f44336';
+                hint.style.display = 'block';
+                previewContainer.style.cursor = 'copy';
+
+                // Go to step 2 and render background
+                if (currentStep !== 2) {
+                    goToStep(2);
+                } else {
+                    renderPreview();
+                }
+            } else {
+                btn.textContent = '📦 Capture Template';
+                btn.style.background = '';
+                hint.style.display = 'none';
+                previewContainer.style.cursor = '';
+
+                // Remove iframe listener if it exists
+                const iframe = document.querySelector('#previewContainer iframe');
+                if (iframe && iframe.contentDocument) {
+                    try {
+                        iframe.contentDocument.removeEventListener('click', captureTemplateFromIframe);
+                        iframe.contentDocument.body.style.cursor = '';
+                    } catch (e) {
+                        // Ignore errors
+                    }
+                }
+
+                renderPreview();
+            }
+        }
+
+        function captureTemplateFromIframe(event) {
+            console.log('captureTemplateFromIframe called!', event.target);
+            event.preventDefault();
+            event.stopPropagation();
+
+            if (!templateCaptureActive) {
+                console.log('Template capture not active');
+                return;
+            }
+
+            try {
+                let element = event.target;
+
+                // Walk up to find a reasonable container (message bubble)
+                // Look for elements with certain characteristics
+                let messageContainer = element;
+                let maxDepth = 10;
+                let depth = 0;
+
+                while (messageContainer && depth < maxDepth) {
+                    const computedStyle = messageContainer.ownerDocument.defaultView.getComputedStyle(messageContainer);
+
+                    // Look for container-like elements (has padding, background, or flex/grid layout)
+                    const hasPadding = parseFloat(computedStyle.paddingTop) > 0 || parseFloat(computedStyle.paddingLeft) > 0;
+                    const hasBackground = computedStyle.backgroundColor !== 'rgba(0, 0, 0, 0)' && computedStyle.backgroundColor !== 'transparent';
+                    const isContainer = computedStyle.display === 'flex' || computedStyle.display === 'grid' || computedStyle.display === 'block';
+
+                    if ((hasPadding || hasBackground) && isContainer && messageContainer.children.length > 0) {
+                        console.log('Found message container:', messageContainer.tagName, messageContainer.className);
+                        break;
+                    }
+
+                    messageContainer = messageContainer.parentElement;
+                    depth++;
+                }
+
+                // Get the outer HTML of the container
+                const templateHTML = messageContainer.outerHTML;
+                const templateText = messageContainer.textContent.trim().substring(0, 100);
+
+                capturedTemplate = {
+                    html: templateHTML,
+                    text: templateText,
+                    element: messageContainer.tagName.toLowerCase(),
+                    className: messageContainer.className
+                };
+
+                showTemplateModal(capturedTemplate);
+                enableTemplateCapture(); // Turn off capture mode
+
+            } catch (error) {
+                console.error('Template capture error:', error);
+                alert('Error capturing template: ' + error.message);
+            }
+        }
+
+        function showTemplateModal(template) {
+            // Parse the template to extract structured information
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(template.html, 'text/html');
+            const rootElement = doc.body.firstChild;
+
+            // Extract styles from the root element and find message bubble
+            let messageBubble = rootElement;
+            let textElement = null;
+            let avatarElement = null;
+            let titleElement = null;
+            let actionButtons = null;
+
+            // Detect components in the template
+            const components = [];
+
+            // Try to find message bubble (element with background and padding)
+            function findMessageBubble(element) {
+                if (!element) return null;
+
+                const style = window.getComputedStyle(element);
+                const hasBackground = style.backgroundColor && style.backgroundColor !== 'rgba(0, 0, 0, 0)';
+                const hasPadding = parseFloat(style.paddingTop) > 0;
+
+                if (hasBackground && hasPadding) {
+                    return element;
+                }
+
+                // Check children
+                for (let child of element.children) {
+                    const result = findMessageBubble(child);
+                    if (result) return result;
+                }
+
+                return null;
+            }
+
+            // Find components
+            const bubble = findMessageBubble(rootElement) || rootElement;
+
+            // Find avatar (img, svg, or element with background-image)
+            avatarElement = rootElement.querySelector('img, svg, [class*="avatar"], [class*="icon"], [style*="background-image"]');
+            if (avatarElement) {
+                components.push('• Avatar/Icon');
+            }
+
+            // Find title/name - look for heading tags or elements with specific classes
+            titleElement = rootElement.querySelector('h1, h2, h3, h4, h5, h6, [class*="title"], [class*="name"], [class*="agent"]');
+            if (titleElement) {
+                components.push('• Title/Name: "' + titleElement.textContent.trim().substring(0, 30) + '..."');
+            }
+
+            // Find message text (usually largest text block)
+            const textNodes = Array.from(rootElement.querySelectorAll('*')).filter(el => {
+                const text = el.textContent.trim();
+                return text.length > 20 && el.children.length === 0;
+            });
+            if (textNodes.length > 0) {
+                textElement = textNodes[0];
+                components.push('• Message Text');
+            }
+
+            // Find action buttons (like thumbs up/down, volume, etc.)
+            actionButtons = rootElement.querySelectorAll('button, [role="button"], [class*="action"], [class*="button"]');
+            if (actionButtons && actionButtons.length > 0) {
+                components.push(`• Action Buttons (${actionButtons.length})`);
+            }
+
+            if (components.length === 0) {
+                components.push('• Message Container');
+            }
+
+            // Get computed styles from bubble
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = template.html;
+            document.body.appendChild(tempDiv);
+            tempDiv.style.position = 'absolute';
+            tempDiv.style.visibility = 'hidden';
+
+            const bubbleInDOM = tempDiv.querySelector('*');
+            const computedStyle = window.getComputedStyle(bubbleInDOM);
+
+            // Extract styling properties
+            const extractedStyles = {
+                backgroundColor: computedStyle.backgroundColor,
+                color: computedStyle.color,
+                borderRadius: computedStyle.borderRadius,
+                padding: computedStyle.padding,
+                paddingTop: computedStyle.paddingTop,
+                fontSize: computedStyle.fontSize,
+                fontFamily: computedStyle.fontFamily,
+                fontWeight: computedStyle.fontWeight,
+                lineHeight: computedStyle.lineHeight
+            };
+
+            document.body.removeChild(tempDiv);
+
+            // Convert to hex colors
+            function rgbToHex(rgb) {
+                if (!rgb || rgb === 'transparent' || rgb === 'rgba(0, 0, 0, 0)') return '#f0f0f0';
+                if (rgb.startsWith('#')) return rgb;
+                const matches = rgb.match(/\d+/g);
+                if (!matches || matches.length < 3) return '#f0f0f0';
+                const r = parseInt(matches[0]);
+                const g = parseInt(matches[1]);
+                const b = parseInt(matches[2]);
+                return '#' + [r, g, b].map(x => {
+                    const h = x.toString(16);
+                    return h.length === 1 ? '0' + h : h;
+                }).join('');
+            }
+
+            const bgColor = rgbToHex(extractedStyles.backgroundColor);
+            const textColor = rgbToHex(extractedStyles.color);
+            const borderRadius = parseInt(extractedStyles.borderRadius) || 0;
+            const padding = parseInt(extractedStyles.paddingTop || extractedStyles.padding) || 12;
+
+            // Create structured display
+            const modalHTML = `
+                <div class="capture-modal active" id="templateModal">
+                    <div class="capture-modal-content" style="max-width: 700px;">
+                        <h2>📦 Captured Template Structure</h2>
+
+                        <div style="background: #e8f5e9; border-left: 4px solid #4caf50; padding: 12px; border-radius: 6px; margin-bottom: 20px;">
+                            <strong style="color: #2e7d32; display: block; margin-bottom: 8px;">🧩 Detected Components:</strong>
+                            <div style="font-size: 13px; color: #1b5e20;">
+                                ${components.join('<br>')}
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+                            <div class="captured-style-item">
+                                <strong>Element:</strong>
+                                <span>&lt;${template.element}&gt;</span>
+                            </div>
+                            <div class="captured-style-item">
+                                <strong>Classes:</strong>
+                                <span>${template.className ? template.className.substring(0, 50) + '...' : 'none'}</span>
+                            </div>
+                        </div>
+
+                        <h3 style="font-size: 16px; color: #667eea; margin-bottom: 12px;">Extracted Styles:</h3>
+
+                        <div class="captured-style-item">
+                            <strong>Background:</strong>
+                            <span>${bgColor} <span style="display: inline-block; width: 20px; height: 20px; background: ${bgColor}; border: 1px solid #ddd; border-radius: 3px; vertical-align: middle;"></span></span>
+                        </div>
+                        <div class="captured-style-item">
+                            <strong>Text Color:</strong>
+                            <span>${textColor} <span style="display: inline-block; width: 20px; height: 20px; background: ${textColor}; border: 1px solid #ddd; border-radius: 3px; vertical-align: middle;"></span></span>
+                        </div>
+                        <div class="captured-style-item">
+                            <strong>Border Radius:</strong>
+                            <span>${borderRadius}px</span>
+                        </div>
+                        <div class="captured-style-item">
+                            <strong>Padding:</strong>
+                            <span>${padding}px</span>
+                        </div>
+                        <div class="captured-style-item">
+                            <strong>Font Size:</strong>
+                            <span>${extractedStyles.fontSize}</span>
+                        </div>
+                        <div class="captured-style-item">
+                            <strong>Font Family:</strong>
+                            <span>${extractedStyles.fontFamily.split(',')[0].replace(/"/g, '')}</span>
+                        </div>
+
+                        <div class="capture-preview" style="margin: 20px 0;">
+                            <div style="font-size: 13px; color: #888; margin-bottom: 8px;">Preview:</div>
+                            <div style="
+                                background-color: ${bgColor};
+                                color: ${textColor};
+                                border-radius: ${borderRadius}px;
+                                padding: ${padding}px;
+                                display: inline-block;
+                                font-size: ${extractedStyles.fontSize};
+                                font-family: ${extractedStyles.fontFamily};
+                            ">Sample message text</div>
+                        </div>
+
+                        <div class="apply-buttons">
+                            <button class="btn btn-primary" onclick="applyTemplateStyles('agent')">
+                                Apply to Agent Messages
+                            </button>
+                            <button class="btn btn-primary" onclick="applyTemplateStyles('customer')">
+                                Apply to Customer Messages
+                            </button>
+                        </div>
+
+                        <button class="btn btn-secondary" onclick="closeTemplateModal()" style="margin-top: 12px;">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // Store extracted styles and structure for application
+            capturedTemplate.extractedStyles = {
+                backgroundColor: bgColor,
+                textColor: textColor,
+                borderRadius: borderRadius,
+                padding: padding,
+                fontSize: extractedStyles.fontSize,
+                fontFamily: extractedStyles.fontFamily
+            };
+
+            capturedTemplate.structure = {
+                components: components,
+                hasAvatar: !!avatarElement,
+                hasTitle: !!titleElement,
+                hasActions: !!(actionButtons && actionButtons.length > 0),
+                messageTextSelector: textElement ? textElement.tagName : null
+            };
+
+            // Append modal to body
+            const existingModal = document.getElementById('templateModal');
+            if (existingModal) {
+                existingModal.remove();
+            }
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+
+        function applyTemplateStyles(messageType) {
+            if (!capturedTemplate || !capturedTemplate.extractedStyles) {
+                alert('No template styles available!');
+                return;
+            }
+
+            const styles = capturedTemplate.extractedStyles;
+            const prefix = messageType; // 'agent' or 'customer'
+
+            // Apply extracted styles to controls
+            document.getElementById(prefix + 'Bg').value = styles.backgroundColor;
+            document.getElementById(prefix + 'Color').value = styles.textColor;
+            document.getElementById(prefix + 'Radius').value = styles.borderRadius;
+            document.getElementById(prefix + 'Padding').value = styles.padding;
+
+            // Store the complete template HTML for this message type
+            if (messageType === 'agent') {
+                window.agentMessageTemplate = capturedTemplate.html;
+                window.agentTemplateStructure = capturedTemplate.structure;
+            } else {
+                window.customerMessageTemplate = capturedTemplate.html;
+                window.customerTemplateStructure = capturedTemplate.structure;
+            }
+
+            // Update preview
+            updateStylePreview();
+
+            // Close modal
+            closeTemplateModal();
+
+            alert(`✓ Template applied as default for ${messageType} messages!\n\n📋 Extracted Components:\n${capturedTemplate.structure.components.join('\n')}\n\n🎨 Styles:\n• Background: ${styles.backgroundColor}\n• Text: ${styles.textColor}\n• Radius: ${styles.borderRadius}px\n• Padding: ${styles.padding}px\n\nThis template will be used for all ${messageType} messages you add.`);
+        }
+
+        function closeTemplateModal() {
+            const modal = document.getElementById('templateModal');
+            if (modal) {
+                modal.remove();
+            }
+            capturedTemplate = null;
+        }
+
+        function applyCapturedStyles(messageType) {
+            if (!capturedStyles) {
+                alert('No styles captured!');
+                return;
+            }
+
+            // Helper to convert color to hex
+            function rgbToHex(rgb) {
+                if (rgb.startsWith('#')) return rgb;
+                const matches = rgb.match(/\d+/g);
+                if (!matches || matches.length < 3) return '#000000';
+                const r = parseInt(matches[0]);
+                const g = parseInt(matches[1]);
+                const b = parseInt(matches[2]);
+                return '#' + [r, g, b].map(x => {
+                    const h = x.toString(16);
+                    return h.length === 1 ? '0' + h : h;
+                }).join('');
+            }
+
+            // Helper to extract numeric value
+            function getNumericValue(str) {
+                const match = String(str).match(/[\d.]+/);
+                return match ? parseInt(parseFloat(match[0])) : 12;
+            }
+
+            const colorHex = rgbToHex(capturedStyles.color);
+            const bgColorHex = rgbToHex(capturedStyles.backgroundColor);
+            const radius = getNumericValue(capturedStyles.borderRadius);
+            const padding = getNumericValue(capturedStyles.paddingTop || capturedStyles.padding);
+
+            // Apply to selected message type
+            const prefix = messageType; // 'agent' or 'customer'
+
+            document.getElementById(prefix + 'Bg').value = bgColorHex;
+            document.getElementById(prefix + 'Color').value = colorHex;
+            document.getElementById(prefix + 'Radius').value = radius;
+            document.getElementById(prefix + 'Padding').value = padding;
+
+            // Update preview
+            updateStylePreview();
+
+            // Close modal
+            closeCaptureModal();
+
+            alert(`✓ Styles applied to ${messageType} messages!\n\nYou can now fine-tune the settings in Step 2.`);
+        }
+
+        // Import message styles from JSON
+        function importStyles(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const json = JSON.parse(e.target.result);
+
+                    // Check if JSON has the expected structure
+                    if (!json.agentMessageStyles && !json.customerMessageStyles) {
+                        alert('Invalid style JSON format. Please select a valid message styles file.');
+                        return;
+                    }
+
+                    // Helper function to convert hex color with optional RGB fallback
+                    function getColorValue(obj) {
+                        if (obj.backgroundColor && obj.backgroundColor.startsWith('#')) {
+                            return obj.backgroundColor;
+                        }
+                        if (obj.backgroundColor && obj.backgroundColor.startsWith('rgb')) {
+                            // Convert rgb/rgba to hex
+                            const matches = obj.backgroundColor.match(/\d+/g);
+                            if (matches && matches.length >= 3) {
+                                const r = parseInt(matches[0]);
+                                const g = parseInt(matches[1]);
+                                const b = parseInt(matches[2]);
+                                return '#' + [r, g, b].map(x => {
+                                    const h = x.toString(16);
+                                    return h.length === 1 ? '0' + h : h;
+                                }).join('');
+                            }
+                        }
+                        return null;
+                    }
+
+                    // Helper function to extract numeric value
+                    function getNumericValue(str, defaultVal) {
+                        if (!str) return defaultVal;
+                        const match = String(str).match(/\d+/);
+                        return match ? parseInt(match[0]) : defaultVal;
+                    }
+
+                    // Apply agent styles
+                    if (json.agentMessageStyles) {
+                        const agentStyles = json.agentMessageStyles;
+
+                        const agentBgColor = getColorValue(agentStyles);
+                        if (agentBgColor) {
+                            document.getElementById('agentBg').value = agentBgColor;
+                        }
+
+                        if (agentStyles.color) {
+                            // Extract just the color value (handle "rgb(66, 66, 66)" format)
+                            if (agentStyles.color.startsWith('rgb')) {
+                                const matches = agentStyles.color.match(/\d+/g);
+                                if (matches && matches.length >= 3) {
+                                    const r = parseInt(matches[0]);
+                                    const g = parseInt(matches[1]);
+                                    const b = parseInt(matches[2]);
+                                    const hex = '#' + [r, g, b].map(x => {
+                                        const h = x.toString(16);
+                                        return h.length === 1 ? '0' + h : h;
+                                    }).join('');
+                                    document.getElementById('agentColor').value = hex;
+                                }
+                            } else if (agentStyles.color.startsWith('#')) {
+                                document.getElementById('agentColor').value = agentStyles.color;
+                            }
+                        }
+
+                        const agentRadius = getNumericValue(agentStyles.borderRadius, 12);
+                        document.getElementById('agentRadius').value = agentRadius;
+
+                        const agentPadding = getNumericValue(agentStyles.padding || agentStyles.paddingTop, 12);
+                        document.getElementById('agentPadding').value = agentPadding;
+                    }
+
+                    // Apply customer styles
+                    if (json.customerMessageStyles) {
+                        const customerStyles = json.customerMessageStyles;
+
+                        const customerBgColor = getColorValue(customerStyles);
+                        if (customerBgColor) {
+                            document.getElementById('customerBg').value = customerBgColor;
+                        }
+
+                        if (customerStyles.color) {
+                            if (customerStyles.color.startsWith('rgb')) {
+                                const matches = customerStyles.color.match(/\d+/g);
+                                if (matches && matches.length >= 3) {
+                                    const r = parseInt(matches[0]);
+                                    const g = parseInt(matches[1]);
+                                    const b = parseInt(matches[2]);
+                                    const hex = '#' + [r, g, b].map(x => {
+                                        const h = x.toString(16);
+                                        return h.length === 1 ? '0' + h : h;
+                                    }).join('');
+                                    document.getElementById('customerColor').value = hex;
+                                }
+                            } else if (customerStyles.color.startsWith('#')) {
+                                document.getElementById('customerColor').value = customerStyles.color;
+                            }
+                        }
+
+                        const customerRadius = getNumericValue(customerStyles.borderRadius, 12);
+                        document.getElementById('customerRadius').value = customerRadius;
+
+                        const customerPadding = getNumericValue(customerStyles.padding || customerStyles.paddingTop, 12);
+                        document.getElementById('customerPadding').value = customerPadding;
+                    }
+
+                    // Update preview with new styles
+                    updateStylePreview();
+
+                    alert(`✓ Styles imported successfully from ${file.name}!`);
+
+                    // Clear the file input
+                    event.target.value = '';
+                } catch (error) {
+                    alert(`Error importing styles: ${error.message}`);
+                    console.error('Import error:', error);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Export message styles to JSON
+        function exportStyles() {
+            // Get current style values
+            const agentBg = document.getElementById('agentBg').value;
+            const agentColor = document.getElementById('agentColor').value;
+            const agentRadius = document.getElementById('agentRadius').value + 'px';
+            const agentPadding = document.getElementById('agentPadding').value + 'px';
+
+            const customerBg = document.getElementById('customerBg').value;
+            const customerColor = document.getElementById('customerColor').value;
+            const customerRadius = document.getElementById('customerRadius').value + 'px';
+            const customerPadding = document.getElementById('customerPadding').value + 'px';
+
+            // Create example messages for the templates
+            const agentMessageText = "Hi! Great to hear from you. How can I assist you today?";
+            const customerMessageText = "hello";
+
+            // Build the style JSON in the required format
+            const styleJSON = {
+                agentMessageTemplate: {
+                    html: `<div style="background-color: ${agentBg}; color: ${agentColor}; border-radius: ${agentRadius}; padding: ${agentPadding}; display: inline-block; max-width: 75%; word-wrap: break-word;">{{MESSAGE_TEXT}}</div>`,
+                    originalText: agentMessageText
+                },
+                customerMessageTemplate: {
+                    html: `<div style="background-color: ${customerBg}; color: ${customerColor}; border-radius: ${customerRadius}; padding: ${customerPadding}; display: inline-block; max-width: 75%; word-wrap: break-word;">{{MESSAGE_TEXT}}</div>`,
+                    originalText: customerMessageText
+                },
+                agentMessageStyles: {
+                    color: agentColor,
+                    fontSize: "16px",
+                    fontFamily: '"Segoe Sans", "Segoe UI", "Segoe UI Web (West European)", -apple-system, "system-ui", Roboto, "Helvetica Neue", sans-serif',
+                    fontWeight: "400",
+                    lineHeight: "28px",
+                    textAlign: "start",
+                    padding: agentPadding,
+                    paddingTop: agentPadding,
+                    paddingRight: agentPadding,
+                    paddingBottom: agentPadding,
+                    paddingLeft: agentPadding,
+                    background: agentBg,
+                    backgroundColor: agentBg,
+                    border: "0px none " + agentColor,
+                    borderTop: "0px none " + agentColor,
+                    borderRight: "0px none " + agentColor,
+                    borderBottom: "0px none " + agentColor,
+                    borderLeft: "0px none " + agentColor,
+                    borderRadius: agentRadius,
+                    borderColor: agentColor,
+                    borderWidth: "0px",
+                    opacity: "1",
+                    display: "inline-block",
+                    maxWidth: "75%",
+                    wordWrap: "break-word"
+                },
+                customerMessageStyles: {
+                    color: customerColor,
+                    fontSize: "16px",
+                    fontFamily: '"Segoe Sans", "Segoe UI", "Segoe UI Web (West European)", -apple-system, "system-ui", Roboto, "Helvetica Neue", sans-serif',
+                    fontWeight: "400",
+                    lineHeight: "28px",
+                    textAlign: "start",
+                    padding: customerPadding,
+                    paddingTop: customerPadding,
+                    paddingRight: customerPadding,
+                    paddingBottom: customerPadding,
+                    paddingLeft: customerPadding,
+                    background: customerBg,
+                    backgroundColor: customerBg,
+                    border: "0px none " + customerColor,
+                    borderTop: "0px none " + customerColor,
+                    borderRight: "0px none " + customerColor,
+                    borderBottom: "0px none " + customerColor,
+                    borderLeft: "0px none " + customerColor,
+                    borderRadius: customerRadius,
+                    borderColor: customerColor,
+                    borderWidth: "0px",
+                    opacity: "1",
+                    display: "inline-block",
+                    maxWidth: "75%",
+                    wordWrap: "break-word"
+                },
+                metadata: {
+                    exported: new Date().toISOString(),
+                    version: "1.0"
+                }
+            };
+
+            // Create and download the JSON file
+            const jsonString = JSON.stringify(styleJSON, null, 2);
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `chat-styles-${Date.now()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+
+            alert('✓ Styles exported successfully!\n\nYou can import this file later to restore these styles.');
+        }
+
+        function openPresentationMode() {
+            if (messages.length === 0) {
+                alert('Please add at least one message before opening presentation mode.');
+                return;
+            }
+
+            // Collect all settings
+            const agentBg = document.getElementById('agentBg').value;
+            const agentColor = document.getElementById('agentColor').value;
+            const agentRadius = document.getElementById('agentRadius').value;
+            const agentPadding = document.getElementById('agentPadding').value;
+
+            const customerBg = document.getElementById('customerBg').value;
+            const customerColor = document.getElementById('customerColor').value;
+            const customerRadius = document.getElementById('customerRadius').value;
+            const customerPadding = document.getElementById('customerPadding').value;
+
+            // Get component settings
+            const agentShowAvatar = document.getElementById('agentShowAvatar')?.checked || false;
+            const agentShowTitle = document.getElementById('agentShowTitle')?.checked || false;
+            const agentShowActions = document.getElementById('agentShowActions')?.checked || false;
+
+            const customerShowAvatar = document.getElementById('customerShowAvatar')?.checked || false;
+            const customerShowTitle = document.getElementById('customerShowTitle')?.checked || false;
+            const customerShowActions = document.getElementById('customerShowActions')?.checked || false;
+
+            const overlayBg = document.getElementById('overlayBg').value;
+            const overlayOpacity = document.getElementById('overlayOpacity').value / 100;
+            const overlayRadius = document.getElementById('overlayRadius').value;
+            const animSpeed = document.getElementById('animSpeed').value;
+
+            // Create presentation HTML
+            const presentationHTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Animation - Presentation Mode</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            overflow: hidden;
+        }
+        #background {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        #background iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        #chatOverlay {
+            position: absolute;
+            left: ${overlayPosition.x}px;
+            top: ${overlayPosition.y}px;
+            width: ${overlayPosition.width}px;
+            height: ${overlayPosition.height}px;
+            background: ${overlayBg};
+            opacity: ${overlayOpacity};
+            border-radius: ${overlayRadius}px;
+            overflow-y: auto;
+            z-index: 9999;
+            padding: 16px;
+        }
+        .message {
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            z-index: 99999;
+        }
+        .controls button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        .controls button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .controls button.primary {
+            background: #667eea;
+            border-color: #667eea;
+        }
+        .controls button.primary:hover {
+            background: #5568d3;
+        }
+        .frame-counter {
+            font-size: 13px;
+            padding: 0 12px;
+        }
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+        .speed-control input {
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="background">
+        ${backgroundHTML ? `<iframe sandbox="allow-same-origin"></iframe>` : `<div style="width: 100%; height: 100%; background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);"></div>`}
+    </div>
+    <div id="chatOverlay">
+        <div id="messages"></div>
+    </div>
+
+    <div class="controls">
+        <button onclick="prevFrame()">⬅️ Prev</button>
+        <button onclick="playPause()" id="playBtn" class="primary">▶️ Play</button>
+        <button onclick="nextFrame()">Next ➡️</button>
+        <div class="frame-counter" id="frameCounter">Frame 1 / ${messages.length}</div>
+        <div class="speed-control">
+            <label>Speed:</label>
+            <input type="range" id="speedSlider" min="500" max="3000" value="${animSpeed}" step="100" onchange="updateSpeed()">
+            <span id="speedVal">${(animSpeed / 1000).toFixed(1)}s</span>
+        </div>
+        <button onclick="toggleFullscreen()">⛶ Fullscreen</button>
+    </div>
+
+    <script>
+        // Data
+        const messages = ${JSON.stringify(messages)};
+        const styles = {
+            agent: {
+                bg: '${agentBg}',
+                color: '${agentColor}',
+                radius: '${agentRadius}px',
+                padding: '${agentPadding}px'
+            },
+            customer: {
+                bg: '${customerBg}',
+                color: '${customerColor}',
+                radius: '${customerRadius}px',
+                padding: '${customerPadding}px'
+            }
+        };
+        const components = {
+            agent: {
+                showAvatar: ${agentShowAvatar},
+                showTitle: ${agentShowTitle},
+                showActions: ${agentShowActions}
+            },
+            customer: {
+                showAvatar: ${customerShowAvatar},
+                showTitle: ${customerShowTitle},
+                showActions: ${customerShowActions}
+            }
+        };
+
+        let currentFrame = 0;
+        let isPlaying = false;
+        let playInterval = null;
+        let speed = ${animSpeed};
+
+        // Load background if exists
+        ${backgroundHTML ? `
+        const iframe = document.querySelector('#background iframe');
+        const backgroundData = ${JSON.stringify(backgroundHTML)};
+        iframe.contentDocument.open();
+        iframe.contentDocument.write(backgroundData);
+        iframe.contentDocument.close();
+        ` : ''}
+
+        // Format message text to avoid wall of text
+        function formatMessageText(text) {
+            // Split by sentences (periods followed by space/newline)
+            const sentences = text.split(/\\.\\s+/);
+
+            // If there are more than 3 sentences, group into paragraphs
+            if (sentences.length > 3) {
+                const paragraphs = [];
+                for (let i = 0; i < sentences.length; i += 2) {
+                    const paragraph = sentences.slice(i, i + 2).join('. ');
+                    paragraphs.push(paragraph + (paragraph.endsWith('.') ? '' : '.'));
+                }
+                return paragraphs.map(p => '<p style="margin: 0 0 8px 0; line-height: 1.6;">' + p + '</p>').join('');
+            }
+
+            // For shorter messages, just return with proper line height
+            return '<span style="line-height: 1.6;">' + text + '</span>';
+        }
+
+        // Render message with components
+        function renderMessageComponent(msg) {
+            const isAgent = msg.type === 'agent';
+            const style = isAgent ? styles.agent : styles.customer;
+            const comp = isAgent ? components.agent : components.customer;
+
+            let html = '<div style="display: flex; align-items: flex-start; gap: 12px; max-width: 90%; ' + (!isAgent ? 'margin-left: auto; justify-content: flex-end;' : '') + '">';
+
+            // Avatar (left for agent, right for customer)
+            if (isAgent && comp.showAvatar) {
+                html += '<div style="width: 32px; height: 32px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: 600;">AI</div>';
+            }
+
+            html += '<div style="flex: 1; min-width: 0; ' + (!isAgent ? 'display: flex; flex-direction: column; align-items: flex-end;' : '') + '">';
+
+            // Title
+            if (comp.showTitle) {
+                html += '<div style="font-size: 13px; font-weight: 600; color: #616161; margin-bottom: 4px;">' + (isAgent ? 'AI Assistant' : 'You') + '</div>';
+            }
+
+            // Message bubble
+            html += '<div style="background-color: ' + style.bg + '; color: ' + style.color + '; border-radius: ' + style.radius + '; padding: ' + style.padding + '; font-size: 14px;">' + formatMessageText(msg.text) + '</div>';
+
+            // Action buttons
+            if (comp.showActions) {
+                if (isAgent) {
+                    html += '<div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;"><button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">👍</button><button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">👎</button><button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">🔊</button><button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">📋</button></div>';
+                } else {
+                    html += '<div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;"><button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">✏️</button><button style="background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.6;">🗑️</button></div>';
+                }
+            }
+
+            html += '</div>';
+
+            // Avatar (right for customer)
+            if (!isAgent && comp.showAvatar) {
+                html += '<div style="width: 32px; height: 32px; background: #e0e0e0; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: #616161; font-size: 14px; font-weight: 600;">U</div>';
+            }
+
+            html += '</div>';
+
+            return html;
+        }
+
+        // Render current frame
+        function render() {
+            const container = document.getElementById('messages');
+            const visibleMessages = messages.slice(0, currentFrame + 1);
+
+            let html = '';
+            for (let i = 0; i < visibleMessages.length; i++) {
+                const msg = visibleMessages[i];
+                html += '<div class="message ' + msg.type + '" style="margin-bottom: 16px;">' + renderMessageComponent(msg) + '</div>';
+            }
+
+            container.innerHTML = html;
+
+            // Scroll to bottom
+            document.getElementById('chatOverlay').scrollTop = document.getElementById('chatOverlay').scrollHeight;
+
+            // Update counter
+            document.getElementById('frameCounter').textContent = 'Frame ' + (currentFrame + 1) + ' / ' + messages.length;
+        }
+
+        // Playback controls
+        function playPause() {
+            if (isPlaying) {
+                stop();
+            } else {
+                play();
+            }
+        }
+
+        function play() {
+            isPlaying = true;
+            document.getElementById('playBtn').innerHTML = '⏸️ Pause';
+
+            playInterval = setInterval(() => {
+                if (currentFrame < messages.length - 1) {
+                    currentFrame++;
+                    render();
+                } else {
+                    stop();
+                }
+            }, speed);
+        }
+
+        function stop() {
+            isPlaying = false;
+            document.getElementById('playBtn').innerHTML = '▶️ Play';
+            clearInterval(playInterval);
+        }
+
+        function prevFrame() {
+            stop();
+            if (currentFrame > 0) {
+                currentFrame--;
+                render();
+            }
+        }
+
+        function nextFrame() {
+            stop();
+            if (currentFrame < messages.length - 1) {
+                currentFrame++;
+                render();
+            }
+        }
+
+        function updateSpeed() {
+            speed = parseInt(document.getElementById('speedSlider').value);
+            document.getElementById('speedVal').textContent = (speed / 1000).toFixed(1) + 's';
+
+            if (isPlaying) {
+                stop();
+                play();
+            }
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // Initial render
+        render();
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === ' ') {
+                e.preventDefault();
+                playPause();
+            } else if (e.key === 'ArrowLeft') {
+                prevFrame();
+            } else if (e.key === 'ArrowRight') {
+                nextFrame();
+            } else if (e.key === 'f' || e.key === 'F') {
+                toggleFullscreen();
+            }
+        });
+    <\/script>
+</body>
+</html>`;
+
+            // Open in new window
+            const presentWindow = window.open('', '_blank', 'width=1920,height=1080');
+            if (presentWindow) {
+                presentWindow.document.open();
+                presentWindow.document.write(presentationHTML);
+                presentWindow.document.close();
+            } else {
+                alert('Please allow pop-ups to open presentation mode.');
+            }
+        }
+
+        // Presenter Mode Toggle
+        let isPresenterMode = false;
+        let originalStudioParent = null;
+
+        function togglePresenterMode() {
+            const presenterFrame = document.getElementById('presenterFrame');
+            const screenFrame = document.getElementById('screenFrame');
+            const studioContainer = document.querySelector('.studio-container');
+            const body = document.body;
+
+            isPresenterMode = !isPresenterMode;
+
+            if (isPresenterMode) {
+                // Enter presenter mode
+                // Save original parent
+                originalStudioParent = studioContainer.parentElement;
+
+                // Move studio container into screen frame
+                screenFrame.appendChild(studioContainer);
+
+                // Show presenter frame
+                presenterFrame.classList.add('presenter-mode');
+                body.classList.add('presenter-mode');
+
+                // Update admin button
+                document.getElementById('adminButtonText').textContent = '📹 Exit Presenter Mode';
+
+                // Sync step indicator
+                updatePresenterStepIndicator();
+            } else {
+                // Exit presenter mode
+                // Move studio container back to original position
+                if (originalStudioParent) {
+                    originalStudioParent.appendChild(studioContainer);
+                }
+
+                // Hide presenter frame
+                presenterFrame.classList.remove('presenter-mode');
+                body.classList.remove('presenter-mode');
+            }
+        }
+
+        function updatePresenterStepIndicator() {
+            const presenterCurrentStep = document.getElementById('presenterCurrentStep');
+            const presenterTotalSteps = document.getElementById('presenterTotalSteps');
+
+            if (presenterCurrentStep && presenterTotalSteps) {
+                presenterCurrentStep.textContent = currentStep;
+                presenterTotalSteps.textContent = '6';
+            }
+        }
+
+        // Add keyboard shortcut for presenter mode (P key)
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'p' || e.key === 'P') {
+                // Check if not typing in an input field
+                if (!e.target.matches('input, textarea')) {
+                    togglePresenterMode();
+                }
+            }
+            // ESC to exit presenter mode
+            if (e.key === 'Escape' && isPresenterMode) {
+                togglePresenterMode();
+            }
+        });
+
+        // Update presenter step indicator when step changes
+        const originalGoToStep = goToStep;
+        goToStep = function(step) {
+            originalGoToStep(step);
+            if (isPresenterMode) {
+                updatePresenterStepIndicator();
+            }
+        };
+    </script>
+
+    <!-- Presenter Mode Frame -->
+    <div class="video-container" id="presenterFrame">
+        <!-- Step Indicator -->
+        <div class="step-indicator-presenter" id="stepIndicatorPresenter">
+            Step <span id="presenterCurrentStep">1</span> of <span id="presenterTotalSteps">6</span>
+        </div>
+
+        <!-- Admin Button -->
+        <button class="admin-button" id="adminButton" onclick="togglePresenterMode()">
+            <span id="adminButtonText">📹 Exit Presenter Mode</span>
+        </button>
+
+        <div class="screen-frame" id="screenFrame">
+            <!-- The studio container will be cloned here via JavaScript -->
+        </div>
+    </div>
+
+</body></html>
