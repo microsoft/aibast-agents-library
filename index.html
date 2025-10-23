@@ -5183,6 +5183,46 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
                     </div>
                 </div>
 
+                <!-- Agent Library Browser Tool -->
+                <div class="tool-card" style="background: white; border-radius: 12px; padding: 30px; box-shadow: var(--shadow); transition: all 0.3s ease; cursor: pointer; border: 2px solid transparent;"
+                     onclick="window.open('tools/agent_library_browser.html', '_blank')"
+                     onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='var(--shadow-lg)'; this.style.borderColor='var(--primary)';"
+                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow)'; this.style.borderColor='transparent';">
+
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 32px;">
+                            🤖
+                        </div>
+                        <div>
+                            <h3 style="margin: 0; color: var(--text-dark); font-size: 20px;">Agent Library Browser</h3>
+                            <p style="margin: 5px 0 0 0; color: var(--text-light); font-size: 13px;">AI Agent Development</p>
+                        </div>
+                    </div>
+
+                    <p style="color: var(--text-medium); line-height: 1.6; margin-bottom: 20px;">
+                        Browse and explore the complete AI BAST agent library. Access agent templates, documentation, and code samples. Features real-time search, categorization, and detailed agent specifications.
+                    </p>
+
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
+                        <span style="background: #f5f3ff; color: #8b5cf6; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Agent Templates</span>
+                        <span style="background: #f5f3ff; color: #8b5cf6; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Code Browser</span>
+                        <span style="background: #f5f3ff; color: #8b5cf6; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Search</span>
+                        <span style="background: #f5f3ff; color: #8b5cf6; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Documentation</span>
+                    </div>
+
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 15px; border-top: 1px solid var(--border);">
+                        <span style="color: var(--text-light); font-size: 13px;">
+                            <strong style="color: var(--success);">✓</strong> Browser-based
+                        </span>
+                        <span style="color: var(--primary); font-weight: 600; display: flex; align-items: center; gap: 5px;">
+                            Open Tool
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+
             </div>
 
             <div class="highlight-box" style="margin-top: 40px;">
