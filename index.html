@@ -1191,6 +1191,14 @@
                 <span>Roadmap - EOY 2025</span>
             </a>
         </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-title">Tools & Resources</div>
+            <a href="#tools" class="nav-item" onclick="navigateToSection('tools'); return false;">
+                <span class="nav-icon">🛠️</span>
+                <span>Tool Browser</span>
+            </a>
+        </div>
     </div>
 
     <!-- Main Content -->
@@ -5083,6 +5091,128 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
             </div>
         </div>
 
+        <!-- TOOLS BROWSER SECTION -->
+        <div class="content-section" id="tools">
+            <h1 class="section-title">Tool Browser</h1>
+            <p class="section-subtitle">Interactive tools for project management and agent development</p>
+
+            <div class="step-section">
+                <h3>🛠️ Available Tools</h3>
+                <p>These self-contained HTML tools help you manage projects, track implementations, and create demonstrations. Each tool runs entirely in your browser with local-first data storage.</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 25px; margin-top: 30px;">
+
+                <!-- Project Tracker Tool -->
+                <div class="tool-card" style="background: white; border-radius: 12px; padding: 30px; box-shadow: var(--shadow); transition: all 0.3s ease; cursor: pointer; border: 2px solid transparent;"
+                     onclick="window.open('tools/localfirst_project_tracker_tool.html', '_blank')"
+                     onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='var(--shadow-lg)'; this.style.borderColor='var(--primary)';"
+                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow)'; this.style.borderColor='transparent';">
+
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 32px;">
+                            📊
+                        </div>
+                        <div>
+                            <h3 style="margin: 0; color: var(--text-dark); font-size: 20px;">Project Tracker</h3>
+                            <p style="margin: 5px 0 0 0; color: var(--text-light); font-size: 13px;">Local-First Data Storage</p>
+                        </div>
+                    </div>
+
+                    <p style="color: var(--text-medium); line-height: 1.6; margin-bottom: 20px;">
+                        Track customer projects, manage AI agent implementations, and maintain detailed records of your RAPP workflow. Features include project timelines, agent libraries, and export capabilities.
+                    </p>
+
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
+                        <span style="background: var(--bg-light); color: var(--primary); padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Project Management</span>
+                        <span style="background: var(--bg-light); color: var(--primary); padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Agent Library</span>
+                        <span style="background: var(--bg-light); color: var(--primary); padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Timeline Tracking</span>
+                        <span style="background: var(--bg-light); color: var(--primary); padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Word Export</span>
+                    </div>
+
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 15px; border-top: 1px solid var(--border);">
+                        <span style="color: var(--text-light); font-size: 13px;">
+                            <strong style="color: var(--success);">✓</strong> Browser-based
+                        </span>
+                        <span style="color: var(--primary); font-weight: 600; display: flex; align-items: center; gap: 5px;">
+                            Open Tool
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Chat Animation Studio Tool -->
+                <div class="tool-card" style="background: white; border-radius: 12px; padding: 30px; box-shadow: var(--shadow); transition: all 0.3s ease; cursor: pointer; border: 2px solid transparent;"
+                     onclick="window.open('tools/localfirst_chat_animation_studio_tool.html', '_blank')"
+                     onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='var(--shadow-lg)'; this.style.borderColor='var(--primary)';"
+                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow)'; this.style.borderColor='transparent';">
+
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 32px;">
+                            🎬
+                        </div>
+                        <div>
+                            <h3 style="margin: 0; color: var(--text-dark); font-size: 20px;">Chat Animation Studio</h3>
+                            <p style="margin: 5px 0 0 0; color: var(--text-light); font-size: 13px;">Demo Creation Tool</p>
+                        </div>
+                    </div>
+
+                    <p style="color: var(--text-medium); line-height: 1.6; margin-bottom: 20px;">
+                        Create engaging animated chat demonstrations for your AI agents. Design realistic conversation flows, customize timing, and export professional demo videos for customer presentations.
+                    </p>
+
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
+                        <span style="background: #fff7ed; color: #f59e0b; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Animation</span>
+                        <span style="background: #fff7ed; color: #f59e0b; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Chat Demos</span>
+                        <span style="background: #fff7ed; color: #f59e0b; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Video Export</span>
+                        <span style="background: #fff7ed; color: #f59e0b; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Presentations</span>
+                    </div>
+
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 15px; border-top: 1px solid var(--border);">
+                        <span style="color: var(--text-light); font-size: 13px;">
+                            <strong style="color: var(--success);">✓</strong> Browser-based
+                        </span>
+                        <span style="color: var(--primary); font-weight: 600; display: flex; align-items: center; gap: 5px;">
+                            Open Tool
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="highlight-box" style="margin-top: 40px;">
+                <h4>📝 About These Tools</h4>
+                <p style="margin-bottom: 15px;">These are <strong>local-first</strong> HTML tools that run entirely in your browser. Your data is stored locally using browser localStorage, ensuring privacy and offline functionality.</p>
+                <ul style="margin-left: 20px;">
+                    <li><strong>No Server Required:</strong> All tools work offline after initial load</li>
+                    <li><strong>Data Privacy:</strong> Your data never leaves your browser</li>
+                    <li><strong>Export Capabilities:</strong> Download your data as JSON or formatted documents</li>
+                    <li><strong>Shareable:</strong> Open these HTML files in any modern browser</li>
+                </ul>
+            </div>
+
+            <div class="step-section" style="margin-top: 40px;">
+                <h3>🔧 Tool Development</h3>
+                <p>Need a custom tool for your workflow? These tools are built as standalone HTML files that can be easily modified or extended. Check the <code>tools/</code> directory in the repository for source code and templates.</p>
+
+                <div style="background: var(--bg-white); border-left: 4px solid var(--info); padding: 20px; border-radius: 8px; margin-top: 20px;">
+                    <h4 style="color: var(--info); margin-top: 0;">💡 Creating Your Own Tools</h4>
+                    <p>All tools follow a simple pattern:</p>
+                    <ol style="margin-left: 20px; color: var(--text-medium);">
+                        <li>Single HTML file with embedded CSS and JavaScript</li>
+                        <li>Local storage for data persistence</li>
+                        <li>Export/import functionality for data portability</li>
+                        <li>Responsive design for mobile and desktop use</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
@@ -5092,7 +5222,7 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
             'overview', 'architecture', 'principles',
             'step1', 'step2', 'step3', 'step4', 'step5', 'step6', 'step7',
             'step8', 'step9', 'step10', 'step11', 'step12', 'step13', 'step14',
-            'team-setup', 'scaling', 'roadmap'
+            'team-setup', 'scaling', 'roadmap', 'tools'
         ];
 
         // Navigation Functions
