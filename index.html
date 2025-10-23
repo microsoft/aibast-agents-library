@@ -2060,6 +2060,51 @@ def handle_request(user_message, user_guid):
                 <h4>🤖 Automation Tool: Transcript-to-Project Agent</h4>
                 <p><strong>Type:</strong> M365 Copilot Studio Declarative Agent</p>
                 <p><strong>Location:</strong> <a href="https://m365.cloud.microsoft:443/chat/?titleId=T_afded7db-f8c5-703a-5502-2cc9f31b66da&source=embedded-builder" target="_blank">Open Transcript-to-Project Agent</a></p>
+
+                <div class="code-block" style="background: #fff3e0; border-left: 4px solid #f57c00; margin-top: 15px;">
+                    <div class="code-header" style="background: #ffb74d; border-bottom: 1px solid #f57c00; cursor: pointer;" onclick="toggleFallback('transcript-fallback')">
+                        <span class="code-language" style="color: #1a1a1a; font-weight: 600;">⚠️ Manual Fallback: Click to expand prompt (paste into Copilot if agent link isn't working)</span>
+                        <button class="copy-btn" onclick="event.stopPropagation(); copyCode(this.parentElement.nextElementSibling)">Copy</button>
+                    </div>
+                    <pre id="transcript-fallback" style="display: none; white-space: pre-wrap; word-wrap: break-word; color: #1a1a1a; background: #fff; padding: 20px; margin: 0; border-top: 2px solid #f57c00;">You are a project data extraction assistant. Analyze the meeting transcript below and extract structured project information in JSON format that can be imported into the AI Agent Implementation Tracker.
+
+**REQUIRED OUTPUT FORMAT:**
+Return valid JSON with this exact structure (copy this template and fill in the values):
+
+{
+  "projects": [{
+    "id": "[current Unix timestamp - use Date.now()]",
+    "customerName": "[Legal entity name of the customer]",
+    "status": "[MUST be one of: planning, poc, active, production, completed]",
+    "type": "[MUST be one of: legal, hr, it, compliance, customer-service, sales, finance, other]",
+    "description": "[One sentence describing the overall AI implementation]",
+    "stakeholders": "[Names with titles, comma-separated. Example: John Smith (VP Legal), Jane Doe (IT Director)]",
+    "competingSolution": "[What solution are they comparing us to? e.g., Salesforce, ServiceNow, or leave empty if none]",
+    "contractDetails": "[EA details, license counts, budget/ACV, discounts - everything commercial]",
+    "agents": ["[AgentName1]", "[AgentName2]", "[etc - PascalCase, no spaces]"],
+    "mvpUseCase": "[The single focused first use case name, e.g., 'NDA Automation Bot']",
+    "mvpDescription": "[2-3 sentences: What will the MVP specifically do?]",
+    "mvpTimeline": "[Target deadline or timeframe, e.g., '6 weeks POC' or 'Q2 2025']",
+    "notes": "[Important context: competing details, latency requirements, risk factors, strategy notes]",
+    "createdDate": "[Today's date in YYYY-MM-DD format]",
+    "updatedDate": "[Today's date in YYYY-MM-DD format]"
+  }]
+}
+
+**INSTRUCTIONS:**
+1. Extract ALL relevant information from the transcript
+2. For "agents" array: List agent names in PascalCase (e.g., ContractGeneration, not "contract generation")
+3. For "status": Use "planning" unless they explicitly said POC has started
+4. For "type": Choose the closest match from the allowed values
+5. Be specific in mvpDescription - what exactly will the MVP do?
+6. Include contract/budget details even if approximate
+
+**TRANSCRIPT TO ANALYZE:**
+[PASTE YOUR MEETING TRANSCRIPT HERE]
+
+After you provide the JSON, I will copy it and import it into the Project Tracker Tool.</pre>
+                </div>
+
                 <p><strong>What it does:</strong> Extracts customer name, stakeholders, competing solutions, MVP use case, timeline, and generates structured JSON for project tracking.</p>
 
                 <h4>How to Use:</h4>
@@ -2529,6 +2574,93 @@ Tone: Professional but approachable. We're confirming we heard them correctly, n
             <div class="tool-card">
                 <h4>🛠️ Development Tool: RAPP Agent Generator</h4>
                 <p><strong>Location:</strong> <a href="https://m365.cloud.microsoft/chat/?titleId=T_04778775-1214-29c8-3bc4-218e26088499&source=embedded-builder&auth=2" target="_blank">Open RAPP Agent Generator</a></p>
+
+                <div class="code-block" style="background: #fff3e0; border-left: 4px solid #f57c00; margin-top: 15px;">
+                    <div class="code-header" style="background: #ffb74d; border-bottom: 1px solid #f57c00; cursor: pointer;" onclick="toggleFallback('agent-generator-fallback')">
+                        <span class="code-language" style="color: #1a1a1a; font-weight: 600;">⚠️ Manual Fallback: Click to expand prompt (paste into Copilot if agent link isn't working)</span>
+                        <button class="copy-btn" onclick="event.stopPropagation(); copyCode(this.parentElement.nextElementSibling)">Copy</button>
+                    </div>
+                    <pre id="agent-generator-fallback" style="display: none; white-space: pre-wrap; word-wrap: break-word; color: #1a1a1a; background: #fff; padding: 20px; margin: 0; border-top: 2px solid #f57c00;">You are a Python agent code generator for the Microsoft AI BAST RAPP framework. Generate production-ready agent code that follows the BasicAgent pattern and can be deployed to Azure Functions.
+
+**CRITICAL REQUIREMENTS:**
+1. Each agent must inherit from BasicAgent
+2. Class name: PascalCase (e.g., ContractGenerationAgent)
+3. self.name: PascalCase with NO SPACES (e.g., "ContractGeneration")
+4. All perform() methods MUST return strings, never dicts or None
+5. Error handling: Return descriptive error strings, never raise exceptions
+6. Include complete JSON Schema metadata for self-documentation
+7. Keep each agent focused on ONE capability (~100-300 lines)
+8. Follow the exact pattern shown in the framework documentation
+
+**CODE TEMPLATE TO FOLLOW:**
+
+```python
+from agents.basic_agent import BasicAgent
+import logging
+import json
+
+class YourAgentNameAgent(BasicAgent):
+    def __init__(self):
+        self.name = "YourAgentName"  # NO SPACES!
+        self.metadata = {
+            "name": self.name,
+            "description": "Clear description of when to call this agent and what it does",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "param1": {
+                        "type": "string|integer|array|etc",
+                        "description": "What this parameter is for"
+                    }
+                },
+                "required": ["param1"]
+            }
+        }
+        super().__init__(name=self.name, metadata=self.metadata)
+
+    def perform(self, **kwargs):
+        """
+        What this method does.
+        Returns: String describing the result
+        """
+        # Extract and validate parameters
+        param1 = kwargs.get('param1')
+        if not param1:
+            return "Error: param1 is required"
+
+        try:
+            # Your logic here
+            result = "Success: description of what happened"
+            return result
+        except Exception as e:
+            return f"Error in {self.name}: {str(e)}"
+```
+
+**GENERATE AGENTS FOR THIS MVP:**
+
+**Use Case:** [DESCRIBE THE MVP USE CASE]
+
+**Capabilities Needed (one agent per capability):**
+1. [First capability - e.g., "Generate contracts from templates"]
+2. [Second capability - e.g., "Analyze contract risks and compliance"]
+3. [Third capability - e.g., "Route contracts for approval workflow"]
+
+**Data Sources:**
+[LIST: Dynamics 365, SharePoint, Azure File Storage, SQL Database, etc.]
+
+**Special Requirements:**
+[IMAGE PROCESSING? LATENCY REQUIREMENTS? SPECIFIC INTEGRATIONS? EXTERNAL APIs?]
+
+**OUTPUT FORMAT:**
+For each agent, provide:
+1. Complete Python file contents (ready to save as [agent-name]-agent.py)
+2. File name suggestion
+3. Brief description of what the agent does
+4. Any dependencies or setup notes
+
+Generate all agents now.</pre>
+                </div>
+
                 <p><strong>Planned Type:</strong> M365 Copilot Studio Declarative Agent</p>
                 <p><strong>Vision:</strong> Generate complete Python agent code following the BasicAgent pattern with JSON Schema metadata, error handling, and Azure integration.</p>
 
@@ -3586,7 +3718,7 @@ scope a Phase 2 project with those additional capabilities. Sound good?"</code><
 
                 <p><strong>Time Investment:</strong> 3-4 hours (manual)</p>
                 <ul>
-                    <li><strong>Create demo HTML/JSON manually:</strong> 1-2 hours using templates from AutoVideos/</li>
+                    <li><strong>Create demo JSON manually:</strong> 1-2 hours using the Local-First Chat Animation Studio</li>
                     <li><strong>Script narration and timing:</strong> 1 hour</li>
                     <li><strong>Test and refine:</strong> 1 hour</li>
                 </ul>
@@ -3615,7 +3747,108 @@ scope a Phase 2 project with those additional capabilities. Sound good?"</code><
 
                 <div class="tool-card">
                     <h4>🤖 Automation Tool: Video Demo Generator</h4>
+                    <p><strong>Type:</strong> M365 Copilot Studio Declarative Agent</p>
                     <p><strong>Location:</strong> <a href="https://m365.cloud.microsoft:443/chat/?titleId=T_9c21fece-1d32-64df-b68d-db4d0a3cc446&source=embedded-builder" target="_blank">Open Video Demo Generator</a></p>
+                    <p><strong>Local Tool:</strong> <a href="tools/localfirst_chat_animation_studio_tool.html" target="_blank">Open Local-First Chat Animation Studio</a></p>
+
+                    <div class="code-block" style="background: #fff3e0; border-left: 4px solid #f57c00; margin-top: 15px;">
+                        <div class="code-header" style="background: #ffb74d; border-bottom: 1px solid #f57c00; cursor: pointer;" onclick="toggleFallback('video-demo-fallback')">
+                            <span class="code-language" style="color: #1a1a1a; font-weight: 600;">⚠️ Manual Fallback: Click to expand prompt (paste into Copilot if agent link isn't working)</span>
+                            <button class="copy-btn" onclick="event.stopPropagation(); copyCode(this.parentElement.nextElementSibling)">Copy</button>
+                        </div>
+                        <pre id="video-demo-fallback" style="display: none; white-space: pre-wrap; word-wrap: break-word; color: #1a1a1a; background: #fff; padding: 20px; margin: 0; border-top: 2px solid #f57c00;">You are a demo video JSON generator for the Microsoft AI BAST RAPP framework. Generate structured demo configurations that work with the Local-First Chat Animation Studio tool.
+
+**YOUR TASK:**
+Create a complete JSON demo configuration that tells a compelling story about the customer's AI agent implementation.
+
+**REQUIRED JSON STRUCTURE:**
+Return valid JSON with this exact structure:
+
+{
+  "demoMetadata": {
+    "title": "[Customer Name] AI Agent Demo",
+    "customer": "[Customer Name]",
+    "industry": "[Industry: legal, sales, hr, it, etc.]",
+    "totalDuration": "[Total seconds, e.g., 75]",
+    "voiceName": "en-US-GuyNeural",
+    "createdDate": "[YYYY-MM-DD]"
+  },
+  "demoSteps": [
+    {
+      "id": "step1-problem",
+      "name": "[Step Name]",
+      "duration": 8000,
+      "voiceText": "[Professional narration text - what the TTS will say]",
+      "narrator": {
+        "title": "[Visual overlay title]",
+        "text": "[Key metrics or details to display]",
+        "subtitle": "[Supporting context]",
+        "position": "left|right|center"
+      }
+    },
+    // Add 7-10 steps total
+  ],
+  "chatInteractions": [
+    {
+      "stepId": "step2-whatever",
+      "messages": [
+        {"type": "user", "text": "[User query]", "voice": false},
+        {"type": "system", "text": "🔄 Processing...", "timestamp": "9:03am"},
+        {"type": "agent", "text": "[Agent response]", "voice": false}
+      ]
+    }
+  ],
+  "agentCards": [
+    {
+      "stepId": "step3-whatever",
+      "card": {
+        "title": "[AgentName]",
+        "status": "ACTIVE",
+        "details": {
+          "Metric 1": "Value",
+          "Metric 2": "Value",
+          "Processing Time": "1.2s"
+        }
+      }
+    }
+  ]
+}
+
+**DEMO NARRATIVE STRUCTURE:**
+Your demo MUST follow this arc:
+1. **Problem Hook (8-10s):** Show the painful manual process
+2. **Solution Demo (40-50s):** 3-4 agent capabilities in action with specific examples
+3. **Business Impact (10-15s):** ROI, metrics, scalability
+
+**CRITICAL REQUIREMENTS:**
+- voiceText: Write for spoken delivery (~150 words per minute)
+- duration: Match narration length (20 words ≈ 8000ms)
+- Narrator overlays: Include specific metrics (time saved, accuracy %, cost reduction)
+- Use customer's actual agent names from their implementation
+- Include real numbers: accounts analyzed, items processed, seconds to complete
+- Show chat interactions with natural language queries
+- Agent cards should display processing details and confidence scores
+
+**GENERATE DEMO FOR THIS CUSTOMER:**
+
+**Customer:** [Customer Name]
+**Industry:** [Industry]
+**Use Case:** [Describe the MVP use case]
+**Agents:** [List 3-5 key agents with brief descriptions]
+**Key Metrics:**
+- Time saved: [e.g., 45 min/day per user]
+- Accuracy improvement: [e.g., 67% → 95%]
+- Cost savings: [e.g., $2.3M annually]
+**Target Audience:** [Executives / Technical teams / Field users]
+
+**EXAMPLE METRICS TO INCLUDE:**
+- Processing time: "Analyzed 47 accounts in 1.2 seconds"
+- Volume: "200 field reps × 45 minutes saved = 37,500 hours/year"
+- Accuracy: "Improved from 67% to 95% compliance"
+- ROI: "$2.3M annual savings, 340% first-year ROI"
+
+Return ONLY the JSON - no explanations, no markdown code blocks, just the pure JSON that can be imported into the animation studio.</pre>
+                    </div>
 
                     <h4>What It Does:</h4>
                     <p>Generates structured JSON demo configurations with:</p>
@@ -3842,14 +4075,21 @@ Include:
 
             <div class="step-section">
                 <h3>🎥 Running the Demo</h3>
-                <p>The generated JSON works with the <strong>AutoVideos demo template</strong>:</p>
+                <p>The generated JSON works with the <strong>Local-First Chat Animation Studio</strong>:</p>
 
-                <h4>Option 1: Use Existing Demo Template</h4>
-                <pre><code>1. Open AutoVideos/demo-universal-template.html
-2. Replace the demoSteps array with your generated JSON
-3. Update azureTTS credentials (or use mock TTS for testing)
-4. Open in browser via local server: python3 -m http.server 5501
-5. Press SPACE to start demo, arrow keys to navigate</code></pre>
+                <h4>Option 1: Use Local-First Tool (Recommended)</h4>
+                <pre><code>1. Open tools/localfirst_chat_animation_studio_tool.html in your browser
+2. Click "Import Demo JSON" button
+3. Paste your generated JSON or upload the .json file
+4. Configure Azure TTS credentials (or use mock TTS for testing)
+5. Click "Preview Demo" to test
+6. Press SPACE to start auto-play, arrow keys to navigate steps
+
+Benefits:
+- Works offline, no server required
+- Built-in JSON editor and validator
+- Save/load demos from browser storage
+- Export standalone HTML files</code></pre>
 
                 <h4>Option 2: Generate Standalone HTML</h4>
                 <p>Ask the LLM to wrap your JSON in a complete HTML file:</p>
@@ -4522,7 +4762,7 @@ Security additions needed:
                 <ul>
                     <li>Azure CLI / Portal for deployment</li>
                     <li>Video Demo Generator (Copilot Studio)</li>
-                    <li>AutoVideos template for demo creation</li>
+                    <li>Local-First Chat Animation Studio (tools/localfirst_chat_animation_studio_tool.html)</li>
                     <li>Loom/OBS for screen recording</li>
                 </ul>
                 <p><strong>Deliverables:</strong> Working prototype in Azure, customer-approved video demo</p>
@@ -5394,16 +5634,56 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
         }
 
         // Copy Code Function
-        function copyCode(button) {
-            const codeBlock = button.closest('.code-block').querySelector('pre');
+        function copyCode(elementOrButton) {
+            // Handle both button clicks and direct element passing
+            let codeBlock;
+            if (elementOrButton.tagName === 'PRE') {
+                codeBlock = elementOrButton;
+            } else if (elementOrButton.tagName === 'BUTTON') {
+                codeBlock = elementOrButton.closest('.code-block').querySelector('pre');
+            } else {
+                // Assume it's a container element
+                codeBlock = elementOrButton;
+            }
+
             const text = codeBlock.textContent;
 
             navigator.clipboard.writeText(text).then(() => {
-                button.textContent = 'Copied!';
-                setTimeout(() => {
-                    button.textContent = 'Copy';
-                }, 2000);
+                // Only update button text if it's a button click
+                if (elementOrButton.tagName === 'BUTTON') {
+                    elementOrButton.textContent = 'Copied!';
+                    setTimeout(() => {
+                        elementOrButton.textContent = 'Copy';
+                    }, 2000);
+                } else {
+                    // Show a temporary notification
+                    const notification = document.createElement('div');
+                    notification.textContent = 'Copied to clipboard!';
+                    notification.style.cssText = 'position: fixed; top: 20px; right: 20px; background: #10b981; color: white; padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); z-index: 10000; font-weight: 500;';
+                    document.body.appendChild(notification);
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 2000);
+                }
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                alert('Failed to copy to clipboard. Please try selecting and copying manually.');
             });
+        }
+
+        // Toggle Fallback Prompt Function
+        function toggleFallback(fallbackId) {
+            const fallbackElement = document.getElementById(fallbackId);
+            const header = fallbackElement.previousElementSibling;
+            const headerText = header.querySelector('.code-language');
+
+            if (fallbackElement.style.display === 'none') {
+                fallbackElement.style.display = 'block';
+                headerText.innerHTML = headerText.innerHTML.replace('Click to expand', 'Click to collapse');
+            } else {
+                fallbackElement.style.display = 'none';
+                headerText.innerHTML = headerText.innerHTML.replace('Click to collapse', 'Click to expand');
+            }
         }
 
         // Gut Check Quiz Functions
