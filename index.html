@@ -1191,6 +1191,14 @@
                 <span>Roadmap - EOY 2025</span>
             </a>
         </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-title">Tools & Resources</div>
+            <a href="#tools" class="nav-item" onclick="navigateToSection('tools'); return false;">
+                <span class="nav-icon">🛠️</span>
+                <span>Tool Browser</span>
+            </a>
+        </div>
     </div>
 
     <!-- Main Content -->
@@ -1443,7 +1451,7 @@
                 <p><strong>Solution:</strong> Agents live in Azure File Storage at <code>memory/{user-guid}/agents/</code>. The Intelligence Layer dynamically loads them on each request. Drop in a new Python file, and it's live instantly.</p>
 
                 <div class="example-box">
-                    <h4>🎯 Real-World Example: Retail Beverage Company Field Sales</h4>
+                    <h4>🎯 Real-World Example: Field Sales Route Optimization</h4>
                     <p><strong>Scenario:</strong> Customer requests a change to route optimization logic at 2 PM.</p>
                     <p><strong>Traditional Approach:</strong> 3-5 days for code change → testing → approval → deployment.</p>
                     <p><strong>This Architecture:</strong></p>
@@ -1498,7 +1506,7 @@
 
                 <div class="example-box">
                     <h4>🎯 Real-World Example: Production Resilience</h4>
-                    <p>"I wake up and I run it through tests, right? Just like Blade Runner, I say how capable are you today? And if I did this [test] and this didn't fire, and if I expected it to fire... I basically in my head using the full stack can say: Oh, I need to go check and see if that agent is actually loading."</p>
+                    <p>Every morning, the developer runs diagnostic tests to verify system health - asking "how capable are you today?" like the Blade Runner test. If an expected test doesn't trigger, the modular architecture makes it immediately clear which layer has failed: is the agent not loading from storage? Is the Copilot routing broken? Or is there a Power Automate connection issue?</p>
                     <p><strong>The user can diagnose exactly which layer failed:</strong></p>
                     <ul>
                         <li>Assistant working, memory working, but agent not loading? → Storage Layer issue</li>
@@ -1632,8 +1640,8 @@ def handle_request(user_message, user_guid):
 
             <div class="highlight-box">
                 <h4>💡 Why Not Use Copilot Studio's Built-In AI Capabilities?</h4>
-                <p><strong>Problem:</strong> No access to the system message in Copilot Studio. Can't fully control the prompt engineering that makes agents work reliably.</p>
-                <p><strong>Key insight:</strong> "The architecture problem with Copilot Studio is you don't have access to the system message... If I didn't have access to the system message, I couldn't guarantee any agents would be useful."</p>
+                <p><strong>Problem:</strong> No access to the full system message in Copilot Studio. Can't fully control the prompt engineering that makes agents work reliably.</p>
+                <p><strong>Key insight:</strong> The fundamental limitation of Copilot Studio's built-in AI is the lack of system message control. Without access to customize the system message, you cannot fine-tune the prompt engineering that makes agents perform reliably in this RAPP framework.</p>
                 <p><strong>Solution:</strong> Use Copilot Studio for what it's great at (channels, UI, routing) and keep intelligence in a custom Azure Function where you have full control.</p>
             </div>
 
@@ -1681,7 +1689,7 @@ def handle_request(user_message, user_guid):
                 <div class="example-box">
                     <h4>🎯 Real-World Example: The 60 Agent Test</h4>
                     <p><strong>Challenge:</strong> Generate 60 agents to prove the automation works.</p>
-                    <p><strong>Timeline:</strong> "Leadership said, 'Hey, here's this list of agents that I made-up.' And to prove out this automation, I basically said OK, I'm gonna generate these 60 agents and see how they turn out. And I went to lunch and I generated those 60."</p>
+                    <p><strong>Timeline:</strong> When leadership provided a list of 60 agents to test the automation capability, the developer generated all 60 production-ready agents during a lunch break - proving the system could scale agent creation from months to hours.</p>
                     <p><strong>Result:</strong> 60 production-ready agents in ~1 hour while eating lunch. Manual development would have taken months.</p>
                 </div>
 
@@ -1702,7 +1710,7 @@ def handle_request(user_message, user_guid):
 
                 <div class="highlight-box">
                     <h4>💡 Key Insight</h4>
-                    <p>"I'm not saying I don't want to do it [manual work]. I'm saying the manual no, no effort stuff. I stay in control of the taste. Taste is really important. Taste judgment. Is this useful? And you know, based on my experience, is this actually solving this problem?"</p>
+                    <p>It's not about avoiding manual work - it's about avoiding tedious, low-value manual tasks. What's critical is maintaining control over quality and judgment calls. Having good taste matters. The key questions are: Is this actually useful? Based on experience, does this truly solve the problem we're facing?</p>
                 </div>
 
                 <h4>The 6 Quality Gates:</h4>
@@ -1787,7 +1795,7 @@ def handle_request(user_message, user_guid):
                 <div class="example-box">
                     <h4>🎯 Real-World Example: The "Poke" Methodology</h4>
                     <p><strong>What is a "poke"?</strong> A deliberately lightweight MVP summary sent to the customer before any code is written.</p>
-                    <p><strong>The concept:</strong> "Give me the dialed down MVP that I'm going to send to the customer. And I was looking at this, this was called like a poke, right? So you poke them with 'this is what I think I heard.' Right. And that's exactly what your AI is going to build the prototype off of. But basically that poking them with their responses, that's also feedback for the agents."</p>
+                    <p><strong>The concept:</strong> Create a stripped-down MVP summary to send to the customer - a "poke" that says "this is what I think I heard." This lightweight validation serves two purposes: it confirms understanding before any code is written, and the customer's response provides feedback that informs what the AI will build. This early engagement catches misunderstandings before they become expensive mistakes.</p>
                     <p><strong>Why it works:</strong> Customer can respond with "Yes that's it" or "No, you misunderstood - here's what we actually need." Either way, you know BEFORE writing code.</p>
                 </div>
             </div>
@@ -1795,7 +1803,7 @@ def handle_request(user_message, user_guid):
             <div class="step-section">
                 <h3>🔄 Iterations ≠ Experience - It's About Cycles</h3>
                 <p><strong>Traditional Thinking:</strong> "I've been doing this for 10 years, so I have 10 years of experience."</p>
-                <p><strong>Reality:</strong> "It's not like how much experience you have. It's how many iterations have you had in that experience."</p>
+                <p><strong>Reality:</strong> Experience isn't measured by time spent - it's measured by the number of learning cycles completed. Ten years with few iterations is less valuable than two years with hundreds of rapid feedback loops.</p>
 
                 <div class="highlight-box">
                     <h4>💡 The Iteration Advantage</h4>
@@ -1910,21 +1918,21 @@ def handle_request(user_message, user_guid):
 
                 <div class="highlight-box">
                     <h4>💡 Discovery Philosophy</h4>
-                    <p>"We go in and we say, hey, what problems with your business? Like what are the biggest problems with your business, right? And that really puts the mindset shift in a different way."</p>
+                    <p>The approach is to start with open-ended business problem discovery: "What are the biggest problems with your business?" This question creates a crucial mindset shift - focusing on business pain points rather than technology solutions. By leading with problems instead of AI capabilities, you ensure the automation serves real business needs.</p>
                 </div>
 
                 <h4>Question 1: What are your biggest problems?</h4>
                 <p><strong>Why this matters:</strong> Focuses on business value, not technology. Customer describes pain in their own language.</p>
 
                 <div class="example-box">
-                    <h4>🎯 Real-World Example: Retail Beverage Company Field Sales</h4>
-                    <p><strong>Customer's problem statement:</strong> "We have a problem of our delivery people - field sales. We have a problem of them answering the question: <strong>Where do we go? What order do we go to our stops? And what do we do when we get there?</strong>"</p>
+                    <h4>🎯 Real-World Example: Field Sales Operations</h4>
+                    <p><strong>Customer's problem statement:</strong> Field sales representatives struggle with three critical questions every day: Where should we go? What order should we visit our stops? And what should we do when we get there?</p>
                     <p><strong>Why this is perfect:</strong> Specific, measurable, impacts daily operations. Not "we need AI" or "we want to innovate."</p>
                 </div>
 
                 <h4>Question 2: What data sources do you have?</h4>
                 <p><strong>Why this matters:</strong> AI without data is useless. Need to know what's realistic to access.</p>
-                <p><strong>Key quote:</strong> "What data sources do you need to pull data from to make this work? We always caveat that with: if you cannot give us the data, there's that really limits what we can do. AI without data is not very helpful."</p>
+                <p><strong>Key point:</strong> Identify what data sources are required to solve the problem, with a clear caveat up front: if data access isn't available, the project's potential is severely limited. AI systems need data to function effectively - this is a non-negotiable requirement that must be established during discovery.</p>
 
                 <ul>
                     <li><strong>CRM systems</strong>: Dynamics 365, Salesforce, custom systems</li>
@@ -1935,11 +1943,11 @@ def handle_request(user_message, user_guid):
 
                 <h4>Question 3: How do you solve this manually today?</h4>
                 <p><strong>Why this matters:</strong> The manual process is the blueprint for automation. You're scaling what they already do, not inventing something new.</p>
-                <p><strong>Key quote:</strong> "At its core, what we're doing is basically scaling up what the manual process is right now."</p>
+                <p><strong>Key point:</strong> The core principle is scaling and automating the existing manual process - not inventing an entirely new workflow. This approach reduces risk and increases adoption because users recognize their familiar process, just faster and more consistent.</p>
 
                 <div class="example-box">
                     <h4>🎯 Detailed Example: Job Matching Process</h4>
-                    <p><strong>Customer description:</strong> "We offer too many job opportunities... our main channel to talk to our applicants is WhatsApp. Once they go there, they need to chat to a bot that can show them the best job opportunities for them based on their resume, which can be their LinkedIn profile or an uploaded file."</p>
+                    <p><strong>Customer description:</strong> The company offers numerous job opportunities and uses WhatsApp as their primary applicant communication channel. They need a bot that can analyze applicant resumes (from LinkedIn or uploaded files) and match them with the most suitable job opportunities from their extensive catalog.</p>
                     <p><strong>Manual process breakdown:</strong></p>
                     <ol>
                         <li>Receive resume via WhatsApp</li>
@@ -2051,7 +2059,52 @@ def handle_request(user_message, user_guid):
             <div class="tool-card">
                 <h4>🤖 Automation Tool: Transcript-to-Project Agent</h4>
                 <p><strong>Type:</strong> M365 Copilot Studio Declarative Agent</p>
-                <p><strong>Location:</strong> <code>https://m365.cloud.microsoft:443/chat/?titleId=T_afded7db-f8c5-703a-5502-2cc9f31b66da&source=embedded-builder</code></p>
+                <p><strong>Location:</strong> <a href="https://m365.cloud.microsoft:443/chat/?titleId=T_afded7db-f8c5-703a-5502-2cc9f31b66da&source=embedded-builder" target="_blank">Open Transcript-to-Project Agent</a></p>
+
+                <div class="code-block" style="background: #fff3e0; border-left: 4px solid #f57c00; margin-top: 15px;">
+                    <div class="code-header" style="background: #ffb74d; border-bottom: 1px solid #f57c00; cursor: pointer;" onclick="toggleFallback('transcript-fallback')">
+                        <span class="code-language" style="color: #1a1a1a; font-weight: 600;">⚠️ Manual Fallback: Click to expand prompt (paste into Copilot if agent link isn't working)</span>
+                        <button class="copy-btn" onclick="event.stopPropagation(); copyCode(this.parentElement.nextElementSibling)">Copy</button>
+                    </div>
+                    <pre id="transcript-fallback" style="display: none; white-space: pre-wrap; word-wrap: break-word; color: #1a1a1a; background: #fff; padding: 20px; margin: 0; border-top: 2px solid #f57c00;">You are a project data extraction assistant. Analyze the meeting transcript below and extract structured project information in JSON format that can be imported into the AI Agent Implementation Tracker.
+
+**REQUIRED OUTPUT FORMAT:**
+Return valid JSON with this exact structure (copy this template and fill in the values):
+
+{
+  "projects": [{
+    "id": "[current Unix timestamp - use Date.now()]",
+    "customerName": "[Legal entity name of the customer]",
+    "status": "[MUST be one of: planning, poc, active, production, completed]",
+    "type": "[MUST be one of: legal, hr, it, compliance, customer-service, sales, finance, other]",
+    "description": "[One sentence describing the overall AI implementation]",
+    "stakeholders": "[Names with titles, comma-separated. Example: John Smith (VP Legal), Jane Doe (IT Director)]",
+    "competingSolution": "[What solution are they comparing us to? e.g., Salesforce, ServiceNow, or leave empty if none]",
+    "contractDetails": "[EA details, license counts, budget/ACV, discounts - everything commercial]",
+    "agents": ["[AgentName1]", "[AgentName2]", "[etc - PascalCase, no spaces]"],
+    "mvpUseCase": "[The single focused first use case name, e.g., 'NDA Automation Bot']",
+    "mvpDescription": "[2-3 sentences: What will the MVP specifically do?]",
+    "mvpTimeline": "[Target deadline or timeframe, e.g., '6 weeks POC' or 'Q2 2025']",
+    "notes": "[Important context: competing details, latency requirements, risk factors, strategy notes]",
+    "createdDate": "[Today's date in YYYY-MM-DD format]",
+    "updatedDate": "[Today's date in YYYY-MM-DD format]"
+  }]
+}
+
+**INSTRUCTIONS:**
+1. Extract ALL relevant information from the transcript
+2. For "agents" array: List agent names in PascalCase (e.g., ContractGeneration, not "contract generation")
+3. For "status": Use "planning" unless they explicitly said POC has started
+4. For "type": Choose the closest match from the allowed values
+5. Be specific in mvpDescription - what exactly will the MVP do?
+6. Include contract/budget details even if approximate
+
+**TRANSCRIPT TO ANALYZE:**
+[PASTE YOUR MEETING TRANSCRIPT HERE]
+
+After you provide the JSON, I will copy it and import it into the Project Tracker Tool.</pre>
+                </div>
+
                 <p><strong>What it does:</strong> Extracts customer name, stakeholders, competing solutions, MVP use case, timeline, and generates structured JSON for project tracking.</p>
 
                 <h4>How to Use:</h4>
@@ -2157,7 +2210,7 @@ analysis, and automated routing.</pre>
             <div class="highlight-box">
                 <h4>💡 Why This Gate Matters</h4>
                 <p><strong>Time saved:</strong> 15 minutes here prevents 3 weeks of building the wrong solution.</p>
-                <p><strong>Real impact:</strong> "The risk with traditional software development is you spend six months on a problem no one cares about. This is designed to make that go away."</p>
+                <p><strong>Real impact:</strong> Traditional software development risks spending months building solutions for problems that don't actually matter to stakeholders. The audit gate eliminates this risk by validating stakeholder commitment and problem importance before any development begins.</p>
             </div>
 
             <div class="nav-controls">
@@ -2208,7 +2261,7 @@ analysis, and automated routing.</pre>
 
                 <div class="highlight-box">
                     <h4>💡 The "Poke" Concept</h4>
-                    <p>"Give me the dialed down MVP that I'm going to send to the customer. And I was looking at this, this was called like a <strong>poke</strong>, right? So you poke them with 'this is what I think I heard.' Right. And that's exactly what your AI is going to build the prototype off of."</p>
+                    <p>The "poke" is a deliberately lightweight MVP summary sent to validate understanding: "This is what I think I heard - is this correct?" This simple document serves as both a customer validation checkpoint and the exact specification that guides AI prototype generation. Getting customer confirmation on the poke ensures the AI builds the right solution.</p>
                 </div>
 
                 <h4>Why "Poke" Instead of "Requirements Document"?</h4>
@@ -2225,8 +2278,8 @@ analysis, and automated routing.</pre>
 
                 <h4>Section 1: Problem Statement (2-3 sentences)</h4>
                 <div class="example-box">
-                    <h4>🎯 Example: Retail Beverage Company Field Sales</h4>
-                    <p>"Your field sales teams currently spend 2-3 hours per day planning routes manually and deciding which stores to visit in what order. This results in inefficient routes, missed high-priority accounts, and inconsistent store coverage. We heard that solving this routing problem would save each salesperson 10-15 hours per week."</p>
+                    <h4>🎯 Example: Field Sales Route Planning</h4>
+                    <p>"Your field sales teams currently spend 2-3 hours per day planning routes manually and deciding which accounts to visit in what order. This results in inefficient routes, missed high-priority accounts, and inconsistent coverage. We heard that solving this routing problem would save each salesperson 10-15 hours per week."</p>
                 </div>
 
                 <h4>Section 2: Proposed MVP Solution (3-4 bullet points)</h4>
@@ -2332,7 +2385,7 @@ Tone: Professional but approachable. We're confirming we heard them correctly, n
                 <h4>💡 Why This Step is Critical</h4>
                 <p><strong>Time investment so far:</strong> 1 hour discovery call + 15 min audit + overnight automation = <strong>1.25 hours of human time</strong></p>
                 <p><strong>Potential time saved:</strong> If customer says "no that's not what we meant," you've saved 3-6 weeks of building the wrong thing</p>
-                <p><strong>Important principle:</strong> "That poking them with their responses, that's also feedback for the agents, right? So they could say, hey, our HR system is split between 3 instances... whatever they give on top of that poke, that is the first feedback cycle before the application's even thought about."</p>
+                <p><strong>Important principle:</strong> The customer's response to the poke becomes crucial feedback for agent development. Any additional details they provide - like "our HR system is actually split across 3 instances" - represents the first feedback cycle before a single line of code is written. This early correction prevents building on faulty assumptions.</p>
             </div>
 
             <div class="nav-controls">
@@ -2411,7 +2464,7 @@ Tone: Professional but approachable. We're confirming we heard them correctly, n
                         <li><strong>Option A:</strong> "Yes, we can add inventory checking to MVP" → Update poke, re-send</li>
                         <li><strong>Option B:</strong> "That's a great idea for Phase 2, but let's start with just route optimization to get you value faster" → Negotiate scope</li>
                     </ul>
-                    <p><strong>Key principle:</strong> "That might change the agents, right? So that might make it 6 agents to where there was 5 before where one is specialized in [the new requirement]."</p>
+                    <p><strong>Key principle:</strong> New requirements often change the agent architecture. What started as 5 agents might become 6 agents, with a new specialized agent handling the additional requirement. This modular flexibility allows you to adapt the design based on customer feedback without rearchitecting the entire system.</p>
                 </div>
 
                 <h4>Outcome 3: ❌ "This isn't what we need"</h4>
@@ -2467,7 +2520,7 @@ Tone: Professional but approachable. We're confirming we heard them correctly, n
                 <p><strong>Why:</strong> Every subsequent step builds on the assumption that the MVP is correct. If the MVP is wrong, everything downstream is wasted effort.</p>
                 <p><strong>Time invested through Step 4:</strong> ~2 hours of human time + 1-2 days of customer response time</p>
                 <p><strong>Risk eliminated:</strong> Building the wrong solution for 3-6 weeks = hundreds of hours saved</p>
-                <p><strong>Risk mitigation:</strong> "By Step 6, you have code locked in scope with customer sign-off... If they don't like it, you've only spent a few days, not months."</p>
+                <p><strong>Risk mitigation:</strong> By Step 6, you have working code with locked scope and customer approval on the requirements. If the customer ultimately decides the solution isn't right, you've only invested a few days rather than months - dramatically reducing the cost of failure.</p>
             </div>
 
             <div class="nav-controls">
@@ -2520,7 +2573,94 @@ Tone: Professional but approachable. We're confirming we heard them correctly, n
 
             <div class="tool-card">
                 <h4>🛠️ Development Tool: RAPP Agent Generator</h4>
-                <p><strong>Status:</strong>https://m365.cloud.microsoft/chat/?titleId=T_04778775-1214-29c8-3bc4-218e26088499&source=embedded-builder&auth=2</p>
+                <p><strong>Location:</strong> <a href="https://m365.cloud.microsoft/chat/?titleId=T_04778775-1214-29c8-3bc4-218e26088499&source=embedded-builder&auth=2" target="_blank">Open RAPP Agent Generator</a></p>
+
+                <div class="code-block" style="background: #fff3e0; border-left: 4px solid #f57c00; margin-top: 15px;">
+                    <div class="code-header" style="background: #ffb74d; border-bottom: 1px solid #f57c00; cursor: pointer;" onclick="toggleFallback('agent-generator-fallback')">
+                        <span class="code-language" style="color: #1a1a1a; font-weight: 600;">⚠️ Manual Fallback: Click to expand prompt (paste into Copilot if agent link isn't working)</span>
+                        <button class="copy-btn" onclick="event.stopPropagation(); copyCode(this.parentElement.nextElementSibling)">Copy</button>
+                    </div>
+                    <pre id="agent-generator-fallback" style="display: none; white-space: pre-wrap; word-wrap: break-word; color: #1a1a1a; background: #fff; padding: 20px; margin: 0; border-top: 2px solid #f57c00;">You are a Python agent code generator for the Microsoft AI BAST RAPP framework. Generate production-ready agent code that follows the BasicAgent pattern and can be deployed to Azure Functions.
+
+**CRITICAL REQUIREMENTS:**
+1. Each agent must inherit from BasicAgent
+2. Class name: PascalCase (e.g., ContractGenerationAgent)
+3. self.name: PascalCase with NO SPACES (e.g., "ContractGeneration")
+4. All perform() methods MUST return strings, never dicts or None
+5. Error handling: Return descriptive error strings, never raise exceptions
+6. Include complete JSON Schema metadata for self-documentation
+7. Keep each agent focused on ONE capability (~100-300 lines)
+8. Follow the exact pattern shown in the framework documentation
+
+**CODE TEMPLATE TO FOLLOW:**
+
+```python
+from agents.basic_agent import BasicAgent
+import logging
+import json
+
+class YourAgentNameAgent(BasicAgent):
+    def __init__(self):
+        self.name = "YourAgentName"  # NO SPACES!
+        self.metadata = {
+            "name": self.name,
+            "description": "Clear description of when to call this agent and what it does",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "param1": {
+                        "type": "string|integer|array|etc",
+                        "description": "What this parameter is for"
+                    }
+                },
+                "required": ["param1"]
+            }
+        }
+        super().__init__(name=self.name, metadata=self.metadata)
+
+    def perform(self, **kwargs):
+        """
+        What this method does.
+        Returns: String describing the result
+        """
+        # Extract and validate parameters
+        param1 = kwargs.get('param1')
+        if not param1:
+            return "Error: param1 is required"
+
+        try:
+            # Your logic here
+            result = "Success: description of what happened"
+            return result
+        except Exception as e:
+            return f"Error in {self.name}: {str(e)}"
+```
+
+**GENERATE AGENTS FOR THIS MVP:**
+
+**Use Case:** [DESCRIBE THE MVP USE CASE]
+
+**Capabilities Needed (one agent per capability):**
+1. [First capability - e.g., "Generate contracts from templates"]
+2. [Second capability - e.g., "Analyze contract risks and compliance"]
+3. [Third capability - e.g., "Route contracts for approval workflow"]
+
+**Data Sources:**
+[LIST: Dynamics 365, SharePoint, Azure File Storage, SQL Database, etc.]
+
+**Special Requirements:**
+[IMAGE PROCESSING? LATENCY REQUIREMENTS? SPECIFIC INTEGRATIONS? EXTERNAL APIs?]
+
+**OUTPUT FORMAT:**
+For each agent, provide:
+1. Complete Python file contents (ready to save as [agent-name]-agent.py)
+2. File name suggestion
+3. Brief description of what the agent does
+4. Any dependencies or setup notes
+
+Generate all agents now.</pre>
+                </div>
+
                 <p><strong>Planned Type:</strong> M365 Copilot Studio Declarative Agent</p>
                 <p><strong>Vision:</strong> Generate complete Python agent code following the BasicAgent pattern with JSON Schema metadata, error handling, and Azure integration.</p>
 
@@ -2543,7 +2683,7 @@ Tone: Professional but approachable. We're confirming we heard them correctly, n
                     </div>
                     <pre>Generate Python agents for this MVP:
 
-**Use Case:** Field sales route optimization for Retail Beverage Company
+**Use Case:** Field sales route optimization
 
 **Capabilities Needed:**
 1. Dynamic route planning based on account priority and location
@@ -2746,7 +2886,7 @@ class DynamicRoutePlanningAgent(BasicAgent):
 
             <div class="highlight-box">
                 <h4>💡 The 60 Agent Test</h4>
-                <p><strong>Real example:</strong> "Leadership said, 'Hey, here's this list of agents that I made-up.' And to prove out this automation, I basically said OK, I'm gonna generate these 60 agents and see how they turn out. <strong>And I went to lunch and I generated those 60.</strong>"</p>
+                <p><strong>Real example:</strong> When leadership provided a list of 60 agents to test the automation capability, the developer accepted the challenge and generated all 60 production-ready agents during a lunch break - demonstrating that the system could scale agent creation from months to hours.</p>
                 <p><strong>Result:</strong> Successfully generated all 60 agents. Most just need minor API endpoint customization.</p>
             </div>
 
@@ -2879,7 +3019,7 @@ class DynamicRoutePlanningAgent(BasicAgent):
                     </div>
                 </div>
 
-                <p><strong>Iterative refinement:</strong> "And you basically have a conversation with the AI of OK, consolidate these two agents, do this, do that, split these out, right? And you get these files."</p>
+                <p><strong>Iterative refinement:</strong> The code review process involves an interactive conversation with the AI: request consolidation of redundant agents, ask for functionality splits, adjust implementation details - iteratively refining until the agent files meet quality standards.</p>
             </div>
 
             <div class="step-section">
@@ -2978,7 +3118,7 @@ class DynamicRoutePlanningAgent(BasicAgent):
                         </li>
                         <li>Deployment completes in 5-10 minutes</li>
                     </ol>
-                    <p><strong>One-click deployment:</strong> "This Azure ARM template goes and creates all of the stuff you need in Azure. They don't even need to know about it."</p>
+                    <p><strong>One-click deployment:</strong> The Azure ARM template automatically provisions all required Azure infrastructure - Function App, Storage, App Insights, networking, and security configurations - without requiring manual Azure portal navigation. The deployment is fully automated and customer-facing users don't need to understand the underlying infrastructure.</p>
                 </div>
 
                 <h4>Step 7.2: Run Setup Script</h4>
@@ -2999,7 +3139,7 @@ cd copilot-agent-365
 # Click "Open in Codespaces" button
 # Runs automatically in cloud - no local install needed</code></pre>
 
-                <p><strong>Dynamic loading:</strong> "You basically just copy this script that piggybacks and dynamically loads all of the stuff... It'll download everything, pipe it, whatever it needs."</p>
+                <p><strong>Dynamic loading:</strong> The setup script automates the entire environment configuration process - downloading dependencies, installing Python packages, connecting to Azure services, and uploading default agents. It handles all the technical plumbing automatically, regardless of whether running locally or in cloud environments.</p>
 
                 <h4>Step 7.3: Deploy Your Agents</h4>
                 <p>Copy the approved agents from Step 6 into the deployment:</p>
@@ -3040,7 +3180,7 @@ cd copilot-agent-365
                     <li><strong>Publish:</strong> One-click publish to M365</li>
                 </ol>
 
-                <p><strong>M365 integration:</strong> "You download this solution and you put it into Power Platform and then you do the channels, right, and you basically expose it to M365."</p>
+                <p><strong>M365 integration:</strong> The process involves downloading the pre-built Copilot Studio solution, importing it into Power Platform, configuring the desired channels (Teams, Web, Outlook), and publishing - which exposes the agents across all Microsoft 365 interfaces where users work.</p>
 
                 <div class="example-box">
                     <h4>Example: Banking Customer Service Bot Deployment</h4>
@@ -3307,7 +3447,7 @@ Bot: "At Retail Store A (Store #4521):
 
 ✅ Customer sees: Vision AI, competitive analysis, actionable recommendations</code></pre>
 
-                    <p><strong>The process:</strong> "I'm going to deploy them with the prototype and I'm going to film this and I'm going to give this back to the customer and I'm going to see what they say."</p>
+                    <p><strong>The process:</strong> Deploy the agents with the working prototype, record a narrated video demonstration walking through all MVP scenarios, and deliver it to the customer for their review and feedback.</p>
                 </div>
 
                 <h4>Step 8.3: Show "Behind the Scenes" (Optional but Powerful)</h4>
@@ -3348,7 +3488,7 @@ Agent Calls (last 60 seconds):
                     </ol>
                     <p><strong>Customer sees:</strong> Simple conversation<br>
                     <strong>System does:</strong> Complex orchestration with data sources, agents, memory</p>
-                    <p><strong>The "waiter" pattern:</strong> "It's a waiter talking to the person, basically relaying these other conversations that are happening on the side... The person doesn't care, so the person doesn't need to know any of that context."</p>
+                    <p><strong>The "waiter" pattern:</strong> The LLM acts as an intermediary, managing conversations with specialized agents behind the scenes while presenting a simple, unified interface to the user. The end user doesn't see or need to understand the complex orchestration happening in the background - they just get clean, contextualized responses.</p>
                 </div>
             </div>
 
@@ -3578,7 +3718,7 @@ scope a Phase 2 project with those additional capabilities. Sound good?"</code><
 
                 <p><strong>Time Investment:</strong> 3-4 hours (manual)</p>
                 <ul>
-                    <li><strong>Create demo HTML/JSON manually:</strong> 1-2 hours using templates from AutoVideos/</li>
+                    <li><strong>Create demo JSON manually:</strong> 1-2 hours using the Local-First Chat Animation Studio</li>
                     <li><strong>Script narration and timing:</strong> 1 hour</li>
                     <li><strong>Test and refine:</strong> 1 hour</li>
                 </ul>
@@ -3607,7 +3747,108 @@ scope a Phase 2 project with those additional capabilities. Sound good?"</code><
 
                 <div class="tool-card">
                     <h4>🤖 Automation Tool: Video Demo Generator</h4>
-                    <p><strong>Location:</strong> <code>https://m365.cloud.microsoft:443/chat/?titleId=T_9c21fece-1d32-64df-b68d-db4d0a3cc446&source=embedded-builder</code></p>
+                    <p><strong>Type:</strong> M365 Copilot Studio Declarative Agent</p>
+                    <p><strong>Location:</strong> <a href="https://m365.cloud.microsoft:443/chat/?titleId=T_9c21fece-1d32-64df-b68d-db4d0a3cc446&source=embedded-builder" target="_blank">Open Video Demo Generator</a></p>
+                    <p><strong>Local Tool:</strong> <a href="tools/localfirst_chat_animation_studio_tool.html" target="_blank">Open Local-First Chat Animation Studio</a></p>
+
+                    <div class="code-block" style="background: #fff3e0; border-left: 4px solid #f57c00; margin-top: 15px;">
+                        <div class="code-header" style="background: #ffb74d; border-bottom: 1px solid #f57c00; cursor: pointer;" onclick="toggleFallback('video-demo-fallback')">
+                            <span class="code-language" style="color: #1a1a1a; font-weight: 600;">⚠️ Manual Fallback: Click to expand prompt (paste into Copilot if agent link isn't working)</span>
+                            <button class="copy-btn" onclick="event.stopPropagation(); copyCode(this.parentElement.nextElementSibling)">Copy</button>
+                        </div>
+                        <pre id="video-demo-fallback" style="display: none; white-space: pre-wrap; word-wrap: break-word; color: #1a1a1a; background: #fff; padding: 20px; margin: 0; border-top: 2px solid #f57c00;">You are a demo video JSON generator for the Microsoft AI BAST RAPP framework. Generate structured demo configurations that work with the Local-First Chat Animation Studio tool.
+
+**YOUR TASK:**
+Create a complete JSON demo configuration that tells a compelling story about the customer's AI agent implementation.
+
+**REQUIRED JSON STRUCTURE:**
+Return valid JSON with this exact structure:
+
+{
+  "demoMetadata": {
+    "title": "[Customer Name] AI Agent Demo",
+    "customer": "[Customer Name]",
+    "industry": "[Industry: legal, sales, hr, it, etc.]",
+    "totalDuration": "[Total seconds, e.g., 75]",
+    "voiceName": "en-US-GuyNeural",
+    "createdDate": "[YYYY-MM-DD]"
+  },
+  "demoSteps": [
+    {
+      "id": "step1-problem",
+      "name": "[Step Name]",
+      "duration": 8000,
+      "voiceText": "[Professional narration text - what the TTS will say]",
+      "narrator": {
+        "title": "[Visual overlay title]",
+        "text": "[Key metrics or details to display]",
+        "subtitle": "[Supporting context]",
+        "position": "left|right|center"
+      }
+    },
+    // Add 7-10 steps total
+  ],
+  "chatInteractions": [
+    {
+      "stepId": "step2-whatever",
+      "messages": [
+        {"type": "user", "text": "[User query]", "voice": false},
+        {"type": "system", "text": "🔄 Processing...", "timestamp": "9:03am"},
+        {"type": "agent", "text": "[Agent response]", "voice": false}
+      ]
+    }
+  ],
+  "agentCards": [
+    {
+      "stepId": "step3-whatever",
+      "card": {
+        "title": "[AgentName]",
+        "status": "ACTIVE",
+        "details": {
+          "Metric 1": "Value",
+          "Metric 2": "Value",
+          "Processing Time": "1.2s"
+        }
+      }
+    }
+  ]
+}
+
+**DEMO NARRATIVE STRUCTURE:**
+Your demo MUST follow this arc:
+1. **Problem Hook (8-10s):** Show the painful manual process
+2. **Solution Demo (40-50s):** 3-4 agent capabilities in action with specific examples
+3. **Business Impact (10-15s):** ROI, metrics, scalability
+
+**CRITICAL REQUIREMENTS:**
+- voiceText: Write for spoken delivery (~150 words per minute)
+- duration: Match narration length (20 words ≈ 8000ms)
+- Narrator overlays: Include specific metrics (time saved, accuracy %, cost reduction)
+- Use customer's actual agent names from their implementation
+- Include real numbers: accounts analyzed, items processed, seconds to complete
+- Show chat interactions with natural language queries
+- Agent cards should display processing details and confidence scores
+
+**GENERATE DEMO FOR THIS CUSTOMER:**
+
+**Customer:** [Customer Name]
+**Industry:** [Industry]
+**Use Case:** [Describe the MVP use case]
+**Agents:** [List 3-5 key agents with brief descriptions]
+**Key Metrics:**
+- Time saved: [e.g., 45 min/day per user]
+- Accuracy improvement: [e.g., 67% → 95%]
+- Cost savings: [e.g., $2.3M annually]
+**Target Audience:** [Executives / Technical teams / Field users]
+
+**EXAMPLE METRICS TO INCLUDE:**
+- Processing time: "Analyzed 47 accounts in 1.2 seconds"
+- Volume: "200 field reps × 45 minutes saved = 37,500 hours/year"
+- Accuracy: "Improved from 67% to 95% compliance"
+- ROI: "$2.3M annual savings, 340% first-year ROI"
+
+Return ONLY the JSON - no explanations, no markdown code blocks, just the pure JSON that can be imported into the animation studio.</pre>
+                    </div>
 
                     <h4>What It Does:</h4>
                     <p>Generates structured JSON demo configurations with:</p>
@@ -3653,8 +3894,8 @@ Include:
                     <h4>Input Prompt to Video Demo Generator:</h4>
                     <pre><code>Generate a demo JSON for Retail Customer's Field Sales AI Agent system.
 
-Industry: Retail / Beverage Distribution
-Use Case: Field sales reps need to know where to go, what order to visit stores,
+Industry: Field Sales
+Use Case: Field sales reps need to know where to go, what order to visit accounts,
 and what actions to take at each location. Currently done manually, taking 45
 minutes per day. AI agents solve this in real-time.
 
@@ -3834,14 +4075,21 @@ Include:
 
             <div class="step-section">
                 <h3>🎥 Running the Demo</h3>
-                <p>The generated JSON works with the <strong>AutoVideos demo template</strong>:</p>
+                <p>The generated JSON works with the <strong>Local-First Chat Animation Studio</strong>:</p>
 
-                <h4>Option 1: Use Existing Demo Template</h4>
-                <pre><code>1. Open AutoVideos/demo-universal-template.html
-2. Replace the demoSteps array with your generated JSON
-3. Update azureTTS credentials (or use mock TTS for testing)
-4. Open in browser via local server: python3 -m http.server 5501
-5. Press SPACE to start demo, arrow keys to navigate</code></pre>
+                <h4>Option 1: Use Local-First Tool (Recommended)</h4>
+                <pre><code>1. Open tools/localfirst_chat_animation_studio_tool.html in your browser
+2. Click "Import Demo JSON" button
+3. Paste your generated JSON or upload the .json file
+4. Configure Azure TTS credentials (or use mock TTS for testing)
+5. Click "Preview Demo" to test
+6. Press SPACE to start auto-play, arrow keys to navigate steps
+
+Benefits:
+- Works offline, no server required
+- Built-in JSON editor and validator
+- Save/load demos from browser storage
+- Export standalone HTML files</code></pre>
 
                 <h4>Option 2: Generate Standalone HTML</h4>
                 <p>Ask the LLM to wrap your JSON in a complete HTML file:</p>
@@ -4514,7 +4762,7 @@ Security additions needed:
                 <ul>
                     <li>Azure CLI / Portal for deployment</li>
                     <li>Video Demo Generator (Copilot Studio)</li>
-                    <li>AutoVideos template for demo creation</li>
+                    <li>Local-First Chat Animation Studio (tools/localfirst_chat_animation_studio_tool.html)</li>
                     <li>Loom/OBS for screen recording</li>
                 </ul>
                 <p><strong>Deliverables:</strong> Working prototype in Azure, customer-approved video demo</p>
@@ -4691,7 +4939,7 @@ Team Member C completes Step 10 → Bot posts:
 
             <div class="highlight-box">
                 <h4>💡 Key to Scaling: Freeze Frame the Process</h4>
-                <p><strong>Process standardization:</strong> "I basically have to just freeze frame this process and then I can give these HTML files. And then I can just say here's the inputs, here's the outputs that you should audit in this way, and then here's the next stage that you put this process in."</p>
+                <p><strong>Process standardization:</strong> The key to scaling is documenting each station with crystal-clear specifications - defining exact inputs, expected outputs, audit criteria, and handoff procedures to the next stage. This "freeze frame" documentation allows team members to operate their stations autonomously with consistent quality.</p>
                 <p><strong>What this means:</strong> Each station has clear inputs, clear outputs, and clear quality criteria. No ambiguity, no "figure it out yourself."</p>
                 <p><strong>Result:</strong> Team Members A and B can run their stations autonomously while Team Member C focuses on deployment bottleneck</p>
             </div>
@@ -4712,7 +4960,7 @@ Team Member C completes Step 10 → Bot posts:
             <div class="step-section">
                 <h3>🎯 Objective</h3>
                 <p>Run 20+ customer projects simultaneously using the same automation workflow, same agents, same team.</p>
-                <p><strong>Scaling philosophy:</strong> "I'm I'm gonna run this process once I get it down... I could do infinite infinite MVPs for infinite customers as long as I have the data. At scale."</p>
+                <p><strong>Scaling philosophy:</strong> Once the standardized process is refined and documented, the framework can handle unlimited concurrent MVPs for unlimited customers - the only constraint being data access. The automation and standardization enable infinite horizontal scaling.</p>
             </div>
 
             <div class="step-section">
@@ -4913,11 +5161,11 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
         <!-- ROADMAP -->
         <div class="content-section" id="roadmap">
             <h1 class="section-title">Roadmap - EOY 2025</h1>
-            <p class="section-subtitle">Next release wave priorities based on Connect prep for Renato</p>
+            <p class="section-subtitle">Next release wave priorities and strategic focus areas</p>
 
             <div class="highlight-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none;">
                 <h4 style="color: white;">🎯 Strategic Shift: From Prototypes to Production</h4>
-                <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;">"We need to ground those ideas and turn them into real things that can be used on the next day by our field and team to achieve those goals, accelerate deals... Let's make sure those demos they land, they can be reproduced, they can be reused by the field." - Renato</p>
+                <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;">The strategic imperative is to transform conceptual ideas into production-ready solutions that field teams can deploy immediately. The focus is on creating demos that not only impress in presentations but can also be reliably reproduced and reused across multiple customer engagements to accelerate deal closure.</p>
             </div>
 
             <div class="step-section">
@@ -4931,7 +5179,7 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
                 </div>
 
                 <div class="priority-card" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; padding: 25px; border-radius: 12px; margin-bottom: 20px;">
-                    <h4 style="color: white; margin-top: 0;">2. Unblock Blair & Andre - Documentation & Tools</h4>
+                    <h4 style="color: white; margin-top: 0;">2. Enable Team Members - Documentation & Tools</h4>
                     <p style="color: rgba(255,255,255,0.95);"><strong>What:</strong> Create "station-based" guide enabling team to work independently on 2+ process stations</p>
                     <p style="color: rgba(255,255,255,0.95);"><strong>Deliverables:</strong></p>
                     <ul style="color: rgba(255,255,255,0.95); margin-bottom: 15px;">
@@ -4939,7 +5187,7 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
                         <li>M365 agents for discovery calls and MVP generation</li>
                         <li>Clear input/output documentation for each station</li>
                     </ul>
-                    <p style="color: rgba(255,255,255,0.95);"><strong>Impact:</strong> Team scalability - enable Blair/Andre to handle 20+ customer engagements concurrently</p>
+                    <p style="color: rgba(255,255,255,0.95);"><strong>Impact:</strong> Team scalability - enable team members to handle 20+ customer engagements concurrently</p>
                     <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;"><strong>Key Requirement:</strong> "Less code-dependent, more tool-based" - team uses tools, not raw code</p>
                 </div>
 
@@ -4976,7 +5224,7 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
                         </tr>
                         <tr>
                             <td><strong>Video Automation</strong></td>
-                            <td>Implement speech-to-text solution for audio timing (Renato's suggestion: double API call for duration data)</td>
+                            <td>Implement speech-to-text solution for audio timing (double API call for duration data)</td>
                             <td>Automation Team</td>
                         </tr>
                         <tr>
@@ -5022,7 +5270,7 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
                     <div class="metric-card" style="background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%); padding: 20px; border-radius: 12px;">
                         <div class="metric-icon" style="font-size: 2rem; margin-bottom: 10px;">👥</div>
                         <h4 style="color: var(--primary); margin-bottom: 10px;">Team Independence</h4>
-                        <p style="margin-bottom: 5px;"><strong>Metric:</strong> Number of stations Blair/Andre can operate independently</p>
+                        <p style="margin-bottom: 5px;"><strong>Metric:</strong> Number of stations team members can operate independently</p>
                         <p style="margin-bottom: 0; color: var(--text-secondary);"><strong>Target:</strong> 2+ stations by end of cycle</p>
                     </div>
 
@@ -5055,7 +5303,7 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
                 <h4 style="color: var(--primary);">Results You Deliver:</h4>
                 <ul>
                     <li><strong>Business Impact:</strong> Accelerating deals through reproducible AI agent demos</li>
-                    <li><strong>Team Impact:</strong> Enabling Blair/Andre to scale from individual work to managing 20+ concurrent engagements</li>
+                    <li><strong>Team Impact:</strong> Enabling team members to scale from individual work to managing 20+ concurrent engagements</li>
                     <li><strong>Customer Impact:</strong> Moving from "amazing demos" to deployed, production-ready solutions</li>
                 </ul>
 
@@ -5079,7 +5327,129 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
 
             <div class="highlight-box" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none;">
                 <h4 style="color: white; margin-top: 0;">💡 Pro Tip for Connect</h4>
-                <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;">When writing your Connect, emphasize the shift from "200 amazing prototypes" to "2 production-ready tools the field can use tomorrow." This directly addresses Renato's feedback about moving from ideation to realization.</p>
+                <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;">When writing your Connect, emphasize the shift from "200 amazing prototypes" to "2 production-ready tools the field can use tomorrow." This directly addresses the strategic feedback about moving from ideation to realization.</p>
+            </div>
+        </div>
+
+        <!-- TOOLS BROWSER SECTION -->
+        <div class="content-section" id="tools">
+            <h1 class="section-title">Tool Browser</h1>
+            <p class="section-subtitle">Interactive tools for project management and agent development</p>
+
+            <div class="step-section">
+                <h3>🛠️ Available Tools</h3>
+                <p>These self-contained HTML tools help you manage projects, track implementations, and create demonstrations. Each tool runs entirely in your browser with local-first data storage.</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 25px; margin-top: 30px;">
+
+                <!-- Project Tracker Tool -->
+                <div class="tool-card" style="background: white; border-radius: 12px; padding: 30px; box-shadow: var(--shadow); transition: all 0.3s ease; cursor: pointer; border: 2px solid transparent;"
+                     onclick="window.open('tools/localfirst_project_tracker_tool.html', '_blank')"
+                     onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='var(--shadow-lg)'; this.style.borderColor='var(--primary)';"
+                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow)'; this.style.borderColor='transparent';">
+
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 32px;">
+                            📊
+                        </div>
+                        <div>
+                            <h3 style="margin: 0; color: var(--text-dark); font-size: 20px;">Project Tracker</h3>
+                            <p style="margin: 5px 0 0 0; color: var(--text-light); font-size: 13px;">Local-First Data Storage</p>
+                        </div>
+                    </div>
+
+                    <p style="color: var(--text-medium); line-height: 1.6; margin-bottom: 20px;">
+                        Track customer projects, manage AI agent implementations, and maintain detailed records of your RAPP workflow. Features include project timelines, agent libraries, and export capabilities.
+                    </p>
+
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
+                        <span style="background: var(--bg-light); color: var(--primary); padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Project Management</span>
+                        <span style="background: var(--bg-light); color: var(--primary); padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Agent Library</span>
+                        <span style="background: var(--bg-light); color: var(--primary); padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Timeline Tracking</span>
+                        <span style="background: var(--bg-light); color: var(--primary); padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Word Export</span>
+                    </div>
+
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 15px; border-top: 1px solid var(--border);">
+                        <span style="color: var(--text-light); font-size: 13px;">
+                            <strong style="color: var(--success);">✓</strong> Browser-based
+                        </span>
+                        <span style="color: var(--primary); font-weight: 600; display: flex; align-items: center; gap: 5px;">
+                            Open Tool
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Chat Animation Studio Tool -->
+                <div class="tool-card" style="background: white; border-radius: 12px; padding: 30px; box-shadow: var(--shadow); transition: all 0.3s ease; cursor: pointer; border: 2px solid transparent;"
+                     onclick="window.open('tools/localfirst_chat_animation_studio_tool.html', '_blank')"
+                     onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='var(--shadow-lg)'; this.style.borderColor='var(--primary)';"
+                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow)'; this.style.borderColor='transparent';">
+
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 32px;">
+                            🎬
+                        </div>
+                        <div>
+                            <h3 style="margin: 0; color: var(--text-dark); font-size: 20px;">Chat Animation Studio</h3>
+                            <p style="margin: 5px 0 0 0; color: var(--text-light); font-size: 13px;">Demo Creation Tool</p>
+                        </div>
+                    </div>
+
+                    <p style="color: var(--text-medium); line-height: 1.6; margin-bottom: 20px;">
+                        Create engaging animated chat demonstrations for your AI agents. Design realistic conversation flows, customize timing, and export professional demo videos for customer presentations.
+                    </p>
+
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
+                        <span style="background: #fff7ed; color: #f59e0b; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Animation</span>
+                        <span style="background: #fff7ed; color: #f59e0b; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Chat Demos</span>
+                        <span style="background: #fff7ed; color: #f59e0b; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Video Export</span>
+                        <span style="background: #fff7ed; color: #f59e0b; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Presentations</span>
+                    </div>
+
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 15px; border-top: 1px solid var(--border);">
+                        <span style="color: var(--text-light); font-size: 13px;">
+                            <strong style="color: var(--success);">✓</strong> Browser-based
+                        </span>
+                        <span style="color: var(--primary); font-weight: 600; display: flex; align-items: center; gap: 5px;">
+                            Open Tool
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="highlight-box" style="margin-top: 40px;">
+                <h4>📝 About These Tools</h4>
+                <p style="margin-bottom: 15px;">These are <strong>local-first</strong> HTML tools that run entirely in your browser. Your data is stored locally using browser localStorage, ensuring privacy and offline functionality.</p>
+                <ul style="margin-left: 20px;">
+                    <li><strong>No Server Required:</strong> All tools work offline after initial load</li>
+                    <li><strong>Data Privacy:</strong> Your data never leaves your browser</li>
+                    <li><strong>Export Capabilities:</strong> Download your data as JSON or formatted documents</li>
+                    <li><strong>Shareable:</strong> Open these HTML files in any modern browser</li>
+                </ul>
+            </div>
+
+            <div class="step-section" style="margin-top: 40px;">
+                <h3>🔧 Tool Development</h3>
+                <p>Need a custom tool for your workflow? These tools are built as standalone HTML files that can be easily modified or extended. Check the <code>tools/</code> directory in the repository for source code and templates.</p>
+
+                <div style="background: var(--bg-white); border-left: 4px solid var(--info); padding: 20px; border-radius: 8px; margin-top: 20px;">
+                    <h4 style="color: var(--info); margin-top: 0;">💡 Creating Your Own Tools</h4>
+                    <p>All tools follow a simple pattern:</p>
+                    <ol style="margin-left: 20px; color: var(--text-medium);">
+                        <li>Single HTML file with embedded CSS and JavaScript</li>
+                        <li>Local storage for data persistence</li>
+                        <li>Export/import functionality for data portability</li>
+                        <li>Responsive design for mobile and desktop use</li>
+                    </ol>
+                </div>
             </div>
         </div>
 
@@ -5092,7 +5462,7 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
             'overview', 'architecture', 'principles',
             'step1', 'step2', 'step3', 'step4', 'step5', 'step6', 'step7',
             'step8', 'step9', 'step10', 'step11', 'step12', 'step13', 'step14',
-            'team-setup', 'scaling', 'roadmap'
+            'team-setup', 'scaling', 'roadmap', 'tools'
         ];
 
         // Navigation Functions
@@ -5111,6 +5481,10 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
             const targetSection = document.getElementById(sectionId);
             if (targetSection) {
                 targetSection.classList.add('active');
+                // Update URL hash without triggering scroll
+                if (window.location.hash !== '#' + sectionId) {
+                    history.replaceState(null, null, '#' + sectionId);
+                }
             }
 
             // Update sidebar active state
@@ -5220,16 +5594,56 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
         }
 
         // Copy Code Function
-        function copyCode(button) {
-            const codeBlock = button.closest('.code-block').querySelector('pre');
+        function copyCode(elementOrButton) {
+            // Handle both button clicks and direct element passing
+            let codeBlock;
+            if (elementOrButton.tagName === 'PRE') {
+                codeBlock = elementOrButton;
+            } else if (elementOrButton.tagName === 'BUTTON') {
+                codeBlock = elementOrButton.closest('.code-block').querySelector('pre');
+            } else {
+                // Assume it's a container element
+                codeBlock = elementOrButton;
+            }
+
             const text = codeBlock.textContent;
 
             navigator.clipboard.writeText(text).then(() => {
-                button.textContent = 'Copied!';
-                setTimeout(() => {
-                    button.textContent = 'Copy';
-                }, 2000);
+                // Only update button text if it's a button click
+                if (elementOrButton.tagName === 'BUTTON') {
+                    elementOrButton.textContent = 'Copied!';
+                    setTimeout(() => {
+                        elementOrButton.textContent = 'Copy';
+                    }, 2000);
+                } else {
+                    // Show a temporary notification
+                    const notification = document.createElement('div');
+                    notification.textContent = 'Copied to clipboard!';
+                    notification.style.cssText = 'position: fixed; top: 20px; right: 20px; background: #10b981; color: white; padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); z-index: 10000; font-weight: 500;';
+                    document.body.appendChild(notification);
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 2000);
+                }
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                alert('Failed to copy to clipboard. Please try selecting and copying manually.');
             });
+        }
+
+        // Toggle Fallback Prompt Function
+        function toggleFallback(fallbackId) {
+            const fallbackElement = document.getElementById(fallbackId);
+            const header = fallbackElement.previousElementSibling;
+            const headerText = header.querySelector('.code-language');
+
+            if (fallbackElement.style.display === 'none') {
+                fallbackElement.style.display = 'block';
+                headerText.innerHTML = headerText.innerHTML.replace('Click to expand', 'Click to collapse');
+            } else {
+                fallbackElement.style.display = 'none';
+                headerText.innerHTML = headerText.innerHTML.replace('Click to collapse', 'Click to expand');
+            }
         }
 
         // Gut Check Quiz Functions
@@ -5378,11 +5792,26 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
             }
         });
 
+        // Handle hash navigation
+        function handleHashNavigation() {
+            const hash = window.location.hash.slice(1); // Remove the # symbol
+            if (hash && sections.includes(hash)) {
+                navigateToSection(hash);
+            } else {
+                navigateToSection('overview');
+            }
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             initializeTrack();
             initializeQuizzes();
-            navigateToSection('overview');
+            handleHashNavigation();
+        });
+
+        // Handle hash changes (when user clicks browser back/forward or hash changes)
+        window.addEventListener('hashchange', () => {
+            handleHashNavigation();
         });
     </script>
 </body>
