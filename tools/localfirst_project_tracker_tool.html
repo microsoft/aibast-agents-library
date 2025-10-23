@@ -1,0 +1,1926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Project Tracker Tool - AI Agent Implementations</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Layout Components */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0078d4 0%, #0066cc 100%);
+            color: white;
+            padding: 30px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            text-align: center;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+
+        .header .subtitle {
+            text-align: center;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 15px 30px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-tab:hover {
+            background-color: #f8f9fa;
+        }
+
+        .nav-tab.active {
+            background-color: #0078d4;
+            color: white;
+        }
+
+        .nav-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background-color: #005eb8;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Cards and Forms */
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #0078d4;
+            box-shadow: 0 0 0 2px rgba(0,120,212,0.1);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        select.form-control {
+            cursor: pointer;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-primary {
+            background-color: #0078d4;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0066cc;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .btn-warning {
+            background-color: #ffc107;
+            color: #333;
+        }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+
+        .btn-info {
+            background-color: #17a2b8;
+            color: white;
+        }
+
+        .btn-info:hover {
+            background-color: #138496;
+        }
+
+        .btn-word {
+            background-color: #2b579a;
+            color: white;
+        }
+
+        .btn-word:hover {
+            background-color: #1e3d6f;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        /* Project List */
+        .project-list {
+            display: grid;
+            gap: 20px;
+        }
+
+        .project-item {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-item:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+
+        .project-item.selected {
+            border: 2px solid #0078d4;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+
+        .project-title {
+            font-size: 1.5em;
+            color: #0078d4;
+            margin-bottom: 5px;
+        }
+
+        .project-status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-planning {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .status-active {
+            background-color: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .status-poc {
+            background-color: #fff3e0;
+            color: #f57c00;
+        }
+
+        .status-production {
+            background-color: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .status-completed {
+            background-color: #e0e0e0;
+            color: #616161;
+        }
+
+        .project-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .project-description {
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .project-agents {
+            margin-top: 15px;
+        }
+
+        .agent-tag {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #e3f2fd;
+            color: #1976d2;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        /* Agent Builder */
+        .agent-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .agent-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .agent-name {
+            font-weight: 500;
+        }
+
+        .agent-status {
+            font-size: 12px;
+            padding: 3px 10px;
+            border-radius: 3px;
+        }
+
+        .status-required {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+
+        .status-existing {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-new {
+            background-color: #fff3e0;
+            color: #f57c00;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #ddd;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            background-color: #0078d4;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 0 0 2px #ddd;
+        }
+
+        .timeline-date {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Data Management */
+        .data-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .file-input-wrapper input[type=file] {
+            position: absolute;
+            left: -9999px;
+        }
+
+        /* Import Preview */
+        .import-preview {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .import-preview.active {
+            display: block;
+        }
+
+        .import-preview h3 {
+            margin-bottom: 15px;
+        }
+
+        .import-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .import-stat {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .import-stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #0078d4;
+        }
+
+        .import-stat-label {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .merge-info {
+            background: #e3f2fd;
+            border-left: 4px solid #0078d4;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .merge-info h4 {
+            margin-bottom: 10px;
+            color: #0078d4;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        /* Word Export Preview */
+        .word-export-preview {
+            background: white;
+            padding: 30px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 20px;
+            max-height: 500px;
+            overflow-y: auto;
+            font-family: 'Times New Roman', serif;
+            line-height: 1.8;
+            white-space: pre-wrap;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .agent-builder {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-tab {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+
+            .project-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        /* Loading State */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #0078d4;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Tags Input */
+        .tags-input {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-height: 40px;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 10px;
+            background-color: #e3f2fd;
+            color: #1976d2;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        .tag-remove {
+            margin-left: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .tag-input {
+            border: none;
+            outline: none;
+            flex: 1;
+            min-width: 100px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>AI Agent Implementation Tracker</h1>
+            <div class="subtitle">Microsoft Copilot Studio - AI Automation</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="switchTab('overview')">Overview</button>
+            <button class="nav-tab" onclick="switchTab('projects')">Projects</button>
+            <button class="nav-tab" onclick="switchTab('agents')">Agent Library</button>
+            <button class="nav-tab" onclick="switchTab('timeline')">Timeline</button>
+            <button class="nav-tab" onclick="switchTab('data')">Data Management</button>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="overview-tab" class="tab-content active">
+            <div class="card">
+                <h2>Dashboard Overview</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px;">
+                    <div style="text-align: center; padding: 20px; background: #e3f2fd; border-radius: 8px;">
+                        <div style="font-size: 2em; font-weight: bold; color: #1976d2;" id="total-projects">0</div>
+                        <div style="color: #666;">Total Projects</div>
+                    </div>
+                    <div style="text-align: center; padding: 20px; background: #e8f5e9; border-radius: 8px;">
+                        <div style="font-size: 2em; font-weight: bold; color: #388e3c;" id="active-projects">0</div>
+                        <div style="color: #666;">Active Projects</div>
+                    </div>
+                    <div style="text-align: center; padding: 20px; background: #fff3e0; border-radius: 8px;">
+                        <div style="font-size: 2em; font-weight: bold; color: #f57c00;" id="total-agents">0</div>
+                        <div style="color: #666;">Total Agents</div>
+                    </div>
+                    <div style="text-align: center; padding: 20px; background: #f3e5f5; border-radius: 8px;">
+                        <div style="font-size: 2em; font-weight: bold; color: #7b1fa2;" id="poc-success">0</div>
+                        <div style="color: #666;">POC Success</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Recent Activities</h3>
+                <div id="recent-activities" style="margin-top: 20px;">
+                    <!-- Recent activities will be populated here -->
+                </div>
+            </div>
+        </div>
+
+        <div id="projects-tab" class="tab-content">
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2>Customer Projects</h2>
+                    <button class="btn btn-primary" onclick="openProjectModal()">+ New Project</button>
+                </div>
+                <div id="project-list" class="project-list">
+                    <!-- Projects will be populated here -->
+                </div>
+            </div>
+            <div id="project-details" style="display: none;">
+                <!-- Detailed project view will be populated here -->
+            </div>
+        </div>
+
+        <div id="agents-tab" class="tab-content">
+            <div class="card">
+                <h2>Agent Library</h2>
+                <div class="agent-builder">
+                    <div>
+                        <h3>Available Agents</h3>
+                        <div id="available-agents">
+                            <!-- Available agents will be populated here -->
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Custom Agents</h3>
+                        <button class="btn btn-secondary" onclick="openAgentModal()" style="margin-bottom: 15px;">+ Add Custom Agent</button>
+                        <div id="custom-agents">
+                            <!-- Custom agents will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="timeline-tab" class="tab-content">
+            <div class="card">
+                <h2>Project Timeline</h2>
+                <div class="timeline" id="timeline">
+                    <!-- Timeline items will be populated here -->
+                </div>
+            </div>
+        </div>
+
+        <div id="data-tab" class="tab-content">
+            <div class="card">
+                <h2>Data Management</h2>
+                <div class="data-actions">
+                    <button class="btn btn-success" onclick="exportData()">📥 Export All Data (JSON)</button>
+                    <button class="btn btn-word" onclick="exportToWord()">📄 Export to Word Format</button>
+                    <div class="file-input-wrapper">
+                        <button class="btn btn-info" onclick="document.getElementById('import-file').click()">📤 Merge Import Data (JSON)</button>
+                        <input type="file" id="import-file" accept=".json" onchange="importData(event)" style="display: none;">
+                    </div>
+                    <button class="btn btn-danger" onclick="clearData()">🗑️ Clear All Data</button>
+                </div>
+                
+                <div id="import-preview" class="import-preview">
+                    <h3>Import Preview</h3>
+                    <div class="merge-info">
+                        <h4>📊 Merge Operation</h4>
+                        <p>The import will merge new data with your existing data:</p>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li>Existing projects will be updated if they have the same ID</li>
+                            <li>New projects will be added without affecting existing ones</li>
+                            <li>New agents will be added to your library</li>
+                            <li>Timeline events will be merged</li>
+                        </ul>
+                    </div>
+                    <div class="import-stats">
+                        <div class="import-stat">
+                            <div class="import-stat-value" id="import-new-projects">0</div>
+                            <div class="import-stat-label">New Projects</div>
+                        </div>
+                        <div class="import-stat">
+                            <div class="import-stat-value" id="import-update-projects">0</div>
+                            <div class="import-stat-label">Projects to Update</div>
+                        </div>
+                        <div class="import-stat">
+                            <div class="import-stat-value" id="import-agent-count">0</div>
+                            <div class="import-stat-label">New Agents</div>
+                        </div>
+                        <div class="import-stat">
+                            <div class="import-stat-value" id="import-timeline-count">0</div>
+                            <div class="import-stat-label">New Timeline Events</div>
+                        </div>
+                    </div>
+                    <div id="import-details" style="margin-bottom: 20px;">
+                        <!-- Import details will be shown here -->
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-success" onclick="confirmImport()">✅ Confirm Merge</button>
+                        <button class="btn btn-secondary" onclick="cancelImport()">❌ Cancel</button>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <h3>Data Summary</h3>
+                    <pre id="data-summary" style="background: #f5f5f5; padding: 15px; border-radius: 4px; overflow-x: auto;"></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Modal -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="project-modal-title">New Project</h2>
+                <button class="modal-close" onclick="closeProjectModal()">×</button>
+            </div>
+            <form id="project-form">
+                <input type="hidden" id="project-id">
+                <div class="form-group">
+                    <label>Customer Name *</label>
+                    <input type="text" class="form-control" id="customer-name" required>
+                    <label>MVP Use Case *</label>
+                    <input type="text" class="form-control" id="mvp-use-case" placeholder="e.g., Contract Generation Bot" required>
+                </div>
+                <div class="form-group">
+                    <label>MVP Description</label>
+                    <textarea class="form-control" id="mvp-description" rows="3" placeholder="Describe the first prototype/use case to demonstrate value"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>MVP Timeline</label>
+                    <input type="text" class="form-control" id="mvp-timeline" placeholder="e.g., 4 weeks, Q2 2025">
+                </div>
+                <div class="form-group">
+                    <label>Project Status *</label>
+                    <select class="form-control" id="project-status" required>
+                        <option value="planning">Planning</option>
+                        <option value="poc">Proof of Concept</option>
+                        <option value="active">Active Development</option>
+                        <option value="production">Production</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Project Type</label>
+                    <select class="form-control" id="project-type">
+                        <option value="legal">Legal AI</option>
+                        <option value="hr">HR Operations</option>
+                        <option value="it">IT Service Desk</option>
+                        <option value="compliance">Compliance</option>
+                        <option value="customer-service">Customer Service</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control" id="project-description" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Key Stakeholders</label>
+                    <input type="text" class="form-control" id="stakeholders" placeholder="e.g., John Doe (Legal), Jane Smith (IT)">
+                </div>
+                <div class="form-group">
+                    <label>Competing Solution</label>
+                    <input type="text" class="form-control" id="competing-solution" placeholder="e.g., Salesforce Agentforce">
+                </div>
+                <div class="form-group">
+                    <label>Contract Details</label>
+                    <textarea class="form-control" id="contract-details" rows="3" placeholder="EA details, licenses, discounts..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Agents</label>
+                    <div id="agent-selection" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px;">
+                        <!-- Agent checkboxes will be populated here -->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Notes</label>
+                    <textarea class="form-control" id="project-notes" rows="4"></textarea>
+                </div>
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-primary">Save Project</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeProjectModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Agent Modal -->
+    <div id="agent-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Custom Agent</h2>
+                <button class="modal-close" onclick="closeAgentModal()">×</button>
+            </div>
+            <form id="agent-form">
+                <div class="form-group">
+                    <label>Agent Name *</label>
+                    <input type="text" class="form-control" id="agent-name" required>
+                </div>
+                <div class="form-group">
+                    <label>Description *</label>
+                    <textarea class="form-control" id="agent-description" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select class="form-control" id="agent-category">
+                        <option value="contract">Contract Management</option>
+                        <option value="analysis">Analysis</option>
+                        <option value="workflow">Workflow</option>
+                        <option value="integration">Integration</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select class="form-control" id="agent-status">
+                        <option value="existing">Existing</option>
+                        <option value="new">To Be Built</option>
+                        <option value="required">Required</option>
+                    </select>
+                </div>
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-primary">Add Agent</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeAgentModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Word Export Modal -->
+    <div id="word-export-modal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h2>Export to Word Format</h2>
+                <button class="modal-close" onclick="closeWordExportModal()">×</button>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <p>Copy the text below and paste it into Microsoft Word. The formatting will be preserved.</p>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="copyWordExport()">📋 Copy to Clipboard</button>
+                    <button class="btn btn-secondary" onclick="downloadWordExport()">💾 Download as Text File</button>
+                </div>
+            </div>
+            <div id="word-export-content" class="word-export-preview">
+                <!-- Word export content will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data structure
+        let appData = {
+            projects: [],
+            agents: {
+                builtin: [
+                    { name: 'SharePointDocumentExtractor', description: 'Extract content from SharePoint documents', category: 'integration', status: 'existing' },
+                    { name: 'Dynamics365CRUD', description: 'CRUD operations with Dynamics 365', category: 'integration', status: 'existing' },
+                    { name: 'PowerPoint', description: 'Generate PowerPoint presentations', category:'other', status: 'existing' },
+                    { name: 'ManageMemory', description: 'Memory management for conversations', category: 'other', status: 'existing' },
+                    { name: 'ContractTemplate', description: 'Generate contracts from templates', category: 'contract', status: 'new' },
+                    { name: 'ContractAnalysis', description: 'Analyze contract content and risks', category: 'analysis', status: 'new' },
+                    { name: 'ContractRouting', description: 'Route contracts for approval', category: 'workflow', status: 'new' },
+                    { name: 'ContractMonitoring', description: 'Monitor contract lifecycle', category: 'contract', status: 'new' }
+                ],
+                custom: []
+            },
+            timeline: []
+        };
+
+        // Temporary storage for pending import
+        let pendingImport = null;
+
+        // Load data from localStorage
+        function loadData() {
+            const saved = localStorage.getItem('projectTrackerData');
+            if (saved) {
+                appData = JSON.parse(saved);
+            }
+            updateUI();
+        }
+
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem('projectTrackerData', JSON.stringify(appData));
+            updateDataSummary();
+        }
+
+        // Deep merge function for objects
+        function deepMerge(target, source) {
+            const output = Object.assign({}, target);
+            if (isObject(target) && isObject(source)) {
+                Object.keys(source).forEach(key => {
+                    if (isObject(source[key])) {
+                        if (!(key in target))
+                            Object.assign(output, { [key]: source[key] });
+                        else
+                            output[key] = deepMerge(target[key], source[key]);
+                    } else {
+                        Object.assign(output, { [key]: source[key] });
+                    }
+                });
+            }
+            return output;
+        }
+
+        function isObject(item) {
+            return item && typeof item === 'object' && !Array.isArray(item);
+        }
+
+        // Merge data function
+        function mergeData(existingData, newData) {
+            const merged = JSON.parse(JSON.stringify(existingData)); // Deep clone
+            
+            // Merge projects
+            if (newData.projects && Array.isArray(newData.projects)) {
+                newData.projects.forEach(newProject => {
+                    const existingIndex = merged.projects.findIndex(p => p.id === newProject.id);
+                    if (existingIndex >= 0) {
+                        // Update existing project, preserving any fields not in the new data
+                        merged.projects[existingIndex] = deepMerge(merged.projects[existingIndex], {
+                            ...newProject,
+                            updatedDate: new Date().toISOString()
+                        });
+                    } else {
+                        // Add new project
+                        merged.projects.push({
+                            ...newProject,
+                            id: newProject.id || Date.now().toString(),
+                            createdDate: newProject.createdDate || new Date().toISOString(),
+                            updatedDate: new Date().toISOString()
+                        });
+                    }
+                });
+            }
+            
+            // Merge agents
+            if (newData.agents) {
+                // Merge builtin agents (usually shouldn't change, but just in case)
+                if (newData.agents.builtin && Array.isArray(newData.agents.builtin)) {
+                    newData.agents.builtin.forEach(newAgent => {
+                        if (!merged.agents.builtin.some(a => a.name === newAgent.name)) {
+                            merged.agents.builtin.push(newAgent);
+                        }
+                    });
+                }
+                
+                // Merge custom agents
+                if (newData.agents.custom && Array.isArray(newData.agents.custom)) {
+                    newData.agents.custom.forEach(newAgent => {
+                        const existingIndex = merged.agents.custom.findIndex(a => a.name === newAgent.name);
+                        if (existingIndex >= 0) {
+                            // Update existing agent
+                            merged.agents.custom[existingIndex] = deepMerge(merged.agents.custom[existingIndex], newAgent);
+                        } else {
+                            // Add new agent
+                            merged.agents.custom.push(newAgent);
+                        }
+                    });
+                }
+            }
+            
+            // Merge timeline events
+            if (newData.timeline && Array.isArray(newData.timeline)) {
+                // Check for duplicate timeline events (same date and title)
+                newData.timeline.forEach(newEvent => {
+                    const isDuplicate = merged.timeline.some(e => 
+                        e.date === newEvent.date && e.title === newEvent.title
+                    );
+                    if (!isDuplicate) {
+                        merged.timeline.push(newEvent);
+                    }
+                });
+            }
+            
+            return merged;
+        }
+
+        // Switch tabs
+        function switchTab(tabName) {
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            
+            if (tabName === 'data') {
+                updateDataSummary();
+            }
+        }
+
+        // Update UI
+        function updateUI() {
+            updateDashboard();
+            updateProjectList();
+            updateAgentList();
+            updateTimeline();
+            updateDataSummary();
+        }
+
+        // Update Dashboard
+        function updateDashboard() {
+            document.getElementById('total-projects').textContent = appData.projects.length;
+            document.getElementById('active-projects').textContent = appData.projects.filter(p => p.status === 'active' || p.status === 'poc').length;
+            
+            const allAgents = [...appData.agents.builtin, ...appData.agents.custom];
+            document.getElementById('total-agents').textContent = allAgents.length;
+            
+            document.getElementById('poc-success').textContent = appData.projects.filter(p => p.status === 'production' || p.status === 'completed').length;
+            
+            // Recent activities
+            const activities = document.getElementById('recent-activities');
+            const recentItems = [...appData.timeline].reverse().slice(0, 5);
+            
+            if (recentItems.length === 0) {
+                activities.innerHTML = '<p style="color: #666;">No recent activities</p>';
+            } else {
+                activities.innerHTML = recentItems.map(item => `
+                    <div style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                        <div style="font-weight: 500;">${item.title}</div>
+                        <div style="font-size: 12px; color: #666;">${new Date(item.date).toLocaleDateString()} - ${item.description}</div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Update Project List
+        function updateProjectList() {
+            const projectList = document.getElementById('project-list');
+            const projectDetails = document.getElementById('project-details');
+            
+            if (appData.projects.length === 0) {
+                projectList.innerHTML = '<p style="text-align: center; color: #666;">No projects yet. Click "New Project" to add one.</p>';
+                projectDetails.style.display = 'none';
+                return;
+            }
+            
+            projectList.innerHTML = appData.projects.map(project => `
+                <div class="project-item" onclick="showProjectDetails('${project.id}')">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">${project.customerName}</h3>
+                            <div class="project-meta">
+                                <span>📅 ${new Date(project.createdDate).toLocaleDateString()}</span>
+                                <span>📋 ${project.type}</span>
+                                ${project.competingSolution ? `<span>⚔️ vs ${project.competingSolution}</span>` : ''}
+                            </div>
+                        </div>
+                        <span class="project-status status-${project.status}">${project.status.toUpperCase()}</span>
+                    </div>
+                    <p class="project-description">${project.description || 'No description provided'}</p>
+                    ${project.mvpUseCase ? `
+                        <div style="margin-top: 15px; padding: 10px; background: #e3f2fd; border-radius: 4px;">
+                            <strong>MVP:</strong> ${project.mvpUseCase}
+                            ${project.mvpTimeline ? ` <span style="color: #666;">(${project.mvpTimeline})</span>` : ''}
+                        </div>
+                    ` : ''}
+                    ${project.agents && project.agents.length > 0 ? `
+                        <div class="project-agents">
+                            <strong>Agents:</strong>
+                            ${project.agents.slice(0, 3).map(agent => `<span class="agent-tag">${agent}</span>`).join('')}
+                            ${project.agents.length > 3 ? `<span class="agent-tag">+${project.agents.length - 3} more</span>` : ''}
+                        </div>
+                    ` : ''}
+                    <div style="margin-top: 15px; text-align: right;">
+                        <button class="btn btn-secondary" style="padding: 5px 15px; font-size: 12px;" onclick="event.stopPropagation(); editProject('${project.id}')">Edit</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Show detailed project view
+        function showProjectDetails(projectId) {
+            const project = appData.projects.find(p => p.id === projectId);
+            if (!project) return;
+            
+            const projectList = document.getElementById('project-list').parentElement;
+            const projectDetails = document.getElementById('project-details');
+            
+            projectList.style.display = 'none';
+            projectDetails.style.display = 'block';
+            
+            const allAgents = [...appData.agents.builtin, ...appData.agents.custom];
+            const projectAgents = project.agents ? project.agents.map(agentName => 
+                allAgents.find(a => a.name === agentName) || { name: agentName, description: 'Custom agent', status: 'new' }
+            ) : [];
+            
+            projectDetails.innerHTML = `
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <button class="btn btn-secondary" onclick="backToProjectList()">← Back to Projects</button>
+                        <div>
+                            <button class="btn btn-primary" onclick="editProject('${project.id}')">Edit Project</button>
+                            <button class="btn btn-warning" onclick="exportProject('${project.id}')">Export Project</button>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 300px; gap: 30px;">
+                        <div>
+                            <h1 style="color: #0078d4; margin-bottom: 10px;">${project.customerName}</h1>
+                            <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                                <span class="project-status status-${project.status}">${project.status.toUpperCase()}</span>
+                                <span style="color: #666;">Type: ${project.type}</span>
+                                ${project.competingSolution ? `<span style="color: #dc3545;">Competing: ${project.competingSolution}</span>` : ''}
+                            </div>
+                            
+                            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                                <h3 style="margin-bottom: 10px;">Project Overview</h3>
+                                <p>${project.description || 'No description provided'}</p>
+                            </div>
+                            
+                            ${project.mvpUseCase ? `
+                                <div style="background: #e3f2fd; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                                    <h3 style="color: #1976d2; margin-bottom: 10px;">🎯 MVP Use Case</h3>
+                                    <h4>${project.mvpUseCase}</h4>
+                                    ${project.mvpDescription ? `<p style="margin-top: 10px;">${project.mvpDescription}</p>` : ''}
+                                    ${project.mvpTimeline ? `<p style="margin-top: 10px;"><strong>Timeline:</strong> ${project.mvpTimeline}</p>` : ''}
+                                </div>
+                            ` : ''}
+                            
+                            <div style="margin-bottom: 20px;">
+                                <h3>Key Stakeholders</h3>
+                                <p>${project.stakeholders || 'Not specified'}</p>
+                            </div>
+                            
+                            <div style="margin-bottom: 20px;">
+                                <h3>Contract & Commercial Details</h3>
+                                <div style="background: #f8f9fa; padding: 15px; border-radius: 4px;">
+                                    ${project.contractDetails || 'No contract details provided'}
+                                </div>
+                            </div>
+                            
+                            ${project.notes ? `
+                                <div style="margin-bottom: 20px;">
+                                    <h3>Notes & Strategy</h3>
+                                    <div style="background: #fff3e0; padding: 15px; border-radius: 4px;">
+                                        ${project.notes}
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+                        
+                        <div>
+                            <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px;">
+                                <h3 style="margin-bottom: 15px;">Required Agents (${projectAgents.length})</h3>
+                                <div style="max-height: 400px; overflow-y: auto;">
+                                    ${projectAgents.map(agent => `
+                                        <div class="agent-item" style="margin-bottom: 10px;">
+                                            <div>
+                                                <div class="agent-name">${agent.name}</div>
+                                                <div style="font-size: 12px; color: #666;">${agent.description || 'No description'}</div>
+                                            </div>
+                                            <span class="agent-status status-${agent.status || 'new'}">${(agent.status || 'new').toUpperCase()}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            
+                            <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                <h3 style="margin-bottom: 15px;">Project Timeline</h3>
+                                <div style="font-size: 14px;">
+                                    <div style="margin-bottom: 10px;">
+                                        <strong>Created:</strong><br>
+                                        ${new Date(project.createdDate).toLocaleDateString()}
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <strong>Last Updated:</strong><br>
+                                        ${new Date(project.updatedDate).toLocaleDateString()}
+                                    </div>
+                                    ${project.mvpTimeline ? `
+                                        <div>
+                                            <strong>MVP Target:</strong><br>
+                                            ${project.mvpTimeline}
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function backToProjectList() {
+            document.getElementById('project-list').parentElement.style.display = 'block';
+            document.getElementById('project-details').style.display = 'none';
+        }
+
+        function exportProject(projectId) {
+            const project = appData.projects.find(p => p.id === projectId);
+            if (!project) return;
+            
+            const exportData = {
+                projects: [project],
+                agents: {
+                    custom: project.agents ? project.agents.map(agentName => {
+                        const customAgent = appData.agents.custom.find(a => a.name === agentName);
+                        return customAgent || null;
+                    }).filter(a => a !== null) : []
+                },
+                exportDate: new Date().toISOString()
+            };
+            
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${project.customerName.replace(/\s+/g, '-')}-project-export.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        // Update Agent List
+        function updateAgentList() {
+            const availableAgents = document.getElementById('available-agents');
+            const customAgents = document.getElementById('custom-agents');
+            
+            availableAgents.innerHTML = appData.agents.builtin.map(agent => `
+                <div class="agent-item">
+                    <div>
+                        <div class="agent-name">${agent.name}</div>
+                        <div style="font-size: 12px; color: #666;">${agent.description}</div>
+                    </div>
+                    <span class="agent-status status-${agent.status}">${agent.status.toUpperCase()}</span>
+                </div>
+            `).join('');
+            
+            if (appData.agents.custom.length === 0) {
+                customAgents.innerHTML = '<p style="color: #666;">No custom agents defined yet.</p>';
+            } else {
+                customAgents.innerHTML = appData.agents.custom.map(agent => `
+                    <div class="agent-item">
+                        <div>
+                            <div class="agent-name">${agent.name}</div>
+                            <div style="font-size: 12px; color: #666;">${agent.description}</div>
+                        </div>
+                        <span class="agent-status status-${agent.status}">${agent.status.toUpperCase()}</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Update Timeline
+        function updateTimeline() {
+            const timeline = document.getElementById('timeline');
+            
+            if (appData.timeline.length === 0) {
+                timeline.innerHTML = '<p style="color: #666;">No timeline events yet.</p>';
+                return;
+            }
+            
+            const sortedTimeline = [...appData.timeline].sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            timeline.innerHTML = sortedTimeline.map(item => `
+                <div class="timeline-item">
+                    <div class="timeline-date">${new Date(item.date).toLocaleDateString()}</div>
+                    <div class="timeline-content">
+                        <strong>${item.title}</strong>
+                        <p style="margin-top: 5px; color: #666;">${item.description}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Project Modal Functions
+        function openProjectModal(projectId = null) {
+            const modal = document.getElementById('project-modal');
+            const form = document.getElementById('project-form');
+            const title = document.getElementById('project-modal-title');
+            
+            form.reset();
+            
+            if (projectId) {
+                const project = appData.projects.find(p => p.id === projectId);
+                if (project) {
+                    title.textContent = 'Edit Project';
+                    document.getElementById('project-id').value = project.id;
+                    document.getElementById('customer-name').value = project.customerName;
+                    document.getElementById('project-status').value = project.status;
+                    document.getElementById('project-type').value = project.type;
+                    document.getElementById('project-description').value = project.description || '';
+                    document.getElementById('stakeholders').value = project.stakeholders || '';
+                    document.getElementById('competing-solution').value = project.competingSolution || '';
+                    document.getElementById('contract-details').value = project.contractDetails || '';
+                    document.getElementById('project-notes').value = project.notes || '';
+                    document.getElementById('mvp-use-case').value = project.mvpUseCase || '';
+                    document.getElementById('mvp-description').value = project.mvpDescription || '';
+                    document.getElementById('mvp-timeline').value = project.mvpTimeline || '';
+                }
+            } else {
+                title.textContent = 'New Project';
+            }
+            
+            // Populate agent checkboxes
+            const agentSelection = document.getElementById('agent-selection');
+            const allAgents = [...appData.agents.builtin, ...appData.agents.custom];
+            const currentProject = projectId ? appData.projects.find(p => p.id === projectId) : null;
+            
+            agentSelection.innerHTML = allAgents.map(agent => `
+                <label style="display: flex; align-items: center; gap: 5px;">
+                    <input type="checkbox" name="agents" value="${agent.name}" 
+                        ${currentProject && currentProject.agents && currentProject.agents.includes(agent.name) ? 'checked' : ''}>
+                    ${agent.name}
+                </label>
+            `).join('');
+            
+            modal.classList.add('active');
+        }
+
+        function closeProjectModal() {
+            document.getElementById('project-modal').classList.remove('active');
+        }
+
+        function editProject(projectId) {
+            openProjectModal(projectId);
+        }
+
+        // Agent Modal Functions
+        function openAgentModal() {
+            document.getElementById('agent-form').reset();
+            document.getElementById('agent-modal').classList.add('active');
+        }
+
+        function closeAgentModal() {
+            document.getElementById('agent-modal').classList.remove('active');
+        }
+
+        // Word Export Functions
+        function exportToWord() {
+            const wordContent = generateWordContent();
+            document.getElementById('word-export-content').textContent = wordContent;
+            document.getElementById('word-export-modal').classList.add('active');
+        }
+
+        function closeWordExportModal() {
+            document.getElementById('word-export-modal').classList.remove('active');
+        }
+
+        function generateWordContent() {
+            let content = '';
+            const separator = '='.repeat(80);
+            const subSeparator = '-'.repeat(60);
+            
+            // Header
+            content += 'AI AGENT IMPLEMENTATION TRACKER\n';
+            content += 'Microsoft Copilot Studio - Customer Projects\n';
+            content += `Generated: ${new Date().toLocaleString()}\n`;
+            content += separator + '\n\n';
+            
+            // Executive Summary
+            content += 'EXECUTIVE SUMMARY\n';
+            content += subSeparator + '\n';
+            content += `Total Projects: ${appData.projects.length}\n`;
+            content += `Active Projects: ${appData.projects.filter(p => p.status === 'active' || p.status === 'poc').length}\n`;
+            content += `Total Agents: ${[...appData.agents.builtin, ...appData.agents.custom].length}\n`;
+            content += `Successful POCs: ${appData.projects.filter(p => p.status === 'production' || p.status === 'completed').length}\n\n`;
+            
+            // Projects Section
+            content += separator + '\n';
+            content += 'CUSTOMER PROJECTS\n';
+            content += separator + '\n\n';
+            
+            if (appData.projects.length === 0) {
+                content += 'No projects recorded.\n\n';
+            } else {
+                appData.projects.forEach((project, index) => {
+                    content += `PROJECT ${index + 1}: ${project.customerName.toUpperCase()}\n`;
+                    content += subSeparator + '\n';
+                    
+                    content += `Status: ${project.status.toUpperCase()}\n`;
+                    content += `Type: ${project.type}\n`;
+                    content += `Created: ${new Date(project.createdDate).toLocaleDateString()}\n`;
+                    content += `Updated: ${new Date(project.updatedDate).toLocaleDateString()}\n`;
+                    
+                    if (project.competingSolution) {
+                        content += `Competing Solution: ${project.competingSolution}\n`;
+                    }
+                    
+                    content += '\n';
+                    
+                    if (project.description) {
+                        content += 'Project Description:\n';
+                        content += project.description + '\n\n';
+                    }
+                    
+                    if (project.mvpUseCase) {
+                        content += 'MVP USE CASE:\n';
+                        content += `• ${project.mvpUseCase}\n`;
+                        if (project.mvpDescription) {
+                            content += '\nMVP Description:\n';
+                            content += project.mvpDescription + '\n';
+                        }
+                        if (project.mvpTimeline) {
+                            content += `\nMVP Timeline: ${project.mvpTimeline}\n`;
+                        }
+                        content += '\n';
+                    }
+                    
+                    if (project.stakeholders) {
+                        content += 'Key Stakeholders:\n';
+                        content += project.stakeholders + '\n\n';
+                    }
+                    
+                    if (project.contractDetails) {
+                        content += 'Contract & Commercial Details:\n';
+                        content += project.contractDetails + '\n\n';
+                    }
+                    
+                    if (project.agents && project.agents.length > 0) {
+                        content += 'Required Agents:\n';
+                        project.agents.forEach(agent => {
+                            content += `• ${agent}\n`;
+                        });
+                        content += '\n';
+                    }
+                    
+                    if (project.notes) {
+                        content += 'Notes & Strategy:\n';
+                        content += project.notes + '\n\n';
+                    }
+                    
+                    content += '\n';
+                });
+            }
+            
+            // Agents Section
+            content += separator + '\n';
+            content += 'AGENT LIBRARY\n';
+            content += separator + '\n\n';
+            
+            content += 'BUILT-IN AGENTS\n';
+            content += subSeparator + '\n';
+            appData.agents.builtin.forEach(agent => {
+                content += `• ${agent.name} (${agent.status.toUpperCase()})\n`;
+                content += `  ${agent.description}\n`;
+                content += `  Category: ${agent.category}\n\n`;
+            });
+            
+            if (appData.agents.custom.length > 0) {
+                content += '\nCUSTOM AGENTS\n';
+                content += subSeparator + '\n';
+                appData.agents.custom.forEach(agent => {
+                    content += `• ${agent.name} (${agent.status.toUpperCase()})\n`;
+                    content += `  ${agent.description}\n`;
+                    content += `  Category: ${agent.category}\n\n`;
+                });
+            }
+            
+            // Timeline Section
+            content += separator + '\n';
+            content += 'PROJECT TIMELINE\n';
+            content += separator + '\n\n';
+            
+            if (appData.timeline.length === 0) {
+                content += 'No timeline events recorded.\n\n';
+            } else {
+                const sortedTimeline = [...appData.timeline].sort((a, b) => new Date(b.date) - new Date(a.date));
+                sortedTimeline.forEach(event => {
+                    content += `${new Date(event.date).toLocaleDateString()} - ${event.title}\n`;
+                    content += `${event.description}\n\n`;
+                });
+            }
+            
+            content += separator + '\n';
+            content += 'END OF REPORT\n';
+            
+            return content;
+        }
+
+        function copyWordExport() {
+            const content = document.getElementById('word-export-content').textContent;
+            navigator.clipboard.writeText(content).then(() => {
+                alert('Content copied to clipboard! You can now paste it into Microsoft Word.');
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                alert('Failed to copy. Please select the text manually and copy it.');
+            });
+        }
+
+        function downloadWordExport() {
+            const content = document.getElementById('word-export-content').textContent;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `AI-Agent-Projects-Report-${new Date().toISOString().split('T')[0]}.txt`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        // Form Submissions
+        document.getElementById('project-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const projectId = document.getElementById('project-id').value;
+            const selectedAgents = Array.from(document.querySelectorAll('input[name="agents"]:checked'))
+                .map(cb => cb.value);
+            
+            const projectData = {
+                id: projectId || Date.now().toString(),
+                customerName: document.getElementById('customer-name').value,
+                status: document.getElementById('project-status').value,
+                type: document.getElementById('project-type').value,
+                description: document.getElementById('project-description').value,
+                stakeholders: document.getElementById('stakeholders').value,
+                competingSolution: document.getElementById('competing-solution').value,
+                contractDetails: document.getElementById('contract-details').value,
+                agents: selectedAgents,
+                notes: document.getElementById('project-notes').value,
+                mvpUseCase: document.getElementById('mvp-use-case').value,
+                mvpDescription: document.getElementById('mvp-description').value,
+                mvpTimeline: document.getElementById('mvp-timeline').value,
+                createdDate: projectId ? 
+                    appData.projects.find(p => p.id === projectId).createdDate : 
+                    new Date().toISOString(),
+                updatedDate: new Date().toISOString()
+            };
+            
+            if (projectId) {
+                const index = appData.projects.findIndex(p => p.id === projectId);
+                appData.projects[index] = projectData;
+                
+                appData.timeline.push({
+                    date: new Date().toISOString(),
+                    title: `Updated ${projectData.customerName} project`,
+                    description: `Status: ${projectData.status}, Type: ${projectData.type}`
+                });
+            } else {
+                appData.projects.push(projectData);
+                
+                appData.timeline.push({
+                    date: new Date().toISOString(),
+                    title: `Created new project for ${projectData.customerName}`,
+                    description: `${projectData.type} implementation with ${selectedAgents.length} agents`
+                });
+            }
+            
+            saveData();
+            updateUI();
+            closeProjectModal();
+        });
+
+        document.getElementById('agent-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const agentData = {
+                name: document.getElementById('agent-name').value,
+                description: document.getElementById('agent-description').value,
+                category: document.getElementById('agent-category').value,
+                status: document.getElementById('agent-status').value
+            };
+            
+            appData.agents.custom.push(agentData);
+            
+            appData.timeline.push({
+                date: new Date().toISOString(),
+                title: `Added custom agent: ${agentData.name}`,
+                description: agentData.description
+            });
+            
+            saveData();
+            updateUI();
+            closeAgentModal();
+        });
+
+        // Data Management Functions
+        function exportData() {
+            const dataStr = JSON.stringify(appData, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `project-tracker-export-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            alert('Data exported successfully!');
+        }
+
+        // Modified import function to always merge
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    
+                    // Store the imported data for preview
+                    pendingImport = importedData;
+                    
+                    showImportPreview();
+                } catch (error) {
+                    alert('Error reading file: ' + error.message);
+                    pendingImport = null;
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function showImportPreview() {
+            if (!pendingImport) return;
+            
+            const preview = document.getElementById('import-preview');
+            const newProjects = document.getElementById('import-new-projects');
+            const updateProjects = document.getElementById('import-update-projects');
+            const agentCount = document.getElementById('import-agent-count');
+            const timelineCount = document.getElementById('import-timeline-count');
+            const details = document.getElementById('import-details');
+            
+            // Calculate merge statistics
+            let newProjectCount = 0;
+            let updateProjectCount = 0;
+            let newAgentCount = 0;
+            let newTimelineCount = 0;
+            
+            // Check projects
+            if (pendingImport.projects && Array.isArray(pendingImport.projects)) {
+                pendingImport.projects.forEach(project => {
+                    if (appData.projects.some(p => p.id === project.id)) {
+                        updateProjectCount++;
+                    } else {
+                        newProjectCount++;
+                    }
+                });
+            }
+            
+            // Check agents
+            if (pendingImport.agents) {
+                if (pendingImport.agents.builtin && Array.isArray(pendingImport.agents.builtin)) {
+                    pendingImport.agents.builtin.forEach(agent => {
+                        if (!appData.agents.builtin.some(a => a.name === agent.name)) {
+                            newAgentCount++;
+                        }
+                    });
+                }
+                if (pendingImport.agents.custom && Array.isArray(pendingImport.agents.custom)) {
+                    pendingImport.agents.custom.forEach(agent => {
+                        if (!appData.agents.custom.some(a => a.name === agent.name)) {
+                            newAgentCount++;
+                        }
+                    });
+                }
+            }
+            
+            // Check timeline
+            if (pendingImport.timeline && Array.isArray(pendingImport.timeline)) {
+                pendingImport.timeline.forEach(event => {
+                    if (!appData.timeline.some(e => e.date === event.date && e.title === event.title)) {
+                        newTimelineCount++;
+                    }
+                });
+            }
+            
+            newProjects.textContent = newProjectCount;
+            updateProjects.textContent = updateProjectCount;
+            agentCount.textContent = newAgentCount;
+            timelineCount.textContent = newTimelineCount;
+            
+            // Show project details
+            let detailsHTML = '';
+            
+            if (newProjectCount > 0 || updateProjectCount > 0) {
+                detailsHTML += '<h4>Projects:</h4><ul style="list-style: none; padding: 0;">';
+                
+                if (pendingImport.projects && Array.isArray(pendingImport.projects)) {
+                    pendingImport.projects.forEach(project => {
+                        const isUpdate = appData.projects.some(p => p.id === project.id);
+                        detailsHTML += `
+                            <li style="margin-bottom: 10px; padding: 10px; background: #f8f9fa; border-radius: 4px;">
+                                <strong>${project.customerName}</strong> - ${project.type} (${project.status})
+                                <span style="margin-left: 10px; padding: 2px 8px; background: ${isUpdate ? '#fff3e0' : '#e8f5e9'}; color: ${isUpdate ? '#f57c00' : '#388e3c'}; border-radius: 3px; font-size: 12px;">
+                                    ${isUpdate ? 'UPDATE' : 'NEW'}
+                                </span>
+                                ${project.mvpUseCase ? `<br><small>MVP: ${project.mvpUseCase}</small>` : ''}
+                            </li>
+                        `;
+                    });
+                }
+                detailsHTML += '</ul>';
+            }
+            
+            if (newAgentCount > 0) {
+                detailsHTML += '<h4>New Agents to Add:</h4><ul style="list-style: none; padding: 0;">';
+                
+                if (pendingImport.agents) {
+                    if (pendingImport.agents.builtin && Array.isArray(pendingImport.agents.builtin)) {
+                        pendingImport.agents.builtin.forEach(agent => {
+                            if (!appData.agents.builtin.some(a => a.name === agent.name)) {
+                                detailsHTML += `<li style="margin-bottom: 5px;">• ${agent.name} (Built-in)</li>`;
+                            }
+                        });
+                    }
+                    if (pendingImport.agents.custom && Array.isArray(pendingImport.agents.custom)) {
+                        pendingImport.agents.custom.forEach(agent => {
+                            if (!appData.agents.custom.some(a => a.name === agent.name)) {
+                                detailsHTML += `<li style="margin-bottom: 5px;">• ${agent.name} (Custom)</li>`;
+                            }
+                        });
+                    }
+                }
+                detailsHTML += '</ul>';
+            }
+            
+            details.innerHTML = detailsHTML;
+            preview.classList.add('active');
+        }
+
+        function confirmImport() {
+            if (!pendingImport) return;
+            
+            // Perform the merge
+            const mergedData = mergeData(appData, pendingImport);
+            
+            // Add import event to timeline
+            mergedData.timeline.push({
+                date: new Date().toISOString(),
+                title: 'Data import completed',
+                description: `Merged data from import file`
+            });
+            
+            // Update app data
+            appData = mergedData;
+            
+            saveData();
+            updateUI();
+            cancelImport();
+            
+            alert('Data successfully merged!');
+        }
+
+        function cancelImport() {
+            pendingImport = null;
+            document.getElementById('import-preview').classList.remove('active');
+            document.getElementById('import-file').value = '';
+        }
+
+        function clearData() {
+            if (confirm('This will delete all projects and custom agents. Are you sure?')) {
+                if (confirm('This action cannot be undone. Please confirm again.')) {
+                    appData = {
+                        projects: [],
+                        agents: {
+                            builtin: appData.agents.builtin, // Keep built-in agents
+                            custom: []
+                        },
+                        timeline: []
+                    };
+                    saveData();
+                    updateUI();
+                    alert('All data has been cleared.');
+                }
+            }
+        }
+
+        function updateDataSummary() {
+            const summary = document.getElementById('data-summary');
+            const stats = {
+                'Total Projects': appData.projects.length,
+                'Custom Agents': appData.agents.custom.length,
+                'Built-in Agents': appData.agents.builtin.length,
+                'Timeline Events': appData.timeline.length,
+                'Data Size': (JSON.stringify(appData).length / 1024).toFixed(2) + ' KB',
+                'Last Updated': new Date().toLocaleString()
+            };
+            
+            summary.textContent = JSON.stringify(stats, null, 2);
+        }
+
+        // Initialize with data from uploaded file
+        function initializeFromUploadedFile() {
+            // Try to load from the uploaded JSON file
+            if (typeof window.uploadedProjectData !== 'undefined') {
+                // Merge uploaded data with any existing data
+                const existingData = localStorage.getItem('projectTrackerData');
+                if (existingData) {
+                    const parsed = JSON.parse(existingData);
+                    appData = mergeData(parsed, window.uploadedProjectData);
+                } else {
+                    appData = window.uploadedProjectData;
+                }
+                saveData();
+                updateUI();
+            } else {
+                // No uploaded data, load from localStorage
+                loadData();
+            }
+        }
+
+        // Initialize app
+        window.addEventListener('DOMContentLoaded', () => {
+            // Check if there's data in the uploaded JSON
+            const uploadedJsonElement = document.querySelector('script[type="application/json"]');
+            if (uploadedJsonElement) {
+                try {
+                    const uploadedData = JSON.parse(uploadedJsonElement.textContent);
+                    // Load existing data first
+                    const saved = localStorage.getItem('projectTrackerData');
+                    if (saved) {
+                        appData = JSON.parse(saved);
+                        // Merge with uploaded data
+                        appData = mergeData(appData, uploadedData);
+                    } else {
+                        appData = uploadedData;
+                    }
+                    saveData();
+                } catch (e) {
+                    console.log('No uploaded data found, loading from localStorage');
+                    loadData();
+                }
+            } else {
+                loadData();
+            }
+            
+            updateUI();
+        });
+
+        // Close modals on background click
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+        });
+    </script>
+
+    <!-- Optional: Initialize with the uploaded data -->
+    <script type="application/json" id="initial-data">
+    {
+        "projects": [],
+        "agents": {
+            "builtin": [
+                { "name": "SharePointDocumentExtractor", "description": "Extract content from SharePoint documents", "category": "integration", "status": "existing" },
+                { "name": "Dynamics365CRUD", "description": "CRUD operations with Dynamics 365", "category": "integration", "status": "existing" },
+                { "name": "PowerPoint", "description": "Generate PowerPoint presentations", "category": "other", "status": "existing" },
+                { "name": "ManageMemory", "description": "Memory management for conversations", "category": "other", "status": "existing" },
+                { "name": "ContractTemplate", "description": "Generate contracts from templates", "category": "contract", "status": "new" },
+                { "name": "ContractAnalysis", "description": "Analyze contract content and risks", "category": "analysis", "status": "new" },
+                { "name": "ContractRouting", "description": "Route contracts for approval", "category": "workflow", "status": "new" },
+                { "name": "ContractMonitoring", "description": "Monitor contract lifecycle", "category": "contract", "status": "new" }
+            ],
+            "custom": []
+        },
+        "timeline": []
+    }
+    </script>
+</body>
+</html>
