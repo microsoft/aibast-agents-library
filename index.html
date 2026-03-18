@@ -9,7 +9,7 @@
 
         :root {
             --primary: #58a6ff;
-            --primary-dark: #388bfd;
+            --primary-dark: #1f6feb;
             --secondary: #1f6feb;
             --accent: #d29922;
             --success: #3fb950;
@@ -18,12 +18,12 @@
             --info: #58a6ff;
             --bg-light: #0d1117;
             --bg-white: #161b22;
-            --text-dark: #e6edf3;
+            --text-dark: #c9d1d9;
             --text-medium: #8b949e;
             --text-light: #484f58;
             --border: #21262d;
-            --shadow: 0 2px 4px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
-            --shadow-lg: 0 8px 16px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2);
+            --shadow: none;
+            --shadow-lg: none;
         }
 
         * {
@@ -1074,146 +1074,107 @@
         }
 
         /* ══════════════════════════════════════════════════════════
-           DARK MODE OVERRIDE — forces dark theme on ALL elements
-           including inline styles from the original light theme.
+           DARK MODE — matches RAPP Brainstem chat UI exactly.
+           Body: #0d1117, Cards: #161b22, Borders: #21262d
+           Text: #c9d1d9, Muted: #8b949e, Accent: #1f6feb
            ══════════════════════════════════════════════════════════ */
 
-        /* Kill ALL inline background gradients and force dark cards */
+        /* Kill ALL inline gradients — flat dark cards only */
         [style*="linear-gradient"] {
             background: #161b22 !important;
             border: 1px solid #21262d !important;
+            border-radius: 8px !important;
         }
+        [style*="linear-gradient"] * { color: #c9d1d9 !important; }
+        [style*="linear-gradient"] strong { color: #e6edf3 !important; }
+        [style*="linear-gradient"] a { color: #58a6ff !important; }
 
-        /* Colored accent cards — use left border instead of full bg */
-        [style*="linear-gradient"][style*="color: white"],
-        [style*="linear-gradient"][style*="color: #e6edf3"] {
-            color: #e6edf3 !important;
+        /* Named card classes */
+        .priority-card, .highlight-box, .non-technical-only,
+        .metric-card, .tool-card, .stat-card {
             background: #161b22 !important;
-        }
-
-        /* Priority/highlight cards with green bg */
-        .priority-card, .highlight-box {
-            background: #161b22 !important;
-            color: #e6edf3 !important;
+            color: #c9d1d9 !important;
             border: 1px solid #21262d !important;
+            box-shadow: none !important;
         }
+        .tool-card:hover { border-color: #1f6feb !important; }
+        .stat-card .stat-number { color: #58a6ff !important; }
 
-        /* Non-technical callouts */
-        .non-technical-only {
-            background: #161b22 !important;
-            color: #e6edf3 !important;
-            border: 1px solid #21262d !important;
-        }
-
-        /* Metric cards */
-        .metric-card, [class*="metric"] {
-            background: #161b22 !important;
-            color: #e6edf3 !important;
-            border: 1px solid #21262d !important;
-        }
-
-        /* Tool cards */
-        .tool-card {
-            background: #161b22 !important;
-            color: #e6edf3 !important;
-            border: 1px solid #21262d !important;
-        }
-        .tool-card:hover {
-            border-color: var(--primary) !important;
-        }
-
-        /* Icon containers with gradients */
-        [style*="width: 60px"][style*="height: 60px"][style*="linear-gradient"] {
+        /* Icon circles */
+        [style*="width: 60px"][style*="height: 60px"] {
             background: #21262d !important;
-            border: 1px solid #30363d !important;
+            border: none !important;
         }
 
-        /* All bold text inside dark cards */
-        [style*="linear-gradient"] strong,
-        .priority-card strong,
-        .highlight-box strong,
-        .non-technical-only strong {
-            color: #e6edf3 !important;
-        }
-
-        /* Fix any remaining white/light backgrounds */
-        [style*="background: #f3f4f6"],
-        [style*="background: #e5e7eb"],
-        [style*="background: #fff"],
-        [style*="background: white"] {
+        /* Fix ALL light backgrounds */
+        [style*="background: #f"], [style*="background: #e"],
+        [style*="background: white"], [style*="background: #fff"] {
             background: #161b22 !important;
         }
 
-        /* Fix text colors that were set for light mode */
-        [style*="color: #1e293b"],
-        [style*="color: #242424"],
-        [style*="color: #333"],
-        [style*="color: #555"],
-        [style*="color: #374151"] {
-            color: #e6edf3 !important;
+        /* Fix ALL dark-on-light text */
+        [style*="color: #1"], [style*="color: #2"], [style*="color: #3"],
+        [style*="color: #4"], [style*="color: #5"] {
+            color: #c9d1d9 !important;
         }
 
-        [style*="color: #475569"],
-        [style*="color: #6b7280"],
-        [style*="color: #616161"] {
-            color: #8b949e !important;
-        }
-
-        /* Fix borders that were light */
-        [style*="border: 1px solid #e5e7eb"],
-        [style*="border: 1px solid #e0e0e0"],
-        [style*="border: 2px solid #e5e7eb"] {
+        /* Fix light borders */
+        [style*="border"][style*="#e"], [style*="border"][style*="#d"],
+        [style*="border"][style*="#c"], [style*="border"][style*="#b"] {
             border-color: #21262d !important;
         }
 
-        /* Fix code blocks and pre elements */
+        /* Code blocks */
         pre, code {
             background: #0d1117 !important;
-            color: #e6edf3 !important;
+            color: #c9d1d9 !important;
             border: 1px solid #21262d !important;
         }
 
-        /* Stat cards — numbers in accent color */
-        .stat-card .stat-number {
-            color: var(--primary) !important;
-        }
-
-        /* Top bar stays gradient (intentional) */
+        /* Top bar — flat dark blue, not gradient */
         .top-bar {
-            background: linear-gradient(135deg, #1f6feb 0%, #0c2d48 100%) !important;
+            background: #161b22 !important;
+            border-bottom: 1px solid #21262d !important;
+            box-shadow: none !important;
         }
+        .top-bar h1 { color: #e6edf3 !important; }
 
-        /* Sidebar active item */
-        .nav-item.active {
-            background: rgba(88,166,255,0.1) !important;
-        }
+        /* Sidebar */
+        .nav-item.active { background: rgba(31,111,235,0.1) !important; }
+        .nav-item:hover { background: #21262d !important; }
 
-        /* Progress bar keeps its gradient (intentional) */
-        .progress {
-            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%) !important;
-        }
+        /* Progress bar — only place with color */
+        .progress { background: #1f6feb !important; }
 
-        /* Comparison table header */
+        /* Tables */
         .comparison-table th {
-            background: #0c2d48 !important;
+            background: #161b22 !important;
+            color: #58a6ff !important;
+            border-bottom: 2px solid #1f6feb !important;
+        }
+        .comparison-table td { color: #c9d1d9 !important; }
+
+        /* Links */
+        a { color: #58a6ff; }
+        a:hover { color: #79c0ff; }
+
+        /* Buttons — match brainstem Send button */
+        .btn, .btn-outline {
+            background: transparent !important;
+            border: 1px solid #c9d1d9 !important;
+            color: #c9d1d9 !important;
+        }
+        .btn:hover, .btn-outline:hover {
+            background: #21262d !important;
+            border-color: #58a6ff !important;
             color: #58a6ff !important;
         }
 
-        /* Section boxes, content cards, any white containers */
-        .section-content, .content-area, .main-content {
-            background: transparent !important;
-        }
-
-        /* Links throughout */
-        a {
-            color: #58a6ff;
-        }
-
-        /* Scrollbar for dark mode */
+        /* Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #0d1117; }
-        ::-webkit-scrollbar-thumb { background: #30363d; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #484f58; }
+        ::-webkit-scrollbar-thumb { background: #21262d; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #30363d; }
 
     </style>
 </head>
