@@ -12,10 +12,10 @@
             --primary: #58a6ff;
             --primary-dark: #1f6feb;
             --secondary: #1f6feb;
-            --accent: #d29922;
+            --accent: #58a6ff;
             --success: #3fb950;
             --danger: #f85149;
-            --warning: #d29922;
+            --warning: #58a6ff;
             --info: #58a6ff;
             --bg-light: #0d1117;
             --bg-white: #161b22;
@@ -132,7 +132,7 @@
         }
 
         .track-badge.business {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            background: linear-gradient(135deg, #58a6ff 0%, #58a6ff 100%);
             color: white;
         }
 
@@ -472,12 +472,12 @@
         }
 
         .nav-item.audit {
-            color: var(--warning);
+            color: var(--text-medium);
         }
 
         .nav-item.audit.active {
-            color: var(--warning);
-            border-left-color: var(--warning);
+            color: var(--primary);
+            border-left-color: var(--primary);
         }
 
         .nav-icon {
@@ -583,7 +583,7 @@
         }
 
         .badge.audit {
-            background: linear-gradient(135deg, var(--warning) 0%, #d97706 100%);
+            background: linear-gradient(135deg, var(--warning) 0%, #58a6ff 100%);
             color: white;
         }
 
@@ -770,7 +770,7 @@
         }
 
         .highlight-box {
-            background: linear-gradient(135deg, #2d2006 0%, #3d2b08 100%);
+            background: linear-gradient(135deg, #161b22 0%, #161b22 100%);
             border-left: 4px solid var(--warning);
             border-radius: 12px;
             padding: 25px;
@@ -780,7 +780,7 @@
         .highlight-box h4 {
             font-size: 18px;
             font-weight: 700;
-            color: #d29922;
+            color: #58a6ff;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
@@ -1188,14 +1188,14 @@
 
     <!-- No JavaScript Warning -->
     <noscript>
-        <div style="position: fixed; top: 0; left: 0; right: 0; background: #2d2006; color: #d29922; padding: 15px 20px; text-align: center; z-index: 10000; font-weight: 600; box-shadow: 0 4px 6px rgba(0,0,0,0.1); font-family: -apple-system, BlinkMacSystemFont, sans-serif;">
+        <div style="position: fixed; top: 0; left: 0; right: 0; background: #161b22; color: #58a6ff; padding: 15px 20px; text-align: center; z-index: 10000; font-weight: 600; box-shadow: 0 4px 6px rgba(0,0,0,0.1); font-family: -apple-system, BlinkMacSystemFont, sans-serif;">
             ⚠️ JavaScript is disabled. All 19 sections are visible below. Use the sidebar links or scroll to navigate. For interactive features, please enable JavaScript.
         </div>
         <div style="height: 50px;"></div>
     </noscript>
 
     <!-- Experimental Disclaimer Banner -->
-    <div style="background: #1c1f26; border-bottom: 2px solid #d29922; padding: 12px 20px; text-align: center; font-family: 'Segoe UI', -apple-system, sans-serif; font-size: 13px; color: #d29922; z-index: 9999;">
+    <div style="background: #1c1f26; border-bottom: 2px solid #58a6ff; padding: 12px 20px; text-align: center; font-family: 'Segoe UI', -apple-system, sans-serif; font-size: 13px; color: #58a6ff; z-index: 9999;">
         ⚠️ <strong>IMPORTANT:</strong> This is an experimental project managed by a v-team from the Artificial Intelligence Business Applications Specialist Team (AIBAST), not an officially supported Microsoft product. Agent templates are starting points — human review remains important. <a href="https://github.com/microsoft/aibast-agents-library/issues" style="color: #58a6ff;">File an issue</a> to help us improve.
     </div>
 
@@ -1517,7 +1517,7 @@
                 <p class="section-subtitle">A 4-layer universal intelligence system designed for infinite scale and zero-downtime updates.</p>
             </div>
 
-            <div class="non-technical-only" style="background: #2d2006; color: #e6edf3; border-left: 3px solid #d29922; padding: 25px; border-radius: 12px; margin-bottom: 30px;">
+            <div class="non-technical-only" style="background: #161b22; color: #e6edf3; border-left: 3px solid #58a6ff; padding: 25px; border-radius: 12px; margin-bottom: 30px;">
                 <h3 style="color: white; margin-top: 0;">💼 Why Architecture Matters (Business View)</h3>
                 <p style="color: rgba(255,255,255,0.95);">The architecture enables <strong>rapid agent updates</strong> with zero downtime, <strong>infinite horizontal scaling</strong> for concurrent users, and <strong>universal memory</strong> so context persists across Teams, Web, and Mobile. This translates to faster iteration cycles, lower operational costs, and seamless user experiences.</p>
             </div>
@@ -1794,7 +1794,7 @@ def handle_request(user_message, user_guid):
             <div class="step-section">
                 <h3>⚙️ The Buzz Saw: Heavy Lifting (Building Toward Automation)</h3>
 
-                <div class="highlight-box" style="background: #2d2006; color: #e6edf3; border-left: 3px solid #d29922; border: none; margin-bottom: 20px;">
+                <div class="highlight-box" style="background: #161b22; color: #e6edf3; border-left: 3px solid #58a6ff; border: none; margin-bottom: 20px;">
                     <h4 style="color: white; margin-top: 0;">📍 Current State</h4>
                     <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;">This framework is currently <strong>manual-first</strong> with a roadmap to automate key steps. We're building the "buzz saw" step by step, proving each process manually before automating it.</p>
                 </div>
@@ -2177,12 +2177,12 @@ def handle_request(user_message, user_guid):
                 <p><strong>Type:</strong> M365 Copilot Studio Declarative Agent</p>
                 <p><strong>Location:</strong> <a href="https://m365.cloud.microsoft:443/chat/?titleId=T_afded7db-f8c5-703a-5502-2cc9f31b66da&source=embedded-builder" target="_blank">Open Transcript-to-Project Agent</a></p>
 
-                <div class="code-block" style="background: #fff3e0; border-left: 4px solid #f57c00; margin-top: 15px;">
-                    <div class="code-header" style="background: #ffb74d; border-bottom: 1px solid #f57c00; cursor: pointer;" onclick="toggleFallback('transcript-fallback')">
+                <div class="code-block" style="background: #fff3e0; border-left: 4px solid #21262d; margin-top: 15px;">
+                    <div class="code-header" style="background: #ffb74d; border-bottom: 1px solid #21262d; cursor: pointer;" onclick="toggleFallback('transcript-fallback')">
                         <span class="code-language" style="color: #e6edf3; font-weight: 600;">⚠️ Manual Fallback: Click to expand prompt (paste into Copilot if agent link isn't working)</span>
                         <button class="copy-btn" onclick="event.stopPropagation(); copyCode(this.parentElement.nextElementSibling)">Copy</button>
                     </div>
-                    <pre id="transcript-fallback" style="display: none; white-space: pre-wrap; word-wrap: break-word; color: #e6edf3; background: var(--bg-white); padding: 20px; margin: 0; border-top: 2px solid #d29922;">You are a project data extraction assistant. Analyze the meeting transcript below and extract structured project information in JSON format that can be imported into the AI Agent Implementation Tracker.
+                    <pre id="transcript-fallback" style="display: none; white-space: pre-wrap; word-wrap: break-word; color: #e6edf3; background: var(--bg-white); padding: 20px; margin: 0; border-top: 2px solid #58a6ff;">You are a project data extraction assistant. Analyze the meeting transcript below and extract structured project information in JSON format that can be imported into the AI Agent Implementation Tracker.
 
 **REQUIRED OUTPUT FORMAT:**
 Return valid JSON with this exact structure (copy this template and fill in the values):
@@ -2670,7 +2670,7 @@ Tone: Professional but approachable. We're confirming we heard them correctly, n
                 <span class="badge manual">MANUAL</span>
             </div>
 
-            <div class="non-technical-only" style="background: #2d2006; color: #e6edf3; border-left: 3px solid #d29922; padding: 25px; border-radius: 12px; margin-bottom: 30px;">
+            <div class="non-technical-only" style="background: #161b22; color: #e6edf3; border-left: 3px solid #58a6ff; padding: 25px; border-radius: 12px; margin-bottom: 30px;">
                 <h3 style="color: white; margin-top: 0;">💼 Business Summary</h3>
                 <p style="color: rgba(255,255,255,0.95);"><strong>Current state:</strong> Team manually creates agent code using templates and patterns. <strong>Vision:</strong> AI-assisted generation to accelerate development.</p>
                 <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;"><strong>Goal:</strong> Reduce agent development time from 2-3 weeks per agent to hours with reusable templates and tooling. Build library of patterns for consistency.</p>
@@ -2691,12 +2691,12 @@ Tone: Professional but approachable. We're confirming we heard them correctly, n
                 <h4>🛠️ Development Tool: RAPP Agent Generator</h4>
                 <p><strong>Location:</strong> <a href="https://m365.cloud.microsoft/chat/?titleId=T_04778775-1214-29c8-3bc4-218e26088499&source=embedded-builder&auth=2" target="_blank">Open RAPP Agent Generator</a></p>
 
-                <div class="code-block" style="background: #fff3e0; border-left: 4px solid #f57c00; margin-top: 15px;">
-                    <div class="code-header" style="background: #ffb74d; border-bottom: 1px solid #f57c00; cursor: pointer;" onclick="toggleFallback('agent-generator-fallback')">
+                <div class="code-block" style="background: #fff3e0; border-left: 4px solid #21262d; margin-top: 15px;">
+                    <div class="code-header" style="background: #ffb74d; border-bottom: 1px solid #21262d; cursor: pointer;" onclick="toggleFallback('agent-generator-fallback')">
                         <span class="code-language" style="color: #e6edf3; font-weight: 600;">⚠️ Manual Fallback: Click to expand prompt (paste into Copilot if agent link isn't working)</span>
                         <button class="copy-btn" onclick="event.stopPropagation(); copyCode(this.parentElement.nextElementSibling)">Copy</button>
                     </div>
-                    <pre id="agent-generator-fallback" style="display: none; white-space: pre-wrap; word-wrap: break-word; color: #e6edf3; background: var(--bg-white); padding: 20px; margin: 0; border-top: 2px solid #d29922;">You are a Python agent code generator for the Microsoft AI BAST RAPP framework. Generate production-ready agent code that follows the BasicAgent pattern and can be deployed to Azure Functions.
+                    <pre id="agent-generator-fallback" style="display: none; white-space: pre-wrap; word-wrap: break-word; color: #e6edf3; background: var(--bg-white); padding: 20px; margin: 0; border-top: 2px solid #58a6ff;">You are a Python agent code generator for the Microsoft AI BAST RAPP framework. Generate production-ready agent code that follows the BasicAgent pattern and can be deployed to Azure Functions.
 
 **CRITICAL REQUIREMENTS:**
 1. Each agent must inherit from BasicAgent
@@ -3867,12 +3867,12 @@ scope a Phase 2 project with those additional capabilities. Sound good?"</code><
                     <p><strong>Location:</strong> <a href="https://m365.cloud.microsoft:443/chat/?titleId=T_9c21fece-1d32-64df-b68d-db4d0a3cc446&source=embedded-builder" target="_blank">Open Video Demo Generator</a></p>
                     <p><strong>Local Tool:</strong> <a href="tools/localfirst_chat_animation_studio_tool.html" target="_blank">Open Local-First Chat Animation Studio</a></p>
 
-                    <div class="code-block" style="background: #fff3e0; border-left: 4px solid #f57c00; margin-top: 15px;">
-                        <div class="code-header" style="background: #ffb74d; border-bottom: 1px solid #f57c00; cursor: pointer;" onclick="toggleFallback('video-demo-fallback')">
+                    <div class="code-block" style="background: #fff3e0; border-left: 4px solid #21262d; margin-top: 15px;">
+                        <div class="code-header" style="background: #ffb74d; border-bottom: 1px solid #21262d; cursor: pointer;" onclick="toggleFallback('video-demo-fallback')">
                             <span class="code-language" style="color: #e6edf3; font-weight: 600;">⚠️ Manual Fallback: Click to expand prompt (paste into Copilot if agent link isn't working)</span>
                             <button class="copy-btn" onclick="event.stopPropagation(); copyCode(this.parentElement.nextElementSibling)">Copy</button>
                         </div>
-                        <pre id="video-demo-fallback" style="display: none; white-space: pre-wrap; word-wrap: break-word; color: #e6edf3; background: var(--bg-white); padding: 20px; margin: 0; border-top: 2px solid #d29922;">You are a demo video JSON generator for the Microsoft AI BAST RAPP framework. Generate structured demo configurations that work with the Local-First Chat Animation Studio tool.
+                        <pre id="video-demo-fallback" style="display: none; white-space: pre-wrap; word-wrap: break-word; color: #e6edf3; background: var(--bg-white); padding: 20px; margin: 0; border-top: 2px solid #58a6ff;">You are a demo video JSON generator for the Microsoft AI BAST RAPP framework. Generate structured demo configurations that work with the Local-First Chat Animation Studio tool.
 
 **YOUR TASK:**
 Create a complete JSON demo configuration that tells a compelling story about the customer's AI agent implementation.
@@ -5066,7 +5066,7 @@ Team Member C completes Step 10 → Bot posts:
             <h1 class="section-title">Scaling to 20+ Concurrent Projects</h1>
             <p class="section-subtitle">How the framework handles massive parallelization</p>
 
-            <div class="non-technical-only" style="background: #0d2818; color: #e6edf3; border-left: 3px solid #3fb950; padding: 25px; border-radius: 12px; margin-bottom: 30px;">
+            <div class="non-technical-only" style="background: #161b22; color: #e6edf3; border-left: 3px solid #3fb950; padding: 25px; border-radius: 12px; margin-bottom: 30px;">
                 <h3 style="color: white; margin-top: 0;">💰 Business Impact at Scale</h3>
                 <p style="color: rgba(255,255,255,0.95);"><strong>3-person team capacity:</strong> 20-25 concurrent MVP projects, 50+ total projects including production.</p>
                 <p style="color: rgba(255,255,255,0.95);"><strong>Cost structure:</strong> ~$50-100/month per prototype environment (auto-deleted after customer handoff), zero marginal cost for production (runs in customer Azure).</p>
@@ -5287,14 +5287,14 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
             <div class="step-section">
                 <h3>🥇 Top 3 Priorities (In Order)</h3>
 
-                <div class="priority-card" style="background: #0d2818; color: #e6edf3; border-left: 3px solid #3fb950; padding: 25px; border-radius: 12px; margin-bottom: 20px;">
+                <div class="priority-card" style="background: #161b22; color: #e6edf3; border-left: 3px solid #3fb950; padding: 25px; border-radius: 12px; margin-bottom: 20px;">
                     <h4 style="color: white; margin-top: 0;">1. SPUR Committed Work - Agents & Videos</h4>
                     <p style="color: rgba(255,255,255,0.95);"><strong>What:</strong> Deliver committed agents and videos for SPUR engagement</p>
                     <p style="color: rgba(255,255,255,0.95);"><strong>Impact:</strong> Revenue-generating, already committed to customer</p>
                     <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;"><strong>Status to Track:</strong> Completion of agent builds and video production</p>
                 </div>
 
-                <div class="priority-card" style="background: #2d2006; color: #e6edf3; border-left: 3px solid #d29922; padding: 25px; border-radius: 12px; margin-bottom: 20px;">
+                <div class="priority-card" style="background: #161b22; color: #e6edf3; border-left: 3px solid #58a6ff; padding: 25px; border-radius: 12px; margin-bottom: 20px;">
                     <h4 style="color: white; margin-top: 0;">2. Enable Team Members - Documentation & Tools</h4>
                     <p style="color: rgba(255,255,255,0.95);"><strong>What:</strong> Create "station-based" guide enabling team to work independently on 2+ process stations</p>
                     <p style="color: rgba(255,255,255,0.95);"><strong>Deliverables:</strong></p>
@@ -5441,7 +5441,7 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
                 </ul>
             </div>
 
-            <div class="highlight-box" style="background: #0d2818; color: #e6edf3; border-left: 3px solid #3fb950; border: none;">
+            <div class="highlight-box" style="background: #161b22; color: #e6edf3; border-left: 3px solid #3fb950; border: none;">
                 <h4 style="color: white; margin-top: 0;">💡 Pro Tip for Connect</h4>
                 <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;">When writing your Connect, emphasize the shift from "200 amazing prototypes" to "2 production-ready tools the field can use tomorrow." This directly addresses the strategic feedback about moving from ideation to realization.</p>
             </div>
@@ -5506,7 +5506,7 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
                      onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow)'; this.style.borderColor='transparent';">
 
                     <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
-                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 32px;">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #58a6ff 0%, #ef4444 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 32px;">
                             🎬
                         </div>
                         <div>
@@ -5520,10 +5520,10 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
                     </p>
 
                     <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
-                        <span style="background: #fff7ed; color: #f59e0b; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Animation</span>
-                        <span style="background: #fff7ed; color: #f59e0b; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Chat Demos</span>
-                        <span style="background: #fff7ed; color: #f59e0b; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Video Export</span>
-                        <span style="background: #fff7ed; color: #f59e0b; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Presentations</span>
+                        <span style="background: #fff7ed; color: #58a6ff; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Animation</span>
+                        <span style="background: #fff7ed; color: #58a6ff; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Chat Demos</span>
+                        <span style="background: #fff7ed; color: #58a6ff; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Video Export</span>
+                        <span style="background: #fff7ed; color: #58a6ff; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Presentations</span>
                     </div>
 
                     <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 15px; border-top: 1px solid var(--border);">
