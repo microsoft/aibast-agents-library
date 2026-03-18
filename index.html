@@ -858,18 +858,20 @@
         }
 
         .stat-card {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
+            background: #161b22;
+            color: #e6edf3;
             border-radius: 12px;
             padding: 25px;
             text-align: center;
             box-shadow: var(--shadow);
+            border: 1px solid var(--border);
         }
 
         .stat-number {
             font-size: 42px;
             font-weight: 900;
             margin-bottom: 8px;
+            color: var(--primary);
         }
 
         .stat-label {
@@ -890,12 +892,13 @@
         }
 
         .comparison-table th {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
+            background: #161b22;
+            color: var(--primary);
             padding: 18px;
             text-align: left;
             font-weight: 700;
             font-size: 14px;
+            border-bottom: 2px solid var(--primary);
         }
 
         .comparison-table td {
@@ -1069,6 +1072,149 @@
                 margin: 0;
             }
         }
+
+        /* ══════════════════════════════════════════════════════════
+           DARK MODE OVERRIDE — forces dark theme on ALL elements
+           including inline styles from the original light theme.
+           ══════════════════════════════════════════════════════════ */
+
+        /* Kill ALL inline background gradients and force dark cards */
+        [style*="linear-gradient"] {
+            background: #161b22 !important;
+            border: 1px solid #21262d !important;
+        }
+
+        /* Colored accent cards — use left border instead of full bg */
+        [style*="linear-gradient"][style*="color: white"],
+        [style*="linear-gradient"][style*="color: #e6edf3"] {
+            color: #e6edf3 !important;
+            background: #161b22 !important;
+        }
+
+        /* Priority/highlight cards with green bg */
+        .priority-card, .highlight-box {
+            background: #161b22 !important;
+            color: #e6edf3 !important;
+            border: 1px solid #21262d !important;
+        }
+
+        /* Non-technical callouts */
+        .non-technical-only {
+            background: #161b22 !important;
+            color: #e6edf3 !important;
+            border: 1px solid #21262d !important;
+        }
+
+        /* Metric cards */
+        .metric-card, [class*="metric"] {
+            background: #161b22 !important;
+            color: #e6edf3 !important;
+            border: 1px solid #21262d !important;
+        }
+
+        /* Tool cards */
+        .tool-card {
+            background: #161b22 !important;
+            color: #e6edf3 !important;
+            border: 1px solid #21262d !important;
+        }
+        .tool-card:hover {
+            border-color: var(--primary) !important;
+        }
+
+        /* Icon containers with gradients */
+        [style*="width: 60px"][style*="height: 60px"][style*="linear-gradient"] {
+            background: #21262d !important;
+            border: 1px solid #30363d !important;
+        }
+
+        /* All bold text inside dark cards */
+        [style*="linear-gradient"] strong,
+        .priority-card strong,
+        .highlight-box strong,
+        .non-technical-only strong {
+            color: #e6edf3 !important;
+        }
+
+        /* Fix any remaining white/light backgrounds */
+        [style*="background: #f3f4f6"],
+        [style*="background: #e5e7eb"],
+        [style*="background: #fff"],
+        [style*="background: white"] {
+            background: #161b22 !important;
+        }
+
+        /* Fix text colors that were set for light mode */
+        [style*="color: #1e293b"],
+        [style*="color: #242424"],
+        [style*="color: #333"],
+        [style*="color: #555"],
+        [style*="color: #374151"] {
+            color: #e6edf3 !important;
+        }
+
+        [style*="color: #475569"],
+        [style*="color: #6b7280"],
+        [style*="color: #616161"] {
+            color: #8b949e !important;
+        }
+
+        /* Fix borders that were light */
+        [style*="border: 1px solid #e5e7eb"],
+        [style*="border: 1px solid #e0e0e0"],
+        [style*="border: 2px solid #e5e7eb"] {
+            border-color: #21262d !important;
+        }
+
+        /* Fix code blocks and pre elements */
+        pre, code {
+            background: #0d1117 !important;
+            color: #e6edf3 !important;
+            border: 1px solid #21262d !important;
+        }
+
+        /* Stat cards — numbers in accent color */
+        .stat-card .stat-number {
+            color: var(--primary) !important;
+        }
+
+        /* Top bar stays gradient (intentional) */
+        .top-bar {
+            background: linear-gradient(135deg, #1f6feb 0%, #0c2d48 100%) !important;
+        }
+
+        /* Sidebar active item */
+        .nav-item.active {
+            background: rgba(88,166,255,0.1) !important;
+        }
+
+        /* Progress bar keeps its gradient (intentional) */
+        .progress {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%) !important;
+        }
+
+        /* Comparison table header */
+        .comparison-table th {
+            background: #0c2d48 !important;
+            color: #58a6ff !important;
+        }
+
+        /* Section boxes, content cards, any white containers */
+        .section-content, .content-area, .main-content {
+            background: transparent !important;
+        }
+
+        /* Links throughout */
+        a {
+            color: #58a6ff;
+        }
+
+        /* Scrollbar for dark mode */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0d1117; }
+        ::-webkit-scrollbar-thumb { background: #30363d; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #484f58; }
+
     </style>
 </head>
 <body>
@@ -1196,7 +1342,7 @@
             </a>
             <a href="#roadmap" class="nav-item" onclick="navigateToSection('roadmap'); return false;">
                 <span class="nav-icon">🗺️</span>
-                <span>Roadmap - EOY 2025</span>
+                <span>Roadmap - EOY 2026</span>
             </a>
         </div>
 
@@ -1248,7 +1394,7 @@
                 </div>
             </div>
 
-            <div class="highlight-box" style="background: linear-gradient(135deg, #0078d4 0%, #005a9e 100%); color: white; border: none;">
+            <div class="highlight-box" style="background: #0c2d48; color: #e6edf3; border-left: 3px solid #58a6ff; border: none;">
                 <h4 style="color: white;">📚 Comprehensive Documentation</h4>
                 <p style="color: rgba(255,255,255,0.95);">This documentation provides a complete view of the Rapid Agent Prototype Pattern (RAPP), combining:</p>
                 <ul style="color: rgba(255,255,255,0.95); margin-bottom: 0;">
@@ -1409,7 +1555,7 @@
                 <p class="section-subtitle">A 4-layer universal intelligence system designed for infinite scale and zero-downtime updates.</p>
             </div>
 
-            <div class="non-technical-only" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; padding: 25px; border-radius: 12px; margin-bottom: 30px;">
+            <div class="non-technical-only" style="background: #2d2006; color: #e6edf3; border-left: 3px solid #d29922; padding: 25px; border-radius: 12px; margin-bottom: 30px;">
                 <h3 style="color: white; margin-top: 0;">💼 Why Architecture Matters (Business View)</h3>
                 <p style="color: rgba(255,255,255,0.95);">The architecture enables <strong>rapid agent updates</strong> with zero downtime, <strong>infinite horizontal scaling</strong> for concurrent users, and <strong>universal memory</strong> so context persists across Teams, Web, and Mobile. This translates to faster iteration cycles, lower operational costs, and seamless user experiences.</p>
             </div>
@@ -1686,7 +1832,7 @@ def handle_request(user_message, user_guid):
             <div class="step-section">
                 <h3>⚙️ The Buzz Saw: Heavy Lifting (Building Toward Automation)</h3>
 
-                <div class="highlight-box" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; border: none; margin-bottom: 20px;">
+                <div class="highlight-box" style="background: #2d2006; color: #e6edf3; border-left: 3px solid #d29922; border: none; margin-bottom: 20px;">
                     <h4 style="color: white; margin-top: 0;">📍 Current State</h4>
                     <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;">This framework is currently <strong>manual-first</strong> with a roadmap to automate key steps. We're building the "buzz saw" step by step, proving each process manually before automating it.</p>
                 </div>
@@ -2562,7 +2708,7 @@ Tone: Professional but approachable. We're confirming we heard them correctly, n
                 <span class="badge manual">MANUAL</span>
             </div>
 
-            <div class="non-technical-only" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; padding: 25px; border-radius: 12px; margin-bottom: 30px;">
+            <div class="non-technical-only" style="background: #2d2006; color: #e6edf3; border-left: 3px solid #d29922; padding: 25px; border-radius: 12px; margin-bottom: 30px;">
                 <h3 style="color: white; margin-top: 0;">💼 Business Summary</h3>
                 <p style="color: rgba(255,255,255,0.95);"><strong>Current state:</strong> Team manually creates agent code using templates and patterns. <strong>Vision:</strong> AI-assisted generation to accelerate development.</p>
                 <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;"><strong>Goal:</strong> Reduce agent development time from 2-3 weeks per agent to hours with reusable templates and tooling. Build library of patterns for consistency.</p>
@@ -4958,7 +5104,7 @@ Team Member C completes Step 10 → Bot posts:
             <h1 class="section-title">Scaling to 20+ Concurrent Projects</h1>
             <p class="section-subtitle">How the framework handles massive parallelization</p>
 
-            <div class="non-technical-only" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 25px; border-radius: 12px; margin-bottom: 30px;">
+            <div class="non-technical-only" style="background: #0d2818; color: #e6edf3; border-left: 3px solid #3fb950; padding: 25px; border-radius: 12px; margin-bottom: 30px;">
                 <h3 style="color: white; margin-top: 0;">💰 Business Impact at Scale</h3>
                 <p style="color: rgba(255,255,255,0.95);"><strong>3-person team capacity:</strong> 20-25 concurrent MVP projects, 50+ total projects including production.</p>
                 <p style="color: rgba(255,255,255,0.95);"><strong>Cost structure:</strong> ~$50-100/month per prototype environment (auto-deleted after customer handoff), zero marginal cost for production (runs in customer Azure).</p>
@@ -5168,10 +5314,10 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
 
         <!-- ROADMAP -->
         <div class="content-section" id="roadmap">
-            <h1 class="section-title">Roadmap - EOY 2025</h1>
+            <h1 class="section-title">Roadmap - EOY 2026</h1>
             <p class="section-subtitle">Next release wave priorities and strategic focus areas</p>
 
-            <div class="highlight-box" style="background: linear-gradient(135deg, #0078d4 0%, #005a9e 100%); color: white; border: none;">
+            <div class="highlight-box" style="background: #0c2d48; color: #e6edf3; border-left: 3px solid #58a6ff; border: none;">
                 <h4 style="color: white;">🎯 Strategic Shift: From Prototypes to Production</h4>
                 <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;">The strategic imperative is to transform conceptual ideas into production-ready solutions that field teams can deploy immediately. The focus is on creating demos that not only impress in presentations but can also be reliably reproduced and reused across multiple customer engagements to accelerate deal closure.</p>
             </div>
@@ -5179,14 +5325,14 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
             <div class="step-section">
                 <h3>🥇 Top 3 Priorities (In Order)</h3>
 
-                <div class="priority-card" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 25px; border-radius: 12px; margin-bottom: 20px;">
+                <div class="priority-card" style="background: #0d2818; color: #e6edf3; border-left: 3px solid #3fb950; padding: 25px; border-radius: 12px; margin-bottom: 20px;">
                     <h4 style="color: white; margin-top: 0;">1. SPUR Committed Work - Agents & Videos</h4>
                     <p style="color: rgba(255,255,255,0.95);"><strong>What:</strong> Deliver committed agents and videos for SPUR engagement</p>
                     <p style="color: rgba(255,255,255,0.95);"><strong>Impact:</strong> Revenue-generating, already committed to customer</p>
                     <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;"><strong>Status to Track:</strong> Completion of agent builds and video production</p>
                 </div>
 
-                <div class="priority-card" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; padding: 25px; border-radius: 12px; margin-bottom: 20px;">
+                <div class="priority-card" style="background: #2d2006; color: #e6edf3; border-left: 3px solid #d29922; padding: 25px; border-radius: 12px; margin-bottom: 20px;">
                     <h4 style="color: white; margin-top: 0;">2. Enable Team Members - Documentation & Tools</h4>
                     <p style="color: rgba(255,255,255,0.95);"><strong>What:</strong> Create "station-based" guide enabling team to work independently on 2+ process stations</p>
                     <p style="color: rgba(255,255,255,0.95);"><strong>Deliverables:</strong></p>
@@ -5199,7 +5345,7 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
                     <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;"><strong>Key Requirement:</strong> "Less code-dependent, more tool-based" - team uses tools, not raw code</p>
                 </div>
 
-                <div class="priority-card" style="background: linear-gradient(135deg, #0078d4 0%, #005a9e 100%); color: white; padding: 25px; border-radius: 12px; margin-bottom: 20px;">
+                <div class="priority-card" style="background: #0c2d48; color: #e6edf3; border-left: 3px solid #58a6ff; padding: 25px; border-radius: 12px; margin-bottom: 20px;">
                     <h4 style="color: white; margin-top: 0;">3. AI Agents Library Infrastructure</h4>
                     <p style="color: rgba(255,255,255,0.95);"><strong>What:</strong> Azure environment architecture where field can demo live agents</p>
                     <p style="color: rgba(255,255,255,0.95);"><strong>Deliverables:</strong></p>
@@ -5333,7 +5479,7 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
                 </ul>
             </div>
 
-            <div class="highlight-box" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none;">
+            <div class="highlight-box" style="background: #0d2818; color: #e6edf3; border-left: 3px solid #3fb950; border: none;">
                 <h4 style="color: white; margin-top: 0;">💡 Pro Tip for Connect</h4>
                 <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;">When writing your Connect, emphasize the shift from "200 amazing prototypes" to "2 production-ready tools the field can use tomorrow." This directly addresses the strategic feedback about moving from ideation to realization.</p>
             </div>
