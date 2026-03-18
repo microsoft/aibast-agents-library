@@ -147,7 +147,8 @@ pytest
 
 | Resource | Description |
 |----------|-------------|
-| [RAPP Production Guide](docs/rapp-guide.html) | Complete 14-step workflow from discovery to post-deployment |
+| [RAPP Production Guide](index.html) | Complete 14-step workflow from discovery to post-deployment |
+| [RAPP Installer](docs/installer.html) | One-liner install, Azure deploy, Copilot Studio setup |
 | [CONSTITUTION.md](CONSTITUTION.md) | Governing document for agent standards |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | How to contribute agents |
 | [skill.md](skill.md) | Machine-readable AI interface for agent discovery |
