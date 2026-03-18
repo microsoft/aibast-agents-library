@@ -8,22 +8,22 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
         :root {
-            --primary: #667eea;
-            --primary-dark: #5568d3;
-            --secondary: #764ba2;
-            --accent: #f59e0b;
-            --success: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --info: #3b82f6;
-            --bg-light: #f8fafc;
+            --primary: #0078d4;
+            --primary-dark: #106ebe;
+            --secondary: #005a9e;
+            --accent: #ffb900;
+            --success: #107c10;
+            --danger: #d13438;
+            --warning: #ffb900;
+            --info: #0078d4;
+            --bg-light: #f5f5f5;
             --bg-white: #ffffff;
-            --text-dark: #1e293b;
-            --text-medium: #475569;
-            --text-light: #94a3b8;
-            --border: #e2e8f0;
-            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-            --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            --text-dark: #242424;
+            --text-medium: #616161;
+            --text-light: #a0a0a0;
+            --border: #e0e0e0;
+            --shadow: 0 2px 4px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-lg: 0 8px 16px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04);
         }
 
         * {
@@ -33,7 +33,7 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg-light);
             color: var(--text-dark);
             line-height: 1.7;
@@ -126,7 +126,7 @@
         }
 
         .track-badge.technical {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0078d4 0%, #005a9e 100%);
             color: white;
         }
 
@@ -464,7 +464,7 @@
         }
 
         .nav-item.active {
-            background: linear-gradient(90deg, rgba(102,126,234,0.1) 0%, transparent 100%);
+            background: linear-gradient(90deg, rgba(0,120,212,0.1) 0%, transparent 100%);
             color: var(--primary);
             font-weight: 600;
             border-left-color: var(--primary);
@@ -914,7 +914,7 @@
         }
 
         .tool-card {
-            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+            background: linear-gradient(135deg, #e8f4fd 0%, #cce4f7 100%);
             border-left: 4px solid var(--secondary);
             border-radius: 12px;
             padding: 25px;
@@ -1245,7 +1245,7 @@
                 </div>
             </div>
 
-            <div class="highlight-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none;">
+            <div class="highlight-box" style="background: linear-gradient(135deg, #0078d4 0%, #005a9e 100%); color: white; border: none;">
                 <h4 style="color: white;">📚 Comprehensive Documentation</h4>
                 <p style="color: rgba(255,255,255,0.95);">This documentation provides a complete view of the Rapid Agent Prototype Pattern (RAPP), combining:</p>
                 <ul style="color: rgba(255,255,255,0.95); margin-bottom: 0;">
@@ -5168,7 +5168,7 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
             <h1 class="section-title">Roadmap - EOY 2025</h1>
             <p class="section-subtitle">Next release wave priorities and strategic focus areas</p>
 
-            <div class="highlight-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none;">
+            <div class="highlight-box" style="background: linear-gradient(135deg, #0078d4 0%, #005a9e 100%); color: white; border: none;">
                 <h4 style="color: white;">🎯 Strategic Shift: From Prototypes to Production</h4>
                 <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;">The strategic imperative is to transform conceptual ideas into production-ready solutions that field teams can deploy immediately. The focus is on creating demos that not only impress in presentations but can also be reliably reproduced and reused across multiple customer engagements to accelerate deal closure.</p>
             </div>
@@ -5196,7 +5196,7 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
                     <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;"><strong>Key Requirement:</strong> "Less code-dependent, more tool-based" - team uses tools, not raw code</p>
                 </div>
 
-                <div class="priority-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px; border-radius: 12px; margin-bottom: 20px;">
+                <div class="priority-card" style="background: linear-gradient(135deg, #0078d4 0%, #005a9e 100%); color: white; padding: 25px; border-radius: 12px; margin-bottom: 20px;">
                     <h4 style="color: white; margin-top: 0;">3. AI Agents Library Infrastructure</h4>
                     <p style="color: rgba(255,255,255,0.95);"><strong>What:</strong> Azure environment architecture where field can demo live agents</p>
                     <p style="color: rgba(255,255,255,0.95);"><strong>Deliverables:</strong></p>
