@@ -1305,7 +1305,7 @@
             </a>
             <a href="#roadmap" class="nav-item" onclick="navigateToSection('roadmap'); return false;">
                 <span class="nav-icon">🗺️</span>
-                <span>Roadmap - EOY 2026</span>
+                <span>Gains &amp; Improvements</span>
             </a>
         </div>
 
@@ -4061,8 +4061,8 @@ Include:
       "duration": 7000,
       "voiceText": "Every morning, 200 field reps face the same question: where do I go today, and what do I do when I get there? This manual process wastes 45 minutes per day per rep. Let's see how AI changes everything.",
       "narrator": {
-        "title": "The $2M Problem",
-        "text": "200 reps × 45 min/day × 250 days = 37,500 hours wasted annually",
+        "title": "The Productivity Problem",
+        "text": "Hundreds of reps wasting time on manual planning every single day",
         "subtitle": "Manual route planning • No prioritization • Missed opportunities",
         "position": "center"
       }
@@ -5069,9 +5069,9 @@ Team Member C completes Step 10 → Bot posts:
 
             <div class="non-technical-only" style="background: #161b22; color: #e6edf3; border-left: 3px solid #3fb950; padding: 25px; border-radius: 12px; margin-bottom: 30px;">
                 <h3 style="color: white; margin-top: 0;">💰 Business Impact at Scale</h3>
-                <p style="color: rgba(255,255,255,0.95);"><strong>3-person team capacity:</strong> 20-25 concurrent MVP projects, 50+ total projects including production.</p>
-                <p style="color: rgba(255,255,255,0.95);"><strong>Cost structure:</strong> ~$50-100/month per prototype environment (auto-deleted after customer handoff), zero marginal cost for production (runs in customer Azure).</p>
-                <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;"><strong>Revenue model:</strong> Each project = $100K-500K ACV. Team of 3 can manage $2M-10M ARR pipeline simultaneously.</p>
+                <p style="color: rgba(255,255,255,0.95);"><strong>Team capacity:</strong> Small teams can manage many concurrent MVP projects simultaneously, with even more in production.</p>
+                <p style="color: rgba(255,255,255,0.95);"><strong>Cost structure:</strong> Minimal per-environment cost for prototyping (auto-deleted after customer handoff), zero marginal cost for production (runs in customer Azure).</p>
+                <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;"><strong>Revenue model:</strong> Each project drives significant ACV. Small teams can manage large ARR pipelines simultaneously.</p>
             </div>
 
             <div class="step-section">
@@ -5232,7 +5232,7 @@ Week 3:
 - Steady state: 8 in Discovery, 8 in Development, 8 in Deployment, 25+ in Production
 - Total: 49 active projects across all stages</code></pre>
 
-                <p><strong>Steady-state capacity:</strong> 20-25 projects in active development (Steps 1-10), 50+ total projects including production</p>
+                <p><strong>Steady-state capacity:</strong> Many projects in active development (Steps 1-10), with additional projects in production</p>
             </div>
 
             <div class="step-section">
@@ -5242,7 +5242,7 @@ Week 3:
                 <ul>
                     <li><strong>Dev/Prototype:</strong> 1 Function App, 1 File Storage account (Hot tier), Application Insights</li>
                     <li><strong>Production:</strong> Customer's Azure subscription (not our cost)</li>
-                    <li><strong>Cost per prototype:</strong> ~$50-100/month while active, delete after Step 10</li>
+                    <li><strong>Cost per prototype:</strong> Minimal monthly cost while active, delete after Step 10</li>
                 </ul>
 
                 <h4>Cost Optimization:</h4>
@@ -5250,7 +5250,7 @@ Week 3:
                 <pre><code># Run weekly: Delete prototype environments >30 days old
 az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09-15']" | xargs -I {} az functionapp delete --name {}
 
-# Saves: $50-100 per deleted environment
+# Saves: minimal cost per deleted environment
 # With 20 projects/month, 10 completing → $500-1000/month savings</code></pre>
             </div>
 
@@ -5277,105 +5277,72 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
 
         <!-- ROADMAP -->
         <div class="content-section" id="roadmap">
-            <h1 class="section-title">Roadmap - EOY 2026</h1>
-            <p class="section-subtitle">Next release wave priorities and strategic focus areas</p>
+            <h1 class="section-title">Gains & Improvements</h1>
+            <p class="section-subtitle">What RAPP delivers and where we're heading</p>
 
-            <div class="highlight-box" style="background: #0c2d48; color: #e6edf3; border-left: 3px solid #58a6ff; border: none;">
-                <h4 style="color: white;">🎯 Strategic Shift: From Prototypes to Production</h4>
-                <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;">The strategic imperative is to transform conceptual ideas into production-ready solutions that field teams can deploy immediately. The focus is on creating demos that not only impress in presentations but can also be reliably reproduced and reused across multiple customer engagements to accelerate deal closure.</p>
+            <div class="highlight-box">
+                <h4>🎯 Strategic Direction: From Prototypes to Production</h4>
+                <p>Transform conceptual ideas into production-ready solutions that teams can deploy immediately. Create demos that not only impress in presentations but can be reliably reproduced and reused across multiple customer engagements.</p>
             </div>
 
             <div class="step-section">
-                <h3>🥇 Top 3 Priorities (In Order)</h3>
+                <h3>✅ Current Gains</h3>
 
-                <div class="priority-card" style="background: #161b22; color: #e6edf3; border-left: 3px solid #3fb950; padding: 25px; border-radius: 12px; margin-bottom: 20px;">
-                    <h4 style="color: white; margin-top: 0;">1. SPUR Committed Work - Agents & Videos</h4>
-                    <p style="color: rgba(255,255,255,0.95);"><strong>What:</strong> Deliver committed agents and videos for SPUR engagement</p>
-                    <p style="color: rgba(255,255,255,0.95);"><strong>Impact:</strong> Revenue-generating, already committed to customer</p>
-                    <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;"><strong>Status to Track:</strong> Completion of agent builds and video production</p>
+                <div class="priority-card" style="background: #161b22; border: 1px solid #21262d; padding: 25px; border-radius: 8px; margin-bottom: 16px;">
+                    <h4 style="color: #e6edf3; margin-top: 0;">Dramatically Faster Agent Development</h4>
+                    <p style="color: #8b949e;">Compress multi-month development cycles into days using the RAPP 14-step process. AI does the heavy lifting, humans provide the judgment.</p>
                 </div>
 
-                <div class="priority-card" style="background: #161b22; color: #e6edf3; border-left: 3px solid #58a6ff; padding: 25px; border-radius: 12px; margin-bottom: 20px;">
-                    <h4 style="color: white; margin-top: 0;">2. Enable Team Members - Documentation & Tools</h4>
-                    <p style="color: rgba(255,255,255,0.95);"><strong>What:</strong> Create "station-based" guide enabling team to work independently on 2+ process stations</p>
-                    <p style="color: rgba(255,255,255,0.95);"><strong>Deliverables:</strong></p>
-                    <ul style="color: rgba(255,255,255,0.95); margin-bottom: 15px;">
-                        <li>14-step process guide (the "Bible") with audit trails</li>
-                        <li>M365 agents for discovery calls and MVP generation</li>
-                        <li>Clear input/output documentation for each station</li>
-                    </ul>
-                    <p style="color: rgba(255,255,255,0.95);"><strong>Impact:</strong> Team scalability - enable team members to handle 20+ customer engagements concurrently</p>
-                    <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;"><strong>Key Requirement:</strong> "Less code-dependent, more tool-based" - team uses tools, not raw code</p>
+                <div class="priority-card" style="background: #161b22; border: 1px solid #21262d; padding: 25px; border-radius: 8px; margin-bottom: 16px;">
+                    <h4 style="color: #e6edf3; margin-top: 0;">Team Scalability</h4>
+                    <p style="color: #8b949e;">Station-based process enables team members to work independently across multiple engagement stages. Scale concurrent projects without adding headcount.</p>
                 </div>
 
-                <div class="priority-card" style="background: #0c2d48; color: #e6edf3; border-left: 3px solid #58a6ff; padding: 25px; border-radius: 12px; margin-bottom: 20px;">
-                    <h4 style="color: white; margin-top: 0;">3. AI Agents Library Infrastructure</h4>
-                    <p style="color: rgba(255,255,255,0.95);"><strong>What:</strong> Azure environment architecture where field can demo live agents</p>
-                    <p style="color: rgba(255,255,255,0.95);"><strong>Deliverables:</strong></p>
-                    <ul style="color: rgba(255,255,255,0.95); margin-bottom: 15px;">
-                        <li>Shared Azure tenant (non-expiring) for all agents</li>
-                        <li>Live endpoint demos accessible by entire field</li>
-                        <li>No per-demo deployment needed</li>
-                    </ul>
-                    <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;"><strong>Impact:</strong> Field enablement at scale - eliminate deployment friction for demos</p>
+                <div class="priority-card" style="background: #161b22; border: 1px solid #21262d; padding: 25px; border-radius: 8px; margin-bottom: 16px;">
+                    <h4 style="color: #e6edf3; margin-top: 0;">Risk Elimination Through Early Validation</h4>
+                    <p style="color: #8b949e;">Multiple customer checkpoints before significant investment. MVP "poke" at Step 3 gets feedback before real work begins. By Step 6, scope is locked with customer sign-off.</p>
+                </div>
+
+                <div class="priority-card" style="background: #161b22; border: 1px solid #21262d; padding: 25px; border-radius: 8px; margin-bottom: 16px;">
+                    <h4 style="color: #e6edf3; margin-top: 0;">Zero-Cost Horizontal Scaling</h4>
+                    <p style="color: #8b949e;">Stateless Azure Function design with hot-loaded agents. Minimal per-environment cost for prototyping. Production runs in customer Azure — zero marginal cost.</p>
                 </div>
             </div>
 
             <div class="step-section">
-                <h3>⚡ Specific Action Items</h3>
+                <h3>🚀 Planned Improvements</h3>
 
-                <h4 style="color: var(--primary); margin-top: 25px;">Immediate (Next 1-2 Weeks)</h4>
                 <table class="comparison-table">
                     <thead>
                         <tr>
-                            <th>Action</th>
-                            <th>Description</th>
-                            <th>Owner</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Hardware Procurement</strong></td>
-                            <td>Procure 2TB external drive for video storage (via Juke Room Store or procurement)</td>
-                            <td>Infrastructure Team</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Video Automation</strong></td>
-                            <td>Implement speech-to-text solution for audio timing (double API call for duration data)</td>
-                            <td>Automation Team</td>
-                        </tr>
-                        <tr>
-                            <td><strong>PII Gate</strong></td>
-                            <td>Create review process and tagging system (PII/PII-removed/Public-ready) for agent library</td>
-                            <td>Security/Compliance</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h4 style="color: var(--primary); margin-top: 35px;">Short-term (This Cycle)</h4>
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>Action</th>
-                            <th>Description</th>
-                            <th>Owner</th>
+                            <th>Area</th>
+                            <th>Improvement</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td><strong>Documentation</strong></td>
-                            <td>Complete station-based guide with examples and prompts</td>
-                            <td>Documentation Team</td>
+                            <td>Complete station-based guides with examples and prompts for each RAPP step</td>
                         </tr>
                         <tr>
-                            <td><strong>Agent Deployment</strong></td>
-                            <td>Simplify ARM scripts for one-click deployment</td>
-                            <td>Technical Team</td>
+                            <td><strong>Deployment</strong></td>
+                            <td>Simplify ARM scripts for true one-click deployment to Azure</td>
                         </tr>
                         <tr>
-                            <td><strong>Library Architecture</strong></td>
-                            <td>Design structure for field-accessible agent demos with live endpoints</td>
-                            <td>Architecture Team</td>
+                            <td><strong>Agent Library</strong></td>
+                            <td>Shared Azure environment with live agent demos accessible by all field teams</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Video Automation</strong></td>
+                            <td>Automated speech-to-text and timing for demo video generation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Security</strong></td>
+                            <td>Systematic PII detection, classification, and governance gates for agent library</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Copilot Studio</strong></td>
+                            <td>Native YAML authoring via Skills for Copilot Studio — skip the Azure Function for simpler deployments</td>
                         </tr>
                     </tbody>
                 </table>
@@ -5384,67 +5351,30 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
             <div class="step-section">
                 <h3>📊 Success Metrics</h3>
                 <div class="grid-2">
-                    <div class="metric-card" style="background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%); padding: 20px; border-radius: 12px;">
+                    <div class="metric-card" style="padding: 20px; border-radius: 8px;">
                         <div class="metric-icon" style="font-size: 2rem; margin-bottom: 10px;">👥</div>
                         <h4 style="color: var(--primary); margin-bottom: 10px;">Team Independence</h4>
-                        <p style="margin-bottom: 5px;"><strong>Metric:</strong> Number of stations team members can operate independently</p>
-                        <p style="margin-bottom: 0; color: var(--text-secondary);"><strong>Target:</strong> 2+ stations by end of cycle</p>
+                        <p style="margin-bottom: 0;">Team members operating independently across multiple RAPP process stations</p>
                     </div>
 
-                    <div class="metric-card" style="background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%); padding: 20px; border-radius: 12px;">
+                    <div class="metric-card" style="padding: 20px; border-radius: 8px;">
                         <div class="metric-icon" style="font-size: 2rem; margin-bottom: 10px;">⚡</div>
                         <h4 style="color: var(--primary); margin-bottom: 10px;">Process Efficiency</h4>
-                        <p style="margin-bottom: 5px;"><strong>Metric:</strong> Time reduction from manual process to tool-based process</p>
-                        <p style="margin-bottom: 0; color: var(--text-secondary);"><strong>Target:</strong> 50% reduction in manual steps</p>
+                        <p style="margin-bottom: 0;">Significant reduction in manual steps through tool-based automation</p>
                     </div>
 
-                    <div class="metric-card" style="background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%); padding: 20px; border-radius: 12px;">
+                    <div class="metric-card" style="padding: 20px; border-radius: 8px;">
                         <div class="metric-icon" style="font-size: 2rem; margin-bottom: 10px;">🚀</div>
                         <h4 style="color: var(--primary); margin-bottom: 10px;">Field Adoption</h4>
-                        <p style="margin-bottom: 5px;"><strong>Metric:</strong> Number of demos running from shared Azure environment</p>
-                        <p style="margin-bottom: 0; color: var(--text-secondary);"><strong>Target:</strong> 10+ field-accessible demos</p>
+                        <p style="margin-bottom: 0;">Growing number of field-accessible demos running from shared infrastructure</p>
                     </div>
 
-                    <div class="metric-card" style="background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%); padding: 20px; border-radius: 12px;">
-                        <div class="metric-icon" style="font-size: 2rem; margin-bottom: 10px;">💰</div>
+                    <div class="metric-card" style="padding: 20px; border-radius: 8px;">
+                        <div class="metric-icon" style="font-size: 2rem; margin-bottom: 10px;">🔄</div>
                         <h4 style="color: var(--primary); margin-bottom: 10px;">Customer Conversion</h4>
-                        <p style="margin-bottom: 5px;"><strong>Metric:</strong> Demos converted to deployed agents</p>
-                        <p style="margin-bottom: 0; color: var(--text-secondary);"><strong>Target:</strong> 30% conversion rate</p>
+                        <p style="margin-bottom: 0;">Demos converting to deployed, production-ready agent solutions</p>
                     </div>
                 </div>
-            </div>
-
-            <div class="step-section">
-                <h3>🎯 Connect Format Alignment</h3>
-
-                <h4 style="color: var(--primary);">Results You Deliver:</h4>
-                <ul>
-                    <li><strong>Business Impact:</strong> Accelerating deals through reproducible AI agent demos</li>
-                    <li><strong>Team Impact:</strong> Enabling team members to scale from individual work to managing 20+ concurrent engagements</li>
-                    <li><strong>Customer Impact:</strong> Moving from "amazing demos" to deployed, production-ready solutions</li>
-                </ul>
-
-                <h4 style="color: var(--primary); margin-top: 25px;">How You Deliver:</h4>
-                <ul>
-                    <li><strong>From Research to Production:</strong> Grounding prototypes into field-usable tools</li>
-                    <li><strong>Incremental Delivery:</strong> "Don't wait for the whole project" - ship station 1 & 2, then expand</li>
-                    <li><strong>Team Enablement:</strong> Growth mindset - building framework that helps others succeed, not just solo innovation</li>
-                </ul>
-            </div>
-
-            <div class="step-section">
-                <h3>🔒 Security & Governance Goals</h3>
-                <ul>
-                    <li><strong>PII Detection & Tagging:</strong> Implement systematic PII detection and classification for agent library</li>
-                    <li><strong>Governance Gates:</strong> Establish review gates before public consumption of agents</li>
-                    <li><strong>Data Handling Best Practices:</strong> Document security protocols in team documentation</li>
-                    <li><strong>Compliance Alignment:</strong> Ensure all agents meet enterprise security standards before field deployment</li>
-                </ul>
-            </div>
-
-            <div class="highlight-box" style="background: #161b22; color: #e6edf3; border-left: 3px solid #3fb950; border: none;">
-                <h4 style="color: white; margin-top: 0;">💡 Pro Tip for Connect</h4>
-                <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;">When writing your Connect, emphasize the shift from "200 amazing prototypes" to "2 production-ready tools the field can use tomorrow." This directly addresses the strategic feedback about moving from ideation to realization.</p>
             </div>
         </div>
 
