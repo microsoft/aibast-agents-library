@@ -273,7 +273,7 @@
     </div>
   </div>
 
-  <!-- TIER 2: AZURE -->
+  <!-- TIER 2: STEP UP — TWO PATHS -->
   <div class="tier" onclick="toggleTier(event, this)">
     <div class="tier-header">
       <div class="tier-icon">☁️</div>
@@ -285,18 +285,18 @@
       <span class="tier-arrow">▶</span>
     </div>
     <div class="tier-body">
-      <p class="metaphor">The spinal cord connects your brainstem to the rest of your body. Deploying RAPP to Azure does the same — your agent is now always-on, reachable from anywhere, with persistent storage and monitoring. Same agent logic, now serving multiple users at enterprise scale.</p>
+      <p class="metaphor">The spinal cord connects your brainstem to the rest of your body. Deploy RAPP to Azure — your agent is now always-on, reachable from anywhere, with persistent storage and monitoring.</p>
       <div class="steps">
         <div class="step">
           <h3>1. Deploy Azure resources</h3>
           <p>One script creates everything: Function App, Azure OpenAI, Storage Account, Application Insights. All using Entra ID auth — no API keys.</p>
           <div class="cmd" onclick="copyCmd(event, this)">curl -fsSL https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/deploy.sh | bash</div>
           <p style="margin-top:8px">Or click to deploy directly from the Azure Portal:</p>
-          <p style="margin-top:4px"><a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkody-w%2Frapp-installer%2Fmain%2Fazuredeploy.json" target="_blank"><img src="https://aka.ms/deploytoazurebutton" alt="Deploy to Azure" style="height:32px"></a></p>
+          <p style="margin-top:4px"><a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Faibast-agents-library%2Fmain%2Fazuredeploy.json" target="_blank"><img src="https://aka.ms/deploytoazurebutton" alt="Deploy to Azure" style="height:32px"></a></p>
         </div>
         <div class="step">
           <h3>2. Deploy your code</h3>
-          <p>Push the RAPP function code to your new Azure Function App. The app name comes from the deploy output in step 1.</p>
+          <p>Push the RAPP function code to your new Azure Function App. The app name comes from the deploy output.</p>
           <div class="cmd" onclick="copyCmd(event, this)">func azure functionapp publish YOUR_APP_NAME --build remote</div>
         </div>
         <div class="step">
@@ -309,34 +309,42 @@
     </div>
   </div>
 
-  <!-- TIER 3: COPILOT STUDIO -->
+  <!-- TIER 3: THE NERVOUS SYSTEM — TWO OPTIONS -->
   <div class="tier" onclick="toggleTier(event, this)">
     <div class="tier-header">
       <div class="tier-icon">🤖</div>
       <div class="tier-title">
         <h2>The Nervous System</h2>
-        <div class="subtitle">Connect to Copilot Studio — reach into Teams &amp; M365</div>
+        <div class="subtitle">Reach into Teams &amp; M365 — two paths</div>
       </div>
       <span class="tier-badge advanced">Advanced</span>
       <span class="tier-arrow">▶</span>
     </div>
     <div class="tier-body">
-      <p class="metaphor">Connect your agent to Teams, M365 Copilot, and the entire Microsoft ecosystem. Two paths: import the Power Platform solution to wire your Azure Function, or go native with <a href="https://github.com/microsoft/skills-for-copilot-studio" target="_blank"><strong>Skills for Copilot Studio</strong></a> — the CAT team's open-source plugin that lets you author Copilot Studio agents as YAML directly from Claude Code or GitHub Copilot CLI, up to 20x faster.</p>
-      <div class="steps">
-        <div class="step">
-          <h3>Option A: Power Platform Solution</h3>
-          <p>Import the included <code>.zip</code> into Power Platform to create a declarative agent wired to your Azure Function.</p>
-          <div class="cmd" onclick="copyCmd(event, this)">curl -fsSL -o MSFTAIBASMultiAgentCopilot.zip https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/MSFTAIBASMultiAgentCopilot_1_0_0_5.zip</div>
-          <p style="margin-top:8px">Go to <a href="https://make.powerapps.com" target="_blank">make.powerapps.com</a> → Solutions → Import → upload the <code>.zip</code>. Then update the HTTP action URL in the Power Automate flow to point to your Azure Function endpoint. Publish in Copilot Studio.</p>
+      <p class="metaphor">Your nervous system extends your brain's reach everywhere. Choose your deployment path:</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0;">
+        <div style="background:#161b22;border:1px solid #238636;border-radius:10px;padding:20px;">
+          <h3 style="color:#3fb950;font-size:15px;margin-bottom:8px;">🅰️ Azure Function → Copilot Studio</h3>
+          <p style="color:#8b949e;font-size:13px;line-height:1.6;margin-bottom:12px;">Wire your deployed Azure Function to Copilot Studio. Import the Power Platform solution, point it at your endpoint, publish. Same RAPP agents, now in Teams and M365 Copilot.</p>
+          <p style="font-size:12px;color:#8b949e;margin-bottom:8px;"><strong style="color:#e6edf3;">Requires:</strong> Tier 2 (Azure) completed</p>
+          <div class="cmd" onclick="copyCmd(event, this)" style="font-size:12px;">curl -fsSL -o MSFTAIBASMultiAgentCopilot.zip https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/MSFTAIBASMultiAgentCopilot_1_0_0_5.zip</div>
+          <p style="margin-top:8px;font-size:12px;color:#8b949e;">Import at <a href="https://make.powerapps.com" target="_blank" style="color:#58a6ff;">make.powerapps.com</a> → Solutions → Import. Update the HTTP action URL to your Azure Function. Publish.</p>
         </div>
-        <div class="step">
-          <h3>Option B: Native Copilot Studio via Skills Plugin</h3>
-          <p>Skip the Azure Function entirely. Use the <a href="https://github.com/microsoft/skills-for-copilot-studio" target="_blank">Skills for Copilot Studio</a> plugin to author agents as YAML from your terminal — describe what you need in natural language, push to Copilot Studio, done.</p>
-          <div class="cmd" onclick="copyCmd(event, this)">/plugin marketplace add microsoft/skills-for-copilot-studio</div>
-          <p style="margin-top:6px"><code>@copilot-studio:author</code> to create topics, actions, knowledge sources. <code>@copilot-studio:test</code> to run test suites. <code>@copilot-studio:troubleshoot</code> to debug routing issues.</p>
+        <div style="background:#161b22;border:1px solid #58a6ff;border-radius:10px;padding:20px;">
+          <h3 style="color:#58a6ff;font-size:15px;margin-bottom:8px;">🅱️ Native Copilot Studio (No Azure needed)</h3>
+          <p style="color:#8b949e;font-size:13px;line-height:1.6;margin-bottom:12px;">Skip the Azure Function entirely. Use <a href="https://github.com/microsoft/skills-for-copilot-studio" target="_blank" style="color:#58a6ff;">Skills for Copilot Studio</a> — the CAT team's open-source plugin for Claude Code &amp; GitHub Copilot CLI. Author agents as YAML from your terminal, up to 20x faster.</p>
+          <p style="font-size:12px;color:#8b949e;margin-bottom:8px;"><strong style="color:#e6edf3;">Requires:</strong> Claude Code or GitHub Copilot CLI + VS Code Copilot Studio Extension</p>
+          <div class="cmd" onclick="copyCmd(event, this)" style="font-size:12px;">/plugin marketplace add microsoft/skills-for-copilot-studio</div>
+          <p style="margin-top:8px;font-size:12px;color:#8b949e;">
+            <code style="color:#58a6ff;">@copilot-studio:author</code> — create topics, actions, knowledge sources<br>
+            <code style="color:#58a6ff;">@copilot-studio:test</code> — run test suites against published agents<br>
+            <code style="color:#58a6ff;">@copilot-studio:troubleshoot</code> — debug routing and validation issues
+          </p>
         </div>
       </div>
-      <p><strong>What you learn:</strong> Copilot Studio, declarative agents, Power Platform solutions, Teams integration, YAML-as-code agent authoring, enterprise AI deployment.</p>
+
+      <p><strong>What you learn:</strong> Copilot Studio, declarative agents, Power Platform solutions, Teams integration, YAML-as-code agent authoring.</p>
     </div>
   </div>
 
