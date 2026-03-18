@@ -8,7 +8,7 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
     background: #0d1117; color: #e6edf3;
     min-height: 100vh; padding: 48px 24px;
     display: flex; flex-direction: column; align-items: center;
@@ -195,16 +195,18 @@
 </head>
 <body>
 
-<div style="background:#fff3cd;border-bottom:2px solid #ffc107;padding:10px 20px;text-align:center;font-size:13px;color:#856404;">
-  ⚠️ <strong>IMPORTANT:</strong> This is an experimental project managed by a v-team from the Artificial Intelligence Business Applications Specialist Team (AIBAST), not an officially supported Microsoft product.
-  <a href="https://github.com/microsoft/aibast-agents-library/issues" style="color:#0d6efd;">File an issue</a> to help us improve.
-</div>
-
 <div class="hero">
-  <div class="logo">🧠</div>
-  <h1>AIBAST Agents Library</h1>
-  <p>A local-first AI agent server and 104 industry agent templates powered by GitHub Copilot.<br>No API keys. No cloud setup. Just your GitHub account.</p>
-  <div class="tagline">Start simple. Layer up when you're ready.</div>
+  <div class="logo" style="font-size:48px;margin-bottom:12px;">
+    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:8px;">
+      <rect width="22" height="22" fill="#f25022"/>
+      <rect x="26" width="22" height="22" fill="#7fba00"/>
+      <rect y="26" width="22" height="22" fill="#00a4ef"/>
+      <rect x="26" y="26" width="22" height="22" fill="#ffb900"/>
+    </svg>
+  </div>
+  <h1 style="font-size:32px;font-weight:600;letter-spacing:-0.5px;">AIBAST Agents Library</h1>
+  <p style="color:#8b949e;font-size:15px;line-height:1.6;margin-top:8px;">104 industry AI agent templates and a local-first agent server.<br>Powered by GitHub Copilot. No API keys. No cloud setup.</p>
+  <div class="tagline" style="margin-top:16px;font-size:13px;">Part of the Rapid Agent Prototype Pattern (RAPP) · <a href="docs/rapp-guide.html" style="color:#58a6ff;">Production Guide →</a></div>
 </div>
 
 <div class="install-widget" id="install-widget">
@@ -349,10 +351,10 @@
 
 <div class="links">
   <a href="https://github.com/microsoft/aibast-agents-library">GitHub</a>
-  <a href="release-notes.html">Release Notes</a>
-  <a href="blog.html">Engineering Blog</a>
-  <a href="rapp_brainstem/README.md">Brainstem Docs</a>
-  <a href="https://github.com/marketplace/models">GitHub Models</a>
+  <a href="docs/rapp-guide.html">RAPP Production Guide</a>
+  <a href="https://github.com/microsoft/aibast-agents-library/issues">Issues &amp; Feedback</a>
+  <a href="CONTRIBUTING.md">Contributing</a>
+  <a href="https://github.com/microsoft/skills-for-copilot-studio">Skills for Copilot Studio</a>
 </div>
 
 <script>
@@ -462,22 +464,21 @@
   setInterval(checkBrainstem, 5000);
 </script>
 
-<div style="max-width:800px;margin:40px auto;padding:0 20px 60px;">
-  <h2 style="font-size:1.5em;margin-bottom:16px;color:#333;">Current Limitations</h2>
-  <div style="background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:16px 20px;margin-bottom:16px;color:#856404;font-size:14px;">
+<div style="max-width:620px;width:100%;margin:40px auto;padding:0 0 60px;">
+  <h2 style="font-size:1.3em;margin-bottom:16px;color:#e6edf3;font-weight:600;">Current Limitations</h2>
+  <div style="background:#1c1f26;border:1px solid #d29922;border-radius:8px;padding:14px 18px;margin-bottom:16px;color:#d29922;font-size:13px;line-height:1.6;">
     ⚠️ <strong>IMPORTANT:</strong> This is an experimental project managed by a v-team from the Artificial Intelligence Business Applications Specialist Team (AIBAST), not an officially supported Microsoft product.
   </div>
-  <p style="color:#555;line-height:1.7;margin-bottom:12px;">This project is still in beta. Even if we're optimizing it for best-practice adherence, by using it you might sometimes experience unwanted patterns, errors, or simply bad architectures. By filing a <a href="https://github.com/microsoft/aibast-agents-library/issues" style="color:#0d6efd;">GitHub issue in the project repo</a> you will help us improve these tools.</p>
-  <p style="color:#555;line-height:1.7;margin-bottom:12px;">A few additional things to keep in mind:</p>
-  <ul style="color:#555;line-height:1.9;margin-left:20px;">
-    <li><strong>Agent templates are starting points, not turnkey solutions.</strong> Each template provides the structure, system prompts, and logic scaffold for a specific business function. Users must customize them to adapt to their specific data sources, business rules, APIs, and deployment environment before production use.</li>
-    <li><strong>AI-generated output may contain errors or unsupported patterns.</strong> The agent templates reduce this significantly compared to a general-purpose model, but human review remains important.</li>
-    <li><strong>The project is evolving quickly.</strong> We're actively improving it based on feedback.</li>
+  <p style="color:#8b949e;line-height:1.7;font-size:14px;margin-bottom:12px;">This project is still in beta. Even if we're optimizing it for best-practice adherence, by using it you might sometimes experience unwanted patterns, errors, or simply bad architectures. By filing a <a href="https://github.com/microsoft/aibast-agents-library/issues" style="color:#58a6ff;">GitHub issue</a> you will help us improve these tools.</p>
+  <ul style="color:#8b949e;line-height:1.9;margin-left:20px;font-size:13px;">
+    <li><strong style="color:#e6edf3;">Agent templates are starting points, not turnkey solutions.</strong> Each template provides the structure, system prompts, and logic scaffold for a specific business function. Customize before production use.</li>
+    <li><strong style="color:#e6edf3;">AI-generated output may contain errors or unsupported patterns.</strong> Human review remains important.</li>
+    <li><strong style="color:#e6edf3;">The project is evolving quickly.</strong> We're actively improving it based on feedback.</li>
   </ul>
-  <hr style="margin:30px 0;border:none;border-top:1px solid #e0e0e0;">
-  <p style="color:#999;font-size:12px;line-height:1.6;">
-    This project has adopted the <a href="https://opensource.microsoft.com/codeofconduct/" style="color:#0d6efd;">Microsoft Open Source Code of Conduct</a>.
-    This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow <a href="https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general" style="color:#0d6efd;">Microsoft's Trademark &amp; Brand Guidelines</a>.
+  <hr style="margin:30px 0;border:none;border-top:1px solid #21262d;">
+  <p style="color:#484f58;font-size:11px;line-height:1.6;">
+    This project has adopted the <a href="https://opensource.microsoft.com/codeofconduct/" style="color:#58a6ff;">Microsoft Open Source Code of Conduct</a>.
+    This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow <a href="https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general" style="color:#58a6ff;">Microsoft's Trademark &amp; Brand Guidelines</a>.
     MIT License — Copyright (c) 2025 Microsoft.
   </p>
 </div>
