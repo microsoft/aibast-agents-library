@@ -194,6 +194,6 @@ If you believe you have found a security vulnerability in any Microsoft-owned re
 
 ## License
 
-MIT License - Copyright (c) 2025 Microsoft
+MIT License - Copyright (c) 2026 Microsoft
 
 See [LICENSE](LICENSE) for full details.

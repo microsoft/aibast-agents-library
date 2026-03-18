@@ -78,4 +78,4 @@ Agents are Python files that:
 
 ## License
 
-This project uses the MIT License (Copyright 2025 Microsoft).
+This project uses the MIT License (Copyright 2026 Microsoft).
