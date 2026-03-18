@@ -1,0 +1,526 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "subscriptionId": {
+      "type": "String",
+      "defaultValue": "[subscription().subscriptionId]"
+    },
+    "functionAppName": {
+      "type": "string",
+      "defaultValue": "[concat('rapp-', uniqueString(resourceGroup().id))]",
+      "metadata": {
+        "description": "Name of the Function App (must be globally unique)"
+      }
+    },
+    "storageAccountName": {
+      "type": "string",
+      "defaultValue": "[concat('st', uniqueString(resourceGroup().id))]",
+      "maxLength": 24,
+      "metadata": {
+        "description": "Storage Account Name (3-24 characters, lowercase and numbers only)"
+      }
+    },
+    "storageBlobContainerName": {
+      "type": "String",
+      "defaultValue": "deployments"
+    },
+    "openAIServiceName": {
+      "type": "string",
+      "defaultValue": "[concat('openai-', uniqueString(resourceGroup().id))]",
+      "metadata": {
+        "description": "Name for the Azure OpenAI Service"
+      }
+    },
+    "openAIModelName": {
+      "type": "string",
+      "defaultValue": "gpt-4o",
+      "allowedValues": [
+        "gpt-4o",
+        "gpt-4o-mini",
+        "gpt-5-chat",
+        "o1",
+        "o1-mini",
+        "o3-mini"
+      ],
+      "metadata": {
+        "description": "Azure OpenAI Model to deploy. All models use the tools API format."
+      }
+    },
+    "openAIDeploymentName": {
+      "type": "string",
+      "defaultValue": "gpt-deployment",
+      "metadata": {
+        "description": "Name for the model deployment"
+      }
+    },
+    "openAIDeploymentCapacity": {
+      "type": "int",
+      "defaultValue": 10,
+      "minValue": 1,
+      "maxValue": 300,
+      "metadata": {
+        "description": "Deployment capacity in thousands of tokens per minute (TPM). Start with 10 and increase if needed based on your quota."
+      }
+    },
+    "assistantName": {
+      "type": "string",
+      "defaultValue": "RAPP Agent",
+      "metadata": {
+        "description": "Name for the AI Assistant"
+      }
+    },
+    "characteristicDescription": {
+      "type": "string",
+      "defaultValue": "Rapid Agent Prototyping Platform assistant",
+      "metadata": {
+        "description": "Description of the assistant's characteristics"
+      }
+    },
+    "openAILocation": {
+      "type": "string",
+      "allowedValues": [
+        "australiaeast",
+        "canadaeast",
+        "eastus",
+        "eastus2",
+        "francecentral",
+        "japaneast",
+        "northcentralus",
+        "norwayeast",
+        "southcentralus",
+        "swedencentral",
+        "switzerlandnorth",
+        "uksouth",
+        "westeurope",
+        "westus",
+        "westus3"
+      ],
+      "metadata": {
+        "description": "REQUIRED: Select region for Azure OpenAI Service. Choose a region with available quota (different from your resource group region if needed)."
+      }
+    },
+    "pythonVersion": {
+      "type": "string",
+      "defaultValue": "3.11",
+      "allowedValues": [
+        "3.11"
+      ],
+      "metadata": {
+        "description": "Python version to use (3.11 required for Azure Functions v4 compatibility)"
+      }
+    },
+    "functionAppRuntime": {
+      "type": "string",
+      "defaultValue": "python",
+      "metadata": {
+        "description": "Runtime for Function App"
+      }
+    },
+    "storageNetworkDefaultAction": {
+      "type": "string",
+      "defaultValue": "Allow",
+      "allowedValues": [
+        "Allow"
+      ],
+      "metadata": {
+        "description": "IMPORTANT: Must be 'Allow' for Flex Consumption Function Apps. The deployment pipeline (Kudu) requires public network access to upload function packages. Security is maintained via Azure AD auth (allowSharedKeyAccess=false) and RBAC roles. Do NOT change this to 'Deny' or deployment will fail with 403 errors."
+      }
+    }
+  },
+  "variables": {
+    "fileShareName": "[concat('azf', parameters('functionAppName'), uniqueString(resourceGroup().id))]",
+    "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
+    "openAIResourceId": "[resourceId('Microsoft.CognitiveServices/accounts', parameters('openAIServiceName'))]",
+    "functionAppId": "[resourceId('Microsoft.Web/sites', parameters('functionAppName'))]",
+    "appServicePlanName": "[concat('asp-', parameters('functionAppName'))]",
+    "appInsightsName": "[concat('ai-', parameters('functionAppName'))]",
+    "storageBlobDataOwnerRoleId": "b7e6dc6d-f1e8-4753-8033-0f276bb0955b",
+    "storageBlobDataContributorRoleId": "ba92f5b4-2d11-453d-a403-e96b0029c9fe",
+    "storageFileDataSmbShareContributorRoleId": "0c867c2a-1d8c-454a-a3db-ab2ea1bdc8bb",
+    "storageFileDataPrivilegedContributorRoleId": "69566ab7-960f-475b-8e7c-b3118f30c6bd",
+    "storageAccountContributorRoleId": "17d1049b-9a84-46fb-8f53-869881c3d3ab",
+    "storageQueueDataContributorRoleId": "974c5e8b-45b9-4653-ba55-5f855dd0fb88",
+    "storageTableDataContributorRoleId": "0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3",
+    "cognitiveServicesOpenAIUserRoleId": "5e0bd9bd-7b93-4f28-af87-19fc36ad61bd"
+  },
+  "resources": [
+    {
+      "comments": "CRITICAL: Storage account MUST have publicNetworkAccess=Enabled for Flex Consumption deployments. The Kudu deployment pipeline requires network access to upload function packages to blob storage.",
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2023-05-01",
+      "name": "[parameters('storageAccountName')]",
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "Standard_LRS"
+      },
+      "kind": "StorageV2",
+      "properties": {
+        "supportsHttpsTrafficOnly": true,
+        "minimumTlsVersion": "TLS1_2",
+        "defaultToOAuthAuthentication": true,
+        "allowBlobPublicAccess": false,
+        "allowSharedKeyAccess": false,
+        "publicNetworkAccess": "Enabled",
+        "networkAcls": {
+          "bypass": "AzureServices,Logging,Metrics",
+          "defaultAction": "[parameters('storageNetworkDefaultAction')]",
+          "ipRules": [],
+          "virtualNetworkRules": []
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/fileServices/shares",
+      "apiVersion": "2022-05-01",
+      "name": "[concat(parameters('storageAccountName'), '/default/', variables('fileShareName'))]",
+      "dependsOn": [
+        "[variables('storageAccountId')]"
+      ]
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+      "apiVersion": "2022-05-01",
+      "name": "[concat(parameters('storageAccountName'), '/default/', parameters('storageBlobContainerName'))]",
+      "dependsOn": [
+        "[variables('storageAccountId')]"
+      ],
+      "properties": {
+        "publicAccess": "None"
+      }
+    },
+    {
+      "type": "Microsoft.CognitiveServices/accounts",
+      "apiVersion": "2023-05-01",
+      "name": "[parameters('openAIServiceName')]",
+      "location": "[parameters('openAILocation')]",
+      "sku": {
+        "name": "S0"
+      },
+      "kind": "OpenAI",
+      "properties": {
+        "customSubDomainName": "[parameters('openAIServiceName')]",
+        "publicNetworkAccess": "Enabled",
+        "disableLocalAuth": true
+      }
+    },
+    {
+      "type": "Microsoft.CognitiveServices/accounts/deployments",
+      "apiVersion": "2023-05-01",
+      "name": "[concat(parameters('openAIServiceName'), '/', parameters('openAIDeploymentName'))]",
+      "dependsOn": [
+        "[variables('openAIResourceId')]"
+      ],
+      "sku": {
+        "name": "Standard",
+        "capacity": "[parameters('openAIDeploymentCapacity')]"
+      },
+      "properties": {
+        "model": {
+          "format": "OpenAI",
+          "name": "[parameters('openAIModelName')]",
+          "version": "2024-08-06"
+        },
+        "versionUpgradeOption": "OnceNewDefaultVersionAvailable",
+        "raiPolicyName": "Microsoft.Default"
+      }
+    },
+    {
+      "type": "Microsoft.Insights/components",
+      "apiVersion": "2020-02-02",
+      "name": "[variables('appInsightsName')]",
+      "location": "[resourceGroup().location]",
+      "kind": "web",
+      "properties": {
+        "Application_Type": "web"
+      }
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2023-12-01",
+      "name": "[variables('appServicePlanName')]",
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "tier": "FlexConsumption",
+        "name": "FC1"
+      },
+      "kind": "functionapp",
+      "properties": {
+        "reserved": true
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2023-12-01",
+      "name": "[parameters('functionAppName')]",
+      "location": "[resourceGroup().location]",
+      "kind": "functionapp,linux",
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
+        "[variables('storageAccountId')]",
+        "[resourceId('Microsoft.Storage/storageAccounts/blobServices/containers', parameters('storageAccountName'), 'default', parameters('storageBlobContainerName'))]",
+        "[variables('openAIResourceId')]",
+        "[resourceId('Microsoft.Insights/components', variables('appInsightsName'))]"
+      ],
+      "tags": {
+        "hidden-link: /app-insights-resource-id": "[resourceId('Microsoft.Insights/components', variables('appInsightsName'))]"
+      },
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
+        "httpsOnly": true,
+        "functionAppConfig": {
+          "deployment": {
+            "storage": {
+              "type": "blobContainer",
+              "value": "[concat('https://', parameters('storageAccountName'), '.blob.core.windows.net/', parameters('storageBlobContainerName'))]",
+              "authentication": {
+                "type": "SystemAssignedIdentity"
+              }
+            }
+          },
+          "scaleAndConcurrency": {
+            "maximumInstanceCount": 100,
+            "instanceMemoryMB": 2048
+          },
+          "runtime": {
+            "name": "python",
+            "version": "[parameters('pythonVersion')]"
+          }
+        },
+        "siteConfig": {
+          "cors": {
+            "allowedOrigins": ["*"],
+            "supportCredentials": false
+          },
+          "appSettings": [
+            {
+              "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+              "value": "[reference(resourceId('Microsoft.Insights/components', variables('appInsightsName'))).ConnectionString]"
+            },
+            {
+              "name": "AzureWebJobsStorage__accountName",
+              "value": "[parameters('storageAccountName')]"
+            },
+            {
+              "name": "AZURE_OPENAI_ENDPOINT",
+              "value": "[reference(variables('openAIResourceId')).endpoint]"
+            },
+            {
+              "name": "AZURE_OPENAI_API_VERSION",
+              "value": "2025-01-01-preview"
+            },
+            {
+              "name": "AZURE_OPENAI_DEPLOYMENT_NAME",
+              "value": "[parameters('openAIDeploymentName')]"
+            },
+            {
+              "name": "AZURE_STORAGE_ACCOUNT_NAME",
+              "value": "[parameters('storageAccountName')]"
+            },
+            {
+              "name": "AZURE_FILES_SHARE_NAME",
+              "value": "[variables('fileShareName')]"
+            },
+            {
+              "name": "ASSISTANT_NAME",
+              "value": "[parameters('assistantName')]"
+            },
+            {
+              "name": "CHARACTERISTIC_DESCRIPTION",
+              "value": "[parameters('characteristicDescription')]"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "comments": "CRITICAL: Storage Account Contributor - Required for Flex Consumption Function Apps to fully access storage",
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2022-04-01",
+      "name": "[guid(parameters('storageAccountName'), parameters('functionAppName'), variables('storageAccountContributorRoleId'))]",
+      "scope": "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]",
+      "dependsOn": [
+        "[variables('functionAppId')]",
+        "[variables('storageAccountId')]"
+      ],
+      "properties": {
+        "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', variables('storageAccountContributorRoleId'))]",
+        "principalId": "[reference(variables('functionAppId'), '2023-12-01', 'Full').identity.principalId]",
+        "principalType": "ServicePrincipal"
+      }
+    },
+    {
+      "comments": "Storage Blob Data Owner - Full control over blob data (required for deployment container access)",
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2022-04-01",
+      "name": "[guid(parameters('storageAccountName'), parameters('functionAppName'), variables('storageBlobDataOwnerRoleId'))]",
+      "scope": "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]",
+      "dependsOn": [
+        "[variables('functionAppId')]",
+        "[variables('storageAccountId')]"
+      ],
+      "properties": {
+        "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', variables('storageBlobDataOwnerRoleId'))]",
+        "principalId": "[reference(variables('functionAppId'), '2023-12-01', 'Full').identity.principalId]",
+        "principalType": "ServicePrincipal"
+      }
+    },
+    {
+      "comments": "Storage Blob Data Contributor - Required for deployment pipeline to upload/download function packages",
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2022-04-01",
+      "name": "[guid(parameters('storageAccountName'), parameters('functionAppName'), variables('storageBlobDataContributorRoleId'))]",
+      "scope": "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]",
+      "dependsOn": [
+        "[variables('functionAppId')]",
+        "[variables('storageAccountId')]"
+      ],
+      "properties": {
+        "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', variables('storageBlobDataContributorRoleId'))]",
+        "principalId": "[reference(variables('functionAppId'), '2023-12-01', 'Full').identity.principalId]",
+        "principalType": "ServicePrincipal"
+      }
+    },
+    {
+      "comments": "Storage File Data Privileged Contributor - Required for Azure Files token-based authentication with token_intent=backup",
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2022-04-01",
+      "name": "[guid(parameters('storageAccountName'), parameters('functionAppName'), variables('storageFileDataPrivilegedContributorRoleId'))]",
+      "scope": "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]",
+      "dependsOn": [
+        "[variables('functionAppId')]",
+        "[variables('storageAccountId')]"
+      ],
+      "properties": {
+        "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', variables('storageFileDataPrivilegedContributorRoleId'))]",
+        "principalId": "[reference(variables('functionAppId'), '2023-12-01', 'Full').identity.principalId]",
+        "principalType": "ServicePrincipal"
+      }
+    },
+    {
+      "comments": "Storage File Data SMB Share Contributor - Required for file share operations",
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2022-04-01",
+      "name": "[guid(parameters('storageAccountName'), parameters('functionAppName'), variables('storageFileDataSmbShareContributorRoleId'))]",
+      "scope": "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]",
+      "dependsOn": [
+        "[variables('functionAppId')]",
+        "[variables('storageAccountId')]"
+      ],
+      "properties": {
+        "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', variables('storageFileDataSmbShareContributorRoleId'))]",
+        "principalId": "[reference(variables('functionAppId'), '2023-12-01', 'Full').identity.principalId]",
+        "principalType": "ServicePrincipal"
+      }
+    },
+    {
+      "comments": "Storage Queue Data Contributor - Required for Azure Functions trigger bindings",
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2022-04-01",
+      "name": "[guid(parameters('storageAccountName'), parameters('functionAppName'), variables('storageQueueDataContributorRoleId'))]",
+      "scope": "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]",
+      "dependsOn": [
+        "[variables('functionAppId')]",
+        "[variables('storageAccountId')]"
+      ],
+      "properties": {
+        "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', variables('storageQueueDataContributorRoleId'))]",
+        "principalId": "[reference(variables('functionAppId'), '2023-12-01', 'Full').identity.principalId]",
+        "principalType": "ServicePrincipal"
+      }
+    },
+    {
+      "comments": "Storage Table Data Contributor - Required for Azure Functions durable functions and state management",
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2022-04-01",
+      "name": "[guid(parameters('storageAccountName'), parameters('functionAppName'), variables('storageTableDataContributorRoleId'))]",
+      "scope": "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]",
+      "dependsOn": [
+        "[variables('functionAppId')]",
+        "[variables('storageAccountId')]"
+      ],
+      "properties": {
+        "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', variables('storageTableDataContributorRoleId'))]",
+        "principalId": "[reference(variables('functionAppId'), '2023-12-01', 'Full').identity.principalId]",
+        "principalType": "ServicePrincipal"
+      }
+    },
+    {
+      "comments": "Cognitive Services OpenAI User - Required for Azure OpenAI API access via Managed Identity (Entra ID authentication)",
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2022-04-01",
+      "name": "[guid(parameters('openAIServiceName'), parameters('functionAppName'), variables('cognitiveServicesOpenAIUserRoleId'))]",
+      "scope": "[concat('Microsoft.CognitiveServices/accounts/', parameters('openAIServiceName'))]",
+      "dependsOn": [
+        "[variables('functionAppId')]",
+        "[variables('openAIResourceId')]"
+      ],
+      "properties": {
+        "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', variables('cognitiveServicesOpenAIUserRoleId'))]",
+        "principalId": "[reference(variables('functionAppId'), '2023-12-01', 'Full').identity.principalId]",
+        "principalType": "ServicePrincipal"
+      }
+    }
+  ],
+  "outputs": {
+    "functionAppName": {
+      "type": "string",
+      "value": "[parameters('functionAppName')]"
+    },
+    "functionAppUrl": {
+      "type": "string",
+      "value": "[concat('https://', reference(variables('functionAppId')).defaultHostName)]"
+    },
+    "functionEndpoint": {
+      "type": "string",
+      "value": "[concat('https://', reference(variables('functionAppId')).defaultHostName, '/api/businessinsightbot_function')]"
+    },
+    "openAIEndpoint": {
+      "type": "string",
+      "value": "[reference(variables('openAIResourceId')).endpoint]"
+    },
+    "storageAccountName": {
+      "type": "string",
+      "value": "[parameters('storageAccountName')]"
+    },
+    "fileShareName": {
+      "type": "string",
+      "value": "[variables('fileShareName')]"
+    },
+    "resourceGroupName": {
+      "type": "string",
+      "value": "[resourceGroup().name]"
+    },
+    "managedIdentityPrincipalId": {
+      "type": "string",
+      "value": "[reference(variables('functionAppId'), '2023-12-01', 'Full').identity.principalId]"
+    },
+    "localSettingsJson": {
+      "type": "string",
+      "value": "[concat('{\n  \"IsEncrypted\": false,\n  \"Values\": {\n    \"FUNCTIONS_WORKER_RUNTIME\": \"python\",\n    \"AzureWebJobsStorage__accountName\": \"', parameters('storageAccountName'), '\",\n    \"AZURE_OPENAI_ENDPOINT\": \"', reference(variables('openAIResourceId')).endpoint, '\",\n    \"AZURE_OPENAI_API_VERSION\": \"2025-01-01-preview\",\n    \"AZURE_OPENAI_DEPLOYMENT_NAME\": \"', parameters('openAIDeploymentName'), '\",\n    \"AZURE_STORAGE_ACCOUNT_NAME\": \"', parameters('storageAccountName'), '\",\n    \"AZURE_FILES_SHARE_NAME\": \"', variables('fileShareName'), '\",\n    \"ASSISTANT_NAME\": \"', parameters('assistantName'), '\",\n    \"CHARACTERISTIC_DESCRIPTION\": \"', parameters('characteristicDescription'), '\"\n  }\n}')]"
+    },
+    "getFunctionKeyInstructions": {
+      "type": "string",
+      "value": "[concat('To get your Function Key:\n1. Go to Azure Portal\n2. Navigate to Function App: ', parameters('functionAppName'), '\n3. Click \"App keys\" in left menu\n4. Copy the \"default\" key under \"Host keys\"\n\nOr use Azure CLI:\naz functionapp keys list --name ', parameters('functionAppName'), ' --resource-group ', resourceGroup().name, ' --query \"functionKeys.default\" -o tsv')]"
+    },
+    "windowsSetupScript": {
+      "type": "string",
+      "value": "[concat('# Copilot Entra Agent - Windows Setup Script\n# Generated from ARM deployment\n# Run this script in PowerShell to configure your local environment\n# Uses Azure AD (Entra ID) authentication - no API keys required\n\n$ErrorActionPreference = \"Stop\"\n\nWrite-Host \"========================================\" -ForegroundColor Cyan\nWrite-Host \"Copilot Entra Agent - Local Setup\" -ForegroundColor Cyan\nWrite-Host \"(Azure AD Authentication)\" -ForegroundColor Cyan\nWrite-Host \"========================================\" -ForegroundColor Cyan\n\n# Configuration from deployment\n$FUNCTION_APP_NAME = \"', parameters('functionAppName'), '\"\n$RESOURCE_GROUP = \"', resourceGroup().name, '\"\n$SUBSCRIPTION_ID = \"', subscription().subscriptionId, '\"\n$OPENAI_SERVICE_NAME = \"', parameters('openAIServiceName'), '\"\n$OPENAI_ENDPOINT = \"', reference(variables('openAIResourceId')).endpoint, '\"\n$OPENAI_DEPLOYMENT = \"', parameters('openAIDeploymentName'), '\"\n$STORAGE_ACCOUNT = \"', parameters('storageAccountName'), '\"\n$FILE_SHARE = \"', variables('fileShareName'), '\"\n$ASSISTANT_NAME = \"', parameters('assistantName'), '\"\n$CHARACTERISTIC_DESC = \"', parameters('characteristicDescription'), '\"\n$FUNCTION_URL = \"https://', reference(variables('functionAppId')).defaultHostName, '/api/businessinsightbot_function\"\n$REPO_URL = \"https://github.com/kody-w/EntraCopilotAgent365.git\"\n\n# Function to find Python 3.11\nfunction Find-Python311 {\n    $commands = @(\"python3.11\", \"python311\")\n    foreach ($cmd in $commands) {\n        $fullPath = Get-Command $cmd -ErrorAction SilentlyContinue\n        if ($fullPath) {\n            $ver = & $fullPath.Source --version 2>&1\n            if ($ver -match \"Python 3\\.11\") { return $fullPath.Source }\n        }\n    }\n    # Check py launcher\n    try {\n        $ver = & py -3.11 --version 2>&1\n        if ($ver -match \"Python 3\\.11\") { return \"py -3.11\" }\n    } catch {}\n    # Check common paths\n    $paths = @(\"$env:LOCALAPPDATA\\Programs\\Python\\Python311\\python.exe\", \"C:\\Python311\\python.exe\")\n    foreach ($p in $paths) {\n        if (Test-Path $p) {\n            $ver = & $p --version 2>&1\n            if ($ver -match \"Python 3\\.11\") { return $p }\n        }\n    }\n    return $null\n}\n\n# Check prerequisites\nWrite-Host \"\"\nWrite-Host \"Checking prerequisites...\" -ForegroundColor Yellow\n\n# Check Git - auto install if missing\nif (-not (Get-Command git -ErrorAction SilentlyContinue)) {\n    Write-Host \"[!] Git not found - installing...\" -ForegroundColor Yellow\n    winget install Git.Git --accept-source-agreements --accept-package-agreements\n    $env:Path = [System.Environment]::GetEnvironmentVariable(\"Path\",\"Machine\") + \";\" + [System.Environment]::GetEnvironmentVariable(\"Path\",\"User\")\n}\nWrite-Host \"[OK] Git installed\" -ForegroundColor Green\n\n# Check Python 3.11 - auto install if missing\n$PYTHON_CMD = Find-Python311\nif (-not $PYTHON_CMD) {\n    Write-Host \"[!] Python 3.11 not found - installing...\" -ForegroundColor Yellow\n    winget install Python.Python.3.11 --accept-source-agreements --accept-package-agreements\n    $env:Path = [System.Environment]::GetEnvironmentVariable(\"Path\",\"Machine\") + \";\" + [System.Environment]::GetEnvironmentVariable(\"Path\",\"User\")\n    Start-Sleep -Seconds 2\n    $PYTHON_CMD = Find-Python311\n    if (-not $PYTHON_CMD) {\n        Write-Host \"[X] Failed to install Python 3.11. Please restart terminal and try again.\" -ForegroundColor Red\n        exit 1\n    }\n}\nWrite-Host \"[OK] Python 3.11 found: $PYTHON_CMD\" -ForegroundColor Green\n\n# Check Azure Functions Core Tools - auto install if missing\nif (-not (Get-Command func -ErrorAction SilentlyContinue)) {\n    Write-Host \"[!] Azure Functions Core Tools not found - installing...\" -ForegroundColor Yellow\n    winget install Microsoft.Azure.FunctionsCoreTools --accept-source-agreements --accept-package-agreements\n    $env:Path = [System.Environment]::GetEnvironmentVariable(\"Path\",\"Machine\") + \";\" + [System.Environment]::GetEnvironmentVariable(\"Path\",\"User\")\n}\nWrite-Host \"[OK] Azure Functions Core Tools installed\" -ForegroundColor Green\n\n# Check Azure CLI - auto install if missing\nif (-not (Get-Command az -ErrorAction SilentlyContinue)) {\n    Write-Host \"[!] Azure CLI not found - installing...\" -ForegroundColor Yellow\n    winget install Microsoft.AzureCLI --accept-source-agreements --accept-package-agreements\n    $env:Path = [System.Environment]::GetEnvironmentVariable(\"Path\",\"Machine\") + \";\" + [System.Environment]::GetEnvironmentVariable(\"Path\",\"User\")\n}\nWrite-Host \"[OK] Azure CLI installed\" -ForegroundColor Green\n\n# Check Azure CLI login\nWrite-Host \"\"\nWrite-Host \"Checking Azure CLI login (required for Azure AD authentication)...\" -ForegroundColor Yellow\n$azAccount = az account show 2>$null | ConvertFrom-Json\nif (-not $azAccount) {\n    Write-Host \"[X] Not logged into Azure CLI\" -ForegroundColor Red\n    Write-Host \"Running: az login\" -ForegroundColor Yellow\n    az login\n    $azAccount = az account show | ConvertFrom-Json\n}\nWrite-Host \"[OK] Logged in as: $($azAccount.user.name)\" -ForegroundColor Green\n$USER_OBJECT_ID = (az ad signed-in-user show --query id -o tsv)\nWrite-Host \"[OK] User Object ID: $USER_OBJECT_ID\" -ForegroundColor Green\n\n# Assign roles for local development\nWrite-Host \"\"\nWrite-Host \"Assigning roles for local development...\" -ForegroundColor Yellow\n\n# Storage File Data Privileged Contributor\nWrite-Host \"Role: Storage File Data Privileged Contributor\" -ForegroundColor White\ntry {\n    az role assignment create --assignee $USER_OBJECT_ID --role \"Storage File Data Privileged Contributor\" --scope \"/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.Storage/storageAccounts/$STORAGE_ACCOUNT\" 2>$null\n    Write-Host \"[OK] Storage role assigned\" -ForegroundColor Green\n} catch {\n    Write-Host \"[!] Storage role may already exist\" -ForegroundColor Yellow\n}\n\n# Cognitive Services OpenAI User (for Azure AD auth to OpenAI)\nWrite-Host \"Role: Cognitive Services OpenAI User\" -ForegroundColor White\ntry {\n    az role assignment create --assignee $USER_OBJECT_ID --role \"Cognitive Services OpenAI User\" --scope \"/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.CognitiveServices/accounts/$OPENAI_SERVICE_NAME\" 2>$null\n    Write-Host \"[OK] OpenAI role assigned\" -ForegroundColor Green\n} catch {\n    Write-Host \"[!] OpenAI role may already exist\" -ForegroundColor Yellow\n}\n\n# Clone the repository\nWrite-Host \"\"\nWrite-Host \"Cloning repository...\" -ForegroundColor Yellow\nif (Test-Path \"EntraCopilotAgent365\") {\n    Write-Host \"Directory already exists, pulling latest...\" -ForegroundColor Yellow\n    Set-Location EntraCopilotAgent365\n    git pull\n} else {\n    git clone $REPO_URL\n    Set-Location EntraCopilotAgent365\n}\n\n# Create virtual environment with Python 3.11\nWrite-Host \"\"\nWrite-Host \"Creating Python 3.11 virtual environment...\" -ForegroundColor Yellow\nif (Test-Path \".venv\") { Remove-Item -Recurse -Force .venv }\nif ($PYTHON_CMD -eq \"py -3.11\") {\n    & py -3.11 -m venv .venv\n} else {\n    & $PYTHON_CMD -m venv .venv\n}\n\n# Activate and install dependencies\nWrite-Host \"Installing dependencies...\" -ForegroundColor Yellow\n.venv\\Scripts\\Activate.ps1\npip install --upgrade pip -q\npip install -r requirements.txt -q\n\nWrite-Host \"\"\nWrite-Host \"Creating local.settings.json (Azure AD auth - no API keys)...\" -ForegroundColor Yellow\n\n$localSettings = @{\n    IsEncrypted = $false\n    Values = @{\n        FUNCTIONS_WORKER_RUNTIME = \"python\"\n        \"AzureWebJobsStorage__accountName\" = $STORAGE_ACCOUNT\n        AZURE_OPENAI_ENDPOINT = $OPENAI_ENDPOINT\n        AZURE_OPENAI_API_VERSION = \"2025-01-01-preview\"\n        AZURE_OPENAI_DEPLOYMENT_NAME = $OPENAI_DEPLOYMENT\n        AZURE_STORAGE_ACCOUNT_NAME = $STORAGE_ACCOUNT\n        AZURE_FILES_SHARE_NAME = $FILE_SHARE\n        ASSISTANT_NAME = $ASSISTANT_NAME\n        CHARACTERISTIC_DESCRIPTION = $CHARACTERISTIC_DESC\n    }\n}\n\n$localSettings | ConvertTo-Json -Depth 10 | Set-Content -Path \"local.settings.json\" -Encoding UTF8\nWrite-Host \"local.settings.json created successfully!\" -ForegroundColor Green\n\n# Verify storage access before deployment\nWrite-Host \"\"\nWrite-Host \"Verifying storage account configuration...\" -ForegroundColor Yellow\n$publicAccess = az storage account show --name $STORAGE_ACCOUNT --query publicNetworkAccess -o tsv 2>$null\nif ($publicAccess -ne \"Enabled\") {\n    Write-Host \"[!] Storage public network access is $publicAccess, enabling...\" -ForegroundColor Yellow\n    az storage account update --name $STORAGE_ACCOUNT --public-network-access Enabled\n    Write-Host \"[OK] Storage public network access enabled\" -ForegroundColor Green\n} else {\n    Write-Host \"[OK] Storage public network access is Enabled\" -ForegroundColor Green\n}\n\n# Deploy to Azure with remote build (REQUIRED for Flex Consumption - builds Linux binaries)\nWrite-Host \"\"\nWrite-Host \"Deploying to Azure Function App (remote build for Linux)...\" -ForegroundColor Yellow\nfunc azure functionapp publish $FUNCTION_APP_NAME --build remote\n\nWrite-Host \"\"\nWrite-Host \"========================================\" -ForegroundColor Green\nWrite-Host \"Setup Complete!\" -ForegroundColor Green\nWrite-Host \"========================================\" -ForegroundColor Green\nWrite-Host \"\"\nWrite-Host \"Authentication: Azure AD (Entra ID)\" -ForegroundColor White\nWrite-Host \"Function App Name: $FUNCTION_APP_NAME\" -ForegroundColor White\nWrite-Host \"Function URL: $FUNCTION_URL\" -ForegroundColor White\nWrite-Host \"\"\nWrite-Host \"To run locally: .\\\\run.ps1\" -ForegroundColor Yellow\nWrite-Host \"Note: Ensure you are logged into Azure CLI (az login)\" -ForegroundColor Yellow\n')]"
+    },
+    "troubleshootingGuide": {
+      "type": "string",
+      "value": "[concat('# RAPP Deployment Troubleshooting Guide\n\n## If deployment fails with 403 Storage Error:\n\n### 1. Check storage public network access (MUST be Enabled):\naz storage account show --name ', parameters('storageAccountName'), ' --query publicNetworkAccess -o tsv\n# Expected: Enabled\n\n### 2. Fix if Disabled:\naz storage account update --name ', parameters('storageAccountName'), ' --public-network-access Enabled\n\n### 3. Check network rules:\naz storage account show --name ', parameters('storageAccountName'), ' --query networkRuleSet -o json\n# defaultAction should be \"Allow\"\n\n### 4. Verify role assignments:\naz role assignment list --scope /subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Storage/storageAccounts/', parameters('storageAccountName'), ' --query \"[].{role:roleDefinitionName, principal:principalName}\" -o table\n\n### 5. Retry deployment (MUST use --build remote for Flex Consumption):\nfunc azure functionapp publish ', parameters('functionAppName'), ' --build remote\n\n## If Function App returns 503 Service Unavailable:\n\n### 1. Check app state:\naz functionapp show --name ', parameters('functionAppName'), ' --resource-group ', resourceGroup().name, ' --query state -o tsv\n\n### 2. Restart the app:\naz functionapp restart --name ', parameters('functionAppName'), ' --resource-group ', resourceGroup().name, '\n\n### 3. Check functions deployed:\naz functionapp function list --name ', parameters('functionAppName'), ' --resource-group ', resourceGroup().name, ' -o table\n')]"
+    },
+    "storageVerificationCommand": {
+      "type": "string",
+      "value": "[concat('# Verify storage is correctly configured for deployment:\naz storage account show --name ', parameters('storageAccountName'), ' --query \"{publicNetworkAccess:publicNetworkAccess, networkDefaultAction:networkRuleSet.defaultAction, allowSharedKeyAccess:allowSharedKeyAccess}\" -o json')]"
+    },
+    "macLinuxSetupScript": {
+      "type": "string",
+      "value": "[concat('#!/bin/bash\n# Copilot Entra Agent - Mac/Linux Setup Script\n# Generated from ARM deployment\n# Uses Azure AD (Entra ID) authentication - no API keys required\n# Run: chmod +x setup.sh && ./setup.sh\n\nset -e\n\nRED=\"\\033[0;31m\"\nGREEN=\"\\033[0;32m\"\nYELLOW=\"\\033[1;33m\"\nBLUE=\"\\033[0;34m\"\nNC=\"\\033[0m\"\n\necho -e \"${BLUE}========================================${NC}\"\necho -e \"${BLUE}Copilot Entra Agent - Local Setup${NC}\"\necho -e \"${BLUE}(Azure AD Authentication)${NC}\"\necho -e \"${BLUE}========================================${NC}\"\n\n# Configuration from deployment\nFUNCTION_APP_NAME=\"', parameters('functionAppName'), '\"\nRESOURCE_GROUP=\"', resourceGroup().name, '\"\nSUBSCRIPTION_ID=\"', subscription().subscriptionId, '\"\nOPENAI_SERVICE_NAME=\"', parameters('openAIServiceName'), '\"\nOPENAI_ENDPOINT=\"', reference(variables('openAIResourceId')).endpoint, '\"\nOPENAI_DEPLOYMENT=\"', parameters('openAIDeploymentName'), '\"\nSTORAGE_ACCOUNT=\"', parameters('storageAccountName'), '\"\nFILE_SHARE=\"', variables('fileShareName'), '\"\nASSISTANT_NAME=\"', parameters('assistantName'), '\"\nCHARACTERISTIC_DESC=\"', parameters('characteristicDescription'), '\"\nFUNCTION_URL=\"https://', reference(variables('functionAppId')).defaultHostName, '/api/businessinsightbot_function\"\nREPO_URL=\"https://github.com/kody-w/EntraCopilotAgent365.git\"\n\n# Detect OS\nif [[ \"$OSTYPE\" == \"darwin\"* ]]; then\n    OS_TYPE=\"macos\"\nelse\n    OS_TYPE=\"linux\"\nfi\necho -e \"${YELLOW}Detected OS: $OS_TYPE${NC}\"\n\n# Function to find Python 3.11\nfind_python311() {\n    for cmd in python3.11 python311; do\n        if command -v $cmd &> /dev/null; then\n            ver=$($cmd --version 2>&1)\n            if [[ $ver == *\"3.11\"* ]]; then\n                echo $cmd\n                return 0\n            fi\n        fi\n    done\n    # Check Homebrew paths on macOS\n    if [[ \"$OS_TYPE\" == \"macos\" ]]; then\n        for p in /opt/homebrew/bin/python3.11 /usr/local/bin/python3.11; do\n            if [[ -x $p ]]; then\n                echo $p\n                return 0\n            fi\n        done\n    fi\n    return 1\n}\n\n# Function to install Python 3.11\ninstall_python311() {\n    echo -e \"${YELLOW}Installing Python 3.11...${NC}\"\n    if [[ \"$OS_TYPE\" == \"macos\" ]]; then\n        if command -v brew &> /dev/null; then\n            brew install python@3.11\n            export PATH=\"/opt/homebrew/bin:/usr/local/bin:$PATH\"\n        else\n            echo -e \"${RED}Homebrew not found. Installing Homebrew first...${NC}\"\n            /bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"\n            export PATH=\"/opt/homebrew/bin:/usr/local/bin:$PATH\"\n            brew install python@3.11\n        fi\n    else\n        sudo apt-get update\n        sudo apt-get install -y python3.11 python3.11-venv python3.11-dev\n    fi\n}\n\necho \"\"\necho -e \"${YELLOW}Checking prerequisites...${NC}\"\n\n# Check/Install Git\nif ! command -v git &> /dev/null; then\n    echo -e \"${YELLOW}[!] Git not found - installing...${NC}\"\n    if [[ \"$OS_TYPE\" == \"macos\" ]]; then\n        brew install git\n    else\n        sudo apt-get update && sudo apt-get install -y git\n    fi\nfi\necho -e \"${GREEN}[OK] Git installed${NC}\"\n\n# Check/Install Python 3.11\nPYTHON_CMD=$(find_python311)\nif [[ -z \"$PYTHON_CMD\" ]]; then\n    echo -e \"${YELLOW}[!] Python 3.11 not found - installing...${NC}\"\n    install_python311\n    PYTHON_CMD=$(find_python311)\n    if [[ -z \"$PYTHON_CMD\" ]]; then\n        echo -e \"${RED}[X] Failed to install Python 3.11${NC}\"\n        exit 1\n    fi\nfi\necho -e \"${GREEN}[OK] Python 3.11: $PYTHON_CMD${NC}\"\n\n# Check/Install Azure Functions Core Tools\nif ! command -v func &> /dev/null; then\n    echo -e \"${YELLOW}[!] Azure Functions Core Tools not found - installing...${NC}\"\n    if [[ \"$OS_TYPE\" == \"macos\" ]]; then\n        brew tap azure/functions\n        brew install azure-functions-core-tools@4\n    else\n        curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg\n        sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg\n        sudo sh -c \"echo \\\"deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-$(lsb_release -cs)-prod $(lsb_release -cs) main\\\" > /etc/apt/sources.list.d/dotnetdev.list\"\n        sudo apt-get update\n        sudo apt-get install -y azure-functions-core-tools-4\n    fi\nfi\necho -e \"${GREEN}[OK] Azure Functions Core Tools installed${NC}\"\n\n# Check/Install Azure CLI\nif ! command -v az &> /dev/null; then\n    echo -e \"${YELLOW}[!] Azure CLI not found - installing...${NC}\"\n    if [[ \"$OS_TYPE\" == \"macos\" ]]; then\n        brew install azure-cli\n    else\n        curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash\n    fi\nfi\necho -e \"${GREEN}[OK] Azure CLI installed${NC}\"\n\n# Check Azure CLI login\necho \"\"\necho -e \"${YELLOW}Checking Azure CLI login (required for Azure AD authentication)...${NC}\"\nif ! az account show &> /dev/null; then\n    echo -e \"${YELLOW}Running: az login${NC}\"\n    az login\nfi\nAZ_USER=$(az account show --query user.name -o tsv)\necho -e \"${GREEN}[OK] Logged in as: $AZ_USER${NC}\"\nUSER_OBJECT_ID=$(az ad signed-in-user show --query id -o tsv)\n\n# Assign roles for local development\necho \"\"\necho -e \"${YELLOW}Assigning roles for local development...${NC}\"\n\n# Storage File Data Privileged Contributor\necho -e \"${YELLOW}Role: Storage File Data Privileged Contributor${NC}\"\naz role assignment create --assignee \"$USER_OBJECT_ID\" --role \"Storage File Data Privileged Contributor\" --scope \"/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.Storage/storageAccounts/$STORAGE_ACCOUNT\" 2>/dev/null || true\necho -e \"${GREEN}[OK] Storage role assigned${NC}\"\n\n# Cognitive Services OpenAI User (for Azure AD auth to OpenAI)\necho -e \"${YELLOW}Role: Cognitive Services OpenAI User${NC}\"\naz role assignment create --assignee \"$USER_OBJECT_ID\" --role \"Cognitive Services OpenAI User\" --scope \"/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.CognitiveServices/accounts/$OPENAI_SERVICE_NAME\" 2>/dev/null || true\necho -e \"${GREEN}[OK] OpenAI role assigned${NC}\"\n\n# Clone repository\necho \"\"\necho -e \"${YELLOW}Cloning repository...${NC}\"\nif [ -d \"EntraCopilotAgent365\" ]; then\n    cd EntraCopilotAgent365 && git pull\nelse\n    git clone $REPO_URL && cd EntraCopilotAgent365\nfi\n\n# Create venv with Python 3.11\necho \"\"\necho -e \"${YELLOW}Creating Python 3.11 virtual environment...${NC}\"\n[ -d \".venv\" ] && rm -rf .venv\n$PYTHON_CMD -m venv .venv\nsource .venv/bin/activate\npip install --upgrade pip -q\npip install -r requirements.txt -q\necho -e \"${GREEN}[OK] Dependencies installed${NC}\"\n\n# Create local.settings.json (Azure AD auth - no API keys)\necho \"\"\necho -e \"${YELLOW}Creating local.settings.json (Azure AD auth - no API keys)...${NC}\"\ncat > local.settings.json << EOF\n{\n  \"IsEncrypted\": false,\n  \"Values\": {\n    \"FUNCTIONS_WORKER_RUNTIME\": \"python\",\n    \"AzureWebJobsStorage__accountName\": \"$STORAGE_ACCOUNT\",\n    \"AZURE_OPENAI_ENDPOINT\": \"$OPENAI_ENDPOINT\",\n    \"AZURE_OPENAI_API_VERSION\": \"2025-01-01-preview\",\n    \"AZURE_OPENAI_DEPLOYMENT_NAME\": \"$OPENAI_DEPLOYMENT\",\n    \"AZURE_STORAGE_ACCOUNT_NAME\": \"$STORAGE_ACCOUNT\",\n    \"AZURE_FILES_SHARE_NAME\": \"$FILE_SHARE\",\n    \"ASSISTANT_NAME\": \"$ASSISTANT_NAME\",\n    \"CHARACTERISTIC_DESCRIPTION\": \"$CHARACTERISTIC_DESC\"\n  }\n}\nEOF\necho -e \"${GREEN}[OK] local.settings.json created${NC}\"\n\n# Verify storage access before deployment\necho \"\"\necho -e \"${YELLOW}Verifying storage account configuration...${NC}\"\nPUBLIC_ACCESS=$(az storage account show --name $STORAGE_ACCOUNT --query publicNetworkAccess -o tsv 2>/dev/null)\nif [[ \"$PUBLIC_ACCESS\" != \"Enabled\" ]]; then\n    echo -e \"${YELLOW}[!] Storage public network access is $PUBLIC_ACCESS, enabling...${NC}\"\n    az storage account update --name $STORAGE_ACCOUNT --public-network-access Enabled\n    echo -e \"${GREEN}[OK] Storage public network access enabled${NC}\"\nelse\n    echo -e \"${GREEN}[OK] Storage public network access is Enabled${NC}\"\nfi\n\n# Deploy with remote build (REQUIRED for Flex Consumption - builds Linux binaries)\necho \"\"\necho -e \"${YELLOW}Deploying to Azure (remote build for Linux)...${NC}\"\nfunc azure functionapp publish $FUNCTION_APP_NAME --build remote\n\necho \"\"\necho -e \"${GREEN}========================================${NC}\"\necho -e \"${GREEN}Setup Complete!${NC}\"\necho -e \"${GREEN}========================================${NC}\"\necho \"Authentication: Azure AD (Entra ID)\"\necho \"Function URL: $FUNCTION_URL\"\necho \"To run locally: ./run.sh\"\necho \"Note: Ensure you are logged into Azure CLI (az login)\"\n')]"
+    }
+  }
+}
