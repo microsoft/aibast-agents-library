@@ -103,7 +103,7 @@ These are **templates, not turnkey agents.** Each template provides the agent st
 1. GET registry.json
 2. Search agents[] for query in name/tags/description
 3. GET the agent's _file path
-4. Save to CommunityRAPP agents/ folder
+4. Save to RAPP agents/ folder
 5. Check requires_env — warn if non-empty
 6. Report: "Installed @aibast-agents-library/agent-name vX.Y.Z"
 ```

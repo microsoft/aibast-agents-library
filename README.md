@@ -44,13 +44,13 @@ Or click: [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://porta
 
 The system uses a three-tier architecture designed for progressive learning of the Microsoft AI stack:
 
-### 🧠 Tier 1: RAPP Brainstem (Local)
+### 🧠 Tier 1: The Brainstem (Local)
 
 A local Flask server powered by GitHub Copilot. No API keys needed beyond a GitHub account. Define a **soul** (system prompt), drop in **agents** (Python tools), and talk to it at `localhost:7071`.
 
-### ☁️ Tier 2: CommunityRAPP on Azure
+### ☁️ Tier 2: The Spinal Cord (RAPP on Azure)
 
-Deploy the full [CommunityRAPP](https://github.com/kody-w/CommunityRAPP) Azure Function app — the same agent logic, now always-on with Azure OpenAI, persistent Azure File Storage, and Application Insights monitoring. One-click ARM template deployment. Agents hot-load from storage — no redeployment needed.
+Deploy RAPP to Azure — the same agent logic from your brainstem, now always-on with Azure OpenAI, persistent Azure File Storage, and Application Insights monitoring. One-click ARM template deployment. Agents hot-load from storage — no redeployment needed.
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/deploy.sh | bash
@@ -58,7 +58,7 @@ curl -fsSL https://raw.githubusercontent.com/microsoft/aibast-agents-library/mai
 
 Or click: [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Faibast-agents-library%2Fmain%2Fazuredeploy.json)
 
-### 🤖 Tier 3: Copilot Studio (Enterprise)
+### 🤖 Tier 3: The Nervous System (Copilot Studio)
 
 Connect your agent to Teams and M365 Copilot using Copilot Studio. Two paths:
 

@@ -276,36 +276,29 @@
     <div class="tier-header">
       <div class="tier-icon">☁️</div>
       <div class="tier-title">
-        <h2>CommunityRAPP on Azure</h2>
-        <div class="subtitle">Deploy to Azure — give it a cloud body</div>
+        <h2>The Spinal Cord</h2>
+        <div class="subtitle">Deploy RAPP to Azure — give it a cloud body</div>
       </div>
       <span class="tier-badge next">Next step</span>
       <span class="tier-arrow">▶</span>
     </div>
     <div class="tier-body">
-      <p class="metaphor">Deploy <a href="https://github.com/kody-w/CommunityRAPP" target="_blank"><strong>CommunityRAPP</strong></a> to Azure — your agent is now always-on, reachable from anywhere, with persistent storage and monitoring. This is the Azure Function version of RAPP, built to serve multiple users with the same agent logic you tested locally.</p>
+      <p class="metaphor">The spinal cord connects your brainstem to the rest of your body. Deploying RAPP to Azure does the same — your agent is now always-on, reachable from anywhere, with persistent storage and monitoring. Same agent logic, now serving multiple users at enterprise scale.</p>
       <div class="steps">
         <div class="step">
-          <h3>1. Get CommunityRAPP</h3>
-          <p>CommunityRAPP is in <strong>private preview</strong>. This one-liner checks your GitHub access (the gate), clones the repo, sets up Python 3.11, installs Azure Functions Core Tools, and creates the venv. Separate from the brainstem — this is the Azure Function project you'll deploy for others.</p>
-          <div class="cmd" onclick="copyCmd(event, this)">curl -fsSL https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/community_rapp/install.sh | bash</div>
-          <p style="margin-top:6px;font-size:12px;color:#8b949e;">Windows: <code style="cursor:pointer" onclick="copyCmd(event, this)">irm https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/community_rapp/install.ps1 | iex</code></p>
-          <p style="margin-top:6px;font-size:12px;color:#8b949e;">No access? Request collaborator access to <code>kody-w/CommunityRAPP</code> from a repo maintainer.</p>
-        </div>
-        <div class="step">
-          <h3>2. Deploy Azure resources</h3>
+          <h3>1. Deploy Azure resources</h3>
           <p>One script creates everything: Function App, Azure OpenAI, Storage Account, Application Insights. All using Entra ID auth — no API keys.</p>
           <div class="cmd" onclick="copyCmd(event, this)">curl -fsSL https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/deploy.sh | bash</div>
           <p style="margin-top:8px">Or click to deploy directly from the Azure Portal:</p>
           <p style="margin-top:4px"><a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkody-w%2Frapp-installer%2Fmain%2Fazuredeploy.json" target="_blank"><img src="https://aka.ms/deploytoazurebutton" alt="Deploy to Azure" style="height:32px"></a></p>
         </div>
         <div class="step">
-          <h3>3. Deploy your code</h3>
-          <p>Push the CommunityRAPP function code to your new Azure Function App. The app name comes from the deploy output in step 2.</p>
-          <div class="cmd" onclick="copyCmd(event, this)">cd CommunityRAPP && func azure functionapp publish YOUR_APP_NAME --build remote</div>
+          <h3>2. Deploy your code</h3>
+          <p>Push the RAPP function code to your new Azure Function App. The app name comes from the deploy output in step 1.</p>
+          <div class="cmd" onclick="copyCmd(event, this)">func azure functionapp publish YOUR_APP_NAME --build remote</div>
         </div>
         <div class="step">
-          <h3>4. Test it</h3>
+          <h3>3. Test it</h3>
           <p>Hit your deployed endpoint to verify the agent is live in the cloud.</p>
           <div class="cmd" onclick="copyCmd(event, this)">curl -s https://YOUR_APP_NAME.azurewebsites.net/api/businessinsightbot_function -X POST -H "Content-Type: application/json" -d '{"user_input":"hello"}' | python3 -m json.tool</div>
         </div>
@@ -319,8 +312,8 @@
     <div class="tier-header">
       <div class="tier-icon">🤖</div>
       <div class="tier-title">
-        <h2>Copilot Studio</h2>
-        <div class="subtitle">Go enterprise — reach into Teams &amp; M365</div>
+        <h2>The Nervous System</h2>
+        <div class="subtitle">Connect to Copilot Studio — reach into Teams &amp; M365</div>
       </div>
       <span class="tier-badge advanced">Advanced</span>
       <span class="tier-arrow">▶</span>

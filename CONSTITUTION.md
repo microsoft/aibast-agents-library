@@ -143,7 +143,7 @@ __manifest__ = {
 All agents in this registry target:
 
 - **Python**: 3.11+
-- **Runtime**: RAPP Brainstem / CommunityRAPP
+- **Runtime**: RAPP Brainstem / RAPP on Azure
 - **Base class**: BasicAgent
 - **AI Model**: Azure OpenAI or GitHub Copilot (agents should not hardcode model names)
 

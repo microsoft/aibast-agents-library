@@ -2,7 +2,7 @@
 
 ## Architecture
 
-This is the **AI BAST Agents Library** — an agent registry and local-first AI agent platform for the [RAPP](https://github.com/kody-w/CommunityRAPP) ecosystem. It contains industry vertical agent templates and a local brainstem server.
+This is the **AI BAST Agents Library** — an agent registry and local-first AI agent platform for the RAPP ecosystem. It contains industry vertical agent templates and a local brainstem server.
 
 ### Core principle: Single File Agent
 

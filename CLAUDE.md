@@ -14,9 +14,9 @@ The framework implements the **Rapid Agent Prototype Pattern (RAPP)** — a 14-s
 
 The system uses a three-tier architecture:
 
-1. **Tier 1 — RAPP Brainstem (Local)**: Flask server + GitHub Copilot for local agent development
-2. **Tier 2 — CommunityRAPP on Azure**: Azure Function App + Azure OpenAI + Azure File Storage for cloud deployment ([CommunityRAPP](https://github.com/kody-w/CommunityRAPP))
-3. **Tier 3 — Copilot Studio (Enterprise)**: Teams + M365 Copilot via Power Platform solution import or native YAML authoring with [Skills for Copilot Studio](https://github.com/microsoft/skills-for-copilot-studio)
+1. **Tier 1 — The Brainstem (Local)**: Flask server + GitHub Copilot for local agent development
+2. **Tier 2 — The Spinal Cord (RAPP on Azure)**: Azure Function App + Azure OpenAI + Azure File Storage for cloud deployment
+3. **Tier 3 — The Nervous System (Copilot Studio)**: Teams + M365 Copilot via Power Platform solution import or native YAML authoring with [Skills for Copilot Studio](https://github.com/microsoft/skills-for-copilot-studio)
 
 **Key Design Principles**:
 - Agents are single `.py` files with embedded `__manifest__` dicts — no separate manifests
