@@ -1,0 +1,54 @@
+# ============================================================
+# CommunityRAPP Memory Agent Platform .gitignore
+# ============================================================
+
+# ----- Python -----
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv/
+
+# ----- Azure Functions -----
+local.settings.json
+.python_packages/
+.func/
+func-cli/
+
+# ----- Credentials & Local Config -----
+rappid.local.json
+
+# ----- Generated Artifacts -----
+# Solution packages (binary artifacts — generate with utils/generate_memory_agent_solution.py)
+*.zip
+# Transpiled output
+transpiled/
+
+# ----- Local Storage -----
+.local_storage/
+
+# ----- IDE & OS -----
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# ----- Testing -----
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ----- Build & Deployment Artifacts -----
+deployment/
+*.mp4
+*.pptx
+
+# ----- Session Data -----
+.claude/hooks/*.log
+.rapp/
+.vault/

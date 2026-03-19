@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$TOOL_INPUT\" | grep -q 'func azure functionapp publish'; then ./.claude/hooks/pre-deploy-test.sh; fi"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$TOOL_INPUT\" | grep -q 'func azure functionapp publish' && [ \"$TOOL_EXIT_CODE\" = \"0\" ]; then ./.claude/hooks/post-deploy-verify.sh; fi"
+          }
+        ]
+      }
+    ]
+  }
+}

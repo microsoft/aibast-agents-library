@@ -3,27 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rapid Agent Prototype Pattern (RAPP) - Production Guide</title>
+    <title>RAPP — Rapid Agent Prototype Pattern</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%2358a6ff'%3E%3Cpath d='M184 0c-30.9 0-56.5 22.7-61.1 52.3C54.5 67 0 130 0 206.8c0 41.6 17.4 79.2 45.3 105.9-2 9.2-3.3 18.8-3.3 28.7 0 55.3 35.8 102.2 85.5 119C142.2 493 172.6 512 208 512h16c35.3 0 64-28.7 64-64V86c0-8.8-7.2-16-16-16h-16c-8.8 0-16 7.2-16 16v16c0 8.8-7.2 16-16 16s-16-7.2-16-16V64c0-35.3-28.7-64-64-64h40zm144 0c30.9 0 56.5 22.7 61.1 52.3C457.5 67 512 130 512 206.8c0 41.6-17.4 79.2-45.3 105.9 2 9.2 3.3 18.8 3.3 28.7 0 55.3-35.8 102.2-85.5 119C369.8 493 339.4 512 304 512h-16c-35.3 0-64-28.7-64-64V86c0-8.8 7.2-16 16-16h16c8.8 0 16 7.2 16 16v16c0 8.8 7.2 16 16 16s16-7.2 16-16V64c0-35.3 28.7-64 64-64h-40z'/%3E%3C/svg%3E">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
         :root {
-            --primary: #667eea;
-            --primary-dark: #5568d3;
-            --secondary: #764ba2;
-            --accent: #f59e0b;
-            --success: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --info: #3b82f6;
-            --bg-light: #f8fafc;
-            --bg-white: #ffffff;
-            --text-dark: #1e293b;
-            --text-medium: #475569;
-            --text-light: #94a3b8;
-            --border: #e2e8f0;
-            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-            --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            --primary: #58a6ff;
+            --primary-dark: #1f6feb;
+            --secondary: #1f6feb;
+            --accent: #58a6ff;
+            --success: #3fb950;
+            --danger: #f85149;
+            --warning: #58a6ff;
+            --info: #58a6ff;
+            --bg-light: #0d1117;
+            --bg-white: #161b22;
+            --text-dark: #c9d1d9;
+            --text-medium: #8b949e;
+            --text-light: #484f58;
+            --border: #21262d;
+            --shadow: none;
+            --shadow-lg: none;
         }
 
         * {
@@ -33,7 +34,7 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg-light);
             color: var(--text-dark);
             line-height: 1.7;
@@ -101,7 +102,7 @@
         }
 
         .track-btn.active {
-            background: white;
+            background: var(--bg-white);
             color: var(--primary);
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
@@ -126,17 +127,17 @@
         }
 
         .track-badge.technical {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #161b22;
             color: white;
         }
 
         .track-badge.business {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            background: linear-gradient(135deg, #58a6ff 0%, #58a6ff 100%);
             color: white;
         }
 
         .track-badge.universal {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            background: #161b22;
             color: white;
         }
 
@@ -170,7 +171,7 @@
 
         /* ========== GUT CHECK QUIZZES ========== */
         .gut-check {
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            background: linear-gradient(135deg, #161b22 0%, #21262d 100%);
             border-left: 4px solid var(--info);
             border-radius: 12px;
             padding: 25px;
@@ -234,7 +235,7 @@
         }
 
         .quiz-option {
-            background: white;
+            background: var(--bg-white);
             border: 2px solid var(--border);
             border-radius: 8px;
             padding: 12px 15px;
@@ -305,13 +306,13 @@
         .quiz-feedback.correct {
             background: rgba(16, 185, 129, 0.1);
             border-left: 4px solid var(--success);
-            color: #065f46;
+            color: #8b949e;
         }
 
         .quiz-feedback.incorrect {
             background: rgba(239, 68, 68, 0.1);
             border-left: 4px solid var(--danger);
-            color: #991b1b;
+            color: #f85149;
         }
 
         .quiz-feedback-title {
@@ -386,7 +387,7 @@
         }
 
         .btn-primary {
-            background: white;
+            background: var(--bg-white);
             color: var(--primary);
         }
 
@@ -464,19 +465,19 @@
         }
 
         .nav-item.active {
-            background: linear-gradient(90deg, rgba(102,126,234,0.1) 0%, transparent 100%);
+            background: linear-gradient(90deg, rgba(0,120,212,0.1) 0%, transparent 100%);
             color: var(--primary);
             font-weight: 600;
             border-left-color: var(--primary);
         }
 
         .nav-item.audit {
-            color: var(--warning);
+            color: var(--text-medium);
         }
 
         .nav-item.audit.active {
-            color: var(--warning);
-            border-left-color: var(--warning);
+            color: var(--primary);
+            border-left-color: var(--primary);
         }
 
         .nav-icon {
@@ -572,22 +573,22 @@
         }
 
         .badge.automated {
-            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+            background: #161b22;
             color: white;
         }
 
         .badge.manual {
-            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+            background: #161b22;
             color: white;
         }
 
         .badge.audit {
-            background: linear-gradient(135deg, var(--warning) 0%, #d97706 100%);
+            background: linear-gradient(135deg, var(--warning) 0%, #58a6ff 100%);
             color: white;
         }
 
         .badge.human {
-            background: linear-gradient(135deg, var(--info) 0%, #2563eb 100%);
+            background: #161b22;
             color: white;
         }
 
@@ -723,8 +724,8 @@
         }
 
         .code-block {
-            background: #1e293b;
-            color: #e2e8f0;
+            background: #161b22;
+            color: #c9d1d9;
             padding: 25px;
             border-radius: 12px;
             font-family: 'JetBrains Mono', 'Courier New', monospace;
@@ -750,7 +751,7 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #94a3b8;
+            color: #8b949e;
         }
 
         .copy-btn {
@@ -769,17 +770,18 @@
         }
 
         .highlight-box {
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-            border-left: 4px solid var(--warning);
-            border-radius: 12px;
+            background: #161b22;
+            border-left: 4px solid #21262d;
+            border-radius: 8px;
             padding: 25px;
             margin: 25px 0;
+            border: 1px solid #21262d;
         }
 
         .highlight-box h4 {
             font-size: 18px;
             font-weight: 700;
-            color: #92400e;
+            color: #e6edf3;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
@@ -788,14 +790,14 @@
 
         .highlight-box p {
             font-size: 15px;
-            color: #78350f;
+            color: #8b949e;
             line-height: 1.7;
         }
 
         .example-box {
-            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
-            border-left: 4px solid var(--info);
-            border-radius: 12px;
+            background: #161b22;
+            border-left: 4px solid #21262d;
+            border-radius: 8px;
             padding: 25px;
             margin: 25px 0;
         }
@@ -803,7 +805,7 @@
         .example-box h4 {
             font-size: 18px;
             font-weight: 700;
-            color: #1e40af;
+            color: #58a6ff;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
@@ -812,17 +814,17 @@
 
         .example-box p {
             font-size: 15px;
-            color: #1e3a8a;
+            color: #58a6ff;
             line-height: 1.7;
             margin-bottom: 10px;
         }
 
         .example-box strong {
-            color: #1e40af;
+            color: #58a6ff;
         }
 
         .pitfall-box {
-            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            background: #161b22;
             border-left: 4px solid var(--danger);
             border-radius: 12px;
             padding: 25px;
@@ -832,7 +834,7 @@
         .pitfall-box h4 {
             font-size: 18px;
             font-weight: 700;
-            color: #991b1b;
+            color: #f85149;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
@@ -841,13 +843,13 @@
 
         .pitfall-box p {
             font-size: 15px;
-            color: #7f1d1d;
+            color: #8b949e;
             line-height: 1.7;
             margin-bottom: 10px;
         }
 
         .pitfall-box strong {
-            color: #991b1b;
+            color: #f85149;
         }
 
         .stats-grid {
@@ -858,18 +860,20 @@
         }
 
         .stat-card {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
+            background: #161b22;
+            color: #e6edf3;
             border-radius: 12px;
             padding: 25px;
             text-align: center;
             box-shadow: var(--shadow);
+            border: 1px solid var(--border);
         }
 
         .stat-number {
             font-size: 42px;
             font-weight: 900;
             margin-bottom: 8px;
+            color: var(--primary);
         }
 
         .stat-label {
@@ -890,12 +894,13 @@
         }
 
         .comparison-table th {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
+            background: #161b22;
+            color: var(--primary);
             padding: 18px;
             text-align: left;
             font-weight: 700;
             font-size: 14px;
+            border-bottom: 2px solid var(--primary);
         }
 
         .comparison-table td {
@@ -914,7 +919,7 @@
         }
 
         .tool-card {
-            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+            background: #161b22;
             border-left: 4px solid var(--secondary);
             border-radius: 12px;
             padding: 25px;
@@ -924,7 +929,7 @@
         .tool-card h4 {
             font-size: 18px;
             font-weight: 700;
-            color: #5b21b6;
+            color: #58a6ff;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
@@ -933,7 +938,7 @@
 
         .tool-card p {
             font-size: 15px;
-            color: #4c1d95;
+            color: #58a6ff;
             line-height: 1.7;
             margin-bottom: 10px;
         }
@@ -1069,6 +1074,110 @@
                 margin: 0;
             }
         }
+
+        /* ══════════════════════════════════════════════════════════
+           DARK MODE — matches RAPP Brainstem chat UI exactly.
+           Body: #0d1117, Cards: #161b22, Borders: #21262d
+           Text: #c9d1d9, Muted: #8b949e, Accent: #1f6feb
+           ══════════════════════════════════════════════════════════ */
+
+        /* Kill ALL inline gradients — flat dark cards only */
+        [style*="linear-gradient"] {
+            background: #161b22 !important;
+            border: 1px solid #21262d !important;
+            border-radius: 8px !important;
+        }
+        [style*="linear-gradient"] * { color: #c9d1d9 !important; }
+        [style*="linear-gradient"] strong { color: #e6edf3 !important; }
+        [style*="linear-gradient"] a { color: #58a6ff !important; }
+
+        /* Named card classes */
+        .priority-card, .highlight-box, .non-technical-only,
+        .metric-card, .tool-card, .stat-card {
+            background: #161b22 !important;
+            color: #c9d1d9 !important;
+            border: 1px solid #21262d !important;
+            box-shadow: none !important;
+        }
+        .tool-card:hover { border-color: #1f6feb !important; }
+        .stat-card .stat-number { color: #58a6ff !important; }
+
+        /* Icon circles */
+        [style*="width: 60px"][style*="height: 60px"] {
+            background: #21262d !important;
+            border: none !important;
+        }
+
+        /* Fix ALL light backgrounds */
+        [style*="background: #f"], [style*="background: #e"],
+        [style*="background: white"], [style*="background: #fff"] {
+            background: #161b22 !important;
+        }
+
+        /* Fix ALL dark-on-light text */
+        [style*="color: #1"], [style*="color: #2"], [style*="color: #3"],
+        [style*="color: #4"], [style*="color: #5"] {
+            color: #c9d1d9 !important;
+        }
+
+        /* Fix light borders */
+        [style*="border"][style*="#e"], [style*="border"][style*="#d"],
+        [style*="border"][style*="#c"], [style*="border"][style*="#b"] {
+            border-color: #21262d !important;
+        }
+
+        /* Code blocks */
+        pre, code {
+            background: #0d1117 !important;
+            color: #c9d1d9 !important;
+            border: 1px solid #21262d !important;
+        }
+
+        /* Top bar — flat dark blue, not gradient */
+        .top-bar {
+            background: #161b22 !important;
+            border-bottom: 1px solid #21262d !important;
+            box-shadow: none !important;
+        }
+        .top-bar h1 { color: #e6edf3 !important; }
+
+        /* Sidebar */
+        .nav-item.active { background: rgba(31,111,235,0.1) !important; }
+        .nav-item:hover { background: #21262d !important; }
+
+        /* Progress bar — only place with color */
+        .progress { background: #1f6feb !important; }
+
+        /* Tables */
+        .comparison-table th {
+            background: #161b22 !important;
+            color: #58a6ff !important;
+            border-bottom: 2px solid #1f6feb !important;
+        }
+        .comparison-table td { color: #c9d1d9 !important; }
+
+        /* Links */
+        a { color: #58a6ff; }
+        a:hover { color: #79c0ff; }
+
+        /* Buttons — match brainstem Send button */
+        .btn, .btn-outline {
+            background: transparent !important;
+            border: 1px solid #c9d1d9 !important;
+            color: #c9d1d9 !important;
+        }
+        .btn:hover, .btn-outline:hover {
+            background: #21262d !important;
+            border-color: #58a6ff !important;
+            color: #58a6ff !important;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0d1117; }
+        ::-webkit-scrollbar-thumb { background: #21262d; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #30363d; }
+
     </style>
 </head>
 <body>
@@ -1080,11 +1189,16 @@
 
     <!-- No JavaScript Warning -->
     <noscript>
-        <div style="position: fixed; top: 0; left: 0; right: 0; background: #f59e0b; color: #ffffff; padding: 15px 20px; text-align: center; z-index: 10000; font-weight: 600; box-shadow: 0 4px 6px rgba(0,0,0,0.1); font-family: -apple-system, BlinkMacSystemFont, sans-serif;">
+        <div style="position: fixed; top: 0; left: 0; right: 0; background: #161b22; color: #58a6ff; padding: 15px 20px; text-align: center; z-index: 10000; font-weight: 600; box-shadow: 0 4px 6px rgba(0,0,0,0.1); font-family: -apple-system, BlinkMacSystemFont, sans-serif;">
             ⚠️ JavaScript is disabled. All 19 sections are visible below. Use the sidebar links or scroll to navigate. For interactive features, please enable JavaScript.
         </div>
         <div style="height: 50px;"></div>
     </noscript>
+
+    <!-- Experimental Disclaimer Banner -->
+    <div style="background: #1c1f26; border-bottom: 2px solid #58a6ff; padding: 12px 20px; text-align: center; font-family: 'Segoe UI', -apple-system, sans-serif; font-size: 13px; color: #58a6ff; z-index: 9999;">
+        ⚠️ <strong>IMPORTANT:</strong> This is an experimental project managed by a v-team from the Artificial Intelligence Business Applications Specialist Team (AIBAST), not an officially supported Microsoft product. Agent templates are starting points — human review remains important. <a href="https://github.com/microsoft/aibast-agents-library/issues" style="color: #58a6ff;">File an issue</a> to help us improve.
+    </div>
 
     <!-- Top Bar -->
     <div class="top-bar">
@@ -1092,6 +1206,9 @@
             <span>Rapid Agent Prototype Pattern (RAPP)</span>
         </h1>
         <div class="top-bar-controls">
+            <a href="docs/installer.html" class="btn btn-outline" style="margin-right:8px;text-decoration:none;">
+                <span>Install RAPP</span>
+            </a>
             <button class="btn btn-outline" onclick="toggleSidebar()">
                 <span>Menu</span>
             </button>
@@ -1188,7 +1305,7 @@
             </a>
             <a href="#roadmap" class="nav-item" onclick="navigateToSection('roadmap'); return false;">
                 <span class="nav-icon">🗺️</span>
-                <span>Roadmap - EOY 2025</span>
+                <span>Gains &amp; Improvements</span>
             </a>
         </div>
 
@@ -1240,7 +1357,7 @@
                 </div>
             </div>
 
-            <div class="highlight-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none;">
+            <div class="highlight-box" style="background: #0c2d48; color: #e6edf3; border-left: 3px solid #58a6ff; border: none;">
                 <h4 style="color: white;">📚 Comprehensive Documentation</h4>
                 <p style="color: rgba(255,255,255,0.95);">This documentation provides a complete view of the Rapid Agent Prototype Pattern (RAPP), combining:</p>
                 <ul style="color: rgba(255,255,255,0.95); margin-bottom: 0;">
@@ -1401,7 +1518,7 @@
                 <p class="section-subtitle">A 4-layer universal intelligence system designed for infinite scale and zero-downtime updates.</p>
             </div>
 
-            <div class="non-technical-only" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; padding: 25px; border-radius: 12px; margin-bottom: 30px;">
+            <div class="non-technical-only" style="background: #161b22; color: #e6edf3; border-left: 3px solid #58a6ff; padding: 25px; border-radius: 12px; margin-bottom: 30px;">
                 <h3 style="color: white; margin-top: 0;">💼 Why Architecture Matters (Business View)</h3>
                 <p style="color: rgba(255,255,255,0.95);">The architecture enables <strong>rapid agent updates</strong> with zero downtime, <strong>infinite horizontal scaling</strong> for concurrent users, and <strong>universal memory</strong> so context persists across Teams, Web, and Mobile. This translates to faster iteration cycles, lower operational costs, and seamless user experiences.</p>
             </div>
@@ -1678,7 +1795,7 @@ def handle_request(user_message, user_guid):
             <div class="step-section">
                 <h3>⚙️ The Buzz Saw: Heavy Lifting (Building Toward Automation)</h3>
 
-                <div class="highlight-box" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; border: none; margin-bottom: 20px;">
+                <div class="highlight-box" style="background: #161b22; color: #e6edf3; border-left: 3px solid #58a6ff; border: none; margin-bottom: 20px;">
                     <h4 style="color: white; margin-top: 0;">📍 Current State</h4>
                     <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;">This framework is currently <strong>manual-first</strong> with a roadmap to automate key steps. We're building the "buzz saw" step by step, proving each process manually before automating it.</p>
                 </div>
@@ -2061,12 +2178,12 @@ def handle_request(user_message, user_guid):
                 <p><strong>Type:</strong> M365 Copilot Studio Declarative Agent</p>
                 <p><strong>Location:</strong> <a href="https://m365.cloud.microsoft:443/chat/?titleId=T_afded7db-f8c5-703a-5502-2cc9f31b66da&source=embedded-builder" target="_blank">Open Transcript-to-Project Agent</a></p>
 
-                <div class="code-block" style="background: #fff3e0; border-left: 4px solid #f57c00; margin-top: 15px;">
-                    <div class="code-header" style="background: #ffb74d; border-bottom: 1px solid #f57c00; cursor: pointer;" onclick="toggleFallback('transcript-fallback')">
-                        <span class="code-language" style="color: #1a1a1a; font-weight: 600;">⚠️ Manual Fallback: Click to expand prompt (paste into Copilot if agent link isn't working)</span>
+                <div class="code-block" style="background: #fff3e0; border-left: 4px solid #21262d; margin-top: 15px;">
+                    <div class="code-header" style="background: #ffb74d; border-bottom: 1px solid #21262d; cursor: pointer;" onclick="toggleFallback('transcript-fallback')">
+                        <span class="code-language" style="color: #e6edf3; font-weight: 600;">⚠️ Manual Fallback: Click to expand prompt (paste into Copilot if agent link isn't working)</span>
                         <button class="copy-btn" onclick="event.stopPropagation(); copyCode(this.parentElement.nextElementSibling)">Copy</button>
                     </div>
-                    <pre id="transcript-fallback" style="display: none; white-space: pre-wrap; word-wrap: break-word; color: #1a1a1a; background: #fff; padding: 20px; margin: 0; border-top: 2px solid #f57c00;">You are a project data extraction assistant. Analyze the meeting transcript below and extract structured project information in JSON format that can be imported into the AI Agent Implementation Tracker.
+                    <pre id="transcript-fallback" style="display: none; white-space: pre-wrap; word-wrap: break-word; color: #e6edf3; background: var(--bg-white); padding: 20px; margin: 0; border-top: 2px solid #58a6ff;">You are a project data extraction assistant. Analyze the meeting transcript below and extract structured project information in JSON format that can be imported into the AI Agent Implementation Tracker.
 
 **REQUIRED OUTPUT FORMAT:**
 Return valid JSON with this exact structure (copy this template and fill in the values):
@@ -2554,7 +2671,7 @@ Tone: Professional but approachable. We're confirming we heard them correctly, n
                 <span class="badge manual">MANUAL</span>
             </div>
 
-            <div class="non-technical-only" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; padding: 25px; border-radius: 12px; margin-bottom: 30px;">
+            <div class="non-technical-only" style="background: #161b22; color: #e6edf3; border-left: 3px solid #58a6ff; padding: 25px; border-radius: 12px; margin-bottom: 30px;">
                 <h3 style="color: white; margin-top: 0;">💼 Business Summary</h3>
                 <p style="color: rgba(255,255,255,0.95);"><strong>Current state:</strong> Team manually creates agent code using templates and patterns. <strong>Vision:</strong> AI-assisted generation to accelerate development.</p>
                 <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;"><strong>Goal:</strong> Reduce agent development time from 2-3 weeks per agent to hours with reusable templates and tooling. Build library of patterns for consistency.</p>
@@ -2575,12 +2692,12 @@ Tone: Professional but approachable. We're confirming we heard them correctly, n
                 <h4>🛠️ Development Tool: RAPP Agent Generator</h4>
                 <p><strong>Location:</strong> <a href="https://m365.cloud.microsoft/chat/?titleId=T_04778775-1214-29c8-3bc4-218e26088499&source=embedded-builder&auth=2" target="_blank">Open RAPP Agent Generator</a></p>
 
-                <div class="code-block" style="background: #fff3e0; border-left: 4px solid #f57c00; margin-top: 15px;">
-                    <div class="code-header" style="background: #ffb74d; border-bottom: 1px solid #f57c00; cursor: pointer;" onclick="toggleFallback('agent-generator-fallback')">
-                        <span class="code-language" style="color: #1a1a1a; font-weight: 600;">⚠️ Manual Fallback: Click to expand prompt (paste into Copilot if agent link isn't working)</span>
+                <div class="code-block" style="background: #fff3e0; border-left: 4px solid #21262d; margin-top: 15px;">
+                    <div class="code-header" style="background: #ffb74d; border-bottom: 1px solid #21262d; cursor: pointer;" onclick="toggleFallback('agent-generator-fallback')">
+                        <span class="code-language" style="color: #e6edf3; font-weight: 600;">⚠️ Manual Fallback: Click to expand prompt (paste into Copilot if agent link isn't working)</span>
                         <button class="copy-btn" onclick="event.stopPropagation(); copyCode(this.parentElement.nextElementSibling)">Copy</button>
                     </div>
-                    <pre id="agent-generator-fallback" style="display: none; white-space: pre-wrap; word-wrap: break-word; color: #1a1a1a; background: #fff; padding: 20px; margin: 0; border-top: 2px solid #f57c00;">You are a Python agent code generator for the Microsoft AI BAST RAPP framework. Generate production-ready agent code that follows the BasicAgent pattern and can be deployed to Azure Functions.
+                    <pre id="agent-generator-fallback" style="display: none; white-space: pre-wrap; word-wrap: break-word; color: #e6edf3; background: var(--bg-white); padding: 20px; margin: 0; border-top: 2px solid #58a6ff;">You are a Python agent code generator for the Microsoft AI BAST RAPP framework. Generate production-ready agent code that follows the BasicAgent pattern and can be deployed to Azure Functions.
 
 **CRITICAL REQUIREMENTS:**
 1. Each agent must inherit from BasicAgent
@@ -3751,12 +3868,12 @@ scope a Phase 2 project with those additional capabilities. Sound good?"</code><
                     <p><strong>Location:</strong> <a href="https://m365.cloud.microsoft:443/chat/?titleId=T_9c21fece-1d32-64df-b68d-db4d0a3cc446&source=embedded-builder" target="_blank">Open Video Demo Generator</a></p>
                     <p><strong>Local Tool:</strong> <a href="tools/localfirst_chat_animation_studio_tool.html" target="_blank">Open Local-First Chat Animation Studio</a></p>
 
-                    <div class="code-block" style="background: #fff3e0; border-left: 4px solid #f57c00; margin-top: 15px;">
-                        <div class="code-header" style="background: #ffb74d; border-bottom: 1px solid #f57c00; cursor: pointer;" onclick="toggleFallback('video-demo-fallback')">
-                            <span class="code-language" style="color: #1a1a1a; font-weight: 600;">⚠️ Manual Fallback: Click to expand prompt (paste into Copilot if agent link isn't working)</span>
+                    <div class="code-block" style="background: #fff3e0; border-left: 4px solid #21262d; margin-top: 15px;">
+                        <div class="code-header" style="background: #ffb74d; border-bottom: 1px solid #21262d; cursor: pointer;" onclick="toggleFallback('video-demo-fallback')">
+                            <span class="code-language" style="color: #e6edf3; font-weight: 600;">⚠️ Manual Fallback: Click to expand prompt (paste into Copilot if agent link isn't working)</span>
                             <button class="copy-btn" onclick="event.stopPropagation(); copyCode(this.parentElement.nextElementSibling)">Copy</button>
                         </div>
-                        <pre id="video-demo-fallback" style="display: none; white-space: pre-wrap; word-wrap: break-word; color: #1a1a1a; background: #fff; padding: 20px; margin: 0; border-top: 2px solid #f57c00;">You are a demo video JSON generator for the Microsoft AI BAST RAPP framework. Generate structured demo configurations that work with the Local-First Chat Animation Studio tool.
+                        <pre id="video-demo-fallback" style="display: none; white-space: pre-wrap; word-wrap: break-word; color: #e6edf3; background: var(--bg-white); padding: 20px; margin: 0; border-top: 2px solid #58a6ff;">You are a demo video JSON generator for the Microsoft AI BAST RAPP framework. Generate structured demo configurations that work with the Local-First Chat Animation Studio tool.
 
 **YOUR TASK:**
 Create a complete JSON demo configuration that tells a compelling story about the customer's AI agent implementation.
@@ -3944,8 +4061,8 @@ Include:
       "duration": 7000,
       "voiceText": "Every morning, 200 field reps face the same question: where do I go today, and what do I do when I get there? This manual process wastes 45 minutes per day per rep. Let's see how AI changes everything.",
       "narrator": {
-        "title": "The $2M Problem",
-        "text": "200 reps × 45 min/day × 250 days = 37,500 hours wasted annually",
+        "title": "The Productivity Problem",
+        "text": "Hundreds of reps wasting time on manual planning every single day",
         "subtitle": "Manual route planning • No prioritization • Missed opportunities",
         "position": "center"
       }
@@ -4950,11 +5067,11 @@ Team Member C completes Step 10 → Bot posts:
             <h1 class="section-title">Scaling to 20+ Concurrent Projects</h1>
             <p class="section-subtitle">How the framework handles massive parallelization</p>
 
-            <div class="non-technical-only" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 25px; border-radius: 12px; margin-bottom: 30px;">
+            <div class="non-technical-only" style="background: #161b22; color: #e6edf3; border-left: 3px solid #3fb950; padding: 25px; border-radius: 12px; margin-bottom: 30px;">
                 <h3 style="color: white; margin-top: 0;">💰 Business Impact at Scale</h3>
-                <p style="color: rgba(255,255,255,0.95);"><strong>3-person team capacity:</strong> 20-25 concurrent MVP projects, 50+ total projects including production.</p>
-                <p style="color: rgba(255,255,255,0.95);"><strong>Cost structure:</strong> ~$50-100/month per prototype environment (auto-deleted after customer handoff), zero marginal cost for production (runs in customer Azure).</p>
-                <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;"><strong>Revenue model:</strong> Each project = $100K-500K ACV. Team of 3 can manage $2M-10M ARR pipeline simultaneously.</p>
+                <p style="color: rgba(255,255,255,0.95);"><strong>Team capacity:</strong> Small teams can manage many concurrent MVP projects simultaneously, with even more in production.</p>
+                <p style="color: rgba(255,255,255,0.95);"><strong>Cost structure:</strong> Minimal per-environment cost for prototyping (auto-deleted after customer handoff), zero marginal cost for production (runs in customer Azure).</p>
+                <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;"><strong>Revenue model:</strong> Each project drives significant ACV. Small teams can manage large ARR pipelines simultaneously.</p>
             </div>
 
             <div class="step-section">
@@ -5115,7 +5232,7 @@ Week 3:
 - Steady state: 8 in Discovery, 8 in Development, 8 in Deployment, 25+ in Production
 - Total: 49 active projects across all stages</code></pre>
 
-                <p><strong>Steady-state capacity:</strong> 20-25 projects in active development (Steps 1-10), 50+ total projects including production</p>
+                <p><strong>Steady-state capacity:</strong> Many projects in active development (Steps 1-10), with additional projects in production</p>
             </div>
 
             <div class="step-section">
@@ -5125,7 +5242,7 @@ Week 3:
                 <ul>
                     <li><strong>Dev/Prototype:</strong> 1 Function App, 1 File Storage account (Hot tier), Application Insights</li>
                     <li><strong>Production:</strong> Customer's Azure subscription (not our cost)</li>
-                    <li><strong>Cost per prototype:</strong> ~$50-100/month while active, delete after Step 10</li>
+                    <li><strong>Cost per prototype:</strong> Minimal monthly cost while active, delete after Step 10</li>
                 </ul>
 
                 <h4>Cost Optimization:</h4>
@@ -5133,7 +5250,7 @@ Week 3:
                 <pre><code># Run weekly: Delete prototype environments >30 days old
 az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09-15']" | xargs -I {} az functionapp delete --name {}
 
-# Saves: $50-100 per deleted environment
+# Saves: minimal cost per deleted environment
 # With 20 projects/month, 10 completing → $500-1000/month savings</code></pre>
             </div>
 
@@ -5160,105 +5277,72 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
 
         <!-- ROADMAP -->
         <div class="content-section" id="roadmap">
-            <h1 class="section-title">Roadmap - EOY 2025</h1>
-            <p class="section-subtitle">Next release wave priorities and strategic focus areas</p>
+            <h1 class="section-title">Gains & Improvements</h1>
+            <p class="section-subtitle">What RAPP delivers and where we're heading</p>
 
-            <div class="highlight-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none;">
-                <h4 style="color: white;">🎯 Strategic Shift: From Prototypes to Production</h4>
-                <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;">The strategic imperative is to transform conceptual ideas into production-ready solutions that field teams can deploy immediately. The focus is on creating demos that not only impress in presentations but can also be reliably reproduced and reused across multiple customer engagements to accelerate deal closure.</p>
+            <div class="highlight-box">
+                <h4>🎯 Strategic Direction: From Prototypes to Production</h4>
+                <p>Transform conceptual ideas into production-ready solutions that teams can deploy immediately. Create demos that not only impress in presentations but can be reliably reproduced and reused across multiple customer engagements.</p>
             </div>
 
             <div class="step-section">
-                <h3>🥇 Top 3 Priorities (In Order)</h3>
+                <h3>✅ Current Gains</h3>
 
-                <div class="priority-card" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 25px; border-radius: 12px; margin-bottom: 20px;">
-                    <h4 style="color: white; margin-top: 0;">1. SPUR Committed Work - Agents & Videos</h4>
-                    <p style="color: rgba(255,255,255,0.95);"><strong>What:</strong> Deliver committed agents and videos for SPUR engagement</p>
-                    <p style="color: rgba(255,255,255,0.95);"><strong>Impact:</strong> Revenue-generating, already committed to customer</p>
-                    <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;"><strong>Status to Track:</strong> Completion of agent builds and video production</p>
+                <div class="priority-card" style="background: #161b22; border: 1px solid #21262d; padding: 25px; border-radius: 8px; margin-bottom: 16px;">
+                    <h4 style="color: #e6edf3; margin-top: 0;">Dramatically Faster Agent Development</h4>
+                    <p style="color: #8b949e;">Compress multi-month development cycles into days using the RAPP 14-step process. AI does the heavy lifting, humans provide the judgment.</p>
                 </div>
 
-                <div class="priority-card" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; padding: 25px; border-radius: 12px; margin-bottom: 20px;">
-                    <h4 style="color: white; margin-top: 0;">2. Enable Team Members - Documentation & Tools</h4>
-                    <p style="color: rgba(255,255,255,0.95);"><strong>What:</strong> Create "station-based" guide enabling team to work independently on 2+ process stations</p>
-                    <p style="color: rgba(255,255,255,0.95);"><strong>Deliverables:</strong></p>
-                    <ul style="color: rgba(255,255,255,0.95); margin-bottom: 15px;">
-                        <li>14-step process guide (the "Bible") with audit trails</li>
-                        <li>M365 agents for discovery calls and MVP generation</li>
-                        <li>Clear input/output documentation for each station</li>
-                    </ul>
-                    <p style="color: rgba(255,255,255,0.95);"><strong>Impact:</strong> Team scalability - enable team members to handle 20+ customer engagements concurrently</p>
-                    <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;"><strong>Key Requirement:</strong> "Less code-dependent, more tool-based" - team uses tools, not raw code</p>
+                <div class="priority-card" style="background: #161b22; border: 1px solid #21262d; padding: 25px; border-radius: 8px; margin-bottom: 16px;">
+                    <h4 style="color: #e6edf3; margin-top: 0;">Team Scalability</h4>
+                    <p style="color: #8b949e;">Station-based process enables team members to work independently across multiple engagement stages. Scale concurrent projects without adding headcount.</p>
                 </div>
 
-                <div class="priority-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px; border-radius: 12px; margin-bottom: 20px;">
-                    <h4 style="color: white; margin-top: 0;">3. AI Agents Library Infrastructure</h4>
-                    <p style="color: rgba(255,255,255,0.95);"><strong>What:</strong> Azure environment architecture where field can demo live agents</p>
-                    <p style="color: rgba(255,255,255,0.95);"><strong>Deliverables:</strong></p>
-                    <ul style="color: rgba(255,255,255,0.95); margin-bottom: 15px;">
-                        <li>Shared Azure tenant (non-expiring) for all agents</li>
-                        <li>Live endpoint demos accessible by entire field</li>
-                        <li>No per-demo deployment needed</li>
-                    </ul>
-                    <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;"><strong>Impact:</strong> Field enablement at scale - eliminate deployment friction for demos</p>
+                <div class="priority-card" style="background: #161b22; border: 1px solid #21262d; padding: 25px; border-radius: 8px; margin-bottom: 16px;">
+                    <h4 style="color: #e6edf3; margin-top: 0;">Risk Elimination Through Early Validation</h4>
+                    <p style="color: #8b949e;">Multiple customer checkpoints before significant investment. MVP "poke" at Step 3 gets feedback before real work begins. By Step 6, scope is locked with customer sign-off.</p>
+                </div>
+
+                <div class="priority-card" style="background: #161b22; border: 1px solid #21262d; padding: 25px; border-radius: 8px; margin-bottom: 16px;">
+                    <h4 style="color: #e6edf3; margin-top: 0;">Zero-Cost Horizontal Scaling</h4>
+                    <p style="color: #8b949e;">Stateless Azure Function design with hot-loaded agents. Minimal per-environment cost for prototyping. Production runs in customer Azure — zero marginal cost.</p>
                 </div>
             </div>
 
             <div class="step-section">
-                <h3>⚡ Specific Action Items</h3>
+                <h3>🚀 Planned Improvements</h3>
 
-                <h4 style="color: var(--primary); margin-top: 25px;">Immediate (Next 1-2 Weeks)</h4>
                 <table class="comparison-table">
                     <thead>
                         <tr>
-                            <th>Action</th>
-                            <th>Description</th>
-                            <th>Owner</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Hardware Procurement</strong></td>
-                            <td>Procure 2TB external drive for video storage (via Juke Room Store or procurement)</td>
-                            <td>Infrastructure Team</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Video Automation</strong></td>
-                            <td>Implement speech-to-text solution for audio timing (double API call for duration data)</td>
-                            <td>Automation Team</td>
-                        </tr>
-                        <tr>
-                            <td><strong>PII Gate</strong></td>
-                            <td>Create review process and tagging system (PII/PII-removed/Public-ready) for agent library</td>
-                            <td>Security/Compliance</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h4 style="color: var(--primary); margin-top: 35px;">Short-term (This Cycle)</h4>
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>Action</th>
-                            <th>Description</th>
-                            <th>Owner</th>
+                            <th>Area</th>
+                            <th>Improvement</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td><strong>Documentation</strong></td>
-                            <td>Complete station-based guide with examples and prompts</td>
-                            <td>Documentation Team</td>
+                            <td>Complete station-based guides with examples and prompts for each RAPP step</td>
                         </tr>
                         <tr>
-                            <td><strong>Agent Deployment</strong></td>
-                            <td>Simplify ARM scripts for one-click deployment</td>
-                            <td>Technical Team</td>
+                            <td><strong>Deployment</strong></td>
+                            <td>Simplify ARM scripts for true one-click deployment to Azure</td>
                         </tr>
                         <tr>
-                            <td><strong>Library Architecture</strong></td>
-                            <td>Design structure for field-accessible agent demos with live endpoints</td>
-                            <td>Architecture Team</td>
+                            <td><strong>Agent Library</strong></td>
+                            <td>Shared Azure environment with live agent demos accessible by all field teams</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Video Automation</strong></td>
+                            <td>Automated speech-to-text and timing for demo video generation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Security</strong></td>
+                            <td>Systematic PII detection, classification, and governance gates for agent library</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Copilot Studio</strong></td>
+                            <td>Native YAML authoring via Skills for Copilot Studio — skip the Azure Function for simpler deployments</td>
                         </tr>
                     </tbody>
                 </table>
@@ -5267,67 +5351,30 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
             <div class="step-section">
                 <h3>📊 Success Metrics</h3>
                 <div class="grid-2">
-                    <div class="metric-card" style="background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%); padding: 20px; border-radius: 12px;">
+                    <div class="metric-card" style="padding: 20px; border-radius: 8px;">
                         <div class="metric-icon" style="font-size: 2rem; margin-bottom: 10px;">👥</div>
                         <h4 style="color: var(--primary); margin-bottom: 10px;">Team Independence</h4>
-                        <p style="margin-bottom: 5px;"><strong>Metric:</strong> Number of stations team members can operate independently</p>
-                        <p style="margin-bottom: 0; color: var(--text-secondary);"><strong>Target:</strong> 2+ stations by end of cycle</p>
+                        <p style="margin-bottom: 0;">Team members operating independently across multiple RAPP process stations</p>
                     </div>
 
-                    <div class="metric-card" style="background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%); padding: 20px; border-radius: 12px;">
+                    <div class="metric-card" style="padding: 20px; border-radius: 8px;">
                         <div class="metric-icon" style="font-size: 2rem; margin-bottom: 10px;">⚡</div>
                         <h4 style="color: var(--primary); margin-bottom: 10px;">Process Efficiency</h4>
-                        <p style="margin-bottom: 5px;"><strong>Metric:</strong> Time reduction from manual process to tool-based process</p>
-                        <p style="margin-bottom: 0; color: var(--text-secondary);"><strong>Target:</strong> 50% reduction in manual steps</p>
+                        <p style="margin-bottom: 0;">Significant reduction in manual steps through tool-based automation</p>
                     </div>
 
-                    <div class="metric-card" style="background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%); padding: 20px; border-radius: 12px;">
+                    <div class="metric-card" style="padding: 20px; border-radius: 8px;">
                         <div class="metric-icon" style="font-size: 2rem; margin-bottom: 10px;">🚀</div>
                         <h4 style="color: var(--primary); margin-bottom: 10px;">Field Adoption</h4>
-                        <p style="margin-bottom: 5px;"><strong>Metric:</strong> Number of demos running from shared Azure environment</p>
-                        <p style="margin-bottom: 0; color: var(--text-secondary);"><strong>Target:</strong> 10+ field-accessible demos</p>
+                        <p style="margin-bottom: 0;">Growing number of field-accessible demos running from shared infrastructure</p>
                     </div>
 
-                    <div class="metric-card" style="background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%); padding: 20px; border-radius: 12px;">
-                        <div class="metric-icon" style="font-size: 2rem; margin-bottom: 10px;">💰</div>
+                    <div class="metric-card" style="padding: 20px; border-radius: 8px;">
+                        <div class="metric-icon" style="font-size: 2rem; margin-bottom: 10px;">🔄</div>
                         <h4 style="color: var(--primary); margin-bottom: 10px;">Customer Conversion</h4>
-                        <p style="margin-bottom: 5px;"><strong>Metric:</strong> Demos converted to deployed agents</p>
-                        <p style="margin-bottom: 0; color: var(--text-secondary);"><strong>Target:</strong> 30% conversion rate</p>
+                        <p style="margin-bottom: 0;">Demos converting to deployed, production-ready agent solutions</p>
                     </div>
                 </div>
-            </div>
-
-            <div class="step-section">
-                <h3>🎯 Connect Format Alignment</h3>
-
-                <h4 style="color: var(--primary);">Results You Deliver:</h4>
-                <ul>
-                    <li><strong>Business Impact:</strong> Accelerating deals through reproducible AI agent demos</li>
-                    <li><strong>Team Impact:</strong> Enabling team members to scale from individual work to managing 20+ concurrent engagements</li>
-                    <li><strong>Customer Impact:</strong> Moving from "amazing demos" to deployed, production-ready solutions</li>
-                </ul>
-
-                <h4 style="color: var(--primary); margin-top: 25px;">How You Deliver:</h4>
-                <ul>
-                    <li><strong>From Research to Production:</strong> Grounding prototypes into field-usable tools</li>
-                    <li><strong>Incremental Delivery:</strong> "Don't wait for the whole project" - ship station 1 & 2, then expand</li>
-                    <li><strong>Team Enablement:</strong> Growth mindset - building framework that helps others succeed, not just solo innovation</li>
-                </ul>
-            </div>
-
-            <div class="step-section">
-                <h3>🔒 Security & Governance Goals</h3>
-                <ul>
-                    <li><strong>PII Detection & Tagging:</strong> Implement systematic PII detection and classification for agent library</li>
-                    <li><strong>Governance Gates:</strong> Establish review gates before public consumption of agents</li>
-                    <li><strong>Data Handling Best Practices:</strong> Document security protocols in team documentation</li>
-                    <li><strong>Compliance Alignment:</strong> Ensure all agents meet enterprise security standards before field deployment</li>
-                </ul>
-            </div>
-
-            <div class="highlight-box" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none;">
-                <h4 style="color: white; margin-top: 0;">💡 Pro Tip for Connect</h4>
-                <p style="color: rgba(255,255,255,0.95); margin-bottom: 0;">When writing your Connect, emphasize the shift from "200 amazing prototypes" to "2 production-ready tools the field can use tomorrow." This directly addresses the strategic feedback about moving from ideation to realization.</p>
             </div>
         </div>
 
@@ -5344,7 +5391,7 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
             <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 25px; margin-top: 30px;">
 
                 <!-- Project Tracker Tool -->
-                <div class="tool-card" style="background: white; border-radius: 12px; padding: 30px; box-shadow: var(--shadow); transition: all 0.3s ease; cursor: pointer; border: 2px solid transparent;"
+                <div class="tool-card" style="background: var(--bg-white); border-radius: 12px; padding: 30px; box-shadow: var(--shadow); transition: all 0.3s ease; cursor: pointer; border: 2px solid transparent;"
                      onclick="window.open('tools/localfirst_project_tracker_tool.html', '_blank')"
                      onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='var(--shadow-lg)'; this.style.borderColor='var(--primary)';"
                      onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow)'; this.style.borderColor='transparent';">
@@ -5384,13 +5431,13 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
                 </div>
 
                 <!-- Chat Animation Studio Tool -->
-                <div class="tool-card" style="background: white; border-radius: 12px; padding: 30px; box-shadow: var(--shadow); transition: all 0.3s ease; cursor: pointer; border: 2px solid transparent;"
+                <div class="tool-card" style="background: var(--bg-white); border-radius: 12px; padding: 30px; box-shadow: var(--shadow); transition: all 0.3s ease; cursor: pointer; border: 2px solid transparent;"
                      onclick="window.open('tools/localfirst_chat_animation_studio_tool.html', '_blank')"
                      onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='var(--shadow-lg)'; this.style.borderColor='var(--primary)';"
                      onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow)'; this.style.borderColor='transparent';">
 
                     <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
-                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 32px;">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #58a6ff 0%, #ef4444 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 32px;">
                             🎬
                         </div>
                         <div>
@@ -5404,10 +5451,10 @@ az functionapp list --query "[?tags.Stage=='Prototype' && tags.LastUsed<'2024-09
                     </p>
 
                     <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
-                        <span style="background: #fff7ed; color: #f59e0b; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Animation</span>
-                        <span style="background: #fff7ed; color: #f59e0b; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Chat Demos</span>
-                        <span style="background: #fff7ed; color: #f59e0b; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Video Export</span>
-                        <span style="background: #fff7ed; color: #f59e0b; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Presentations</span>
+                        <span style="background: #fff7ed; color: #58a6ff; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Animation</span>
+                        <span style="background: #fff7ed; color: #58a6ff; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Chat Demos</span>
+                        <span style="background: #fff7ed; color: #58a6ff; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Video Export</span>
+                        <span style="background: #fff7ed; color: #58a6ff; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">Presentations</span>
                     </div>
 
                     <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 15px; border-top: 1px solid var(--border);">

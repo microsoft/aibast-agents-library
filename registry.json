@@ -1,0 +1,2576 @@
+{
+  "schema": "rapp-registry/1.0",
+  "version": "1.0.0",
+  "generated_at": "2026-03-18T18:10:24.730840+00:00",
+  "stats": {
+    "total_agents": 104,
+    "publishers": 1,
+    "categories": 14,
+    "publisher_list": [
+      "@aibast-agents-library"
+    ],
+    "category_list": [
+      "b2b_sales",
+      "b2c_sales",
+      "energy",
+      "federal_government",
+      "financial_services",
+      "general",
+      "healthcare",
+      "human_resources",
+      "it_management",
+      "manufacturing",
+      "professional_services",
+      "retail_cpg",
+      "slg_government",
+      "software_digital_products"
+    ]
+  },
+  "agents": [
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/account-intelligence",
+      "version": "1.0.0",
+      "display_name": "Account Intelligence",
+      "description": "360-degree account briefings with stakeholder mapping, competitive analysis, and deal risk assessment.",
+      "author": "AIBAST",
+      "tags": [
+        "b2b",
+        "sales",
+        "account-intelligence",
+        "stakeholder-mapping",
+        "competitive-intel"
+      ],
+      "category": "b2b_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/account_intelligence_agent.py",
+      "_size_kb": 23.3,
+      "_lines": 456
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/account-intelligence-orchestrator",
+      "version": "1.0.0",
+      "display_name": "Account Intelligence Orchestrator",
+      "description": "Coordinates multi-agent pipelines for 360-degree account intelligence briefings.",
+      "author": "AIBAST",
+      "tags": [
+        "b2b",
+        "sales",
+        "orchestration",
+        "pipeline",
+        "account-intelligence"
+      ],
+      "category": "b2b_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/account_intelligence_orchestrator.py",
+      "_size_kb": 20.8,
+      "_lines": 457
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/action-prioritization",
+      "version": "1.0.0",
+      "display_name": "Action Prioritization",
+      "description": "Prioritizes sales actions, generates daily plans, and optimizes resource allocation across deals.",
+      "author": "AIBAST",
+      "tags": [
+        "b2b",
+        "sales",
+        "action-prioritization",
+        "planning",
+        "resource-allocation"
+      ],
+      "category": "b2b_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/action_prioritization_agent.py",
+      "_size_kb": 19.7,
+      "_lines": 398
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/competitive-intelligence",
+      "version": "1.0.0",
+      "display_name": "Competitive Intelligence",
+      "description": "Analyzes competitive landscapes, win/loss patterns, and generates battlecards for enterprise deals.",
+      "author": "AIBAST",
+      "tags": [
+        "b2b",
+        "sales",
+        "competitive-intelligence",
+        "battlecards",
+        "win-loss"
+      ],
+      "category": "b2b_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/competitive_intelligence_agent.py",
+      "_size_kb": 21.3,
+      "_lines": 441
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/deal-tracking",
+      "version": "1.0.0",
+      "display_name": "Deal Tracking",
+      "description": "Tracks pipeline, deal movement, stage velocity, and forecast accuracy for enterprise sales.",
+      "author": "AIBAST",
+      "tags": [
+        "b2b",
+        "sales",
+        "deal-tracking",
+        "pipeline",
+        "forecasting"
+      ],
+      "category": "b2b_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/deal_tracking_agent.py",
+      "_size_kb": 18.6,
+      "_lines": 402
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/meeting-prep",
+      "version": "1.0.0",
+      "display_name": "Meeting Prep",
+      "description": "Generates pre-meeting briefs, talking points, objection prep, and follow-up templates.",
+      "author": "AIBAST",
+      "tags": [
+        "b2b",
+        "sales",
+        "meeting-prep",
+        "briefing",
+        "objection-handling"
+      ],
+      "category": "b2b_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/meeting_prep_agent.py",
+      "_size_kb": 25.1,
+      "_lines": 521
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/account-messaging",
+      "version": "1.0.0",
+      "display_name": "Account Messaging",
+      "description": "Generates personalized outreach, follow-ups, and campaign sequences for enterprise accounts.",
+      "author": "AIBAST",
+      "tags": [
+        "b2b",
+        "sales",
+        "messaging",
+        "outreach",
+        "email-sequences"
+      ],
+      "category": "b2b_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/messaging_agent.py",
+      "_size_kb": 20.3,
+      "_lines": 429
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/account-risk-assessment",
+      "version": "1.0.0",
+      "display_name": "Account Risk Assessment",
+      "description": "Assesses deal risk, churn probability, and financial health with mitigation recommendations.",
+      "author": "AIBAST",
+      "tags": [
+        "b2b",
+        "sales",
+        "risk-assessment",
+        "churn-prediction",
+        "deal-risk"
+      ],
+      "category": "b2b_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/risk_assessment_agent.py",
+      "_size_kb": 23.0,
+      "_lines": 495
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/stakeholder-intelligence",
+      "version": "1.0.0",
+      "display_name": "Stakeholder Intelligence",
+      "description": "Maps org charts, analyzes buying committees, and scores relationship strength for enterprise accounts.",
+      "author": "AIBAST",
+      "tags": [
+        "b2b",
+        "sales",
+        "stakeholder-mapping",
+        "org-chart",
+        "buying-committee"
+      ],
+      "category": "b2b_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/stakeholder_intelligence_agent.py",
+      "_size_kb": 23.4,
+      "_lines": 440
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/activity-gap",
+      "version": "1.0.0",
+      "display_name": "Activity Gap Analyzer",
+      "description": "Identifies missing sales activities per stage, evaluates completion, generates roadmaps, and analyzes gap impact.",
+      "author": "AIBAST",
+      "tags": [
+        "b2b",
+        "sales",
+        "activity-gap",
+        "deal-progression",
+        "pipeline"
+      ],
+      "category": "b2b_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/activity_gap_agent.py",
+      "_size_kb": 18.0,
+      "_lines": 393
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/deal-competitor-intel",
+      "version": "1.0.0",
+      "display_name": "Deal Competitor Intelligence",
+      "description": "Competitive snapshots, threat scoring, counter-strategies, and win/loss pattern analysis per deal.",
+      "author": "AIBAST",
+      "tags": [
+        "b2b",
+        "sales",
+        "competitive-intelligence",
+        "deal-progression",
+        "strategy"
+      ],
+      "category": "b2b_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/competitor_intelligence_agent.py",
+      "_size_kb": 16.5,
+      "_lines": 334
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/deal-health-score",
+      "version": "1.0.0",
+      "display_name": "Deal Health Score",
+      "description": "Calculates deal health scores, trend analysis, benchmark comparison, and health alerts.",
+      "author": "AIBAST",
+      "tags": [
+        "b2b",
+        "sales",
+        "deal-health",
+        "scoring",
+        "pipeline"
+      ],
+      "category": "b2b_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/deal_health_score_agent.py",
+      "_size_kb": 17.6,
+      "_lines": 378
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/deal-progression",
+      "version": "1.0.0",
+      "display_name": "Deal Progression",
+      "description": "Pipeline health analysis, stalled-deal detection, action plan generation, and pipeline acceleration.",
+      "author": "AIBAST",
+      "tags": [
+        "b2b",
+        "sales",
+        "deal-progression",
+        "pipeline",
+        "forecasting"
+      ],
+      "category": "b2b_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/deal_progression_agent.py",
+      "_size_kb": 41.6,
+      "_lines": 643
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/deal-risk-assessment",
+      "version": "1.0.0",
+      "display_name": "Deal Risk Assessment",
+      "description": "Multi-factor risk scoring, risk matrices, mitigation planning, and risk trend tracking for pipeline deals.",
+      "author": "AIBAST",
+      "tags": [
+        "b2b",
+        "sales",
+        "risk-assessment",
+        "deal-progression",
+        "pipeline"
+      ],
+      "category": "b2b_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/deal_risk_assessment_agent.py",
+      "_size_kb": 19.2,
+      "_lines": 424
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/next-best-action",
+      "version": "1.0.0",
+      "display_name": "Next Best Action",
+      "description": "Recommends prioritized actions, sequences tasks, forecasts impact, and optimizes rep assignments.",
+      "author": "AIBAST",
+      "tags": [
+        "b2b",
+        "sales",
+        "next-best-action",
+        "deal-progression",
+        "recommendations"
+      ],
+      "category": "b2b_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/next_best_action_agent.py",
+      "_size_kb": 19.7,
+      "_lines": 430
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/pipeline-velocity",
+      "version": "1.0.0",
+      "display_name": "Pipeline Velocity",
+      "description": "Velocity dashboard, stage analysis, bottleneck detection, and acceleration planning for the sales pipeline.",
+      "author": "AIBAST",
+      "tags": [
+        "b2b",
+        "sales",
+        "pipeline-velocity",
+        "deal-progression",
+        "analytics"
+      ],
+      "category": "b2b_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/pipeline_velocity_agent.py",
+      "_size_kb": 17.1,
+      "_lines": 380
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/revenue-forecast",
+      "version": "1.0.0",
+      "display_name": "Revenue Forecast",
+      "description": "Quarterly forecasting, scenario analysis, commit vs best-case modeling, and forecast accuracy tracking.",
+      "author": "AIBAST",
+      "tags": [
+        "b2b",
+        "sales",
+        "revenue-forecast",
+        "deal-progression",
+        "analytics"
+      ],
+      "category": "b2b_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/revenue_forecast_agent.py",
+      "_size_kb": 16.1,
+      "_lines": 348
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/deal-stakeholder-engagement",
+      "version": "1.0.0",
+      "display_name": "Stakeholder Engagement",
+      "description": "Engagement scoring, relationship mapping, engagement planning, and sentiment analysis for deal stakeholders.",
+      "author": "AIBAST",
+      "tags": [
+        "b2b",
+        "sales",
+        "stakeholder-engagement",
+        "deal-progression",
+        "relationships"
+      ],
+      "category": "b2b_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/stakeholder_engagement_agent.py",
+      "_size_kb": 19.2,
+      "_lines": 398
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/stalled-deal-detection",
+      "version": "1.0.0",
+      "display_name": "Stalled Deal Detection",
+      "description": "Detects stalled deals, classifies root causes, generates intervention plans, and provides stall prevention.",
+      "author": "AIBAST",
+      "tags": [
+        "b2b",
+        "sales",
+        "stalled-deals",
+        "deal-progression",
+        "pipeline"
+      ],
+      "category": "b2b_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/stalled_deal_detection_agent.py",
+      "_size_kb": 20.6,
+      "_lines": 453
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/win-probability",
+      "version": "1.0.0",
+      "display_name": "Win Probability",
+      "description": "Calculates win probabilities, analyzes contributing factors, tracks trends, and compares deals.",
+      "author": "AIBAST",
+      "tags": [
+        "b2b",
+        "sales",
+        "win-probability",
+        "deal-progression",
+        "forecasting"
+      ],
+      "category": "b2b_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/win_probability_agent.py",
+      "_size_kb": 20.4,
+      "_lines": 414
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/proposal-generation",
+      "version": "1.0.0",
+      "display_name": "Proposal Generation",
+      "description": "AI-powered proposal generation with RFP analysis, personalized content, pricing optimization, and competitive positioning.",
+      "author": "AIBAST",
+      "tags": [
+        "b2b",
+        "sales",
+        "proposal",
+        "rfp",
+        "pricing",
+        "competitive-positioning"
+      ],
+      "category": "b2b_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2b_sales_stacks/proposal_generation_stack/proposal_generation_agent.py",
+      "_size_kb": 34.6,
+      "_lines": 673
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/sales-qualification",
+      "version": "1.0.0",
+      "display_name": "Sales Qualification",
+      "description": "ICP scoring, BANT analysis, personalized outreach, AE routing, and SLA tracking for inbound leads.",
+      "author": "AIBAST",
+      "tags": [
+        "b2b",
+        "sales",
+        "lead-qualification",
+        "bant",
+        "icp-scoring",
+        "lead-routing"
+      ],
+      "category": "b2b_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2b_sales_stacks/sales_qualification_stack/sales_qualification_agent.py",
+      "_size_kb": 47.4,
+      "_lines": 570
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/win-loss-analysis",
+      "version": "1.0.0",
+      "display_name": "Win/Loss Analysis",
+      "description": "AI-powered win/loss analysis with pattern recognition, competitive insights, revenue recovery modeling, and board-ready presentations.",
+      "author": "AIBAST",
+      "tags": [
+        "b2b",
+        "sales",
+        "win-loss",
+        "competitive-intel",
+        "revenue-recovery"
+      ],
+      "category": "b2b_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2b_sales_stacks/win_loss_analysis_stack/win_loss_analysis_agent.py",
+      "_size_kb": 89.7,
+      "_lines": 921
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/cart-abandonment-recovery",
+      "version": "1.0.0",
+      "display_name": "Cart Abandonment Recovery Agent",
+      "description": "Cart abandonment analysis with recovery campaigns, incentive optimization, and conversion tracking for e-commerce.",
+      "author": "AIBAST",
+      "tags": [
+        "cart-abandonment",
+        "recovery",
+        "ecommerce",
+        "conversion",
+        "email",
+        "b2c"
+      ],
+      "category": "b2c_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2c_sales_stacks/cart_abandonment_recovery_stack/cart_abandonment_recovery_agent.py",
+      "_size_kb": 13.0,
+      "_lines": 289
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/customer-360-speech",
+      "version": "1.0.0",
+      "display_name": "Customer 360 & Speech Agent",
+      "description": "Unified customer profiles with interaction history, sentiment analysis, and next-best-action recommendations.",
+      "author": "AIBAST",
+      "tags": [
+        "customer-360",
+        "speech",
+        "sentiment",
+        "omnichannel",
+        "profile",
+        "b2c"
+      ],
+      "category": "b2c_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2c_sales_stacks/customer_360_speech_stack/customer_360_speech_agent.py",
+      "_size_kb": 14.6,
+      "_lines": 289
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/customer-loyalty-rewards",
+      "version": "1.0.0",
+      "display_name": "Customer Loyalty & Rewards Agent",
+      "description": "Loyalty program management with dashboards, points tracking, reward recommendations, and tier analytics.",
+      "author": "AIBAST",
+      "tags": [
+        "loyalty",
+        "rewards",
+        "points",
+        "retention",
+        "tier",
+        "b2c"
+      ],
+      "category": "b2c_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2c_sales_stacks/customer_loyalty_rewards_stack/customer_loyalty_rewards_agent.py",
+      "_size_kb": 13.0,
+      "_lines": 292
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/omnichannel-engagement",
+      "version": "1.0.0",
+      "display_name": "Omnichannel Engagement Agent",
+      "description": "Omnichannel engagement analytics with channel performance, journey mapping, optimization, and campaign attribution.",
+      "author": "AIBAST",
+      "tags": [
+        "omnichannel",
+        "engagement",
+        "journey",
+        "attribution",
+        "campaign",
+        "b2c"
+      ],
+      "category": "b2c_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2c_sales_stacks/omnichannel_engagement_stack/omnichannel_engagement_agent.py",
+      "_size_kb": 12.9,
+      "_lines": 273
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/personalized-shopping-assistant",
+      "version": "1.0.0",
+      "display_name": "Personalized Shopping Assistant Agent",
+      "description": "Personalized retail shopping with product recommendations, style profiling, inventory checks, and outfit building.",
+      "author": "AIBAST",
+      "tags": [
+        "shopping",
+        "personalization",
+        "recommendations",
+        "style",
+        "inventory",
+        "b2c"
+      ],
+      "category": "b2c_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2c_sales_stacks/personalized_shopping_assistant_stack/personalized_shopping_assistant_agent.py",
+      "_size_kb": 13.7,
+      "_lines": 266
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/returns-exchange",
+      "version": "1.0.0",
+      "display_name": "Returns & Exchange Agent",
+      "description": "Retail returns and exchange management with initiation, eligibility checking, exchange options, and refund tracking.",
+      "author": "AIBAST",
+      "tags": [
+        "returns",
+        "exchange",
+        "refund",
+        "retail",
+        "customer-service",
+        "b2c"
+      ],
+      "category": "b2c_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2c_sales_stacks/returns_exchange_stack/returns_exchange_agent.py",
+      "_size_kb": 15.3,
+      "_lines": 331
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/sales-chat",
+      "version": "1.0.0",
+      "display_name": "Sales Chat Agent",
+      "description": "Retail sales chat support with product inquiries, availability checks, promotion lookups, and order assistance.",
+      "author": "AIBAST",
+      "tags": [
+        "sales",
+        "chat",
+        "product",
+        "promotion",
+        "order",
+        "b2c"
+      ],
+      "category": "b2c_sales",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/b2c_sales_stacks/sales_chat_stack/sales_chat_agent.py",
+      "_size_kb": 14.8,
+      "_lines": 360
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/asset-maintenance-forecast",
+      "version": "1.0.0",
+      "display_name": "Asset Maintenance Forecast Agent",
+      "description": "Predictive maintenance forecasting, asset health monitoring, budget projections, and work order planning for energy infrastructure.",
+      "author": "AIBAST",
+      "tags": [
+        "maintenance",
+        "asset-health",
+        "energy",
+        "predictive",
+        "work-orders",
+        "budget"
+      ],
+      "category": "energy",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/energy_stacks/asset_maintenance_forecast_stack/asset_maintenance_forecast_agent.py",
+      "_size_kb": 13.3,
+      "_lines": 328
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/emission-tracking",
+      "version": "1.0.0",
+      "display_name": "Emission Tracking Agent",
+      "description": "Monitors GHG emissions by facility, tracks regulatory compliance, develops reduction plans, and analyzes carbon offset opportunities.",
+      "author": "AIBAST",
+      "tags": [
+        "emissions",
+        "carbon",
+        "compliance",
+        "ghg",
+        "sustainability",
+        "energy"
+      ],
+      "category": "energy",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/energy_stacks/emission_tracking_stack/emission_tracking_agent.py",
+      "_size_kb": 13.8,
+      "_lines": 328
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/field-service-dispatch",
+      "version": "1.0.0",
+      "display_name": "Field Service Dispatch Agent",
+      "description": "Manages field service dispatch, route optimization, technician assignment, and emergency response for energy infrastructure.",
+      "author": "AIBAST",
+      "tags": [
+        "field-service",
+        "dispatch",
+        "routing",
+        "technicians",
+        "emergency",
+        "energy"
+      ],
+      "category": "energy",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/energy_stacks/field_service_dispatch_stack/field_service_dispatch_agent.py",
+      "_size_kb": 14.4,
+      "_lines": 369
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/permit-license-management",
+      "version": "1.0.0",
+      "display_name": "Permit & License Management Agent",
+      "description": "Tracks permits and licenses across energy facilities, manages renewal calendars, identifies compliance gaps, and monitors applications.",
+      "author": "AIBAST",
+      "tags": [
+        "permits",
+        "licenses",
+        "compliance",
+        "regulatory",
+        "energy",
+        "renewals"
+      ],
+      "category": "energy",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/energy_stacks/permit_license_management_stack/permit_license_management_agent.py",
+      "_size_kb": 12.9,
+      "_lines": 341
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/energy-regulatory-reporting",
+      "version": "1.0.0",
+      "display_name": "Energy Regulatory Reporting Agent",
+      "description": "Manages regulatory report status, data validation, submission tracking, and audit readiness for EPA, FERC, and state filings.",
+      "author": "AIBAST",
+      "tags": [
+        "regulatory",
+        "reporting",
+        "epa",
+        "ferc",
+        "audit",
+        "compliance",
+        "energy"
+      ],
+      "category": "energy",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/energy_stacks/regulatory_reporting_stack/regulatory_reporting_agent.py",
+      "_size_kb": 12.8,
+      "_lines": 326
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/acquisition-support",
+      "version": "1.0.0",
+      "display_name": "Acquisition Support Agent",
+      "description": "Federal acquisition lifecycle support with FAR/DFAR compliance, vendor evaluation, and procurement timeline management.",
+      "author": "AIBAST",
+      "tags": [
+        "acquisition",
+        "FAR",
+        "DFAR",
+        "procurement",
+        "vendor-evaluation",
+        "federal"
+      ],
+      "category": "federal_government",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/federal_government_stacks/acquisition_support_stack/acquisition_support_agent.py",
+      "_size_kb": 16.9,
+      "_lines": 398
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/federal-grants-oversight",
+      "version": "1.0.0",
+      "display_name": "Federal Grants Oversight Agent",
+      "description": "Federal grants monitoring with dashboards, compliance tracking, reporting status, and audit preparation.",
+      "author": "AIBAST",
+      "tags": [
+        "grants",
+        "oversight",
+        "compliance",
+        "audit",
+        "federal",
+        "reporting"
+      ],
+      "category": "federal_government",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/federal_government_stacks/federal_grants_oversight_stack/federal_grants_oversight_agent.py",
+      "_size_kb": 15.1,
+      "_lines": 328
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/mission-reporting-assistant",
+      "version": "1.0.0",
+      "display_name": "Mission Reporting Assistant Agent",
+      "description": "Generates mission summaries, KPI dashboards, stakeholder briefs, and trend analyses for federal programs.",
+      "author": "AIBAST",
+      "tags": [
+        "mission",
+        "reporting",
+        "KPI",
+        "stakeholder",
+        "federal",
+        "dashboard"
+      ],
+      "category": "federal_government",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/federal_government_stacks/mission_reporting_assistant_stack/mission_reporting_assistant_agent.py",
+      "_size_kb": 13.0,
+      "_lines": 286
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/regulatory-compliance-fed",
+      "version": "1.0.0",
+      "display_name": "Regulatory Compliance (Federal) Agent",
+      "description": "Federal regulatory compliance management with FISMA, FedRAMP, and NIST gap analysis, remediation planning, and audit readiness.",
+      "author": "AIBAST",
+      "tags": [
+        "compliance",
+        "FISMA",
+        "FedRAMP",
+        "NIST",
+        "audit",
+        "federal",
+        "regulatory"
+      ],
+      "category": "federal_government",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/federal_government_stacks/regulatory_compliance_fed_stack/regulatory_compliance_fed_agent.py",
+      "_size_kb": 14.8,
+      "_lines": 290
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/workforce-clearance-onboarding",
+      "version": "1.0.0",
+      "display_name": "Workforce Clearance & Onboarding Agent",
+      "description": "Federal workforce clearance tracking, onboarding checklists, background check monitoring, and access provisioning.",
+      "author": "AIBAST",
+      "tags": [
+        "clearance",
+        "onboarding",
+        "background-check",
+        "workforce",
+        "federal",
+        "access"
+      ],
+      "category": "federal_government",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/federal_government_stacks/workforce_clearance_onboarding_stack/workforce_clearance_onboarding_agent.py",
+      "_size_kb": 14.9,
+      "_lines": 338
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/claims-processing",
+      "version": "1.0.0",
+      "display_name": "Claims Processing Agent",
+      "description": "Insurance claims processing with intake, adjudication review, fraud detection, and settlement recommendations.",
+      "author": "AIBAST",
+      "tags": [
+        "claims",
+        "insurance",
+        "adjudication",
+        "fraud",
+        "settlement",
+        "financial-services"
+      ],
+      "category": "financial_services",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/financial_services_stacks/claims_processing_stack/claims_processing_agent.py",
+      "_size_kb": 13.9,
+      "_lines": 295
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/fs-customer-onboarding",
+      "version": "1.0.0",
+      "display_name": "FS Customer Onboarding Agent",
+      "description": "Financial services customer onboarding with KYC verification, account setup, document checklists, and status tracking.",
+      "author": "AIBAST",
+      "tags": [
+        "KYC",
+        "onboarding",
+        "account-setup",
+        "compliance",
+        "financial-services"
+      ],
+      "category": "financial_services",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/financial_services_stacks/customer_onboarding_fs_stack/customer_onboarding_fs_agent.py",
+      "_size_kb": 13.6,
+      "_lines": 317
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/customer-sentiment-churn",
+      "version": "1.0.0",
+      "display_name": "Customer Sentiment & Churn Agent",
+      "description": "Customer sentiment analysis, churn prediction, retention action planning, and segment analytics for financial services.",
+      "author": "AIBAST",
+      "tags": [
+        "sentiment",
+        "churn",
+        "retention",
+        "NPS",
+        "analytics",
+        "financial-services"
+      ],
+      "category": "financial_services",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/financial_services_stacks/customer_sentiment_churn_stack/customer_sentiment_churn_agent.py",
+      "_size_kb": 15.0,
+      "_lines": 327
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/financial-advisor-copilot",
+      "version": "1.0.0",
+      "display_name": "Financial Advisor Copilot Agent",
+      "description": "Financial advisor support with client reviews, portfolio summaries, recommendation engine, and compliance checks.",
+      "author": "AIBAST",
+      "tags": [
+        "advisor",
+        "portfolio",
+        "investment",
+        "compliance",
+        "financial-services"
+      ],
+      "category": "financial_services",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/financial_services_stacks/financial_advisor_copilot_stack/financial_advisor_copilot_agent.py",
+      "_size_kb": 13.2,
+      "_lines": 292
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/fraud-detection-alert",
+      "version": "1.0.0",
+      "display_name": "Fraud Detection & Alert Agent",
+      "description": "Financial fraud detection with alert triage, transaction analysis, pattern recognition, and investigation case management.",
+      "author": "AIBAST",
+      "tags": [
+        "fraud",
+        "detection",
+        "alerts",
+        "transactions",
+        "investigation",
+        "financial-services"
+      ],
+      "category": "financial_services",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/financial_services_stacks/fraud_detection_alert_stack/fraud_detection_alert_agent.py",
+      "_size_kb": 14.6,
+      "_lines": 272
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/loan-origination-assistant",
+      "version": "1.0.0",
+      "display_name": "Loan Origination Assistant Agent",
+      "description": "Loan origination support with application review, credit analysis, document verification, and decision recommendations.",
+      "author": "AIBAST",
+      "tags": [
+        "loan",
+        "origination",
+        "credit",
+        "underwriting",
+        "mortgage",
+        "financial-services"
+      ],
+      "category": "financial_services",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/financial_services_stacks/loan_origination_assistant_stack/loan_origination_assistant_agent.py",
+      "_size_kb": 14.0,
+      "_lines": 327
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/portfolio-rebalancing",
+      "version": "1.0.0",
+      "display_name": "Portfolio Rebalancing Agent",
+      "description": "Portfolio rebalancing with drift analysis, trade recommendations, tax impact assessment, and execution planning.",
+      "author": "AIBAST",
+      "tags": [
+        "portfolio",
+        "rebalancing",
+        "allocation",
+        "tax",
+        "trading",
+        "financial-services"
+      ],
+      "category": "financial_services",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/financial_services_stacks/portfolio_rebalancing_stack/portfolio_rebalancing_agent.py",
+      "_size_kb": 14.1,
+      "_lines": 306
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/fs-regulatory-compliance",
+      "version": "1.0.0",
+      "display_name": "FS Regulatory Compliance Agent",
+      "description": "Financial services regulatory compliance with SOX, Dodd-Frank, BSA tracking, remediation planning, and examiner preparation.",
+      "author": "AIBAST",
+      "tags": [
+        "compliance",
+        "SOX",
+        "Dodd-Frank",
+        "BSA",
+        "AML",
+        "regulatory",
+        "financial-services"
+      ],
+      "category": "financial_services",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/financial_services_stacks/regulatory_compliance_fs_stack/regulatory_compliance_fs_agent.py",
+      "_size_kb": 12.8,
+      "_lines": 268
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/underwriting-support",
+      "version": "1.0.0",
+      "display_name": "Underwriting Support Agent",
+      "description": "Insurance underwriting support with risk evaluation, pricing recommendations, guideline compliance, and exception review.",
+      "author": "AIBAST",
+      "tags": [
+        "underwriting",
+        "insurance",
+        "risk",
+        "pricing",
+        "guidelines",
+        "financial-services"
+      ],
+      "category": "financial_services",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/financial_services_stacks/underwriting_support_stack/underwriting_support_agent.py",
+      "_size_kb": 14.4,
+      "_lines": 329
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/wealth-insights-generator",
+      "version": "1.0.0",
+      "display_name": "Wealth Insights Generator Agent",
+      "description": "Wealth management insights with market briefs, client analytics, opportunity alerts, and performance attribution.",
+      "author": "AIBAST",
+      "tags": [
+        "wealth",
+        "insights",
+        "market",
+        "performance",
+        "analytics",
+        "financial-services"
+      ],
+      "category": "financial_services",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/financial_services_stacks/wealth_insights_generator_stack/wealth_insights_generator_agent.py",
+      "_size_kb": 12.6,
+      "_lines": 280
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/ai-customer-assistant",
+      "version": "1.0.0",
+      "display_name": "AI Customer Assistant",
+      "description": "AI-powered customer service assistant for inquiries, knowledge search, escalation routing, and satisfaction surveys.",
+      "author": "AIBAST",
+      "tags": [
+        "customer-service",
+        "support",
+        "knowledge-base",
+        "escalation",
+        "satisfaction"
+      ],
+      "category": "general",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/general_stacks/ai_customer_assistant_stack/ai_customer_assistant_agent.py",
+      "_size_kb": 18.2,
+      "_lines": 369
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/general-ask-hr",
+      "version": "1.0.0",
+      "display_name": "General Ask HR",
+      "description": "General-purpose HR assistant for policy lookups, benefits inquiries, leave requests, and employee directory searches.",
+      "author": "AIBAST",
+      "tags": [
+        "hr",
+        "policy",
+        "benefits",
+        "leave",
+        "directory",
+        "general"
+      ],
+      "category": "general",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/general_stacks/ask_hr_stack/ask_hr_agent.py",
+      "_size_kb": 18.9,
+      "_lines": 402
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/bulk-crm-data-generator",
+      "version": "1.0.0",
+      "display_name": "Bulk CRM Data Generator",
+      "description": "Generates synthetic CRM contacts, accounts, and opportunities for testing, demos, and data migration.",
+      "author": "AIBAST",
+      "tags": [
+        "crm",
+        "data-generation",
+        "testing",
+        "contacts",
+        "accounts",
+        "opportunities"
+      ],
+      "category": "general",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/general_stacks/crm_bulk_data_creator_stack/bulk_crm_data_generator.py",
+      "_size_kb": 15.9,
+      "_lines": 264
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/dynamics-365-connector",
+      "version": "1.0.0",
+      "display_name": "Dynamics 365 Connector",
+      "description": "Dynamics 365 connector for entity queries, record creation, bulk import, and schema inspection.",
+      "author": "AIBAST",
+      "tags": [
+        "dynamics-365",
+        "crm",
+        "d365",
+        "entity",
+        "bulk-import",
+        "schema"
+      ],
+      "category": "general",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/general_stacks/crm_bulk_data_creator_stack/dynamics_365_agent.py",
+      "_size_kb": 16.8,
+      "_lines": 325
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/one-click-crm-intake",
+      "version": "1.0.0",
+      "display_name": "One-Click CRM Intake",
+      "description": "Streamlined CRM data intake with form generation, validation, duplicate detection, and import preview.",
+      "author": "AIBAST",
+      "tags": [
+        "crm",
+        "intake",
+        "data-validation",
+        "duplicate-detection",
+        "import"
+      ],
+      "category": "general",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/general_stacks/crm_bulk_data_creator_stack/one_click_crm_intake_agent.py",
+      "_size_kb": 15.5,
+      "_lines": 293
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/cross-selling",
+      "version": "1.0.0",
+      "display_name": "Cross-Selling Opportunities",
+      "description": "Identifies cross-selling opportunities via product affinity analysis, customer ownership mapping, and revenue impact projections.",
+      "author": "AIBAST",
+      "tags": [
+        "cross-sell",
+        "upsell",
+        "revenue",
+        "product-affinity",
+        "recommendations"
+      ],
+      "category": "general",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/general_stacks/cross_selling_opportunities_stack/cross_selling_agent.py",
+      "_size_kb": 15.2,
+      "_lines": 300
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/customer-360",
+      "version": "1.0.0",
+      "display_name": "Customer 360",
+      "description": "Unified customer profiles merging CRM, support, and billing data with health scores and next-best-action recommendations.",
+      "author": "AIBAST",
+      "tags": [
+        "customer-360",
+        "unified-profile",
+        "health-score",
+        "next-best-action",
+        "crm"
+      ],
+      "category": "general",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/general_stacks/customer_360_stack/customer_360_agent.py",
+      "_size_kb": 17.7,
+      "_lines": 317
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/email-drafting",
+      "version": "1.0.0",
+      "display_name": "Email Drafting",
+      "description": "AI-powered email drafting for outreach, follow-ups, proposals, and template management with personalization.",
+      "author": "AIBAST",
+      "tags": [
+        "email",
+        "drafting",
+        "outreach",
+        "follow-up",
+        "proposal",
+        "templates"
+      ],
+      "category": "general",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/general_stacks/email_drafting_stack/email_drafting_agent.py",
+      "_size_kb": 14.7,
+      "_lines": 284
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/find-accurate-models",
+      "version": "1.0.0",
+      "display_name": "Find Accurate Models",
+      "description": "AI/ML model search and comparison by accuracy benchmarks, deployment readiness, and cost analysis.",
+      "author": "AIBAST",
+      "tags": [
+        "ai",
+        "ml",
+        "model-selection",
+        "benchmarks",
+        "accuracy",
+        "deployment"
+      ],
+      "category": "general",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/general_stacks/find_accurate_models_stack/find_accurate_models_agent.py",
+      "_size_kb": 14.9,
+      "_lines": 285
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/identify-discounts",
+      "version": "1.0.0",
+      "display_name": "Identify Discounts",
+      "description": "Discount identification with eligibility checks, savings calculations, and approval workflow management.",
+      "author": "AIBAST",
+      "tags": [
+        "discounts",
+        "pricing",
+        "savings",
+        "eligibility",
+        "approval"
+      ],
+      "category": "general",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/general_stacks/identify_discounts_stack/identify_discounts_agent.py",
+      "_size_kb": 15.8,
+      "_lines": 296
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/it-ticket-management",
+      "version": "1.0.0",
+      "display_name": "IT Ticket Management",
+      "description": "IT ticket management with dashboards, priority assignment, SLA tracking, and resolution reporting.",
+      "author": "AIBAST",
+      "tags": [
+        "it",
+        "tickets",
+        "helpdesk",
+        "sla",
+        "priority",
+        "resolution"
+      ],
+      "category": "general",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/general_stacks/it_ticket_management_stack/it_ticket_management_agent.py",
+      "_size_kb": 15.8,
+      "_lines": 258
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/procurement-agent",
+      "version": "1.0.0",
+      "display_name": "Procurement Agent",
+      "description": "Procurement management for purchase requests, vendor comparison, approval routing, and spend analysis.",
+      "author": "AIBAST",
+      "tags": [
+        "procurement",
+        "purchasing",
+        "vendor",
+        "approval",
+        "spend-analysis"
+      ],
+      "category": "general",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/general_stacks/procurement_agent_stack/procurement_agent.py",
+      "_size_kb": 14.4,
+      "_lines": 250
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/procurement-support",
+      "version": "1.0.0",
+      "display_name": "Procurement Support",
+      "description": "Procurement support for requisition tracking, contract lookups, supplier performance, and budget checks.",
+      "author": "AIBAST",
+      "tags": [
+        "procurement",
+        "requisition",
+        "contracts",
+        "supplier",
+        "budget"
+      ],
+      "category": "general",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/general_stacks/procurement_support_stack/procurement_support_agent.py",
+      "_size_kb": 14.8,
+      "_lines": 240
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/product-reference",
+      "version": "1.0.0",
+      "display_name": "Product Reference",
+      "description": "Product catalog with feature comparison, pricing tiers, and compatibility checking.",
+      "author": "AIBAST",
+      "tags": [
+        "product",
+        "catalog",
+        "pricing",
+        "features",
+        "compatibility"
+      ],
+      "category": "general",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/general_stacks/product_reference_stack/product_reference_agent.py",
+      "_size_kb": 14.8,
+      "_lines": 267
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/sales-coach",
+      "version": "1.0.0",
+      "display_name": "Sales Coach",
+      "description": "AI-powered sales coaching with call reviews, skill assessments, coaching plans, and performance dashboards.",
+      "author": "AIBAST",
+      "tags": [
+        "sales",
+        "coaching",
+        "training",
+        "performance",
+        "call-review"
+      ],
+      "category": "general",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/general_stacks/sales_coach_stack/sales_coach_agent.py",
+      "_size_kb": 15.9,
+      "_lines": 283
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/sales-simulation",
+      "version": "1.0.0",
+      "display_name": "Sales Simulation",
+      "description": "Sales scenario simulation with buyer personas, objection practice, and performance scoring.",
+      "author": "AIBAST",
+      "tags": [
+        "sales",
+        "simulation",
+        "training",
+        "objections",
+        "personas",
+        "scoring"
+      ],
+      "category": "general",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/general_stacks/simulation_sales_stack/sales_simulation_agent.py",
+      "_size_kb": 16.2,
+      "_lines": 306
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/speech-to-crm",
+      "version": "1.0.0",
+      "display_name": "Speech to CRM",
+      "description": "Transcribes sales calls, extracts entities, maps to CRM fields, and previews record updates.",
+      "author": "AIBAST",
+      "tags": [
+        "speech",
+        "transcription",
+        "crm",
+        "entity-extraction",
+        "nlp"
+      ],
+      "category": "general",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/general_stacks/speech_to_crm_stack/speech_to_crm_agent.py",
+      "_size_kb": 14.6,
+      "_lines": 265
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/triage-bot",
+      "version": "1.0.0",
+      "display_name": "Triage Bot",
+      "description": "Inquiry classification, routing, priority assessment, and handoff summary generation.",
+      "author": "AIBAST",
+      "tags": [
+        "triage",
+        "classification",
+        "routing",
+        "priority",
+        "handoff"
+      ],
+      "category": "general",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/general_stacks/triage_bot_stack/triage_bot_agent.py",
+      "_size_kb": 14.3,
+      "_lines": 253
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/voice-to-crm-d365",
+      "version": "1.0.0",
+      "display_name": "Voice to CRM (D365)",
+      "description": "Voice-driven D365 CRM updates with voice capture, entity extraction, record updates, and sync tracking.",
+      "author": "AIBAST",
+      "tags": [
+        "voice",
+        "d365",
+        "crm",
+        "speech",
+        "entity-extraction",
+        "sync"
+      ],
+      "category": "general",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/general_stacks/voice_to_crm_stack/dynamics_365_agent.py",
+      "_size_kb": 12.8,
+      "_lines": 253
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/voice-to-crm-email",
+      "version": "1.0.0",
+      "display_name": "Voice to CRM Email",
+      "description": "Meeting recap generation, action item extraction, follow-up email drafting, and distribution list management.",
+      "author": "AIBAST",
+      "tags": [
+        "voice",
+        "email",
+        "meeting-recap",
+        "action-items",
+        "follow-up"
+      ],
+      "category": "general",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/general_stacks/voice_to_crm_stack/email_drafting_agent.py",
+      "_size_kb": 12.9,
+      "_lines": 258
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/sharepoint-document-extractor",
+      "version": "1.0.0",
+      "display_name": "SharePoint Document Extractor",
+      "description": "SharePoint document search, URL extraction, metadata enrichment, and link validation.",
+      "author": "AIBAST",
+      "tags": [
+        "sharepoint",
+        "documents",
+        "url-extraction",
+        "metadata",
+        "search"
+      ],
+      "category": "general",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/general_stacks/voice_to_crm_stack/extract_sharepoint_document_url_agent.py",
+      "_size_kb": 14.2,
+      "_lines": 243
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/voice-to-crm-servicenow",
+      "version": "1.0.0",
+      "display_name": "Voice to CRM (ServiceNow)",
+      "description": "ServiceNow integration for incident creation, knowledge search, assignment routing, and status updates.",
+      "author": "AIBAST",
+      "tags": [
+        "servicenow",
+        "itsm",
+        "incidents",
+        "knowledge-base",
+        "routing"
+      ],
+      "category": "general",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/general_stacks/voice_to_crm_stack/servicenow_agent.py",
+      "_size_kb": 14.5,
+      "_lines": 264
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/care-gap-closure",
+      "version": "1.0.0",
+      "display_name": "Care Gap Closure Agent",
+      "description": "Analyzes HEDIS quality measure gaps, prioritizes patient outreach, manages campaigns, and provides HEDIS compliance dashboards.",
+      "author": "AIBAST",
+      "tags": [
+        "hedis",
+        "care-gaps",
+        "quality-measures",
+        "outreach",
+        "population-health",
+        "healthcare"
+      ],
+      "category": "healthcare",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/healthcare_stacks/care_gap_closure_stack/care_gap_closure_agent.py",
+      "_size_kb": 12.7,
+      "_lines": 324
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/clinical-notes-summarizer",
+      "version": "1.0.0",
+      "display_name": "Clinical Notes Summarizer Agent",
+      "description": "Summarizes patient encounters, performs medication reviews, generates problem lists, and produces referral summaries.",
+      "author": "AIBAST",
+      "tags": [
+        "clinical-notes",
+        "ehr",
+        "encounters",
+        "medications",
+        "referrals",
+        "healthcare"
+      ],
+      "category": "healthcare",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/healthcare_stacks/clinical_notes_summarizer_stack/clinical_notes_summarizer_agent.py",
+      "_size_kb": 15.8,
+      "_lines": 354
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/patient-intake",
+      "version": "1.0.0",
+      "display_name": "Patient Intake Agent",
+      "description": "Manages patient intake forms, insurance verification, appointment scheduling, and pre-visit summary preparation.",
+      "author": "AIBAST",
+      "tags": [
+        "intake",
+        "insurance",
+        "scheduling",
+        "patient",
+        "registration",
+        "healthcare"
+      ],
+      "category": "healthcare",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/healthcare_stacks/patient_intake_stack/patient_intake_agent.py",
+      "_size_kb": 14.0,
+      "_lines": 369
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/prior-authorization",
+      "version": "1.0.0",
+      "display_name": "Prior Authorization Agent",
+      "description": "Manages prior authorization requests, clinical criteria checks, status tracking, and appeal preparation for healthcare payers.",
+      "author": "AIBAST",
+      "tags": [
+        "prior-auth",
+        "authorization",
+        "payer",
+        "clinical-criteria",
+        "appeals",
+        "healthcare"
+      ],
+      "category": "healthcare",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/healthcare_stacks/prior_authorization_stack/prior_authorization_agent.py",
+      "_size_kb": 15.0,
+      "_lines": 364
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/staff-credentialing",
+      "version": "1.0.0",
+      "display_name": "Staff Credentialing Agent",
+      "description": "Manages staff credential tracking, expiration alerts, verification audits, and onboarding checklists for healthcare organizations.",
+      "author": "AIBAST",
+      "tags": [
+        "credentialing",
+        "licenses",
+        "certifications",
+        "dea",
+        "compliance",
+        "healthcare"
+      ],
+      "category": "healthcare",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/healthcare_stacks/staff_credentialing_stack/staff_credentialing_agent.py",
+      "_size_kb": 14.7,
+      "_lines": 310
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/ask-hr",
+      "version": "1.0.0",
+      "display_name": "Ask HR",
+      "description": "AI-powered HR assistant for time-off requests, benefits inquiries, parental leave, and policy lookups.",
+      "author": "AIBAST",
+      "tags": [
+        "hr",
+        "human-resources",
+        "benefits",
+        "time-off",
+        "employee-self-service"
+      ],
+      "category": "human_resources",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/human_resources_stacks/ask_hr_stack/ask_hr_agent.py",
+      "_size_kb": 17.3,
+      "_lines": 390
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/it-helpdesk",
+      "version": "1.0.0",
+      "display_name": "IT Helpdesk",
+      "description": "AI-powered IT helpdesk with automated troubleshooting, knowledge retrieval, remote remediation, and ticket management.",
+      "author": "AIBAST",
+      "tags": [
+        "it",
+        "helpdesk",
+        "troubleshooting",
+        "itsm",
+        "support"
+      ],
+      "category": "it_management",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/it_management_stacks/it_helpdesk_stack/it_helpdesk_agent.py",
+      "_size_kb": 18.7,
+      "_lines": 425
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/inventory-rebalancing",
+      "version": "1.0.0",
+      "display_name": "Inventory Rebalancing Agent",
+      "description": "Optimizes multi-warehouse inventory distribution by analyzing stock levels against demand forecasts and generating cost-effective transfer plans.",
+      "author": "AIBAST",
+      "tags": [
+        "inventory",
+        "warehouse",
+        "supply-chain",
+        "rebalancing",
+        "manufacturing"
+      ],
+      "category": "manufacturing",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/manufacturing_stacks/inventory_rebalancing_stack/inventory_rebalancing_agent.py",
+      "_size_kb": 15.0,
+      "_lines": 353
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/maintenance-scheduling",
+      "version": "1.0.0",
+      "display_name": "Maintenance Scheduling Agent",
+      "description": "Generates predictive maintenance schedules from equipment telemetry and failure models, optimizing technician assignments to minimize unplanned downtime.",
+      "author": "AIBAST",
+      "tags": [
+        "maintenance",
+        "predictive",
+        "scheduling",
+        "manufacturing",
+        "IoT"
+      ],
+      "category": "manufacturing",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/manufacturing_stacks/maintenance_scheduling_stack/maintenance_scheduling_agent.py",
+      "_size_kb": 16.2,
+      "_lines": 367
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/order-status-communication",
+      "version": "1.0.0",
+      "display_name": "Order Status Communication Agent",
+      "description": "Tracks manufacturing orders through fulfillment, generates proactive delay notifications, and drafts customer status updates with shipment details.",
+      "author": "AIBAST",
+      "tags": [
+        "orders",
+        "communication",
+        "shipment",
+        "customer-service",
+        "manufacturing"
+      ],
+      "category": "manufacturing",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/manufacturing_stacks/order_status_communication_stack/order_status_communication_agent.py",
+      "_size_kb": 12.5,
+      "_lines": 321
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/production-line-optimization",
+      "version": "1.0.0",
+      "display_name": "Production Line Optimization Agent",
+      "description": "Analyzes production line OEE, identifies bottleneck stations, and generates throughput optimization plans with shift-level scheduling.",
+      "author": "AIBAST",
+      "tags": [
+        "production",
+        "OEE",
+        "bottleneck",
+        "throughput",
+        "manufacturing"
+      ],
+      "category": "manufacturing",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/manufacturing_stacks/production_line_optimization_stack/production_line_optimization_agent.py",
+      "_size_kb": 14.9,
+      "_lines": 319
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/supplier-risk-monitoring",
+      "version": "1.0.0",
+      "display_name": "Supplier Risk Monitoring Agent",
+      "description": "Monitors supplier risk across quality, delivery, financial, and geopolitical dimensions with scorecards, disruption alerts, and alternative-sourcing plans.",
+      "author": "AIBAST",
+      "tags": [
+        "supplier",
+        "risk",
+        "procurement",
+        "supply-chain",
+        "manufacturing"
+      ],
+      "category": "manufacturing",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/manufacturing_stacks/supplier_risk_monitoring_stack/supplier_risk_monitoring_agent.py",
+      "_size_kb": 13.8,
+      "_lines": 330
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/client-health-score",
+      "version": "1.0.0",
+      "display_name": "Client Health Score Agent",
+      "description": "Computes client health scores from NPS, margins, utilization, and escalation data to identify at-risk accounts and drive retention strategies.",
+      "author": "AIBAST",
+      "tags": [
+        "client-health",
+        "NPS",
+        "retention",
+        "professional-services",
+        "churn"
+      ],
+      "category": "professional_services",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/professional_services_stacks/client_health_score_stack/client_health_score_agent.py",
+      "_size_kb": 13.0,
+      "_lines": 342
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/contract-risk-review",
+      "version": "1.0.0",
+      "display_name": "Contract Risk Review Agent",
+      "description": "Scans contracts for risky clauses, evaluates compliance with internal policies, and produces renegotiation briefs with prioritized amendments.",
+      "author": "AIBAST",
+      "tags": [
+        "contract",
+        "risk",
+        "legal",
+        "compliance",
+        "professional-services"
+      ],
+      "category": "professional_services",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/professional_services_stacks/contract_risk_review_stack/contract_risk_review_agent.py",
+      "_size_kb": 13.8,
+      "_lines": 315
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/proposal-copilot",
+      "version": "1.0.0",
+      "display_name": "Proposal Copilot Agent",
+      "description": "Generates competitive proposals with pricing models, win-theme analysis from historical data, and competitive positioning against known bidders.",
+      "author": "AIBAST",
+      "tags": [
+        "proposal",
+        "RFP",
+        "pricing",
+        "competitive-intelligence",
+        "professional-services"
+      ],
+      "category": "professional_services",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/professional_services_stacks/proposal_copilot_stack/proposal_copilot_agent.py",
+      "_size_kb": 13.7,
+      "_lines": 333
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/resource-utilization",
+      "version": "1.0.0",
+      "display_name": "Resource Utilization Agent",
+      "description": "Tracks consultant utilization and capacity, forecasts demand, analyzes bench costs, and generates staffing recommendations to meet targets.",
+      "author": "AIBAST",
+      "tags": [
+        "utilization",
+        "staffing",
+        "capacity",
+        "bench",
+        "professional-services"
+      ],
+      "category": "professional_services",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/professional_services_stacks/resource_utilization_stack/resource_utilization_agent.py",
+      "_size_kb": 15.6,
+      "_lines": 335
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/time-entry-billing",
+      "version": "1.0.0",
+      "display_name": "Time Entry & Billing Agent",
+      "description": "Processes time entries against billing rules, surfaces unbilled hours, audits entries for compliance, and prepares invoice packages.",
+      "author": "AIBAST",
+      "tags": [
+        "billing",
+        "time-entry",
+        "invoicing",
+        "audit",
+        "professional-services"
+      ],
+      "category": "professional_services",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/professional_services_stacks/time_entry_billing_stack/time_entry_billing_agent.py",
+      "_size_kb": 17.7,
+      "_lines": 362
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/inventory-visibility",
+      "version": "1.0.0",
+      "display_name": "Inventory Visibility Agent",
+      "description": "Delivers real-time inventory dashboards, stock-out alerts, replenishment planning, and channel allocation optimization for omni-channel retail and CPG operations.",
+      "author": "AIBAST",
+      "tags": [
+        "inventory",
+        "stock-management",
+        "replenishment",
+        "omni-channel",
+        "retail"
+      ],
+      "category": "retail_cpg",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/retail_cpg_stacks/inventory_visibility_stack/inventory_visibility_agent.py",
+      "_size_kb": 15.6,
+      "_lines": 370
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/personalized-marketing",
+      "version": "1.0.0",
+      "display_name": "Personalized Marketing Agent",
+      "description": "Enables customer segmentation, personalized campaign design, dynamic content personalization, and marketing performance analysis for retail and CPG brands.",
+      "author": "AIBAST",
+      "tags": [
+        "marketing",
+        "personalization",
+        "segmentation",
+        "campaigns",
+        "retail"
+      ],
+      "category": "retail_cpg",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/retail_cpg_stacks/personalized_marketing_stack/personalized_marketing_agent.py",
+      "_size_kb": 17.2,
+      "_lines": 436
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/returns-complaints-resolution",
+      "version": "1.0.0",
+      "display_name": "Returns & Complaints Resolution Agent",
+      "description": "Automates return processing, classifies customer complaints, recommends optimal resolutions, and identifies complaint trends for retail and CPG customer service teams.",
+      "author": "AIBAST",
+      "tags": [
+        "returns",
+        "complaints",
+        "customer-service",
+        "resolution",
+        "retail"
+      ],
+      "category": "retail_cpg",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/retail_cpg_stacks/returns_complaints_resolution_stack/returns_complaints_resolution_agent.py",
+      "_size_kb": 20.4,
+      "_lines": 506
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/store-associate-copilot",
+      "version": "1.0.0",
+      "display_name": "Store Associate Copilot Agent",
+      "description": "Provides store associates with instant product lookup, guided customer assistance scripts, daily task checklists, and real-time performance dashboards to improve in-store operations.",
+      "author": "AIBAST",
+      "tags": [
+        "store-operations",
+        "associate",
+        "copilot",
+        "product-lookup",
+        "retail"
+      ],
+      "category": "retail_cpg",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/retail_cpg_stacks/store_associate_copilot_stack/store_associate_copilot_agent.py",
+      "_size_kb": 22.4,
+      "_lines": 538
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/supply-chain-disruption-alert",
+      "version": "1.0.0",
+      "display_name": "Supply Chain Disruption Alert Agent",
+      "description": "Monitors supply chain networks for disruption events, performs risk assessments, generates mitigation playbooks, and identifies qualified alternative suppliers to maintain retail continuity.",
+      "author": "AIBAST",
+      "tags": [
+        "supply-chain",
+        "disruption",
+        "risk-management",
+        "logistics",
+        "retail"
+      ],
+      "category": "retail_cpg",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/retail_cpg_stacks/supply_chain_disruption_alert_stack/supply_chain_disruption_alert_agent.py",
+      "_size_kb": 23.8,
+      "_lines": 631
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/building-permit-processing",
+      "version": "1.0.0",
+      "display_name": "Building Permit Processing Agent",
+      "description": "Local government building permit processing with status tracking, review checklists, inspector assignment, and fee calculation.",
+      "author": "AIBAST",
+      "tags": [
+        "permits",
+        "building",
+        "zoning",
+        "inspection",
+        "local-government",
+        "fees"
+      ],
+      "category": "slg_government",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/slg_government_stacks/building_permit_processing_stack/building_permit_processing_agent.py",
+      "_size_kb": 14.6,
+      "_lines": 349
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/citizen-service-request",
+      "version": "1.0.0",
+      "display_name": "Citizen Service Request Agent",
+      "description": "Municipal service request management with intake, routing, status tracking, and resolution summaries.",
+      "author": "AIBAST",
+      "tags": [
+        "311",
+        "citizen-services",
+        "municipal",
+        "routing",
+        "SLA",
+        "local-government"
+      ],
+      "category": "slg_government",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/slg_government_stacks/citizen_service_request_stack/citizen_service_request_agent.py",
+      "_size_kb": 14.6,
+      "_lines": 327
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/foia-request-assistant",
+      "version": "1.0.0",
+      "display_name": "FOIA Request Assistant Agent",
+      "description": "FOIA request processing support with request analysis, document search, redaction review, and response preparation.",
+      "author": "AIBAST",
+      "tags": [
+        "FOIA",
+        "public-records",
+        "redaction",
+        "transparency",
+        "government"
+      ],
+      "category": "slg_government",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/slg_government_stacks/foia_request_assistant_stack/foia_request_assistant_agent.py",
+      "_size_kb": 14.7,
+      "_lines": 308
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/slg-grants-management",
+      "version": "1.0.0",
+      "display_name": "SLG Grants Management Agent",
+      "description": "State and local government grants portfolio management with application tracking, reporting calendars, and budget monitoring.",
+      "author": "AIBAST",
+      "tags": [
+        "grants",
+        "budget",
+        "reporting",
+        "local-government",
+        "state-government"
+      ],
+      "category": "slg_government",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/slg_government_stacks/grants_management_stack/grants_management_agent.py",
+      "_size_kb": 12.9,
+      "_lines": 307
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/utility-billing-assistance",
+      "version": "1.0.0",
+      "display_name": "Utility Billing Assistance Agent",
+      "description": "Municipal utility billing support with account inquiries, usage analysis, payment plans, and assistance program eligibility.",
+      "author": "AIBAST",
+      "tags": [
+        "utility",
+        "billing",
+        "water",
+        "payment",
+        "assistance",
+        "municipal"
+      ],
+      "category": "slg_government",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/slg_government_stacks/utility_billing_assistance_stack/utility_billing_assistance_agent.py",
+      "_size_kb": 16.3,
+      "_lines": 372
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/software-competitive-intel",
+      "version": "1.0.0",
+      "display_name": "Competitive Intelligence Agent",
+      "description": "AI-powered competitive intelligence for SaaS market landscape analysis, feature comparisons, pricing analysis, and threat assessments.",
+      "author": "AIBAST",
+      "tags": [
+        "competitive-intel",
+        "market-analysis",
+        "saas",
+        "pricing",
+        "threat-assessment"
+      ],
+      "category": "software_digital_products",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/software_dp_stacks/competitive_intel_stack/competitive_intel_agent.py",
+      "_size_kb": 15.8,
+      "_lines": 421
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/software-customer-onboarding",
+      "version": "1.0.0",
+      "display_name": "Customer Onboarding Agent",
+      "description": "Tracks SaaS customer onboarding status, milestone completion, feature adoption metrics, and risk flags.",
+      "author": "AIBAST",
+      "tags": [
+        "onboarding",
+        "customer-success",
+        "saas",
+        "adoption",
+        "milestones"
+      ],
+      "category": "software_digital_products",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/software_dp_stacks/customer_onboarding_stack/customer_onboarding_agent.py",
+      "_size_kb": 14.3,
+      "_lines": 379
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/license-renewal-expansion",
+      "version": "1.0.0",
+      "display_name": "License Renewal & Expansion Agent",
+      "description": "Manages SaaS license renewal pipelines, expansion opportunities, churn risk analysis, and revenue impact projections.",
+      "author": "AIBAST",
+      "tags": [
+        "license",
+        "renewal",
+        "expansion",
+        "churn",
+        "revenue",
+        "saas"
+      ],
+      "category": "software_digital_products",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/software_dp_stacks/license_renewal_expansion_stack/license_renewal_expansion_agent.py",
+      "_size_kb": 13.6,
+      "_lines": 351
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/product-feedback-synthesizer",
+      "version": "1.0.0",
+      "display_name": "Product Feedback Synthesizer Agent",
+      "description": "Aggregates customer feedback, feature requests, sentiment analysis, and roadmap impact assessments for product teams.",
+      "author": "AIBAST",
+      "tags": [
+        "feedback",
+        "product",
+        "feature-requests",
+        "sentiment",
+        "roadmap",
+        "nps"
+      ],
+      "category": "software_digital_products",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/software_dp_stacks/product_feedback_synthesizer_stack/product_feedback_synthesizer_agent.py",
+      "_size_kb": 13.1,
+      "_lines": 363
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/support-ticket-resolution",
+      "version": "1.0.0",
+      "display_name": "Support Ticket Resolution Agent",
+      "description": "Intelligent ticket triage, KB resolution search, escalation routing, and SLA compliance dashboards.",
+      "author": "AIBAST",
+      "tags": [
+        "support",
+        "tickets",
+        "triage",
+        "sla",
+        "knowledge-base",
+        "escalation"
+      ],
+      "category": "software_digital_products",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/software_dp_stacks/support_ticket_resolution_stack/support_ticket_resolution_agent.py",
+      "_size_kb": 13.1,
+      "_lines": 324
+    }
+  ]
+}

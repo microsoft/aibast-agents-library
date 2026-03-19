@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAPP — Install</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%2358a6ff'%3E%3Cpath d='M184 0c-30.9 0-56.5 22.7-61.1 52.3C54.5 67 0 130 0 206.8c0 41.6 17.4 79.2 45.3 105.9-2 9.2-3.3 18.8-3.3 28.7 0 55.3 35.8 102.2 85.5 119C142.2 493 172.6 512 208 512h16c35.3 0 64-28.7 64-64V86c0-8.8-7.2-16-16-16h-16c-8.8 0-16 7.2-16 16v16c0 8.8-7.2 16-16 16s-16-7.2-16-16V64c0-35.3-28.7-64-64-64h40zm144 0c30.9 0 56.5 22.7 61.1 52.3C457.5 67 512 130 512 206.8c0 41.6-17.4 79.2-45.3 105.9 2 9.2 3.3 18.8 3.3 28.7 0 55.3-35.8 102.2-85.5 119C369.8 493 339.4 512 304 512h-16c-35.3 0-64-28.7-64-64V86c0-8.8 7.2-16 16-16h16c8.8 0 16 7.2 16 16v16c0 8.8 7.2 16 16 16s16-7.2 16-16V64c0-35.3 28.7-64 64-64h-40z'/%3E%3C/svg%3E">
+<meta name="description" content="AIBAST Agents Library — local-first AI agent server and 104 industry agent templates. One dependency: a GitHub account.">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0d1117; color: #e6edf3;
+    min-height: 100vh; padding: 48px 24px;
+    display: flex; flex-direction: column; align-items: center;
+  }
+  a { color: #58a6ff; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code {
+    font-family: "SF Mono", "Fira Code", monospace; font-size: 13px;
+    background: #161b22; padding: 2px 6px; border-radius: 4px;
+  }
+  .hero { text-align: center; max-width: 620px; margin-bottom: 48px; }
+  .hero .logo { font-size: 64px; margin-bottom: 16px; }
+  .hero h1 { font-size: 36px; font-weight: 700; margin-bottom: 8px; }
+  .hero p { color: #8b949e; font-size: 16px; line-height: 1.6; }
+  .hero .tagline { color: #58a6ff; font-weight: 600; font-size: 14px; margin-top: 12px; }
+
+  .one-liner {
+    max-width: 620px; width: 100%;
+    background: #161b22; border: 2px solid #238636; border-radius: 12px;
+    padding: 20px 24px; margin-bottom: 48px;
+    text-align: center; cursor: pointer;
+    transition: border-color 0.15s, transform 0.1s;
+  }
+  .one-liner:hover { border-color: #3fb950; transform: translateY(-1px); }
+  .one-liner .label { font-size: 12px; color: #3fb950; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .one-liner .cmd {
+    font-family: "SF Mono", "Fira Code", monospace; font-size: 15px;
+    color: #e6edf3; word-break: break-all;
+  }
+  .one-liner .hint { font-size: 11px; color: #484f58; margin-top: 8px; }
+  .one-liner.copied .hint { color: #3fb950; }
+
+  .tiers { max-width: 620px; width: 100%; }
+
+  .tier {
+    background: #161b22; border: 1px solid #21262d; border-radius: 12px;
+    margin-bottom: 24px; overflow: hidden;
+    transition: border-color 0.15s;
+  }
+  .tier:hover { border-color: #30363d; }
+  .tier-header {
+    padding: 20px 24px; display: flex; align-items: center; gap: 16px;
+    cursor: pointer; user-select: none;
+  }
+  .tier-icon { font-size: 32px; flex-shrink: 0; }
+  .tier-title h2 { font-size: 18px; font-weight: 600; margin-bottom: 2px; }
+  .tier-title .subtitle { font-size: 13px; color: #8b949e; }
+  .tier-badge {
+    margin-left: auto; font-size: 11px; font-weight: 600; padding: 4px 10px;
+    border-radius: 12px; flex-shrink: 0; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .tier-badge.start { background: #238636; color: #fff; }
+  .tier-badge.next { background: #1f6feb33; color: #58a6ff; border: 1px solid #1f6feb; }
+  .tier-badge.advanced { background: #8b5cf633; color: #a78bfa; border: 1px solid #8b5cf6; }
+  .tier-arrow {
+    color: #484f58; font-size: 18px; transition: transform 0.2s; flex-shrink: 0;
+  }
+  .tier.open .tier-arrow { transform: rotate(90deg); }
+  .tier-body {
+    display: none; padding: 0 24px 24px; border-top: 1px solid #21262d;
+  }
+  .tier.open .tier-body { display: block; }
+
+  .tier-body p { color: #8b949e; font-size: 14px; line-height: 1.6; margin-top: 16px; }
+  .tier-body .metaphor { color: #d2a8ff; font-style: italic; font-size: 13px; margin-top: 12px; }
+
+  .steps { margin-top: 16px; }
+  .step {
+    background: #0d1117; border: 1px solid #21262d; border-radius: 8px;
+    padding: 14px 16px; margin-top: 10px;
+  }
+  .step h3 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .step p { color: #8b949e; font-size: 13px; margin: 0; }
+  .cmd {
+    display: block; background: #0d1117; border: 1px solid #21262d;
+    border-radius: 8px; padding: 10px 14px; margin-top: 8px;
+    font-family: "SF Mono", "Fira Code", monospace; font-size: 13px;
+    color: #e6edf3; cursor: pointer; position: relative;
+    transition: border-color 0.15s; white-space: pre-wrap;
+  }
+  .cmd:hover { border-color: #30363d; }
+  .cmd::after {
+    content: "📋"; position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+    font-size: 13px; opacity: 0.3; transition: opacity 0.15s;
+  }
+  .cmd:hover::after { opacity: 1; }
+  .cmd.copied::after { content: "✓"; color: #3fb950; opacity: 1; }
+
+  /* ── Install widget ── */
+  .install-widget {
+    max-width: 620px; width: 100%; margin-bottom: 48px;
+    background: #161b22; border: 2px solid #238636; border-radius: 12px;
+    overflow: hidden; transition: border-color 0.15s;
+  }
+  .install-tabs {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 16px; border-bottom: 1px solid #21262d; height: 40px;
+  }
+  .install-tabs-left {
+    display: flex; align-items: center; gap: 2px;
+  }
+  .install-tabs-left .dots {
+    display: flex; gap: 5px; margin-right: 14px;
+  }
+  .install-tabs-left .dots span {
+    width: 10px; height: 10px; border-radius: 50%;
+  }
+  .install-tabs-left .dots span:nth-child(1) { background: #f85149; }
+  .install-tabs-left .dots span:nth-child(2) { background: #d29922; }
+  .install-tabs-left .dots span:nth-child(3) { background: #3fb950; }
+  .install-tab {
+    background: none; border: none; color: #484f58; font-size: 12px;
+    padding: 8px 14px; cursor: pointer; font-family: "SF Mono", "Fira Code", monospace;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .install-tab:hover { color: #8b949e; }
+  .install-tab.active {
+    color: #e6edf3; border-bottom-color: #238636;
+  }
+  .install-tabs-right {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .os-toggle {
+    display: flex; align-items: center; gap: 6px; font-size: 12px; color: #8b949e;
+  }
+  .os-toggle .os-name { font-family: "SF Mono", "Fira Code", monospace; }
+  .os-toggle .change-btn {
+    background: none; border: none; color: #58a6ff; font-size: 12px;
+    cursor: pointer; text-decoration: none;
+    font-family: "SF Mono", "Fira Code", monospace;
+  }
+  .os-toggle .change-btn:hover { text-decoration: underline; }
+  .install-body {
+    padding: 20px 24px; cursor: pointer;
+  }
+  .install-body .comment {
+    color: #3fb950; font-family: "SF Mono", "Fira Code", monospace;
+    font-size: 13px; margin-bottom: 8px;
+  }
+  .install-body .prompt {
+    font-family: "SF Mono", "Fira Code", monospace; font-size: 14px;
+    color: #e6edf3; display: flex; align-items: center; gap: 8px;
+  }
+  .install-body .prompt .dollar { color: #8b949e; user-select: none; }
+  .install-body .copy-icon {
+    margin-left: auto; font-size: 16px; opacity: 0.3;
+    transition: opacity 0.15s; cursor: pointer; flex-shrink: 0;
+  }
+  .install-body:hover .copy-icon { opacity: 1; }
+  .install-body.copied .copy-icon { opacity: 1; }
+  .install-hint {
+    padding: 0 24px 14px; font-size: 11px; color: #484f58; text-align: center;
+  }
+
+  .status-bar {
+    max-width: 620px; width: 100%; margin-top: 16px;
+    background: #161b22; border: 1px solid #21262d; border-radius: 12px;
+    padding: 16px 24px; text-align: center;
+  }
+  .dot {
+    display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+    margin-right: 8px; vertical-align: middle;
+  }
+  .dot.online { background: #3fb950; }
+  .dot.offline { background: #f85149; }
+  .dot.checking { background: #d29922; animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .status-label { font-size: 14px; vertical-align: middle; }
+  .open-btn {
+    display: inline-block; margin-top: 12px;
+    background: #238636; color: #fff; border: none; border-radius: 8px;
+    padding: 10px 24px; font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: background 0.15s;
+  }
+  .open-btn:hover { background: #2ea043; }
+  .open-btn:disabled { opacity: 0.4; cursor: default; }
+
+  .links {
+    margin-top: 32px; text-align: center; font-size: 13px; color: #484f58;
+  }
+  .links a { margin: 0 12px; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="logo">🧠</div>
+  <h1 style="font-size:32px;font-weight:600;letter-spacing:-0.5px;">RAPP</h1>
+  <p style="color:#8b949e;font-size:14px;margin-top:4px;font-weight:500;">Rapid Agent Prototype Pattern</p>
+  <p style="color:#8b949e;font-size:15px;line-height:1.6;margin-top:12px;">The AI that lets you understand how AIs think.<br>Start local. Layer up to Azure and Copilot Studio when you're ready.</p>
+  <div class="tagline" style="margin-top:16px;font-size:13px;"><a href="../index.html" style="color:#58a6ff;">Production Guide →</a></div>
+</div>
+
+<div class="install-widget" id="install-widget">
+  <div class="install-tabs">
+    <div class="install-tabs-left">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <button class="install-tab active" data-tab="one-liner" onclick="switchTab(this)">One-liner</button>
+      <button class="install-tab" data-tab="manual" onclick="switchTab(this)">Manual</button>
+    </div>
+    <div class="install-tabs-right">
+      <div class="os-toggle">
+        <span class="os-name" id="os-label">macOS/Linux</span>
+        <button class="change-btn" onclick="flipOS()">change</button>
+      </div>
+    </div>
+  </div>
+  <div class="install-body" onclick="copyInstall(this)">
+    <div class="comment" id="install-comment"># Works everywhere. Installs everything. 🧠</div>
+    <div class="prompt">
+      <span class="dollar">$</span>
+      <span id="install-cmd">curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash</span>
+      <span class="copy-icon" id="copy-icon">📋</span>
+    </div>
+  </div>
+  <div class="install-hint" id="install-hint">Works on macOS &amp; Linux. Auto-installs Python 3.11 if missing.</div>
+</div>
+
+<div class="tiers">
+
+  <!-- TIER 1: BRAINSTEM -->
+  <div class="tier open" onclick="toggleTier(event, this)">
+    <div class="tier-header">
+      <div class="tier-icon">🧠</div>
+      <div class="tier-title">
+        <h2>The Brainstem</h2>
+        <div class="subtitle">Local agent server — the survival basics</div>
+      </div>
+      <span class="tier-badge start">Start here</span>
+      <span class="tier-arrow">▶</span>
+    </div>
+    <div class="tier-body">
+      <p class="metaphor">The biological brainstem keeps you alive — breathing, heartbeat, reflexes. Your AI brainstem does the same: it runs the core agent loop, calls tools, and responds. Everything else builds on top of this.</p>
+      <div class="steps">
+        <div class="step">
+          <h3>1. Authenticate with GitHub</h3>
+          <p>Your GitHub Copilot subscription IS the AI engine. No OpenAI keys needed.</p>
+          <div class="cmd" onclick="copyCmd(event, this)">gh auth login</div>
+        </div>
+        <div class="step">
+          <h3>2. Start the brainstem</h3>
+          <p>The server starts on port 7071 with a chat UI, health endpoint, and agent auto-discovery.</p>
+          <div class="cmd" onclick="copyCmd(event, this)">brainstem</div>
+        </div>
+        <div class="step">
+          <h3>3. Talk to it</h3>
+          <p>Open <code>localhost:7071</code> in your browser, or hit the API directly.</p>
+          <div class="cmd" onclick="copyCmd(event, this)">curl -s localhost:7071/health | python3 -m json.tool</div>
+        </div>
+        <div class="step">
+          <h3>4. Make it yours</h3>
+          <p>Write a <code>soul.md</code> to define its personality. Drop <code>*_agent.py</code> files into the agents folder to give it skills. Point <code>SOUL_PATH</code> and <code>AGENTS_PATH</code> in <code>.env</code> to your private files.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIER 2: STEP UP — TWO PATHS -->
+  <div class="tier" onclick="toggleTier(event, this)">
+    <div class="tier-header">
+      <div class="tier-icon">☁️</div>
+      <div class="tier-title">
+        <h2>The Spinal Cord</h2>
+        <div class="subtitle">Deploy RAPP to Azure — give it a cloud body</div>
+      </div>
+      <span class="tier-badge next">Next step</span>
+      <span class="tier-arrow">▶</span>
+    </div>
+    <div class="tier-body">
+      <p class="metaphor">The spinal cord connects your brainstem to the rest of your body. Deploy RAPP to Azure — your agent is now always-on, reachable from anywhere, with persistent storage and monitoring.</p>
+      <div class="steps">
+        <div class="step">
+          <h3>1. Deploy Azure resources</h3>
+          <p>One script creates everything: Function App, Azure OpenAI, Storage Account, Application Insights. All using Entra ID auth — no API keys.</p>
+          <div class="cmd" onclick="copyCmd(event, this)">curl -fsSL https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/deploy.sh | bash</div>
+          <p style="margin-top:8px">Or click to deploy directly from the Azure Portal:</p>
+          <p style="margin-top:4px"><a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Faibast-agents-library%2Fmain%2Fazuredeploy.json" target="_blank"><img src="https://aka.ms/deploytoazurebutton" alt="Deploy to Azure" style="height:32px"></a></p>
+        </div>
+        <div class="step">
+          <h3>2. Deploy your code</h3>
+          <p>Push the RAPP function code to your new Azure Function App. The app name comes from the deploy output.</p>
+          <div class="cmd" onclick="copyCmd(event, this)">func azure functionapp publish YOUR_APP_NAME --build remote</div>
+        </div>
+        <div class="step">
+          <h3>3. Test it</h3>
+          <p>Hit your deployed endpoint to verify the agent is live in the cloud.</p>
+          <div class="cmd" onclick="copyCmd(event, this)">curl -s https://YOUR_APP_NAME.azurewebsites.net/api/businessinsightbot_function -X POST -H "Content-Type: application/json" -d '{"user_input":"hello"}' | python3 -m json.tool</div>
+        </div>
+      </div>
+      <p><strong>What you learn:</strong> ARM templates, Azure Functions (Python), managed identity, RBAC, Azure OpenAI.</p>
+    </div>
+  </div>
+
+  <!-- TIER 3: THE NERVOUS SYSTEM — TWO OPTIONS -->
+  <div class="tier" onclick="toggleTier(event, this)">
+    <div class="tier-header">
+      <div class="tier-icon">🤖</div>
+      <div class="tier-title">
+        <h2>The Nervous System</h2>
+        <div class="subtitle">Reach into Teams &amp; M365 — two paths</div>
+      </div>
+      <span class="tier-badge advanced">Advanced</span>
+      <span class="tier-arrow">▶</span>
+    </div>
+    <div class="tier-body">
+      <p class="metaphor">Your nervous system extends your brain's reach everywhere. Choose your deployment path:</p>
+
+      <div class="steps">
+        <div class="step" style="border:1px solid #238636;border-radius:10px;padding:20px;background:#0d1117;">
+          <h3 style="color:#3fb950;">Option A: Azure Function → Copilot Studio</h3>
+          <p>Wire your deployed Azure Function to Copilot Studio. Import the Power Platform solution, point it at your endpoint, publish. Same RAPP agents, now in Teams and M365 Copilot.</p>
+          <p style="font-size:13px;color:#8b949e;margin:8px 0;"><strong style="color:#e6edf3;">Requires:</strong> Tier 2 (Spinal Cord) completed</p>
+          <div class="cmd" onclick="copyCmd(event, this)">curl -fsSL -o MSFTAIBASMultiAgentCopilot.zip https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/MSFTAIBASMultiAgentCopilot_1_0_0_5.zip</div>
+          <p style="margin-top:8px;font-size:13px;color:#8b949e;">Import at <a href="https://make.powerapps.com" target="_blank" style="color:#58a6ff;">make.powerapps.com</a> → Solutions → Import. Update the HTTP action URL to your Azure Function. Publish.</p>
+        </div>
+        <div class="step" style="border:1px solid #58a6ff;border-radius:10px;padding:20px;background:#0d1117;">
+          <h3 style="color:#58a6ff;">Option B: Native Copilot Studio (No Azure needed)</h3>
+          <p>Skip the Azure Function entirely. Use <a href="https://github.com/microsoft/skills-for-copilot-studio" target="_blank" style="color:#58a6ff;">Skills for Copilot Studio</a> — the CAT team's open-source plugin for Claude Code &amp; GitHub Copilot CLI. Author agents as YAML from your terminal, up to 20x faster.</p>
+          <p style="font-size:13px;color:#8b949e;margin:8px 0;"><strong style="color:#e6edf3;">Requires:</strong> Claude Code or GitHub Copilot CLI + VS Code Copilot Studio Extension</p>
+          <div class="cmd" onclick="copyCmd(event, this)">/plugin marketplace add microsoft/skills-for-copilot-studio</div>
+          <p style="margin-top:8px;font-size:13px;color:#8b949e;">
+            <code style="color:#58a6ff;">@copilot-studio:author</code> — create topics, actions, knowledge sources<br>
+            <code style="color:#58a6ff;">@copilot-studio:test</code> — run test suites against published agents<br>
+            <code style="color:#58a6ff;">@copilot-studio:troubleshoot</code> — debug routing and validation issues
+          </p>
+        </div>
+      </div>
+
+      <p><strong>What you learn:</strong> Copilot Studio, declarative agents, Power Platform solutions, Teams integration, YAML-as-code agent authoring.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="status-bar" id="status-bar">
+  <span class="dot checking" id="dot"></span>
+  <span class="status-label" id="status-label">Checking brainstem...</span>
+  <br>
+  <button class="open-btn" id="open-btn" disabled onclick="window.open('http://localhost:7071','_blank')">Open Chat UI</button>
+</div>
+
+<div class="links">
+  <a href="https://github.com/microsoft/aibast-agents-library">GitHub</a>
+  <a href="../index.html">RAPP Production Guide</a>
+  <a href="https://github.com/microsoft/aibast-agents-library/issues">Issues &amp; Feedback</a>
+  <a href="CONTRIBUTING.md">Contributing</a>
+  <a href="https://github.com/microsoft/skills-for-copilot-studio">Skills for Copilot Studio</a>
+</div>
+
+<script>
+  // ── Install widget ──
+  const installs = {
+    'macOS/Linux': {
+      'one-liner': {
+        comment: '# Works everywhere. Installs everything. 🧠',
+        cmd: 'curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash',
+        hint: 'Works on macOS & Linux. Auto-installs Python 3.11 if missing.'
+      },
+      'manual': {
+        comment: '# Clone, install deps, done.',
+        cmd: 'git clone https://github.com/microsoft/aibast-agents-library.git ~/.brainstem/src && cd ~/.brainstem/src/rapp_brainstem && pip3 install -r requirements.txt && ./start.sh',
+        hint: 'Requires Python 3.11+ and Git already installed.'
+      }
+    },
+    'Windows': {
+      'one-liner': {
+        comment: '# Factory Windows 11 ready. Installs everything via winget. 🧠',
+        cmd: 'irm https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/install.ps1 | iex',
+        hint: 'Run in PowerShell. Auto-installs Python, Git & GitHub CLI via winget.'
+      },
+      'manual': {
+        comment: '# Clone, install deps, done.',
+        cmd: 'git clone https://github.com/microsoft/aibast-agents-library.git %USERPROFILE%\\.brainstem\\src && cd %USERPROFILE%\\.brainstem\\src\\rapp_brainstem && pip install -r requirements.txt && python brainstem.py',
+        hint: 'Requires Python 3.11+ and Git already installed.'
+      }
+    }
+  };
+
+  let currentOS = navigator.platform.includes('Win') ? 'Windows' : 'macOS/Linux';
+  let currentTab = 'one-liner';
+
+  function renderInstall() {
+    const data = installs[currentOS][currentTab];
+    document.getElementById('os-label').textContent = currentOS;
+    document.getElementById('install-comment').textContent = data.comment;
+    document.getElementById('install-cmd').textContent = data.cmd;
+    document.getElementById('install-hint').innerHTML = data.hint;
+    document.getElementById('copy-icon').textContent = '📋';
+  }
+
+  function flipOS() {
+    currentOS = currentOS === 'macOS/Linux' ? 'Windows' : 'macOS/Linux';
+    renderInstall();
+  }
+
+  function switchTab(btn) {
+    document.querySelectorAll('.install-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    currentTab = btn.dataset.tab;
+    renderInstall();
+  }
+
+  function copyInstall(el) {
+    const text = document.getElementById('install-cmd').textContent;
+    navigator.clipboard.writeText(text);
+    document.getElementById('copy-icon').textContent = '✓';
+    el.classList.add('copied');
+    setTimeout(() => {
+      document.getElementById('copy-icon').textContent = '📋';
+      el.classList.remove('copied');
+    }, 2000);
+  }
+
+  renderInstall();
+
+  // ── Tier commands ──
+  function copyCmd(e, el) {
+    e.stopPropagation();
+    const text = el.textContent.trim();
+    navigator.clipboard.writeText(text);
+    el.classList.add('copied');
+    setTimeout(() => el.classList.remove('copied'), 1500);
+  }
+
+  function toggleTier(e, el) {
+    if (e.target.closest('.cmd') || e.target.closest('a')) return;
+    el.classList.toggle('open');
+  }
+
+  async function checkBrainstem() {
+    const dot = document.getElementById('dot');
+    const label = document.getElementById('status-label');
+    const btn = document.getElementById('open-btn');
+    try {
+      const r = await fetch('http://localhost:7071/health', { signal: AbortSignal.timeout(3000) });
+      const d = await r.json();
+      if (d.status === 'ok') {
+        dot.className = 'dot online';
+        const agents = d.agents ? d.agents.length : 0;
+        label.textContent = `Brainstem running · ${d.model} · ${agents} agent${agents !== 1 ? 's' : ''}`;
+        btn.disabled = false;
+      } else {
+        dot.className = 'dot offline';
+        label.textContent = 'Brainstem running but not authenticated — visit localhost:7071';
+        btn.disabled = false;
+      }
+    } catch {
+      dot.className = 'dot offline';
+      label.textContent = 'Brainstem not detected — install and run brainstem to get started';
+      btn.disabled = true;
+    }
+  }
+  checkBrainstem();
+  setInterval(checkBrainstem, 5000);
+</script>
+
+<div style="max-width:620px;width:100%;margin:40px auto;padding:0 0 60px;">
+  <h2 style="font-size:1.3em;margin-bottom:16px;color:#e6edf3;font-weight:600;">Current Limitations</h2>
+  <div style="background:#1c1f26;border:1px solid #d29922;border-radius:8px;padding:14px 18px;margin-bottom:16px;color:#d29922;font-size:13px;line-height:1.6;">
+    ⚠️ <strong>IMPORTANT:</strong> This is an experimental project managed by a v-team from the Artificial Intelligence Business Applications Specialist Team (AIBAST), not an officially supported Microsoft product.
+  </div>
+  <p style="color:#8b949e;line-height:1.7;font-size:14px;margin-bottom:12px;">This project is still in beta. Even if we're optimizing it for best-practice adherence, by using it you might sometimes experience unwanted patterns, errors, or simply bad architectures. By filing a <a href="https://github.com/microsoft/aibast-agents-library/issues" style="color:#58a6ff;">GitHub issue</a> you will help us improve these tools.</p>
+  <ul style="color:#8b949e;line-height:1.9;margin-left:20px;font-size:13px;">
+    <li><strong style="color:#e6edf3;">Agent templates are starting points, not turnkey solutions.</strong> Each template provides the structure, system prompts, and logic scaffold for a specific business function. Customize before production use.</li>
+    <li><strong style="color:#e6edf3;">AI-generated output may contain errors or unsupported patterns.</strong> Human review remains important.</li>
+    <li><strong style="color:#e6edf3;">The project is evolving quickly.</strong> We're actively improving it based on feedback.</li>
+  </ul>
+  <hr style="margin:30px 0;border:none;border-top:1px solid #21262d;">
+  <p style="color:#484f58;font-size:11px;line-height:1.6;">
+    This project has adopted the <a href="https://opensource.microsoft.com/codeofconduct/" style="color:#58a6ff;">Microsoft Open Source Code of Conduct</a>.
+    This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow <a href="https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general" style="color:#58a6ff;">Microsoft's Trademark &amp; Brand Guidelines</a>.
+    MIT License — Copyright (c) 2026 Microsoft.
+  </p>
+</div>
+
+</body>
+</html>

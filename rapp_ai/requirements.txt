@@ -1,0 +1,24 @@
+# Core Azure Functions dependencies
+azure-functions==1.18.0
+
+# Azure Identity for Entra ID authentication (Managed Identity, App Registration, Azure CLI)
+azure-identity>=1.15.0
+
+# Azure Storage with Entra ID support
+azure-storage-blob>=12.19.0
+azure-storage-file-share>=12.15.0
+azure-core>=1.28.0,<2.0.0
+
+# OpenAI - FIXED VERSION to resolve proxies error
+openai==1.55.3
+
+# HTTP and SSL dependencies - PINNED httpx to avoid conflicts
+httpx==0.27.2
+urllib3>=1.26.0,<2.0.0
+requests>=2.31.0
+certifi>=2023.0.0
+
+# Additional dependencies
+python-dateutil>=2.8.2
+# pydantic v2 is required by openai library - do NOT downgrade to v1
+pydantic>=2.0.0

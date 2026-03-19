@@ -1,0 +1,65 @@
+# Virtual environment
+.venv
+.env
+
+# Local settings (contains secrets!)
+local.settings.json
+local.settings.template.json
+rappid.local.json
+
+# Local storage
+.local_storage
+
+# Python cache
+__pycache__
+*.pyc
+*.pyo
+
+# Git
+.git
+.github
+.gitignore
+.gitattributes
+
+# Claude Code
+.claude
+
+# Copilot
+.copilot
+
+# RAPP ecosystem (archive, config)
+.rapp
+
+# Transpiled output (generated artifacts)
+transpiled/
+
+# IDE
+.vscode
+.idea
+
+# Documentation
+docs/
+*.md
+CLAUDE.md
+README.md
+QUICK_START.md
+
+# Tests
+tests/
+test_*.py
+
+# Experimental agents (archived to .rapp/)
+# experimental/
+
+# Demo files (loaded from Azure storage)
+demos/
+
+# Static HTML files (serve from storage/CDN instead)
+*.html
+
+# Build artifacts
+*.zip
+*.svg
+
+# Misc
+*.copy.html

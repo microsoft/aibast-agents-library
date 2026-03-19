@@ -1,0 +1,64 @@
+name: Bug Report
+description: Report a bug in CommunityRAPP
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill out the sections below.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: What happened? What did you expect to happen?
+      placeholder: When I call the API with..., I get... instead of...
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce this?
+      value: |
+        1. 
+        2. 
+        3. 
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      description: Which part of the system is affected?
+      options:
+        - Core Runtime (function_app.py)
+        - Agent (specify in description)
+        - Storage / Memory
+        - Copilot Studio Integration
+        - Deployment / ARM Template
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Your setup details
+      value: |
+        - OS: 
+        - Python version: 
+        - Running locally or in Azure: 
+        - Azure Functions Core Tools version: 
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant Logs
+      description: Paste any relevant log output (redact any credentials!)
+      render: shell
