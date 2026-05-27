@@ -82,7 +82,7 @@ class LocalFileStorageManager:
             # Create default memory file if it doesn't exist
             default_memory = os.path.join(shared_dir, self.default_file_name)
             if not os.path.exists(default_memory):
-                with open(default_memory, 'w') as f:
+                with open(default_memory, 'w', encoding='utf-8') as f:
                     json.dump({}, f)
                 logging.info(f"Created default memory file: {default_memory}")
 
@@ -143,7 +143,7 @@ class LocalFileStorageManager:
             else:
                 # Create new GUID directory and file
                 os.makedirs(os.path.dirname(file_path), exist_ok=True)
-                with open(file_path, 'w') as f:
+                with open(file_path, 'w', encoding='utf-8') as f:
                     json.dump({}, f)
                 logging.info(f"Created new memory file for GUID: {guid}")
                 self.current_guid = guid
@@ -173,7 +173,7 @@ class LocalFileStorageManager:
         """Read from shared memory location."""
         try:
             file_path = self._get_full_path(self.shared_memory_path, self.default_file_name)
-            with open(file_path, 'r') as f:
+            with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
             return safe_json_loads(content)
         except FileNotFoundError:
@@ -188,7 +188,7 @@ class LocalFileStorageManager:
         """Read from GUID-specific memory location."""
         try:
             file_path = self._get_full_path(self.current_memory_path, "user_memory.json")
-            with open(file_path, 'r') as f:
+            with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
             return safe_json_loads(content)
         except Exception as e:
@@ -213,7 +213,7 @@ class LocalFileStorageManager:
         try:
             file_path = self._get_full_path(self.shared_memory_path, self.default_file_name)
             os.makedirs(os.path.dirname(file_path), exist_ok=True)
-            with open(file_path, 'w') as f:
+            with open(file_path, 'w', encoding='utf-8') as f:
                 json.dump(data, f, indent=4)
         except Exception as e:
             logging.error(f"Error writing to shared memory: {str(e)}")
@@ -224,7 +224,7 @@ class LocalFileStorageManager:
         try:
             file_path = self._get_full_path(self.current_memory_path, "user_memory.json")
             os.makedirs(os.path.dirname(file_path), exist_ok=True)
-            with open(file_path, 'w') as f:
+            with open(file_path, 'w', encoding='utf-8') as f:
                 json.dump(data, f, indent=4)
         except Exception as e:
             logging.error(f"Error writing to GUID memory: {str(e)}")
@@ -286,7 +286,7 @@ class LocalFileStorageManager:
                 binary_content = str(content)
                 mode = 'w'
 
-            with open(file_path, mode) as f:
+            with open(file_path, mode, encoding=(None if 'b' in mode else 'utf-8')) as f:
                 f.write(binary_content)
 
             logging.debug(f"Wrote file: {file_path}")

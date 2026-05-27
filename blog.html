@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Engineering Blog — RAPP Brainstem</title>
+<meta name="description" content="Engineering deep-dives on RAPP Brainstem design decisions and architecture.">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #0d1117; color: #e6edf3;
+    min-height: 100vh; padding: 48px 24px;
+    display: flex; flex-direction: column; align-items: center;
+  }
+  a { color: #58a6ff; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code {
+    font-family: "SF Mono", "Fira Code", monospace; font-size: 13px;
+    background: #161b22; padding: 2px 6px; border-radius: 4px;
+  }
+  pre {
+    font-family: "SF Mono", "Fira Code", monospace; font-size: 13px;
+    background: #161b22; border: 1px solid #21262d; border-radius: 8px;
+    padding: 16px 20px; overflow-x: auto; margin: 16px 0; line-height: 1.6;
+    color: #c9d1d9;
+  }
+
+  .container { max-width: 720px; width: 100%; }
+
+  .nav {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 48px; font-size: 14px;
+  }
+  .nav .back { color: #8b949e; }
+  .nav .sep { color: #30363d; }
+
+  .page-header { margin-bottom: 48px; }
+  .page-header h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+  .page-header p { color: #8b949e; font-size: 16px; }
+
+  .post {
+    background: #161b22; border: 1px solid #21262d; border-radius: 12px;
+    margin-bottom: 32px; overflow: hidden;
+  }
+  .post-header {
+    padding: 24px 28px; border-bottom: 1px solid #21262d;
+  }
+  .post-header h2 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+  .post-meta {
+    display: flex; align-items: center; gap: 16px;
+    font-size: 13px; color: #8b949e;
+  }
+  .post-meta .tag {
+    font-size: 11px; font-weight: 600; padding: 3px 10px;
+    border-radius: 12px; background: #1f6feb33; color: #58a6ff;
+    border: 1px solid #1f6feb;
+  }
+  .post-body {
+    padding: 28px;
+  }
+  .post-body p {
+    font-size: 15px; line-height: 1.75; color: #c9d1d9; margin-bottom: 20px;
+  }
+  .post-body h3 {
+    font-size: 17px; font-weight: 600; margin-bottom: 12px; margin-top: 8px;
+    color: #e6edf3;
+  }
+  .post-body ul {
+    margin: 0 0 20px 20px; font-size: 15px; line-height: 1.75; color: #c9d1d9;
+  }
+  .post-body .callout {
+    background: #1f6feb1a; border-left: 3px solid #1f6feb;
+    padding: 14px 18px; border-radius: 0 8px 8px 0;
+    margin: 20px 0; font-size: 14px; color: #c9d1d9; line-height: 1.6;
+  }
+  .post-body .callout strong { color: #58a6ff; }
+  .post-body .diagram {
+    background: #0d1117; border: 1px solid #21262d; border-radius: 8px;
+    padding: 20px; margin: 20px 0; text-align: center;
+    font-family: "SF Mono", "Fira Code", monospace; font-size: 13px;
+    line-height: 1.8; color: #8b949e; white-space: pre;
+  }
+
+  .links {
+    margin-top: 32px; text-align: center; font-size: 13px; color: #484f58;
+  }
+  .links a { margin: 0 12px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="nav">
+    <a class="back" href="index.html">← Home</a>
+    <span class="sep">/</span>
+    <a href="release-notes.html">Release Notes</a>
+    <span class="sep">/</span>
+    <span>Engineering Blog</span>
+  </div>
+
+  <div class="page-header">
+    <h1>⚙️ Engineering Blog</h1>
+    <p>Design decisions, architecture deep-dives, and lessons from building the brainstem.</p>
+  </div>
+
+  <!-- ── Post: Fixing the Device Code Auth Race ── -->
+  <div class="post">
+    <div class="post-header">
+      <h2>How a Background Thread Silently Ate Your Login</h2>
+      <div class="post-meta">
+        <span>April 11, 2026</span>
+        <span class="tag">Bug Fix</span>
+      </div>
+    </div>
+    <div class="post-body">
+
+      <p>
+        We shipped an account switcher in v0.5.4. It worked great — unless you
+        first signed in with a GitHub account that didn't have Copilot access.
+        When you switched to the right account, the UI stayed stuck on
+        "Waiting for authorization..." forever. The fix was a six-line architectural
+        change, but the bug exposed a pattern worth documenting.
+      </p>
+
+      <h3>The setup: two callers, one resource</h3>
+      <p>
+        The brainstem's device code login flow has two consumers. A <strong>background
+        thread</strong> (<code>_bg_poll_loop</code>) polls GitHub so the token gets
+        captured even if the browser disconnects. And the <strong>client</strong>
+        polls <code>POST /login/poll</code> every 5 seconds so the UI updates when
+        auth completes.
+      </p>
+      <p>
+        Both callers invoked the same function: <code>poll_device_code()</code>.
+        That function, on success, saves the token and clears the
+        <code>_pending_login</code> state. Whoever gets there first wins the token.
+        The loser finds <code>_pending_login</code> empty, returns <code>None</code>,
+        and tells the client <code>{"status": "pending"}</code>. Forever.
+      </p>
+
+      <div class="diagram">Background thread          Client poll (/login/poll)
+       │                              │
+       ├── poll_device_code() ────┐   │
+       │   ✓ got token            │   │
+       │   ✓ cleared state ───────┤   │
+       │                          │   ├── poll_device_code()
+       │                          │   │   ✗ state empty → None
+       │                          │   │   returns {"pending"}
+       │                          │   │
+       │                          │   ├── ...forever
+       ▼                          ▼   ▼</div>
+
+      <h3>Why it only showed up on account switch</h3>
+      <p>
+        On a normal first login, the race exists but is harmless — either caller
+        reports success and the UI dismisses. On an account switch, the first
+        (wrong) account goes through the full device code flow successfully at
+        the GitHub level. GitHub grants a token. But the Copilot token exchange
+        fails because the account has no Copilot license. The background thread
+        catches this error silently, and the client is left polling an empty
+        <code>_pending_login</code> dict.
+      </p>
+      <p>
+        The second login attempt (correct account) hits the same race. If the
+        background thread wins — which it reliably does because it's already
+        polling at the right interval — the client never sees the result.
+      </p>
+
+      <h3>The fix: single-writer pattern</h3>
+      <p>
+        The solution is to stop having two callers compete for the same resource.
+        We introduced a shared <code>_login_result</code> dict. The background
+        thread is now the <strong>sole caller</strong> of
+        <code>poll_device_code()</code>. When it gets a result — success or
+        failure — it writes to <code>_login_result</code>.
+      </p>
+      <p>
+        The <code>/login/poll</code> endpoint no longer calls
+        <code>poll_device_code()</code> at all. It just reads
+        <code>_login_result</code>. Python's GIL makes dict assignment atomic,
+        so no locks are needed.
+      </p>
+
+<pre>_login_result = {}  # Written by bg thread only
+
+def _bg_poll_loop():
+    token = poll_device_code()
+    if token:
+        try:
+            get_copilot_token()
+            _login_result = {"status": "ok", ...}
+        except NO_COPILOT_ACCESS:
+            _login_result = {"status": "error", ...}
+
+@app.route("/login/poll")
+def login_poll():
+    if _login_result:          # bg thread wrote something
+        return jsonify(_login_result)
+    if not _pending_login:     # no flow in progress
+        return jsonify({"status": "expired"})
+    return jsonify({"status": "pending"})  # still waiting</pre>
+
+      <div class="callout">
+        <strong>Pattern:</strong> When a background thread and a request handler
+        both need the result of the same operation, don't let them race to call
+        it. Have one writer and N readers. The writer owns the function call; the
+        readers check a shared result.
+      </div>
+
+      <h3>Bonus fixes</h3>
+      <ul>
+        <li><strong>NO_COPILOT_ACCESS surfaces to the UI.</strong> Previously
+        swallowed — the user saw "Authenticated!" then got errors on first chat.
+        Now the login overlay shows "username doesn't have Copilot access" with
+        "Switch account" and "Sign up for Copilot" links.</li>
+        <li><strong>Client poll has a timeout.</strong> 180 attempts at 5-second
+        intervals (15 minutes, matching GitHub's device code expiry). No more
+        infinite loops.</li>
+        <li><strong>Stale Copilot cache cleared on new flow.</strong> Starting a
+        fresh device code now wipes <code>.copilot_session</code> and the
+        in-memory cache, so a previous account's session can't bleed through.</li>
+      </ul>
+
+      <h3>The lesson</h3>
+      <p>
+        Background threads that "help" by doing the same work as a request
+        handler create races that only show up under specific timing. The thread
+        was added to capture tokens when the browser disconnects — a real need.
+        But it should have been the only writer from day one, with the HTTP
+        endpoint as a passive reader. Adding a background optimization to an
+        existing request path requires rethinking ownership, not just adding
+        another caller.
+      </p>
+
+    </div>
+  </div>
+
+  <!-- ── Post: Why We Removed Remote Agents ── -->
+  <div class="post">
+    <div class="post-header">
+      <h2>Why We Killed Remote Agents (For Now)</h2>
+      <div class="post-meta">
+        <span>March 5, 2026</span>
+        <span class="tag">Architecture</span>
+      </div>
+    </div>
+    <div class="post-body">
+
+      <p>
+        The brainstem shipped with a feature that felt magical: paste a GitHub repo URL, toggle agents on, and they'd hot-load into your running server. No restart, no file copying. It worked by fetching <code>manifest.json</code> from the repo, downloading individual <code>*_agent.py</code> files, shimming their imports, and injecting them into the running Python process.
+      </p>
+
+      <p>
+        We removed all of it in v0.1.0. Here's why.
+      </p>
+
+      <h3>The complexity cost</h3>
+      <p>
+        Remote agent loading touched almost every layer of the system. It required URL normalization (handling <code>github.com/</code>, <code>owner/repo</code>, GitHub Pages URLs), manifest fetching (with three fallback strategies), file downloads, <code>sys.path</code> manipulation, <code>sys.modules</code> shimming, auto-pip-install on import failures, persistent config in <code>.repos.json</code>, restore-on-startup logic, and four HTTP endpoints for the UI to manage it all.
+      </p>
+
+      <p>
+        That's a lot of surface area for a feature whose primary value — making agents available — can be solved by just dropping a <code>.py</code> file into a folder.
+      </p>
+
+      <h3>The statelessness argument</h3>
+      <p>
+        The brainstem is designed to deploy as an Azure Function. Azure Functions are stateless by design — each invocation starts clean. Caching agents in memory and hot-loading from remote repos assumes a long-lived process. That assumption breaks in production.
+      </p>
+
+      <p>
+        By making agent loading stateless (fresh discovery every call, no cache, no remote state), we made the brainstem behave identically whether it's running locally on Flask or deployed as a serverless function. Same code path everywhere.
+      </p>
+
+      <div class="callout">
+        <strong>Design principle:</strong> If it works differently in dev vs prod, it's a bug in the architecture, not a feature.
+      </div>
+
+      <h3>What stays</h3>
+      <p>
+        The import shims (<code>_register_shims</code>) still exist. They're valuable for a different reason: agents written for the Azure deployment import <code>utils.azure_file_storage</code>, and the shims redirect those imports to <code>local_storage.py</code> so the same agent code runs locally without modification. That's a portability feature, not a remote-loading feature.
+      </p>
+
+      <p>
+        The auto-pip-install logic also stays. If a local agent imports <code>beautifulsoup4</code> and it's not installed, the brainstem installs it and retries. That makes onboarding frictionless — drop in an agent, the brainstem figures out the deps.
+      </p>
+
+      <h3>The path forward</h3>
+      <p>
+        Remote agents will likely return, but as a first-class packaging system rather than a runtime hot-loader. Think: <code>brainstem install github.com/org/agents</code> that clones the repo into your local agents folder, resolves dependencies, and you're done. Install-time, not runtime. Explicit, not magic.
+      </p>
+
+      <div class="diagram">agents/
+├── hello_agent.py            ← local, loads automatically
+├── my_custom_agent.py        ← local, loads automatically
+├── context_memory_agent.py   ← local, loads automatically
+└── experimental/
+    └── converter_agent.py    ← excluded from auto-discovery</div>
+
+    </div>
+  </div>
+
+  <!-- ── Post: Version Tracking with a Plain Text File ── -->
+  <div class="post">
+    <div class="post-header">
+      <h2>Version Tracking with a Plain Text File</h2>
+      <div class="post-meta">
+        <span>March 5, 2026</span>
+        <span class="tag">DevEx</span>
+      </div>
+    </div>
+    <div class="post-body">
+
+      <p>
+        The brainstem installs via a one-liner: <code>curl ... | bash</code>. That same one-liner should also handle upgrades. The question is: how does the installer know whether to upgrade?
+      </p>
+
+      <h3>The approach</h3>
+      <p>
+        A single file — <code>rapp_brainstem/VERSION</code> — contains the semver string. That's it. No package registry, no GitHub releases API, no <code>git describe</code> parsing.
+      </p>
+
+<pre>$ cat rapp_brainstem/VERSION
+0.1.0</pre>
+
+      <p>
+        The installer does two things:
+      </p>
+      <ul>
+        <li>Reads the local <code>VERSION</code> file from <code>~/.brainstem/src/rapp_brainstem/VERSION</code></li>
+        <li>Fetches the remote <code>VERSION</code> from the raw GitHub URL</li>
+      </ul>
+      <p>
+        If they match, print "Already up to date" and exit. If remote is newer, proceed with the full install flow (git pull, pip install, CLI wrapper update). The comparison is a simple semver walk — split on dots, compare integers left to right.
+      </p>
+
+      <h3>Why not git-based detection?</h3>
+      <p>
+        We could compare commit SHAs or use <code>git fetch</code> + <code>git rev-list</code> to detect ahead/behind. But the installer runs <em>before</em> cloning on a fresh install. We need a mechanism that works with a single HTTP request against a raw file URL, even when there's no local git repo yet.
+      </p>
+
+      <h3>Why not GitHub Releases API?</h3>
+      <p>
+        The GitHub API requires authentication for higher rate limits and adds a JSON parsing dependency. A raw file on GitHub Pages is cacheable, fast, and works with a bare <code>curl</code>. The VERSION file is also readable by Python (<code>brainstem.py</code> reads it at startup), the shell installers, and humans — one file serves every consumer.
+      </p>
+
+      <div class="callout">
+        <strong>Bump process:</strong> Edit <code>rapp_brainstem/VERSION</code>, commit, push. The next time any user runs the one-liner, they get the update. That's the whole release process.
+      </div>
+
+      <h3>Exposed in the API</h3>
+      <p>
+        The version is available at <code>GET /version</code> and included in the <code>GET /health</code> response. The startup banner prints it too. Everything reads from the same <code>VERSION</code> file — there's exactly one place to update.
+      </p>
+
+<pre>$ curl -s localhost:7071/health | python3 -m json.tool
+{
+    "status": "ok",
+    "version": "0.1.0",
+    "model": "gpt-4o",
+    "agents": ["HelloAgent", "ContextMemoryAgent"],
+    "copilot": "✓",
+    ...
+}</pre>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="links">
+  <a href="index.html">Home</a>
+  <a href="release-notes.html">Release Notes</a>
+  <a href="https://github.com/microsoft/aibast-agents-library">GitHub</a>
+</div>
+
+</body>
+</html>

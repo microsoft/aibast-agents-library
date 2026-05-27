@@ -115,7 +115,7 @@ def build_registry():
         "agents": agents
     }
 
-    with open(REGISTRY_FILE, "w") as f:
+    with open(REGISTRY_FILE, "w", encoding="utf-8") as f:
         json.dump(registry, f, indent=2)
 
     print(f"✓ Registry built: {len(agents)} agents from {len(publishers)} publishers")
