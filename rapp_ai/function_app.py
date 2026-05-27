@@ -196,7 +196,7 @@ def _load_single_agent_azure(file_name: str, file_content: str) -> Result[BasicA
 
     try:
         os.makedirs(temp_dir, exist_ok=True)
-        with open(temp_file, 'w') as f:
+        with open(temp_file, 'w', encoding='utf-8') as f:
             f.write(file_content)
 
         if temp_dir not in sys.path:

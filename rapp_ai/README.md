@@ -2,7 +2,7 @@
 
 The memory center for your AI agents. Built on Azure Functions — local-first, deploy to Azure when ready.
 
-> In the brain, the **hippocampus** is responsible for forming and recalling memories. In the RAPP anatomy, it's the next evolution above the [Brainstem](https://github.com/kody-w/rapp-installer) — adding persistent memory, Azure Functions runtime, and cloud deployment.
+> In the brain, the **hippocampus** is responsible for forming and recalling memories. In the RAPP anatomy, it's the next evolution above the [Brainstem](https://github.com/microsoft/aibast-agents-library) — adding persistent memory, Azure Functions runtime, and cloud deployment.
 
 ```
   Brainstem (Tier 1)     →  Hippocampus (Tier 2)    →  Nervous System (Tier 3)

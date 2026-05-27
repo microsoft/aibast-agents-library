@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAPP Brainstem — Get Started in 5 Minutes</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #e0e0e0; min-height: 100vh; line-height: 1.6; }
+.header { background: linear-gradient(135deg, #1a1a2e, #0a0a1a); padding: 60px 20px; text-align: center; border-bottom: 1px solid #222; }
+.header h1 { font-size: 2.5em; margin-bottom: 8px; }
+.header .emoji { font-size: 3em; margin-bottom: 16px; }
+.header p { color: #888; font-size: 1.1em; max-width: 600px; margin: 0 auto; }
+.container { max-width: 700px; margin: 0 auto; padding: 40px 20px; }
+.step { background: #111; border: 1px solid #222; border-radius: 12px; padding: 24px; margin: 24px 0; }
+.step .number { background: #7b68ee; color: #fff; width: 36px; height: 36px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 12px; }
+.step h2 { display: inline; font-size: 1.3em; vertical-align: middle; }
+.step p { margin-top: 12px; color: #ccc; }
+.step .time { color: #7b68ee; font-size: 0.85em; margin-top: 4px; }
+.code-block { background: #0a0a1a; border: 1px solid #333; border-radius: 8px; padding: 16px; margin: 16px 0; font-family: 'SF Mono', Menlo, monospace; font-size: 0.95em; overflow-x: auto; position: relative; color: #00d4ff; }
+.code-block .copy { position: absolute; top: 8px; right: 8px; background: #333; color: #aaa; border: none; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8em; }
+.code-block .copy:hover { background: #7b68ee; color: #fff; }
+.note { background: #1a1a2e; border-left: 3px solid #7b68ee; padding: 12px 16px; margin: 16px 0; border-radius: 0 8px 8px 0; font-size: 0.9em; color: #aaa; }
+.platform-tabs { display: flex; gap: 0; margin: 16px 0 0; }
+.platform-tabs button { flex: 1; padding: 10px; border: 1px solid #333; background: #111; color: #888; cursor: pointer; font-size: 0.9em; }
+.platform-tabs button:first-child { border-radius: 8px 0 0 8px; }
+.platform-tabs button:last-child { border-radius: 0 8px 8px 0; }
+.platform-tabs button.active { background: #7b68ee22; color: #7b68ee; border-color: #7b68ee; }
+.platform-content { display: none; }
+.platform-content.active { display: block; }
+.success { background: #0a1a0a; border: 1px solid #2a5a2a; border-radius: 12px; padding: 24px; margin: 24px 0; text-align: center; }
+.success h2 { color: #4CAF50; margin-bottom: 8px; }
+.next-steps { background: #111; border: 1px solid #222; border-radius: 12px; padding: 24px; margin: 24px 0; }
+.next-steps h2 { margin-bottom: 16px; }
+.next-steps ul { list-style: none; padding: 0; }
+.next-steps li { padding: 8px 0; border-bottom: 1px solid #1a1a1a; }
+.next-steps li:last-child { border: none; }
+.next-steps li::before { content: "→ "; color: #7b68ee; }
+.footer { text-align: center; padding: 40px 20px; color: #444; font-size: 0.85em; border-top: 1px solid #1a1a1a; margin-top: 40px; }
+.agent-example { background: #0a0a1a; border: 1px solid #333; border-radius: 8px; padding: 16px; margin: 16px 0; }
+.agent-example .filename { color: #ff6b9d; font-family: monospace; font-size: 0.85em; margin-bottom: 8px; }
+@media (max-width: 600px) { .header h1 { font-size: 1.8em; } .container { padding: 20px 16px; } }
+</style>
+</head>
+<body>
+
+<div class="header">
+    <div class="emoji">🧠</div>
+    <h1>RAPP Brainstem</h1>
+    <p>Your own AI agent server. One command install. No API keys. No cloud setup. Just your GitHub account.</p>
+</div>
+
+<div class="container">
+
+    <!-- Step 0: GitHub Account -->
+    <div class="step">
+        <span class="number">0</span>
+        <h2>Get a GitHub Account (Free)</h2>
+        <p>Go to <a href="https://github.com" style="color:#7b68ee">github.com</a> and sign up. This is your key — GitHub has free AI models built in. No credit card. No API key. Just an account.</p>
+        <div class="time">⏱ 2 minutes</div>
+    </div>
+
+    <!-- Step 1: Install -->
+    <div class="step">
+        <span class="number">1</span>
+        <h2>Run One Command</h2>
+        <p>Open your terminal and paste one line. It installs everything automatically.</p>
+
+        <div class="platform-tabs">
+            <button class="active" onclick="showPlatform('windows')">Windows</button>
+            <button onclick="showPlatform('mac')">Mac</button>
+            <button onclick="showPlatform('linux')">Linux</button>
+        </div>
+
+        <div id="windows" class="platform-content active">
+            <p style="margin-top:12px; color:#888;">Open PowerShell (search "powershell" in Start menu)</p>
+            <div class="code-block">
+                <button class="copy" onclick="copyCode(this)">Copy</button>
+                irm https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/install.ps1 | iex
+            </div>
+            <div class="note">Works on factory Windows 11. Auto-installs Python, Git, and GitHub CLI if missing.</div>
+        </div>
+
+        <div id="mac" class="platform-content">
+            <p style="margin-top:12px; color:#888;">Open Terminal (Cmd+Space, type "terminal")</p>
+            <div class="code-block">
+                <button class="copy" onclick="copyCode(this)">Copy</button>
+                curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash
+            </div>
+        </div>
+
+        <div id="linux" class="platform-content">
+            <p style="margin-top:12px; color:#888;">Open your terminal</p>
+            <div class="code-block">
+                <button class="copy" onclick="copyCode(this)">Copy</button>
+                curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash
+            </div>
+        </div>
+
+        <div class="time">⏱ 3 minutes (auto-installs dependencies)</div>
+    </div>
+
+    <!-- Step 2: Auth -->
+    <div class="step">
+        <span class="number">2</span>
+        <h2>Sign In to GitHub</h2>
+        <p>The installer will prompt you to authenticate. Just follow the instructions — it opens a browser, you log in, done.</p>
+        <div class="code-block">
+            <button class="copy" onclick="copyCode(this)">Copy</button>
+            gh auth login
+        </div>
+        <div class="note">One-time setup. After this, the AI works through your GitHub account — free tier includes AI model access.</div>
+        <div class="time">⏱ 1 minute</div>
+    </div>
+
+    <!-- Step 3: Start -->
+    <div class="step">
+        <span class="number">3</span>
+        <h2>Start the Brainstem</h2>
+        <div class="code-block">
+            <button class="copy" onclick="copyCode(this)">Copy</button>
+            brainstem
+        </div>
+        <p>Your AI agent server is now running at <strong>localhost:7071</strong>. Open a browser and go there to chat.</p>
+        <div class="time">⏱ Instant</div>
+    </div>
+
+    <!-- Success -->
+    <div class="success">
+        <h2>You're Running 🧠</h2>
+        <p>Your own AI agent server. On your machine. No cloud. No subscription.</p>
+    </div>
+
+    <!-- Step 4: Write an Agent -->
+    <div class="step">
+        <span class="number">4</span>
+        <h2>Write Your First Agent</h2>
+        <p>Create a Python file in the agents folder. The brainstem picks it up automatically.</p>
+
+        <div class="agent-example">
+            <div class="filename">~/.brainstem/src/rapp_brainstem/agents/weather_agent.py</div>
+            <div class="code-block">
+AGENT = {
+    "name": "weather",
+    "description": "Get weather for any city",
+    "parameters": {
+        "city": {"type": "string", "description": "City name"}
+    }
+}
+
+def run(city: str) -> str:
+    return f"Weather in {city}: 72°F, sunny"
+            </div>
+        </div>
+        <p>That's it. Save the file. The brainstem discovers it. The AI can now use it. No restart needed.</p>
+        <div class="note">This is the RAPP pattern — one file, one agent. The same pattern that produced 70 customer-facing agents at Microsoft.</div>
+    </div>
+
+    <!-- Step 5: Soul File -->
+    <div class="step">
+        <span class="number">5</span>
+        <h2>Customize the Personality</h2>
+        <p>Edit the soul file to give your AI a personality:</p>
+        <div class="code-block">
+            <button class="copy" onclick="copyCode(this)">Copy</button>
+            ~/.brainstem/src/rapp_brainstem/soul.md
+        </div>
+        <p>This is a markdown file — the AI's system prompt. Write who it should be. It persists across sessions. It grows with every conversation.</p>
+        <div class="note">The soul file is what makes RAPP different from ChatGPT. Your AI remembers. It accumulates personality. It never resets.</div>
+    </div>
+
+    <!-- Next Steps -->
+    <div class="next-steps">
+        <h2>What's Next</h2>
+        <ul>
+            <li><strong>Add more agents</strong> — drop .py files in the agents folder. Each one gives your AI a new skill.</li>
+            <li><strong>Pull updates</strong> — run the install command again anytime. It auto-updates to the latest version.</li>
+            <li><strong>Read the docs</strong> — <a href="https://github.com/microsoft/aibast-agents-library" style="color:#7b68ee">github.com/microsoft/aibast-agents-library</a></li>
+            <li><strong>Share with friends</strong> — just send them the install command. One line. That's the whole pitch.</li>
+        </ul>
+    </div>
+
+</div>
+
+<div class="footer">
+    <p>RAPP Brainstem — Built by Kody Wildfeuer</p>
+    <p style="margin-top: 4px; color: #333;">Single-file agents are a game changer and people don't know about them at all.</p>
+</div>
+
+<script>
+function showPlatform(platform) {
+    document.querySelectorAll('.platform-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.platform-tabs button').forEach(el => el.classList.remove('active'));
+    document.getElementById(platform).classList.add('active');
+    event.target.classList.add('active');
+}
+
+function copyCode(btn) {
+    const code = btn.parentElement.textContent.replace('Copy', '').trim();
+    navigator.clipboard.writeText(code);
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 2000);
+}
+</script>
+</body>
+</html>

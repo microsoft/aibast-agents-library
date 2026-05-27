@@ -10,7 +10,7 @@
 
 ```bash
 # Clone the public installer repo
-git clone https://github.com/kody-w/rapp-installer.git
+git clone https://github.com/microsoft/aibast-agents-library.git
 cd rapp-installer
 
 # Run the installer (guides you through setup)
@@ -56,7 +56,7 @@ curl -X POST http://localhost:7071/api/businessinsightbot_function \
 
 | Repository | Access | Purpose |
 |------------|--------|---------|
-| [rapp-installer](https://github.com/kody-w/rapp-installer) | Public | Installer, setup scripts, access request |
+| [rapp-installer](https://github.com/microsoft/aibast-agents-library) | Public | Installer, setup scripts, access request |
 | CommunityRAPP | Private Beta | Core RAPP platform and agents |
 
 ---
@@ -363,7 +363,7 @@ rm -rf .local_storage/
 
 ### Need Access or Support?
 
-- **Access issues:** Visit [rapp-installer](https://github.com/kody-w/rapp-installer) to request private beta access
+- **Access issues:** Visit [rapp-installer](https://github.com/microsoft/aibast-agents-library) to request private beta access
 - **Bug reports:** Open an issue in the installer repo (for public issues) or CommunityRAPP (for beta members)
 - **Feature requests:** Submit via GitHub issues
 
@@ -436,7 +436,7 @@ A: No, it's for development only. Azure deployments automatically use Azure File
 
 CommunityRAPP is in private beta. To request access:
 
-1. **Visit the public installer repo:** [github.com/kody-w/rapp-installer](https://github.com/kody-w/rapp-installer)
+1. **Visit the public installer repo:** [github.com/microsoft/aibast-agents-library](https://github.com/microsoft/aibast-agents-library)
 2. **Run the installer** - it will check your access and provide instructions
 3. **Submit an access request** via the installer or GitHub issue
 4. **Wait for invitation** - you'll receive a GitHub invitation once approved
@@ -450,4 +450,4 @@ CommunityRAPP is in private beta. To request access:
 
 ---
 
-**Ready to build AI agents? Start with the [installer](https://github.com/kody-w/rapp-installer)!**
+**Ready to build AI agents? Start with the [installer](https://github.com/microsoft/aibast-agents-library)!**

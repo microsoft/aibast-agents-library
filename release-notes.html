@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Release Notes — RAPP Brainstem</title>
+<meta name="description" content="RAPP Brainstem release notes and changelog.">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #0d1117; color: #e6edf3;
+    min-height: 100vh; padding: 48px 24px;
+    display: flex; flex-direction: column; align-items: center;
+  }
+  a { color: #58a6ff; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code {
+    font-family: "SF Mono", "Fira Code", monospace; font-size: 13px;
+    background: #161b22; padding: 2px 6px; border-radius: 4px;
+  }
+
+  .container { max-width: 720px; width: 100%; }
+
+  .nav {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 48px; font-size: 14px;
+  }
+  .nav .back { color: #8b949e; }
+  .nav .sep { color: #30363d; }
+
+  .page-header { margin-bottom: 48px; }
+  .page-header h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+  .page-header p { color: #8b949e; font-size: 16px; }
+
+  .release {
+    background: #161b22; border: 1px solid #21262d; border-radius: 12px;
+    margin-bottom: 32px; overflow: hidden;
+  }
+  .release-header {
+    padding: 20px 24px; border-bottom: 1px solid #21262d;
+    display: flex; align-items: baseline; gap: 12px;
+  }
+  .release-version {
+    font-size: 22px; font-weight: 700;
+    font-family: "SF Mono", "Fira Code", monospace;
+  }
+  .release-date { color: #8b949e; font-size: 13px; }
+  .release-tag {
+    font-size: 11px; font-weight: 600; padding: 3px 10px;
+    border-radius: 12px; text-transform: uppercase; letter-spacing: 0.5px;
+    background: #238636; color: #fff;
+  }
+  .release-body { padding: 24px; }
+  .release-body h3 {
+    font-size: 15px; font-weight: 600; margin-bottom: 12px;
+    color: #58a6ff; display: flex; align-items: center; gap: 8px;
+  }
+  .release-body ul {
+    margin: 0 0 24px 20px; font-size: 14px; line-height: 1.8; color: #c9d1d9;
+  }
+  .release-body ul:last-child { margin-bottom: 0; }
+  .release-body li { margin-bottom: 4px; }
+  .release-body .highlight {
+    background: #1f6feb1a; border-left: 3px solid #1f6feb;
+    padding: 12px 16px; border-radius: 0 8px 8px 0;
+    margin-bottom: 24px; font-size: 14px; color: #c9d1d9; line-height: 1.6;
+  }
+
+  .links {
+    margin-top: 32px; text-align: center; font-size: 13px; color: #484f58;
+  }
+  .links a { margin: 0 12px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="nav">
+    <a class="back" href="index.html">← Home</a>
+    <span class="sep">/</span>
+    <span>Release Notes</span>
+    <span class="sep">/</span>
+    <a href="blog.html">Engineering Blog</a>
+  </div>
+
+  <div class="page-header">
+    <h1>📋 Release Notes</h1>
+    <p>Changelog for the RAPP Brainstem project.</p>
+  </div>
+
+  <!-- ── v0.6.0 ── -->
+  <div class="release">
+    <div class="release-header">
+      <span class="release-version">v0.6.0</span>
+      <span class="release-date">April 11, 2026</span>
+      <span class="release-tag">Latest</span>
+    </div>
+    <div class="release-body">
+
+      <div class="highlight">
+        Account switching, auth reliability, and diagnostics privacy. You can now switch GitHub accounts without restarting, and the login flow handles wrong-account scenarios gracefully instead of hanging forever.
+      </div>
+
+      <h3>🔄 Account Switcher</h3>
+      <ul>
+        <li>New <strong>Switch Account</strong> option in the header — change GitHub accounts without restarting the server.</li>
+        <li>Clears all cached tokens (GitHub, Copilot, disk) and starts a fresh device code flow immediately.</li>
+      </ul>
+
+      <h3>🔐 Auth Race Condition Fix</h3>
+      <ul>
+        <li>Fixed: signing in with a non-Copilot account then switching to the correct account left the UI stuck on "Waiting for authorization..." forever.</li>
+        <li>Root cause: background poll thread and client poll raced to call <code>poll_device_code()</code>. Now uses a single-writer pattern — the bg thread is the sole caller, the client reads a shared result.</li>
+        <li><code>NO_COPILOT_ACCESS</code> errors now surface in the UI with the username and links to <strong>Switch Account</strong> or <strong>Sign up for Copilot</strong>.</li>
+        <li>Client-side poll now times out after 15 minutes (matching GitHub's device code expiry) instead of polling forever.</li>
+        <li>Stale Copilot session cache is cleared when starting a new login flow.</li>
+      </ul>
+
+      <h3>🏷️ Version in Header</h3>
+      <ul>
+        <li>The brainstem version now displays in the chat UI header — no more guessing which version you're running.</li>
+      </ul>
+
+      <h3>🔒 Diagnostics Privacy</h3>
+      <ul>
+        <li>The <strong>Get Help</strong> report now scrubs <code>user_code</code>, <code>device_code</code>, and <code>session_id</code> from diagnostics before publishing to GitHub issues.</li>
+      </ul>
+
+      <h3>🔧 Other Fixes</h3>
+      <ul>
+        <li>Friendly error message when GitHub API quota is exceeded.</li>
+        <li>Installer handles force-push divergence and kills existing server on port 7071 before starting.</li>
+        <li>400 error fallback and <code>gh</code> CLI issue creation when API token lacks repo scope.</li>
+        <li>Better error telemetry throughout the auth and diagnostics pipeline.</li>
+      </ul>
+
+    </div>
+  </div>
+
+  <!-- ── v0.1.0 ── -->
+  <div class="release">
+    <div class="release-header">
+      <span class="release-version">v0.1.0</span>
+      <span class="release-date">March 5, 2026</span>
+    </div>
+    <div class="release-body">
+
+      <div class="highlight">
+        First versioned release. Focuses the brainstem on <strong>local-first, stateless agent execution</strong> and adds auto-upgrade support to the one-liner installers.
+      </div>
+
+      <h3>🎯 Local-Only Agents</h3>
+      <ul>
+        <li>Removed the remote agent system — no more hot-loading agents from GitHub repos at runtime.</li>
+        <li>Only <code>*_agent.py</code> files directly in the <code>agents/</code> folder are discovered and loaded.</li>
+        <li>Subdirectories like <code>agents/experimental/</code> are intentionally excluded from auto-discovery.</li>
+        <li>Removed the <strong>⚡ Sources</strong> sidebar panel, all <code>/repos/*</code> API endpoints, and associated JS/CSS from the chat UI.</li>
+      </ul>
+
+      <h3>🔄 Stateless Agent Loading</h3>
+      <ul>
+        <li>Agents now load fresh on every request — no in-memory cache between calls.</li>
+        <li>Removed <code>_agents_cache</code> and <code>reload_agents()</code> — the brainstem is fully stateless per invocation.</li>
+        <li>Makes local development and debugging faster: edit an agent file, hit the endpoint, see the change immediately.</li>
+      </ul>
+
+      <h3>📦 Version Tracking &amp; Auto-Upgrade</h3>
+      <ul>
+        <li>Added <code>rapp_brainstem/VERSION</code> file as the single source of truth for the current version.</li>
+        <li>New <code>GET /version</code> endpoint returns <code>{"version": "0.1.0"}</code>.</li>
+        <li>Version now included in <code>GET /health</code> response and server startup banner.</li>
+        <li>The <code>install.sh</code> and <code>install.ps1</code> one-liner scripts now compare the local <code>VERSION</code> against the remote one hosted on GitHub.</li>
+        <li>If the local version matches the remote, the installer exits with <strong>"Already up to date"</strong> — no unnecessary re-cloning.</li>
+        <li>If the remote version is newer, the installer proceeds with a full upgrade (git pull + pip install).</li>
+      </ul>
+
+      <h3>🔧 Other Improvements</h3>
+      <ul>
+        <li>Improved <code>/health</code> endpoint: returns <code>200</code> with <code>"status": "unauthenticated"</code> when the Copilot token is missing, instead of a 500 error. The chat UI shows the login overlay instead of failing silently.</li>
+        <li>GitHub token refresh and caching improvements (from upstream).</li>
+        <li>Copilot Studio converter agent moved to <code>agents/experimental/</code> (excluded from auto-discovery).</li>
+      </ul>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="links">
+  <a href="index.html">Home</a>
+  <a href="blog.html">Engineering Blog</a>
+  <a href="https://github.com/microsoft/aibast-agents-library">GitHub</a>
+</div>
+
+</body>
+</html>

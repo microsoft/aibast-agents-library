@@ -65,7 +65,7 @@ class AzureFileStorageManager:
         if not os.path.exists(path):
             return {}
         try:
-            with open(path, "r") as f:
+            with open(path, "r", encoding="utf-8") as f:
                 return json.load(f)
         except (json.JSONDecodeError, IOError):
             return {}
@@ -74,7 +74,7 @@ class AzureFileStorageManager:
         """Write JSON data to local storage."""
         path = file_path or self._file_path()
         os.makedirs(os.path.dirname(path), exist_ok=True)
-        with open(path, "w") as f:
+        with open(path, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, default=str)
         return True
 
@@ -84,13 +84,13 @@ class AzureFileStorageManager:
         full = os.path.join(_DATA_DIR, file_path)
         if not os.path.exists(full):
             return None
-        with open(full, "r") as f:
+        with open(full, "r", encoding="utf-8") as f:
             return f.read()
 
     def write_file(self, file_path, content):
         full = os.path.join(_DATA_DIR, file_path)
         os.makedirs(os.path.dirname(full), exist_ok=True)
-        with open(full, "w") as f:
+        with open(full, "w", encoding="utf-8") as f:
             f.write(content)
         return True
 
