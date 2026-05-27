@@ -247,6 +247,162 @@ class TestExtractPackageName(unittest.TestCase):
         self.assertEqual(brainstem._extract_package_name(err), "somethingweird")
 
 
+class TestLoginPoll(unittest.TestCase):
+    """Test /login/poll endpoint reads _login_result instead of racing poll_device_code()."""
+
+    def setUp(self):
+        import brainstem
+        self.brainstem = brainstem
+        self.app = brainstem.app
+        self.app.testing = True
+        self.client = self.app.test_client()
+        # Save original state
+        self._orig_login_result = brainstem._login_result
+        self._orig_pending_login = brainstem._pending_login
+        self._orig_copilot_cache = brainstem._copilot_token_cache.copy()
+
+    def tearDown(self):
+        # Restore original state
+        self.brainstem._login_result = self._orig_login_result
+        self.brainstem._pending_login = self._orig_pending_login
+        self.brainstem._copilot_token_cache = self._orig_copilot_cache
+
+    def test_returns_ok_from_login_result(self):
+        """When bg thread writes success to _login_result, /login/poll returns ok."""
+        self.brainstem._login_result = {"status": "ok", "message": "Authenticated with GitHub Copilot!"}
+        self.brainstem._pending_login = {}
+        resp = self.client.post("/login/poll")
+        data = resp.get_json()
+        self.assertEqual(data["status"], "ok")
+        self.assertIn("Authenticated", data["message"])
+
+    def test_returns_error_from_login_result(self):
+        """When bg thread writes NO_COPILOT_ACCESS to _login_result, /login/poll returns it."""
+        self.brainstem._login_result = {"status": "error", "error": "NO_COPILOT_ACCESS:testuser"}
+        self.brainstem._pending_login = {}
+        resp = self.client.post("/login/poll")
+        data = resp.get_json()
+        self.assertEqual(data["status"], "error")
+        self.assertIn("NO_COPILOT_ACCESS", data["error"])
+        self.assertIn("testuser", data["error"])
+
+    def test_returns_pending_when_waiting(self):
+        """When _pending_login is active and no result yet, returns pending."""
+        self.brainstem._login_result = {}
+        self.brainstem._pending_login = {
+            "device_code": "abc",
+            "user_code": "ABCD-1234",
+            "verification_uri": "https://github.com/login/device",
+            "interval": 5,
+            "expires_at": __import__("time").time() + 600,
+        }
+        resp = self.client.post("/login/poll")
+        data = resp.get_json()
+        self.assertEqual(data["status"], "pending")
+
+    def test_returns_expired_when_code_expired(self):
+        """When _pending_login has expired, returns expired status."""
+        self.brainstem._login_result = {}
+        self.brainstem._pending_login = {
+            "device_code": "abc",
+            "expires_at": __import__("time").time() - 10,  # expired 10s ago
+        }
+        resp = self.client.post("/login/poll")
+        data = resp.get_json()
+        self.assertEqual(data["status"], "expired")
+        self.assertIn("expired", data["error"].lower())
+
+    def test_returns_expired_when_no_pending_login(self):
+        """When _pending_login is empty and no result, returns expired."""
+        self.brainstem._login_result = {}
+        self.brainstem._pending_login = {}
+        resp = self.client.post("/login/poll")
+        data = resp.get_json()
+        self.assertEqual(data["status"], "expired")
+        self.assertIn("No login in progress", data["error"])
+
+    def test_login_result_takes_priority_over_pending(self):
+        """_login_result is checked before _pending_login state."""
+        self.brainstem._login_result = {"status": "ok", "message": "Done!"}
+        self.brainstem._pending_login = {
+            "device_code": "abc",
+            "expires_at": __import__("time").time() + 600,
+        }
+        resp = self.client.post("/login/poll")
+        data = resp.get_json()
+        self.assertEqual(data["status"], "ok")
+
+
+class TestLoginStateCleanup(unittest.TestCase):
+    """Test that starting new login flows clears stale state."""
+
+    def setUp(self):
+        import brainstem
+        self.brainstem = brainstem
+        self.app = brainstem.app
+        self.app.testing = True
+        self.client = self.app.test_client()
+        # Save original state
+        self._orig_login_result = brainstem._login_result
+        self._orig_pending_login = brainstem._pending_login
+        self._orig_copilot_cache = brainstem._copilot_token_cache.copy()
+
+    def tearDown(self):
+        self.brainstem._login_result = self._orig_login_result
+        self.brainstem._pending_login = self._orig_pending_login
+        self.brainstem._copilot_token_cache = self._orig_copilot_cache
+
+    def test_login_switch_clears_login_result(self):
+        """POST /login/switch should clear _login_result."""
+        self.brainstem._login_result = {"status": "error", "error": "NO_COPILOT_ACCESS:old"}
+        self.brainstem._copilot_token_cache = {"token": "old", "endpoint": "x", "expires_at": 0}
+        # login/switch will try to start a new device code flow which calls GitHub API
+        # so we just test that the state gets cleared by calling the function directly
+        # rather than hitting the endpoint (which would require network)
+        from unittest.mock import patch
+        with patch.object(self.brainstem, 'start_device_code_login', return_value={"user_code": "TEST", "verification_uri": "https://github.com/login/device"}):
+            resp = self.client.post("/login/switch")
+        self.assertEqual(self.brainstem._login_result, {})
+        self.assertIsNone(self.brainstem._copilot_token_cache["token"])
+
+    def test_start_device_code_clears_stale_state(self):
+        """start_device_code_login() should clear _login_result and Copilot cache."""
+        self.brainstem._login_result = {"status": "ok", "message": "stale"}
+        self.brainstem._copilot_token_cache = {"token": "stale", "endpoint": "x", "expires_at": 9999999999}
+        self.brainstem._pending_login = {}  # No existing code to reuse
+        from unittest.mock import patch, MagicMock
+        mock_resp = MagicMock()
+        mock_resp.json.return_value = {
+            "device_code": "test_dc",
+            "user_code": "TEST-CODE",
+            "verification_uri": "https://github.com/login/device",
+            "interval": 5,
+            "expires_in": 900,
+        }
+        mock_resp.raise_for_status = MagicMock()
+        with patch("requests.post", return_value=mock_resp):
+            with patch.object(self.brainstem, '_start_bg_poll'):
+                self.brainstem.start_device_code_login(force_new=True)
+        self.assertEqual(self.brainstem._login_result, {})
+        self.assertIsNone(self.brainstem._copilot_token_cache["token"])
+
+    def test_reuse_existing_code_preserves_login_result(self):
+        """When reusing a non-expired code, _login_result should NOT be cleared."""
+        import time
+        self.brainstem._pending_login = {
+            "device_code": "existing",
+            "user_code": "REUSE-ME",
+            "verification_uri": "https://github.com/login/device",
+            "interval": 5,
+            "expires_at": time.time() + 600,
+        }
+        self.brainstem._login_result = {"status": "ok", "message": "previous success"}
+        result = self.brainstem.start_device_code_login(force_new=False)
+        self.assertEqual(result["user_code"], "REUSE-ME")
+        # _login_result should be untouched because we reused the existing code
+        self.assertEqual(self.brainstem._login_result["status"], "ok")
+
+
 class TestMemoryAgentIntegration(unittest.TestCase):
     """End-to-end: load the real context_memory_agent and manage_memory_agent from remote repo."""
 
