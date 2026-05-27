@@ -48,6 +48,8 @@ The system uses a three-tier architecture designed for progressive learning of t
 
 A local Flask server powered by GitHub Copilot. No API keys needed beyond a GitHub account. Define a **soul** (system prompt), drop in **agents** (Python tools), and talk to it at `localhost:7071`.
 
+The brainstem kernel (`rapp_brainstem/brainstem.py`) is vendored verbatim from the canonical [rapp-installer grail](https://github.com/kody-w/rapp-installer/tree/main/rapp_brainstem) — currently **v0.6.0**. It is a **frozen kernel**: never hand-edited, only re-vendored from the grail (enforced by `rapp_brainstem/test_kernel_version.py`).
+
 ### ☁️ Tier 2: The Spinal Cord (RAPP on Azure)
 
 Deploy RAPP to Azure — the same agent logic from your brainstem, now always-on with Azure OpenAI, persistent Azure File Storage, and Application Insights monitoring. One-click ARM template deployment. Agents hot-load from storage — no redeployment needed.

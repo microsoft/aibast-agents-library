@@ -19,9 +19,11 @@ import json
 import uuid
 import glob
 import time
+import threading
 import importlib.util
 import subprocess
 import traceback
+from datetime import datetime, timezone
 
 import requests
 from flask import Flask, request, jsonify, send_from_directory
@@ -96,6 +98,60 @@ def _fetch_copilot_models():
     except Exception as e:
         print(f"[brainstem] Could not fetch models (using defaults): {e}")
         _models_fetched = True
+
+# ── Flight Recorder (book.json telemetry) ─────────────────────────────────────
+
+_flight_log = []
+_flight_log_lock = threading.Lock()
+_FLIGHT_LOG_MAX = 2000
+_flight_log_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".brainstem_book.json")
+
+def _tlog(event_type, data=None, level="info"):
+    """Append an event to the flight recorder."""
+    entry = {
+        "ts": datetime.now(timezone.utc).isoformat(),
+        "type": event_type,
+        "level": level,
+    }
+    if data:
+        entry["data"] = data
+    with _flight_log_lock:
+        _flight_log.append(entry)
+        if len(_flight_log) > _FLIGHT_LOG_MAX:
+            _flight_log[:] = _flight_log[-_FLIGHT_LOG_MAX:]
+
+def _tlog_save():
+    """Persist flight log to disk (called periodically and on export)."""
+    try:
+        with _flight_log_lock:
+            snapshot = list(_flight_log)
+        with open(_flight_log_file, "w") as f:
+            json.dump(snapshot, f)
+    except Exception:
+        pass
+
+def _tlog_load():
+    """Load previous flight log from disk on startup."""
+    global _flight_log
+    if not os.path.exists(_flight_log_file):
+        return
+    try:
+        with open(_flight_log_file) as f:
+            data = json.load(f)
+        if isinstance(data, list):
+            with _flight_log_lock:
+                _flight_log = data[-_FLIGHT_LOG_MAX:]
+    except Exception:
+        pass
+
+def _tlog_autosave():
+    """Background thread: flush flight log to disk every 30s."""
+    while True:
+        time.sleep(30)
+        _tlog_save()
+
+# Start autosave thread
+threading.Thread(target=_tlog_autosave, daemon=True).start()
 
 # ── GitHub token ──────────────────────────────────────────────────────────────
 
@@ -175,6 +231,7 @@ def save_github_token(token, refresh_token=None):
     }
     with open(_token_file, "w") as f:
         json.dump(data, f)
+    _tlog("auth.token_saved", {"prefix": token[:4], "has_refresh": bool(refresh_token)})
     print(f"[brainstem] GitHub token saved (prefix: {token[:4]}...)")
 
 def refresh_github_token():
@@ -260,18 +317,22 @@ def get_copilot_token():
     disk_cache = _load_copilot_cache()
     if disk_cache:
         _copilot_token_cache = disk_cache
+        _tlog("auth.copilot_restored", {"expires_in": int(disk_cache['expires_at'] - time.time())})
         print(f"[brainstem] Copilot token restored from cache (expires in {int(disk_cache['expires_at'] - time.time())}s)")
         return disk_cache["token"], disk_cache["endpoint"]
     
     # 3. Exchange GitHub token for Copilot token
     github_token = get_github_token()
     if not github_token:
+        _tlog("auth.no_github_token", level="warn")
         raise RuntimeError("Not authenticated. Visit /login in your browser to sign in with GitHub.")
     
+    _tlog("auth.copilot_exchange", {"token_prefix": github_token[:4]})
     resp = _exchange_github_for_copilot(github_token)
     
     # 4. If error, the GitHub token may have expired — try refreshing it
     if resp.status_code in (401, 403, 404):
+        _tlog("auth.copilot_exchange_failed", {"status": resp.status_code, "trying_refresh": True}, level="warn")
         refreshed = refresh_github_token()
         if refreshed:
             resp = _exchange_github_for_copilot(refreshed)
@@ -289,6 +350,7 @@ def get_copilot_token():
                 # Extract username from error message
                 detail_msg = err_details.get("message", "")
                 username = detail_msg.split("as ")[-1].rstrip(".") if "as " in detail_msg else "this account"
+                _tlog("auth.no_copilot_access", {"username": username}, level="error")
                 print(f"[brainstem] No Copilot access for {username}")
                 # Delete the bad token so health check shows unauthenticated
                 if os.path.exists(_token_file):
@@ -301,6 +363,7 @@ def get_copilot_token():
                 err_msg = err_body.get("message", resp.text[:200])
             except Exception:
                 err_msg = resp.text[:200]
+            _tlog("auth.copilot_exchange_error", {"status": resp.status_code, "error": err_msg[:200]}, level="error")
             print(f"[brainstem] Copilot token exchange failed (HTTP {resp.status_code}): {err_msg}")
             raise RuntimeError(
                 f"Copilot auth failed ({resp.status_code}): {err_msg}. Sign in with GitHub to retry."
@@ -313,6 +376,7 @@ def get_copilot_token():
     expires_at = data.get("expires_at", time.time() + 600)
     
     if not copilot_token:
+        _tlog("auth.copilot_no_token", level="error")
         raise RuntimeError("Failed to get Copilot API token. Check your Copilot subscription.")
     
     _copilot_token_cache = {
@@ -322,16 +386,72 @@ def get_copilot_token():
     }
     _save_copilot_cache(copilot_token, endpoint, expires_at)
     
+    _tlog("auth.copilot_ready", {"expires_in": int(expires_at - time.time()), "endpoint": endpoint})
     print(f"[brainstem] Copilot token refreshed (expires in {int(expires_at - time.time())}s)")
     return copilot_token, endpoint
 
 # ── Device code OAuth flow ────────────────────────────────────────────────────
 
 _pending_login = {}
+_login_bg_thread = None
+_login_result = {}  # Written by bg poll thread, read by /login/poll endpoint
+_pending_login_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".copilot_pending")
 
-def start_device_code_login():
-    """Start GitHub device code OAuth flow. Returns user_code and verification_uri."""
+def _save_pending_login():
+    """Persist pending device code to disk so it survives server restarts."""
+    try:
+        if _pending_login:
+            with open(_pending_login_file, "w") as f:
+                json.dump(_pending_login, f)
+        elif os.path.exists(_pending_login_file):
+            os.remove(_pending_login_file)
+    except Exception:
+        pass
+
+def _load_pending_login():
+    """Load pending device code from disk on startup."""
     global _pending_login
+    if not os.path.exists(_pending_login_file):
+        return
+    try:
+        with open(_pending_login_file) as f:
+            data = json.load(f)
+        if data.get("device_code") and time.time() < data.get("expires_at", 0):
+            _pending_login = data
+            print(f"[brainstem] Resumed pending device code: {data.get('user_code')} (expires in {int(data['expires_at'] - time.time())}s)")
+            _start_bg_poll()
+        else:
+            # Expired — clean up
+            os.remove(_pending_login_file)
+    except Exception:
+        pass
+
+def start_device_code_login(force_new=False):
+    """Start GitHub device code OAuth flow. Returns user_code and verification_uri.
+    
+    Reuses an existing pending code if it hasn't expired (prevents refresh-kills-auth bug).
+    Set force_new=True to always request a fresh code.
+    """
+    global _pending_login, _login_bg_thread, _login_result, _copilot_token_cache
+
+    # Reuse existing non-expired code (e.g. user refreshed the page)
+    if not force_new and _pending_login and time.time() < _pending_login.get("expires_at", 0):
+        _tlog("login.reuse_code", {"user_code": _pending_login["user_code"], "expires_in": int(_pending_login["expires_at"] - time.time())})
+        print(f"[brainstem] Reusing existing device code (expires in {int(_pending_login['expires_at'] - time.time())}s)")
+        return {
+            "user_code": _pending_login["user_code"],
+            "verification_uri": _pending_login["verification_uri"],
+        }
+
+    # Clear stale state so the new flow starts completely clean
+    _login_result = {}
+    _copilot_token_cache = {"token": None, "endpoint": None, "expires_at": 0}
+    if os.path.exists(_copilot_cache_file):
+        try:
+            os.remove(_copilot_cache_file)
+        except Exception:
+            pass
+
     resp = requests.post(
         "https://github.com/login/device/code",
         headers={"Accept": "application/json", "Content-Type": "application/x-www-form-urlencoded"},
@@ -342,20 +462,82 @@ def start_device_code_login():
     data = resp.json()
     _pending_login = {
         "device_code": data["device_code"],
+        "user_code": data["user_code"],
+        "verification_uri": data["verification_uri"],
         "interval": data.get("interval", 5),
         "expires_at": time.time() + data.get("expires_in", 900),
     }
+    _save_pending_login()
+    _tlog("login.device_code_started", {"user_code": data["user_code"]})
+    print(f"[brainstem] Device code login started: {data['user_code']}")
+
+    # Start background polling so token is captured even if browser disconnects
+    _start_bg_poll()
+
     return {
         "user_code": data["user_code"],
         "verification_uri": data["verification_uri"],
     }
+
+def _start_bg_poll():
+    """Start a background thread that polls GitHub for device code completion."""
+    global _login_bg_thread
+    if _login_bg_thread and _login_bg_thread.is_alive():
+        return  # Already running
+    _login_bg_thread = threading.Thread(target=_bg_poll_loop, daemon=True)
+    _login_bg_thread.start()
+
+def _bg_poll_loop():
+    """Background loop: polls GitHub for the device code token.
+
+    This is the SOLE caller of poll_device_code(). The /login/poll endpoint
+    reads _login_result instead of calling poll_device_code() directly,
+    which eliminates the race condition between bg thread and client poll.
+    """
+    global _login_result
+    while _pending_login:
+        interval = _pending_login.get("interval", 5)
+        time.sleep(interval)
+        if not _pending_login:
+            break
+        try:
+            token = poll_device_code()
+            if token:
+                print(f"[brainstem] Background poll: token acquired (prefix: {token[:4]}...)")
+                # Eagerly exchange for Copilot token
+                try:
+                    get_copilot_token()
+                    print("[brainstem] Copilot session established via background poll")
+                    _login_result = {"status": "ok", "message": "Authenticated with GitHub Copilot!"}
+                except Exception as e:
+                    err = str(e)
+                    if err.startswith("NO_COPILOT_ACCESS:"):
+                        print(f"[brainstem] Background poll: no Copilot access — {err}")
+                        _login_result = {"status": "error", "error": err}
+                    else:
+                        print(f"[brainstem] Eager Copilot exchange deferred: {e}")
+                        _login_result = {"status": "ok", "message": "Authenticated with GitHub Copilot!"}
+                break
+        except RuntimeError as e:
+            print(f"[brainstem] Background poll stopped: {e}")
+            _login_result = {"status": "error", "error": str(e)}
+            break
+        except Exception as e:
+            print(f"[brainstem] Background poll error: {e}")
+            # Keep polling on transient errors
 
 def poll_device_code():
     """Poll for completed device code authorization. Returns token or None."""
     global _pending_login
     if not _pending_login:
         return None
-    
+
+    if time.time() >= _pending_login.get("expires_at", 0):
+        _pending_login = {}
+        _save_pending_login()
+        _tlog("login.code_expired", level="warn")
+        raise RuntimeError("Login code expired. Please try again.")
+
     resp = requests.post(
         "https://github.com/login/oauth/access_token",
         headers={"Accept": "application/json", "Content-Type": "application/x-www-form-urlencoded"},
@@ -367,24 +549,34 @@ def poll_device_code():
         timeout=10,
     )
     data = resp.json()
-    
+
     if data.get("access_token"):
         token = data["access_token"]
         refresh = data.get("refresh_token")
+        _tlog("login.authorized", {"token_prefix": token[:4], "has_refresh": bool(refresh)})
+        print(f"[brainstem] Device code authorized! Token prefix: {token[:4]}...")
         save_github_token(token, refresh)
         _pending_login = {}
+        _save_pending_login()
         return token
-    
+
     error = data.get("error", "")
-    if error in ("authorization_pending", "slow_down"):
+    if error == "slow_down":
+        _tlog("login.slow_down", level="warn")
+        _pending_login["interval"] = _pending_login.get("interval", 5) + 5
+        return None
+    if error == "authorization_pending":
         return None  # Keep polling
     if error == "expired_token":
         _pending_login = {}
-        raise RuntimeError("Login expired. Please try again.")
+        _save_pending_login()
+        _tlog("login.expired_token", level="warn")
+        raise RuntimeError("Login code expired. Please try again.")
     if error:
         _pending_login = {}
+        _save_pending_login()
         raise RuntimeError(f"Login failed: {error}")
-    
+
     return None
 
 # ── Soul loader ───────────────────────────────────────────────────────────────
@@ -604,9 +796,10 @@ def call_copilot(messages, tools=None):
     resp = requests.post(url, headers=headers, json=body, timeout=60)
     if resp.status_code != 200:
         error_detail = resp.text[:500] if resp.text else "No details"
+        _tlog("api.error", {"model": MODEL, "status": resp.status_code, "detail": error_detail[:300]}, level="error")
         print(f"[brainstem] API error {resp.status_code} with model '{MODEL}': {error_detail}")
-        # On 429/5xx, cycle through other available models before giving up
-        if resp.status_code in (429, 500, 502, 503):
+        # On 400/429/5xx, cycle through other available models before giving up
+        if resp.status_code in (400, 429, 500, 502, 503):
             tried = {MODEL}
             fallback_ids = [m["id"] for m in AVAILABLE_MODELS if m["id"] != MODEL]
             for fallback_model in fallback_ids:
@@ -702,6 +895,8 @@ def chat():
     if not user_input:
         return jsonify({"error": "user_input is required"}), 400
 
+    _tlog("chat.request", {"session_id": session_id, "input_len": len(user_input), "history_len": len(history)})
+
     try:
         soul   = load_soul()
         agents = load_agents()
@@ -762,14 +957,21 @@ def chat():
     except requests.exceptions.HTTPError as e:
         traceback.print_exc()
         status = e.response.status_code if e.response is not None else 502
+        detail = (e.response.text[:300] if e.response is not None else str(e)[:300])
+        _tlog("chat.error", {"model": MODEL, "status": status, "detail": detail[:200]}, level="error")
+        if status == 429 or "quota" in detail.lower():
+            msg = "Copilot usage limit reached — wait a minute and try again."
+        else:
+            msg = f"Model '{MODEL}' returned {status}. All fallback models also failed — try again shortly or switch models."
         return jsonify({
-            "error": f"Model '{MODEL}' returned {status}. All fallback models also failed — try again shortly or switch models.",
+            "error": msg,
             "model": MODEL,
-            "detail": str(e)[:300]
+            "detail": detail
         }), 502
 
     except Exception as e:
         traceback.print_exc()
+        _tlog("chat.error", {"error": str(e)[:200]}, level="error")
         return jsonify({"error": str(e)}), 500
 
 # ── /health endpoint ──────────────────────────────────────────────────────────
@@ -789,26 +991,67 @@ def login():
 
 @app.route("/login/poll", methods=["POST"])
 def login_poll():
-    """Poll for completed device code authorization."""
-    try:
-        token = poll_device_code()
-        if token:
-            # Eagerly exchange for Copilot token so health check shows ready immediately
-            try:
-                get_copilot_token()
-                print("[brainstem] Copilot session established after login")
-            except Exception as e:
-                print(f"[brainstem] Eager Copilot exchange deferred: {e}")
-                # Not fatal — will exchange on first /chat call
-            return jsonify({"status": "ok", "message": "Authenticated with GitHub Copilot!"})
-        return jsonify({"status": "pending"})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    """Poll for completed device code authorization.
+
+    Reads _login_result (written by the bg poll thread) instead of calling
+    poll_device_code() directly. This eliminates the race where the bg thread
+    and client poll both compete for the same device code response.
+    """
+    # Check if bg thread has completed (or errored)
+    if _login_result:
+        result = _login_result.copy()
+        if result.get("status") == "error":
+            return jsonify(result)
+        return jsonify(result)
+
+    # Check if code has expired
+    if _pending_login and time.time() >= _pending_login.get("expires_at", 0):
+        return jsonify({"status": "expired", "error": "Login code expired. Please try again."})
+
+    # No pending login at all (e.g., server restarted, or flow was never started)
+    if not _pending_login:
+        return jsonify({"status": "expired", "error": "No login in progress. Please try again."})
+
+    return jsonify({"status": "pending"})
 
 @app.route("/login/status", methods=["GET"])
 def login_status():
-    """Check if a login flow is currently in progress."""
-    return jsonify({"pending": bool(_pending_login)})
+    """Check if a login flow is currently in progress. Returns code info for UI resume."""
+    if _pending_login and time.time() < _pending_login.get("expires_at", 0):
+        return jsonify({
+            "pending": True,
+            "user_code": _pending_login.get("user_code"),
+            "verification_uri": _pending_login.get("verification_uri"),
+            "expires_in": int(_pending_login["expires_at"] - time.time()),
+        })
+    return jsonify({"pending": False})
+
+@app.route("/login/switch", methods=["POST"])
+def login_switch():
+    """Switch GitHub account — clears all cached tokens and starts fresh login."""
+    global _copilot_token_cache, _pending_login, _login_result
+    _tlog("auth.account_switch")
+
+    # Clear everything: memory caches, disk caches, pending login, prior result
+    _copilot_token_cache = {"token": None, "endpoint": None, "expires_at": 0}
+    _pending_login = {}
+    _login_result = {}
+    _save_pending_login()
+
+    for f in (_token_file, _copilot_cache_file):
+        try:
+            if os.path.exists(f):
+                os.remove(f)
+        except Exception:
+            pass
+
+    # Start a fresh device code flow immediately
+    try:
+        data = start_device_code_login(force_new=True)
+        _tlog("auth.switch_new_code", {"user_code": data["user_code"]})
+        return jsonify({"status": "ok", **data})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route("/models", methods=["GET"])
 def list_models():
@@ -950,6 +1193,90 @@ def version():
     """Return the current brainstem version."""
     return jsonify({"version": VERSION})
 
+@app.route("/agents", methods=["GET"])
+def list_agents_files():
+    """List all agent .py files available with their loaded agent names."""
+    files = glob.glob(os.path.join(AGENTS_PATH, "*.py"))
+    results = []
+    for f in files:
+        filename = os.path.basename(f)
+        if filename.startswith("__") or not filename.endswith(".py"):
+            continue
+        try:
+            # We don't want to re-download pip packages or run arbitrary init unnecessarily,
+            # but if it's already synthetically loaded or safe to parse, _load_agent_from_file is okay.
+            loaded = _load_agent_from_file(f)
+            agent_names = list(loaded.keys())
+        except Exception:
+            agent_names = []
+            
+        results.append({
+            "filename": filename,
+            "agents": agent_names
+        })
+        
+    return jsonify({"files": results})
+
+@app.route("/agents/export/<filename>", methods=["GET"])
+def agents_export(filename):
+    """Export an agent .py file."""
+    from flask import send_file
+    import werkzeug.utils
+    safe_name = werkzeug.utils.secure_filename(filename)
+    if not safe_name.endswith('.py'):
+        safe_name += '.py'
+    filepath = os.path.join(AGENTS_PATH, safe_name)
+    if os.path.exists(filepath):
+        return send_file(filepath, as_attachment=True)
+    return jsonify({"error": "Agent not found"}), 404
+
+@app.route("/agents/<filename>", methods=["DELETE"])
+def agents_delete(filename):
+    """Delete an agent .py file."""
+    import werkzeug.utils
+    safe_name = werkzeug.utils.secure_filename(filename)
+    if not safe_name.endswith('.py'):
+        safe_name += '.py'
+    filepath = os.path.join(AGENTS_PATH, safe_name)
+    if os.path.exists(filepath):
+        os.remove(filepath)
+        # Reload agents so memory drops it
+        try:
+            load_agents()
+        except Exception:
+            pass
+        return jsonify({"status": "ok", "message": f"Agent {safe_name} deleted."})
+    return jsonify({"error": "Agent not found"}), 404
+
+@app.route("/agents/import", methods=["POST"])
+def agents_import():
+    """Import an agent .py file via drag & drop."""
+    import werkzeug.utils
+    if 'file' not in request.files:
+        return jsonify({"error": "No file uploaded"}), 400
+    f = request.files['file']
+    if f.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+    if not f.filename.endswith('.py'):
+        return jsonify({"error": "Only .py files are supported"}), 400
+    
+    os.makedirs(AGENTS_PATH, exist_ok=True)
+    safe_name = werkzeug.utils.secure_filename(f.filename)
+    # Ensure it matches the glob pattern *_agent.py
+    if not safe_name.endswith('_agent.py'):
+        safe_name = safe_name[:-3] + '_agent.py'
+        
+    filepath = os.path.join(AGENTS_PATH, safe_name)
+    f.save(filepath)
+    
+    # Reload agents to include the new one
+    try:
+        load_agents()
+    except Exception as e:
+        return jsonify({"error": f"Uploaded but failed to load: {e}"}), 500
+        
+    return jsonify({"status": "ok", "message": f"Agent {safe_name} imported successfully."})
+
 @app.route("/health", methods=["GET"])
 def health():
     agents = {}
@@ -1020,9 +1347,189 @@ def debug_auth():
 
     return jsonify(result)
 
+# ── Diagnostics / Flight Recorder (book.json) ─────────────────────────────────
+
+@app.route("/diagnostics", methods=["GET"])
+def diagnostics():
+    """Return the flight recorder log as JSON. Add ?tail=N for last N events."""
+    tail = request.args.get("tail", type=int)
+    with _flight_log_lock:
+        events = list(_flight_log)
+    if tail:
+        events = events[-tail:]
+    return jsonify({
+        "version": VERSION,
+        "model": MODEL,
+        "uptime_events": len(events),
+        "events": events,
+    })
+
+@app.route("/diagnostics/book.json", methods=["GET"])
+def diagnostics_export():
+    """Export full flight recorder as book.json — the brainstem's story."""
+    _tlog_save()  # Flush to disk first
+    with _flight_log_lock:
+        events = list(_flight_log)
+
+    # Build the book
+    github_token = get_github_token()
+    book = {
+        "title": "RAPP Brainstem Flight Recorder",
+        "exported_at": datetime.now(timezone.utc).isoformat(),
+        "version": VERSION,
+        "config": {
+            "model": MODEL,
+            "soul_path": SOUL_PATH,
+            "agents_path": AGENTS_PATH,
+            "port": PORT,
+            "voice_mode": VOICE_MODE,
+        },
+        "auth_state": {
+            "github_token_exists": github_token is not None,
+            "github_token_prefix": github_token[:4] + "..." if github_token else None,
+            "token_file_exists": os.path.exists(_token_file),
+            "copilot_cache_valid": bool(_copilot_token_cache["token"] and time.time() < _copilot_token_cache["expires_at"] - 60),
+            "pending_login": bool(_pending_login),
+        },
+        "agents_loaded": list(load_agents().keys()) if True else [],
+        "events": events,
+    }
+
+    from flask import Response
+    return Response(
+        json.dumps(book, indent=2),
+        mimetype="application/json",
+        headers={"Content-Disposition": "attachment; filename=share-with-admin--this-file-tells-your-whole-story--they-can-help-you-now.json"},
+    )
+
+@app.route("/diagnostics/clear", methods=["POST"])
+def diagnostics_clear():
+    """Clear the flight recorder."""
+    with _flight_log_lock:
+        _flight_log.clear()
+    _tlog_save()
+    return jsonify({"status": "ok", "message": "Flight recorder cleared."})
+
+@app.route("/diagnostics/report", methods=["POST"])
+def diagnostics_report():
+    """Create a GitHub issue with session diagnostics so admin can help."""
+    _tlog("diagnostics.report_started")
+    github_token = get_github_token()
+    if not github_token:
+        return jsonify({"error": "Not authenticated — sign in first to submit a report."}), 401
+
+    data = request.get_json(force=True) or {}
+    user_description = data.get("description", "").strip() or "_No description provided_"
+    client_events = data.get("client_events", [])
+
+    # Build the diagnostics snapshot
+    _tlog_save()
+    with _flight_log_lock:
+        events = list(_flight_log)
+
+    # Extract recent errors/warnings for summary
+    err_events = [e for e in events if e.get("level") in ("error", "warn")][-10:]
+    summary_lines = []
+    for e in err_events:
+        d = e.get("data", {})
+        summary_lines.append(f"- `{e['ts']}` **{e['type']}** {json.dumps(d) if d else ''}")
+    error_summary = "\n".join(summary_lines) if summary_lines else "_No errors or warnings recorded_"
+
+    # Scrub sensitive fields from events before publishing
+    _SCRUB_KEYS = {"user_code", "device_code", "session_id"}
+    def _scrub_event(ev):
+        ev = dict(ev)
+        if ev.get("data"):
+            ev["data"] = {k: v for k, v in ev["data"].items() if k not in _SCRUB_KEYS}
+        return ev
+    events = [_scrub_event(e) for e in events]
+    client_events = [_scrub_event(e) for e in client_events]
+
+    # Build compact book (no secrets, capped size)
+    book = {
+        "version": VERSION,
+        "model": MODEL,
+        "auth_state": {
+            "github_token_exists": True,
+            "token_prefix": github_token[:4] + "...",
+            "copilot_cache_valid": bool(_copilot_token_cache["token"] and time.time() < _copilot_token_cache["expires_at"] - 60),
+            "pending_login": bool(_pending_login),
+        },
+        "agents_loaded": list(load_agents().keys()),
+        "server_events": events[-50:],  # Last 50 server events
+        "client_events": client_events[-50:] if client_events else [],
+    }
+    book_json = json.dumps(book, indent=2)
+    # GitHub issues have a body limit ~65536 chars; trim if needed
+    if len(book_json) > 40000:
+        book["server_events"] = events[-20:]
+        book["client_events"] = client_events[-20:] if client_events else []
+        book_json = json.dumps(book, indent=2)
+
+    issue_body = (
+        f"## User Report\n\n{user_description}\n\n"
+        f"## Environment\n\n"
+        f"- **Version:** {VERSION}\n"
+        f"- **Model:** {MODEL}\n"
+        f"- **Agents:** {', '.join(book['agents_loaded']) or 'none'}\n\n"
+        f"## Recent Warnings & Errors\n\n{error_summary}\n\n"
+        f"## Session Diagnostics\n\n"
+        f"<details><summary>book.json (click to expand)</summary>\n\n"
+        f"```json\n{book_json}\n```\n\n</details>"
+    )
+
+    try:
+        resp = requests.post(
+            "https://api.github.com/repos/kody-w/rapp-installer/issues",
+            headers={
+                "Authorization": f"Bearer {github_token}",
+                "Accept": "application/vnd.github+json",
+                "X-GitHub-Api-Version": "2022-11-28",
+            },
+            json={
+                "title": f"🆘 Help request — v{VERSION}",
+                "body": issue_body,
+                "labels": [],
+            },
+            timeout=15,
+        )
+        if resp.status_code in (201, 200):
+            issue_data = resp.json()
+            issue_url = issue_data.get("html_url", "")
+            _tlog("diagnostics.report_created", {"issue_url": issue_url})
+            return jsonify({"status": "ok", "issue_url": issue_url})
+
+        # ghu_ tokens from device code don't have repo scope — try gh CLI
+        if resp.status_code in (403, 404):
+            _tlog("diagnostics.report_api_403_trying_cli", level="warn")
+            try:
+                result = subprocess.run(
+                    ["gh", "issue", "create",
+                     "--repo", "kody-w/rapp-installer",
+                     "--title", f"🆘 Help request — v{VERSION}",
+                     "--body", issue_body],
+                    capture_output=True, text=True, timeout=30,
+                )
+                if result.returncode == 0:
+                    issue_url = result.stdout.strip()
+                    _tlog("diagnostics.report_created_via_cli", {"issue_url": issue_url})
+                    return jsonify({"status": "ok", "issue_url": issue_url})
+                _tlog("diagnostics.report_cli_failed", {"stderr": result.stderr[:200]}, level="error")
+            except Exception as cli_err:
+                _tlog("diagnostics.report_cli_error", {"error": str(cli_err)}, level="error")
+
+        err = resp.text[:300]
+        _tlog("diagnostics.report_failed", {"status": resp.status_code, "error": err}, level="error")
+        return jsonify({"error": f"GitHub API returned {resp.status_code}: {err}"}), resp.status_code
+    except Exception as e:
+        _tlog("diagnostics.report_error", {"error": str(e)}, level="error")
+        return jsonify({"error": str(e)}), 500
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
+    _tlog_load()  # Restore previous flight log
+    _tlog("server.starting", {"version": VERSION, "model": MODEL, "port": PORT})
     print(f"\n🧠 RAPP Brainstem v{VERSION} starting on http://localhost:{PORT}")
     print(f"   Soul:   {SOUL_PATH}")
     print(f"   Agents: {AGENTS_PATH}")
@@ -1030,5 +1537,8 @@ if __name__ == "__main__":
     print(f"   Voice:  {'on' if VOICE_MODE else 'off'} (POST /voice/toggle to change)")
     print(f"   Auth:   GitHub Copilot API (via gh CLI)\n")
     load_soul()
-    load_agents()
+    agents = load_agents()
+    _tlog("server.agents_loaded", {"agents": list(agents.keys())})
+    _load_pending_login()  # Resume any in-progress device code login
+    _tlog("server.ready", {"url": f"http://localhost:{PORT}"})
     app.run(host="0.0.0.0", port=PORT, debug=False)

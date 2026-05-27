@@ -42,6 +42,8 @@ The `build_registry.py` script uses AST parsing to extract `__manifest__` dicts 
 
 ## RAPP Brainstem (Local Development)
 
+The brainstem kernel (`rapp_brainstem/brainstem.py`) is a **frozen kernel** vendored verbatim from the [rapp-installer grail](https://github.com/kody-w/rapp-installer/tree/main/rapp_brainstem) — currently **v0.6.0** (`rapp_brainstem/VERSION`). Never hand-edit it; re-vendor from the grail and bump the pin in `rapp_brainstem/test_kernel_version.py`.
+
 ```bash
 cd rapp_brainstem
 pip install -r requirements.txt
