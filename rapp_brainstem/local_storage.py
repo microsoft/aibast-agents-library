@@ -8,9 +8,42 @@ Data lives in .brainstem_data/ next to this file.
 
 import os
 import json
-import logging
 
 _DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".brainstem_data")
+
+
+def _safe_join(*parts):
+    """Join path parts under _DATA_DIR and refuse anything that escapes it.
+
+    user_guid and agent-supplied file paths are attacker-influenced (they come from
+    LLM tool-call arguments), so a value like '../../.env' or an absolute path must
+    not be able to read or write outside the data directory. Returns an absolute path
+    guaranteed to live under _DATA_DIR, or raises ValueError."""
+    base = os.path.abspath(_DATA_DIR)
+    target = os.path.abspath(os.path.join(base, *[str(p) for p in parts]))
+    if target != base and not target.startswith(base + os.sep):
+        raise ValueError(f"path escapes data directory: {os.path.join(*[str(p) for p in parts])}")
+    return target
+
+
+def _atomic_write(path, write_fn):
+    """Write via a temp file in the same directory + os.replace, so a crash or a
+    concurrent reader never sees a half-written (and on the next write, silently
+    wiped) file. write_fn receives the open file handle."""
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    tmp = f"{path}.{os.getpid()}.tmp"
+    try:
+        with open(tmp, "w", encoding="utf-8") as f:
+            write_fn(f)
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(tmp, path)
+    finally:
+        if os.path.exists(tmp):
+            try:
+                os.remove(tmp)
+            except OSError:
+                pass
 
 
 class AzureFileStorageManager:
@@ -49,19 +82,19 @@ class AzureFileStorageManager:
         """Return the absolute path for the current memory file.
         Shared:  .brainstem_data/shared_memories/memory.json
         User:    .brainstem_data/memory/{guid}/user_memory.json
+        A malicious user_guid (e.g. '../../') is contained by _safe_join.
         """
         if self.current_guid:
-            folder = os.path.join(_DATA_DIR, self.current_memory_path)
-            fname = "user_memory.json"
+            rel = os.path.join(self.current_memory_path, "user_memory.json")
         else:
-            folder = os.path.join(_DATA_DIR, self.shared_memory_path)
-            fname = self.default_file_name
-        os.makedirs(folder, exist_ok=True)
-        return os.path.join(folder, fname)
+            rel = os.path.join(self.shared_memory_path, self.default_file_name)
+        path = _safe_join(rel)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        return path
 
     def read_json(self, file_path=None):
         """Read JSON data from local storage."""
-        path = file_path or self._file_path()
+        path = _safe_join(file_path) if file_path else self._file_path()
         if not os.path.exists(path):
             return {}
         try:
@@ -71,41 +104,40 @@ class AzureFileStorageManager:
             return {}
 
     def write_json(self, data, file_path=None):
-        """Write JSON data to local storage."""
-        path = file_path or self._file_path()
-        os.makedirs(os.path.dirname(path), exist_ok=True)
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=2, default=str)
+        """Write JSON data to local storage (atomically)."""
+        path = _safe_join(file_path) if file_path else self._file_path()
+        _atomic_write(path, lambda f: json.dump(data, f, indent=2, default=str))
         return True
 
     # ── Convenience methods used by some agents ───────────────────────────
 
     def read_file(self, file_path):
-        full = os.path.join(_DATA_DIR, file_path)
+        full = _safe_join(file_path)
         if not os.path.exists(full):
             return None
         with open(full, "r", encoding="utf-8") as f:
             return f.read()
 
     def write_file(self, file_path, content):
-        full = os.path.join(_DATA_DIR, file_path)
-        os.makedirs(os.path.dirname(full), exist_ok=True)
-        with open(full, "w", encoding="utf-8") as f:
-            f.write(content)
+        full = _safe_join(file_path)
+        _atomic_write(full, lambda f: f.write(content))
         return True
 
     def list_files(self, directory=""):
-        full = os.path.join(_DATA_DIR, directory)
+        full = _safe_join(directory) if directory else os.path.abspath(_DATA_DIR)
         if not os.path.exists(full):
             return []
         return os.listdir(full)
 
     def delete_file(self, file_path):
-        full = os.path.join(_DATA_DIR, file_path)
+        full = _safe_join(file_path)
         if os.path.exists(full):
             os.remove(full)
             return True
         return False
 
     def file_exists(self, file_path):
-        return os.path.exists(os.path.join(_DATA_DIR, file_path))
+        try:
+            return os.path.exists(_safe_join(file_path))
+        except ValueError:
+            return False

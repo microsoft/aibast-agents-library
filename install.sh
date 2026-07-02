@@ -277,18 +277,25 @@ install_brainstem() {
             fi
             echo -e "  ${GREEN}✓${NC} Backed up soul, agents, config"
 
-            # 2. Fetch and checkout target version
+            # 2. Fetch and checkout target version.
+            # Guard the fetch: offline (or a black-holed github) must not abort the
+            # whole script under `set -e` — we fall back to whatever is already local.
             cd "$BRAINSTEM_HOME/src"
             git stash --quiet 2>/dev/null || true
-            git fetch origin --tags --quiet 2>/dev/null
+            git fetch origin --tags --quiet 2>/dev/null || true
             if [ -n "$PIN_VERSION" ]; then
-                # Checkout the exact tagged version
-                if git rev-parse "$PIN_VERSION" >/dev/null 2>&1; then
-                    git checkout "$PIN_VERSION" --quiet 2>/dev/null
-                    echo -e "  ${GREEN}✓${NC} Checked out ${PIN_VERSION}"
+                # Resolve the pin against every tag form we ship: the documented
+                # v0.6.0 UX, a bare 0.6.0, and the actual release tag brainstem-v0.6.0.
+                TAG_REF=""
+                for cand in "$PIN_VERSION" "v${PIN_VERSION#v}" "brainstem-${PIN_VERSION#v}" "brainstem-v${PIN_VERSION#v}"; do
+                    if git rev-parse "$cand" >/dev/null 2>&1; then TAG_REF="$cand"; break; fi
+                done
+                if [ -n "$TAG_REF" ]; then
+                    git checkout "$TAG_REF" --quiet 2>/dev/null
+                    echo -e "  ${GREEN}✓${NC} Checked out ${TAG_REF}"
                 else
                     echo -e "  ${RED}✗${NC} Version ${PIN_VERSION} not found. Available versions:"
-                    git tag -l 'v*' | sort -V | sed 's/^/    /'
+                    git tag -l 'brainstem-v*' 'v*' | sort -V | sed 's/^/    /'
                     exit 1
                 fi
             else
@@ -319,19 +326,49 @@ install_brainstem() {
         fi
     else
         echo "  Fresh install — cloning repository..."
+        # A broken prior install (src present but .git gone) may still hold the user's
+        # soul, .env, and custom agents — none of which are in git. Preserve them
+        # before wiping so a re-run can't silently destroy the user's work. The common
+        # case (no existing src) leaves FRESH_BACKUP empty and skips all of this.
+        local FRESH_BACKUP=""
+        if [ -d "$BRAINSTEM_HOME/src/rapp_brainstem" ]; then
+            FRESH_BACKUP=$(mktemp -d "${TMPDIR:-/tmp}/brainstem-fresh-XXXXXX")
+            mkdir -p "$FRESH_BACKUP/agents"
+            [ -f "$SOUL_FILE" ] && cp "$SOUL_FILE" "$FRESH_BACKUP/soul.md" 2>/dev/null || true
+            [ -f "$ENV_FILE" ] && cp "$ENV_FILE" "$FRESH_BACKUP/.env" 2>/dev/null || true
+            [ -d "$AGENTS_DIR" ] && cp "$AGENTS_DIR"/*.py "$FRESH_BACKUP/agents/" 2>/dev/null || true
+        fi
         rm -rf "$BRAINSTEM_HOME/src" 2>/dev/null || true
         git clone --quiet "$REPO_URL" "$BRAINSTEM_HOME/src"
-        # If pinning, checkout the specific tag after clone
+        # If pinning, checkout the specific tag after clone (accepts every tag form).
         if [ -n "$PIN_VERSION" ]; then
             cd "$BRAINSTEM_HOME/src"
-            if git rev-parse "$PIN_VERSION" >/dev/null 2>&1; then
-                git checkout "$PIN_VERSION" --quiet 2>/dev/null
-                echo -e "  ${GREEN}✓${NC} Checked out ${PIN_VERSION}"
+            git fetch origin --tags --quiet 2>/dev/null || true
+            TAG_REF=""
+            for cand in "$PIN_VERSION" "v${PIN_VERSION#v}" "brainstem-${PIN_VERSION#v}" "brainstem-v${PIN_VERSION#v}"; do
+                if git rev-parse "$cand" >/dev/null 2>&1; then TAG_REF="$cand"; break; fi
+            done
+            if [ -n "$TAG_REF" ]; then
+                git checkout "$TAG_REF" --quiet 2>/dev/null
+                echo -e "  ${GREEN}✓${NC} Checked out ${TAG_REF}"
             else
                 echo -e "  ${RED}✗${NC} Version ${PIN_VERSION} not found. Available versions:"
-                git tag -l 'v*' | sort -V | sed 's/^/    /'
+                git tag -l 'brainstem-v*' 'v*' | sort -V | sed 's/^/    /'
                 exit 1
             fi
+        fi
+        # Restore any preserved user files over the fresh checkout.
+        if [ -n "$FRESH_BACKUP" ]; then
+            [ -f "$FRESH_BACKUP/soul.md" ] && cp "$FRESH_BACKUP/soul.md" "$SOUL_FILE" 2>/dev/null || true
+            [ -f "$FRESH_BACKUP/.env" ] && cp "$FRESH_BACKUP/.env" "$ENV_FILE" 2>/dev/null || true
+            for af in "$FRESH_BACKUP/agents"/*.py; do
+                [ -f "$af" ] || continue
+                fn=$(basename "$af")
+                case "$fn" in basic_agent.py|__init__.py) continue ;; esac
+                cp "$af" "$AGENTS_DIR/$fn" 2>/dev/null || true
+            done
+            rm -rf "$FRESH_BACKUP"
+            echo -e "  ${GREEN}✓${NC} Preserved your soul, agents, and config"
         fi
     fi
     echo -e "  ${GREEN}✓${NC} Source code ready"
@@ -373,7 +410,7 @@ setup_deps() {
         "$VENV_DIR/bin/pip" install -r "$req_file"
 
     # Verify the critical imports actually work
-    if ! "$VENV_DIR/bin/python" -c "import flask, requests, dotenv" 2>/dev/null; then
+    if ! "$VENV_DIR/bin/python" -c "import flask, flask_cors, requests, dotenv" 2>/dev/null; then
         echo -e "  ${RED}✗${NC} Dependencies failed to install"
         echo "    Try: $VENV_DIR/bin/pip install -r $req_file"
         exit 1
@@ -383,7 +420,7 @@ setup_deps() {
 
 ensure_deps() {
     # Quick import check — only install if something is missing
-    if "$VENV_DIR/bin/python" -c "import flask, requests, dotenv" 2>/dev/null; then
+    if "$VENV_DIR/bin/python" -c "import flask, flask_cors, requests, dotenv" 2>/dev/null; then
         echo -e "  ${GREEN}✓${NC} Dependencies verified"
         return 0
     fi
@@ -393,7 +430,7 @@ ensure_deps() {
     "$VENV_DIR/bin/pip" install -r "$req_file" --quiet 2>/dev/null || \
         "$VENV_DIR/bin/pip" install -r "$req_file"
 
-    if ! "$VENV_DIR/bin/python" -c "import flask, requests, dotenv" 2>/dev/null; then
+    if ! "$VENV_DIR/bin/python" -c "import flask, flask_cors, requests, dotenv" 2>/dev/null; then
         echo -e "  ${RED}✗${NC} Dependencies failed — try: $VENV_DIR/bin/pip install -r $req_file"
         exit 1
     fi
@@ -422,7 +459,7 @@ if [ ! -x "$VENV_PYTHON" ]; then
 fi
 
 # Verify deps on every launch (fast no-op if already installed)
-if ! "$VENV_PYTHON" -c "import flask, requests, dotenv" 2>/dev/null; then
+if ! "$VENV_PYTHON" -c "import flask, flask_cors, requests, dotenv" 2>/dev/null; then
     "$BRAINSTEM_HOME/venv/bin/pip" install -r requirements.txt --quiet 2>/dev/null || true
 fi
 
@@ -501,14 +538,19 @@ except: pass
             local auth_prefix="token"
             if [[ "$saved_token" != ghu_* ]]; then auth_prefix="Bearer"; fi
             local check_status
-            check_status=$(curl -s -o /dev/null -w "%{http_code}" \
+            check_status=$(curl -s --max-time 15 -o /dev/null -w "%{http_code}" \
                 -H "Authorization: $auth_prefix $saved_token" \
                 -H "Accept: application/json" \
                 -H "Editor-Version: vscode/1.95.0" \
                 -H "Editor-Plugin-Version: copilot/1.0.0" \
-                "https://api.github.com/copilot_internal/v2/token" 2>/dev/null)
+                "https://api.github.com/copilot_internal/v2/token" 2>/dev/null) || true
             if [[ "$check_status" == "200" ]]; then
                 echo -e "  ${GREEN}✓${NC} Already authenticated with GitHub Copilot"
+                needs_auth=false
+            elif [[ -z "$check_status" || "$check_status" == "000" ]]; then
+                # curl never reached GitHub (offline, captive portal, timeout) — that
+                # says nothing about the token. Keep it; the server retries live.
+                echo -e "  ${YELLOW}⚠${NC} Couldn't verify the saved token (no network) — keeping it"
                 needs_auth=false
             else
                 echo -e "  ${YELLOW}⚠${NC} Saved token expired — re-authenticating..."
@@ -524,9 +566,16 @@ except: pass
         echo -e "  ${CYAN}Authenticating with GitHub Copilot...${NC}"
         echo ""
 
+        # Best-effort auth: disable `set -e` for the whole block. Every curl and JSON
+        # parse below tolerates failure (empty response when offline), and the code
+        # already handles those cases gracefully — but under `set -e` the very first
+        # failed command substitution would abort the installer before the server can
+        # start. The user can always finish signing in later at /login.
+        set +e
+
         # Request device code
         local device_resp
-        device_resp=$(curl -fsSL -X POST "https://github.com/login/device/code" \
+        device_resp=$(curl -fsSL --max-time 15 -X POST "https://github.com/login/device/code" \
             -H "Accept: application/json" \
             -H "Content-Type: application/x-www-form-urlencoded" \
             -d "client_id=${client_id}" 2>/dev/null)
@@ -556,10 +605,10 @@ except: pass
             for i in $(seq 1 60); do
                 sleep "${interval:-5}"
                 local poll_resp
-                poll_resp=$(curl -fsSL -X POST "https://github.com/login/oauth/access_token" \
+                poll_resp=$(curl -fsSL --max-time 15 -X POST "https://github.com/login/oauth/access_token" \
                     -H "Accept: application/json" \
                     -H "Content-Type: application/x-www-form-urlencoded" \
-                    -d "client_id=${client_id}&device_code=${device_code}&grant_type=urn:ietf:params:oauth:grant-type:device_code" 2>/dev/null)
+                    -d "client_id=${client_id}&device_code=${device_code}&grant_type=urn:ietf:params:oauth:grant-type:device_code" 2>/dev/null) || true
 
                 local access_token error
                 access_token=$(echo "$poll_resp" | "$venv_python" -c "import sys,json; d=json.load(sys.stdin); print(d.get('access_token',''))" 2>/dev/null)
@@ -577,12 +626,12 @@ with open(sys.argv[2], 'w') as f: json.dump(out, f)
 
                     # Validate Copilot access immediately
                     local copilot_check copilot_status
-                    copilot_check=$(curl -s -w "\n%{http_code}" \
+                    copilot_check=$(curl -s --max-time 15 -w "\n%{http_code}" \
                         -H "Authorization: token $access_token" \
                         -H "Accept: application/json" \
                         -H "Editor-Version: vscode/1.95.0" \
                         -H "Editor-Plugin-Version: copilot/1.0.0" \
-                        "https://api.github.com/copilot_internal/v2/token" 2>/dev/null)
+                        "https://api.github.com/copilot_internal/v2/token" 2>/dev/null) || true
                     copilot_status=$(echo "$copilot_check" | tail -1)
 
                     if [[ "$copilot_status" == "200" ]]; then
@@ -613,6 +662,7 @@ with open(sys.argv[2], 'w') as f: json.dump(out, f)
                 fi
             done
         fi
+        set -e   # end best-effort auth block
     fi
 
     # Step 2: Launch brainstem
@@ -635,7 +685,7 @@ with open(sys.argv[2], 'w') as f: json.dump(out, f)
     (sleep 3 && (open "http://localhost:7071" 2>/dev/null || xdg-open "http://localhost:7071" 2>/dev/null)) &
 
     # Final dep safety net — if somehow we got here without deps, fix it
-    if ! "$venv_python" -c "import flask, requests, dotenv" 2>/dev/null; then
+    if ! "$venv_python" -c "import flask, flask_cors, requests, dotenv" 2>/dev/null; then
         echo -e "  ${YELLOW}⚠${NC} Fixing missing dependencies..."
         "$VENV_DIR/bin/pip" install -r "$BRAINSTEM_HOME/src/rapp_brainstem/requirements.txt" --quiet 2>/dev/null || \
             "$VENV_DIR/bin/pip" install -r "$BRAINSTEM_HOME/src/rapp_brainstem/requirements.txt"
@@ -645,8 +695,16 @@ with open(sys.argv[2], 'w') as f: json.dump(out, f)
     # When piped (curl | bash), exec can lose the TTY and hang.
     if [ -t 0 ]; then
         exec "$venv_python" brainstem.py
-    else
+    elif ( : </dev/tty ) 2>/dev/null; then
+        # Piped installer with a USABLE controlling terminal — reattach stdin.
+        # Test by opening it: the /dev/tty node exists even without a controlling
+        # terminal (ssh without -t, CI), where only the open fails — a bare `-e`
+        # check would take this branch and die on the redirect.
         "$venv_python" brainstem.py </dev/tty
+    else
+        # No controlling terminal at all (ssh without -t, CI, a container). Reattaching
+        # /dev/tty would error out; just run the server on the inherited stdin.
+        "$venv_python" brainstem.py
     fi
 }
 

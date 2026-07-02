@@ -330,7 +330,7 @@
               <p>Edit <code>local.settings.json</code> with your Azure OpenAI credentials, then publish.</p>
               <div class="cmd" onclick="copyCmd(event, this)">func azure functionapp publish YOUR_APP_NAME --build remote</div>
               <p style="margin-top:8px">Or deploy from the Azure Portal:</p>
-              <p style="margin-top:4px"><a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkody-w%2Frapp-installer%2Fmain%2Fazuredeploy.json" target="_blank"><img src="https://aka.ms/deploytoazurebutton" alt="Deploy to Azure" style="height:32px"></a></p>
+              <p style="margin-top:4px"><a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Faibast-agents-library%2Fmain%2Fazuredeploy.json" target="_blank"><img src="https://aka.ms/deploytoazurebutton" alt="Deploy to Azure" style="height:32px"></a></p>
             </div>
             <div class="step">
               <h3>Test the cloud deployment</h3>
@@ -389,6 +389,7 @@
 
 <div class="links">
   <a href="https://github.com/microsoft/aibast-agents-library">GitHub</a>
+  <a href="https://github.com/microsoft/aibast-agents-library/issues">Issues &amp; Feedback</a>
   <a href="https://github.com/kody-w/CommunityRAPP">Hippocampus Repo</a>
   <a href="https://kody-w.github.io/CommunityRAPP/onboard.html">Hippocampus Guide</a>
   <a href="rapp_brainstem/README.md">Brainstem Docs</a>
@@ -534,5 +535,20 @@
   applyHash();
   window.addEventListener('hashchange', applyHash);
 </script>
+
+<div style="max-width:620px;width:100%;margin:40px auto;padding:0 0 60px;">
+  <h2 style="font-size:1.3em;margin-bottom:16px;color:#e6edf3;font-weight:600;">Current Limitations</h2>
+  <div style="background:#1c1f26;border:1px solid #d29922;border-radius:8px;padding:14px 18px;margin-bottom:16px;color:#d29922;font-size:13px;line-height:1.6;">
+    ⚠️ <strong>IMPORTANT:</strong> This is an experimental project managed by a v-team from the Artificial Intelligence Business Applications Specialist Team (AIBAST), not an officially supported Microsoft product.
+  </div>
+  <p style="color:#8b949e;line-height:1.7;font-size:14px;margin-bottom:12px;">This project is still in beta. Even if we're optimizing it for best-practice adherence, by using it you might sometimes experience unwanted patterns, errors, or simply bad architectures. By filing a <a href="https://github.com/microsoft/aibast-agents-library/issues" style="color:#58a6ff;">GitHub issue</a> you will help us improve these tools.</p>
+  <hr style="margin:30px 0;border:none;border-top:1px solid #21262d;">
+  <p style="color:#484f58;font-size:11px;line-height:1.6;">
+    This project has adopted the <a href="https://opensource.microsoft.com/codeofconduct/" style="color:#58a6ff;">Microsoft Open Source Code of Conduct</a>.
+    This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow <a href="https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general" style="color:#58a6ff;">Microsoft's Trademark &amp; Brand Guidelines</a>.
+    MIT License — Copyright (c) 2026 Microsoft.
+  </p>
+</div>
+
 </body>
 </html>

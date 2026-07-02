@@ -59,7 +59,9 @@ class ManageMemoryAgent(BasicAgent):
 
     def store_memory(self, memory_type, content, importance, tags):
         memory_data = self.storage_manager.read_json()
-        if not memory_data:
+        # Tolerate a corrupted/foreign store (non-object) instead of crashing on
+        # dict assignment below.
+        if not isinstance(memory_data, dict):
             memory_data = {}
 
         memory_id = str(uuid.uuid4())

@@ -43,13 +43,13 @@ class HackerNewsAgent(BasicAgent):
             top_stories_url = f"{base_url}topstories.json"
             story_url = lambda story_id: f"{base_url}item/{story_id}.json"
 
-            response = requests.get(top_stories_url)
+            response = requests.get(top_stories_url, timeout=10)
             response.raise_for_status()
             top_story_ids = response.json()[:10]
 
             stories = []
             for story_id in top_story_ids:
-                story_response = requests.get(story_url(story_id))
+                story_response = requests.get(story_url(story_id), timeout=10)
                 story_response.raise_for_status()
                 story_data = story_response.json()
                 if story_data:

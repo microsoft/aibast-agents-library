@@ -563,6 +563,55 @@
     color: #24292e;
     border-color: #57606a;
   }
+
+  /* ── Pearl polish ─────────────────────────────────────────────────────────
+     Additive refinements only — no new elements, no changed interactions. */
+
+  /* 1. Header survives narrow viewports: let the control cluster wrap onto a
+        second line instead of pushing the model picker and buttons off-screen. */
+  header { flex-wrap: wrap; row-gap: 8px; }
+  header .controls { flex-wrap: wrap; justify-content: flex-end; }
+  @media (max-width: 600px) {
+    header { padding: 10px 14px; }
+    #model-select { max-width: 44vw; }
+    #chat, footer { padding-left: 14px; padding-right: 14px; }
+  }
+  /* Consistent keyboard-focus ring across interactive chrome (accessibility). */
+  .icon-btn:focus-visible, #model-select:focus-visible, #send:focus-visible,
+  .starter-btn:focus-visible, .toolbar-link:focus-visible, .rar-add-btn:focus-visible,
+  .rar-group-chip:focus-visible, #rar-search-input:focus-visible {
+    outline: 2px solid #58a6ff; outline-offset: 1px;
+  }
+
+  /* 2. Light mode — lift the system-notice text and code chips to a legible
+        contrast (the dark tokens read ~2.9:1 on white, below WCAG AA). */
+  body.light-mode .msg.system .bubble { color: #57606a; }
+  body.light-mode .msg.system .bubble code {
+    background: rgba(175,184,193,0.2); color: #24292e;
+  }
+
+  /* 3. Light mode — finish the assistant-bubble markdown overrides that the base
+        light theme left pointing at dark-mode colours. */
+  body.light-mode .msg.assistant .bubble a { color: #0969da; }
+  body.light-mode .msg.assistant .bubble blockquote {
+    border-left-color: #d0d7de; color: #57606a;
+  }
+  body.light-mode .msg.assistant .bubble hr { border-top-color: #d0d7de; }
+  body.light-mode .msg.assistant .bubble code { color: #24292e; }
+
+  /* 4. Light mode — complete the voice panel: it only recoloured its top border,
+        leaving the other three borders and labels dark. */
+  body.light-mode #voice-panel {
+    border-color: #d0d7de;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  }
+  body.light-mode #voice-panel label { color: #57606a; }
+  body.light-mode #voice-panel .panel-status { color: #57606a; }
+
+  /* 5. Light mode — the device code is the single most important thing on the
+        sign-in card; give it (and the card links) the light accent for contrast. */
+  body.light-mode .device-code { color: #0969da; }
+  body.light-mode .login-card a { color: #0969da; }
 </style>
 </head>
 <body>
@@ -870,6 +919,14 @@
   let loginDismissed = false;
   let pollAttempts = 0;
   const MAX_POLL_ATTEMPTS = 180;  // 15 min at 5s intervals (matches device code expiry)
+  // Each login start bumps the generation; an older poll loop sees it's been
+  // superseded and stops. Without this, sign-in + resume + switch could run several
+  // loops at once — doubling /login/poll traffic and racing the attempt counter.
+  let pollGen = 0;
+  function startPollLogin() {
+    pollAttempts = 0;
+    pollLogin(++pollGen);
+  }
 
   async function switchAccount() {
     clog('auth.switch_account');
@@ -890,8 +947,7 @@
       loginDismissed = false;
       copyDeviceCode();
       window.open(d.verification_uri, '_blank');
-      pollAttempts = 0;
-      pollLogin();
+      startPollLogin();
     } catch (e) {
       alert('Failed to switch: ' + e.message);
     }
@@ -925,8 +981,7 @@
         document.getElementById('verify-link').href = d.verification_uri;
         document.getElementById('login-status').textContent = 'Waiting for authorization...';
         loginInProgress = true;
-        pollAttempts = 0;
-        pollLogin();
+        startPollLogin();
       }
     } catch { /* ignore — user can click Sign In manually */ }
   }
@@ -995,7 +1050,12 @@
 
   window.addEventListener('dragleave', (e) => {
     e.preventDefault();
-    if (e.target === dropOverlay) {
+    // dragleave fires for every element the pointer crosses, and the overlay has
+    // pointer-events:none so it's never e.target. Hide only when the drag actually
+    // leaves the window, otherwise the overlay sticks forever after a non-drop.
+    if (e.relatedTarget === null ||
+        e.clientX <= 0 || e.clientY <= 0 ||
+        e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) {
       dropOverlay.style.display = 'none';
     }
   });
@@ -1141,9 +1201,13 @@
       const ta = document.createElement('textarea');
       ta.value = code; ta.style.position = 'fixed'; ta.style.opacity = '0';
       document.body.appendChild(ta); ta.select();
-      document.execCommand('copy'); document.body.removeChild(ta);
-      document.getElementById('copy-toast').textContent = 'Copied to clipboard';
-      setTimeout(() => { document.getElementById('copy-toast').innerHTML = '&nbsp;'; }, 2000);
+      let ok = false;
+      try { ok = document.execCommand('copy'); } catch {}
+      document.body.removeChild(ta);
+      const toast = document.getElementById('copy-toast');
+      // Only claim success when the copy actually worked; otherwise tell the user how.
+      toast.textContent = ok ? 'Copied to clipboard' : 'Press Ctrl/Cmd+C to copy the code';
+      setTimeout(() => { toast.innerHTML = '&nbsp;'; }, 2000);
     }
   }
 
@@ -1162,8 +1226,7 @@
       document.getElementById('verify-link').href = d.verification_uri;
       copyDeviceCode();
       window.open(d.verification_uri, '_blank');
-      pollAttempts = 0;
-      pollLogin();
+      startPollLogin();
     } catch (e) {
       clog('login.start_failed', { error: e.message });
       alert('Failed to start login: ' + e.message);
@@ -1172,7 +1235,9 @@
     }
   }
 
-  async function pollLogin() {
+  async function pollLogin(gen) {
+    // A newer login flow started — this loop is stale, stop silently.
+    if (gen !== pollGen) return;
     pollAttempts++;
     if (pollAttempts > MAX_POLL_ATTEMPTS) {
       clog('login.poll_timeout');
@@ -1217,8 +1282,8 @@
         checkHealth();
         return;
       }
-      setTimeout(pollLogin, 5000);
-    } catch { setTimeout(pollLogin, 5000); }
+      setTimeout(() => pollLogin(gen), 5000);
+    } catch { setTimeout(() => pollLogin(gen), 5000); }
   }
 
   // ── Models ──
@@ -1264,8 +1329,31 @@
   });
 
   // ── Chat rendering ──
+  // Render markdown safely: marked produces HTML from model/agent output, which we
+  // must not trust blindly. Parse into an inert <template>, strip active content
+  // (script/style/iframe/…), on* handlers, and javascript: URLs, then use the result.
+  const _SANITIZE_BAD_TAGS = ['SCRIPT','STYLE','IFRAME','OBJECT','EMBED','LINK','META','FORM','BASE'];
+  function sanitizeHtml(html) {
+    const tpl = document.createElement('template');
+    tpl.innerHTML = html;
+    tpl.content.querySelectorAll('*').forEach(el => {
+      if (_SANITIZE_BAD_TAGS.includes(el.tagName)) { el.remove(); return; }
+      [...el.attributes].forEach(attr => {
+        const name = attr.name.toLowerCase();
+        if (name.startsWith('on')) el.removeAttribute(attr.name);
+        else if ((name === 'href' || name === 'src') && /^\s*javascript:/i.test(attr.value)) {
+          el.removeAttribute(attr.name);
+        }
+      });
+    });
+    return tpl.innerHTML;
+  }
+
   function appendMsg(role, text, logs) {
     const chat = document.getElementById('chat');
+    // Only auto-scroll to the newest message if the user is already near the bottom
+    // (or it's their own message) — never yank the view while they read scrollback.
+    const nearBottom = (chat.scrollHeight - chat.scrollTop - chat.clientHeight) < 120;
     const wrap = document.createElement('div');
     wrap.className = `msg ${role}`;
 
@@ -1280,7 +1368,7 @@
     const bubble = document.createElement('div');
     bubble.className = 'bubble';
     if (role === 'assistant' && typeof marked !== 'undefined') {
-      bubble.innerHTML = marked.parse(text);
+      bubble.innerHTML = sanitizeHtml(marked.parse(text));
       bubble.querySelectorAll('a').forEach(a => a.target = '_blank');
     } else {
       bubble.textContent = text;
@@ -1290,14 +1378,28 @@
     if (logs) {
       const wrapper = document.createElement('div');
       wrapper.className = 'agent-logs-wrapper';
-      // Extract agent names from log lines like "[AgentName] result"
-      const agentNames = [...new Set((logs.match(/\[([^\]]+)\]/g) || []).map(m => m.slice(1, -1)))];
+      // Extract agent names from log lines like "[AgentName] result". Anchor to the
+      // start of a line so brackets inside the JSON result (e.g. a "stories": [...]
+      // array) aren't mistaken for agent names and dumped into the label.
+      const agentNames = [...new Set(
+        [...logs.matchAll(/^\s*\[([^\]\n]+)\]/gm)].map(m => m[1].trim())
+      )];
       const label = document.createElement('div');
       label.className = 'logs-label';
-      const nameSpan = agentNames.length > 0
-        ? ' <span class="agent-name">' + agentNames.join(', ') + '</span>'
-        : '';
-      label.innerHTML = '<span class="arrow">\u25B6</span> agent called' + nameSpan;
+      // Build from DOM nodes: agentNames are scraped from tool output and must not be
+      // interpolated into innerHTML.
+      const arrow = document.createElement('span');
+      arrow.className = 'arrow';
+      arrow.textContent = '\u25B6';
+      label.appendChild(arrow);
+      label.appendChild(document.createTextNode(' agent called'));
+      if (agentNames.length > 0) {
+        label.appendChild(document.createTextNode(' '));
+        const nameEl = document.createElement('span');
+        nameEl.className = 'agent-name';
+        nameEl.textContent = agentNames.join(', ');
+        label.appendChild(nameEl);
+      }
       const logBox = document.createElement('div');
       logBox.className = 'agent-logs collapsed';
       logBox.textContent = logs;
@@ -1313,7 +1415,7 @@
     wrap.appendChild(avatar);
     wrap.appendChild(right);
     chat.appendChild(wrap);
-    chat.scrollTop = chat.scrollHeight;
+    if (nearBottom || role === 'user') chat.scrollTop = chat.scrollHeight;
     return wrap;
   }
 
@@ -1348,6 +1450,9 @@
 
   // ── Send ──
   async function sendMessage() {
+    // A request in flight disables the Send button, but the Enter-key handler would
+    // still fire and start an overlapping /chat that corrupts history order. Guard it.
+    if (document.getElementById('send').disabled) return;
     const text = input.value.trim();
     if (!text) return;
 
@@ -1943,7 +2048,7 @@
     const payload = {
       exported_at: new Date().toISOString(),
       session_id: sessionId,
-      brainstem_version: document.title,
+      brainstem_version: (document.getElementById('version-tag')?.textContent || '').replace(/^v/, '') || 'unknown',
       model: document.getElementById('model-select')?.value || 'unknown',
       turns: fullTranscript
     };
