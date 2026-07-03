@@ -41,10 +41,10 @@ else
     fail "install.sh should create brainstem CLI wrapper"
 fi
 
-if grep -q 'rapp-installer.git' "$REPO_ROOT/install.sh" && ! grep -q 'RAPPAI' "$REPO_ROOT/install.sh"; then
+if grep -q 'aibast-agents-library.git' "$REPO_ROOT/install.sh" && ! grep -q 'RAPPAI' "$REPO_ROOT/install.sh"; then
     pass "install.sh clones public repo"
 else
-    fail "install.sh should clone public rapp-installer repo"
+    fail "install.sh should clone public aibast-agents-library repo"
 fi
 
 echo ""

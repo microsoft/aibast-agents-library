@@ -69,6 +69,10 @@ class ContextMemoryAgent(BasicAgent):
     def _recall_context(self, max_messages, keywords, full_recall=False):
         memory_data = self.storage_manager.read_json()
 
+        # A hand-edited or foreign memory file may not be a JSON object — don't crash.
+        if not isinstance(memory_data, dict):
+            memory_data = {}
+
         if not memory_data:
             if self.storage_manager.current_guid:
                 return f"I don't have any memories stored yet for user ID {self.storage_manager.current_guid}."
@@ -92,7 +96,7 @@ class ContextMemoryAgent(BasicAgent):
         if full_recall:
             sorted_memories = sorted(
                 memories,
-                key=lambda x: (x.get('date', ''), x.get('time', '')),
+                key=lambda x: (x.get('date') or '', x.get('time') or ''),
                 reverse=True
             )
             memory_lines = []
@@ -126,13 +130,13 @@ class ContextMemoryAgent(BasicAgent):
             else:
                 memories = sorted(
                     memories,
-                    key=lambda x: (x.get('date', ''), x.get('time', '')),
+                    key=lambda x: (x.get('date') or '', x.get('time') or ''),
                     reverse=True
                 )[:max_messages]
         else:
             memories = sorted(
                 memories,
-                key=lambda x: (x.get('date', ''), x.get('time', '')),
+                key=lambda x: (x.get('date') or '', x.get('time') or ''),
                 reverse=True
             )[:max_messages]
 

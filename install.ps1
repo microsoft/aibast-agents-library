@@ -5,6 +5,15 @@
 
 $ErrorActionPreference = "Stop"
 
+# Force TLS 1.2 for every web request in this session. Stock Windows PowerShell 5.1
+# on older builds negotiates TLS 1.0 by default, which GitHub and raw.githubusercontent
+# now refuse — the download would fail with an opaque "could not create SSL/TLS secure
+# channel". Additive and harmless where 1.2 is already the default.
+try {
+    [Net.ServicePointManager]::SecurityProtocol = `
+        [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+} catch {}
+
 $BRAINSTEM_HOME = "$env:USERPROFILE\.brainstem"
 $BRAINSTEM_BIN = "$env:USERPROFILE\.local\bin"
 $REPO_URL = "https://github.com/microsoft/aibast-agents-library.git"
@@ -75,6 +84,92 @@ function Install-WithWinget {
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
 }
 
+function Resolve-PythonExe {
+    # Return a real Python 3 executable. Prefer the one Check-Prerequisites already
+    # validated ($script:PythonExe); otherwise probe — this matters on the
+    # "already up to date" fast path, which skips Check-Prerequisites and would
+    # otherwise fall back to a bare "python" that may be the Windows Store alias
+    # stub (it prints "Python was not found" and opens the Store instead of running).
+    if ($script:PythonExe) { return $script:PythonExe }
+    foreach ($cmd in @("python3", "python")) {
+        try {
+            $out = & $cmd --version 2>&1
+            if ($LASTEXITCODE -eq 0 -and $out -match "Python 3\.(\d+)") {
+                $script:PythonExe = $cmd
+                return $cmd
+            }
+        } catch {}
+    }
+    $direct = "$env:LOCALAPPDATA\Programs\Python\Python311\python.exe"
+    if (Test-Path $direct) { $script:PythonExe = $direct; return $direct }
+    return "python"
+}
+
+function Test-PipWorks {
+    param([string]$Py)
+    $prev = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    try {
+        & $Py -m pip --version 2>&1 | Out-Null
+        return ($LASTEXITCODE -eq 0)
+    } catch {
+        return $false
+    } finally {
+        $ErrorActionPreference = $prev
+    }
+}
+
+function Ensure-Pip {
+    # A found Python is NOT guaranteed to have pip. Corp-managed images and
+    # stripped/partial installs ship a working python.exe with no pip module —
+    # seen in the wild on a fresh Windows 11 machine: every pip call printed
+    # "No module named pip", then the server died at `import requests` behind a
+    # dead localhost:7071 browser tab. Bootstrap order: ensurepip (stdlib,
+    # works offline, restores the pip bundled with Python) -> get-pip.py (network).
+    # Returns $true only when `python -m pip` actually works.
+    $py = Resolve-PythonExe
+    if (Test-PipWorks $py) { return $true }
+
+    Write-Host "  [..] Python has no pip — bootstrapping via ensurepip..." -ForegroundColor Yellow
+    $prev = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    try {
+        # Write-Host, not bare pipeline output: Ensure-Pip's return value is its
+        # pipeline — stray tool output here would corrupt the caller's boolean.
+        & $py -m ensurepip --upgrade --default-pip 2>&1 | ForEach-Object { Write-Host "$_" }
+    } catch {
+    } finally {
+        $ErrorActionPreference = $prev
+    }
+    if (Test-PipWorks $py) {
+        Write-Host "  [OK] pip bootstrapped via ensurepip" -ForegroundColor Green
+        return $true
+    }
+
+    Write-Host "  [..] ensurepip unavailable — fetching get-pip.py..." -ForegroundColor Yellow
+    $getPip = Join-Path $env:TEMP "rapp-get-pip.py"
+    $prev = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    try {
+        Invoke-WebRequest -Uri "https://bootstrap.pypa.io/get-pip.py" -OutFile $getPip -UseBasicParsing -TimeoutSec 120
+        & $py $getPip 2>&1 | ForEach-Object { Write-Host "$_" }
+    } catch {
+    } finally {
+        $ErrorActionPreference = $prev
+        Remove-Item $getPip -Force -ErrorAction SilentlyContinue
+    }
+    if (Test-PipWorks $py) {
+        Write-Host "  [OK] pip bootstrapped via get-pip.py" -ForegroundColor Green
+        return $true
+    }
+
+    Write-Host "  [X] Python at '$py' has no pip and it could not be bootstrapped." -ForegroundColor Red
+    Write-Host "      Fix it manually, then re-run this installer:" -ForegroundColor Yellow
+    Write-Host "        `"$py`" -m ensurepip --upgrade --default-pip" -ForegroundColor Cyan
+    Write-Host "      Or reinstall Python from https://python.org with 'pip' checked." -ForegroundColor Yellow
+    return $false
+}
+
 function Check-Prerequisites {
     Write-Host "Checking prerequisites..."
 
@@ -83,7 +178,7 @@ function Check-Prerequisites {
         winget --version 2>&1 | Out-Null
     } catch {
         Write-Host "  [X] winget not found — this installer requires Windows 10 1709+ or Windows 11" -ForegroundColor Red
-        exit 1
+        throw "winget not found"
     }
 
     # Git
@@ -102,7 +197,7 @@ function Check-Prerequisites {
             Write-Host "  [OK] Git installed" -ForegroundColor Green
         } catch {
             Write-Host "  [X] Git install failed — install manually from https://git-scm.com" -ForegroundColor Red
-            exit 1
+            throw "Git install failed"
         }
     }
 
@@ -184,7 +279,7 @@ function Check-Prerequisites {
         if (-not $pythonOk) {
             Write-Host "  [X] Python install failed — install from https://python.org" -ForegroundColor Red
             Write-Host "      Make sure to check 'Add Python to PATH' during install" -ForegroundColor Yellow
-            exit 1
+            throw "Python 3.11+ install failed"
         }
     }
 
@@ -241,12 +336,27 @@ function Install-Brainstem {
             if (Test-Path $AgentsDir) { Copy-Item "$AgentsDir\*.py" "$Backup\" -ErrorAction SilentlyContinue }
             Write-Host "  [OK] Backed up soul, agents, config" -ForegroundColor Green
 
-            # Pull latest
+            # Pull latest from THIS installer's repo. A prior install may have cloned from a
+            # different origin (fork/mirror); repoint origin and hard-reset to it so the upgrade
+            # is reliable even across unrelated histories. User files (soul, agents, .env) were
+            # backed up above and are restored below; tokens and .brainstem_data are gitignored.
             Push-Location "$BRAINSTEM_HOME\src"
-            try { git stash --quiet 2>&1 | Out-Null } catch {}
-            try { git pull --quiet 2>&1 | Out-Null } catch {}
+            $prevEAP = $ErrorActionPreference
+            $ErrorActionPreference = 'Continue'
+            git remote set-url origin $REPO_URL 2>&1 | Out-Null
+            git fetch --quiet origin main 2>&1 | Out-Null
+            $pullOk = ($LASTEXITCODE -eq 0)
+            if ($pullOk) {
+                git reset --hard --quiet FETCH_HEAD 2>&1 | Out-Null
+                $pullOk = ($LASTEXITCODE -eq 0)
+            }
+            $ErrorActionPreference = $prevEAP
             Pop-Location
-            Write-Host "  [OK] Framework updated" -ForegroundColor Green
+            if ($pullOk) {
+                Write-Host "  [OK] Framework updated" -ForegroundColor Green
+            } else {
+                Write-Host "  [!] Update download failed — keeping existing files (v$LocalVer)" -ForegroundColor Yellow
+            }
 
             # Restore user files
             if (Test-Path "$Backup\soul.md") { Copy-Item "$Backup\soul.md" $SoulFile -Force }
@@ -257,7 +367,15 @@ function Install-Brainstem {
                 }
             }
             Remove-Item -Recurse -Force $Backup -ErrorAction SilentlyContinue
-            Write-Host "  [OK] Upgrade complete: v$LocalVer -> v$RemoteVer" -ForegroundColor Green
+            # Report the version actually on disk after the pull, not the remote string —
+            # if the pull failed the banner must not claim a successful upgrade.
+            $NewVer = $LocalVer
+            if (Test-Path $VerFile) { $NewVer = (Get-Content $VerFile -Raw).Trim() }
+            if ($pullOk -and $NewVer -ne $LocalVer) {
+                Write-Host "  [OK] Upgrade complete: v$LocalVer -> v$NewVer" -ForegroundColor Green
+            } elseif ($pullOk) {
+                Write-Host "  [OK] Already at the latest framework (v$NewVer)" -ForegroundColor Green
+            }
         }
     } else {
         if (Test-Path "$BRAINSTEM_HOME\src") {
@@ -267,7 +385,7 @@ function Install-Brainstem {
         git clone --quiet $REPO_URL "$BRAINSTEM_HOME\src" 2>&1
         if ($LASTEXITCODE -ne 0) {
             Write-Host "  [X] Failed to clone repository" -ForegroundColor Red
-            exit 1
+            throw "git clone failed"
         }
     }
     Write-Host "  [OK] Source code ready" -ForegroundColor Green
@@ -275,17 +393,49 @@ function Install-Brainstem {
 
 function Run-PipInstall {
     $reqFile = "$BRAINSTEM_HOME\src\rapp_brainstem\requirements.txt"
-    $py = if ($script:PythonExe) { $script:PythonExe } else { "python" }
-    & $py -m pip install -r $reqFile
-    if ($LASTEXITCODE -ne 0) {
-        & $py -m pip install -r $reqFile --user
+    $py = Resolve-PythonExe
+    # Without pip every install below is guaranteed noise — bootstrap it first.
+    # On $false, Ensure-Pip already printed the actionable fix; the dep gates in
+    # Setup-Dependencies / Launch-Brainstem turn that into an honest failure.
+    if (-not (Ensure-Pip)) { return }
+    # Use the call operator, NOT Start-Process (same reasoning as Check-PythonDeps):
+    # the call operator quotes a $reqFile path containing spaces correctly, and it
+    # needs no console attachment — Start-Process -NoNewWindow -Wait can block
+    # forever in consoleless sessions (CI, some terminal hosts). Drop
+    # ErrorActionPreference to Continue locally so pip's stderr progress lines are
+    # not promoted to a terminating NativeCommandError under the script's global
+    # $ErrorActionPreference = 'Stop'.
+    $prev = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    try {
+        & $py -m pip install -r $reqFile 2>&1 | ForEach-Object { "$_" }
+        if ($LASTEXITCODE -ne 0) {
+            & $py -m pip install -r $reqFile --user 2>&1 | ForEach-Object { "$_" }
+        }
+    } finally {
+        $ErrorActionPreference = $prev
     }
 }
 
 function Check-PythonDeps {
-    $py = if ($script:PythonExe) { $script:PythonExe } else { "python" }
-    & $py -c "import flask, flask_cors, requests, dotenv" *> $null
-    return $LASTEXITCODE -eq 0
+    $py = Resolve-PythonExe
+    # Use the call operator, NOT Start-Process -ArgumentList. Start-Process joins array
+    # arguments with spaces but does not re-quote an element that itself contains spaces,
+    # so "-c", "import flask, flask_cors, ..." reached python as the tokens
+    # "-c import flask, flask_cors, ..." — python's -c got only "import" -> SyntaxError.
+    # The call operator quotes arguments correctly. Drop ErrorActionPreference to Continue
+    # locally so python's stderr (e.g. when a module is missing) is not promoted to a
+    # terminating NativeCommandError under the script's global $ErrorActionPreference='Stop'.
+    $prev = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    try {
+        & $py -c "import flask, flask_cors, requests, dotenv" 2>&1 | Out-Null
+        return ($LASTEXITCODE -eq 0)
+    } catch {
+        return $false
+    } finally {
+        $ErrorActionPreference = $prev
+    }
 }
 
 function Setup-Dependencies {
@@ -293,10 +443,22 @@ function Setup-Dependencies {
     Write-Host "Installing dependencies..."
     Push-Location "$BRAINSTEM_HOME\src\rapp_brainstem"
     Run-PipInstall
-    if (-not (Check-PythonDeps)) {
-        Write-Host "  [!] Some dependencies may not have installed correctly" -ForegroundColor Yellow
+    $depsOk = Check-PythonDeps
+    if (-not $depsOk) {
+        # v0.6.2 accidentally self-healed transient pip failures via the second
+        # Run-PipInstall in Launch-Brainstem. Keep one deliberate retry here so
+        # a PyPI/DNS blip doesn't hard-abort a fresh install.
+        Write-Host "  [..] Dependency check failed — retrying pip install once..." -ForegroundColor Yellow
+        Run-PipInstall
+        $depsOk = Check-PythonDeps
     }
     Pop-Location
+    if (-not $depsOk) {
+        # Never print [OK] and continue toward a server that will die at
+        # `import requests` behind a dead browser tab — stop here, honestly,
+        # with the guidance Ensure-Pip/pip printed above.
+        throw "Python dependencies failed to install (see messages above)"
+    }
     Write-Host "  [OK] Dependencies installed" -ForegroundColor Green
 }
 
@@ -308,12 +470,14 @@ function Install-CLI {
         New-Item -ItemType Directory -Force -Path $BRAINSTEM_BIN | Out-Null
     }
 
-    # Batch wrapper (works in cmd.exe and PowerShell)
-    $py = if ($script:PythonExe) { $script:PythonExe } else { "python" }
+    # Batch wrapper (works in cmd.exe and PowerShell). Quote the interpreter path —
+    # the direct-path fallback (…\First Last\AppData\…\python.exe) contains spaces and
+    # would otherwise split into a broken command.
+    $py = Resolve-PythonExe
     $cmdContent = @"
 @echo off
 cd /d "$BRAINSTEM_HOME\src\rapp_brainstem"
-$py brainstem.py %*
+"$py" brainstem.py %*
 "@
     Set-Content -Path "$BRAINSTEM_BIN\brainstem.cmd" -Value $cmdContent
 
@@ -344,12 +508,31 @@ function Create-Env {
 }
 
 function Launch-Brainstem {
-    # Always pull latest before launching
+    # Refresh from this installer's repo before launching (no-op if already current).
     if (Test-Path "$BRAINSTEM_HOME\src\.git") {
         Push-Location "$BRAINSTEM_HOME\src"
-        try { git pull --quiet 2>&1 | Out-Null } catch {}
+        $prevEAP = $ErrorActionPreference
+        $ErrorActionPreference = 'Continue'
+        git remote set-url origin $REPO_URL 2>&1 | Out-Null
+        git pull --quiet origin main 2>&1 | Out-Null
+        $ErrorActionPreference = $prevEAP
         Pop-Location
     }
+
+    # Dependencies BEFORE auth: if they cannot be installed, fail now — not after
+    # walking the user through a GitHub device-code authorization they can't use.
+    Push-Location "$BRAINSTEM_HOME\src\rapp_brainstem"
+    if (-not (Check-PythonDeps)) {
+        Write-Host "  [..] Installing missing dependencies..." -ForegroundColor Yellow
+        Run-PipInstall
+        if (-not (Check-PythonDeps)) {
+            Pop-Location
+            # Launching anyway would crash at `import requests` and strand the user
+            # on a browser tab pointing at a server that never bound port 7071.
+            throw "Python dependencies are missing and could not be installed (see messages above)"
+        }
+    }
+    Pop-Location
 
     $tokenFile = "$BRAINSTEM_HOME\src\rapp_brainstem\.copilot_token"
     $clientId = "Iv1.b507a08c87ecfe98"
@@ -475,16 +658,10 @@ function Launch-Brainstem {
 
     Push-Location "$BRAINSTEM_HOME\src\rapp_brainstem"
 
-    # Ensure deps are installed (handles first-run failure or stale install)
-    if (-not (Check-PythonDeps)) {
-        Write-Host "  [..] Installing missing dependencies..." -ForegroundColor Yellow
-        Run-PipInstall
-    }
-
     # Open browser after a delay
     Start-Job -ScriptBlock { Start-Sleep -Seconds 3; Start-Process "http://localhost:7071" } | Out-Null
 
-    $py = if ($script:PythonExe) { $script:PythonExe } else { "python" }
+    $py = Resolve-PythonExe
     & $py brainstem.py
 }
 
@@ -503,9 +680,12 @@ function Main {
 
     Check-Prerequisites
     Install-Brainstem
-    Setup-Dependencies
+    # CLI wrappers and .env before dependencies: they are cheap, offline-safe and
+    # idempotent. If Setup-Dependencies throws, VERSION already matches remote, so
+    # a re-run takes the fast path and would otherwise never come back for them.
     Install-CLI
     Create-Env
+    Setup-Dependencies
 
     $installedVersion = ""
     $vf = "$BRAINSTEM_HOME\src\rapp_brainstem\VERSION"
@@ -520,4 +700,18 @@ function Main {
     Launch-Brainstem
 }
 
-Main
+# Invoked as `irm … | iex`, a bare `exit`/uncaught throw terminates the USER'S whole
+# PowerShell session — the window closes and the error vanishes. Catch here so a
+# failure prints an actionable message and control returns to their prompt instead.
+try {
+    Main
+} catch {
+    Write-Host ""
+    Write-Host "  [X] Install failed: $($_.Exception.Message)" -ForegroundColor Red
+    Write-Host "      Nothing was launched. Fix the issue above and re-run the installer." -ForegroundColor Yellow
+    Write-Host "      Need help? Open an issue at https://github.com/microsoft/aibast-agents-library/issues" -ForegroundColor Gray
+    Write-Host ""
+    # `irm | iex` has no $PSCommandPath — return to the prompt quietly. A file-based
+    # run (CI, a saved script) must still report failure through the exit code.
+    if ($PSCommandPath) { exit 1 }
+}
