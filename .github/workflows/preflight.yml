@@ -57,7 +57,21 @@ jobs:
             'rapp_brainstem/start.ps1',
             'rapp_ai/install.ps1'
           )
+          $bootstrapFiles = @(
+            'install.ps1',
+            'deploy.ps1',
+            'community_rapp/install.ps1',
+            'rapp_ai/install.ps1'
+          )
           $bad = $false
+          foreach ($file in $bootstrapFiles) {
+            $bytes = [System.IO.File]::ReadAllBytes("$PWD/$file")
+            if ($bytes.Length -ge 3 -and
+                $bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF) {
+              Write-Host "::error file=$file::UTF-8 BOM breaks irm <url> | iex in Windows PowerShell 5.1"
+              $bad = $true
+            }
+          }
           foreach ($file in $files) {
             $errors = $null
             [System.Management.Automation.Language.Parser]::ParseFile(
@@ -98,6 +112,8 @@ jobs:
           python -m pip install -q -r requirements-dev.txt
           python -m py_compile brainstem.py local_storage.py tests/soul_hash.py agents/*.py
           python -m pytest tests -q
+          python tests/test_model_selection.py
+          python tests/test_streaming.py
 
       - name: Installer contracts
         run: bash tests/test_installer.sh
@@ -220,7 +236,8 @@ jobs:
         if: runner.os == 'Windows'
         shell: powershell
         run: |
-          $boot = "iex (Get-Content -Raw -Encoding UTF8 '$PWD\install.ps1')"
+          $path = "$PWD\install.ps1"
+          $boot = "iex ([Text.Encoding]::UTF8.GetString([IO.File]::ReadAllBytes('$path')))"
           $encoded = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($boot))
           $command = "powershell -NoProfile -ExecutionPolicy Bypass -EncodedCommand $encoded > `"$env:RUNNER_TEMP\install.log`" 2>&1"
           Start-Process cmd -ArgumentList '/c', $command

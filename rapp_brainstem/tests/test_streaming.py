@@ -17,7 +17,7 @@ import json
 import unittest
 from unittest import mock
 
-BRAINSTEM_DIR = os.path.dirname(os.path.abspath(__file__))
+BRAINSTEM_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if BRAINSTEM_DIR not in sys.path:
     sys.path.insert(0, BRAINSTEM_DIR)
 

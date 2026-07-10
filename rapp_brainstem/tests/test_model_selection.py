@@ -6,7 +6,13 @@ Runs two ways:
     python  test_model_selection.py                  # standalone (no pytest needed)
 """
 import os
+import sys
 import tempfile
+
+BRAINSTEM_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if BRAINSTEM_DIR not in sys.path:
+    sys.path.insert(0, BRAINSTEM_DIR)
+
 import brainstem as bs
 
 

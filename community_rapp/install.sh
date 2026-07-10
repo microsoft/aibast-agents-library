@@ -79,7 +79,8 @@ PROJECT_NAME="${1:-}"
 if [ -z "$PROJECT_NAME" ]; then
     echo ""
     printf "Project name (e.g. my-project): "
-    read -r PROJECT_NAME
+    read -r PROJECT_NAME </dev/tty \
+        || die "Project name required without a terminal. Use: curl ... | bash -s -- my-project"
     [ -z "$PROJECT_NAME" ] && die "Project name is required."
 fi
 

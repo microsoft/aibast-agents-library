@@ -1,4 +1,4 @@
-﻿# CommunityRAPP — One-line installer for Windows (Hippocampus / Tier 2)
+# CommunityRAPP — One-line installer for Windows (Hippocampus / Tier 2)
 # Usage: irm https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/community_rapp/install.ps1 | iex
 #
 # Creates a ready-to-run CommunityRAPP project with persistent memory,
@@ -112,6 +112,7 @@ if (-not (Test-Path $ProjectsDir)) { New-Item -ItemType Directory -Path $Project
 
 Write-Host "Cloning CommunityRAPP..." -ForegroundColor Yellow
 git clone --depth 1 --quiet https://github.com/kody-w/CommunityRAPP.git $ProjectDir
+if ($LASTEXITCODE -ne 0) { throw "Failed to clone CommunityRAPP." }
 Write-Host "[OK] Cloned" -ForegroundColor Green
 
 # ── Venv + deps ─────────────────────────────────────────────
@@ -121,9 +122,13 @@ if ($PYTHON_CMD -match "^py ") {
 } else {
     & $PYTHON_CMD -m venv "$ProjectDir\.venv"
 }
+if ($LASTEXITCODE -ne 0 -or -not (Test-Path "$ProjectDir\.venv\Scripts\python.exe")) {
+    throw "Failed to create the project virtual environment."
+}
 
 Write-Host "Installing dependencies..." -ForegroundColor Yellow
 & "$ProjectDir\.venv\Scripts\pip.exe" install -r "$ProjectDir\requirements.txt" --quiet 2>$null
+if ($LASTEXITCODE -ne 0) { throw "Failed to install project dependencies." }
 Write-Host "[OK] Dependencies installed" -ForegroundColor Green
 
 # ── Settings ────────────────────────────────────────────────

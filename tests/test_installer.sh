@@ -76,6 +76,39 @@ else
     fail "install.ps1 should target ~/.brainstem"
 fi
 
+BOOTSTRAP_BOMS=$("$PYTHON_BIN" - "$REPO_ROOT" <<'PY'
+import pathlib
+import sys
+
+root = pathlib.Path(sys.argv[1])
+files = (
+    "install.ps1",
+    "deploy.ps1",
+    "community_rapp/install.ps1",
+    "rapp_ai/install.ps1",
+)
+print(" ".join(name for name in files if (root / name).read_bytes().startswith(b"\xef\xbb\xbf")))
+PY
+)
+if [ -z "$BOOTSTRAP_BOMS" ]; then
+    pass "PowerShell bootstrap scripts omit UTF-8 BOMs"
+else
+    fail "PowerShell 5.1 irm | iex rejects BOMs in: $BOOTSTRAP_BOMS"
+fi
+
+if grep -q 'read -r PROJECT_NAME </dev/tty' "$REPO_ROOT/community_rapp/install.sh"; then
+    pass "piped CommunityRAPP installer reads prompts from the terminal"
+else
+    fail "community_rapp/install.sh should not consume its piped script as prompt input"
+fi
+
+if grep -q 'FRESH_SHIPPED' "$REPO_ROOT/install.sh" \
+   && grep -q 'FreshShipped' "$REPO_ROOT/install.ps1"; then
+    pass "repair installs preserve fresh bundled agents"
+else
+    fail "repair installs should restore only custom agents"
+fi
+
 echo ""
 
 # ── install.cmd tests ────────────────────────────────────────────────────────
@@ -317,6 +350,13 @@ if "$PYTHON_BIN" -m pytest tests/ -x --tb=short -q 2>&1; then
     pass "unit tests passed"
 else
     fail "unit tests failed"
+fi
+
+if "$PYTHON_BIN" tests/test_model_selection.py >/dev/null 2>&1 \
+   && "$PYTHON_BIN" tests/test_streaming.py >/dev/null 2>&1; then
+    pass "documented standalone test runners work"
+else
+    fail "standalone model-selection or streaming test runner failed"
 fi
 
 echo ""

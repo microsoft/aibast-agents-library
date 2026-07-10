@@ -418,12 +418,18 @@ install_brainstem() {
         fi
         # Restore any preserved user files over the fresh checkout.
         if [ -n "$FRESH_BACKUP" ]; then
+            local FRESH_SHIPPED=""
+            for shipped_file in "$AGENTS_DIR"/*.py; do
+                [ -f "$shipped_file" ] || continue
+                FRESH_SHIPPED="$FRESH_SHIPPED $(basename "$shipped_file")"
+            done
             [ -f "$FRESH_BACKUP/soul.md" ] && cp "$FRESH_BACKUP/soul.md" "$SOUL_FILE" 2>/dev/null || true
             [ -f "$FRESH_BACKUP/.env" ] && cp "$FRESH_BACKUP/.env" "$ENV_FILE" 2>/dev/null || true
             for af in "$FRESH_BACKUP/agents"/*.py; do
                 [ -f "$af" ] || continue
                 fn=$(basename "$af")
                 case "$fn" in basic_agent.py|__init__.py) continue ;; esac
+                case " $FRESH_SHIPPED " in *" $fn "*) continue ;; esac
                 cp "$af" "$AGENTS_DIR/$fn" 2>/dev/null || true
             done
             [ -d "$FRESH_BACKUP/.brainstem_data" ] && cp -R "$FRESH_BACKUP/.brainstem_data" "$DATA_DIR" 2>/dev/null || true

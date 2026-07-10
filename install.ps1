@@ -1,4 +1,4 @@
-﻿# RAPP Brainstem Installer for Windows
+# RAPP Brainstem Installer for Windows
 # Usage: irm https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/install.ps1 | iex
 #
 # Works on a factory Windows 11 install — auto-installs Python, Git, and GitHub CLI via winget.
@@ -35,9 +35,9 @@ for ($i = 0; $i -lt $argList.Count; $i++) {
 
 function Print-Banner {
     Write-Host ""
-    Write-Host "  🧠 RAPP Brainstem" -ForegroundColor Cyan
+    Write-Host "  RAPP Brainstem" -ForegroundColor Cyan
     Write-Host "  Local-first AI agent server" -ForegroundColor Gray
-    Write-Host "  Powered by GitHub Copilot — no API keys needed" -ForegroundColor Gray
+    Write-Host "  Powered by GitHub Copilot - no API keys needed" -ForegroundColor Gray
     Write-Host ""
 }
 
@@ -64,7 +64,7 @@ function Check-ForUpgrade {
     try {
         $remoteVersion = (Invoke-WebRequest -Uri $REMOTE_VERSION_URL -UseBasicParsing -TimeoutSec 10).Content.Trim()
     } catch {
-        Write-Host "  [!] Could not check remote version — upgrading anyway" -ForegroundColor Yellow
+        Write-Host "  [!] Could not check remote version - upgrading anyway" -ForegroundColor Yellow
         return $true
     }
 
@@ -158,7 +158,7 @@ function Ensure-Pip {
     $py = Resolve-PythonExe
     if (Test-PipWorks $py) { return $true }
 
-    Write-Host "  [..] Python has no pip — bootstrapping via ensurepip..." -ForegroundColor Yellow
+    Write-Host "  [..] Python has no pip - bootstrapping via ensurepip..." -ForegroundColor Yellow
     $prev = $ErrorActionPreference
     $ErrorActionPreference = 'Continue'
     try {
@@ -174,7 +174,7 @@ function Ensure-Pip {
         return $true
     }
 
-    Write-Host "  [..] ensurepip unavailable — fetching get-pip.py..." -ForegroundColor Yellow
+    Write-Host "  [..] ensurepip unavailable - fetching get-pip.py..." -ForegroundColor Yellow
     $getPip = Join-Path $env:TEMP "rapp-get-pip.py"
     $prev = $ErrorActionPreference
     $ErrorActionPreference = 'Continue'
@@ -214,7 +214,7 @@ function Setup-Venv {
             Write-Host "  [OK] Virtual environment OK" -ForegroundColor Green
             return
         }
-        Write-Host "  [..] Virtual environment broken — recreating..." -ForegroundColor Yellow
+        Write-Host "  [..] Virtual environment broken - recreating..." -ForegroundColor Yellow
         Remove-Item -Recurse -Force $VENV_DIR -ErrorAction SilentlyContinue
     }
 
@@ -250,7 +250,7 @@ function Check-Prerequisites {
     try {
         winget --version 2>&1 | Out-Null
     } catch {
-        Write-Host "  [X] winget not found — this installer requires Windows 10 1709+ or Windows 11" -ForegroundColor Red
+        Write-Host "  [X] winget not found - this installer requires Windows 10 1709+ or Windows 11" -ForegroundColor Red
         throw "winget not found"
     }
 
@@ -269,7 +269,7 @@ function Check-Prerequisites {
             git --version 2>&1 | Out-Null
             Write-Host "  [OK] Git installed" -ForegroundColor Green
         } catch {
-            Write-Host "  [X] Git install failed — install manually from https://git-scm.com" -ForegroundColor Red
+            Write-Host "  [X] Git install failed - install manually from https://git-scm.com" -ForegroundColor Red
             throw "Git install failed"
         }
     }
@@ -350,7 +350,7 @@ function Check-Prerequisites {
         }
 
         if (-not $pythonOk) {
-            Write-Host "  [X] Python install failed — install from https://python.org" -ForegroundColor Red
+            Write-Host "  [X] Python install failed - install from https://python.org" -ForegroundColor Red
             Write-Host "      Make sure to check 'Add Python to PATH' during install" -ForegroundColor Yellow
             throw "Python 3.11+ install failed"
         }
@@ -370,7 +370,7 @@ function Check-Prerequisites {
             gh --version 2>&1 | Out-Null
             Write-Host "  [OK] GitHub CLI installed" -ForegroundColor Green
         } catch {
-            Write-Host "  [!] GitHub CLI not installed (optional — you can authenticate later)" -ForegroundColor Yellow
+            Write-Host "  [!] GitHub CLI not installed (optional - you can authenticate later)" -ForegroundColor Yellow
         }
     }
 }
@@ -519,7 +519,7 @@ function Install-Brainstem {
                     Write-Host "  [OK] Framework updated" -ForegroundColor Green
                 }
             } else {
-                Write-Host "  [!] Update download failed — keeping existing files (v$LocalVer)" -ForegroundColor Yellow
+                Write-Host "  [!] Update download failed - keeping existing files (v$LocalVer)" -ForegroundColor Yellow
             }
 
             # Restore user files.
@@ -623,10 +623,14 @@ function Install-Brainstem {
         # Restore any preserved user files over the fresh checkout.
         if ($FreshBackup) {
             $AgentsDir = "$BRAINSTEM_HOME\src\rapp_brainstem\agents"
+            $FreshShipped = @()
+            if (Test-Path $AgentsDir) {
+                $FreshShipped = @(Get-ChildItem "$AgentsDir\*.py" -ErrorAction SilentlyContinue | ForEach-Object { $_.Name })
+            }
             if (Test-Path "$FreshBackup\soul.md") { Copy-Item "$FreshBackup\soul.md" "$BRAINSTEM_HOME\src\rapp_brainstem\soul.md" -Force -ErrorAction SilentlyContinue }
             if (Test-Path "$FreshBackup\.env") { Copy-Item "$FreshBackup\.env" "$BRAINSTEM_HOME\src\rapp_brainstem\.env" -Force -ErrorAction SilentlyContinue }
             Get-ChildItem "$FreshBackup\agents\*.py" -ErrorAction SilentlyContinue | ForEach-Object {
-                if ($_.Name -notin @("basic_agent.py", "__init__.py")) {
+                if (($_.Name -notin @("basic_agent.py", "__init__.py")) -and ($_.Name -notin $FreshShipped)) {
                     Copy-Item $_.FullName "$AgentsDir\$($_.Name)" -Force -ErrorAction SilentlyContinue
                 }
             }
@@ -699,7 +703,7 @@ function Setup-Dependencies {
         # v0.6.2 accidentally self-healed transient pip failures via the second
         # Run-PipInstall in Launch-Brainstem. Keep one deliberate retry here so
         # a PyPI/DNS blip doesn't hard-abort a fresh install.
-        Write-Host "  [..] Dependency check failed — retrying pip install once..." -ForegroundColor Yellow
+        Write-Host "  [..] Dependency check failed - retrying pip install once..." -ForegroundColor Yellow
         Run-PipInstall
         $depsOk = Check-PythonDeps
     }
@@ -722,7 +726,7 @@ function Ensure-Dependencies {
         Write-Host "  [OK] Dependencies verified" -ForegroundColor Green
         return
     }
-    Write-Host "  [..] Missing dependencies — installing..." -ForegroundColor Yellow
+    Write-Host "  [..] Missing dependencies - installing..." -ForegroundColor Yellow
     Run-PipInstall
     $ok = Check-PythonDeps
     Pop-Location
@@ -837,7 +841,7 @@ function Launch-Brainstem {
                         $needsAuth = $false
                     }
                 } catch {
-                    Write-Host "  [..] Saved token expired — re-authenticating..." -ForegroundColor Yellow
+                    Write-Host "  [..] Saved token expired - re-authenticating..." -ForegroundColor Yellow
                     Remove-Item $tokenFile -Force -ErrorAction SilentlyContinue
                 }
             }
@@ -860,11 +864,11 @@ function Launch-Brainstem {
             $verifyUri = $deviceResp.verification_uri
 
             if (-not $userCode -or -not $deviceCode) {
-                Write-Host "  [!] Could not start auth — sign in at http://localhost:7071/login" -ForegroundColor Yellow
+                Write-Host "  [!] Could not start auth - sign in at http://localhost:7071/login" -ForegroundColor Yellow
             } else {
-                Write-Host "  ┌─────────────────────────────────────────┐"
-                Write-Host "  │  Your code: " -NoNewline; Write-Host $userCode -ForegroundColor Cyan -NoNewline; Write-Host "                  │"
-                Write-Host "  └─────────────────────────────────────────┘"
+                Write-Host "  +-----------------------------------------+"
+                Write-Host "  |  Your code: " -NoNewline; Write-Host $userCode -ForegroundColor Cyan -NoNewline; Write-Host "                  |"
+                Write-Host "  +-----------------------------------------+"
                 Write-Host ""
                 Write-Host "  Opening browser to authorize..."
 
@@ -893,7 +897,7 @@ function Launch-Brainstem {
                             try {
                                 $copilotCheck = Invoke-WebRequest -Uri "https://api.github.com/copilot_internal/v2/token" -Headers $headers -UseBasicParsing -TimeoutSec 10 -ErrorAction SilentlyContinue
                                 if ($copilotCheck.StatusCode -eq 200) {
-                                    Write-Host "  [OK] Authenticated — Copilot access confirmed" -ForegroundColor Green
+                                    Write-Host "  [OK] Authenticated - Copilot access confirmed" -ForegroundColor Green
                                 }
                             } catch {
                                 $statusCode = $_.Exception.Response.StatusCode.value__
@@ -915,7 +919,7 @@ function Launch-Brainstem {
 
                         $error_code = $pollResp.error
                         if ($error_code -eq "expired_token") {
-                            Write-Host "  [!] Auth timed out — sign in at http://localhost:7071/login" -ForegroundColor Yellow
+                            Write-Host "  [!] Auth timed out - sign in at http://localhost:7071/login" -ForegroundColor Yellow
                             break
                         }
                         if ($error_code -ne "authorization_pending" -and $error_code -ne "slow_down" -and $error_code) {
@@ -926,7 +930,7 @@ function Launch-Brainstem {
                 }
             }
         } catch {
-            Write-Host "  [!] Could not start auth — sign in at http://localhost:7071/login" -ForegroundColor Yellow
+            Write-Host "  [!] Could not start auth - sign in at http://localhost:7071/login" -ForegroundColor Yellow
         }
     }
 
