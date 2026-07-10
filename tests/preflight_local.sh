@@ -138,12 +138,14 @@ echo "── running install.sh (log: $LOG) ──"
     export HOME="$FAKE_HOME"
     export PATH="$SHIMS:$PATH"
     export PORT="$PORT"          # env beats .env — server binds the sandbox port
-    # `script` allocates a pty so the installer launches the server exactly as it
-    # would in a user's terminal (its final exec needs a controlling tty).
-    if [ "$(uname)" = "Darwin" ]; then
+    # Prefer a PTY when `script` is available. The installer also supports
+    # headless stdin, so Git Bash and minimal containers can run it directly.
+    if command -v script >/dev/null 2>&1 && [ "$(uname)" = "Darwin" ]; then
         exec script -q "$LOG" bash "$REPO_ROOT/install.sh" </dev/null >/dev/null 2>&1
-    else
+    elif command -v script >/dev/null 2>&1; then
         exec script -qec "bash '$REPO_ROOT/install.sh'" "$LOG" </dev/null >/dev/null 2>&1
+    else
+        exec bash "$REPO_ROOT/install.sh" >"$LOG" 2>&1
     fi
 ) &
 SERVER_PID=$!
