@@ -16,20 +16,20 @@ Philosophy: "engine, not experience" — infrastructure only, no opinionated UI 
 python brainstem.py       # Direct run (assumes deps installed)
 
 # Install dependencies
-pip3 install -r requirements.txt
+python3 -m pip install -r requirements-dev.txt
 
 # Run all tests
-python3 -m pytest test_local_agents.py -v
+python3 -m pytest tests -v
 
 # Run a single test
-python3 -m pytest test_local_agents.py::TestLocalStorage::test_write_and_read -v
+python3 -m pytest tests/test_local_agents.py::TestLocalStorage::test_write_and_read -v
 ```
 
 No build step, linter, or type checker is configured.
 
 ## Architecture
 
-**Entry point:** `brainstem.py` — a single-file Flask server (~1100 lines) that handles auth, chat, agent orchestration, and the web UI.
+**Entry point:** `brainstem.py` — a single-file Flask server (~2,000 lines) that handles auth, chat, agent orchestration, and the web UI.
 
 **Request flow (POST /chat):**
 1. Load `soul.md` (system prompt) and fresh-discover agents from `agents/`
@@ -54,11 +54,11 @@ No build step, linter, or type checker is configured.
 | File | Purpose |
 |------|---------|
 | `brainstem.py` | Main server: all routes, agent loading, Copilot API integration |
-| `basic_agent.py` | Base class for agents (also copied to `agents/basic_agent.py`) |
+| `agents/basic_agent.py` | Base class for all agents |
 | `local_storage.py` | Local shim for Azure File Storage |
 | `soul.md` | Default system prompt loaded every request |
 | `index.html` | Built-in web UI served at `/` |
-| `VERSION` | Semantic version string (currently 0.4.0) |
+| `VERSION` | Semantic version string (currently 0.6.14) |
 | `CONSTITUTION.md` | Governance doc defining what belongs in this repo |
 
 ## Writing Agents
@@ -74,5 +74,5 @@ The `agents/experimental/` subdirectory exists for agents that should not be aut
 
 Configuration via `.env` (auto-created from `.env.example` by `start.sh`):
 - `GITHUB_TOKEN` — auto-detected from `gh` CLI if blank
-- `GITHUB_MODEL` — default `gpt-4o`, switchable at runtime via `/models/set`
+- `GITHUB_MODEL` — default `auto` (auto-selects the highest Claude Haiku the account can use — fastest responses — else the highest Sonnet, else `gpt-4o`); or pin a specific id. A UI pick is persisted to `.brainstem_model` and overrides this. Switchable at runtime via `/models/set` (`auto` re-selects)
 - `SOUL_PATH`, `AGENTS_PATH`, `PORT`, `VOICE_MODE`

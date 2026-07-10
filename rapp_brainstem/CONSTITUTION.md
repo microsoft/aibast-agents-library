@@ -48,8 +48,9 @@ to, not when we push them.
 
 ## Article III — Local First
 
-The brainstem runs on the user's machine. No cloud account required.
-No API keys beyond a GitHub account with Copilot access.
+The brainstem runs on the user's machine. Core chat requires no cloud account
+or provider API key beyond a GitHub account with Copilot access. Optional
+integrations may use credentials supplied and controlled by the user.
 
 Azure and Copilot Studio are deployment targets, not prerequisites. A
 brainstem that never leaves localhost is fully functional.
@@ -65,7 +66,7 @@ Agents are single `*_agent.py` files that extend `BasicAgent` and
 implement `perform()`. That's the entire contract.
 
 - No config files. No YAML. No dependency manifests.
-- Auto-discovered on startup. No registration step.
+- Auto-discovered on every request. No registration step or restart.
 - The LLM decides when to call them based on the metadata description.
 - Portable: copy the file, the skill travels with it.
 

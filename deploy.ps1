@@ -1,4 +1,4 @@
-# RAPP Azure Deployment Script for Windows
+﻿# RAPP Azure Deployment Script for Windows
 # Deploy Azure resources needed for RAPP
 #
 # Usage:

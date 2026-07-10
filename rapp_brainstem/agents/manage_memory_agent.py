@@ -58,24 +58,34 @@ class ManageMemoryAgent(BasicAgent):
         return self.store_memory(memory_type, content, importance, tags)
 
     def store_memory(self, memory_type, content, importance, tags):
-        memory_data = self.storage_manager.read_json()
-        # Tolerate a corrupted/foreign store (non-object) instead of crashing on
-        # dict assignment below.
-        if not isinstance(memory_data, dict):
-            memory_data = {}
-
         memory_id = str(uuid.uuid4())
-        memory_data[memory_id] = {
+        try:
+            importance = max(1, min(5, int(importance)))
+        except (TypeError, ValueError):
+            importance = 3
+        if not isinstance(tags, list):
+            tags = []
+        tags = [tag for tag in tags if isinstance(tag, str)]
+        memory = {
             "conversation_id": self.storage_manager.current_guid or "current",
             "session_id": "current",
             "message": content,
             "mood": "neutral",
             "theme": memory_type,
+            "importance": importance,
+            "tags": tags,
             "date": datetime.now().strftime("%Y-%m-%d"),
             "time": datetime.now().strftime("%H:%M:%S")
         }
 
-        self.storage_manager.write_json(memory_data)
+        def add_memory(memory_data):
+            if not isinstance(memory_data, dict):
+                raise ValueError(
+                    "Memory store is not a JSON object; refusing to overwrite it.")
+            memory_data[memory_id] = memory
+            return memory_data
+
+        self.storage_manager.update_json(add_memory)
 
         memory_location = f"for user {self.storage_manager.current_guid}" if self.storage_manager.current_guid else "in shared memory"
         return f'Successfully stored {memory_type} memory {memory_location}: "{content}"'

@@ -234,6 +234,45 @@ check_prereqs() {
     fi
 }
 
+# On upgrade, decide what to do with the user's existing soul.md (issue #40).
+# Args: <old_soul> <new_default_soul>. The new checkout's default is already at
+# <new_default_soul>; <old_soul> is the pre-upgrade file we backed up.
+#   return 0 → refreshed: keep the new default in place, save the old one to
+#              soul.md.bak-<date>, and print one line saying so.
+#   return 1 → preserve : caller restores <old_soul> byte-for-byte (today's behavior).
+# It only returns 0 when the old soul is an UNMODIFIED historical default — its
+# normalized hash (rapp_brainstem/tests/soul_hash.py) is listed in the manifest —
+# AND the new default differs. Any customization, or any uncertainty (no python, no
+# manifest, unreadable/undecodable file), fails safe to preserve. It never clobbers.
+maybe_refresh_soul() {
+    local old="$1" newdef="$2"
+    local src_dir="$BRAINSTEM_HOME/src/rapp_brainstem"
+    local hasher="$src_dir/tests/soul_hash.py"
+    local manifest="$src_dir/tests/soul_defaults.sha256"
+
+    [ -n "${PYTHON_CMD:-}" ] && [ -f "$hasher" ] && [ -f "$manifest" ] || return 1
+
+    local oldhash newhash
+    oldhash=$("$PYTHON_CMD" "$hasher" "$old" 2>/dev/null) || return 1
+    [ -n "$oldhash" ] || return 1
+    # Not an unmodified default (customized or unrecognizable) → preserve.
+    awk -v h="$oldhash" '/^[[:space:]]*#/{next} $1==h{f=1; exit} END{exit !f}' "$manifest" || return 1
+    # A known default — only refresh if the new default actually differs.
+    newhash=$("$PYTHON_CMD" "$hasher" "$newdef" 2>/dev/null) || return 1
+    [ -n "$newhash" ] && [ "$oldhash" != "$newhash" ] || return 1
+
+    local bak="$src_dir/soul.md.bak-$(date +%Y%m%d)"
+    # Don't clobber an earlier same-day backup (a second refresh on the same date).
+    if [ -e "$bak" ]; then
+        local n=1
+        while [ -e "${bak}-${n}" ]; do n=$((n+1)); done
+        bak="${bak}-${n}"
+    fi
+    cp "$old" "$bak" 2>/dev/null || return 1
+    echo -e "  ${GREEN}✓${NC} Refreshed default soul (yours was an unmodified default); backup at ${bak}"
+    return 0
+}
+
 install_brainstem() {
     echo ""
     echo "Installing RAPP Brainstem..."
@@ -242,6 +281,7 @@ install_brainstem() {
     local AGENTS_DIR="$BRAINSTEM_HOME/src/rapp_brainstem/agents"
     local SOUL_FILE="$BRAINSTEM_HOME/src/rapp_brainstem/soul.md"
     local ENV_FILE="$BRAINSTEM_HOME/src/rapp_brainstem/.env"
+    local DATA_DIR="$BRAINSTEM_HOME/src/rapp_brainstem/.brainstem_data"
     local LOCAL_VERSION_FILE="$BRAINSTEM_HOME/src/rapp_brainstem/VERSION"
 
     if [ -d "$BRAINSTEM_HOME/src/.git" ]; then
@@ -304,17 +344,35 @@ install_brainstem() {
             fi
 
             # 3. Restore user's local files (merge, don't overwrite)
-            [ -f "$BACKUP/soul.md" ] && cp "$BACKUP/soul.md" "$SOUL_FILE"
+            # soul.md: refresh it only when the pre-upgrade file was an unmodified
+            # historical default (issue #40); any customization is preserved as-is.
+            if [ -f "$BACKUP/soul.md" ]; then
+                if ! maybe_refresh_soul "$BACKUP/soul.md" "$SOUL_FILE"; then
+                    cp "$BACKUP/soul.md" "$SOUL_FILE"
+                fi
+            fi
             [ -f "$BACKUP/.env" ] && cp "$BACKUP/.env" "$ENV_FILE"
             if [ -d "$BACKUP/agents" ]; then
-                # Restore user agents that aren't in the repo (custom ones)
+                # Only restore genuinely user-added agents. Compute the set the repo
+                # now ships from the fresh checkout and skip-restore anything in it —
+                # otherwise bundled agents (context_memory, manage_memory, hacker_news)
+                # get reverted to the backed-up copies on every upgrade (issue #2), so
+                # bundled-agent fixes never reach existing users.
+                local SHIPPED=""
+                for shipped_file in "$AGENTS_DIR"/*.py; do
+                    [ -f "$shipped_file" ] || continue
+                    SHIPPED="$SHIPPED $(basename "$shipped_file")"
+                done
                 for agent_file in "$BACKUP/agents"/*.py; do
+                    [ -f "$agent_file" ] || continue
                     local fname=$(basename "$agent_file")
                     # Skip core agents that the repo manages
                     case "$fname" in
                         basic_agent.py|__init__.py) continue ;;
                     esac
-                    # If user has a custom agent, keep it
+                    # Skip anything shipped in the fresh checkout (bundled agents)
+                    case " $SHIPPED " in *" $fname "*) continue ;; esac
+                    # Genuinely user-added agent — keep it
                     cp "$agent_file" "$AGENTS_DIR/$fname"
                 done
                 echo -e "  ${GREEN}✓${NC} Restored custom agents + soul + config"
@@ -337,6 +395,7 @@ install_brainstem() {
             [ -f "$SOUL_FILE" ] && cp "$SOUL_FILE" "$FRESH_BACKUP/soul.md" 2>/dev/null || true
             [ -f "$ENV_FILE" ] && cp "$ENV_FILE" "$FRESH_BACKUP/.env" 2>/dev/null || true
             [ -d "$AGENTS_DIR" ] && cp "$AGENTS_DIR"/*.py "$FRESH_BACKUP/agents/" 2>/dev/null || true
+            [ -d "$DATA_DIR" ] && cp -R "$DATA_DIR" "$FRESH_BACKUP/.brainstem_data" 2>/dev/null || true
         fi
         rm -rf "$BRAINSTEM_HOME/src" 2>/dev/null || true
         git clone --quiet "$REPO_URL" "$BRAINSTEM_HOME/src"
@@ -367,8 +426,9 @@ install_brainstem() {
                 case "$fn" in basic_agent.py|__init__.py) continue ;; esac
                 cp "$af" "$AGENTS_DIR/$fn" 2>/dev/null || true
             done
+            [ -d "$FRESH_BACKUP/.brainstem_data" ] && cp -R "$FRESH_BACKUP/.brainstem_data" "$DATA_DIR" 2>/dev/null || true
             rm -rf "$FRESH_BACKUP"
-            echo -e "  ${GREEN}✓${NC} Preserved your soul, agents, and config"
+            echo -e "  ${GREEN}✓${NC} Preserved your soul, agents, memories, and config"
         fi
     fi
     echo -e "  ${GREEN}✓${NC} Source code ready"
@@ -681,8 +741,19 @@ with open(sys.argv[2], 'w') as f: json.dump(out, f)
         sleep 1
     fi
 
-    # Open the browser after a short delay
-    (sleep 3 && (open "http://localhost:7071" 2>/dev/null || xdg-open "http://localhost:7071" 2>/dev/null)) &
+    # Open the browser once the server actually answers (#14) — a fixed delay
+    # races cold startups (token exchange, dep installs) and lands the user on
+    # a dead-port error page. Poll /health, then open; after 60s open anyway so
+    # the user still gets the tab (with the URL bar filled in) on a slow start.
+    (
+        for _ in $(seq 1 60); do
+            if curl -sf -o /dev/null --max-time 1 "http://localhost:7071/health" 2>/dev/null; then
+                break
+            fi
+            sleep 1
+        done
+        open "http://localhost:7071" 2>/dev/null || xdg-open "http://localhost:7071" 2>/dev/null || true
+    ) &
 
     # Final dep safety net — if somehow we got here without deps, fix it
     if ! "$venv_python" -c "import flask, flask_cors, requests, dotenv" 2>/dev/null; then
