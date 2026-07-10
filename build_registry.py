@@ -29,10 +29,10 @@ REQUIRED_MANIFEST_FIELDS = [
 def extract_manifest(py_path: Path) -> dict:
     """Extract __manifest__ dict from a Python file using AST parsing."""
     try:
-        source = py_path.read_text()
+        source = py_path.read_text(encoding="utf-8")
         tree = ast.parse(source)
     except SyntaxError as e:
-        print(f"  ⚠ Syntax error in {py_path}: {e}")
+        print(f"  [WARN] Syntax error in {py_path}: {e}")
         return None
 
     for node in ast.walk(tree):
@@ -42,7 +42,7 @@ def extract_manifest(py_path: Path) -> dict:
                     try:
                         return ast.literal_eval(node.value)
                     except (ValueError, TypeError) as e:
-                        print(f"  ⚠ Cannot parse __manifest__ in {py_path}: {e}")
+                        print(f"  [WARN] Cannot parse __manifest__ in {py_path}: {e}")
                         return None
     return None
 
@@ -94,9 +94,9 @@ def build_registry():
         categories.add(manifest.get("category", "uncategorized"))
 
         # Add file metadata
-        content = py_path.read_text()
-        manifest["_file"] = str(py_path)
-        manifest["_size_kb"] = round(py_path.stat().st_size / 1024, 1)
+        content = py_path.read_text(encoding="utf-8")
+        manifest["_file"] = py_path.as_posix()
+        manifest["_size_kb"] = round(len(content.encode("utf-8")) / 1024, 1)
         manifest["_lines"] = len(content.split('\n'))
 
         agents.append(manifest)
@@ -118,12 +118,12 @@ def build_registry():
     with open(REGISTRY_FILE, "w", encoding="utf-8") as f:
         json.dump(registry, f, indent=2)
 
-    print(f"✓ Registry built: {len(agents)} agents from {len(publishers)} publishers")
+    print(f"[OK] Registry built: {len(agents)} agents from {len(publishers)} publishers")
     print(f"  Categories: {', '.join(sorted(categories))}")
     print(f"  Publishers: {', '.join(sorted(publishers))}")
 
     if errors:
-        print(f"\n⚠ {len(errors)} validation errors:")
+        print(f"\n[WARN] {len(errors)} validation errors:")
         for err in errors:
             print(f"  - {err}")
         return 1
