@@ -45,7 +45,7 @@ for candidate in "${PYTHON:-}" python3 python; do
     [ -n "$candidate" ] || continue
     if command -v "$candidate" >/dev/null 2>&1 \
        && "$candidate" -c 'import sys' >/dev/null 2>&1; then
-        PYTHON_BIN="$candidate"
+        PYTHON_BIN="$(command -v "$candidate")"
         break
     fi
 done
@@ -75,10 +75,10 @@ echo "  sandbox: $SANDBOX"
 
 # ── 1. Fake origin: bare repo whose `main` is this checkout's HEAD ────────────
 git clone --quiet --bare "$REPO_ROOT" "$BARE"
-git -C "$BARE" update-ref refs/heads/main "$(git -C "$REPO_ROOT" rev-parse HEAD)"
-git -C "$BARE" symbolic-ref HEAD refs/heads/main
+git -c safe.bareRepository=all -C "$BARE" update-ref refs/heads/main "$(git -C "$REPO_ROOT" rev-parse HEAD)"
+git -c safe.bareRepository=all -C "$BARE" symbolic-ref HEAD refs/heads/main
 if git -C "$REPO_ROOT" rev-parse origin/main >/dev/null 2>&1; then
-    git -C "$BARE" update-ref refs/heads/production-baseline "$(git -C "$REPO_ROOT" rev-parse origin/main)"
+    git -c safe.bareRepository=all -C "$BARE" update-ref refs/heads/production-baseline "$(git -C "$REPO_ROOT" rev-parse origin/main)"
 fi
 HOME="$FAKE_HOME" git config --global "url.file://$BARE.insteadOf" "https://github.com/microsoft/aibast-agents-library.git"
 HOME="$FAKE_HOME" git config --global user.email preflight@localhost
@@ -93,6 +93,10 @@ cat > "$SHIMS/open" <<'EOF'
 #!/bin/bash
 exit 0
 EOF
+cat > "$SHIMS/python3" <<EOF
+#!/bin/bash
+exec "$PYTHON_BIN" "\$@"
+EOF
 cat > "$SHIMS/curl" <<EOF
 #!/bin/bash
 for a in "\$@"; do
@@ -102,11 +106,11 @@ for a in "\$@"; do
 done
 exec /usr/bin/curl "\$@"
 EOF
-chmod +x "$SHIMS"/lsof "$SHIMS"/open "$SHIMS"/curl
+chmod +x "$SHIMS"/lsof "$SHIMS"/open "$SHIMS"/python3 "$SHIMS"/curl
 
 # ── 3. Upgrade scenario: seed a real production-main install with user files ──
 if [ "$SCENARIO" = "upgrade" ]; then
-    if ! git -C "$BARE" rev-parse production-baseline >/dev/null 2>&1; then
+    if ! git -c safe.bareRepository=all -C "$BARE" rev-parse production-baseline >/dev/null 2>&1; then
         echo "  ✗ no origin/main in this checkout — cannot seed the upgrade baseline"; exit 1
     fi
     git clone --quiet "$BARE" "$FAKE_HOME/.brainstem/src"
