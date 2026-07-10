@@ -6,7 +6,8 @@
 <title>RAPP Brainstem — Get Started in 5 Minutes</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #e0e0e0; min-height: 100vh; line-height: 1.6; }
+html { overflow-x: hidden; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #e0e0e0; min-height: 100vh; line-height: 1.6; overflow-x: hidden; }
 .header { background: linear-gradient(135deg, #1a1a2e, #0a0a1a); padding: 60px 20px; text-align: center; border-bottom: 1px solid #222; }
 .header h1 { font-size: 2.5em; margin-bottom: 8px; }
 .header .emoji { font-size: 3em; margin-bottom: 16px; }
@@ -47,7 +48,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 <div class="header">
     <div class="emoji">🧠</div>
     <h1>RAPP Brainstem</h1>
-    <p>Your own AI agent server. One command install. No API keys. No cloud setup. Just your GitHub account.</p>
+    <p>Your local AI agent server from the AIBAST Agents Library. Core chat requires a GitHub account with Copilot access.</p>
 </div>
 
 <div class="container">
@@ -55,8 +56,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
     <!-- Step 0: GitHub Account -->
     <div class="step">
         <span class="number">0</span>
-        <h2>Get a GitHub Account (Free)</h2>
-        <p>Go to <a href="https://github.com" style="color:#7b68ee">github.com</a> and sign up. This is your key — GitHub has free AI models built in. No credit card. No API key. Just an account.</p>
+        <h2>Get GitHub Copilot Access</h2>
+        <p>Sign in at <a href="https://github.com" style="color:#7b68ee">github.com</a> with an account that can use GitHub Copilot. The Brainstem exchanges that credential for model access, so no separate provider API key is needed for core chat.</p>
         <div class="time">⏱ 2 minutes</div>
     </div>
 
@@ -67,9 +68,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
         <p>Open your terminal and paste one line. It installs everything automatically.</p>
 
         <div class="platform-tabs">
-            <button class="active" onclick="showPlatform('windows')">Windows</button>
-            <button onclick="showPlatform('mac')">Mac</button>
-            <button onclick="showPlatform('linux')">Linux</button>
+            <button class="active" onclick="showPlatform(event, 'windows')">Windows</button>
+            <button onclick="showPlatform(event, 'mac')">Mac</button>
+            <button onclick="showPlatform(event, 'linux')">Linux</button>
         </div>
 
         <div id="windows" class="platform-content active">
@@ -104,12 +105,12 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
     <div class="step">
         <span class="number">2</span>
         <h2>Sign In to GitHub</h2>
-        <p>The installer will prompt you to authenticate. Just follow the instructions — it opens a browser, you log in, done.</p>
+        <p>Start the Brainstem and open <strong>localhost:7071</strong>. If no compatible credential is available, the chat UI displays a GitHub device code and walks you through sign-in.</p>
         <div class="code-block">
             <button class="copy" onclick="copyCode(this)">Copy</button>
-            gh auth login
+            brainstem
         </div>
-        <div class="note">One-time setup. After this, the AI works through your GitHub account — free tier includes AI model access.</div>
+        <div class="note">Authentication persists locally across restarts. You can also use an existing compatible <code>gh auth</code> session.</div>
         <div class="time">⏱ 1 minute</div>
     </div>
 
@@ -128,7 +129,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
     <!-- Success -->
     <div class="success">
         <h2>You're Running 🧠</h2>
-        <p>Your own AI agent server. On your machine. No cloud. No subscription.</p>
+        <p>Your own AI agent server, running locally with your GitHub Copilot access.</p>
     </div>
 
     <!-- Step 4: Write an Agent -->
@@ -140,20 +141,30 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
         <div class="agent-example">
             <div class="filename">~/.brainstem/src/rapp_brainstem/agents/weather_agent.py</div>
             <div class="code-block">
-AGENT = {
-    "name": "weather",
-    "description": "Get weather for any city",
-    "parameters": {
-        "city": {"type": "string", "description": "City name"}
-    }
-}
+from agents.basic_agent import BasicAgent
 
-def run(city: str) -> str:
-    return f"Weather in {city}: 72°F, sunny"
+class WeatherAgent(BasicAgent):
+    def __init__(self):
+        self.name = "Weather"
+        self.metadata = {
+            "name": self.name,
+            "description": "Get weather for a city.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "city": {"type": "string", "description": "City name"}
+                },
+                "required": ["city"]
+            }
+        }
+        super().__init__(name=self.name, metadata=self.metadata)
+
+    def perform(self, city="", **kwargs):
+        return f"Weather in {city}: sunny"
             </div>
         </div>
         <p>That's it. Save the file. The brainstem discovers it. The AI can now use it. No restart needed.</p>
-        <div class="note">This is the RAPP pattern — one file, one agent. The same pattern that produced 70 customer-facing agents at Microsoft.</div>
+        <div class="note">This is the portable RAPP pattern used throughout the AIBAST Agents Library: one reviewed file, one focused agent contract.</div>
     </div>
 
     <!-- Step 5: Soul File -->
@@ -165,8 +176,8 @@ def run(city: str) -> str:
             <button class="copy" onclick="copyCode(this)">Copy</button>
             ~/.brainstem/src/rapp_brainstem/soul.md
         </div>
-        <p>This is a markdown file — the AI's system prompt. Write who it should be. It persists across sessions. It grows with every conversation.</p>
-        <div class="note">The soul file is what makes RAPP different from ChatGPT. Your AI remembers. It accumulates personality. It never resets.</div>
+        <p>This markdown file is the AI's system prompt. Write who it should be; the Brainstem reloads it for every request and keeps your edits across restarts.</p>
+        <div class="note">Long-term facts are handled separately by the bundled memory agents. The soul defines behavior; memory stores recalled context.</div>
     </div>
 
     <!-- Next Steps -->
@@ -175,7 +186,8 @@ def run(city: str) -> str:
         <ul>
             <li><strong>Add more agents</strong> — drop .py files in the agents folder. Each one gives your AI a new skill.</li>
             <li><strong>Pull updates</strong> — run the install command again anytime. It auto-updates to the latest version.</li>
-            <li><strong>Read the docs</strong> — <a href="https://github.com/microsoft/aibast-agents-library" style="color:#7b68ee">github.com/microsoft/aibast-agents-library</a></li>
+            <li><strong>Use the production guide</strong> — <a href="rapp-guide.html" style="color:#7b68ee">follow the complete 14-step RAPP methodology</a>.</li>
+            <li><strong>Browse agent templates</strong> — <a href="https://github.com/microsoft/aibast-agents-library/tree/main/agents/%40aibast-agents-library" style="color:#7b68ee">review the AIBAST library</a>.</li>
             <li><strong>Share with friends</strong> — just send them the install command. One line. That's the whole pitch.</li>
         </ul>
     </div>
@@ -183,12 +195,12 @@ def run(city: str) -> str:
 </div>
 
 <div class="footer">
-    <p>RAPP Brainstem — Built by Kody Wildfeuer</p>
-    <p style="margin-top: 4px; color: #333;">Single-file agents are a game changer and people don't know about them at all.</p>
+    <p>AIBAST Agents Library</p>
+    <p style="margin-top: 4px; color: #666;">Experimental v-team project; not an officially supported Microsoft product.</p>
 </div>
 
 <script>
-function showPlatform(platform) {
+function showPlatform(event, platform) {
     document.querySelectorAll('.platform-content').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.platform-tabs button').forEach(el => el.classList.remove('active'));
     document.getElementById(platform).classList.add('active');

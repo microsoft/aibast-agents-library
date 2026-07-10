@@ -4,19 +4,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-RAPP Installer is the single entry point for the RAPP (Rapid Agent Prototyping Platform) — a progressive AI agent platform that teaches the Microsoft AI stack through three tiers. The repo contains the brainstem server, install scripts, Azure deployment templates, a Power Platform solution, and a landing page.
+AIBAST Agents Library is the stable Microsoft downstream for the RAPP (Rapid Agent Prototype Pattern) stack. It combines the local Brainstem server, an industry agent-template catalog, the RAPP production guide, Azure deployment assets, and a Power Platform solution.
 
 Philosophy: "engine, not experience" — this is infrastructure, not a consumer product. See `CONSTITUTION.md` for scope rules and governance.
 
 ## Repository Layout
 
 - `rapp_brainstem/` — The core brainstem server (see `rapp_brainstem/CLAUDE.md` for deep internals)
+- `agents/@aibast-agents-library/` — AIBAST-owned industry templates and stacks; never replace this tree from Grail
+- `registry.json`, `build_registry.py` — generated catalog and its AIBAST-owned builder
 - `install.sh`, `install.ps1`, `install.cmd` — One-liner installers (Brainstem path). **These are sacred** — any change must be tested end-to-end on a fresh machine.
 - `community_rapp/` — Hippocampus (Tier 2) installer scripts. Parallel path, no dependency on brainstem.
+- `rapp_ai/` — AIBAST-owned Azure Functions implementation and documentation
 - `azuredeploy.json`, `deploy.sh`, `deploy.ps1` — Azure ARM deployment (Tier 2 cloud)
 - `MSFTAIBASMultiAgentCopilot_*.zip` — Power Platform solution for Copilot Studio (Tier 3)
-- `index.html` — Landing page served at microsoft.github.io/aibast-agents-library
-- `docs/` — Tutorial and docs pages for the landing site
+- `index.html` — AIBAST Agents Library landing page served at microsoft.github.io/aibast-agents-library
+- `docs/rapp-guide.html` — Restored 14-step RAPP production methodology
+- `docs/` — Quick start, tutorial, production guide, and installer mirrors
 - `skill.md` — Moltbook-pattern onboarding skill (YAML frontmatter, autonomous steps, pause points)
 
 ## Commands
@@ -28,14 +32,15 @@ cd rapp_brainstem && ./start.sh
 # Direct run (assumes deps installed)
 cd rapp_brainstem && python brainstem.py
 
-# Run all tests
-cd rapp_brainstem && python3 -m pytest test_local_agents.py -v
+# Run all Brainstem tests
+cd rapp_brainstem && python -m pytest tests -v
 
 # Run a single test
-cd rapp_brainstem && python3 -m pytest test_local_agents.py::TestLocalStorage::test_write_and_read -v
+cd rapp_brainstem && python -m pytest tests/test_local_agents.py::TestLocalStorage::test_write_and_read -v
 
-# Run a single test class
-cd rapp_brainstem && python3 -m pytest test_local_agents.py::TestShimRegistration -v
+# Validate and regenerate the AIBAST registry
+python build_registry.py
+python -m pytest tests -v
 
 # Health check (server must be running)
 curl -s localhost:7071/health | python3 -m json.tool
@@ -58,9 +63,9 @@ Each tier is self-contained. Users advance when they choose to.
 
 ## Brainstem Server (rapp_brainstem/)
 
-**Single-file server**: All logic lives in `brainstem.py` (~1100 lines) — auth, routing, LLM calls, agent orchestration. Keep it that way.
+**Single-file server**: All logic lives in `brainstem.py` (~3,300 lines) — auth, routing, streaming, diagnostics, LLM calls, and agent orchestration. Keep it that way.
 
-**Request flow (POST /chat)**: Load soul.md -> discover agents from `agents/*_agent.py` -> call Copilot API with tools -> execute tool calls via agent `.perform()` -> loop up to 3 rounds -> return response.
+**Request flow (`POST /chat` and `POST /chat/stream`)**: Load soul.md -> discover agents from `agents/*_agent.py` -> call Copilot API with tools -> execute tool calls via agent `.perform()` -> loop up to 3 rounds -> return JSON or server-sent events.
 
 **Agent system**: Files matching `agents/*_agent.py` are auto-discovered (flat directory only, `experimental/` excluded). Each extends `BasicAgent` with `metadata` (OpenAI function schema) and `perform(**kwargs)`. Agents reload from disk every request — no restart needed.
 
@@ -83,10 +88,21 @@ Each tier is self-contained. Users advance when they choose to.
 
 **Do not push directly to `main`** except via a merge at release time. The one-liner install is sacred — `main` must always be in a working state.
 
+## Grail Downstream Boundary
+
+Shared Brainstem releases flow from `kody-w/rapp-installer`, but this repository is not a mirror. Preserve these AIBAST-owned surfaces during every sync:
+
+- `agents/@aibast-agents-library/`, `registry.json`, and `build_registry.py`
+- `rapp_ai/`
+- `README.md`, `index.html`, `CLAUDE.md`, `docs/index.html`, `docs/tutorial.html`, and `docs/rapp-guide.html`
+- `.github/`, `LICENSE`, `SECURITY.md`, `CONTRIBUTING.md`, `.vscode/`, and `tools/`
+
+Only repository-identity references are rewritten mechanically: `kody-w/rapp-installer` becomes `microsoft/aibast-agents-library`, and Brainstem support drafts target `microsoft/aibast-agents-library`. Content repositories such as CommunityRAPP are separate dependencies and must be reviewed rather than globally replaced. Installer mirrors under `docs/install.*` must remain byte-identical to their root counterparts.
+
 ## Key Conventions
 
 - **Python 3.11** target; venv at `~/.brainstem/venv`
 - **No API keys** for local dev — GitHub Copilot token exchange handles auth
-- **Config via `.env`** in `rapp_brainstem/` — `GITHUB_TOKEN`, `GITHUB_MODEL` (default `gpt-4o`), `SOUL_PATH`, `AGENTS_PATH`, `PORT` (default 7071)
+- **Config via `.env`** in `rapp_brainstem/` — `GITHUB_TOKEN`, `GITHUB_MODEL` (default `auto`), `SOUL_PATH`, `AGENTS_PATH`, `PORT`, `BRAINSTEM_LAN_MODE`, `BRAINSTEM_ALLOWED_HOSTS`, and `VOICE_ZIP_PASSWORD`
 - Two install paths exist and must never cross-contaminate: brainstem (`install.sh`) and hippocampus (`community_rapp/install.sh`)
 - The landing page (`index.html`) and `docs/` are static HTML — no build step
