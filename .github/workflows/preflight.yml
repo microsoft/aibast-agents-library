@@ -1,0 +1,277 @@
+# Preflight validates a candidate branch before it reaches production main.
+# The real installers are left unmodified: url.insteadOf redirects their
+# Microsoft clone URL to a local bare repository whose main ref is the candidate.
+
+name: preflight
+
+on:
+  push:
+    branches-ignore: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: preflight-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Shell syntax
+        run: |
+          bash -n install.sh
+          bash -n install.command
+          bash -n community_rapp/install.sh
+          bash -n rapp_brainstem/start.sh
+          bash -n tests/test_installer.sh
+          bash -n tests/preflight_local.sh
+          bash -n tests/gen_soul_hashes.sh
+
+      - name: Pages installer mirrors
+        run: |
+          rc=0
+          for file in install.sh install.ps1 install.cmd install.command; do
+            if ! cmp -s "$file" "docs/$file"; then
+              echo "::error file=docs/$file::Pages mirror differs from $file"
+              rc=1
+            fi
+          done
+          exit "$rc"
+
+      - name: PowerShell parse and 5.1 compatibility
+        shell: pwsh
+        run: |
+          $files = @(
+            'install.ps1',
+            'deploy.ps1',
+            'community_rapp/install.ps1',
+            'rapp_brainstem/start.ps1',
+            'rapp_ai/install.ps1'
+          )
+          $bad = $false
+          foreach ($file in $files) {
+            $errors = $null
+            [System.Management.Automation.Language.Parser]::ParseFile(
+              "$PWD/$file", [ref]$null, [ref]$errors
+            ) | Out-Null
+            if ($errors) {
+              $errors | ForEach-Object {
+                Write-Host "::error file=$file,line=$($_.Extent.StartLineNumber)::$($_.Message)"
+              }
+              $bad = $true
+            }
+          }
+          if ($bad) { exit 1 }
+          Install-Module PSScriptAnalyzer -Force -Scope CurrentUser
+          $settings = @{
+            Rules = @{
+              PSUseCompatibleSyntax = @{
+                Enable = $true
+                TargetVersions = @('5.1', '7.0')
+              }
+            }
+          }
+          $findings = $files | ForEach-Object {
+            Invoke-ScriptAnalyzer -Path $_ -Settings $settings
+          }
+          $findings | Format-Table -AutoSize | Out-String | Write-Host
+          if ($findings | Where-Object RuleName -eq 'PSUseCompatibleSyntax') {
+            exit 1
+          }
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Brainstem compile and tests
+        working-directory: rapp_brainstem
+        run: |
+          python -m pip install -q -r requirements-dev.txt
+          python -m py_compile brainstem.py local_storage.py tests/soul_hash.py agents/*.py
+          python -m pytest tests -q
+
+      - name: Installer contracts
+        run: bash tests/test_installer.sh
+
+      - name: AIBAST agent and registry contracts
+        run: |
+          python -m pytest tests -q
+          python - <<'PY'
+          import json
+          import pathlib
+          import subprocess
+
+          old = json.loads(subprocess.check_output(
+              ['git', 'show', 'HEAD:registry.json'], text=True, encoding='utf-8'
+          ))
+          new = json.loads(pathlib.Path('registry.json').read_text(encoding='utf-8'))
+          old['generated_at'] = new['generated_at']
+          assert old == new, 'registry changed beyond generated_at'
+          PY
+
+      - name: AIBAST Azure tier tests
+        run: |
+          python -m pip install -q -r rapp_ai/requirements.txt
+          python -m pytest rapp_ai/tests -q
+
+  e2e:
+    needs: static
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+        scenario: [fresh, upgrade]
+        include:
+          - os: windows-latest
+            scenario: fresh-nopip
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Strip pip from Python
+        if: matrix.scenario == 'fresh-nopip'
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Continue'
+          python -m pip uninstall -y pip 2>&1 | Out-String | Write-Host
+          python -m pip --version 2>&1 | Out-String | Write-Host
+          if ($LASTEXITCODE -eq 0) { exit 1 }
+          exit 0
+
+      - name: Point installers at candidate
+        shell: bash
+        run: |
+          set -euxo pipefail
+          BARE="$RUNNER_TEMP/fake-origin.git"
+          git clone --bare . "$BARE"
+          git -C "$BARE" update-ref refs/heads/main "$GITHUB_SHA"
+          git -C "$BARE" symbolic-ref HEAD refs/heads/main
+          git -C "$BARE" update-ref refs/heads/production-baseline "$(git rev-parse origin/main)"
+          BARE_URL="file://$(echo "$BARE" | sed 's|\\|/|g; s|^\([A-Za-z]\):|/\1:|')"
+          git config --global "url.${BARE_URL}.insteadOf" \
+            "https://github.com/microsoft/aibast-agents-library.git"
+          echo "BARE=$BARE" >> "$GITHUB_ENV"
+
+      - name: Seed existing production install
+        if: matrix.scenario == 'upgrade'
+        shell: bash
+        run: |
+          set -euxo pipefail
+          git clone "$BARE" "$HOME/.brainstem/src"
+          git -C "$HOME/.brainstem/src" reset --hard origin/production-baseline
+          cat > "$HOME/.brainstem/src/rapp_brainstem/agents/preflight_custom_agent.py" <<'PY'
+          from agents.basic_agent import BasicAgent
+          class PreflightCustomAgent(BasicAgent):
+              def __init__(self):
+                  self.name = 'PreflightCustom'
+                  self.metadata = {
+                      'name': self.name,
+                      'description': 'preflight marker agent',
+                      'parameters': {'type': 'object', 'properties': {}, 'required': []},
+                  }
+                  super().__init__(name=self.name, metadata=self.metadata)
+              def perform(self, **kwargs):
+                  return 'preflight-marker'
+          PY
+          printf '\nPREFLIGHT-SOUL-MARKER\n' >> "$HOME/.brainstem/src/rapp_brainstem/soul.md"
+          printf 'GITHUB_MODEL=auto\nPORT=7071\n# PREFLIGHT-ENV-MARKER\n' \
+            > "$HOME/.brainstem/src/rapp_brainstem/.env"
+
+      - name: Block auth and remote-version endpoints
+        if: runner.os != 'Windows'
+        run: |
+          printf '127.0.0.1 github.com\n127.0.0.1 raw.githubusercontent.com\n' \
+            | sudo tee -a /etc/hosts
+
+      - name: Block auth and remote-version endpoints on Windows
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: |
+          $hosts = "$env:SystemRoot\System32\drivers\etc\hosts"
+          Add-Content -Path $hosts -Value '127.0.0.1 github.com', '127.0.0.1 raw.githubusercontent.com'
+
+      - name: Run real Unix installer
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          if [ "$RUNNER_OS" = 'macOS' ]; then
+            script -q "$RUNNER_TEMP/install.log" bash install.sh &
+          else
+            script -qec "bash install.sh" "$RUNNER_TEMP/install.log" &
+          fi
+          echo $! > "$RUNNER_TEMP/installer.pid"
+
+      - name: Run real Windows installer in PowerShell 5.1
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: |
+          $boot = "iex (Get-Content -Raw -Encoding UTF8 '$PWD\install.ps1')"
+          $encoded = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($boot))
+          $command = "powershell -NoProfile -ExecutionPolicy Bypass -EncodedCommand $encoded > `"$env:RUNNER_TEMP\install.log`" 2>&1"
+          Start-Process cmd -ArgumentList '/c', $command
+
+      - name: Wait for Brainstem and assert
+        shell: bash
+        run: |
+          set -uo pipefail
+          BRANCH_VERSION="$(tr -d '[:space:]' < rapp_brainstem/VERSION)"
+          for attempt in $(seq 1 120); do
+            sleep 5
+            if curl -sf http://localhost:7071/health -o "$RUNNER_TEMP/health.json"; then
+              break
+            fi
+            if [ "$attempt" = 120 ]; then
+              tail -60 "$RUNNER_TEMP/install.log" 2>/dev/null || true
+              exit 1
+            fi
+          done
+          python - "$RUNNER_TEMP/health.json" "$BRANCH_VERSION" <<'PY'
+          import json
+          import sys
+          data = json.load(open(sys.argv[1]))
+          assert data.get('status') in ('ok', 'unauthenticated'), data
+          assert data.get('version') == sys.argv[2], data
+          assert 'ContextMemory' in (data.get('agents') or []), data
+          PY
+          curl -sf http://localhost:7071/ -o "$RUNNER_TEMP/index.html"
+          grep -q 'RAPP Brainstem' "$RUNNER_TEMP/index.html"
+          curl -sf http://localhost:7071/models >/dev/null
+          curl -s -X POST http://localhost:7071/chat \
+            -H 'Content-Type: application/json' -d '{}' \
+            | python -c 'import json,sys; assert "error" in json.load(sys.stdin)'
+
+      - name: Assert user files survived upgrade
+        if: matrix.scenario == 'upgrade'
+        shell: bash
+        run: |
+          set -euxo pipefail
+          test -f "$HOME/.brainstem/src/rapp_brainstem/agents/preflight_custom_agent.py"
+          grep -q PREFLIGHT-SOUL-MARKER "$HOME/.brainstem/src/rapp_brainstem/soul.md"
+          grep -q PREFLIGHT-ENV-MARKER "$HOME/.brainstem/src/rapp_brainstem/.env"
+          curl -sf http://localhost:7071/health | python -c \
+            'import json,sys; assert "PreflightCustom" in json.load(sys.stdin).get("agents", [])'
+
+      - name: Collect installer log
+        if: always()
+        shell: bash
+        run: tail -100 "$RUNNER_TEMP/install.log" 2>/dev/null || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: preflight-${{ matrix.os }}-${{ matrix.scenario }}
+          path: ${{ runner.temp }}/install.*
+          if-no-files-found: ignore
