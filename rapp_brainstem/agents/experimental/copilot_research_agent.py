@@ -65,8 +65,9 @@ class CopilotResearchAgent(BasicAgent):
                 timeout=120,
             )
             output = result.stdout.strip()
-            if result.returncode != 0 and not output:
-                return f"Copilot CLI error (exit {result.returncode}): {result.stderr.strip()}"
+            if result.returncode != 0:
+                detail = result.stderr.strip() or output or "No diagnostic output."
+                return f"Copilot CLI error (exit {result.returncode}): {detail[:2000]}"
             return output or "No results returned."
         except subprocess.TimeoutExpired:
             return "Research timed out after 120 seconds."

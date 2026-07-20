@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RAPP Brainstem</title>
-<meta name="description" content="RAPP Brainstem — local-first AI agent server. One dependency: a GitHub account.">
+<title>AIBAST Agents Library</title>
+<meta name="description" content="AIBAST Agents Library — industry agent templates, the RAPP production guide, and a local-first AI agent server powered by GitHub Copilot.">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -24,6 +24,22 @@
   .hero h1 { font-size: 36px; font-weight: 700; margin-bottom: 8px; }
   .hero p { color: #8b949e; font-size: 16px; line-height: 1.6; }
   .hero .tagline { color: #58a6ff; font-weight: 600; font-size: 14px; margin-top: 12px; }
+  .hero-actions {
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 10px;
+    margin-top: 20px;
+  }
+  .hero-action {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 40px; padding: 9px 16px; border: 1px solid #30363d;
+    border-radius: 6px; color: #c9d1d9; font-size: 13px; font-weight: 600;
+    transition: border-color 0.15s, background 0.15s, color 0.15s;
+  }
+  .hero-action:hover {
+    border-color: #58a6ff; background: #1f6feb1a; color: #fff;
+    text-decoration: none;
+  }
+  .hero-action.primary { background: #1f6feb; border-color: #1f6feb; color: #fff; }
+  .hero-action.primary:hover { background: #388bfd; }
 
   .one-liner {
     max-width: 620px; width: 100%;
@@ -209,9 +225,13 @@
 
 <div class="hero">
   <div class="logo">🧠</div>
-  <h1>RAPP Brainstem</h1>
-  <p>A local-first AI agent server powered by GitHub Copilot.<br>No API keys. No cloud setup. Just your GitHub account.</p>
-  <div class="tagline">Start simple. Layer up when you're ready.</div>
+  <h1>AIBAST Agents Library</h1>
+  <p>Industry agent templates, production patterns, and a local-first RAPP Brainstem powered by GitHub Copilot.</p>
+  <div class="tagline">Build locally. Validate with the production guide. Scale through the Microsoft AI stack.</div>
+  <div class="hero-actions">
+    <a class="hero-action primary" href="docs/rapp-guide.html">Open Production Guide</a>
+    <a class="hero-action" href="https://github.com/microsoft/aibast-agents-library/tree/main/agents/%40aibast-agents-library">Browse Agent Templates</a>
+  </div>
 </div>
 
 <div class="install-widget" id="install-widget">
@@ -388,6 +408,8 @@
 </div>
 
 <div class="links">
+  <a href="docs/rapp-guide.html">Production Guide</a>
+  <a href="https://github.com/microsoft/aibast-agents-library/tree/main/agents/%40aibast-agents-library">Agent Templates</a>
   <a href="https://github.com/microsoft/aibast-agents-library">GitHub</a>
   <a href="https://github.com/microsoft/aibast-agents-library/issues">Issues &amp; Feedback</a>
   <a href="https://github.com/kody-w/CommunityRAPP">Hippocampus Repo</a>

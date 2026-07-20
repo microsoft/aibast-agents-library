@@ -2,7 +2,7 @@
 
 A local-first AI agent server. One dependency: a GitHub account with Copilot access.
 
-The brainstem runs on your machine, uses GitHub Copilot as the LLM, auto-discovers agents from Python files, and exposes a chat API + web UI on `localhost:7071`. No API keys, no cloud setup, no config.
+The brainstem runs on your machine, uses GitHub Copilot as the LLM, auto-discovers agents from Python files, and exposes a chat API + web UI on `localhost:7071`. Core chat needs no provider API key or cloud setup beyond GitHub Copilot; optional Azure Speech and ElevenLabs voice integrations use their own credentials.
 
 ---
 
@@ -35,13 +35,10 @@ pip3 install -r requirements.txt
 ## Quickstart
 
 ```bash
-# 1. Authenticate with GitHub
-gh auth login
-
-# 2. Start the brainstem
+# 1. Start the brainstem
 brainstem            # or: cd rapp_brainstem && ./start.sh
 
-# 3. Open the UI
+# 2. Open the UI and sign in with GitHub when prompted
 open http://localhost:7071
 ```
 
@@ -77,7 +74,13 @@ The main conversation endpoint. Sends user input through the LLM with tool-calli
 |-------|------|-------------|
 | `user_input` | string | **Required.** The user's message. |
 | `conversation_history` | array | Optional. Previous messages (`role` + `content`). |
-| `session_id` | string | Optional. Returned in every response for continuity. |
+| `session_id` | string | Optional correlation identifier returned in every response. Clients must resend `conversation_history`; the server does not persist conversations by ID. |
+
+### `POST /chat/stream`
+
+Streaming counterpart to `/chat`. Accepts the same JSON body and returns
+server-sent events. It is POST-only because a request may invoke agents and
+therefore is not a safe, side-effect-free GET.
 
 ### `GET /health`
 
@@ -152,10 +155,30 @@ All config is via environment variables in `.env` (auto-created from `.env.examp
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `GITHUB_TOKEN` | *auto-detected* | GitHub PAT or Copilot token. Auto-detected from `gh auth token` if blank. |
-| `GITHUB_MODEL` | `gpt-4o` | LLM model. Changeable at runtime via `/models/set`. |
+| `GITHUB_MODEL` | `auto` | `auto` picks the highest Claude Haiku your account can use — fastest responses (falling back to the highest Sonnet, then `gpt-4o`), or pin a specific id. A model picked in the web UI is remembered (`.brainstem_model`) and overrides this. Changeable at runtime via `/models/set` (`"model": "auto"` re-selects). |
 | `SOUL_PATH` | `./soul.md` | Path to the system prompt file. |
 | `AGENTS_PATH` | `./agents` | Directory to discover `*_agent.py` files from. |
 | `PORT` | `7071` | Server port. |
+| `BRAINSTEM_LAN_MODE` | `false` | Set `true` to bind all interfaces. Non-loopback capability routes require the per-install secret. |
+| `BRAINSTEM_ALLOWED_HOSTS` | *(empty)* | Optional comma-separated LAN hostnames. Loopback and private IP literals are handled automatically. |
+| `VOICE_ZIP_PASSWORD` | *(empty)* | Optional password used to unlock the encrypted `voice.zip` config for Azure Speech or ElevenLabs at startup. |
+
+### LAN access
+
+The secure default is `127.0.0.1`; the brainstem is not reachable from other
+machines. To opt in, set `BRAINSTEM_LAN_MODE=true` and restart. The server prints
+the per-install secret stored in `.brainstem_secret`. Non-loopback API clients
+must send it on capability-bearing routes:
+
+```bash
+curl http://192.168.1.20:7071/health \
+  -H "X-Brainstem-Secret: $(cat .brainstem_secret)"
+```
+
+Private IP hosts are accepted automatically in LAN mode. If clients use a named
+host, add it to `BRAINSTEM_ALLOWED_HOSTS`. The bundled browser UI remains
+zero-configuration on the same machine; authenticated LAN automation should use
+the API header.
 
 ---
 
@@ -165,7 +188,7 @@ The brainstem uses GitHub Copilot's API — no OpenAI keys needed. It resolves a
 
 1. **`GITHUB_TOKEN` env var** — set in `.env` or your shell
 2. **`.copilot_token` file** — saved automatically after device-code login
-3. **`gh auth token` CLI** — if GitHub CLI is installed and authenticated
+3. **`gh auth token` CLI** — only when it returns a Copilot-compatible token; the common `gho_` token is ignored
 
 The GitHub token is exchanged for a short-lived Copilot API token (auto-refreshed, cached to disk across restarts). If the token expires and a refresh token is available, it auto-refreshes without user interaction.
 
@@ -226,6 +249,11 @@ class GreetingAgent(BasicAgent):
 
 If your agent imports a package that isn't installed, the brainstem auto-installs it via pip and retries. Common mappings are built in (`bs4` → `beautifulsoup4`, `PIL` → `Pillow`, etc.).
 
+The built-in RAR browser is pinned to an immutable reviewed RAR commit. Every
+catalog agent must carry a SHA-256, and the exact downloaded bytes are verified
+in both the browser and server before import. Advancing the catalog requires a
+new brainstem release; drag-and-drop remains available for local files you trust.
+
 ### Using local storage
 
 Agents that import `utils.azure_file_storage` get a local shim automatically. This means agents written for the Azure deployment work locally without modification.
@@ -244,7 +272,9 @@ class MyAgent(BasicAgent):
         return "Done"
 ```
 
-Locally, data is stored in `.brainstem_data/` as JSON files. In Azure, the same imports use Azure File Storage.
+Locally, data is stored in `.brainstem_data/` as JSON files. Named `share_name`
+values receive isolated deterministic directories; the unnamed bundled memory
+store keeps its existing path. In Azure, the same imports use Azure File Storage.
 
 ---
 
@@ -259,7 +289,8 @@ Always respond in 2-3 sentences. Use data from the CRM agent when available.
 Never share customer PII in responses.
 ```
 
-Point `SOUL_PATH` in `.env` to your own file. The brainstem code never changes — only the soul does.
+Point `SOUL_PATH` in `.env` to your own file. Changes are detected on the next
+conversation without restarting the server.
 
 ---
 
@@ -268,23 +299,23 @@ Point `SOUL_PATH` in `.env` to your own file. The brainstem code never changes �
 ```
 rapp_brainstem/
 ├── brainstem.py          # The server — auth, agents, tool-calling loop, all endpoints
-├── basic_agent.py        # Base class all agents extend
 ├── local_storage.py      # Local shim for Azure File Storage
 ├── soul.md               # Default system prompt (replace with your own)
 ├── VERSION               # Semver string, read at startup
 ├── index.html            # Built-in chat web UI
 ├── start.sh              # macOS/Linux startup script
 ├── start.ps1             # Windows startup script
-├── requirements.txt      # Python dependencies (flask, requests, python-dotenv)
+├── requirements.txt      # Runtime dependencies
+├── requirements-dev.txt  # Runtime dependencies plus pytest
 ├── .env.example          # Config template
 ├── .env                  # Your config (auto-created, gitignored)
 ├── .brainstem_data/      # Local storage data (gitignored)
 ├── .copilot_token        # Saved GitHub token (gitignored)
 ├── .copilot_session      # Cached Copilot API token (gitignored)
 ├── agents/               # Agent auto-discovery directory
-│   ├── hello_agent.py    # Example agent
-│   └── experimental/     # Subdirectory — NOT auto-loaded
-└── test_local_agents.py  # Test suite
+│   ├── basic_agent.py    # Base class all agents extend
+│   └── *_agent.py        # Auto-discovered agent cartridges
+└── tests/                # Pytest regression suite
 ```
 
 ---
@@ -293,12 +324,13 @@ rapp_brainstem/
 
 ```bash
 cd rapp_brainstem
-python3 -m pytest test_local_agents.py -v
+python3 -m pip install -r requirements-dev.txt
+python3 -m pytest tests -v
 ```
 
 Run a single test:
 ```bash
-python3 -m pytest test_local_agents.py::TestLocalStorage::test_write_and_read -v
+python3 -m pytest tests/test_local_agents.py::TestLocalStorage::test_write_and_read -v
 ```
 
 ---

@@ -19,10 +19,10 @@ $ServerUrl      = "http://localhost:$ServerPort"
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 function Write-Info    { param($Msg) Write-Host "  i " -ForegroundColor Cyan -NoNewline; Write-Host $Msg }
-function Write-Ok      { param($Msg) Write-Host "  ✓ " -ForegroundColor Green -NoNewline; Write-Host $Msg }
-function Write-Warn    { param($Msg) Write-Host "  ⚠ " -ForegroundColor Yellow -NoNewline; Write-Host $Msg }
-function Write-Err     { param($Msg) Write-Host "  ✗ " -ForegroundColor Red -NoNewline; Write-Host $Msg; exit 1 }
-function Write-Step    { param($Msg) Write-Host ""; Write-Host "  ▸ $Msg" -ForegroundColor Cyan }
+function Write-Ok      { param($Msg) Write-Host "  [OK] " -ForegroundColor Green -NoNewline; Write-Host $Msg }
+function Write-Warn    { param($Msg) Write-Host "  [!] " -ForegroundColor Yellow -NoNewline; Write-Host $Msg }
+function Write-Err     { param($Msg) Write-Host "  [X] " -ForegroundColor Red -NoNewline; Write-Host $Msg; exit 1 }
+function Write-Step    { param($Msg) Write-Host ""; Write-Host "  > $Msg" -ForegroundColor Cyan }
 
 function Prompt-User {
     param(
@@ -50,16 +50,16 @@ function Test-CommandExists {
 # ── Banner ────────────────────────────────────────────────────────────────────
 function Show-Banner {
     Write-Host ""
-    Write-Host "  ╔═══════════════════════════════════════════════════╗" -ForegroundColor Cyan
-    Write-Host "  ║                                                   ║" -ForegroundColor Cyan
-    Write-Host "  ║   🧠 RAPP Hippocampus         ║" -ForegroundColor Cyan
-    Write-Host "  ║                                                   ║" -ForegroundColor Cyan
-    Write-Host "  ║   The memory center for your AI agents            ║" -ForegroundColor Cyan
-    Write-Host "  ║   Local-first — deploy to Azure when ready        ║" -ForegroundColor Cyan
-    Write-Host "  ║                                                   ║" -ForegroundColor Cyan
-    Write-Host "  ╚═══════════════════════════════════════════════════╝" -ForegroundColor Cyan
+    Write-Host "  +---------------------------------------------------+" -ForegroundColor Cyan
+    Write-Host "  |                                                   |" -ForegroundColor Cyan
+    Write-Host "  |   RAPP Hippocampus                                |" -ForegroundColor Cyan
+    Write-Host "  |                                                   |" -ForegroundColor Cyan
+    Write-Host "  |   The memory center for your AI agents            |" -ForegroundColor Cyan
+    Write-Host "  |   Local-first - deploy to Azure when ready        |" -ForegroundColor Cyan
+    Write-Host "  |                                                   |" -ForegroundColor Cyan
+    Write-Host "  +---------------------------------------------------+" -ForegroundColor Cyan
     Write-Host ""
-    Write-Host "  Installer v$Version — Windows $([System.Environment]::OSVersion.Version)" -ForegroundColor DarkGray
+    Write-Host "  Installer v$Version - Windows $([System.Environment]::OSVersion.Version)" -ForegroundColor DarkGray
     Write-Host ""
 }
 
@@ -101,7 +101,7 @@ function Check-Python {
         return
     }
 
-    Write-Warn "Python 3.11+ not found — installing..."
+    Write-Warn "Python 3.11+ not found - installing..."
     if (Test-WingetAvailable) {
         winget install Python.Python.3.11 --accept-source-agreements --accept-package-agreements --silent
         # Refresh PATH
@@ -133,7 +133,7 @@ function Check-Git {
         return
     }
 
-    Write-Warn "Git not found — installing..."
+    Write-Warn "Git not found - installing..."
     if (Test-WingetAvailable) {
         winget install Git.Git --accept-source-agreements --accept-package-agreements --silent
         $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
@@ -158,9 +158,9 @@ function Check-Node {
             Write-Ok "Node.js $nodeVer"
             return
         }
-        Write-Warn "Node.js $nodeVer found but need 18+ — upgrading..."
+        Write-Warn "Node.js $nodeVer found but need 18+ - upgrading..."
     } else {
-        Write-Warn "Node.js not found — installing..."
+        Write-Warn "Node.js not found - installing..."
     }
 
     if (Test-WingetAvailable) {
@@ -193,9 +193,9 @@ function Check-FuncTools {
             Write-Ok "Azure Functions Core Tools v$funcVer"
             return
         }
-        Write-Warn "Azure Functions Core Tools v$funcVer found but need v4+ — upgrading..."
+        Write-Warn "Azure Functions Core Tools v$funcVer found but need v4+ - upgrading..."
     } else {
-        Write-Warn "Azure Functions Core Tools not found — installing..."
+        Write-Warn "Azure Functions Core Tools not found - installing..."
     }
 
     npm install -g azure-functions-core-tools@4 --unsafe-perm true 2>&1 | Select-Object -Last 1
@@ -211,7 +211,7 @@ function Check-FuncTools {
 
 function Check-Prerequisites {
     Write-Host ""
-    Write-Host "  ── Prerequisites ──────────────────────────────────" -ForegroundColor White
+    Write-Host "  -- Prerequisites ----------------------------------" -ForegroundColor White
     Write-Info "Detected: Windows $([System.Environment]::OSVersion.Version)"
 
     Check-Python
@@ -229,14 +229,14 @@ function Check-Prerequisites {
 
 function Install-CommunityRAPP {
     Write-Host ""
-    Write-Host "  ── Installing CommunityRAPP ───────────────────────" -ForegroundColor White
+    Write-Host "  -- Installing CommunityRAPP -----------------------" -ForegroundColor White
 
     if (-not (Test-Path $InstallDir)) {
         New-Item -ItemType Directory -Path $InstallDir -Force | Out-Null
     }
 
     if (Test-Path (Join-Path $RepoDir ".git")) {
-        Write-Step "Existing installation found — checking for updates..."
+        Write-Step "Existing installation found - checking for updates..."
 
         $localVersion = "0.0.0"
         $versionFile = Join-Path $SourceDir "VERSION"
@@ -272,7 +272,7 @@ function Install-CommunityRAPP {
 
     # Verify
     if (-not (Test-Path (Join-Path $SourceDir "function_app.py"))) {
-        Write-Err "Installation failed — CommunityRAPP source not found at $SourceDir"
+        Write-Err "Installation failed - CommunityRAPP source not found at $SourceDir"
     }
 
     # Write version marker
@@ -286,12 +286,12 @@ function Install-CommunityRAPP {
 
 function Setup-Venv {
     Write-Host ""
-    Write-Host "  ── Setting up Python environment ──────────────────" -ForegroundColor White
+    Write-Host "  -- Setting up Python environment ------------------" -ForegroundColor White
 
     $activateScript = Join-Path $VenvDir "Scripts\Activate.ps1"
 
     if ((Test-Path $VenvDir) -and (Test-Path $activateScript)) {
-        Write-Step "Existing virtual environment found — updating packages..."
+        Write-Step "Existing virtual environment found - updating packages..."
     } else {
         Write-Step "Creating virtual environment..."
         & $script:PythonCmd -m venv $VenvDir
@@ -317,7 +317,7 @@ function Setup-Venv {
 
 function Configure-OpenAI {
     Write-Host ""
-    Write-Host "  ── Azure OpenAI Configuration ─────────────────────" -ForegroundColor White
+    Write-Host "  -- Azure OpenAI Configuration ---------------------" -ForegroundColor White
 
     $settingsFile = Join-Path $SourceDir "local.settings.json"
 
@@ -335,7 +335,7 @@ function Configure-OpenAI {
     Write-Host "  How would you like to connect to Azure OpenAI?" -ForegroundColor White
     Write-Host ""
     Write-Host "    1) " -ForegroundColor Cyan -NoNewline; Write-Host "Enter API key manually"
-    Write-Host "    2) " -ForegroundColor Cyan -NoNewline; Write-Host "Use Azure CLI login (az login) — " -NoNewline; Write-Host "recommended for Azure users" -ForegroundColor DarkGray
+    Write-Host "    2) " -ForegroundColor Cyan -NoNewline; Write-Host "Use Azure CLI login (az login) - " -NoNewline; Write-Host "recommended for Azure users" -ForegroundColor DarkGray
     Write-Host "    3) " -ForegroundColor Cyan -NoNewline; Write-Host "Skip for now " -NoNewline; Write-Host "(configure later)" -ForegroundColor DarkGray
     Write-Host ""
 
@@ -352,7 +352,7 @@ function Configure-OpenAI {
             Write-Host ""
             $apiKey = Prompt-User "Azure OpenAI API key"
             if ([string]::IsNullOrWhiteSpace($apiKey)) {
-                Write-Warn "No API key provided — using placeholder"
+                Write-Warn "No API key provided - using placeholder"
                 $apiKey = "<your-openai-api-key>"
             }
             $endpoint = Prompt-User "Azure OpenAI endpoint (e.g. https://your-resource.openai.azure.com/)"
@@ -389,7 +389,7 @@ function Configure-OpenAI {
                 }
                 $deployment = Prompt-User "Deployment name" "gpt-4o"
                 $apiKey = ""
-                Write-Ok "Will use Azure CLI (Entra ID) authentication — no API key needed"
+                Write-Ok "Will use Azure CLI (Entra ID) authentication - no API key needed"
             } else {
                 Write-Warn "Azure CLI not found. Install from: https://aka.ms/installazurecli"
                 Write-Warn "Falling back to placeholder configuration"
@@ -436,7 +436,7 @@ function Configure-OpenAI {
 
 function Install-CLI {
     Write-Host ""
-    Write-Host "  ── Installing CLI commands ────────────────────────" -ForegroundColor White
+    Write-Host "  -- Installing CLI commands ------------------------" -ForegroundColor White
 
     if (-not (Test-Path $BinDir)) {
         New-Item -ItemType Directory -Path $BinDir -Force | Out-Null
@@ -446,7 +446,7 @@ function Install-CLI {
     $launcherCmd = Join-Path $BinDir "communityrapp.cmd"
     $launcherContent = @"
 @echo off
-REM RAPP Hippocampus — CLI Launcher
+REM RAPP Hippocampus - CLI Launcher
 setlocal
 
 set INSTALL_DIR=%USERPROFILE%\.communityrapp
@@ -554,7 +554,7 @@ REM Alias for communityrapp
 
 function Launch-CommunityRAPP {
     Write-Host ""
-    Write-Host "  ── Launching CommunityRAPP ────────────────────────" -ForegroundColor White
+    Write-Host "  -- Launching CommunityRAPP ------------------------" -ForegroundColor White
 
     Push-Location $SourceDir
     try {
@@ -626,9 +626,9 @@ function Show-Success {
     }
 
     Write-Host ""
-    Write-Host "  ═══════════════════════════════════════════════════" -ForegroundColor Green
-    Write-Host "  ✓ CommunityRAPP v$installedVersion installed!" -ForegroundColor Green
-    Write-Host "  ═══════════════════════════════════════════════════" -ForegroundColor Green
+    Write-Host "  ===================================================" -ForegroundColor Green
+    Write-Host "  [OK] CommunityRAPP v$installedVersion installed!" -ForegroundColor Green
+    Write-Host "  ===================================================" -ForegroundColor Green
     Write-Host ""
     Write-Host "  Start the server:" -ForegroundColor White
     Write-Host "    communityrapp" -ForegroundColor Cyan
@@ -639,15 +639,15 @@ function Show-Success {
     Write-Host "      -d '{`"user_input`": `"Remember that I love coding`", `"conversation_history`": []}'" -ForegroundColor DarkGray
     Write-Host ""
     Write-Host "  Other commands:" -ForegroundColor White
-    Write-Host "    communityrapp status" -ForegroundColor Cyan -NoNewline; Write-Host "   — Check server health"
-    Write-Host "    communityrapp test" -ForegroundColor Cyan -NoNewline; Write-Host "     — Send a test message"
-    Write-Host "    communityrapp update" -ForegroundColor Cyan -NoNewline; Write-Host "   — Pull latest version"
-    Write-Host "    crapp" -ForegroundColor Cyan -NoNewline; Write-Host "                  — Short alias"
+    Write-Host "    communityrapp status" -ForegroundColor Cyan -NoNewline; Write-Host "   - Check server health"
+    Write-Host "    communityrapp test" -ForegroundColor Cyan -NoNewline; Write-Host "     - Send a test message"
+    Write-Host "    communityrapp update" -ForegroundColor Cyan -NoNewline; Write-Host "   - Pull latest version"
+    Write-Host "    crapp" -ForegroundColor Cyan -NoNewline; Write-Host "                  - Short alias"
     Write-Host ""
     Write-Host "  Next steps:" -ForegroundColor White
-    Write-Host "    • " -NoNewline; Write-Host "Deploy to Azure:" -ForegroundColor Green -NoNewline; Write-Host " see docs/DEPLOYMENT.md"
-    Write-Host "    • " -NoNewline; Write-Host "Add custom agents:" -ForegroundColor Green -NoNewline; Write-Host " drop *_agent.py files in agents/"
-    Write-Host "    • " -NoNewline; Write-Host "Configure memory:" -ForegroundColor Green -NoNewline; Write-Host " edit local.settings.json"
+    Write-Host "    - " -NoNewline; Write-Host "Deploy to Azure:" -ForegroundColor Green -NoNewline; Write-Host " see docs/DEPLOYMENT.md"
+    Write-Host "    - " -NoNewline; Write-Host "Add custom agents:" -ForegroundColor Green -NoNewline; Write-Host " drop *_agent.py files in agents/"
+    Write-Host "    - " -NoNewline; Write-Host "Configure memory:" -ForegroundColor Green -NoNewline; Write-Host " edit local.settings.json"
     Write-Host ""
     Write-Host "  Installation: ~/.communityrapp/" -ForegroundColor DarkGray
     Write-Host "  Need help?  communityrapp help" -ForegroundColor DarkGray

@@ -1,20 +1,20 @@
-# Copilot Instructions — RAPP Brainstem
+# Copilot Instructions — AIBAST Agents Library
 
 ## Architecture
 
-RAPP Brainstem is a progressive AI agent platform using a biological metaphor (see `CONSTITUTION.md` for architectural principles):
+AIBAST Agents Library is the stable Microsoft downstream for the RAPP stack (see `CONSTITUTION.md` for architectural principles):
 
 1. **Brainstem** (`rapp_brainstem/`) — The core. A local-first Flask server (Python 3.11) using GitHub Copilot's API for LLM inference. No API keys needed — just `gh auth login`. This is where all development happens.
 2. **Spinal Cord** (`azuredeploy.json`, `deploy.sh`) — Azure deployment. ARM template creates Function App, Azure OpenAI, Storage, App Insights. All Entra ID auth.
 3. **Nervous System** (`MSFTAIBASMultiAgentCopilot_*.zip`) — Power Platform solution for Copilot Studio. Connects the Azure Function to Teams and M365 Copilot.
 
-Everything else in the repo root (install scripts, index.html, docs/) is onboarding infrastructure. `community_rapp/` contains public skill gateways for private backend repos.
+The repository also owns `agents/@aibast-agents-library/`, `registry.json`, `build_registry.py`, `rapp_ai/`, the production guide, and Microsoft governance files. These are not upstream Grail mirrors.
 
 ### Brainstem internals
 
 `brainstem.py` is the single-file server containing auth, agent orchestration, the tool-calling loop, and all HTTP endpoints.
 
-**Tool-calling loop** (`/chat`): Builds messages from soul + memory + conversation history, then runs up to **3 rounds** of LLM calls. Each round checks for `tool_calls` in the response, executes matching agents via `run_tool_calls()`, appends tool results, and loops. Falls back to `gpt-4o` if the configured model fails.
+**Tool-calling loop** (`/chat`, `/chat/stream`): Builds messages from soul + conversation history, then runs up to **3 rounds** of LLM calls. Each round checks for `tool_calls`, executes matching agents via `run_tool_calls()`, appends tool results, and loops. The streaming route returns server-sent events and does not replay an accepted request after interruption.
 
 **Agent auto-discovery**: `load_agents()` globs `*_agent.py` in `AGENTS_PATH`, dynamically imports each file, finds classes with a `perform` method (excluding `BasicAgent` itself), and instantiates them. Each agent's `to_tool()` generates its OpenAI function-calling schema.
 
@@ -44,14 +44,15 @@ Copilot API tokens are exchanged from the GitHub token, cached in memory (with 6
 # Start the brainstem server (creates venv at ~/.brainstem/venv if needed)
 cd rapp_brainstem && ./start.sh    # port 7071
 
-# Run tests
-cd rapp_brainstem && python3 -m pytest test_local_agents.py -v
+# Run all Brainstem tests
+cd rapp_brainstem && python -m pytest tests -v
 
 # Run a single test
-python3 -m pytest test_local_agents.py::TestLocalStorage::test_write_and_read -v
+python -m pytest tests/test_local_agents.py::TestLocalStorage::test_write_and_read -v
 
-# Run a single test class
-python3 -m pytest test_local_agents.py::TestShimRegistration -v
+# Validate the AIBAST registry
+python build_registry.py
+python -m pytest tests -v
 
 # Health check
 curl -s localhost:7071/health | python3 -m json.tool
@@ -65,6 +66,7 @@ No linter or type-checker is configured.
 |----------|--------|---------|
 | `/` | GET | Serves `index.html` (chat UI) |
 | `/chat` | POST | `{"user_input": "...", "conversation_history": [], "session_id": "..."}` |
+| `/chat/stream` | POST | Server-sent events for streamed replies and agent activity |
 | `/health` | GET | Status, model, loaded agents, token state |
 | `/login` | POST | Start GitHub device code OAuth flow |
 | `/login/poll` | POST | Poll for completed device code auth |
@@ -83,13 +85,14 @@ No linter or type-checker is configured.
 | `/voice/import` | POST | Import `voice.zip` from upload |
 | `/version` | GET | Server version (reads `VERSION` file) |
 | `/debug/auth` | GET | Auth diagnostics |
+| `/diagnostics/report` | POST | Prepare a privacy-scrubbed GitHub issue draft |
 
 ## Writing Agents
 
 Agents extend `BasicAgent` (`agents/basic_agent.py`) with `name`, `metadata` (OpenAI function schema), and `perform()`:
 
 ```python
-from basic_agent import BasicAgent
+from agents.basic_agent import BasicAgent
 
 class MyAgent(BasicAgent):
     def __init__(self):
@@ -120,8 +123,12 @@ class MyAgent(BasicAgent):
 
 - **Python 3.11** target runtime; venv at `~/.brainstem/venv`
 - **No API keys** for local dev — GitHub Copilot token exchange handles auth
-- **Config via `.env`** — `GITHUB_TOKEN`, `GITHUB_MODEL`, `SOUL_PATH`, `AGENTS_PATH`, `PORT`, `VOICE_ZIP_PASSWORD` (see `.env.example`)
+- **Config via `.env`** — `GITHUB_TOKEN`, `GITHUB_MODEL` (`auto` by default), `SOUL_PATH`, `AGENTS_PATH`, `PORT`, `BRAINSTEM_LAN_MODE`, `BRAINSTEM_ALLOWED_HOSTS`, `VOICE_ZIP_PASSWORD` (see `.env.example`)
 - **Local-first storage**: `local_storage.py` stores to `.brainstem_data/` on disk, mirroring the CommunityRAPP Azure File Storage layout (`shared_memories/memory.json` for shared, `memory/{guid}/user_memory.json` for per-user)
 - **Soul file** (`soul.md`): System prompt loaded as the first message in every conversation. Users customize by editing it or pointing `SOUL_PATH` to their own
 - **Skill-based onboarding**: `skill.md` uses the Moltbook pattern — YAML frontmatter, autonomous execution steps, ⏸️ pause points for user input, state saved to `~/.config/brainstem/state.json`
 - **Single-file server**: All server logic lives in `brainstem.py` — auth, routing, LLM calls, agent orchestration. Keep it that way.
+
+## Downstream Sync Safety
+
+Never overwrite AIBAST-owned content with Grail equivalents: `agents/@aibast-agents-library/`, `registry.json`, `build_registry.py`, `rapp_ai/`, root `README.md`/`index.html`/`CLAUDE.md`, `docs/index.html`, `docs/tutorial.html`, `docs/rapp-guide.html`, `.github/`, legal/governance files, `.vscode/`, and `tools/`. Rewrite only Grail repository-identity URLs to `microsoft/aibast-agents-library`; review content-repository links such as CommunityRAPP individually.

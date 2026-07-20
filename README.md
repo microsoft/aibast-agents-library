@@ -1,10 +1,12 @@
-# 🧠 RAPP Brainstem
+# AIBAST Agents Library
 
 > ⚠️ **IMPORTANT:** This is an experimental project managed by a v-team from the Artificial Intelligence Business Applications Specialist Team (AIBAST), not an officially supported Microsoft product.
 
 > **👉 [Get Started at microsoft.github.io/aibast-agents-library](https://microsoft.github.io/aibast-agents-library/)**
 
-A local-first AI agent server powered by GitHub Copilot. No API keys. No cloud setup. Just your GitHub account.
+Industry agent templates, the RAPP production methodology, and a local-first AI agent server powered by GitHub Copilot. No provider API key or cloud setup is required for core chat beyond a GitHub account with Copilot access.
+
+[Production Guide](https://microsoft.github.io/aibast-agents-library/docs/rapp-guide.html) | [Browse Agent Templates](https://github.com/microsoft/aibast-agents-library/tree/main/agents/%40aibast-agents-library) | [Brainstem API and configuration](rapp_brainstem/README.md)
 
 ```
 curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash
@@ -18,9 +20,10 @@ Auto-installs Python 3.11, Git, and GitHub CLI via winget if missing.
 
 Then:
 ```bash
-gh auth login   # one-time GitHub auth
 brainstem       # start the server → localhost:7071
 ```
+
+The browser walks through GitHub device-code sign-in when no compatible credential is already available.
 
 ---
 
@@ -85,9 +88,9 @@ class WeatherAgent(BasicAgent):
         return f"It's sunny in {city}!"
 ```
 
-### Connect Remote Agent Repos
+### Browse the AIBAST Agent Library
 
-The chat UI has a **Sources** panel — paste any GitHub repo URL with an `agents/` folder and the brainstem hot-loads them. Missing pip dependencies are auto-installed.
+Industry templates live under [`agents/@aibast-agents-library/`](agents/@aibast-agents-library/). Review a template, adapt it to your environment, then drag the trusted `*_agent.py` file into the Brainstem chat or place it in the configured agents directory. Agent files are Python code and execute locally, so review them before installation.
 
 ---
 
@@ -133,20 +136,25 @@ All config via `.env` (see `.env.example`):
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `GITHUB_TOKEN` | auto-detected via `gh` | GitHub PAT or Copilot token |
-| `GITHUB_MODEL` | `gpt-4o` | Model ([GitHub Models](https://github.com/marketplace/models)) |
+| `GITHUB_MODEL` | `auto` | Selects the fastest available Claude Haiku, then Sonnet, then `gpt-4o`; a model selected in the UI overrides this value. |
 | `SOUL_PATH` | `./soul.md` | Path to your soul file |
 | `AGENTS_PATH` | `./agents` | Path to your agents directory |
 | `PORT` | `7071` | Server port |
+| `BRAINSTEM_LAN_MODE` | `false` | Opt in to LAN binding; non-loopback capability routes require the per-install secret. |
+| `BRAINSTEM_ALLOWED_HOSTS` | *(empty)* | Optional comma-separated LAN hostnames. |
+| `VOICE_ZIP_PASSWORD` | *(empty)* | Optional password for encrypted Azure Speech or ElevenLabs configuration. |
 
 ## API
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
 | `/chat` | POST | `{"user_input": "...", "conversation_history": [], "session_id": "..."}` |
+| `/chat/stream` | POST | Server-sent event stream for chat and agent activity. |
 | `/health` | GET | Status, model, loaded agents, token state |
 | `/login` | POST | Start GitHub device code OAuth flow |
 | `/models` | GET | List available models |
-| `/repos` | GET | List connected agent repos |
+| `/agents` | GET | List installed agent files and loaded tools. |
+| `/diagnostics/report` | POST | Prepare a privacy-scrubbed GitHub issue draft for review. |
 
 ## Requirements
 

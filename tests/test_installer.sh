@@ -7,6 +7,17 @@ PASS=0
 FAIL=0
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 
+PYTHON_BIN=""
+for candidate in "${PYTHON:-}" python3 python; do
+    [ -n "$candidate" ] || continue
+    if command -v "$candidate" >/dev/null 2>&1 \
+       && "$candidate" -c 'import sys' >/dev/null 2>&1; then
+        PYTHON_BIN="$candidate"
+        break
+    fi
+done
+[ -n "$PYTHON_BIN" ] || { echo "No runnable Python interpreter found" >&2; exit 1; }
+
 pass() { PASS=$((PASS + 1)); echo "  ✓ $1"; }
 fail() { FAIL=$((FAIL + 1)); echo "  ✗ $1"; }
 
@@ -41,10 +52,10 @@ else
     fail "install.sh should create brainstem CLI wrapper"
 fi
 
-if grep -q 'aibast-agents-library.git' "$REPO_ROOT/install.sh" && ! grep -q 'RAPPAI' "$REPO_ROOT/install.sh"; then
-    pass "install.sh clones public repo"
+if grep -q 'microsoft/aibast-agents-library.git' "$REPO_ROOT/install.sh" && ! grep -q 'RAPPAI' "$REPO_ROOT/install.sh"; then
+    pass "install.sh clones the public AIBAST repo"
 else
-    fail "install.sh should clone public aibast-agents-library repo"
+    fail "install.sh should clone microsoft/aibast-agents-library"
 fi
 
 echo ""
@@ -63,6 +74,39 @@ if grep -q '\.brainstem' "$REPO_ROOT/install.ps1"; then
     pass "install.ps1 targets ~/.brainstem"
 else
     fail "install.ps1 should target ~/.brainstem"
+fi
+
+BOOTSTRAP_BOMS=$("$PYTHON_BIN" - "$REPO_ROOT" <<'PY'
+import pathlib
+import sys
+
+root = pathlib.Path(sys.argv[1])
+files = (
+    "install.ps1",
+    "deploy.ps1",
+    "community_rapp/install.ps1",
+    "rapp_ai/install.ps1",
+)
+print(" ".join(name for name in files if (root / name).read_bytes().startswith(b"\xef\xbb\xbf")))
+PY
+)
+if [ -z "$BOOTSTRAP_BOMS" ]; then
+    pass "PowerShell bootstrap scripts omit UTF-8 BOMs"
+else
+    fail "PowerShell 5.1 irm | iex rejects BOMs in: $BOOTSTRAP_BOMS"
+fi
+
+if grep -q 'read -r PROJECT_NAME </dev/tty' "$REPO_ROOT/community_rapp/install.sh"; then
+    pass "piped CommunityRAPP installer reads prompts from the terminal"
+else
+    fail "community_rapp/install.sh should not consume its piped script as prompt input"
+fi
+
+if grep -q 'FRESH_SHIPPED' "$REPO_ROOT/install.sh" \
+   && grep -q 'FreshShipped' "$REPO_ROOT/install.ps1"; then
+    pass "repair installs preserve fresh bundled agents"
+else
+    fail "repair installs should restore only custom agents"
 fi
 
 echo ""
@@ -89,14 +133,16 @@ else
     fail "skill.md missing YAML frontmatter"
 fi
 
-TIER_COUNT=$(grep -c "## .* Tier" "$REPO_ROOT/skill.md" || true)
+TIER_COUNT=$(grep -cE "^## Tier [0-9]" "$REPO_ROOT/skill.md" || true)
 if [ "$TIER_COUNT" -ge 3 ]; then
     pass "skill.md has all 3 tiers"
 else
     fail "skill.md missing tier content (found $TIER_COUNT)"
 fi
 
-PAUSE_COUNT=$(grep -c "⏸️" "$REPO_ROOT/skill.md" || true)
+# Pause points are the per-tier gates that stop autonomous execution and hand back
+# to the user ("Do not proceed…", "Wait for…", "Only pause and ask…").
+PAUSE_COUNT=$(grep -cE "Do not proceed|Wait for|Only pause" "$REPO_ROOT/skill.md" || true)
 if [ "$PAUSE_COUNT" -ge 3 ]; then
     pass "skill.md has $PAUSE_COUNT pause points"
 else
@@ -121,7 +167,11 @@ echo ""
 
 echo "--- index.html ---"
 
-if grep -q "Brainstem" "$REPO_ROOT/index.html" && grep -q "Spinal Cord" "$REPO_ROOT/index.html" && grep -q "Nervous System" "$REPO_ROOT/index.html"; then
+# The landing page names Tier 2 by its installer path ("Hippocampus") or its tier
+# metaphor ("Spinal Cord") — accept either so a vocabulary choice doesn't fail the test.
+if grep -q "Brainstem" "$REPO_ROOT/index.html" \
+   && { grep -q "Spinal Cord" "$REPO_ROOT/index.html" || grep -q "Hippocampus" "$REPO_ROOT/index.html"; } \
+   && grep -q "Nervous System" "$REPO_ROOT/index.html"; then
     pass "index.html has all 3 tiers"
 else
     fail "index.html missing tier content"
@@ -145,10 +195,11 @@ echo ""
 
 echo "--- README.md ---"
 
-if head -5 "$REPO_ROOT/README.md" | grep -q "Brainstem"; then
-    pass "README.md leads with brainstem"
+if head -8 "$REPO_ROOT/README.md" | grep -q "AIBAST Agents Library" \
+   && grep -q "Brainstem" "$REPO_ROOT/README.md"; then
+    pass "README.md leads with AIBAST and documents Brainstem"
 else
-    fail "README.md should lead with brainstem"
+    fail "README.md should preserve AIBAST library identity and Brainstem guidance"
 fi
 
 if grep -q "curl -fsSL" "$REPO_ROOT/README.md"; then
@@ -193,7 +244,7 @@ else
     fail "requirements.txt missing"
 fi
 
-for endpoint in "/chat" "/health" "/login" "/models" "/repos"; do
+for endpoint in "/chat" "/health" "/login" "/models" "/agents" "/version"; do
     if grep -q "\"$endpoint\"" "$REPO_ROOT/rapp_brainstem/brainstem.py"; then
         pass "brainstem.py has $endpoint endpoint"
     else
@@ -201,7 +252,8 @@ for endpoint in "/chat" "/health" "/login" "/models" "/repos"; do
     fi
 done
 
-if grep -q "def perform" "$REPO_ROOT/rapp_brainstem/basic_agent.py" && grep -q "def to_tool" "$REPO_ROOT/rapp_brainstem/basic_agent.py"; then
+# BasicAgent lives in agents/ (also mirrored to the repo copy the shim loads).
+if grep -q "def perform" "$REPO_ROOT/rapp_brainstem/agents/basic_agent.py" && grep -q "def to_tool" "$REPO_ROOT/rapp_brainstem/agents/basic_agent.py"; then
     pass "basic_agent.py has perform() and to_tool()"
 else
     fail "basic_agent.py missing required methods"
@@ -209,52 +261,53 @@ fi
 
 echo ""
 
-# ── onboarding agent tests ───────────────────────────────────────────────────
+# ── bundled agents ────────────────────────────────────────────────────────────
 
-echo "--- onboarding agent ---"
+echo "--- bundled agents ---"
 
-if grep -q "OnboardingGuide" "$REPO_ROOT/rapp_brainstem/agents/hello_agent.py"; then
-    pass "onboarding agent has OnboardingGuide class"
-else
-    fail "onboarding agent missing OnboardingGuide class"
+# Each bundled agent file must define a class that loads and exposes a valid tool
+# schema. This is the contract every *_agent.py must satisfy to be discoverable.
+for agent_file in manage_memory_agent context_memory_agent hacker_news_agent; do
+    if [ -f "$REPO_ROOT/rapp_brainstem/agents/${agent_file}.py" ]; then
+        pass "bundled agent present: ${agent_file}.py"
+    else
+        fail "bundled agent missing: ${agent_file}.py"
+    fi
+done
+
+# Drive the REAL loader (which registers the utils/basic_agent shims the memory
+# agents import) so this exercises the same path a live /chat request would — but
+# against a temp dir holding only the GIT-TRACKED agents, so a local drop-in can't
+# fail (or pip-install mid-run during) a check of the BUNDLED set. The `|| true`
+# keeps a failure reportable instead of aborting the whole suite under set -e.
+TMP_AGENTS=$(mktemp -d "${TMPDIR:-/tmp}/brainstem-agents-XXXXXX")
+for f in "$REPO_ROOT"/rapp_brainstem/agents/*.py; do
+    base=$(basename "$f")
+    if (cd "$REPO_ROOT" && git ls-files --error-unmatch "rapp_brainstem/agents/$base" >/dev/null 2>&1); then
+        cp "$f" "$TMP_AGENTS/"
+    fi
+done
+# Not a git checkout (tarball)? Fall back to everything rather than testing nothing.
+if ! ls "$TMP_AGENTS"/*_agent.py >/dev/null 2>&1; then
+    cp "$REPO_ROOT"/rapp_brainstem/agents/*.py "$TMP_AGENTS/" 2>/dev/null || true
 fi
-
-if grep -q "skill.md" "$REPO_ROOT/rapp_brainstem/agents/hello_agent.py"; then
-    pass "onboarding agent reads skill.md"
-else
-    fail "onboarding agent should read skill.md"
-fi
-
-if grep -q "state.json" "$REPO_ROOT/rapp_brainstem/agents/hello_agent.py"; then
-    pass "onboarding agent reads saved state"
-else
-    fail "onboarding agent should read user progress state"
-fi
-
-# Test that the agent actually loads and runs
-AGENT_TEST=$(cd "$REPO_ROOT/rapp_brainstem" && python3 -c "
-import sys, os
-sys.path.insert(0, os.path.dirname(os.path.abspath('.')))
+AGENT_TEST=$(cd "$REPO_ROOT/rapp_brainstem" && AGENTS_PATH="$TMP_AGENTS" "$PYTHON_BIN" -c "
+import sys
 sys.path.insert(0, '.')
-from agents.hello_agent import OnboardingAgent
-a = OnboardingAgent()
-assert a.name == 'OnboardingGuide'
-tool = a.to_tool()
-assert tool['type'] == 'function'
-result = a.perform(topic='overview')
-assert 'Tier 1' in result and 'Tier 2' in result and 'Tier 3' in result
-result = a.perform(topic='agents')
-assert 'BasicAgent' in result
-result = a.perform(topic='next')
-assert len(result) > 0
-result = a.perform(topic='install')
-assert 'skill.md' in result and 'curl' in result and 'irm' in result
+import brainstem
+agents = brainstem.load_agents()
+names = set(agents)
+assert 'ManageMemory' in names and 'ContextMemory' in names, names
+for a in agents.values():
+    t = a.to_tool()
+    assert t['type'] == 'function' and t['function']['name'], t
 print('ok')
-" 2>&1)
-if [ "$AGENT_TEST" = "ok" ]; then
-    pass "onboarding agent loads, runs, and returns correct content"
+" 2>&1) || true
+rm -rf "$TMP_AGENTS"
+if [ "$(printf '%s' "$AGENT_TEST" | tail -1)" = "ok" ]; then
+    pass "bundled agents load and expose valid tool schemas"
 else
-    fail "onboarding agent runtime test failed: $AGENT_TEST"
+    fail "bundled agent runtime test failed: $AGENT_TEST"
 fi
 
 echo ""
@@ -291,12 +344,19 @@ echo ""
 
 # ── unit tests ────────────────────────────────────────────────────────────────
 
-echo "--- unit tests (test_local_agents.py) ---"
+echo "--- unit tests (tests/) ---"
 cd "$REPO_ROOT/rapp_brainstem"
-if python3 -m pytest test_local_agents.py -x --tb=short -q 2>&1; then
+if "$PYTHON_BIN" -m pytest tests/ -x --tb=short -q 2>&1; then
     pass "unit tests passed"
 else
     fail "unit tests failed"
+fi
+
+if "$PYTHON_BIN" tests/test_model_selection.py >/dev/null 2>&1 \
+   && "$PYTHON_BIN" tests/test_streaming.py >/dev/null 2>&1; then
+    pass "documented standalone test runners work"
+else
+    fail "standalone model-selection or streaming test runner failed"
 fi
 
 echo ""
