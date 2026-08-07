@@ -122,6 +122,11 @@ th.num, td.num { text-align: right; padding-right: 0; }
 .src-item b { min-width: 190px; font-weight: 650; }
 .src-item span { color: var(--text-muted); }
 .empty { color: var(--text-muted); font-size: .82rem; padding: 18px 0; text-align: center; }
+.callout {
+  margin-top: 14px; background: rgba(210,153,34,.08); border: 1px solid rgba(210,153,34,.35);
+  border-radius: 8px; padding: 11px 14px; font-size: .8rem; color: var(--text-dim); line-height: 1.6; max-width: 860px;
+}
+.callout b { color: var(--orange); font-weight: 700; }
 .note { font-size: .78rem; color: var(--text-muted); line-height: 1.65; }
 footer { margin-top: 50px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: .78rem; text-align: center; }
 </style>
@@ -150,6 +155,7 @@ footer { margin-top: 50px; padding-top: 20px; border-top: 1px solid var(--border
       <span>&middot;</span><span id="stamp-src"></span>
       <span>&middot;</span><span id="stamp-mode"></span>
     </div>
+    <div id="traffic-gap"></div>
   </div>
 
   <div class="kpis" id="kpis"></div>
@@ -335,11 +341,16 @@ function render() {
   $('stamp-time').textContent = 'snapshot ' + new Date(M.generated_at).toLocaleString();
   const tr = M.traffic || {};
   $('stamp-src').textContent = tr.live === false
-    ? (tr.as_of ? `traffic figures as of ${String(tr.as_of).slice(0, 10)} (last authorized read)` : 'traffic never read — no METRICS_TOKEN yet')
+    ? (tr.as_of ? `traffic figures as of ${String(tr.as_of).slice(0, 10)} (last authorized read)` : 'traffic never read — see below')
     : 'traffic read live';
   $('stamp-window').textContent = t.tracking_since
     ? `tracking since ${t.tracking_since} (${t.days_tracked} days)`
     : 'traffic tracking not started';
+  // A zero with no explanation reads as "nobody cloned it". Say which door is
+  // shut instead, in the words the API itself used.
+  $('traffic-gap').innerHTML = tr.unavailable_reason
+    ? `<div class="callout"><b>Clone and page-view figures are unavailable, not zero.</b> ${esc(tr.unavailable_reason)}</div>`
+    : '';
   renderKPIs();
   $('board-hint').textContent = `ranked across ${num(t.agents)} single-file agents`;
   renderChart();

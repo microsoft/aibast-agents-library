@@ -72,28 +72,43 @@ def log(msg):
     print(msg, file=sys.stderr)
 
 
-def fetch_json(url, token=None):
-    """GET JSON. Returns None on any failure — metrics are best-effort."""
+def request_json(url, token=None):
+    """GET JSON. Returns (data, error) — error is None on success.
+
+    Metrics are best-effort, but a caller that needs to explain a gap to a
+    reader (the traffic endpoints) needs the reason, not just the absence.
+    """
     req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Accept": "application/json"})
     if token:
         req.add_header("Authorization", f"Bearer {token}")
     try:
         with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
-            return json.loads(resp.read().decode("utf-8"))
+            return json.loads(resp.read().decode("utf-8")), None
     except urllib.error.HTTPError as e:
-        log(f"  ! {e.code} {url}")
+        detail = ""
+        try:
+            detail = (json.loads(e.read().decode("utf-8")) or {}).get("message", "")
+        except Exception:
+            pass
+        log(f"  ! {e.code} {url}{' — ' + detail if detail else ''}")
+        return None, {"status": e.code, "message": detail or e.reason}
     except Exception as e:
         log(f"  ! {type(e).__name__} {url}: {e}")
-    return None
+        return None, {"status": None, "message": f"{type(e).__name__}: {e}"}
+
+
+def fetch_json(url, token=None):
+    """GET JSON, or None on any failure."""
+    return request_json(url, token)[0]
 
 
 def fetch_public(url, token=None):
     """Public GitHub endpoint, token first.
 
-    A personal token that has not been SSO-authorized for the Microsoft org gets
-    403 on this repository even though the data is public and an anonymous
-    request succeeds. Falling back to anonymous keeps stars, forks and releases
-    flowing instead of silently zeroing them out.
+    A token that has not been SSO-authorized for the owning org gets 403 on this
+    repository even though the data is public and an anonymous request succeeds.
+    Falling back to anonymous keeps stars, forks and releases flowing instead of
+    silently zeroing them out.
     """
     if token:
         d = fetch_json(url, token)
@@ -178,13 +193,41 @@ def fetch_releases(token):
     return {"total_downloads": total, "count": len(out), "releases": out[:10]}
 
 
+def traffic_gap(err):
+    """Turn a traffic 403/404 into a sentence a reader can act on.
+
+    The three failures look identical in the data (no numbers) and have
+    completely different fixes, so the snapshot records which one happened.
+    """
+    if not err:
+        return None
+    msg = (err.get("message") or "").lower()
+    if err.get("status") == 403 and "push access" in msg:
+        return ("The token is valid for this repository but has read-only access. "
+                "GitHub requires push access to read traffic; grant the account write "
+                "on the repository, or set METRICS_TOKEN to a token from an account that has it.")
+    if err.get("status") == 403 and "saml" in msg:
+        return ("The token is not SSO-authorized for the owning organization. "
+                "Authorize it for the org, or set METRICS_TOKEN to one that is.")
+    if err.get("status") == 401:
+        return "The token was rejected as invalid or expired."
+    return f"GitHub returned {err.get('status') or 'an error'}: {err.get('message')}"
+
+
 def fetch_traffic(token):
-    """Clones + views + popular paths/referrers. Requires push-scoped token."""
+    """Clones + views + popular paths/referrers. Requires a push-scoped token.
+
+    Returns the traffic dict; on failure it carries an `_error` key describing
+    why, so the dashboard can say what is missing instead of showing a zero.
+    """
     if not token:
         log("  · no token — skipping GitHub traffic")
-        return {}
+        return {"_error": "No token was supplied, so the GitHub traffic endpoints were not called. "
+                          "Set METRICS_TOKEN (needs push access to this repository) to start the series."}
     out = {}
-    clones = fetch_json(f"{GH_API}/repos/{OWNER}/{REPO}/traffic/clones", token)
+    clones, err = request_json(f"{GH_API}/repos/{OWNER}/{REPO}/traffic/clones", token)
+    if err:
+        out["_error"] = traffic_gap(err)
     if clones:
         out["clones"] = {
             "count_14d": clones.get("count", 0),
@@ -427,6 +470,7 @@ def main():
     history = out_path.parent / HISTORY.name
     hist_totals, daily, last_known = merge_history(traffic, jsd, history)
     traffic_live = bool(traffic.get("clones"))
+    traffic_error = traffic.get("_error")
 
     release_dl = releases.get("total_downloads", 0) if releases else 0
     agent_hits = jsd.get("agent_hits", 0)
@@ -488,6 +532,7 @@ def main():
                           if traffic.get("views") else last_known.get("views_14d", 0)),
             "live": traffic_live,
             "as_of": now_iso() if traffic_live else last_known.get("at"),
+            "unavailable_reason": None if traffic_live else traffic_error,
         },
         "cdn": {"total_hits": jsd["total_hits"], "bandwidth": jsd["bandwidth"],
                 "rank": jsd.get("rank"), "agent_hits": agent_hits,
@@ -508,6 +553,8 @@ def main():
     t = doc["totals"]
     log(f"✓ {out_path}")
     log(f"  downloads={t['downloads']} (clones {t['clones']} + cdn {t['cdn_hits']} + releases {t['release_downloads']})")
+    if traffic_error:
+        log(f"  · traffic unavailable: {traffic_error}")
     log(f"  agents={t['agents']} stacks={t['stacks']} agent_files={t['agent_file_downloads']} "
         f"installers={t['installer_downloads']} stars={doc['repo'].get('stars', 0)}")
     return 0
