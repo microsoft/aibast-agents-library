@@ -60,7 +60,11 @@
     "SharePoint",
     "Microsoft Word"
    ],
-   "customer_scenario": [],
+   "customer_scenario": [
+    "Initial concerns about liability, IP assignment, and payment terms",
+    "Limited time to analyze the MSA and identify gaps, risks, and prioritized amendments",
+    "Heavy reliance on manual analysis and cross-referencing processes"
+   ],
    "outcomes": [
     "Reduced liability exposure and safeguarded intellectual property and proprietary assets",
     "Improved financial outcomes by optimizing payment terms",
@@ -99,7 +103,12 @@
     "SharePoint",
     "Microsoft Teams"
    ],
-   "customer_scenario": [],
+   "customer_scenario": [
+    "Automate identity verification, document collection, and analysis",
+    "Perform sanctions screening and regulatory checks",
+    "Configure accounts, treasury services, and credit facilities",
+    "Gain real-time updates on client profiles and KYC processes"
+   ],
    "outcomes": [],
    "capabilities": [],
    "onepager": "Customer Onboarding Agent one-pager.pptx",
@@ -250,7 +259,11 @@
     "Microsoft Teams",
     "Dynamics 365 Commerce"
    ],
-   "customer_scenario": [],
+   "customer_scenario": [
+    "An inventory portfolio burdened with slow-moving and obsolete stock",
+    "Warehouse operating at near-critical capacity that caused congestion",
+    "Rising storage costs and increasing obsolescence risk"
+   ],
    "outcomes": [
     "Freed up working capital",
     "Improved warehouse efficiency with space optimization and streamlined picking processes",
@@ -592,7 +605,12 @@
     "Dynamics 365 CcaaS",
     "Microsoft Teams"
    ],
-   "customer_scenario": [],
+   "customer_scenario": [
+    "Wear indicators signaled imminent equipment failure",
+    "Manual scheduling risked disrupting delivery timelines",
+    "Parts availability and crew coordination were unclear",
+    "Maintenance planning lacked full visibility into capacity constraints"
+   ],
    "outcomes": [
     "Prevented unplanned downtime and maintained delivery commitments",
     "Reduced emergency repair costs through proactive scheduling",
@@ -857,7 +875,12 @@
     "Microsoft Teams",
     "Microsoft Outlook"
    ],
-   "customer_scenario": [],
+   "customer_scenario": [
+    "Associates spent minutes searching for product details and stock levels",
+    "Manual promotion application caused pricing errors and delays",
+    "Upsell opportunities were missed due to lack of real-time guidance",
+    "Customer satisfaction scores declined during peak traffic periods"
+   ],
    "outcomes": [
     "Reduced interaction time dramatically",
     "Increased accessory attach rates and average transaction value",
@@ -1126,7 +1149,11 @@
     "Dynamics 365 Commerce",
     "Microsoft Outlook"
    ],
-   "customer_scenario": [],
+   "customer_scenario": [
+    "Conversations spanned across app, chat, and phone, forcing customers to repeat themselves",
+    "High\u2011intent shoppers dropped off when switching channels",
+    "Engagement campaigns were sent through the wrong channels, lowering response rates"
+   ],
    "outcomes": [
     "Resolved issues in a single interaction with complete context",
     "Increased conversion by delivering the right content at key moments",
@@ -1212,7 +1239,12 @@
     "Microsoft Teams",
     "Dynamics 365 CcaaS"
    ],
-   "customer_scenario": [],
+   "customer_scenario": [
+    "Large volumes of open gaps across chronic and preventive measures",
+    "Manual chart review and outreach processes that slowed progress on overdue visits and screenings",
+    "Limited insight on access barriers and which patients were likely to respond",
+    "No centralized view of gap\u2011closure progress across care teams"
+   ],
    "outcomes": [
     "Strengthened their HEDIS performance and Star Rating",
     "Improved care\u2011gap closure rates via targeted outreach",
@@ -1425,7 +1457,16 @@
     "Dynamics 365 CRM",
     "Microsoft Teams"
    ],
-   "customer_scenario": [],
+   "customer_scenario": [
+    "Feedback, complaints, and sentiment signals were spread touchpoints",
+    "Teams couldn\u2019t predict which at\u2011risk customers needed prioritization",
+    "High\u2011value accounts were leaving without early warning",
+    "Retention strategies were generic, reactive, and ineffective",
+    "Analyze sentiment across all customer touchpoints",
+    "Score churn risk by unifying sentiment, behavior, and all activity",
+    "Identify the customers most likely to leave and most valuable to retain",
+    "Generate targeted retention strategies and recommended outreach plans"
+   ],
    "outcomes": [
     "Acted before churn intent surfaced",
     "Prioritized high\u2011risk, high\u2011value customers",
@@ -1556,7 +1597,12 @@
     "Dynamics 365 ERP",
     "Microsoft Teams"
    ],
-   "customer_scenario": [],
+   "customer_scenario": [
+    "Manual document review slowed intake, causing delays",
+    "Eligibility checks across multiple loan programs took significant time",
+    "Credit, income, and property risk reviews required repetitive manual analysis",
+    "Closing timelines slipped due to unmanaged underwriting conditions"
+   ],
    "outcomes": [
     "Accelerated intake and reduced manual document handling",
     "Delivered same\u2011day eligibility guidance to borrowers",
@@ -1676,7 +1722,12 @@
    "featured_tools": [
     "Microsoft Teams"
    ],
-   "customer_scenario": [],
+   "customer_scenario": [
+    "Manual review processes created delays and increased audit risk",
+    "Reporting errors, venue mismatches, and other issues required time\u2011consuming investigation",
+    "Strategy documentation was inconsistent, risking non\u2011compliance",
+    "Trader certifications were going to expire without centralized tracking"
+   ],
    "outcomes": [
     "Ensured near\u2011perfect reporting accuracy and reduced exposure to regulatory penalties",
     "Validated algorithm documentation before go\u2011live",
@@ -1695,7 +1746,26 @@
    "source": "AIBAST Agents Library (SharePoint) \u2014 approved catalog",
    "advertised_display": "Regulatory Compliance Agent",
    "sharepoint_list_name": "Regulatory Compliance Agent",
-   "is_primary": true
+   "is_primary": true,
+   "capability_map": [
+    {
+     "advertised": "Scan all executed trades for reporting accuracy, required fields, and best\u2011execution performance",
+     "operation": "trade_surveillance"
+    },
+    {
+     "advertised": "Flag missing or outdated documentation",
+     "operation": "documentation_review"
+    },
+    {
+     "advertised": "Automate corrections and submissions to the regulatory portal",
+     "operation": "remediation_submission"
+    },
+    {
+     "advertised": "Identify upcoming certification expirations and enroll traders",
+     "operation": "certification_tracker"
+    }
+   ],
+   "sample_output": "samples/fs-regulatory-compliance.json"
   },
   {
    "slot": 41,
@@ -1927,7 +1997,12 @@
     "Microsoft Outlook",
     "Microsoft Teams"
    ],
-   "customer_scenario": [],
+   "customer_scenario": [
+    "Give employees instant, personalized answers based on their profile, location, and benefits",
+    "Surface relevant policy guidance and upcoming deadlines",
+    "Automate time\u2011off requests, form pre\u2011population, and approval routing",
+    "Reduce dependency on HR staff for routine questions and tasks"
+   ],
    "outcomes": [
     "Resolved common HR inquiries instantly, without tickets",
     "Eliminated bottlenecks in time\u2011off management with automated routing and notifications",

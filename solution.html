@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solution — AIBAST Agents Library</title>
+<meta name="description" content="An AIBAST industry solution: what was advertised, and the agent that delivers it.">
+<style>
+:root {
+  --bg: #0d1117; --surface: #161b22; --surface2: #21262d; --border: #30363d;
+  --border-hover: #484f58; --text: #e6edf3; --text-dim: #8b949e; --text-muted: #656d76;
+  --accent: #58a6ff; --purple: #bc8cff; --green: #3fb950; --orange: #d29922; --radius: 10px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.55; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+code, .mono { font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace; }
+
+header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 32px;
+  display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; gap: 16px; flex-wrap: wrap; }
+.logo { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; font-weight: 700; }
+.logo-mark { background: linear-gradient(135deg, var(--accent), var(--purple)); color: #fff;
+  width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: .72rem; font-weight: 800; }
+.nav-link { background: var(--surface2); border: 1px solid var(--border); color: var(--text-dim);
+  padding: 6px 14px; border-radius: 6px; font-size: .78rem; font-weight: 600; cursor: pointer; }
+.nav-link:hover { border-color: var(--border-hover); color: var(--text); text-decoration: none; }
+.nav-link.primary { background: linear-gradient(135deg, var(--accent), var(--purple)); color: #fff; border: none; }
+.header-right { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.container { max-width: 1060px; margin: 0 auto; padding: 30px 24px 90px; }
+.crumb { font-size: .78rem; color: var(--text-muted); margin-bottom: 14px; }
+
+.hero { border: 1px solid var(--border); border-radius: 14px; padding: 28px 30px;
+  background: linear-gradient(135deg, rgba(88,166,255,.08), rgba(188,140,255,.05)); }
+.slot { font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; color: var(--purple); font-weight: 800; }
+.hero h1 { font-size: 2.1rem; font-weight: 850; letter-spacing: -.025em; margin: 6px 0 10px; }
+.hero .summary { font-size: 1.05rem; color: var(--text-dim); max-width: 780px; }
+.hero .alias { font-size: .8rem; color: var(--text-muted); margin-top: 10px; }
+.chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 16px; }
+.chip { font-size: .72rem; background: var(--surface2); border: 1px solid var(--border);
+  color: var(--text-dim); border-radius: 20px; padding: 3px 11px; }
+.chip.k { color: var(--text-muted); border-color: transparent; background: transparent; padding-left: 0; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .07em; font-size: .66rem; }
+.assets { display: flex; gap: 8px; margin-top: 18px; flex-wrap: wrap; }
+.asset { font-size: .72rem; font-weight: 700; border-radius: 6px; padding: 4px 10px;
+  background: rgba(63,185,80,.10); color: var(--green); border: 1px solid rgba(63,185,80,.3); }
+
+.section { margin-top: 38px; }
+.section > h2 { font-size: 1.15rem; font-weight: 780; margin-bottom: 4px; }
+.section > .sub { font-size: .82rem; color: var(--text-muted); margin-bottom: 14px; }
+
+.story { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+@media (max-width: 880px) { .story { grid-template-columns: 1fr; } }
+.story .col { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; }
+.story h3 { font-size: .72rem; text-transform: uppercase; letter-spacing: .09em; font-weight: 800; margin-bottom: 10px; }
+.story .situation h3 { color: var(--orange); }
+.story .opportunity h3 { color: var(--accent); }
+.story .helped h3 { color: var(--green); }
+.story ul { margin: 0 0 0 17px; padding: 0; }
+.story li { font-size: .85rem; color: var(--text-dim); margin-bottom: 7px; }
+
+table { width: 100%; border-collapse: collapse; font-size: .84rem; }
+th { text-align: left; color: var(--text-muted); font-size: .68rem; text-transform: uppercase;
+  letter-spacing: .07em; padding: 8px 12px 8px 0; border-bottom: 1px solid var(--border); }
+td { padding: 10px 12px 10px 0; border-bottom: 1px solid var(--surface2); color: var(--text-dim); vertical-align: top; }
+td.op { white-space: nowrap; }
+.ok { color: var(--green); font-weight: 700; }
+
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+.tab { background: var(--surface); border: 1px solid var(--border); color: var(--text-dim);
+  padding: 6px 13px; border-radius: 20px; font-size: .77rem; font-weight: 650; cursor: pointer; }
+.tab:hover { border-color: var(--border-hover); color: var(--text); }
+.tab.active { background: rgba(88,166,255,.14); border-color: var(--accent); color: var(--accent); }
+.output { background: #010409; border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 20px 22px; overflow-x: auto; }
+.output .label { font-size: .7rem; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--text-muted); font-weight: 700; margin-bottom: 12px; }
+.output h1 { font-size: 1.05rem; margin: 0 0 10px; font-weight: 800; }
+.output h2 { font-size: .9rem; margin: 18px 0 8px; font-weight: 750; color: var(--text); }
+.output p { font-size: .84rem; color: var(--text-dim); margin-bottom: 8px; }
+.output ul { margin: 0 0 10px 18px; }
+.output li { font-size: .82rem; color: var(--text-dim); margin-bottom: 4px; }
+.output table { font-size: .78rem; margin: 6px 0 12px; }
+.output th, .output td { padding: 5px 12px 5px 0; }
+.output code { background: var(--surface2); padding: 1px 5px; border-radius: 4px; font-size: .78rem; }
+.output strong { color: var(--text); }
+
+.cmd { display: block; background: #010409; border: 1px solid var(--border); border-radius: 8px;
+  padding: 12px 40px 12px 15px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .79rem; color: var(--text); cursor: pointer; position: relative; word-break: break-all; }
+.cmd:hover { border-color: var(--border-hover); }
+.cmd::after { content: "copy"; position: absolute; right: 11px; top: 11px; font-size: .64rem; color: var(--text-muted); }
+.cmd.copied::after { content: "copied"; color: var(--green); }
+.note { font-size: .79rem; color: var(--text-muted); line-height: 1.65; }
+.kv { display: grid; grid-template-columns: 190px 1fr; gap: 7px 16px; font-size: .83rem; }
+.kv dt { color: var(--text-muted); font-weight: 650; }
+.kv dd { color: var(--text-dim); }
+footer { margin-top: 54px; padding-top: 20px; border-top: 1px solid var(--border);
+  color: var(--text-muted); font-size: .78rem; text-align: center; }
+.empty { color: var(--text-muted); padding: 60px 0; text-align: center; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><div class="logo-mark">AIB</div> Industry Solution</div>
+  <div class="header-right">
+    <a class="nav-link" href="library.html">All solutions</a>
+    <a class="nav-link" href="index.html">Home</a>
+    <a class="nav-link primary" id="src-link" href="https://github.com/microsoft/aibast-agents-library" target="_blank" rel="noopener">Source</a>
+  </div>
+</header>
+
+<div class="container" id="root"><div class="empty">Loading…</div></div>
+
+<script>
+const OWNER = 'microsoft', REPO = 'aibast-agents-library';
+const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main`;
+const BLOB = `https://github.com/${OWNER}/${REPO}/blob/main`;
+const AGENT_DIR = '~/.brainstem/src/rapp_brainstem/agents';
+const esc = s => String(s == null ? '' : s).replace(/[&<>"'`]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','`':'&#96;'}[c]));
+const num = n => (n == null || isNaN(n)) ? '—' : Number(n).toLocaleString();
+
+async function getJSON(paths) {
+  for (const p of paths) {
+    try { const r = await fetch(p, { cache: 'no-store' }); if (r.ok) return await r.json(); } catch (e) {}
+  }
+  return null;
+}
+
+/* The agent returns Markdown; render the subset it actually emits so the sample
+   reads the way it does in the Brainstem chat, not as escaped source. */
+function md(src) {
+  const lines = String(src).split('\n');
+  let out = '', inTable = false, inList = false;
+  const inline = t => esc(t)
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  const closeList = () => { if (inList) { out += '</ul>'; inList = false; } };
+  const closeTable = () => { if (inTable) { out += '</tbody></table>'; inTable = false; } };
+  for (const raw of lines) {
+    const l = raw.trim();
+    if (!l) { closeList(); closeTable(); continue; }
+    if (/^\|[\s-|:]+\|$/.test(l)) continue;                      // separator row
+    if (l.startsWith('|')) {
+      const cells = l.split('|').slice(1, -1).map(c => c.trim());
+      if (!inTable) { closeList(); out += '<table><thead><tr>' + cells.map(c => `<th>${inline(c)}</th>`).join('') + '</tr></thead><tbody>'; inTable = true; }
+      else out += '<tr>' + cells.map(c => `<td>${inline(c)}</td>`).join('') + '</tr>';
+      continue;
+    }
+    closeTable();
+    if (l.startsWith('## ')) { closeList(); out += `<h2>${inline(l.slice(3))}</h2>`; continue; }
+    if (l.startsWith('# '))  { closeList(); out += `<h1>${inline(l.slice(2))}</h1>`; continue; }
+    if (l.startsWith('- '))  { if (!inList) { out += '<ul>'; inList = true; } out += `<li>${inline(l.slice(2))}</li>`; continue; }
+    closeList();
+    out += `<p>${inline(l)}</p>`;
+  }
+  closeList(); closeTable();
+  return out;
+}
+
+let SAMPLE = null, activeOp = null;
+
+async function init() {
+  const id = new URLSearchParams(location.search).get('id');
+  const t = '?t=' + Date.now();
+  const [solDoc, reg] = await Promise.all([
+    getJSON(['solutions.json' + t, RAW + '/solutions.json' + t]),
+    getJSON(['registry.json' + t, RAW + '/registry.json' + t]),
+  ]);
+  if (!solDoc) { document.getElementById('root').innerHTML = '<div class="empty">Could not load <code>solutions.json</code>.</div>'; return; }
+
+  const sols = solDoc.solutions.filter(s => s.is_primary !== false);
+  const sol = sols.find(s => s.repo_agent === id) ||
+              sols.find(s => String(s.slot) === String(id)) ||
+              sols.find(s => s.sample_output) || sols[0];
+  const agent = (reg?.agents || []).find(a => a.name === sol.repo_agent);
+
+  if (sol.sample_output) SAMPLE = await getJSON([sol.sample_output + t, RAW + '/' + sol.sample_output + t]);
+  render(sol, agent, sols);
+}
+
+function render(sol, agent, sols) {
+  const file = agent?._file;
+  if (file) document.getElementById('src-link').href = `${BLOB}/${encodeURI(file)}`;
+  document.title = `${sol.advertised_display || sol.advertised_name} — AIBAST Agents Library`;
+
+  const ops = SAMPLE?.operations || [];
+  const capRows = (sol.capability_map || sol.capabilities.map(c => ({ advertised: c, operation: null })));
+  const chip = (label, arr) => arr && arr.length
+    ? `<span class="chip k">${label}</span>` + arr.map(x => `<span class="chip">${esc(x)}</span>`).join('') : '';
+
+  document.getElementById('root').innerHTML = `
+  <div class="crumb"><a href="library.html">Agent Library</a> › ${esc(sol.industries?.[0] || 'Solution')}</div>
+
+  <div class="hero">
+    <div class="slot">AIBAST Agents Library · advertised solution #${esc(sol.slot)}</div>
+    <h1>${esc(sol.advertised_display || sol.advertised_name)}</h1>
+    <p class="summary">${esc(sol.executive_summary)}</p>
+    ${sol.sharepoint_list_name && sol.sharepoint_list_name !== (sol.advertised_display || sol.advertised_name)
+      ? `<div class="alias">Listed on the AIBAST SharePoint as <b>${esc(sol.sharepoint_list_name)}</b>.</div>` : ''}
+    <div class="chips">
+      ${chip('Industries', sol.industries)}
+      ${chip('Personas', sol.personas)}
+      ${chip('Featured tools', sol.featured_tools)}
+    </div>
+    <div class="assets">
+      ${sol.onepager ? '<span class="asset">✓ Published one-pager</span>' : ''}
+      ${sol.demo_video ? '<span class="asset">✓ Demo video filmed</span>' : ''}
+      ${agent ? '<span class="asset">✓ Agent implemented</span>' : ''}
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>The scenario the field was shown</h2>
+    <div class="sub">Straight from the published one-pager.</div>
+    <div class="story">
+      <div class="col situation"><h3>Situation</h3><ul>${(sol.customer_scenario || []).map(x => `<li>${esc(x)}</li>`).join('') || '<li>—</li>'}</ul></div>
+      <div class="col helped"><h3>How the agent helped</h3><ul>${(sol.capabilities || []).map(x => `<li>${esc(x)}</li>`).join('') || '<li>—</li>'}</ul></div>
+      <div class="col opportunity"><h3>Outcomes</h3><ul>${(sol.outcomes || []).map(x => `<li>${esc(x)}</li>`).join('') || '<li>—</li>'}</ul></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Promise to implementation</h2>
+    <div class="sub">Every advertised capability, and the agent operation that delivers it.</div>
+    <table>
+      <thead><tr><th>Advertised capability</th><th>Agent operation</th><th>Status</th></tr></thead>
+      <tbody>${capRows.map(r => `<tr>
+        <td>${esc(r.advertised)}</td>
+        <td class="op">${r.operation ? `<code>${esc(r.operation)}</code>` : '<span style="color:var(--text-muted)">—</span>'}</td>
+        <td>${r.operation && ops.some(o => o.operation === r.operation) ? '<span class="ok">delivered</span>' : '<span style="color:var(--text-muted)">not mapped</span>'}</td>
+      </tr>`).join('')}</tbody>
+    </table>
+  </div>
+
+  ${ops.length ? `<div class="section">
+    <h2>What it actually returns</h2>
+    <div class="sub">Real output from the agent, captured ${esc(SAMPLE.captured)}. Not a mockup — this is the string the Brainstem hands back.</div>
+    <div class="tabs" id="op-tabs">${ops.map((o, i) =>
+      `<button class="tab${i === 0 ? ' active' : ''}" data-op="${esc(o.operation)}">${esc(o.operation)}</button>`).join('')}</div>
+    <div class="output" id="op-output"></div>
+  </div>` : ''}
+
+  <div class="section">
+    <h2>Run it</h2>
+    <div class="sub">Drop the file into a running Brainstem; agents reload from disk on the next request.</div>
+    ${file ? `<div class="cmd" onclick="copyCmd(this)">curl -fsSL ${RAW}/${encodeURI(file)} -o ${AGENT_DIR}/${esc(file.split('/').pop())}</div>` : ''}
+    <p class="note" style="margin-top:12px">Then ask it, in the Brainstem chat:
+      ${ops.slice(1, 3).map(o => `<br>&nbsp;&nbsp;· <i>&ldquo;Run ${esc(o.operation)} on ${esc(agent?.display_name || '')}&rdquo;</i>`).join('')}</p>
+  </div>
+
+  <div class="section">
+    <h2>Provenance</h2>
+    <dl class="kv">
+      <dt>Advertised as</dt><dd>${esc(sol.advertised_display || sol.advertised_name)} · solution #${esc(sol.slot)}</dd>
+      <dt>SharePoint listing</dt><dd>${esc(sol.sharepoint_list_name || '—')}</dd>
+      <dt>Repo agent</dt><dd class="mono">${esc(sol.repo_agent)}</dd>
+      <dt>Source file</dt><dd>${file ? `<a href="${BLOB}/${encodeURI(file)}" target="_blank" rel="noopener">${esc(file)}</a>` : '—'}</dd>
+      <dt>Version / size</dt><dd>${esc(agent?.version || '—')} · ${num(agent?._lines)} lines</dd>
+      <dt>Data plane</dt><dd>Static synthetic data shaped to the real sources — no live endpoint required.</dd>
+    </dl>
+  </div>
+
+  <footer>
+    Advertised catalog in <a href="solutions.json">solutions.json</a> ·
+    <a href="library.html">all ${sols.length} solutions</a> ·
+    <a href="https://github.com/${OWNER}/${REPO}" target="_blank" rel="noopener">${OWNER}/${REPO}</a>
+  </footer>`;
+
+  if (ops.length) {
+    activeOp = ops[0].operation;
+    document.querySelectorAll('#op-tabs .tab').forEach(el => el.onclick = () => {
+      activeOp = el.dataset.op;
+      document.querySelectorAll('#op-tabs .tab').forEach(x => x.classList.toggle('active', x.dataset.op === activeOp));
+      paintOutput(ops);
+    });
+    paintOutput(ops);
+  }
+}
+
+function paintOutput(ops) {
+  const o = ops.find(x => x.operation === activeOp) || ops[0];
+  document.getElementById('op-output').innerHTML =
+    `<div class="label">${esc(o.label)}</div>` + md(o.output);
+}
+
+function copyCmd(el) {
+  navigator.clipboard.writeText(el.textContent).then(() => {
+    el.classList.add('copied'); setTimeout(() => el.classList.remove('copied'), 1400);
+  }).catch(() => {});
+}
+
+init();
+</script>
+</body>
+</html>

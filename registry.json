@@ -1,15 +1,15 @@
 {
   "schema": "rapp-registry/1.0",
   "version": "1.0.0",
-  "generated_at": "2026-08-07T21:27:36.841367+00:00",
+  "generated_at": "2026-08-07T21:43:37.225506+00:00",
   "stats": {
     "total_agents": 69,
     "publishers": 1,
     "categories": 12,
     "total_stacks": 51,
     "total_verticals": 12,
-    "total_lines": 26533,
-    "total_kb": 1278.5,
+    "total_lines": 26902,
+    "total_kb": 1299.0,
     "publisher_list": [
       "@aibast-agents-library"
     ],
@@ -1574,7 +1574,11 @@
           "Reduced repeat contacts across channels",
           "Improved customer satisfaction through consistent, personalized engagement"
         ],
-        "customer_scenario": [],
+        "customer_scenario": [
+          "Conversations spanned across app, chat, and phone, forcing customers to repeat themselves",
+          "High\u2011intent shoppers dropped off when switching channels",
+          "Engagement campaigns were sent through the wrong channels, lowering response rates"
+        ],
         "has_onepager": true,
         "has_demo_video": true
       }
@@ -2095,7 +2099,12 @@
         ],
         "capabilities": [],
         "outcomes": [],
-        "customer_scenario": [],
+        "customer_scenario": [
+          "Automate identity verification, document collection, and analysis",
+          "Perform sanctions screening and regulatory checks",
+          "Configure accounts, treasury services, and credit facilities",
+          "Gain real-time updates on client profiles and KYC processes"
+        ],
         "has_onepager": true,
         "has_demo_video": true
       }
@@ -2159,7 +2168,16 @@
           "Generate targeted retention strategies and recommended outreach plans",
           "Customer Sentiment and Churn Prediction Agent"
         ],
-        "customer_scenario": [],
+        "customer_scenario": [
+          "Feedback, complaints, and sentiment signals were spread touchpoints",
+          "Teams couldn\u2019t predict which at\u2011risk customers needed prioritization",
+          "High\u2011value accounts were leaving without early warning",
+          "Retention strategies were generic, reactive, and ineffective",
+          "Analyze sentiment across all customer touchpoints",
+          "Score churn risk by unifying sentiment, behavior, and all activity",
+          "Identify the customers most likely to leave and most valuable to retain",
+          "Generate targeted retention strategies and recommended outreach plans"
+        ],
         "has_onepager": true,
         "has_demo_video": true
       }
@@ -2352,7 +2370,12 @@
           "Shortened closing timelines with automated condition tracking",
           "Freed teams for high-value tasks"
         ],
-        "customer_scenario": [],
+        "customer_scenario": [
+          "Manual document review slowed intake, causing delays",
+          "Eligibility checks across multiple loan programs took significant time",
+          "Credit, income, and property risk reviews required repetitive manual analysis",
+          "Closing timelines slipped due to unmanaged underwriting conditions"
+        ],
         "has_onepager": true,
         "has_demo_video": true
       }
@@ -2418,17 +2441,17 @@
     {
       "schema": "rapp-agent/1.0",
       "name": "@aibast-agents-library/fs-regulatory-compliance",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "display_name": "Regulatory Compliance Agent",
-      "description": "Automate compliance monitoring and regulatory reporting to achieve proactive risk management with real-time surveillance.",
+      "description": "Automates compliance monitoring and regulatory reporting to achieve proactive risk management with real-time surveillance.",
       "author": "AIBAST",
       "tags": [
         "compliance",
-        "SOX",
-        "Dodd-Frank",
-        "BSA",
-        "AML",
-        "regulatory",
+        "MiFID-II",
+        "trade-surveillance",
+        "best-execution",
+        "transaction-reporting",
+        "certifications",
         "financial-services"
       ],
       "category": "financial_services",
@@ -2438,9 +2461,9 @@
         "@rapp/basic-agent"
       ],
       "_file": "agents/@aibast-agents-library/financial_services_stacks/regulatory_compliance_fs_stack/regulatory_compliance_fs_agent.py",
-      "_size_kb": 12.8,
-      "_lines": 268,
-      "_sha256": "031bb62fac7027aa65b0c7b8e7d7f92174c4db116088f0e33393fcf3a1c067bc",
+      "_size_kb": 33.3,
+      "_lines": 637,
+      "_sha256": "9d57c35d0aac48a33b2e6548a3eece1f082cd5d7be7afb00b7ca9d91139bf9a5",
       "_stack": "regulatory_compliance_fs",
       "_stack_vertical": "financial_services",
       "_added_at": "2026-03-18T13:23:12-04:00",
@@ -2472,7 +2495,12 @@
           "Reduced compliance workload by automating reviews and reporting",
           "Maintained certification readiness across the desk with automated scheduling and alerts"
         ],
-        "customer_scenario": [],
+        "customer_scenario": [
+          "Manual review processes created delays and increased audit risk",
+          "Reporting errors, venue mismatches, and other issues required time\u2011consuming investigation",
+          "Strategy documentation was inconsistent, risking non\u2011compliance",
+          "Trader certifications were going to expire without centralized tracking"
+        ],
         "has_onepager": true,
         "has_demo_video": true
       }
@@ -2922,7 +2950,12 @@
           "Reduced admin workloads by automating patient identification and personalizing outreach",
           "Gained clear visibility into campaign progress to adjust strategies mid\u2011cycle"
         ],
-        "customer_scenario": [],
+        "customer_scenario": [
+          "Large volumes of open gaps across chronic and preventive measures",
+          "Manual chart review and outreach processes that slowed progress on overdue visits and screenings",
+          "Limited insight on access barriers and which patients were likely to respond",
+          "No centralized view of gap\u2011closure progress across care teams"
+        ],
         "has_onepager": true,
         "has_demo_video": true
       }
@@ -3175,7 +3208,12 @@
           "Automate time\u2011off requests, form pre\u2011population, and approval routing",
           "Reduce dependency on HR staff for routine questions and tasks"
         ],
-        "customer_scenario": [],
+        "customer_scenario": [
+          "Give employees instant, personalized answers based on their profile, location, and benefits",
+          "Surface relevant policy guidance and upcoming deadlines",
+          "Automate time\u2011off requests, form pre\u2011population, and approval routing",
+          "Reduce dependency on HR staff for routine questions and tasks"
+        ],
         "has_onepager": true,
         "has_demo_video": true
       }
@@ -3237,7 +3275,11 @@
           "Reduced financial risk by minimizing obsolescence",
           "Enhanced operational agility with dynamic inventory policies and AI-driven demand alignment"
         ],
-        "customer_scenario": [],
+        "customer_scenario": [
+          "An inventory portfolio burdened with slow-moving and obsolete stock",
+          "Warehouse operating at near-critical capacity that caused congestion",
+          "Rising storage costs and increasing obsolescence risk"
+        ],
         "has_onepager": true,
         "has_demo_video": true
       }
@@ -3299,7 +3341,12 @@
           "Extended equipment lifespan while sustaining quality standards",
           "Improved production schedule adherence, reducing disruptions"
         ],
-        "customer_scenario": [],
+        "customer_scenario": [
+          "Wear indicators signaled imminent equipment failure",
+          "Manual scheduling risked disrupting delivery timelines",
+          "Parts availability and crew coordination were unclear",
+          "Maintenance planning lacked full visibility into capacity constraints"
+        ],
         "has_onepager": true,
         "has_demo_video": true
       }
@@ -3616,7 +3663,11 @@
           "Improved financial outcomes by optimizing payment terms",
           "Lowered legal costs and accelerated deal closure"
         ],
-        "customer_scenario": [],
+        "customer_scenario": [
+          "Initial concerns about liability, IP assignment, and payment terms",
+          "Limited time to analyze the MSA and identify gaps, risks, and prioritized amendments",
+          "Heavy reliance on manual analysis and cross-referencing processes"
+        ],
         "has_onepager": true,
         "has_demo_video": true
       }
@@ -4000,7 +4051,12 @@
           "Prepare transactions with loyalty discounts and financing options automatically",
           "Retail Store Associate Copilot"
         ],
-        "customer_scenario": [],
+        "customer_scenario": [
+          "Associates spent minutes searching for product details and stock levels",
+          "Manual promotion application caused pricing errors and delays",
+          "Upsell opportunities were missed due to lack of real-time guidance",
+          "Customer satisfaction scores declined during peak traffic periods"
+        ],
         "has_onepager": true,
         "has_demo_video": true
       }
