@@ -221,7 +221,7 @@ class PermitLicenseManagementAgent(BasicAgent):
     """Permit and license tracking and compliance management agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/permit-license-management"
+        self.name = "PermitLicenseManagementAgent"
         self.metadata = {
             "name": self.name,
             "description": __manifest__["description"],

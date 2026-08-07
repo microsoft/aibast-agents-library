@@ -167,7 +167,7 @@ class FSCustomerOnboardingAgent(BasicAgent):
     """Financial services customer onboarding agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/fs-customer-onboarding"
+        self.name = "FSCustomerOnboardingAgent"
         self.metadata = {
             "name": self.name,
             "display_name": "FS Customer Onboarding Agent",

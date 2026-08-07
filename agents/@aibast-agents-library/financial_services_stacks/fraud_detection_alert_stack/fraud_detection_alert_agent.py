@@ -120,7 +120,7 @@ class FraudDetectionAlertAgent(BasicAgent):
     """Fraud detection and alert management agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/fraud-detection-alert"
+        self.name = "FraudDetectionAlertAgent"
         self.metadata = {
             "name": self.name,
             "display_name": "Fraud Detection & Alert Agent",

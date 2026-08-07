@@ -172,7 +172,7 @@ class LoanOriginationAssistantAgent(BasicAgent):
     """Loan origination assistant agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/loan-origination-assistant"
+        self.name = "LoanOriginationAssistantAgent"
         self.metadata = {
             "name": self.name,
             "display_name": "Loan Origination Assistant Agent",

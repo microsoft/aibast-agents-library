@@ -112,7 +112,7 @@ class OmnichannelEngagementAgent(BasicAgent):
     """Omnichannel engagement analytics agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/omnichannel-engagement"
+        self.name = "OmnichannelEngagementAgent"
         self.metadata = {
             "name": self.name,
             "display_name": "Omnichannel Engagement Agent",

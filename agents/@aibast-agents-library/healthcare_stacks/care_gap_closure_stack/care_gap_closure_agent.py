@@ -205,7 +205,7 @@ class CareGapClosureAgent(BasicAgent):
     """HEDIS care gap analysis and outreach management agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/care-gap-closure"
+        self.name = "CareGapClosureAgent"
         self.metadata = {
             "name": self.name,
             "description": __manifest__["description"],

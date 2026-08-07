@@ -204,7 +204,7 @@ class RegulatoryReportingAgent(BasicAgent):
     """Regulatory reporting status and audit readiness agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/energy-regulatory-reporting"
+        self.name = "RegulatoryReportingAgent"
         self.metadata = {
             "name": self.name,
             "description": __manifest__["description"],

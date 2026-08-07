@@ -213,7 +213,7 @@ class LicenseRenewalExpansionAgent(BasicAgent):
     """License renewal pipeline and expansion opportunity agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/license-renewal-expansion"
+        self.name = "LicenseRenewalExpansionAgent"
         self.metadata = {
             "name": self.name,
             "description": __manifest__["description"],

@@ -180,7 +180,7 @@ class UnderwritingSupportAgent(BasicAgent):
     """Insurance underwriting support agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/underwriting-support"
+        self.name = "UnderwritingSupportAgent"
         self.metadata = {
             "name": self.name,
             "display_name": "Underwriting Support Agent",

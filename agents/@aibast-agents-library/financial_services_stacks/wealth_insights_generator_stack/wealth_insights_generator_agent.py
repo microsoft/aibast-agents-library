@@ -138,7 +138,7 @@ class WealthInsightsGeneratorAgent(BasicAgent):
     """Wealth management insights generator agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/wealth-insights-generator"
+        self.name = "WealthInsightsGeneratorAgent"
         self.metadata = {
             "name": self.name,
             "display_name": "Wealth Insights Generator Agent",

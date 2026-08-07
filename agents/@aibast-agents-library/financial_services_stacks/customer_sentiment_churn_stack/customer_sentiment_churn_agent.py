@@ -172,7 +172,7 @@ class CustomerSentimentChurnAgent(BasicAgent):
     """Customer sentiment and churn prediction agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/customer-sentiment-churn"
+        self.name = "CustomerSentimentChurnAgent"
         self.metadata = {
             "name": self.name,
             "display_name": "Customer Sentiment & Churn Agent",

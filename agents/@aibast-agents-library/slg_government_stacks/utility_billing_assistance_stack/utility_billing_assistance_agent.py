@@ -213,7 +213,7 @@ class UtilityBillingAssistanceAgent(BasicAgent):
     """Municipal utility billing assistance agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/utility-billing-assistance"
+        self.name = "UtilityBillingAssistanceAgent"
         self.metadata = {
             "name": self.name,
             "display_name": "Utility Billing Assistance Agent",

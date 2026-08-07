@@ -150,7 +150,7 @@ class ClaimsProcessingAgent(BasicAgent):
     """Insurance claims processing agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/claims-processing"
+        self.name = "ClaimsProcessingAgent"
         self.metadata = {
             "name": self.name,
             "display_name": "Claims Processing Agent",

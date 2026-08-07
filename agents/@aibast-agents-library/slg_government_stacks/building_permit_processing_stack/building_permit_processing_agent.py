@@ -202,7 +202,7 @@ class BuildingPermitProcessingAgent(BasicAgent):
     """Building permit processing agent for local government."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/building-permit-processing"
+        self.name = "BuildingPermitProcessingAgent"
         self.metadata = {
             "name": self.name,
             "display_name": "Building Permit Processing Agent",

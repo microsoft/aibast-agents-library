@@ -224,7 +224,7 @@ class ClinicalNotesSummarizerAgent(BasicAgent):
     """Clinical notes summarization and medication review agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/clinical-notes-summarizer"
+        self.name = "ClinicalNotesSummarizerAgent"
         self.metadata = {
             "name": self.name,
             "description": __manifest__["description"],

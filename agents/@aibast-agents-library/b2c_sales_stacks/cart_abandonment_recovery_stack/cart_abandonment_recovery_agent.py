@@ -155,7 +155,7 @@ class CartAbandonmentRecoveryAgent(BasicAgent):
     """Cart abandonment recovery agent for e-commerce."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/cart-abandonment-recovery"
+        self.name = "CartAbandonmentRecoveryAgent"
         self.metadata = {
             "name": self.name,
             "display_name": "Cart Abandonment Recovery Agent",

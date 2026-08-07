@@ -208,7 +208,7 @@ class EmissionTrackingAgent(BasicAgent):
     """GHG emission monitoring and compliance tracking agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/emission-tracking"
+        self.name = "EmissionTrackingAgent"
         self.metadata = {
             "name": self.name,
             "description": __manifest__["description"],

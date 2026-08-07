@@ -221,7 +221,7 @@ class ProductFeedbackSynthesizerAgent(BasicAgent):
     """Product feedback synthesis and roadmap impact agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/product-feedback-synthesizer"
+        self.name = "ProductFeedbackSynthesizerAgent"
         self.metadata = {
             "name": self.name,
             "description": __manifest__["description"],

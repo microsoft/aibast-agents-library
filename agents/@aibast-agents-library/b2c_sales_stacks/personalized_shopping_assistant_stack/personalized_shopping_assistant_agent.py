@@ -119,7 +119,7 @@ class PersonalizedShoppingAssistantAgent(BasicAgent):
     """Personalized shopping assistant agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/personalized-shopping-assistant"
+        self.name = "PersonalizedShoppingAssistantAgent"
         self.metadata = {
             "name": self.name,
             "display_name": "Personalized Shopping Assistant Agent",

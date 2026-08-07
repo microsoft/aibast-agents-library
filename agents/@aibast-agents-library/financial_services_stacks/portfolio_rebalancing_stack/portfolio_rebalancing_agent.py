@@ -131,7 +131,7 @@ class PortfolioRebalancingAgent(BasicAgent):
     """Portfolio rebalancing agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/portfolio-rebalancing"
+        self.name = "PortfolioRebalancingAgent"
         self.metadata = {
             "name": self.name,
             "display_name": "Portfolio Rebalancing Agent",

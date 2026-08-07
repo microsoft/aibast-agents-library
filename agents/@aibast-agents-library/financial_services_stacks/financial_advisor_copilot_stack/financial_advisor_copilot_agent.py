@@ -159,7 +159,7 @@ class FinancialAdvisorCopilotAgent(BasicAgent):
     """Financial advisor copilot agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/financial-advisor-copilot"
+        self.name = "FinancialAdvisorCopilotAgent"
         self.metadata = {
             "name": self.name,
             "display_name": "Financial Advisor Copilot Agent",

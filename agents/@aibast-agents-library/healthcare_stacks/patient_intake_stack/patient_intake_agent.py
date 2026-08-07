@@ -260,7 +260,7 @@ class PatientIntakeAgent(BasicAgent):
     """Patient intake workflow and insurance verification agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/patient-intake"
+        self.name = "PatientIntakeAgent"
         self.metadata = {
             "name": self.name,
             "description": __manifest__["description"],

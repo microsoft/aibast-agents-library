@@ -243,7 +243,7 @@ class FieldServiceDispatchAgent(BasicAgent):
     """Field service dispatch and technician management agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/field-service-dispatch"
+        self.name = "FieldServiceDispatchAgent"
         self.metadata = {
             "name": self.name,
             "description": __manifest__["description"],

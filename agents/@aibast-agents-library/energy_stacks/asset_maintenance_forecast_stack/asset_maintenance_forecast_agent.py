@@ -206,7 +206,7 @@ class AssetMaintenanceForecastAgent(BasicAgent):
     """Predictive maintenance and asset health agent for energy infrastructure."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/asset-maintenance-forecast"
+        self.name = "AssetMaintenanceForecastAgent"
         self.metadata = {
             "name": self.name,
             "description": __manifest__["description"],

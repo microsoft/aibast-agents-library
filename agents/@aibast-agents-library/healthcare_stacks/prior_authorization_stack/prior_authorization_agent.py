@@ -241,7 +241,7 @@ class PriorAuthorizationAgent(BasicAgent):
     """Prior authorization management and clinical criteria checking agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/prior-authorization"
+        self.name = "PriorAuthorizationAgent"
         self.metadata = {
             "name": self.name,
             "description": __manifest__["description"],

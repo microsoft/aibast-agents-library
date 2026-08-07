@@ -144,7 +144,7 @@ class CustomerLoyaltyRewardsAgent(BasicAgent):
     """Customer loyalty and rewards management agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/customer-loyalty-rewards"
+        self.name = "CustomerLoyaltyRewardsAgent"
         self.metadata = {
             "name": self.name,
             "display_name": "Customer Loyalty & Rewards Agent",
