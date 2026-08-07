@@ -16,7 +16,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/wealth-insights-generator",
     "version": "1.0.0",
     "display_name": "Wealth Insights Generator Agent",
-    "description": "Wealth management insights with market briefs, client analytics, opportunity alerts, and performance attribution.",
+    "description": "Deliver AI-powered portfolio intelligence to uncover hidden asset opportunities, strengthen client relationships, and drive advisory growth at scale.",
     "author": "AIBAST",
     "tags": ["wealth", "insights", "market", "performance", "analytics", "financial-services"],
     "category": "financial_services",

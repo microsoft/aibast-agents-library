@@ -17,7 +17,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/field-service-dispatch",
     "version": "1.0.0",
     "display_name": "Field Service Dispatch Agent",
-    "description": "Manages field service dispatch, route optimization, technician assignment, and emergency response for energy infrastructure.",
+    "description": "Automates field service scheduling and coordination to reduce response times, optimize resource use, and improve customer satisfaction.",
     "author": "AIBAST",
     "tags": ["field-service", "dispatch", "routing", "technicians", "emergency", "energy"],
     "category": "energy",

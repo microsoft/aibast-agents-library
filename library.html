@@ -301,7 +301,7 @@ function setCat(cat) {
 function matches(a, words) {
   if (!words.length) return true;
   const s = a._solution || {};
-  const hay = [a.display_name, a.description, s.advertised_name, s.executive_summary,
+  const hay = [a.display_name, a.description, s.advertised_name, s.sharepoint_list_name, s.executive_summary,
                pretty(a.category), pretty(a._stack || ''), ...(s.industries || []),
                ...(s.personas || []), ...(s.featured_tools || []), ...(s.capabilities || []),
                ...(a.tags || []), a.author || ''].join(' ').toLowerCase();
@@ -415,7 +415,7 @@ function openAgent(name) {
     <h2>${esc(shown(a))}</h2>
     <div class="ns mono">${esc(a.name)} &middot; v${esc(a.version)}${sol ? ` &middot; advertised as solution #${sol.slot}` : ''}</div>
     <p class="lede">${esc(summary(a))}</p>
-    ${sol && sol.advertised_name !== a.display_name ? `<p class="note" style="margin-top:8px">Shipped in this repo as <b>${esc(a.display_name)}</b>.</p>` : ''}
+    ${sol && sol.sharepoint_list_name && sol.sharepoint_list_name !== sol.advertised_name ? `<p class="note" style="margin-top:8px">Listed on the AIBAST SharePoint as <b>${esc(sol.sharepoint_list_name)}</b>.</p>` : ''}
 
     ${sol ? `${bullets('What it does', sol.capabilities)}
     ${bullets('Outcomes', sol.outcomes)}

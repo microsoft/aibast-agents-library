@@ -16,7 +16,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/cart-abandonment-recovery",
     "version": "1.0.0",
     "display_name": "Cart Abandonment Recovery Agent",
-    "description": "Cart abandonment analysis with recovery campaigns, incentive optimization, and conversion tracking for e-commerce.",
+    "description": "Automate abandoned cart analysis and recovery campaigns to convert lost sales, protect margins, and improve customer engagement.",
     "author": "AIBAST",
     "tags": ["cart-abandonment", "recovery", "ecommerce", "conversion", "email", "b2c"],
     "category": "b2c_sales",

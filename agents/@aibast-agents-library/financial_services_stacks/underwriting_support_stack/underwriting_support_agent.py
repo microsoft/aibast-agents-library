@@ -16,7 +16,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/underwriting-support",
     "version": "1.0.0",
     "display_name": "Underwriting Support Agent",
-    "description": "Insurance underwriting support with risk evaluation, pricing recommendations, guideline compliance, and exception review.",
+    "description": "Automate commercial underwriting analysis to accelerate evaluations, improve pricing accuracy, and maintain full compliance.",
     "author": "AIBAST",
     "tags": ["underwriting", "insurance", "risk", "pricing", "guidelines", "financial-services"],
     "category": "financial_services",

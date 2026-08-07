@@ -17,7 +17,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/clinical-notes-summarizer",
     "version": "1.0.0",
     "display_name": "Clinical Notes Summarizer Agent",
-    "description": "Summarizes patient encounters, performs medication reviews, generates problem lists, and produces referral summaries.",
+    "description": "Transform complex clinical histories into clear, actionable summaries for faster decision-making, better coordination, and safer care.",
     "author": "AIBAST",
     "tags": ["clinical-notes", "ehr", "encounters", "medications", "referrals", "healthcare"],
     "category": "healthcare",

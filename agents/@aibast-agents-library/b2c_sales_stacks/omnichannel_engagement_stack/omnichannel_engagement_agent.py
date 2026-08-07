@@ -16,7 +16,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/omnichannel-engagement",
     "version": "1.0.0",
     "display_name": "Omnichannel Engagement Agent",
-    "description": "Omnichannel engagement analytics with channel performance, journey mapping, optimization, and campaign attribution.",
+    "description": "Deliver a single, unified view of cross-channel interactions for more strategic, streamlined support and stronger engagement.",
     "author": "AIBAST",
     "tags": ["omnichannel", "engagement", "journey", "attribution", "campaign", "b2c"],
     "category": "b2c_sales",

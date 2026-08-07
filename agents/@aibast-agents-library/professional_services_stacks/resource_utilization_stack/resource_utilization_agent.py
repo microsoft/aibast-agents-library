@@ -17,7 +17,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/resource-utilization",
     "version": "1.0.0",
     "display_name": "Resource Utilization Agent",
-    "description": "Tracks consultant utilization and capacity, forecasts demand, analyzes bench costs, and generates staffing recommendations to meet targets.",
+    "description": "Provide intelligent resource analysis and recommendations to maximize billable utilization and reduce costs.",
     "author": "AIBAST",
     "tags": ["utilization", "staffing", "capacity", "bench", "professional-services"],
     "category": "professional_services",

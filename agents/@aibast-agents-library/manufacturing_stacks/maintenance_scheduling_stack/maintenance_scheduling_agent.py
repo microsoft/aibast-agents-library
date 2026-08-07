@@ -18,7 +18,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/maintenance-scheduling",
     "version": "1.0.0",
     "display_name": "Maintenance Scheduling Agent",
-    "description": "Generates predictive maintenance schedules from equipment telemetry and failure models, optimizing technician assignments to minimize unplanned downtime.",
+    "description": "Perform predictive maintenance analysis and scheduling orchestration to prevent unplanned downtime and protect production capacity.",
     "author": "AIBAST",
     "tags": ["maintenance", "predictive", "scheduling", "manufacturing", "IoT"],
     "category": "manufacturing",

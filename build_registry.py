@@ -198,7 +198,11 @@ def build_registry():
         sol = solutions.get(name)
         if sol:
             manifest["_solution"] = {
-                "advertised_name": sol.get("advertised_name"),
+                # The one-pager slide title is what the field saw on screen;
+                # the list row name is internal SharePoint taxonomy. Both are
+                # published so a seller can find the solution either way.
+                "advertised_name": sol.get("advertised_display") or sol.get("advertised_name"),
+                "sharepoint_list_name": sol.get("sharepoint_list_name") or sol.get("advertised_name"),
                 "slot": sol.get("slot"),
                 "executive_summary": sol.get("executive_summary"),
                 "industries": sol.get("industries", []),

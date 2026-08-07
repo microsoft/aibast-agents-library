@@ -21,9 +21,7 @@ __manifest__ = {
     "version": "1.0.0",
     "display_name": "Inventory Visibility Agent",
     "description": (
-        "Delivers real-time inventory dashboards, stock-out alerts, "
-        "replenishment planning, and channel allocation optimization "
-        "for omni-channel retail and CPG operations."
+        "Deliver real-time cross-channel inventory intelligence to prevent stockouts, reduce overstock, and maximize omnichannel retail performance."
     ),
     "author": "AIBAST",
     "tags": [

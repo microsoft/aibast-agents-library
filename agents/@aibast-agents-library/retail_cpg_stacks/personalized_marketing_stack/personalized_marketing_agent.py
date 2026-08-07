@@ -20,9 +20,7 @@ __manifest__ = {
     "version": "1.0.0",
     "display_name": "Personalized Marketing Agent",
     "description": (
-        "Enables customer segmentation, personalized campaign design, "
-        "dynamic content personalization, and marketing performance "
-        "analysis for retail and CPG brands."
+        "Automate personalized campaign design and execution to boost engagement, accelerate revenue, and strengthen customer loyalty."
     ),
     "author": "AIBAST",
     "tags": [

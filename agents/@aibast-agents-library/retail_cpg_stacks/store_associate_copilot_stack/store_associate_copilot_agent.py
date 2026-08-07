@@ -18,11 +18,9 @@ __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/store-associate-copilot",
     "version": "1.0.0",
-    "display_name": "Store Associate Copilot Agent",
+    "display_name": "Retail Store Associate Copilot",
     "description": (
-        "Provides store associates with instant product lookup, guided "
-        "customer assistance scripts, daily task checklists, and real-time "
-        "performance dashboards to improve in-store operations."
+        "Deliver real-time product intelligence and transaction support to deliver faster service and boost sales performance."
     ),
     "author": "AIBAST",
     "tags": [

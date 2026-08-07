@@ -17,7 +17,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/prior-authorization",
     "version": "1.0.0",
     "display_name": "Prior Authorization Agent",
-    "description": "Manages prior authorization requests, clinical criteria checks, status tracking, and appeal preparation for healthcare payers.",
+    "description": "Automate insurance approval workflows to accelerate authorization processes, improve documentation accuracy, and reduce care delays.",
     "author": "AIBAST",
     "tags": ["prior-auth", "authorization", "payer", "clinical-criteria", "appeals", "healthcare"],
     "category": "healthcare",

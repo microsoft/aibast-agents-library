@@ -17,7 +17,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/care-gap-closure",
     "version": "1.0.0",
     "display_name": "Care Gap Closure Agent",
-    "description": "Analyzes HEDIS quality measure gaps, prioritizes patient outreach, manages campaigns, and provides HEDIS compliance dashboards.",
+    "description": "Automate quality gap analysis and targeted outreach to improve HEDIS performance, campaign ROI, and care gap closure efficiency.",
     "author": "AIBAST",
     "tags": ["hedis", "care-gaps", "quality-measures", "outreach", "population-health", "healthcare"],
     "category": "healthcare",

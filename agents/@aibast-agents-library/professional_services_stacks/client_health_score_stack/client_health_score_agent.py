@@ -17,7 +17,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/client-health-score",
     "version": "1.0.0",
     "display_name": "Client Health Score Agent",
-    "description": "Computes client health scores from NPS, margins, utilization, and escalation data to identify at-risk accounts and drive retention strategies.",
+    "description": "Automate client portfolio health monitoring and planning to improve client relationships, protect revenue, and optimize financial performance.",
     "author": "AIBAST",
     "tags": ["client-health", "NPS", "retention", "professional-services", "churn"],
     "category": "professional_services",

@@ -16,7 +16,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/claims-processing",
     "version": "1.0.0",
     "display_name": "Claims Processing Agent",
-    "description": "Insurance claims processing with intake, adjudication review, fraud detection, and settlement recommendations.",
+    "description": "Automate claims processing workflows to deliver faster, consistent, and more compliant claim outcomes.",
     "author": "AIBAST",
     "tags": ["claims", "insurance", "adjudication", "fraud", "settlement", "financial-services"],
     "category": "financial_services",

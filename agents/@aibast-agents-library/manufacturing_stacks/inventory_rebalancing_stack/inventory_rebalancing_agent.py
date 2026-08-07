@@ -18,7 +18,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/inventory-rebalancing",
     "version": "1.0.0",
     "display_name": "Inventory Rebalancing Agent",
-    "description": "Optimizes multi-warehouse inventory distribution by analyzing stock levels against demand forecasts and generating cost-effective transfer plans.",
+    "description": "Intelligently optimize inventory portfolios to improve cash flow and warehouse efficiency while reducing waste.",
     "author": "AIBAST",
     "tags": ["inventory", "warehouse", "supply-chain", "rebalancing", "manufacturing"],
     "category": "manufacturing",

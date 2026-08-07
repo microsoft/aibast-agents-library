@@ -21,7 +21,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/procurement-agent",
     "version": "1.0.0",
     "display_name": "Procurement Agent",
-    "description": "Procurement management for purchase requests, vendor comparison, approval routing, and spend analysis.",
+    "description": "Automate purchase order management and vendor selection to enable faster and more cost-effective purchasing.",
     "author": "AIBAST",
     "tags": ["procurement", "purchasing", "vendor", "approval", "spend-analysis"],
     "category": "general",

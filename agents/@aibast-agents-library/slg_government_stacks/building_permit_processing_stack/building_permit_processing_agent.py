@@ -17,7 +17,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/building-permit-processing",
     "version": "1.0.0",
     "display_name": "Building Permit Processing Agent",
-    "description": "Local government building permit processing with status tracking, review checklists, inspector assignment, and fee calculation.",
+    "description": "Automate building permit review processes to enable faster service, lower operational costs, and higher citizen satisfaction.",
     "author": "AIBAST",
     "tags": ["permits", "building", "zoning", "inspection", "local-government", "fees"],
     "category": "slg_government",

@@ -20,9 +20,7 @@ __manifest__ = {
     "version": "1.0.0",
     "display_name": "Supply Chain Disruption Alert Agent",
     "description": (
-        "Monitors supply chain networks for disruption events, performs "
-        "risk assessments, generates mitigation playbooks, and identifies "
-        "qualified alternative suppliers to maintain retail continuity."
+        "Detects and manages supply chain risks to defend against disruptions, protect revenue, and maintain operational continuity."
     ),
     "author": "AIBAST",
     "tags": [

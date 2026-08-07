@@ -16,7 +16,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/product-feedback-synthesizer",
     "version": "1.0.0",
     "display_name": "Product Feedback Synthesizer Agent",
-    "description": "Aggregates customer feedback, feature requests, sentiment analysis, and roadmap impact assessments for product teams.",
+    "description": "Turn fragmented feedback into actionable insights that accelerate product improvements, prevent churn, and optimize engineering priorities.",
     "author": "AIBAST",
     "tags": ["feedback", "product", "feature-requests", "sentiment", "roadmap", "nps"],
     "category": "software_digital_products",

@@ -17,7 +17,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/contract-risk-review",
     "version": "1.0.0",
     "display_name": "Contract Risk Review Agent",
-    "description": "Scans contracts for risky clauses, evaluates compliance with internal policies, and produces renegotiation briefs with prioritized amendments.",
+    "description": "Automate contract review processes to enable faster, lower-risk, and more successful negotiations.",
     "author": "AIBAST",
     "tags": ["contract", "risk", "legal", "compliance", "professional-services"],
     "category": "professional_services",

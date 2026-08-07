@@ -18,11 +18,9 @@ __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/returns-complaints-resolution",
     "version": "1.0.0",
-    "display_name": "Returns & Complaints Resolution Agent",
+    "display_name": "Returns and Complaints Resolution Agent",
     "description": (
-        "Automates return processing, classifies customer complaints, "
-        "recommends optimal resolutions, and identifies complaint trends "
-        "for retail and CPG customer service teams."
+        "Automate return decisions and complaint handling to speed resolution, reduce fraud, and protect customer loyalty."
     ),
     "author": "AIBAST",
     "tags": [

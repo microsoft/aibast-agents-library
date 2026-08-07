@@ -16,7 +16,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/portfolio-rebalancing",
     "version": "1.0.0",
     "display_name": "Portfolio Rebalancing Agent",
-    "description": "Portfolio rebalancing with drift analysis, trade recommendations, tax impact assessment, and execution planning.",
+    "description": "Provide intelligent, automated portfolio rebalancing that streamlines manual reviews and improves wealth management outcomes.",
     "author": "AIBAST",
     "tags": ["portfolio", "rebalancing", "allocation", "tax", "trading", "financial-services"],
     "category": "financial_services",
