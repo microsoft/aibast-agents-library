@@ -153,6 +153,8 @@ select.sortsel {
 .cmd::after { content: "copy"; position: absolute; right: 10px; top: 10px; font-size: .64rem; color: var(--text-muted); }
 .cmd.copied::after { content: "copied"; color: var(--green); }
 .note { font-size: .78rem; color: var(--text-muted); line-height: 1.6; }
+.adv-list { margin: 0 0 4px 18px; padding: 0; }
+.adv-list li { font-size: .84rem; color: var(--text-dim); line-height: 1.55; margin-bottom: 3px; }
 .modal-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
 footer { margin-top: 50px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: .78rem; text-align: center; }
 @media (max-width: 620px) { .kv { grid-template-columns: 1fr; } header { padding: 12px 16px; } }
@@ -298,7 +300,10 @@ function setCat(cat) {
 
 function matches(a, words) {
   if (!words.length) return true;
-  const hay = [a.display_name, a.description, pretty(a.category), pretty(a._stack || ''),
+  const s = a._solution || {};
+  const hay = [a.display_name, a.description, s.advertised_name, s.executive_summary,
+               pretty(a.category), pretty(a._stack || ''), ...(s.industries || []),
+               ...(s.personas || []), ...(s.featured_tools || []), ...(s.capabilities || []),
                ...(a.tags || []), a.author || ''].join(' ').toLowerCase();
   return words.every(w => hay.includes(w));
 }
@@ -324,10 +329,10 @@ function render() {
 
   const dl = a => (agentMetrics[a.name] || {}).d || 0;
   const cmp = {
-    name: (a, b) => a.display_name.localeCompare(b.display_name),
+    name: (a, b) => shown(a).localeCompare(shown(b)),
     newest: (a, b) => String(b._added_at || '').localeCompare(String(a._added_at || '')),
     largest: (a, b) => (b._lines || 0) - (a._lines || 0),
-    downloads: (a, b) => dl(b) - dl(a) || a.display_name.localeCompare(b.display_name),
+    downloads: (a, b) => dl(b) - dl(a) || shown(a).localeCompare(shown(b)),
   }[sort];
   filtered = filtered.slice().sort(cmp);
   $('grid').innerHTML = `<div class="agents-grid">${filtered.map(card).join('')}</div>`;
@@ -353,7 +358,7 @@ function renderByStack(filtered) {
            <span class="meta">${members.length} agent${members.length === 1 ? '' : 's'} &middot; ${num(lines)} lines</span>
            <a href="${BLOB}/${encodeURI(s.path)}" target="_blank" rel="noopener">source folder &#8599;</a>`
         : `<h2>Ungrouped</h2><span class="meta">${members.length} agents</span>`;
-      members = members.slice().sort((a, b) => a.display_name.localeCompare(b.display_name));
+      members = members.slice().sort((a, b) => shown(a).localeCompare(shown(b)));
       return `<div class="stack-group"><div class="stack-head">${head}</div>
                 <div class="agents-grid">${members.map(card).join('')}</div></div>`;
     }).join('');
@@ -368,12 +373,20 @@ function badges(a) {
   return `<span class="metric-strip">${bits.join('<span style="color:var(--text-muted)">&middot;</span>')}</span>`;
 }
 
+// The advertised listing wins over the repo's own manifest wording: this is the
+// name and summary the field was shown on the one-pager and in the demo video.
+const shown = a => (a._solution && a._solution.advertised_name) || a.display_name;
+const summary = a => (a._solution && a._solution.executive_summary) || a.description;
+
 function card(a) {
-  const tags = (a.tags || []).slice(0, 4).map(t => `<span class="tag">${esc(t)}</span>`).join('');
+  const s = a._solution;
+  const chips = s && s.industries && s.industries.length
+    ? s.industries.slice(0, 3).map(i => `<span class="tag">${esc(i)}</span>`).join('')
+    : (a.tags || []).slice(0, 4).map(t => `<span class="tag">${esc(t)}</span>`).join('');
   return `<div class="agent-card" onclick="openAgent('${esc(a.name)}')">
-    <div class="card-name">${esc(a.display_name)}${a.quality_tier === 'verified' ? '<span class="tier-badge">verified</span>' : ''}</div>
-    <div class="card-desc">${esc(a.description)}</div>
-    <div class="card-tags">${tags}</div>
+    <div class="card-name">${esc(shown(a))}${s ? '<span class="tier-badge" title="Published on the AIBAST Agents Library with a one-pager and a demo video">advertised</span>' : ''}</div>
+    <div class="card-desc">${esc(summary(a))}</div>
+    <div class="card-tags">${chips}</div>
     <div class="card-footer">
       <span class="cat-badge">${esc(pretty(a.category))}</span>
       ${badges(a)}
@@ -392,13 +405,26 @@ function openAgent(name) {
   const target = base.endsWith('_agent.py') ? base : base.replace(/\.py$/, '_agent.py');
   const stack = stacks.find(s => s.vertical === a._stack_vertical && s.stack === a._stack);
 
+  const sol = a._solution;
+  const bullets = (label, items) => items && items.length
+    ? `<div class="sub-head">${label}</div><ul class="adv-list">${items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`
+    : '';
+
   $('modal-content').innerHTML = `
     <button class="modal-close" onclick="closeModal()">&times;</button>
-    <h2>${esc(a.display_name)}</h2>
-    <div class="ns mono">${esc(a.name)} &middot; v${esc(a.version)}</div>
-    <p class="lede">${esc(a.description)}</p>
+    <h2>${esc(shown(a))}</h2>
+    <div class="ns mono">${esc(a.name)} &middot; v${esc(a.version)}${sol ? ` &middot; advertised as solution #${sol.slot}` : ''}</div>
+    <p class="lede">${esc(summary(a))}</p>
+    ${sol && sol.advertised_name !== a.display_name ? `<p class="note" style="margin-top:8px">Shipped in this repo as <b>${esc(a.display_name)}</b>.</p>` : ''}
+
+    ${sol ? `${bullets('What it does', sol.capabilities)}
+    ${bullets('Outcomes', sol.outcomes)}
+    ${bullets('The situation it solves', sol.customer_scenario)}` : ''}
 
     <dl class="kv">
+      ${sol && sol.industries.length ? `<dt>Industries</dt><dd>${sol.industries.map(i => `<span class="tag">${esc(i)}</span>`).join(' ')}</dd>` : ''}
+      ${sol && sol.personas.length ? `<dt>Personas</dt><dd>${sol.personas.map(p => `<span class="tag">${esc(p)}</span>`).join(' ')}</dd>` : ''}
+      ${sol && sol.featured_tools.length ? `<dt>Featured tools</dt><dd>${sol.featured_tools.map(t => `<span class="tag">${esc(t)}</span>`).join(' ')}</dd>` : ''}
       <dt>Vertical</dt><dd>${esc(pretty(a.category))}</dd>
       <dt>Stack</dt><dd>${stack ? `${esc(stack.display_name)} — <a href="${BLOB}/${encodeURI(stack.path)}" target="_blank" rel="noopener">${stack.agent_count} agent${stack.agent_count === 1 ? '' : 's'} in this stack &#8599;</a>` : '—'}</dd>
       <dt>Author</dt><dd>${esc(a.author)}</dd>

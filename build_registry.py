@@ -27,10 +27,35 @@ from datetime import datetime, timezone
 
 AGENTS_DIR = Path("agents")
 REGISTRY_FILE = Path("registry.json")
+SOLUTIONS_FILE = Path("solutions.json")
 REQUIRED_MANIFEST_FIELDS = [
     "schema", "name", "version", "display_name",
     "description", "author", "tags", "category"
 ]
+
+
+def load_solutions() -> dict:
+    """agent name -> the approved SharePoint listing for that solution.
+
+    solutions.json is the AIBAST SharePoint "Agents Library" catalog: the set
+    that was actually advertised to the field, each with a one-pager and a demo
+    video. It is authored upstream and is NOT derived from this repo — the repo
+    aligns to it. Every agent that implements an advertised solution inherits
+    that listing's name, summary, industries, personas and featured tools, so
+    the catalog page shows the field what it was sold.
+    """
+    if not SOLUTIONS_FILE.exists():
+        return {}
+    try:
+        doc = json.loads(SOLUTIONS_FILE.read_text(encoding="utf-8"))
+    except (ValueError, OSError) as e:
+        print(f"  [WARN] cannot read {SOLUTIONS_FILE}: {e}")
+        return {}
+    out = {}
+    for s in doc.get("solutions", []):
+        if s.get("repo_agent"):
+            out.setdefault(s["repo_agent"], s)
+    return out
 
 
 def stack_of(py_path: Path) -> tuple:
@@ -128,6 +153,7 @@ def build_registry():
     errors = []
 
     added_dates = git_added_dates()
+    solutions = load_solutions()
     previous = {}
     if REGISTRY_FILE.exists():
         try:
@@ -167,6 +193,23 @@ def build_registry():
         added = added_dates.get(py_path.as_posix()) or previous.get(name, {}).get("_added_at")
         if added:
             manifest["_added_at"] = added
+
+        # The advertised listing, when this agent implements an approved solution.
+        sol = solutions.get(name)
+        if sol:
+            manifest["_solution"] = {
+                "advertised_name": sol.get("advertised_name"),
+                "slot": sol.get("slot"),
+                "executive_summary": sol.get("executive_summary"),
+                "industries": sol.get("industries", []),
+                "personas": sol.get("personas", []),
+                "featured_tools": sol.get("featured_tools", []),
+                "capabilities": sol.get("capabilities", []),
+                "outcomes": sol.get("outcomes", []),
+                "customer_scenario": sol.get("customer_scenario", []),
+                "has_onepager": bool(sol.get("onepager")),
+                "has_demo_video": bool(sol.get("demo_video")),
+            }
 
         agents.append(manifest)
 
