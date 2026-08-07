@@ -32,6 +32,10 @@ def test_every_agent_has_library_fields():
     names = {a["name"] for a in reg["agents"]}
     for a in reg["agents"]:
         assert a.get("_sha256"), f"{a['name']} missing _sha256"
+        # templates/ holds connector templates and the agent generator - library
+        # infrastructure, not industry solutions, so they sit outside a stack.
+        if "/templates/" in a["_file"]:
+            continue
         assert a.get("_stack"), f"{a['name']} is not inside a *_stack folder"
         assert a.get("_stack_vertical"), f"{a['name']} missing _stack_vertical"
     # Every stack member must resolve to a real agent, or the stack install

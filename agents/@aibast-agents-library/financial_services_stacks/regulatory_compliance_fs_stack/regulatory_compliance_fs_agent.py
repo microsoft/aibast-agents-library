@@ -359,7 +359,20 @@ class FSRegulatoryComplianceAgent(BasicAgent):
         self.metadata = {
             "name": self.name,
             "display_name": "Regulatory Compliance Agent",
-            "description": __manifest__["description"],
+            # Article III.2: the manifest description is the advertised summary
+            # for the catalog page; this string is what the model routes on, so
+            # it names the surfaces a desk asks about in their own words.
+            "description": (
+                "The trading desk's regulatory compliance system of record, under MiFID II / "
+                "MiFIR. Use this for ANY question about trade reporting, audit readiness, "
+                "regulator rejections, best execution or execution quality, venue mismatches, "
+                "trader certifications and who is allowed on the desk, algorithm or strategy "
+                "sign-off, and filings to the reporting portal — including questions that never "
+                "name a regulation, such as whether we would fail an audit, what is broken on "
+                "the desk, which trades the regulator will reject, who cannot legally trade "
+                "today, whether anything is about to go live that should not be, and proving to "
+                "a board that reporting is or is not in order."
+            ),
             "parameters": {
                 "type": "object",
                 "properties": {

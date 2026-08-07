@@ -24,7 +24,8 @@
     "which trade would you"
    ],
    "min_words": 50,
-   "assertion_note": "Assert ONLY on identifiers the agent computed (trader ids). The LLM's prose varies run to run, so thematic words like 'reporting' or regime names like 'RTS 22' make a good answer flake red. Entities are stable because they come from the agent, not the model."
+   "assertion_note": "Assert ONLY on identifiers the agent computed (trader ids). The LLM's prose varies run to run, so thematic words like 'reporting' or regime names like 'RTS 22' make a good answer flake red. Entities are stable because they come from the agent, not the model.",
+   "expects_agent": "FSRegulatoryCompliance"
   },
   {
    "id": "RC-02",
@@ -39,7 +40,8 @@
     "I don't have access",
     "provide the trader"
    ],
-   "min_words": 30
+   "min_words": 30,
+   "expects_agent": "FSRegulatoryCompliance"
   },
   {
    "id": "RC-03",
@@ -54,7 +56,8 @@
     "I don't have access",
     "upload"
    ],
-   "min_words": 40
+   "min_words": 40,
+   "expects_agent": "FSRegulatoryCompliance"
   },
   {
    "id": "RC-04",
@@ -67,7 +70,8 @@
    "must_not_include": [
     "I don't have access"
    ],
-   "min_words": 25
+   "min_words": 25,
+   "expects_agent": "FSRegulatoryCompliance"
   },
   {
    "id": "RC-05",
@@ -80,8 +84,9 @@
    "must_not_include": [
     "I don't have access"
    ],
-   "min_words": 60
+   "min_words": 60,
+   "expects_agent": "FSRegulatoryCompliance"
   }
  ],
- "assertion_principle": "must_include should name agent-computed entities - ids, names, figures. must_not_include should name stall phrases that prove the agent was not called ('I don't have access', 'give me an id'). Never assert on the model's phrasing."
+ "assertion_principle": "The tool description and parameters are the ONLY context the Brainstem has about this agent. So: expects_agent proves the description was sufficient to route; must_include is asserted against the agent's own output (deterministic, never the model's prose); must_not_include catches stalls that prove the agent was never called. A routing failure is a defect in the description, not flakiness."
 }

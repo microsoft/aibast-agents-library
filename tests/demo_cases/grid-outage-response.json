@@ -1,0 +1,72 @@
+{
+ "solution": "Grid Outage Response Agent",
+ "slot": null,
+ "agent": "@aibast-agents-library/grid-outage-response",
+ "status": "GENERATED - not SharePoint-advertised. Proves the generator; must be advertised before it ships (Article I.1).",
+ "agent_files": [
+  "grid_outage_response_agent"
+ ],
+ "note": "Locked demo cases, one per capability bullet in the brief. Phrased the way a control room actually talks.",
+ "assertion_principle": "The tool description and parameters are the ONLY context the Brainstem has about this agent. So: expects_agent proves the description was sufficient to route; must_include is asserted against the agent's own output (deterministic, never the model's prose); must_not_include catches stalls that prove the agent was never called. A routing failure is a defect in the description, not flakiness.",
+ "cases": [
+  {
+   "id": "GOR-01",
+   "persona": "Control Room Operator",
+   "onepager_bullet": "Detect and rank active outages by customer impact and vulnerability",
+   "prompt": "What's out right now and which one do I care about most?",
+   "must_include": [
+    "OTG-4417",
+    "FDR-2214"
+   ],
+   "must_not_include": [
+    "I don't have access",
+    "give me an outage"
+   ],
+   "min_words": 30,
+   "assertion_note": "Identifiers only. A raw figure like 3184 is unsafe: the model renders it '3,184' with a thousands separator and a correct answer flakes red. Circuit and outage ids survive any formatting.",
+   "expects_agent": "GridOutageResponseAgent"
+  },
+  {
+   "id": "GOR-02",
+   "persona": "Field Dispatch Supervisor",
+   "onepager_bullet": "Dispatch the right crew to the highest-impact circuit first",
+   "prompt": "Who's rolling where, and is anything sitting with no crew on it?",
+   "must_include": [
+    "OTG-4421"
+   ],
+   "must_not_include": [
+    "I don't have access"
+   ],
+   "min_words": 25,
+   "expects_agent": "GridOutageResponseAgent"
+  },
+  {
+   "id": "GOR-03",
+   "persona": "Control Room Operator",
+   "onepager_bullet": "Give every affected customer an accurate restoration estimate",
+   "prompt": "What are we telling customers about when their power comes back?",
+   "must_include": [
+    "OTG-4417"
+   ],
+   "must_not_include": [
+    "I don't have access"
+   ],
+   "min_words": 25,
+   "expects_agent": "GridOutageResponseAgent"
+  },
+  {
+   "id": "GOR-04",
+   "persona": "Regulatory Reporting Manager",
+   "onepager_bullet": "Track reliability minutes against the regulator's thresholds continuously",
+   "prompt": "Are we heading for a reliability breach this year?",
+   "must_include": [
+    "OTG-"
+   ],
+   "must_not_include": [
+    "I don't have access"
+   ],
+   "min_words": 25,
+   "expects_agent": "GridOutageResponseAgent"
+  }
+ ]
+}

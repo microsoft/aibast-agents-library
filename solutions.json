@@ -1,6 +1,6 @@
 {
  "schema": "aibast-solutions/1.0",
- "count": 53,
+ "count": 54,
  "note": "Approved industry-solution catalog as advertised on the AIBAST SharePoint Agents Library. The repo aligns to this; it is not derived from the repo.",
  "solutions": [
   {
@@ -2270,6 +2270,67 @@
    "advertised_display": "Supply Chain Disruption Alert Agent",
    "sharepoint_list_name": "Supply Chain Disruption Alert Agent",
    "is_primary": true
+  },
+  {
+   "slot": null,
+   "advertised_name": "Grid Outage Response Agent",
+   "advertised_display": "Grid Outage Response Agent",
+   "sharepoint_list_name": "Grid Outage Response Agent",
+   "canonical_name": "Grid Outage Response Agent",
+   "repo_agent": "@aibast-agents-library/grid-outage-response",
+   "executive_summary": "Coordinate outage detection, crew dispatch and customer communication to restore power faster, protect vulnerable customers, and defend regulatory reliability performance.",
+   "industries": [
+    "Energy and Utilities"
+   ],
+   "personas": [
+    "Control Room Operator",
+    "Field Dispatch Supervisor",
+    "Regulatory Reporting Manager"
+   ],
+   "featured_tools": [
+    "Dynamics 365 Field Service",
+    "Azure IoT Hub",
+    "Microsoft Teams",
+    "Power BI"
+   ],
+   "customer_scenario": [
+    "Storm outages were reported by customer calls before SCADA raised them",
+    "Crews were dispatched without knowing which circuits carried critical-care customers",
+    "Restoration estimates given to customers were guesses, driving repeat calls",
+    "Reliability minutes were reconstructed manually at year end for the regulator"
+   ],
+   "outcomes": [
+    "Restored the highest-impact circuits first, cutting customer-minutes lost",
+    "Protected critical-care customers with a register the control room could see",
+    "Gave callers a restoration estimate that held, reducing repeat calls",
+    "Tracked reliability performance continuously instead of reconstructing it at year end"
+   ],
+   "capabilities": [
+    "Detect and rank active outages by customer impact and vulnerability",
+    "Dispatch the right crew to the highest-impact circuit first",
+    "Give every affected customer an accurate restoration estimate",
+    "Track reliability minutes against the regulator's thresholds continuously"
+   ],
+   "capability_map": [
+    {
+     "advertised": "Detect and rank active outages by customer impact and vulnerability",
+     "operation": "outage_overview"
+    },
+    {
+     "advertised": "Dispatch the right crew to the highest-impact circuit first",
+     "operation": "crew_dispatch"
+    },
+    {
+     "advertised": "Give every affected customer an accurate restoration estimate",
+     "operation": "customer_comms"
+    },
+    {
+     "advertised": "Track reliability minutes against the regulator's thresholds continuously",
+     "operation": "reliability_reporting"
+    }
+   ],
+   "is_primary": true,
+   "source": "GENERATED \u2014 not yet advertised on the AIBAST SharePoint. Article I.1: it ships only once it is."
   }
  ]
 }

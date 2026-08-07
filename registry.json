@@ -1,15 +1,15 @@
 {
   "schema": "rapp-registry/1.0",
   "version": "1.0.0",
-  "generated_at": "2026-08-07T22:05:54.219109+00:00",
+  "generated_at": "2026-08-07T22:31:25.614913+00:00",
   "stats": {
-    "total_agents": 69,
+    "total_agents": 71,
     "publishers": 1,
     "categories": 12,
-    "total_stacks": 51,
+    "total_stacks": 52,
     "total_verticals": 12,
-    "total_lines": 27159,
-    "total_kb": 1311.3,
+    "total_lines": 28220,
+    "total_kb": 1359.2,
     "publisher_list": [
       "@aibast-agents-library"
     ],
@@ -28,7 +28,7 @@
       "software_digital_products"
     ],
     "tier_counts": {
-      "verified": 69
+      "verified": 71
     }
   },
   "stacks": [
@@ -167,6 +167,16 @@
       "path": "agents/@aibast-agents-library/energy_stacks/field_service_dispatch_stack",
       "agents": [
         "@aibast-agents-library/field-service-dispatch"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "grid_outage_response",
+      "vertical": "energy",
+      "display_name": "Grid Outage Response",
+      "path": "agents/@aibast-agents-library/energy_stacks/grid_outage_response_stack",
+      "agents": [
+        "@aibast-agents-library/grid-outage-response"
       ],
       "agent_count": 1
     },
@@ -1845,6 +1855,75 @@
     },
     {
       "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/grid-outage-response",
+      "version": "1.0.0",
+      "display_name": "Grid Outage Response Agent",
+      "description": "Coordinate outage detection, crew dispatch and customer communication to restore power faster, protect vulnerable customers, and defend regulatory reliability performance.",
+      "author": "AIBAST",
+      "tags": [
+        "energy",
+        "utilities",
+        "outage",
+        "SAIDI",
+        "SAIFI",
+        "field-service",
+        "reliability"
+      ],
+      "category": "energy",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/energy_stacks/grid_outage_response_stack/grid_outage_response_agent.py",
+      "_size_kb": 14.7,
+      "_lines": 338,
+      "_sha256": "198877c352c2715a2efa00bba06390cca79f4a2a88063cb2199f7f5cc69a4c47",
+      "_stack": "grid_outage_response",
+      "_stack_vertical": "energy",
+      "_solution": {
+        "advertised_name": "Grid Outage Response Agent",
+        "sharepoint_list_name": "Grid Outage Response Agent",
+        "slot": null,
+        "executive_summary": "Coordinate outage detection, crew dispatch and customer communication to restore power faster, protect vulnerable customers, and defend regulatory reliability performance.",
+        "industries": [
+          "Energy and Utilities"
+        ],
+        "personas": [
+          "Control Room Operator",
+          "Field Dispatch Supervisor",
+          "Regulatory Reporting Manager"
+        ],
+        "featured_tools": [
+          "Dynamics 365 Field Service",
+          "Azure IoT Hub",
+          "Microsoft Teams",
+          "Power BI"
+        ],
+        "capabilities": [
+          "Detect and rank active outages by customer impact and vulnerability",
+          "Dispatch the right crew to the highest-impact circuit first",
+          "Give every affected customer an accurate restoration estimate",
+          "Track reliability minutes against the regulator's thresholds continuously"
+        ],
+        "outcomes": [
+          "Restored the highest-impact circuits first, cutting customer-minutes lost",
+          "Protected critical-care customers with a register the control room could see",
+          "Gave callers a restoration estimate that held, reducing repeat calls",
+          "Tracked reliability performance continuously instead of reconstructing it at year end"
+        ],
+        "customer_scenario": [
+          "Storm outages were reported by customer calls before SCADA raised them",
+          "Crews were dispatched without knowing which circuits carried critical-care customers",
+          "Restoration estimates given to customers were guesses, driving repeat calls",
+          "Reliability minutes were reconstructed manually at year end for the regulator"
+        ],
+        "has_onepager": false,
+        "has_demo_video": false
+      }
+    },
+    {
+      "schema": "rapp-agent/1.0",
       "name": "@aibast-agents-library/permit-license-management",
       "version": "1.0.0",
       "display_name": "Energy Operations Agent Suite",
@@ -2461,9 +2540,9 @@
         "@rapp/basic-agent"
       ],
       "_file": "agents/@aibast-agents-library/financial_services_stacks/regulatory_compliance_fs_stack/regulatory_compliance_fs_agent.py",
-      "_size_kb": 34.7,
-      "_lines": 657,
-      "_sha256": "b197e6debc7c123ad1cb4423932499561249f3907a61ce278f1dd0e416a78098",
+      "_size_kb": 35.7,
+      "_lines": 670,
+      "_sha256": "11a1ac0f2cfe84b0882325a3663947cbaa34a41ab1be150e91e03716a43ce490",
       "_stack": "regulatory_compliance_fs",
       "_stack_vertical": "financial_services",
       "_added_at": "2026-03-18T13:23:12-04:00",
@@ -4151,9 +4230,9 @@
         "@rapp/basic-agent"
       ],
       "_file": "agents/@aibast-agents-library/slg_government_stacks/building_permit_processing_stack/building_permit_processing_agent.py",
-      "_size_kb": 26.1,
-      "_lines": 586,
-      "_sha256": "680268024c702c31a93121565314c44d17c606d657100a54a6a1ef1c61e56a21",
+      "_size_kb": 27.3,
+      "_lines": 601,
+      "_sha256": "55a5cfa3e015b62579d0edf4171f080f22500eb89a5e7c25947dae93f0f79e7c",
       "_stack": "building_permit_processing",
       "_stack_vertical": "slg_government",
       "_added_at": "2026-03-18T13:23:12-04:00",
@@ -4400,6 +4479,33 @@
         "has_onepager": true,
         "has_demo_video": true
       }
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/industry-agent-generator",
+      "version": "1.0.0",
+      "display_name": "Industry Agent Generator",
+      "description": "Generates a complete, constitution-compliant AIBAST industry solution agent from a one-pager brief, with its locked demo cases.",
+      "author": "AIBAST",
+      "tags": [
+        "meta",
+        "generator",
+        "scaffolding",
+        "constitution",
+        "agent-authoring"
+      ],
+      "category": "general",
+      "quality_tier": "verified",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/templates/industry_agent_generator_agent.py",
+      "_size_kb": 31.0,
+      "_lines": 695,
+      "_sha256": "df4e721bccc8fefc6333540868248afb97a390ee65e76da81407bad2522c0d97",
+      "_stack": null,
+      "_stack_vertical": null
     }
   ]
 }

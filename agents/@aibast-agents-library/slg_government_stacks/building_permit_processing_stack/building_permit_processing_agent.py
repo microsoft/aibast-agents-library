@@ -348,9 +348,24 @@ class BuildingPermitProcessingAgent(BasicAgent):
                 "properties": {
                     "operation": {
                         "type": "string",
-                        "description": "Which permitting workflow to run. Use permit_backlog "
-                                       "for department-wide questions about delays, overdue "
-                                       "permits or citizen complaints — it needs no permit id.",
+                        "description": (
+                            "Which permitting workflow to run. "
+                            "permit_backlog: department-wide delays on applications ALREADY in "
+                            "review — what is late, which resident will complain. Needs no "
+                            "permit id. Do NOT use for anything newly arrived or at the counter. "
+                            "intake_triage: THE FRONT COUNTER and the intake queue — use this "
+                            "whenever the question is about what is arriving, what to accept or "
+                            "reject today, or a newly submitted application. Covers whether to "
+                            "accept it, duplicates, missing documents, WHICH REVIEW TEAMS it "
+                            "routes to and when it is due back. Use this for any newly arrived "
+                            "application named by street, applicant or project type. "
+                            "applicant_updates: what to send applicants so they stop calling. "
+                            "permit_status: one named permit's current state. "
+                            "review_checklist: the plan-review checklist for a permit type. "
+                            "inspector_assignment: which inspections are booked and who covers "
+                            "them. "
+                            "fee_calculation: permit fees for a valuation."
+                        ),
                         "enum": [
                             "permit_backlog",
                             "intake_triage",
