@@ -365,7 +365,20 @@ class FSRegulatoryComplianceAgent(BasicAgent):
                 "properties": {
                     "operation": {
                         "type": "string",
-                        "description": "Which compliance workflow to run.",
+                        "description": (
+                            "Which compliance workflow to run. "
+                            "trade_surveillance: which trades the regulator will reject, missing "
+                            "fields, venue mismatches, best execution and slippage. "
+                            "documentation_review: whether an ALGORITHM or strategy is about to go "
+                            "live without validated documentation, or is running on outdated docs "
+                            "— use this for any 'about to go live', 'is it signed off', 'can we "
+                            "turn it on' question. "
+                            "remediation_submission: prepare corrections and file them to the ARM "
+                            "portal. "
+                            "certification_tracker: which TRADERS are lapsed or expiring and "
+                            "enrolling them. "
+                            "compliance_dashboard: the whole-desk roll-up."
+                        ),
                         "enum": [
                             "compliance_dashboard",
                             "trade_surveillance",
@@ -412,10 +425,17 @@ class FSRegulatoryComplianceAgent(BasicAgent):
         L.append(f"**Reporting accuracy:** {_reporting_accuracy()}%  ·  "
                  f"**Trades with exceptions:** {_exception_rate()}%  ·  "
                  f"**Open exceptions:** {total_ex} ({high} high)\n")
+        if lapsed:
+            who = ", ".join(f"{tid} ({TRADERS[tid]['desk']}, {cert})"
+                            for tid, cert, _ in lapsed)
+            L.append(f"**Stand down now: {who}.** Naming them is the point — a lapsed "
+                     f"certification is a binary breach, not a score.\n")
         L.append("| Area | Status | Detail |")
         L.append("|---|---|---|")
+        worst_ref = max(TRADES, key=lambda t: len(_trade_exceptions(t)))["ref"] if TRADES else "-"
         L.append(f"| Transaction reporting (RTS 22) | {'ATTENTION' if high else 'OK'} | "
-                 f"{high} high-severity defect(s) across {len(TRADES)} executed trades |")
+                 f"{high} high-severity defect(s) across {len(TRADES)} executed trades; "
+                 f"worst is {worst_ref} |")
         L.append(f"| ARM submission | {'ATTENTION' if unsubmitted else 'OK'} | "
                  f"{len(unsubmitted)} trade(s) outside the T+1 window |")
         L.append(f"| Best execution (RTS 27/28) | "
