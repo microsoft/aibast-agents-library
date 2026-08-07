@@ -1,0 +1,902 @@
+{
+ "schema": "aibast-metrics/1.0",
+ "generated_at": "2026-08-07T20:41:20Z",
+ "repo": {
+  "owner": "microsoft",
+  "name": "aibast-agents-library",
+  "url": "https://github.com/microsoft/aibast-agents-library",
+  "site": "https://microsoft.github.io/aibast-agents-library/",
+  "stars": 4,
+  "forks": 2,
+  "watchers": 0,
+  "open_issues": 5,
+  "size_kb": 2935,
+  "created_at": "2025-10-17T16:17:53Z",
+  "pushed_at": "2026-07-20T14:54:29Z",
+  "description": "Main repository for AI BAST Specialist Teal AI Agents Library",
+  "homepage": null
+ },
+ "totals": {
+  "downloads": 0,
+  "clones": 0,
+  "cdn_hits": 0,
+  "release_downloads": 0,
+  "agent_file_downloads": 0,
+  "installer_downloads": 0,
+  "clones_excluding_ci_estimate": 0,
+  "ci_clone_estimate": 0,
+  "page_views": 0,
+  "clone_uniques_14d": 0,
+  "view_uniques_14d": 0,
+  "clone_uniques_daily_sum": 0,
+  "view_uniques_daily_sum": 0,
+  "days_tracked": 0,
+  "tracking_since": null,
+  "agents": 104,
+  "stacks": 81,
+  "verticals": 14,
+  "publishers": 1,
+  "categories": 14,
+  "total_lines": 37413,
+  "total_kb": 1806.2
+ },
+ "daily": [],
+ "traffic": {
+  "paths": [],
+  "referrers": [],
+  "clones_14d": 0,
+  "views_14d": 0,
+  "live": false,
+  "as_of": null
+ },
+ "cdn": {
+  "total_hits": 0,
+  "bandwidth": 0,
+  "rank": null,
+  "agent_hits": 0,
+  "installer_hits": 0,
+  "files": []
+ },
+ "releases": {
+  "total_downloads": 0,
+  "count": 0,
+  "releases": []
+ },
+ "leaderboards": {
+  "most_downloaded": [],
+  "largest": [
+   {
+    "name": "@aibast-agents-library/win-loss-analysis",
+    "display_name": "Win/Loss Analysis",
+    "publisher": "@aibast-agents-library",
+    "category": "b2b_sales",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 921,
+    "size_kb": 89.7,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/b2b_sales_stacks/win_loss_analysis_stack/win_loss_analysis_agent.py",
+    "description": "AI-powered win/loss analysis with pattern recognition, competitive insights, revenue recovery modeling, and board-ready presentations.",
+    "stack": "win_loss_analysis",
+    "vertical": "b2b_sales"
+   },
+   {
+    "name": "@aibast-agents-library/proposal-generation",
+    "display_name": "Proposal Generation",
+    "publisher": "@aibast-agents-library",
+    "category": "b2b_sales",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 673,
+    "size_kb": 34.6,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/b2b_sales_stacks/proposal_generation_stack/proposal_generation_agent.py",
+    "description": "AI-powered proposal generation with RFP analysis, personalized content, pricing optimization, and competitive positioning.",
+    "stack": "proposal_generation",
+    "vertical": "b2b_sales"
+   },
+   {
+    "name": "@aibast-agents-library/deal-progression",
+    "display_name": "Deal Progression",
+    "publisher": "@aibast-agents-library",
+    "category": "b2b_sales",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 643,
+    "size_kb": 41.6,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/deal_progression_agent.py",
+    "description": "Pipeline health analysis, stalled-deal detection, action plan generation, and pipeline acceleration.",
+    "stack": "deal_progression",
+    "vertical": "b2b_sales"
+   },
+   {
+    "name": "@aibast-agents-library/supply-chain-disruption-alert",
+    "display_name": "Supply Chain Disruption Alert Agent",
+    "publisher": "@aibast-agents-library",
+    "category": "retail_cpg",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 631,
+    "size_kb": 23.8,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/retail_cpg_stacks/supply_chain_disruption_alert_stack/supply_chain_disruption_alert_agent.py",
+    "description": "Monitors supply chain networks for disruption events, performs risk assessments, generates mitigation playbooks, and identifies qualified alternative suppliers to maintain retail continuity.",
+    "stack": "supply_chain_disruption_alert",
+    "vertical": "retail_cpg"
+   },
+   {
+    "name": "@aibast-agents-library/sales-qualification",
+    "display_name": "Sales Qualification",
+    "publisher": "@aibast-agents-library",
+    "category": "b2b_sales",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 570,
+    "size_kb": 47.4,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/b2b_sales_stacks/sales_qualification_stack/sales_qualification_agent.py",
+    "description": "ICP scoring, BANT analysis, personalized outreach, AE routing, and SLA tracking for inbound leads.",
+    "stack": "sales_qualification",
+    "vertical": "b2b_sales"
+   },
+   {
+    "name": "@aibast-agents-library/store-associate-copilot",
+    "display_name": "Store Associate Copilot Agent",
+    "publisher": "@aibast-agents-library",
+    "category": "retail_cpg",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 538,
+    "size_kb": 22.4,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/retail_cpg_stacks/store_associate_copilot_stack/store_associate_copilot_agent.py",
+    "description": "Provides store associates with instant product lookup, guided customer assistance scripts, daily task checklists, and real-time performance dashboards to improve in-store operations.",
+    "stack": "store_associate_copilot",
+    "vertical": "retail_cpg"
+   },
+   {
+    "name": "@aibast-agents-library/meeting-prep",
+    "display_name": "Meeting Prep",
+    "publisher": "@aibast-agents-library",
+    "category": "b2b_sales",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 521,
+    "size_kb": 25.1,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/meeting_prep_agent.py",
+    "description": "Generates pre-meeting briefs, talking points, objection prep, and follow-up templates.",
+    "stack": "account_intelligence",
+    "vertical": "b2b_sales"
+   },
+   {
+    "name": "@aibast-agents-library/returns-complaints-resolution",
+    "display_name": "Returns & Complaints Resolution Agent",
+    "publisher": "@aibast-agents-library",
+    "category": "retail_cpg",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 506,
+    "size_kb": 20.4,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/retail_cpg_stacks/returns_complaints_resolution_stack/returns_complaints_resolution_agent.py",
+    "description": "Automates return processing, classifies customer complaints, recommends optimal resolutions, and identifies complaint trends for retail and CPG customer service teams.",
+    "stack": "returns_complaints_resolution",
+    "vertical": "retail_cpg"
+   },
+   {
+    "name": "@aibast-agents-library/account-risk-assessment",
+    "display_name": "Account Risk Assessment",
+    "publisher": "@aibast-agents-library",
+    "category": "b2b_sales",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 495,
+    "size_kb": 23.0,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/risk_assessment_agent.py",
+    "description": "Assesses deal risk, churn probability, and financial health with mitigation recommendations.",
+    "stack": "account_intelligence",
+    "vertical": "b2b_sales"
+   },
+   {
+    "name": "@aibast-agents-library/account-intelligence-orchestrator",
+    "display_name": "Account Intelligence Orchestrator",
+    "publisher": "@aibast-agents-library",
+    "category": "b2b_sales",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 457,
+    "size_kb": 20.8,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/account_intelligence_orchestrator.py",
+    "description": "Coordinates multi-agent pipelines for 360-degree account intelligence briefings.",
+    "stack": "account_intelligence",
+    "vertical": "b2b_sales"
+   },
+   {
+    "name": "@aibast-agents-library/account-intelligence",
+    "display_name": "Account Intelligence",
+    "publisher": "@aibast-agents-library",
+    "category": "b2b_sales",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 456,
+    "size_kb": 23.3,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/account_intelligence_agent.py",
+    "description": "360-degree account briefings with stakeholder mapping, competitive analysis, and deal risk assessment.",
+    "stack": "account_intelligence",
+    "vertical": "b2b_sales"
+   },
+   {
+    "name": "@aibast-agents-library/stalled-deal-detection",
+    "display_name": "Stalled Deal Detection",
+    "publisher": "@aibast-agents-library",
+    "category": "b2b_sales",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 453,
+    "size_kb": 20.6,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/stalled_deal_detection_agent.py",
+    "description": "Detects stalled deals, classifies root causes, generates intervention plans, and provides stall prevention.",
+    "stack": "deal_progression",
+    "vertical": "b2b_sales"
+   },
+   {
+    "name": "@aibast-agents-library/competitive-intelligence",
+    "display_name": "Competitive Intelligence",
+    "publisher": "@aibast-agents-library",
+    "category": "b2b_sales",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 441,
+    "size_kb": 21.3,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/competitive_intelligence_agent.py",
+    "description": "Analyzes competitive landscapes, win/loss patterns, and generates battlecards for enterprise deals.",
+    "stack": "account_intelligence",
+    "vertical": "b2b_sales"
+   },
+   {
+    "name": "@aibast-agents-library/stakeholder-intelligence",
+    "display_name": "Stakeholder Intelligence",
+    "publisher": "@aibast-agents-library",
+    "category": "b2b_sales",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 440,
+    "size_kb": 23.4,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/stakeholder_intelligence_agent.py",
+    "description": "Maps org charts, analyzes buying committees, and scores relationship strength for enterprise accounts.",
+    "stack": "account_intelligence",
+    "vertical": "b2b_sales"
+   },
+   {
+    "name": "@aibast-agents-library/personalized-marketing",
+    "display_name": "Personalized Marketing Agent",
+    "publisher": "@aibast-agents-library",
+    "category": "retail_cpg",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 436,
+    "size_kb": 17.2,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/retail_cpg_stacks/personalized_marketing_stack/personalized_marketing_agent.py",
+    "description": "Enables customer segmentation, personalized campaign design, dynamic content personalization, and marketing performance analysis for retail and CPG brands.",
+    "stack": "personalized_marketing",
+    "vertical": "retail_cpg"
+   }
+  ],
+  "newest": [
+   {
+    "name": "@aibast-agents-library/account-intelligence",
+    "display_name": "Account Intelligence",
+    "publisher": "@aibast-agents-library",
+    "category": "b2b_sales",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 456,
+    "size_kb": 23.3,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/account_intelligence_agent.py",
+    "description": "360-degree account briefings with stakeholder mapping, competitive analysis, and deal risk assessment.",
+    "stack": "account_intelligence",
+    "vertical": "b2b_sales"
+   },
+   {
+    "name": "@aibast-agents-library/account-intelligence-orchestrator",
+    "display_name": "Account Intelligence Orchestrator",
+    "publisher": "@aibast-agents-library",
+    "category": "b2b_sales",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 457,
+    "size_kb": 20.8,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/account_intelligence_orchestrator.py",
+    "description": "Coordinates multi-agent pipelines for 360-degree account intelligence briefings.",
+    "stack": "account_intelligence",
+    "vertical": "b2b_sales"
+   },
+   {
+    "name": "@aibast-agents-library/action-prioritization",
+    "display_name": "Action Prioritization",
+    "publisher": "@aibast-agents-library",
+    "category": "b2b_sales",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 398,
+    "size_kb": 19.7,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/action_prioritization_agent.py",
+    "description": "Prioritizes sales actions, generates daily plans, and optimizes resource allocation across deals.",
+    "stack": "account_intelligence",
+    "vertical": "b2b_sales"
+   },
+   {
+    "name": "@aibast-agents-library/competitive-intelligence",
+    "display_name": "Competitive Intelligence",
+    "publisher": "@aibast-agents-library",
+    "category": "b2b_sales",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 441,
+    "size_kb": 21.3,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/competitive_intelligence_agent.py",
+    "description": "Analyzes competitive landscapes, win/loss patterns, and generates battlecards for enterprise deals.",
+    "stack": "account_intelligence",
+    "vertical": "b2b_sales"
+   },
+   {
+    "name": "@aibast-agents-library/deal-tracking",
+    "display_name": "Deal Tracking",
+    "publisher": "@aibast-agents-library",
+    "category": "b2b_sales",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 402,
+    "size_kb": 18.6,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/deal_tracking_agent.py",
+    "description": "Tracks pipeline, deal movement, stage velocity, and forecast accuracy for enterprise sales.",
+    "stack": "account_intelligence",
+    "vertical": "b2b_sales"
+   },
+   {
+    "name": "@aibast-agents-library/meeting-prep",
+    "display_name": "Meeting Prep",
+    "publisher": "@aibast-agents-library",
+    "category": "b2b_sales",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 521,
+    "size_kb": 25.1,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/meeting_prep_agent.py",
+    "description": "Generates pre-meeting briefs, talking points, objection prep, and follow-up templates.",
+    "stack": "account_intelligence",
+    "vertical": "b2b_sales"
+   },
+   {
+    "name": "@aibast-agents-library/account-messaging",
+    "display_name": "Account Messaging",
+    "publisher": "@aibast-agents-library",
+    "category": "b2b_sales",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 429,
+    "size_kb": 20.3,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/messaging_agent.py",
+    "description": "Generates personalized outreach, follow-ups, and campaign sequences for enterprise accounts.",
+    "stack": "account_intelligence",
+    "vertical": "b2b_sales"
+   },
+   {
+    "name": "@aibast-agents-library/account-risk-assessment",
+    "display_name": "Account Risk Assessment",
+    "publisher": "@aibast-agents-library",
+    "category": "b2b_sales",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 495,
+    "size_kb": 23.0,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/risk_assessment_agent.py",
+    "description": "Assesses deal risk, churn probability, and financial health with mitigation recommendations.",
+    "stack": "account_intelligence",
+    "vertical": "b2b_sales"
+   },
+   {
+    "name": "@aibast-agents-library/stakeholder-intelligence",
+    "display_name": "Stakeholder Intelligence",
+    "publisher": "@aibast-agents-library",
+    "category": "b2b_sales",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 440,
+    "size_kb": 23.4,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/stakeholder_intelligence_agent.py",
+    "description": "Maps org charts, analyzes buying committees, and scores relationship strength for enterprise accounts.",
+    "stack": "account_intelligence",
+    "vertical": "b2b_sales"
+   },
+   {
+    "name": "@aibast-agents-library/activity-gap",
+    "display_name": "Activity Gap Analyzer",
+    "publisher": "@aibast-agents-library",
+    "category": "b2b_sales",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 393,
+    "size_kb": 18.0,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/activity_gap_agent.py",
+    "description": "Identifies missing sales activities per stage, evaluates completion, generates roadmaps, and analyzes gap impact.",
+    "stack": "deal_progression",
+    "vertical": "b2b_sales"
+   },
+   {
+    "name": "@aibast-agents-library/deal-competitor-intel",
+    "display_name": "Deal Competitor Intelligence",
+    "publisher": "@aibast-agents-library",
+    "category": "b2b_sales",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 334,
+    "size_kb": 16.5,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/competitor_intelligence_agent.py",
+    "description": "Competitive snapshots, threat scoring, counter-strategies, and win/loss pattern analysis per deal.",
+    "stack": "deal_progression",
+    "vertical": "b2b_sales"
+   },
+   {
+    "name": "@aibast-agents-library/deal-health-score",
+    "display_name": "Deal Health Score",
+    "publisher": "@aibast-agents-library",
+    "category": "b2b_sales",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 378,
+    "size_kb": 17.6,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/deal_health_score_agent.py",
+    "description": "Calculates deal health scores, trend analysis, benchmark comparison, and health alerts.",
+    "stack": "deal_progression",
+    "vertical": "b2b_sales"
+   },
+   {
+    "name": "@aibast-agents-library/deal-progression",
+    "display_name": "Deal Progression",
+    "publisher": "@aibast-agents-library",
+    "category": "b2b_sales",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 643,
+    "size_kb": 41.6,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/deal_progression_agent.py",
+    "description": "Pipeline health analysis, stalled-deal detection, action plan generation, and pipeline acceleration.",
+    "stack": "deal_progression",
+    "vertical": "b2b_sales"
+   },
+   {
+    "name": "@aibast-agents-library/deal-risk-assessment",
+    "display_name": "Deal Risk Assessment",
+    "publisher": "@aibast-agents-library",
+    "category": "b2b_sales",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 424,
+    "size_kb": 19.2,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/deal_risk_assessment_agent.py",
+    "description": "Multi-factor risk scoring, risk matrices, mitigation planning, and risk trend tracking for pipeline deals.",
+    "stack": "deal_progression",
+    "vertical": "b2b_sales"
+   },
+   {
+    "name": "@aibast-agents-library/next-best-action",
+    "display_name": "Next Best Action",
+    "publisher": "@aibast-agents-library",
+    "category": "b2b_sales",
+    "tier": "verified",
+    "downloads": 0,
+    "lines": 430,
+    "size_kb": 19.7,
+    "added_at": "2026-03-18T13:23:12-04:00",
+    "file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/next_best_action_agent.py",
+    "description": "Recommends prioritized actions, sequences tasks, forecasts impact, and optimizes rep assignments.",
+    "stack": "deal_progression",
+    "vertical": "b2b_sales"
+   }
+  ],
+  "stacks": [
+   {
+    "name": "deal_progression",
+    "display_name": "Deal Progression",
+    "vertical": "b2b_sales",
+    "path": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack",
+    "agents": 11,
+    "lines": 4595,
+    "downloads": 0
+   },
+   {
+    "name": "account_intelligence",
+    "display_name": "Account Intelligence",
+    "vertical": "b2b_sales",
+    "path": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack",
+    "agents": 9,
+    "lines": 4039,
+    "downloads": 0
+   },
+   {
+    "name": "voice_to_crm",
+    "display_name": "Voice To Crm",
+    "vertical": "general",
+    "path": "agents/@aibast-agents-library/general_stacks/voice_to_crm_stack",
+    "agents": 4,
+    "lines": 1018,
+    "downloads": 0
+   },
+   {
+    "name": "crm_bulk_data_creator",
+    "display_name": "Crm Bulk Data Creator",
+    "vertical": "general",
+    "path": "agents/@aibast-agents-library/general_stacks/crm_bulk_data_creator_stack",
+    "agents": 3,
+    "lines": 882,
+    "downloads": 0
+   },
+   {
+    "name": "acquisition_support",
+    "display_name": "Acquisition Support",
+    "vertical": "federal_government",
+    "path": "agents/@aibast-agents-library/federal_government_stacks/acquisition_support_stack",
+    "agents": 1,
+    "lines": 398,
+    "downloads": 0
+   },
+   {
+    "name": "ai_customer_assistant",
+    "display_name": "Ai Customer Assistant",
+    "vertical": "general",
+    "path": "agents/@aibast-agents-library/general_stacks/ai_customer_assistant_stack",
+    "agents": 1,
+    "lines": 369,
+    "downloads": 0
+   },
+   {
+    "name": "ask_hr",
+    "display_name": "Ask Hr",
+    "vertical": "general",
+    "path": "agents/@aibast-agents-library/general_stacks/ask_hr_stack",
+    "agents": 1,
+    "lines": 402,
+    "downloads": 0
+   },
+   {
+    "name": "ask_hr",
+    "display_name": "Ask Hr",
+    "vertical": "human_resources",
+    "path": "agents/@aibast-agents-library/human_resources_stacks/ask_hr_stack",
+    "agents": 1,
+    "lines": 390,
+    "downloads": 0
+   },
+   {
+    "name": "asset_maintenance_forecast",
+    "display_name": "Asset Maintenance Forecast",
+    "vertical": "energy",
+    "path": "agents/@aibast-agents-library/energy_stacks/asset_maintenance_forecast_stack",
+    "agents": 1,
+    "lines": 328,
+    "downloads": 0
+   },
+   {
+    "name": "building_permit_processing",
+    "display_name": "Building Permit Processing",
+    "vertical": "slg_government",
+    "path": "agents/@aibast-agents-library/slg_government_stacks/building_permit_processing_stack",
+    "agents": 1,
+    "lines": 349,
+    "downloads": 0
+   },
+   {
+    "name": "care_gap_closure",
+    "display_name": "Care Gap Closure",
+    "vertical": "healthcare",
+    "path": "agents/@aibast-agents-library/healthcare_stacks/care_gap_closure_stack",
+    "agents": 1,
+    "lines": 324,
+    "downloads": 0
+   },
+   {
+    "name": "cart_abandonment_recovery",
+    "display_name": "Cart Abandonment Recovery",
+    "vertical": "b2c_sales",
+    "path": "agents/@aibast-agents-library/b2c_sales_stacks/cart_abandonment_recovery_stack",
+    "agents": 1,
+    "lines": 289,
+    "downloads": 0
+   },
+   {
+    "name": "citizen_service_request",
+    "display_name": "Citizen Service Request",
+    "vertical": "slg_government",
+    "path": "agents/@aibast-agents-library/slg_government_stacks/citizen_service_request_stack",
+    "agents": 1,
+    "lines": 327,
+    "downloads": 0
+   },
+   {
+    "name": "claims_processing",
+    "display_name": "Claims Processing",
+    "vertical": "financial_services",
+    "path": "agents/@aibast-agents-library/financial_services_stacks/claims_processing_stack",
+    "agents": 1,
+    "lines": 295,
+    "downloads": 0
+   },
+   {
+    "name": "client_health_score",
+    "display_name": "Client Health Score",
+    "vertical": "professional_services",
+    "path": "agents/@aibast-agents-library/professional_services_stacks/client_health_score_stack",
+    "agents": 1,
+    "lines": 342,
+    "downloads": 0
+   },
+   {
+    "name": "clinical_notes_summarizer",
+    "display_name": "Clinical Notes Summarizer",
+    "vertical": "healthcare",
+    "path": "agents/@aibast-agents-library/healthcare_stacks/clinical_notes_summarizer_stack",
+    "agents": 1,
+    "lines": 354,
+    "downloads": 0
+   },
+   {
+    "name": "competitive_intel",
+    "display_name": "Competitive Intel",
+    "vertical": "software_dp",
+    "path": "agents/@aibast-agents-library/software_dp_stacks/competitive_intel_stack",
+    "agents": 1,
+    "lines": 421,
+    "downloads": 0
+   },
+   {
+    "name": "contract_risk_review",
+    "display_name": "Contract Risk Review",
+    "vertical": "professional_services",
+    "path": "agents/@aibast-agents-library/professional_services_stacks/contract_risk_review_stack",
+    "agents": 1,
+    "lines": 315,
+    "downloads": 0
+   },
+   {
+    "name": "cross_selling_opportunities",
+    "display_name": "Cross Selling Opportunities",
+    "vertical": "general",
+    "path": "agents/@aibast-agents-library/general_stacks/cross_selling_opportunities_stack",
+    "agents": 1,
+    "lines": 300,
+    "downloads": 0
+   },
+   {
+    "name": "customer_360",
+    "display_name": "Customer 360",
+    "vertical": "general",
+    "path": "agents/@aibast-agents-library/general_stacks/customer_360_stack",
+    "agents": 1,
+    "lines": 317,
+    "downloads": 0
+   }
+  ],
+  "categories": [
+   {
+    "name": "b2b_sales",
+    "agents": 23,
+    "downloads": 0,
+    "lines": 10798
+   },
+   {
+    "name": "general",
+    "agents": 22,
+    "downloads": 0,
+    "lines": 6275
+   },
+   {
+    "name": "financial_services",
+    "agents": 10,
+    "downloads": 0,
+    "lines": 3013
+   },
+   {
+    "name": "b2c_sales",
+    "agents": 7,
+    "downloads": 0,
+    "lines": 2100
+   },
+   {
+    "name": "energy",
+    "agents": 5,
+    "downloads": 0,
+    "lines": 1692
+   },
+   {
+    "name": "federal_government",
+    "agents": 5,
+    "downloads": 0,
+    "lines": 1640
+   },
+   {
+    "name": "healthcare",
+    "agents": 5,
+    "downloads": 0,
+    "lines": 1721
+   },
+   {
+    "name": "manufacturing",
+    "agents": 5,
+    "downloads": 0,
+    "lines": 1690
+   },
+   {
+    "name": "professional_services",
+    "agents": 5,
+    "downloads": 0,
+    "lines": 1687
+   },
+   {
+    "name": "retail_cpg",
+    "agents": 5,
+    "downloads": 0,
+    "lines": 2481
+   },
+   {
+    "name": "slg_government",
+    "agents": 5,
+    "downloads": 0,
+    "lines": 1663
+   },
+   {
+    "name": "software_digital_products",
+    "agents": 5,
+    "downloads": 0,
+    "lines": 1838
+   },
+   {
+    "name": "human_resources",
+    "agents": 1,
+    "downloads": 0,
+    "lines": 390
+   },
+   {
+    "name": "it_management",
+    "agents": 1,
+    "downloads": 0,
+    "lines": 425
+   }
+  ],
+  "verticals": [
+   {
+    "name": "b2b_sales",
+    "agents": 23,
+    "downloads": 0,
+    "stacks": 5
+   },
+   {
+    "name": "general",
+    "agents": 22,
+    "downloads": 0,
+    "stacks": 17
+   },
+   {
+    "name": "financial_services",
+    "agents": 10,
+    "downloads": 0,
+    "stacks": 10
+   },
+   {
+    "name": "b2c_sales",
+    "agents": 7,
+    "downloads": 0,
+    "stacks": 7
+   },
+   {
+    "name": "energy",
+    "agents": 5,
+    "downloads": 0,
+    "stacks": 5
+   },
+   {
+    "name": "federal_government",
+    "agents": 5,
+    "downloads": 0,
+    "stacks": 5
+   },
+   {
+    "name": "healthcare",
+    "agents": 5,
+    "downloads": 0,
+    "stacks": 5
+   },
+   {
+    "name": "manufacturing",
+    "agents": 5,
+    "downloads": 0,
+    "stacks": 5
+   },
+   {
+    "name": "professional_services",
+    "agents": 5,
+    "downloads": 0,
+    "stacks": 5
+   },
+   {
+    "name": "retail_cpg",
+    "agents": 5,
+    "downloads": 0,
+    "stacks": 5
+   },
+   {
+    "name": "slg_government",
+    "agents": 5,
+    "downloads": 0,
+    "stacks": 5
+   },
+   {
+    "name": "software_dp",
+    "agents": 5,
+    "downloads": 0,
+    "stacks": 5
+   },
+   {
+    "name": "human_resources",
+    "agents": 1,
+    "downloads": 0,
+    "stacks": 1
+   },
+   {
+    "name": "it_management",
+    "agents": 1,
+    "downloads": 0,
+    "stacks": 1
+   }
+  ],
+  "tiers": {
+   "verified": 104
+  }
+ },
+ "agent_metrics": {},
+ "sources": [
+  {
+   "name": "GitHub Traffic API",
+   "metric": "clones, views, popular paths (clones include this repo's own CI checkouts)",
+   "url": "https://api.github.com/repos/microsoft/aibast-agents-library/traffic/clones"
+  },
+  {
+   "name": "jsDelivr CDN",
+   "metric": "per-file download hits \u2014 agent templates and installers",
+   "url": "https://data.jsdelivr.com/v1/stats/packages/gh/microsoft/aibast-agents-library"
+  },
+  {
+   "name": "GitHub Releases",
+   "metric": "release asset downloads",
+   "url": "https://api.github.com/repos/microsoft/aibast-agents-library/releases"
+  },
+  {
+   "name": "registry.json",
+   "metric": "agents, stacks, verticals, categories",
+   "url": "https://microsoft.github.io/aibast-agents-library/registry.json"
+  }
+ ]
+}

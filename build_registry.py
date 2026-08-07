@@ -9,11 +9,18 @@ Scans agents/@publisher/slug.py for __manifest__ dicts and builds:
 - registry.json (full index for programmatic access)
 - Validates all manifests against schema
 - Reports errors for malformed agents
+
+Each entry also carries the stack it belongs to (_stack / _stack_vertical), the
+SHA-256 of the exact file indexed, and the date it first landed in git. The
+library browse page (library.html) and the metrics snapshot
+(scripts/build_metrics.py) both read those fields.
 """
 
 import ast
+import hashlib
 import json
 import os
+import subprocess
 import sys
 from pathlib import Path
 from datetime import datetime, timezone
@@ -24,6 +31,49 @@ REQUIRED_MANIFEST_FIELDS = [
     "schema", "name", "version", "display_name",
     "description", "author", "tags", "category"
 ]
+
+
+def stack_of(py_path: Path) -> tuple:
+    """(stack, vertical) for agents/@pub/<vertical>_stacks/<name>_stack/x.py.
+
+    Templates and anything outside a *_stacks/*_stack/ folder return (None, None)
+    — they are library primitives, not a shipped industry stack.
+    """
+    parts = py_path.parts
+    for i, part in enumerate(parts):
+        if part.endswith("_stacks") and i + 1 < len(parts):
+            folder = parts[i + 1]
+            if folder.endswith("_stack"):
+                return folder[: -len("_stack")], part[: -len("_stacks")]
+    return None, None
+
+
+def git_added_dates() -> dict:
+    """path -> ISO date the file was first added, from git history.
+
+    CI checks out shallow, so history is often absent. That is not an error:
+    the caller carries the previous registry's dates forward instead.
+    """
+    dates = {}
+    try:
+        out = subprocess.run(
+            ["git", "log", "--diff-filter=A", "--reverse", "--date=iso-strict",
+             "--format=%cd", "--name-only", "--", str(AGENTS_DIR)],
+            capture_output=True, text=True, timeout=120, check=True,
+        ).stdout
+    except Exception:
+        return dates
+
+    current = None
+    for line in out.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        if line[:4].isdigit() and "T" in line:
+            current = line
+        elif current and line.endswith(".py"):
+            dates.setdefault(line, current)
+    return dates
 
 
 def extract_manifest(py_path: Path) -> dict:
@@ -77,6 +127,15 @@ def build_registry():
     categories = set()
     errors = []
 
+    added_dates = git_added_dates()
+    previous = {}
+    if REGISTRY_FILE.exists():
+        try:
+            for a in json.loads(REGISTRY_FILE.read_text(encoding="utf-8")).get("agents", []):
+                previous[a.get("name")] = a
+        except (ValueError, OSError):
+            pass
+
     for py_path in sorted(AGENTS_DIR.rglob("*.py")):
         manifest = extract_manifest(py_path)
         if manifest is None:
@@ -95,11 +154,41 @@ def build_registry():
 
         # Add file metadata
         content = py_path.read_text(encoding="utf-8")
+        raw = content.encode("utf-8")
+        stack, vertical = stack_of(py_path)
         manifest["_file"] = py_path.as_posix()
-        manifest["_size_kb"] = round(len(content.encode("utf-8")) / 1024, 1)
+        manifest["_size_kb"] = round(len(raw) / 1024, 1)
         manifest["_lines"] = len(content.split('\n'))
+        manifest["_sha256"] = hashlib.sha256(raw).hexdigest()
+        manifest["_stack"] = stack
+        manifest["_stack_vertical"] = vertical
+        # git history first, last good registry second — a shallow CI checkout
+        # must not blank the date the catalog already published.
+        added = added_dates.get(py_path.as_posix()) or previous.get(name, {}).get("_added_at")
+        if added:
+            manifest["_added_at"] = added
 
         agents.append(manifest)
+
+    stacks = {}
+    tiers = {}
+    for a in agents:
+        tiers[a.get("quality_tier", "community")] = tiers.get(a.get("quality_tier", "community"), 0) + 1
+        if not a.get("_stack"):
+            continue
+        key = f"{a['_stack_vertical']}/{a['_stack']}"
+        entry = stacks.setdefault(key, {
+            "stack": a["_stack"],
+            "vertical": a["_stack_vertical"],
+            "display_name": a["_stack"].replace("_", " ").title(),
+            "path": str(Path(a["_file"]).parent.as_posix()),
+            "agents": [],
+        })
+        entry["agents"].append(a["name"])
+
+    stack_rows = sorted(stacks.values(), key=lambda s: (s["vertical"], s["stack"]))
+    for s in stack_rows:
+        s["agent_count"] = len(s["agents"])
 
     registry = {
         "schema": "rapp-registry/1.0",
@@ -109,9 +198,15 @@ def build_registry():
             "total_agents": len(agents),
             "publishers": len(publishers),
             "categories": len(categories),
+            "total_stacks": len(stack_rows),
+            "total_verticals": len({s["vertical"] for s in stack_rows}),
+            "total_lines": sum(a["_lines"] for a in agents),
+            "total_kb": round(sum(a["_size_kb"] for a in agents), 1),
             "publisher_list": sorted(publishers),
-            "category_list": sorted(categories)
+            "category_list": sorted(categories),
+            "tier_counts": dict(sorted(tiers.items(), key=lambda kv: -kv[1])),
         },
+        "stacks": stack_rows,
         "agents": agents
     }
 

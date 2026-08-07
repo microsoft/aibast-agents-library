@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Library — AIBAST Agents Library</title>
+<meta name="description" content="Browse the AIBAST industry agent templates. Every agent is one Python file, grouped into deployable industry stacks.">
+<meta property="og:title" content="AIBAST Agent Library">
+<meta property="og:description" content="Browse industry agent templates by vertical and stack. Every agent is one Python file.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://microsoft.github.io/aibast-agents-library/library.html">
+<style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface2: #21262d;
+  --border: #30363d;
+  --border-hover: #484f58;
+  --text: #e6edf3;
+  --text-dim: #8b949e;
+  --text-muted: #656d76;
+  --accent: #58a6ff;
+  --purple: #bc8cff;
+  --green: #3fb950;
+  --radius: 10px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.5;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+code, .mono { font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace; }
+
+header {
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 14px 32px; display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 50; gap: 16px; flex-wrap: wrap;
+}
+.logo { display: flex; align-items: center; gap: 10px; font-size: 1.15rem; font-weight: 700; }
+.logo-mark {
+  background: linear-gradient(135deg, var(--accent), var(--purple));
+  color: #fff; width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; font-size: .72rem; font-weight: 800;
+}
+.header-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.nav-link {
+  background: var(--surface2); border: 1px solid var(--border); color: var(--text-dim);
+  padding: 6px 14px; border-radius: 6px; font-size: .78rem; font-weight: 600;
+  cursor: pointer; transition: all .15s;
+}
+.nav-link:hover { border-color: var(--border-hover); color: var(--text); text-decoration: none; }
+.nav-link.primary { background: linear-gradient(135deg, var(--accent), var(--purple)); color: #fff; border: none; }
+
+.container { max-width: 1180px; margin: 0 auto; padding: 28px 24px 80px; }
+
+.page-head h1 { font-size: 1.9rem; font-weight: 800; letter-spacing: -.02em; }
+.page-head p { color: var(--text-dim); margin-top: 6px; font-size: .95rem; max-width: 760px; }
+
+.stats-bar { display: flex; gap: 22px; flex-wrap: wrap; margin: 16px 0 18px; font-size: .8rem; color: var(--text-dim); }
+.stats-bar strong { color: var(--text); font-size: 1.05rem; font-weight: 800; margin-right: 4px; }
+
+.search-box { position: relative; margin-bottom: 14px; }
+.search-box input {
+  width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text);
+  padding: 12px 14px 12px 40px; border-radius: 8px; font-size: .95rem; outline: none;
+}
+.search-box input:focus { border-color: var(--accent); }
+.search-box .si { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); line-height: 0; }
+
+.pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.pill {
+  background: var(--surface); border: 1px solid var(--border); color: var(--text-dim);
+  padding: 5px 11px; border-radius: 20px; font-size: .76rem; font-weight: 600; cursor: pointer;
+  transition: all .15s; user-select: none;
+}
+.pill:hover { border-color: var(--border-hover); color: var(--text); }
+.pill.active { background: rgba(88,166,255,.14); border-color: var(--accent); color: var(--accent); }
+.pill .ct { color: var(--text-muted); font-weight: 500; margin-left: 3px; }
+
+.toolbar { display: flex; align-items: center; gap: 10px; margin: 14px 0 6px; flex-wrap: wrap; }
+.toolbar .lab { font-size: .74rem; text-transform: uppercase; letter-spacing: .08em; color: var(--text-muted); font-weight: 700; }
+select.sortsel {
+  background: var(--surface); border: 1px solid var(--border); color: var(--text-dim);
+  border-radius: 6px; padding: 5px 9px; font-size: .78rem; font-weight: 600; cursor: pointer;
+}
+.result-count { margin-left: auto; font-size: .76rem; color: var(--text-muted); }
+
+.stack-group { margin-top: 26px; }
+.stack-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+.stack-head h2 { font-size: 1.02rem; font-weight: 750; }
+.stack-head .vert { font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--purple); font-weight: 700; }
+.stack-head .meta { font-size: .74rem; color: var(--text-muted); }
+.stack-head a { font-size: .74rem; margin-left: auto; }
+
+.agents-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 12px; }
+.agent-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 15px 16px; cursor: pointer; transition: border-color .15s, transform .1s;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.agent-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+.card-name { font-weight: 700; font-size: .95rem; display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+.card-desc { color: var(--text-dim); font-size: .82rem; line-height: 1.45; flex: 1; }
+.card-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+.tag { font-size: .68rem; color: var(--text-muted); background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; }
+.cat-badge {
+  font-size: .66rem; text-transform: uppercase; letter-spacing: .05em; font-weight: 700;
+  background: rgba(88,166,255,.10); color: var(--accent); border: 1px solid rgba(88,166,255,.28);
+  border-radius: 4px; padding: 1px 6px; white-space: nowrap;
+}
+.tier-badge {
+  font-size: .66rem; text-transform: uppercase; letter-spacing: .05em; font-weight: 700;
+  background: rgba(63,185,80,.10); color: var(--green); border: 1px solid rgba(63,185,80,.3);
+  border-radius: 4px; padding: 1px 6px;
+}
+.card-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: .72rem; color: var(--text-muted); }
+.metric-strip { display: flex; gap: 8px; align-items: center; font-size: .72rem; color: var(--text-dim); }
+
+.empty, .loading { text-align: center; color: var(--text-muted); padding: 60px 20px; font-size: .9rem; }
+.spinner {
+  width: 22px; height: 22px; border: 2px solid var(--border); border-top-color: var(--accent);
+  border-radius: 50%; animation: spin .8s linear infinite; margin: 0 auto 12px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.modal-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(1,4,9,.8);
+  z-index: 100; padding: 40px 20px; overflow-y: auto;
+}
+.modal-overlay.open { display: block; }
+.modal {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  max-width: 760px; margin: 0 auto; padding: 26px 28px 30px;
+}
+.modal h2 { font-size: 1.4rem; font-weight: 800; letter-spacing: -.02em; }
+.modal .ns { font-size: .8rem; color: var(--text-muted); margin-top: 2px; }
+.modal .lede { color: var(--text-dim); margin-top: 12px; font-size: .92rem; }
+.modal-close { float: right; background: none; border: none; color: var(--text-muted); font-size: 1.3rem; cursor: pointer; line-height: 1; }
+.modal-close:hover { color: var(--text); }
+.kv { display: grid; grid-template-columns: 150px 1fr; gap: 6px 14px; margin-top: 18px; font-size: .82rem; }
+.kv dt { color: var(--text-muted); font-weight: 600; }
+.kv dd { color: var(--text-dim); word-break: break-word; }
+.sub-head { font-size: .72rem; text-transform: uppercase; letter-spacing: .09em; color: var(--text-muted); font-weight: 700; margin: 22px 0 8px; }
+.cmd {
+  display: block; background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+  padding: 11px 40px 11px 14px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .78rem; color: var(--text); cursor: pointer; position: relative; white-space: pre-wrap;
+  word-break: break-all; margin-bottom: 8px;
+}
+.cmd:hover { border-color: var(--border-hover); }
+.cmd::after { content: "copy"; position: absolute; right: 10px; top: 10px; font-size: .64rem; color: var(--text-muted); }
+.cmd.copied::after { content: "copied"; color: var(--green); }
+.note { font-size: .78rem; color: var(--text-muted); line-height: 1.6; }
+.modal-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
+footer { margin-top: 50px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: .78rem; text-align: center; }
+@media (max-width: 620px) { .kv { grid-template-columns: 1fr; } header { padding: 12px 16px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><div class="logo-mark">AIB</div> Agent Library</div>
+  <div class="header-right">
+    <a class="nav-link" href="index.html">Home</a>
+    <a class="nav-link" href="metrics.html">Metrics</a>
+    <a class="nav-link" href="docs/rapp-guide.html">Production Guide</a>
+    <a class="nav-link primary" href="https://github.com/microsoft/aibast-agents-library" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<div class="container">
+  <div class="page-head">
+    <h1>Industry agent templates</h1>
+    <p>Every agent is a single Python file with a <code>__manifest__</code> and a <code>perform()</code> method. Drop one into a running Brainstem and it is live on the next request — no restart, no rebuild. Agents ship grouped into stacks: the set that solves one industry scenario end to end.</p>
+  </div>
+
+  <div class="stats-bar" id="stats-bar" style="display:none"></div>
+
+  <div class="search-box">
+    <span class="si"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 20 20"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2" opacity="0.6"/><line x1="12" y1="12" x2="17" y2="17" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/></svg></span>
+    <input type="text" id="search" placeholder="Search agents — try &ldquo;claims&rdquo;, &ldquo;intake&rdquo;, &ldquo;supply chain&rdquo;&hellip;" oninput="render()">
+  </div>
+
+  <div class="pills" id="pills"></div>
+
+  <div class="toolbar">
+    <span class="lab">Sort</span>
+    <select class="sortsel" id="sort" onchange="render()">
+      <option value="stack">By stack</option>
+      <option value="name">A–Z</option>
+      <option value="newest">Newest</option>
+      <option value="largest">Most code</option>
+      <option value="downloads">Most downloaded</option>
+    </select>
+    <span class="result-count" id="result-count"></span>
+  </div>
+
+  <div id="grid"><div class="loading"><div class="spinner"></div>Loading the catalog&hellip;</div></div>
+
+  <footer>
+    Catalog built by <code>build_registry.py</code> from the agent manifests &middot;
+    <a href="registry.json">registry.json</a> &middot;
+    <a href="metrics.html">registry metrics</a> &middot;
+    <a href="https://github.com/microsoft/aibast-agents-library" target="_blank" rel="noopener">microsoft/aibast-agents-library</a>
+  </footer>
+</div>
+
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modal-content"></div>
+</div>
+
+<script>
+const OWNER = 'microsoft', REPO = 'aibast-agents-library';
+const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main`;
+const BLOB = `https://github.com/${OWNER}/${REPO}/blob/main`;
+// Where install.sh puts the Brainstem's agent folder. Agents are re-read from
+// disk on every request, so a copied file is live without a restart.
+const AGENT_DIR = '~/.brainstem/src/rapp_brainstem/agents';
+
+let allAgents = [], stacks = [], regStats = {};
+let agentMetrics = {};
+let currentCat = 'all';
+
+const $ = id => document.getElementById(id);
+const num = n => (n === null || n === undefined || isNaN(n)) ? '—' : Number(n).toLocaleString();
+const esc = s => String(s == null ? '' : s).replace(/[&<>"'`]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','`':'&#96;'}[c]));
+const pretty = s => String(s || '').replace(/_/g, ' ');
+
+function timeAgo(iso) {
+  if (!iso) return '';
+  const days = Math.floor((Date.now() - new Date(iso)) / 86400000);
+  if (days <= 0) return 'today';
+  if (days === 1) return 'yesterday';
+  if (days < 7) return days + 'd ago';
+  if (days < 30) return Math.floor(days / 7) + 'w ago';
+  if (days < 365) return Math.floor(days / 30) + 'mo ago';
+  return Math.floor(days / 365) + 'y ago';
+}
+
+/* Relative first so a fork or a local checkout reads its own catalog; raw as
+   the fallback for a file:// open, where the relative fetch is blocked. */
+async function getJSON(paths) {
+  for (const p of paths) {
+    try {
+      const r = await fetch(p, { cache: 'no-store' });
+      if (r.ok) return await r.json();
+    } catch (e) { /* try next */ }
+  }
+  return null;
+}
+
+async function init() {
+  const t = '?t=' + Date.now();
+  const reg = await getJSON(['registry.json' + t, RAW + '/registry.json' + t]);
+  if (!reg) {
+    $('grid').innerHTML = '<div class="empty">Could not load <code>registry.json</code>. Run <code>python build_registry.py</code>, or browse the <a href="' + BLOB + '/agents">agents folder on GitHub</a>.</div>';
+    return;
+  }
+  allAgents = reg.agents || [];
+  stacks = reg.stacks || [];
+  regStats = reg.stats || {};
+
+  $('stats-bar').style.display = 'flex';
+  $('stats-bar').innerHTML =
+    `<div><strong>${num(regStats.total_agents || allAgents.length)}</strong> agents</div>` +
+    `<div><strong>${num(regStats.total_stacks || stacks.length)}</strong> stacks</div>` +
+    `<div><strong>${num(regStats.total_verticals || (regStats.category_list || []).length)}</strong> verticals</div>` +
+    `<div><strong>${num(regStats.total_lines)}</strong> lines of Python</div>` +
+    `<div>built ${esc(String(reg.generated_at || '').slice(0, 10))}</div>`;
+
+  buildPills();
+  render();
+
+  // Download counts are a separate, slower-moving snapshot. The catalog must
+  // render with or without them, so this is fire-and-forget.
+  const m = await getJSON(['state/metrics.json' + t, RAW + '/state/metrics.json' + t]);
+  if (m && m.agent_metrics) { agentMetrics = m.agent_metrics; render(); }
+}
+
+function buildPills() {
+  const counts = {};
+  allAgents.forEach(a => { counts[a.category] = (counts[a.category] || 0) + 1; });
+  const cats = Object.keys(counts).sort();
+  let h = `<span class="pill ${currentCat === 'all' ? 'active' : ''}" onclick="setCat('all')">All verticals <span class="ct">${allAgents.length}</span></span>`;
+  cats.forEach(c => {
+    h += `<span class="pill ${currentCat === c ? 'active' : ''}" onclick="setCat('${esc(c)}')">${esc(pretty(c))} <span class="ct">${counts[c]}</span></span>`;
+  });
+  $('pills').innerHTML = h;
+}
+
+function setCat(cat) {
+  currentCat = cat;
+  buildPills();
+  render();
+}
+
+function matches(a, words) {
+  if (!words.length) return true;
+  const hay = [a.display_name, a.description, pretty(a.category), pretty(a._stack || ''),
+               ...(a.tags || []), a.author || ''].join(' ').toLowerCase();
+  return words.every(w => hay.includes(w));
+}
+
+function render() {
+  const q = $('search').value.toLowerCase().trim();
+  const words = q.split(/\s+/).filter(w => w.length > 1);
+  const sort = $('sort').value;
+
+  let filtered = allAgents.filter(a =>
+    (currentCat === 'all' || a.category === currentCat) && matches(a, words));
+
+  $('result-count').textContent = filtered.length === allAgents.length
+    ? `${allAgents.length} agents`
+    : `${filtered.length} of ${allAgents.length} agents`;
+
+  if (!filtered.length) {
+    $('grid').innerHTML = '<div class="empty">No agents match that search.</div>';
+    return;
+  }
+
+  if (sort === 'stack') { $('grid').innerHTML = renderByStack(filtered); return; }
+
+  const dl = a => (agentMetrics[a.name] || {}).d || 0;
+  const cmp = {
+    name: (a, b) => a.display_name.localeCompare(b.display_name),
+    newest: (a, b) => String(b._added_at || '').localeCompare(String(a._added_at || '')),
+    largest: (a, b) => (b._lines || 0) - (a._lines || 0),
+    downloads: (a, b) => dl(b) - dl(a) || a.display_name.localeCompare(b.display_name),
+  }[sort];
+  filtered = filtered.slice().sort(cmp);
+  $('grid').innerHTML = `<div class="agents-grid">${filtered.map(card).join('')}</div>`;
+}
+
+function renderByStack(filtered) {
+  const groups = new Map();
+  filtered.forEach(a => {
+    const key = a._stack_vertical && a._stack ? `${a._stack_vertical}/${a._stack}` : 'unstacked';
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(a);
+  });
+  const meta = {};
+  stacks.forEach(s => { meta[`${s.vertical}/${s.stack}`] = s; });
+
+  return [...groups.entries()]
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .map(([key, members]) => {
+      const s = meta[key];
+      const lines = members.reduce((n, a) => n + (a._lines || 0), 0);
+      const head = s
+        ? `<span class="vert">${esc(pretty(s.vertical))}</span><h2>${esc(s.display_name)}</h2>
+           <span class="meta">${members.length} agent${members.length === 1 ? '' : 's'} &middot; ${num(lines)} lines</span>
+           <a href="${BLOB}/${encodeURI(s.path)}" target="_blank" rel="noopener">source folder &#8599;</a>`
+        : `<h2>Ungrouped</h2><span class="meta">${members.length} agents</span>`;
+      members = members.slice().sort((a, b) => a.display_name.localeCompare(b.display_name));
+      return `<div class="stack-group"><div class="stack-head">${head}</div>
+                <div class="agents-grid">${members.map(card).join('')}</div></div>`;
+    }).join('');
+}
+
+function badges(a) {
+  const bits = [];
+  const d = (agentMetrics[a.name] || {}).d;
+  if (d) bits.push(`<span title="${d} fetch${d === 1 ? '' : 'es'} through the jsDelivr CDN">&#8595; ${num(d)}</span>`);
+  bits.push(`<span title="${num(a._lines)} lines, ${a._size_kb} KB">${num(a._lines)} lines</span>`);
+  if (a._added_at) bits.push(`<span title="added ${String(a._added_at).slice(0, 10)}">${timeAgo(a._added_at)}</span>`);
+  return `<span class="metric-strip">${bits.join('<span style="color:var(--text-muted)">&middot;</span>')}</span>`;
+}
+
+function card(a) {
+  const tags = (a.tags || []).slice(0, 4).map(t => `<span class="tag">${esc(t)}</span>`).join('');
+  return `<div class="agent-card" onclick="openAgent('${esc(a.name)}')">
+    <div class="card-name">${esc(a.display_name)}${a.quality_tier === 'verified' ? '<span class="tier-badge">verified</span>' : ''}</div>
+    <div class="card-desc">${esc(a.description)}</div>
+    <div class="card-tags">${tags}</div>
+    <div class="card-footer">
+      <span class="cat-badge">${esc(pretty(a.category))}</span>
+      ${badges(a)}
+    </div>
+  </div>`;
+}
+
+function openAgent(name) {
+  const a = allAgents.find(x => x.name === name);
+  if (!a) return;
+  const file = a._file || '';
+  const base = file.split('/').pop();
+  const d = (agentMetrics[a.name] || {}).d;
+  // The Brainstem discovers agents/*_agent.py only, so a file that does not
+  // already end in _agent.py has to land under a renamed target.
+  const target = base.endsWith('_agent.py') ? base : base.replace(/\.py$/, '_agent.py');
+  const stack = stacks.find(s => s.vertical === a._stack_vertical && s.stack === a._stack);
+
+  $('modal-content').innerHTML = `
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <h2>${esc(a.display_name)}</h2>
+    <div class="ns mono">${esc(a.name)} &middot; v${esc(a.version)}</div>
+    <p class="lede">${esc(a.description)}</p>
+
+    <dl class="kv">
+      <dt>Vertical</dt><dd>${esc(pretty(a.category))}</dd>
+      <dt>Stack</dt><dd>${stack ? `${esc(stack.display_name)} — <a href="${BLOB}/${encodeURI(stack.path)}" target="_blank" rel="noopener">${stack.agent_count} agent${stack.agent_count === 1 ? '' : 's'} in this stack &#8599;</a>` : '—'}</dd>
+      <dt>Author</dt><dd>${esc(a.author)}</dd>
+      <dt>Quality tier</dt><dd>${esc(a.quality_tier || 'community')}</dd>
+      <dt>Size</dt><dd>${num(a._lines)} lines &middot; ${a._size_kb} KB</dd>
+      <dt>Added</dt><dd>${a._added_at ? esc(String(a._added_at).slice(0, 10)) + ` (${timeAgo(a._added_at)})` : '—'}</dd>
+      ${d ? `<dt>CDN fetches</dt><dd>${num(d)}</dd>` : ''}
+      <dt>Dependencies</dt><dd>${(a.dependencies || []).map(x => `<code>${esc(x)}</code>`).join(' ') || 'none'}</dd>
+      <dt>Env required</dt><dd>${(a.requires_env || []).map(x => `<code>${esc(x)}</code>`).join(' ') || 'none'}</dd>
+      <dt>Tags</dt><dd>${(a.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join(' ')}</dd>
+      <dt>SHA-256</dt><dd class="mono" style="font-size:.72rem">${esc(a._sha256 || '—')}</dd>
+    </dl>
+
+    <div class="sub-head">Install into a running Brainstem</div>
+    <div class="cmd" onclick="copyCmd(this)">curl -fsSL ${RAW}/${encodeURI(file)} -o ${AGENT_DIR}/${esc(target)}</div>
+    <p class="note">Agents reload from disk on every request &mdash; the Brainstem picks this up without a restart. ${base === target ? '' : `This file is a stack component rather than a standalone tool, so the target is renamed to <code>${esc(target)}</code>: discovery matches <code>agents/*_agent.py</code>.`}</p>
+
+    <div class="sub-head">Install the whole stack</div>
+    <div class="cmd" onclick="copyCmd(this)">${stack ? stackCmd(stack) : 'This agent is not part of a stack.'}</div>
+
+    <div class="modal-actions">
+      <a class="nav-link" href="${BLOB}/${encodeURI(file)}" target="_blank" rel="noopener">View source &#8599;</a>
+      <a class="nav-link" href="${RAW}/${encodeURI(file)}" target="_blank" rel="noopener">Raw .py &#8599;</a>
+      <a class="nav-link" href="docs/rapp-guide.html">Production guide</a>
+      <button class="nav-link" onclick="closeModal()">Close</button>
+    </div>`;
+  $('modal').classList.add('open');
+  location.hash = 'agent/' + encodeURIComponent(a.name);
+}
+
+function stackCmd(stack) {
+  return stack.agents
+    .map(n => allAgents.find(x => x.name === n))
+    .filter(Boolean)
+    .map(a => {
+      const b = a._file.split('/').pop();
+      const t = b.endsWith('_agent.py') ? b : b.replace(/\.py$/, '_agent.py');
+      return `curl -fsSL ${RAW}/${encodeURI(a._file)} -o ${AGENT_DIR}/${t}`;
+    })
+    .join('\n');
+}
+
+function copyCmd(el) {
+  navigator.clipboard.writeText(el.textContent).then(() => {
+    el.classList.add('copied');
+    setTimeout(() => el.classList.remove('copied'), 1400);
+  }).catch(() => {});
+}
+
+function closeModal() {
+  $('modal').classList.remove('open');
+  if (location.hash.startsWith('#agent/')) history.replaceState(null, '', location.pathname + location.search);
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+init().then(() => {
+  if (location.hash.startsWith('#agent/')) openAgent(decodeURIComponent(location.hash.slice(7)));
+});
+</script>
+</body>
+</html>

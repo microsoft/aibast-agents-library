@@ -1,11 +1,15 @@
 {
   "schema": "rapp-registry/1.0",
   "version": "1.0.0",
-  "generated_at": "2026-07-20T14:54:28.155585+00:00",
+  "generated_at": "2026-08-07T20:41:18.091382+00:00",
   "stats": {
     "total_agents": 104,
     "publishers": 1,
     "categories": 14,
+    "total_stacks": 81,
+    "total_verticals": 14,
+    "total_lines": 37413,
+    "total_kb": 1806.2,
     "publisher_list": [
       "@aibast-agents-library"
     ],
@@ -24,8 +28,846 @@
       "retail_cpg",
       "slg_government",
       "software_digital_products"
-    ]
+    ],
+    "tier_counts": {
+      "verified": 104
+    }
   },
+  "stacks": [
+    {
+      "stack": "account_intelligence",
+      "vertical": "b2b_sales",
+      "display_name": "Account Intelligence",
+      "path": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack",
+      "agents": [
+        "@aibast-agents-library/account-intelligence",
+        "@aibast-agents-library/account-intelligence-orchestrator",
+        "@aibast-agents-library/action-prioritization",
+        "@aibast-agents-library/competitive-intelligence",
+        "@aibast-agents-library/deal-tracking",
+        "@aibast-agents-library/meeting-prep",
+        "@aibast-agents-library/account-messaging",
+        "@aibast-agents-library/account-risk-assessment",
+        "@aibast-agents-library/stakeholder-intelligence"
+      ],
+      "agent_count": 9
+    },
+    {
+      "stack": "deal_progression",
+      "vertical": "b2b_sales",
+      "display_name": "Deal Progression",
+      "path": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack",
+      "agents": [
+        "@aibast-agents-library/activity-gap",
+        "@aibast-agents-library/deal-competitor-intel",
+        "@aibast-agents-library/deal-health-score",
+        "@aibast-agents-library/deal-progression",
+        "@aibast-agents-library/deal-risk-assessment",
+        "@aibast-agents-library/next-best-action",
+        "@aibast-agents-library/pipeline-velocity",
+        "@aibast-agents-library/revenue-forecast",
+        "@aibast-agents-library/deal-stakeholder-engagement",
+        "@aibast-agents-library/stalled-deal-detection",
+        "@aibast-agents-library/win-probability"
+      ],
+      "agent_count": 11
+    },
+    {
+      "stack": "proposal_generation",
+      "vertical": "b2b_sales",
+      "display_name": "Proposal Generation",
+      "path": "agents/@aibast-agents-library/b2b_sales_stacks/proposal_generation_stack",
+      "agents": [
+        "@aibast-agents-library/proposal-generation"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "sales_qualification",
+      "vertical": "b2b_sales",
+      "display_name": "Sales Qualification",
+      "path": "agents/@aibast-agents-library/b2b_sales_stacks/sales_qualification_stack",
+      "agents": [
+        "@aibast-agents-library/sales-qualification"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "win_loss_analysis",
+      "vertical": "b2b_sales",
+      "display_name": "Win Loss Analysis",
+      "path": "agents/@aibast-agents-library/b2b_sales_stacks/win_loss_analysis_stack",
+      "agents": [
+        "@aibast-agents-library/win-loss-analysis"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "cart_abandonment_recovery",
+      "vertical": "b2c_sales",
+      "display_name": "Cart Abandonment Recovery",
+      "path": "agents/@aibast-agents-library/b2c_sales_stacks/cart_abandonment_recovery_stack",
+      "agents": [
+        "@aibast-agents-library/cart-abandonment-recovery"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "customer_360_speech",
+      "vertical": "b2c_sales",
+      "display_name": "Customer 360 Speech",
+      "path": "agents/@aibast-agents-library/b2c_sales_stacks/customer_360_speech_stack",
+      "agents": [
+        "@aibast-agents-library/customer-360-speech"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "customer_loyalty_rewards",
+      "vertical": "b2c_sales",
+      "display_name": "Customer Loyalty Rewards",
+      "path": "agents/@aibast-agents-library/b2c_sales_stacks/customer_loyalty_rewards_stack",
+      "agents": [
+        "@aibast-agents-library/customer-loyalty-rewards"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "omnichannel_engagement",
+      "vertical": "b2c_sales",
+      "display_name": "Omnichannel Engagement",
+      "path": "agents/@aibast-agents-library/b2c_sales_stacks/omnichannel_engagement_stack",
+      "agents": [
+        "@aibast-agents-library/omnichannel-engagement"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "personalized_shopping_assistant",
+      "vertical": "b2c_sales",
+      "display_name": "Personalized Shopping Assistant",
+      "path": "agents/@aibast-agents-library/b2c_sales_stacks/personalized_shopping_assistant_stack",
+      "agents": [
+        "@aibast-agents-library/personalized-shopping-assistant"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "returns_exchange",
+      "vertical": "b2c_sales",
+      "display_name": "Returns Exchange",
+      "path": "agents/@aibast-agents-library/b2c_sales_stacks/returns_exchange_stack",
+      "agents": [
+        "@aibast-agents-library/returns-exchange"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "sales_chat",
+      "vertical": "b2c_sales",
+      "display_name": "Sales Chat",
+      "path": "agents/@aibast-agents-library/b2c_sales_stacks/sales_chat_stack",
+      "agents": [
+        "@aibast-agents-library/sales-chat"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "asset_maintenance_forecast",
+      "vertical": "energy",
+      "display_name": "Asset Maintenance Forecast",
+      "path": "agents/@aibast-agents-library/energy_stacks/asset_maintenance_forecast_stack",
+      "agents": [
+        "@aibast-agents-library/asset-maintenance-forecast"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "emission_tracking",
+      "vertical": "energy",
+      "display_name": "Emission Tracking",
+      "path": "agents/@aibast-agents-library/energy_stacks/emission_tracking_stack",
+      "agents": [
+        "@aibast-agents-library/emission-tracking"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "field_service_dispatch",
+      "vertical": "energy",
+      "display_name": "Field Service Dispatch",
+      "path": "agents/@aibast-agents-library/energy_stacks/field_service_dispatch_stack",
+      "agents": [
+        "@aibast-agents-library/field-service-dispatch"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "permit_license_management",
+      "vertical": "energy",
+      "display_name": "Permit License Management",
+      "path": "agents/@aibast-agents-library/energy_stacks/permit_license_management_stack",
+      "agents": [
+        "@aibast-agents-library/permit-license-management"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "regulatory_reporting",
+      "vertical": "energy",
+      "display_name": "Regulatory Reporting",
+      "path": "agents/@aibast-agents-library/energy_stacks/regulatory_reporting_stack",
+      "agents": [
+        "@aibast-agents-library/energy-regulatory-reporting"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "acquisition_support",
+      "vertical": "federal_government",
+      "display_name": "Acquisition Support",
+      "path": "agents/@aibast-agents-library/federal_government_stacks/acquisition_support_stack",
+      "agents": [
+        "@aibast-agents-library/acquisition-support"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "federal_grants_oversight",
+      "vertical": "federal_government",
+      "display_name": "Federal Grants Oversight",
+      "path": "agents/@aibast-agents-library/federal_government_stacks/federal_grants_oversight_stack",
+      "agents": [
+        "@aibast-agents-library/federal-grants-oversight"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "mission_reporting_assistant",
+      "vertical": "federal_government",
+      "display_name": "Mission Reporting Assistant",
+      "path": "agents/@aibast-agents-library/federal_government_stacks/mission_reporting_assistant_stack",
+      "agents": [
+        "@aibast-agents-library/mission-reporting-assistant"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "regulatory_compliance_fed",
+      "vertical": "federal_government",
+      "display_name": "Regulatory Compliance Fed",
+      "path": "agents/@aibast-agents-library/federal_government_stacks/regulatory_compliance_fed_stack",
+      "agents": [
+        "@aibast-agents-library/regulatory-compliance-fed"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "workforce_clearance_onboarding",
+      "vertical": "federal_government",
+      "display_name": "Workforce Clearance Onboarding",
+      "path": "agents/@aibast-agents-library/federal_government_stacks/workforce_clearance_onboarding_stack",
+      "agents": [
+        "@aibast-agents-library/workforce-clearance-onboarding"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "claims_processing",
+      "vertical": "financial_services",
+      "display_name": "Claims Processing",
+      "path": "agents/@aibast-agents-library/financial_services_stacks/claims_processing_stack",
+      "agents": [
+        "@aibast-agents-library/claims-processing"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "customer_onboarding_fs",
+      "vertical": "financial_services",
+      "display_name": "Customer Onboarding Fs",
+      "path": "agents/@aibast-agents-library/financial_services_stacks/customer_onboarding_fs_stack",
+      "agents": [
+        "@aibast-agents-library/fs-customer-onboarding"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "customer_sentiment_churn",
+      "vertical": "financial_services",
+      "display_name": "Customer Sentiment Churn",
+      "path": "agents/@aibast-agents-library/financial_services_stacks/customer_sentiment_churn_stack",
+      "agents": [
+        "@aibast-agents-library/customer-sentiment-churn"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "financial_advisor_copilot",
+      "vertical": "financial_services",
+      "display_name": "Financial Advisor Copilot",
+      "path": "agents/@aibast-agents-library/financial_services_stacks/financial_advisor_copilot_stack",
+      "agents": [
+        "@aibast-agents-library/financial-advisor-copilot"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "fraud_detection_alert",
+      "vertical": "financial_services",
+      "display_name": "Fraud Detection Alert",
+      "path": "agents/@aibast-agents-library/financial_services_stacks/fraud_detection_alert_stack",
+      "agents": [
+        "@aibast-agents-library/fraud-detection-alert"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "loan_origination_assistant",
+      "vertical": "financial_services",
+      "display_name": "Loan Origination Assistant",
+      "path": "agents/@aibast-agents-library/financial_services_stacks/loan_origination_assistant_stack",
+      "agents": [
+        "@aibast-agents-library/loan-origination-assistant"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "portfolio_rebalancing",
+      "vertical": "financial_services",
+      "display_name": "Portfolio Rebalancing",
+      "path": "agents/@aibast-agents-library/financial_services_stacks/portfolio_rebalancing_stack",
+      "agents": [
+        "@aibast-agents-library/portfolio-rebalancing"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "regulatory_compliance_fs",
+      "vertical": "financial_services",
+      "display_name": "Regulatory Compliance Fs",
+      "path": "agents/@aibast-agents-library/financial_services_stacks/regulatory_compliance_fs_stack",
+      "agents": [
+        "@aibast-agents-library/fs-regulatory-compliance"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "underwriting_support",
+      "vertical": "financial_services",
+      "display_name": "Underwriting Support",
+      "path": "agents/@aibast-agents-library/financial_services_stacks/underwriting_support_stack",
+      "agents": [
+        "@aibast-agents-library/underwriting-support"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "wealth_insights_generator",
+      "vertical": "financial_services",
+      "display_name": "Wealth Insights Generator",
+      "path": "agents/@aibast-agents-library/financial_services_stacks/wealth_insights_generator_stack",
+      "agents": [
+        "@aibast-agents-library/wealth-insights-generator"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "ai_customer_assistant",
+      "vertical": "general",
+      "display_name": "Ai Customer Assistant",
+      "path": "agents/@aibast-agents-library/general_stacks/ai_customer_assistant_stack",
+      "agents": [
+        "@aibast-agents-library/ai-customer-assistant"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "ask_hr",
+      "vertical": "general",
+      "display_name": "Ask Hr",
+      "path": "agents/@aibast-agents-library/general_stacks/ask_hr_stack",
+      "agents": [
+        "@aibast-agents-library/general-ask-hr"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "crm_bulk_data_creator",
+      "vertical": "general",
+      "display_name": "Crm Bulk Data Creator",
+      "path": "agents/@aibast-agents-library/general_stacks/crm_bulk_data_creator_stack",
+      "agents": [
+        "@aibast-agents-library/bulk-crm-data-generator",
+        "@aibast-agents-library/dynamics-365-connector",
+        "@aibast-agents-library/one-click-crm-intake"
+      ],
+      "agent_count": 3
+    },
+    {
+      "stack": "cross_selling_opportunities",
+      "vertical": "general",
+      "display_name": "Cross Selling Opportunities",
+      "path": "agents/@aibast-agents-library/general_stacks/cross_selling_opportunities_stack",
+      "agents": [
+        "@aibast-agents-library/cross-selling"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "customer_360",
+      "vertical": "general",
+      "display_name": "Customer 360",
+      "path": "agents/@aibast-agents-library/general_stacks/customer_360_stack",
+      "agents": [
+        "@aibast-agents-library/customer-360"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "email_drafting",
+      "vertical": "general",
+      "display_name": "Email Drafting",
+      "path": "agents/@aibast-agents-library/general_stacks/email_drafting_stack",
+      "agents": [
+        "@aibast-agents-library/email-drafting"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "find_accurate_models",
+      "vertical": "general",
+      "display_name": "Find Accurate Models",
+      "path": "agents/@aibast-agents-library/general_stacks/find_accurate_models_stack",
+      "agents": [
+        "@aibast-agents-library/find-accurate-models"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "identify_discounts",
+      "vertical": "general",
+      "display_name": "Identify Discounts",
+      "path": "agents/@aibast-agents-library/general_stacks/identify_discounts_stack",
+      "agents": [
+        "@aibast-agents-library/identify-discounts"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "it_ticket_management",
+      "vertical": "general",
+      "display_name": "It Ticket Management",
+      "path": "agents/@aibast-agents-library/general_stacks/it_ticket_management_stack",
+      "agents": [
+        "@aibast-agents-library/it-ticket-management"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "procurement_agent",
+      "vertical": "general",
+      "display_name": "Procurement Agent",
+      "path": "agents/@aibast-agents-library/general_stacks/procurement_agent_stack",
+      "agents": [
+        "@aibast-agents-library/procurement-agent"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "procurement_support",
+      "vertical": "general",
+      "display_name": "Procurement Support",
+      "path": "agents/@aibast-agents-library/general_stacks/procurement_support_stack",
+      "agents": [
+        "@aibast-agents-library/procurement-support"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "product_reference",
+      "vertical": "general",
+      "display_name": "Product Reference",
+      "path": "agents/@aibast-agents-library/general_stacks/product_reference_stack",
+      "agents": [
+        "@aibast-agents-library/product-reference"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "sales_coach",
+      "vertical": "general",
+      "display_name": "Sales Coach",
+      "path": "agents/@aibast-agents-library/general_stacks/sales_coach_stack",
+      "agents": [
+        "@aibast-agents-library/sales-coach"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "simulation_sales",
+      "vertical": "general",
+      "display_name": "Simulation Sales",
+      "path": "agents/@aibast-agents-library/general_stacks/simulation_sales_stack",
+      "agents": [
+        "@aibast-agents-library/sales-simulation"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "speech_to_crm",
+      "vertical": "general",
+      "display_name": "Speech To Crm",
+      "path": "agents/@aibast-agents-library/general_stacks/speech_to_crm_stack",
+      "agents": [
+        "@aibast-agents-library/speech-to-crm"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "triage_bot",
+      "vertical": "general",
+      "display_name": "Triage Bot",
+      "path": "agents/@aibast-agents-library/general_stacks/triage_bot_stack",
+      "agents": [
+        "@aibast-agents-library/triage-bot"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "voice_to_crm",
+      "vertical": "general",
+      "display_name": "Voice To Crm",
+      "path": "agents/@aibast-agents-library/general_stacks/voice_to_crm_stack",
+      "agents": [
+        "@aibast-agents-library/voice-to-crm-d365",
+        "@aibast-agents-library/voice-to-crm-email",
+        "@aibast-agents-library/sharepoint-document-extractor",
+        "@aibast-agents-library/voice-to-crm-servicenow"
+      ],
+      "agent_count": 4
+    },
+    {
+      "stack": "care_gap_closure",
+      "vertical": "healthcare",
+      "display_name": "Care Gap Closure",
+      "path": "agents/@aibast-agents-library/healthcare_stacks/care_gap_closure_stack",
+      "agents": [
+        "@aibast-agents-library/care-gap-closure"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "clinical_notes_summarizer",
+      "vertical": "healthcare",
+      "display_name": "Clinical Notes Summarizer",
+      "path": "agents/@aibast-agents-library/healthcare_stacks/clinical_notes_summarizer_stack",
+      "agents": [
+        "@aibast-agents-library/clinical-notes-summarizer"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "patient_intake",
+      "vertical": "healthcare",
+      "display_name": "Patient Intake",
+      "path": "agents/@aibast-agents-library/healthcare_stacks/patient_intake_stack",
+      "agents": [
+        "@aibast-agents-library/patient-intake"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "prior_authorization",
+      "vertical": "healthcare",
+      "display_name": "Prior Authorization",
+      "path": "agents/@aibast-agents-library/healthcare_stacks/prior_authorization_stack",
+      "agents": [
+        "@aibast-agents-library/prior-authorization"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "staff_credentialing",
+      "vertical": "healthcare",
+      "display_name": "Staff Credentialing",
+      "path": "agents/@aibast-agents-library/healthcare_stacks/staff_credentialing_stack",
+      "agents": [
+        "@aibast-agents-library/staff-credentialing"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "ask_hr",
+      "vertical": "human_resources",
+      "display_name": "Ask Hr",
+      "path": "agents/@aibast-agents-library/human_resources_stacks/ask_hr_stack",
+      "agents": [
+        "@aibast-agents-library/ask-hr"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "it_helpdesk",
+      "vertical": "it_management",
+      "display_name": "It Helpdesk",
+      "path": "agents/@aibast-agents-library/it_management_stacks/it_helpdesk_stack",
+      "agents": [
+        "@aibast-agents-library/it-helpdesk"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "inventory_rebalancing",
+      "vertical": "manufacturing",
+      "display_name": "Inventory Rebalancing",
+      "path": "agents/@aibast-agents-library/manufacturing_stacks/inventory_rebalancing_stack",
+      "agents": [
+        "@aibast-agents-library/inventory-rebalancing"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "maintenance_scheduling",
+      "vertical": "manufacturing",
+      "display_name": "Maintenance Scheduling",
+      "path": "agents/@aibast-agents-library/manufacturing_stacks/maintenance_scheduling_stack",
+      "agents": [
+        "@aibast-agents-library/maintenance-scheduling"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "order_status_communication",
+      "vertical": "manufacturing",
+      "display_name": "Order Status Communication",
+      "path": "agents/@aibast-agents-library/manufacturing_stacks/order_status_communication_stack",
+      "agents": [
+        "@aibast-agents-library/order-status-communication"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "production_line_optimization",
+      "vertical": "manufacturing",
+      "display_name": "Production Line Optimization",
+      "path": "agents/@aibast-agents-library/manufacturing_stacks/production_line_optimization_stack",
+      "agents": [
+        "@aibast-agents-library/production-line-optimization"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "supplier_risk_monitoring",
+      "vertical": "manufacturing",
+      "display_name": "Supplier Risk Monitoring",
+      "path": "agents/@aibast-agents-library/manufacturing_stacks/supplier_risk_monitoring_stack",
+      "agents": [
+        "@aibast-agents-library/supplier-risk-monitoring"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "client_health_score",
+      "vertical": "professional_services",
+      "display_name": "Client Health Score",
+      "path": "agents/@aibast-agents-library/professional_services_stacks/client_health_score_stack",
+      "agents": [
+        "@aibast-agents-library/client-health-score"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "contract_risk_review",
+      "vertical": "professional_services",
+      "display_name": "Contract Risk Review",
+      "path": "agents/@aibast-agents-library/professional_services_stacks/contract_risk_review_stack",
+      "agents": [
+        "@aibast-agents-library/contract-risk-review"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "proposal_copilot",
+      "vertical": "professional_services",
+      "display_name": "Proposal Copilot",
+      "path": "agents/@aibast-agents-library/professional_services_stacks/proposal_copilot_stack",
+      "agents": [
+        "@aibast-agents-library/proposal-copilot"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "resource_utilization",
+      "vertical": "professional_services",
+      "display_name": "Resource Utilization",
+      "path": "agents/@aibast-agents-library/professional_services_stacks/resource_utilization_stack",
+      "agents": [
+        "@aibast-agents-library/resource-utilization"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "time_entry_billing",
+      "vertical": "professional_services",
+      "display_name": "Time Entry Billing",
+      "path": "agents/@aibast-agents-library/professional_services_stacks/time_entry_billing_stack",
+      "agents": [
+        "@aibast-agents-library/time-entry-billing"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "inventory_visibility",
+      "vertical": "retail_cpg",
+      "display_name": "Inventory Visibility",
+      "path": "agents/@aibast-agents-library/retail_cpg_stacks/inventory_visibility_stack",
+      "agents": [
+        "@aibast-agents-library/inventory-visibility"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "personalized_marketing",
+      "vertical": "retail_cpg",
+      "display_name": "Personalized Marketing",
+      "path": "agents/@aibast-agents-library/retail_cpg_stacks/personalized_marketing_stack",
+      "agents": [
+        "@aibast-agents-library/personalized-marketing"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "returns_complaints_resolution",
+      "vertical": "retail_cpg",
+      "display_name": "Returns Complaints Resolution",
+      "path": "agents/@aibast-agents-library/retail_cpg_stacks/returns_complaints_resolution_stack",
+      "agents": [
+        "@aibast-agents-library/returns-complaints-resolution"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "store_associate_copilot",
+      "vertical": "retail_cpg",
+      "display_name": "Store Associate Copilot",
+      "path": "agents/@aibast-agents-library/retail_cpg_stacks/store_associate_copilot_stack",
+      "agents": [
+        "@aibast-agents-library/store-associate-copilot"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "supply_chain_disruption_alert",
+      "vertical": "retail_cpg",
+      "display_name": "Supply Chain Disruption Alert",
+      "path": "agents/@aibast-agents-library/retail_cpg_stacks/supply_chain_disruption_alert_stack",
+      "agents": [
+        "@aibast-agents-library/supply-chain-disruption-alert"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "building_permit_processing",
+      "vertical": "slg_government",
+      "display_name": "Building Permit Processing",
+      "path": "agents/@aibast-agents-library/slg_government_stacks/building_permit_processing_stack",
+      "agents": [
+        "@aibast-agents-library/building-permit-processing"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "citizen_service_request",
+      "vertical": "slg_government",
+      "display_name": "Citizen Service Request",
+      "path": "agents/@aibast-agents-library/slg_government_stacks/citizen_service_request_stack",
+      "agents": [
+        "@aibast-agents-library/citizen-service-request"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "foia_request_assistant",
+      "vertical": "slg_government",
+      "display_name": "Foia Request Assistant",
+      "path": "agents/@aibast-agents-library/slg_government_stacks/foia_request_assistant_stack",
+      "agents": [
+        "@aibast-agents-library/foia-request-assistant"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "grants_management",
+      "vertical": "slg_government",
+      "display_name": "Grants Management",
+      "path": "agents/@aibast-agents-library/slg_government_stacks/grants_management_stack",
+      "agents": [
+        "@aibast-agents-library/slg-grants-management"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "utility_billing_assistance",
+      "vertical": "slg_government",
+      "display_name": "Utility Billing Assistance",
+      "path": "agents/@aibast-agents-library/slg_government_stacks/utility_billing_assistance_stack",
+      "agents": [
+        "@aibast-agents-library/utility-billing-assistance"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "competitive_intel",
+      "vertical": "software_dp",
+      "display_name": "Competitive Intel",
+      "path": "agents/@aibast-agents-library/software_dp_stacks/competitive_intel_stack",
+      "agents": [
+        "@aibast-agents-library/software-competitive-intel"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "customer_onboarding",
+      "vertical": "software_dp",
+      "display_name": "Customer Onboarding",
+      "path": "agents/@aibast-agents-library/software_dp_stacks/customer_onboarding_stack",
+      "agents": [
+        "@aibast-agents-library/software-customer-onboarding"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "license_renewal_expansion",
+      "vertical": "software_dp",
+      "display_name": "License Renewal Expansion",
+      "path": "agents/@aibast-agents-library/software_dp_stacks/license_renewal_expansion_stack",
+      "agents": [
+        "@aibast-agents-library/license-renewal-expansion"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "product_feedback_synthesizer",
+      "vertical": "software_dp",
+      "display_name": "Product Feedback Synthesizer",
+      "path": "agents/@aibast-agents-library/software_dp_stacks/product_feedback_synthesizer_stack",
+      "agents": [
+        "@aibast-agents-library/product-feedback-synthesizer"
+      ],
+      "agent_count": 1
+    },
+    {
+      "stack": "support_ticket_resolution",
+      "vertical": "software_dp",
+      "display_name": "Support Ticket Resolution",
+      "path": "agents/@aibast-agents-library/software_dp_stacks/support_ticket_resolution_stack",
+      "agents": [
+        "@aibast-agents-library/support-ticket-resolution"
+      ],
+      "agent_count": 1
+    }
+  ],
   "agents": [
     {
       "schema": "rapp-agent/1.0",
@@ -49,7 +891,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/account_intelligence_agent.py",
       "_size_kb": 23.3,
-      "_lines": 456
+      "_lines": 456,
+      "_sha256": "c93112b9e0ba8f42db4359618e01f37c399cc9e4dca6007b660d991a7384d37e",
+      "_stack": "account_intelligence",
+      "_stack_vertical": "b2b_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -73,7 +919,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/account_intelligence_orchestrator.py",
       "_size_kb": 20.8,
-      "_lines": 457
+      "_lines": 457,
+      "_sha256": "a21f50d0b417a4cd1f78d6e5cd4a3a19bf946ea1531f05708c28a77f5e789aab",
+      "_stack": "account_intelligence",
+      "_stack_vertical": "b2b_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -97,7 +947,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/action_prioritization_agent.py",
       "_size_kb": 19.7,
-      "_lines": 398
+      "_lines": 398,
+      "_sha256": "9e6deed0078a65dfa4f73a7a7bde65080d9d97b513efb99129400750ed3f6030",
+      "_stack": "account_intelligence",
+      "_stack_vertical": "b2b_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -121,7 +975,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/competitive_intelligence_agent.py",
       "_size_kb": 21.3,
-      "_lines": 441
+      "_lines": 441,
+      "_sha256": "8848b9a389d6a017a30b98dbd62a2713e6086b41e6a25b7b2b91e77ff0420556",
+      "_stack": "account_intelligence",
+      "_stack_vertical": "b2b_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -145,7 +1003,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/deal_tracking_agent.py",
       "_size_kb": 18.6,
-      "_lines": 402
+      "_lines": 402,
+      "_sha256": "19d403a2a7d46a308800c3a54cf62d19eddd104242673f00bd0051d8665ff4c8",
+      "_stack": "account_intelligence",
+      "_stack_vertical": "b2b_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -169,7 +1031,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/meeting_prep_agent.py",
       "_size_kb": 25.1,
-      "_lines": 521
+      "_lines": 521,
+      "_sha256": "0b0d029fe2dc9b8de15bd906905d5fc23e3dba72b264630b3cc7d5a0586c7275",
+      "_stack": "account_intelligence",
+      "_stack_vertical": "b2b_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -193,7 +1059,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/messaging_agent.py",
       "_size_kb": 20.3,
-      "_lines": 429
+      "_lines": 429,
+      "_sha256": "f0fdb371c236ea54cab996b385a744fcd20395459f2b5d5b313721b87ca9eb35",
+      "_stack": "account_intelligence",
+      "_stack_vertical": "b2b_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -217,7 +1087,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/risk_assessment_agent.py",
       "_size_kb": 23.0,
-      "_lines": 495
+      "_lines": 495,
+      "_sha256": "ea496765dbd7aad657f3531af2da1c05cefe994ddbec9e5d8307e3d255c4bb0c",
+      "_stack": "account_intelligence",
+      "_stack_vertical": "b2b_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -241,7 +1115,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/stakeholder_intelligence_agent.py",
       "_size_kb": 23.4,
-      "_lines": 440
+      "_lines": 440,
+      "_sha256": "1100b908472d7ed850f5263503d682f686ba0af05f5b5b1f951c76f143cb05c0",
+      "_stack": "account_intelligence",
+      "_stack_vertical": "b2b_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -265,7 +1143,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/activity_gap_agent.py",
       "_size_kb": 18.0,
-      "_lines": 393
+      "_lines": 393,
+      "_sha256": "e78373cf5e31d61e079c15f6562294c9cbf96cae4dc738ca2cfabbd50f050f59",
+      "_stack": "deal_progression",
+      "_stack_vertical": "b2b_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -289,7 +1171,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/competitor_intelligence_agent.py",
       "_size_kb": 16.5,
-      "_lines": 334
+      "_lines": 334,
+      "_sha256": "c80a6d56f47d8f7c1cdba0dbe6b7fff580e5dccef2cfb71ed0e38086401a32d7",
+      "_stack": "deal_progression",
+      "_stack_vertical": "b2b_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -313,7 +1199,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/deal_health_score_agent.py",
       "_size_kb": 17.6,
-      "_lines": 378
+      "_lines": 378,
+      "_sha256": "dc4353257490668d9b07c0a8433831ed1bf28f9f01be62b3789f12d1d9b87839",
+      "_stack": "deal_progression",
+      "_stack_vertical": "b2b_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -337,7 +1227,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/deal_progression_agent.py",
       "_size_kb": 41.6,
-      "_lines": 643
+      "_lines": 643,
+      "_sha256": "12e641d32ba334b59b7f7b536d9d60a81883605b0be8f00b7a2ece52078167cc",
+      "_stack": "deal_progression",
+      "_stack_vertical": "b2b_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -361,7 +1255,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/deal_risk_assessment_agent.py",
       "_size_kb": 19.2,
-      "_lines": 424
+      "_lines": 424,
+      "_sha256": "7f5aa8a7cdf7db08e34903b432ab1aae93ff4c69a53f5cd74f14d0069f9ff77d",
+      "_stack": "deal_progression",
+      "_stack_vertical": "b2b_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -385,7 +1283,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/next_best_action_agent.py",
       "_size_kb": 19.7,
-      "_lines": 430
+      "_lines": 430,
+      "_sha256": "34e511cdf408effb22f5e3b377e2a82201881c416371908b9db58fef307a3fdb",
+      "_stack": "deal_progression",
+      "_stack_vertical": "b2b_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -409,7 +1311,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/pipeline_velocity_agent.py",
       "_size_kb": 17.1,
-      "_lines": 380
+      "_lines": 380,
+      "_sha256": "639bf408848cdaf12398fdaf98c8c2029f80ce87ecbae34169e6a6770c33fbe6",
+      "_stack": "deal_progression",
+      "_stack_vertical": "b2b_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -433,7 +1339,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/revenue_forecast_agent.py",
       "_size_kb": 16.1,
-      "_lines": 348
+      "_lines": 348,
+      "_sha256": "3a9f7b8165a071e91403c7bff947b7caf395d1772b51a185fcbb26ab3d7f41ba",
+      "_stack": "deal_progression",
+      "_stack_vertical": "b2b_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -457,7 +1367,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/stakeholder_engagement_agent.py",
       "_size_kb": 19.2,
-      "_lines": 398
+      "_lines": 398,
+      "_sha256": "7fb6cd8613c6f9de8748448fc06aed54fbd5aed3bf1ac828022a09f56bca7394",
+      "_stack": "deal_progression",
+      "_stack_vertical": "b2b_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -481,7 +1395,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/stalled_deal_detection_agent.py",
       "_size_kb": 20.6,
-      "_lines": 453
+      "_lines": 453,
+      "_sha256": "e05038240707d856c23934051fd47b2c3ad6260120902de43f010ec0ed776929",
+      "_stack": "deal_progression",
+      "_stack_vertical": "b2b_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -505,7 +1423,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2b_sales_stacks/deal_progression_stack/win_probability_agent.py",
       "_size_kb": 20.4,
-      "_lines": 414
+      "_lines": 414,
+      "_sha256": "c75e86c4dc900bde852af7ceab38c07be15a18f5ac96d999c6f3999e5bb6384a",
+      "_stack": "deal_progression",
+      "_stack_vertical": "b2b_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -530,7 +1452,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2b_sales_stacks/proposal_generation_stack/proposal_generation_agent.py",
       "_size_kb": 34.6,
-      "_lines": 673
+      "_lines": 673,
+      "_sha256": "d783a0b63424905664612a59b5e2dfb56534d09dc2ee69cf0d3166e4e902df63",
+      "_stack": "proposal_generation",
+      "_stack_vertical": "b2b_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -555,7 +1481,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2b_sales_stacks/sales_qualification_stack/sales_qualification_agent.py",
       "_size_kb": 47.4,
-      "_lines": 570
+      "_lines": 570,
+      "_sha256": "664d816ccb83d94870083c8f821221c21a9378e955b75742fb844e0310e87486",
+      "_stack": "sales_qualification",
+      "_stack_vertical": "b2b_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -579,7 +1509,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2b_sales_stacks/win_loss_analysis_stack/win_loss_analysis_agent.py",
       "_size_kb": 89.7,
-      "_lines": 921
+      "_lines": 921,
+      "_sha256": "782a947983e23d5c126a0c25dd01a6ee04d94da823ac86a0f220e33a11dd2195",
+      "_stack": "win_loss_analysis",
+      "_stack_vertical": "b2b_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -604,7 +1538,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2c_sales_stacks/cart_abandonment_recovery_stack/cart_abandonment_recovery_agent.py",
       "_size_kb": 13.0,
-      "_lines": 289
+      "_lines": 289,
+      "_sha256": "8baf1699e2bbf5c48063b3d9a4146724e3cdc2efa188fbd21e423e4dc8cd4ef2",
+      "_stack": "cart_abandonment_recovery",
+      "_stack_vertical": "b2c_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -629,7 +1567,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2c_sales_stacks/customer_360_speech_stack/customer_360_speech_agent.py",
       "_size_kb": 14.6,
-      "_lines": 289
+      "_lines": 289,
+      "_sha256": "7d7b8a305f7ca9181d8533b60ba18df6de93eb36b383f4285e88a4c5bc491bf5",
+      "_stack": "customer_360_speech",
+      "_stack_vertical": "b2c_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -654,7 +1596,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2c_sales_stacks/customer_loyalty_rewards_stack/customer_loyalty_rewards_agent.py",
       "_size_kb": 13.0,
-      "_lines": 292
+      "_lines": 292,
+      "_sha256": "4ef7a5a981dd346ce02d3c2fa69258720d15e29e8557a903bb86647fa76b200a",
+      "_stack": "customer_loyalty_rewards",
+      "_stack_vertical": "b2c_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -679,7 +1625,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2c_sales_stacks/omnichannel_engagement_stack/omnichannel_engagement_agent.py",
       "_size_kb": 12.9,
-      "_lines": 273
+      "_lines": 273,
+      "_sha256": "022656981cc6f832cf19771e9ec255492d33eada67feeff94c8a5d099b5b8def",
+      "_stack": "omnichannel_engagement",
+      "_stack_vertical": "b2c_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -704,7 +1654,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2c_sales_stacks/personalized_shopping_assistant_stack/personalized_shopping_assistant_agent.py",
       "_size_kb": 13.7,
-      "_lines": 266
+      "_lines": 266,
+      "_sha256": "ac7fcb5102dbc7b437d98a52aa5e7131b172db33cad82564f4a08fd2b353c22c",
+      "_stack": "personalized_shopping_assistant",
+      "_stack_vertical": "b2c_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -729,7 +1683,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2c_sales_stacks/returns_exchange_stack/returns_exchange_agent.py",
       "_size_kb": 15.3,
-      "_lines": 331
+      "_lines": 331,
+      "_sha256": "2f2e77ca2deca60d3b30dc6a728d154a3127655d222039d9d134474ba7ba2116",
+      "_stack": "returns_exchange",
+      "_stack_vertical": "b2c_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -754,7 +1712,11 @@
       ],
       "_file": "agents/@aibast-agents-library/b2c_sales_stacks/sales_chat_stack/sales_chat_agent.py",
       "_size_kb": 14.8,
-      "_lines": 360
+      "_lines": 360,
+      "_sha256": "f04d9e492090d9b371f41e9611a9168a35e54846ab1469ea24a66c0e4f814ef9",
+      "_stack": "sales_chat",
+      "_stack_vertical": "b2c_sales",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -779,7 +1741,11 @@
       ],
       "_file": "agents/@aibast-agents-library/energy_stacks/asset_maintenance_forecast_stack/asset_maintenance_forecast_agent.py",
       "_size_kb": 13.3,
-      "_lines": 328
+      "_lines": 328,
+      "_sha256": "33877d64cf4d49cd1d8f39894e545611da91b4328fa78258d2ee94ffec9c2a3f",
+      "_stack": "asset_maintenance_forecast",
+      "_stack_vertical": "energy",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -804,7 +1770,11 @@
       ],
       "_file": "agents/@aibast-agents-library/energy_stacks/emission_tracking_stack/emission_tracking_agent.py",
       "_size_kb": 13.8,
-      "_lines": 328
+      "_lines": 328,
+      "_sha256": "b89d159c1e3017bda99685b38a8cf15cc7bfa9fde47da8dd38f5968c6d2cc51d",
+      "_stack": "emission_tracking",
+      "_stack_vertical": "energy",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -829,7 +1799,11 @@
       ],
       "_file": "agents/@aibast-agents-library/energy_stacks/field_service_dispatch_stack/field_service_dispatch_agent.py",
       "_size_kb": 14.4,
-      "_lines": 369
+      "_lines": 369,
+      "_sha256": "af876226981287ceb427329e4f6b0d76f0938720e1a2fa55ce738dbf9af555f3",
+      "_stack": "field_service_dispatch",
+      "_stack_vertical": "energy",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -854,7 +1828,11 @@
       ],
       "_file": "agents/@aibast-agents-library/energy_stacks/permit_license_management_stack/permit_license_management_agent.py",
       "_size_kb": 12.9,
-      "_lines": 341
+      "_lines": 341,
+      "_sha256": "0194dc926d1ba862f379eb7f82319700d8dbcab24220fffbff24b32d7d760dd9",
+      "_stack": "permit_license_management",
+      "_stack_vertical": "energy",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -880,7 +1858,11 @@
       ],
       "_file": "agents/@aibast-agents-library/energy_stacks/regulatory_reporting_stack/regulatory_reporting_agent.py",
       "_size_kb": 12.8,
-      "_lines": 326
+      "_lines": 326,
+      "_sha256": "278d3048a76c665bd6c61d83603e1f0b31ebce9c212e126f9c59e44557d0910c",
+      "_stack": "regulatory_reporting",
+      "_stack_vertical": "energy",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -905,7 +1887,11 @@
       ],
       "_file": "agents/@aibast-agents-library/federal_government_stacks/acquisition_support_stack/acquisition_support_agent.py",
       "_size_kb": 16.9,
-      "_lines": 398
+      "_lines": 398,
+      "_sha256": "2720ae6f0672df28a5596a41bffc7f4a90c0f5741d6853da6e83f9cf032338a9",
+      "_stack": "acquisition_support",
+      "_stack_vertical": "federal_government",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -930,7 +1916,11 @@
       ],
       "_file": "agents/@aibast-agents-library/federal_government_stacks/federal_grants_oversight_stack/federal_grants_oversight_agent.py",
       "_size_kb": 15.1,
-      "_lines": 328
+      "_lines": 328,
+      "_sha256": "7ddd7db0c2b2345dc6f1c48cd089214b8e8a162500985f509b932e4b6a64b770",
+      "_stack": "federal_grants_oversight",
+      "_stack_vertical": "federal_government",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -955,7 +1945,11 @@
       ],
       "_file": "agents/@aibast-agents-library/federal_government_stacks/mission_reporting_assistant_stack/mission_reporting_assistant_agent.py",
       "_size_kb": 13.0,
-      "_lines": 286
+      "_lines": 286,
+      "_sha256": "d7e7777fae8595d09803a4b8af82cf8f89968b49eb18af02fb37a6702fbae399",
+      "_stack": "mission_reporting_assistant",
+      "_stack_vertical": "federal_government",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -981,7 +1975,11 @@
       ],
       "_file": "agents/@aibast-agents-library/federal_government_stacks/regulatory_compliance_fed_stack/regulatory_compliance_fed_agent.py",
       "_size_kb": 14.8,
-      "_lines": 290
+      "_lines": 290,
+      "_sha256": "b9fc3faf6537e8101f36b3000e24111829ba5941b95383064e18a87cb4fbbcb3",
+      "_stack": "regulatory_compliance_fed",
+      "_stack_vertical": "federal_government",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1006,7 +2004,11 @@
       ],
       "_file": "agents/@aibast-agents-library/federal_government_stacks/workforce_clearance_onboarding_stack/workforce_clearance_onboarding_agent.py",
       "_size_kb": 14.9,
-      "_lines": 338
+      "_lines": 338,
+      "_sha256": "94c9f772b0d13f80f7bc28ee6734425876edc1e414efe07f39877d26176402ed",
+      "_stack": "workforce_clearance_onboarding",
+      "_stack_vertical": "federal_government",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1031,7 +2033,11 @@
       ],
       "_file": "agents/@aibast-agents-library/financial_services_stacks/claims_processing_stack/claims_processing_agent.py",
       "_size_kb": 13.9,
-      "_lines": 295
+      "_lines": 295,
+      "_sha256": "efaf4b44775b439ce0c572dbc0fa92ef5931232ba5b3c79e2c70bcbf6edb1be1",
+      "_stack": "claims_processing",
+      "_stack_vertical": "financial_services",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1055,7 +2061,11 @@
       ],
       "_file": "agents/@aibast-agents-library/financial_services_stacks/customer_onboarding_fs_stack/customer_onboarding_fs_agent.py",
       "_size_kb": 13.6,
-      "_lines": 317
+      "_lines": 317,
+      "_sha256": "60e4b53dc2e06113f10167613bef135ad8a312df107842415956eb976297b34f",
+      "_stack": "customer_onboarding_fs",
+      "_stack_vertical": "financial_services",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1080,7 +2090,11 @@
       ],
       "_file": "agents/@aibast-agents-library/financial_services_stacks/customer_sentiment_churn_stack/customer_sentiment_churn_agent.py",
       "_size_kb": 15.0,
-      "_lines": 327
+      "_lines": 327,
+      "_sha256": "6441949eb77394aceeccf4df09f2cfd12dcd4811006741b990a6da8c0ace976c",
+      "_stack": "customer_sentiment_churn",
+      "_stack_vertical": "financial_services",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1104,7 +2118,11 @@
       ],
       "_file": "agents/@aibast-agents-library/financial_services_stacks/financial_advisor_copilot_stack/financial_advisor_copilot_agent.py",
       "_size_kb": 13.2,
-      "_lines": 292
+      "_lines": 292,
+      "_sha256": "3883ab9ddac8b57a0d35ec9a380bd71e6d09146d8f8c27d5d83a026f00d6b34a",
+      "_stack": "financial_advisor_copilot",
+      "_stack_vertical": "financial_services",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1129,7 +2147,11 @@
       ],
       "_file": "agents/@aibast-agents-library/financial_services_stacks/fraud_detection_alert_stack/fraud_detection_alert_agent.py",
       "_size_kb": 14.6,
-      "_lines": 272
+      "_lines": 272,
+      "_sha256": "70980797a3d7987fadcec0febb34fda5a0c84df17f0c210abf681e1d1a9da12c",
+      "_stack": "fraud_detection_alert",
+      "_stack_vertical": "financial_services",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1154,7 +2176,11 @@
       ],
       "_file": "agents/@aibast-agents-library/financial_services_stacks/loan_origination_assistant_stack/loan_origination_assistant_agent.py",
       "_size_kb": 14.0,
-      "_lines": 327
+      "_lines": 327,
+      "_sha256": "dd04a7f0d75199747cdf809918c91d590eee687cc1350c555762e74f2e952564",
+      "_stack": "loan_origination_assistant",
+      "_stack_vertical": "financial_services",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1179,7 +2205,11 @@
       ],
       "_file": "agents/@aibast-agents-library/financial_services_stacks/portfolio_rebalancing_stack/portfolio_rebalancing_agent.py",
       "_size_kb": 14.1,
-      "_lines": 306
+      "_lines": 306,
+      "_sha256": "31db95d8597942e77347571f7aad705d9dd7a515b7d875670641a49600cf4261",
+      "_stack": "portfolio_rebalancing",
+      "_stack_vertical": "financial_services",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1205,7 +2235,11 @@
       ],
       "_file": "agents/@aibast-agents-library/financial_services_stacks/regulatory_compliance_fs_stack/regulatory_compliance_fs_agent.py",
       "_size_kb": 12.8,
-      "_lines": 268
+      "_lines": 268,
+      "_sha256": "ffaed0d70b8e7e7cc05eb83ecf01925984903d284d7277e919dd0430f0be69c3",
+      "_stack": "regulatory_compliance_fs",
+      "_stack_vertical": "financial_services",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1230,7 +2264,11 @@
       ],
       "_file": "agents/@aibast-agents-library/financial_services_stacks/underwriting_support_stack/underwriting_support_agent.py",
       "_size_kb": 14.4,
-      "_lines": 329
+      "_lines": 329,
+      "_sha256": "242eb9a49c5cc58a232c15453f92b30927949348039c8f4acc7aeb5534c41af5",
+      "_stack": "underwriting_support",
+      "_stack_vertical": "financial_services",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1255,7 +2293,11 @@
       ],
       "_file": "agents/@aibast-agents-library/financial_services_stacks/wealth_insights_generator_stack/wealth_insights_generator_agent.py",
       "_size_kb": 12.6,
-      "_lines": 280
+      "_lines": 280,
+      "_sha256": "0354b3e82065da7f34240fae09bed21675cb0f7999e752b338e6dc984bee94a7",
+      "_stack": "wealth_insights_generator",
+      "_stack_vertical": "financial_services",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1279,7 +2321,11 @@
       ],
       "_file": "agents/@aibast-agents-library/general_stacks/ai_customer_assistant_stack/ai_customer_assistant_agent.py",
       "_size_kb": 18.2,
-      "_lines": 369
+      "_lines": 369,
+      "_sha256": "73b5098383b63bce7b3bfb6510bbaf80edd78830cbac3e09725c4878a7ba008e",
+      "_stack": "ai_customer_assistant",
+      "_stack_vertical": "general",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1304,7 +2350,11 @@
       ],
       "_file": "agents/@aibast-agents-library/general_stacks/ask_hr_stack/ask_hr_agent.py",
       "_size_kb": 18.9,
-      "_lines": 402
+      "_lines": 402,
+      "_sha256": "09a715ef42d1f9220b9d5ffc3de2228ab209bd8f7d02a0770204e6ea2e34054c",
+      "_stack": "ask_hr",
+      "_stack_vertical": "general",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1329,7 +2379,11 @@
       ],
       "_file": "agents/@aibast-agents-library/general_stacks/crm_bulk_data_creator_stack/bulk_crm_data_generator.py",
       "_size_kb": 15.9,
-      "_lines": 264
+      "_lines": 264,
+      "_sha256": "567aeeb4eab8636400da2400c1498ee007b60a4666e53cd5d25cfa35efa58c38",
+      "_stack": "crm_bulk_data_creator",
+      "_stack_vertical": "general",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1354,7 +2408,11 @@
       ],
       "_file": "agents/@aibast-agents-library/general_stacks/crm_bulk_data_creator_stack/dynamics_365_agent.py",
       "_size_kb": 16.8,
-      "_lines": 325
+      "_lines": 325,
+      "_sha256": "a13e1831077b440b544ee2cc8e33190284b688d066e885c31c8794332c71590c",
+      "_stack": "crm_bulk_data_creator",
+      "_stack_vertical": "general",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1378,7 +2436,11 @@
       ],
       "_file": "agents/@aibast-agents-library/general_stacks/crm_bulk_data_creator_stack/one_click_crm_intake_agent.py",
       "_size_kb": 15.5,
-      "_lines": 293
+      "_lines": 293,
+      "_sha256": "bebd8c398d2a826a2aba41a5e16a5795476ce695ec9d0f3199f8a030774262c9",
+      "_stack": "crm_bulk_data_creator",
+      "_stack_vertical": "general",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1402,7 +2464,11 @@
       ],
       "_file": "agents/@aibast-agents-library/general_stacks/cross_selling_opportunities_stack/cross_selling_agent.py",
       "_size_kb": 15.2,
-      "_lines": 300
+      "_lines": 300,
+      "_sha256": "05ff72f6f777d3e37efb8b9301936c0462dc02aa0c0f9d6889886da247f5708f",
+      "_stack": "cross_selling_opportunities",
+      "_stack_vertical": "general",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1426,7 +2492,11 @@
       ],
       "_file": "agents/@aibast-agents-library/general_stacks/customer_360_stack/customer_360_agent.py",
       "_size_kb": 17.7,
-      "_lines": 317
+      "_lines": 317,
+      "_sha256": "3382fb40569be724a1ffc7a8db584c080afac0938403c98b8e8cf6f3d1297141",
+      "_stack": "customer_360",
+      "_stack_vertical": "general",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1451,7 +2521,11 @@
       ],
       "_file": "agents/@aibast-agents-library/general_stacks/email_drafting_stack/email_drafting_agent.py",
       "_size_kb": 14.7,
-      "_lines": 284
+      "_lines": 284,
+      "_sha256": "b3796f06d6d77bcdc2a0f6d011e103a84c1c29a5b203f7b3fd42586dd1ce48d6",
+      "_stack": "email_drafting",
+      "_stack_vertical": "general",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1476,7 +2550,11 @@
       ],
       "_file": "agents/@aibast-agents-library/general_stacks/find_accurate_models_stack/find_accurate_models_agent.py",
       "_size_kb": 14.9,
-      "_lines": 285
+      "_lines": 285,
+      "_sha256": "1193a3c497f80d0452abf8d6648e527f5bb44dd485c2ba80d337ef51868109fe",
+      "_stack": "find_accurate_models",
+      "_stack_vertical": "general",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1500,7 +2578,11 @@
       ],
       "_file": "agents/@aibast-agents-library/general_stacks/identify_discounts_stack/identify_discounts_agent.py",
       "_size_kb": 15.8,
-      "_lines": 296
+      "_lines": 296,
+      "_sha256": "01bb3c5da4914f3acd42aca87c193d7bf4cf3f911fec7244d1d04de49d67b444",
+      "_stack": "identify_discounts",
+      "_stack_vertical": "general",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1525,7 +2607,11 @@
       ],
       "_file": "agents/@aibast-agents-library/general_stacks/it_ticket_management_stack/it_ticket_management_agent.py",
       "_size_kb": 15.8,
-      "_lines": 258
+      "_lines": 258,
+      "_sha256": "0ac67f18a653434bf1450a7e310e1f76eeb3ca48c5dc534341d9a1010e2e98f2",
+      "_stack": "it_ticket_management",
+      "_stack_vertical": "general",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1549,7 +2635,11 @@
       ],
       "_file": "agents/@aibast-agents-library/general_stacks/procurement_agent_stack/procurement_agent.py",
       "_size_kb": 14.4,
-      "_lines": 250
+      "_lines": 250,
+      "_sha256": "95741ca7e787937e8a3c1dd99ce40fb620c874d424ce375885af387d3d54fffb",
+      "_stack": "procurement_agent",
+      "_stack_vertical": "general",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1573,7 +2663,11 @@
       ],
       "_file": "agents/@aibast-agents-library/general_stacks/procurement_support_stack/procurement_support_agent.py",
       "_size_kb": 14.8,
-      "_lines": 240
+      "_lines": 240,
+      "_sha256": "1d504f1ce304b6a18a4cc0a40b3f34b73f1a2948ad34fe33cd7241001f8385e0",
+      "_stack": "procurement_support",
+      "_stack_vertical": "general",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1597,7 +2691,11 @@
       ],
       "_file": "agents/@aibast-agents-library/general_stacks/product_reference_stack/product_reference_agent.py",
       "_size_kb": 14.8,
-      "_lines": 267
+      "_lines": 267,
+      "_sha256": "bbee8fc52c6ee71385bb339177a68e22dc2214948b90c75309eda48a07f5064c",
+      "_stack": "product_reference",
+      "_stack_vertical": "general",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1621,7 +2719,11 @@
       ],
       "_file": "agents/@aibast-agents-library/general_stacks/sales_coach_stack/sales_coach_agent.py",
       "_size_kb": 15.9,
-      "_lines": 283
+      "_lines": 283,
+      "_sha256": "4a3325cbf651c7609d0be923c6fc0fa6c1c23e30ab429a99da66dc95a59a16cb",
+      "_stack": "sales_coach",
+      "_stack_vertical": "general",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1646,7 +2748,11 @@
       ],
       "_file": "agents/@aibast-agents-library/general_stacks/simulation_sales_stack/sales_simulation_agent.py",
       "_size_kb": 16.2,
-      "_lines": 306
+      "_lines": 306,
+      "_sha256": "128602c6b391e5c81509078e54f3bd3c03786ab0a978f9eb0805fb5f77629684",
+      "_stack": "simulation_sales",
+      "_stack_vertical": "general",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1670,7 +2776,11 @@
       ],
       "_file": "agents/@aibast-agents-library/general_stacks/speech_to_crm_stack/speech_to_crm_agent.py",
       "_size_kb": 14.6,
-      "_lines": 265
+      "_lines": 265,
+      "_sha256": "40af36c8202cf104bd9b62776975f1b273fd9d72fd9ff2fd3b1577b7905fa1cd",
+      "_stack": "speech_to_crm",
+      "_stack_vertical": "general",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1694,7 +2804,11 @@
       ],
       "_file": "agents/@aibast-agents-library/general_stacks/triage_bot_stack/triage_bot_agent.py",
       "_size_kb": 14.3,
-      "_lines": 253
+      "_lines": 253,
+      "_sha256": "b7548d58fa69069a6d21ca394eb9d2f4d170c831fbfdb06ff16a2f57f97ad033",
+      "_stack": "triage_bot",
+      "_stack_vertical": "general",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1719,7 +2833,11 @@
       ],
       "_file": "agents/@aibast-agents-library/general_stacks/voice_to_crm_stack/dynamics_365_agent.py",
       "_size_kb": 12.8,
-      "_lines": 253
+      "_lines": 253,
+      "_sha256": "31cf691fa3b792015c4c3a4ca723b5eb19c50d1c7f2bcb303a57618609c12ae1",
+      "_stack": "voice_to_crm",
+      "_stack_vertical": "general",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1743,7 +2861,11 @@
       ],
       "_file": "agents/@aibast-agents-library/general_stacks/voice_to_crm_stack/email_drafting_agent.py",
       "_size_kb": 12.9,
-      "_lines": 258
+      "_lines": 258,
+      "_sha256": "f1590393b43e4edd5334c57fb02f1aed228339b2549b7ea4b2d9e486b08d9791",
+      "_stack": "voice_to_crm",
+      "_stack_vertical": "general",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1767,7 +2889,11 @@
       ],
       "_file": "agents/@aibast-agents-library/general_stacks/voice_to_crm_stack/extract_sharepoint_document_url_agent.py",
       "_size_kb": 14.2,
-      "_lines": 243
+      "_lines": 243,
+      "_sha256": "06a76de66bf74732a328baf8c43db872d5e360788a812fa1d04767e28828e6ad",
+      "_stack": "voice_to_crm",
+      "_stack_vertical": "general",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1791,7 +2917,11 @@
       ],
       "_file": "agents/@aibast-agents-library/general_stacks/voice_to_crm_stack/servicenow_agent.py",
       "_size_kb": 14.5,
-      "_lines": 264
+      "_lines": 264,
+      "_sha256": "a4833c29b394f311cf5ebd08dcd30f376542eff32206d6e6f1c3ebba2964fb34",
+      "_stack": "voice_to_crm",
+      "_stack_vertical": "general",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1816,7 +2946,11 @@
       ],
       "_file": "agents/@aibast-agents-library/healthcare_stacks/care_gap_closure_stack/care_gap_closure_agent.py",
       "_size_kb": 12.7,
-      "_lines": 324
+      "_lines": 324,
+      "_sha256": "c2a012359c8e3eb41e84160457048847e7c661400acb2ed8e4a92b7bda85b708",
+      "_stack": "care_gap_closure",
+      "_stack_vertical": "healthcare",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1841,7 +2975,11 @@
       ],
       "_file": "agents/@aibast-agents-library/healthcare_stacks/clinical_notes_summarizer_stack/clinical_notes_summarizer_agent.py",
       "_size_kb": 15.8,
-      "_lines": 354
+      "_lines": 354,
+      "_sha256": "faf0ee52cd24738c53f1da5cf9304fe3b9259ea97295ff4d590899c9deb867b1",
+      "_stack": "clinical_notes_summarizer",
+      "_stack_vertical": "healthcare",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1866,7 +3004,11 @@
       ],
       "_file": "agents/@aibast-agents-library/healthcare_stacks/patient_intake_stack/patient_intake_agent.py",
       "_size_kb": 14.0,
-      "_lines": 369
+      "_lines": 369,
+      "_sha256": "dc351c1bb91c2d1b49fe262a580342c0f00d3025917532ef5b2fa08b9525d2d1",
+      "_stack": "patient_intake",
+      "_stack_vertical": "healthcare",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1891,7 +3033,11 @@
       ],
       "_file": "agents/@aibast-agents-library/healthcare_stacks/prior_authorization_stack/prior_authorization_agent.py",
       "_size_kb": 15.0,
-      "_lines": 364
+      "_lines": 364,
+      "_sha256": "bc1d229d80f337d575e593091a75e28343d74568708b4c9c947fcdfc22aaf577",
+      "_stack": "prior_authorization",
+      "_stack_vertical": "healthcare",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1916,7 +3062,11 @@
       ],
       "_file": "agents/@aibast-agents-library/healthcare_stacks/staff_credentialing_stack/staff_credentialing_agent.py",
       "_size_kb": 14.7,
-      "_lines": 310
+      "_lines": 310,
+      "_sha256": "dea67f9ca758bd0903b175ed5cfce2727037e57f2b4bf56b38d5b30028481736",
+      "_stack": "staff_credentialing",
+      "_stack_vertical": "healthcare",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1940,7 +3090,11 @@
       ],
       "_file": "agents/@aibast-agents-library/human_resources_stacks/ask_hr_stack/ask_hr_agent.py",
       "_size_kb": 17.3,
-      "_lines": 390
+      "_lines": 390,
+      "_sha256": "d447b3b07e8c31f053a3dde602ab7d0451e6e8752ccbbae825df84ffecb6f9f2",
+      "_stack": "ask_hr",
+      "_stack_vertical": "human_resources",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1964,7 +3118,11 @@
       ],
       "_file": "agents/@aibast-agents-library/it_management_stacks/it_helpdesk_stack/it_helpdesk_agent.py",
       "_size_kb": 18.7,
-      "_lines": 425
+      "_lines": 425,
+      "_sha256": "09539b3e1cb09e03067776b9ff82848c845e450e4ec6dd12399ff28e51daa207",
+      "_stack": "it_helpdesk",
+      "_stack_vertical": "it_management",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -1988,7 +3146,11 @@
       ],
       "_file": "agents/@aibast-agents-library/manufacturing_stacks/inventory_rebalancing_stack/inventory_rebalancing_agent.py",
       "_size_kb": 15.0,
-      "_lines": 353
+      "_lines": 353,
+      "_sha256": "9226ca6a090ef17d955ca6ae2eb1aa82b67d575cbca191bc30ad6be5e638c86a",
+      "_stack": "inventory_rebalancing",
+      "_stack_vertical": "manufacturing",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -2012,7 +3174,11 @@
       ],
       "_file": "agents/@aibast-agents-library/manufacturing_stacks/maintenance_scheduling_stack/maintenance_scheduling_agent.py",
       "_size_kb": 16.2,
-      "_lines": 367
+      "_lines": 367,
+      "_sha256": "d6a9ff28097fa3ffa26b826bc2d201a73cb66dd9fcacdf0f930779faa6580765",
+      "_stack": "maintenance_scheduling",
+      "_stack_vertical": "manufacturing",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -2036,7 +3202,11 @@
       ],
       "_file": "agents/@aibast-agents-library/manufacturing_stacks/order_status_communication_stack/order_status_communication_agent.py",
       "_size_kb": 12.5,
-      "_lines": 321
+      "_lines": 321,
+      "_sha256": "cc565f681d33f567ca68893322dedeabd8ab70aff0c81d61e9f2398eb70df541",
+      "_stack": "order_status_communication",
+      "_stack_vertical": "manufacturing",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -2060,7 +3230,11 @@
       ],
       "_file": "agents/@aibast-agents-library/manufacturing_stacks/production_line_optimization_stack/production_line_optimization_agent.py",
       "_size_kb": 14.9,
-      "_lines": 319
+      "_lines": 319,
+      "_sha256": "115337205732586ed1d325953799c24b3ba5f883924f908ee977a1517c9a9d8e",
+      "_stack": "production_line_optimization",
+      "_stack_vertical": "manufacturing",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -2084,7 +3258,11 @@
       ],
       "_file": "agents/@aibast-agents-library/manufacturing_stacks/supplier_risk_monitoring_stack/supplier_risk_monitoring_agent.py",
       "_size_kb": 13.8,
-      "_lines": 330
+      "_lines": 330,
+      "_sha256": "2522324799069ac42b28b8612a1d57e23f4d9308e04d6190efb76b1b9a203193",
+      "_stack": "supplier_risk_monitoring",
+      "_stack_vertical": "manufacturing",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -2108,7 +3286,11 @@
       ],
       "_file": "agents/@aibast-agents-library/professional_services_stacks/client_health_score_stack/client_health_score_agent.py",
       "_size_kb": 13.0,
-      "_lines": 342
+      "_lines": 342,
+      "_sha256": "2c96f83bb2d54980366d34113769b4e9bad51e7730cda55fd45b06a695803051",
+      "_stack": "client_health_score",
+      "_stack_vertical": "professional_services",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -2132,7 +3314,11 @@
       ],
       "_file": "agents/@aibast-agents-library/professional_services_stacks/contract_risk_review_stack/contract_risk_review_agent.py",
       "_size_kb": 13.8,
-      "_lines": 315
+      "_lines": 315,
+      "_sha256": "0b22d2af5949e79a02445876eb12db2e9c21e219204552ed8605217ef4b590a2",
+      "_stack": "contract_risk_review",
+      "_stack_vertical": "professional_services",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -2156,7 +3342,11 @@
       ],
       "_file": "agents/@aibast-agents-library/professional_services_stacks/proposal_copilot_stack/proposal_copilot_agent.py",
       "_size_kb": 13.7,
-      "_lines": 333
+      "_lines": 333,
+      "_sha256": "16dbf8b9d72673a1b3c9f2c6cbc24cdd9ce91b432afb57961d2d07135ca2c73f",
+      "_stack": "proposal_copilot",
+      "_stack_vertical": "professional_services",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -2180,7 +3370,11 @@
       ],
       "_file": "agents/@aibast-agents-library/professional_services_stacks/resource_utilization_stack/resource_utilization_agent.py",
       "_size_kb": 15.6,
-      "_lines": 335
+      "_lines": 335,
+      "_sha256": "a7b8b905552c0049a6e9057cc90356c77409b9d911d1dede24e5ae532e25e318",
+      "_stack": "resource_utilization",
+      "_stack_vertical": "professional_services",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -2204,7 +3398,11 @@
       ],
       "_file": "agents/@aibast-agents-library/professional_services_stacks/time_entry_billing_stack/time_entry_billing_agent.py",
       "_size_kb": 17.7,
-      "_lines": 362
+      "_lines": 362,
+      "_sha256": "bb19896437902b593972014200f4ab27452bafdb3d81de5daed08afc449c9b86",
+      "_stack": "time_entry_billing",
+      "_stack_vertical": "professional_services",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -2228,7 +3426,11 @@
       ],
       "_file": "agents/@aibast-agents-library/retail_cpg_stacks/inventory_visibility_stack/inventory_visibility_agent.py",
       "_size_kb": 15.6,
-      "_lines": 370
+      "_lines": 370,
+      "_sha256": "fb93fed58eb1c09c1369f6b52fa5ba7a595666b1c9df50cd151f904f744552c2",
+      "_stack": "inventory_visibility",
+      "_stack_vertical": "retail_cpg",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -2252,7 +3454,11 @@
       ],
       "_file": "agents/@aibast-agents-library/retail_cpg_stacks/personalized_marketing_stack/personalized_marketing_agent.py",
       "_size_kb": 17.2,
-      "_lines": 436
+      "_lines": 436,
+      "_sha256": "06f67c8f4d74c90f34c92f79ba7e3a6c511c12490b97b0eb912124685020e00e",
+      "_stack": "personalized_marketing",
+      "_stack_vertical": "retail_cpg",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -2276,7 +3482,11 @@
       ],
       "_file": "agents/@aibast-agents-library/retail_cpg_stacks/returns_complaints_resolution_stack/returns_complaints_resolution_agent.py",
       "_size_kb": 20.4,
-      "_lines": 506
+      "_lines": 506,
+      "_sha256": "cbcc0c72e9e35465b5a3e002fda88b1722d438f8b85ec652d5090c68e7de3c49",
+      "_stack": "returns_complaints_resolution",
+      "_stack_vertical": "retail_cpg",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -2300,7 +3510,11 @@
       ],
       "_file": "agents/@aibast-agents-library/retail_cpg_stacks/store_associate_copilot_stack/store_associate_copilot_agent.py",
       "_size_kb": 22.4,
-      "_lines": 538
+      "_lines": 538,
+      "_sha256": "d1113750e2378b85eed5160f1345b945e1a924888f2bbcebd0602be0b4452494",
+      "_stack": "store_associate_copilot",
+      "_stack_vertical": "retail_cpg",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -2324,7 +3538,11 @@
       ],
       "_file": "agents/@aibast-agents-library/retail_cpg_stacks/supply_chain_disruption_alert_stack/supply_chain_disruption_alert_agent.py",
       "_size_kb": 23.8,
-      "_lines": 631
+      "_lines": 631,
+      "_sha256": "9eacb2fd0a9492e5edd96ae3e9ecd1e0213228e122dfe733c6d9760a555a7cd2",
+      "_stack": "supply_chain_disruption_alert",
+      "_stack_vertical": "retail_cpg",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -2349,7 +3567,11 @@
       ],
       "_file": "agents/@aibast-agents-library/slg_government_stacks/building_permit_processing_stack/building_permit_processing_agent.py",
       "_size_kb": 14.6,
-      "_lines": 349
+      "_lines": 349,
+      "_sha256": "93982dfe66ca78ec70708739619b320f009db6e90252687c56cbeadee983f2b2",
+      "_stack": "building_permit_processing",
+      "_stack_vertical": "slg_government",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -2374,7 +3596,11 @@
       ],
       "_file": "agents/@aibast-agents-library/slg_government_stacks/citizen_service_request_stack/citizen_service_request_agent.py",
       "_size_kb": 14.6,
-      "_lines": 327
+      "_lines": 327,
+      "_sha256": "9811b431a73138338e8b1b4e3acc8d33418009dce1fe5ec56626ffcbab4634d4",
+      "_stack": "citizen_service_request",
+      "_stack_vertical": "slg_government",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -2398,7 +3624,11 @@
       ],
       "_file": "agents/@aibast-agents-library/slg_government_stacks/foia_request_assistant_stack/foia_request_assistant_agent.py",
       "_size_kb": 14.7,
-      "_lines": 308
+      "_lines": 308,
+      "_sha256": "d2c90bcc7ba1d29b7556563ebba44b8e9deb4dff4c9f1ac61e4020afdcaad1d2",
+      "_stack": "foia_request_assistant",
+      "_stack_vertical": "slg_government",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -2422,7 +3652,11 @@
       ],
       "_file": "agents/@aibast-agents-library/slg_government_stacks/grants_management_stack/grants_management_agent.py",
       "_size_kb": 12.9,
-      "_lines": 307
+      "_lines": 307,
+      "_sha256": "45b488ddc28c546458acf273ce896fddb6f427d7949ba0b3f523cfa5920e574b",
+      "_stack": "grants_management",
+      "_stack_vertical": "slg_government",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -2447,7 +3681,11 @@
       ],
       "_file": "agents/@aibast-agents-library/slg_government_stacks/utility_billing_assistance_stack/utility_billing_assistance_agent.py",
       "_size_kb": 16.3,
-      "_lines": 372
+      "_lines": 372,
+      "_sha256": "f09baff79727ad049b51fc54269236ea2f4662b4b1e5def5b8a2b4ecc931cf32",
+      "_stack": "utility_billing_assistance",
+      "_stack_vertical": "slg_government",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -2471,7 +3709,11 @@
       ],
       "_file": "agents/@aibast-agents-library/software_dp_stacks/competitive_intel_stack/competitive_intel_agent.py",
       "_size_kb": 15.8,
-      "_lines": 421
+      "_lines": 421,
+      "_sha256": "fe0d6bc1a5ec54de85885506ad4781ffdac9e073333400473d5769f8662d496c",
+      "_stack": "competitive_intel",
+      "_stack_vertical": "software_dp",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -2495,7 +3737,11 @@
       ],
       "_file": "agents/@aibast-agents-library/software_dp_stacks/customer_onboarding_stack/customer_onboarding_agent.py",
       "_size_kb": 14.3,
-      "_lines": 379
+      "_lines": 379,
+      "_sha256": "060d958fb137404881cd8c3ed161c50a27d1509bdf885e0b84847d379021a806",
+      "_stack": "customer_onboarding",
+      "_stack_vertical": "software_dp",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -2520,7 +3766,11 @@
       ],
       "_file": "agents/@aibast-agents-library/software_dp_stacks/license_renewal_expansion_stack/license_renewal_expansion_agent.py",
       "_size_kb": 13.6,
-      "_lines": 351
+      "_lines": 351,
+      "_sha256": "ece11a920522b9d6f943635794079e70f42460d8bbac85718d2e54e26661e125",
+      "_stack": "license_renewal_expansion",
+      "_stack_vertical": "software_dp",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -2545,7 +3795,11 @@
       ],
       "_file": "agents/@aibast-agents-library/software_dp_stacks/product_feedback_synthesizer_stack/product_feedback_synthesizer_agent.py",
       "_size_kb": 13.1,
-      "_lines": 363
+      "_lines": 363,
+      "_sha256": "7d90cb323b424027f1eeb8655f2de42d3498400f100acc4cd38177e1a1c15848",
+      "_stack": "product_feedback_synthesizer",
+      "_stack_vertical": "software_dp",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     },
     {
       "schema": "rapp-agent/1.0",
@@ -2570,7 +3824,11 @@
       ],
       "_file": "agents/@aibast-agents-library/software_dp_stacks/support_ticket_resolution_stack/support_ticket_resolution_agent.py",
       "_size_kb": 13.1,
-      "_lines": 324
+      "_lines": 324,
+      "_sha256": "c27285521e2e551b7fb8dd308777d6a4f0659b88844d4a505bc7372c1180a554",
+      "_stack": "support_ticket_resolution",
+      "_stack_vertical": "software_dp",
+      "_added_at": "2026-03-18T13:23:12-04:00"
     }
   ]
 }

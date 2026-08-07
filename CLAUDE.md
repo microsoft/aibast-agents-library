@@ -19,6 +19,8 @@ Philosophy: "engine, not experience" — this is infrastructure, not a consumer 
 - `azuredeploy.json`, `deploy.sh`, `deploy.ps1` — Azure ARM deployment (Tier 2 cloud)
 - `MSFTAIBASMultiAgentCopilot_*.zip` — Power Platform solution for Copilot Studio (Tier 3)
 - `index.html` — AIBAST Agents Library landing page served at microsoft.github.io/aibast-agents-library
+- `library.html` — browsable agent catalog (search, vertical filter, per-agent and per-stack install commands); reads `registry.json`
+- `metrics.html`, `scripts/build_metrics.py`, `state/metrics*.json` — public metrics dashboard and its daily snapshot
 - `docs/rapp-guide.html` — Restored 14-step RAPP production methodology
 - `docs/` — Quick start, tutorial, production guide, and installer mirrors
 - `skill.md` — Moltbook-pattern onboarding skill (YAML frontmatter, autonomous steps, pause points)
@@ -41,6 +43,10 @@ cd rapp_brainstem && python -m pytest tests/test_local_agents.py::TestLocalStora
 # Validate and regenerate the AIBAST registry
 python build_registry.py
 python -m pytest tests -v
+
+# Refresh the public metrics snapshot (state/metrics.json)
+python scripts/build_metrics.py            # live; GITHUB_TOKEN with admin:read unlocks traffic
+python scripts/build_metrics.py --offline  # no network, catalog composition only
 
 # Health check (server must be running)
 curl -s localhost:7071/health | python3 -m json.tool
@@ -93,6 +99,7 @@ Each tier is self-contained. Users advance when they choose to.
 Shared Brainstem releases flow from `kody-w/rapp-installer`, but this repository is not a mirror. Preserve these AIBAST-owned surfaces during every sync:
 
 - `agents/@aibast-agents-library/`, `registry.json`, and `build_registry.py`
+- `library.html`, `metrics.html`, `scripts/build_metrics.py`, and `state/` (the catalog browse page, the metrics dashboard, and its snapshots)
 - `rapp_ai/`
 - `README.md`, `index.html`, `CLAUDE.md`, `docs/index.html`, `docs/tutorial.html`, and `docs/rapp-guide.html`
 - `.github/`, `LICENSE`, `SECURITY.md`, `CONTRIBUTING.md`, `.vscode/`, and `tools/`
