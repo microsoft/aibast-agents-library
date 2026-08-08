@@ -68,6 +68,12 @@ def test_personless_harness_hotloads_and_proves_every_local_case(tmp_path):
         "status": "not_requested",
         "published": False,
     }
+    assert (
+        Path(result["workspace"])
+        / "tests"
+        / "demo_cases"
+        / "time-entry-billing.json"
+    ).exists()
     assert result["published"] is False
 
 

@@ -292,6 +292,10 @@ class TimeEntryBillingWorkshop(BasicAgent):
         if source_root.exists():
             shutil.rmtree(source_root)
         self._safe_extract(archive, source_root)
+        self._atomic_write(
+            source_root / CASES_PATH,
+            self._fetch_bytes(CASES_PATH),
+        )
         promote = source_root / PROMOTE_TOOL_PATH
         self._atomic_write(promote, self._fetch_bytes(PROMOTE_TOOL_PATH))
         return source_root
