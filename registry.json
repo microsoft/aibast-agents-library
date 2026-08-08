@@ -1,9 +1,9 @@
 {
   "schema": "rapp-registry/1.0",
   "version": "1.0.0",
-  "generated_at": "2026-08-08T22:51:44.641582+00:00",
+  "generated_at": "2026-08-08T23:44:35.944704+00:00",
   "stats": {
-    "total_agents": 71,
+    "total_agents": 72,
     "publishers": 1,
     "categories": 12,
     "total_stacks": 52,
@@ -16,8 +16,8 @@
     "curated_copy_solutions": 51,
     "solution_onepagers": 51,
     "solution_demo_videos": 47,
-    "total_lines": 29783,
-    "total_kb": 1470.9,
+    "total_lines": 30192,
+    "total_kb": 1485.3,
     "publisher_list": [
       "@aibast-agents-library"
     ],
@@ -36,7 +36,8 @@
       "software_digital_products"
     ],
     "tier_counts": {
-      "verified": 71
+      "verified": 71,
+      "pilot": 1
     }
   },
   "stacks": [
@@ -13539,6 +13540,36 @@
         "Synthetic data",
         "Production pattern"
       ]
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/easy-mode",
+      "version": "1.0.0",
+      "display_name": "AIBAST Easy Mode",
+      "description": "Turns a named AIBAST workshop into a personless Brainstem + Copilot run: fetch the task cartridge, test the solution, deploy its Draft, and return the evidence verdict.",
+      "author": "AIBAST",
+      "tags": [
+        "easy-mode",
+        "personless-harness",
+        "brainstem",
+        "workshops",
+        "copilot-studio"
+      ],
+      "category": "general",
+      "quality_tier": "pilot",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/templates/easy_mode_agent.py",
+      "_size_kb": 14.4,
+      "_lines": 409,
+      "_sha256": "21b262070582d9f5b61db10ccc75a90c5338d9fb661efa221574fd9fdc3fcb8a",
+      "_stack": null,
+      "_stack_vertical": null,
+      "_synthetic_data": false,
+      "_catalog_kind": "template",
+      "_readiness": []
     },
     {
       "schema": "rapp-agent/1.0",

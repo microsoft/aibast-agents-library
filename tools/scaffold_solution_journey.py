@@ -700,6 +700,17 @@ def collect_resources(ctx: JourneyContext) -> list[Resource]:
         "Detailed GitHub Copilot-only prompts retained for the skeptic comparison",
         generated=True,
     )
+    easy_agent = easy_mode_agent_path(ctx)
+    if easy_agent:
+        add_resource(
+            resources,
+            seen,
+            ctx,
+            "easy-mode-agent",
+            "Reusable AIBAST Easy Mode agent",
+            easy_agent,
+            "Registry-discoverable Brainstem router for the three-message workshop flow",
+        )
     workshop_agent = personless_agent_path(ctx)
     if workshop_agent:
         add_resource(
@@ -1052,49 +1063,85 @@ def personless_agent_path(ctx: JourneyContext) -> Path | None:
     return agents[0] if agents else None
 
 
-def personless_trigger_sentence(ctx: JourneyContext) -> str:
-    agent = personless_agent_path(ctx)
-    if not agent:
-        return (
-            f"Run the {ctx.title} workshop through my local RAPP Brainstem "
-            "personlessly, keep executing every Brainstem handoff until it "
-            "reports complete, and stop before publish."
-        )
-    return (
-        "Use my local RAPP Brainstem at http://localhost:7071: hot-load "
-        f"{ctx.raw(ctx.rel(agent))} through /agents/import, ask /chat to run "
-        f"the {ctx.title} workshop, execute every handoff it returns until "
-        "Brainstem reports complete, and stop before publish."
+def easy_mode_agent_path(ctx: JourneyContext) -> Path | None:
+    path = (
+        ctx.root
+        / "agents"
+        / "@aibast-agents-library"
+        / "templates"
+        / "easy_mode_agent.py"
     )
+    return path if path.exists() else None
+
+
+def easy_mode_solution_name(ctx: JourneyContext) -> str:
+    return re.sub(r"\s+Agent$", "", ctx.title).strip()
+
+
+def personless_prompts(ctx: JourneyContext) -> list[tuple[str, str]]:
+    solution = easy_mode_solution_name(ctx)
+    return [
+        (
+            "1. Start the engine",
+            (
+                "Start the Brainstem and go and get the Easy Mode agent from "
+                "the AIBAST Agents Library."
+            ),
+        ),
+        (
+            "2. Build and test the solution",
+            (
+                f"Give me {solution} using the Easy Mode agent and test it "
+                "for me."
+            ),
+        ),
+        (
+            "3. Deploy the validated Draft",
+            "Deploy it into Copilot Studio for me.",
+        ),
+    ]
 
 
 def render_personless_easy_markdown(ctx: JourneyContext) -> str:
-    agent = personless_agent_path(ctx)
-    agent_link = ctx.raw(ctx.rel(agent)) if agent else "Agent cartridge pending"
+    easy_agent = easy_mode_agent_path(ctx)
+    workshop_agent = personless_agent_path(ctx)
+    easy_agent_link = (
+        ctx.raw(ctx.rel(easy_agent)) if easy_agent else "Easy Mode agent pending"
+    )
+    workshop_agent_link = (
+        ctx.raw(ctx.rel(workshop_agent))
+        if workshop_agent
+        else "Task workshop agent pending"
+    )
+    prompts = "\n\n".join(
+        f"## {title}\n\n```text\n{prompt}\n```"
+        for title, prompt in personless_prompts(ctx)
+    )
     return f"""# {ctx.title} — personless Easy mode
 
-Open GitHub Copilot Chat in VS Code, select **Agent mode**, and paste this one
-sentence:
+Assume the Brainstem one-line installer is available. Open GitHub Copilot Chat
+in VS Code, select **Agent mode**, and send these three short messages in order:
 
-```text
-{personless_trigger_sentence(ctx)}
-```
+{prompts}
 
 ## What pulls the harness
 
-1. GitHub Copilot checks the local Brainstem and imports the raw workshop
-   cartridge through `/agents/import`.
-2. Brainstem invokes `TimeEntryBillingWorkshop`, which downloads the reviewed
-   GitHub assets, verifies their pinned source hash, and hot-loads the business
-   agent into its live agents directory.
-3. The workshop cartridge runs every locked local case, prepares or pushes the
-   Copilot Studio Draft through the active PAC environment, and returns the
-   exact front-door actions still required.
-4. Copilot performs those actions, sends the captured Preview evidence back to
-   Brainstem, and continues until Brainstem returns `status: complete`.
+1. Copilot starts the installed Brainstem, finds
+   `@aibast-agents-library/easy-mode` in the AIBAST registry, and imports it
+   through `/agents/import`.
+2. `AIBASTEasyModeAgent` resolves the named solution, integrity-checks and
+   hot-loads its task-specific workshop cartridge, then asks that cartridge to
+   hot-load and test the business agent.
+3. The same Easy Mode agent remembers the active solution, so “Deploy it” runs
+   the validated Draft flow without the attendee repeating URLs or context.
+4. Copilot executes any real front-door handoff returned by Brainstem, sends
+   the captured Preview evidence back, and continues until Brainstem returns
+   `status: complete`.
 5. The final gate requires **Draft** and `published: false`.
 
-Workshop cartridge: {agent_link}
+Reusable Easy Mode agent: {easy_agent_link}
+
+Task workshop cartridge: {workshop_agent_link}
 
 This is the default Easy path. The person sets the destination and reads the
 verdict; Brainstem + Copilot pull the harness.
@@ -1155,13 +1202,16 @@ blueprint, and decide what production integration would require.
 
 1. Open GitHub Copilot Chat in VS Code and select **Agent mode**.
 2. Open `EASY-MODE-PERSONLESS.md`.
-3. Paste its single sentence.
-4. Copilot hot-loads the task-specific workshop agent into the local Brainstem.
-5. Brainstem retrieves the reviewed GitHub assets, hot-loads the business
+3. Send its three short messages in order: start the engine, build and test the
+   named solution, then deploy the validated Draft.
+4. Copilot installs the reusable AIBAST Easy Mode agent into the local
+   Brainstem.
+5. Easy Mode resolves and hot-loads the task-specific workshop cartridge.
+6. Brainstem retrieves the reviewed GitHub assets, hot-loads the business
    agent, proves it locally, drives Draft setup, and returns front-door actions.
-6. Copilot executes each handoff and sends evidence back until Brainstem
+7. Copilot executes each handoff and sends evidence back until Brainstem
    returns `status: complete`.
-7. Stop at **Draft**. Publishing remains a separate human approval gate.
+8. Stop at **Draft**. Publishing remains a separate human approval gate.
 
 ## Easy mode — without Brainstem (comparison)
 
@@ -1430,6 +1480,22 @@ def render_easy_prompt_cards(ctx: JourneyContext) -> str:
     return "\n".join(cards)
 
 
+def render_personless_prompt_cards(ctx: JourneyContext) -> str:
+    cards = []
+    for index, (title, prompt) in enumerate(personless_prompts(ctx), start=1):
+        target = f"personless-prompt-{index}"
+        cards.append(
+            f"""<article class="prompt-card">
+        <div class="prompt-heading">
+          <div><p class="prompt-kicker">Message {index} of 3</p><h3>{html.escape(title)}</h3></div>
+          <button class="button primary" type="button" data-copy-target="{target}">Copy message</button>
+        </div>
+        <pre class="prompt-block" id="{target}">{html.escape(prompt)}</pre>
+      </article>"""
+        )
+    return "\n".join(cards)
+
+
 def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     assisted_gif = ctx.package / "screenshots" / "assisted" / "copilot-assisted-walkthrough.gif"
     manual_gif = referenced_media_path(
@@ -1479,6 +1545,13 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .engine-flow {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 18px 0; }}
     .engine-node {{ padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface); text-align: center; font-weight: 750; }}
     .comparison-note {{ margin: 14px 0; padding: 14px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft); color: var(--cp-text-muted); }}
+    .outcome-grid {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }}
+    .outcome-card {{ padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }}
+    .outcome-card strong {{ display: block; margin-bottom: 6px; }}
+    .outcome-card p {{ margin: 0; color: var(--cp-text-muted); }}
+    .facilitator-details {{ margin-top: 18px; padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); }}
+    .facilitator-details summary {{ cursor: pointer; font-weight: 750; }}
+    .facilitator-actions {{ display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }}
     .prompt-card {{ margin: 16px 0; padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }}
     .prompt-heading {{ display: flex; align-items: start; justify-content: space-between; gap: 16px; }}
     .prompt-heading h3 {{ margin: 0; }}
@@ -1486,7 +1559,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .prompt-block {{ overflow-x: auto; margin: 14px 0 0; padding: 16px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text); white-space: pre-wrap; word-break: break-word; font-family: Consolas, "Courier New", Courier, monospace; font-size: 13px; line-height: 1.55; }}
     .resource-list {{ columns: 2; padding-left: 22px; }}
     .resource-list li {{ break-inside: avoid; margin-bottom: 10px; }}
-    @media (max-width: 760px) {{ .engine-flow {{ grid-template-columns: 1fr; }} }}
+    @media (max-width: 760px) {{ .engine-flow, .outcome-grid {{ grid-template-columns: 1fr; }} }}
     @media (max-width: 620px) {{ .resource-list {{ columns: 1; }} .prompt-heading {{ display: block; }} .prompt-heading .button {{ margin-top: 12px; }} .easy-lane-switch {{ display: grid; }} }}
   </style>
 </head>
@@ -1515,19 +1588,13 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
       </div>
 
       <div class="easy-lane" data-easy-lane="brainstem">
-        <div class="notice"><strong>Personless harness:</strong> the attendee sets the destination with one sentence. Brainstem is the engine; Copilot pulls the front-door actions until Brainstem returns the verdict.</div>
-        <article class="prompt-card">
-          <div class="prompt-heading">
-            <div><p class="prompt-kicker">One sentence · recommended</p><h3>Run the personless workshop</h3></div>
-            <button class="button primary" type="button" data-copy-target="personless-prompt">Copy sentence</button>
-          </div>
-          <pre class="prompt-block" id="personless-prompt">{html.escape(personless_trigger_sentence(ctx))}</pre>
-        </article>
+        <div class="notice"><strong>Personless harness:</strong> the attendee sends three short messages. Brainstem remembers the active workshop and does the heavy lifting between them.</div>
+        {render_personless_prompt_cards(ctx)}
         <div class="engine-flow" aria-label="Personless harness loop">
-          <div class="engine-node">1. GitHub Copilot</div>
-          <div class="engine-node">2. RAPP Brainstem</div>
-          <div class="engine-node">3. Hot-loaded workshop agent</div>
-          <div class="engine-node">4. Evidence verdict</div>
+          <div class="engine-node">1. Start + install Easy Mode</div>
+          <div class="engine-node">2. Build + test the named solution</div>
+          <div class="engine-node">3. Deploy the validated Draft</div>
+          <div class="engine-node">4. Return the evidence verdict</div>
         </div>
         <label class="checkpoint"><input type="checkbox" data-checkpoint="brainstem-hotload"><span><strong>Brainstem hot-loaded the workshop cartridge</strong><span>The raw task-specific agent entered the live agents directory through the standard import boundary.</span></span></label>
         <label class="checkpoint"><input type="checkbox" data-checkpoint="brainstem-local"><span><strong>The engine proved the business agent locally</strong><span>Source integrity and every locked deterministic case passed without attendee action.</span></span></label>
@@ -1559,11 +1626,22 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     </section>
 
     <section class="card">
-      <h2>Raw resources</h2>
-      <ul class="resource-list">
-        {quest_resources(ctx, resources)}
-      </ul>
-      <p><a href="export-manifest.json">Open the complete raw resource manifest</a> · <a href="exports/{html.escape(ctx.slug)}-source.zip">Download the source bundle</a></p>
+      <h2>What the workshop returns</h2>
+      <div class="outcome-grid">
+        <article class="outcome-card"><strong>Local proof</strong><p>The exact business agent is hot-loaded, integrity checked, and tested against every locked case.</p></article>
+        <article class="outcome-card"><strong>Copilot Studio Draft</strong><p>The reviewed instructions, knowledge, skills, and model are assembled without publishing.</p></article>
+        <article class="outcome-card"><strong>Evidence verdict</strong><p>Brainstem reports case totals, agent identity, Draft state, and any blocker instead of asking the attendee to inspect files.</p></article>
+      </div>
+      <details class="facilitator-details">
+        <summary>Facilitator evidence and portable download</summary>
+        <p>These links support audit, troubleshooting, and offline delivery. They are not attendee steps.</p>
+        <div class="facilitator-actions">
+          <a class="button" href="FIELD-GUIDE.md">Field guide</a>
+          <a class="button" href="evals/transcripts.json">Locked evidence</a>
+          <a class="button" href="export-manifest.json">Audit manifest</a>
+          <a class="button" href="exports/{html.escape(ctx.slug)}-source.zip">Portable bundle</a>
+        </div>
+      </details>
     </section>
   </main>
   <script>

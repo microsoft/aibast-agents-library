@@ -46,6 +46,14 @@ def build_fixture(root):
     source = root / "agents" / "demo_agent.py"
     write(source, "class DemoAgent:\n    pass\n")
     write(
+        root
+        / "agents"
+        / "@aibast-agents-library"
+        / "templates"
+        / "easy_mode_agent.py",
+        "class AIBASTEasyModeAgent:\n    pass\n",
+    )
+    write(
         package / "README.md",
         "# Demo Journey\n\nDomain narrative that the scaffolder must preserve.\n",
     )
@@ -250,7 +258,7 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
 
     assert "Easy mode — with Brainstem (default)" in guide
     assert "Easy mode — without Brainstem (comparison)" in guide
-    assert "single sentence" in guide
+    assert "three short messages" in guide
     assert "Hard mode — literal browser construction" in guide
     assert "Production replacement seams" in guide
     assert "Failure recovery" in guide
@@ -270,14 +278,21 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "View workshop agent" in quest
     assert "Skeptic comparison" in quest
     assert "Fast path — complete Easy mode in one message" in quest
-    assert quest.count("data-copy-target=") == 7
+    assert quest.count("data-copy-target=") == 9
+    assert "Start the Brainstem and go and get the Easy Mode agent" in quest
+    assert "Give me Demo Journey using the Easy Mode agent and test it for me." in quest
+    assert "Deploy it into Copilot Studio for me." in quest
+    assert "What the workshop returns" in quest
+    assert "Facilitator evidence and portable download" in quest
+    assert "Raw resources" not in quest
     assert "literal browser construction" in quest
     assert "Draft and is not published" in quest
     assert "manual-tutorial.html" in quest
     assert "copilot-assisted-walkthrough.gif" in quest
     assert "manual-build-walkthrough.gif" in quest
-    assert "hot-load" in personless
-    assert "ask /chat to run the Demo Journey Agent workshop" in personless
+    assert "Start the Brainstem and go and get the Easy Mode agent" in personless
+    assert "Give me Demo Journey using the Easy Mode agent and test it for me." in personless
+    assert "Deploy it into Copilot Studio for me." in personless
     assert "demo_workshop_agent.py" in personless
     assert "Brainstem + Copilot pull the harness" in personless
     assert "GitHub Copilot Chat running in Agent mode in VS Code" in easy_prompts
@@ -303,6 +318,7 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
         "deployment-recipe",
         "field-guide",
         "easy-personless-guide",
+        "easy-mode-agent",
         "easy-personless-agent",
         "easy-copilot-chat-prompts",
         "settings",
@@ -414,6 +430,7 @@ def test_optional_export_uses_existing_builder_semantics(tmp_path):
         names = set(archive.namelist())
     assert "solutions/demo-journey/FIELD-GUIDE.md" in names
     assert "solutions/demo-journey/EASY-MODE-PERSONLESS.md" in names
+    assert "agents/@aibast-agents-library/templates/easy_mode_agent.py" in names
     assert "solutions/demo-journey/easy/demo_workshop_agent.py" in names
     assert "solutions/demo-journey/EASY-MODE-COPILOT-CHAT.md" in names
     assert "solutions/demo-journey/quest.html" in names

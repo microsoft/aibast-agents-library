@@ -288,10 +288,11 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     ]
 
     for marker in (
-        "one\nsentence",
-        "RAPP Brainstem",
-        "hot-load",
-        "TimeEntryBillingWorkshop",
+        "Start the Brainstem and go and get the Easy Mode agent",
+        "Give me Time Entry and Billing using the Easy Mode agent and test it for me.",
+        "Deploy it into Copilot Studio for me.",
+        "AIBASTEasyModeAgent",
+        "Task workshop cartridge",
         "status: complete",
         "published: false",
     ):
@@ -319,7 +320,12 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     assert "Personless harness" in quest
     assert "Skeptic comparison" in quest
     assert "Fast path — complete Easy mode in one message" in quest
-    assert quest.count("data-copy-target=") == 7
+    assert quest.count("data-copy-target=") == 9
+    assert "Start the Brainstem and go and get the Easy Mode agent" in quest
+    assert "Give me Time Entry and Billing using the Easy Mode agent and test it for me." in quest
+    assert "Deploy it into Copilot Studio for me." in quest
+    assert "What the workshop returns" in quest
+    assert "Raw resources" not in quest
     assert "EASY-MODE-PERSONLESS.md" in quest
     assert "EASY-MODE-COPILOT-CHAT.md" in quest
 

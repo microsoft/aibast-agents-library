@@ -18,13 +18,16 @@ blueprint, and decide what production integration would require.
 
 1. Open GitHub Copilot Chat in VS Code and select **Agent mode**.
 2. Open `EASY-MODE-PERSONLESS.md`.
-3. Paste its single sentence.
-4. Copilot hot-loads the task-specific workshop agent into the local Brainstem.
-5. Brainstem retrieves the reviewed GitHub assets, hot-loads the business
+3. Send its three short messages in order: start the engine, build and test the
+   named solution, then deploy the validated Draft.
+4. Copilot installs the reusable AIBAST Easy Mode agent into the local
+   Brainstem.
+5. Easy Mode resolves and hot-loads the task-specific workshop cartridge.
+6. Brainstem retrieves the reviewed GitHub assets, hot-loads the business
    agent, proves it locally, drives Draft setup, and returns front-door actions.
-6. Copilot executes each handoff and sends evidence back until Brainstem
+7. Copilot executes each handoff and sends evidence back until Brainstem
    returns `status: complete`.
-7. Stop at **Draft**. Publishing remains a separate human approval gate.
+8. Stop at **Draft**. Publishing remains a separate human approval gate.
 
 ## Easy mode — without Brainstem (comparison)
 

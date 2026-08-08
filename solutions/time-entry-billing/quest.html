@@ -176,6 +176,13 @@
     .engine-flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 18px 0; }
     .engine-node { padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface); text-align: center; font-weight: 750; }
     .comparison-note { margin: 14px 0; padding: 14px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft); color: var(--cp-text-muted); }
+    .outcome-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .outcome-card { padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
+    .outcome-card strong { display: block; margin-bottom: 6px; }
+    .outcome-card p { margin: 0; color: var(--cp-text-muted); }
+    .facilitator-details { margin-top: 18px; padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); }
+    .facilitator-details summary { cursor: pointer; font-weight: 750; }
+    .facilitator-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
     .prompt-card { margin: 16px 0; padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
     .prompt-heading { display: flex; align-items: start; justify-content: space-between; gap: 16px; }
     .prompt-heading h3 { margin: 0; }
@@ -183,7 +190,7 @@
     .prompt-block { overflow-x: auto; margin: 14px 0 0; padding: 16px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text); white-space: pre-wrap; word-break: break-word; font-family: Consolas, "Courier New", Courier, monospace; font-size: 13px; line-height: 1.55; }
     .resource-list { columns: 2; padding-left: 22px; }
     .resource-list li { break-inside: avoid; margin-bottom: 10px; }
-    @media (max-width: 760px) { .engine-flow { grid-template-columns: 1fr; } }
+    @media (max-width: 760px) { .engine-flow, .outcome-grid { grid-template-columns: 1fr; } }
     @media (max-width: 620px) { .resource-list { columns: 1; } .prompt-heading { display: block; } .prompt-heading .button { margin-top: 12px; } .easy-lane-switch { display: grid; } }
   </style>
 </head>
@@ -212,19 +219,33 @@
       </div>
 
       <div class="easy-lane" data-easy-lane="brainstem">
-        <div class="notice"><strong>Personless harness:</strong> the attendee sets the destination with one sentence. Brainstem is the engine; Copilot pulls the front-door actions until Brainstem returns the verdict.</div>
+        <div class="notice"><strong>Personless harness:</strong> the attendee sends three short messages. Brainstem remembers the active workshop and does the heavy lifting between them.</div>
         <article class="prompt-card">
-          <div class="prompt-heading">
-            <div><p class="prompt-kicker">One sentence · recommended</p><h3>Run the personless workshop</h3></div>
-            <button class="button primary" type="button" data-copy-target="personless-prompt">Copy sentence</button>
-          </div>
-          <pre class="prompt-block" id="personless-prompt">Use my local RAPP Brainstem at http://localhost:7071: hot-load https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/easy/time_entry_billing_workshop_agent.py through /agents/import, ask /chat to run the Time Entry and Billing Agent workshop, execute every handoff it returns until Brainstem reports complete, and stop before publish.</pre>
-        </article>
+        <div class="prompt-heading">
+          <div><p class="prompt-kicker">Message 1 of 3</p><h3>1. Start the engine</h3></div>
+          <button class="button primary" type="button" data-copy-target="personless-prompt-1">Copy message</button>
+        </div>
+        <pre class="prompt-block" id="personless-prompt-1">Start the Brainstem and go and get the Easy Mode agent from the AIBAST Agents Library.</pre>
+      </article>
+<article class="prompt-card">
+        <div class="prompt-heading">
+          <div><p class="prompt-kicker">Message 2 of 3</p><h3>2. Build and test the solution</h3></div>
+          <button class="button primary" type="button" data-copy-target="personless-prompt-2">Copy message</button>
+        </div>
+        <pre class="prompt-block" id="personless-prompt-2">Give me Time Entry and Billing using the Easy Mode agent and test it for me.</pre>
+      </article>
+<article class="prompt-card">
+        <div class="prompt-heading">
+          <div><p class="prompt-kicker">Message 3 of 3</p><h3>3. Deploy the validated Draft</h3></div>
+          <button class="button primary" type="button" data-copy-target="personless-prompt-3">Copy message</button>
+        </div>
+        <pre class="prompt-block" id="personless-prompt-3">Deploy it into Copilot Studio for me.</pre>
+      </article>
         <div class="engine-flow" aria-label="Personless harness loop">
-          <div class="engine-node">1. GitHub Copilot</div>
-          <div class="engine-node">2. RAPP Brainstem</div>
-          <div class="engine-node">3. Hot-loaded workshop agent</div>
-          <div class="engine-node">4. Evidence verdict</div>
+          <div class="engine-node">1. Start + install Easy Mode</div>
+          <div class="engine-node">2. Build + test the named solution</div>
+          <div class="engine-node">3. Deploy the validated Draft</div>
+          <div class="engine-node">4. Return the evidence verdict</div>
         </div>
         <label class="checkpoint"><input type="checkbox" data-checkpoint="brainstem-hotload"><span><strong>Brainstem hot-loaded the workshop cartridge</strong><span>The raw task-specific agent entered the live agents directory through the standard import boundary.</span></span></label>
         <label class="checkpoint"><input type="checkbox" data-checkpoint="brainstem-local"><span><strong>The engine proved the business agent locally</strong><span>Source integrity and every locked deterministic case passed without attendee action.</span></span></label>
@@ -366,21 +387,22 @@ Must not include: contacted the client, charge was waived</pre>
     </section>
 
     <section class="card">
-      <h2>Raw resources</h2>
-      <ul class="resource-list">
-        <li><a href="deployment.json">Deployment recipe</a> <span class="status">Ready</span></li>
-<li><a href="FIELD-GUIDE.md">Customer field guide</a> <span class="status">Ready</span></li>
-<li><a href="EASY-MODE-PERSONLESS.md">Personless Easy-mode guide</a> <span class="status">Ready</span></li>
-<li><a href="EASY-MODE-COPILOT-CHAT.md">Copilot-only Easy-mode comparison</a> <span class="status">Ready</span></li>
-<li><a href="easy/time_entry_billing_workshop_agent.py">Personless workshop Brainstem agent</a> <span class="status">Ready</span></li>
-<li><a href="manual/GLOBAL-INSTRUCTIONS.md">Manual global instructions</a> <span class="status">Ready</span></li>
-<li><a href="evals/manual-build-evidence.json">Manual build evidence</a> <span class="status">Ready</span></li>
-<li><a href="evals/transcripts.json">Isolated Brainstem transcripts</a> <span class="status">Ready</span></li>
-<li><a href="screenshots/manual/manual-build-walkthrough.gif">Manual browserfilm</a> <span class="status">Ready</span></li>
-<li><a href="screenshots/assisted/copilot-assisted-walkthrough.gif">Copilot-assisted browserfilm</a> <span class="status">Ready</span></li>
-<li><a href="manual-tutorial.html">Manual browser tutorial</a> <span class="status">Ready</span></li>
-      </ul>
-      <p><a href="export-manifest.json">Open the complete raw resource manifest</a> · <a href="exports/time-entry-billing-source.zip">Download the source bundle</a></p>
+      <h2>What the workshop returns</h2>
+      <div class="outcome-grid">
+        <article class="outcome-card"><strong>Local proof</strong><p>The exact business agent is hot-loaded, integrity checked, and tested against every locked case.</p></article>
+        <article class="outcome-card"><strong>Copilot Studio Draft</strong><p>The reviewed instructions, knowledge, skills, and model are assembled without publishing.</p></article>
+        <article class="outcome-card"><strong>Evidence verdict</strong><p>Brainstem reports case totals, agent identity, Draft state, and any blocker instead of asking the attendee to inspect files.</p></article>
+      </div>
+      <details class="facilitator-details">
+        <summary>Facilitator evidence and portable download</summary>
+        <p>These links support audit, troubleshooting, and offline delivery. They are not attendee steps.</p>
+        <div class="facilitator-actions">
+          <a class="button" href="FIELD-GUIDE.md">Field guide</a>
+          <a class="button" href="evals/transcripts.json">Locked evidence</a>
+          <a class="button" href="export-manifest.json">Audit manifest</a>
+          <a class="button" href="exports/time-entry-billing-source.zip">Portable bundle</a>
+        </div>
+      </details>
     </section>
   </main>
   <script>
