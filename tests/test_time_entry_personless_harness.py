@@ -181,6 +181,75 @@ def test_personless_harness_returns_copilot_front_door_handoff(
     assert "complete_workshop" in handoff["instruction"]
 
 
+def test_personless_harness_auto_clones_recorded_draft(
+    tmp_path,
+    monkeypatch,
+):
+    _module, agent, _agents_dir = build_agent(tmp_path)
+    source_root = tmp_path / "source"
+    package = source_root / "solutions" / "time-entry-billing"
+    package.mkdir(parents=True)
+    (source_root / "tools").mkdir()
+    (source_root / "tools" / "promote_solution_draft.py").write_text(
+        "# fixture\n",
+        encoding="utf-8",
+    )
+    environment = "ee67a404-325c-e726-a18a-886fe708ca0b"
+    deployment = {
+        "display_name": "Time Entry and Billing Agent",
+        "copilot_studio": {
+            "validated_pilot": {
+                "display_name": "Time Entry and Billing Pilot",
+                "schema_name": "aibast_TimeEntryandBillingPilot",
+                "environment_id": environment,
+            }
+        },
+    }
+    (package / "deployment.json").write_text(
+        json.dumps(deployment),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(agent, "_find_pac", lambda: "/usr/bin/true")
+    monkeypatch.setattr(
+        agent,
+        "_resolve_environment",
+        lambda _pac, _explicit: (environment, "active-pac-profile"),
+    )
+    commands = []
+
+    def fake_run(command, **_kwargs):
+        commands.append(command)
+        if "clone" in command:
+            project = (
+                agent.workshop_home
+                / "copilot-studio-projects"
+                / "Time Entry and Billing Pilot"
+            )
+            (project / ".mcs").mkdir(parents=True)
+            (project / ".mcs" / "conn.json").write_text(
+                "{}",
+                encoding="utf-8",
+            )
+            return "Clone complete"
+        return json.dumps(
+            {
+                "display_name": "Time Entry and Billing Pilot",
+                "schema_name": "aibast_TimeEntryandBillingPilot",
+                "pushed": True,
+            }
+        )
+
+    monkeypatch.setattr(agent, "_run_command", fake_run)
+
+    result = agent._deploy_draft(source_root, "")
+
+    assert commands[0][1:3] == ["copilot", "clone"]
+    assert "aibast_TimeEntryandBillingPilot" in commands[0]
+    assert "--update-existing" in commands[1]
+    assert result["environment_id"] == environment
+    assert result["published"] is False
+
+
 def test_personless_harness_never_contains_a_publish_command():
     source = AGENT_PATH.read_text(encoding="utf-8")
     assert "pac copilot publish" not in source

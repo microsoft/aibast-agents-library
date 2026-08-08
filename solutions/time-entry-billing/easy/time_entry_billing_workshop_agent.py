@@ -359,7 +359,26 @@ class TimeEntryBillingWorkshop(BasicAgent):
             pac,
             environment_id,
         )
-        project = self.workshop_home / "copilot-studio-project"
+        recipe = json.loads(
+            (
+                source_root
+                / "solutions"
+                / SLUG
+                / "deployment.json"
+            ).read_text(encoding="utf-8")
+        )
+        recorded = recipe.get("copilot_studio", {}).get(
+            "validated_pilot",
+            {},
+        )
+        display_name = str(
+            recorded.get("display_name")
+            or recipe.get("display_name")
+            or "Time Entry and Billing Pilot"
+        )
+        project_root = self.workshop_home / "copilot-studio-projects"
+        project = project_root / display_name
+        connected = (project / ".mcs" / "conn.json").exists()
         command = [
             sys.executable,
             str(source_root / PROMOTE_TOOL_PATH),
@@ -370,14 +389,42 @@ class TimeEntryBillingWorkshop(BasicAgent):
             environment,
             "--push",
         ]
-        if project.exists():
-            command.append("--update-existing")
         child_env = os.environ.copy()
         child_env["PATH"] = (
             str(Path(pac).parent)
             + os.pathsep
             + child_env.get("PATH", "")
         )
+        if (
+            not connected
+            and recorded.get("environment_id") == environment
+            and recorded.get("schema_name")
+        ):
+            if project.exists():
+                shutil.rmtree(project)
+            project_root.mkdir(parents=True, exist_ok=True)
+            self._run_command(
+                [
+                    pac,
+                    "copilot",
+                    "clone",
+                    "--bot",
+                    str(recorded["schema_name"]),
+                    "--environment",
+                    environment,
+                    "--output-dir",
+                    str(project_root),
+                ],
+                env=child_env,
+                timeout=600,
+            )
+            connected = (project / ".mcs" / "conn.json").exists()
+            if not connected:
+                raise WorkshopError(
+                    f"PAC cloned the recorded Draft but {project} is not connected"
+                )
+        if connected:
+            command.append("--update-existing")
         output = self._run_command(
             command,
             cwd=source_root,
