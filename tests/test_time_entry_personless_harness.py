@@ -111,6 +111,42 @@ def test_personless_harness_closes_loop_from_front_door_evidence(tmp_path):
     assert "Personless workshop complete" in completed["verdict"]
 
 
+def test_personless_harness_accepts_captured_marker_contract(tmp_path):
+    _module, agent, _agents_dir = build_agent(tmp_path)
+    agent.perform(
+        operation="run_workshop",
+        deploy_to_studio=False,
+    )
+    cases = json.loads(
+        (ROOT / "tests/demo_cases/time-entry-billing.json").read_text(
+            encoding="utf-8"
+        )
+    )["cases"]
+    evidence = {
+        "status": "Draft",
+        "published": False,
+        "cases": [
+            {
+                "case_id": case["id"],
+                "must_include": case["must_include"],
+                "must_not_include": case["must_not_include"],
+                "passed": True,
+            }
+            for case in cases
+        ],
+    }
+
+    completed = json.loads(
+        agent.perform(
+            operation="complete_workshop",
+            preview_evidence=json.dumps(evidence),
+        )
+    )
+
+    assert completed["status"] == "complete"
+    assert completed["front_door_validation"]["passed"] == 5
+
+
 def test_personless_harness_returns_copilot_front_door_handoff(
     tmp_path,
     monkeypatch,

@@ -481,29 +481,50 @@ class TimeEntryBillingWorkshop(BasicAgent):
                 "Preview evidence must prove status Draft and published false"
             )
         cases = self._fetch_json(CASES_PATH)
-        responses = {
-            str(item.get("case_id")): str(item.get("response") or "")
+        captured = {
+            str(item.get("case_id")): item
             for item in evidence.get("cases", [])
             if isinstance(item, dict)
         }
         results = []
         for case in cases.get("cases", []):
-            response = responses.get(case["id"], "")
+            item = captured.get(case["id"], {})
+            response = str(item.get("response") or "")
             lower = response.lower()
-            missing = [
-                marker
-                for marker in case.get("must_include", [])
-                if marker.lower() not in lower
-            ]
-            forbidden = [
-                marker
-                for marker in case.get("must_not_include", [])
-                if marker.lower() in lower
-            ]
+            if response:
+                missing = [
+                    marker
+                    for marker in case.get("must_include", [])
+                    if marker.lower() not in lower
+                ]
+                forbidden = [
+                    marker
+                    for marker in case.get("must_not_include", [])
+                    if marker.lower() in lower
+                ]
+                passed = not missing and not forbidden
+            else:
+                recorded_include = item.get("must_include") or []
+                recorded_exclude = item.get("must_not_include") or []
+                missing = (
+                    []
+                    if recorded_include == case.get("must_include", [])
+                    else ["captured must_include contract differs"]
+                )
+                forbidden = (
+                    []
+                    if recorded_exclude == case.get("must_not_include", [])
+                    else ["captured must_not_include contract differs"]
+                )
+                passed = (
+                    item.get("passed") is True
+                    and not missing
+                    and not forbidden
+                )
             results.append(
                 {
                     "case_id": case["id"],
-                    "passed": bool(response) and not missing and not forbidden,
+                    "passed": passed,
                     "missing": missing,
                     "forbidden": forbidden,
                 }

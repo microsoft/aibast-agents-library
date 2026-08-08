@@ -55,8 +55,8 @@ WORKSHOPS = {
         "agent_filename": "time_entry_billing_workshop_agent.py",
         "agent_class": "TimeEntryBillingWorkshop",
         "sha256": (
-            "d29ff49496200eecd34c4c5c039d7750"
-            "e25f56302f677fb21f4341188ea83766"
+            "261b6fc077f53a750daabf060aeccb38"
+            "f26093db1d101c6d17281d70b0051d4b"
         ),
         "aliases": {
             "time entry billing",
