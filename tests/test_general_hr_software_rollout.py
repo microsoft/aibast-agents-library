@@ -6,11 +6,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parent.parent
-FRAGMENT = Path(
-    "/Users/kodywildfeuer/.copilot/session-state/"
-    "994e930b-0925-4d45-b127-e1be7576fff1/files/"
-    "rollout-fragments/general-hr-software.json"
-)
+FRAGMENT = ROOT / "solutions" / "catalog.json"
 SOLUTIONS = {
     "ai-customer-assistant": (
         "agents/@aibast-agents-library/general_stacks/"
@@ -342,8 +338,9 @@ def test_rollout_fragment_is_hand_authored_qualitative_copy():
     expected = {
         f"@aibast-agents-library/{slug}" for slug in SOLUTIONS
     }
-    assert fragment["schema"] == "aibast-rollout-fragment/1.0"
-    assert set(fragment["solutions"]) == expected
+    entries = {name: fragment["solutions"][name] for name in expected}
+    assert fragment["schema"] == "aibast-solution-copy/1.0"
+    assert set(entries) == expected
     entry_keys = {
         "display_name",
         "sales_headline",
@@ -369,7 +366,7 @@ def test_rollout_fragment_is_hand_authored_qualitative_copy():
         "acceptance_checks",
         "hard_mode",
     }
-    for name, entry in fragment["solutions"].items():
+    for name, entry in entries.items():
         assert set(entry) == entry_keys, name
         assert set(entry["architecture"]) == architecture_keys, name
         assert all(

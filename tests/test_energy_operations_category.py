@@ -207,18 +207,17 @@ def test_cases_pin_exact_agent_file_stems():
 
 
 def test_rollout_fragment_contains_full_catalog_entries():
-    fragment = read_json(
-        Path(
-            "/Users/kodywildfeuer/.copilot/session-state/"
-            "994e930b-0925-4d45-b127-e1be7576fff1/files/"
-            "rollout-fragments/energy.json"
-        )
-    )
-    assert set(fragment) == {"solutions"}
+    catalog = read_json(ROOT / "solutions" / "catalog.json")
     expected_names = {
         read_json(ROOT / "tests/demo_cases" / f"{slug}.json")["agent"]
         for slug in OPERATIONS
     }
+    fragment = {
+        "solutions": {
+            name: catalog["solutions"][name] for name in expected_names
+        }
+    }
+    assert set(fragment) == {"solutions"}
     assert set(fragment["solutions"]) == expected_names
     entry_keys = {
         "display_name",

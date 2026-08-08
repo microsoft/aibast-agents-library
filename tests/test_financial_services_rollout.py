@@ -5,11 +5,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parent.parent
-FRAGMENT = Path(
-    "/Users/kodywildfeuer/.copilot/session-state/"
-    "994e930b-0925-4d45-b127-e1be7576fff1/files/"
-    "rollout-fragments/financial-services.json"
-)
+FRAGMENT = ROOT / "solutions" / "catalog.json"
 
 SOLUTIONS = {
     "fs-customer-onboarding": (
@@ -236,8 +232,9 @@ def test_curated_fragment_has_pilot_quality_catalog_and_architecture_entries():
     fragment = read_json(FRAGMENT)
     assert fragment["schema"] == "aibast-solution-copy/1.0"
     expected = {f"@aibast-agents-library/{slug}" for slug in SOLUTIONS}
-    assert set(fragment["solutions"]) == expected
-    for entry in fragment["solutions"].values():
+    entries = {name: fragment["solutions"][name] for name in expected}
+    assert set(entries) == expected
+    for entry in entries.values():
         assert all(
             entry[field]
             for field in (

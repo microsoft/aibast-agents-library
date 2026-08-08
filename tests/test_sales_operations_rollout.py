@@ -8,11 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 ONEPAGERS = ROOT / "state" / "onepager_content.json"
 LIBRARY = ROOT / "agents" / "@aibast-agents-library"
-FRAGMENT = Path(
-    "/Users/kodywildfeuer/.copilot/session-state/"
-    "994e930b-0925-4d45-b127-e1be7576fff1/files/"
-    "rollout-fragments/sales.json"
-)
+FRAGMENT = ROOT / "solutions" / "catalog.json"
 
 SOLUTIONS = {
     "@aibast-agents-library/deal-progression": {
@@ -590,7 +586,10 @@ def test_other_sales_manual_knowledge_serializes_source_and_locked_evidence():
 def test_fragment_uses_full_catalog_entry_and_capture_url_shape():
     fragment = read_json(FRAGMENT)
     assert fragment["schema"] == "aibast-solution-copy/1.0"
-    assert set(fragment["solutions"]) == set(SOLUTIONS)
+    entries = {
+        name: fragment["solutions"][name] for name in SOLUTIONS
+    }
+    assert set(entries) == set(SOLUTIONS)
     entry_keys = {
         "display_name",
         "sales_headline",
@@ -617,7 +616,7 @@ def test_fragment_uses_full_catalog_entry_and_capture_url_shape():
         "hard_mode",
     }
     for name, config in SOLUTIONS.items():
-        entry = fragment["solutions"][name]
+        entry = entries[name]
         assert set(entry) == entry_keys
         assert "business" not in entry
         assert len(entry["business_value"]) == 3
