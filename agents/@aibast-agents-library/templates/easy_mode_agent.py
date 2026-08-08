@@ -155,6 +155,26 @@ class AIBASTEasyModeAgent(BasicAgent):
             state_path or os.getenv("AIBAST_EASY_MODE_STATE") or default_state
         ).expanduser().resolve()
 
+    def system_context(self):
+        state = self._read_state()
+        active = state.get("active_solution")
+        if active in WORKSHOPS:
+            display_name = WORKSHOPS[active]["display_name"]
+            return (
+                "AIBAST Easy Mode has an active workshop: "
+                f"{display_name}. Its current state is "
+                f"{state.get('status', 'unknown')}. When the user says "
+                "'deploy it into Copilot Studio', 'deploy it', or equivalent, "
+                "do not ask what 'it' means: call AIBASTEasyModeAgent with "
+                "operation deploy and no solution so it resumes the active "
+                "workshop. Never publish."
+            )
+        return (
+            "AIBAST Easy Mode is installed with no active workshop. When the "
+            "user names a supported solution and asks to use Easy Mode and test "
+            "it, call AIBASTEasyModeAgent with operation build_and_test."
+        )
+
     def perform(self, **kwargs):
         operation = kwargs.get("operation", "status")
         try:

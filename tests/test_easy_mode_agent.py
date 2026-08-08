@@ -102,6 +102,10 @@ def test_easy_mode_builds_and_tests_named_solution_personlessly(tmp_path):
     assert (agents_dir / "time_entry_billing_agent.py").exists()
     assert result["next_prompt"] == "Deploy it into Copilot Studio for me."
     assert result["published"] is False
+    context = agent.system_context()
+    assert "active workshop: Time Entry and Billing" in context
+    assert "do not ask what 'it' means" in context
+    assert "operation deploy" in context
 
 
 def test_easy_mode_deploy_returns_continuation_handoff(tmp_path, monkeypatch):
