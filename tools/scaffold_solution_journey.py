@@ -684,12 +684,33 @@ def collect_resources(ctx: JourneyContext) -> list[Resource]:
         resources,
         seen,
         ctx,
-        "easy-copilot-chat-prompts",
-        "Easy-mode GitHub Copilot Chat prompts",
-        ctx.package / "EASY-MODE-COPILOT-CHAT.md",
-        "Literal end-to-end natural-language messages for GitHub Copilot Chat in VS Code",
+        "easy-personless-guide",
+        "Personless Easy-mode guide",
+        ctx.package / "EASY-MODE-PERSONLESS.md",
+        "One-sentence Brainstem + Copilot workshop trigger and engine loop",
         generated=True,
     )
+    add_resource(
+        resources,
+        seen,
+        ctx,
+        "easy-copilot-chat-prompts",
+        "Copilot-only Easy-mode comparison",
+        ctx.package / "EASY-MODE-COPILOT-CHAT.md",
+        "Detailed GitHub Copilot-only prompts retained for the skeptic comparison",
+        generated=True,
+    )
+    workshop_agent = personless_agent_path(ctx)
+    if workshop_agent:
+        add_resource(
+            resources,
+            seen,
+            ctx,
+            "easy-personless-agent",
+            "Personless workshop Brainstem agent",
+            workshop_agent,
+            "Hot-loaded workshop engine for asset retrieval, local proof, Draft setup, and verdict",
+        )
     add_resource(resources, seen, ctx, "manual-instructions", "Manual global instructions", ctx.package / "manual" / "GLOBAL-INSTRUCTIONS.md", "Reviewed instructions for literal browser construction")
 
     settings = ctx.package / "copilot-studio" / "settings.mcs.yml"
@@ -1026,17 +1047,75 @@ Finish with the local health result, smoke-test result, Copilot Studio display n
     ]
 
 
+def personless_agent_path(ctx: JourneyContext) -> Path | None:
+    agents = sorted((ctx.package / "easy").glob("*_agent.py"))
+    return agents[0] if agents else None
+
+
+def personless_trigger_sentence(ctx: JourneyContext) -> str:
+    agent = personless_agent_path(ctx)
+    if not agent:
+        return (
+            f"Run the {ctx.title} workshop through my local RAPP Brainstem "
+            "personlessly, keep executing every Brainstem handoff until it "
+            "reports complete, and stop before publish."
+        )
+    return (
+        "Use my local RAPP Brainstem at http://localhost:7071: hot-load "
+        f"{ctx.raw(ctx.rel(agent))} through /agents/import, ask /chat to run "
+        f"the {ctx.title} workshop, execute every handoff it returns until "
+        "Brainstem reports complete, and stop before publish."
+    )
+
+
+def render_personless_easy_markdown(ctx: JourneyContext) -> str:
+    agent = personless_agent_path(ctx)
+    agent_link = ctx.raw(ctx.rel(agent)) if agent else "Agent cartridge pending"
+    return f"""# {ctx.title} — personless Easy mode
+
+Open GitHub Copilot Chat in VS Code, select **Agent mode**, and paste this one
+sentence:
+
+```text
+{personless_trigger_sentence(ctx)}
+```
+
+## What pulls the harness
+
+1. GitHub Copilot checks the local Brainstem and imports the raw workshop
+   cartridge through `/agents/import`.
+2. Brainstem invokes `TimeEntryBillingWorkshop`, which downloads the reviewed
+   GitHub assets, verifies their pinned source hash, and hot-loads the business
+   agent into its live agents directory.
+3. The workshop cartridge runs every locked local case, prepares or pushes the
+   Copilot Studio Draft through the active PAC environment, and returns the
+   exact front-door actions still required.
+4. Copilot performs those actions, sends the captured Preview evidence back to
+   Brainstem, and continues until Brainstem returns `status: complete`.
+5. The final gate requires **Draft** and `published: false`.
+
+Workshop cartridge: {agent_link}
+
+This is the default Easy path. The person sets the destination and reads the
+verdict; Brainstem + Copilot pull the harness.
+"""
+
+
 def render_easy_copilot_chat_markdown(ctx: JourneyContext) -> str:
     sections = "\n\n".join(
         f"## {title}\n\n```text\n{prompt}\n```"
         for title, prompt in easy_copilot_chat_prompts(ctx)
     )
-    return f"""# {ctx.title} — Easy mode in GitHub Copilot Chat
+    return f"""# {ctx.title} — Copilot-only Easy mode comparison
 
 Open this repository in VS Code, open **GitHub Copilot Chat**, select **Agent
 mode**, and paste either the fast-path message or messages 1–5 in order.
 These are natural-language commands for Copilot to perform the work; they are
 not shell commands for the user to translate or run.
+
+This comparison lane intentionally omits Brainstem so workshop participants can
+answer “why not just use GitHub Copilot by itself?” It is retained behind the
+default Brainstem + Copilot personless lane.
 
 {sections}
 
@@ -1072,18 +1151,25 @@ blueprint, and decide what production integration would require.
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
-## Easy mode — GitHub Copilot Chat in VS Code
+## Easy mode — with Brainstem (default)
 
-1. Open this repository in VS Code.
-2. Open GitHub Copilot Chat and select **Agent mode**.
-3. Open `EASY-MODE-COPILOT-CHAT.md`.
-4. Paste the fast-path message, or paste messages 1–5 in order.
-5. Let Copilot own terminal commands, file edits, plugin calls, validation, and
-   evidence gathering. Do not translate its natural-language instructions into
-   shell commands for the user.
-6. Stop at **Draft**. Publishing remains a separate human approval gate.
+1. Open GitHub Copilot Chat in VS Code and select **Agent mode**.
+2. Open `EASY-MODE-PERSONLESS.md`.
+3. Paste its single sentence.
+4. Copilot hot-loads the task-specific workshop agent into the local Brainstem.
+5. Brainstem retrieves the reviewed GitHub assets, hot-loads the business
+   agent, proves it locally, drives Draft setup, and returns front-door actions.
+6. Copilot executes each handoff and sends evidence back until Brainstem
+   returns `status: complete`.
+7. Stop at **Draft**. Publishing remains a separate human approval gate.
 
-The exact copy/paste messages include every recorded case prompt:
+## Easy mode — without Brainstem (comparison)
+
+`EASY-MODE-COPILOT-CHAT.md` retains the detailed GitHub Copilot-only prompts
+for participants who ask why Copilot cannot do the same work alone. That lane
+keeps the person in the harness; it is deliberately secondary.
+
+Both Easy lanes preserve every recorded case prompt:
 
 {markdown_list(easy_case_lines(ctx), "No Easy-mode case evidence is recorded; treat this checkpoint as pending.")}
 
@@ -1303,6 +1389,8 @@ def quest_resources(ctx: JourneyContext, resources: list[Resource]) -> str:
     preferred = {
         "deployment-recipe",
         "field-guide",
+        "easy-personless-guide",
+        "easy-personless-agent",
         "easy-copilot-chat-prompts",
         "manual-instructions",
         "brainstem-transcripts",
@@ -1359,6 +1447,12 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         if manual_gif.exists()
         else '<span class="button" aria-disabled="true">Manual film pending</span>'
     )
+    workshop_agent = personless_agent_path(ctx)
+    workshop_agent_link = (
+        f'<a class="button" href="{html.escape(workshop_agent.relative_to(ctx.package).as_posix())}">View workshop agent</a>'
+        if workshop_agent
+        else '<span class="button" aria-disabled="true">Workshop agent pending</span>'
+    )
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -1378,6 +1472,13 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .checkpoint strong, .checkpoint span {{ display: block; }}
     .checkpoint span {{ color: var(--cp-text-muted); }}
     .path[hidden] {{ display: none; }}
+    .easy-lane-switch {{ display: inline-flex; gap: 6px; margin: 16px 0; padding: 5px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); }}
+    .easy-lane-button {{ border: 0; border-radius: 8px; padding: 10px 14px; background: transparent; color: var(--cp-text-muted); cursor: pointer; font-weight: 750; }}
+    .easy-lane-button.active {{ background: var(--cp-accent); color: var(--cp-accent-fg); }}
+    .easy-lane[hidden] {{ display: none; }}
+    .engine-flow {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 18px 0; }}
+    .engine-node {{ padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface); text-align: center; font-weight: 750; }}
+    .comparison-note {{ margin: 14px 0; padding: 14px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft); color: var(--cp-text-muted); }}
     .prompt-card {{ margin: 16px 0; padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }}
     .prompt-heading {{ display: flex; align-items: start; justify-content: space-between; gap: 16px; }}
     .prompt-heading h3 {{ margin: 0; }}
@@ -1385,7 +1486,8 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .prompt-block {{ overflow-x: auto; margin: 14px 0 0; padding: 16px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text); white-space: pre-wrap; word-break: break-word; font-family: Consolas, "Courier New", Courier, monospace; font-size: 13px; line-height: 1.55; }}
     .resource-list {{ columns: 2; padding-left: 22px; }}
     .resource-list li {{ break-inside: avoid; margin-bottom: 10px; }}
-    @media (max-width: 620px) {{ .resource-list {{ columns: 1; }} .prompt-heading {{ display: block; }} .prompt-heading .button {{ margin-top: 12px; }} }}
+    @media (max-width: 760px) {{ .engine-flow {{ grid-template-columns: 1fr; }} }}
+    @media (max-width: 620px) {{ .resource-list {{ columns: 1; }} .prompt-heading {{ display: block; }} .prompt-heading .button {{ margin-top: 12px; }} .easy-lane-switch {{ display: grid; }} }}
   </style>
 </head>
 <body>
@@ -1397,7 +1499,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     <section class="hero">
       <p class="eyebrow">Evidence-grounded customer journey</p>
       <h1>{html.escape(ctx.title)}</h1>
-      <p class="lede">Choose literal GitHub Copilot Chat messages in Easy mode or literal browser construction in Hard mode. Progress resumes locally in this browser.</p>
+      <p class="lede">Default to the Brainstem + Copilot personless harness, compare it with Copilot alone, or reproduce every click in Hard mode.</p>
       <div class="notice"><strong>Boundary:</strong> synthetic qualitative evidence only—not a customer KPI, measured production result, live connection, or publication approval.</div>
       <div class="mode-switch" role="tablist">
         <button class="mode active" data-mode="easy" role="tab">Easy</button>
@@ -1406,15 +1508,44 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     </section>
 
     <section class="path" data-path="easy">
-      <h2>Easy mode — GitHub Copilot Chat in VS Code</h2>
-      <div class="notice"><strong>Where to run these:</strong> open this repository in VS Code, open GitHub Copilot Chat, select Agent mode, and paste a message exactly as shown. These are natural-language commands for Copilot—not shell commands for the user.</div>
-      <p>Use the fast-path message for a one-shot build, or paste messages 1–5 in order when you want to review every checkpoint.</p>
-      {render_easy_prompt_cards(ctx)}
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="easy-source"><span><strong>Copilot inspected the source package</strong><span>It reported the source, tool, model, knowledge, skills, locked cases, and safety boundary before editing.</span></span></label>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="easy-build"><span><strong>Copilot completed local and Copilot Studio setup</strong><span>GitHub Copilot owned terminal and plugin actions, preserved reviewed files, and did not ask the user to translate messages into commands.</span></span></label>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="easy-cases"><span><strong>Copilot replayed every locked case</strong><span>It used exact prompts and identifiers and recorded pass/fail evidence without retrying until success.</span></span></label>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="easy-draft"><span><strong>Stop at the Draft gate</strong><span>The agent must remain Draft and is not published. Publishing needs separate human approval.</span></span></label>
-      <p><a class="button" href="EASY-MODE-COPILOT-CHAT.md">Open all prompts as Markdown</a> {assisted_link}</p>
+      <h2>Easy mode</h2>
+      <div class="easy-lane-switch" role="tablist" aria-label="Easy mode harness">
+        <button class="easy-lane-button active" type="button" data-easy-lane-button="brainstem">With Brainstem — default</button>
+        <button class="easy-lane-button" type="button" data-easy-lane-button="copilot">GitHub Copilot only</button>
+      </div>
+
+      <div class="easy-lane" data-easy-lane="brainstem">
+        <div class="notice"><strong>Personless harness:</strong> the attendee sets the destination with one sentence. Brainstem is the engine; Copilot pulls the front-door actions until Brainstem returns the verdict.</div>
+        <article class="prompt-card">
+          <div class="prompt-heading">
+            <div><p class="prompt-kicker">One sentence · recommended</p><h3>Run the personless workshop</h3></div>
+            <button class="button primary" type="button" data-copy-target="personless-prompt">Copy sentence</button>
+          </div>
+          <pre class="prompt-block" id="personless-prompt">{html.escape(personless_trigger_sentence(ctx))}</pre>
+        </article>
+        <div class="engine-flow" aria-label="Personless harness loop">
+          <div class="engine-node">1. GitHub Copilot</div>
+          <div class="engine-node">2. RAPP Brainstem</div>
+          <div class="engine-node">3. Hot-loaded workshop agent</div>
+          <div class="engine-node">4. Evidence verdict</div>
+        </div>
+        <label class="checkpoint"><input type="checkbox" data-checkpoint="brainstem-hotload"><span><strong>Brainstem hot-loaded the workshop cartridge</strong><span>The raw task-specific agent entered the live agents directory through the standard import boundary.</span></span></label>
+        <label class="checkpoint"><input type="checkbox" data-checkpoint="brainstem-local"><span><strong>The engine proved the business agent locally</strong><span>Source integrity and every locked deterministic case passed without attendee action.</span></span></label>
+        <label class="checkpoint"><input type="checkbox" data-checkpoint="brainstem-studio"><span><strong>Copilot executed Brainstem’s front-door handoffs</strong><span>The Draft was prepared, Preview evidence returned to Brainstem, and the loop continued without a person pulling each step.</span></span></label>
+        <label class="checkpoint"><input type="checkbox" data-checkpoint="brainstem-verdict"><span><strong>Brainstem reported complete</strong><span>The final state proves Draft, published false, and every locked case passed.</span></span></label>
+        <p><a class="button" href="EASY-MODE-PERSONLESS.md">Open personless guide</a> {workshop_agent_link} <a class="button" href="https://kodyw.com/the-personless-harness/" target="_blank" rel="noopener">Why personless? ↗</a></p>
+      </div>
+
+      <div class="easy-lane" data-easy-lane="copilot" hidden>
+        <div class="comparison-note"><strong>Skeptic comparison:</strong> this lane proves GitHub Copilot can perform the work without Brainstem, but the attendee remains the horse—feeding the sequence, checking each stage, and deciding what happens next.</div>
+        <p>Use the fast-path prompt or messages 1–5 in order. These detailed prompts remain intentionally behind the Brainstem-default lane.</p>
+        {render_easy_prompt_cards(ctx)}
+        <label class="checkpoint"><input type="checkbox" data-checkpoint="copilot-source"><span><strong>Copilot inspected the source package</strong><span>It reported the source, tool, model, knowledge, skills, locked cases, and safety boundary before editing.</span></span></label>
+        <label class="checkpoint"><input type="checkbox" data-checkpoint="copilot-build"><span><strong>Copilot completed local and Copilot Studio setup</strong><span>GitHub Copilot owned terminal and plugin actions, but the user still supplied the detailed harness.</span></span></label>
+        <label class="checkpoint"><input type="checkbox" data-checkpoint="copilot-cases"><span><strong>Copilot replayed every locked case</strong><span>It used exact prompts and identifiers and recorded pass/fail evidence without retrying until success.</span></span></label>
+        <label class="checkpoint"><input type="checkbox" data-checkpoint="copilot-draft"><span><strong>Stop at the Draft gate</strong><span>The agent must remain Draft and is not published. Publishing needs separate human approval.</span></span></label>
+        <p><a class="button" href="EASY-MODE-COPILOT-CHAT.md">Open Copilot-only prompts</a> {assisted_link}</p>
+      </div>
     </section>
 
     <section class="path" data-path="hard" hidden>
@@ -1438,9 +1569,12 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
   <script>
     (() => {{
       const modeKey = "aibast:{html.escape(ctx.slug)}:quest-mode";
+      const easyLaneKey = "aibast:{html.escape(ctx.slug)}:easy-lane";
       const progressKey = "aibast:{html.escape(ctx.slug)}:quest-progress";
       const buttons = Array.from(document.querySelectorAll("[data-mode]"));
       const paths = Array.from(document.querySelectorAll("[data-path]"));
+      const easyLaneButtons = Array.from(document.querySelectorAll("[data-easy-lane-button]"));
+      const easyLanes = Array.from(document.querySelectorAll("[data-easy-lane]"));
       const boxes = Array.from(document.querySelectorAll("[data-checkpoint]"));
       let saved = {{}};
       try {{ saved = JSON.parse(localStorage.getItem(progressKey) || "{{}}"); }} catch (_error) {{ saved = {{}}; }}
@@ -1457,6 +1591,12 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         localStorage.setItem(modeKey, mode);
       }}
       buttons.forEach((button) => button.addEventListener("click", () => selectMode(button.dataset.mode)));
+      function selectEasyLane(lane) {{
+        easyLaneButtons.forEach((button) => button.classList.toggle("active", button.dataset.easyLaneButton === lane));
+        easyLanes.forEach((panel) => {{ panel.hidden = panel.dataset.easyLane !== lane; }});
+        localStorage.setItem(easyLaneKey, lane);
+      }}
+      easyLaneButtons.forEach((button) => button.addEventListener("click", () => selectEasyLane(button.dataset.easyLaneButton)));
       document.querySelectorAll("[data-copy-target]").forEach((button) => {{
         button.addEventListener("click", () => {{
           const target = document.getElementById(button.dataset.copyTarget);
@@ -1473,6 +1613,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
           }});
         }});
       }});
+      selectEasyLane(localStorage.getItem(easyLaneKey) || "brainstem");
       selectMode(localStorage.getItem(modeKey) || "easy");
     }})();
   </script>
@@ -1538,7 +1679,11 @@ def readme_block(ctx: JourneyContext, resources: list[Resource]) -> str:
     rows = [
         ("Customer field guide", f"`solutions/{ctx.slug}/FIELD-GUIDE.md`"),
         (
-            "Easy-mode GitHub Copilot Chat prompts",
+            "Personless Easy-mode guide",
+            f"`solutions/{ctx.slug}/EASY-MODE-PERSONLESS.md`",
+        ),
+        (
+            "Copilot-only Easy-mode comparison",
             f"`solutions/{ctx.slug}/EASY-MODE-COPILOT-CHAT.md`",
         ),
         ("Guided Easy/Hard quest", f"`solutions/{ctx.slug}/quest.html`"),
@@ -1590,6 +1735,7 @@ def write_outputs(ctx: JourneyContext) -> list[Resource]:
     resources = collect_resources(ctx)
     outputs = {
         ctx.package / "FIELD-GUIDE.md": render_field_guide(ctx),
+        ctx.package / "EASY-MODE-PERSONLESS.md": render_personless_easy_markdown(ctx),
         ctx.package / "EASY-MODE-COPILOT-CHAT.md": render_easy_copilot_chat_markdown(ctx),
         ctx.package / "quest.html": render_quest(ctx, resources),
         ctx.package / "manual-tutorial.html": render_manual_tutorial(ctx),

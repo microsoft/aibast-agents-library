@@ -276,6 +276,9 @@ def test_every_locked_case_has_factual_evidence_in_manual_knowledge():
 
 def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     package = ROOT / "solutions" / "time-entry-billing"
+    personless = (package / "EASY-MODE-PERSONLESS.md").read_text(
+        encoding="utf-8"
+    )
     prompts = (package / "EASY-MODE-COPILOT-CHAT.md").read_text(
         encoding="utf-8"
     )
@@ -284,6 +287,15 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
         "cases"
     ]
 
+    for marker in (
+        "one\nsentence",
+        "RAPP Brainstem",
+        "hot-load",
+        "TimeEntryBillingWorkshop",
+        "status: complete",
+        "published: false",
+    ):
+        assert marker in personless
     for marker in (
         "GitHub Copilot Chat",
         "Agent mode",
@@ -302,9 +314,13 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
         for value in case["must_not_include"]:
             assert value in prompts
 
-    assert "Easy mode — GitHub Copilot Chat in VS Code" in quest
+    assert "With Brainstem — default" in quest
+    assert "GitHub Copilot only" in quest
+    assert "Personless harness" in quest
+    assert "Skeptic comparison" in quest
     assert "Fast path — complete Easy mode in one message" in quest
-    assert quest.count("data-copy-target=") == 6
+    assert quest.count("data-copy-target=") == 7
+    assert "EASY-MODE-PERSONLESS.md" in quest
     assert "EASY-MODE-COPILOT-CHAT.md" in quest
 
 

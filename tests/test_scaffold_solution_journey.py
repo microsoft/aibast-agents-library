@@ -111,6 +111,10 @@ def build_fixture(root):
         package / "manual" / "GLOBAL-INSTRUCTIONS.md",
         "# Role\n\nUse only synthetic fixture records.\n",
     )
+    write(
+        package / "easy" / "demo_workshop_agent.py",
+        "class DemoWorkshop:\n    pass\n",
+    )
     write(package / "manual" / "knowledge" / "synthetic-records.md")
     write(package / "manual" / "knowledge" / "review-rules.md")
     write(package / "manual" / "skills" / "review" / "SKILL.md", "---\nname: review\n---\n")
@@ -233,6 +237,9 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     scaffold("demo-journey", root=tmp_path)
 
     guide = (package / "FIELD-GUIDE.md").read_text(encoding="utf-8")
+    personless = (package / "EASY-MODE-PERSONLESS.md").read_text(
+        encoding="utf-8"
+    )
     easy_prompts = (package / "EASY-MODE-COPILOT-CHAT.md").read_text(
         encoding="utf-8"
     )
@@ -241,8 +248,9 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     manifest = json.loads((package / "export-manifest.json").read_text(encoding="utf-8"))
     readme = (package / "README.md").read_text(encoding="utf-8")
 
-    assert "Easy mode — GitHub Copilot Chat in VS Code" in guide
-    assert "natural-language instructions" in guide
+    assert "Easy mode — with Brainstem (default)" in guide
+    assert "Easy mode — without Brainstem (comparison)" in guide
+    assert "single sentence" in guide
     assert "Hard mode — literal browser construction" in guide
     assert "Production replacement seams" in guide
     assert "Failure recovery" in guide
@@ -256,16 +264,24 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
         assert DARK_THEME_VARIABLES in generated
         assert "Clawpilot" in generated
         assert "localStorage" in generated
-    assert "Easy mode — GitHub Copilot Chat in VS Code" in quest
-    assert "select Agent mode" in quest
+    assert "With Brainstem — default" in quest
+    assert "GitHub Copilot only" in quest
+    assert "Personless harness" in quest
+    assert "View workshop agent" in quest
+    assert "Skeptic comparison" in quest
     assert "Fast path — complete Easy mode in one message" in quest
-    assert quest.count("data-copy-target=") == 6
+    assert quest.count("data-copy-target=") == 7
     assert "literal browser construction" in quest
     assert "Draft and is not published" in quest
     assert "manual-tutorial.html" in quest
     assert "copilot-assisted-walkthrough.gif" in quest
     assert "manual-build-walkthrough.gif" in quest
+    assert "hot-load" in personless
+    assert "ask /chat to run the Demo Journey Agent workshop" in personless
+    assert "demo_workshop_agent.py" in personless
+    assert "Brainstem + Copilot pull the harness" in personless
     assert "GitHub Copilot Chat running in Agent mode in VS Code" in easy_prompts
+    assert "Copilot-only Easy mode comparison" in easy_prompts
     assert "natural-language commands" in easy_prompts
     assert "Show the synthetic review." in easy_prompts
     assert "Do not ask me to open a terminal" in easy_prompts
@@ -286,6 +302,8 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
         "portable-agent",
         "deployment-recipe",
         "field-guide",
+        "easy-personless-guide",
+        "easy-personless-agent",
         "easy-copilot-chat-prompts",
         "settings",
         "agent-sync",
@@ -395,6 +413,8 @@ def test_optional_export_uses_existing_builder_semantics(tmp_path):
     with zipfile.ZipFile(bundle) as archive:
         names = set(archive.namelist())
     assert "solutions/demo-journey/FIELD-GUIDE.md" in names
+    assert "solutions/demo-journey/EASY-MODE-PERSONLESS.md" in names
+    assert "solutions/demo-journey/easy/demo_workshop_agent.py" in names
     assert "solutions/demo-journey/EASY-MODE-COPILOT-CHAT.md" in names
     assert "solutions/demo-journey/quest.html" in names
     assert "solutions/demo-journey/manual-tutorial.html" in names

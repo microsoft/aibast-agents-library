@@ -169,6 +169,13 @@
     .checkpoint strong, .checkpoint span { display: block; }
     .checkpoint span { color: var(--cp-text-muted); }
     .path[hidden] { display: none; }
+    .easy-lane-switch { display: inline-flex; gap: 6px; margin: 16px 0; padding: 5px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); }
+    .easy-lane-button { border: 0; border-radius: 8px; padding: 10px 14px; background: transparent; color: var(--cp-text-muted); cursor: pointer; font-weight: 750; }
+    .easy-lane-button.active { background: var(--cp-accent); color: var(--cp-accent-fg); }
+    .easy-lane[hidden] { display: none; }
+    .engine-flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 18px 0; }
+    .engine-node { padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface); text-align: center; font-weight: 750; }
+    .comparison-note { margin: 14px 0; padding: 14px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft); color: var(--cp-text-muted); }
     .prompt-card { margin: 16px 0; padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
     .prompt-heading { display: flex; align-items: start; justify-content: space-between; gap: 16px; }
     .prompt-heading h3 { margin: 0; }
@@ -176,7 +183,8 @@
     .prompt-block { overflow-x: auto; margin: 14px 0 0; padding: 16px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text); white-space: pre-wrap; word-break: break-word; font-family: Consolas, "Courier New", Courier, monospace; font-size: 13px; line-height: 1.55; }
     .resource-list { columns: 2; padding-left: 22px; }
     .resource-list li { break-inside: avoid; margin-bottom: 10px; }
-    @media (max-width: 620px) { .resource-list { columns: 1; } .prompt-heading { display: block; } .prompt-heading .button { margin-top: 12px; } }
+    @media (max-width: 760px) { .engine-flow { grid-template-columns: 1fr; } }
+    @media (max-width: 620px) { .resource-list { columns: 1; } .prompt-heading { display: block; } .prompt-heading .button { margin-top: 12px; } .easy-lane-switch { display: grid; } }
   </style>
 </head>
 <body>
@@ -188,7 +196,7 @@
     <section class="hero">
       <p class="eyebrow">Evidence-grounded customer journey</p>
       <h1>Time Entry and Billing Agent</h1>
-      <p class="lede">Choose literal GitHub Copilot Chat messages in Easy mode or literal browser construction in Hard mode. Progress resumes locally in this browser.</p>
+      <p class="lede">Default to the Brainstem + Copilot personless harness, compare it with Copilot alone, or reproduce every click in Hard mode.</p>
       <div class="notice"><strong>Boundary:</strong> synthetic qualitative evidence only—not a customer KPI, measured production result, live connection, or publication approval.</div>
       <div class="mode-switch" role="tablist">
         <button class="mode active" data-mode="easy" role="tab">Easy</button>
@@ -197,10 +205,38 @@
     </section>
 
     <section class="path" data-path="easy">
-      <h2>Easy mode — GitHub Copilot Chat in VS Code</h2>
-      <div class="notice"><strong>Where to run these:</strong> open this repository in VS Code, open GitHub Copilot Chat, select Agent mode, and paste a message exactly as shown. These are natural-language commands for Copilot—not shell commands for the user.</div>
-      <p>Use the fast-path message for a one-shot build, or paste messages 1–5 in order when you want to review every checkpoint.</p>
-      <article class="prompt-card">
+      <h2>Easy mode</h2>
+      <div class="easy-lane-switch" role="tablist" aria-label="Easy mode harness">
+        <button class="easy-lane-button active" type="button" data-easy-lane-button="brainstem">With Brainstem — default</button>
+        <button class="easy-lane-button" type="button" data-easy-lane-button="copilot">GitHub Copilot only</button>
+      </div>
+
+      <div class="easy-lane" data-easy-lane="brainstem">
+        <div class="notice"><strong>Personless harness:</strong> the attendee sets the destination with one sentence. Brainstem is the engine; Copilot pulls the front-door actions until Brainstem returns the verdict.</div>
+        <article class="prompt-card">
+          <div class="prompt-heading">
+            <div><p class="prompt-kicker">One sentence · recommended</p><h3>Run the personless workshop</h3></div>
+            <button class="button primary" type="button" data-copy-target="personless-prompt">Copy sentence</button>
+          </div>
+          <pre class="prompt-block" id="personless-prompt">Use my local RAPP Brainstem at http://localhost:7071: hot-load https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/easy/time_entry_billing_workshop_agent.py through /agents/import, ask /chat to run the Time Entry and Billing Agent workshop, execute every handoff it returns until Brainstem reports complete, and stop before publish.</pre>
+        </article>
+        <div class="engine-flow" aria-label="Personless harness loop">
+          <div class="engine-node">1. GitHub Copilot</div>
+          <div class="engine-node">2. RAPP Brainstem</div>
+          <div class="engine-node">3. Hot-loaded workshop agent</div>
+          <div class="engine-node">4. Evidence verdict</div>
+        </div>
+        <label class="checkpoint"><input type="checkbox" data-checkpoint="brainstem-hotload"><span><strong>Brainstem hot-loaded the workshop cartridge</strong><span>The raw task-specific agent entered the live agents directory through the standard import boundary.</span></span></label>
+        <label class="checkpoint"><input type="checkbox" data-checkpoint="brainstem-local"><span><strong>The engine proved the business agent locally</strong><span>Source integrity and every locked deterministic case passed without attendee action.</span></span></label>
+        <label class="checkpoint"><input type="checkbox" data-checkpoint="brainstem-studio"><span><strong>Copilot executed Brainstem’s front-door handoffs</strong><span>The Draft was prepared, Preview evidence returned to Brainstem, and the loop continued without a person pulling each step.</span></span></label>
+        <label class="checkpoint"><input type="checkbox" data-checkpoint="brainstem-verdict"><span><strong>Brainstem reported complete</strong><span>The final state proves Draft, published false, and every locked case passed.</span></span></label>
+        <p><a class="button" href="EASY-MODE-PERSONLESS.md">Open personless guide</a> <a class="button" href="easy/time_entry_billing_workshop_agent.py">View workshop agent</a> <a class="button" href="https://kodyw.com/the-personless-harness/" target="_blank" rel="noopener">Why personless? ↗</a></p>
+      </div>
+
+      <div class="easy-lane" data-easy-lane="copilot" hidden>
+        <div class="comparison-note"><strong>Skeptic comparison:</strong> this lane proves GitHub Copilot can perform the work without Brainstem, but the attendee remains the horse—feeding the sequence, checking each stage, and deciding what happens next.</div>
+        <p>Use the fast-path prompt or messages 1–5 in order. These detailed prompts remain intentionally behind the Brainstem-default lane.</p>
+        <article class="prompt-card">
         <div class="prompt-heading">
           <div><p class="prompt-kicker">GitHub Copilot Chat message 1</p><h3>Fast path — complete Easy mode in one message</h3></div>
           <button class="button primary" type="button" data-copy-target="easy-prompt-1">Copy prompt</button>
@@ -311,11 +347,12 @@ Must not include: contacted the client, charge was waived</pre>
         </div>
         <pre class="prompt-block" id="easy-prompt-6">You are GitHub Copilot Chat running in Agent mode in VS Code. Perform the final Easy-mode audit for Time Entry and Billing Agent. Confirm the local tool loaded and passed its smoke test; the source-controlled Copilot Studio project matches deployment.json; model `Claude Sonnet 4.6`, exact instructions, 2 knowledge files, 5 skills, and all locked cases are present; web search and unapproved tools are absent; every case passed; no external side effect occurred; and the agent is Draft and unpublished. Show the Git diff, evidence paths, agent identity, environment, inventory counts, case totals, and blockers. Do not publish or commit unless I explicitly ask.</pre>
       </article>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="easy-source"><span><strong>Copilot inspected the source package</strong><span>It reported the source, tool, model, knowledge, skills, locked cases, and safety boundary before editing.</span></span></label>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="easy-build"><span><strong>Copilot completed local and Copilot Studio setup</strong><span>GitHub Copilot owned terminal and plugin actions, preserved reviewed files, and did not ask the user to translate messages into commands.</span></span></label>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="easy-cases"><span><strong>Copilot replayed every locked case</strong><span>It used exact prompts and identifiers and recorded pass/fail evidence without retrying until success.</span></span></label>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="easy-draft"><span><strong>Stop at the Draft gate</strong><span>The agent must remain Draft and is not published. Publishing needs separate human approval.</span></span></label>
-      <p><a class="button" href="EASY-MODE-COPILOT-CHAT.md">Open all prompts as Markdown</a> <a class="button" href="screenshots/assisted/copilot-assisted-walkthrough.gif">Watch assisted film</a></p>
+        <label class="checkpoint"><input type="checkbox" data-checkpoint="copilot-source"><span><strong>Copilot inspected the source package</strong><span>It reported the source, tool, model, knowledge, skills, locked cases, and safety boundary before editing.</span></span></label>
+        <label class="checkpoint"><input type="checkbox" data-checkpoint="copilot-build"><span><strong>Copilot completed local and Copilot Studio setup</strong><span>GitHub Copilot owned terminal and plugin actions, but the user still supplied the detailed harness.</span></span></label>
+        <label class="checkpoint"><input type="checkbox" data-checkpoint="copilot-cases"><span><strong>Copilot replayed every locked case</strong><span>It used exact prompts and identifiers and recorded pass/fail evidence without retrying until success.</span></span></label>
+        <label class="checkpoint"><input type="checkbox" data-checkpoint="copilot-draft"><span><strong>Stop at the Draft gate</strong><span>The agent must remain Draft and is not published. Publishing needs separate human approval.</span></span></label>
+        <p><a class="button" href="EASY-MODE-COPILOT-CHAT.md">Open Copilot-only prompts</a> <a class="button" href="screenshots/assisted/copilot-assisted-walkthrough.gif">Watch assisted film</a></p>
+      </div>
     </section>
 
     <section class="path" data-path="hard" hidden>
@@ -333,7 +370,9 @@ Must not include: contacted the client, charge was waived</pre>
       <ul class="resource-list">
         <li><a href="deployment.json">Deployment recipe</a> <span class="status">Ready</span></li>
 <li><a href="FIELD-GUIDE.md">Customer field guide</a> <span class="status">Ready</span></li>
-<li><a href="EASY-MODE-COPILOT-CHAT.md">Easy-mode GitHub Copilot Chat prompts</a> <span class="status">Ready</span></li>
+<li><a href="EASY-MODE-PERSONLESS.md">Personless Easy-mode guide</a> <span class="status">Ready</span></li>
+<li><a href="EASY-MODE-COPILOT-CHAT.md">Copilot-only Easy-mode comparison</a> <span class="status">Ready</span></li>
+<li><a href="easy/time_entry_billing_workshop_agent.py">Personless workshop Brainstem agent</a> <span class="status">Ready</span></li>
 <li><a href="manual/GLOBAL-INSTRUCTIONS.md">Manual global instructions</a> <span class="status">Ready</span></li>
 <li><a href="evals/manual-build-evidence.json">Manual build evidence</a> <span class="status">Ready</span></li>
 <li><a href="evals/transcripts.json">Isolated Brainstem transcripts</a> <span class="status">Ready</span></li>
@@ -347,9 +386,12 @@ Must not include: contacted the client, charge was waived</pre>
   <script>
     (() => {
       const modeKey = "aibast:time-entry-billing:quest-mode";
+      const easyLaneKey = "aibast:time-entry-billing:easy-lane";
       const progressKey = "aibast:time-entry-billing:quest-progress";
       const buttons = Array.from(document.querySelectorAll("[data-mode]"));
       const paths = Array.from(document.querySelectorAll("[data-path]"));
+      const easyLaneButtons = Array.from(document.querySelectorAll("[data-easy-lane-button]"));
+      const easyLanes = Array.from(document.querySelectorAll("[data-easy-lane]"));
       const boxes = Array.from(document.querySelectorAll("[data-checkpoint]"));
       let saved = {};
       try { saved = JSON.parse(localStorage.getItem(progressKey) || "{}"); } catch (_error) { saved = {}; }
@@ -366,6 +408,12 @@ Must not include: contacted the client, charge was waived</pre>
         localStorage.setItem(modeKey, mode);
       }
       buttons.forEach((button) => button.addEventListener("click", () => selectMode(button.dataset.mode)));
+      function selectEasyLane(lane) {
+        easyLaneButtons.forEach((button) => button.classList.toggle("active", button.dataset.easyLaneButton === lane));
+        easyLanes.forEach((panel) => { panel.hidden = panel.dataset.easyLane !== lane; });
+        localStorage.setItem(easyLaneKey, lane);
+      }
+      easyLaneButtons.forEach((button) => button.addEventListener("click", () => selectEasyLane(button.dataset.easyLaneButton)));
       document.querySelectorAll("[data-copy-target]").forEach((button) => {
         button.addEventListener("click", () => {
           const target = document.getElementById(button.dataset.copyTarget);
@@ -382,6 +430,7 @@ Must not include: contacted the client, charge was waived</pre>
           });
         });
       });
+      selectEasyLane(localStorage.getItem(easyLaneKey) || "brainstem");
       selectMode(localStorage.getItem(modeKey) || "easy");
     })();
   </script>

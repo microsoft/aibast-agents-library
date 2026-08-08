@@ -1,9 +1,13 @@
-# Time Entry and Billing Agent — Easy mode in GitHub Copilot Chat
+# Time Entry and Billing Agent — Copilot-only Easy mode comparison
 
 Open this repository in VS Code, open **GitHub Copilot Chat**, select **Agent
 mode**, and paste either the fast-path message or messages 1–5 in order.
 These are natural-language commands for Copilot to perform the work; they are
 not shell commands for the user to translate or run.
+
+This comparison lane intentionally omits Brainstem so workshop participants can
+answer “why not just use GitHub Copilot by itself?” It is retained behind the
+default Brainstem + Copilot personless lane.
 
 ## Fast path — complete Easy mode in one message
 

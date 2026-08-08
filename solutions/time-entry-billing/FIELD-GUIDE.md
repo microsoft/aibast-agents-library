@@ -14,18 +14,25 @@ blueprint, and decide what production integration would require.
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
-## Easy mode — GitHub Copilot Chat in VS Code
+## Easy mode — with Brainstem (default)
 
-1. Open this repository in VS Code.
-2. Open GitHub Copilot Chat and select **Agent mode**.
-3. Open `EASY-MODE-COPILOT-CHAT.md`.
-4. Paste the fast-path message, or paste messages 1–5 in order.
-5. Let Copilot own terminal commands, file edits, plugin calls, validation, and
-   evidence gathering. Do not translate its natural-language instructions into
-   shell commands for the user.
-6. Stop at **Draft**. Publishing remains a separate human approval gate.
+1. Open GitHub Copilot Chat in VS Code and select **Agent mode**.
+2. Open `EASY-MODE-PERSONLESS.md`.
+3. Paste its single sentence.
+4. Copilot hot-loads the task-specific workshop agent into the local Brainstem.
+5. Brainstem retrieves the reviewed GitHub assets, hot-loads the business
+   agent, proves it locally, drives Draft setup, and returns front-door actions.
+6. Copilot executes each handoff and sends evidence back until Brainstem
+   returns `status: complete`.
+7. Stop at **Draft**. Publishing remains a separate human approval gate.
 
-The exact copy/paste messages include every recorded case prompt:
+## Easy mode — without Brainstem (comparison)
+
+`EASY-MODE-COPILOT-CHAT.md` retains the detailed GitHub Copilot-only prompts
+for participants who ask why Copilot cannot do the same work alone. That lane
+keeps the person in the harness; it is deliberately secondary.
+
+Both Easy lanes preserve every recorded case prompt:
 
 - `TEB-01` — What billable work is still blocked from this close, and what has to happen before it can move?
 - `TEB-02` — Give me the month-end billing rollup by project and consultant without treating it as posted revenue.
