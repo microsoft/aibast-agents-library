@@ -1,0 +1,109 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-08-08T09:49:31.239Z",
+  "solution": "@aibast-agents-library/contract-risk-review",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "Contract Risk Review Manual",
+    "bot_id": "fd8bdb23-59be-4fe3-bb9a-d3ed12d94d7e",
+    "created": true
+  },
+  "target_model": "Claude Sonnet 4.6",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 4,
+      "confirmed": 4
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "CRR-01",
+      "prompt": "Which agreements should I put in front of counsel first, and what is driving the priority?",
+      "must_include": [
+        "NovaTech Systems",
+        "Atlas Financial Group",
+        "Review support only"
+      ],
+      "must_not_include": [
+        "contract was approved",
+        "legal advice"
+      ],
+      "expected_screenshot": "14-crr-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CRR-02",
+      "prompt": "Walk me through the liability, IP ownership, and payment-term language that needs attention in the MSA.",
+      "must_include": [
+        "Liability Cap",
+        "IP Ownership",
+        "Payment Terms"
+      ],
+      "must_not_include": [
+        "we approve this contract"
+      ],
+      "expected_screenshot": "15-crr-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CRR-03",
+      "prompt": "Compare the available contract evidence with our internal policy and tell me where the file is incomplete.",
+      "must_include": [
+        "Internal Policy Requirements",
+        "REVIEW REQUIRED",
+        "CTR-5002"
+      ],
+      "must_not_include": [
+        "CTR-5002 -- Meridian Healthcare -- **PASS**"
+      ],
+      "expected_screenshot": "16-crr-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CRR-04",
+      "prompt": "Prepare the negotiation positions, fallbacks, and escalation points for the highest-risk agreements.",
+      "must_include": [
+        "Non-Negotiable Amendments",
+        "General Counsel",
+        "Draft positions"
+      ],
+      "must_not_include": [
+        "the client accepted"
+      ],
+      "expected_screenshot": "17-crr-04.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/contract-risk-review/screenshots/manual/browserfilm.json",
+    "gif": "solutions/contract-risk-review/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/contract-risk-review/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "18-confirm-draft.jpg"
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:31:37.029603+00:00",
+  "solution": "@aibast-agents-library/resource-utilization",
+  "onepager": "Resource Utilization Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "ResourceUtilizationAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/professional_services_stacks/resource_utilization_stack/resource_utilization_agent.py",
+      "sha256": "10bf9262731ad7b3168ea94b01b87ccf29d88f3956454bd1c8d50206923d53b6"
+    }
+  ],
+  "case_file": "tests/demo_cases/resource-utilization.json",
+  "case_file_sha256": "0d107b1c13684c5fb1c9aa2722db09397aabd5c84c4a7ce26118b42aa0f80dcd",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "RU-01",
+      "persona": "Operations Leader",
+      "onepager_promise": "Implement real-time utilization tracking and capacity analysis",
+      "prompt": "Where are we under target today, and which parts of the workforce are sitting available?",
+      "assistant_response": "## Gap & Opportunity\n\n**You're 41 points under target.** Firm utilization is 43.8% vs. your 85% target \u2014 that's a **$156k/month revenue opportunity** sitting on the bench.\n\n### Where You're Hurting\n- **Mid-level:** 21.2% utilization (target: 80%) \u2014 David Okafor, Sarah Kim, Robert Garcia all unassigned\n- **Senior:** 64.5% utilization (target: 85%) \u2014 mostly full but Chen Wei is completely benched\n- **Junior:** James Wright at 0%\n\n### Who's Available (5 on Bench)\n1. **Chen Wei** (Senior, AI/ML + Python) \u2014 highest-value idle talent, $22k/month cost\n2. **Robert Garcia** (Mid, ERP + D365) \u2014 enterprise systems specialist\n3. **Sarah Kim** (Mid, Cloud Architecture + AWS) \u2014 infrastructure focus\n4. **David Okafor** (Mid, Data Analytics + Power BI) \u2014 analytics track\n5. **James Wright** (Junior, Business Analysis) \u2014 entry-level capacity\n\nThe bench has solid skill mix (analytics, cloud, ERP, AI/ML). Next step: check your **pipeline** to see which projects could absorb them. Want me to match available people to upcoming demand?",
+      "agent_logs": "[ResourceUtilizationAgent] ## Resource Utilization Dashboard\n\n**Firm utilization:** 43.8% (target: 85%, gap: 41.2pp)\n**Total headcount:** 10\n**Billable:** 5\n**Bench:** 5\n**Monthly bench cost:** $74,000\n\n| ID | Name | Level | Rate/Hr | Util % | Status | Project | End Date |\n|----|------|-------|---------|--------|--------|---------|----------|\n| CON-401 | Elena Vasquez | Senior | $275 | 92% | billable | TechCorp Transformatio | 2026-06-30 |\n| CON-402 | Michael Chen | Senior | $260 | 88% | billable | Apex Analytics Platfor | 2026-05-15 |\n| CON-403 | Priya Sharma | Manager | $310 | 95% | billable | Pinnacle Energy ERP | 2026-08-31 |\n| CON-404 | David Okafor | Mid | $175 | 0% | bench **BENCH** | - | - |\n| CON-405 | Sarah Kim | Mid | $185 | 0% | bench **BENCH** | - | - |\n| CON-406 | James Wright | Junior | $125 | 0% | bench **BENCH** | - | - |\n| CON-407 | Lisa Tanaka | Senior | $290 | 78% | billable | Atlas Security Audit | 2026-04-10 |\n| CON-408 | Robert Garcia | Mid | $195 | 0% | bench **BENCH** | - | - |\n| CON-409 | Amanda Foster | Mid | $165 | 85% | billable | Metro Transit Portal | 2026-05-01 |\n| CON-410 | Chen Wei | Senior | $295 | 0% | bench **BENCH** | - | - |\n\n### Utilization by Level\n\n| Level | Headcount | Avg Util | Target | Status |\n|-------|-----------|----------|--------|--------|\n| Senior | 4 | 64.5% | 85% | Below Target |\n| Manager | 1 | 95.0% | 80% | On Track |\n| Mid | 4 | 21.2% | 80% | Below Target |\n| Junior | 1 | 0.0% | 75% | Below Target |\n\n> Synthetic planning snapshot; utilization is not a live PSA reading.\n[ResourceUtilizationAgent] ## Bench Analysis\n\n**Bench headcount:** 5\n**Monthly bench cost:** $74,000\n**Annualized bench cost:** $888,000\n\n| ID | Name | Level | Rate/Hr | Skills | Monthly Cost | Days on Bench |\n|----|------|-------|---------|--------|-------------|---------------|\n| CON-404 | David Okafor | Mid | $175 | Data Analytics, Power BI | $14,000 | est. 30+ |\n| CON-405 | Sarah Kim | Mid | $185 | Cloud Architecture, AWS | $14,000 | est. 30+ |\n| CON-406 | James Wright | Junior | $125 | Business Analysis, Requirements | $10,000 | est. 30+ |\n| CON-408 | Robert Garcia | Mid | $195 | ERP, D365 | $14,000 | est. 30+ |\n| CON-410 | Chen Wei | Senior | $295 | AI/ML, Python | $22,000 | est. 30+ |\n\n### Skill Inventory on Bench\n\n| Skill | Available |\n|-------|-----------|\n| Data Analytics | 1 |\n| Power BI | 1 |\n| SQL | 1 |\n| Cloud Architecture | 1 |\n| AWS | 1 |\n| Terraform | 1 |\n| Business Analysis | 1 |\n| Requirements | 1 |\n| Jira | 1 |\n| ERP | 1 |\n| D365 | 1 |\n| Integration | 1 |\n| AI/ML | 1 |\n| Python | 1 |\n| Azure ML | 1 |\n\n**Revenue opportunity if deployed:** $156,000/month\n\n> Opportunity values are synthetic scenarios; no deployment or revenue is committed.",
+      "expected_agent": "ResourceUtilizationAgent",
+      "must_include": [
+        "Firm utilization",
+        "Bench",
+        "Utilization by Level"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "RU-02",
+      "persona": "Resource Manager",
+      "onepager_promise": "Analyze workforce skills and availability to identify deployment gaps and opportunities",
+      "prompt": "What capacity is coming free, and how does it line up with the opportunities expected over the next quarter?",
+      "assistant_response": "## The Picture\n\n**Capacity opening up:**\n- **April 10** \u2014 Lisa Tanaka (Senior, Cybersecurity) wraps Atlas Security Audit\n- **May 1** \u2014 Amanda Foster (Mid, UX/Research) clears Metro Transit Portal\n- **May 15** \u2014 Michael Chen (Senior, Data Engineering) finishes Apex Analytics\n- **June 30** \u2014 Elena Vasquez (Senior, Cloud Architecture) completes TechCorp\n\nThat's **4 people** freeing up across 2.5 months, plus you already have **5 on the bench** (David, Sarah, James, Robert, Chen Wei).\n\n**Pipeline demand:**\nYou've got **12 roles** queued up with decent conviction (75\u201390% probability on the high-value ones). The timing is tight but workable:\n- **Government Cyber Assessment** (90% prob, starts April 1) needs a Senior in Cybersecurity \u2014 **Lisa Tanaka fits perfectly** if she can wrap early or overlap\n- **FinanceHub Cloud Migration** (85% prob, April 1) needs Cloud Architecture (Senior) and DevOps (Mid) \u2014 **Elena Vasquez + someone from the bench**\n- **Healthcare Digital** and **Retail Analytics** come in May\u2013June, which aligns with Chen and Vasquez freeing up\n\n**Gap:** You need **12 roles filled but only 9 people will be available** (5 bench + 4 returning). The pipeline is heavier on Seniors and data skills than your bench currently shows.\n\nWant me to **match your bench skills to the pipeline roles** to see which gaps are real, or look at **upskilling options** for the people you have?",
+      "agent_logs": "[ResourceUtilizationAgent] ## Resource Utilization Dashboard\n\n**Firm utilization:** 43.8% (target: 85%, gap: 41.2pp)\n**Total headcount:** 10\n**Billable:** 5\n**Bench:** 5\n**Monthly bench cost:** $74,000\n\n| ID | Name | Level | Rate/Hr | Util % | Status | Project | End Date |\n|----|------|-------|---------|--------|--------|---------|----------|\n| CON-401 | Elena Vasquez | Senior | $275 | 92% | billable | TechCorp Transformatio | 2026-06-30 |\n| CON-402 | Michael Chen | Senior | $260 | 88% | billable | Apex Analytics Platfor | 2026-05-15 |\n| CON-403 | Priya Sharma | Manager | $310 | 95% | billable | Pinnacle Energy ERP | 2026-08-31 |\n| CON-404 | David Okafor | Mid | $175 | 0% | bench **BENCH** | - | - |\n| CON-405 | Sarah Kim | Mid | $185 | 0% | bench **BENCH** | - | - |\n| CON-406 | James Wright | Junior | $125 | 0% | bench **BENCH** | - | - |\n| CON-407 | Lisa Tanaka | Senior | $290 | 78% | billable | Atlas Security Audit | 2026-04-10 |\n| CON-408 | Robert Garcia | Mid | $195 | 0% | bench **BENCH** | - | - |\n| CON-409 | Amanda Foster | Mid | $165 | 85% | billable | Metro Transit Portal | 2026-05-01 |\n| CON-410 | Chen Wei | Senior | $295 | 0% | bench **BENCH** | - | - |\n\n### Utilization by Level\n\n| Level | Headcount | Avg Util | Target | Status |\n|-------|-----------|----------|--------|--------|\n| Senior | 4 | 64.5% | 85% | Below Target |\n| Manager | 1 | 95.0% | 80% | On Track |\n| Mid | 4 | 21.2% | 80% | Below Target |\n| Junior | 1 | 0.0% | 75% | Below Target |\n\n> Synthetic planning snapshot; utilization is not a live PSA reading.\n[ResourceUtilizationAgent] ## Capacity Forecast (Next 90 Days)\n\n### Upcoming Project Endings\n\n| Consultant | Project | End Date | Level | Skills |\n|------------|---------|----------|-------|--------|\n| Lisa Tanaka | Atlas Security Audit | 2026-04-10 | Senior | Cybersecurity, Identity |\n| Amanda Foster | Metro Transit Portal | 2026-05-01 | Mid | UX Design, Research |\n| Michael Chen | Apex Analytics Platform | 2026-05-15 | Senior | Data Engineering, Databricks |\n| Elena Vasquez | TechCorp Transformation | 2026-06-30 | Senior | Cloud Architecture, Azure |\n\n### Pipeline Demand\n\n| Project | Start | Duration | Probability | Roles Needed |\n|---------|-------|----------|-------------|--------------|\n| FinanceHub Cloud Migration | 2026-04-01 | 6mo | 85% | Cloud Architecture (Senior); DevOps (Mid) |\n| Healthcare Digital Transformation | 2026-04-15 | 12mo | 75% | Program Management (Manager); Data Analytics (Mid); Business Analysis (Junior) |\n| Retail Analytics Platform | 2026-05-01 | 8mo | 60% | AI/ML (Senior); Data Engineering (Mid) |\n| Government Cyber Assessment | 2026-04-01 | 3mo | 90% | Cybersecurity (Senior); Compliance (Mid) |\n\n**Total roles in pipeline:** 12\n**Bench available:** 5\n\n> Pipeline probabilities are synthetic planning inputs, not committed work.",
+      "expected_agent": "ResourceUtilizationAgent",
+      "must_include": [
+        "Upcoming Project Endings",
+        "Pipeline Demand",
+        "Total roles in pipeline"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "RU-03",
+      "persona": "Finance Director",
+      "onepager_promise": "Analyze workforce skills and availability to identify deployment gaps and opportunities",
+      "prompt": "Show me who is on the bench, the skills we are carrying, and the cost exposure we need to address.",
+      "assistant_response": "**The short version:**\n\n- **5 people on the bench** \u2014 $888K annualized cost exposure\n- **Strong skill mix**: cloud (AWS, architecture), data (analytics, Power BI), AI/ML (Python, Chen Wei is a senior specialist), ERP (D365), and BA\n- **Biggest gap**: Chen Wei (senior, $295/hr, $22K/month) is your highest-cost resource \u2014 if you can place that AI/ML expertise, you recoup significant cost\n- **Revenue potential**: $156K/month if the full bench ships to projects\n\n**Next steps:** I can show you the pipeline to see where these skills match incoming demand, or a workforce plan to model upskilling options for unmatched resources. Which would help more?",
+      "agent_logs": "[ResourceUtilizationAgent] ## Bench Analysis\n\n**Bench headcount:** 5\n**Monthly bench cost:** $74,000\n**Annualized bench cost:** $888,000\n\n| ID | Name | Level | Rate/Hr | Skills | Monthly Cost | Days on Bench |\n|----|------|-------|---------|--------|-------------|---------------|\n| CON-404 | David Okafor | Mid | $175 | Data Analytics, Power BI | $14,000 | est. 30+ |\n| CON-405 | Sarah Kim | Mid | $185 | Cloud Architecture, AWS | $14,000 | est. 30+ |\n| CON-406 | James Wright | Junior | $125 | Business Analysis, Requirements | $10,000 | est. 30+ |\n| CON-408 | Robert Garcia | Mid | $195 | ERP, D365 | $14,000 | est. 30+ |\n| CON-410 | Chen Wei | Senior | $295 | AI/ML, Python | $22,000 | est. 30+ |\n\n### Skill Inventory on Bench\n\n| Skill | Available |\n|-------|-----------|\n| Data Analytics | 1 |\n| Power BI | 1 |\n| SQL | 1 |\n| Cloud Architecture | 1 |\n| AWS | 1 |\n| Terraform | 1 |\n| Business Analysis | 1 |\n| Requirements | 1 |\n| Jira | 1 |\n| ERP | 1 |\n| D365 | 1 |\n| Integration | 1 |\n| AI/ML | 1 |\n| Python | 1 |\n| Azure ML | 1 |\n\n**Revenue opportunity if deployed:** $156,000/month\n\n> Opportunity values are synthetic scenarios; no deployment or revenue is committed.",
+      "expected_agent": "ResourceUtilizationAgent",
+      "must_include": [
+        "David Okafor",
+        "Robert Garcia",
+        "Skill Inventory on Bench"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "RU-04",
+      "persona": "Resource Manager",
+      "onepager_promise": "Match consultants to pipeline projects and innovation initiatives for immediate revenue impact",
+      "prompt": "Which available consultants fit the strongest pipeline needs, and who still needs another path?",
+      "assistant_response": "## Summary\n\n**Strong matches to deploy now:**\n- **David Okafor** \u2192 Healthcare Digital Transformation (Data Analytics, 75% confidence, starting April 2026)\n- **James Wright** \u2192 Same project (Business Analysis, Junior level, April 2026)\n- **Chen Wei** \u2192 Retail Analytics Platform (AI/ML, Senior, 60% confidence, May 2026)\n\nDeploying these three saves **$46K/month** in bench cost and lifts firm utilization from 43.8% \u2192 69.6%.\n\n**Two people who need a path:**\n- **Sarah Kim** (Mid, Cloud Architecture/AWS) \u2014 upskill pathway recommended; could contribute to innovation work (Terraform patterns) while pipeline builds\n- **Robert Garcia** (Mid, ERP/D365) \u2014 **strongest candidate for immediate upskilling**. A 4-week D365 integration accelerator pays for itself in 0.1 months once deployed to FinanceHub Cloud Migration work. He could also contribute to building the accelerator itself while training.\n\nThe workforce plan suggests having Robert and Sarah stay productive on capability-building and documentation work *while* waiting for pipeline demand to fully materialize. This keeps bench costs lower and builds internal IP.",
+      "agent_logs": "[ResourceUtilizationAgent] ## Staffing Recommendations\n\n### Bench-to-Pipeline Matches\n\n| Consultant | Project | Skill Match | Level | Probability | Start |\n|------------|---------|-------------|-------|-------------|-------|\n| David Okafor | Healthcare Digital Transformation | Data Analytics | Mid | 75% | 2026-04-15 |\n| James Wright | Healthcare Digital Transformation | Business Analysis | Junior | 75% | 2026-04-15 |\n| Chen Wei | Retail Analytics Platform | AI/ML | Senior | 60% | 2026-05-01 |\n\n**Bench cost saved if deployed:** $46,000/month\n\n### Unmatched Bench Resources\n\n| Consultant | Level | Skills | Recommendation |\n|------------|-------|--------|----------------|\n| Sarah Kim | Mid | Cloud Architecture, AWS | Upskill to cloud/AI |\n| Robert Garcia | Mid | ERP, D365 | Upskill to cloud/AI |\n\n### Projected Utilization Impact\n- Current firm utilization: **43.8%**\n- Projected after deployment: **69.6%**\n- Target: **85%**\n\n> Recommendations require resource-manager confirmation; no assignment was made.\n[ResourceUtilizationAgent] ## Strategic Workforce Plan\n\n### Upskilling Pathways\n\n| Consultant | Path | Duration | Cost | Target Demand | Monthly Scenario Value |\n|------------|------|----------|------|---------------|------------------------|\n| Robert Garcia | D365 integration accelerator | 4 weeks | $3,200 | FinanceHub Cloud Migration integration work | $31,200 |\n\n**Synthetic payback scenario for Robert Garcia:** 0.1 months after billable deployment begins.\n\n### Innovation and Capability-Building Options\n\n- Robert Garcia: contribute to the D365 integration accelerator while completing the pathway.\n- Sarah Kim: document reusable Terraform patterns between pipeline staffing decisions.\n- Chen Wei: prototype an internal AI delivery playbook if the retail opportunity does not proceed.\n\n> Scenario modeling only; training, internal work, staffing, and financial benefits require leadership approval and validated demand.",
+      "expected_agent": "ResourceUtilizationAgent",
+      "must_include": [
+        "Bench-to-Pipeline Matches",
+        "Unmatched Bench Resources",
+        "Robert Garcia"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "RU-05",
+      "persona": "Operations Leader",
+      "onepager_promise": "Model upskilling ROI and implement strategic workforce planning to align with market demand",
+      "prompt": "Give me an upskilling and internal-innovation plan for the people we cannot place directly, including the business case.",
+      "assistant_response": "## Upskilling & Innovation Plan\n\n**Unmatched resource:** Robert Garcia (1 consultant currently unplaced)\n\n### Business Case: D365 Integration Accelerator\n\n| Metric | Value |\n|--------|-------|\n| **Pathway** | D365 integration accelerator |\n| **Duration** | 4 weeks |\n| **Investment** | $3,200 |\n| **Target opportunity** | FinanceHub Cloud Migration integration work |\n| **Monthly billable rate** | $31,200 |\n| **Payback period** | 0.1 months (~3 days) |\n| **ROI** | 9,750% in Year 1 |\n\n**Rationale:** Robert is a fit for FinanceHub's D365 integration demand in your pipeline. Accelerated training gets him billable in under a month, and the synthetic scenario shows near-immediate payback.\n\n### Concurrent Innovation Work\n\nWhile Robert ramps:\n- **Sarah Kim:** Document reusable Terraform patterns \u2014 builds capability for future cloud infrastructure work and cross-trains the bench\n- **Chen Wei:** Prototype an internal AI delivery playbook \u2014 if the retail opportunity doesn't close, this creates a repeatable methodology for future AI projects\n\n**Next steps:** Validate Robert's interest and FinanceHub's timeline, then approve the training investment. Sarah and Chen can start documentation/prototyping immediately with minimal overhead.",
+      "agent_logs": "[ResourceUtilizationAgent] ## Strategic Workforce Plan\n\n### Upskilling Pathways\n\n| Consultant | Path | Duration | Cost | Target Demand | Monthly Scenario Value |\n|------------|------|----------|------|---------------|------------------------|\n| Robert Garcia | D365 integration accelerator | 4 weeks | $3,200 | FinanceHub Cloud Migration integration work | $31,200 |\n\n**Synthetic payback scenario for Robert Garcia:** 0.1 months after billable deployment begins.\n\n### Innovation and Capability-Building Options\n\n- Robert Garcia: contribute to the D365 integration accelerator while completing the pathway.\n- Sarah Kim: document reusable Terraform patterns between pipeline staffing decisions.\n- Chen Wei: prototype an internal AI delivery playbook if the retail opportunity does not proceed.\n\n> Scenario modeling only; training, internal work, staffing, and financial benefits require leadership approval and validated demand.",
+      "expected_agent": "ResourceUtilizationAgent",
+      "must_include": [
+        "D365 integration accelerator",
+        "Synthetic payback scenario",
+        "Innovation and Capability-Building Options"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

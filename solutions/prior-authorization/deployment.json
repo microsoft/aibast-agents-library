@@ -1,0 +1,101 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/prior-authorization",
+  "display_name": "Prior Authorization Agent",
+  "source_path": "agents/@aibast-agents-library/healthcare_stacks/prior_authorization_stack/prior_authorization_agent.py",
+  "target_filename": "prior_authorization_agent.py",
+  "expected_tool": "PriorAuthorizationAgent",
+  "data_source": "synthetic",
+  "operations": [
+    "request_evidence",
+    "criteria_evidence",
+    "status_summary",
+    "appeal_evidence_packet"
+  ],
+  "smoke_test": {
+    "prompt": "What evidence is present or missing for synthetic request SYN-AUTH-001?",
+    "arguments": {
+      "operation": "request_evidence"
+    },
+    "must_call": "PriorAuthorizationAgent",
+    "must_include": [
+      "SYN-AUTH-001",
+      "additional evidence requested"
+    ]
+  },
+  "manual_package": {
+    "global_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
+    "knowledge_files": [
+      "manual/knowledge/aibast_prior-authorization-synthetic-records.md",
+      "manual/knowledge/aibast_prior-authorization-review-rules.md"
+    ],
+    "skill_count": 4,
+    "skills": [
+      "manual/skills/request-evidence/SKILL.md",
+      "manual/skills/criteria-evidence/SKILL.md",
+      "manual/skills/status-summary/SKILL.md",
+      "manual/skills/appeal-evidence-packet/SKILL.md"
+    ],
+    "locked_demo_cases": "../../tests/demo_cases/prior-authorization.json",
+    "onepager_map": "evals/onepager-map.json",
+    "source_audit": "evals/source-audit.json"
+  },
+  "copilot_studio": {
+    "status": "package-ready-not-created",
+    "publish": false,
+    "publish_requires_confirmation": true,
+    "required_connections": [
+      "Approved read-only EHR or FHIR evidence source",
+      "Approved payer policy source",
+      "Microsoft Teams utilization-review coordination"
+    ],
+    "external_actions": "not-configured",
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "authoring_mode": "cli-copilot",
+    "validated_manual": {
+      "display_name": "Prior Authorization Manual",
+      "bot_id": "a07640ad-eab3-49b1-905d-172e8638bd35",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "web_search_removed": true,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    },
+    "validated_pilot": {
+      "display_name": "Prior Authorization Pilot",
+      "schema_name": "aibast_PriorAuthorizationPilot",
+      "bot_id": "6e991351-27ea-4605-a15b-7f5b15d9dc36",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "changes_pushed": 7,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    }
+  },
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/healthcare_stacks/prior_authorization_stack/prior_authorization_agent.py",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  }
+}

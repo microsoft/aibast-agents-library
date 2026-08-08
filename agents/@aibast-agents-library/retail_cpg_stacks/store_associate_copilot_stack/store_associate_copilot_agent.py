@@ -20,7 +20,7 @@ __manifest__ = {
     "version": "1.0.0",
     "display_name": "Retail Store Associate Copilot",
     "description": (
-        "Deliver real-time product intelligence and transaction support to deliver faster service and boost sales performance."
+        "Provide synthetic product intelligence, customer-assistance drafts, task planning, and aggregate coaching insights for associate review."
     ),
     "author": "AIBAST",
     "tags": [
@@ -196,31 +196,31 @@ PRODUCT_CATALOG = {
 CUSTOMER_INTERACTION_SCRIPTS = {
     "greeting": {
         "scenario": "Customer enters the store",
-        "script": "Welcome to our store! Is there anything specific I can help you find today?",
+        "script": "Draft: Welcome the shopper and ask what category they would like help finding.",
         "follow_up": "If they mention a product category, guide them to the correct aisle.",
         "tips": ["Make eye contact", "Smile genuinely", "Keep a comfortable distance"],
     },
     "upsell": {
         "scenario": "Customer is ready to purchase a single item",
-        "script": "Great choice! Did you know that pairs perfectly with our {complementary_product}? Many customers love the combination.",
+        "script": "Draft: If useful, mention one relevant complementary item without pressure.",
         "follow_up": "If interested, walk them to the complementary item. If not, respect their decision.",
         "tips": ["Suggest only relevant items", "Limit to one upsell attempt", "Focus on value not price"],
     },
     "complaint_handling": {
         "scenario": "Customer has a complaint or issue",
-        "script": "I am sorry to hear about that. Let me make sure I understand the issue so I can help resolve it right away.",
+        "script": "Draft: Acknowledge the concern, restate it, and explain that an authorized associate will review options.",
         "follow_up": "Listen fully, repeat back the issue, offer a concrete solution within your authority.",
         "tips": ["Never argue", "Acknowledge their frustration", "Offer alternatives if first solution is declined"],
     },
     "size_help": {
         "scenario": "Customer needs sizing assistance",
-        "script": "I would be happy to help you find the right fit. What size do you typically wear in this type of item?",
+        "script": "Draft: Ask which size the shopper would like checked; do not infer body characteristics.",
         "follow_up": "Check fitting room availability. Bring two sizes if customer is between sizes.",
         "tips": ["Be sensitive about sizing", "Suggest trying multiple sizes", "Check stock for requested size first"],
     },
     "return_at_counter": {
         "scenario": "Customer wants to make a return at the register",
-        "script": "Of course, I can help with that. Do you have your receipt or order confirmation?",
+        "script": "Draft: Ask whether proof of purchase is available and explain that return eligibility requires authorized review.",
         "follow_up": "Verify return eligibility per policy. Process efficiently and offer exchange if applicable.",
         "tips": ["Stay positive and empathetic", "Explain policy clearly", "Thank them regardless of outcome"],
     },
@@ -253,7 +253,7 @@ DAILY_TASK_LIST = {
 
 ASSOCIATE_PERFORMANCE = {
     "ASC-101": {
-        "name": "Taylor Brooks",
+        "name": "Opening Senior Associate Cohort",
         "role": "Senior Associate",
         "shift": "opening",
         "units_sold_today": 23,
@@ -267,7 +267,7 @@ ASSOCIATE_PERFORMANCE = {
         "hours_this_week": 32.5,
     },
     "ASC-102": {
-        "name": "Jordan Kim",
+        "name": "Midday Associate Cohort",
         "role": "Associate",
         "shift": "midday",
         "units_sold_today": 17,
@@ -281,7 +281,7 @@ ASSOCIATE_PERFORMANCE = {
         "hours_this_week": 28.0,
     },
     "ASC-103": {
-        "name": "Morgan Lee",
+        "name": "Closing Associate Cohort",
         "role": "Associate",
         "shift": "closing",
         "units_sold_today": 12,
@@ -295,7 +295,7 @@ ASSOCIATE_PERFORMANCE = {
         "hours_this_week": 24.0,
     },
     "ASC-104": {
-        "name": "Casey Rivera",
+        "name": "Opening Lead Associate Cohort",
         "role": "Lead Associate",
         "shift": "opening",
         "units_sold_today": 29,
@@ -322,6 +322,29 @@ COMPLEMENTARY_PRODUCTS = {
     "SKU-1009": ["SKU-1006", "SKU-1004"],
     "SKU-1010": ["SKU-1009", "SKU-1006"],
 }
+
+APPROVED_PERSONAS = {
+    "Store Associate": "clear product facts and respectful customer-assistance drafts",
+    "Sales Manager": "aggregate coaching signals and operational review",
+    "Floor Specialist": "location, availability, and task-planning detail",
+}
+
+SAFETY_NOTICE = (
+    "> Synthetic planning snapshot. Recommendations and scripts are drafts only; "
+    "availability is not guaranteed, inventory is not reserved, and no message, "
+    "offer, return, refund, transaction, or purchase is completed."
+)
+
+
+def _response_header(persona):
+    role = persona if persona in APPROVED_PERSONAS else "Store Associate"
+    return [
+        f"**Prepared for:** {role}",
+        f"**Role focus:** {APPROVED_PERSONAS[role]}",
+        "",
+        SAFETY_NOTICE,
+        "",
+    ]
 
 
 # ---------------------------------------------------------------------------
@@ -384,8 +407,14 @@ class StoreAssociateCopilotAgent(BasicAgent):
                     "sku_id": {"type": "string"},
                     "scenario": {"type": "string"},
                     "shift": {"type": "string"},
+                    "persona": {
+                        "type": "string",
+                        "enum": list(APPROVED_PERSONAS),
+                    },
+                    "data_source": {"type": "string", "enum": ["synthetic"]},
                 },
                 "required": ["operation"],
+                "additionalProperties": False,
             },
         }
         super().__init__(name=self.name, metadata=self.metadata)
@@ -393,13 +422,15 @@ class StoreAssociateCopilotAgent(BasicAgent):
     def _product_lookup(self, **kwargs):
         query = kwargs.get("query", "")
         sku_id = kwargs.get("sku_id", "")
+        if sku_id and sku_id not in PRODUCT_CATALOG:
+            return f"Unknown sku_id `{sku_id}`. Valid: {', '.join(PRODUCT_CATALOG)}"
         if sku_id and sku_id in PRODUCT_CATALOG:
             results = [(sku_id, PRODUCT_CATALOG[sku_id])]
         elif query:
             results = _search_products(query)
         else:
             results = list(PRODUCT_CATALOG.items())
-        lines = ["# Product Lookup", ""]
+        lines = _response_header(kwargs.get("persona")) + ["# Product Lookup Snapshot", ""]
         if not results:
             lines.append(f"No products found for query: \"{query}\"")
             return "\n".join(lines)
@@ -414,7 +445,7 @@ class StoreAssociateCopilotAgent(BasicAgent):
             lines.append(f"- **Materials:** {prod['materials']}")
             lines.append(f"- **Care:** {prod['care']}")
             lines.append(f"- **Location:** Aisle {prod['location_aisle']}, {prod['location_shelf']}")
-            lines.append(f"- **In Stock:** {prod['on_hand']} units")
+            lines.append(f"- **Synthetic On-Hand Snapshot:** {prod['on_hand']} units (verify before advising)")
             lines.append(f"- **UPC:** {prod['upc']}")
             lines.append("")
             lines.append("**Key Features:**")
@@ -424,23 +455,28 @@ class StoreAssociateCopilotAgent(BasicAgent):
             comp_skus = COMPLEMENTARY_PRODUCTS.get(sid, [])
             if comp_skus:
                 comp_names = [PRODUCT_CATALOG[c]["name"] for c in comp_skus if c in PRODUCT_CATALOG]
-                lines.append(f"**Pairs Well With:** {', '.join(comp_names)}")
+                lines.append(f"**Optional Complementary Ideas:** {', '.join(comp_names)}")
             lines.append("")
         return "\n".join(lines)
 
     def _customer_assist(self, **kwargs):
         scenario = kwargs.get("scenario", "")
+        if scenario and scenario not in CUSTOMER_INTERACTION_SCRIPTS:
+            return (
+                f"Unknown scenario `{scenario}`. Valid: "
+                f"{', '.join(CUSTOMER_INTERACTION_SCRIPTS)}"
+            )
         if scenario and scenario in CUSTOMER_INTERACTION_SCRIPTS:
             scripts = {scenario: CUSTOMER_INTERACTION_SCRIPTS[scenario]}
         else:
             scripts = CUSTOMER_INTERACTION_SCRIPTS
-        lines = ["# Customer Assistance Guide", ""]
+        lines = _response_header(kwargs.get("persona")) + ["# Draft Customer Assistance Guide", ""]
         for scen_id, scr in scripts.items():
             lines.append(f"## {scen_id.replace('_', ' ').title()}")
             lines.append("")
             lines.append(f"**Scenario:** {scr['scenario']}")
             lines.append("")
-            lines.append("**Suggested Script:**")
+            lines.append("**Suggested Draft Language:**")
             lines.append(f"> {scr['script']}")
             lines.append("")
             lines.append(f"**Follow-Up:** {scr['follow_up']}")
@@ -453,11 +489,13 @@ class StoreAssociateCopilotAgent(BasicAgent):
 
     def _task_checklist(self, **kwargs):
         shift = kwargs.get("shift", "")
+        if shift and shift not in DAILY_TASK_LIST:
+            return f"Unknown shift `{shift}`. Valid: {', '.join(DAILY_TASK_LIST)}"
         if shift and shift in DAILY_TASK_LIST:
             shifts = {shift: DAILY_TASK_LIST[shift]}
         else:
             shifts = DAILY_TASK_LIST
-        lines = ["# Daily Task Checklist", ""]
+        lines = _response_header(kwargs.get("persona")) + ["# Daily Task Planning Checklist", ""]
         for shift_name, tasks in shifts.items():
             total_minutes = sum(t["est_minutes"] for t in tasks)
             comp_rate = _task_completion_rate(shift_name)
@@ -474,8 +512,8 @@ class StoreAssociateCopilotAgent(BasicAgent):
     def _performance_dashboard(self, **kwargs):
         total_rev = _store_total_revenue()
         total_txn = _store_total_transactions()
-        lines = [
-            "# Associate Performance Dashboard",
+        lines = _response_header(kwargs.get("persona")) + [
+            "# Synthetic Role-Cohort Performance Dashboard",
             "",
             f"**Store Total Revenue Today:** ${total_rev:,.2f}",
             f"**Store Total Transactions:** {total_txn}",
@@ -494,17 +532,19 @@ class StoreAssociateCopilotAgent(BasicAgent):
                 f"| {asc['tasks_completed']}/{asc['tasks_total']} ({task_pct}%) |"
             )
         lines.append("")
-        lines.append("## Top Performer Highlights")
+        lines.append("## Aggregate Coaching Signals")
         lines.append("")
         best_rev = max(ASSOCIATE_PERFORMANCE.values(), key=lambda a: a["revenue_today"])
         best_csat = max(ASSOCIATE_PERFORMANCE.values(), key=lambda a: a["csat_score"])
         best_upsell = max(ASSOCIATE_PERFORMANCE.values(), key=lambda a: a["upsell_rate"])
-        lines.append(f"- **Highest Revenue:** {best_rev['name']} — ${best_rev['revenue_today']:,.2f}")
-        lines.append(f"- **Best CSAT:** {best_csat['name']} — {best_csat['csat_score']}/5.0")
-        lines.append(f"- **Top Upsell Rate:** {best_upsell['name']} — {best_upsell['upsell_rate']*100:.0f}%")
+        lines.append(f"- **Revenue reference cohort:** {best_rev['name']} — use for workflow review, not personnel decisions")
+        lines.append(f"- **Service reference cohort:** {best_csat['name']} — inspect practices, not individuals")
+        lines.append(f"- **Attach-rate reference cohort:** {best_upsell['name']} — avoid pressure-based selling")
         return "\n".join(lines)
 
     def perform(self, **kwargs):
+        if kwargs.get("data_source", "synthetic") != "synthetic":
+            return "data_source must be `synthetic` for this package."
         operation = kwargs.get("operation", "product_lookup")
         dispatch = {
             "product_lookup": self._product_lookup,

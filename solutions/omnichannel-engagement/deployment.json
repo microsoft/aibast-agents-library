@@ -1,0 +1,125 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/omnichannel-engagement",
+  "display_name": "Omnichannel Engagement Agent",
+  "source_path": "agents/@aibast-agents-library/b2c_sales_stacks/omnichannel_engagement_stack/omnichannel_engagement_agent.py",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/b2c_sales_stacks/omnichannel_engagement_stack/omnichannel_engagement_agent.py",
+  "target_filename": "omnichannel_engagement_agent.py",
+  "expected_tool": "OmnichannelEngagementAgent",
+  "operations": [
+    "channel_performance",
+    "journey_analysis",
+    "engagement_optimization",
+    "campaign_attribution"
+  ],
+  "manual_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
+  "manual_authoring": {
+    "knowledge_files": 2,
+    "skills": 4,
+    "status": "source-assets-only",
+    "publish": false
+  },
+  "manual_knowledge_files": [
+    "manual/knowledge/aibast_omnichannel-synthetic-records.md",
+    "manual/knowledge/aibast_omnichannel-rules-and-safety.md"
+  ],
+  "manual_skill_count": 4,
+  "production_connectors": [
+    "Approved aggregate CRM and commerce analytics",
+    "Approved contact-center analytics"
+  ],
+  "write_controls": {
+    "authenticated_tools_required": true,
+    "explicit_human_approval_required": true,
+    "authorization_check_required": true,
+    "audit_log_required": true,
+    "local_demo_performs_writes": false
+  },
+  "copilot_studio": {
+    "authoring_mode": "manual-upload",
+    "status": "not_initialized",
+    "operations": [
+      "channel_performance",
+      "journey_analysis",
+      "engagement_optimization",
+      "campaign_attribution"
+    ],
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_omnichannel-synthetic-records.md",
+      "manual/knowledge/aibast_omnichannel-rules-and-safety.md"
+    ],
+    "manual_skill_count": 4,
+    "required_connections": [
+      "Approved aggregate CRM and commerce analytics",
+      "Approved contact-center analytics"
+    ],
+    "publish_requires_confirmation": true,
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "validated_manual": {
+      "display_name": "Omnichannel Engagement Manual",
+      "bot_id": "33afc443-1862-4116-874f-544e59025549",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "web_search_removed": true,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    },
+    "validated_pilot": {
+      "display_name": "Omnichannel Engagement Pilot",
+      "schema_name": "aibast_OmnichannelEngagementPilot",
+      "bot_id": "c5461c2e-2198-4934-a317-87858ec09759",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "changes_pushed": 7,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    }
+  },
+  "smoke_test": {
+    "prompt": "As Customer Experience Leader, compare the aggregate channel picture and call out continuity risks.",
+    "must_call": "OmnichannelEngagementAgent",
+    "operation": "channel_performance",
+    "persona": "Customer Experience Leader",
+    "must_include": [
+      "Synthetic Channel Performance",
+      "no identity stitching"
+    ]
+  },
+  "safety_boundary": "The agent analyzes aggregate patterns only and never stitches identities, profiles sensitive traits, sends outreach, creates an offer or reward, or completes a purchase.",
+  "safety": {
+    "mode": "advisory-only",
+    "prohibits": [
+      "identity stitching",
+      "sensitive profiling",
+      "outreach",
+      "message sending",
+      "offer issuance",
+      "purchase"
+    ]
+  },
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  }
+}

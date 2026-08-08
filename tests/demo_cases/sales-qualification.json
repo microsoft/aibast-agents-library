@@ -1,0 +1,157 @@
+{
+  "solution": "Sales Qualification Agent",
+  "slot": 21,
+  "agent": "@aibast-agents-library/sales-qualification",
+  "onepager": "21. Sales Qualification Agent one-pager.pptx",
+  "agent_files": [
+    "sales_qualification_agent"
+  ],
+  "note": "Locked persona-language capture contract with one deterministic synthetic case per implemented operation.",
+  "cases": [
+    {
+      "id": "SQ-01",
+      "persona": "Sales Manager",
+      "onepager_bullet": "Perform intelligent lead enrichment to prioritize high-potential opportunities",
+      "prompt": "Which bundled synthetic leads should my team review first, and why did they score that way?",
+      "operation": "score_leads",
+      "arguments": {
+        "operation": "score_leads",
+        "data_source": "synthetic"
+      },
+      "must_include": [
+        "Lead Qualification Summary",
+        "Top Hot Leads",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "SalesQualificationAgent"
+    },
+    {
+      "id": "SQ-02",
+      "persona": "Business Development Rep.",
+      "onepager_bullet": "Automate qualification scoring to identify conversion-ready prospects",
+      "prompt": "Show the BANT evidence and missing qualification details for the strongest synthetic leads.",
+      "operation": "bant_analysis",
+      "arguments": {
+        "operation": "bant_analysis",
+        "data_source": "synthetic"
+      },
+      "must_include": [
+        "BANT Analysis",
+        "Strongest Engagement Signals",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "SalesQualificationAgent"
+    },
+    {
+      "id": "SQ-03",
+      "persona": "Business Development Rep.",
+      "onepager_bullet": "Generate personalized outreach sequences to boost engagement",
+      "prompt": "Draft outreach ideas for the synthetic hot leads, but do not send or schedule any communication.",
+      "operation": "create_outreach",
+      "arguments": {
+        "operation": "create_outreach",
+        "data_source": "synthetic"
+      },
+      "must_include": [
+        "Personalized Outreach",
+        "Draft Sequence Cadence",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "SalesQualificationAgent"
+    },
+    {
+      "id": "SQ-04",
+      "persona": "Sales Manager",
+      "onepager_bullet": "Coordinate SLA-based assignments and tracking to drive timely engagement",
+      "prompt": "Recommend synthetic lead routing for manager review without assigning CRM owners.",
+      "operation": "assign_leads",
+      "arguments": {
+        "operation": "assign_leads",
+        "data_source": "synthetic"
+      },
+      "must_include": [
+        "Recommended Lead Routing",
+        "Handoff Package",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "SalesQualificationAgent"
+    },
+    {
+      "id": "SQ-05",
+      "persona": "Sales Manager",
+      "onepager_bullet": "Coordinate SLA-based assignments and tracking to drive timely engagement",
+      "prompt": "Draft an SLA and escalation plan for the synthetic leads without activating alerts or automations.",
+      "operation": "setup_tracking",
+      "arguments": {
+        "operation": "setup_tracking",
+        "data_source": "synthetic"
+      },
+      "must_include": [
+        "Draft SLA Tracking Plan",
+        "Proposed Monitoring",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "SalesQualificationAgent"
+    },
+    {
+      "id": "SQ-06",
+      "persona": "Account Executive",
+      "onepager_bullet": "Automate qualification scoring to identify conversion-ready prospects",
+      "prompt": "Summarize the synthetic qualified pipeline and clearly label every conversion and value assumption.",
+      "operation": "qualification_report",
+      "arguments": {
+        "operation": "qualification_report",
+        "data_source": "synthetic"
+      },
+      "must_include": [
+        "Qualification Report",
+        "Synthetic Conversion Assumptions",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "SalesQualificationAgent"
+    }
+  ],
+  "assertion_principle": "expects_agent proves routing; must_include checks deterministic tool output; must_not_include catches routing stalls or prohibited side-effect claims."
+}

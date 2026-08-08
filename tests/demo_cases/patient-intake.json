@@ -1,0 +1,88 @@
+{
+  "solution": "Patient Intake and Scheduling Agent",
+  "slot": 31,
+  "agent": "@aibast-agents-library/patient-intake",
+  "onepager": "31. Patient Intake and Scheduling Agent one-pager.pptx",
+  "agent_files": [
+    "patient_intake_agent"
+  ],
+  "note": "Locked synthetic, read-only persona cases; exactly one case per implemented operation.",
+  "cases": [
+    {
+      "id": "PI-01",
+      "persona": "Front Desk Staff",
+      "onepager_bullet": "Deliver tailored digital packets with all required pre-visit forms",
+      "operation": "intake_readiness",
+      "prompt": "What is still missing from the synthetic intake packet for Patient Alpha?",
+      "must_include": [
+        "SYN-PT-001",
+        "emergency contact confirmation"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "PatientIntakeAgent"
+    },
+    {
+      "id": "PI-02",
+      "persona": "Patient Access Representative",
+      "onepager_bullet": "Verify insurance, referrals, and network status during patient intake",
+      "operation": "coverage_evidence",
+      "prompt": "What coverage evidence is recorded for Synthetic Patient Alpha, and what must staff still confirm?",
+      "must_include": [
+        "Synthetic Health Plan",
+        "source record received"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "PatientIntakeAgent"
+    },
+    {
+      "id": "PI-03",
+      "persona": "Scheduling Coordinator",
+      "onepager_bullet": "Ensure clinicians\u2019 availability and readiness through up-to-date scheduling data",
+      "operation": "appointment_availability",
+      "prompt": "Show the candidate source slots for Clinician A without booking anything.",
+      "must_include": [
+        "Clinician A",
+        "nothing has been reserved or booked"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "PatientIntakeAgent"
+    },
+    {
+      "id": "PI-04",
+      "persona": "Front Desk Staff",
+      "onepager_bullet": "Automate intake checks and coordination to ensure patients are fully prepared",
+      "operation": "pre_visit_summary",
+      "prompt": "Prepare a pre-visit readiness summary for Synthetic Patient Alpha.",
+      "must_include": [
+        "SYN-PT-001",
+        "Required reviewer"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "PatientIntakeAgent"
+    }
+  ]
+}

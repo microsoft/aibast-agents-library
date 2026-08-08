@@ -1,13 +1,8 @@
-"""
-Prior Authorization Agent for Healthcare.
+"""Read-only, synthetic prior-authorization evidence support."""
 
-Manages prior authorization requests, checks clinical criteria against
-payer rules, tracks authorization status, and prepares appeal documentation
-for denied or pending authorizations.
-"""
-
-import sys
 import os
+import sys
+
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "templates"))
 from basic_agent import BasicAgent
 
@@ -15,230 +10,88 @@ from basic_agent import BasicAgent
 __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/prior-authorization",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "display_name": "Prior Authorization Agent",
-    "description": "Automate insurance approval workflows to accelerate authorization processes, improve documentation accuracy, and reduce care delays.",
+    "description": (
+        "Assembles synthetic payer and clinical evidence for human utilization review; it never "
+        "predicts, grants, denies, submits, or changes an authorization."
+    ),
     "author": "AIBAST",
-    "tags": ["prior-auth", "authorization", "payer", "clinical-criteria", "appeals", "healthcare"],
+    "tags": ["prior-auth", "evidence-packet", "payer-criteria", "healthcare", "human-review"],
     "category": "healthcare",
     "quality_tier": "verified",
     "requires_env": [],
     "dependencies": ["@rapp/basic-agent"],
 }
 
+SAFETY = (
+    "Synthetic demonstration data only. This output is a read-only evidence draft, not an "
+    "authorization, eligibility, medical-necessity, diagnosis, or treatment decision. A qualified "
+    "utilization reviewer must verify payer policy and clinical evidence before any submission."
+)
 
-# ---------------------------------------------------------------------------
-# Synthetic domain data
-# ---------------------------------------------------------------------------
-
-AUTH_REQUESTS = {
-    "AUTH-4001": {
-        "patient": "Margaret Sullivan",
-        "patient_id": "PT-10045",
-        "procedure": "Left Knee MRI without Contrast",
-        "cpt_code": "73721",
-        "diagnosis": "M17.12 - Primary osteoarthritis, left knee",
-        "requesting_provider": "Dr. Anita Patel",
-        "payer": "Blue Cross Blue Shield of Illinois",
-        "plan": "PPO Gold",
-        "submitted_date": "2026-03-13",
-        "status": "approved",
-        "decision_date": "2026-03-14",
-        "auth_number": "BCBS-AUTH-884210",
-        "valid_through": "2026-06-14",
-        "notes": "Auto-approved based on clinical criteria match.",
+REQUESTS = {
+    "SYN-AUTH-001": {
+        "service": "synthetic knee imaging request",
+        "payer": "Synthetic Health Plan",
+        "source_status": "additional evidence requested",
+        "source_date": "2026-07-30",
+        "policy_id": "SYN-POL-IMG-01",
+        "evidence": {
+            "encounter note": "present",
+            "prior imaging report": "present",
+            "conservative-care duration": "not found in synthetic source",
+        },
     },
-    "AUTH-4002": {
-        "patient": "Robert Kim",
-        "patient_id": "PT-10078",
-        "procedure": "Cardiac Stress Test (Nuclear)",
-        "cpt_code": "78452",
-        "diagnosis": "R07.9 - Chest pain, unspecified",
-        "requesting_provider": "Dr. James Wright",
-        "payer": "Aetna",
-        "plan": "HMO Select",
-        "submitted_date": "2026-03-15",
-        "status": "pending_review",
-        "decision_date": None,
-        "auth_number": None,
-        "valid_through": None,
-        "notes": "Requires peer-to-peer review. Additional documentation requested.",
-    },
-    "AUTH-4003": {
-        "patient": "Maria Gonzalez",
-        "patient_id": "PT-20003",
-        "procedure": "Total Hip Arthroplasty",
-        "cpt_code": "27130",
-        "diagnosis": "M16.11 - Primary osteoarthritis, right hip",
-        "requesting_provider": "Dr. Michael Torres",
-        "payer": "Medicare Part B",
-        "plan": "Original Medicare",
-        "submitted_date": "2026-03-10",
-        "status": "approved",
-        "decision_date": "2026-03-11",
-        "auth_number": "MCR-AUTH-THA-99201",
-        "valid_through": "2026-09-11",
-        "notes": "Medicare LCD criteria met. Pre-op clearance required.",
-    },
-    "AUTH-4004": {
-        "patient": "David Nguyen",
-        "patient_id": "PT-20002",
-        "procedure": "Lumbar Spine MRI with Contrast",
-        "cpt_code": "72149",
-        "diagnosis": "M54.5 - Low back pain",
-        "requesting_provider": "Dr. James Wright",
-        "payer": "Aetna",
-        "plan": "HMO Select",
-        "submitted_date": "2026-03-08",
-        "status": "denied",
-        "decision_date": "2026-03-12",
-        "auth_number": None,
-        "valid_through": None,
-        "notes": "Denied: Conservative therapy requirement not met. Minimum 6 weeks PT required.",
+    "SYN-AUTH-002": {
+        "service": "synthetic outpatient procedure request",
+        "payer": "Synthetic Community Plan",
+        "source_status": "payer response recorded",
+        "source_date": "2026-07-31",
+        "policy_id": "SYN-POL-PROC-02",
+        "evidence": {
+            "encounter note": "present",
+            "specialist note": "present",
+            "current payer policy confirmation": "requires human review",
+        },
     },
 }
 
-CLINICAL_CRITERIA = {
-    "73721": {
-        "procedure": "Knee MRI",
-        "payer_rules": {
-            "BCBS": {"requires": ["Physical exam documented", "X-ray completed", "Conservative therapy >= 4 weeks"], "auto_approve": True},
-            "Aetna": {"requires": ["Physical exam documented", "X-ray completed", "Conservative therapy >= 6 weeks", "Specialist referral"], "auto_approve": False},
-            "Medicare": {"requires": ["Physical exam documented", "Imaging appropriate per LCD"], "auto_approve": True},
-        },
-        "avg_turnaround_days": 1.5,
-        "approval_rate_pct": 92,
+POLICIES = {
+    "SYN-POL-IMG-01": {
+        "title": "Synthetic Imaging Evidence Checklist",
+        "requirements": ["relevant encounter note", "prior imaging evidence", "documented duration fields"],
+        "effective_date": "2026-07-01",
     },
-    "78452": {
-        "procedure": "Nuclear Cardiac Stress Test",
-        "payer_rules": {
-            "BCBS": {"requires": ["Cardiac risk factors documented", "EKG performed", "Symptoms documented"], "auto_approve": False},
-            "Aetna": {"requires": ["Cardiac risk factors documented", "EKG performed", "Peer-to-peer if age < 55"], "auto_approve": False},
-            "Medicare": {"requires": ["Symptoms documented", "EKG performed"], "auto_approve": True},
-        },
-        "avg_turnaround_days": 3.2,
-        "approval_rate_pct": 78,
-    },
-    "27130": {
-        "procedure": "Total Hip Arthroplasty",
-        "payer_rules": {
-            "BCBS": {"requires": ["Failed conservative therapy >= 3 months", "Imaging confirming severe OA", "Functional impairment documented"], "auto_approve": False},
-            "Aetna": {"requires": ["Failed conservative therapy >= 3 months", "Imaging", "Functional assessment", "BMI < 40"], "auto_approve": False},
-            "Medicare": {"requires": ["LCD criteria met", "Pre-op clearance", "Imaging"], "auto_approve": True},
-        },
-        "avg_turnaround_days": 5.0,
-        "approval_rate_pct": 85,
-    },
-    "72149": {
-        "procedure": "Lumbar MRI with Contrast",
-        "payer_rules": {
-            "BCBS": {"requires": ["Conservative therapy >= 4 weeks", "Red flags absent", "Physical exam documented"], "auto_approve": True},
-            "Aetna": {"requires": ["Conservative therapy >= 6 weeks", "Physical therapy documented", "Red flags absent"], "auto_approve": False},
-            "Medicare": {"requires": ["Symptoms documented", "Exam documented"], "auto_approve": True},
-        },
-        "avg_turnaround_days": 2.0,
-        "approval_rate_pct": 74,
+    "SYN-POL-PROC-02": {
+        "title": "Synthetic Procedure Evidence Checklist",
+        "requirements": ["relevant encounter note", "specialist documentation", "current policy version"],
+        "effective_date": "2026-07-01",
     },
 }
 
-PAYER_APPROVAL_RATES = {
-    "Blue Cross Blue Shield of Illinois": {"overall_pct": 88, "avg_days": 1.8, "appeal_success_pct": 62},
-    "Aetna": {"overall_pct": 72, "avg_days": 4.1, "appeal_success_pct": 48},
-    "Medicare Part B": {"overall_pct": 94, "avg_days": 1.2, "appeal_success_pct": 71},
+ALIASES = {
+    "auth_request": "request_evidence",
+    "clinical_criteria_check": "criteria_evidence",
+    "status_tracking": "status_summary",
+    "appeal_preparation": "appeal_evidence_packet",
 }
 
 
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
-
-def _auth_request_status():
-    requests = []
-    for aid, auth in AUTH_REQUESTS.items():
-        requests.append({
-            "id": aid, "patient": auth["patient"], "procedure": auth["procedure"],
-            "cpt": auth["cpt_code"], "payer": auth["payer"], "status": auth["status"],
-            "submitted": auth["submitted_date"], "decision": auth["decision_date"] or "Pending",
-            "auth_number": auth["auth_number"] or "N/A",
-        })
-    status_counts = {}
-    for r in requests:
-        status_counts[r["status"]] = status_counts.get(r["status"], 0) + 1
-    return {"requests": requests, "status_counts": status_counts}
+def _notice(title):
+    return [f"# {title}", "", f"> {SAFETY}", ""]
 
 
-def _clinical_criteria_check():
-    checks = []
-    for aid, auth in AUTH_REQUESTS.items():
-        cpt = auth["cpt_code"]
-        criteria = CLINICAL_CRITERIA.get(cpt, {})
-        payer_key = None
-        for key in ["BCBS", "Aetna", "Medicare"]:
-            if key.lower() in auth["payer"].lower():
-                payer_key = key
-                break
-        rules = criteria.get("payer_rules", {}).get(payer_key, {})
-        checks.append({
-            "auth_id": aid, "patient": auth["patient"],
-            "procedure": auth["procedure"], "cpt": cpt,
-            "payer": auth["payer"],
-            "requirements": rules.get("requires", []),
-            "auto_approve": rules.get("auto_approve", False),
-            "approval_rate": criteria.get("approval_rate_pct", 0),
-            "avg_turnaround": criteria.get("avg_turnaround_days", 0),
-        })
-    return {"checks": checks}
+def _selected_request(auth_id):
+    if not auth_id:
+        return REQUESTS.items()
+    if auth_id not in REQUESTS:
+        return []
+    return [(auth_id, REQUESTS[auth_id])]
 
-
-def _status_tracking():
-    tracking = []
-    for aid, auth in AUTH_REQUESTS.items():
-        payer_stats = PAYER_APPROVAL_RATES.get(auth["payer"], {})
-        tracking.append({
-            "id": aid, "patient": auth["patient"], "procedure": auth["procedure"],
-            "status": auth["status"], "payer": auth["payer"],
-            "submitted": auth["submitted_date"],
-            "decision": auth["decision_date"] or "Awaiting",
-            "valid_through": auth["valid_through"] or "N/A",
-            "payer_avg_days": payer_stats.get("avg_days", 0),
-            "notes": auth["notes"],
-        })
-    return {"tracking": tracking}
-
-
-def _appeal_preparation():
-    denied = [auth for auth in AUTH_REQUESTS.values() if auth["status"] == "denied"]
-    appeals = []
-    for auth in denied:
-        payer_stats = PAYER_APPROVAL_RATES.get(auth["payer"], {})
-        criteria = CLINICAL_CRITERIA.get(auth["cpt_code"], {})
-        payer_key = None
-        for key in ["BCBS", "Aetna", "Medicare"]:
-            if key.lower() in auth["payer"].lower():
-                payer_key = key
-                break
-        rules = criteria.get("payer_rules", {}).get(payer_key, {})
-        appeals.append({
-            "patient": auth["patient"], "procedure": auth["procedure"],
-            "payer": auth["payer"], "denial_reason": auth["notes"],
-            "criteria_not_met": rules.get("requires", []),
-            "appeal_success_rate": payer_stats.get("appeal_success_pct", 0),
-            "recommended_actions": [
-                "Document conservative therapy completed to date",
-                "Obtain physical therapy records",
-                "Schedule peer-to-peer review with medical director",
-                "Submit supplemental clinical documentation",
-            ],
-        })
-    return {"appeals": appeals, "total_denied": len(denied)}
-
-
-# ---------------------------------------------------------------------------
-# Agent
-# ---------------------------------------------------------------------------
 
 class PriorAuthorizationAgent(BasicAgent):
-    """Prior authorization management and clinical criteria checking agent."""
+    """Assemble evidence without making an authorization outcome."""
 
     def __init__(self):
         self.name = "PriorAuthorizationAgent"
@@ -247,20 +100,17 @@ class PriorAuthorizationAgent(BasicAgent):
             "description": __manifest__["description"],
             "parameters": {
                 "type": "object",
+                "additionalProperties": False,
                 "properties": {
                     "operation": {
                         "type": "string",
-                        "enum": [
-                            "auth_request",
-                            "clinical_criteria_check",
-                            "status_tracking",
-                            "appeal_preparation",
-                        ],
-                        "description": "The prior authorization operation to perform.",
+                        "enum": ["request_evidence", "criteria_evidence", "status_summary", "appeal_evidence_packet"],
+                        "description": "Read-only utilization-review evidence operation.",
                     },
                     "auth_id": {
                         "type": "string",
-                        "description": "Optional authorization ID to filter results.",
+                        "enum": sorted(REQUESTS),
+                        "description": "Optional synthetic request identifier.",
                     },
                 },
                 "required": ["operation"],
@@ -269,95 +119,84 @@ class PriorAuthorizationAgent(BasicAgent):
         super().__init__(name=self.name, metadata=self.metadata)
 
     def perform(self, **kwargs) -> str:
-        op = kwargs.get("operation", "auth_request")
-        if op == "auth_request":
-            return self._auth_request()
-        elif op == "clinical_criteria_check":
-            return self._clinical_criteria_check()
-        elif op == "status_tracking":
-            return self._status_tracking()
-        elif op == "appeal_preparation":
-            return self._appeal_preparation()
-        return f"**Error:** Unknown operation `{op}`."
+        operation = ALIASES.get(kwargs.get("operation", ""), kwargs.get("operation", ""))
+        routes = {
+            "request_evidence": self._request_evidence,
+            "criteria_evidence": self._criteria_evidence,
+            "status_summary": self._status_summary,
+            "appeal_evidence_packet": self._appeal_evidence_packet,
+        }
+        if operation not in routes:
+            return f"**Error:** Unknown operation `{operation}`. No action was taken."
+        return routes[operation](kwargs.get("auth_id"))
 
-    def _auth_request(self) -> str:
-        data = _auth_request_status()
-        lines = [
-            "# Prior Authorization Requests",
-            "",
-            "**Status Summary:** " + " | ".join(f"{s}: {c}" for s, c in data["status_counts"].items()),
-            "",
-            "| ID | Patient | Procedure | CPT | Payer | Status | Submitted | Decision | Auth # |",
-            "|----|---------|-----------|-----|-------|--------|-----------|----------|--------|",
-        ]
-        for r in data["requests"]:
-            lines.append(
-                f"| {r['id']} | {r['patient']} | {r['procedure']} | {r['cpt']} "
-                f"| {r['payer']} | {r['status'].upper()} | {r['submitted']} "
-                f"| {r['decision']} | {r['auth_number']} |"
-            )
-        return "\n".join(lines)
-
-    def _clinical_criteria_check(self) -> str:
-        data = _clinical_criteria_check()
-        lines = ["# Clinical Criteria Check", ""]
-        for c in data["checks"]:
-            auto = "Yes" if c["auto_approve"] else "No"
-            lines.append(f"## {c['auth_id']}: {c['procedure']} ({c['patient']})")
-            lines.append(f"**Payer:** {c['payer']} | **Auto-Approve:** {auto}")
-            lines.append(f"**Historical Approval Rate:** {c['approval_rate']}% | **Avg Turnaround:** {c['avg_turnaround']} days")
-            lines.append("")
-            lines.append("**Requirements:**")
-            for req in c["requirements"]:
-                lines.append(f"- {req}")
+    def _request_evidence(self, auth_id=None):
+        rows = list(_selected_request(auth_id))
+        if not rows:
+            return f"# Request Evidence\n\n> {SAFETY}\n\nNo synthetic request matched `{auth_id}`."
+        lines = _notice("Prior-Authorization Evidence Inventory")
+        for rid, request in rows:
+            lines.extend([
+                f"## {rid}: {request['service']}",
+                f"- Payer in synthetic source: {request['payer']}",
+                f"- Source-recorded workflow state: {request['source_status']} ({request['source_date']})",
+                f"- Referenced policy: {request['policy_id']}",
+                "",
+            ])
+            for item, state in request["evidence"].items():
+                lines.append(f"- {item}: {state}")
             lines.append("")
         return "\n".join(lines)
 
-    def _status_tracking(self) -> str:
-        data = _status_tracking()
-        lines = ["# Authorization Status Tracking", ""]
-        for t in data["tracking"]:
-            lines.append(f"## {t['id']}: {t['procedure']}")
-            lines.append(f"- Patient: {t['patient']}")
-            lines.append(f"- Payer: {t['payer']} (avg decision: {t['payer_avg_days']} days)")
-            lines.append(f"- Status: {t['status'].upper()}")
-            lines.append(f"- Submitted: {t['submitted']} | Decision: {t['decision']} | Valid Through: {t['valid_through']}")
-            lines.append(f"- Notes: {t['notes']}")
+    def _criteria_evidence(self, auth_id=None):
+        rows = list(_selected_request(auth_id))
+        if not rows:
+            return f"# Criteria Evidence\n\n> {SAFETY}\n\nNo synthetic request matched `{auth_id}`."
+        lines = _notice("Criteria-to-Evidence Crosswalk")
+        for rid, request in rows:
+            policy = POLICIES[request["policy_id"]]
+            lines.extend([
+                f"## {rid} — {policy['title']}",
+                f"- Synthetic policy effective date: {policy['effective_date']}",
+                "- Checklist only; presence does not establish medical necessity or authorization.",
+            ])
+            for requirement in policy["requirements"]:
+                lines.append(f"- Reviewer check: {requirement}")
             lines.append("")
         return "\n".join(lines)
 
-    def _appeal_preparation(self) -> str:
-        data = _appeal_preparation()
-        if data["total_denied"] == 0:
-            return "# Appeal Preparation\n\nNo denied authorizations requiring appeals."
-        lines = [
-            "# Appeal Preparation",
-            "",
-            f"**Total Denied Authorizations:** {data['total_denied']}",
-            "",
-        ]
-        for a in data["appeals"]:
-            lines.append(f"## {a['procedure']} - {a['patient']}")
-            lines.append(f"**Payer:** {a['payer']}")
-            lines.append(f"**Denial Reason:** {a['denial_reason']}")
-            lines.append(f"**Appeal Success Rate:** {a['appeal_success_rate']}%")
-            lines.append("")
-            lines.append("**Criteria Not Met:**")
-            for c in a["criteria_not_met"]:
-                lines.append(f"- {c}")
-            lines.append("")
-            lines.append("**Recommended Actions:**")
-            for action in a["recommended_actions"]:
-                lines.append(f"1. {action}")
-            lines.append("")
+    def _status_summary(self, auth_id=None):
+        rows = list(_selected_request(auth_id))
+        if not rows:
+            return f"# Status Summary\n\n> {SAFETY}\n\nNo synthetic request matched `{auth_id}`."
+        lines = _notice("Source-Recorded Status Summary")
+        for rid, request in rows:
+            lines.extend([
+                f"- {rid}: {request['source_status']} as recorded on {request['source_date']}",
+                "  - This is a source transcription, not an agent determination.",
+            ])
+        return "\n".join(lines)
+
+    def _appeal_evidence_packet(self, auth_id=None):
+        rows = list(_selected_request(auth_id))
+        if not rows:
+            return f"# Appeal Evidence Packet\n\n> {SAFETY}\n\nNo synthetic request matched `{auth_id}`."
+        lines = _notice("Reconsideration Evidence Draft")
+        lines.append("A reviewer must confirm that reconsideration or appeal is appropriate and permitted.")
+        lines.append("")
+        for rid, request in rows:
+            lines.extend([
+                f"## {rid}",
+                f"- Source workflow state: {request['source_status']}",
+                f"- Policy reference to verify: {request['policy_id']}",
+                "- Include only authorized, minimum-necessary evidence.",
+                "- Human utilization reviewer owns rationale, completeness, and submission.",
+                "",
+            ])
         return "\n".join(lines)
 
 
-# ---------------------------------------------------------------------------
 if __name__ == "__main__":
     agent = PriorAuthorizationAgent()
-    for op in ["auth_request", "clinical_criteria_check", "status_tracking", "appeal_preparation"]:
-        print(f"\n{'='*60}")
-        print(f"Operation: {op}")
-        print("=" * 60)
+    for op in agent.metadata["parameters"]["properties"]["operation"]["enum"]:
         print(agent.perform(operation=op))

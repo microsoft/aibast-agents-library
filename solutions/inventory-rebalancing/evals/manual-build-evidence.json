@@ -1,0 +1,77 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "solution": "@aibast-agents-library/inventory-rebalancing",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "expected_display_name": "Inventory Manual Build",
+    "display_name": "Inventory Manual Build",
+    "bot_id": "05b62fa7-0327-4626-b9db-8c9de02de91a",
+    "created": true
+  },
+  "target_model": "Claude Sonnet 4.6",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {"expected": true, "confirmed": true},
+    "web_search_removed": {"expected": true, "confirmed": true},
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2,
+      "reviewed_as_complete_files": true,
+      "parity_fix_confirmed": true
+    },
+    "skills": {"expected": 4, "confirmed": 4},
+    "tools": {"expected": 0, "confirmed": 0}
+  },
+  "source_parity": {
+    "knowledge_files_byte_identical_to_easy_source": true,
+    "skill_files_exact_easy_content_blocks": true,
+    "skill_frontmatter_included": true
+  },
+  "corrections_before_final_pass": [
+    "Replaced incomplete knowledge uploads with the two reviewed full Markdown files.",
+    "Updated cost-analysis routing so total annual holding cost and planning-meeting trade-offs select the cost skill."
+  ],
+  "canonical_preview": [
+    {
+      "case_id": "IR-01",
+      "must_include": ["Dallas Fulfillment Center", "SKU-4406"],
+      "expected_screenshot": "18-preview-ir01-capacity-review.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "IR-02",
+      "must_include": ["SKU-4402", "SLOW-MOVING"],
+      "expected_screenshot": "19-preview-ir02-imbalance-review.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "IR-03",
+      "must_include": ["SKU-4401", "No inventory has been reserved"],
+      "expected_screenshot": "20-preview-ir03-transfer-plan.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "IR-04",
+      "must_include": ["Total annual holding cost", "synthetic planning estimates"],
+      "expected_screenshot": "21-preview-ir04-cost-analysis.jpg",
+      "source_capture": 142,
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "expected_frames": 22,
+    "manifest": "solutions/inventory-rebalancing/screenshots/manual/browserfilm.json",
+    "gif": "solutions/inventory-rebalancing/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/inventory-rebalancing/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "22-verify-draft-no-publish.jpg"
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:42:56.256484+00:00",
+  "solution": "@aibast-agents-library/emission-tracking",
+  "onepager": "Energy Operations Agent Suite one-pager (2).pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "EmissionTrackingAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/energy_stacks/emission_tracking_stack/emission_tracking_agent.py",
+      "sha256": "995b5f93335d3b49c8579ed22cab7882b711958be0b7a5bd75e68103f1a0ed8e"
+    }
+  ],
+  "case_file": "tests/demo_cases/emission-tracking.json",
+  "case_file_sha256": "8a88d29e81eac3487d304354386fd8ab71ba75d7aa3d04ff613d3100de2dd95a",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "EMISSION_TRACKING-01",
+      "persona": "Emissions Data Analyst",
+      "onepager_promise": null,
+      "prompt": "Consolidate the Ridgeline scope totals and state the evidence limitation.",
+      "assistant_response": "## Ridgeline Scope Consolidation\n\n**Total Portfolio Emissions: 1,533,200 tonnes CO2e**\n\n| Scope | Emissions | Share |\n|-------|-----------|-------|\n| **Scope 1** (Direct) | 1,420,000 tCO2e | 92.6% |\n| **Scope 2** (Purchased Energy) | 18,200 tCO2e | 1.2% |\n| **Scope 3** (Value Chain) | 95,000 tCO2e | 6.2% |\n\n### Evidence Limitation\n\n**This is synthetic data.** The inventory is not verified. Before any public claim:\n- Confirm **boundaries** (facility boundaries, operational control)\n- Verify **emission factors** against source methodologies (e.g., GHG Protocol, IPCC)\n- Audit **units and calculations** (especially Scope 1 from coal combustion)\n- Back claims with **source records** (fuel receipts, utility bills, third-party audits)\n\nQualified reviewers must approve through authenticated tools before disclosure or filing.",
+      "agent_logs": "[EmissionTrackingAgent] # Emissions Dashboard\n\n**Total Portfolio Emissions:** 1,533,200 tonnes CO2e\n\n| Facility | Type | Scope 1 | Scope 2 | Scope 3 | Total | % of Threshold |\n|----------|------|---------|---------|---------|-------|---------------|\n| Ridgeline Coal Station | coal_plant | 1,420,000 | 18,200 | 95,000 | 1,533,200 | 94.7% |\n\n> Synthetic inventory, not verified emissions evidence. Validate boundaries, factors, units, and source records before making a claim.",
+      "expected_agent": "EmissionTrackingAgent",
+      "must_include": [
+        "Ridgeline Coal Station",
+        "1,533,200",
+        "not verified emissions evidence"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "EMISSION_TRACKING-02",
+      "persona": "Environmental Compliance Manager",
+      "onepager_promise": null,
+      "prompt": "Screen FAC-E03 against its threshold without making a legal compliance claim.",
+      "assistant_response": "**Threshold screening for FAC-E03 (Ridgeline Coal Station):**\n\n- **Scope 1 emissions:** 1,420,000 tCO\u2082e  \n- **Screening threshold:** 1,500,000 tCO\u2082e  \n- **Status:** Below the screening threshold (no flag)\n\nThe facility sits 80,000 tCO\u2082e under the threshold. However, it's tracking 20.2% reduction against a 30% target\u2014about 10 points behind plan. This is a screening result only; qualified reviewers must verify against applicable regulations.",
+      "agent_logs": "[EmissionTrackingAgent] # Compliance Status\n\n| Facility | Scope 1 CO2 | Threshold | Compliant | Gap | Target Reduction | Actual |\n|----------|-------------|-----------|-----------|-----|-----------------|--------|\n| Ridgeline Coal Station | 1,420,000 | 1,500,000 | BELOW SCREENING THRESHOLD | 0 | 30% | 20.2% (Behind) |\n\n> Screening result only; it is not a legal compliance determination or an emissions claim.",
+      "expected_agent": "EmissionTrackingAgent",
+      "must_include": [
+        "BELOW SCREENING THRESHOLD",
+        "not a legal compliance determination"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "EMISSION_TRACKING-03",
+      "persona": "Decarbonization Program Lead",
+      "onepager_promise": null,
+      "prompt": "What reduction scenarios exist for Ridgeline and who must review them?",
+      "assistant_response": "**Ridgeline has three reduction scenarios:**\n\n1. **Fuel switching to natural gas** \u2014 400,000 tonnes reduction at $85M (biggest impact for cost)\n2. **Carbon capture retrofit** \u2014 300,000 tonnes at $120M (highest cost but proven tech)\n3. **Efficiency upgrades** \u2014 50,000 tonnes at $12M (smallest, lowest cost)\n\n**Who must review them:** Engineering, finance, environmental, and executive teams. This is a draft stage \u2014 no actual deployment or compliance claims until qualified reviewers approve all scenarios against source data and operational constraints.",
+      "agent_logs": "[EmissionTrackingAgent] # Emission Reduction Plans\n\n## Ridgeline Coal Station\nCurrent: 1,420,000 tonnes | Target: 1,246,000 tonnes | Gap: 174,000 tonnes\n\n| Action | Reduction (tonnes) | Cost ($M) |\n|--------|-------------------|----------|\n| Fuel switching to natural gas | 400,000 | $85.0M |\n| Carbon capture retrofit | 300,000 | $120.0M |\n| Efficiency upgrades | 50,000 | $12.0M |\n\n> Scenario estimates require engineering, finance, environmental, and executive review before action.",
+      "expected_agent": "EmissionTrackingAgent",
+      "must_include": [
+        "Fuel switching to natural gas",
+        "engineering, finance, environmental, and executive review"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "EMISSION_TRACKING-04",
+      "persona": "Sustainability Lead",
+      "onepager_promise": null,
+      "prompt": "Show offset candidates for the Ridgeline gap, but do not buy or claim credits.",
+      "assistant_response": "**Ridgeline offset candidates** \u2014 174,000 tonnes to cover:\n\nFour project types are screened above with ~228,000 tonnes available across verified programs (Verra, Green-e, ACR, Gold Standard). Wind and reforestation dominate the supply; methane and soil carbon fill niche depth.\n\n**Next steps for your team:**\n- Have qualified reviewers audit project documentation (methodology, vintage, additionality)\n- Verify issuing body credentials and registry standing\n- Confirm alignment with your scope and reduction timeline\n- Only then proceed to a purchase decision\n\nNo credits claimed or retired here \u2014 this is due-diligence input only.",
+      "agent_logs": "[EmissionTrackingAgent] # Carbon Offset Analysis\n\n**Emission Gap to Cover:** 174,000 tonnes\n**Total Credits Available:** 228,000 tonnes\n**Total Offset Cost:** $3,804,500\n\n| Project | Type | Credits | Price/t | Total Cost | Verified By |\n|---------|------|---------|---------|-----------|-------------|\n| Appalachian Reforestation | forestry | 45,000 | $18.50 | $832,500 | Verra VCS |\n| Texas Wind REC Bundle | renewable_energy | 120,000 | $12.75 | $1,530,000 | Green-e |\n| Montana Methane Capture | methane_capture | 28,000 | $24.00 | $672,000 | ACR |\n| Iowa Agricultural Soil Carbon | soil_carbon | 35,000 | $22.00 | $770,000 | Gold Standard |\n\n> Due-diligence shortlist only. No credit purchase, retirement, disclosure, or offset claim has been made.",
+      "expected_agent": "EmissionTrackingAgent",
+      "must_include": [
+        "Appalachian Reforestation",
+        "No credit purchase",
+        "offset claim"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

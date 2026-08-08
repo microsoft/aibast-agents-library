@@ -1,0 +1,76 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/fs-regulatory-compliance",
+  "display_name": "Regulatory Compliance Agent",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/financial_services_stacks/regulatory_compliance_fs_stack/regulatory_compliance_fs_agent.py",
+  "target_filename": "regulatory_compliance_fs_agent.py",
+  "expected_tool": "FSRegulatoryCompliance",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "smoke_test": {
+    "prompt": "Are we going to fail our next MiFID audit? What's actually broken on the desk right now?",
+    "must_call": "FSRegulatoryCompliance",
+    "must_include": [
+      "T-2041",
+      "T-2233"
+    ]
+  },
+  "copilot_studio": {
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "authoring_mode": "cli-copilot",
+    "validated_pilot": {
+      "display_name": "Regulatory Compliance Pilot",
+      "schema_name": "aibast_RegulatoryCompliancePilot",
+      "bot_id": "1a5fb3de-2e07-4415-89f9-40c5620c0cc5",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 5,
+      "knowledge_files": 2,
+      "changes_pushed": 8,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 5,
+      "preview_cases_total": 5
+    },
+    "required_connections": [
+      "Order-management or transaction-reporting data through an approved connector or API",
+      "Approved Reporting Mechanism through Power Automate or a custom connector",
+      "Learning management system",
+      "Microsoft Teams"
+    ],
+    "operations": [
+      "compliance_dashboard",
+      "trade_surveillance",
+      "documentation_review",
+      "remediation_submission",
+      "certification_tracker"
+    ],
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_fs-regulatory-compliance-synthetic-records.md",
+      "manual/knowledge/aibast_fs-regulatory-compliance-rules-and-controls.md"
+    ],
+    "manual_skill_count": 5,
+    "publish_requires_confirmation": true
+  },
+  "demo_scenarios": [
+    "regulatory-audit-readiness",
+    "regulatory-certification-readiness",
+    "regulatory-trade-surveillance",
+    "regulatory-algorithm-go-live",
+    "regulatory-board-evidence"
+  ]
+}

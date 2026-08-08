@@ -1,0 +1,75 @@
+{
+  "schema": "aibast-persona-cases/1.0",
+  "solution": "Supply Chain Disruption Alert Agent",
+  "agent": "@aibast-agents-library/supply-chain-disruption-alert",
+  "onepager": "35. Supply Chain Disruption Alert Agent one-pager.pptx",
+  "cases": [
+    {
+      "id": "SUPPLY_CHAIN_DISRUPTION_ALERT-01",
+      "operation": "disruption_dashboard",
+      "persona": "Customer Fulfillment Lead",
+      "prompt": "Which active disruption has the largest modeled impact and what is affected?",
+      "kwargs": {
+        "operation": "disruption_dashboard"
+      },
+      "must_include": [
+        "DISR-002",
+        "$3,800,000.00",
+        "SKU-1010"
+      ],
+      "expects_agent": "supply-chain-disruption-alert-agent"
+    },
+    {
+      "id": "SUPPLY_CHAIN_DISRUPTION_ALERT-02",
+      "operation": "risk_assessment",
+      "persona": "Supply Chain Planner",
+      "prompt": "Why is RT-APAC-01 high risk?",
+      "kwargs": {
+        "operation": "risk_assessment",
+        "route_id": "RT-APAC-01"
+      },
+      "must_include": [
+        "Asia-Pacific Primary",
+        "HIGH",
+        "Weather"
+      ],
+      "expects_agent": "supply-chain-disruption-alert-agent"
+    },
+    {
+      "id": "SUPPLY_CHAIN_DISRUPTION_ALERT-03",
+      "operation": "mitigation_plan",
+      "persona": "Operations Leader",
+      "prompt": "Draft a DISR-002 mitigation scenario without rerouting or moving inventory.",
+      "kwargs": {
+        "operation": "mitigation_plan",
+        "disruption_id": "DISR-002"
+      },
+      "must_include": [
+        "DISR-002",
+        "Draft Disruption Mitigation Scenario",
+        "no purchase order"
+      ],
+      "expects_agent": "supply-chain-disruption-alert-agent"
+    },
+    {
+      "id": "SUPPLY_CHAIN_DISRUPTION_ALERT-04",
+      "operation": "supplier_alternatives",
+      "persona": "Procurement Manager",
+      "prompt": "Show Electronics alternatives without activating a supplier.",
+      "kwargs": {
+        "operation": "supplier_alternatives",
+        "category": "Electronics"
+      },
+      "must_include": [
+        "TechSource Taiwan",
+        "due diligence",
+        "human approval"
+      ],
+      "expects_agent": "supply-chain-disruption-alert-agent"
+    }
+  ],
+  "assertion_principle": "One persona case per operation; assertions use deterministic source evidence and explicit safety language.",
+  "agent_files": [
+    "supply_chain_disruption_alert_agent"
+  ]
+}

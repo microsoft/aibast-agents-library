@@ -1,0 +1,51 @@
+{
+  "solution": "Contract Risk Review Agent",
+  "agent": "@aibast-agents-library/contract-risk-review",
+  "onepager": "Contract Risk Review Agent one-pager.pptx",
+  "agent_files": [
+    "contract_risk_review_agent"
+  ],
+  "note": "Persona-language locked cases for every implemented contract-review workflow.",
+  "cases": [
+    {
+      "id": "CRR-01",
+      "persona": "Legal Operations Director",
+      "onepager_bullet": "Perform comprehensive contract analysis to accelerate reviews and highlight critical risks",
+      "prompt": "Which agreements should I put in front of counsel first, and what is driving the priority?",
+      "operation": "risk_scan",
+      "must_include": ["NovaTech Systems", "Atlas Financial Group", "Review support only"],
+      "must_not_include": ["contract was approved", "legal advice"],
+      "expects_agent": "ContractRiskReviewAgent"
+    },
+    {
+      "id": "CRR-02",
+      "persona": "Commercial Attorney",
+      "onepager_bullet": "Evaluate liability exposure and IP provisions to identify gaps and ensure complete financial protections",
+      "prompt": "Walk me through the liability, IP ownership, and payment-term language that needs attention in the MSA.",
+      "operation": "clause_analysis",
+      "must_include": ["Liability Cap", "IP Ownership", "Payment Terms"],
+      "must_not_include": ["we approve this contract"],
+      "expects_agent": "ContractRiskReviewAgent"
+    },
+    {
+      "id": "CRR-03",
+      "persona": "Legal Operations Manager",
+      "onepager_bullet": "Evaluate liability exposure and IP provisions to identify gaps and ensure complete financial protections",
+      "prompt": "Compare the available contract evidence with our internal policy and tell me where the file is incomplete.",
+      "operation": "compliance_check",
+      "must_include": ["Internal Policy Requirements", "REVIEW REQUIRED", "CTR-5002"],
+      "must_not_include": ["CTR-5002 -- Meridian Healthcare -- **PASS**"],
+      "expects_agent": "ContractRiskReviewAgent"
+    },
+    {
+      "id": "CRR-04",
+      "persona": "General Counsel",
+      "onepager_bullet": "Recommend amendments and negotiation strategies to strengthen contract positions and limit legal costs",
+      "prompt": "Prepare the negotiation positions, fallbacks, and escalation points for the highest-risk agreements.",
+      "operation": "renegotiation_brief",
+      "must_include": ["Non-Negotiable Amendments", "General Counsel", "Draft positions"],
+      "must_not_include": ["the client accepted"],
+      "expects_agent": "ContractRiskReviewAgent"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T22:32:18.625Z",
+  "solution": "@aibast-agents-library/time-entry-billing",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Time Entry and Billing Pilot",
+  "schema_name": "aibast_TimeEntryandBillingPilot",
+  "bot_id": "eef12393-69b8-47c9-b37b-ac3f194f102f",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "TEB-01",
+      "must_include": [
+        "TE-9004",
+        "TE-9011",
+        "Needs approval"
+      ],
+      "must_not_include": [
+        "entries were approved automatically"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "TEB-02",
+      "must_include": [
+        "By Project",
+        "By Consultant",
+        "not posted revenue"
+      ],
+      "must_not_include": [
+        "revenue recognized"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "TEB-03",
+      "must_include": [
+        "Missing description",
+        "Exceeds 10-hour daily limit",
+        "Budget Alert"
+      ],
+      "must_not_include": [
+        "description completed automatically"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "TEB-04",
+      "must_include": [
+        "Invoices Ready to Generate",
+        "Fixed-fee hold",
+        "no invoice was generated"
+      ],
+      "must_not_include": [
+        "Pinnacle Energy ERP | Pinnacle Energy"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "TEB-05",
+      "must_include": [
+        "DSP-301",
+        "DSP-302",
+        "authorized review"
+      ],
+      "must_not_include": [
+        "contacted the client",
+        "charge was waived"
+      ],
+      "passed": true
+    }
+  ]
+}

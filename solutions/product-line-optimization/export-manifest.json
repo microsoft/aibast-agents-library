@@ -1,0 +1,205 @@
+{
+  "schema": "aibast-solution-export/1.0",
+  "solution": "@aibast-agents-library/production-line-optimization",
+  "raw_base": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/",
+  "github_folder": "https://github.com/microsoft/aibast-agents-library/tree/main/solutions/product-line-optimization",
+  "bundle": {
+    "label": "Product Line Optimization current source bundle",
+    "path": "solutions/product-line-optimization/exports/product-line-optimization-source.zip",
+    "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/exports/product-line-optimization-source.zip"
+  },
+  "files": [
+    {
+      "id": "portable-agent",
+      "label": "Portable Brainstem agent.py",
+      "path": "agents/@aibast-agents-library/manufacturing_stacks/production_line_optimization_stack/production_line_optimization_agent.py",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/manufacturing_stacks/production_line_optimization_stack/production_line_optimization_agent.py",
+      "use": "Local Brainstem runtime and production logic reference",
+      "status": "ready"
+    },
+    {
+      "id": "deployment-recipe",
+      "label": "No-terminal deployment recipe",
+      "path": "solutions/product-line-optimization/deployment.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/deployment.json",
+      "use": "GitHub Copilot Easy-mode installation contract",
+      "status": "ready"
+    },
+    {
+      "id": "field-guide",
+      "label": "Customer field guide",
+      "path": "solutions/product-line-optimization/FIELD-GUIDE.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/FIELD-GUIDE.md",
+      "use": "Facilitation, production seams, recovery, and evidence gates",
+      "status": "ready"
+    },
+    {
+      "id": "settings",
+      "label": "Copilot Studio settings",
+      "path": "solutions/product-line-optimization/copilot-studio/settings.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/copilot-studio/settings.mcs.yml",
+      "use": "Reviewed instructions, model, identity, and safety boundaries",
+      "status": "ready"
+    },
+    {
+      "id": "global-instructions",
+      "label": "Manual global instructions",
+      "path": "solutions/product-line-optimization/manual/GLOBAL-INSTRUCTIONS.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/manual/GLOBAL-INSTRUCTIONS.md",
+      "use": "Paste directly into the blank Copilot Studio agent",
+      "status": "ready"
+    },
+    {
+      "id": "agent-sync",
+      "label": "Copilot Studio component manifest",
+      "path": "solutions/product-line-optimization/copilot-studio/agent.sync.yaml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/copilot-studio/agent.sync.yaml",
+      "use": "CLI project component synchronization",
+      "status": "ready"
+    },
+    {
+      "id": "knowledge-records",
+      "label": "Synthetic production-line records",
+      "path": "solutions/product-line-optimization/copilot-studio/capabilities/knowledge/files/aibast_production-line-synthetic-records.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/copilot-studio/capabilities/knowledge/files/aibast_production-line-synthetic-records.md",
+      "use": "Upload directly as Copilot Studio knowledge",
+      "status": "ready"
+    },
+    {
+      "id": "knowledge-rules",
+      "label": "Production optimization rules",
+      "path": "solutions/product-line-optimization/copilot-studio/capabilities/knowledge/files/aibast_production-optimization-rules.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/copilot-studio/capabilities/knowledge/files/aibast_production-optimization-rules.md",
+      "use": "Upload directly as Copilot Studio knowledge",
+      "status": "ready"
+    },
+    {
+      "id": "skill-line-health",
+      "label": "Plant-wide operating health skill",
+      "path": "solutions/product-line-optimization/manual/skills/aibast_line-health_plo01/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/manual/skills/aibast_line-health_plo01/SKILL.md",
+      "use": "Upload directly through Copilot Studio Add skill",
+      "status": "ready"
+    },
+    {
+      "id": "skill-bottleneck",
+      "label": "Constraining-station skill",
+      "path": "solutions/product-line-optimization/manual/skills/aibast_bottleneck_plo02/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/manual/skills/aibast_bottleneck_plo02/SKILL.md",
+      "use": "Upload directly through Copilot Studio Add skill",
+      "status": "ready"
+    },
+    {
+      "id": "skill-throughput",
+      "label": "Improvement-option comparison skill",
+      "path": "solutions/product-line-optimization/manual/skills/aibast_throughput-options_plo03/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/manual/skills/aibast_throughput-options_plo03/SKILL.md",
+      "use": "Upload directly through Copilot Studio Add skill",
+      "status": "ready"
+    },
+    {
+      "id": "skill-shift-plan",
+      "label": "Day-swing-night planning skill",
+      "path": "solutions/product-line-optimization/manual/skills/aibast_shift-plan_plo04/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/manual/skills/aibast_shift-plan_plo04/SKILL.md",
+      "use": "Upload directly through Copilot Studio Add skill",
+      "status": "ready"
+    },
+    {
+      "id": "onepager-map",
+      "label": "One-pager promise map",
+      "path": "solutions/product-line-optimization/evals/onepager-map.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/evals/onepager-map.json",
+      "use": "Advertised promise coverage evidence",
+      "status": "ready"
+    },
+    {
+      "id": "brainstem-transcripts",
+      "label": "Isolated Brainstem transcripts",
+      "path": "solutions/product-line-optimization/evals/transcripts.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/evals/transcripts.json",
+      "use": "Canonical portable-agent acceptance corpus",
+      "status": "ready"
+    },
+    {
+      "id": "studio-preview-evidence",
+      "label": "Copilot Studio Preview evidence",
+      "path": "solutions/product-line-optimization/evals/copilot-studio-preview-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/evals/copilot-studio-preview-evidence.json",
+      "use": "PLO-01 through PLO-04 Easy-agent Preview evidence and identity",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-browserfilm-manifest",
+      "label": "Copilot-assisted browserfilm manifest",
+      "path": "solutions/product-line-optimization/screenshots/assisted/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/assisted/browserfilm.json",
+      "use": "Captured Easy-mode frame sequence",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-browserfilm",
+      "label": "Copilot-assisted walkthrough",
+      "path": "solutions/product-line-optimization/screenshots/assisted/copilot-assisted-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/assisted/copilot-assisted-walkthrough.gif",
+      "use": "Animated proof of the pushed Easy agent",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-contact-sheet",
+      "label": "Copilot-assisted contact sheet",
+      "path": "solutions/product-line-optimization/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
+      "use": "Static Easy-mode evidence overview",
+      "status": "ready"
+    },
+    {
+      "id": "manual-evidence",
+      "label": "Manual build evidence",
+      "path": "solutions/product-line-optimization/evals/manual-build-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/evals/manual-build-evidence.json",
+      "use": "Manual identity, inventory, Preview parity, and Draft gate",
+      "status": "ready"
+    },
+    {
+      "id": "quest",
+      "label": "Interactive deployment quest",
+      "path": "solutions/product-line-optimization/quest.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/quest.html",
+      "use": "Easy and literal-browser Hard mode journey",
+      "status": "ready"
+    },
+    {
+      "id": "manual-tutorial",
+      "label": "Manual browser-build tutorial",
+      "path": "solutions/product-line-optimization/manual-tutorial.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/manual-tutorial.html",
+      "use": "Microsoft Learn-style 23-step manual tutorial",
+      "status": "ready"
+    },
+    {
+      "id": "manual-browserfilm-manifest",
+      "label": "Manual browserfilm frame manifest",
+      "path": "solutions/product-line-optimization/screenshots/manual/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/browserfilm.json",
+      "use": "Deterministic captured frame sequence",
+      "status": "ready"
+    },
+    {
+      "id": "manual-browserfilm",
+      "label": "Manual build browserfilm",
+      "path": "solutions/product-line-optimization/screenshots/manual/manual-build-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/manual-build-walkthrough.gif",
+      "use": "Animated proof assembled from the real 23-step capture",
+      "status": "ready"
+    },
+    {
+      "id": "manual-contact-sheet",
+      "label": "Manual build contact sheet",
+      "path": "solutions/product-line-optimization/screenshots/manual/manual-build-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/manual-build-contact-sheet.jpg",
+      "use": "Static overview of all 23 manual actions",
+      "status": "ready"
+    }
+  ]
+}

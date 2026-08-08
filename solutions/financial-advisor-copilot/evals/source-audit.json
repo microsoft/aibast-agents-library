@@ -1,0 +1,42 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/financial-advisor-copilot",
+  "audited_source": "agents/@aibast-agents-library/financial_services_stacks/financial_advisor_copilot_stack/financial_advisor_copilot_agent.py",
+  "source_sha256": "b69a30049be7f2ec22efbae99bc4e5bd4bff20e35c47cf6bbd8b553b606cbf85",
+  "case_file": "tests/demo_cases/financial-advisor-copilot.json",
+  "onepager": "50. Financial Advisor Agent one-pager.pptx",
+  "operations": {
+    "service_intake": [
+      "FAC-01"
+    ],
+    "client_review": [
+      "FAC-02"
+    ],
+    "portfolio_summary": [
+      "FAC-03"
+    ],
+    "recommendation_engine": [
+      "FAC-04"
+    ],
+    "compliance_check": [
+      "FAC-05"
+    ],
+    "advisor_handoff": [
+      "FAC-06"
+    ]
+  },
+  "defects_fixed": [
+    "Expanded tool routing descriptions so persona-language requests map to the intended operation.",
+    "Aligned implemented operations with approved one-pager promises and added missing decision-support workflows where needed.",
+    "Added synthetic-data labels, explicit human review, and no-advice/no-approval/no-transaction boundaries.",
+    "Rejected unknown record identifiers instead of silently substituting another fictional record.",
+    "Added exact persona-language routing phrases, operation selection guidance, and synthetic entity-to-identifier mappings for strict-isolation capture."
+  ],
+  "unresolved_defects": [],
+  "routing_result": {
+    "cases_passed": 6,
+    "cases_total": 6,
+    "strict_isolation": true,
+    "loaded_tool": "FinancialAdvisorCopilotAgent"
+  }
+}

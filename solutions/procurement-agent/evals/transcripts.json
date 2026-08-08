@@ -1,0 +1,89 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:37:18.559277+00:00",
+  "solution": "@aibast-agents-library/procurement-agent",
+  "onepager": "Procurement Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "ProcurementAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/general_stacks/procurement_agent_stack/procurement_agent.py",
+      "sha256": "eda05784ae535846d91d21df09f72a53458ed7972d6351edb17f05ed0dff641d"
+    }
+  ],
+  "case_file": "tests/demo_cases/procurement-agent.json",
+  "case_file_sha256": "30c70a4e75fe85ba0cad7f716256693e1987f75459bdc99664488b518048928e",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "PROC-01",
+      "persona": "Procurement Manager",
+      "onepager_promise": "Automate purchase order creation and approval workflows to reduce cycle times and manual workload",
+      "prompt": "Walk me through the cloud-upgrade request and tell me whose review it needs before anything moves.",
+      "assistant_response": "Here's what you need to know:\n\n**The Request (PR-5001):**\n- **What:** Cloud Infrastructure Upgrade via AWS\n- **Amount:** $125,000\n- **Why:** Current system at 92% capacity; Q1 growth requires scaling\n- **Requester:** Sarah Chen (IT)\n\n**The Approval Chain:**\nYour $125,000 request sits in the **$100K\u2013$500K band**, which means **the CFO must review and approve it** before anything proceeds. The SLA is **48 hours**.\n\n**Before that happens:** If you want to speed things up, VP Finance can fast-track an initial review (24-hour SLA), but the final gate is still CFO sign-off.\n\n**Bottom line:** Get this to the CFO's desk. Once they approve, procurement can move to vendor selection and contract negotiation.",
+      "agent_logs": "[ProcurementAgent] **Purchase Request Review: PR-5001**\n\n| Field | Detail |\n|---|---|\n| Title | Cloud Infrastructure Upgrade |\n| Requester | Sarah Chen (IT) |\n| Category | Technology |\n| Amount | $125,000 |\n| Priority | High |\n| Status | Pending Approval |\n| Preferred Vendor | AWS |\n| Budget Code | IT-INFRA-2025 |\n| Required Approver | CFO |\n\n**Justification:** Current infrastructure at 92% capacity, scaling needed for Q1 growth\n\n**Approval gate:** Analysis only. No purchase order is created, no supplier is selected or contacted, and no funds are committed without authorized procurement approval.\n\nSource: [Synthetic Procurement Snapshot]\nAgents: ProcurementAgent\n[ProcurementAgent] **Approval Routing: PR-5001**\n\n| Field | Detail |\n|---|---|\n| Request | Cloud Infrastructure Upgrade |\n| Amount | $125,000 |\n| Required Approver | CFO |\n| Approval SLA | 48 hours |\n| Current Status | Pending Approval |\n\n**Approval Thresholds:**\n\n| Amount Limit | Approver | SLA |\n|---|---|---|\n| Up to $5,000 | Direct Manager | 4h |\n| Up to $25,000 | Department Head | 8h |\n| Up to $100,000 | VP Finance | 24h |\n| Up to $500,000 | CFO | 48h | <-- This request\n| Up to Unlimited | CEO + Board | 120h |\n\n\nRouting is a recommendation and does not record an approval. Analysis only. No purchase order is created, no supplier is selected or contacted, and no funds are committed without authorized procurement approval.\n\nSource: [Synthetic Approval Rules]\nAgents: ProcurementAgent",
+      "expected_agent": "ProcurementAgent",
+      "must_include": [
+        "PR-5001",
+        "$125,000",
+        "CFO"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PROC-02",
+      "persona": "Category Buyer",
+      "onepager_promise": "Perform intelligent vendor analysis to optimize supplier selection, contract compliance, and performance tracking",
+      "prompt": "Give me a neutral comparison of the approved cloud vendors; do not pick a winner.",
+      "assistant_response": "Here's your neutral vendor snapshot for cloud infrastructure:\n\n**Strategic Tier (approved, high-volume partners):**\n- **AWS**: 4.7/5 rating | $890K annual spend | Net 30 terms\n- **Azure**: 4.6/5 rating | $650K annual spend | Net 30 terms\n\nBoth are established strategic vendors with comparable ratings and payment terms. AWS has higher annual volume; Azure sits at a solid second. Both offer the support level and pricing controls you'd expect at this tier\u2014no standout difference in terms or reliability from this data.\n\n**The comparison is evidence only.** Use it to inform your selection process, but the decision stays with your procurement team based on your specific requirements (workload fit, integration needs, cost structure for your use case).",
+      "agent_logs": "[ProcurementAgent] **Vendor Comparison**\n\n| ID | Vendor | Category | Tier | Rating | Annual Spend | Terms |\n|---|---|---|---|---|---|---|\n| VND-001 | AWS | Cloud Infrastructure | Strategic | 4.7/5 | $890,000 | Net 30 |\n| VND-002 | Salesforce | CRM Software | Strategic | 4.5/5 | $430,000 | Annual Prepay |\n| VND-003 | Steelcase | Office Furniture | Preferred | 4.3/5 | $125,000 | Net 45 |\n| VND-004 | Herman Miller | Office Furniture | Approved | 4.6/5 | $85,000 | Net 30 |\n| VND-005 | Azure | Cloud Infrastructure | Strategic | 4.6/5 | $650,000 | Net 30 |\n| VND-006 | FranklinCovey | Training Services | Approved | 4.2/5 | $45,000 | Net 30 |\n\n**Vendor Tiers:**\n- Strategic: Long-term partners, best pricing, dedicated support\n- Preferred: Competitive pricing, standard support, pre-approved\n- Approved: Vetted and available, standard terms\n\nRatings and terms are comparison evidence, not a supplier award. Analysis only. No purchase order is created, no supplier is selected or contacted, and no funds are committed without authorized procurement approval.\n\nSource: [Synthetic Vendor Management Snapshot]\nAgents: ProcurementAgent",
+      "expected_agent": "ProcurementAgent",
+      "must_include": [
+        "AWS",
+        "Azure",
+        "not a supplier award"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PROC-03",
+      "persona": "Department Approver",
+      "onepager_promise": "Automate purchase order creation and approval workflows to reduce cycle times and manual workload",
+      "prompt": "This infrastructure request landed in my queue. What is the recommended approval path?",
+      "assistant_response": "**For PR-5001 (Cloud Infrastructure Upgrade at $125,000):** \n\nThe approval needs to go to **CFO** with a **48-hour SLA**. This request exceeds the VP Finance threshold ($100K limit), so it escalates to CFO-level review.\n\nDo you need me to check the vendor options, budget headroom, or anything else before it goes up?",
+      "agent_logs": "[ProcurementAgent] **Approval Routing: PR-5001**\n\n| Field | Detail |\n|---|---|\n| Request | Cloud Infrastructure Upgrade |\n| Amount | $125,000 |\n| Required Approver | CFO |\n| Approval SLA | 48 hours |\n| Current Status | Pending Approval |\n\n**Approval Thresholds:**\n\n| Amount Limit | Approver | SLA |\n|---|---|---|\n| Up to $5,000 | Direct Manager | 4h |\n| Up to $25,000 | Department Head | 8h |\n| Up to $100,000 | VP Finance | 24h |\n| Up to $500,000 | CFO | 48h | <-- This request\n| Up to Unlimited | CEO + Board | 120h |\n\n\nRouting is a recommendation and does not record an approval. Analysis only. No purchase order is created, no supplier is selected or contacted, and no funds are committed without authorized procurement approval.\n\nSource: [Synthetic Approval Rules]\nAgents: ProcurementAgent",
+      "expected_agent": "ProcurementAgent",
+      "must_include": [
+        "CFO",
+        "48 hours",
+        "does not record an approval"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PROC-04",
+      "persona": "Finance Director",
+      "onepager_promise": "Deliver real-time spend analytics to identify savings opportunities and prevent duplicate spending",
+      "prompt": "Where is the purchasing budget under pressure, and what should we review before approving more spend?",
+      "assistant_response": "**Budget pressure summary:**\n\n**\ud83d\udea9 Critical \u2014 Software (OVER by $60K)**\n- 73% spent + committed already exceeds your $800K allocation\n- Growing 18% YoY; this is structural overspend\n- **Before approving more:** Review active software contracts for consolidation, renegotiation, or sunset candidates\n\n**\u26a0\ufe0f At Risk \u2014 Technology ($285K remaining)**\n- 73% spent on $2.5M; 12% YoY growth\n- Committed spend is tight against remaining budget\n- **Before approving more:** Prioritize only critical purchases; defer discretionary infrastructure/tooling\n\n**On Track \u2014 Professional Services, Travel, Office Supplies**\n- These have breathing room for the rest of the period\n\n**Key questions to answer before next approval:**\n1. Can any Software licenses be renegotiated or consolidated?\n2. Are there Technology commitments that can be deferred to next fiscal year?\n3. Is the 18% Software growth driven by headcount, new products, or contract creep?\n\nWant me to help evaluate a specific purchase request against these constraints, or dig into approval routing for a spend decision?",
+      "agent_logs": "[ProcurementAgent] **Spend Analysis**\n\n| Metric | Value |\n|---|---|\n| Total Budget | $4,350,000 |\n| Spent YTD | $3,197,000 (73%) |\n| Committed | $656,500 |\n| Available | $496,500 |\n\n**By Category:**\n\n| Category | Budget | Spent YTD | Committed | Available | Status | Trend |\n|---|---|---|---|---|---|---|\n| Technology | $2,500,000 | $1,875,000 | $340,000 | $285,000 | At Risk | +12% YoY |\n| Software | $800,000 | $645,000 | $215,000 | $-60,000 | Over Budget | +18% YoY |\n| Office Supplies | $350,000 | $210,000 | $48,500 | $91,500 | On Track | -5% YoY |\n| Professional Services | $500,000 | $325,000 | $35,000 | $140,000 | On Track | +8% YoY |\n| Travel | $200,000 | $142,000 | $18,000 | $40,000 | On Track | -15% YoY |\n\n**Alerts:**\n- Software category over budget by $60,000 - requires reallocation\n- Technology committed spend approaching budget limit\n\nAnalysis only. No purchase order is created, no supplier is selected or contacted, and no funds are committed without authorized procurement approval.\n\nSource: [Synthetic ERP + Finance Snapshot]\nAgents: ProcurementAgent",
+      "expected_agent": "ProcurementAgent",
+      "must_include": [
+        "Software",
+        "$60,000",
+        "No purchase order is created"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

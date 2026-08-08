@@ -17,7 +17,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/supplier-risk-monitoring",
     "version": "1.0.0",
     "display_name": "Supply Risk Monitoring Agent",
-    "description": "Deliver real-time risk intelligence and planning to protect production continuity and reduce disruption exposure.",
+    "description": "Analyze a fixed synthetic supplier-risk snapshot and recommend review-ready mitigation options. Never contact suppliers, change sourcing, place orders, or approve procurement action.",
     "author": "AIBAST",
     "tags": ["supplier", "risk", "procurement", "supply-chain", "manufacturing"],
     "category": "manufacturing",
@@ -179,6 +179,28 @@ class SupplierRiskMonitoringAgent(BasicAgent):
                 "disruption_alerts",
                 "alternative_sourcing",
             ],
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "operation": {
+                        "type": "string",
+                        "enum": [
+                            "risk_dashboard",
+                            "supplier_scorecard",
+                            "disruption_alerts",
+                            "alternative_sourcing",
+                        ],
+                        "description": (
+                            "risk_dashboard: rank the fixed supplier-risk snapshot. "
+                            "supplier_scorecard: explain quality, delivery, financial, and geopolitical evidence. "
+                            "disruption_alerts: summarize recorded incidents and potential exposure. "
+                            "alternative_sourcing: compare synthetic backup options for authorized procurement review; "
+                            "never contact a supplier or change sourcing."
+                        ),
+                    },
+                },
+                "required": ["operation"],
+            },
         }
         super().__init__(name=self.name, metadata=self.metadata)
 
@@ -197,7 +219,7 @@ class SupplierRiskMonitoringAgent(BasicAgent):
 
     # ------------------------------------------------------------------
     def _risk_dashboard(self, **kwargs) -> str:
-        lines = ["## Supplier Risk Dashboard\n"]
+        lines = ["## Supplier Risk Dashboard\n", "> Fixed synthetic snapshot; no live financial, logistics, ERP, or supplier feed was queried.\n"]
         total = _total_spend()
         at_risk = _spend_at_risk(5.0)
         lines.append(f"**Total annual supplier spend:** ${total:,.0f}")
@@ -221,7 +243,7 @@ class SupplierRiskMonitoringAgent(BasicAgent):
 
     # ------------------------------------------------------------------
     def _supplier_scorecard(self, **kwargs) -> str:
-        lines = ["## Supplier Scorecards\n"]
+        lines = ["## Supplier Scorecards\n", "> Synthetic evidence for procurement review; scores are not customer or third-party ratings.\n"]
         for sid, s in SUPPLIERS.items():
             health = _composite_score(s)
             tier = _risk_tier_label(s["overall_risk"])
@@ -251,7 +273,7 @@ class SupplierRiskMonitoringAgent(BasicAgent):
 
     # ------------------------------------------------------------------
     def _disruption_alerts(self, **kwargs) -> str:
-        lines = ["## Active Disruption Alerts\n"]
+        lines = ["## Active Disruption Alerts\n", "> Recorded synthetic incidents only; validate against approved sources before action.\n"]
         if not RECENT_INCIDENTS:
             lines.append("No active disruption alerts.")
             return "\n".join(lines)
@@ -261,7 +283,10 @@ class SupplierRiskMonitoringAgent(BasicAgent):
         lines.append("|----------|------|----------|-------------|")
         for inc in sorted_incidents:
             sname = SUPPLIERS.get(inc["supplier_id"], {}).get("name", inc["supplier_id"])
-            lines.append(f"| **{inc['severity']}** | {inc['date']} | {sname[:28]} | {inc['description']} |")
+            lines.append(
+                f"| **{inc['severity']}** | {inc['date']} | "
+                f"{sname[:28]} ({inc['supplier_id']}) | {inc['description']} |"
+            )
 
         lines.append("\n### Impact Assessment\n")
         for inc in sorted_incidents:
@@ -278,7 +303,7 @@ class SupplierRiskMonitoringAgent(BasicAgent):
 
     # ------------------------------------------------------------------
     def _alternative_sourcing(self, **kwargs) -> str:
-        lines = ["## Alternative Sourcing Plan\n"]
+        lines = ["## Alternative Sourcing Options\n", "> Synthetic recommendation only. No supplier was contacted, qualified, selected, or awarded business.\n"]
         if not BACKUP_SUPPLIERS:
             lines.append("No alternative suppliers have been identified.")
             return "\n".join(lines)
@@ -299,12 +324,12 @@ class SupplierRiskMonitoringAgent(BasicAgent):
             qualified = [b for b in backups if b["qual_status"] == "Qualified"]
             if qualified:
                 best = min(qualified, key=lambda b: b["est_cost_premium_pct"])
-                lines.append(f"\n**Recommendation:** Activate {best['name']} immediately "
-                             f"(qualified, +{best['est_cost_premium_pct']}% premium, {best['lead_time_weeks']}-week lead)")
+                lines.append(f"\n**Review option:** Ask authorized procurement owners to evaluate {best['name']} "
+                             f"(synthetic status: qualified; +{best['est_cost_premium_pct']}% premium; {best['lead_time_weeks']}-week lead)")
             else:
                 fastest = min(backups, key=lambda b: b["lead_time_weeks"])
-                lines.append(f"\n**Recommendation:** Accelerate qualification of {fastest['name']} "
-                             f"({fastest['lead_time_weeks']}-week lead, currently {fastest['qual_status']})")
+                lines.append(f"\n**Review option:** Ask authorized procurement owners whether to assess {fastest['name']} "
+                             f"({fastest['lead_time_weeks']}-week lead; synthetic status: {fastest['qual_status']})")
             lines.append("")
 
         total_premium = 0
@@ -313,7 +338,8 @@ class SupplierRiskMonitoringAgent(BasicAgent):
             best_prem = min(b["est_cost_premium_pct"] for b in backups)
             total_premium += s.get("annual_spend", 0) * best_prem / 100
         lines.append(f"**Estimated annual cost of full diversification:** ${total_premium:,.0f}")
-        lines.append(f"**Risk reduction value:** ${_spend_at_risk(5.0):,.0f} of spend de-risked")
+        lines.append(f"**Spend represented by the modeled review scope:** ${_spend_at_risk(5.0):,.0f}")
+        lines.append("\nThis agent does not contact suppliers, change allocations, place orders, or approve qualification.")
         return "\n".join(lines)
 
 

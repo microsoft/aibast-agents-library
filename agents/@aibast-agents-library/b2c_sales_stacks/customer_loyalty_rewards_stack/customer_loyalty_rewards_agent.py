@@ -16,7 +16,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/customer-loyalty-rewards",
     "version": "1.0.0",
     "display_name": "Customer Loyalty and Rewards Agent",
-    "description": "Deliver AI-driven loyalty insights and planning to reduce points liability, improve engagement results, and boost member retention.",
+    "description": "Provide synthetic loyalty insights, points summaries, reward-option drafts, and tier analysis without issuing or redeeming benefits.",
     "author": "AIBAST",
     "tags": ["loyalty", "rewards", "points", "retention", "tier", "b2c"],
     "category": "b2c_sales",
@@ -31,7 +31,7 @@ __manifest__ = {
 
 LOYALTY_MEMBERS = {
     "LM-10001": {
-        "name": "Katherine Brooks",
+        "name": "Synthetic Platinum Member",
         "tier": "platinum",
         "points_balance": 48250,
         "points_earned_ytd": 12400,
@@ -39,11 +39,10 @@ LOYALTY_MEMBERS = {
         "member_since": "2018-03-15",
         "total_spend_ytd": 6200,
         "engagement_score": 92,
-        "birthday_month": 5,
         "preferred_rewards": ["travel", "dining"],
     },
     "LM-10002": {
-        "name": "Antonio Vasquez",
+        "name": "Synthetic Gold Member",
         "tier": "gold",
         "points_balance": 22100,
         "points_earned_ytd": 6800,
@@ -51,11 +50,10 @@ LOYALTY_MEMBERS = {
         "member_since": "2020-08-22",
         "total_spend_ytd": 3400,
         "engagement_score": 75,
-        "birthday_month": 11,
         "preferred_rewards": ["merchandise", "gift_cards"],
     },
     "LM-10003": {
-        "name": "Rachel Nguyen",
+        "name": "Synthetic Silver Member",
         "tier": "silver",
         "points_balance": 8450,
         "points_earned_ytd": 3200,
@@ -63,11 +61,10 @@ LOYALTY_MEMBERS = {
         "member_since": "2023-01-10",
         "total_spend_ytd": 1600,
         "engagement_score": 58,
-        "birthday_month": 3,
         "preferred_rewards": ["discounts"],
     },
     "LM-10004": {
-        "name": "Derek Washington",
+        "name": "Synthetic Bronze Member",
         "tier": "bronze",
         "points_balance": 2100,
         "points_earned_ytd": 900,
@@ -75,7 +72,6 @@ LOYALTY_MEMBERS = {
         "member_since": "2024-06-05",
         "total_spend_ytd": 450,
         "engagement_score": 32,
-        "birthday_month": 8,
         "preferred_rewards": ["discounts", "free_shipping"],
     },
 }
@@ -104,6 +100,29 @@ ENGAGEMENT_ACTIVITIES = [
     {"activity": "Social Share", "points": "50 bonus", "frequency": "per_share"},
     {"activity": "App Download", "points": "250 one-time bonus", "frequency": "once"},
 ]
+
+APPROVED_PERSONAS = {
+    "Loyalty Program Director": "program health, liability, governance, and structural options",
+    "CRM Manager": "aggregate engagement patterns and consented preference quality",
+    "Marketing Leader": "review-ready campaign concepts and qualitative value",
+}
+
+SAFETY_NOTICE = (
+    "> Synthetic loyalty planning data. Informational options only; no member is "
+    "contacted or enrolled, and no points, tier, offer, reward, redemption, refund, "
+    "order, or purchase is issued or changed."
+)
+
+
+def _response_header(persona):
+    role = persona if persona in APPROVED_PERSONAS else "Loyalty Program Director"
+    return [
+        f"**Prepared for:** {role}",
+        f"**Role focus:** {APPROVED_PERSONAS[role]}",
+        "",
+        SAFETY_NOTICE,
+        "",
+    ]
 
 
 # ---------------------------------------------------------------------------
@@ -148,12 +167,23 @@ class CustomerLoyaltyRewardsAgent(BasicAgent):
         self.metadata = {
             "name": self.name,
             "display_name": "Customer Loyalty & Rewards Agent",
-            "description": __manifest__["description"],
+            "description": (
+                f"{__manifest__['description']} Route program-health questions to "
+                "`loyalty_dashboard`; member balance, ledger, earned, or redeemed "
+                "points questions to `points_summary`; reward-option questions to "
+                "`reward_recommendations`; and tier structure or progress questions "
+                "to `tier_analysis`."
+            ),
             "parameters": {
                 "type": "object",
                 "properties": {
                     "operation": {
                         "type": "string",
+                        "description": (
+                            "Required routing key. Use points_summary for any member "
+                            "balance or ledger explanation, including a Gold member; "
+                            "do not substitute loyalty_dashboard."
+                        ),
                         "enum": [
                             "loyalty_dashboard",
                             "points_summary",
@@ -161,14 +191,35 @@ class CustomerLoyaltyRewardsAgent(BasicAgent):
                             "tier_analysis",
                         ],
                     },
-                    "member_id": {"type": "string"},
+                    "member_id": {
+                        "type": "string",
+                        "description": (
+                            "Synthetic member ID when the prompt identifies a member. "
+                            "Synthetic Gold Member is LM-10002."
+                        ),
+                    },
+                    "persona": {
+                        "type": "string",
+                        "enum": list(APPROVED_PERSONAS),
+                        "description": "Copy the role stated in the request.",
+                    },
+                    "data_source": {"type": "string", "enum": ["synthetic"]},
                 },
                 "required": ["operation"],
+                "additionalProperties": False,
             },
         }
         super().__init__(name=self.name, metadata=self.metadata)
 
     def perform(self, **kwargs) -> str:
+        if kwargs.get("data_source", "synthetic") != "synthetic":
+            return "data_source must be `synthetic` for this package."
+        member_id = kwargs.get("member_id")
+        if member_id and member_id not in LOYALTY_MEMBERS:
+            return (
+                f"Unknown member_id `{member_id}`. Valid synthetic IDs: "
+                f"{', '.join(LOYALTY_MEMBERS)}"
+            )
         operation = kwargs.get("operation", "loyalty_dashboard")
         dispatch = {
             "loyalty_dashboard": self._loyalty_dashboard,
@@ -185,7 +236,7 @@ class CustomerLoyaltyRewardsAgent(BasicAgent):
         total_members = len(LOYALTY_MEMBERS)
         total_points = sum(m["points_balance"] for m in LOYALTY_MEMBERS.values())
         total_spend = sum(m["total_spend_ytd"] for m in LOYALTY_MEMBERS.values())
-        lines = ["# Loyalty Program Dashboard\n"]
+        lines = _response_header(kwargs.get("persona")) + ["# Synthetic Loyalty Program Dashboard\n"]
         lines.append(f"**Total Members:** {total_members}")
         lines.append(f"**Total Points Outstanding:** {total_points:,} (${_points_value(total_points):,.2f})")
         lines.append(f"**Total Member Spend YTD:** ${total_spend:,.0f}\n")
@@ -208,7 +259,7 @@ class CustomerLoyaltyRewardsAgent(BasicAgent):
         member_id = kwargs.get("member_id")
         if member_id and member_id in LOYALTY_MEMBERS:
             m = LOYALTY_MEMBERS[member_id]
-            lines = [f"# Points Summary: {m['name']}\n"]
+            lines = _response_header(kwargs.get("persona")) + [f"# Synthetic Points Summary: {m['name']}\n"]
             lines.append(f"- **Tier:** {m['tier'].title()}")
             lines.append(f"- **Points Balance:** {m['points_balance']:,} (${_points_value(m['points_balance']):,.2f})")
             lines.append(f"- **Earned YTD:** {m['points_earned_ytd']:,}")
@@ -219,7 +270,7 @@ class CustomerLoyaltyRewardsAgent(BasicAgent):
                 lines.append(f"- **{act['activity']}:** {act['points']}")
             return "\n".join(lines)
 
-        lines = ["# Points Summary — All Members\n"]
+        lines = _response_header(kwargs.get("persona")) + ["# Synthetic Points Summary — All Members\n"]
         lines.append("| Member | Tier | Balance | Earned YTD | Redeemed YTD | Value |")
         lines.append("|---|---|---|---|---|---|")
         for mid, m in LOYALTY_MEMBERS.items():
@@ -230,8 +281,10 @@ class CustomerLoyaltyRewardsAgent(BasicAgent):
         return "\n".join(lines)
 
     def _reward_recommendations(self, **kwargs) -> str:
-        lines = ["# Reward Recommendations\n"]
-        for mid, m in LOYALTY_MEMBERS.items():
+        lines = _response_header(kwargs.get("persona")) + ["# Draft Reward Option Recommendations\n"]
+        member_id = kwargs.get("member_id")
+        members = {member_id: LOYALTY_MEMBERS[member_id]} if member_id else LOYALTY_MEMBERS
+        for mid, m in members.items():
             recs = _recommended_rewards(m)
             lines.append(f"## {m['name']} ({mid}) — {m['points_balance']:,} points\n")
             if recs:
@@ -241,7 +294,7 @@ class CustomerLoyaltyRewardsAgent(BasicAgent):
                     val = f"${reward['value']}" if reward["value"] else "Discount"
                     lines.append(f"| {reward['name']} | {reward['points_cost']:,} | {reward['category'].replace('_', ' ').title()} | {val} |")
             else:
-                lines.append("No matching rewards available at current points balance.")
+                lines.append("No matching informational reward options at the current synthetic balance.")
             lines.append("")
         lines.append("## Full Redemption Catalog\n")
         lines.append("| Reward | Points | Category | Value |")
@@ -252,7 +305,7 @@ class CustomerLoyaltyRewardsAgent(BasicAgent):
         return "\n".join(lines)
 
     def _tier_analysis(self, **kwargs) -> str:
-        lines = ["# Tier Analysis\n"]
+        lines = _response_header(kwargs.get("persona")) + ["# Synthetic Tier Analysis\n"]
         lines.append("## Tier Structure\n")
         lines.append("| Tier | Min Spend | Multiplier | Key Perks |")
         lines.append("|---|---|---|---|")

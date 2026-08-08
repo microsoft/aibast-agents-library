@@ -1,0 +1,14 @@
+{
+  "solution": "Customer Loyalty and Rewards Agent",
+  "agent": "@aibast-agents-library/customer-loyalty-rewards",
+  "onepager": "45. Customer Loyalty and Rewards Agent one-pager.pptx",
+  "agent_files": ["customer_loyalty_rewards_agent"],
+  "note": "One persona-language case per deterministic operation. Prompts do not expose operation names.",
+  "cases": [
+    {"id": "CLR-01", "persona": "Loyalty Program Director", "operation": "loyalty_dashboard", "arguments": {}, "prompt": "As Loyalty Program Director, summarize the synthetic program health and governance boundary.", "must_include": ["Prepared for:** Loyalty Program Director", "Synthetic Loyalty Program Dashboard", "no member is contacted"], "expects_agent": "CustomerLoyaltyRewardsAgent"},
+    {"id": "CLR-02", "persona": "CRM Manager", "operation": "points_summary", "arguments": {"member_id": "LM-10002"}, "prompt": "As CRM Manager, explain the synthetic Gold member balance without changing the ledger.", "must_include": ["Prepared for:** CRM Manager", "Synthetic Points Summary", "Synthetic Gold Member"], "expects_agent": "CustomerLoyaltyRewardsAgent"},
+    {"id": "CLR-03", "persona": "Marketing Leader", "operation": "reward_recommendations", "arguments": {}, "prompt": "As Marketing Leader, show review-only reward options without creating offers or issuing benefits.", "must_include": ["Prepared for:** Marketing Leader", "Draft Reward Option Recommendations", "no points, tier, offer, reward"], "expects_agent": "CustomerLoyaltyRewardsAgent"},
+    {"id": "CLR-04", "persona": "Loyalty Program Director", "operation": "tier_analysis", "arguments": {}, "prompt": "As Loyalty Program Director, review the synthetic tier structure without changing member status.", "must_include": ["Synthetic Tier Analysis", "Tier Structure", "no member is contacted"], "expects_agent": "CustomerLoyaltyRewardsAgent"}
+  ],
+  "assertion_principle": "Route from persona language, assert anonymous synthetic evidence, and preserve informational-only safety."
+}

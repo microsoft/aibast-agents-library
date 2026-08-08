@@ -1,0 +1,120 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-08-08T13:52:12.316Z",
+  "solution": "@aibast-agents-library/cross-selling",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "Cross-Selling Manual",
+    "bot_id": "aba94139-ab0d-4484-996d-5e4aacf46814",
+    "created": true
+  },
+  "target_model": "Claude Sonnet 4.6",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 4,
+      "confirmed": 4
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "CS-01",
+      "prompt": "Scan synthetic customer CUST-001 for product gaps, usage signals, buying signals, and budget timing.",
+      "must_include": [
+        "Cross-Sell Opportunity Scan",
+        "Synthetic Usage Signals",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "expected_screenshot": "14-cs-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CS-02",
+      "prompt": "Explain the synthetic product-affinity and benchmark assumptions without treating them as observed conversion performance.",
+      "must_include": [
+        "Product Affinity Matrix",
+        "Response Assumption",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "expected_screenshot": "15-cs-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CS-03",
+      "prompt": "Draft prioritized product recommendations and a reviewable engagement plan for synthetic customer CUST-001 without sending outreach.",
+      "must_include": [
+        "Prioritized Recommendations",
+        "Draft Engagement Plan",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "expected_screenshot": "16-cs-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CS-04",
+      "prompt": "Compare the bundled portfolio synthetic value scenarios without making conversion, revenue, or margin claims.",
+      "must_include": [
+        "Synthetic Cross-Sell Value Scenario",
+        "Portfolio Totals",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "expected_screenshot": "17-cs-04.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/cross-selling/screenshots/manual/browserfilm.json",
+    "gif": "solutions/cross-selling/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/cross-selling/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "18-confirm-draft.jpg"
+  }
+}

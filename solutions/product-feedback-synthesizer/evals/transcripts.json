@@ -1,0 +1,89 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:30:16.395373+00:00",
+  "solution": "@aibast-agents-library/product-feedback-synthesizer",
+  "onepager": "26. Product Feedback Synthesizer Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "ProductFeedbackSynthesizerAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/software_dp_stacks/product_feedback_synthesizer_stack/product_feedback_synthesizer_agent.py",
+      "sha256": "5d3849a8f2ef2d7d1336ef2191a216e491a4f4db5cc61e3848c49702ed4d61da"
+    }
+  ],
+  "case_file": "tests/demo_cases/product-feedback-synthesizer.json",
+  "case_file_sha256": "409275ddabb3e14c84603e73f7b7989acc6748d92d318fa22080e2872a6fbcae",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "PFS-01",
+      "persona": "Product Manager",
+      "onepager_promise": "Aggregate and analyze feedback from multiple sources to provide a unified view of customer sentiment and priorities",
+      "prompt": "Give me the cross-channel feedback picture before the weekly product review.",
+      "assistant_response": "## The Picture\n\n**Sentiment is split:** 33% positive, 33% negative, 34% neutral across 6 inputs ($1.28M ARR). NPS ticked up slightly (35\u219236) but you've got detractors growing\u2014watch that.\n\n**Three high-impact candidates for your roadmap conversation:**\n1. **Workflow Automation Builder** ($1.14M ARR) \u2014 heavyweight ask, high effort\n2. **Role-Based Access Controls** ($960K ARR) \u2014 heavyweight ask, high effort  \n3. **Real-Time Alerting** ($780K ARR) \u2014 competitive gap, high effort\n\n**Quick wins to consider:**\n- **Customizable Dashboard** (medium effort, $612K ARR) \u2014 addresses usability friction at Meridian Healthcare\n- **Large Dataset Export fix** (low effort, $264K ARR) \u2014 one-blocker issue, compliance sensitive\n\n**What jumped out:** Workflow automation and RBAC both came from customers ready to expand their seat count\u2014validate with sales before sequencing. The data export issue is a hard stop for one customer.\n\n**Next step:** Bring product and engineering into the room to size the top three and make the sequencing call. This is synthetic\u2014your teams own the validation.",
+      "agent_logs": "[ProductFeedbackSynthesizerAgent] # Product Feedback Summary\n\n**Total Feedback Entries:** 6\n**Avg Satisfaction Score:** 5.2/10\n**ARR Represented:** $1,278,000\n\n## Sentiment Breakdown\n\n| Sentiment | Count |\n|-----------|-------|\n| Positive | 2 |\n| Neutral | 2 |\n| Negative | 2 |\n\n## By Category\n\n| Category | Count |\n|----------|-------|\n| Usability | 1 |\n| Feature Gap | 3 |\n| Praise | 1 |\n| Bug Report | 1 |\n\n## By Channel\n\n| Channel | Count |\n|---------|-------|\n| Support Ticket | 2 |\n| Nps Survey | 1 |\n| Qbr | 1 |\n| In App | 1 |\n| Sales Call | 1 |\n\n**Review gate:** Synthetic insight only. No roadmap commitment, Jira ticket, customer outreach, or account action is created; product owners must validate the evidence.\n[ProductFeedbackSynthesizerAgent] # Sentiment Analysis\n\n**Positive:** 33.3% | **Negative:** 33.3%\n\n## NPS Trend\n\n| Quarter | Promoters | Passives | Detractors | NPS |\n|---------|-----------|----------|------------|-----|\n| 2025-Q4 | 142 | 88 | 45 | 35 |\n| 2026-Q1 | 158 | 91 | 51 | 36 |\n\n## Recent Feedback\n\n| Customer | Sentiment | Score | Category | Excerpt |\n|----------|-----------|-------|----------|---------|\n| Meridian Healthcare Systems | NEGATIVE | 2 | usability | The dashboard takes too many clicks to get to key metrics. We need a customizabl... |\n| Apex Financial Group | NEUTRAL | 6 | feature_gap | Product is solid but missing real-time alerting capabilities that competitors of... |\n| Skyline Hospitality Group | POSITIVE | 9 | praise | Integration with our POS system has been seamless. Would love to see mobile app ... |\n| Vanguard Logistics | NEGATIVE | 1 | bug_report | Data export fails consistently for reports over 10K rows. This is blocking our m... |\n| BrightPath Education | NEUTRAL | 5 | feature_gap | Need role-based access controls for student data. Currently everyone sees everyt... |\n| Orion Manufacturing | POSITIVE | 8 | feature_gap | Great product overall. If you add workflow automation we would double our seat c... |\n\nAll feedback excerpts and account names are fictional pilot data.\n**Review gate:** Synthetic insight only. No roadmap commitment, Jira ticket, customer outreach, or account action is created; product owners must validate the evidence.\n[ProductFeedbackSynthesizerAgent] # Feature Requests (Ranked by ARR Weight)\n\n**Total Requests:** 6\n\n| Rank | Feature | Votes | ARR Weight | Effort | Status |\n|------|---------|-------|-----------|--------|--------|\n| 1 | Workflow Automation Builder | 203 | $1,140,000 | HIGH | candidate_for_review |\n| 2 | Role-Based Access Controls (RBAC) | 156 | $960,000 | HIGH | candidate_for_review |\n| 3 | Real-Time Alerting Engine | 134 | $780,000 | HIGH | candidate_for_review |\n| 4 | Customizable Dashboard Home View | 87 | $612,000 | MEDIUM | under_review |\n| 5 | Mobile App Enhancements | 62 | $420,000 | MEDIUM | evidence_under_review |\n| 6 | Large Dataset Export Fix | 41 | $264,000 | LOW | evidence_under_review |\n\n**Review gate:** Synthetic insight only. No roadmap commitment, Jira ticket, customer outreach, or account action is created; product owners must validate the evidence.\n[ProductFeedbackSynthesizerAgent] # Roadmap Impact Assessment\n\n| Rank | Feature | Priority Score | ARR Weight | Effort | Status |\n|------|---------|---------------|-----------|--------|--------|\n| 1 | Workflow Automation Builder | 380.0 | $1,140,000 | HIGH | candidate_for_review |\n| 2 | Role-Based Access Controls (RBAC) | 320.0 | $960,000 | HIGH | candidate_for_review |\n| 3 | Customizable Dashboard Home View | 306.0 | $612,000 | MEDIUM | under_review |\n| 4 | Large Dataset Export Fix | 264.0 | $264,000 | LOW | evidence_under_review |\n| 5 | Real-Time Alerting Engine | 260.0 | $780,000 | HIGH | candidate_for_review |\n| 6 | Mobile App Enhancements | 210.0 | $420,000 | MEDIUM | evidence_under_review |\n\n## Review Candidates\n- Validate RBAC and Workflow Automation evidence with product, engineering, and security owners.\n- Review the Large Dataset Export issue as a lower-effort candidate; do not infer churn from one signal.\n- Compare Real-Time Alerting evidence with strategy and capacity before any sequencing decision.\n\n**Review gate:** Synthetic insight only. No roadmap commitment, Jira ticket, customer outreach, or account action is created; product owners must validate the evidence.",
+      "expected_agent": "ProductFeedbackSynthesizerAgent",
+      "must_include": [
+        "Total Feedback Entries",
+        "6",
+        "No roadmap commitment"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PFS-02",
+      "persona": "Engineering Lead",
+      "onepager_promise": "Apply AI-driven sentiment and pattern recognition to identify critical pain points and feature requests",
+      "prompt": "Rank the feature-request evidence for review, but do not turn it into a roadmap.",
+      "assistant_response": "Here's the feature-request ranking based on pilot feedback. Three candidates are ready for review:\n\n**Review candidates (ranked by ARR weight):**\n1. **Workflow Automation Builder** \u2014 203 votes, $1.14M potential, HIGH effort\n2. **Role-Based Access Controls (RBAC)** \u2014 156 votes, $960K potential, HIGH effort\n3. **Real-Time Alerting Engine** \u2014 134 votes, $780K potential, HIGH effort\n\n**Already under review:**\n4. Customizable Dashboard Home View \u2014 Medium effort, $612K\n5. Mobile App Enhancements \u2014 Medium effort, $420K\n6. Large Dataset Export Fix \u2014 Low effort, $264K\n\nThis is **feedback evidence only** \u2014 a starting point for your product team to validate the signal. No roadmap, tickets, or customer commitments were made. Your team owns the next step: talking to customers, sizing the effort, and deciding what moves forward.",
+      "agent_logs": "[ProductFeedbackSynthesizerAgent] # Feature Requests (Ranked by ARR Weight)\n\n**Total Requests:** 6\n\n| Rank | Feature | Votes | ARR Weight | Effort | Status |\n|------|---------|-------|-----------|--------|--------|\n| 1 | Workflow Automation Builder | 203 | $1,140,000 | HIGH | candidate_for_review |\n| 2 | Role-Based Access Controls (RBAC) | 156 | $960,000 | HIGH | candidate_for_review |\n| 3 | Real-Time Alerting Engine | 134 | $780,000 | HIGH | candidate_for_review |\n| 4 | Customizable Dashboard Home View | 87 | $612,000 | MEDIUM | under_review |\n| 5 | Mobile App Enhancements | 62 | $420,000 | MEDIUM | evidence_under_review |\n| 6 | Large Dataset Export Fix | 41 | $264,000 | LOW | evidence_under_review |\n\n**Review gate:** Synthetic insight only. No roadmap commitment, Jira ticket, customer outreach, or account action is created; product owners must validate the evidence.",
+      "expected_agent": "ProductFeedbackSynthesizerAgent",
+      "must_include": [
+        "Workflow Automation Builder",
+        "candidate_for_review",
+        "No roadmap commitment"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PFS-03",
+      "persona": "Director of Product",
+      "onepager_promise": "Apply AI-driven sentiment and pattern recognition to identify critical pain points and feature requests",
+      "prompt": "What are the strongest sentiment signals in the fictional customer snapshot?",
+      "assistant_response": "**Strongest sentiment signals:**\n\n1. **Split satisfaction (33% positive / 33% negative)** \u2014 Your NPS hovers around 35-36, which is below healthy. The neutrals (passives) are your swing votes.\n\n2. **Critical blocker (Vanguard Logistics, score 1)** \u2014 Data export failures on 10K+ row reports is a hard blocker. If this is widespread, it's churn risk.\n\n3. **Usability friction (Meridian Healthcare, score 2)** \u2014 Dashboard navigation overhead is turning prospects away. This affects daily workflows.\n\n4. **Feature gap consensus** \u2014 Three customers mention missing capabilities (real-time alerting, role-based access, workflow automation). These aren't nice-to-haves; they're competitive gaps.\n\n5. **High-intent upgrade signal (Orion Manufacturing, score 8)** \u2014 \"Would double our seat count\" if workflows automate. This is revenue-unlocking feedback.\n\n**The pattern:** You're not losing on core stability \u2014 your promoters love you (Skyline's seamless POS integration). You're losing on *accessibility* (UI friction) and *extensibility* (missing standard features competitors have). Fixing the export bug and streamlining dashboard navigation would likely move 2\u20133 detractors to neutral fast.",
+      "agent_logs": "[ProductFeedbackSynthesizerAgent] # Sentiment Analysis\n\n**Positive:** 33.3% | **Negative:** 33.3%\n\n## NPS Trend\n\n| Quarter | Promoters | Passives | Detractors | NPS |\n|---------|-----------|----------|------------|-----|\n| 2025-Q4 | 142 | 88 | 45 | 35 |\n| 2026-Q1 | 158 | 91 | 51 | 36 |\n\n## Recent Feedback\n\n| Customer | Sentiment | Score | Category | Excerpt |\n|----------|-----------|-------|----------|---------|\n| Meridian Healthcare Systems | NEGATIVE | 2 | usability | The dashboard takes too many clicks to get to key metrics. We need a customizabl... |\n| Apex Financial Group | NEUTRAL | 6 | feature_gap | Product is solid but missing real-time alerting capabilities that competitors of... |\n| Skyline Hospitality Group | POSITIVE | 9 | praise | Integration with our POS system has been seamless. Would love to see mobile app ... |\n| Vanguard Logistics | NEGATIVE | 1 | bug_report | Data export fails consistently for reports over 10K rows. This is blocking our m... |\n| BrightPath Education | NEUTRAL | 5 | feature_gap | Need role-based access controls for student data. Currently everyone sees everyt... |\n| Orion Manufacturing | POSITIVE | 8 | feature_gap | Great product overall. If you add workflow automation we would double our seat c... |\n\nAll feedback excerpts and account names are fictional pilot data.\n**Review gate:** Synthetic insight only. No roadmap commitment, Jira ticket, customer outreach, or account action is created; product owners must validate the evidence.",
+      "expected_agent": "ProductFeedbackSynthesizerAgent",
+      "must_include": [
+        "Positive",
+        "Negative",
+        "fictional pilot data"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PFS-04",
+      "persona": "Product Manager",
+      "onepager_promise": "Automate prioritization and workflow orchestration to convert insights into engineering actions and roadmap updates",
+      "prompt": "Frame the impact tradeoffs the product trio should validate before sequencing work.",
+      "assistant_response": "**Here are the key tradeoffs to validate:**\n\n### 1. **High-Effort, High-ARR Play**\n**Workflow Automation + RBAC** ($2.1M potential) vs. engineering capacity  \n- Both score highest but demand significant work  \n- **Tradeoff:** Bet on one tier-1 feature first, or split the team? Validate: Does Automation unlock expansion revenue faster than Automation + RBAC together?\n\n### 2. **Quick Win vs. Strategic Mover**\n**Large Dataset Export** (LOW effort, $264K) vs. **Real-Time Alerting** (HIGH effort, $780K)  \n- Export is a friction point with proof; Alerting has higher upside but needs validation  \n- **Tradeoff:** Ship the fix this sprint to reduce churn, or hold capacity for Alerting? Ask: Which prevents customer loss?\n\n### 3. **Breadth or Depth**\n**Dashboard Customization** (MEDIUM, $612K) spreads perceived value; Automation/RBAC go deep on core power users  \n- **Tradeoff:** Retention (dashboard\u2014broad appeal) vs. expansion (automation\u2014tier-up trigger)?\n\n### **Before sequencing, validate with your trio:**\n- Does RBAC unlock Automation's value, or are they independent?  \n- Which feature has the strongest churn signal vs. expansion signal?  \n- Can Export be fixed in parallel without slowing tier-1 work?  \n- Does your capacity allow *one* HIGH-effort play this quarter, or two?\n\nThese are review candidates only \u2014 your product, engineering, and security owners need to confirm the evidence and capacity assumptions before any commitment.",
+      "agent_logs": "[ProductFeedbackSynthesizerAgent] # Roadmap Impact Assessment\n\n| Rank | Feature | Priority Score | ARR Weight | Effort | Status |\n|------|---------|---------------|-----------|--------|--------|\n| 1 | Workflow Automation Builder | 380.0 | $1,140,000 | HIGH | candidate_for_review |\n| 2 | Role-Based Access Controls (RBAC) | 320.0 | $960,000 | HIGH | candidate_for_review |\n| 3 | Customizable Dashboard Home View | 306.0 | $612,000 | MEDIUM | under_review |\n| 4 | Large Dataset Export Fix | 264.0 | $264,000 | LOW | evidence_under_review |\n| 5 | Real-Time Alerting Engine | 260.0 | $780,000 | HIGH | candidate_for_review |\n| 6 | Mobile App Enhancements | 210.0 | $420,000 | MEDIUM | evidence_under_review |\n\n## Review Candidates\n- Validate RBAC and Workflow Automation evidence with product, engineering, and security owners.\n- Review the Large Dataset Export issue as a lower-effort candidate; do not infer churn from one signal.\n- Compare Real-Time Alerting evidence with strategy and capacity before any sequencing decision.\n\n**Review gate:** Synthetic insight only. No roadmap commitment, Jira ticket, customer outreach, or account action is created; product owners must validate the evidence.",
+      "expected_agent": "ProductFeedbackSynthesizerAgent",
+      "must_include": [
+        "Review Candidates",
+        "RBAC",
+        "No roadmap commitment"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

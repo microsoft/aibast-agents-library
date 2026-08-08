@@ -1,0 +1,99 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-08-08T09:29:31.508Z",
+  "solution": "@aibast-agents-library/asset-maintenance-forecast",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "Asset Maintenance Manual",
+    "bot_id": "b608e498-c872-4e78-b9ba-855964f6b7d9",
+    "created": true
+  },
+  "target_model": "Claude Sonnet 4.6",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 4,
+      "confirmed": 4
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "ASSET_MAINTENANCE_FORECAST-01",
+      "prompt": "Which asset is most likely to interrupt operations next, and what evidence supports that?",
+      "must_include": [
+        "Substation Transformer B-12",
+        "2026-05-01"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "14-asset_maintenance_forecast-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "ASSET_MAINTENANCE_FORECAST-02",
+      "prompt": "Show me the weakest asset condition and whether this is an operating authorization.",
+      "must_include": [
+        "Substation Transformer B-12",
+        "CRITICAL",
+        "not a safety determination"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "15-asset_maintenance_forecast-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "ASSET_MAINTENANCE_FORECAST-03",
+      "prompt": "What maintenance funding should I reserve for the transformer risk?",
+      "must_include": [
+        "Substation Transformer B-12",
+        "$273,000",
+        "Synthetic planning estimate"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "16-asset_maintenance_forecast-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "ASSET_MAINTENANCE_FORECAST-04",
+      "prompt": "Draft the maintenance queue for AST-X002, but do not create any work orders.",
+      "must_include": [
+        "Substation Transformer B-12",
+        "Draft approval queue",
+        "No work order"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "17-asset_maintenance_forecast-04.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/asset-maintenance-forecast/screenshots/manual/browserfilm.json",
+    "gif": "solutions/asset-maintenance-forecast/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/asset-maintenance-forecast/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "18-confirm-draft.jpg"
+  }
+}

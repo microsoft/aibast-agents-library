@@ -1,0 +1,127 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/store-associate-copilot",
+  "display_name": "Retail Store Associate Copilot",
+  "source_path": "agents/@aibast-agents-library/retail_cpg_stacks/store_associate_copilot_stack/store_associate_copilot_agent.py",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/retail_cpg_stacks/store_associate_copilot_stack/store_associate_copilot_agent.py",
+  "target_filename": "store_associate_copilot_agent.py",
+  "expected_tool": "StoreAssociateCopilotAgent",
+  "operations": [
+    "product_lookup",
+    "customer_assist",
+    "task_checklist",
+    "performance_dashboard"
+  ],
+  "manual_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
+  "manual_authoring": {
+    "knowledge_files": 2,
+    "skills": 4,
+    "status": "source-assets-only",
+    "publish": false
+  },
+  "manual_knowledge_files": [
+    "manual/knowledge/aibast_store-associate-synthetic-records.md",
+    "manual/knowledge/aibast_store-associate-rules-and-safety.md"
+  ],
+  "manual_skill_count": 4,
+  "production_connectors": [
+    "Approved read-only commerce catalog",
+    "Approved read-only store inventory",
+    "Approved manager review workflow"
+  ],
+  "write_controls": {
+    "authenticated_tools_required": true,
+    "explicit_human_approval_required": true,
+    "authorization_check_required": true,
+    "audit_log_required": true,
+    "local_demo_performs_writes": false
+  },
+  "copilot_studio": {
+    "authoring_mode": "manual-upload",
+    "status": "not_initialized",
+    "operations": [
+      "product_lookup",
+      "customer_assist",
+      "task_checklist",
+      "performance_dashboard"
+    ],
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_store-associate-synthetic-records.md",
+      "manual/knowledge/aibast_store-associate-rules-and-safety.md"
+    ],
+    "manual_skill_count": 4,
+    "required_connections": [
+      "Approved read-only commerce catalog",
+      "Approved read-only store inventory",
+      "Approved manager review workflow"
+    ],
+    "publish_requires_confirmation": true,
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "validated_manual": {
+      "display_name": "Retail Store Associate Manual",
+      "bot_id": "7308105d-3105-46e9-917a-4a80fbc3835a",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "web_search_removed": true,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    },
+    "validated_pilot": {
+      "display_name": "Retail Store Associate Pilot",
+      "schema_name": "aibast_RetailStoreAssociateCopilot",
+      "bot_id": "68455256-c5b0-48dc-b707-285f9dae051b",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "changes_pushed": 7,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    }
+  },
+  "smoke_test": {
+    "prompt": "As a Store Associate, give me the verified product facts and availability caveat for SKU-1005.",
+    "must_call": "StoreAssociateCopilotAgent",
+    "operation": "product_lookup",
+    "persona": "Store Associate",
+    "must_include": [
+      "Product Lookup Snapshot",
+      "verify before advising"
+    ]
+  },
+  "safety_boundary": "The agent provides drafts and planning only and never reserves inventory, applies a promotion, sends a message, processes a return or refund, or completes a purchase.",
+  "safety": {
+    "mode": "draft-only",
+    "prohibits": [
+      "inventory reservation",
+      "promotion application",
+      "message sending",
+      "return processing",
+      "refund",
+      "purchase"
+    ]
+  },
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/procurement-agent",
+  "status": "audited-and-fixed",
+  "approved_slide": {
+    "file": "Procurement Agent one-pager.pptx",
+    "sha256": "0e377b02c6b5eacf8ef9b2fb2abd5873e39c58fa14caaea6745ea647a4217531"
+  },
+  "source_path": "agents/@aibast-agents-library/general_stacks/procurement_agent_stack/procurement_agent.py",
+  "findings": [
+    "The source covered request, vendor, approval, and spend views but its manifest language could imply autonomous PO and supplier action.",
+    "Vendor and approval outputs did not clearly distinguish evidence and recommendations from awards or recorded approvals.",
+    "Live strict isolation showed that the cloud-upgrade persona prompt could be answered without invoking ProcurementAgent."
+  ],
+  "fixes": [
+    "Added no-PO, no-supplier-selection, no-contact, and no-funds-commitment boundaries.",
+    "Relabeled purchase, vendor, approval, and spend outputs as synthetic review evidence.",
+    "Expanded tool, operation, and request-ID descriptions with the exact cloud-upgrade, request-review, vendor, approval, and spend persona language."
+  ],
+  "remaining_boundary": "Production connections and all external actions require customer approval, least-privilege controls, and an authorized human workflow.",
+  "strict_capture": "passed"
+}

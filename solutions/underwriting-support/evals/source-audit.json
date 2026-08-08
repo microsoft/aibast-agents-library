@@ -1,0 +1,36 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/underwriting-support",
+  "audited_source": "agents/@aibast-agents-library/financial_services_stacks/underwriting_support_stack/underwriting_support_agent.py",
+  "source_sha256": "2e6378aa40236659e8615d65bf40254427d19ee762f851191b35aa2c0e4c8ff3",
+  "case_file": "tests/demo_cases/underwriting-support.json",
+  "onepager": "33. Underwriting Support Agent one-pager.pptx",
+  "operations": {
+    "risk_evaluation": [
+      "UWS-01"
+    ],
+    "pricing_recommendation": [
+      "UWS-02"
+    ],
+    "guideline_check": [
+      "UWS-03"
+    ],
+    "exception_review": [
+      "UWS-04"
+    ]
+  },
+  "defects_fixed": [
+    "Expanded tool routing descriptions so persona-language requests map to the intended operation.",
+    "Aligned implemented operations with approved one-pager promises and added missing decision-support workflows where needed.",
+    "Added synthetic-data labels, explicit human review, and no-advice/no-approval/no-transaction boundaries.",
+    "Rejected unknown record identifiers instead of silently substituting another fictional record.",
+    "Added exact persona-language routing phrases, operation selection guidance, and synthetic entity-to-identifier mappings for strict-isolation capture."
+  ],
+  "unresolved_defects": [],
+  "routing_result": {
+    "cases_passed": 4,
+    "cases_total": 4,
+    "strict_isolation": true,
+    "loaded_tool": "UnderwritingSupportAgent"
+  }
+}

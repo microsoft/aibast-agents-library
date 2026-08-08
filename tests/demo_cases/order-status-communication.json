@@ -1,0 +1,68 @@
+{
+  "solution": "Order Status Communications Agent",
+  "agent": "@aibast-agents-library/order-status-communication",
+  "onepager": "44. Order Status Communications Agent one-pager.pptx",
+  "agent_files": [
+    "order_status_communication_agent"
+  ],
+  "note": "One persona-language case per deterministic operation. Prompts do not expose operation names.",
+  "cases": [
+    {
+      "id": "OS-01",
+      "operation": "order_lookup",
+      "persona": "Customer Service Representative",
+      "prompt": "Which orders are on track or delayed, and where should customer service focus its review?",
+      "must_include": [
+        "ORD-7813",
+        "DELAYED"
+      ],
+      "expects_agent": "OrderStatusCommunicationAgent",
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ]
+    },
+    {
+      "id": "OS-02",
+      "operation": "shipment_tracking",
+      "persona": "Account Manager",
+      "prompt": "What shipment evidence is recorded for the shipped order, and what still needs carrier validation?",
+      "must_include": [
+        "ORD-7812",
+        "XPO-884291047"
+      ],
+      "expects_agent": "OrderStatusCommunicationAgent",
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ]
+    },
+    {
+      "id": "OS-03",
+      "operation": "delay_notification",
+      "persona": "Operations Leader",
+      "prompt": "Prepare the internal delay and recovery review for the at-risk customer order without changing any schedule.",
+      "must_include": [
+        "ORD-7813",
+        "Recorded synthetic recovery options"
+      ],
+      "expects_agent": "OrderStatusCommunicationAgent",
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ]
+    },
+    {
+      "id": "OS-04",
+      "operation": "customer_update",
+      "persona": "Account Manager",
+      "prompt": "Draft the customer updates for approval, but do not send an email, portal update, EDI message, or Teams message.",
+      "must_include": [
+        "Customer Update Drafts",
+        "No email, EDI message"
+      ],
+      "expects_agent": "OrderStatusCommunicationAgent",
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ]
+    }
+  ],
+  "assertion_principle": "Route from persona language, assert deterministic source evidence, and preserve recommendation-only safety."
+}

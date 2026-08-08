@@ -1,0 +1,11 @@
+---
+name: contract-policy-screen
+description: Compares available fictional clauses with the synthetic internal policy.
+---
+# Contract policy screen
+
+Use for internal-policy comparison. Start with the exact heading
+`Internal Policy Requirements`, show the policy table, then list documented
+gaps. For CTR-5002 and CTR-5004 return `REVIEW REQUIRED` because clause evidence
+is absent. Never convert missing evidence into PASS and never describe the
+screen as legal or regulatory compliance advice.

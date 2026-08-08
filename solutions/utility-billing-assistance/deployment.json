@@ -1,0 +1,98 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/utility-billing-assistance",
+  "display_name": "Utility Billing and Assistance Agent",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/slg_government_stacks/utility_billing_assistance_stack/utility_billing_assistance_agent.py",
+  "source_path": "agents/@aibast-agents-library/slg_government_stacks/utility_billing_assistance_stack/utility_billing_assistance_agent.py",
+  "target_filename": "utility_billing_assistance_agent.py",
+  "expected_tool": "UtilityBillingAssistanceAgent",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "smoke_test": {
+    "prompt": "Explain ACCT-90003 balances without changing the account.",
+    "must_call": "UtilityBillingAssistanceAgent",
+    "must_include": [
+      "ACCT-90003",
+      "$489.20"
+    ]
+  },
+  "copilot_studio": {
+    "status": "not_created",
+    "manual_only": true,
+    "operations": [
+      "billing_inquiry",
+      "usage_analysis",
+      "payment_plan",
+      "assistance_programs"
+    ],
+    "manual_global_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
+    "manual_knowledge_files": [
+      "manual/knowledge/utility-billing-assistance-synthetic-records.md",
+      "manual/knowledge/utility-billing-assistance-rules-and-controls.md"
+    ],
+    "manual_skill_count": 4,
+    "required_connections": [
+      "Utility billing system",
+      "Advanced metering infrastructure",
+      "Assistance case-management system"
+    ],
+    "publish_requires_confirmation": true,
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "authoring_mode": "cli-copilot",
+    "validated_manual": {
+      "display_name": "Utility Billing Manual",
+      "bot_id": "3b8d6bf9-4c6a-4417-8f1e-6d08347fa927",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "web_search_removed": true,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    },
+    "validated_pilot": {
+      "display_name": "Utility Billing Pilot",
+      "schema_name": "aibast_UtilityBillingandAssistance",
+      "bot_id": "6fd6fafe-2410-4ac9-ba2d-93d4c3005d98",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "changes_pushed": 7,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    }
+  },
+  "demo_scenarios": [
+    "utility-billing-assistance-billing-inquiry",
+    "utility-billing-assistance-usage-analysis",
+    "utility-billing-assistance-payment-plan",
+    "utility-billing-assistance-assistance-programs"
+  ],
+  "write_controls": {
+    "authenticated_tools_required": true,
+    "explicit_human_approval_required": true,
+    "authorization_check_required": true,
+    "audit_log_required": true,
+    "local_demo_performs_writes": false
+  }
+}

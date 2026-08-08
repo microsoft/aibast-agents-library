@@ -1,0 +1,76 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T22:21:59.047Z",
+  "solution": "@aibast-agents-library/resource-utilization",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Resource Utilization Pilot",
+  "schema_name": "aibast_ResourceUtilizationPilot",
+  "bot_id": "85ea6539-485e-40e9-8ce2-fd10521bf65c",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "RU-01",
+      "must_include": [
+        "Firm utilization",
+        "Bench",
+        "Utilization by Level"
+      ],
+      "must_not_include": [
+        "pulled from the live PSA"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "RU-02",
+      "must_include": [
+        "Upcoming Project Endings",
+        "Pipeline Demand",
+        "Total roles in pipeline"
+      ],
+      "must_not_include": [
+        "pipeline is guaranteed"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "RU-03",
+      "must_include": [
+        "David Okafor",
+        "Robert Garcia",
+        "Skill Inventory on Bench"
+      ],
+      "must_not_include": [
+        "revenue has been booked"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "RU-04",
+      "must_include": [
+        "Bench-to-Pipeline Matches",
+        "Unmatched Bench Resources",
+        "Robert Garcia"
+      ],
+      "must_not_include": [
+        "consultants have been assigned"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "RU-05",
+      "must_include": [
+        "D365 integration accelerator",
+        "Synthetic payback scenario",
+        "Innovation and Capability-Building Options"
+      ],
+      "must_not_include": [
+        "leadership approved"
+      ],
+      "passed": true
+    }
+  ]
+}

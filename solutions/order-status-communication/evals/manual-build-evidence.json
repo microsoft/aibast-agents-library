@@ -1,0 +1,104 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-08-08T11:12:33.652Z",
+  "solution": "@aibast-agents-library/order-status-communication",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "Order Status Manual",
+    "bot_id": "99ce350e-deff-4186-b49c-ec37731e42f0",
+    "created": true
+  },
+  "target_model": "Claude Sonnet 4.6",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 4,
+      "confirmed": 4
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "OS-01",
+      "prompt": "Which orders are on track or delayed, and where should customer service focus its review?",
+      "must_include": [
+        "ORD-7813",
+        "DELAYED"
+      ],
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "expected_screenshot": "14-os-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "OS-02",
+      "prompt": "What shipment evidence is recorded for the shipped order, and what still needs carrier validation?",
+      "must_include": [
+        "ORD-7812",
+        "XPO-884291047"
+      ],
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "expected_screenshot": "15-os-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "OS-03",
+      "prompt": "Prepare the internal delay and recovery review for the at-risk customer order without changing any schedule.",
+      "must_include": [
+        "ORD-7813",
+        "Recorded synthetic recovery options"
+      ],
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "expected_screenshot": "16-os-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "OS-04",
+      "prompt": "Draft the customer updates for approval, but do not send an email, portal update, EDI message, or Teams message.",
+      "must_include": [
+        "Customer Update Drafts",
+        "No email, EDI message"
+      ],
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "expected_screenshot": "17-os-04.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/order-status-communication/screenshots/manual/browserfilm.json",
+    "gif": "solutions/order-status-communication/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/order-status-communication/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "18-confirm-draft.jpg"
+  }
+}

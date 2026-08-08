@@ -1,0 +1,56 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/financial-advisor-copilot",
+  "onepager": "50. Financial Advisor Agent one-pager.pptx",
+  "source_slide_sha256": "56ed4d8b7a1e7a2d659bee4d6ed62bb05200871b308bb71608184d1adc1ae350",
+  "promises": [
+    {
+      "advertised_promise": "Coordinate check-in, identity verification, and service routing",
+      "operations": [
+        "service_intake"
+      ],
+      "demo_cases": [
+        "FAC-01"
+      ],
+      "synthetic_evidence": [
+        "Service intake and routing returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    },
+    {
+      "advertised_promise": "Guide bankers through advisory, onboarding, and transaction workflows",
+      "operations": [
+        "client_review",
+        "advisor_handoff"
+      ],
+      "demo_cases": [
+        "FAC-02",
+        "FAC-06"
+      ],
+      "synthetic_evidence": [
+        "Client review returns deterministic fictional identifiers and review context",
+        "Banker-to-advisor handoff returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    },
+    {
+      "advertised_promise": "Surface personalized financial insights, risk assessments, and research",
+      "operations": [
+        "portfolio_summary",
+        "recommendation_engine",
+        "compliance_check"
+      ],
+      "demo_cases": [
+        "FAC-03",
+        "FAC-04",
+        "FAC-05"
+      ],
+      "synthetic_evidence": [
+        "Portfolio context returns deterministic fictional identifiers and review context",
+        "Advisor-review considerations returns deterministic fictional identifiers and review context",
+        "Compliance checkpoints returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    }
+  ]
+}

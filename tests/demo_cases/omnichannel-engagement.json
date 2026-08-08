@@ -1,0 +1,14 @@
+{
+  "solution": "Omnichannel Engagement Agent",
+  "agent": "@aibast-agents-library/omnichannel-engagement",
+  "onepager": "30. Omnichannel Engagement Agent one-pager.pptx",
+  "agent_files": ["omnichannel_engagement_agent"],
+  "note": "One persona-language case per deterministic operation. Prompts do not expose operation names.",
+  "cases": [
+    {"id": "OCE-01", "persona": "Customer Experience Leader", "operation": "channel_performance", "arguments": {}, "prompt": "As Customer Experience Leader, compare the aggregate channel picture and call out continuity risks.", "must_include": ["Prepared for:** Customer Experience Leader", "Synthetic Channel Performance", "no identity stitching"]},
+    {"id": "OCE-02", "persona": "Contact Center Supervisor", "operation": "journey_analysis", "arguments": {}, "prompt": "As Contact Center Supervisor, identify handoff friction across the aggregate journey archetypes.", "must_include": ["Prepared for:** Contact Center Supervisor", "Aggregate Customer Journey Analysis", "Journey Optimization Opportunities"]},
+    {"id": "OCE-03", "persona": "Digital Engagement Manager", "operation": "engagement_optimization", "arguments": {}, "prompt": "As Digital Engagement Manager, propose consent-aware experiments with frequency caps and no outreach.", "must_include": ["Prepared for:** Digital Engagement Manager", "Draft Engagement Optimization Report", "frequency caps"]},
+    {"id": "OCE-04", "persona": "Digital Engagement Manager", "operation": "campaign_attribution", "arguments": {}, "prompt": "As Digital Engagement Manager, summarize the synthetic attribution view and avoid causal claims.", "must_include": ["Synthetic Campaign Attribution Report", "Overall Campaign ROI", "Recommendations only"]}
+  ],
+  "assertion_principle": "Route from persona language, assert aggregate synthetic evidence, and preserve privacy safety."
+}

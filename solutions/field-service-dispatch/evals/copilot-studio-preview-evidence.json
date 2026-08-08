@@ -1,0 +1,56 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T19:14:50.577Z",
+  "solution": "@aibast-agents-library/field-service-dispatch",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Field Service Dispatch Pilot",
+  "schema_name": "aibast_FieldServiceDispatchPilot",
+  "bot_id": "f3d9ce1d-ff3a-457e-8c7e-886a73888e10",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "FIELD_SERVICE_DISPATCH-01",
+      "must_include": [
+        "Emergency: SCADA communication failure",
+        "CRITICAL",
+        "No job"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "FIELD_SERVICE_DISPATCH-02",
+      "must_include": [
+        "Central",
+        "3",
+        "dispatcher must validate"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "FIELD_SERVICE_DISPATCH-03",
+      "must_include": [
+        "Marcus Thompson",
+        "Candidate for dispatcher review",
+        "No technician has been assigned"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "FIELD_SERVICE_DISPATCH-04",
+      "must_include": [
+        "Emergency Response Draft",
+        "Marcus Thompson",
+        "No field action"
+      ],
+      "must_not_include": [],
+      "passed": true
+    }
+  ]
+}

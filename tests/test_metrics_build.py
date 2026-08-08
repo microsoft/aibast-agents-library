@@ -20,11 +20,18 @@ def load_registry():
 def test_registry_exposes_stacks():
     reg = load_registry()
     assert reg["stats"]["total_stacks"] > 0
+    assert reg["stats"]["total_multi_agent_stacks"] > 0
+    assert reg["stats"]["total_solution_containers"] > 0
     assert reg["stacks"], "registry.json must carry a stacks block for library.html"
     for stack in reg["stacks"]:
-        for field in ("stack", "vertical", "display_name", "path", "agents", "agent_count"):
+        for field in (
+            "stack", "vertical", "display_name", "path", "agents",
+            "agent_count", "stack_type",
+        ):
             assert field in stack, f"stack {stack.get('stack')} missing {field}"
         assert stack["agent_count"] == len(stack["agents"])
+        expected_type = "multi_agent" if stack["agent_count"] > 1 else "solution_container"
+        assert stack["stack_type"] == expected_type
 
 
 def test_every_agent_has_library_fields():
@@ -32,6 +39,8 @@ def test_every_agent_has_library_fields():
     names = {a["name"] for a in reg["agents"]}
     for a in reg["agents"]:
         assert a.get("_sha256"), f"{a['name']} missing _sha256"
+        assert a.get("_catalog_kind"), f"{a['name']} missing _catalog_kind"
+        assert isinstance(a.get("_readiness"), list), f"{a['name']} missing _readiness"
         # templates/ holds connector templates and the agent generator - library
         # infrastructure, not industry solutions, so they sit outside a stack.
         if "/templates/" in a["_file"]:
@@ -43,6 +52,24 @@ def test_every_agent_has_library_fields():
     for stack in reg["stacks"]:
         for member in stack["agents"]:
             assert member in names, f"stack {stack['stack']} references unknown agent {member}"
+
+
+def test_advertised_solutions_expose_showroom_fields():
+    reg = load_registry()
+    advertised = [a for a in reg["agents"] if a.get("_solution")]
+    assert advertised
+    assert reg["stats"]["advertised_solutions"] == len(advertised)
+    assert reg["stats"]["demo_proven_agents"] > 0
+    assert reg["stats"]["solution_onepagers"] > 0
+    assert reg["stats"]["solution_demo_videos"] > 0
+    for agent in advertised:
+        solution = agent["_solution"]
+        for field in (
+            "advertised_name", "executive_summary", "industries", "personas",
+            "featured_tools", "capabilities", "outcomes", "customer_scenario",
+            "onepager", "demo_video", "promise_coverage", "aliases",
+        ):
+            assert field in solution, f"{agent['name']} solution missing {field}"
 
 
 def test_metrics_build_offline_exits_zero(tmp_path):

@@ -1,0 +1,41 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/claims-processing",
+  "audited_source": "agents/@aibast-agents-library/financial_services_stacks/claims_processing_stack/claims_processing_agent.py",
+  "source_sha256": "1239dd5f2cbf012c08e7413bfd6051f92441d00f4ff1f2b3a4be9ca69c309403",
+  "case_file": "tests/demo_cases/claims-processing.json",
+  "onepager": "39. Claims Processing Agent one-pager.pptx",
+  "operations": {
+    "claim_intake": [
+      "CLP-01"
+    ],
+    "adjudication_review": [
+      "CLP-02"
+    ],
+    "fraud_flag": [
+      "CLP-03"
+    ],
+    "settlement_recommendation": [
+      "CLP-04"
+    ]
+  },
+  "defects_fixed": [
+    "Expanded tool routing descriptions so persona-language requests map to the intended operation.",
+    "Aligned implemented operations with approved one-pager promises and added missing decision-support workflows where needed.",
+    "Added synthetic-data labels, explicit human review, and no-advice/no-approval/no-transaction boundaries.",
+    "Rejected unknown record identifiers instead of silently substituting another fictional record.",
+    "Added explicit persona-language routing for named claimant file-readiness requests and mapped Jennifer Liu/the theft file to CLM-2025-7004."
+  ],
+  "unresolved_defects": [],
+  "routing_result": {
+    "cases_passed": 4,
+    "cases_total": 4,
+    "strict_isolation": true,
+    "loaded_tool": "ClaimsProcessingAgent",
+    "named_file_case": "CLP-02",
+    "named_file_evidence": [
+      "CLM-2025-7004",
+      "Receipts or appraisals"
+    ]
+  }
+}

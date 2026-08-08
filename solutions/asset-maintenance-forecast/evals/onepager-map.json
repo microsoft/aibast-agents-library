@@ -1,0 +1,66 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/asset-maintenance-forecast",
+  "onepager": "Energy Operations Agent Suite one-pager (2).pptx",
+  "source_slide_sha256": "27262902b33c359f0cb74f23e3f6660e6f17033542e676fa63167db16ad6fb4f",
+  "suite": "Energy Operations Agent Suite",
+  "preserves_distinct_module": true,
+  "promises": [
+    {
+      "advertised_promise": "Uses real-time IoT data to monitor asset health, predict failures, and optimize maintenance schedules to avoid downtime",
+      "operations": [
+        "maintenance_forecast"
+      ],
+      "demo_cases": [
+        "ASSET_MAINTENANCE_FORECAST-01"
+      ],
+      "synthetic_evidence": [
+        "Substation Transformer B-12",
+        "2026-05-01"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Uses real-time IoT data to monitor asset health, predict failures, and optimize maintenance schedules to avoid downtime",
+      "operations": [
+        "asset_health"
+      ],
+      "demo_cases": [
+        "ASSET_MAINTENANCE_FORECAST-02"
+      ],
+      "synthetic_evidence": [
+        "Substation Transformer B-12",
+        "CRITICAL"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Uses real-time IoT data to monitor asset health, predict failures, and optimize maintenance schedules to avoid downtime",
+      "operations": [
+        "budget_projection"
+      ],
+      "demo_cases": [
+        "ASSET_MAINTENANCE_FORECAST-03"
+      ],
+      "synthetic_evidence": [
+        "Substation Transformer B-12",
+        "$273,000"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Uses real-time IoT data to monitor asset health, predict failures, and optimize maintenance schedules to avoid downtime",
+      "operations": [
+        "work_order_plan"
+      ],
+      "demo_cases": [
+        "ASSET_MAINTENANCE_FORECAST-04"
+      ],
+      "synthetic_evidence": [
+        "Substation Transformer B-12",
+        "Draft approval queue"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    }
+  ]
+}

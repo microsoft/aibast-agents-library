@@ -1,0 +1,88 @@
+{
+  "solution": "Clinical Notes Summarizer Agent",
+  "slot": 49,
+  "agent": "@aibast-agents-library/clinical-notes-summarizer",
+  "onepager": "49. Clinical Notes Summarizer Agent one-pager.pptx",
+  "agent_files": [
+    "clinical_notes_summarizer_agent"
+  ],
+  "note": "Locked synthetic, read-only persona cases; exactly one case per implemented operation.",
+  "cases": [
+    {
+      "id": "CN-01",
+      "persona": "Primary Care Physician",
+      "onepager_bullet": "Automatically generate concise, clinically relevant patient summaries",
+      "operation": "encounter_summary",
+      "prompt": "Summarize synthetic encounter SYN-ENC-001 using source facts only.",
+      "must_include": [
+        "SYN-ENC-001",
+        "Clinical interpretation: not performed"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "ClinicalNotesSummarizerAgent"
+    },
+    {
+      "id": "CN-02",
+      "persona": "Anesthesia Clinician",
+      "onepager_bullet": "Surface key risks, comorbidities, and medication considerations",
+      "operation": "medication_inventory",
+      "prompt": "List the source-recorded medications for SYN-ENC-001 for reconciliation.",
+      "must_include": [
+        "Metformin 1000 mg twice daily",
+        "clinician/pharmacist review"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "ClinicalNotesSummarizerAgent"
+    },
+    {
+      "id": "CN-03",
+      "persona": "Surgeon",
+      "onepager_bullet": "Standardize documentation to support smoother surgical and anesthesia workflows",
+      "operation": "problem_list_extract",
+      "prompt": "Extract the source-coded problems for SYN-ENC-001 without confirming a diagnosis.",
+      "must_include": [
+        "source-coded type 2 diabetes",
+        "No diagnosis was added"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "ClinicalNotesSummarizerAgent"
+    },
+    {
+      "id": "CN-04",
+      "persona": "Primary Care Physician",
+      "onepager_bullet": "Send summaries through EHR and secure messaging systems",
+      "operation": "referral_context",
+      "prompt": "What referral context is recorded for SYN-ENC-001, and what action has not occurred?",
+      "must_include": [
+        "Orthopedics referral draft",
+        "No referral was placed"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "ClinicalNotesSummarizerAgent"
+    }
+  ]
+}

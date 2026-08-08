@@ -64,7 +64,7 @@ INVESTIGATION_CASES = {
         "analyst": "Karen Wright",
         "opened": "2025-03-05",
         "priority": "high",
-        "notes": "Cardholder confirmed they are not traveling. Card blocked. Replacement issued.",
+        "notes": "Synthetic contact evidence indicates no travel. Card block and replacement are proposed protective actions pending authorization.",
     },
     "INV-2025-302": {
         "alert_txns": ["TXN-90006"],
@@ -74,7 +74,7 @@ INVESTIGATION_CASES = {
         "analyst": "David Chen",
         "opened": "2025-03-05",
         "priority": "critical",
-        "notes": "Wire to Nigeria following password reset 90 minutes prior. SAR filing initiated.",
+        "notes": "Synthetic wire followed a password reset by 90 minutes. Escalation and SAR review are proposed; no filing or account action occurred.",
     },
     "INV-2025-303": {
         "alert_txns": ["TXN-90003", "TXN-90004"],
@@ -88,6 +88,12 @@ INVESTIGATION_CASES = {
     },
 }
 
+
+SYNTHETIC_NOTICE = (
+    "> **SYNTHETIC DEMO DATA — INVESTIGATOR REVIEW REQUIRED.** Fictional alerts and accounts only. "
+    "A score or pattern is not proof of fraud. No card, account, payment, wire, report, or filing has been "
+    "blocked, changed, submitted, or completed.\n\n"
+)
 
 # ---------------------------------------------------------------------------
 # Helper functions
@@ -124,12 +130,28 @@ class FraudDetectionAlertAgent(BasicAgent):
         self.metadata = {
             "name": self.name,
             "display_name": "Fraud Detection & Alert Agent",
-            "description": __manifest__["description"],
+            "description": (
+                "Always call this tool for fraud-analyst, SIU, or risk-leader requests about the most urgent "
+                "alert, account activity behind the Dubai alert, a transaction sequence, coordinated fraud "
+                "patterns, or preparing the critical wire case for SIU review. Do not answer those requests "
+                "from general knowledge. Uses fictional records only; a flag is not proof of fraud and the "
+                "tool never blocks funds, changes an account, contacts a customer, files a SAR, or performs "
+                "another protective action. Human investigation and authorized human review and approval "
+                "are mandatory."
+            ),
             "parameters": {
                 "type": "object",
                 "properties": {
                     "operation": {
                         "type": "string",
+                        "description": (
+                            "Choose alert_triage for the most urgent alert, overnight queue, severity, or "
+                            "why an alert is urgent. Choose transaction_analysis for account activity, the "
+                            "Dubai alert, merchant sequence, transactions, or account-level evidence. Choose "
+                            "pattern_detection for coordinated fraud, rings, known patterns, or why a match "
+                            "is only a hypothesis. Choose investigation_summary for a named case, the critical "
+                            "wire case, SIU preparation, proposed routing, or what protective actions actually occurred."
+                        ),
                         "enum": [
                             "alert_triage",
                             "transaction_analysis",
@@ -137,8 +159,21 @@ class FraudDetectionAlertAgent(BasicAgent):
                             "investigation_summary",
                         ],
                     },
-                    "case_id": {"type": "string"},
-                    "account": {"type": "string"},
+                    "case_id": {
+                        "type": "string",
+                        "description": (
+                            "Synthetic case mapping: the Dubai/card-cloning case is INV-2025-301; the "
+                            "critical wire case is INV-2025-302; the crypto case is INV-2025-303."
+                        ),
+                    },
+                    "account": {
+                        "type": "string",
+                        "description": (
+                            "Synthetic account mapping: the Dubai alert or James Peterson is "
+                            "4532-XXXX-8891; Lisa Wang/crypto is 4716-XXXX-3304; Robert Miles/critical wire "
+                            "is 5412-XXXX-6678; Elena Vasquez is 4024-XXXX-1190."
+                        ),
+                    },
                 },
                 "required": ["operation"],
             },
@@ -146,6 +181,13 @@ class FraudDetectionAlertAgent(BasicAgent):
         super().__init__(name=self.name, metadata=self.metadata)
 
     def perform(self, **kwargs) -> str:
+        record_id = kwargs.get("case_id")
+        if record_id and record_id not in INVESTIGATION_CASES:
+            return SYNTHETIC_NOTICE + f"**Not found:** No synthetic record `{record_id}` exists; no substitute record was used."
+        account = kwargs.get("account")
+        known_accounts = {txn["account"] for txn in TRANSACTIONS.values()}
+        if account and account not in known_accounts:
+            return SYNTHETIC_NOTICE + f"**Not found:** No synthetic record `{account}` exists; no substitute record was used."
         operation = kwargs.get("operation", "alert_triage")
         dispatch = {
             "alert_triage": self._alert_triage,
@@ -156,7 +198,7 @@ class FraudDetectionAlertAgent(BasicAgent):
         handler = dispatch.get(operation)
         if not handler:
             return f"**Error:** Unknown operation `{operation}`."
-        return handler(**kwargs)
+        return SYNTHETIC_NOTICE + handler(**kwargs)
 
     def _alert_triage(self, **kwargs) -> str:
         metrics = _alert_metrics()
@@ -242,6 +284,9 @@ class FraudDetectionAlertAgent(BasicAgent):
             for rule_id in case["rules_triggered"]:
                 rule = ALERT_RULES.get(rule_id, {})
                 lines.append(f"- **{rule_id}:** {rule.get('name', 'Unknown')} [{rule.get('severity', 'N/A').upper()}]")
+            route = "SIU" if case["priority"] in ("critical", "high") else "Fraud Operations"
+            lines.append(f"\n## Proposed Routing\n\n- Queue: {route}")
+            lines.append("- Status: Prepared for authorized investigator review; no external action taken")
             return "\n".join(lines)
 
         lines = ["# Investigation Case Summary\n"]

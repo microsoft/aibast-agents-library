@@ -1,0 +1,66 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/utility-billing-assistance",
+  "onepager": "27. Utility Billing and Assistance Agent one-pager.pptx",
+  "source_slide_sha256": "b96e166881edb90442204519a76925e090edc2acdcf182d369410d44fdc33b7f",
+  "suite": null,
+  "preserves_distinct_module": false,
+  "promises": [
+    {
+      "advertised_promise": "Analyze smart-meter anomalies, calculate draft adjustments, screen assistance, and configure draft payment-plan options",
+      "operations": [
+        "billing_inquiry"
+      ],
+      "demo_cases": [
+        "UTILITY_BILLING_ASSISTANCE-01"
+      ],
+      "synthetic_evidence": [
+        "ACCT-90003",
+        "$489.20"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Analyze smart-meter anomalies, calculate draft adjustments, screen assistance, and configure draft payment-plan options",
+      "operations": [
+        "usage_analysis"
+      ],
+      "demo_cases": [
+        "UTILITY_BILLING_ASSISTANCE-02"
+      ],
+      "synthetic_evidence": [
+        "REVIEW POSSIBLE LEAK",
+        "Draft policy estimate"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Analyze smart-meter anomalies, calculate draft adjustments, screen assistance, and configure draft payment-plan options",
+      "operations": [
+        "payment_plan"
+      ],
+      "demo_cases": [
+        "UTILITY_BILLING_ASSISTANCE-03"
+      ],
+      "synthetic_evidence": [
+        "12 months",
+        "No payment arrangement was created"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Analyze smart-meter anomalies, calculate draft adjustments, screen assistance, and configure draft payment-plan options",
+      "operations": [
+        "assistance_programs"
+      ],
+      "demo_cases": [
+        "UTILITY_BILLING_ASSISTANCE-04"
+      ],
+      "synthetic_evidence": [
+        "POTENTIALLY ELIGIBLE",
+        "No eligibility determination"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    }
+  ]
+}

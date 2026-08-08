@@ -15,7 +15,7 @@ from basic_agent import BasicAgent
 __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/resource-utilization",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "display_name": "Resource Utilization Agent",
     "description": "Provide intelligent resource analysis and recommendations to maximize billable utilization and reduce costs.",
     "author": "AIBAST",
@@ -90,6 +90,16 @@ BENCH_COST_PER_MONTH = {
     "Junior": 10000,
 }
 
+WORKFORCE_PATHS = {
+    "CON-408": {
+        "path": "D365 integration accelerator",
+        "duration_weeks": 4,
+        "training_cost": 3200,
+        "target_demand": "FinanceHub Cloud Migration integration work",
+        "monthly_value_at_rate": 31200,
+    },
+}
+
 
 # ---------------------------------------------------------------------------
 # Helper functions
@@ -154,13 +164,49 @@ class ResourceUtilizationAgent(BasicAgent):
         self.name = "ResourceUtilizationAgent"
         self.metadata = {
             "name": self.name,
-            "description": __manifest__["description"],
+            "description": (
+                "The professional-services resource and capacity agent. Use it for firm and "
+                "level utilization, upcoming availability, bench cost and skill inventory, "
+                "pipeline staffing matches, or upskilling and innovation planning. Use "
+                "utilization_dashboard for the current portfolio, capacity_forecast for the "
+                "next ninety days, bench_analysis for available talent and cost, "
+                "staffing_recommendation for skill-and-level matches to weighted pipeline, and "
+                "workforce_plan for unmatched-resource pathways and synthetic upskilling ROI. "
+                "It recommends options only and never assigns people, changes employment "
+                "status, books revenue, or contacts employees or clients."
+            ),
             "operations": [
                 "utilization_dashboard",
                 "capacity_forecast",
                 "bench_analysis",
                 "staffing_recommendation",
+                "workforce_plan",
             ],
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "operation": {
+                        "type": "string",
+                        "enum": [
+                            "utilization_dashboard",
+                            "capacity_forecast",
+                            "bench_analysis",
+                            "staffing_recommendation",
+                            "workforce_plan",
+                        ],
+                        "description": (
+                            "utilization_dashboard: show current utilization, targets, and "
+                            "availability. capacity_forecast: compare upcoming project endings "
+                            "with weighted pipeline demand. bench_analysis: inventory bench "
+                            "skills and synthetic carrying cost. staffing_recommendation: match "
+                            "qualified available consultants to pipeline needs. workforce_plan: "
+                            "model upskilling and internal-innovation options for unmatched "
+                            "resources without making assignments."
+                        ),
+                    }
+                },
+                "required": ["operation"],
+            },
         }
         super().__init__(name=self.name, metadata=self.metadata)
 
@@ -171,6 +217,7 @@ class ResourceUtilizationAgent(BasicAgent):
             "capacity_forecast": self._capacity_forecast,
             "bench_analysis": self._bench_analysis,
             "staffing_recommendation": self._staffing_recommendation,
+            "workforce_plan": self._workforce_plan,
         }
         handler = dispatch.get(operation)
         if handler is None:
@@ -212,6 +259,7 @@ class ResourceUtilizationAgent(BasicAgent):
             tgt = UTILIZATION_TARGETS.get(level, 80)
             status = "On Track" if avg >= tgt else "Below Target"
             lines.append(f"| {level} | {len(members)} | {avg}% | {tgt}% | {status} |")
+        lines.append("\n> Synthetic planning snapshot; utilization is not a live PSA reading.")
         return "\n".join(lines)
 
     # ------------------------------------------------------------------
@@ -241,6 +289,7 @@ class ResourceUtilizationAgent(BasicAgent):
         total_roles = sum(count for proj in PROJECT_PIPELINE for _, _, count in proj["needs"])
         lines.append(f"\n**Total roles in pipeline:** {total_roles}")
         lines.append(f"**Bench available:** {len(_bench_consultants())}")
+        lines.append("\n> Pipeline probabilities are synthetic planning inputs, not committed work.")
         return "\n".join(lines)
 
     # ------------------------------------------------------------------
@@ -272,6 +321,7 @@ class ResourceUtilizationAgent(BasicAgent):
             lines.append(f"| {s} | {count} |")
 
         lines.append(f"\n**Revenue opportunity if deployed:** ${sum(c['rate_hr'] * 160 for c in bench.values()):,.0f}/month")
+        lines.append("\n> Opportunity values are synthetic scenarios; no deployment or revenue is committed.")
         return "\n".join(lines)
 
     # ------------------------------------------------------------------
@@ -310,7 +360,7 @@ class ResourceUtilizationAgent(BasicAgent):
         # Utilization projection
         bench = _bench_consultants()
         current_util = _firm_utilization()
-        deployable = len(matches)
+        deployable = len({m["consultant_id"] for m in matches})
         total = len(CONSULTANTS)
         currently_billable = total - len(bench)
         projected_billable = currently_billable + deployable
@@ -319,6 +369,35 @@ class ResourceUtilizationAgent(BasicAgent):
         lines.append(f"- Current firm utilization: **{current_util}%**")
         lines.append(f"- Projected after deployment: **{projected_util}%**")
         lines.append(f"- Target: **{UTILIZATION_TARGETS['firm_target']}%**")
+        lines.append("\n> Recommendations require resource-manager confirmation; no assignment was made.")
+        return "\n".join(lines)
+
+    # ------------------------------------------------------------------
+    def _workforce_plan(self, **kwargs) -> str:
+        lines = ["## Strategic Workforce Plan\n"]
+        lines.append("### Upskilling Pathways\n")
+        lines.append("| Consultant | Path | Duration | Cost | Target Demand | Monthly Scenario Value |")
+        lines.append("|------------|------|----------|------|---------------|------------------------|")
+        for cid, path in WORKFORCE_PATHS.items():
+            consultant = CONSULTANTS[cid]
+            lines.append(
+                f"| {consultant['name']} | {path['path']} | {path['duration_weeks']} weeks | "
+                f"${path['training_cost']:,.0f} | {path['target_demand']} | "
+                f"${path['monthly_value_at_rate']:,.0f} |"
+            )
+            payback = round(path["training_cost"] / path["monthly_value_at_rate"], 2)
+            lines.append(
+                f"\n**Synthetic payback scenario for {consultant['name']}:** "
+                f"{payback} months after billable deployment begins."
+            )
+        lines.append("\n### Innovation and Capability-Building Options\n")
+        lines.append("- Robert Garcia: contribute to the D365 integration accelerator while completing the pathway.")
+        lines.append("- Sarah Kim: document reusable Terraform patterns between pipeline staffing decisions.")
+        lines.append("- Chen Wei: prototype an internal AI delivery playbook if the retail opportunity does not proceed.")
+        lines.append(
+            "\n> Scenario modeling only; training, internal work, staffing, and financial "
+            "benefits require leadership approval and validated demand."
+        )
         return "\n".join(lines)
 
 

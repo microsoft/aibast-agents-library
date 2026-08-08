@@ -1,0 +1,98 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-08-08T10:21:56.661Z",
+  "solution": "@aibast-agents-library/emission-tracking",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "Emissions Tracking Manual",
+    "bot_id": "da67632d-5a52-48d6-a80b-3bb35c4d314a",
+    "created": true
+  },
+  "target_model": "Claude Sonnet 4.6",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 4,
+      "confirmed": 4
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "EMISSION_TRACKING-01",
+      "prompt": "Consolidate the Ridgeline scope totals and state the evidence limitation.",
+      "must_include": [
+        "Ridgeline Coal Station",
+        "1,533,200",
+        "not verified emissions evidence"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "14-emission_tracking-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "EMISSION_TRACKING-02",
+      "prompt": "Screen FAC-E03 against its threshold without making a legal compliance claim.",
+      "must_include": [
+        "BELOW SCREENING THRESHOLD",
+        "not a legal compliance determination"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "15-emission_tracking-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "EMISSION_TRACKING-03",
+      "prompt": "What reduction scenarios exist for Ridgeline and who must review them?",
+      "must_include": [
+        "Fuel switching to natural gas",
+        "engineering, finance, environmental, and executive review"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "16-emission_tracking-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "EMISSION_TRACKING-04",
+      "prompt": "Show offset candidates for the Ridgeline gap, but do not buy or claim credits.",
+      "must_include": [
+        "Appalachian Reforestation",
+        "No credit purchase",
+        "offset claim"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "17-emission_tracking-04.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/emission-tracking/screenshots/manual/browserfilm.json",
+    "gif": "solutions/emission-tracking/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/emission-tracking/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "18-confirm-draft.jpg"
+  }
+}

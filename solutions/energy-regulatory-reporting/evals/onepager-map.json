@@ -1,0 +1,66 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/energy-regulatory-reporting",
+  "onepager": "Energy Operations Agent Suite one-pager (2).pptx",
+  "source_slide_sha256": "27262902b33c359f0cb74f23e3f6660e6f17033542e676fa63167db16ad6fb4f",
+  "suite": "Energy Operations Agent Suite",
+  "preserves_distinct_module": true,
+  "promises": [
+    {
+      "advertised_promise": "Consolidates data, validates compliance requirements, and generates regulatory reports to streamline submissions",
+      "operations": [
+        "report_status"
+      ],
+      "demo_cases": [
+        "ENERGY_REGULATORY_REPORTING-01"
+      ],
+      "synthetic_evidence": [
+        "PHMSA Annual Pipeline Safety Report",
+        "OVERDUE"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Consolidates data, validates compliance requirements, and generates regulatory reports to streamline submissions",
+      "operations": [
+        "data_validation"
+      ],
+      "demo_cases": [
+        "ENERGY_REGULATORY_REPORTING-02"
+      ],
+      "synthetic_evidence": [
+        "Data collection incomplete",
+        "Data quality score below threshold"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Consolidates data, validates compliance requirements, and generates regulatory reports to streamline submissions",
+      "operations": [
+        "submission_tracker"
+      ],
+      "demo_cases": [
+        "ENERGY_REGULATORY_REPORTING-03"
+      ],
+      "synthetic_evidence": [
+        "PHMSA Annual Pipeline Safety Report",
+        "OVERDUE"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Consolidates data, validates compliance requirements, and generates regulatory reports to streamline submissions",
+      "operations": [
+        "audit_readiness"
+      ],
+      "demo_cases": [
+        "ENERGY_REGULATORY_REPORTING-04"
+      ],
+      "synthetic_evidence": [
+        "Pipeline mileage discrepancy",
+        "HIGH"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    }
+  ]
+}

@@ -17,10 +17,10 @@ from basic_agent import BasicAgent
 __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/supply-chain-disruption-alert",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "display_name": "Supply Chain Disruption Alert Agent",
     "description": (
-        "Detects and manages supply chain risks to defend against disruptions, protect revenue, and maintain operational continuity."
+        "Analyze a synthetic supply-chain snapshot for disruptions, route risk, mitigation scenarios, and alternative-supplier due diligence. Use for planning and continuity questions. The agent never changes a purchase order, activates a supplier, reroutes a shipment, or moves inventory; procurement and operations owners must approve actions through future authenticated tools."
     ),
     "author": "AIBAST",
     "tags": [
@@ -429,10 +429,11 @@ class SupplyChainDisruptionAlertAgent(BasicAgent):
                             "mitigation_plan",
                             "supplier_alternatives",
                         ],
+                        "description": "Choose disruption_dashboard for active events and impact, risk_assessment for route scoring, mitigation_plan for an approval-gated scenario, or supplier_alternatives for due-diligence candidates.",
                     },
-                    "route_id": {"type": "string"},
-                    "disruption_id": {"type": "string"},
-                    "category": {"type": "string"},
+                    "route_id": {"type": "string", "description": "Optional synthetic route ID such as RT-APAC-01."},
+                    "disruption_id": {"type": "string", "description": "Optional synthetic disruption ID such as DISR-002."},
+                    "category": {"type": "string", "description": "Optional product category such as Electronics."},
                 },
                 "required": ["operation"],
             },
@@ -483,12 +484,13 @@ class SupplyChainDisruptionAlertAgent(BasicAgent):
                 lines.append(f"**Affected SKUs:** {', '.join(d['affected_skus'])}")
                 lines.append(f"**Affected Routes:** {', '.join(d['affected_routes'])}")
                 lines.append("")
+        lines.append("> Synthetic monitoring snapshot. Validate live supplier, logistics, order, and customer data before action.")
         return "\n".join(lines)
 
     def _risk_assessment(self, **kwargs):
         route_id = kwargs.get("route_id")
-        if route_id and route_id in RISK_SCORES:
-            routes = {route_id: RISK_SCORES[route_id]}
+        if route_id:
+            routes = {route_id: RISK_SCORES[route_id]} if route_id in RISK_SCORES else {}
         else:
             routes = RISK_SCORES
         lines = [
@@ -521,24 +523,26 @@ class SupplyChainDisruptionAlertAgent(BasicAgent):
         lines.append("## Highest Risk Factors")
         lines.append("")
         all_factors = {}
-        for scores in RISK_SCORES.values():
+        for scores in routes.values():
             for factor in ["geopolitical", "weather", "infrastructure", "labor", "regulatory", "financial"]:
                 all_factors.setdefault(factor, []).append(scores[factor])
         for factor, values in sorted(all_factors.items(), key=lambda x: -max(x[1])):
             avg_score = sum(values) / len(values)
             peak = max(values)
             lines.append(f"- **{factor.title()}:** avg {avg_score:.2f}, peak {peak:.2f}")
+        lines.append("")
+        lines.append("> Decision-support score only; it is not a supplier default prediction or authorization to change supply.")
         return "\n".join(lines)
 
     def _mitigation_plan(self, **kwargs):
         disruption_id = kwargs.get("disruption_id")
-        if disruption_id and disruption_id in DISRUPTION_EVENTS:
-            events = {disruption_id: DISRUPTION_EVENTS[disruption_id]}
+        if disruption_id:
+            events = {disruption_id: DISRUPTION_EVENTS[disruption_id]} if disruption_id in DISRUPTION_EVENTS else {}
         else:
             events = {k: v for k, v in DISRUPTION_EVENTS.items() if v["status"] == "active"}
         total_cost = _total_mitigation_cost()
         lines = [
-            "# Disruption Mitigation Plan",
+            "# Draft Disruption Mitigation Scenario",
             "",
             f"**Estimated Total Mitigation Investment:** ${total_cost:,.2f}",
             "",
@@ -552,9 +556,9 @@ class SupplyChainDisruptionAlertAgent(BasicAgent):
             lines.append(f"**Expected Risk Reduction:** {playbook['risk_reduction_pct']}%")
             lines.append(f"**Mitigation Cost:** ${playbook['estimated_mitigation_cost']:,.2f}")
             lines.append("")
-            lines.append("### Immediate Actions (0-48 hours)")
+            lines.append("### Proposed immediate actions (0-48 hours)")
             for action in playbook["immediate_actions"]:
-                lines.append(f"1. {action}")
+                lines.append(f"1. Consider: {action}")
             lines.append("")
             lines.append("### Short-Term Actions (1-2 weeks)")
             for action in playbook["short_term_actions"]:
@@ -564,12 +568,13 @@ class SupplyChainDisruptionAlertAgent(BasicAgent):
             for action in playbook["long_term_actions"]:
                 lines.append(f"1. {action}")
             lines.append("")
+        lines.append("> Approval gate: no purchase order, supplier, shipment, route, or inventory position has been changed.")
         return "\n".join(lines)
 
     def _supplier_alternatives(self, **kwargs):
         category = kwargs.get("category")
-        if category and category in ALTERNATIVE_SUPPLIERS:
-            cats = {category: ALTERNATIVE_SUPPLIERS[category]}
+        if category:
+            cats = {category: ALTERNATIVE_SUPPLIERS[category]} if category in ALTERNATIVE_SUPPLIERS else {}
         else:
             cats = ALTERNATIVE_SUPPLIERS
         lines = ["# Alternative Supplier Directory", ""]
@@ -577,7 +582,7 @@ class SupplyChainDisruptionAlertAgent(BasicAgent):
             best = _best_alternative(cat_name)
             lines.append(f"## {cat_name}")
             if best:
-                lines.append(f"**Recommended (fastest lead time):** {best['name']} — {best['lead_time_days']}d")
+                lines.append(f"**Fastest candidate for due diligence:** {best['name']} — {best['lead_time_days']}d")
             lines.append("")
             lines.append("| Supplier | Location | Lead Time | Quality | Capacity/Mo | Price Premium | MOQ |")
             lines.append("|----------|----------|-----------|---------|-------------|---------------|-----|")
@@ -595,6 +600,8 @@ class SupplyChainDisruptionAlertAgent(BasicAgent):
             lines.append("")
         total_suppliers = sum(len(s) for s in ALTERNATIVE_SUPPLIERS.values())
         lines.append(f"**Total Qualified Alternatives:** {total_suppliers} suppliers across {len(ALTERNATIVE_SUPPLIERS)} categories")
+        lines.append("")
+        lines.append("> Synthetic candidates only. Qualification, contracting, sourcing, and inventory movement require human approval and authenticated systems.")
         return "\n".join(lines)
 
     def perform(self, **kwargs):

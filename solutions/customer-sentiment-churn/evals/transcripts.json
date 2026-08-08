@@ -1,0 +1,85 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:39:27.446843+00:00",
+  "solution": "@aibast-agents-library/customer-sentiment-churn",
+  "onepager": "37. Customer Sentiment and Churn Prediction Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "CustomerSentimentChurnAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/financial_services_stacks/customer_sentiment_churn_stack/customer_sentiment_churn_agent.py",
+      "sha256": "c6c5c2c62e315d5110c4eb199fb6b85712ce454b1ac4a362cefc4166206b47fc"
+    }
+  ],
+  "case_file": "tests/demo_cases/customer-sentiment-churn.json",
+  "case_file_sha256": "edae90cdb8175c4b339a1fd94b5682cf0cd3e2e3ddcbe80b9ee6479f434072d5",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "CSC-01",
+      "persona": "Customer Success Lead",
+      "onepager_promise": "Aggregate sentiment across touchpoints to track trends before churn signals escalate",
+      "prompt": "What are customers telling us across channels, and which relationship needs attention first?",
+      "assistant_response": "## Quick Summary\n\n**Your portfolio is mixed:** Average NPS of 5.8 with 40% negative sentiment \u2014 that's a signal to act.\n\n**Review these customers first, in order:**\n\n1. **Gerald Thompson (CUST-8004) \u2014 Churn Score 70 (High)**\n   - Mass Market, 8-year customer, only 1 product (checking)\n   - Only 4 transactions in the review period + low NPS (3)\n   - **Why it matters:** Long tenure + sudden drop in engagement is a classic churn warning\n\n2. **Marcus Johnson (CUST-8002) \u2014 Churn Score 45 (Medium)**\n   - Mass Market, 5 complaints in the last year, NPS 4 (detractor)\n   - Low transaction frequency (15) relative to his segment\n   - **Why it matters:** Repeated friction + low satisfaction suggests unresolved pain\n\n**Positive signals you can build on:**\n- Elizabeth Warren-Hayes (Affluent, NPS 9, no complaints) \u2014 your advocate\n- Priya Sharma (Emerging Affluent, stable, only 1 complaint)\n\n**Next step:** Want me to pull retention options for Gerald or Marcus before you reach out? I can show you what actions might work best for each.",
+      "agent_logs": "[CustomerSentimentChurnAgent] > **SYNTHETIC DEMO DATA \u2014 HUMAN REVIEW REQUIRED.** Fictional customer signals only. Scores are prioritization heuristics, not facts about a real person; no outreach, offer, fee change, or account action has occurred.\n\n# Customer Sentiment Dashboard\n\n**Average NPS:** 5.8\n**Total Interactions Analyzed:** 10\n\n## Sentiment Distribution\n\n- **Positive:** 2 (20.0%)\n- **Neutral:** 4 (40.0%)\n- **Negative:** 4 (40.0%)\n\n## Customer NPS Scores\n\n| Customer | Segment | NPS | Products | Complaints (12m) |\n|---|---|---|---|---|\n| Elizabeth Warren-Hayes (CUST-8001) | Affluent | 9 | 4 | 0 |\n| Marcus Johnson (CUST-8002) | Mass Market | 4 | 2 | 5 |\n| Priya Sharma (CUST-8003) | Emerging Affluent | 7 | 4 | 1 |\n| Gerald Thompson (CUST-8004) | Mass Market | 3 | 1 | 2 |\n| Diana Castellano (CUST-8005) | Small Business | 6 | 3 | 3 |\n[CustomerSentimentChurnAgent] > **SYNTHETIC DEMO DATA \u2014 HUMAN REVIEW REQUIRED.** Fictional customer signals only. Scores are prioritization heuristics, not facts about a real person; no outreach, offer, fee change, or account action has occurred.\n\n# Churn Prediction Report\n\n| Customer | Segment | Churn Score | NPS | Transactions | Complaints |\n|---|---|---|---|---|---|\n| Elizabeth Warren-Hayes (CUST-8001) | Affluent | 0 (Low) | 9 | 48 | 0 |\n| Marcus Johnson (CUST-8002) | Mass Market | 45 (Medium) | 4 | 15 | 5 |\n| Priya Sharma (CUST-8003) | Emerging Affluent | 0 (Low) | 7 | 32 | 1 |\n| Gerald Thompson (CUST-8004) | Mass Market | 70 (High) | 3 | 4 | 2 |\n| Diana Castellano (CUST-8005) | Small Business | 20 (Low) | 6 | 120 | 3 |\n\n## High-Risk Customers\n\n### Gerald Thompson (CUST-8004) \u2014 Score: 70\n\n- Segment: Mass Market\n- Tenure: 8 years\n- Products: checking\n- Recent sentiment: neutral\n\n\n## Churn Indicators Reference\n\n- **Low Nps** (weight: 25): NPS score below 5 indicates detractor status\n- **Declining Transactions** (weight: 20): Monthly transactions below segment average\n- **High Complaints** (weight: 20): 3+ complaints in last 12 months\n- **Low Engagement** (weight: 15): Digital engagement score below 30\n- **Single Product** (weight: 10): Only one active product\n- **Stale Survey** (weight: 10): Last survey response over 90 days ago\n\nThese scores prioritize review; they do not predict an individual outcome.",
+      "expected_agent": "CustomerSentimentChurnAgent",
+      "must_include": [
+        "CUST-8002",
+        "Negative"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "CSC-02",
+      "persona": "Retention Specialist",
+      "onepager_promise": "Predict churn risk to pinpoint critical and high-risk customers",
+      "prompt": "Who should my team review first today, and what evidence drove the priority?",
+      "assistant_response": "**Review Gerald Thompson first** (CUST-8004) \u2014 churn score 70 (high priority).\n\n**Evidence:**\n- NPS of 3 (detractor territory) \u2014 strong negative sentiment signal\n- Only 4 transactions in the review period \u2014 well below Mass Market segment average\n- Single product (checking) \u2014 low wallet depth increases exit risk\n- 8-year tenure with declining engagement \u2014 recent shift is the alarm bell\n\n**Second priority:** Marcus Johnson (CUST-8002, score 45) \u2014 NPS 4, rising complaint count (5), also Mass Market but slightly better transaction activity.\n\nBoth need outreach *before* they leave. Would you like retention options for either customer?",
+      "agent_logs": "[CustomerSentimentChurnAgent] > **SYNTHETIC DEMO DATA \u2014 HUMAN REVIEW REQUIRED.** Fictional customer signals only. Scores are prioritization heuristics, not facts about a real person; no outreach, offer, fee change, or account action has occurred.\n\n# Churn Prediction Report\n\n| Customer | Segment | Churn Score | NPS | Transactions | Complaints |\n|---|---|---|---|---|---|\n| Elizabeth Warren-Hayes (CUST-8001) | Affluent | 0 (Low) | 9 | 48 | 0 |\n| Marcus Johnson (CUST-8002) | Mass Market | 45 (Medium) | 4 | 15 | 5 |\n| Priya Sharma (CUST-8003) | Emerging Affluent | 0 (Low) | 7 | 32 | 1 |\n| Gerald Thompson (CUST-8004) | Mass Market | 70 (High) | 3 | 4 | 2 |\n| Diana Castellano (CUST-8005) | Small Business | 20 (Low) | 6 | 120 | 3 |\n\n## High-Risk Customers\n\n### Gerald Thompson (CUST-8004) \u2014 Score: 70\n\n- Segment: Mass Market\n- Tenure: 8 years\n- Products: checking\n- Recent sentiment: neutral\n\n\n## Churn Indicators Reference\n\n- **Low Nps** (weight: 25): NPS score below 5 indicates detractor status\n- **Declining Transactions** (weight: 20): Monthly transactions below segment average\n- **High Complaints** (weight: 20): 3+ complaints in last 12 months\n- **Low Engagement** (weight: 15): Digital engagement score below 30\n- **Single Product** (weight: 10): Only one active product\n- **Stale Survey** (weight: 10): Last survey response over 90 days ago\n\nThese scores prioritize review; they do not predict an individual outcome.",
+      "expected_agent": "CustomerSentimentChurnAgent",
+      "must_include": [
+        "CUST-8004",
+        "prioritize review"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "CSC-03",
+      "persona": "Relationship Manager",
+      "onepager_promise": "Generate tailored retention and outreach plans",
+      "prompt": "Prepare options for Marcus that I can review before anyone contacts him or changes a fee.",
+      "assistant_response": "Here are your retention options for Marcus before any outreach:\n\n**Recommended Actions (in priority order):**\n\n1. **Complaint Resolution** ($50, 65% success) \u2014 Escalate to service recovery team to address underlying issues\n2. **Personal Outreach** ($25, 55% success) \u2014 Schedule a call with a relationship manager for direct conversation\n3. **Product Bundle** ($200, 60% success) \u2014 Offer discounted bundle + waived fees as a value add\n\nMarcus has a churn score of 45, suggesting moderate risk. The complaint resolution path has the highest success rate \u2014 likely addressing a specific pain point will matter more than discounting right now.\n\n**Next step:** Review which action fits your policy and Marcus's situation, then let me know if you want to move forward with any of these options.",
+      "agent_logs": "[CustomerSentimentChurnAgent] > **SYNTHETIC DEMO DATA \u2014 HUMAN REVIEW REQUIRED.** Fictional customer signals only. Scores are prioritization heuristics, not facts about a real person; no outreach, offer, fee change, or account action has occurred.\n\n# Retention Action Recommendations\n\n## Available Actions\n\n| Action | Description | Cost | Success Rate |\n|---|---|---|---|\n| Fee Waiver | Waive monthly maintenance fees for 6 months | $72 | 45% |\n| Rate Upgrade | Offer premium savings rate for 12 months | $150 | 35% |\n| Personal Outreach | Schedule call with relationship manager | $25 | 55% |\n| Product Bundle | Offer discounted product bundle with waived fees | $200 | 60% |\n| Loyalty Bonus | Credit loyalty bonus to account | $100 | 50% |\n| Complaint Resolution | Escalate to service recovery team | $50 | 65% |\n\n## Recommended Actions by Customer\n\n### Marcus Johnson (CUST-8002) \u2014 Churn Score: 45\n\n1. **Complaint Resolution** \u2014 Escalate to service recovery team\n2. **Personal Outreach** \u2014 Schedule call with relationship manager\n3. **Product Bundle** \u2014 Offer discounted product bundle with waived fees\n\n### Gerald Thompson (CUST-8004) \u2014 Churn Score: 70\n\n2. **Personal Outreach** \u2014 Schedule call with relationship manager\n3. **Product Bundle** \u2014 Offer discounted product bundle with waived fees\n\n\nEvery option requires relationship-manager review, policy validation, customer consent where applicable, and approved execution. No customer was contacted and no offer was made.",
+      "expected_agent": "CustomerSentimentChurnAgent",
+      "must_include": [
+        "Marcus Johnson",
+        "No customer was contacted"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "CSC-04",
+      "persona": "Head of Customer Experience",
+      "onepager_promise": "Aggregate sentiment across touchpoints to track trends before churn signals escalate",
+      "prompt": "Which segment is under its experience benchmark, and what should we investigate?",
+      "assistant_response": "**Mass Market is significantly under benchmark** \u2014 NPS of 3.5 vs. a target of 6.5, and only 1.5 products adopted vs. 2.0.\n\n**What to investigate:**\n1. **NPS gap is critical** \u2014 a 3-point drop suggests real satisfaction issues. Pull sentiment data for those 2 Mass Market customers to spot friction points.\n2. **Low product adoption** \u2014 they're using fewer tools than segment average. Check if onboarding is weak, pricing barriers exist, or features don't fit their use case.\n3. **Churn risk** \u2014 low NPS + low engagement often precedes churn. Run a churn prediction on those 2 customers to see if they're priority for retention outreach.\n\nWould you like me to pull sentiment details or churn predictions for the Mass Market segment?",
+      "agent_logs": "[CustomerSentimentChurnAgent] > **SYNTHETIC DEMO DATA \u2014 HUMAN REVIEW REQUIRED.** Fictional customer signals only. Scores are prioritization heuristics, not facts about a real person; no outreach, offer, fee change, or account action has occurred.\n\n# Segment Analysis\n\n## Segment Benchmarks\n\n| Segment | Avg NPS | Avg Products | Avg Tenure | Avg Transactions |\n|---|---|---|---|---|\n| Affluent | 8.2 | 4.1 | 10 yrs | 55/mo |\n| Emerging Affluent | 7.0 | 3.2 | 5 yrs | 35/mo |\n| Mass Market | 6.5 | 2.0 | 4 yrs | 20/mo |\n| Small Business | 6.8 | 3.0 | 5 yrs | 90/mo |\n\n## Current Customer Performance vs Benchmark\n\n### Affluent (1 customers)\n\n- NPS: 9.0 (benchmark: 8.2)\n- Products: 4.0 (benchmark: 4.1)\n\n### Mass Market (2 customers)\n\n- NPS: 3.5 (benchmark: 6.5)\n- Products: 1.5 (benchmark: 2.0)\n\n### Emerging Affluent (1 customers)\n\n- NPS: 7.0 (benchmark: 7.0)\n- Products: 4.0 (benchmark: 3.2)\n\n### Small Business (1 customers)\n\n- NPS: 6.0 (benchmark: 6.8)\n- Products: 3.0 (benchmark: 3.0)\n",
+      "expected_agent": "CustomerSentimentChurnAgent",
+      "must_include": [
+        "Mass Market",
+        "benchmark"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

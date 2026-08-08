@@ -1,0 +1,112 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-08-08T09:18:30.671Z",
+  "solution": "@aibast-agents-library/ai-customer-assistant",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "Customer Escalations Manual",
+    "bot_id": "8b248e8b-753b-4ba0-b65a-0fea02b649dd",
+    "created": true
+  },
+  "target_model": "Claude Sonnet 4.6",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 4,
+      "confirmed": 4
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "CES-01",
+      "prompt": "I just inherited the export-error escalation. Give me the full brief before I respond.",
+      "must_include": [
+        "INQ-4001",
+        "KB-104",
+        "No customer message is sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "14-ces-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CES-02",
+      "prompt": "What approved guidance should I review for the customer who cannot export a long analytics range?",
+      "must_include": [
+        "KB-104",
+        "Resolution Steps",
+        "No customer message is sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "15-ces-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CES-03",
+      "prompt": "The SSO migration case is urgent. Which queue and response target does our rulebook recommend?",
+      "must_include": [
+        "Tier 2 Engineering",
+        "2 hours",
+        "does not execute"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "16-ces-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CES-04",
+      "prompt": "What does the latest service-quality snapshot say, and which signals need human review?",
+      "must_include": [
+        "4.3/5.0",
+        "Recent Surveys",
+        "fictional pilot records"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expected_screenshot": "17-ces-04.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/ai-customer-assistant/screenshots/manual/browserfilm.json",
+    "gif": "solutions/ai-customer-assistant/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/ai-customer-assistant/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "18-confirm-draft.jpg"
+  }
+}

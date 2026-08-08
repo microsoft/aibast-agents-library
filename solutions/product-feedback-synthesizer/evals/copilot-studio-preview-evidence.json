@@ -1,0 +1,68 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T20:33:38.468Z",
+  "solution": "@aibast-agents-library/product-feedback-synthesizer",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Product Feedback Pilot",
+  "schema_name": "aibast_ProductFeedbackSynthesizerP",
+  "bot_id": "fc513c73-82b0-40f9-a51b-868048ebad4c",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "PFS-01",
+      "must_include": [
+        "Total Feedback Entries",
+        "6",
+        "No roadmap commitment"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PFS-02",
+      "must_include": [
+        "Workflow Automation Builder",
+        "candidate_for_review",
+        "No roadmap commitment"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PFS-03",
+      "must_include": [
+        "Positive",
+        "Negative",
+        "fictional pilot data"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PFS-04",
+      "must_include": [
+        "Review Candidates",
+        "RBAC",
+        "No roadmap commitment"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    }
+  ]
+}

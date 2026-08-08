@@ -1,0 +1,114 @@
+{
+  "solution": "Wealth Insights Generator Agent",
+  "agent": "@aibast-agents-library/wealth-insights-generator",
+  "onepager": "42. Wealth Insights Generator Agent one-pager.pptx",
+  "agent_files": [
+    "wealth_insights_generator_agent"
+  ],
+  "note": "Persona-language locked cases, exactly one per implemented operation. Prompts avoid operation names and assertions pin deterministic synthetic evidence plus safety boundaries.",
+  "cases": [
+    {
+      "id": "WIG-01",
+      "persona": "Advisory Director",
+      "operation": "market_brief",
+      "onepager_bullet": "Fixed market snapshot",
+      "prompt": "Give me the fixed market snapshot for the morning huddle and label whether it is current data.",
+      "must_include": [
+        "NASDAQ Composite",
+        "Fixed Synthetic"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "WealthInsightsGeneratorAgent",
+      "arguments": {}
+    },
+    {
+      "id": "WIG-02",
+      "persona": "Wealth Advisor",
+      "operation": "client_insights",
+      "onepager_bullet": "Analyze client portfolios and surface held-away wealth to uncover expansion opportunities",
+      "prompt": "Which household has the largest held-away opportunity and what life event needs validation?",
+      "must_include": [
+        "WM-003",
+        "Held Away"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "WealthInsightsGeneratorAgent",
+      "arguments": {}
+    },
+    {
+      "id": "WIG-03",
+      "persona": "Relationship Manager",
+      "operation": "opportunity_alerts",
+      "onepager_bullet": "Detect planning gaps and risk exposures to support proactive client conversations",
+      "prompt": "Which clients have high-priority planning signals for advisor review?",
+      "must_include": [
+        "Harrison Family Trust",
+        "Dr. Anita Rao"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "WealthInsightsGeneratorAgent",
+      "arguments": {}
+    },
+    {
+      "id": "WIG-04",
+      "persona": "Portfolio Strategist",
+      "operation": "performance_attribution",
+      "onepager_bullet": "Detect planning gaps and risk exposures to support proactive client conversations",
+      "prompt": "Which synthetic client is below its benchmark, and what does the attribution label say?",
+      "must_include": [
+        "Tidewater Ventures",
+        "Underperformance"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "WealthInsightsGeneratorAgent",
+      "arguments": {}
+    },
+    {
+      "id": "WIG-05",
+      "persona": "Wealth Advisor",
+      "operation": "meeting_brief",
+      "onepager_bullet": "Produce personalized engagement materials instantly",
+      "prompt": "Prepare my review brief for the Kensington household without turning it into advice or outreach.",
+      "must_include": [
+        "George & Martha Kensington",
+        "preparation material"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "WealthInsightsGeneratorAgent",
+      "arguments": {
+        "client_id": "WM-003"
+      }
+    }
+  ],
+  "assertion_principle": "Routing is proven by the expected tool; deterministic source output proves capability coverage. All records are synthetic and every consequential action remains behind human review."
+}

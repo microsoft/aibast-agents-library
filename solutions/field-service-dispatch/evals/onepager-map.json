@@ -1,0 +1,66 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/field-service-dispatch",
+  "onepager": "23. Field Service Dispatch Agent one-pager.pptx",
+  "source_slide_sha256": "9610dfddc2c9fb1b1f7e4900d56a6657eb38fa49ff768861a05d71d6beed2237",
+  "suite": null,
+  "preserves_distinct_module": false,
+  "promises": [
+    {
+      "advertised_promise": "Perform intelligent route optimization, skill-based matching, emergency response planning, and operational dashboards",
+      "operations": [
+        "dispatch_dashboard"
+      ],
+      "demo_cases": [
+        "FIELD_SERVICE_DISPATCH-01"
+      ],
+      "synthetic_evidence": [
+        "Emergency: SCADA communication failure",
+        "CRITICAL"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Perform intelligent route optimization, skill-based matching, emergency response planning, and operational dashboards",
+      "operations": [
+        "route_optimization"
+      ],
+      "demo_cases": [
+        "FIELD_SERVICE_DISPATCH-02"
+      ],
+      "synthetic_evidence": [
+        "Central",
+        "3"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Perform intelligent route optimization, skill-based matching, emergency response planning, and operational dashboards",
+      "operations": [
+        "technician_assignment"
+      ],
+      "demo_cases": [
+        "FIELD_SERVICE_DISPATCH-03"
+      ],
+      "synthetic_evidence": [
+        "Marcus Thompson",
+        "Candidate for dispatcher review"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Perform intelligent route optimization, skill-based matching, emergency response planning, and operational dashboards",
+      "operations": [
+        "emergency_response"
+      ],
+      "demo_cases": [
+        "FIELD_SERVICE_DISPATCH-04"
+      ],
+      "synthetic_evidence": [
+        "Emergency Response Draft",
+        "Marcus Thompson"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    }
+  ]
+}

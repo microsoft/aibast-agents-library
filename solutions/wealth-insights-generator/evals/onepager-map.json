@@ -1,0 +1,50 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/wealth-insights-generator",
+  "onepager": "42. Wealth Insights Generator Agent one-pager.pptx",
+  "source_slide_sha256": "a1f7b620ca3412e62891adcc7dea1547b3a71ee93e9e0c9ded2912d3d3e1aa12",
+  "promises": [
+    {
+      "advertised_promise": "Analyze client portfolios and surface held-away wealth to uncover expansion opportunities",
+      "operations": [
+        "client_insights"
+      ],
+      "demo_cases": [
+        "WIG-02"
+      ],
+      "synthetic_evidence": [
+        "Unified wealth insights returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    },
+    {
+      "advertised_promise": "Detect planning gaps and risk exposures to support proactive client conversations",
+      "operations": [
+        "opportunity_alerts",
+        "performance_attribution"
+      ],
+      "demo_cases": [
+        "WIG-03",
+        "WIG-04"
+      ],
+      "synthetic_evidence": [
+        "Planning-gap signals returns deterministic fictional identifiers and review context",
+        "Performance context returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    },
+    {
+      "advertised_promise": "Produce personalized engagement materials instantly",
+      "operations": [
+        "meeting_brief"
+      ],
+      "demo_cases": [
+        "WIG-05"
+      ],
+      "synthetic_evidence": [
+        "Advisor meeting preparation returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    }
+  ]
+}

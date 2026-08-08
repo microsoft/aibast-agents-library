@@ -1,0 +1,69 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/fs-regulatory-compliance",
+  "onepager": "43. Regulatory Compliance Agent one-pager.pptx",
+  "source_slide_sha256": "d7198d097296a6b3be72e4f7a425057c6823e29ad9e1bab070fa808bf43ed928",
+  "promises": [
+    {
+      "advertised_promise": "Scan all executed trades for reporting accuracy, required fields, and best-execution performance",
+      "operations": [
+        "compliance_dashboard",
+        "trade_surveillance"
+      ],
+      "demo_cases": [
+        "RC-01",
+        "RC-03",
+        "RC-05"
+      ],
+      "synthetic_evidence": [
+        "The desk roll-up identifies the traders, reporting exceptions, submission gap, documentation risk, and certification risk requiring action",
+        "Trade surveillance reports missing RTS 22 fields, venue-admission mismatches, submission state, and execution-quality outliers",
+        "TRD-88133 remains the deterministic board-level example because it combines missing fields, a late report, execution-quality evidence, and stale algorithm documentation"
+      ]
+    },
+    {
+      "advertised_promise": "Flag missing or outdated documentation",
+      "operations": [
+        "documentation_review"
+      ],
+      "demo_cases": [
+        "RC-04"
+      ],
+      "synthetic_evidence": [
+        "ALGO-POV-NL is identified as approaching go-live without validation",
+        "The missing risk-control, kill-switch, and conformance-test artefacts are named",
+        "ALGO-IS-DE is identified as live with expired validation"
+      ]
+    },
+    {
+      "advertised_promise": "Automate corrections and submissions to the regulatory portal",
+      "operations": [
+        "remediation_submission"
+      ],
+      "demo_cases": [
+        "RC-05"
+      ],
+      "synthetic_evidence": [
+        "Deterministic source values are staged for the missing investment, execution, buyer, and venue fields",
+        "New and correction-report payloads are separated and prepared for the Approved Reporting Mechanism",
+        "The local demonstration preserves a mandatory human approval gate and never claims that an external filing was transmitted"
+      ]
+    },
+    {
+      "advertised_promise": "Identify upcoming certification expirations and enroll traders",
+      "operations": [
+        "certification_tracker",
+        "compliance_dashboard"
+      ],
+      "demo_cases": [
+        "RC-01",
+        "RC-02"
+      ],
+      "synthetic_evidence": [
+        "T-2041 and T-2233 are deterministically identified as unable to trade because a certification has lapsed",
+        "The affected desk and supervisor are named",
+        "Available training sessions and coverage gaps are presented without claiming that a real enrollment or notification occurred"
+      ]
+    }
+  ]
+}

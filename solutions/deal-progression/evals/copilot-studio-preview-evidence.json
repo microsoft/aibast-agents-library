@@ -1,0 +1,106 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T19:04:56.386Z",
+  "solution": "@aibast-agents-library/deal-progression",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Deal Progression Pilot",
+  "schema_name": "aibast_DealProgressionPilot",
+  "bot_id": "d409e39c-3ee5-4a1d-8c45-3497bf4aff5d",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "DP-01",
+      "must_include": [
+        "Pipeline Health Summary",
+        "Evidence boundary",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "DP-02",
+      "must_include": [
+        "Stalled Deal Deep-Dive",
+        "Diagnosis",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "DP-03",
+      "must_include": [
+        "Action Plans",
+        "Planning Objective",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "DP-04",
+      "must_include": [
+        "Pipeline Acceleration Strategy",
+        "Synthetic Scenario",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "DP-05",
+      "must_include": [
+        "Draft Task Assignment Plan",
+        "candidate tasks",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "DP-06",
+      "must_include": [
+        "Executive Summary",
+        "Synthetic Planning Targets",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    }
+  ]
+}

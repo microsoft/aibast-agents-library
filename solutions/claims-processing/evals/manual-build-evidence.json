@@ -1,0 +1,116 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-08-08T08:59:20.047Z",
+  "solution": "@aibast-agents-library/claims-processing",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "Claims Processing Manual",
+    "bot_id": "72ff18d3-f6ba-45c9-a85f-3ef0cbf472be",
+    "created": true
+  },
+  "target_model": "Claude Sonnet 4.6",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 4,
+      "confirmed": 4
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "CLP-01",
+      "prompt": "Which incoming claim needs specialized handling first, and where should it be reviewed?",
+      "must_include": [
+        "CLM-2025-7003",
+        "Investigation"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "14-clp-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CLP-02",
+      "prompt": "What is missing from Jennifer Liu’s theft file before I can evaluate it?",
+      "must_include": [
+        "CLM-2025-7004",
+        "Receipts or appraisals"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "15-clp-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CLP-03",
+      "prompt": "Which claim crosses the SIU review threshold, and does that prove fraud?",
+      "must_include": [
+        "CLM-2025-7003",
+        "SIU Referrals"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "16-clp-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CLP-04",
+      "prompt": "Show the policy-term estimates and state clearly whether any claim was approved or paid.",
+      "must_include": [
+        "CLM-2025-7002",
+        "No approval"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "17-clp-04.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/claims-processing/screenshots/manual/browserfilm.json",
+    "gif": "solutions/claims-processing/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/claims-processing/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "18-confirm-draft.jpg"
+  }
+}

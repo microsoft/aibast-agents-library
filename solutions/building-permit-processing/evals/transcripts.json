@@ -1,0 +1,102 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T00:42:46.729810+00:00",
+  "solution": "@aibast-agents-library/building-permit-processing",
+  "onepager": "46. Building Permit Processing Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "BuildingPermitProcessingAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/slg_government_stacks/building_permit_processing_stack/building_permit_processing_agent.py",
+      "sha256": "55a5cfa3e015b62579d0edf4171f080f22500eb89a5e7c25947dae93f0f79e7c"
+    }
+  ],
+  "case_file": "tests/demo_cases/building-permit-processing.json",
+  "case_file_sha256": "600facefe3ade7f225160859ba67eb8afa7225709e1ee3dfb6bcf30c22634004",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "BPP-01",
+      "persona": "Development Services Director",
+      "onepager_promise": "pain: long processing times and high citizen complaints",
+      "prompt": "Which permit applications have been sitting too long, and which resident is going to complain first?",
+      "assistant_response": "## Summary\n\n**Three permits are overdue** on the statutory clock:\n\n1. **BP-2025-0104** (Metro School District, institutional) — **63 days, 18 days overdue** — This one is at the highest complaint risk (100/100). It's been through 3 correction cycles and is still awaiting revisions. This is your lead complainant.\n\n2. **BP-2025-0101** (Greenfield Development LLC, new construction) — **48 days, 18 days overdue** — High complaint risk (66/100).\n\n3. **BP-2025-0103** (Sunrise Solar Inc., commercial alteration) — **26 days, 5 days overdue** — Moderate complaint risk (25/100).\n\n## Who will complain first\n\n**Metro School District** on the institutional project at 2200 Education Way (BP-2025-0104). They're the furthest over the clock, longest in process, and caught in a correction loop. The auditor evidence shows this needs immediate action: **send the cycle-3 correction list today with a committed re-review date** to head off the call. Your reviewer Tom Delgado should be notified this is a priority escalation.",
+      "agent_logs": "[BuildingPermitProcessingAgent] # Permit Backlog — 2026-08-07\n\n**5 open applications · 3 past the statutory clock**\n\n| Permit | Applicant | Type | Age | SLA | State | Complaint risk |\n|---|---|---|---|---|---|---|\n| BP-2025-0104 | Metro School District | institutional | 63d | 45d | OVERDUE (+18d) | 100/100 |\n| BP-2025-0101 | Greenfield Development LLC | new construction | 48d | 30d | OVERDUE (+18d) | 66/100 |\n| BP-2025-0103 | Sunrise Solar Inc. | commercial alteration | 26d | 21d | OVERDUE (+5d) | 25/100 |\n| BP-2025-0105 | Greenfield Development LLC | new construction | 3d | 30d | ON TRACK | 0/100 |\n| BP-2025-0106 | Ridgeline Restaurants Inc. | commercial alteration | 1d | 21d | ON TRACK | 0/100 |\n\n## Who calls first\n\n**Metro School District** on BP-2025-0104 — 2200 Education Way. 63 days in process against a 45-day clock, 18 days over, 3 correction cycle(s), currently corrections required.\n- Reviewer: Tom Delgado\n- Get ahead of it: send the cycle-3 correction list today and give a committed re-review date.",
+      "expected_agent": "BuildingPermitProcessingAgent",
+      "must_include": [
+        "BP-2025-0104",
+        "Metro School District",
+        "overdue"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "BPP-02",
+      "persona": "Permit Technician",
+      "onepager_promise": "Classify and validate permit applications at intake",
+      "prompt": "Anything at the front counter I should not be accepting today?",
+      "assistant_response": "**Yes — reject BP-2025-0105 (Greenfield Development LLC).**\n\nIt's a **duplicate** of **BP-2025-0101**, which is already in plan review for the same parcel and applicant. Close it and direct them to track the original application.\n\nAlso flag: even if they resubmit, this one is **missing MEP drawings and a title report**, so it wouldn't be ready to accept anyway.\n\n**Accept BP-2025-0106** (Ridgeline Restaurants Inc.) — that's a clean commercial alteration application routing through Zoning → Building → Fire/Life Safety with a 21-day clock starting today.",
+      "agent_logs": "[BuildingPermitProcessingAgent] # Intake Triage — 2 application(s)\n\n## BP-2025-0105 — Greenfield Development LLC\n\n- **Classification:** new construction · MU-2 (Mixed Use) · $4,200,000 valuation\n- **Verdict:** REJECT — duplicate\n- **Duplicate of BP-2025-0101** — same parcel 045-221-009 and applicant, already in plan review. Close this one and point the applicant at BP-2025-0101.\n- **Missing at intake:** `mep_drawings`, `title_report` — the review clock does not start until these land.\n\n## BP-2025-0106 — Ridgeline Restaurants Inc.\n\n- **Classification:** commercial alteration · MU-2 (Mixed Use) · $540,000 valuation\n- **Verdict:** ACCEPT\n- **Routed to:** Zoning → Building → Fire/Life Safety\n- **Clock starts today**, 21-day statutory target (due 2026-08-28).\n",
+      "expected_agent": "BuildingPermitProcessingAgent",
+      "must_include": [
+        "BP-2025-0105",
+        "duplicate"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "BPP-03",
+      "persona": "Permit Technician",
+      "onepager_promise": "Route requests automatically to the correct review teams",
+      "prompt": "The restaurant fit-out on Harbor Way just came in. Who needs to review it and when is it due back?",
+      "assistant_response": "Good news — the restaurant fit-out on Harbor Way came in clean.\n\n**Permit:** BP-2025-0106 (Ridgeline Restaurants Inc.)  \n**Classification:** Commercial alteration, MU-2 zoning, $540,000 valuation\n\n**Review Path:**\n1. **Zoning** (first)\n2. **Building** (second)\n3. **Fire/Life Safety** (third)\n\n**Clock:** Starts today with a **21-day statutory target due 2026-08-28**.\n\nThe application is accepted and ready to route through the review teams in that order.",
+      "agent_logs": "[BuildingPermitProcessingAgent] # Intake Triage — 2 application(s)\n\n## BP-2025-0105 — Greenfield Development LLC\n\n- **Classification:** new construction · MU-2 (Mixed Use) · $4,200,000 valuation\n- **Verdict:** REJECT — duplicate\n- **Duplicate of BP-2025-0101** — same parcel 045-221-009 and applicant, already in plan review. Close this one and point the applicant at BP-2025-0101.\n- **Missing at intake:** `mep_drawings`, `title_report` — the review clock does not start until these land.\n\n## BP-2025-0106 — Ridgeline Restaurants Inc.\n\n- **Classification:** commercial alteration · MU-2 (Mixed Use) · $540,000 valuation\n- **Verdict:** ACCEPT\n- **Routed to:** Zoning → Building → Fire/Life Safety\n- **Clock starts today**, 21-day statutory target (due 2026-08-28).\n",
+      "expected_agent": "BuildingPermitProcessingAgent",
+      "must_include": [
+        "Zoning",
+        "Fire/Life Safety",
+        "21"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "BPP-04",
+      "persona": "Customer Service Lead",
+      "onepager_promise": "Centralize communication and provide instant updates to applicants",
+      "prompt": "My front desk is drowning in status calls. What can we send out today so people stop calling?",
+      "assistant_response": "Perfect. **Send these five updates today:**\n\n1. **Metro School District (BP-2025-0104)** — overdue 18 days. Tell them: corrections are with Tom Delgado; include his contact and a target handoff date to keep them from re-calling.\n\n2. **Greenfield Development LLC (BP-2025-0101)** — overdue 18 days. They're in active plan review; share which review teams have it and expected completion date.\n\n3. **Sunrise Solar Inc. (BP-2025-0103)** — 5 days overdue. Their next trigger is a scheduled electrical rough-in inspection on 2026-08-17 with Dave Martinez; confirm the appointment or reschedule.\n\n4. **Greenfield Development LLC (BP-2025-0105)** — on track but stalled at intake. Send the exact missing items (MEP drawings, title report) and a deadline to reactivate the 30-day clock.\n\n5. **Ridgeline Restaurants Inc. (BP-2025-0106)** — just entered review. Confirm receipt, set expectations for the 21-day review period, and give them a checkpoint date.\n\nThese proactive updates address the reason behind most status calls: **uncertainty about what happens next and who to contact.** Expect a sharp drop in call volume once these go out.",
+      "agent_logs": "[BuildingPermitProcessingAgent] # Applicant Updates Ready to Send — 5\n\n**BP-2025-0104 → Metro School District**\n- your application is in correction cycle 3; the outstanding items are with Tom Delgado.\n- Day 63 of a 45-day target — overdue, 18 days over.\n\n**BP-2025-0101 → Greenfield Development LLC**\n- your application is in plan review.\n- Day 48 of a 30-day target — overdue, 18 days over.\n\n**BP-2025-0103 → Sunrise Solar Inc.**\n- your next inspection is Electrical Rough-In on 2026-08-17 with Dave Martinez.\n- Day 26 of a 21-day target — overdue, 5 days over.\n\n**BP-2025-0105 → Greenfield Development LLC**\n- we need mep_drawings, title_report before the review clock can start.\n- Day 3 of a 30-day target — on track.\n\n**BP-2025-0106 → Ridgeline Restaurants Inc.**\n- your application is complete and enters review today.\n- Day 1 of a 21-day target — on track.\n\nSending these removes the reason for 5 status-check call(s).",
+      "expected_agent": "BuildingPermitProcessingAgent",
+      "must_include": [
+        "BP-2025-0104",
+        "Greenfield"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "BPP-05",
+      "persona": "Chief Building Inspector",
+      "onepager_promise": "Provide inspectors with mobile access and real-time assignments",
+      "prompt": "What inspections are on the board for the solar job, and who is covering them?",
+      "assistant_response": "Based on the inspector assignment data, the **solar job** (permit **BP-2025-0103** at 1100 Industrial Pkwy) has the following inspections scheduled:\n\n| Inspection Type | Inspector | Date | Status |\n|---|---|---|---|\n| Electrical Rough-In | Dave Martinez | 2026-08-17 | Scheduled |\n| Structural Mounting | Lisa Park | 2026-08-19 | Scheduled |\n| Final Electrical | Dave Martinez | 2026-08-02 | Pending |\n\n**Coverage:**\n- **Dave Martinez** (Electrical Specialist, East Zone) is covering both the electrical rough-in and final electrical inspections\n- **Lisa Park** (Structural Specialist, East Zone) is covering the structural mounting inspection",
+      "agent_logs": "[BuildingPermitProcessingAgent] # Inspector Assignment\n\n## Available Inspectors\n\n| Inspector | Specialty | Available Slots | Zone |\n|---|---|---|---|\n| Dave Martinez | Electrical | 3 | East |\n| Lisa Park | Structural | 2 | East |\n| Carlos Reyes | Plumbing/Mechanical | 4 | West |\n| Ann Kowalski | Fire/Life Safety | 2 | All |\n\n## Scheduled Inspections\n\n### BP-2025-0103 — 1100 Industrial Pkwy\n\n| Type | Inspector | Date | Status |\n|---|---|---|---|\n| Electrical Rough-In | Dave Martinez | 2026-08-17 | Scheduled |\n| Structural Mounting | Lisa Park | 2026-08-19 | Scheduled |\n| Final Electrical | Dave Martinez | 2026-08-02 | Pending |\n",
+      "expected_agent": "BuildingPermitProcessingAgent",
+      "must_include": [
+        "Dave Martinez"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

@@ -18,7 +18,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/maintenance-scheduling",
     "version": "1.0.0",
     "display_name": "Maintenance Scheduling Agent",
-    "description": "Perform predictive maintenance analysis and scheduling orchestration to prevent unplanned downtime and protect production capacity.",
+    "description": "Analyze a fixed synthetic maintenance snapshot and prepare review-ready alerts and schedule options. Never control equipment, create or dispatch work orders, assign technicians, or reserve parts.",
     "author": "AIBAST",
     "tags": ["maintenance", "predictive", "scheduling", "manufacturing", "IoT"],
     "category": "manufacturing",
@@ -138,6 +138,18 @@ DOWNTIME_COST_PER_HOUR = {
     "Injection Molder": 1400, "Conveyor": 2200,
 }
 
+PARTS_READINESS = {
+    "EQ-INJ-01": "Heater band kit HB-220 is staged in the synthetic record",
+    "EQ-PRS-01": "Hydraulic seal kit HS-400 requires planner confirmation",
+    "EQ-CNC-01": "Spindle bearing kit SB-CNC is available in the synthetic record",
+}
+
+BACKUP_READINESS = {
+    "EQ-INJ-01": "No validated backup capacity is recorded",
+    "EQ-PRS-01": "Press 250T backup requires production-fit review",
+    "EQ-CNC-01": "CNC Milling Center #2 is a candidate subject to capacity review",
+}
+
 
 # ---------------------------------------------------------------------------
 # Helper functions
@@ -199,6 +211,28 @@ class MaintenanceSchedulingAgent(BasicAgent):
                 "work_order_plan",
                 "downtime_analysis",
             ],
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "operation": {
+                        "type": "string",
+                        "enum": [
+                            "schedule_overview",
+                            "predictive_alerts",
+                            "work_order_plan",
+                            "downtime_analysis",
+                        ],
+                        "description": (
+                            "schedule_overview: summarize equipment and technician capacity. "
+                            "predictive_alerts: rank synthetic sensor and failure-risk signals. "
+                            "work_order_plan: propose maintenance windows, technician candidates, "
+                            "parts checks, and backup checks for planner approval; never dispatch. "
+                            "downtime_analysis: compare synthetic downtime exposure and preventive options."
+                        ),
+                    },
+                },
+                "required": ["operation"],
+            },
         }
         super().__init__(name=self.name, metadata=self.metadata)
 
@@ -217,7 +251,7 @@ class MaintenanceSchedulingAgent(BasicAgent):
 
     # ------------------------------------------------------------------
     def _schedule_overview(self, **kwargs) -> str:
-        lines = ["## Maintenance Schedule Overview\n"]
+        lines = ["## Maintenance Schedule Overview\n", "> Synthetic planning snapshot; no equipment was queried or controlled.\n"]
         lines.append("### Equipment Status\n")
         lines.append("| ID | Equipment | Type | Status | Runtime (hrs) | Last Service | Risk Score |")
         lines.append("|----|-----------|------|--------|---------------|--------------|------------|")
@@ -252,7 +286,7 @@ class MaintenanceSchedulingAgent(BasicAgent):
 
     # ------------------------------------------------------------------
     def _predictive_alerts(self, **kwargs) -> str:
-        lines = ["## Predictive Maintenance Alerts\n"]
+        lines = ["## Predictive Maintenance Alerts\n", "> Synthetic advisory signals only; verify against approved condition-monitoring systems before action.\n"]
         alerts = []
         for eq_id in EQUIPMENT:
             fp = FAILURE_PROBABILITIES[eq_id]
@@ -283,10 +317,11 @@ class MaintenanceSchedulingAgent(BasicAgent):
 
     # ------------------------------------------------------------------
     def _work_order_plan(self, **kwargs) -> str:
-        lines = ["## Work Order Plan\n"]
-        lines.append("Priority-ranked work orders for the next 30 days:\n")
-        lines.append("| Priority | Equipment | Work Description | Est Hours | Assigned Tech | Shift |")
-        lines.append("|----------|-----------|------------------|-----------|---------------|-------|")
+        lines = ["## Proposed Work Order Plan\n"]
+        lines.append("> Fixed synthetic plan for planner review. No work order is created or dispatched, no technician is assigned, and no part is reserved.\n")
+        lines.append("Priority-ranked maintenance candidates for the next 30 days:\n")
+        lines.append("| Priority | Equipment | Work Description | Est Hours | Technician Candidate | Shift | Parts Check | Backup Check |")
+        lines.append("|----------|-----------|------------------|-----------|----------------------|-------|-------------|--------------|")
 
         ranked = sorted(EQUIPMENT.keys(), key=lambda e: _risk_priority(e), reverse=True)
         priority = 0
@@ -303,21 +338,24 @@ class MaintenanceSchedulingAgent(BasicAgent):
             est_hours = _work_order_hours(fp["30_day"])
             total_hours += est_hours
             lines.append(
-                f"| P{priority} | {eq['name']} | {fp['failure_mode']} -- preventive service | "
-                f"{est_hours} | {tech_name} | {shift} |"
+                f"| P{priority} | {eq['name']} ({eq_id}) | {fp['failure_mode']} -- preventive service | "
+                f"{est_hours} | {tech_name} | {shift} | "
+                f"{PARTS_READINESS.get(eq_id, 'Planner confirmation required')} | "
+                f"{BACKUP_READINESS.get(eq_id, 'Production review required')} |"
             )
 
         lines.append(f"\n**Total work orders:** {priority}")
         lines.append(f"**Total estimated labor hours:** {total_hours}")
         lines.append("\n**Scheduling notes:**")
-        lines.append("- P1 work orders should be completed within 7 days")
-        lines.append("- P2 work orders within 14 days")
-        lines.append("- P3+ within 30 days")
+        lines.append("- P1 candidates should be reviewed within 7 days")
+        lines.append("- P2 candidates should be reviewed within 14 days")
+        lines.append("- P3+ candidates should be reviewed within 30 days")
+        lines.append("- Authorized maintenance and production owners decide whether to create, schedule, or dispatch work")
         return "\n".join(lines)
 
     # ------------------------------------------------------------------
     def _downtime_analysis(self, **kwargs) -> str:
-        lines = ["## Downtime & Cost Analysis\n"]
+        lines = ["## Downtime & Cost Analysis\n", "> All probabilities, hours, and costs are synthetic planning estimates.\n"]
         lines.append("### Unplanned Downtime Risk (Next 90 Days)\n")
         lines.append("| Equipment | 30-Day P(Fail) | Est Downtime (hrs) | Downtime Cost | Prevention Cost | Net Savings |")
         lines.append("|-----------|----------------|--------------------|--------------:|----------------:|------------:|")
@@ -341,7 +379,7 @@ class MaintenanceSchedulingAgent(BasicAgent):
 
         lines.append(f"\n**Total downtime cost exposure:** ${total_dt_cost:,.2f}")
         lines.append(f"**Total preventive maintenance cost:** ${total_prev_cost:,.2f}")
-        lines.append(f"**Net savings from preventive action:** ${total_dt_cost - total_prev_cost:,.2f}")
+        lines.append(f"**Modeled avoided-cost opportunity before approval:** ${total_dt_cost - total_prev_cost:,.2f}")
 
         lines.append("\n### Historical Maintenance Spend\n")
         total_hist = sum(r["cost"] for r in MAINTENANCE_HISTORY)
@@ -351,6 +389,7 @@ class MaintenanceSchedulingAgent(BasicAgent):
         lines.append(f"- Preventive work orders: **{prev_count}**")
         lines.append(f"- Corrective (unplanned) work orders: **{corr_count}**")
         lines.append(f"- Preventive-to-corrective ratio: **{prev_count}:{corr_count}** (target 5:1)")
+        lines.append("\nThis agent does not control equipment or create, schedule, assign, or dispatch maintenance work.")
         return "\n".join(lines)
 
 

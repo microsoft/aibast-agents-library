@@ -1,0 +1,95 @@
+{
+  "solution": "Customer Escalations Agent",
+  "agent": "@aibast-agents-library/ai-customer-assistant",
+  "onepager": "Customer Escalations Agent one-pager.pptx",
+  "agent_files": [
+    "ai_customer_assistant_agent"
+  ],
+  "note": "Locked synthetic persona-language case per exposed operation. Prompts avoid operation names and preserve approval boundaries.",
+  "cases": [
+    {
+      "id": "CES-01",
+      "persona": "Back-Office Agent",
+      "operation": "handle_inquiry",
+      "onepager_bullet": "Perform real-time inquiry analysis from full customer context to speed up escalation handling",
+      "prompt": "I just inherited the export-error escalation. Give me the full brief before I respond.",
+      "arguments": {
+        "operation": "handle_inquiry",
+        "inquiry_id": "INQ-4001"
+      },
+      "must_include": [
+        "INQ-4001",
+        "KB-104",
+        "No customer message is sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "AICustomerAssistantAgent"
+    },
+    {
+      "id": "CES-02",
+      "persona": "Back-Office Agent",
+      "operation": "knowledge_search",
+      "onepager_bullet": "Recommend resolutions aligned to policies, case studies, and playbooks to improve resolution success rates",
+      "prompt": "What approved guidance should I review for the customer who cannot export a long analytics range?",
+      "arguments": {
+        "operation": "knowledge_search",
+        "inquiry_id": "INQ-4001"
+      },
+      "must_include": [
+        "KB-104",
+        "Resolution Steps",
+        "No customer message is sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "AICustomerAssistantAgent"
+    },
+    {
+      "id": "CES-03",
+      "persona": "Escalation Manager",
+      "operation": "escalation_routing",
+      "onepager_bullet": "Recommend resolutions aligned to policies, case studies, and playbooks to improve resolution success rates",
+      "prompt": "The SSO migration case is urgent. Which queue and response target does our rulebook recommend?",
+      "arguments": {
+        "operation": "escalation_routing",
+        "inquiry_id": "INQ-4003"
+      },
+      "must_include": [
+        "Tier 2 Engineering",
+        "2 hours",
+        "does not execute"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "AICustomerAssistantAgent"
+    },
+    {
+      "id": "CES-04",
+      "persona": "Quality Analyst",
+      "operation": "satisfaction_survey",
+      "onepager_bullet": "Perform real-time inquiry analysis from full customer context to speed up escalation handling",
+      "prompt": "What does the latest service-quality snapshot say, and which signals need human review?",
+      "arguments": {
+        "operation": "satisfaction_survey"
+      },
+      "must_include": [
+        "4.3/5.0",
+        "Recent Surveys",
+        "fictional pilot records"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "AICustomerAssistantAgent"
+    }
+  ],
+  "assertion_principle": "Direct tests call each operation with deterministic arguments and assert only source-backed evidence and safety gates."
+}

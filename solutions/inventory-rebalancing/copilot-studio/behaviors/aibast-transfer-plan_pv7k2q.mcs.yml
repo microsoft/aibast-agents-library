@@ -1,0 +1,75 @@
+mcs.metadata:
+  componentName: "aibast-transfer-plan"
+  description: "Use when a supply chain manager asks for review-ready inter-warehouse move options."
+kind: InlineAgentSkill
+content: |
+  ---
+  name: aibast-transfer-plan
+  description: Use when a supply chain manager asks for review-ready inter-warehouse move options.
+  ---
+  <!-- bic:source=blank -->
+  # Proposed transfer plan
+
+  ## Use
+
+  Use when the user asks for proposed inter-warehouse moves in their own
+  language. Route the exact locked persona prompt "Show me the proposed warehouse moves, but do not move or reserve anything." here. Route similar persona-language requests here rather than requiring the user to name an operation.
+
+  ## Required inputs
+
+  None required. If the user names a specific SKU or facility pair, scope the
+  plan to it; otherwise propose transfers for every SKU with a material
+  surplus-to-deficit pairing across the four facilities.
+
+  ## Clarifying questions
+
+  - If the user wants a plan for a specific SKU or lane only, confirm scope
+    before producing the full multi-SKU plan.
+  - If the user asks the agent to actually execute a move, clarify that this
+    skill only prepares a proposal and that execution requires an authorized
+    ERP/WMS owner using an approved production tool.
+
+  ## Procedure
+
+  1. Use only the facility-and-SKU synthetic snapshot and the cost-and-review
+     rules knowledge sources (transfer-cost-per-kg matrix, SKU weights).
+  2. Identify, per SKU, facilities with a material surplus (on-hand minus
+     forecast > 200) and facilities with a material deficit (on-hand minus
+     forecast < -200). Pair the largest surplus facility with the largest
+     deficit facility first, moving the smaller of the two magnitudes, and
+     repeat until surpluses or deficits are exhausted.
+  3. For each proposed move, cite the SKU identifier (e.g. `SKU-4401`), the
+     from/to facility, the proposed quantity, the SKU weight, and the
+     estimated transfer cost (quantity × weight × the from/to per-kg rate
+     from the cost-and-review rules knowledge source).
+  4. Total the proposed units and total estimated transfer cost, and note the
+     synthetic ground-freight planning assumption (2–5 business days).
+  5. State explicitly and verbatim in the response that "No inventory has
+     been reserved, picked, shipped, or moved" — this proposal is for
+     inventory, warehouse, finance, and transportation review only.
+  6. Separate the proposed moves (evidence-based estimate) from the
+     recommendation to review with facility owners from the authorization
+     gate required before any real transfer.
+  7. State plainly that every quantity and cost figure is a synthetic
+     planning estimate from a fixed snapshot, not a completed or scheduled
+     shipment.
+
+  ## Output
+
+  A table of proposed SKU-level transfers (from, to, quantity, weight,
+  estimated cost), total units and total estimated cost, and a closing
+  statement that no inventory has been reserved, picked, shipped, or moved
+  and that execution requires authorized ERP/WMS review.
+
+  ## Safety boundary (no side effects)
+
+  This skill never reserves, picks, ships, or moves inventory, and never
+  changes a reorder point or other inventory policy — it only proposes.
+  Any real transfer requires an authorized ERP/WMS system owner and an
+  approved, connected production tool.
+
+  ## Assumptions
+
+  - Transfer pairing uses a simple largest-surplus-to-largest-deficit
+    heuristic from the synthetic knowledge source; it is a planning
+    illustration, not an optimized logistics solve.

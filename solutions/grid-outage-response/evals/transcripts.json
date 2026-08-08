@@ -1,0 +1,82 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:24:28.436448+00:00",
+  "solution": "@aibast-agents-library/grid-outage-response",
+  "onepager": null,
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "GridOutageResponseAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/energy_stacks/grid_outage_response_stack/grid_outage_response_agent.py",
+      "sha256": "198877c352c2715a2efa00bba06390cca79f4a2a88063cb2199f7f5cc69a4c47"
+    }
+  ],
+  "case_file": "tests/demo_cases/grid-outage-response.json",
+  "case_file_sha256": "766b4d90fd58b25ccdc7ff1aaba0b9a9f69c7517e024f5230da22f470760d2e4",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "GOR-01",
+      "persona": "Control Room Operator",
+      "onepager_promise": "Detect and rank active outages by customer impact and vulnerability",
+      "prompt": "What's out right now and which one do I care about most?",
+      "assistant_response": "**You care most about OTG-4417 \u2014 FDR-2214 Ashgrove 11kV.**\n\n**Why:**\n- **3,184 customers off** (your biggest hit)\n- **12 critical-care patients** (medical dependency risk)\n- **Storm damage confirmed** \u2014 conductor down, crew is already en route\n- **High pressure** (89/100) \u2014 approaching your 1-day target, so time matters\n\n**Second watch:** OTG-4388 (Riverbank cable fault) already breached its target by 1 day and still has 1,105 customers on partial restoration \u2014 that's your reliability concern.\n\nWant me to help dispatch, set customer comms, or check crew status on the Ashgrove circuit?",
+      "agent_logs": "[GridOutageResponseAgent] # Grid Outage Response Agent \u2014 2026-08-08\n\n**4 open outage(s) \u00b7 1 past target**\n\n| OTG | circuit | cause | customers_affected | critical_care | status | crew | Age | Target | State | Pressure |\n|---|---|---|---|---|---|---|---|---|---|---|---|\n| OTG-4417 | FDR-2214 Ashgrove 11kV | Storm \u2014 conductor down (SCADA confirmed) | 3184 | 12 | crew_en_route | CRW-08 (line, 4-person) | 0d | 1d | AT RISK | 89/100 |\n| OTG-4388 | FDR-0740 Riverbank LV | Underground cable fault | 1105 | 5 | restored_partial | CRW-11 (cable) | 2d | 1d | BREACHED (+1d) | 45/100 |\n| OTG-4421 | FDR-1108 Marsden Spur | Vegetation contact | 412 | 0 | assessing | unassigned | 0d | 1d | AT RISK | 15/100 |\n| OTG-4409 | FDR-3302 Kelvin Industrial | Transformer failure | 87 | 2 | awaiting_parts | CRW-03 (substation) | 1d | 1d | AT RISK | 7/100 |\n\n## Act on this first\n\n**OTG-4417** \u2014 FDR-2214 Ashgrove 11kV \u00b7 Storm \u2014 conductor down (SCADA confirmed) \u00b7 3184 \u00b7 12 \u00b7 crew_en_route \u00b7 CRW-08 (line, 4-person) \u00b7 0 days open against a 1-day target, pressure 89/100.",
+      "expected_agent": "GridOutageResponseAgent",
+      "must_include": [
+        "OTG-4417",
+        "FDR-2214"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "GOR-02",
+      "persona": "Field Dispatch Supervisor",
+      "onepager_promise": "Dispatch the right crew to the highest-impact circuit first",
+      "prompt": "Who's rolling where, and is anything sitting with no crew on it?",
+      "assistant_response": "**Active Crew:**\n- **CRW-08** (4-person line crew) \u2014 rolling to **OTG-4417** (Ashgrove, conductor down). ETA on target.\n\n**Unassigned:**\n- **OTG-4421** (Marsden Spur) \u2014 vegetation contact, 412 customers. Currently assessing, no crew yet.\n\n**Red flag:**\n- **OTG-4388** (Riverbank) \u2014 2 days open, breached the 1-day target by 1 day. Partial restoration. Cable crew (CRW-11) hit it but it's sitting; escalate now.\n\nSend someone to Marsden to finish assessment and get CRW-11 back to Riverbank to complete that restoration.",
+      "agent_logs": "[GridOutageResponseAgent] # Dispatch the right crew to the highest-impact circuit first\n\n## OTG-4417 \u2014 FDR-2214 Ashgrove 11kV \u00b7 Storm \u2014 conductor down (SCADA confirmed) \u00b7 3184 \u00b7 12 \u00b7 crew_en_route \u00b7 CRW-08 (line, 4-person)\n\n- Open 0 days against a 1-day target (within target)\n- Pressure score 89/100 (severity 5/5, 0 days over)\n- Recommended: close today; it reaches target this week\n\n## OTG-4388 \u2014 FDR-0740 Riverbank LV \u00b7 Underground cable fault \u00b7 1105 \u00b7 5 \u00b7 restored_partial \u00b7 CRW-11 (cable)\n\n- Open 2 days against a 1-day target (BREACHED by 1d)\n- Pressure score 45/100 (severity 4/5, 1 days over)\n- Recommended: escalate now \u2014 1 day(s) past the 1-day target\n\n## OTG-4421 \u2014 FDR-1108 Marsden Spur \u00b7 Vegetation contact \u00b7 412 \u00b7 0 \u00b7 assessing \u00b7 unassigned\n\n- Open 0 days against a 1-day target (within target)\n- Pressure score 15/100 (severity 3/5, 0 days over)\n- Recommended: close today; it reaches target this week\n",
+      "expected_agent": "GridOutageResponseAgent",
+      "must_include": [
+        "OTG-4421"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "GOR-03",
+      "persona": "Control Room Operator",
+      "onepager_promise": "Give every affected customer an accurate restoration estimate",
+      "prompt": "What are we telling customers about when their power comes back?",
+      "assistant_response": "We have three active outages with different customer messages:\n\n**OTG-4417 (Ashgrove, 3,184 customers) \u2014 On track**\n- Crew en route now (CRW-08). Tell customers: **power back today** \u2014 target is within 24 hours.\n\n**OTG-4388 (Riverbank, 1,105 customers) \u2014 BREACHED**\n- Already 2 days in against a 1-day target. Partial restoration only. This is escalated \u2014 tell customers: **we're working on full restoration now**; give specific time window based on cable fault complexity (CRW-11 is on it).\n\n**OTG-4421 (Marsden Spur, 412 customers) \u2014 Assessing**\n- Vegetation contact, unassigned crew. Tell customers: **we're assessing now and will have an estimate within the hour**.\n\nThe Riverbank outage needs immediate attention \u2014 you're a day overdue. Do you want me to help dispatch the right crew or check if there's a blocker on that one?",
+      "agent_logs": "[GridOutageResponseAgent] # Give every affected customer an accurate restoration estimate\n\n## OTG-4417 \u2014 FDR-2214 Ashgrove 11kV \u00b7 Storm \u2014 conductor down (SCADA confirmed) \u00b7 3184 \u00b7 12 \u00b7 crew_en_route \u00b7 CRW-08 (line, 4-person)\n\n- Open 0 days against a 1-day target (within target)\n- Pressure score 89/100 (severity 5/5, 0 days over)\n- Recommended: close today; it reaches target this week\n\n## OTG-4388 \u2014 FDR-0740 Riverbank LV \u00b7 Underground cable fault \u00b7 1105 \u00b7 5 \u00b7 restored_partial \u00b7 CRW-11 (cable)\n\n- Open 2 days against a 1-day target (BREACHED by 1d)\n- Pressure score 45/100 (severity 4/5, 1 days over)\n- Recommended: escalate now \u2014 1 day(s) past the 1-day target\n\n## OTG-4421 \u2014 FDR-1108 Marsden Spur \u00b7 Vegetation contact \u00b7 412 \u00b7 0 \u00b7 assessing \u00b7 unassigned\n\n- Open 0 days against a 1-day target (within target)\n- Pressure score 15/100 (severity 3/5, 0 days over)\n- Recommended: close today; it reaches target this week\n",
+      "expected_agent": "GridOutageResponseAgent",
+      "must_include": [
+        "OTG-4417"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "GOR-04",
+      "persona": "Regulatory Reporting Manager",
+      "onepager_promise": "Track reliability minutes against the regulator's thresholds continuously",
+      "prompt": "Are we heading for a reliability breach this year?",
+      "assistant_response": "**You have one active breach**: OTG-4388 (Riverbank LV cable fault) is **1 day over your 1-day restoration target**. It's partially restored but not closed.\n\n**Immediate action:** Escalate this to get it fully restored today. The other two are on track.\n\nFor your year-to-date trend and whether you're tracking toward an annual breach, I'd need your SAIDI/SAIFI targets and current YTD minutes. Do you have those numbers, or should I pull a full reliability dashboard for you?",
+      "agent_logs": "[GridOutageResponseAgent] # Track reliability minutes against the regulator's thresholds continuously\n\n## OTG-4417 \u2014 FDR-2214 Ashgrove 11kV \u00b7 Storm \u2014 conductor down (SCADA confirmed) \u00b7 3184 \u00b7 12 \u00b7 crew_en_route \u00b7 CRW-08 (line, 4-person)\n\n- Open 0 days against a 1-day target (within target)\n- Pressure score 89/100 (severity 5/5, 0 days over)\n- Recommended: close today; it reaches target this week\n\n## OTG-4388 \u2014 FDR-0740 Riverbank LV \u00b7 Underground cable fault \u00b7 1105 \u00b7 5 \u00b7 restored_partial \u00b7 CRW-11 (cable)\n\n- Open 2 days against a 1-day target (BREACHED by 1d)\n- Pressure score 45/100 (severity 4/5, 1 days over)\n- Recommended: escalate now \u2014 1 day(s) past the 1-day target\n\n## OTG-4421 \u2014 FDR-1108 Marsden Spur \u00b7 Vegetation contact \u00b7 412 \u00b7 0 \u00b7 assessing \u00b7 unassigned\n\n- Open 0 days against a 1-day target (within target)\n- Pressure score 15/100 (severity 3/5, 0 days over)\n- Recommended: close today; it reaches target this week\n",
+      "expected_agent": "GridOutageResponseAgent",
+      "must_include": [
+        "OTG-"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:44:21.424559+00:00",
+  "solution": "@aibast-agents-library/personalized-shopping-assistant",
+  "onepager": "41. Personalized Shopping Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "PersonalizedShoppingAssistantAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/b2c_sales_stacks/personalized_shopping_assistant_stack/personalized_shopping_assistant_agent.py",
+      "sha256": "81d81bea23718cefb0b026d8156d6099df5c7e32477fd648bd5204a73ce11dc8"
+    }
+  ],
+  "case_file": "tests/demo_cases/personalized-shopping-assistant.json",
+  "case_file_sha256": "d59176f403b24507257012a48b0451f0024c74c950e16b923c19b71e03e6cfea",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "PSA-01",
+      "persona": "Personal Shopper",
+      "onepager_promise": null,
+      "prompt": "As Personal Shopper, suggest transparent options for Synthetic Shopper A using only stated preferences.",
+      "assistant_response": "I've pulled transparent product options for Synthetic Shopper A based on their stated preferences\u2014classic and smart casual style, $50\u2013$250 budget.\n\n**Top picks:**\n- **Merino Wool Crew Sweater** (90% match) \u2014 versatile layering piece, highly rated\n- **Leather Chelsea Boots** (55% match) \u2014 classic smart casual closer, investment piece\n- **Linen Blazer** (35% match) \u2014 polished option, slightly above core preferences but works for smart casual\n\nEach option shows the match score and tradeoffs (price, style alignment). No sensitive data is inferred\u2014only what they've explicitly stated. Ready to dive deeper into any of these, check sizing, or build a coordinated outfit?",
+      "agent_logs": "[PersonalizedShoppingAssistantAgent] **Prepared for:** Personal Shopper\n**Role focus:** occasion-ready options and transparent tradeoffs\n\n> Synthetic opt-in preferences and inventory snapshots. Recommendations only; no sensitive traits are inferred, inventory is not reserved, benefits are not applied, and no return, refund, order, or purchase is completed.\n\n# Draft Product Recommendations: Synthetic Shopper A\n\n**Style:** classic, smart_casual\n**Budget:** $50 - $250\n\n| Rank | Product | Brand | Price | Match Score | Rating |\n|---|---|---|---|---|---|\n| 1 | Merino Wool Crew Sweater (SKU-1003) | Alpine Knits | $125.00 | 90% | 4.8 |\n| 2 | Leather Chelsea Boots (SKU-1004) | Cobblestone | $195.00 | 55% | 4.6 |\n| 3 | Linen Blazer \u2014 Unstructured (SKU-1008) | Riviera Style | $225.00 | 35% | 4.3 |\n| 4 | Quilted Vest (SKU-1005) | Northfield | $110.00 | 25% | 4.4 |\n| 5 | Performance Running Shoe (SKU-1007) | Stride Labs | $145.00 | 15% | 4.7 |",
+      "expected_agent": "PersonalizedShoppingAssistantAgent",
+      "must_include": [
+        "Prepared for:** Personal Shopper",
+        "Draft Product Recommendations",
+        "no sensitive traits are inferred"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PSA-02",
+      "persona": "Clienteling Specialist",
+      "onepager_promise": null,
+      "prompt": "As Clienteling Specialist, summarize Synthetic Shopper B's opt-in preferences without inferring anything else.",
+      "assistant_response": "**Synthetic Shopper B's Opt-In Preferences:**\n\n**Sizing:** S (top), 30 (bottom), 8 (shoe)\n\n**Style:** Casual, Outdoor, Athletic\n\n**Brands:** Northfield, Stride Labs\n\n**Colors:** Olive, Black, White Grey\n\n**Budget:** $30\u2013$175\n\n**Recent purchases:** Quilted Vest ($110), Performance Running Shoe ($145)",
+      "agent_logs": "[PersonalizedShoppingAssistantAgent] **Prepared for:** Clienteling Specialist\n**Role focus:** opt-in preferences, continuity, and respectful follow-up drafts\n\n> Synthetic opt-in preferences and inventory snapshots. Recommendations only; no sensitive traits are inferred, inventory is not reserved, benefits are not applied, and no return, refund, order, or purchase is completed.\n\n# Opt-In Style Profile: Synthetic Shopper B\n\n## Sizing\n\n- Top: S\n- Bottom: 30\n- Shoe: 8\n\n## Style Preferences\n\n- Casual\n- Outdoor\n- Athletic\n\n## Brand Affinity\n\n- Northfield\n- Stride Labs\n\n## Color Preference\n\n- Olive\n- Black\n- White Grey\n\n## Budget Range\n\n$30 - $175\n\n## Purchase History\n\n- Quilted Vest \u2014 $110.00\n- Performance Running Shoe \u2014 $145.00",
+      "expected_agent": "PersonalizedShoppingAssistantAgent",
+      "must_include": [
+        "Prepared for:** Clienteling Specialist",
+        "Opt-In Style Profile",
+        "Synthetic Shopper B"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PSA-03",
+      "persona": "Retail Manager",
+      "onepager_promise": null,
+      "prompt": "As Retail Manager, show the synthetic size-level availability and verification gate for SKU-1003.",
+      "assistant_response": "**Inventory Verification Gate for SKU-1003:**\n\n\u2713 **Data sourced from:** Synthetic shopper environment (opt-in preferences only)  \n\u2713 **No sensitive customer traits inferred**  \n\u2713 **No inventory reserved or modified**  \n\u2713 **Stock snapshot current as of this check**\n\n**Key findings:**\n- **M and L sizes** carry healthy stock (10 and 8 units)\n- **S and XL** flagged as low stock (4 and 3 units respectively)\n- **Total availability:** 25 units across all sizes\n\n**Retail recommendation:** Consider reordering S and XL to maintain tier-1 availability across the full size range. M and L show strong position.",
+      "agent_logs": "[PersonalizedShoppingAssistantAgent] **Prepared for:** Retail Manager\n**Role focus:** consistency, availability caveats, and service quality\n\n> Synthetic opt-in preferences and inventory snapshots. Recommendations only; no sensitive traits are inferred, inventory is not reserved, benefits are not applied, and no return, refund, order, or purchase is completed.\n\n# Inventory Snapshot: Merino Wool Crew Sweater (SKU-1003)\n\n- **Price:** $125.00\n- **Brand:** Alpine Knits\n- **Rating:** 4.8\n\n## Stock by Size\n\n| Size | Stock | Status |\n|---|---|---|\n| S | 4 | Low Stock |\n| M | 10 | In Stock |\n| L | 8 | In Stock |\n| XL | 3 | Low Stock |\n\n**Total Units:** 25",
+      "expected_agent": "PersonalizedShoppingAssistantAgent",
+      "must_include": [
+        "Prepared for:** Retail Manager",
+        "Inventory Snapshot",
+        "inventory is not reserved"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PSA-04",
+      "persona": "Personal Shopper",
+      "onepager_promise": null,
+      "prompt": "As Personal Shopper, draft coordinated outfit options and transparent totals without ordering anything.",
+      "assistant_response": "Done. I've drafted four coordinated outfits for you to review\u2014ranging from $255 to $567. Each includes specific pieces, colors, and transparent pricing so you can see the value and tradeoffs at a glance.\n\n**Next steps:**\n- Want to see availability for a specific size?\n- Need style tweaks or different occasions?\n- Ready to review the full preference profile?\n\nNo items are reserved or ordered\u2014this is pure planning.",
+      "agent_logs": "[PersonalizedShoppingAssistantAgent] **Prepared for:** Personal Shopper\n**Role focus:** occasion-ready options and transparent tradeoffs\n\n> Synthetic opt-in preferences and inventory snapshots. Recommendations only; no sensitive traits are inferred, inventory is not reserved, benefits are not applied, and no return, refund, order, or purchase is completed.\n\n# Draft Outfit Builder: Synthetic Shopper A\n\n## Business Casual\n\n- **Tops:** Classic Oxford Shirt \u2014 White \u2014 $68.00\n- **Bottoms:** Slim Fit Chinos \u2014 Navy \u2014 $79.00\n- **Footwear:** Leather Chelsea Boots \u2014 $195.00\n- **Accessories:** Silk Pocket Square \u2014 $35.00\n\n**Outfit Total:** $377.00\n\n## Weekend Smart\n\n- **Tops:** Merino Wool Crew Sweater \u2014 $125.00\n- **Bottoms:** Slim Fit Chinos \u2014 Navy \u2014 $79.00\n- **Footwear:** Leather Chelsea Boots \u2014 $195.00\n\n**Outfit Total:** $399.00\n\n## Active Weekend\n\n- **Outerwear:** Quilted Vest \u2014 $110.00\n- **Footwear:** Performance Running Shoe \u2014 $145.00\n\n**Outfit Total:** $255.00\n\n## Evening Out\n\n- **Outerwear:** Linen Blazer \u2014 Unstructured \u2014 $225.00\n- **Tops:** Classic Oxford Shirt \u2014 White \u2014 $68.00\n- **Bottoms:** Slim Fit Chinos \u2014 Navy \u2014 $79.00\n- **Footwear:** Leather Chelsea Boots \u2014 $195.00\n\n**Outfit Total:** $567.00\n",
+      "expected_agent": "PersonalizedShoppingAssistantAgent",
+      "must_include": [
+        "Draft Outfit Builder",
+        "Business Casual",
+        "no return, refund, order, or purchase"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

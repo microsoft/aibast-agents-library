@@ -1,0 +1,200 @@
+{
+  "schema": "aibast-solution-export/1.0",
+  "solution": "@aibast-agents-library/fs-regulatory-compliance",
+  "raw_base": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/",
+  "github_folder": "https://github.com/microsoft/aibast-agents-library/tree/main/solutions/fs-regulatory-compliance",
+  "bundle": {
+    "label": "Complete Regulatory Compliance source bundle",
+    "path": "solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-source.zip",
+    "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-source.zip",
+    "status": "complete"
+  },
+  "files": [
+    {
+      "id": "export-manifest",
+      "label": "Export resource manifest",
+      "path": "solutions/fs-regulatory-compliance/export-manifest.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/export-manifest.json",
+      "use": "Canonical raw-download index for the tutorial and quest"
+    },
+    {
+      "id": "portable-agent",
+      "label": "Portable Brainstem agent.py",
+      "path": "agents/@aibast-agents-library/financial_services_stacks/regulatory_compliance_fs_stack/regulatory_compliance_fs_agent.py",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/financial_services_stacks/regulatory_compliance_fs_stack/regulatory_compliance_fs_agent.py",
+      "use": "Local Brainstem runtime and production logic reference"
+    },
+    {
+      "id": "deployment-recipe",
+      "label": "No-terminal deployment recipe",
+      "path": "solutions/fs-regulatory-compliance/deployment.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/deployment.json",
+      "use": "GitHub Copilot Easy-mode installation contract"
+    },
+    {
+      "id": "field-guide",
+      "label": "Customer field guide",
+      "path": "solutions/fs-regulatory-compliance/FIELD-GUIDE.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/FIELD-GUIDE.md",
+      "use": "Hands-on-keyboard facilitation, boundaries, and failure recovery"
+    },
+    {
+      "id": "global-instructions",
+      "label": "Manual global instructions",
+      "path": "solutions/fs-regulatory-compliance/manual/GLOBAL-INSTRUCTIONS.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/manual/GLOBAL-INSTRUCTIONS.md",
+      "use": "Paste into the blank Copilot Studio agent"
+    },
+    {
+      "id": "knowledge-records",
+      "label": "Synthetic compliance records",
+      "path": "solutions/fs-regulatory-compliance/manual/knowledge/aibast_fs-regulatory-compliance-synthetic-records.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/manual/knowledge/aibast_fs-regulatory-compliance-synthetic-records.md",
+      "use": "Upload directly as Copilot Studio knowledge"
+    },
+    {
+      "id": "knowledge-rules",
+      "label": "Synthetic rules and controls",
+      "path": "solutions/fs-regulatory-compliance/manual/knowledge/aibast_fs-regulatory-compliance-rules-and-controls.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/manual/knowledge/aibast_fs-regulatory-compliance-rules-and-controls.md",
+      "use": "Upload directly as Copilot Studio knowledge"
+    },
+    {
+      "id": "skill-compliance-dashboard",
+      "label": "Compliance dashboard skill",
+      "path": "solutions/fs-regulatory-compliance/manual/skills/aibast_compliance-dashboard_rc01/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/manual/skills/aibast_compliance-dashboard_rc01/SKILL.md",
+      "use": "Upload directly through Copilot Studio Add skill"
+    },
+    {
+      "id": "skill-trade-surveillance",
+      "label": "Trade surveillance skill",
+      "path": "solutions/fs-regulatory-compliance/manual/skills/aibast_trade-surveillance_rc02/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/manual/skills/aibast_trade-surveillance_rc02/SKILL.md",
+      "use": "Upload directly through Copilot Studio Add skill"
+    },
+    {
+      "id": "skill-documentation-review",
+      "label": "Algorithm documentation review skill",
+      "path": "solutions/fs-regulatory-compliance/manual/skills/aibast_documentation-review_rc03/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/manual/skills/aibast_documentation-review_rc03/SKILL.md",
+      "use": "Upload directly through Copilot Studio Add skill"
+    },
+    {
+      "id": "skill-remediation-submission",
+      "label": "Remediation preparation skill",
+      "path": "solutions/fs-regulatory-compliance/manual/skills/aibast_remediation-submission_rc04/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/manual/skills/aibast_remediation-submission_rc04/SKILL.md",
+      "use": "Upload directly through Copilot Studio Add skill"
+    },
+    {
+      "id": "skill-certification-tracker",
+      "label": "Certification readiness skill",
+      "path": "solutions/fs-regulatory-compliance/manual/skills/aibast_certification-tracker_rc05/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/manual/skills/aibast_certification-tracker_rc05/SKILL.md",
+      "use": "Upload directly through Copilot Studio Add skill"
+    },
+    {
+      "id": "onepager-map",
+      "label": "One-pager promise map",
+      "path": "solutions/fs-regulatory-compliance/evals/onepager-map.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/evals/onepager-map.json",
+      "use": "Approved one-pager promise coverage evidence"
+    },
+    {
+      "id": "brainstem-transcripts",
+      "label": "Isolated Brainstem transcripts",
+      "path": "solutions/fs-regulatory-compliance/evals/transcripts.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/evals/transcripts.json",
+      "use": "Canonical source-agent acceptance corpus"
+    },
+    {
+      "id": "source-audit",
+      "label": "Source and safety audit",
+      "path": "solutions/fs-regulatory-compliance/evals/source-audit.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/evals/source-audit.json",
+      "use": "Routing, behavior, and claim-boundary evidence"
+    },
+    {
+      "id": "studio-preview-evidence",
+      "label": "Copilot Studio Preview evidence",
+      "path": "solutions/fs-regulatory-compliance/evals/copilot-studio-preview-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/evals/copilot-studio-preview-evidence.json",
+      "use": "Five-case Easy-agent Preview parity and safety evidence"
+    },
+    {
+      "id": "assisted-browserfilm-manifest",
+      "label": "Copilot-assisted browserfilm manifest",
+      "path": "solutions/fs-regulatory-compliance/screenshots/assisted/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/screenshots/assisted/browserfilm.json",
+      "use": "Captured Easy-mode frame sequence"
+    },
+    {
+      "id": "assisted-browserfilm",
+      "label": "Copilot-assisted walkthrough",
+      "path": "solutions/fs-regulatory-compliance/screenshots/assisted/copilot-assisted-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/screenshots/assisted/copilot-assisted-walkthrough.gif",
+      "use": "Animated proof of the pushed Easy agent"
+    },
+    {
+      "id": "assisted-contact-sheet",
+      "label": "Copilot-assisted contact sheet",
+      "path": "solutions/fs-regulatory-compliance/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
+      "use": "Static Easy-mode evidence overview"
+    },
+    {
+      "id": "manual-tutorial",
+      "label": "Manual browser-build tutorial",
+      "path": "solutions/fs-regulatory-compliance/manual-tutorial.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/manual-tutorial.html",
+      "use": "Clawpilot-themed 26-action manual walkthrough"
+    },
+    {
+      "id": "manual-evidence",
+      "label": "Manual-build evidence",
+      "path": "solutions/fs-regulatory-compliance/evals/manual-build-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/evals/manual-build-evidence.json",
+      "use": "Captured component, Preview, and publication-gate evidence",
+      "evidence_status": "captured"
+    },
+    {
+      "id": "manual-browserfilm-manifest",
+      "label": "Manual browserfilm manifest",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/screenshots/manual/browserfilm.json",
+      "use": "Deterministic screenshot filenames and capture order",
+      "evidence_status": "captured"
+    },
+    {
+      "id": "manual-browserfilm",
+      "label": "Manual build browserfilm",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/manual-build-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/screenshots/manual/manual-build-walkthrough.gif",
+      "use": "Animated proof of all 26 manual actions",
+      "evidence_status": "captured"
+    },
+    {
+      "id": "manual-contact-sheet",
+      "label": "Manual build contact sheet",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/manual-build-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/screenshots/manual/manual-build-contact-sheet.jpg",
+      "use": "Static overview of all manual evidence",
+      "evidence_status": "captured"
+    },
+    {
+      "id": "quest",
+      "label": "Easy and Hard deployment quest",
+      "path": "solutions/fs-regulatory-compliance/quest.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/quest.html",
+      "use": "Interactive customer journey"
+    },
+    {
+      "id": "exports-readme",
+      "label": "Export bundle instructions",
+      "path": "solutions/fs-regulatory-compliance/exports/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/exports/README.md",
+      "use": "Bundle generation and evidence gates"
+    }
+  ]
+}

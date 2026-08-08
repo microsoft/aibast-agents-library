@@ -1,0 +1,153 @@
+{
+  "schema": "aibast-solution-export/1.0",
+  "solution": "@aibast-agents-library/building-permit-processing",
+  "raw_base": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/",
+  "github_folder": "https://github.com/microsoft/aibast-agents-library/tree/main/solutions/building-permit-processing",
+  "bundle": {
+    "label": "Complete Building Permit Processing source bundle",
+    "path": "solutions/building-permit-processing/exports/building-permit-processing-source.zip",
+    "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/exports/building-permit-processing-source.zip"
+  },
+  "files": [
+    {
+      "id": "portable-agent",
+      "label": "Portable Brainstem agent.py",
+      "path": "agents/@aibast-agents-library/slg_government_stacks/building_permit_processing_stack/building_permit_processing_agent.py",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/slg_government_stacks/building_permit_processing_stack/building_permit_processing_agent.py",
+      "use": "Local Brainstem runtime and production logic reference"
+    },
+    {
+      "id": "deployment-recipe",
+      "label": "No-terminal deployment recipe",
+      "path": "solutions/building-permit-processing/deployment.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/deployment.json",
+      "use": "GitHub Copilot Easy-mode installation contract"
+    },
+    {
+      "id": "field-guide",
+      "label": "Customer field guide",
+      "path": "solutions/building-permit-processing/FIELD-GUIDE.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/FIELD-GUIDE.md",
+      "use": "Hands-on-keyboard facilitation and failure recovery"
+    },
+    {
+      "id": "settings",
+      "label": "Copilot Studio settings",
+      "path": "solutions/building-permit-processing/copilot-studio/settings.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/copilot-studio/settings.mcs.yml",
+      "use": "Global agent instructions and safety boundaries"
+    },
+    {
+      "id": "agent-sync",
+      "label": "Copilot Studio component manifest",
+      "path": "solutions/building-permit-processing/copilot-studio/agent.sync.yaml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/copilot-studio/agent.sync.yaml",
+      "use": "CLI project component synchronization"
+    },
+    {
+      "id": "knowledge-records",
+      "label": "Synthetic permit records",
+      "path": "solutions/building-permit-processing/copilot-studio/capabilities/knowledge/files/aibast_building-permit-synthetic-records.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/copilot-studio/capabilities/knowledge/files/aibast_building-permit-synthetic-records.md",
+      "use": "Upload directly as Copilot Studio knowledge"
+    },
+    {
+      "id": "knowledge-rules",
+      "label": "Synthetic rules and schedules",
+      "path": "solutions/building-permit-processing/copilot-studio/capabilities/knowledge/files/aibast_permit-rules-and-schedules.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/copilot-studio/capabilities/knowledge/files/aibast_permit-rules-and-schedules.md",
+      "use": "Upload directly as Copilot Studio knowledge"
+    },
+    {
+      "id": "skill-backlog",
+      "label": "Backlog and complaint-risk skill",
+      "path": "solutions/building-permit-processing/manual/skills/aibast_permit-backlog_bp01/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/manual/skills/aibast_permit-backlog_bp01/SKILL.md",
+      "use": "Upload directly through Copilot Studio Add skill"
+    },
+    {
+      "id": "skill-intake",
+      "label": "Intake triage and routing skill",
+      "path": "solutions/building-permit-processing/manual/skills/aibast_intake-triage_bp02/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/manual/skills/aibast_intake-triage_bp02/SKILL.md",
+      "use": "Upload directly through Copilot Studio Add skill"
+    },
+    {
+      "id": "skill-updates",
+      "label": "Applicant updates skill",
+      "path": "solutions/building-permit-processing/manual/skills/aibast_applicant-updates_bp03/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/manual/skills/aibast_applicant-updates_bp03/SKILL.md",
+      "use": "Upload directly through Copilot Studio Add skill"
+    },
+    {
+      "id": "skill-status",
+      "label": "Permit status skill",
+      "path": "solutions/building-permit-processing/manual/skills/aibast_permit-status_bp04/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/manual/skills/aibast_permit-status_bp04/SKILL.md",
+      "use": "Upload directly through Copilot Studio Add skill"
+    },
+    {
+      "id": "skill-checklist",
+      "label": "Permit review checklist skill",
+      "path": "solutions/building-permit-processing/manual/skills/aibast_review-checklist_bp05/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/manual/skills/aibast_review-checklist_bp05/SKILL.md",
+      "use": "Upload directly through Copilot Studio Add skill"
+    },
+    {
+      "id": "skill-inspector",
+      "label": "Inspector board skill",
+      "path": "solutions/building-permit-processing/manual/skills/aibast_inspector-assignment_bp06/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/manual/skills/aibast_inspector-assignment_bp06/SKILL.md",
+      "use": "Upload directly through Copilot Studio Add skill"
+    },
+    {
+      "id": "skill-fees",
+      "label": "Permit fee estimate skill",
+      "path": "solutions/building-permit-processing/manual/skills/aibast_fee-calculation_bp07/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/manual/skills/aibast_fee-calculation_bp07/SKILL.md",
+      "use": "Upload directly through Copilot Studio Add skill"
+    },
+    {
+      "id": "onepager-map",
+      "label": "One-pager promise map",
+      "path": "solutions/building-permit-processing/evals/onepager-map.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/evals/onepager-map.json",
+      "use": "Advertised promise coverage evidence"
+    },
+    {
+      "id": "brainstem-transcripts",
+      "label": "Isolated Brainstem transcripts",
+      "path": "solutions/building-permit-processing/evals/transcripts.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/evals/transcripts.json",
+      "use": "Canonical source-agent acceptance corpus"
+    },
+    {
+      "id": "studio-transcripts",
+      "label": "Published Copilot Studio transcripts",
+      "path": "solutions/building-permit-processing/evals/copilot-studio-transcripts.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/evals/copilot-studio-transcripts.json",
+      "use": "Downstream acceptance corpus"
+    },
+    {
+      "id": "manual-tutorial",
+      "label": "Manual build tutorial",
+      "path": "solutions/building-permit-processing/manual-tutorial.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/manual-tutorial.html",
+      "use": "Microsoft Learn-style 24-step manual tutorial"
+    },
+    {
+      "id": "manual-evidence",
+      "label": "Manual build evidence",
+      "path": "solutions/building-permit-processing/evals/manual-build-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/evals/manual-build-evidence.json",
+      "use": "Manual agent identity, component count, and Preview parity evidence"
+    },
+    {
+      "id": "manual-walkthrough",
+      "label": "Manual build browserfilm",
+      "path": "solutions/building-permit-processing/screenshots/manual/manual-build-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/manual-build-walkthrough.gif",
+      "use": "Animated proof of all 24 manual actions"
+    }
+  ]
+}

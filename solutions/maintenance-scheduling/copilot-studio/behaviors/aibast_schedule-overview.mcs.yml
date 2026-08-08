@@ -1,0 +1,30 @@
+mcs.metadata:
+  componentName: "schedule-overview"
+  description: "Use when a maintenance manager asks for equipment condition and technician-capacity context."
+kind: InlineAgentSkill
+content: |
+  ---
+  name: schedule-overview
+  description: Use when a maintenance manager asks for equipment condition and technician-capacity context.
+  ---
+  # Maintenance overview
+
+  ## Use
+
+  Use when a maintenance manager asks for equipment condition and technician-capacity context.
+
+  ## Procedure
+
+  1. Use only the uploaded synthetic records and fixed review rules.
+  2. Summarize synthetic condition and resource evidence under an exact `Technician Availability` heading.
+  3. Cite the stable synthetic identifiers that support the conclusion.
+  4. Separate evidence, recommendation, and required authorization.
+  5. State that exact figures and identifiers are synthetic pilot evidence.
+
+  ## Safety boundary
+
+  The agent never controls equipment or creates, assigns, schedules, or dispatches maintenance work. Do not claim a completed external side effect without an approved connected tool and authorization evidence.
+
+  ## Canonical case
+
+  Use persona-language case `MS-01` as the upload validation prompt.

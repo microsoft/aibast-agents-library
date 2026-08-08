@@ -1,0 +1,10 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/personalized-shopping-assistant",
+  "approved_source": {"onepager": "41. Personalized Shopping Agent one-pager.pptx", "sha256": "2e9d0648f0eddddc95ce8cf68c520f39f7c88990c50302d7f2b454c133bad7da", "snapshot": "state/onepager_content.json", "hash_match": true},
+  "deterministic_source": {"path": "solutions.json", "slot": 38, "canonical_name": "Personalized Shopping Agent", "matches": true},
+  "routing": {"status": "fixed", "finding": "Recommendations, profile, inventory, and outfit workflows each have direct persona coverage."},
+  "interface_schema": {"status": "fixed", "finding": "Personal Shopper, Clienteling Specialist, and Retail Manager language is explicit."},
+  "behavior": {"status": "fixed", "finding": "Named shoppers were replaced with synthetic labels and recommendations explain stated preference signals."},
+  "safety": {"status": "fixed", "finding": "No sensitive trait is inferred and no stock, benefit, return, refund, order, or purchase is changed."}
+}

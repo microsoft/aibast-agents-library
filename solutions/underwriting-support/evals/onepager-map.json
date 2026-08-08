@@ -1,0 +1,56 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/underwriting-support",
+  "onepager": "33. Underwriting Support Agent one-pager.pptx",
+  "source_slide_sha256": "e016ec76554af5f793c30a8934148c8a27bec0453b57bc7734511cefd17fdce1",
+  "promises": [
+    {
+      "advertised_promise": "Analyze applications, documents, and loss history to identify key risk factors and underwriting concerns",
+      "operations": [
+        "risk_evaluation",
+        "guideline_check"
+      ],
+      "demo_cases": [
+        "UWS-01",
+        "UWS-03"
+      ],
+      "synthetic_evidence": [
+        "Submission risk evaluation returns deterministic fictional identifiers and review context",
+        "Guideline and document alignment returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    },
+    {
+      "advertised_promise": "Generate standardized risk assessments, scoring, and pricing recommendations",
+      "operations": [
+        "risk_evaluation",
+        "pricing_recommendation"
+      ],
+      "demo_cases": [
+        "UWS-01",
+        "UWS-02"
+      ],
+      "synthetic_evidence": [
+        "Submission risk evaluation returns deterministic fictional identifiers and review context",
+        "Illustrative pricing-factor review returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    },
+    {
+      "advertised_promise": "Validate coverage structure and compliance requirements",
+      "operations": [
+        "guideline_check",
+        "exception_review"
+      ],
+      "demo_cases": [
+        "UWS-03",
+        "UWS-04"
+      ],
+      "synthetic_evidence": [
+        "Guideline and document alignment returns deterministic fictional identifiers and review context",
+        "Exception review queue returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    }
+  ]
+}

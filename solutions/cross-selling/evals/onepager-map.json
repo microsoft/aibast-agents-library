@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/cross-selling",
+  "onepager": "28. Cross Selling Opportunities Agent one-pager.pptx",
+  "source_slide_sha256": "1c549739797423b9625c445dc46196ef99af0382544992eabc3d836a1de16a15",
+  "promises": [
+    {
+      "advertised_promise": "Analyze product usage trends and benchmarking gaps across accounts to pinpoint expansion potential",
+      "operations": [
+        "opportunity_scan",
+        "product_affinity"
+      ],
+      "demo_cases": [
+        "CS-01",
+        "CS-02"
+      ],
+      "evidence_boundary": "Synthetic workflow evidence only; no measured customer outcome or external side effect."
+    },
+    {
+      "advertised_promise": "Surface buying signals in real time and recommend optimal engagement timing to prevent missed opportunities",
+      "operations": [
+        "opportunity_scan",
+        "recommendation_engine"
+      ],
+      "demo_cases": [
+        "CS-01",
+        "CS-03"
+      ],
+      "evidence_boundary": "Synthetic workflow evidence only; no measured customer outcome or external side effect."
+    },
+    {
+      "advertised_promise": "Generate prioritized opportunity lists and personalize outreach plans to boost conversion rates",
+      "operations": [
+        "recommendation_engine",
+        "revenue_impact"
+      ],
+      "demo_cases": [
+        "CS-03",
+        "CS-04"
+      ],
+      "evidence_boundary": "Synthetic workflow evidence only; no measured customer outcome or external side effect."
+    }
+  ]
+}

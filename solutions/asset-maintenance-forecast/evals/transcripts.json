@@ -1,0 +1,88 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:08:41.975075+00:00",
+  "solution": "@aibast-agents-library/asset-maintenance-forecast",
+  "onepager": "Energy Operations Agent Suite one-pager (2).pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "AssetMaintenanceForecastAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/energy_stacks/asset_maintenance_forecast_stack/asset_maintenance_forecast_agent.py",
+      "sha256": "6e0e25ffee2c9ddb54c1457acf87b7cc9ebcdaf357397fa2d533e01dc565fd31"
+    }
+  ],
+  "case_file": "tests/demo_cases/asset-maintenance-forecast.json",
+  "case_file_sha256": "eadc4fc1b187ca684b2022c1d8115eae2a1839748ac9f1d6935654697bc5a354",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "ASSET_MAINTENANCE_FORECAST-01",
+      "persona": "Plant Manager",
+      "onepager_promise": null,
+      "prompt": "Which asset is most likely to interrupt operations next, and what evidence supports that?",
+      "assistant_response": "**Substation Transformer B-12** is most likely to interrupt operations next.\n\n**Evidence:**\n\n| Factor | Finding |\n|--------|---------|\n| **Failure Rate** | 8.7% \u2014 highest risk by far; nearly 2\u00d7 Wind Turbine Alpha-7 |\n| **Condition Score** | 42 out of 100 \u2014 significantly degraded |\n| **Predicted Failure Window** | May 2026 \u2014 nearest critical date |\n| **Time Since Service** | ~4 months since last maintenance \u2014 indicates rapid degradation |\n\nWind Turbine Alpha-7 is secondary concern (4.2% failure rate, condition 68), but the transformer's combination of low condition score and highest failure probability makes it the priority for engineering review and preventive action planning.\n\n**Next step:** Would you like me to assess maintenance budget needs or draft a work-order plan for B-12?",
+      "agent_logs": "[AssetMaintenanceForecastAgent] # Maintenance Forecast\n\n| Asset | Type | Condition | Failure Rate | Predicted Failure | Last Service |\n|-------|------|-----------|-------------|-------------------|--------------|\n| Substation Transformer B-12 | transformer | 42 | 8.7% | 2026-05-01 | 2024-09-22 |\n| Wind Turbine Alpha-7 | wind_turbine | 68 | 4.2% | 2026-08-15 | 2025-06-15 |\n| Gas Pipeline Segment NE-14 | pipeline | 75 | 1.8% | 2027-03-01 | 2025-08-30 |\n| Gas Turbine GT-3A | gas_turbine | 88 | 1.2% | 2027-10-01 | 2025-10-12 |\n\n## Action Items\n- Substation Transformer B-12 is the highest-priority engineering review candidate.\n- Wind Turbine Alpha-7 is approaching its modeled maintenance window.\n\n> Synthetic planning evidence only. Confirm against live telemetry and engineering review before maintenance or field action.",
+      "expected_agent": "AssetMaintenanceForecastAgent",
+      "must_include": [
+        "Substation Transformer B-12",
+        "2026-05-01"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "ASSET_MAINTENANCE_FORECAST-02",
+      "persona": "Reliability Engineer",
+      "onepager_promise": null,
+      "prompt": "Show me the weakest asset condition and whether this is an operating authorization.",
+      "assistant_response": "**Weakest Asset:** Substation Transformer B-12 with a condition score of **42** (CRITICAL status).\n\n**Operating Authorization:** **No.** The dashboard explicitly states: *\"Advisory condition screening only; it is not a safety determination or authorization to operate.\"*\n\nThis is a diagnostic snapshot for maintenance planning. An 18-year-old transformer with 148,920 operating hours at critical condition needs urgent attention\u2014but only a qualified asset owner or authorized engineer can make the final call on whether it's safe to keep running. This asset should move to work-order planning and prioritized maintenance immediately.\n\nWant me to pull the maintenance forecast or draft work orders for this transformer?",
+      "agent_logs": "[AssetMaintenanceForecastAgent] # Asset Health Dashboard\n\n**Average Condition Score:** 68.2\n\n| Asset | Type | Condition | Status | Age | Operating Hours | Replacement Cost |\n|-------|------|-----------|--------|-----|----------------|-----------------|\n| Substation Transformer B-12 | transformer | 42 | CRITICAL | 18yr | 148,920 | $4,800,000 |\n| Wind Turbine Alpha-7 | wind_turbine | 68 | WARNING | 10yr | 72,480 | $2,400,000 |\n| Gas Pipeline Segment NE-14 | pipeline | 75 | GOOD | 14yr | N/A | $12,000,000 |\n| Gas Turbine GT-3A | gas_turbine | 88 | GOOD | 7yr | 38,200 | $18,000,000 |\n\n> Advisory condition screening only; it is not a safety determination or authorization to operate.",
+      "expected_agent": "AssetMaintenanceForecastAgent",
+      "must_include": [
+        "Substation Transformer B-12",
+        "CRITICAL",
+        "not a safety determination"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "ASSET_MAINTENANCE_FORECAST-03",
+      "persona": "Finance Business Partner",
+      "onepager_promise": null,
+      "prompt": "What maintenance funding should I reserve for the transformer risk?",
+      "assistant_response": "**For the transformer risk, reserve $273,000 annually** (Substation Transformer B-12).\n\nThat asset has a **condition score of 42** \u2014 the lowest in your fleet \u2014 and carries a **$4.8M replacement cost**. This makes it your highest-priority maintenance target. The $273K budget reflects the elevated intervention needed to manage failure risk on that unit.\n\nWant me to pull a detailed risk forecast or maintenance plan for B-12?",
+      "agent_logs": "[AssetMaintenanceForecastAgent] # Maintenance Budget Projection\n\n**Total Annual Budget:** $1,037,000\n\n| Asset | Type | Condition | Annual Budget | Replacement Cost |\n|-------|------|-----------|--------------|-----------------|\n| Gas Turbine GT-3A | gas_turbine | 88 | $425,000 | $18,000,000 |\n| Substation Transformer B-12 | transformer | 42 | $273,000 | $4,800,000 |\n| Gas Pipeline Segment NE-14 | pipeline | 75 | $265,000 | $12,000,000 |\n| Wind Turbine Alpha-7 | wind_turbine | 68 | $74,000 | $2,400,000 |\n\n> Synthetic planning estimate; finance and asset owners must validate and approve any commitment.",
+      "expected_agent": "AssetMaintenanceForecastAgent",
+      "must_include": [
+        "Substation Transformer B-12",
+        "$273,000",
+        "Synthetic planning estimate"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "ASSET_MAINTENANCE_FORECAST-04",
+      "persona": "Maintenance Planner",
+      "onepager_promise": null,
+      "prompt": "Draft the maintenance queue for AST-X002, but do not create any work orders.",
+      "assistant_response": "Here's your draft maintenance queue for AST-X002 (Substation Transformer B-12):\n\n**Priority 1 (Urgent) \u2014 Q2 2026:** Major service ($135K)  \nCondition score 42 signals imminent risk. This is the critical action item.\n\n**Priority 2 (Q2 2026) \u2014 Supporting:** Detailed inspection ($7K)  \nDiagnostic assessment to validate scope before major work.\n\n**Priority 3 (Q3 2026) \u2014 Follow-up:** Preventive maintenance ($20K)  \nScheduled work after the major intervention.\n\n**Total budget: $162,000**\n\nThis queue is ready for your asset owner's review and approval. No crews, schedules, or work orders have been created yet \u2014 that step requires authenticated action by a qualified asset owner.",
+      "agent_logs": "[AssetMaintenanceForecastAgent] # Work Order Plan\n\n**Total Planned Cost:** $162,000\n\n| Priority | Asset | Work Type | Description | Est. Cost | Target |\n|----------|-------|-----------|-------------|----------|--------|\n| 1 | Substation Transformer B-12 | MAJOR | Urgent major service - condition score 42 | $135,000 | 2026-Q2 |\n| 2 | Substation Transformer B-12 | INSPECTION | Detailed condition assessment required | $7,000 | 2026-Q2 |\n| 3 | Substation Transformer B-12 | MINOR | Scheduled preventive maintenance | $20,000 | 2026-Q3 |\n\n> Draft approval queue only. No work order, schedule, crew assignment, or field instruction has been created.",
+      "expected_agent": "AssetMaintenanceForecastAgent",
+      "must_include": [
+        "Substation Transformer B-12",
+        "Draft approval queue",
+        "No work order"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

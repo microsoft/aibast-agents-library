@@ -1,0 +1,26 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/time-entry-billing",
+  "onepager": "Time and Entry Billing Agent one-pager.pptx",
+  "source_slide_sha256": "28855bc5bc3a23fa2877c495664482ae421e0ca09500f6d1f618e29cdc19f0a6",
+  "promises": [
+    {
+      "advertised_promise": "Process time entries intelligently to enforce billing rules and accelerate invoice generation",
+      "operations": ["unbilled_report", "invoice_preparation"],
+      "demo_cases": ["TEB-01", "TEB-04"],
+      "synthetic_evidence": ["TE-9004 and TE-9011 remain outside the invoice package until evidence and approval are present", "Approved T&M entries are grouped by project while fixed-fee work is held for milestone evidence"]
+    },
+    {
+      "advertised_promise": "Automate risk and compliance checks to reduce errors and maintain audit-ready documentation",
+      "operations": ["billing_summary", "time_entry_audit"],
+      "demo_cases": ["TEB-02", "TEB-03"],
+      "synthetic_evidence": ["Twelve fictional entries are summarized by project and consultant", "Missing narrative, excess-hours, rate, approval, and budget conditions remain visible in the audit trail"]
+    },
+    {
+      "advertised_promise": "Provide dispute resolution intelligence to help protect revenue and preserve client relationships",
+      "operations": ["dispute_resolution"],
+      "demo_cases": ["TEB-05"],
+      "synthetic_evidence": ["DSP-301 separates missing narrative and approval evidence", "DSP-302 requires written premium-work authorization and billing-manager sign-off before invoicing"]
+    }
+  ]
+}

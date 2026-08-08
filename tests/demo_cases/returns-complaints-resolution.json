@@ -1,0 +1,14 @@
+{
+  "solution": "Returns and Complaints Resolution Agent",
+  "agent": "@aibast-agents-library/returns-complaints-resolution",
+  "onepager": "51. Returns and Complaints Resolution Agent one-pager 2026 02 23.pptx",
+  "agent_files": ["returns_complaints_resolution_agent"],
+  "note": "One persona-language case per deterministic operation. Prompts do not expose operation names.",
+  "cases": [
+    {"id": "RCR-01", "persona": "Customer Service Agent", "operation": "return_processing", "arguments": {"return_id": "RET-4001"}, "prompt": "As Customer Service Agent, summarize the anonymous return review evidence and approval boundary.", "must_include": ["Prepared for:** Customer Service Agent", "Draft Return Review Queue", "Synthetic size-mismatch case"], "expects_agent": "returns-complaints-resolution-agent"},
+    {"id": "RCR-02", "persona": "Customer Service Agent", "operation": "complaint_classification", "arguments": {"complaint_text": "The synthetic item stopped working after a week."}, "prompt": "As Customer Service Agent, classify this product concern without echoing personal information or sending a response.", "must_include": ["Draft Complaint Classification", "Product Quality", "no return, refund"], "expects_agent": "returns-complaints-resolution-agent"},
+    {"id": "RCR-03", "persona": "Customer Service Agent", "operation": "resolution_recommendation", "arguments": {"return_id": "RET-4001"}, "prompt": "As Customer Service Agent, draft a policy-grounded option and keep all actions behind authorization.", "must_include": ["Draft Resolution Options", "Option for authorized review", "no return"], "expects_agent": "returns-complaints-resolution-agent"},
+    {"id": "RCR-04", "persona": "Quality Team", "operation": "trend_analysis", "arguments": {}, "prompt": "As Quality Team, summarize aggregate defect and return patterns without accusing any person.", "must_include": ["Prepared for:** Quality Team", "Synthetic Returns & Complaints Trend Analysis", "Key Insights"], "expects_agent": "returns-complaints-resolution-agent"}
+  ],
+  "assertion_principle": "Route from persona language, assert anonymous synthetic evidence, and preserve human approval."
+}

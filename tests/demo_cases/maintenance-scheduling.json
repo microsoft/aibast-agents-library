@@ -1,0 +1,68 @@
+{
+  "solution": "Maintenance Scheduling Agent",
+  "agent": "@aibast-agents-library/maintenance-scheduling",
+  "onepager": "Maintenance Scheduling Agent one-pager.pptx",
+  "agent_files": [
+    "maintenance_scheduling_agent"
+  ],
+  "note": "One persona-language case per deterministic operation. Prompts do not expose operation names.",
+  "cases": [
+    {
+      "id": "MS-01",
+      "operation": "schedule_overview",
+      "persona": "Maintenance Manager",
+      "prompt": "Give me the equipment and technician-capacity picture I should review before the weekly maintenance meeting.",
+      "must_include": [
+        "EQ-INJ-01",
+        "Technician Availability"
+      ],
+      "expects_agent": "MaintenanceSchedulingAgent",
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ]
+    },
+    {
+      "id": "MS-02",
+      "operation": "predictive_alerts",
+      "persona": "Production Supervisor",
+      "prompt": "Which asset signals deserve immediate human review before the next production run?",
+      "must_include": [
+        "EQ-INJ-01",
+        "Barrel heater band failure"
+      ],
+      "expects_agent": "MaintenanceSchedulingAgent",
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ]
+    },
+    {
+      "id": "MS-03",
+      "operation": "work_order_plan",
+      "persona": "Maintenance Manager",
+      "prompt": "Draft the maintenance candidates with crew, parts, and backup checks, but do not create or dispatch work orders.",
+      "must_include": [
+        "EQ-INJ-01",
+        "No work order is created or dispatched"
+      ],
+      "expects_agent": "MaintenanceSchedulingAgent",
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ]
+    },
+    {
+      "id": "MS-04",
+      "operation": "downtime_analysis",
+      "persona": "Operations Leader",
+      "prompt": "What synthetic downtime exposure and preventive trade-offs should leadership review?",
+      "must_include": [
+        "Modeled avoided-cost opportunity",
+        "synthetic planning estimates"
+      ],
+      "expects_agent": "MaintenanceSchedulingAgent",
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ]
+    }
+  ],
+  "assertion_principle": "Route from persona language, assert deterministic source evidence, and preserve recommendation-only safety."
+}

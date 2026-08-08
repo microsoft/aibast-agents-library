@@ -1,0 +1,125 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/personalized-marketing",
+  "display_name": "Personalized Marketing Agent",
+  "source_path": "agents/@aibast-agents-library/retail_cpg_stacks/personalized_marketing_stack/personalized_marketing_agent.py",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/retail_cpg_stacks/personalized_marketing_stack/personalized_marketing_agent.py",
+  "target_filename": "personalized_marketing_agent.py",
+  "expected_tool": "PersonalizedMarketingAgent",
+  "operations": [
+    "customer_segmentation",
+    "campaign_design",
+    "content_personalization",
+    "performance_analysis"
+  ],
+  "manual_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
+  "manual_authoring": {
+    "knowledge_files": 2,
+    "skills": 4,
+    "status": "source-assets-only",
+    "publish": false
+  },
+  "manual_knowledge_files": [
+    "manual/knowledge/aibast_personalized-marketing-synthetic-records.md",
+    "manual/knowledge/aibast_personalized-marketing-rules-and-safety.md"
+  ],
+  "manual_skill_count": 4,
+  "production_connectors": [
+    "Approved read-only CRM or customer-insights feed",
+    "Approved campaign review workflow"
+  ],
+  "write_controls": {
+    "authenticated_tools_required": true,
+    "explicit_human_approval_required": true,
+    "authorization_check_required": true,
+    "audit_log_required": true,
+    "local_demo_performs_writes": false
+  },
+  "copilot_studio": {
+    "authoring_mode": "manual-upload",
+    "status": "not_initialized",
+    "operations": [
+      "customer_segmentation",
+      "campaign_design",
+      "content_personalization",
+      "performance_analysis"
+    ],
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_personalized-marketing-synthetic-records.md",
+      "manual/knowledge/aibast_personalized-marketing-rules-and-safety.md"
+    ],
+    "manual_skill_count": 4,
+    "required_connections": [
+      "Approved read-only CRM or customer-insights feed",
+      "Approved campaign review workflow"
+    ],
+    "publish_requires_confirmation": true,
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "validated_manual": {
+      "display_name": "Personalized Marketing Manual",
+      "bot_id": "22c712b6-7501-4034-9539-2fb52c718228",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "web_search_removed": true,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    },
+    "validated_pilot": {
+      "display_name": "Personalized Marketing Pilot",
+      "schema_name": "aibast_PersonalizedMarketingPilot",
+      "bot_id": "c0a4b3a9-1422-4502-9939-28b87e1cb132",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "changes_pushed": 7,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    }
+  },
+  "smoke_test": {
+    "prompt": "As Marketing Director, summarize the aggregate customer groups without using demographic traits.",
+    "must_call": "PersonalizedMarketingAgent",
+    "operation": "customer_segmentation",
+    "persona": "Marketing Director",
+    "must_include": [
+      "Total Addressable Customers",
+      "Synthetic aggregate planning data"
+    ]
+  },
+  "safety_boundary": "The agent drafts recommendations only and never profiles sensitive traits, sends outreach, creates an offer, launches a campaign, issues a reward, or completes a purchase.",
+  "safety": {
+    "mode": "draft-only",
+    "prohibits": [
+      "sensitive profiling",
+      "message sending",
+      "offer creation",
+      "campaign launch",
+      "reward issuance",
+      "purchase"
+    ]
+  },
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  }
+}

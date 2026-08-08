@@ -1,0 +1,116 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-08-08T10:41:23.068Z",
+  "solution": "@aibast-agents-library/fs-customer-onboarding",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "Customer Onboarding Manual",
+    "bot_id": "93546705-f6b3-427a-9afe-9d99c11e9afb",
+    "created": true
+  },
+  "target_model": "Claude Sonnet 4.6",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 4,
+      "confirmed": 4
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "FCO-01",
+      "prompt": "What is holding up the enhanced due diligence case, and which checks need my review?",
+      "must_include": [
+        "APP-6003",
+        "PEP"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "14-fco-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "FCO-02",
+      "prompt": "Which approved-looking file is ready for account setup review, and what product is being prepared?",
+      "must_include": [
+        "APP-6004",
+        "Basic Savings"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "15-fco-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "FCO-03",
+      "prompt": "Give me the business onboarding document list for Blackwood before I call them.",
+      "must_include": [
+        "APP-6002",
+        "Beneficial ownership"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "16-fco-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "FCO-04",
+      "prompt": "Where is the onboarding queue stuck, and who owns each application?",
+      "must_include": [
+        "APP-6001",
+        "APP-6003"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "17-fco-04.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/fs-customer-onboarding/screenshots/manual/browserfilm.json",
+    "gif": "solutions/fs-customer-onboarding/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/fs-customer-onboarding/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "18-confirm-draft.jpg"
+  }
+}

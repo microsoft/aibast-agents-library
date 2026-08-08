@@ -1,0 +1,88 @@
+{
+  "solution": "Prior Authorization Agent",
+  "slot": 47,
+  "agent": "@aibast-agents-library/prior-authorization",
+  "onepager": "47. Prior Authorization Agent one-pager.pptx",
+  "agent_files": [
+    "prior_authorization_agent"
+  ],
+  "note": "Locked synthetic, read-only persona cases; exactly one case per implemented operation.",
+  "cases": [
+    {
+      "id": "PA-01",
+      "persona": "Utilization Management Coordinator",
+      "onepager_bullet": "Compile the full clinical evidence packet needed for medical review",
+      "operation": "request_evidence",
+      "prompt": "What evidence is present or missing for synthetic request SYN-AUTH-001?",
+      "must_include": [
+        "SYN-AUTH-001",
+        "additional evidence requested"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "PriorAuthorizationAgent"
+    },
+    {
+      "id": "PA-02",
+      "persona": "Nurse Case Manager",
+      "onepager_bullet": "Pull payer-specific requirements and match them with EHR data",
+      "operation": "criteria_evidence",
+      "prompt": "Show the synthetic criteria checklist for SYN-AUTH-001 without deciding medical necessity.",
+      "must_include": [
+        "Synthetic Imaging Evidence Checklist",
+        "Checklist only"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "PriorAuthorizationAgent"
+    },
+    {
+      "id": "PA-03",
+      "persona": "Radiology Scheduler",
+      "onepager_bullet": "Submit requests directly to payer portals and send real-time updates",
+      "operation": "status_summary",
+      "prompt": "What workflow state is recorded for SYN-AUTH-001, and what does it not mean?",
+      "must_include": [
+        "SYN-AUTH-001",
+        "not an agent determination"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "PriorAuthorizationAgent"
+    },
+    {
+      "id": "PA-04",
+      "persona": "Utilization Management Coordinator",
+      "onepager_bullet": "Prepare appeal materials proactively",
+      "operation": "appeal_evidence_packet",
+      "prompt": "Prepare a minimum-necessary reconsideration evidence outline for SYN-AUTH-001.",
+      "must_include": [
+        "minimum-necessary evidence",
+        "reviewer must confirm"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "PriorAuthorizationAgent"
+    }
+  ]
+}

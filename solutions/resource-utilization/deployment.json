@@ -1,0 +1,88 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/resource-utilization",
+  "display_name": "Resource Utilization Agent",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/professional_services_stacks/resource_utilization_stack/resource_utilization_agent.py",
+  "target_filename": "resource_utilization_agent.py",
+  "expected_tool": "ResourceUtilizationAgent",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "smoke_test": {
+    "prompt": "Where are we under target today, and which parts of the workforce are sitting available?",
+    "must_call": "ResourceUtilizationAgent",
+    "must_include": [
+      "Firm utilization",
+      "Bench"
+    ]
+  },
+  "copilot_studio": {
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "authoring_mode": "cli-copilot",
+    "required_connections": [
+      "Dynamics 365",
+      "Microsoft Teams"
+    ],
+    "operations": [
+      "utilization_dashboard",
+      "capacity_forecast",
+      "bench_analysis",
+      "staffing_recommendation",
+      "workforce_plan"
+    ],
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_resource-synthetic-roster.md",
+      "manual/knowledge/aibast_resource-pipeline-and-workforce-rules.md"
+    ],
+    "manual_skill_count": 5,
+    "publish_requires_confirmation": true,
+    "minimum_pac_version": "2.9.3",
+    "validated_manual": {
+      "display_name": "Resource Utilization Manual",
+      "bot_id": "92e50540-5dd8-49ff-898e-ab716c930b04",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 5,
+      "knowledge_files": 2,
+      "web_search_removed": true,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 5,
+      "preview_cases_total": 5
+    },
+    "validated_pilot": {
+      "display_name": "Resource Utilization Pilot",
+      "schema_name": "aibast_ResourceUtilizationPilot",
+      "bot_id": "85ea6539-485e-40e9-8ce2-fd10521bf65c",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 5,
+      "knowledge_files": 2,
+      "changes_pushed": 8,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 5,
+      "preview_cases_total": 5
+    }
+  },
+  "demo_scenarios": [
+    "resource-utilization",
+    "resource-capacity",
+    "resource-bench",
+    "resource-staffing",
+    "resource-workforce-plan"
+  ]
+}

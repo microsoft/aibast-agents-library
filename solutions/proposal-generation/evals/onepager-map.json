@@ -1,0 +1,44 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/proposal-generation",
+  "onepager": "Proposal Generation Agent one-pager.pptx",
+  "source_slide_sha256": "f0e4f0d76f88af083c745cd05f680653e5d48c60f9fb561e7ae1f20e3f5d4d7f",
+  "promises": [
+    {
+      "advertised_promise": "Perform rapid RFP analysis and requirement extraction to reduce risk and improve accuracy",
+      "operations": [
+        "analyze_rfp"
+      ],
+      "demo_cases": [
+        "PG-01"
+      ],
+      "evidence_boundary": "Synthetic workflow evidence only; no measured customer outcome or external side effect."
+    },
+    {
+      "advertised_promise": "Assemble personalized proposal content and positioning to strengthen differentiation and win probability",
+      "operations": [
+        "executive_summary",
+        "references_positioning"
+      ],
+      "demo_cases": [
+        "PG-02",
+        "PG-04"
+      ],
+      "evidence_boundary": "Synthetic workflow evidence only; no measured customer outcome or external side effect."
+    },
+    {
+      "advertised_promise": "Generate branded, professional proposal materials for same-day delivery to shorten sales cycles",
+      "operations": [
+        "compile_proposal",
+        "delivery_summary",
+        "solution_pricing"
+      ],
+      "demo_cases": [
+        "PG-05",
+        "PG-06",
+        "PG-03"
+      ],
+      "evidence_boundary": "Synthetic workflow evidence only; no measured customer outcome or external side effect."
+    }
+  ]
+}

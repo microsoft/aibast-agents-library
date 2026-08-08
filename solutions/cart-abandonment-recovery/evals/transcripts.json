@@ -1,0 +1,89 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:09:21.221087+00:00",
+  "solution": "@aibast-agents-library/cart-abandonment-recovery",
+  "onepager": "25. Cart Abandonment Recovery Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "CartAbandonmentRecoveryAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/b2c_sales_stacks/cart_abandonment_recovery_stack/cart_abandonment_recovery_agent.py",
+      "sha256": "b7e795aa88178ec0518fedf94619c339cfdab8ab2a5861ddc61c4a5581c509e8"
+    }
+  ],
+  "case_file": "tests/demo_cases/cart-abandonment-recovery.json",
+  "case_file_sha256": "41ba876995d1afe513e49ff23c00f4de64c13ed6530395626ac64d9e24e09787",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "CAR-01",
+      "persona": "Marketing Manager",
+      "onepager_promise": null,
+      "prompt": "As Marketing Manager, show where the anonymous synthetic cart journey is breaking down and what needs review.",
+      "assistant_response": "## What's Breaking Down\n\n**Your highest-risk drop-off is Payment** \u2014 $1,779.96 (71% of abandoned value) stuck at checkout. This is an established shopper with clear intent, so friction here is costing you most.\n\n**Second priority: Account Creation** \u2014 New visitor abandons after creating friction too early. The first-session flow might be asking for account before showing value.\n\n**Mobile friction pattern:** Two carts abandoned on mobile at different stages (shipping, cart page). Consider streamlining the mobile checkout.\n\n**Guest checkout gap:** The $129.99 guest cart abandoned at the cart page itself \u2014 before shipping even appears \u2014 suggests either display issues or immediate sticker shock.\n\n## What Needs Review\n\n1. **Payment page UX** \u2014 Run a test on desktop payment flow; check for error messages, missing payment methods, or trust signals\n2. **Account friction** \u2014 Consider guest checkout earlier or progressive profiling (account *after* first purchase)\n3. **Mobile optimization** \u2014 Compress checkout steps on mobile; test on the devices your users abandon from\n4. **Cart visibility** \u2014 Why does the guest cart drop at the cart page? Price display? Promo clarity?\n\n**Next move:** Pick one stage to recover (I'd start with Payment) or run a recovery campaign targeting the established shopper to unblock that $1.78k. Want me to draft a recovery strategy?",
+      "agent_logs": "[CartAbandonmentRecoveryAgent] **Prepared for:** Marketing Manager\n**Role focus:** margin-aware recovery planning and approval gates\n\n> Synthetic aggregate planning data. Drafts and scenarios only; no shopper is contacted, no message or offer is sent, and no cart or purchase is changed.\n\n# Synthetic Cart Abandonment Analysis\n\n**Abandoned Carts:** 4\n**Total Abandoned Value:** $2,494.90\n**Abandonment Rate:** 71.4%\n\n## Abandoned Carts Detail\n\n| Cart ID | Customer | Segment | Value | Exit Page | Device | Status |\n|---|---|---|---|---|---|---|\n| CART-20001 | Synthetic returning-shopper cart | Returning Shopper | $284.98 | Shipping Options | Mobile | Draft Stage 1 Ready |\n| CART-20002 | Synthetic first-session cart | New Visitor | $299.97 | Account Creation | Desktop | Not Contacted |\n| CART-20003 | Synthetic established-shopper cart | Established Shopper | $1,779.96 | Payment | Desktop | Not Contacted |\n| CART-20004 | Synthetic guest cart | Guest | $129.99 | Cart Page | Mobile | Unrecoverable |\n\n## Exit Page Breakdown\n\n- Shipping Options: 1\n- Account Creation: 1\n- Payment: 1\n- Cart Page: 1",
+      "expected_agent": null,
+      "must_include": [
+        "Prepared for:** Marketing Manager",
+        "Synthetic Cart Abandonment Analysis",
+        "no shopper is contacted"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "CAR-02",
+      "persona": "Digital Marketing Lead",
+      "onepager_promise": null,
+      "prompt": "As Digital Marketing Lead, outline a consent-aware draft sequence without sending or scheduling anything.",
+      "assistant_response": "## Your Consent-Aware Draft Sequence\n\n**5-touchpoint workflow** (not live; ready for your review and approval):\n\n1. **Email @ 1h** \u2014 Neutral cart reminder. No incentive. Opens at ~45%, converts ~8.5%.\n2. **SMS @ 2h** \u2014 Brief, optional channel. Highest open rate (98%) but lowest conversion intent (4.8%).\n3. **Email @ 24h** \u2014 Soft follow-up focusing on availability, not urgency. Lower friction replay.\n4. **Retargeting @ 6h** \u2014 Pixel-based display ad only for consented audiences. Respects ad-preference signals.\n5. **Email @ 72h** \u2014 Last touchpoint. *Conditional incentive* only if shopper profile qualifies and preference allows promotional messaging.\n\n**Consent guardrails baked in:**\n- Each channel checks preference level (email, SMS, retargeting) before drafting contact\n- Incentive only offered to segments with promotional consent\n- No contact for shoppers flagged \"do not contact\" in synthetic records\n- SMS respects TCPA opt-in status\n\n**3 sample carts tracked**\u2014none contacted yet. You can preview messaging, adjust timing, or swap incentive concepts before enabling. Ready when you are.\n\nWhat would you like to refine first\u2014timing, messaging tone, or incentive logic?",
+      "agent_logs": "[CartAbandonmentRecoveryAgent] **Prepared for:** Digital Marketing Lead\n**Role focus:** channel sequencing, consent, and draft content\n\n> Synthetic aggregate planning data. Drafts and scenarios only; no shopper is contacted, no message or offer is sent, and no cart or purchase is changed.\n\n# Draft Recovery Campaign Dashboard\n\n## Proposed Sequence (not deployed)\n\n| Campaign | Delay | Subject | Incentive | Open Rate | Conversion |\n|---|---|---|---|---|---|\n| Draft Email Reminder | 1h | Draft: neutral cart reminder | None | 45.2% | 8.5% |\n| Draft Follow-Up | 24h | Draft: availability-neutral follow-up | None | 38.1% | 5.2% |\n| Draft Value Option | 72h | Draft: approved value option, if eligible | Optional incentive concept | 42.8% | 12.1% |\n| Draft SMS Reminder | 2h | Draft: concise cart reminder | None | 98.0% | 4.8% |\n| Draft Retargeting Concept | 6h | Draft: consented product reminder concept | None | 0% | 2.1% |\n\n## Carts Pending Recovery\n\n- **CART-20001** (Synthetic returning-shopper cart): $284.98 \u2014 Draft status: Draft Stage 1 Ready\n- **CART-20002** (Synthetic first-session cart): $299.97 \u2014 Draft status: Not Contacted\n- **CART-20003** (Synthetic established-shopper cart): $1,779.96 \u2014 Draft status: Not Contacted\n\n**No consented contact path in synthetic record:** 1",
+      "expected_agent": null,
+      "must_include": [
+        "Prepared for:** Digital Marketing Lead",
+        "Draft Recovery Campaign Dashboard",
+        "not deployed"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "CAR-03",
+      "persona": "Growth Manager",
+      "onepager_promise": null,
+      "prompt": "As Growth Manager, compare margin-aware value scenarios and keep every concept behind approval.",
+      "assistant_response": "**Draft Summary:**\n\nThree margin-aware value scenarios are ready for your approval:\n\n1. **Returning Shoppers** ($285)  \n   Free shipping | 28% lift | Preserves margin while lowering friction  \n\n2. **New Visitors** ($300)  \n   15% off | 48% lift | Higher discount justified by acquisition value  \n\n3. **Established Shoppers** ($1,780)  \n   10% off | 35% lift | Moderate discount on high-value order  \n\nEach scenario is held\u2014no carts contacted, no offers sent. **What questions do you have before we move forward?** Do you want to adjust margin thresholds, test different segments, or model a specific recovery timeline?",
+      "agent_logs": "[CartAbandonmentRecoveryAgent] **Prepared for:** Growth Manager\n**Role focus:** aggregate conversion scenarios and experiment design\n\n> Synthetic aggregate planning data. Drafts and scenarios only; no shopper is contacted, no message or offer is sent, and no cart or purchase is changed.\n\n# Draft Incentive Scenario Comparison\n\n## Available Incentives\n\n| Incentive | Description | Margin Impact | Conversion Lift |\n|---|---|---|---|\n| Percent Off 10 | 10% off cart total | 10.0% | +35.0% |\n| Percent Off 15 | 15% off cart total | 15.0% | +48.0% |\n| Free Shipping | Free standard shipping | 5.5% | +28.0% |\n| Dollar Off 20 | $20 off orders over $150 | 8.0% | +22.0% |\n| Gift With Purchase | Free accessory with order | 6.0% | +18.0% |\n\n## Recommended Incentives by Cart\n\n### CART-20001: Synthetic returning-shopper cart ($284.98)\n\n- **Segment:** Returning Shopper\n- **Scenario for approval:** Free standard shipping\n- **Expected Lift:** +28.0%\n- **Net Recovery Value:** $269.31\n\n### CART-20002: Synthetic first-session cart ($299.97)\n\n- **Segment:** New Visitor\n- **Scenario for approval:** 15% off cart total\n- **Expected Lift:** +48.0%\n- **Net Recovery Value:** $254.97\n\n### CART-20003: Synthetic established-shopper cart ($1,779.96)\n\n- **Segment:** Established Shopper\n- **Scenario for approval:** 10% off cart total\n- **Expected Lift:** +35.0%\n- **Net Recovery Value:** $1,601.96\n",
+      "expected_agent": null,
+      "must_include": [
+        "Prepared for:** Growth Manager",
+        "Draft Incentive Scenario Comparison",
+        "Scenario for approval"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "CAR-04",
+      "persona": "Growth Manager",
+      "onepager_promise": null,
+      "prompt": "As Growth Manager, summarize the fixed recovery metrics and separate benchmarks from planning estimates.",
+      "assistant_response": "## Summary: Fixed Metrics vs. Planning Estimates\n\n### **Fixed Benchmarks** (30-Day Aggregate \u2014 Actual Performance)\n- **Abandonment Rate:** 71.4% (4,250 carts)\n- **Recovery Rate:** 12.8% (544 recovered)\n- **Avg Recovered Order Value:** $187.50\n- **Total Recovered Revenue:** $102,000\n- **Current At-Risk Value:** $2,494.90 (live staging)\n\n### **Separate Planning Estimates** (Campaign Performance Scenarios)\n| Channel | Open Rate | Conversion | Est. Recovery |\n|---|---|---|---|\n| Email Reminder | 45.2% | 8.5% | $67,734 |\n| Value Incentive | 42.8% | **12.1%** | $96,422 \u2b50 |\n| SMS Reminder | 98.0% | 4.8% | $38,250 |\n| Follow-Up Email | 38.1% | 5.2% | $41,438 |\n| Retargeting Ads | 0% | 2.1% | $16,734 |\n\n### **Key Takeaway**\nYour **12.8% recovery baseline** is solid ground. The **Value Option campaign** outperforms at 12.1% conversion\u2014treat that as your best-bet experiment going forward. SMS has top engagement (98% open) but converts lower; email channels dominate recovery revenue.\n\nNeed a campaign template or incentive optimization next?",
+      "agent_logs": "[CartAbandonmentRecoveryAgent] **Prepared for:** Growth Manager\n**Role focus:** aggregate conversion scenarios and experiment design\n\n> Synthetic aggregate planning data. Drafts and scenarios only; no shopper is contacted, no message or offer is sent, and no cart or purchase is changed.\n\n# Synthetic Cart Abandonment Analysis\n\n**Abandoned Carts:** 4\n**Total Abandoned Value:** $2,494.90\n**Abandonment Rate:** 71.4%\n\n## Abandoned Carts Detail\n\n| Cart ID | Customer | Segment | Value | Exit Page | Device | Status |\n|---|---|---|---|---|---|---|\n| CART-20001 | Synthetic returning-shopper cart | Returning Shopper | $284.98 | Shipping Options | Mobile | Draft Stage 1 Ready |\n| CART-20002 | Synthetic first-session cart | New Visitor | $299.97 | Account Creation | Desktop | Not Contacted |\n| CART-20003 | Synthetic established-shopper cart | Established Shopper | $1,779.96 | Payment | Desktop | Not Contacted |\n| CART-20004 | Synthetic guest cart | Guest | $129.99 | Cart Page | Mobile | Unrecoverable |\n\n## Exit Page Breakdown\n\n- Shipping Options: 1\n- Account Creation: 1\n- Payment: 1\n- Cart Page: 1\n[CartAbandonmentRecoveryAgent] **Prepared for:** Growth Manager\n**Role focus:** aggregate conversion scenarios and experiment design\n\n> Synthetic aggregate planning data. Drafts and scenarios only; no shopper is contacted, no message or offer is sent, and no cart or purchase is changed.\n\n# Synthetic Conversion Tracking (30-Day)\n\n- **Abandonment Rate:** 71.4%\n- **Recovery Rate:** 12.8%\n- **Avg Recovered Order Value:** $187.50\n- **Total Abandoned Carts:** 4,250\n- **Total Recovered:** 544\n- **Recovered Revenue:** $102,000\n\n## Campaign Performance\n\n| Campaign | Open Rate | Conversion | Est. Recovered |\n|---|---|---|---|\n| Draft Email Reminder | 45.2% | 8.5% | $67,734 |\n| Draft Follow-Up | 38.1% | 5.2% | $41,438 |\n| Draft Value Option | 42.8% | 12.1% | $96,422 |\n| Draft SMS Reminder | 98.0% | 4.8% | $38,250 |\n| Draft Retargeting Concept | 0% | 2.1% | $16,734 |\n\n**Current Active Cart Value at Risk:** $2,494.90",
+      "expected_agent": null,
+      "must_include": [
+        "Synthetic Conversion Tracking",
+        "Recovery Rate",
+        "no cart or purchase is changed"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

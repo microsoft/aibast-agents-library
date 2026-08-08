@@ -1,0 +1,77 @@
+{
+  "schema": "aibast-persona-cases/1.0",
+  "solution": "Field Service Dispatch Agent",
+  "agent": "@aibast-agents-library/field-service-dispatch",
+  "onepager": "23. Field Service Dispatch Agent one-pager.pptx",
+  "cases": [
+    {
+      "id": "FIELD_SERVICE_DISPATCH-01",
+      "operation": "dispatch_dashboard",
+      "persona": "Field Operations Manager",
+      "prompt": "What critical Central request is unassigned right now?",
+      "kwargs": {
+        "operation": "dispatch_dashboard",
+        "zone": "Central",
+        "service_request_id": "SR-4005"
+      },
+      "must_include": [
+        "Emergency: SCADA communication failure",
+        "CRITICAL",
+        "No job"
+      ],
+      "expects_agent": "FieldServiceDispatchAgent"
+    },
+    {
+      "id": "FIELD_SERVICE_DISPATCH-02",
+      "operation": "route_optimization",
+      "persona": "Service Director",
+      "prompt": "Compare Central zone load and capacity before anyone is rerouted.",
+      "kwargs": {
+        "operation": "route_optimization",
+        "zone": "Central"
+      },
+      "must_include": [
+        "Central",
+        "3",
+        "dispatcher must validate"
+      ],
+      "expects_agent": "FieldServiceDispatchAgent"
+    },
+    {
+      "id": "FIELD_SERVICE_DISPATCH-03",
+      "operation": "technician_assignment",
+      "persona": "Dispatch Coordinator",
+      "prompt": "Who is the best certified candidate for SR-4005? Do not assign them.",
+      "kwargs": {
+        "operation": "technician_assignment",
+        "service_request_id": "SR-4005"
+      },
+      "must_include": [
+        "Marcus Thompson",
+        "Candidate for dispatcher review",
+        "No technician has been assigned"
+      ],
+      "expects_agent": "FieldServiceDispatchAgent"
+    },
+    {
+      "id": "FIELD_SERVICE_DISPATCH-04",
+      "operation": "emergency_response",
+      "persona": "Emergency Duty Manager",
+      "prompt": "Draft the SR-4005 response view without dispatching or notifying anyone.",
+      "kwargs": {
+        "operation": "emergency_response",
+        "service_request_id": "SR-4005"
+      },
+      "must_include": [
+        "Emergency Response Draft",
+        "Marcus Thompson",
+        "No field action"
+      ],
+      "expects_agent": "FieldServiceDispatchAgent"
+    }
+  ],
+  "assertion_principle": "One persona case per operation; assertions use deterministic source evidence and explicit safety language.",
+  "agent_files": [
+    "field_service_dispatch_agent"
+  ]
+}

@@ -37,7 +37,7 @@ from basic_agent import BasicAgent
 __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/fs-regulatory-compliance",
-    "version": "2.0.0",
+    "version": "2.0.2",
     "display_name": "Regulatory Compliance Agent",
     "description": "Automates compliance monitoring and regulatory reporting to achieve proactive risk management with real-time surveillance.",
     "author": "AIBAST",
@@ -122,17 +122,21 @@ TRADES = [
     {"ref": "TRD-88117", "instrument": "DE0007164600", "venue": "XETR", "side": "SELL",
      "quantity": 22500, "price": 141.60, "arrival_price": 141.63, "benchmark_vwap": 141.58,
      "executed": _d(-1), "exec_time": "11:02:57.996210", "counterparty": "213800QILIUD4ROSU703",
-     "trader": "T-2041", "algo": "ALGO-IS-DE", "missing_fields": ["investment_decision_id"], "reported": True},
+     "trader": "T-2041", "algo": "ALGO-IS-DE", "missing_fields": ["investment_decision_id"],
+     "source_fields": {"investment_decision_id": "T-2041"}, "reported": True},
     {"ref": "TRD-88129", "instrument": "FR0000120271", "venue": "XETR", "side": "BUY",
      "quantity": 61000, "price": 58.14, "arrival_price": 58.12, "benchmark_vwap": 58.15,
      "executed": _d(-2), "exec_time": "14:38:05.113904", "counterparty": "549300ZFEEJ2IP5VME73",
-     "trader": "T-2107", "algo": "ALGO-VWAP-EU", "missing_fields": [], "reported": True},
+     "trader": "T-2107", "algo": "ALGO-VWAP-EU", "missing_fields": [],
+     "verified_venue": "XPAR", "reported": True},
     # The problem trade the demo lands on: incomplete, unlodged, and a genuine
     # best-execution outlier all at once.
     {"ref": "TRD-88133", "instrument": "NL0011794037", "venue": "XAMS", "side": "BUY",
      "quantity": 38000, "price": 29.44, "arrival_price": 29.39, "benchmark_vwap": 29.40,
      "executed": _d(-2), "exec_time": "16:51:44.207518", "counterparty": "894500PL5FUZ1QG6JS64",
-     "trader": "T-2107", "algo": "ALGO-IS-DE", "missing_fields": ["execution_decision_id", "buyer_lei"], "reported": False},
+     "trader": "T-2107", "algo": "ALGO-IS-DE", "missing_fields": ["execution_decision_id", "buyer_lei"],
+     "source_fields": {"execution_decision_id": "T-2107", "buyer_lei": EXECUTING_ENTITY["lei"]},
+     "reported": False},
     {"ref": "TRD-88146", "instrument": "XS2434891912", "venue": "XLON", "side": "SELL",
      "quantity": 4000000, "price": 96.35, "arrival_price": 96.36, "benchmark_vwap": 96.34,
      "executed": _d(-3), "exec_time": "10:07:31.660042", "counterparty": "213800QILIUD4ROSU703",
@@ -140,7 +144,8 @@ TRADES = [
     {"ref": "TRD-88150", "instrument": "GB00BH4HKS39", "venue": "TQEX", "side": "SELL",
      "quantity": 96000, "price": 74.51, "arrival_price": 74.60, "benchmark_vwap": 74.55,
      "executed": _d(-3), "exec_time": "15:22:09.874311", "counterparty": "5493001KJTIIGC8Y1R12",
-     "trader": "T-2233", "algo": "ALGO-DARK-EU", "missing_fields": [], "reported": True},
+     "trader": "T-2233", "algo": "ALGO-DARK-EU", "missing_fields": [],
+     "verified_venue": "XLON", "reported": True},
     {"ref": "TRD-88162", "instrument": "DE0007164600", "venue": "CHIX", "side": "BUY",
      "quantity": 18700, "price": 142.05, "arrival_price": 142.02, "benchmark_vwap": 142.07,
      "executed": _d(-4), "exec_time": "13:45:11.004920", "counterparty": "549300ZFEEJ2IP5VME73", "trader": "T-2041", "algo": "ALGO-IS-DE",
@@ -363,15 +368,16 @@ class FSRegulatoryComplianceAgent(BasicAgent):
             # for the catalog page; this string is what the model routes on, so
             # it names the surfaces a desk asks about in their own words.
             "description": (
-                "The trading desk's regulatory compliance system of record, under MiFID II / "
-                "MiFIR. Use this for ANY question about trade reporting, audit readiness, "
-                "regulator rejections, best execution or execution quality, venue mismatches, "
-                "trader certifications and who is allowed on the desk, algorithm or strategy "
-                "sign-off, and filings to the reporting portal — including questions that never "
-                "name a regulation, such as whether we would fail an audit, what is broken on "
-                "the desk, which trades the regulator will reject, who cannot legally trade "
-                "today, whether anything is about to go live that should not be, and proving to "
-                "a board that reporting is or is not in order."
+                "A synthetic trading-desk regulatory compliance pilot under MiFID II / MiFIR. "
+                "Use this for questions about trade-reporting control gaps, audit readiness, "
+                "potential regulator validation or rejection issues, best execution or execution "
+                "quality, venue mismatches, trader-certification status, algorithm or strategy "
+                "sign-off, and preparing reporting payloads for review. For audit questions, "
+                "identify at-risk areas and control gaps only: never state that an audit will "
+                "pass or fail, and never present the result as legal or regulatory advice. "
+                "The remediation workflow prepares synthetic correction and submission payloads "
+                "for authorized review; it never changes external records or transmits to an ARM "
+                "portal. Route natural-language questions even when they do not name a regulation."
             ),
             "parameters": {
                 "type": "object",
@@ -380,17 +386,20 @@ class FSRegulatoryComplianceAgent(BasicAgent):
                         "type": "string",
                         "description": (
                             "Which compliance workflow to run. "
-                            "trade_surveillance: which trades the regulator will reject, missing "
-                            "fields, venue mismatches, best execution and slippage. "
+                            "trade_surveillance: trade-reporting control gaps that could trigger "
+                            "validation or rejection review, including missing fields, venue "
+                            "mismatches, best execution and slippage. "
                             "documentation_review: whether an ALGORITHM or strategy is about to go "
                             "live without validated documentation, or is running on outdated docs "
                             "— use this for any 'about to go live', 'is it signed off', 'can we "
                             "turn it on' question. "
-                            "remediation_submission: prepare corrections and file them to the ARM "
-                            "portal. "
+                            "remediation_submission: prepare synthetic correction and submission "
+                            "payloads for authorized compliance review; never file, transmit, or "
+                            "change an external ARM record. "
                             "certification_tracker: which TRADERS are lapsed or expiring and "
-                            "enrolling them. "
-                            "compliance_dashboard: the whole-desk roll-up."
+                            "prepare enrollment and supervisor follow-up. "
+                            "compliance_dashboard: the whole-desk roll-up of at-risk areas and "
+                            "control gaps; never predict an audit pass or failure."
                         ),
                         "enum": [
                             "compliance_dashboard",
@@ -435,14 +444,20 @@ class FSRegulatoryComplianceAgent(BasicAgent):
         stale_algos = [a for a in ALGO_DOCUMENTATION if _algo_doc_status(a)[0] != "current"]
 
         L = [f"# Regulatory Compliance — Desk Overview ({TODAY.isoformat()})\n"]
+        L.append("**Audit-readiness assessment: AT RISK — control gaps require "
+                 "authorized review.**\n")
+        L.append("This synthetic pilot identifies audit-readiness gaps only. It cannot "
+                 "determine whether an audit will pass or fail and does not provide legal "
+                 "or regulatory advice.\n")
         L.append(f"**Reporting accuracy:** {_reporting_accuracy()}%  ·  "
                  f"**Trades with exceptions:** {_exception_rate()}%  ·  "
                  f"**Open exceptions:** {total_ex} ({high} high)\n")
         if lapsed:
             who = ", ".join(f"{tid} ({TRADERS[tid]['desk']}, {cert})"
                             for tid, cert, _ in lapsed)
-            L.append(f"**Stand down now: {who}.** Naming them is the point — a lapsed "
-                     f"certification is a binary breach, not a score.\n")
+            L.append(f"**Pilot control requires stand-down pending authorized review: "
+                     f"{who}.** A lapsed certification is a blocking control gap in this "
+                     f"dataset, not a legal conclusion.\n")
         L.append("| Area | Status | Detail |")
         L.append("|---|---|---|")
         worst_ref = max(TRADES, key=lambda t: len(_trade_exceptions(t)))["ref"] if TRADES else "-"
@@ -562,48 +577,93 @@ class FSRegulatoryComplianceAgent(BasicAgent):
 
     # -- one-pager bullet 3 -------------------------------------------------
     def _remediation_submission(self, **kwargs) -> str:
-        corrections, resubmissions = [], []
+        corrections, submission_batch, manual_review = [], set(), []
         for t in TRADES:
             ex = _trade_exceptions(t)
-            for sev, cat, detail in ex:
+            for _, cat, detail in ex:
                 if cat == "Missing RTS 22 field":
-                    corrections.append((t, detail, f"populate `{detail}` from the order management record"))
+                    field = next(
+                        (
+                            candidate
+                            for candidate in t["missing_fields"]
+                            if _field_label(candidate) in detail
+                        ),
+                        None,
+                    )
+                    value = t.get("source_fields", {}).get(field)
+                    if value:
+                        corrections.append(
+                            (t, _field_label(field), value, "order management record")
+                        )
+                        submission_batch.add(t["ref"])
+                    else:
+                        manual_review.append(
+                            (t["ref"], _field_label(field or "unknown"), "source value unavailable")
+                        )
                 elif cat == "Venue mismatch":
-                    inst = INSTRUMENT_VENUES[t["instrument"]]
-                    corrections.append((t, "trading_venue",
-                                        f"correct venue to the admitted MIC ({', '.join(inst['admitted'])})"))
+                    verified = t.get("verified_venue")
+                    if verified:
+                        corrections.append(
+                            (
+                                t,
+                                _field_label("trading_venue"),
+                                verified,
+                                "execution venue record",
+                            )
+                        )
+                        submission_batch.add(t["ref"])
+                    else:
+                        manual_review.append(
+                            (
+                                t["ref"],
+                                _field_label("trading_venue"),
+                                "verified execution venue unavailable",
+                            )
+                        )
             if not t["reported"]:
-                resubmissions.append(t)
+                submission_batch.add(t["ref"])
 
         L = ["# Automated Correction & Submission\n"]
         L.append(f"Target portal: **{REGULATORY_PORTAL}**\n")
-        if not corrections and not resubmissions:
+        L.append("Synthetic dry run: corrections and portal payloads are prepared for approval; "
+                 "no external record is changed and no filing is transmitted.\n")
+        if not corrections and not submission_batch:
             L.append("Nothing to submit — every executed trade is complete and already lodged.")
             return "\n".join(L)
 
         if corrections:
             L.append(f"## Field corrections prepared ({len(corrections)})\n")
-            L.append("| Trade | Field | Correction | Status |")
-            L.append("|---|---|---|---|")
-            for t, field, action in corrections:
-                L.append(f"| {t['ref']} | `{field}` | {action} | prepared |")
+            L.append("| Trade | Field | Corrected value | Evidence | Status |")
+            L.append("|---|---|---|---|---|")
+            for t, field, value, evidence in corrections:
+                L.append(f"| {t['ref']} | {field} | `{value}` | {evidence} | prepared |")
 
-        if resubmissions:
-            L.append(f"\n## Submissions queued ({len(resubmissions)})\n")
-            for t in resubmissions:
+        if submission_batch:
+            L.append(f"\n## Portal payloads prepared ({len(submission_batch)})\n")
+            by_ref = {t["ref"]: t for t in TRADES}
+            for ref in sorted(submission_batch):
+                t = by_ref[ref]
                 inst = INSTRUMENT_VENUES.get(t["instrument"], {})
                 age = -_days_until(t["executed"])
+                submission_type = "new submission" if not t["reported"] else "correction report"
                 L.append(f"- **{t['ref']}** — {inst.get('name', '')} {t['side']} {t['quantity']:,} @ {t['price']} "
-                         f"(executed {t['executed']}, {age} day(s) ago). "
+                         f"(executed {t['executed']}, {age} day(s) ago); **{submission_type}**. "
                          f"{'**Breach: outside T+1.**' if age > 1 else 'Within T+1.'}")
 
-        batch = sorted({t["ref"] for t, _, _ in corrections} | {t["ref"] for t in resubmissions})
-        L.append(f"\n## Submission batch\n")
-        L.append(f"- Trades in batch: **{len(batch)}** ({', '.join(batch)})")
-        L.append(f"- Field corrections applied: **{len(corrections)}**")
-        L.append(f"- Reporting accuracy before: **{_reporting_accuracy()}%** → after this batch: **100.0%**")
-        L.append(f"- Remaining manual review: only exceptions the agent cannot source from the "
-                 f"order management record (currently none).")
+        L.append("\n## Approval gate\n")
+        L.append(f"- Trades in staged batch: **{len(submission_batch)}** "
+                 f"({', '.join(sorted(submission_batch))})")
+        L.append(f"- Field corrections staged from synthetic source evidence: **{len(corrections)}**")
+        if manual_review:
+            L.append(f"- Manual evidence checks required: **{len(manual_review)}**")
+            for ref, field, reason in manual_review:
+                L.append(f"  - {ref} · {field}: {reason}")
+        else:
+            L.append("- Manual evidence checks required: **0**")
+            L.append(f"- Projected synthetic reporting accuracy after approved submission: "
+                     f"**{_reporting_accuracy()}% → 100.0%**")
+        L.append("- Required production control: an authorized compliance reviewer must approve "
+                 "the payload before the ARM connector transmits it.")
         return "\n".join(L)
 
     # -- one-pager bullet 4 -------------------------------------------------

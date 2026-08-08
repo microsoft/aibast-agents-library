@@ -17,7 +17,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/order-status-communication",
     "version": "1.0.0",
     "display_name": "Order Status Communications Agent",
-    "description": "Automate proactive order updates, delay management, and customer communications to protect relationships and revenue.",
+    "description": "Analyze a fixed synthetic order snapshot and prepare review-ready status, delay, recovery, and customer-message drafts. Never send a customer update or change an order, shipment, or production schedule.",
     "author": "AIBAST",
     "tags": ["orders", "communication", "shipment", "customer-service", "manufacturing"],
     "category": "manufacturing",
@@ -115,24 +115,28 @@ CUSTOMER_CONTACTS = {
         "account_manager": "Sarah Lin",
         "escalation_contact": "Tom Bradley, Plant Manager",
         "preferred_channel": "email",
+        "customer_tier": "Strategic",
         "sla_response_hours": 4,
     },
     "Caterpillar Inc.": {
         "account_manager": "Robert Kim",
         "escalation_contact": "VP Supply Chain",
         "preferred_channel": "EDI",
+        "customer_tier": "Strategic",
         "sla_response_hours": 8,
     },
     "Tesla Inc.": {
         "account_manager": "Sarah Lin",
         "escalation_contact": "Logistics Director",
         "preferred_channel": "portal",
+        "customer_tier": "Priority",
         "sla_response_hours": 2,
     },
     "John Deere": {
         "account_manager": "Robert Kim",
         "escalation_contact": "Procurement Director",
         "preferred_channel": "email",
+        "customer_tier": "Priority",
         "sla_response_hours": 4,
     },
 }
@@ -214,6 +218,27 @@ class OrderStatusCommunicationAgent(BasicAgent):
                 "delay_notification",
                 "customer_update",
             ],
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "operation": {
+                        "type": "string",
+                        "enum": [
+                            "order_lookup",
+                            "shipment_tracking",
+                            "delay_notification",
+                            "customer_update",
+                        ],
+                        "description": (
+                            "order_lookup: summarize order progress and delay risk. "
+                            "shipment_tracking: report the fixed synthetic shipment record. "
+                            "delay_notification: prepare an internal delay and recovery review. "
+                            "customer_update: draft channel-aware customer messages for approval; never send updates."
+                        ),
+                    },
+                },
+                "required": ["operation"],
+            },
         }
         super().__init__(name=self.name, metadata=self.metadata)
 
@@ -232,7 +257,7 @@ class OrderStatusCommunicationAgent(BasicAgent):
 
     # ------------------------------------------------------------------
     def _order_lookup(self, **kwargs) -> str:
-        lines = ["## Order Status Dashboard\n"]
+        lines = ["## Order Status Dashboard\n", "> Fixed synthetic snapshot; no live ERP, MES, carrier, or CRM system was queried.\n"]
         lines.append("| Order | Customer | Product | Qty | Value | Status | Complete | Promise Date | Days Left |")
         lines.append("|-------|----------|---------|-----|-------|--------|----------|--------------|-----------|")
         for oid, o in ORDERS.items():
@@ -251,7 +276,7 @@ class OrderStatusCommunicationAgent(BasicAgent):
 
     # ------------------------------------------------------------------
     def _shipment_tracking(self, **kwargs) -> str:
-        lines = ["## Shipment Tracking\n"]
+        lines = ["## Shipment Tracking\n", "> Synthetic shipment record; confirm status in the approved carrier system.\n"]
         if not SHIPMENTS:
             lines.append("No active shipments at this time.")
             return "\n".join(lines)
@@ -274,7 +299,7 @@ class OrderStatusCommunicationAgent(BasicAgent):
 
     # ------------------------------------------------------------------
     def _delay_notification(self, **kwargs) -> str:
-        lines = ["## Delay Notifications\n"]
+        lines = ["## Internal Delay Review\n", "> Fixed synthetic draft for authorized review. No production schedule, shipment, or customer record was changed.\n"]
         if not DELAY_REASONS:
             lines.append("No delays currently reported.")
             return "\n".join(lines)
@@ -291,7 +316,7 @@ class OrderStatusCommunicationAgent(BasicAgent):
             lines.append(f"- **Account manager:** {cc.get('account_manager', 'N/A')}")
             lines.append(f"- **SLA response window:** {cc.get('sla_response_hours', 'N/A')} hours")
             lines.append(f"- **Preferred channel:** {cc.get('preferred_channel', 'email')}")
-            lines.append("\n**Recovery actions:**")
+            lines.append("\n**Recorded synthetic recovery options:**")
             for action in d["recovery_actions"]:
                 lines.append(f"- {action}")
             lines.append("")
@@ -300,11 +325,19 @@ class OrderStatusCommunicationAgent(BasicAgent):
     # ------------------------------------------------------------------
     def _customer_update(self, **kwargs) -> str:
         lines = ["## Customer Update Drafts\n"]
-        lines.append("The following update messages have been prepared for all active orders:\n")
+        lines.append("> Fixed synthetic drafts; approval required. No email, EDI message, portal update, Teams message, or other customer communication was sent.\n")
+        lines.append("The following draft messages have been prepared for all active orders:\n")
         for oid in ORDERS:
+            contact = CUSTOMER_CONTACTS.get(ORDERS[oid]["customer"], {})
             lines.append(f"---\n### {oid} -- {ORDERS[oid]['customer']}\n")
+            lines.append(
+                f"**Synthetic communication profile:** {contact.get('customer_tier', 'Standard')} tier; "
+                f"preferred channel {contact.get('preferred_channel', 'email')}; "
+                f"authorized owner {contact.get('account_manager', 'Account Team')}.\n"
+            )
             lines.append(_build_customer_update(oid))
             lines.append("")
+        lines.append("\nCustomer updates require an approved communication tool and an authorized sender.")
         return "\n".join(lines)
 
 

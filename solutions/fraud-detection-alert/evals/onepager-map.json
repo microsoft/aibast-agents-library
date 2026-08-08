@@ -1,0 +1,63 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/fraud-detection-alert",
+  "onepager": "38. Fraud Detection and Alert Agent one-pager.pptx",
+  "source_slide_sha256": "98588f01644c251bf74407f5946b375d47755ec87f25ce75dea322bf38a6c87e",
+  "promises": [
+    {
+      "advertised_promise": "Monitor transactions in real time to flag suspicious activity across all channels",
+      "operations": [
+        "alert_triage",
+        "transaction_analysis"
+      ],
+      "demo_cases": [
+        "FDA-01",
+        "FDA-02"
+      ],
+      "synthetic_evidence": [
+        "Alert triage returns deterministic fictional identifiers and review context",
+        "Transaction evidence review returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    },
+    {
+      "advertised_promise": "Triage alerts automatically to cut noise and focus teams on high-risk cases",
+      "operations": [
+        "alert_triage"
+      ],
+      "demo_cases": [
+        "FDA-01"
+      ],
+      "synthetic_evidence": [
+        "Alert triage returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    },
+    {
+      "advertised_promise": "Detect fraud patterns and rings to limit combined exposure and losses",
+      "operations": [
+        "pattern_detection"
+      ],
+      "demo_cases": [
+        "FDA-03"
+      ],
+      "synthetic_evidence": [
+        "Fraud-pattern hypotheses returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    },
+    {
+      "advertised_promise": "Automate case creation and protective actions to accelerate investigations",
+      "operations": [
+        "investigation_summary"
+      ],
+      "demo_cases": [
+        "FDA-04"
+      ],
+      "synthetic_evidence": [
+        "Case preparation and routing returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/ai-customer-assistant",
+  "status": "audited-and-fixed",
+  "approved_slide": {
+    "file": "Customer Escalations Agent one-pager.pptx",
+    "sha256": "cb20b6eb67d4a95591b8e15cde43372595529b2755a3465480f5657742c97db3"
+  },
+  "source_path": "agents/@aibast-agents-library/general_stacks/ai_customer_assistant_stack/ai_customer_assistant_agent.py",
+  "findings": [
+    "The source covered inquiry, knowledge, routing, and satisfaction analysis but described auto-escalation without a clear execution boundary.",
+    "CRM, survey comments, and source labels were not consistently marked as synthetic.",
+    "Live strict isolation showed that the inherited export-error prompt could be answered without invoking the tool, and the SSO routing prompt could omit INQ-4003.",
+    "A locked rerun showed that the SSO routing output could abbreviate the matrix SLA as 2h and miss the exact 2 hours capture marker."
+  ],
+  "fixes": [
+    "Changed routing language to a triggered rule and review recommendation.",
+    "Added an explicit no-message, no-case-change, no-escalation gate to every operation and labeled all evidence synthetic.",
+    "Expanded tool and operation routing language, documented canonical inquiry IDs, and made escalation routing default deterministically to INQ-4003 when no ID is supplied.",
+    "Rendered every routing-matrix SLA with the full hours unit so the deterministic contract remains exact even when a model supplies a different inquiry ID."
+  ],
+  "remaining_boundary": "Production connections and all external actions require customer approval, least-privilege controls, and an authorized human workflow.",
+  "strict_capture": "passed"
+}

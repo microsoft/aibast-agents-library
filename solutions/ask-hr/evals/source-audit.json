@@ -1,0 +1,24 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/ask-hr",
+  "status": "audited-and-fixed",
+  "approved_slide": {
+    "file": "48. Ask HR Agent one-pager.pptx",
+    "sha256": "671f1ed062e08acba05bffe707e843fb49bab615b5c5a1e91aace7d97dd1b781"
+  },
+  "source_path": "agents/@aibast-agents-library/human_resources_stacks/ask_hr_stack/ask_hr_agent.py",
+  "findings": [
+    "The time-off operation mutated in-memory state and claimed submission and manager notification.",
+    "The source decided parental and remote-work eligibility from profile fields and estimated benefit value from a title-based salary assumption.",
+    "Time-off dates depended on the runtime clock, preventing deterministic review.",
+    "Live strict isolation showed that the vacation-preview wording could route to a non-preview HR operation and omit the required draft-only markers."
+  ],
+  "fixes": [
+    "Converted time off to a deterministic draft preview with user-supplied dates and no mutation or notification.",
+    "Removed salary inference and individualized eligibility decisions; added explicit sensitive-circumstance and HR-decision boundaries.",
+    "Labeled all profiles and policy values as fictional synthetic evidence.",
+    "Made vacation/date preview wording explicitly route to submit_time_off and documented its deterministic Not Submitted, Draft for employee review, and no-notification contract."
+  ],
+  "remaining_boundary": "Production connections and all external actions require customer approval, least-privilege controls, and an authorized human workflow.",
+  "strict_capture": "passed"
+}

@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (() => {
+    const param = new URLSearchParams(window.location.search).get("scoutTheme");
+    const theme =
+      param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI BAST Agent Demo</title>
+<style>
+:root {
+  color-scheme: light;
+  --cp-bg: #f7f4ef;
+  --cp-bg-elevated: #fcfbf8;
+  --cp-surface: #ffffff;
+  --cp-surface-soft: #f5f5f5;
+  --cp-border: #dedede;
+  --cp-border-strong: #919191;
+  --cp-text: #242424;
+  --cp-text-muted: #5c5c5c;
+  --cp-text-soft: #6f6f6f;
+  --cp-accent: #b11f4b;
+  --cp-accent-hover: #9a1a41;
+  --cp-accent-soft: rgba(177, 31, 75, 0.08);
+  --cp-accent-fg: #ffffff;
+  --cp-success: #16a34a;
+  --cp-danger: #dc2626;
+  --cp-warning: #f59e0b;
+  --cp-link: #0078d4;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+  --cp-overlay: rgba(255, 255, 255, 0.8);
+  --cp-panel: rgba(255, 255, 255, 0.86);
+  --cp-panel-strong: rgba(255, 255, 255, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.55);
+  --cp-highlight: rgba(177, 31, 75, 0.12);
+}
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --cp-bg: #3d3b3a;
+  --cp-bg-elevated: #343231;
+  --cp-surface: #292929;
+  --cp-surface-soft: #2e2e2e;
+  --cp-border: #474747;
+  --cp-border-strong: #5f5f5f;
+  --cp-text: #dedede;
+  --cp-text-muted: #919191;
+  --cp-text-soft: #b0b0b0;
+  --cp-accent: #fd8ea1;
+  --cp-accent-hover: #fb7b91;
+  --cp-accent-soft: rgba(253, 142, 161, 0.14);
+  --cp-accent-fg: #1a1a1a;
+  --cp-success: #4ade80;
+  --cp-danger: #f87171;
+  --cp-warning: #fbbf24;
+  --cp-link: #4da6ff;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+  --cp-overlay: rgba(41, 41, 41, 0.88);
+  --cp-panel: rgba(41, 41, 41, 0.72);
+  --cp-panel-strong: rgba(41, 41, 41, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.04);
+  --cp-highlight: rgba(253, 142, 161, 0.12);
+}
+
+* { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+body {
+  display: flex;
+  flex-direction: column;
+  background: var(--cp-surface-soft);
+  color: var(--cp-text);
+  font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+button, input { font: inherit; }
+a { color: var(--cp-link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.topbar {
+  display: flex;
+  height: 48px;
+  flex: 0 0 48px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 8px 0 4px;
+  border-bottom: 1px solid var(--cp-border);
+  background: var(--cp-surface);
+}
+.top-button {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--cp-text-muted);
+  cursor: pointer;
+}
+.top-button:hover { background: var(--cp-surface-soft); }
+.waffle {
+  display: grid;
+  grid-template-columns: repeat(3, 4px);
+  gap: 3px;
+}
+.waffle i {
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--cp-text-muted);
+}
+.copilot-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.84rem;
+  font-weight: 650;
+}
+.copilot-mark {
+  display: grid;
+  width: 23px;
+  height: 23px;
+  place-items: center;
+  border-radius: 5px;
+  background: var(--cp-link);
+  color: var(--cp-surface);
+  font-size: 0.72rem;
+  font-weight: 850;
+}
+.top-search {
+  position: relative;
+  max-width: 560px;
+  min-width: 0;
+  flex: 1;
+  margin: 0 auto;
+}
+.top-search input {
+  width: 100%;
+  border: 1px solid var(--cp-border-strong);
+  border-radius: 4px;
+  background: var(--cp-surface-soft);
+  color: var(--cp-text-muted);
+  padding: 6px 10px 6px 31px;
+  font-size: 0.78rem;
+}
+.top-search span {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  color: var(--cp-text-muted);
+  transform: translateY(-50%);
+}
+.top-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+.avatar {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--cp-link);
+  color: var(--cp-surface);
+  font-size: 0.65rem;
+  font-weight: 750;
+}
+
+.shell {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+}
+.rail {
+  display: flex;
+  width: 54px;
+  flex: 0 0 54px;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 0;
+  border-right: 1px solid var(--cp-border);
+  background: var(--cp-surface);
+}
+.rail-item {
+  position: relative;
+  display: flex;
+  width: 46px;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--cp-text-muted);
+  padding: 7px 0 5px;
+  font-size: 1rem;
+}
+.rail-item small { font-size: 0.58rem; }
+.rail-item.active { color: var(--cp-link); }
+.rail-item.active::before {
+  position: absolute;
+  top: 9px;
+  bottom: 9px;
+  left: -4px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--cp-link);
+  content: "";
+}
+
+.stage {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+}
+.pane-head {
+  display: flex;
+  min-height: 50px;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 16px;
+  border-bottom: 1px solid var(--cp-border);
+  background: var(--cp-surface);
+}
+.back {
+  color: var(--cp-text-muted);
+  font-size: 0.75rem;
+}
+.pane-title { font-size: 0.82rem; font-weight: 650; }
+.agent-chip {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--cp-surface-soft);
+  color: var(--cp-link);
+  padding: 3px 9px 3px 4px;
+  font-size: 0.75rem;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.agent-chip .dot {
+  display: grid;
+  width: 19px;
+  height: 19px;
+  place-items: center;
+  border-radius: 5px;
+  background: var(--cp-link);
+  color: var(--cp-surface);
+}
+.pane-actions {
+  display: flex;
+  gap: 7px;
+  margin-left: auto;
+}
+.action {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: var(--cp-link);
+  color: var(--cp-surface);
+  cursor: pointer;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  font-weight: 650;
+}
+.action.secondary {
+  border-color: var(--cp-border-strong);
+  background: var(--cp-surface);
+  color: var(--cp-text);
+}
+
+.chat {
+  min-height: 0;
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 16px 8px;
+}
+.chat-inner {
+  display: flex;
+  max-width: 780px;
+  margin: 0 auto;
+  flex-direction: column;
+  gap: 19px;
+}
+.stage-note {
+  padding: 22px 0 4px;
+  color: var(--cp-text-muted);
+  text-align: center;
+  font-size: 0.76rem;
+}
+.message {
+  animation: rise 220ms ease both;
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.message.user {
+  display: flex;
+  justify-content: flex-end;
+}
+.user-bubble {
+  max-width: 78%;
+  border-radius: 8px 8px 2px 8px;
+  background: var(--cp-highlight);
+  color: var(--cp-text);
+  padding: 10px 14px;
+  font-size: 0.84rem;
+}
+.agent-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.agent-avatar {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: 6px;
+  background: var(--cp-link);
+  color: var(--cp-surface);
+}
+.agent-name { font-size: 0.84rem; font-weight: 650; }
+.agent-tag {
+  border-radius: 4px;
+  background: var(--cp-surface-soft);
+  color: var(--cp-text-muted);
+  padding: 2px 7px;
+  font-size: 0.66rem;
+}
+.agent-body {
+  margin-left: 36px;
+  color: var(--cp-text);
+  font-size: 0.82rem;
+}
+.agent-body p { margin: 0 0 8px; }
+.agent-body ul { margin: 0 0 8px 19px; padding: 0; }
+.agent-body li { margin: 3px 0; }
+.typing {
+  display: inline-flex;
+  gap: 4px;
+  padding: 5px 0;
+}
+.typing i {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--cp-text-muted);
+  animation: blink 1s infinite;
+}
+.typing i:nth-child(2) { animation-delay: 160ms; }
+.typing i:nth-child(3) { animation-delay: 320ms; }
+@keyframes blink {
+  0%, 70%, 100% { opacity: 0.25; }
+  30% { opacity: 1; }
+}
+.result-card {
+  overflow: hidden;
+  max-width: 600px;
+  margin-top: 10px;
+  border: 1px solid var(--cp-border);
+  border-radius: 8px;
+  background: var(--cp-surface);
+  box-shadow: 0 0 2px var(--cp-border);
+}
+.result-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 11px;
+  border-bottom: 1px solid var(--cp-border);
+  font-size: 0.75rem;
+  font-weight: 650;
+}
+.result-head span:last-child {
+  margin-left: auto;
+  color: var(--cp-success);
+  font-size: 0.67rem;
+}
+.result-card table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.72rem;
+}
+.result-card th, .result-card td {
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--cp-border);
+  text-align: left;
+}
+.result-card th {
+  background: var(--cp-surface-soft);
+  font-weight: 650;
+}
+.result-note {
+  padding: 9px 11px;
+  color: var(--cp-text-muted);
+  font-size: 0.7rem;
+}
+.source {
+  margin-top: 8px;
+  color: var(--cp-text-muted);
+  font-size: 0.66rem;
+}
+
+.prompt-row {
+  flex: 0 0 auto;
+  padding: 7px 16px 0;
+}
+.prompt-inner {
+  display: flex;
+  max-width: 780px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.prompt-pill {
+  overflow: hidden;
+  max-width: 100%;
+  border: 1px solid var(--cp-border-strong);
+  border-radius: 999px;
+  background: var(--cp-surface);
+  color: var(--cp-text);
+  cursor: pointer;
+  padding: 6px 12px;
+  font-size: 0.72rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.prompt-pill:hover { border-color: var(--cp-link); }
+.input-area {
+  flex: 0 0 auto;
+  padding: 9px 16px 11px;
+}
+.input-inner {
+  max-width: 780px;
+  margin: 0 auto;
+}
+.input-wrap { position: relative; }
+.input-wrap input {
+  width: 100%;
+  border: 1px solid var(--cp-border-strong);
+  border-radius: 8px;
+  background: var(--cp-surface);
+  color: var(--cp-text-muted);
+  padding: 10px 42px 10px 13px;
+  font-size: 0.82rem;
+}
+.send {
+  position: absolute;
+  top: 50%;
+  right: 7px;
+  border: 0;
+  background: transparent;
+  color: var(--cp-link);
+  transform: translateY(-50%);
+}
+.disclaimer {
+  margin-top: 5px;
+  color: var(--cp-text-muted);
+  text-align: center;
+  font-size: 0.63rem;
+}
+
+@media (max-width: 760px) {
+  .top-search, .rail { display: none; }
+  .pane-head { padding-right: 8px; padding-left: 8px; }
+  .back { display: none; }
+  .chat { padding-right: 10px; padding-left: 10px; }
+  .agent-body { margin-left: 0; }
+  .user-bubble { max-width: 92%; }
+  .action { padding: 6px 9px; }
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <button class="top-button" aria-label="App launcher"><span class="waffle"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></button>
+  <div class="copilot-title"><span class="copilot-mark">C</span><span>Microsoft 365 Copilot</span></div>
+  <div class="top-search"><span>⌕</span><input type="text" placeholder="Search" disabled></div>
+  <div class="top-right">
+    <button class="top-button" id="theme-toggle" aria-label="Toggle theme">◐</button>
+    <div class="avatar">AI</div>
+  </div>
+</div>
+
+<div class="shell">
+  <nav class="rail" aria-label="App rail">
+    <button class="rail-item"><span>⌂</span><small>Home</small></button>
+    <button class="rail-item active"><span>□</span><small>Chat</small></button>
+    <button class="rail-item"><span>▦</span><small>Apps</small></button>
+    <button class="rail-item"><span>◫</span><small>Calendar</small></button>
+  </nav>
+
+  <main class="stage">
+    <div class="pane-head">
+      <a class="back" id="back-link" href="../../library.html">‹ Agent library</a>
+      <span class="pane-title">Copilot</span>
+      <span class="agent-chip"><span class="dot">✦</span><span id="agent-name"></span></span>
+      <div class="pane-actions">
+        <button class="action" id="play">▶ Play demo</button>
+        <button class="action secondary" id="reset" aria-label="Reset demo">↻</button>
+      </div>
+    </div>
+
+    <div class="chat" id="chat">
+      <div class="chat-inner" id="chat-body">
+        <div class="stage-note" id="stage-note"></div>
+      </div>
+    </div>
+
+    <div class="prompt-row"><div class="prompt-inner" id="prompt-pills"></div></div>
+    <div class="input-area">
+      <div class="input-inner">
+        <div class="input-wrap"><input type="text" disabled placeholder="Message Copilot (scripted demo — use Play or a suggested prompt)"><button class="send" disabled>➤</button></div>
+        <div class="disclaimer">Simulated Microsoft 365 Copilot-style interface over synthetic data. This is a canned product demonstration, not a live customer environment or performance claim.</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+const LEGACY_SCENARIOS = {
+  "permit-backlog": {
+    agent: "Building Permit Processing Agent",
+    agentId: "@aibast-agents-library/building-permit-processing",
+    title: "Permit backlog and complaint risk",
+    persona: "Development Services Director",
+    prompts: ["permit-backlog", "permit-intake", "permit-coordination"],
+    turns: [
+      {
+        user: "Which permit applications have been sitting too long, and which resident is going to complain first?",
+        reply: "<p><strong>Start with BP-2025-0104 for Metro School District.</strong> It is the highest-risk application because it is beyond the institutional review clock and has already gone through multiple correction cycles.</p><ul><li>Send the current correction list today.</li><li>Commit to a re-review date with reviewer Tom Delgado.</li><li>Follow with Greenfield Development and Sunrise Solar before they create another status call.</li></ul>",
+        card: {
+          title: "Applications needing intervention",
+          status: "Action required",
+          headers: ["Permit", "Applicant", "State", "Next move"],
+          rows: [
+            ["BP-2025-0104", "Metro School District", "Overdue", "Commit re-review date"],
+            ["BP-2025-0101", "Greenfield Development", "Overdue", "Send review update"],
+            ["BP-2025-0103", "Sunrise Solar", "Overdue", "Confirm inspection path"]
+          ]
+        }
+      },
+      {
+        user: "Give my leadership team the action list for today.",
+        reply: "<p>Prioritize the work in this order:</p><ol><li><strong>Resolve the Metro School correction loop</strong> and name the next decision date.</li><li><strong>Update Greenfield Development</strong> on plan-review ownership and remaining steps.</li><li><strong>Confirm Sunrise Solar’s inspection sequence</strong> so the applicant receives one consistent answer.</li></ol><p>This turns the backlog into named work with an owner and a customer communication.</p>"
+      }
+    ]
+  },
+  "permit-intake": {
+    agent: "Building Permit Processing Agent",
+    agentId: "@aibast-agents-library/building-permit-processing",
+    title: "Front-counter intake triage",
+    persona: "Permit Technician",
+    prompts: ["permit-intake", "permit-backlog", "permit-coordination"],
+    turns: [
+      {
+        user: "Anything at the front counter I should not be accepting today?",
+        reply: "<p><strong>Do not accept BP-2025-0105 as a new application.</strong> It duplicates the Greenfield Development project already moving through plan review and is still missing required documents.</p><p><strong>Accept BP-2025-0106.</strong> The Harbor Way restaurant fit-out is complete enough to start review.</p>",
+        card: {
+          title: "Intake decisions",
+          status: "2 reviewed",
+          headers: ["Permit", "Decision", "Reason"],
+          rows: [
+            ["BP-2025-0105", "Reject", "Duplicate; documents missing"],
+            ["BP-2025-0106", "Accept", "Complete commercial alteration"]
+          ]
+        }
+      },
+      {
+        user: "Route the accepted application and tell me when it is due back.",
+        reply: "<p>Route BP-2025-0106 to <strong>Zoning → Building → Fire/Life Safety</strong>. The review clock starts today under the commercial-alteration target.</p><p>Send the applicant a confirmation that the submission was accepted, identify the three review desks, and provide the target review date.</p>"
+      }
+    ]
+  },
+  "permit-coordination": {
+    agent: "Building Permit Processing Agent",
+    agentId: "@aibast-agents-library/building-permit-processing",
+    title: "Applicant and inspection coordination",
+    persona: "Customer Service Lead",
+    prompts: ["permit-coordination", "permit-backlog", "permit-intake"],
+    turns: [
+      {
+        user: "The restaurant fit-out on Harbor Way just came in. Who reviews it, what should we tell the applicant, and what inspections are already on the board?",
+        reply: "<p><strong>Harbor Way:</strong> route the application to Zoning, Building, and Fire/Life Safety. Tell Ridgeline Restaurants the submission is complete, the review clock has started, and those three desks own the next review.</p><p><strong>Inspection board:</strong> the active solar project has electrical and structural inspections assigned, with Dave Martinez and Lisa Park covering the work.</p>",
+        card: {
+          title: "Coordination view",
+          status: "Ready to send",
+          headers: ["Work item", "Owner", "Status"],
+          rows: [
+            ["Harbor Way intake", "Zoning / Building / Fire", "Review started"],
+            ["Solar electrical rough-in", "Dave Martinez", "Scheduled"],
+            ["Solar structural mounting", "Lisa Park", "Scheduled"]
+          ]
+        }
+      },
+      {
+        user: "Draft the short update my front desk can use.",
+        reply: "<p>“Your Harbor Way application has been accepted and entered review. Zoning, Building, and Fire/Life Safety are reviewing it now. We will contact you if a reviewer needs clarification; otherwise, your next update will confirm the review outcome and inspection path.”</p>"
+      }
+    ]
+  },
+  "production-line-health": {
+    agent: "Product Line Optimization Agent",
+    agentId: "@aibast-agents-library/production-line-optimization",
+    title: "Production line health",
+    persona: "Plant Manager",
+    prompts: ["production-line-health", "production-bottleneck", "production-plan"],
+    turns: [
+      {
+        user: "Which production line needs attention today, and what is driving the loss?",
+        reply: "<p><strong>Polymer Molding Line C needs the first leadership conversation.</strong> It has the widest gap between design capacity and current output, with availability and quality both contributing.</p><p>Electronics Assembly Line A is the second priority because performance is constrained even though quality remains strong.</p>",
+        card: {
+          title: "Line health snapshot",
+          status: "Synthetic telemetry",
+          headers: ["Line", "OEE", "Output / design", "Primary signal"],
+          rows: [
+            ["Line C — Polymer Molding", "68.0%", "168 / 240", "Availability + quality"],
+            ["Line A — Electronics Assembly", "70.9%", "142 / 180", "Performance constraint"],
+            ["Line B — Metal Fabrication", "85.8%", "261 / 300", "Stable; monitor welding"]
+          ]
+        }
+      },
+      {
+        user: "What should I ask the production team next?",
+        reply: "<p>Ask three questions:</p><ol><li>What is keeping Injection Molding unavailable or slow on Line C?</li><li>What work is queued behind Functional Test on Line A?</li><li>Is Robotic Welding on Line B creating a quality or capacity risk that is not visible in the line-level average?</li></ol>"
+      }
+    ]
+  },
+  "production-bottleneck": {
+    agent: "Product Line Optimization Agent",
+    agentId: "@aibast-agents-library/production-line-optimization",
+    title: "Station bottleneck analysis",
+    persona: "Production Engineer",
+    prompts: ["production-bottleneck", "production-line-health", "production-plan"],
+    turns: [
+      {
+        user: "Where is the bottleneck on each line, and which station should the plant team address first?",
+        reply: "<p>The constraining stations are <strong>Functional Test on Line A</strong>, <strong>Robotic Welding on Line B</strong>, and <strong>Injection Molding on Line C</strong>.</p><p>Address Injection Molding first because it combines the largest cycle-time gap with the strongest defect signal. Functional Test is the next best capacity conversation.</p>",
+        card: {
+          title: "Constraint comparison",
+          status: "3 bottlenecks",
+          headers: ["Line", "Station", "Cycle vs takt", "Decision"],
+          rows: [
+            ["Line C", "Injection Molding", "18.4s vs 15.0s", "Address first"],
+            ["Line A", "Functional Test", "25.3s vs 20.0s", "Capacity review"],
+            ["Line B", "Robotic Welding", "14.2s vs 12.0s", "Quality + flow review"]
+          ]
+        }
+      },
+      {
+        user: "What evidence should I bring into the improvement workshop?",
+        reply: "<p>Bring the station cycle-time history, downtime reasons, queue length before and after the station, defect categories, rework loops, and operator or tooling changes by shift. That separates a true equipment constraint from scheduling, material, or quality causes.</p>"
+      }
+    ]
+  },
+  "production-plan": {
+    agent: "Product Line Optimization Agent",
+    agentId: "@aibast-agents-library/production-line-optimization",
+    title: "Improvement and shift planning",
+    persona: "Operations Director",
+    prompts: ["production-plan", "production-line-health", "production-bottleneck"],
+    turns: [
+      {
+        user: "Give me the practical options to improve throughput, then translate the preferred approach into a shift plan.",
+        reply: "<p>Start with a staged response rather than buying capacity immediately:</p><ol><li>Reduce cycle time at the constraining station through process and tooling changes.</li><li>Remove the quality-driven rework loops that send units back through the line.</li><li>Use a parallel station only where the first two actions cannot protect the required output.</li></ol><p>For the shift plan, protect experienced coverage on the constrained stations, keep the night shift focused on stable work, and review the constraint at every handoff.</p>",
+        card: {
+          title: "Recommended operating sequence",
+          status: "Plan ready",
+          headers: ["Priority", "Action", "Shift implication"],
+          rows: [
+            ["1", "Reduce constraint cycle time", "Experienced operator coverage"],
+            ["2", "Remove rework loops", "Quality support at source"],
+            ["3", "Evaluate parallel capacity", "Use after process changes"],
+            ["4", "Review every handoff", "Day / swing / night continuity"]
+          ]
+        }
+      },
+      {
+        user: "How should leadership review this without treating a projection as a promise?",
+        reply: "<p>Frame every option as a testable operating hypothesis. Confirm the constraint with live data, run the process change on a controlled shift, compare quality and queue behavior, then decide whether to scale the intervention. The synthetic estimates guide the conversation; they are not customer commitments.</p>"
+      }
+    ]
+  }
+};
+
+const SCENARIO_INDEX = {
+  "permit-backlog": {
+    title: "Permit backlog and complaint risk",
+    solution: "building-permit-processing",
+    caseId: "BPP-01",
+    agent: "Building Permit Processing Agent",
+    agentId: "@aibast-agents-library/building-permit-processing",
+    prompts: ["permit-backlog", "permit-intake", "permit-routing", "permit-updates", "permit-inspections"]
+  },
+  "permit-intake": {
+    title: "Front-counter intake triage",
+    solution: "building-permit-processing",
+    caseId: "BPP-02",
+    agent: "Building Permit Processing Agent",
+    agentId: "@aibast-agents-library/building-permit-processing",
+    prompts: ["permit-backlog", "permit-intake", "permit-routing", "permit-updates", "permit-inspections"]
+  },
+  "permit-routing": {
+    title: "Review routing and due date",
+    solution: "building-permit-processing",
+    caseId: "BPP-03",
+    agent: "Building Permit Processing Agent",
+    agentId: "@aibast-agents-library/building-permit-processing",
+    prompts: ["permit-backlog", "permit-intake", "permit-routing", "permit-updates", "permit-inspections"]
+  },
+  "permit-updates": {
+    title: "Proactive applicant updates",
+    solution: "building-permit-processing",
+    caseId: "BPP-04",
+    agent: "Building Permit Processing Agent",
+    agentId: "@aibast-agents-library/building-permit-processing",
+    prompts: ["permit-backlog", "permit-intake", "permit-routing", "permit-updates", "permit-inspections"]
+  },
+  "permit-inspections": {
+    title: "Inspector assignment board",
+    solution: "building-permit-processing",
+    caseId: "BPP-05",
+    agent: "Building Permit Processing Agent",
+    agentId: "@aibast-agents-library/building-permit-processing",
+    prompts: ["permit-backlog", "permit-intake", "permit-routing", "permit-updates", "permit-inspections"]
+  },
+  "production-line-health": {
+    title: "Production line health",
+    solution: "product-line-optimization",
+    caseId: "PLO-01",
+    agent: "Product Line Optimization Agent",
+    agentId: "@aibast-agents-library/production-line-optimization",
+    prompts: ["production-line-health", "production-bottleneck", "production-options", "production-shift-plan"]
+  },
+  "production-bottleneck": {
+    title: "Station bottleneck analysis",
+    solution: "product-line-optimization",
+    caseId: "PLO-02",
+    agent: "Product Line Optimization Agent",
+    agentId: "@aibast-agents-library/production-line-optimization",
+    prompts: ["production-line-health", "production-bottleneck", "production-options", "production-shift-plan"]
+  },
+  "production-options": {
+    title: "Throughput improvement options",
+    solution: "product-line-optimization",
+    caseId: "PLO-03",
+    agent: "Product Line Optimization Agent",
+    agentId: "@aibast-agents-library/production-line-optimization",
+    prompts: ["production-line-health", "production-bottleneck", "production-options", "production-shift-plan"]
+  },
+  "production-shift-plan": {
+    title: "Three-shift production plan",
+    solution: "product-line-optimization",
+    caseId: "PLO-04",
+    agent: "Product Line Optimization Agent",
+    agentId: "@aibast-agents-library/production-line-optimization",
+    prompts: ["production-line-health", "production-bottleneck", "production-options", "production-shift-plan"]
+  },
+  "regulatory-audit-readiness": {
+    title: "MiFID audit readiness",
+    solution: "fs-regulatory-compliance",
+    caseId: "RC-01",
+    agent: "Regulatory Compliance Agent",
+    agentId: "@aibast-agents-library/fs-regulatory-compliance",
+    prompts: ["regulatory-audit-readiness", "regulatory-certification-readiness", "regulatory-trade-surveillance", "regulatory-algorithm-go-live", "regulatory-board-evidence"]
+  },
+  "regulatory-certification-readiness": {
+    title: "Trader certification readiness",
+    solution: "fs-regulatory-compliance",
+    caseId: "RC-02",
+    agent: "Regulatory Compliance Agent",
+    agentId: "@aibast-agents-library/fs-regulatory-compliance",
+    prompts: ["regulatory-audit-readiness", "regulatory-certification-readiness", "regulatory-trade-surveillance", "regulatory-algorithm-go-live", "regulatory-board-evidence"]
+  },
+  "regulatory-trade-surveillance": {
+    title: "Transaction-reporting surveillance",
+    solution: "fs-regulatory-compliance",
+    caseId: "RC-03",
+    agent: "Regulatory Compliance Agent",
+    agentId: "@aibast-agents-library/fs-regulatory-compliance",
+    prompts: ["regulatory-audit-readiness", "regulatory-certification-readiness", "regulatory-trade-surveillance", "regulatory-algorithm-go-live", "regulatory-board-evidence"]
+  },
+  "regulatory-algorithm-go-live": {
+    title: "Algorithm go-live control",
+    solution: "fs-regulatory-compliance",
+    caseId: "RC-04",
+    agent: "Regulatory Compliance Agent",
+    agentId: "@aibast-agents-library/fs-regulatory-compliance",
+    prompts: ["regulatory-audit-readiness", "regulatory-certification-readiness", "regulatory-trade-surveillance", "regulatory-algorithm-go-live", "regulatory-board-evidence"]
+  },
+  "regulatory-board-evidence": {
+    title: "Board-ready compliance evidence",
+    solution: "fs-regulatory-compliance",
+    caseId: "RC-05",
+    agent: "Regulatory Compliance Agent",
+    agentId: "@aibast-agents-library/fs-regulatory-compliance",
+    prompts: ["regulatory-audit-readiness", "regulatory-certification-readiness", "regulatory-trade-surveillance", "regulatory-algorithm-go-live", "regulatory-board-evidence"]
+  }
+};
+
+const params = new URLSearchParams(location.search);
+let scenarioId = params.get("scenario") || "permit-backlog";
+let scenario = null;
+let timers = [];
+
+const $ = id => document.getElementById(id);
+
+async function setScenario(nextId, autoplay = false) {
+  if (!SCENARIO_INDEX[nextId]) return;
+  scenarioId = nextId;
+  history.replaceState(null, "", `${location.pathname}?scenario=${encodeURIComponent(nextId)}`);
+  await loadScenario(nextId);
+  if (autoplay) play();
+}
+
+function configure() {
+  if (!scenario) return;
+  document.title = `${scenario.title} — M365 Copilot Demo`;
+  $("agent-name").textContent = `@${scenario.agent}`;
+  $("back-link").href = `../../library.html#agent/${encodeURIComponent(scenario.agentId)}`;
+  $("stage-note").innerHTML = `<strong>${scenario.title}</strong> — ${scenario.persona}<br>Press Play, or choose a suggested prompt below.`;
+  $("prompt-pills").innerHTML = scenario.prompts.map(id => {
+    const item = SCENARIO_INDEX[id];
+    return `<button class="prompt-pill" type="button" data-scenario="${id}">${item.title}</button>`;
+  }).join("");
+  document.querySelectorAll("[data-scenario]").forEach(button => {
+    button.addEventListener("click", () => setScenario(button.dataset.scenario, true));
+  });
+}
+
+async function loadScenario(id) {
+  const definition = SCENARIO_INDEX[id] || SCENARIO_INDEX["permit-backlog"];
+  const response = await fetch(`../${definition.solution}/evals/transcripts.json`, { cache: "no-store" });
+  if (!response.ok) throw new Error(`Could not load canonical transcript: ${response.status}`);
+  const artifact = await response.json();
+  const transcript = artifact.transcripts.find(item => item.case_id === definition.caseId);
+  if (!transcript) throw new Error(`Missing transcript ${definition.caseId}`);
+  scenario = {
+    ...definition,
+    persona: transcript.persona,
+    capturedAt: artifact.captured_at,
+    agentSha: artifact.agent_sources[0].sha256,
+    turns: [{
+      user: transcript.prompt,
+      reply: markdownToHtml(transcript.assistant_response),
+      model: transcript.model
+    }]
+  };
+  reset();
+}
+
+function clearTimers() {
+  timers.forEach(timer => clearTimeout(timer));
+  timers = [];
+}
+
+function reset() {
+  clearTimers();
+  if (!scenario) return;
+  $("chat-body").innerHTML = `<div class="stage-note" id="stage-note"><strong>${scenario.title}</strong> — ${scenario.persona}<br>Press Play, or choose a suggested prompt below.</div>`;
+  $("play").disabled = false;
+  $("play").textContent = "▶ Play demo";
+  configure();
+}
+
+function userMessage(text) {
+  return `<div class="message user"><div class="user-bubble">${text}</div></div>`;
+}
+
+function resultCard(card) {
+  if (!card) return "";
+  return `<div class="result-card">
+    <div class="result-head"><span>▦</span><strong>${card.title}</strong><span>${card.status}</span></div>
+    <div style="overflow-x:auto"><table><thead><tr>${card.headers.map(header => `<th>${header}</th>`).join("")}</tr></thead>
+    <tbody>${card.rows.map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
+    <div class="result-note">Source: synthetic domain data generated for this AI BAST demonstration.</div>
+  </div>`;
+}
+
+function escapeHtml(value) {
+  return String(value || "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;"
+  })[char]);
+}
+
+function inlineMarkdown(value) {
+  return escapeHtml(value)
+    .replace(/`([^`]+)`/g, "<code>$1</code>")
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+}
+
+function markdownToHtml(markdown) {
+  const lines = String(markdown || "").split(/\r?\n/);
+  const output = [];
+  let index = 0;
+  while (index < lines.length) {
+    const line = lines[index];
+    if (!line.trim()) { index += 1; continue; }
+    if (line.trim().startsWith("|") && index + 1 < lines.length
+        && /^\s*\|?[\s:-]+\|/.test(lines[index + 1])) {
+      const tableLines = [];
+      while (index < lines.length && lines[index].trim().startsWith("|")) {
+        tableLines.push(lines[index].trim());
+        index += 1;
+      }
+      const rows = tableLines
+        .filter((_, rowIndex) => rowIndex !== 1)
+        .map(row => row.replace(/^\||\|$/g, "").split("|").map(cell => cell.trim()));
+      output.push(`<div class="result-card"><table><thead><tr>${rows[0].map(cell => `<th>${inlineMarkdown(cell)}</th>`).join("")}</tr></thead><tbody>${rows.slice(1).map(row => `<tr>${row.map(cell => `<td>${inlineMarkdown(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table><div class="result-note">Exact table captured from the isolated Brainstem response.</div></div>`);
+      continue;
+    }
+    if (/^#{1,3}\s+/.test(line)) {
+      const level = Math.min(3, line.match(/^#+/)[0].length + 2);
+      output.push(`<h${level}>${inlineMarkdown(line.replace(/^#{1,3}\s+/, ""))}</h${level}>`);
+      index += 1;
+      continue;
+    }
+    if (/^\s*[-*]\s+/.test(line)) {
+      const items = [];
+      while (index < lines.length && /^\s*[-*]\s+/.test(lines[index])) {
+        items.push(lines[index].replace(/^\s*[-*]\s+/, ""));
+        index += 1;
+      }
+      output.push(`<ul>${items.map(item => `<li>${inlineMarkdown(item)}</li>`).join("")}</ul>`);
+      continue;
+    }
+    if (/^\s*\d+\.\s+/.test(line)) {
+      const items = [];
+      while (index < lines.length && /^\s*\d+\.\s+/.test(lines[index])) {
+        items.push(lines[index].replace(/^\s*\d+\.\s+/, ""));
+        index += 1;
+      }
+      output.push(`<ol>${items.map(item => `<li>${inlineMarkdown(item)}</li>`).join("")}</ol>`);
+      continue;
+    }
+    output.push(`<p>${inlineMarkdown(line)}</p>`);
+    index += 1;
+  }
+  return output.join("");
+}
+
+function typingMessage() {
+  return `<div class="message" id="typing"><div class="agent-head"><div class="agent-avatar">✦</div><span class="agent-name">${scenario.agent}</span><span class="agent-tag">Copilot Studio agent</span></div><div class="agent-body"><span class="typing"><i></i><i></i><i></i></span></div></div>`;
+}
+
+function agentMessage(turn) {
+  return `<div class="message"><div class="agent-head"><div class="agent-avatar">✦</div><span class="agent-name">${scenario.agent}</span><span class="agent-tag">Copilot Studio agent</span></div>
+    <div class="agent-body">${turn.reply}<div class="source">Exact Brainstem transcript · ${escapeHtml(turn.model || "model unavailable")} · agent SHA ${escapeHtml(scenario.agentSha.slice(0, 12))}… · captured ${escapeHtml(scenario.capturedAt.slice(0, 10))}</div></div></div>`;
+}
+
+function append(html) {
+  $("chat-body").insertAdjacentHTML("beforeend", html);
+  $("chat").scrollTo({ top: $("chat").scrollHeight, behavior: "smooth" });
+}
+
+function play() {
+  clearTimers();
+  reset();
+  $("play").disabled = true;
+  $("play").textContent = "Playing…";
+  let delay = 300;
+  scenario.turns.forEach(turn => {
+    timers.push(setTimeout(() => append(userMessage(turn.user)), delay));
+    delay += 900;
+    timers.push(setTimeout(() => append(typingMessage()), delay));
+    delay += 900;
+    timers.push(setTimeout(() => {
+      const typing = $("typing");
+      if (typing) typing.remove();
+      append(agentMessage(turn));
+    }, delay));
+    delay += 1750;
+  });
+  timers.push(setTimeout(() => {
+    $("play").disabled = false;
+    $("play").textContent = "▶ Play again";
+  }, delay));
+}
+
+$("play").addEventListener("click", play);
+$("reset").addEventListener("click", reset);
+$("theme-toggle").addEventListener("click", () => {
+  const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+});
+
+loadScenario(scenarioId).catch(error => {
+  $("stage-note").innerHTML = `<strong>Demo unavailable</strong><br>${escapeHtml(error.message)}`;
+  console.error(error);
+});
+</script>
+</body>
+</html>

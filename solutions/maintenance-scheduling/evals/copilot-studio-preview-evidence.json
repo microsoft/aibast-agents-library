@@ -1,0 +1,60 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T06:03:48.928Z",
+  "solution": "@aibast-agents-library/maintenance-scheduling",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Maintenance Scheduling Pilot",
+  "schema_name": "aibast_MaintenanceSchedulingPilot",
+  "bot_id": "b6dcbdd5-aa0b-4d72-916c-418ececa38bb",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "MS-01",
+      "must_include": [
+        "EQ-INJ-01",
+        "Technician Availability"
+      ],
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "MS-02",
+      "must_include": [
+        "EQ-INJ-01",
+        "Barrel heater band failure"
+      ],
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "MS-03",
+      "must_include": [
+        "EQ-INJ-01",
+        "No work order is created or dispatched"
+      ],
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "MS-04",
+      "must_include": [
+        "Modeled avoided-cost opportunity",
+        "synthetic planning estimates"
+      ],
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "passed": true
+    }
+  ]
+}

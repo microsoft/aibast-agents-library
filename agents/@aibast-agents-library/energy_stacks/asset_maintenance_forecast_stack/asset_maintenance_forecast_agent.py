@@ -15,9 +15,9 @@ from basic_agent import BasicAgent
 __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/asset-maintenance-forecast",
-    "version": "1.0.0",
-    "display_name": "Energy Operations Agent Suite",
-    "description": "Deliver real-time insights, automate critical workflows, and enable guided decision making—boosting efficiency while reducing operational and compliance risk for energy organizations.",
+    "version": "1.1.0",
+    "display_name": "Asset Maintenance Forecast Agent",
+    "description": "Analyze a synthetic energy-asset snapshot for asset health, failure forecasting, maintenance budgets, and draft work-order planning. Use for reliability and maintenance-planning questions only. The agent never creates work orders, schedules crews, or directs field work; a qualified asset owner must approve any action through future authenticated tools.",
     "author": "AIBAST",
     "tags": ["maintenance", "asset-health", "energy", "predictive", "work-orders", "budget"],
     "category": "energy",
@@ -120,9 +120,15 @@ BUDGET_RATES = {
 # Helpers
 # ---------------------------------------------------------------------------
 
-def _maintenance_forecast():
+def _selected_assets(asset_id=None):
+    if asset_id:
+        return {asset_id: ASSETS[asset_id]} if asset_id in ASSETS else {}
+    return ASSETS
+
+
+def _maintenance_forecast(asset_id=None):
     forecasts = []
-    for aid, a in ASSETS.items():
+    for aid, a in _selected_assets(asset_id).items():
         forecasts.append({
             "id": aid, "name": a["name"], "type": a["type"],
             "condition_score": a["condition_score"],
@@ -135,9 +141,10 @@ def _maintenance_forecast():
     return {"forecasts": forecasts}
 
 
-def _asset_health():
+def _asset_health(asset_id=None):
     health = []
-    for aid, a in ASSETS.items():
+    selected = _selected_assets(asset_id)
+    for aid, a in selected.items():
         status = "critical" if a["condition_score"] < 50 else ("warning" if a["condition_score"] < 70 else "good")
         health.append({
             "id": aid, "name": a["name"], "type": a["type"],
@@ -146,13 +153,14 @@ def _asset_health():
             "replacement_cost": a["replacement_cost"],
         })
     health.sort(key=lambda x: x["condition_score"])
-    return {"assets": health, "avg_condition": round(sum(a["condition_score"] for a in ASSETS.values()) / len(ASSETS), 1)}
+    average = round(sum(a["condition_score"] for a in selected.values()) / len(selected), 1) if selected else 0
+    return {"assets": health, "avg_condition": average}
 
 
-def _budget_projection():
+def _budget_projection(asset_id=None):
     total = 0
     projections = []
-    for aid, a in ASSETS.items():
+    for aid, a in _selected_assets(asset_id).items():
         atype = a["type"]
         annual = BUDGET_RATES["major"][atype] + BUDGET_RATES["minor"][atype] * 2 + BUDGET_RATES["inspection"][atype]
         if a["condition_score"] < 50:
@@ -167,10 +175,10 @@ def _budget_projection():
     return {"projections": projections, "total_annual": total}
 
 
-def _work_order_plan():
+def _work_order_plan(asset_id=None):
     orders = []
     priority = 1
-    for aid, a in sorted(ASSETS.items(), key=lambda x: x[1]["condition_score"]):
+    for aid, a in sorted(_selected_assets(asset_id).items(), key=lambda x: x[1]["condition_score"]):
         atype = a["type"]
         if a["condition_score"] < 50:
             orders.append({
@@ -221,11 +229,11 @@ class AssetMaintenanceForecastAgent(BasicAgent):
                             "budget_projection",
                             "work_order_plan",
                         ],
-                        "description": "The maintenance operation to perform.",
+                        "description": "Choose maintenance_forecast for predicted risk windows, asset_health for condition triage, budget_projection for planning estimates, or work_order_plan for a draft approval queue.",
                     },
                     "asset_id": {
                         "type": "string",
-                        "description": "Optional asset ID to filter results.",
+                        "description": "Optional synthetic asset ID such as AST-X002. Unknown IDs return an empty result, never invented data.",
                     },
                 },
                 "required": ["operation"],
@@ -235,18 +243,19 @@ class AssetMaintenanceForecastAgent(BasicAgent):
 
     def perform(self, **kwargs) -> str:
         op = kwargs.get("operation", "maintenance_forecast")
+        asset_id = kwargs.get("asset_id")
         if op == "maintenance_forecast":
-            return self._maintenance_forecast()
+            return self._maintenance_forecast(asset_id)
         elif op == "asset_health":
-            return self._asset_health()
+            return self._asset_health(asset_id)
         elif op == "budget_projection":
-            return self._budget_projection()
+            return self._budget_projection(asset_id)
         elif op == "work_order_plan":
-            return self._work_order_plan()
+            return self._work_order_plan(asset_id)
         return f"**Error:** Unknown operation `{op}`."
 
-    def _maintenance_forecast(self) -> str:
-        data = _maintenance_forecast()
+    def _maintenance_forecast(self, asset_id=None) -> str:
+        data = _maintenance_forecast(asset_id)
         lines = [
             "# Maintenance Forecast",
             "",
@@ -260,12 +269,19 @@ class AssetMaintenanceForecastAgent(BasicAgent):
             )
         lines.append("")
         lines.append("## Action Items")
-        lines.append("- Substation Transformer B-12 requires immediate attention (predicted failure Q2 2026).")
-        lines.append("- Wind Turbine Alpha-7 approaching maintenance window (predicted failure Q3 2026).")
+        if not data["forecasts"]:
+            lines.append("- No matching synthetic asset was found.")
+        for forecast in data["forecasts"]:
+            if forecast["condition_score"] < 50:
+                lines.append(f"- {forecast['name']} is the highest-priority engineering review candidate.")
+            elif forecast["condition_score"] < 70:
+                lines.append(f"- {forecast['name']} is approaching its modeled maintenance window.")
+        lines.append("")
+        lines.append("> Synthetic planning evidence only. Confirm against live telemetry and engineering review before maintenance or field action.")
         return "\n".join(lines)
 
-    def _asset_health(self) -> str:
-        data = _asset_health()
+    def _asset_health(self, asset_id=None) -> str:
+        data = _asset_health(asset_id)
         lines = [
             "# Asset Health Dashboard",
             "",
@@ -280,10 +296,12 @@ class AssetMaintenanceForecastAgent(BasicAgent):
                 f"| {a['name']} | {a['type']} | {a['condition_score']} "
                 f"| {a['status'].upper()} | {a['age_years']}yr | {hrs} | ${a['replacement_cost']:,} |"
             )
+        lines.append("")
+        lines.append("> Advisory condition screening only; it is not a safety determination or authorization to operate.")
         return "\n".join(lines)
 
-    def _budget_projection(self) -> str:
-        data = _budget_projection()
+    def _budget_projection(self, asset_id=None) -> str:
+        data = _budget_projection(asset_id)
         lines = [
             "# Maintenance Budget Projection",
             "",
@@ -297,10 +315,12 @@ class AssetMaintenanceForecastAgent(BasicAgent):
                 f"| {p['name']} | {p['type']} | {p['condition_score']} "
                 f"| ${p['annual_budget']:,} | ${p['replacement_cost']:,} |"
             )
+        lines.append("")
+        lines.append("> Synthetic planning estimate; finance and asset owners must validate and approve any commitment.")
         return "\n".join(lines)
 
-    def _work_order_plan(self) -> str:
-        data = _work_order_plan()
+    def _work_order_plan(self, asset_id=None) -> str:
+        data = _work_order_plan(asset_id)
         lines = [
             "# Work Order Plan",
             "",
@@ -314,6 +334,8 @@ class AssetMaintenanceForecastAgent(BasicAgent):
                 f"| {wo['priority']} | {wo['asset_name']} | {wo['work_type'].upper()} "
                 f"| {wo['description']} | ${wo['estimated_cost']:,} | {wo['target_date']} |"
             )
+        lines.append("")
+        lines.append("> Draft approval queue only. No work order, schedule, crew assignment, or field instruction has been created.")
         return "\n".join(lines)
 
 

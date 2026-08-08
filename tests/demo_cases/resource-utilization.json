@@ -1,0 +1,59 @@
+{
+  "solution": "Resource Utilization Agent",
+  "agent": "@aibast-agents-library/resource-utilization",
+  "onepager": "Resource Utilization Agent one-pager.pptx",
+  "agent_files": ["resource_utilization_agent"],
+  "note": "Persona-language locked cases for every implemented resource-planning workflow.",
+  "cases": [
+    {
+      "id": "RU-01",
+      "persona": "Operations Leader",
+      "onepager_bullet": "Implement real-time utilization tracking and capacity analysis",
+      "prompt": "Where are we under target today, and which parts of the workforce are sitting available?",
+      "operation": "utilization_dashboard",
+      "must_include": ["Firm utilization", "Bench", "Utilization by Level"],
+      "must_not_include": ["pulled from the live PSA"],
+      "expects_agent": "ResourceUtilizationAgent"
+    },
+    {
+      "id": "RU-02",
+      "persona": "Resource Manager",
+      "onepager_bullet": "Analyze workforce skills and availability to identify deployment gaps and opportunities",
+      "prompt": "What capacity is coming free, and how does it line up with the opportunities expected over the next quarter?",
+      "operation": "capacity_forecast",
+      "must_include": ["Upcoming Project Endings", "Pipeline Demand", "Total roles in pipeline"],
+      "must_not_include": ["pipeline is guaranteed"],
+      "expects_agent": "ResourceUtilizationAgent"
+    },
+    {
+      "id": "RU-03",
+      "persona": "Finance Director",
+      "onepager_bullet": "Analyze workforce skills and availability to identify deployment gaps and opportunities",
+      "prompt": "Show me who is on the bench, the skills we are carrying, and the cost exposure we need to address.",
+      "operation": "bench_analysis",
+      "must_include": ["David Okafor", "Robert Garcia", "Skill Inventory on Bench"],
+      "must_not_include": ["revenue has been booked"],
+      "expects_agent": "ResourceUtilizationAgent"
+    },
+    {
+      "id": "RU-04",
+      "persona": "Resource Manager",
+      "onepager_bullet": "Match consultants to pipeline projects and innovation initiatives for immediate revenue impact",
+      "prompt": "Which available consultants fit the strongest pipeline needs, and who still needs another path?",
+      "operation": "staffing_recommendation",
+      "must_include": ["Bench-to-Pipeline Matches", "Unmatched Bench Resources", "Robert Garcia"],
+      "must_not_include": ["consultants have been assigned"],
+      "expects_agent": "ResourceUtilizationAgent"
+    },
+    {
+      "id": "RU-05",
+      "persona": "Operations Leader",
+      "onepager_bullet": "Model upskilling ROI and implement strategic workforce planning to align with market demand",
+      "prompt": "Give me an upskilling and internal-innovation plan for the people we cannot place directly, including the business case.",
+      "operation": "workforce_plan",
+      "must_include": ["D365 integration accelerator", "Synthetic payback scenario", "Innovation and Capability-Building Options"],
+      "must_not_include": ["leadership approved"],
+      "expects_agent": "ResourceUtilizationAgent"
+    }
+  ]
+}

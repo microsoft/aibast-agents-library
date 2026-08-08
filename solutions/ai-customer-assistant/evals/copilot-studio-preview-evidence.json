@@ -1,0 +1,68 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T15:46:44.297Z",
+  "solution": "@aibast-agents-library/ai-customer-assistant",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Customer Escalations Pilot",
+  "schema_name": "aibast_CustomerEscalationsPilot",
+  "bot_id": "65c39731-b451-4a26-95ac-2e27d0495cda",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "CES-01",
+      "must_include": [
+        "INQ-4001",
+        "KB-104",
+        "No customer message is sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CES-02",
+      "must_include": [
+        "KB-104",
+        "Resolution Steps",
+        "No customer message is sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CES-03",
+      "must_include": [
+        "Tier 2 Engineering",
+        "2 hours",
+        "does not execute"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CES-04",
+      "must_include": [
+        "4.3/5.0",
+        "Recent Surveys",
+        "fictional pilot records"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    }
+  ]
+}

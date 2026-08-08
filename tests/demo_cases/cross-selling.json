@@ -1,0 +1,113 @@
+{
+  "solution": "Cross-Selling Opportunities Agent",
+  "slot": 25,
+  "agent": "@aibast-agents-library/cross-selling",
+  "onepager": "28. Cross Selling Opportunities Agent one-pager.pptx",
+  "agent_files": [
+    "cross_selling_agent"
+  ],
+  "note": "Locked persona-language capture contract with one deterministic synthetic case per implemented operation.",
+  "cases": [
+    {
+      "id": "CS-01",
+      "persona": "Sales Operations Manager",
+      "onepager_bullet": "Analyze product usage trends and benchmarking gaps across accounts to pinpoint expansion potential",
+      "prompt": "Scan synthetic customer CUST-001 for product gaps, usage signals, buying signals, and budget timing.",
+      "operation": "opportunity_scan",
+      "arguments": {
+        "operation": "opportunity_scan",
+        "data_source": "synthetic",
+        "customer_id": "CUST-001"
+      },
+      "must_include": [
+        "Cross-Sell Opportunity Scan",
+        "Synthetic Usage Signals",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "CrossSellingAgent"
+    },
+    {
+      "id": "CS-02",
+      "persona": "Enablement Manager",
+      "onepager_bullet": "Analyze product usage trends and benchmarking gaps across accounts to pinpoint expansion potential",
+      "prompt": "Explain the synthetic product-affinity and benchmark assumptions without treating them as observed conversion performance.",
+      "operation": "product_affinity",
+      "arguments": {
+        "operation": "product_affinity",
+        "data_source": "synthetic",
+        "customer_id": "CUST-001"
+      },
+      "must_include": [
+        "Product Affinity Matrix",
+        "Response Assumption",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "CrossSellingAgent"
+    },
+    {
+      "id": "CS-03",
+      "persona": "Enablement Manager",
+      "onepager_bullet": "Generate prioritized opportunity lists and personalize outreach plans to boost conversion rates",
+      "prompt": "Draft prioritized product recommendations and a reviewable engagement plan for synthetic customer CUST-001 without sending outreach.",
+      "operation": "recommendation_engine",
+      "arguments": {
+        "operation": "recommendation_engine",
+        "data_source": "synthetic",
+        "customer_id": "CUST-001"
+      },
+      "must_include": [
+        "Prioritized Recommendations",
+        "Draft Engagement Plan",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "CrossSellingAgent"
+    },
+    {
+      "id": "CS-04",
+      "persona": "Sales Leader",
+      "onepager_bullet": "Generate prioritized opportunity lists and personalize outreach plans to boost conversion rates",
+      "prompt": "Compare the bundled portfolio synthetic value scenarios without making conversion, revenue, or margin claims.",
+      "operation": "revenue_impact",
+      "arguments": {
+        "operation": "revenue_impact",
+        "data_source": "synthetic",
+        "customer_id": "CUST-001"
+      },
+      "must_include": [
+        "Synthetic Cross-Sell Value Scenario",
+        "Portfolio Totals",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "CrossSellingAgent"
+    }
+  ],
+  "assertion_principle": "expects_agent proves routing; must_include checks deterministic tool output; must_not_include catches routing stalls or prohibited side-effect claims."
+}

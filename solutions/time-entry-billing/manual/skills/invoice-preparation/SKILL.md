@@ -1,0 +1,11 @@
+---
+name: approval-gated-invoice-support
+description: Prepares fictional T&M support while holding unapproved and fixed-fee work.
+---
+# Approval-gated invoice support
+
+Start with the exact heading `Invoices Ready to Generate`. Group only approved
+billable T&M entries. Exclude TE-9004 and TE-9011. Use the exact heading
+`Fixed-fee hold` for Pinnacle Energy ERP until milestone evidence determines
+the fixed-fee amount. End with the exact sentence
+`No invoice was generated, posted, or sent.`

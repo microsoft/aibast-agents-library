@@ -1,0 +1,117 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:40:59.260972+00:00",
+  "solution": "@aibast-agents-library/financial-advisor-copilot",
+  "onepager": "50. Financial Advisor Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "FinancialAdvisorCopilotAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/financial_services_stacks/financial_advisor_copilot_stack/financial_advisor_copilot_agent.py",
+      "sha256": "b69a30049be7f2ec22efbae99bc4e5bd4bff20e35c47cf6bbd8b553b606cbf85"
+    }
+  ],
+  "case_file": "tests/demo_cases/financial-advisor-copilot.json",
+  "case_file_sha256": "17843dcf1e9885039f45c75a8f5d6060941c2e72b6b84fdc9b3406c6763a46bc",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "FAC-01",
+      "persona": "Branch Banker",
+      "onepager_promise": "Coordinate check-in, identity verification, and service routing",
+      "prompt": "Who is waiting, what do they need, and where should I route them after identity checks?",
+      "assistant_response": "**Three clients waiting** (all identity checks pending):\n\n1. **Robert & Susan Whitfield (CLI-3001)**  \n   Need: Retirement Review  \n   Route: Financial Advisor\n\n2. **Angela Martinez (CLI-3002)**  \n   Need: Portfolio Review  \n   Route: Financial Advisor\n\n3. **William Chen Trust (CLI-3003)**  \n   Need: Trust Distribution Question  \n   Route: Senior Advisor\n\nOnce you've completed authorized identity checks on each, route the Whitfields and Angela to a financial advisor, and the Chen Trust to a senior advisor for the distribution matter. Let me know when you've verified them and need compliance flags or advisor handoff details.",
+      "agent_logs": "[FinancialAdvisorCopilotAgent] > **SYNTHETIC DEMO DATA \u2014 LICENSED ADVISOR REVIEW REQUIRED.** Fictional clients and holdings only. This is not investment, tax, legal, or financial advice; no identity was verified, no account was opened, and no order, transaction, transfer, or customer communication occurred.\n\n# Branch Service Intake and Routing Preparation\n\n| Client | Request | Identity Check | Proposed Route |\n|---|---|---|---|\n| Robert & Susan Whitfield (CLI-3001) | Retirement Review | Pending Authorized Check | Financial Advisor |\n| Angela Martinez (CLI-3002) | Portfolio Review | Pending Authorized Check | Financial Advisor |\n| William Chen Trust (CLI-3003) | Trust Distribution Question | Pending Authorized Check | Senior Advisor |\n\nNo identity has been verified and no service has been assigned. Follow approved customer-identification and routing procedures before proceeding.",
+      "expected_agent": "FinancialAdvisorCopilotAgent",
+      "must_include": [
+        "CLI-3001",
+        "No identity"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "FAC-02",
+      "persona": "Advisory Director",
+      "onepager_promise": "Guide bankers through advisory, onboarding, and transaction workflows",
+      "prompt": "Summarize the advisor book and show which client is already retired.",
+      "assistant_response": "## Advisor Book Summary\n\n**Total AUM:** $6.47M across 3 clients managed by James Morrison (CFP) and Patricia Lane (CFA).\n\n**Key highlights:**\n- **Robert & Susan Whitfield** (age 58, moderate risk): $1.85M, retiring in ~9 years\n- **Angela Martinez** (age 34, aggressive risk): $420K, 26 years to retirement\n- **William Chen Trust** (age 72, conservative risk): $4.2M, **already retired**\n\n**Retired client:** **William Chen Trust** \u2014 conservative allocation, managed by Patricia Lane, last reviewed 2025-02-10.",
+      "agent_logs": "[FinancialAdvisorCopilotAgent] > **SYNTHETIC DEMO DATA \u2014 LICENSED ADVISOR REVIEW REQUIRED.** Fictional clients and holdings only. This is not investment, tax, legal, or financial advice; no identity was verified, no account was opened, and no order, transaction, transfer, or customer communication occurred.\n\n# Client Review Summary\n\n| Client | Advisor | Risk | Assets | Age | Retirement In | Last Review |\n|---|---|---|---|---|---|---|\n| Robert & Susan Whitfield (CLI-3001) | James Morrison, CFP | Moderate | $1,850,000 | 58 | 9 yrs | 2024-12-15 |\n| Angela Martinez (CLI-3002) | James Morrison, CFP | Aggressive | $420,000 | 34 | 26 yrs | 2025-01-20 |\n| William Chen Trust (CLI-3003) | Patricia Lane, CFA | Conservative | $4,200,000 | 72 | Retired | 2025-02-10 |\n\n**Total AUM:** $6,470,000\n**Clients:** 3",
+      "expected_agent": "FinancialAdvisorCopilotAgent",
+      "must_include": [
+        "CLI-3003",
+        "Retired"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "FAC-03",
+      "persona": "Financial Advisor",
+      "onepager_promise": "Surface personalized financial insights, risk assessments, and research",
+      "prompt": "Show the Whitfield allocation drift before our review meeting.",
+      "assistant_response": "**Whitfield Portfolio Drift Summary:**\n\nThe portfolio is at **maximum drift** on three positions:\n- **US & International Equities are underweight** (\u22125.0% each combined ~$740K underfunded)\n- **Fixed Income is overweight** (+5.0% | $37.5K excess)\n- **Cash is elevated** (+5.0% | $92.5K excess)\n\n**For your review meeting:** They've accumulated cash and bonds, which suggests a defensive posture. This could be due to recent market conditions, income reinvestment, or a prior risk conversation. Rebalancing into equities or discussing intent before any adjustment would be prudent given their moderate risk profile.",
+      "agent_logs": "[FinancialAdvisorCopilotAgent] > **SYNTHETIC DEMO DATA \u2014 LICENSED ADVISOR REVIEW REQUIRED.** Fictional clients and holdings only. This is not investment, tax, legal, or financial advice; no identity was verified, no account was opened, and no order, transaction, transfer, or customer communication occurred.\n\n# Portfolio Summary: Robert & Susan Whitfield\n\n- **Risk Profile:** Moderate\n- **Total Assets:** $1,850,000\n- **Annual Contributions:** $45,000\n- **Max Allocation Drift:** 5.0%\n\n## Holdings\n\n| Asset Class | Value | Current % | Target % | Drift |\n|---|---|---|---|---|\n| US Equities | $555,000 | 30.0% | 35.0% | -5.0% |\n| International Equities | $185,000 | 10.0% | 15.0% | -5.0% |\n| Fixed Income | $647,500 | 35.0% | 30.0% | +5.0% |\n| Real Estate (REITs) | $185,000 | 10.0% | 10.0% | 0.0% |\n| Alternatives | $92,500 | 5.0% | 5.0% | 0.0% |\n| Cash & Equivalents | $185,000 | 10.0% | 5.0% | +5.0% |",
+      "expected_agent": "FinancialAdvisorCopilotAgent",
+      "must_include": [
+        "Robert & Susan Whitfield",
+        "Cash & Equivalents"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "FAC-04",
+      "persona": "Financial Advisor",
+      "onepager_promise": "Surface personalized financial insights, risk assessments, and research",
+      "prompt": "Prepare discussion candidates for Angela without giving advice or creating an order.",
+      "assistant_response": "Done. Here are the discussion candidates for Angela Martinez:\n\n**Three areas to explore with her:**\n\n1. **Emerging markets** \u2014 currently 12%, target is 15%. Long 26-year horizon supports this move.\n2. **Small-cap tilt** \u2014 her aggressive profile and time horizon can absorb the volatility.\n3. **Cash reserve** \u2014 build to 5% for rebalancing flexibility (currently at 3%).\n\nThe table shows illustrative allocation shifts if these are pursued. This is raw input for a licensed advisor conversation\u2014no advice given, no order placed. Validate suitability, tax impact, and her current goals before moving forward.",
+      "agent_logs": "[FinancialAdvisorCopilotAgent] > **SYNTHETIC DEMO DATA \u2014 LICENSED ADVISOR REVIEW REQUIRED.** Fictional clients and holdings only. This is not investment, tax, legal, or financial advice; no identity was verified, no account was opened, and no order, transaction, transfer, or customer communication occurred.\n\n# Advisor-Review Considerations: Angela Martinez\n\n**Risk Profile:** Aggressive\n**Years to Retirement:** 26\n\n## Discussion Candidates\n\n### 1. Increase emerging markets allocation\n\n**Rationale:** Below target; favorable long-term growth outlook\n\n### 2. Consider small-cap tilt\n\n**Rationale:** Long time horizon supports higher-volatility allocations\n\n### 3. Build cash reserve to target 5%\n\n**Rationale:** Slightly underweight cash for opportunistic rebalancing\n\n## Illustrative Allocation Differences\n\n| Asset Class | Current | Target | Review Direction | Illustrative Amount |\n|---|---|---|---|---|\n| US Equities | 50.0% | 45.0% | Reduce candidate | $21,000 |\n| Emerging Markets | 12.0% | 15.0% | Increase candidate | $12,600 |\n| Cash & Equivalents | 3.0% | 5.0% | Increase candidate | $8,400 |\n\nThese are discussion candidates, not recommendations or orders. Validate objectives, risk tolerance, suitability, tax consequences, disclosures, and client consent.",
+      "expected_agent": "FinancialAdvisorCopilotAgent",
+      "must_include": [
+        "Angela Martinez",
+        "not recommendations"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "FAC-05",
+      "persona": "Compliance Officer",
+      "onepager_promise": "Surface personalized financial insights, risk assessments, and research",
+      "prompt": "Which client requires senior-investor controls, and what other checkpoints apply?",
+      "assistant_response": "**William Chen Trust (CLI-3003)** requires senior-investor controls. Here's what applies:\n\n| Checkpoint | Status |\n|---|---|\n| **Senior Investor Protection** | \u2713 Triggered \u2014 enhanced controls required |\n| **Concentration Limit** | 10% max per position across all clients |\n| **Suitability Obligation** | Ensure recommendations fit Chen's profile |\n| **Regulation Best Interest** | Standard for all accounts |\n| **Form CRS Delivery** | Annual delivery required |\n\nFor Chen specifically: verify age 65+ status in the account record, document suitability rationale before any recommendation, and flag any concentration drift during portfolio reviews.\n\nNeed a deeper look at Chen's allocation or a handoff template with compliance flags?",
+      "agent_logs": "[FinancialAdvisorCopilotAgent] > **SYNTHETIC DEMO DATA \u2014 LICENSED ADVISOR REVIEW REQUIRED.** Fictional clients and holdings only. This is not investment, tax, legal, or financial advice; no identity was verified, no account was opened, and no order, transaction, transfer, or customer communication occurred.\n\n# Compliance Check Report\n\n## Regulatory Requirements\n\n| Rule | Description | Applies To |\n|---|---|---|\n| Regulation Best Interest | Ensure recommendations are in client's best interest | All |\n| Form CRS Delivery | Relationship summary delivered at account opening and annually | All |\n| Suitability Obligation | Investment recommendations suitable for client profile | All |\n| Concentration Limit | No single position exceeds 10% of portfolio | All |\n| Senior Investor Protection | Enhanced protections for clients age 65+ | Seniors |\n\n## Client Compliance Status\n\n### Robert & Susan Whitfield (CLI-3001) \u2014 No Automated Flags\n\n- No automated flags detected; complete normal compliance review\n\n### Angela Martinez (CLI-3002) \u2014 No Automated Flags\n\n- No automated flags detected; complete normal compliance review\n\n### William Chen Trust (CLI-3003) \u2014 Review Flags Found\n\n- **Flag:** Senior investor protections apply\n",
+      "expected_agent": "FinancialAdvisorCopilotAgent",
+      "must_include": [
+        "CLI-3003",
+        "Senior investor"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "FAC-06",
+      "persona": "Branch Banker",
+      "onepager_promise": "Guide bankers through advisory, onboarding, and transaction workflows",
+      "prompt": "Draft the Whitfield handoff with request, identity status, risk context, and compliance flags.",
+      "assistant_response": "**Draft Whitfield Handoff Summary:**\n\n| Field | Status |\n|-------|--------|\n| **Request** | Retirement review |\n| **Identity** | Pending authorized check |\n| **Route** | Financial Advisor |\n| **Risk Profile** | Moderate |\n| **Portfolio Drift** | 5.0% |\n| **Compliance Flags** | None automated |\n\n**Next steps:**\n1. Complete authorized identity verification\n2. Run standard policy compliance checks  \n3. Confirm consent and source records\n4. Execute handoff to assigned Financial Advisor\n\nThis is a draft only \u2014 no customer communication or case transfer has occurred yet. All confirmations must happen in your approved systems before routing.",
+      "agent_logs": "[FinancialAdvisorCopilotAgent] > **SYNTHETIC DEMO DATA \u2014 LICENSED ADVISOR REVIEW REQUIRED.** Fictional clients and holdings only. This is not investment, tax, legal, or financial advice; no identity was verified, no account was opened, and no order, transaction, transfer, or customer communication occurred.\n\n# Draft Banker-to-Advisor Handoff: Robert & Susan Whitfield\n\n- **Requested service:** retirement review\n- **Identity status:** pending authorized check\n- **Proposed route:** Financial Advisor\n- **Risk profile on synthetic record:** Moderate\n- **Portfolio drift:** 5.0%\n\n## Compliance Context\n\n- No automated flag; complete normal policy checks\n\nDraft only. Confirm identity, consent, source records, and routing in approved systems; no case transfer or customer communication has occurred.",
+      "expected_agent": "FinancialAdvisorCopilotAgent",
+      "must_include": [
+        "Robert & Susan Whitfield",
+        "no case transfer"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

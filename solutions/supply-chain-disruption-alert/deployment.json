@@ -1,0 +1,98 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/supply-chain-disruption-alert",
+  "display_name": "Supply Chain Disruption Alert Agent",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/retail_cpg_stacks/supply_chain_disruption_alert_stack/supply_chain_disruption_alert_agent.py",
+  "source_path": "agents/@aibast-agents-library/retail_cpg_stacks/supply_chain_disruption_alert_stack/supply_chain_disruption_alert_agent.py",
+  "target_filename": "supply_chain_disruption_alert_agent.py",
+  "expected_tool": "supply-chain-disruption-alert-agent",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "smoke_test": {
+    "prompt": "Which active disruption has the largest modeled impact and what is affected?",
+    "must_call": "supply-chain-disruption-alert-agent",
+    "must_include": [
+      "DISR-002",
+      "$3,800,000.00"
+    ]
+  },
+  "copilot_studio": {
+    "status": "not_created",
+    "manual_only": true,
+    "operations": [
+      "disruption_dashboard",
+      "risk_assessment",
+      "mitigation_plan",
+      "supplier_alternatives"
+    ],
+    "manual_global_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
+    "manual_knowledge_files": [
+      "manual/knowledge/supply-chain-disruption-alert-synthetic-records.md",
+      "manual/knowledge/supply-chain-disruption-alert-rules-and-controls.md"
+    ],
+    "manual_skill_count": 4,
+    "required_connections": [
+      "Dynamics 365 Supply Chain Management",
+      "Approved supplier-risk feed",
+      "Transportation management system"
+    ],
+    "publish_requires_confirmation": true,
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "authoring_mode": "cli-copilot",
+    "validated_manual": {
+      "display_name": "Supply Chain Disruption Manual",
+      "bot_id": "31ce8e05-7235-4da2-a0f1-358ba5ac63e5",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "web_search_removed": true,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    },
+    "validated_pilot": {
+      "display_name": "Supply Chain Alert Pilot",
+      "schema_name": "aibast_SupplyChainDisruptionAlert",
+      "bot_id": "b59ca0d9-eff9-4467-a5ec-9a96d8b961bd",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "changes_pushed": 7,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    }
+  },
+  "demo_scenarios": [
+    "supply-chain-disruption-alert-disruption-dashboard",
+    "supply-chain-disruption-alert-risk-assessment",
+    "supply-chain-disruption-alert-mitigation-plan",
+    "supply-chain-disruption-alert-supplier-alternatives"
+  ],
+  "write_controls": {
+    "authenticated_tools_required": true,
+    "explicit_human_approval_required": true,
+    "authorization_check_required": true,
+    "audit_log_required": true,
+    "local_demo_performs_writes": false
+  }
+}

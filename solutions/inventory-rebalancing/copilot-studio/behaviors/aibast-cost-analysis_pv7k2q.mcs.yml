@@ -1,0 +1,69 @@
+mcs.metadata:
+  componentName: "aibast-cost-analysis"
+  description: "Use when a procurement manager asks where synthetic holding and shortage exposure is concentrated."
+kind: InlineAgentSkill
+content: |
+  ---
+  name: aibast-cost-analysis
+  description: Use when a procurement manager asks where synthetic holding and shortage exposure is concentrated.
+  ---
+  <!-- bic:source=blank -->
+  # Inventory cost analysis
+
+  ## Use
+
+  Use when the user asks a cost- or trade-off question in their own language.
+  Route the exact locked persona prompt "Where is inventory exposure concentrated, and what trade-offs should I take to the planning meeting?" here. Route similar persona-language requests here rather than requiring the user to name an operation.
+
+  ## Required inputs
+
+  None required. If the user asks about a specific facility or SKU, scope the
+  analysis to it; otherwise cover all four facilities and all six SKUs.
+
+  ## Clarifying questions
+
+  - If the user wants holding cost only, shortage risk only, or the full
+    trade-off view, ask if the request is ambiguous (default to the full
+    view for a broad planning-meeting question).
+
+  ## Procedure
+
+  1. Use only the facility-and-SKU synthetic snapshot and the cost-and-review
+     rules knowledge sources (holding-cost rates, unit costs, transfer-cost
+     matrix). Do not invent figures.
+  2. Compute and report each facility's annual holding cost (used pallets ×
+     holding-cost-per-pallet rate) and sum to a "Total annual holding cost"
+     figure — use that exact phrase when presenting the total.
+  3. Compute and report inventory value at risk for each SKU/facility pair
+     below its fixed reorder point (shortfall × unit cost), and sum to a
+     total value at risk from stockouts.
+  4. Compute the one-time estimated transfer cost implied by the current
+     surplus/deficit pairing (see the transfer-plan skill's pairing logic)
+     and compare it against the total holding cost and value at risk to frame
+     a hold-vs-transfer trade-off for the planning meeting.
+  5. Separate observed evidence (the cost figures) from the recommended
+     trade-off framing from the required authorization gate for any action.
+  6. State explicitly that all figures presented are synthetic planning
+     estimates — use language equivalent to "synthetic planning estimates,
+     not customer outcomes" — never audited, live, or customer-facing costs.
+
+  ## Output
+
+  A holding-cost table with a labeled "Total annual holding cost" line, a
+  value-at-risk table for SKUs below reorder point, and a short trade-off
+  summary (transfer cost vs. holding cost vs. value at risk) explicitly
+  labeled as synthetic planning estimates for the planning meeting.
+
+  ## Safety boundary (no side effects)
+
+  This skill only compares synthetic cost estimates. It never reorders,
+  transfers, returns, liquidates inventory, or changes a reorder point or
+  other inventory policy. Any resulting action requires an authorized
+  ERP/WMS system owner and an approved production tool.
+
+  ## Assumptions
+
+  - Holding-cost rates, unit costs, and transfer-cost rates are fixed
+    synthetic pilot values, not current market or contract rates.
+  - "Trade-offs" means comparing estimated costs to inform a human decision,
+    not an automated recommendation to execute any action.

@@ -1,0 +1,74 @@
+{
+  "schema": "aibast-persona-cases/1.0",
+  "solution": "Emissions Tracking Agent",
+  "agent": "@aibast-agents-library/emission-tracking",
+  "onepager": "Energy Operations Agent Suite one-pager (2).pptx",
+  "cases": [
+    {
+      "id": "EMISSION_TRACKING-01",
+      "operation": "emissions_dashboard",
+      "persona": "Emissions Data Analyst",
+      "prompt": "Consolidate the Ridgeline scope totals and state the evidence limitation.",
+      "kwargs": {
+        "operation": "emissions_dashboard",
+        "facility_id": "FAC-E03"
+      },
+      "must_include": [
+        "Ridgeline Coal Station",
+        "1,533,200",
+        "not verified emissions evidence"
+      ],
+      "expects_agent": "EmissionTrackingAgent"
+    },
+    {
+      "id": "EMISSION_TRACKING-02",
+      "operation": "compliance_status",
+      "persona": "Environmental Compliance Manager",
+      "prompt": "Screen FAC-E03 against its threshold without making a legal compliance claim.",
+      "kwargs": {
+        "operation": "compliance_status",
+        "facility_id": "FAC-E03"
+      },
+      "must_include": [
+        "BELOW SCREENING THRESHOLD",
+        "not a legal compliance determination"
+      ],
+      "expects_agent": "EmissionTrackingAgent"
+    },
+    {
+      "id": "EMISSION_TRACKING-03",
+      "operation": "reduction_plan",
+      "persona": "Decarbonization Program Lead",
+      "prompt": "What reduction scenarios exist for Ridgeline and who must review them?",
+      "kwargs": {
+        "operation": "reduction_plan",
+        "facility_id": "FAC-E03"
+      },
+      "must_include": [
+        "Fuel switching to natural gas",
+        "engineering, finance, environmental, and executive review"
+      ],
+      "expects_agent": "EmissionTrackingAgent"
+    },
+    {
+      "id": "EMISSION_TRACKING-04",
+      "operation": "carbon_offset_analysis",
+      "persona": "Sustainability Lead",
+      "prompt": "Show offset candidates for the Ridgeline gap, but do not buy or claim credits.",
+      "kwargs": {
+        "operation": "carbon_offset_analysis",
+        "facility_id": "FAC-E03"
+      },
+      "must_include": [
+        "Appalachian Reforestation",
+        "No credit purchase",
+        "offset claim"
+      ],
+      "expects_agent": "EmissionTrackingAgent"
+    }
+  ],
+  "assertion_principle": "One persona case per operation; assertions use deterministic source evidence and explicit safety language.",
+  "agent_files": [
+    "emission_tracking_agent"
+  ]
+}

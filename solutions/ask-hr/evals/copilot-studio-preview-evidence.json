@@ -1,0 +1,94 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T18:02:40.778Z",
+  "solution": "@aibast-agents-library/ask-hr",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Ask HR Pilot",
+  "schema_name": "aibast_AskHRPilot",
+  "bot_id": "764fa154-4a14-4d6f-9f0d-efb88a3a1ce1",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "HR-01",
+      "must_include": [
+        "15.5 days",
+        "Upcoming Company Holidays",
+        "Synthetic HRIS"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "HR-02",
+      "must_include": [
+        "Not Submitted",
+        "Draft for employee review",
+        "No notification was sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "HR-03",
+      "must_include": [
+        "Eligibility Rule",
+        "Verify tenure",
+        "does not determine eligibility"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "HR-04",
+      "must_include": [
+        "Enrollment window",
+        "Verify plan rules",
+        "does not determine eligibility"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "HR-05",
+      "must_include": [
+        "Standard Allowance",
+        "Requires role, location",
+        "Do not infer caregiver"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "HR-06",
+      "must_include": [
+        "No salary",
+        "total-compensation value is inferred",
+        "Synthetic Profile"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    }
+  ]
+}

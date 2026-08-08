@@ -1,0 +1,68 @@
+{
+  "solution": "Inventory Rebalancing Agent",
+  "agent": "@aibast-agents-library/inventory-rebalancing",
+  "onepager": "Inventory Rebalancing Agent one-pager.pptx",
+  "agent_files": [
+    "inventory_rebalancing_agent"
+  ],
+  "note": "One persona-language case per deterministic operation. Prompts do not expose operation names.",
+  "cases": [
+    {
+      "id": "IR-01",
+      "operation": "inventory_snapshot",
+      "persona": "Supply Chain Manager",
+      "prompt": "Which distribution centers are tight on space, and which SKU positions should my team review first?",
+      "must_include": [
+        "Dallas Fulfillment Center",
+        "SKU-4406"
+      ],
+      "expects_agent": "InventoryRebalancingAgent",
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ]
+    },
+    {
+      "id": "IR-02",
+      "operation": "rebalance_recommendation",
+      "persona": "Inventory Manager",
+      "prompt": "Where do we have forecast-relative shortages or excess that deserve a rebalancing review?",
+      "must_include": [
+        "SKU-4402",
+        "SLOW-MOVING"
+      ],
+      "expects_agent": "InventoryRebalancingAgent",
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ]
+    },
+    {
+      "id": "IR-03",
+      "operation": "transfer_plan",
+      "persona": "Supply Chain Manager",
+      "prompt": "Show me the proposed warehouse moves, but do not move or reserve anything.",
+      "must_include": [
+        "SKU-4401",
+        "No inventory has been reserved"
+      ],
+      "expects_agent": "InventoryRebalancingAgent",
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ]
+    },
+    {
+      "id": "IR-04",
+      "operation": "cost_analysis",
+      "persona": "Procurement Manager",
+      "prompt": "Where is inventory exposure concentrated, and what trade-offs should I take to the planning meeting?",
+      "must_include": [
+        "Total annual holding cost",
+        "synthetic planning estimates"
+      ],
+      "expects_agent": "InventoryRebalancingAgent",
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ]
+    }
+  ],
+  "assertion_principle": "Route from persona language, assert deterministic source evidence, and preserve recommendation-only safety."
+}

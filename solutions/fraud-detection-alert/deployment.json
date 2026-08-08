@@ -1,0 +1,90 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/fraud-detection-alert",
+  "display_name": "Fraud Detection and Alert Agent",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/financial_services_stacks/fraud_detection_alert_stack/fraud_detection_alert_agent.py",
+  "target_filename": "fraud_detection_alert_agent.py",
+  "expected_tool": "FraudDetectionAlertAgent",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "smoke_test": {
+    "prompt": "What is the most urgent alert in the overnight queue, and what evidence makes it urgent?",
+    "must_call": "FraudDetectionAlertAgent",
+    "must_include": [
+      "TXN-90006",
+      "Critical"
+    ]
+  },
+  "copilot_studio": {
+    "authoring_mode": "manual-upload",
+    "required_connections": [
+      "Approved transaction-monitoring data",
+      "Dynamics 365 fraud or investigation cases",
+      "Microsoft Sentinel or approved security signals",
+      "Microsoft Teams SIU escalation",
+      "Authorized filing and protective-action workflows"
+    ],
+    "operations": [
+      "alert_triage",
+      "transaction_analysis",
+      "pattern_detection",
+      "investigation_summary"
+    ],
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_fraud-detection-alert-synthetic-records.md",
+      "manual/knowledge/aibast_fraud-detection-alert-controls-and-review.md"
+    ],
+    "manual_skill_count": 4,
+    "publish_requires_confirmation": true,
+    "safety_gate": "Validate synthetic labels, human review, and no-advice/no-approval/no-transaction behavior before publish.",
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "validated_manual": {
+      "display_name": "Fraud Detection Manual",
+      "bot_id": "5ac43ae1-9a67-460f-991c-1c0c5c7aea87",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "web_search_removed": true,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    },
+    "validated_pilot": {
+      "display_name": "Fraud Detection Pilot",
+      "schema_name": "aibast_FraudDetectionandAlertPilo",
+      "bot_id": "8f9fd956-5fc4-4c2e-a200-61399060507a",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "changes_pushed": 7,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    }
+  },
+  "demo_scenarios": [
+    "fraud-detection-alert-alert-triage",
+    "fraud-detection-alert-transaction-analysis",
+    "fraud-detection-alert-pattern-detection",
+    "fraud-detection-alert-investigation-summary"
+  ]
+}

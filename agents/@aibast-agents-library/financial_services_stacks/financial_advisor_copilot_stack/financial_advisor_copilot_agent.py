@@ -116,6 +116,18 @@ COMPLIANCE_RULES = {
 }
 
 
+SERVICE_REQUESTS = {
+    "CLI-3001": {"request": "retirement review", "verification": "pending authorized check", "route": "Financial Advisor"},
+    "CLI-3002": {"request": "portfolio review", "verification": "pending authorized check", "route": "Financial Advisor"},
+    "CLI-3003": {"request": "trust distribution question", "verification": "pending authorized check", "route": "Senior Advisor"},
+}
+
+SYNTHETIC_NOTICE = (
+    "> **SYNTHETIC DEMO DATA — LICENSED ADVISOR REVIEW REQUIRED.** Fictional clients and holdings "
+    "only. This is not investment, tax, legal, or financial advice; no identity was verified, no account "
+    "was opened, and no order, transaction, transfer, or customer communication occurred.\n\n"
+)
+
 # ---------------------------------------------------------------------------
 # Helper functions
 # ---------------------------------------------------------------------------
@@ -163,20 +175,47 @@ class FinancialAdvisorCopilotAgent(BasicAgent):
         self.metadata = {
             "name": self.name,
             "display_name": "Financial Advisor Copilot Agent",
-            "description": __manifest__["description"],
+            "description": (
+                "Always call this tool for branch-banker, financial-advisor, or compliance requests about "
+                "who is waiting, what service they need, routing after identity checks, the advisor book, "
+                "a named client's allocation drift, discussion candidates before an order, senior-investor "
+                "controls, or a banker-to-advisor handoff. Do not answer those workflows from general "
+                "knowledge. Uses fictional records only; it never verifies identity, opens an account, "
+                "gives financial advice, or places an order or transaction. Licensed-advisor, compliance, "
+                "and authorized operational review are required."
+            ),
             "parameters": {
                 "type": "object",
                 "properties": {
                     "operation": {
                         "type": "string",
+                        "description": (
+                            "Choose service_intake for who is waiting, what they need, identity-check "
+                            "status, or where to route them. Choose client_review for the advisor book, "
+                            "assets, ages, review dates, or who is retired. Choose portfolio_summary for a "
+                            "named client's allocation or drift. Choose recommendation_engine for "
+                            "discussion candidates before advice or an order. Choose compliance_check for "
+                            "senior-investor controls, concentration, drift, or regulatory checkpoints. "
+                            "Choose advisor_handoff for a draft handoff with request, identity status, risk "
+                            "context, and compliance flags."
+                        ),
                         "enum": [
+                            "service_intake",
                             "client_review",
                             "portfolio_summary",
                             "recommendation_engine",
                             "compliance_check",
+                            "advisor_handoff",
                         ],
                     },
-                    "client_id": {"type": "string"},
+                    "client_id": {
+                        "type": "string",
+                        "description": (
+                            "Synthetic client mapping: Robert and Susan Whitfield, the Whitfields, or "
+                            "Whitfield is CLI-3001; Angela Martinez or Angela is CLI-3002; William Chen "
+                            "Trust or Chen is CLI-3003. Omit for service-intake, book-wide, or compliance-wide reports."
+                        ),
+                    },
                 },
                 "required": ["operation"],
             },
@@ -184,17 +223,38 @@ class FinancialAdvisorCopilotAgent(BasicAgent):
         super().__init__(name=self.name, metadata=self.metadata)
 
     def perform(self, **kwargs) -> str:
+        record_id = kwargs.get("client_id")
+        if record_id and record_id not in CLIENT_PORTFOLIOS:
+            return SYNTHETIC_NOTICE + f"**Not found:** No synthetic record `{record_id}` exists; no substitute record was used."
         operation = kwargs.get("operation", "client_review")
         dispatch = {
+            "service_intake": self._service_intake,
             "client_review": self._client_review,
             "portfolio_summary": self._portfolio_summary,
             "recommendation_engine": self._recommendation_engine,
             "compliance_check": self._compliance_check,
+            "advisor_handoff": self._advisor_handoff,
         }
         handler = dispatch.get(operation)
         if not handler:
             return f"**Error:** Unknown operation `{operation}`."
-        return handler(**kwargs)
+        return SYNTHETIC_NOTICE + handler(**kwargs)
+
+    def _service_intake(self, **kwargs) -> str:
+        lines = ["# Branch Service Intake and Routing Preparation\n"]
+        lines.append("| Client | Request | Identity Check | Proposed Route |")
+        lines.append("|---|---|---|---|")
+        for client_id, request in SERVICE_REQUESTS.items():
+            client = CLIENT_PORTFOLIOS[client_id]
+            lines.append(
+                f"| {client['name']} ({client_id}) | {request['request'].title()} | "
+                f"{request['verification'].title()} | {request['route']} |"
+            )
+        lines.append(
+            "\nNo identity has been verified and no service has been assigned. Follow approved "
+            "customer-identification and routing procedures before proceeding."
+        )
+        return "\n".join(lines)
 
     def _client_review(self, **kwargs) -> str:
         lines = ["# Client Review Summary\n"]
@@ -237,22 +297,26 @@ class FinancialAdvisorCopilotAgent(BasicAgent):
         client_id = kwargs.get("client_id", "CLI-3001")
         client = CLIENT_PORTFOLIOS.get(client_id, list(CLIENT_PORTFOLIOS.values())[0])
         recs = INVESTMENT_RECOMMENDATIONS.get(client["risk_profile"], [])
-        lines = [f"# Investment Recommendations: {client['name']}\n"]
+        lines = [f"# Advisor-Review Considerations: {client['name']}\n"]
         lines.append(f"**Risk Profile:** {client['risk_profile'].title()}")
         lines.append(f"**Years to Retirement:** {_years_to_retirement(client) or 'Retired'}\n")
-        lines.append("## Recommendations\n")
+        lines.append("## Discussion Candidates\n")
         for i, rec in enumerate(recs, 1):
             lines.append(f"### {i}. {rec['action']}\n")
             lines.append(f"**Rationale:** {rec['rationale']}\n")
-        lines.append("## Rebalancing Trades\n")
-        lines.append("| Asset Class | Current | Target | Action | Est. Amount |")
+        lines.append("## Illustrative Allocation Differences\n")
+        lines.append("| Asset Class | Current | Target | Review Direction | Illustrative Amount |")
         lines.append("|---|---|---|---|---|")
         for asset, data in client["holdings"].items():
             diff_pct = data["target"] - data["allocation"]
             if abs(diff_pct) >= 1.0:
                 amount = abs(diff_pct / 100 * client["total_assets"])
-                action = "Buy" if diff_pct > 0 else "Sell"
+                action = "Increase candidate" if diff_pct > 0 else "Reduce candidate"
                 lines.append(f"| {asset} | {data['allocation']}% | {data['target']}% | {action} | ${amount:,.0f} |")
+        lines.append(
+            "\nThese are discussion candidates, not recommendations or orders. Validate objectives, "
+            "risk tolerance, suitability, tax consequences, disclosures, and client consent."
+        )
         return "\n".join(lines)
 
     def _compliance_check(self, **kwargs) -> str:
@@ -265,14 +329,34 @@ class FinancialAdvisorCopilotAgent(BasicAgent):
         lines.append("\n## Client Compliance Status\n")
         for cid, c in CLIENT_PORTFOLIOS.items():
             flags = _compliance_flags(c)
-            status = "Issues Found" if flags else "Compliant"
+            status = "Review Flags Found" if flags else "No Automated Flags"
             lines.append(f"### {c['name']} ({cid}) — {status}\n")
             if flags:
                 for f in flags:
                     lines.append(f"- **Flag:** {f}")
             else:
-                lines.append("- No compliance issues detected")
+                lines.append("- No automated flags detected; complete normal compliance review")
             lines.append("")
+        return "\n".join(lines)
+
+    def _advisor_handoff(self, **kwargs) -> str:
+        client_id = kwargs.get("client_id", "CLI-3001")
+        client = CLIENT_PORTFOLIOS.get(client_id, list(CLIENT_PORTFOLIOS.values())[0])
+        request = SERVICE_REQUESTS.get(client_id, {})
+        flags = _compliance_flags(client)
+        lines = [f"# Draft Banker-to-Advisor Handoff: {client['name']}\n"]
+        lines.append(f"- **Requested service:** {request.get('request', 'advisor review')}")
+        lines.append(f"- **Identity status:** {request.get('verification', 'pending authorized check')}")
+        lines.append(f"- **Proposed route:** {request.get('route', 'Financial Advisor')}")
+        lines.append(f"- **Risk profile on synthetic record:** {client['risk_profile'].title()}")
+        lines.append(f"- **Portfolio drift:** {_allocation_drift(client['holdings'])}%")
+        lines.append("\n## Compliance Context\n")
+        for flag in flags or ["No automated flag; complete normal policy checks"]:
+            lines.append(f"- {flag}")
+        lines.append(
+            "\nDraft only. Confirm identity, consent, source records, and routing in approved systems; "
+            "no case transfer or customer communication has occurred."
+        )
         return "\n".join(lines)
 
 

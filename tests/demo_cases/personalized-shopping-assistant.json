@@ -1,0 +1,14 @@
+{
+  "solution": "Personalized Shopping Agent",
+  "agent": "@aibast-agents-library/personalized-shopping-assistant",
+  "onepager": "41. Personalized Shopping Agent one-pager.pptx",
+  "agent_files": ["personalized_shopping_assistant_agent"],
+  "note": "One persona-language case per deterministic operation. Prompts do not expose operation names.",
+  "cases": [
+    {"id": "PSA-01", "persona": "Personal Shopper", "operation": "product_recommendations", "arguments": {"customer_id": "SHOP-001"}, "prompt": "As Personal Shopper, suggest transparent options for Synthetic Shopper A using only stated preferences.", "must_include": ["Prepared for:** Personal Shopper", "Draft Product Recommendations", "no sensitive traits are inferred"], "expects_agent": "PersonalizedShoppingAssistantAgent"},
+    {"id": "PSA-02", "persona": "Clienteling Specialist", "operation": "style_profile", "arguments": {"customer_id": "SHOP-002"}, "prompt": "As Clienteling Specialist, summarize Synthetic Shopper B's opt-in preferences without inferring anything else.", "must_include": ["Prepared for:** Clienteling Specialist", "Opt-In Style Profile", "Synthetic Shopper B"], "expects_agent": "PersonalizedShoppingAssistantAgent"},
+    {"id": "PSA-03", "persona": "Retail Manager", "operation": "inventory_check", "arguments": {"sku": "SKU-1003"}, "prompt": "As Retail Manager, show the synthetic size-level availability and verification gate for SKU-1003.", "must_include": ["Prepared for:** Retail Manager", "Inventory Snapshot", "inventory is not reserved"], "expects_agent": "PersonalizedShoppingAssistantAgent"},
+    {"id": "PSA-04", "persona": "Personal Shopper", "operation": "outfit_builder", "arguments": {"customer_id": "SHOP-001"}, "prompt": "As Personal Shopper, draft coordinated outfit options and transparent totals without ordering anything.", "must_include": ["Draft Outfit Builder", "Business Casual", "no return, refund, order, or purchase"], "expects_agent": "PersonalizedShoppingAssistantAgent"}
+  ],
+  "assertion_principle": "Route from persona language, assert opt-in synthetic evidence, and preserve recommendation-only safety."
+}

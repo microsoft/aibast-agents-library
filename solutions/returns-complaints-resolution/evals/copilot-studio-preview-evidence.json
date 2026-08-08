@@ -1,0 +1,56 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T20:56:21.381Z",
+  "solution": "@aibast-agents-library/returns-complaints-resolution",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Returns Resolution Pilot",
+  "schema_name": "aibast_ReturnsandComplaintsResolut",
+  "bot_id": "c5c0c513-e4a1-43a5-9860-64bb6babb289",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "RCR-01",
+      "must_include": [
+        "Prepared for:** Customer Service Agent",
+        "Draft Return Review Queue",
+        "Synthetic size-mismatch case"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "RCR-02",
+      "must_include": [
+        "Draft Complaint Classification",
+        "Product Quality",
+        "no return, refund"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "RCR-03",
+      "must_include": [
+        "Draft Resolution Options",
+        "Option for authorized review",
+        "no return"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "RCR-04",
+      "must_include": [
+        "Prepared for:** Quality Team",
+        "Synthetic Returns & Complaints Trend Analysis",
+        "Key Insights"
+      ],
+      "must_not_include": [],
+      "passed": true
+    }
+  ]
+}

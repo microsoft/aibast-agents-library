@@ -1,0 +1,56 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/deal-progression",
+  "onepager": "Deal Progression Agent one-pager.pptx",
+  "source_slide_sha256": "77de49c96da60665386056e32ad55fd8b93cd6cd5428b3cf98967f1b7c124859",
+  "promises": [
+    {
+      "advertised_promise": "Perform proactive pipeline analysis to improve forecast confidence",
+      "operations": [
+        "pipeline_health",
+        "executive_summary"
+      ],
+      "demo_cases": [
+        "DP-01",
+        "DP-06"
+      ],
+      "evidence_boundary": "Synthetic workflow evidence only; no measured customer outcome or external side effect."
+    },
+    {
+      "advertised_promise": "Detect stalled deals to reduce slippage and protect revenue commitments",
+      "operations": [
+        "stalled_deals"
+      ],
+      "demo_cases": [
+        "DP-02"
+      ],
+      "evidence_boundary": "Synthetic workflow evidence only; no measured customer outcome or external side effect."
+    },
+    {
+      "advertised_promise": "Diagnose why deals lost momentum to enable more targeted interventions",
+      "operations": [
+        "stalled_deals",
+        "action_plans"
+      ],
+      "demo_cases": [
+        "DP-02",
+        "DP-03"
+      ],
+      "evidence_boundary": "Synthetic workflow evidence only; no measured customer outcome or external side effect."
+    },
+    {
+      "advertised_promise": "Generate action plans that accelerate deal progress and improve close rates",
+      "operations": [
+        "action_plans",
+        "acceleration",
+        "assign_tasks"
+      ],
+      "demo_cases": [
+        "DP-03",
+        "DP-04",
+        "DP-05"
+      ],
+      "evidence_boundary": "Synthetic workflow evidence only; no measured customer outcome or external side effect."
+    }
+  ]
+}

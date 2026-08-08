@@ -1,8 +1,8 @@
 """
-Procurement Support Agent
+Discount Finder Agent
 
-Provides procurement support operations including requisition status tracking,
-contract lookups, supplier performance scoring, and budget checking.
+Surfaces synthetic contract discounts, time-sensitive offers, consolidation
+opportunities, and purchase-timing considerations for procurement review.
 
 Where a real deployment would connect to ERP and contract management systems,
 this agent uses a synthetic data layer so it runs anywhere without credentials.
@@ -19,8 +19,8 @@ from basic_agent import BasicAgent
 __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/procurement-support",
-    "version": "1.0.0",
-    "display_name": "Procurement Agent",
+    "version": "1.1.0",
+    "display_name": "Discount Finder Agent",
     "description": "Identify and optimize savings opportunities across vendors, contracts, and purchasing cycles to reduce costs and increase procurement efficiency.",
     "author": "AIBAST",
     "tags": ["procurement", "requisition", "contracts", "supplier", "budget"],
@@ -68,6 +68,61 @@ _BUDGET_ALLOCATIONS = {
     "Sales": {"annual_budget": 500000, "spent": 380000, "committed": 0, "remaining": 120000, "q4_forecast": 90000},
 }
 
+_DISCOUNT_OPPORTUNITIES = [
+    {
+        "id": "DISC-101",
+        "supplier": "MedSupply Cooperative",
+        "category": "Clinical consumables",
+        "offer": "4% volume tier above $150,000 aggregated quarterly spend",
+        "current_spend": 138000,
+        "threshold": 150000,
+        "expires": "2026-09-30",
+        "evidence": "Synthetic master agreement section 7.2",
+    },
+    {
+        "id": "DISC-102",
+        "supplier": "Northstar Imaging",
+        "category": "Imaging service renewals",
+        "offer": "3% early-renewal credit when reviewed 60 days before renewal",
+        "current_spend": 240000,
+        "threshold": 0,
+        "expires": "2026-08-31",
+        "evidence": "Synthetic renewal notice RN-204",
+    },
+    {
+        "id": "DISC-103",
+        "supplier": "CareTech Devices",
+        "category": "Patient monitoring devices",
+        "offer": "Price increase of 5% announced after current quote window",
+        "current_spend": 185000,
+        "threshold": 0,
+        "expires": "2026-10-15",
+        "evidence": "Synthetic pricing bulletin PB-88",
+    },
+]
+
+_CONSOLIDATION_CANDIDATES = [
+    {
+        "category": "Clinical consumables",
+        "facilities": 4,
+        "suppliers": 3,
+        "combined_spend": 214000,
+        "candidate": "Aggregate forecast before requesting approved bids",
+    },
+    {
+        "category": "Office and breakroom supplies",
+        "facilities": 5,
+        "suppliers": 4,
+        "combined_spend": 92000,
+        "candidate": "Standardize the basket before comparing contract tiers",
+    },
+]
+
+_DISCOUNT_GATE = (
+    "Synthetic savings analysis only. No supplier is selected or contacted, no "
+    "order or renewal is placed, and no commercial commitment is made."
+)
+
 
 # ═══════════════════════════════════════════════════════════════
 # HELPERS
@@ -104,34 +159,47 @@ def _budget_health():
 
 class ProcurementSupportAgent(BasicAgent):
     """
-    Procurement support agent.
+    Discount-finder decision-support agent.
 
     Operations:
-        requisition_status   - track requisition status and delivery
-        contract_lookup      - look up contracts and renewal dates
-        supplier_performance - view supplier performance scores
-        budget_check         - check budget availability by department
+        savings_scan           - surface contract and offer evidence
+        time_sensitive_deals   - identify dated promotions and price changes
+        consolidation_analysis - find categories suitable for aggregated demand
+        purchase_timing        - compare timing considerations without committing
     """
 
     def __init__(self):
         self.name = "ProcurementSupportAgent"
         self.metadata = {
             "name": self.name,
-            "description": __manifest__["description"],
+            "description": (
+                f"{__manifest__['description']} This is the Discount Finder Agent. "
+                "Always use this tool to scan upcoming healthcare purchases for "
+                "savings signals, find discounts or dated pricing notices, identify "
+                "facility-demand consolidation candidates, or sequence renewal, "
+                "volume-tier, and price-change reviews. The default savings_scan "
+                "returns DISC-101 and DISC-102 and states that candidates are not "
+                "realized savings. Analyze fictional records only; never select or "
+                "contact a supplier, place an order, renew a contract, or make a "
+                "commercial commitment."
+            ),
             "parameters": {
                 "type": "object",
                 "properties": {
                     "operation": {
                         "type": "string",
                         "enum": [
-                            "requisition_status", "contract_lookup",
-                            "supplier_performance", "budget_check",
+                            "savings_scan", "time_sensitive_deals",
+                            "consolidation_analysis", "purchase_timing",
                         ],
-                        "description": "The procurement support operation to perform",
-                    },
-                    "requisition_id": {
-                        "type": "string",
-                        "description": "Requisition ID (e.g. 'REQ-7001')",
+                        "description": (
+                            "Choose savings_scan for upcoming purchases, discounts, "
+                            "or savings signals; time_sensitive_deals for expiring "
+                            "offers, deadlines, or price increases; "
+                            "consolidation_analysis for fragmented facility demand; "
+                            "and purchase_timing for sequencing renewal, volume-tier, "
+                            "and price-change reviews."
+                        ),
                     },
                 },
                 "required": ["operation"],
@@ -140,17 +208,94 @@ class ProcurementSupportAgent(BasicAgent):
         super().__init__(name=self.name, metadata=self.metadata)
 
     def perform(self, **kwargs) -> str:
-        op = kwargs.get("operation", "requisition_status")
+        op = kwargs.get("operation", "savings_scan")
         dispatch = {
-            "requisition_status": self._requisition_status,
-            "contract_lookup": self._contract_lookup,
-            "supplier_performance": self._supplier_performance,
-            "budget_check": self._budget_check,
+            "savings_scan": self._savings_scan,
+            "time_sensitive_deals": self._time_sensitive_deals,
+            "consolidation_analysis": self._consolidation_analysis,
+            "purchase_timing": self._purchase_timing,
         }
         handler = dispatch.get(op)
         if not handler:
             return f"Unknown operation: {op}"
         return handler(kwargs)
+
+    def _savings_scan(self, params):
+        rows = ""
+        for item in _DISCOUNT_OPPORTUNITIES:
+            gap = max(item["threshold"] - item["current_spend"], 0)
+            threshold = f"${item['threshold']:,}" if item["threshold"] else "Dated condition"
+            rows += (
+                f"| {item['id']} | {item['category']} | {item['supplier']} | "
+                f"{item['offer']} | {threshold} | ${gap:,} |\n"
+            )
+        return (
+            "**Savings Opportunity Scan**\n\n"
+            "| ID | Category | Supplier | Contract Evidence | Threshold | Gap |\n"
+            "|---|---|---|---|---|---|\n"
+            f"{rows}\n"
+            "These are review candidates, not realized savings. Validate demand, "
+            "terms, quality, competition, and authority before action.\n\n"
+            f"**Approval gate:** {_DISCOUNT_GATE}\n\n"
+            "Source: [Synthetic Contracts + Purchase Forecast]\n"
+            "Agents: ProcurementSupportAgent"
+        )
+
+    def _time_sensitive_deals(self, params):
+        rows = "\n".join(
+            f"| {item['id']} | {item['supplier']} | {item['expires']} | "
+            f"{item['offer']} | {item['evidence']} |"
+            for item in _DISCOUNT_OPPORTUNITIES
+        )
+        return (
+            "**Time-Sensitive Pricing Review**\n\n"
+            "| ID | Supplier | Review By | Signal | Evidence |\n"
+            "|---|---|---|---|---|\n"
+            f"{rows}\n\n"
+            "Dates are synthetic review deadlines. Confirm current terms directly "
+            "through the approved procurement process before relying on them.\n\n"
+            f"**Approval gate:** {_DISCOUNT_GATE}\n\n"
+            "Source: [Synthetic Vendor Notices + Contracts]\n"
+            "Agents: ProcurementSupportAgent"
+        )
+
+    def _consolidation_analysis(self, params):
+        rows = "\n".join(
+            f"| {item['category']} | {item['facilities']} | {item['suppliers']} | "
+            f"${item['combined_spend']:,} | {item['candidate']} |"
+            for item in _CONSOLIDATION_CANDIDATES
+        )
+        return (
+            "**Demand Consolidation Candidates**\n\n"
+            "| Category | Facilities | Current Suppliers | Combined Spend | Review Candidate |\n"
+            "|---|---|---|---|---|\n"
+            f"{rows}\n\n"
+            "Consolidation may introduce resilience, diversity, quality, or local-"
+            "sourcing tradeoffs. The analysis does not recommend a supplier award.\n\n"
+            f"**Approval gate:** {_DISCOUNT_GATE}\n\n"
+            "Source: [Synthetic Facility Purchase History]\n"
+            "Agents: ProcurementSupportAgent"
+        )
+
+    def _purchase_timing(self, params):
+        return (
+            "**Purchase Timing Review**\n\n"
+            "1. **Northstar Imaging:** review the renewal evidence before 2026-08-31; "
+            "do not renew automatically.\n"
+            "2. **MedSupply Cooperative:** validate whether approved demand could "
+            "reach the synthetic volume tier before 2026-09-30.\n"
+            "3. **CareTech Devices:** compare the announced price change with demand, "
+            "competitive bids, storage, warranty, and cash-flow constraints.\n\n"
+            "Recommended next step: prepare a sourcing-review brief with verified "
+            "terms and alternatives for an authorized category manager.\n\n"
+            f"**Approval gate:** {_DISCOUNT_GATE}\n\n"
+            "Source: [Synthetic Forecast + Contract Calendar]\n"
+            "Agents: ProcurementSupportAgent"
+        )
+
+    # Legacy helper views remain available to source maintainers but are not
+    # exposed as tool operations because they do not implement the approved
+    # Discount Finder one-pager.
 
     # ── requisition_status ─────────────────────────────────────
     def _requisition_status(self, params):
@@ -233,7 +378,7 @@ class ProcurementSupportAgent(BasicAgent):
 
 if __name__ == "__main__":
     agent = ProcurementSupportAgent()
-    for op in ["requisition_status", "contract_lookup", "supplier_performance", "budget_check"]:
+    for op in ["savings_scan", "time_sensitive_deals", "consolidation_analysis", "purchase_timing"]:
         print("=" * 60)
         print(agent.perform(operation=op))
         print()

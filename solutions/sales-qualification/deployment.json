@@ -1,0 +1,100 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/sales-qualification",
+  "display_name": "Sales Qualification Agent",
+  "source_path": "agents/@aibast-agents-library/b2b_sales_stacks/sales_qualification_stack/sales_qualification_agent.py",
+  "target_filename": "sales_qualification_agent.py",
+  "expected_tool": "SalesQualificationAgent",
+  "data_source": "synthetic",
+  "operations": [
+    "score_leads",
+    "bant_analysis",
+    "create_outreach",
+    "assign_leads",
+    "setup_tracking",
+    "qualification_report"
+  ],
+  "smoke_test": {
+    "prompt": "Score and segment the bundled synthetic leads using the documented ICP model.",
+    "arguments": {
+      "operation": "score_leads",
+      "data_source": "synthetic"
+    },
+    "must_call": "SalesQualificationAgent",
+    "must_include": [
+      "Lead Qualification Summary",
+      "Evidence boundary"
+    ]
+  },
+  "manual_package": {
+    "knowledge_files": [
+      "manual/knowledge/aibast_sales-qualification-synthetic-records.md",
+      "manual/knowledge/aibast_sales-qualification-operating-rules.md"
+    ],
+    "skill_count": 6,
+    "skills": [
+      "manual/skills/score-leads/SKILL.md",
+      "manual/skills/bant-analysis/SKILL.md",
+      "manual/skills/create-outreach/SKILL.md",
+      "manual/skills/assign-leads/SKILL.md",
+      "manual/skills/setup-tracking/SKILL.md",
+      "manual/skills/qualification-report/SKILL.md"
+    ],
+    "locked_demo_cases": "tests/demo_cases/sales-qualification.json",
+    "onepager_map": "evals/onepager-map.json",
+    "package_case_mirror": "evals/demo-cases.json"
+  },
+  "copilot_studio": {
+    "status": "package-ready-not-created",
+    "publish": false,
+    "publish_requires_confirmation": true,
+    "external_actions": "not-configured",
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "authoring_mode": "cli-copilot",
+    "validated_manual": {
+      "display_name": "Sales Qualification Manual",
+      "bot_id": "a20c451e-0f6a-4f3a-8631-0ded94fdc55c",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 6,
+      "knowledge_files": 2,
+      "web_search_removed": true,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 6,
+      "preview_cases_total": 6
+    },
+    "validated_pilot": {
+      "display_name": "Sales Qualification Pilot",
+      "schema_name": "aibast_SalesQualificationPilot",
+      "bot_id": "f23dc31b-91ff-44bd-bc28-84e136dda8e8",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 6,
+      "knowledge_files": 2,
+      "changes_pushed": 9,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 6,
+      "preview_cases_total": 6
+    }
+  },
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/b2b_sales_stacks/sales_qualification_stack/sales_qualification_agent.py",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  }
+}

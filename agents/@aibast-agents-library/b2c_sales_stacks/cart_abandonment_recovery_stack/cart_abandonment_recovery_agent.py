@@ -1,8 +1,8 @@
 """
 Cart Abandonment Recovery Agent — B2C Sales Stack
 
-Analyzes cart abandonment patterns, manages recovery campaigns,
-optimizes incentives, and tracks conversion metrics.
+Analyzes synthetic cart abandonment patterns, drafts recovery concepts,
+compares incentive scenarios, and tracks aggregate conversion metrics.
 """
 
 import sys
@@ -16,7 +16,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/cart-abandonment-recovery",
     "version": "1.0.0",
     "display_name": "Cart Abandonment Recovery Agent",
-    "description": "Automate abandoned cart analysis and recovery campaigns to convert lost sales, protect margins, and improve customer engagement.",
+    "description": "Draft privacy-safe abandoned-cart analysis, recovery concepts, incentive scenarios, and aggregate conversion reporting for human review.",
     "author": "AIBAST",
     "tags": ["cart-abandonment", "recovery", "ecommerce", "conversion", "email", "b2c"],
     "category": "b2c_sales",
@@ -31,9 +31,9 @@ __manifest__ = {
 
 ABANDONED_CARTS = {
     "CART-20001": {
-        "customer": "Emily Rodriguez",
-        "email": "e.rodriguez@example.com",
-        "segment": "loyal_shopper",
+        "shopper_label": "Synthetic returning-shopper cart",
+        "contactable": True,
+        "segment": "returning_shopper",
         "items": [
             {"name": "Wireless Noise-Canceling Headphones", "sku": "ELEC-4421", "price": 249.99, "qty": 1},
             {"name": "Premium Headphone Case", "sku": "ACC-1102", "price": 34.99, "qty": 1},
@@ -43,11 +43,11 @@ ABANDONED_CARTS = {
         "page_exit": "shipping_options",
         "device": "mobile",
         "prior_purchases": 8,
-        "recovery_status": "email_1_sent",
+        "recovery_status": "draft_stage_1_ready",
     },
     "CART-20002": {
-        "customer": "Michael Tang",
-        "email": "m.tang@example.com",
+        "shopper_label": "Synthetic first-session cart",
+        "contactable": True,
         "segment": "new_visitor",
         "items": [
             {"name": "Smart Home Hub Pro", "sku": "SMRT-3305", "price": 179.99, "qty": 1},
@@ -61,9 +61,9 @@ ABANDONED_CARTS = {
         "recovery_status": "not_contacted",
     },
     "CART-20003": {
-        "customer": "Sarah Kim",
-        "email": "s.kim@example.com",
-        "segment": "high_value",
+        "shopper_label": "Synthetic established-shopper cart",
+        "contactable": True,
+        "segment": "established_shopper",
         "items": [
             {"name": "4K OLED Smart TV 65-inch", "sku": "TV-7720", "price": 1299.99, "qty": 1},
             {"name": "Soundbar System", "sku": "AUD-5501", "price": 449.99, "qty": 1},
@@ -77,8 +77,8 @@ ABANDONED_CARTS = {
         "recovery_status": "not_contacted",
     },
     "CART-20004": {
-        "customer": "Guest User",
-        "email": None,
+        "shopper_label": "Synthetic guest cart",
+        "contactable": False,
         "segment": "guest",
         "items": [
             {"name": "Running Shoes Pro X", "sku": "SHOE-2201", "price": 129.99, "qty": 1},
@@ -93,11 +93,11 @@ ABANDONED_CARTS = {
 }
 
 RECOVERY_CAMPAIGNS = {
-    "email_1": {"name": "Reminder Email", "delay_hours": 1, "subject": "You left something behind!", "incentive": None, "avg_open_rate": 45.2, "avg_conversion": 8.5},
-    "email_2": {"name": "Urgency Email", "delay_hours": 24, "subject": "Your cart is waiting — items selling fast", "incentive": None, "avg_open_rate": 38.1, "avg_conversion": 5.2},
-    "email_3": {"name": "Incentive Email", "delay_hours": 72, "subject": "Here's 10% off to complete your order", "incentive": "10% discount", "avg_open_rate": 42.8, "avg_conversion": 12.1},
-    "sms_1": {"name": "SMS Reminder", "delay_hours": 2, "subject": "Complete your order at [Store]", "incentive": None, "avg_open_rate": 98.0, "avg_conversion": 4.8},
-    "retargeting_ad": {"name": "Retargeting Display Ad", "delay_hours": 6, "subject": "Dynamic product ad on social/display", "incentive": None, "avg_open_rate": 0, "avg_conversion": 2.1},
+    "email_1": {"name": "Draft Email Reminder", "delay_hours": 1, "subject": "Draft: neutral cart reminder", "incentive": None, "avg_open_rate": 45.2, "avg_conversion": 8.5},
+    "email_2": {"name": "Draft Follow-Up", "delay_hours": 24, "subject": "Draft: availability-neutral follow-up", "incentive": None, "avg_open_rate": 38.1, "avg_conversion": 5.2},
+    "email_3": {"name": "Draft Value Option", "delay_hours": 72, "subject": "Draft: approved value option, if eligible", "incentive": "Optional incentive concept", "avg_open_rate": 42.8, "avg_conversion": 12.1},
+    "sms_1": {"name": "Draft SMS Reminder", "delay_hours": 2, "subject": "Draft: concise cart reminder", "incentive": None, "avg_open_rate": 98.0, "avg_conversion": 4.8},
+    "retargeting_ad": {"name": "Draft Retargeting Concept", "delay_hours": 6, "subject": "Draft: consented product reminder concept", "incentive": None, "avg_open_rate": 0, "avg_conversion": 2.1},
 }
 
 INCENTIVE_OPTIONS = {
@@ -122,10 +122,10 @@ CONVERSION_METRICS = {
 # Helper functions
 # ---------------------------------------------------------------------------
 
-def _abandonment_by_exit():
+def _abandonment_by_exit(carts=None):
     """Break down abandonment by exit page."""
     by_page = {}
-    for cart in ABANDONED_CARTS.values():
+    for cart in (carts or ABANDONED_CARTS).values():
         page = cart["page_exit"]
         by_page[page] = by_page.get(page, 0) + 1
     return by_page
@@ -133,9 +133,9 @@ def _abandonment_by_exit():
 
 def _recommended_incentive(cart):
     """Recommend optimal incentive based on cart value and customer segment."""
-    if cart["segment"] == "high_value" and cart["cart_value"] > 500:
+    if cart["segment"] == "established_shopper" and cart["cart_value"] > 500:
         return "percent_off_10"
-    elif cart["segment"] == "loyal_shopper":
+    elif cart["segment"] == "returning_shopper":
         return "free_shipping"
     elif cart["segment"] == "new_visitor":
         return "percent_off_15"
@@ -145,6 +145,28 @@ def _recommended_incentive(cart):
 def _total_abandoned_value():
     """Sum of all abandoned cart values."""
     return sum(c["cart_value"] for c in ABANDONED_CARTS.values())
+
+APPROVED_PERSONAS = {
+    "Marketing Manager": "margin-aware recovery planning and approval gates",
+    "Digital Marketing Lead": "channel sequencing, consent, and draft content",
+    "Growth Manager": "aggregate conversion scenarios and experiment design",
+}
+
+SAFETY_NOTICE = (
+    "> Synthetic aggregate planning data. Drafts and scenarios only; no shopper "
+    "is contacted, no message or offer is sent, and no cart or purchase is changed."
+)
+
+
+def _response_header(persona):
+    role = persona if persona in APPROVED_PERSONAS else "Marketing Manager"
+    return [
+        f"**Prepared for:** {role}",
+        f"**Role focus:** {APPROVED_PERSONAS[role]}",
+        "",
+        SAFETY_NOTICE,
+        "",
+    ]
 
 
 # ---------------------------------------------------------------------------
@@ -173,13 +195,24 @@ class CartAbandonmentRecoveryAgent(BasicAgent):
                         ],
                     },
                     "cart_id": {"type": "string"},
+                    "persona": {
+                        "type": "string",
+                        "enum": list(APPROVED_PERSONAS),
+                    },
+                    "data_source": {"type": "string", "enum": ["synthetic"]},
                 },
                 "required": ["operation"],
+                "additionalProperties": False,
             },
         }
         super().__init__(name=self.name, metadata=self.metadata)
 
     def perform(self, **kwargs) -> str:
+        if kwargs.get("data_source", "synthetic") != "synthetic":
+            return "data_source must be `synthetic` for this package."
+        cart_id = kwargs.get("cart_id")
+        if cart_id and cart_id not in ABANDONED_CARTS:
+            return f"Unknown cart_id `{cart_id}`. Valid: {', '.join(ABANDONED_CARTS)}"
         operation = kwargs.get("operation", "abandonment_analysis")
         dispatch = {
             "abandonment_analysis": self._abandonment_analysis,
@@ -193,18 +226,20 @@ class CartAbandonmentRecoveryAgent(BasicAgent):
         return handler(**kwargs)
 
     def _abandonment_analysis(self, **kwargs) -> str:
-        total_value = _total_abandoned_value()
-        by_exit = _abandonment_by_exit()
-        lines = ["# Cart Abandonment Analysis\n"]
-        lines.append(f"**Abandoned Carts:** {len(ABANDONED_CARTS)}")
+        cart_id = kwargs.get("cart_id")
+        carts = {cart_id: ABANDONED_CARTS[cart_id]} if cart_id else ABANDONED_CARTS
+        total_value = sum(c["cart_value"] for c in carts.values())
+        by_exit = _abandonment_by_exit(carts)
+        lines = _response_header(kwargs.get("persona")) + ["# Synthetic Cart Abandonment Analysis\n"]
+        lines.append(f"**Abandoned Carts:** {len(carts)}")
         lines.append(f"**Total Abandoned Value:** ${total_value:,.2f}")
         lines.append(f"**Abandonment Rate:** {CONVERSION_METRICS['overall_abandonment_rate']}%\n")
         lines.append("## Abandoned Carts Detail\n")
         lines.append("| Cart ID | Customer | Segment | Value | Exit Page | Device | Status |")
         lines.append("|---|---|---|---|---|---|---|")
-        for cid, c in ABANDONED_CARTS.items():
+        for cid, c in carts.items():
             lines.append(
-                f"| {cid} | {c['customer']} | {c['segment'].replace('_', ' ').title()} "
+                f"| {cid} | {c['shopper_label']} | {c['segment'].replace('_', ' ').title()} "
                 f"| ${c['cart_value']:,.2f} | {c['page_exit'].replace('_', ' ').title()} "
                 f"| {c['device'].title()} | {c['recovery_status'].replace('_', ' ').title()} |"
             )
@@ -214,8 +249,8 @@ class CartAbandonmentRecoveryAgent(BasicAgent):
         return "\n".join(lines)
 
     def _recovery_campaign(self, **kwargs) -> str:
-        lines = ["# Recovery Campaign Dashboard\n"]
-        lines.append("## Campaign Sequence\n")
+        lines = _response_header(kwargs.get("persona")) + ["# Draft Recovery Campaign Dashboard\n"]
+        lines.append("## Proposed Sequence (not deployed)\n")
         lines.append("| Campaign | Delay | Subject | Incentive | Open Rate | Conversion |")
         lines.append("|---|---|---|---|---|---|")
         for cid, camp in RECOVERY_CAMPAIGNS.items():
@@ -225,29 +260,33 @@ class CartAbandonmentRecoveryAgent(BasicAgent):
                 f"| {incentive} | {camp['avg_open_rate']}% | {camp['avg_conversion']}% |"
             )
         lines.append("\n## Carts Pending Recovery\n")
-        pending = {k: v for k, v in ABANDONED_CARTS.items() if v["recovery_status"] != "unrecoverable" and v["email"] is not None}
+        cart_id = kwargs.get("cart_id")
+        carts = {cart_id: ABANDONED_CARTS[cart_id]} if cart_id else ABANDONED_CARTS
+        pending = {k: v for k, v in carts.items() if v["recovery_status"] != "unrecoverable" and v["contactable"]}
         for cid, cart in pending.items():
-            lines.append(f"- **{cid}** ({cart['customer']}): ${cart['cart_value']:,.2f} — Status: {cart['recovery_status'].replace('_', ' ').title()}")
-        unrecoverable = sum(1 for c in ABANDONED_CARTS.values() if c["recovery_status"] == "unrecoverable")
-        lines.append(f"\n**Unrecoverable (no email):** {unrecoverable}")
+            lines.append(f"- **{cid}** ({cart['shopper_label']}): ${cart['cart_value']:,.2f} — Draft status: {cart['recovery_status'].replace('_', ' ').title()}")
+        unrecoverable = sum(1 for c in carts.values() if c["recovery_status"] == "unrecoverable")
+        lines.append(f"\n**No consented contact path in synthetic record:** {unrecoverable}")
         return "\n".join(lines)
 
     def _incentive_optimization(self, **kwargs) -> str:
-        lines = ["# Incentive Optimization\n"]
+        lines = _response_header(kwargs.get("persona")) + ["# Draft Incentive Scenario Comparison\n"]
         lines.append("## Available Incentives\n")
         lines.append("| Incentive | Description | Margin Impact | Conversion Lift |")
         lines.append("|---|---|---|---|")
         for iid, inc in INCENTIVE_OPTIONS.items():
             lines.append(f"| {iid.replace('_', ' ').title()} | {inc['description']} | {inc['cost_margin_impact']}% | +{inc['conversion_lift']}% |")
         lines.append("\n## Recommended Incentives by Cart\n")
-        for cid, cart in ABANDONED_CARTS.items():
+        cart_id = kwargs.get("cart_id")
+        carts = {cart_id: ABANDONED_CARTS[cart_id]} if cart_id else ABANDONED_CARTS
+        for cid, cart in carts.items():
             if cart["recovery_status"] == "unrecoverable":
                 continue
             rec = _recommended_incentive(cart)
             inc = INCENTIVE_OPTIONS[rec]
-            lines.append(f"### {cid}: {cart['customer']} (${cart['cart_value']:,.2f})\n")
+            lines.append(f"### {cid}: {cart['shopper_label']} (${cart['cart_value']:,.2f})\n")
             lines.append(f"- **Segment:** {cart['segment'].replace('_', ' ').title()}")
-            lines.append(f"- **Recommended:** {inc['description']}")
+            lines.append(f"- **Scenario for approval:** {inc['description']}")
             lines.append(f"- **Expected Lift:** +{inc['conversion_lift']}%")
             est_recovery = cart["cart_value"] * (1 - inc["cost_margin_impact"] / 100)
             lines.append(f"- **Net Recovery Value:** ${est_recovery:,.2f}\n")
@@ -255,7 +294,7 @@ class CartAbandonmentRecoveryAgent(BasicAgent):
 
     def _conversion_tracking(self, **kwargs) -> str:
         m = CONVERSION_METRICS
-        lines = ["# Conversion Tracking (30-Day)\n"]
+        lines = _response_header(kwargs.get("persona")) + ["# Synthetic Conversion Tracking (30-Day)\n"]
         lines.append(f"- **Abandonment Rate:** {m['overall_abandonment_rate']}%")
         lines.append(f"- **Recovery Rate:** {m['recovery_rate']}%")
         lines.append(f"- **Avg Recovered Order Value:** ${m['avg_recovered_value']:,.2f}")

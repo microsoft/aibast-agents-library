@@ -1,0 +1,92 @@
+{
+  "solution": "Discount Finder Agent",
+  "agent": "@aibast-agents-library/procurement-support",
+  "onepager": "29. Discount Finder Agent one-pager.pptx",
+  "agent_files": [
+    "procurement_support_agent"
+  ],
+  "note": "Locked synthetic persona-language case per exposed operation. Prompts avoid operation names and preserve approval boundaries.",
+  "cases": [
+    {
+      "id": "DISC-01",
+      "persona": "Procurement Manager",
+      "operation": "savings_scan",
+      "onepager_bullet": "Track discounts across vendors and promotions to reveal savings opportunities",
+      "prompt": "Scan the upcoming healthcare purchases and show me which savings signals are worth validating.",
+      "arguments": {
+        "operation": "savings_scan"
+      },
+      "must_include": [
+        "DISC-101",
+        "DISC-102",
+        "not realized savings"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "ProcurementSupportAgent"
+    },
+    {
+      "id": "DISC-02",
+      "persona": "Category Buyer",
+      "operation": "time_sensitive_deals",
+      "onepager_bullet": "Flag time-sensitive deals and price increases to help teams capture savings",
+      "prompt": "Which pricing notices expire first, and what evidence should I verify before I act?",
+      "arguments": {
+        "operation": "time_sensitive_deals"
+      },
+      "must_include": [
+        "2026-08-31",
+        "2026-09-30",
+        "approved procurement process"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "ProcurementSupportAgent"
+    },
+    {
+      "id": "DISC-03",
+      "persona": "Finance Director",
+      "operation": "consolidation_analysis",
+      "onepager_bullet": "Analyze purchase timing and vendor incentives to secure favorable pricing and contract terms",
+      "prompt": "Are our facilities buying the same categories separately enough to justify a sourcing review?",
+      "arguments": {
+        "operation": "consolidation_analysis"
+      },
+      "must_include": [
+        "Clinical consumables",
+        "4",
+        "does not recommend a supplier award"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "ProcurementSupportAgent"
+    },
+    {
+      "id": "DISC-04",
+      "persona": "Category Buyer",
+      "operation": "purchase_timing",
+      "onepager_bullet": "Analyze purchase timing and vendor incentives to secure favorable pricing and contract terms",
+      "prompt": "Sequence the renewal, volume-tier, and price-change reviews without placing anything.",
+      "arguments": {
+        "operation": "purchase_timing"
+      },
+      "must_include": [
+        "Northstar Imaging",
+        "MedSupply Cooperative",
+        "No supplier is selected"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "ProcurementSupportAgent"
+    }
+  ],
+  "assertion_principle": "Direct tests call each operation with deterministic arguments and assert only source-backed evidence and safety gates."
+}

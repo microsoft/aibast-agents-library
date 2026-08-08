@@ -1,0 +1,88 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/ask-hr",
+  "onepager": "48. Ask HR Agent one-pager.pptx",
+  "source_slide_sha256": "671f1ed062e08acba05bffe707e843fb49bab615b5c5a1e91aace7d97dd1b781",
+  "source_audit": {
+    "status": "audited",
+    "source_path": "agents/@aibast-agents-library/human_resources_stacks/ask_hr_stack/ask_hr_agent.py",
+    "implemented_operations": [
+      "leave_balance",
+      "submit_time_off",
+      "parental_leave",
+      "health_insurance",
+      "remote_work",
+      "benefits_summary"
+    ],
+    "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts or recommendations."
+  },
+  "promises": [
+    {
+      "advertised_promise": "Provides personalized, policy-based answers to reduce inquiry volume via 24/7 self-service resolution",
+      "operations": [
+        "leave_balance",
+        "parental_leave",
+        "health_insurance",
+        "remote_work",
+        "benefits_summary"
+      ],
+      "demo_cases": [
+        "HR-01",
+        "HR-03",
+        "HR-04",
+        "HR-05",
+        "HR-06"
+      ],
+      "synthetic_evidence": [
+        "Vacation",
+        "15.5 days",
+        "Synthetic HRIS",
+        "Eligibility Rule",
+        "Verify tenure",
+        "does not determine eligibility",
+        "Enrollment window",
+        "Verify plan rules",
+        "does not determine eligibility",
+        "Standard Allowance",
+        "Requires role, location",
+        "Do not infer caregiver",
+        "No salary",
+        "Total-compensation value is inferred",
+        "Synthetic Profile"
+      ]
+    },
+    {
+      "advertised_promise": "Guides employees through HR tasks like benefit plan selection to support better employee experiences",
+      "operations": [
+        "health_insurance",
+        "benefits_summary"
+      ],
+      "demo_cases": [
+        "HR-04",
+        "HR-06"
+      ],
+      "synthetic_evidence": [
+        "Enrollment window",
+        "Verify plan rules",
+        "does not determine eligibility",
+        "No salary",
+        "Total-compensation value is inferred",
+        "Synthetic Profile"
+      ]
+    },
+    {
+      "advertised_promise": "Automates core HR transactions like time-off requests to reduce operational costs and increase HR team productivity",
+      "operations": [
+        "submit_time_off"
+      ],
+      "demo_cases": [
+        "HR-02"
+      ],
+      "synthetic_evidence": [
+        "Not Submitted",
+        "Draft for employee review",
+        "No notification was sent"
+      ]
+    }
+  ]
+}

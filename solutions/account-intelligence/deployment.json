@@ -1,0 +1,102 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/account-intelligence",
+  "display_name": "Account Intelligence Agent",
+  "source_path": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/account_intelligence_agent.py",
+  "target_filename": "account_intelligence_agent.py",
+  "expected_tool": "AccountIntelligenceAgent",
+  "data_source": "synthetic",
+  "operations": [
+    "account_overview",
+    "stakeholder_map",
+    "competitive_intel",
+    "value_messaging",
+    "risk_assessment",
+    "executive_briefing"
+  ],
+  "smoke_test": {
+    "prompt": "Create a synthetic Acme account overview and identify evidence that merits seller attention.",
+    "arguments": {
+      "operation": "account_overview",
+      "data_source": "synthetic",
+      "account_name": "Acme Corporation"
+    },
+    "must_call": "AccountIntelligenceAgent",
+    "must_include": [
+      "Account Overview",
+      "Evidence boundary"
+    ]
+  },
+  "manual_package": {
+    "knowledge_files": [
+      "manual/knowledge/aibast_account-intelligence-synthetic-records.md",
+      "manual/knowledge/aibast_account-intelligence-operating-rules.md"
+    ],
+    "skill_count": 6,
+    "skills": [
+      "manual/skills/account-overview/SKILL.md",
+      "manual/skills/stakeholder-map/SKILL.md",
+      "manual/skills/competitive-intel/SKILL.md",
+      "manual/skills/value-messaging/SKILL.md",
+      "manual/skills/risk-assessment/SKILL.md",
+      "manual/skills/executive-briefing/SKILL.md"
+    ],
+    "locked_demo_cases": "tests/demo_cases/account-intelligence.json",
+    "onepager_map": "evals/onepager-map.json",
+    "package_case_mirror": "evals/demo-cases.json",
+    "strict_capture_evidence": "evals/transcripts.json"
+  },
+  "copilot_studio": {
+    "status": "package-ready-not-created",
+    "publish": false,
+    "publish_requires_confirmation": true,
+    "external_actions": "not-configured",
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "authoring_mode": "cli-copilot",
+    "validated_manual": {
+      "display_name": "Account Intelligence Manual",
+      "bot_id": "b676ee45-2c5e-47c3-b0e4-d23931ccfa72",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 6,
+      "knowledge_files": 2,
+      "web_search_removed": true,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 6,
+      "preview_cases_total": 6
+    },
+    "validated_pilot": {
+      "display_name": "Account Intelligence Pilot",
+      "schema_name": "aibast_AccountIntelligencePilot",
+      "bot_id": "8b06f477-82e9-47ca-8bac-df6f87e84d5c",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 6,
+      "knowledge_files": 2,
+      "changes_pushed": 9,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 6,
+      "preview_cases_total": 6
+    }
+  },
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/account_intelligence_agent.py",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  }
+}

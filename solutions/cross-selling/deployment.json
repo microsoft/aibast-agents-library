@@ -1,0 +1,98 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/cross-selling",
+  "display_name": "Cross-Selling Opportunities Agent",
+  "source_path": "agents/@aibast-agents-library/general_stacks/cross_selling_opportunities_stack/cross_selling_agent.py",
+  "target_filename": "cross_selling_agent.py",
+  "expected_tool": "CrossSellingAgent",
+  "data_source": "synthetic",
+  "operations": [
+    "opportunity_scan",
+    "product_affinity",
+    "recommendation_engine",
+    "revenue_impact"
+  ],
+  "smoke_test": {
+    "prompt": "Scan the synthetic CUST-001 ownership record for evidence-backed product gaps.",
+    "arguments": {
+      "operation": "opportunity_scan",
+      "data_source": "synthetic",
+      "customer_id": "CUST-001"
+    },
+    "must_call": "CrossSellingAgent",
+    "must_include": [
+      "Cross-Sell Opportunity Scan",
+      "Evidence boundary"
+    ]
+  },
+  "manual_package": {
+    "knowledge_files": [
+      "manual/knowledge/aibast_cross-selling-synthetic-records.md",
+      "manual/knowledge/aibast_cross-selling-operating-rules.md"
+    ],
+    "skill_count": 4,
+    "skills": [
+      "manual/skills/opportunity-scan/SKILL.md",
+      "manual/skills/product-affinity/SKILL.md",
+      "manual/skills/recommendation-engine/SKILL.md",
+      "manual/skills/revenue-impact/SKILL.md"
+    ],
+    "locked_demo_cases": "tests/demo_cases/cross-selling.json",
+    "onepager_map": "evals/onepager-map.json",
+    "package_case_mirror": "evals/demo-cases.json",
+    "strict_capture_evidence": "evals/transcripts.json"
+  },
+  "copilot_studio": {
+    "status": "package-ready-not-created",
+    "publish": false,
+    "publish_requires_confirmation": true,
+    "external_actions": "not-configured",
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "authoring_mode": "cli-copilot",
+    "validated_manual": {
+      "display_name": "Cross-Selling Manual",
+      "bot_id": "aba94139-ab0d-4484-996d-5e4aacf46814",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "web_search_removed": true,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    },
+    "validated_pilot": {
+      "display_name": "Cross-Selling Pilot",
+      "schema_name": "aibast_CrossSellingOpportunitiesPi",
+      "bot_id": "c98be8f5-d49f-4b04-8e1c-8168972f7cf8",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "changes_pushed": 7,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    }
+  },
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/general_stacks/cross_selling_opportunities_stack/cross_selling_agent.py",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  }
+}

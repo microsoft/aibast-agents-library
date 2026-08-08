@@ -1,0 +1,48 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/emission-tracking",
+  "source_path": "agents/@aibast-agents-library/energy_stacks/emission_tracking_stack/emission_tracking_agent.py",
+  "onepager": "Energy Operations Agent Suite one-pager (2).pptx",
+  "advertised_challenge": "Emissions data is hard to unify, making compliance tracking slow, error-prone, and difficult to manage.",
+  "advertised_action": "Aggregates emissions data, analyzes compliance risk, and raises opportunities to improve sustainability posture",
+  "finding": "covered_by_synthetic_decision_support_with_production_seams",
+  "routing": {
+    "status": "fixed",
+    "evidence": "Tool and operation descriptions now name the supported persona questions and approval boundary."
+  },
+  "behavior": {
+    "status": "fixed",
+    "evidence": "Each advertised workflow returns deterministic synthetic evidence and an explicit limitation."
+  },
+  "safety": {
+    "status": "fixed",
+    "evidence": "Outputs do not claim a live write or final legal, regulatory, safety, eligibility, billing, emissions, dispatch, sourcing, or inventory decision."
+  },
+  "operations": [
+    {
+      "operation": "emissions_dashboard",
+      "persona": "Emissions Data Analyst",
+      "purpose": "Aggregate the synthetic scope inventory."
+    },
+    {
+      "operation": "compliance_status",
+      "persona": "Environmental Compliance Manager",
+      "purpose": "Perform non-legal threshold screening."
+    },
+    {
+      "operation": "reduction_plan",
+      "persona": "Decarbonization Program Lead",
+      "purpose": "Compare draft reduction scenarios."
+    },
+    {
+      "operation": "carbon_offset_analysis",
+      "persona": "Sustainability Lead",
+      "purpose": "Prepare an offset due-diligence shortlist."
+    }
+  ],
+  "interface_schema": {
+    "status": "fixed",
+    "evidence": "Operation-specific parameters are documented and filters no longer invent records for unknown identifiers."
+  },
+  "advertised_vs_local_limitation": "The local source aggregates synthetic figures only; verified inventory factors, attestations, disclosures, and registry actions require production controls."
+}

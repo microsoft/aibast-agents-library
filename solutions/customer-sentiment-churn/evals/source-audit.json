@@ -1,0 +1,36 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/customer-sentiment-churn",
+  "audited_source": "agents/@aibast-agents-library/financial_services_stacks/customer_sentiment_churn_stack/customer_sentiment_churn_agent.py",
+  "source_sha256": "c6c5c2c62e315d5110c4eb199fb6b85712ce454b1ac4a362cefc4166206b47fc",
+  "case_file": "tests/demo_cases/customer-sentiment-churn.json",
+  "onepager": "37. Customer Sentiment and Churn Prediction Agent one-pager.pptx",
+  "operations": {
+    "sentiment_dashboard": [
+      "CSC-01"
+    ],
+    "churn_prediction": [
+      "CSC-02"
+    ],
+    "retention_actions": [
+      "CSC-03"
+    ],
+    "segment_analysis": [
+      "CSC-04"
+    ]
+  },
+  "defects_fixed": [
+    "Expanded tool routing descriptions so persona-language requests map to the intended operation.",
+    "Aligned implemented operations with approved one-pager promises and added missing decision-support workflows where needed.",
+    "Added synthetic-data labels, explicit human review, and no-advice/no-approval/no-transaction boundaries.",
+    "Rejected unknown record identifiers instead of silently substituting another fictional record.",
+    "Added exact persona-language routing phrases, operation selection guidance, and synthetic entity-to-identifier mappings for strict-isolation capture."
+  ],
+  "unresolved_defects": [],
+  "routing_result": {
+    "cases_passed": 4,
+    "cases_total": 4,
+    "strict_isolation": true,
+    "loaded_tool": "CustomerSentimentChurnAgent"
+  }
+}

@@ -15,7 +15,7 @@ from basic_agent import BasicAgent
 __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/contract-risk-review",
-    "version": "1.0.0",
+    "version": "1.1.1",
     "display_name": "Contract Risk Review Agent",
     "description": "Automate contract review processes to enable faster, lower-risk, and more successful negotiations.",
     "author": "AIBAST",
@@ -123,6 +123,8 @@ COMPLIANCE_REQUIREMENTS = {
     "sla_penalty_cap_pct": 15,
 }
 
+SYNTHETIC_SNAPSHOT_DATE = "2026-03-17"
+
 RENEWAL_CALENDAR = [
     {"contract_id": "CTR-5002", "renewal_date": "2027-09-15", "days_out": 547, "action": "Begin renewal discussions Q1 2027"},
     {"contract_id": "CTR-5003", "renewal_date": "2027-12-01", "days_out": 624, "action": "Address risk clauses before renewal"},
@@ -141,13 +143,11 @@ def _high_risk_count(contract_id):
 
 
 def _compliance_gaps(contract_id):
-    """Check contract clauses against compliance requirements."""
+    """Return documented policy gaps, or None when clause evidence is absent."""
+    if contract_id not in CLAUSES:
+        return None
     gaps = []
     clauses = CLAUSES.get(contract_id, [])
-    clause_titles = {c["title"].lower() for c in clauses}
-    ctr = CONTRACTS[contract_id]
-
-    # Check specific known issues
     for cl in clauses:
         if cl["risk"] in ("HIGH", "MEDIUM"):
             gaps.append({"clause": cl["title"], "section": cl["section"], "severity": cl["risk"],
@@ -171,13 +171,49 @@ class ContractRiskReviewAgent(BasicAgent):
         self.name = "ContractRiskReviewAgent"
         self.metadata = {
             "name": self.name,
-            "description": __manifest__["description"],
+            "description": (
+                "The required tool for any professional-services agreement, contract, clause, "
+                "or MSA question. Always invoke it instead of giving generic guidance when a "
+                "legal-operations director, attorney, or executive asks which agreements need "
+                "counsel first; what drives priority; what liability-cap, IP ownership, "
+                "payment-term, termination, SLA, indemnity, data, non-compete, or change-order "
+                "language needs attention; where contract evidence is incomplete against "
+                "internal policy; or what amendments, negotiation positions, fallbacks, and "
+                "escalation points to prepare. The packaged synthetic portfolio is sufficient, "
+                "so do not ask the user to identify an agreement. This tool provides review "
+                "support only and never gives legal advice or changes a contract."
+            ),
             "operations": [
                 "risk_scan",
                 "clause_analysis",
                 "compliance_check",
                 "renegotiation_brief",
             ],
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "operation": {
+                        "type": "string",
+                        "enum": [
+                            "risk_scan",
+                            "clause_analysis",
+                            "compliance_check",
+                            "renegotiation_brief",
+                        ],
+                        "description": (
+                            "Choose from plain-language intent, not operation words. risk_scan: "
+                            "which agreements go to counsel first, priority, ranking, or renewal "
+                            "queue. clause_analysis: walk through MSA language, Liability Cap, "
+                            "IP Ownership, Payment Terms, or other risky clauses. "
+                            "compliance_check: compare evidence with internal policy, find gaps, "
+                            "or identify an incomplete file. renegotiation_brief: prepare "
+                            "amendments, negotiation positions, fallbacks, non-negotiables, and "
+                            "counsel escalation points."
+                        ),
+                    }
+                },
+                "required": ["operation"],
+            },
         }
         super().__init__(name=self.name, metadata=self.metadata)
 
@@ -197,6 +233,7 @@ class ContractRiskReviewAgent(BasicAgent):
     # ------------------------------------------------------------------
     def _risk_scan(self, **kwargs) -> str:
         lines = ["## Contract Risk Scan\n"]
+        lines.append(f"> Synthetic portfolio snapshot: {SYNTHETIC_SNAPSHOT_DATE}.")
         exposure = _total_exposure()
         total_val = sum(c["value"] for c in CONTRACTS.values())
         lines.append(f"**Active contracts:** {len(CONTRACTS)}")
@@ -219,6 +256,7 @@ class ContractRiskReviewAgent(BasicAgent):
         for r in RENEWAL_CALENDAR:
             client = CONTRACTS[r["contract_id"]]["client"]
             lines.append(f"| {r['contract_id']} | {client} | {r['renewal_date']} | {r['days_out']} | {r['action']} |")
+        lines.append("\n> Review support only; contract decisions require authorized legal counsel.")
         return "\n".join(lines)
 
     # ------------------------------------------------------------------
@@ -237,6 +275,7 @@ class ContractRiskReviewAgent(BasicAgent):
             high = sum(1 for cl in CLAUSES[cid] if cl["risk"] == "HIGH")
             med = sum(1 for cl in CLAUSES[cid] if cl["risk"] == "MEDIUM")
             lines.append(f"\n**Summary:** {high} HIGH, {med} MEDIUM risk clauses\n")
+        lines.append("> Synthetic clause excerpts; findings are not legal advice or a complete contract opinion.")
         return "\n".join(lines)
 
     # ------------------------------------------------------------------
@@ -252,7 +291,11 @@ class ContractRiskReviewAgent(BasicAgent):
         lines.append("\n### Contract Compliance Status\n")
         for cid, c in CONTRACTS.items():
             gaps = _compliance_gaps(cid)
-            status = "PASS" if not gaps else f"FAIL ({len(gaps)} gaps)"
+            if gaps is None:
+                lines.append(f"#### {cid} -- {c['client']} -- **REVIEW REQUIRED**\n")
+                lines.append("No clause evidence is packaged for this contract; no compliance conclusion can be made.\n")
+                continue
+            status = "PASS" if not gaps else f"GAPS FOUND ({len(gaps)})"
             lines.append(f"#### {cid} -- {c['client']} -- **{status}**\n")
             if gaps:
                 lines.append("| Clause | Section | Severity | Required Action |")
@@ -262,6 +305,7 @@ class ContractRiskReviewAgent(BasicAgent):
                 lines.append("")
             else:
                 lines.append("All compliance requirements met.\n")
+        lines.append("> Internal-policy screening only; this is not a legal or regulatory compliance determination.")
         return "\n".join(lines)
 
     # ------------------------------------------------------------------
@@ -299,6 +343,7 @@ class ContractRiskReviewAgent(BasicAgent):
 
         total_risk_val = sum(c["value"] for _, c in high_risk)
         lines.append(f"**Total contract value requiring renegotiation:** ${total_risk_val:,.0f}")
+        lines.append("\n> Draft positions for authorized counsel review; no amendment has been sent or accepted.")
         return "\n".join(lines)
 
 

@@ -1,0 +1,89 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:28:48.420384+00:00",
+  "solution": "@aibast-agents-library/personalized-marketing",
+  "onepager": "Personalized Marketing Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "personalized-marketing-agent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/retail_cpg_stacks/personalized_marketing_stack/personalized_marketing_agent.py",
+      "sha256": "2e88be7949918e00f1046f5f2a36e783165a55bd432fca45f437232babe3d785"
+    }
+  ],
+  "case_file": "tests/demo_cases/personalized-marketing.json",
+  "case_file_sha256": "a025e472124c0b91965dfa0538d7ddfe285b959e7535a3502e6fb9da4714811f",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "PM-01",
+      "persona": "Marketing Director",
+      "onepager_promise": null,
+      "prompt": "As Marketing Director, summarize the aggregate customer groups without demographic traits and identify portfolio review priorities.",
+      "assistant_response": "## Summary & Portfolio Priorities\n\n**Aggregate Customer Landscape:**\nYour portfolio consists of **~132K customers** organized into 5 behavioral groups totaling **~$917M in lifetime value**. Two segments drive 84% of revenue: **High-Engagement Members** (elite, 6.6% of base) and **Loyal Advocates** (core revenue engine, 32.5%).\n\n**Critical Portfolio Priorities (in order):**\n\n1. **Defend High-Engagement Members** \u2014 6.6% of base, $36.7M revenue, 97/100 engagement, 6% churn risk. This is your profit center. Retention here has 10x ROI impact.\n\n2. **Stabilize Loyal Advocates** \u2014 32.5% of base, $80.3M revenue, but 42K customers at 4% churn risk means you're losing $3.2M annually. Prevention is cheaper than acquisition.\n\n3. **Win back At-Risk Churners** \u2014 18.4K customers, 38% churn risk, still $11.4M in revenue. Targeted intervention could recover $3\u20135M before loss.\n\n4. **Reactivate Dormant Lapsed** \u2014 34.2K inactive accounts (26% of base), 72% churn risk, minimal engagement. Lower priority unless they're cost-free to attempt.\n\n5. **Graduate New Explorers** \u2014 27.6K customers with 22% churn risk and low LTV ($2K). Focus on onboarding velocity and upsell triggers.\n\n**What would help next?** Campaign design for retention, content strategy for any segment, or performance benchmarking against targets?",
+      "agent_logs": "[personalized-marketing-agent] **Prepared for:** Marketing Director\n**Role focus:** portfolio priorities, governance, and qualitative business value\n\n> Synthetic aggregate planning data. Drafts and recommendations only; no audience is profiled with sensitive attributes, and no message, offer, campaign, reward, or purchase is created or sent.\n\n# Customer Segmentation Overview\n\n**Total Addressable Customers:** 131,820\n**Weighted Average LTV:** $6,966.55\n\n| Segment | Size | Avg Spend | Orders/Yr | LTV | Churn Risk | Engagement |\n|---------|------|-----------|-----------|-----|------------|------------|\n| Loyal Advocates | 42,850 | $1,875.00 | 18.3 | $11,250.00 | 4% | 92/100 |\n| At-Risk Churners | 18,420 | $620.00 | 5.1 | $3,720.00 | 38% | 31/100 |\n| New Explorers | 27,600 | $340.00 | 3.8 | $2,040.00 | 22% | 58/100 |\n| High-Engagement Members | 8,750 | $4,200.00 | 24.6 | $33,600.00 | 6% | 97/100 |\n| Dormant Lapsed | 34,200 | $85.00 | 0.8 | $510.00 | 72% | 9/100 |\n\n## Revenue Contribution by Segment\n\n- **Loyal Advocates:** $80,343,750.00\n- **At-Risk Churners:** $11,420,400.00\n- **New Explorers:** $9,384,000.00\n- **High-Engagement Members:** $36,750,000.00\n- **Dormant Lapsed:** $2,907,000.00",
+      "expected_agent": null,
+      "must_include": [
+        "Prepared for:** Marketing Director",
+        "Total Addressable Customers",
+        "no audience is profiled with sensitive attributes"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PM-02",
+      "persona": "Campaign Manager",
+      "onepager_promise": null,
+      "prompt": "As Campaign Manager, outline the review-only win-back sequence, assumptions, and approval gates.",
+      "assistant_response": "Here's your **win-back campaign outline** (CAMP-WINBACK):\n\n---\n\n## **Win-Back Sequence Overview**\n\n**Segment:** Dormant Lapsed (34,200 contacts)  \n**Duration:** 28 days | 4 touches  \n**Revenue Scenario:** ~$43,605 (illustrative)\n\n| Touch | Timing | Draft Purpose | Goal |\n|-------|--------|---------------|------|\n| **A** | Day 1 | Reconnect on recent category interests | Reactivate with relevance |\n| **B** | Day 7 | Highlight what's new since last visit | Build curiosity |\n| **C** | Day 14 | Optional value reminder (subject to approval) | Lower barriers to return |\n| **D** | Day 28 | Respectful close | Maintain goodwill, sunset gracefully |\n\n---\n\n## **Key Assumptions**\n\n1. **Dormancy Definition:** No purchase/open in 90+ days\n2. **Benchmarks:** 18% open, 4% click, 1.2% convert (historical aggregate)\n3. **No offers deployed** until compliance review clears incentive terms\n4. **Personalization:** Use browsing/category history where available; fall back to popular categories\n5. **Frequency cap:** Excluded from other campaigns during sequence\n\n---\n\n## **Approval Gates**\n\n| Gate | Responsible | Criteria |\n|------|-------------|----------|\n| **Campaign Brief** | Marketing Director | Strategy approved; segment qualified |\n| **Draft Content** | Compliance + Brand | Messaging, tone, legal review |\n| **Offer Terms** | Legal + Promotion Ops | Incentive scope, restrictions (if applied) |\n| **Sample Send** | Campaign Manager | QA: links, dynamic blocks, rendering |\n| **Launch Readiness** | Campaign Manager | All gates passed; audience final count |\n\n---\n\n**Ready to refine personalization rules, adjust cadence, or define success metrics for the close-out stage?**",
+      "agent_logs": "[personalized-marketing-agent] **Prepared for:** Campaign Manager\n**Role focus:** review-ready campaign details, sequencing, and measurement\n\n> Synthetic aggregate planning data. Drafts and recommendations only; no audience is profiled with sensitive attributes, and no message, offer, campaign, reward, or purchase is created or sent.\n\n# Draft Campaign Design Portfolio\n\n## Win-Back Journey (`CAMP-WINBACK`)\n\n- **Type:** automated_email\n- **Target Segment:** Dormant Lapsed (SEG-DORMANT)\n- **Audience Size:** 34,200\n- **Duration:** 28 days, 4 stages\n- **Offer Concept:** Optional incentive concept, subject to policy and approval\n- **Illustrative Revenue Scenario:** $43,605.00\n\n**Draft Sequence (not sent):**\n  1. Draft A: Reconnect with recent category interests\n  2. Draft B: Explore what is new\n  3. Draft C: Optional value reminder\n  4. Draft D: Close the sequence respectfully\n\n**Historical Benchmarks:** Open 18% | Click 4% | Convert 1.2%\n\n## Loyalty Tier Upgrade (`CAMP-LOYALTY`)\n\n- **Type:** multi_channel\n- **Target Segment:** Loyal Advocates (SEG-LOYAL)\n- **Audience Size:** 42,850\n- **Duration:** 14 days, 3 stages\n- **Offer Concept:** Early-access concept; no benefit is issued\n- **Illustrative Revenue Scenario:** $351,232.88\n\n**Draft Sequence (not sent):**\n  1. Draft A: Review progress toward the next tier\n  2. Draft B: Explain an optional approved benefit\n  3. Draft C: Acknowledge a verified tier change\n\n**Historical Benchmarks:** Open 42% | Click 15% | Convert 8.0%\n\n## New Customer Welcome (`CAMP-NEWWELCOME`)\n\n- **Type:** automated_email\n- **Target Segment:** New Explorers (SEG-NEW)\n- **Audience Size:** 27,600\n- **Duration:** 30 days, 5 stages\n- **Offer Concept:** Welcome-value concept, subject to policy and approval\n- **Illustrative Revenue Scenario:** $135,815.46\n\n**Draft Sequence (not sent):**\n  1. Draft A: Welcome and explain available categories\n  2. Draft B: Introduce popular products\n  3. Draft C: Offer optional curated ideas\n  4. Draft D: Invite the shopper to set preferences\n  5. Draft E: Explain the rewards program without enrollment\n\n**Historical Benchmarks:** Open 35% | Click 11% | Convert 5.5%\n\n## VIP Exclusive Preview (`CAMP-VIP`)\n\n- **Type:** multi_channel\n- **Target Segment:** High-Engagement Members (SEG-HIGHVAL)\n- **Audience Size:** 8,750\n- **Duration:** 7 days, 2 stages\n- **Offer Concept:** Private-preview concept; no access or discount is granted\n- **Illustrative Revenue Scenario:** $209,144.25\n\n**Draft Sequence (not sent):**\n  1. Draft A: Preview a collection for an eligible aggregate audience\n  2. Draft B: Close the preview sequence without urgency pressure\n\n**Historical Benchmarks:** Open 58% | Click 24% | Convert 14.0%\n",
+      "expected_agent": null,
+      "must_include": [
+        "Prepared for:** Campaign Manager",
+        "Draft Campaign Design Portfolio",
+        "Win-Back Journey"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PM-03",
+      "persona": "Campaign Manager",
+      "onepager_promise": null,
+      "prompt": "As Campaign Manager, draft neutral content ideas for New Explorers and explain the non-sensitive signals used.",
+      "assistant_response": "## Content Ideas for New Explorers (SEG-NEW)\n\n**Draft Hero Messages:**\n- *\"Welcome to the Family\"* \u2014 signals belonging, low-pressure onboarding\n- *\"Start Shopping\"* \u2014 clear, action-oriented entry point\n\n**Recommended Products:**\n- Organic Cotton T-Shirt \u2014 quality, approachable\n- Stainless Water Bottle \u2014 functional, universal appeal\n- UV Protection Sunglasses \u2014 lifestyle upgrade, low risk\n\n**Best Channels:** Social media and mobile app (where discovery happens naturally)\n\n**Top Categories to Feature:** Apparel, Beauty, Accessories\n\n---\n\n## Non-Sensitive Signals Behind SEG-NEW\n\nThe segmentation uses **behavioral and transactional signals only** \u2014 no demographic profiling:\n\n| Signal | What It Captures |\n|--------|-----------------|\n| **Account Age** | Customers active <6 months |\n| **Order Count** | 3\u20135 purchases to date |\n| **Spend Velocity** | $340 avg spend (baseline adoption phase) |\n| **Channel Preference** | Social/mobile as discovery channels |\n| **Engagement Score** | 58/100 \u2014 active but still exploring |\n| **Churn Risk** | 22% \u2014 indicates need for nurture |\n\n**What's NOT used:** No age, location, income, family status, or purchase intent is profiled. The segmentation is purely about *how recently* and *how often* they're engaging \u2014 privacy-safe and compliant.\n\n**Business Impact:** 27.6K customers, $9.4M contribution, 22% churn risk = urgent nurture opportunity.",
+      "agent_logs": "[personalized-marketing-agent] Unknown segment_id `new_explorers`. Valid: SEG-LOYAL, SEG-ATRISK, SEG-NEW, SEG-HIGHVAL, SEG-DORMANT\n[personalized-marketing-agent] Unknown segment_id `new_explorers`. Valid: SEG-LOYAL, SEG-ATRISK, SEG-NEW, SEG-HIGHVAL, SEG-DORMANT\n[personalized-marketing-agent] **Prepared for:** Campaign Manager\n**Role focus:** review-ready campaign details, sequencing, and measurement\n\n> Synthetic aggregate planning data. Drafts and recommendations only; no audience is profiled with sensitive attributes, and no message, offer, campaign, reward, or purchase is created or sent.\n\n# Draft Content Personalization Matrix\n\n## New Explorers (`SEG-NEW`)\n\n**Draft Hero Copy:**\n- Headline: \"Welcome to the Family\"\n- CTA: \"Start Shopping\"\n\n**Draft Product Ideas:**\n- Organic Cotton T-Shirt\n- Stainless Water Bottle\n- UV Protection Sunglasses\n\n**Preferred Channels:** social_media, mobile_app\n**Top Categories:** Apparel, Beauty, Accessories\n\n[personalized-marketing-agent] **Prepared for:** Marketing Director\n**Role focus:** portfolio priorities, governance, and qualitative business value\n\n> Synthetic aggregate planning data. Drafts and recommendations only; no audience is profiled with sensitive attributes, and no message, offer, campaign, reward, or purchase is created or sent.\n\n# Customer Segmentation Overview\n\n**Total Addressable Customers:** 131,820\n**Weighted Average LTV:** $6,966.55\n\n| Segment | Size | Avg Spend | Orders/Yr | LTV | Churn Risk | Engagement |\n|---------|------|-----------|-----------|-----|------------|------------|\n| New Explorers | 27,600 | $340.00 | 3.8 | $2,040.00 | 22% | 58/100 |\n\n## Revenue Contribution by Segment\n\n- **New Explorers:** $9,384,000.00",
+      "expected_agent": null,
+      "must_include": [
+        "Draft Content Personalization Matrix",
+        "New Explorers",
+        "Draft Hero Copy"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PM-04",
+      "persona": "Marketing Director",
+      "onepager_promise": null,
+      "prompt": "As Marketing Director, compare the synthetic tests and call out measurement limitations before any decision.",
+      "assistant_response": "---\n\n## Key Findings & Measurement Boundaries\n\n**Strong performers:**\n- **VIP Exclusive Preview** leads ROI at 68x, but\u2014\u26a0\ufe0f\u2014with only 3,400 samples (smallest test), high variance risk\n- **Loyalty Tier Upgrade** is most reliable: 6,200 samples, 91% confidence, 23x ROAS\n- Win-Back Journey shows solid 30% lift, but lower conversion (1.2%) may not sustain\n\n**Critical limitations before you decide:**\n\n1. **Synthetic data doesn't account for:**\n   - Channel mix (email vs. SMS vs. push changes real performance)\n   - Seasonality or macroeconomic shifts\n   - Customer lifetime value beyond this campaign\n   - Attribution overlap (if a customer sees multiple campaigns)\n\n2. **Sample sizes vary sharply:**\n   - VIP test is underpowered\u2014confidence is high, but sample is small; one cohort anomaly skews results\n   - Win-Back and Loyalty are robust\n\n3. **Missing context:**\n   - Cost-per-acquisition isn't shown (ROAS without CAC can mislead)\n   - Holdout group data (natural churn baseline) is absent\n   - No repeat purchase or churn impact\n\n4. **Recommendation:**\n   - **Scale cautiously:** Loyalty Tier Upgrade is your safest bet to scale first\n   - **Validate VIP externally:** Before betting big, test VIP on real cohorts across channels\u201468x is compelling but needs real-world friction (unsubscribes, brand fatigue)\n   - **Qualify Win-Back:** Confirm this audience isn't also in the Loyalty test (overlap bleeds ROI)\n\nWhat real-world constraints should we layer in\u2014budget ceiling, channel capacity, or customer overlap rules?",
+      "agent_logs": "[personalized-marketing-agent] **Prepared for:** Marketing Director\n**Role focus:** portfolio priorities, governance, and qualitative business value\n\n> Synthetic aggregate planning data. Drafts and recommendations only; no audience is profiled with sensitive attributes, and no message, offer, campaign, reward, or purchase is created or sent.\n\n# Marketing Performance Analysis\n\n## A/B Test Results\n\n| Test | Campaign | Winner | Confidence | Sample | Lift |\n|------|----------|--------|------------|--------|------|\n| ABT-001 | Win-Back Journey | Variant B | 94% | 8,500 | +30.5% |\n| ABT-002 | Loyalty Tier Upgrade | Variant A | 91% | 6,200 | +14.4% |\n| ABT-003 | VIP Exclusive Preview | Variant B | 88% | 3,400 | +15.3% |\n\n## Campaign ROI Summary\n\n| Campaign | Audience | Proj. Revenue | Conv. Rate | Est. ROAS |\n|----------|----------|---------------|------------|-----------|\n| Win-Back Journey | 34,200 | $43,605.00 | 1.2% | 3.64x |\n| Loyalty Tier Upgrade | 42,850 | $351,232.88 | 8.0% | 23.42x |\n| New Customer Welcome | 27,600 | $135,815.46 | 5.5% | 14.06x |\n| VIP Exclusive Preview | 8,750 | $209,144.25 | 14.0% | 68.29x |\n\n**Total Projected Campaign Revenue:** $739,797.59",
+      "expected_agent": null,
+      "must_include": [
+        "Marketing Performance Analysis",
+        "A/B Test Results",
+        "Synthetic aggregate planning data"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

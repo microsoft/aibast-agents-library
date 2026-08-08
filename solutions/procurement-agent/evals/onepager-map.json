@@ -1,0 +1,66 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/procurement-agent",
+  "onepager": "Procurement Agent one-pager.pptx",
+  "source_slide_sha256": "0e377b02c6b5eacf8ef9b2fb2abd5873e39c58fa14caaea6745ea647a4217531",
+  "source_audit": {
+    "status": "audited",
+    "source_path": "agents/@aibast-agents-library/general_stacks/procurement_agent_stack/procurement_agent.py",
+    "implemented_operations": [
+      "purchase_request",
+      "vendor_comparison",
+      "approval_routing",
+      "spend_analysis"
+    ],
+    "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts or recommendations."
+  },
+  "promises": [
+    {
+      "advertised_promise": "Perform intelligent vendor analysis to optimize supplier selection, contract compliance, and performance tracking",
+      "operations": [
+        "vendor_comparison"
+      ],
+      "demo_cases": [
+        "PROC-02"
+      ],
+      "synthetic_evidence": [
+        "AWS",
+        "Azure",
+        "Ratings and terms are comparison evidence"
+      ]
+    },
+    {
+      "advertised_promise": "Automate purchase order creation and approval workflows to reduce cycle times and manual workload",
+      "operations": [
+        "purchase_request",
+        "approval_routing"
+      ],
+      "demo_cases": [
+        "PROC-01",
+        "PROC-03"
+      ],
+      "synthetic_evidence": [
+        "PR-5001",
+        "$125,000",
+        "CFO",
+        "PR-5001",
+        "CFO",
+        "does not record an approval"
+      ]
+    },
+    {
+      "advertised_promise": "Deliver real-time spend analytics to identify savings opportunities and prevent duplicate spending",
+      "operations": [
+        "spend_analysis"
+      ],
+      "demo_cases": [
+        "PROC-04"
+      ],
+      "synthetic_evidence": [
+        "Software",
+        "$60,000",
+        "No purchase order is created"
+      ]
+    }
+  ]
+}

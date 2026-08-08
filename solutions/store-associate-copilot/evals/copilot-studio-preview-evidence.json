@@ -1,0 +1,56 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T21:12:09.437Z",
+  "solution": "@aibast-agents-library/store-associate-copilot",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Retail Store Associate Pilot",
+  "schema_name": "aibast_RetailStoreAssociateCopilot",
+  "bot_id": "68455256-c5b0-48dc-b707-285f9dae051b",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "SA-01",
+      "must_include": [
+        "Prepared for:** Store Associate",
+        "Product Lookup Snapshot",
+        "verify before advising"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "SA-02",
+      "must_include": [
+        "Draft Customer Assistance Guide",
+        "Suggested Draft Language",
+        "authorized associate"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "SA-03",
+      "must_include": [
+        "Prepared for:** Floor Specialist",
+        "Daily Task Planning Checklist",
+        "Opening Shift"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "SA-04",
+      "must_include": [
+        "Prepared for:** Sales Manager",
+        "Synthetic Role-Cohort Performance Dashboard",
+        "Aggregate Coaching Signals"
+      ],
+      "must_not_include": [],
+      "passed": true
+    }
+  ]
+}

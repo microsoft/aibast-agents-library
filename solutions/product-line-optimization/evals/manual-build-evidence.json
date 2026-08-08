@@ -1,0 +1,93 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-08-08T07:54:02Z",
+  "solution": "@aibast-agents-library/production-line-optimization",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "expected_display_name": "Product Line Manual Build",
+    "display_name": "Product Line Manual Build",
+    "bot_id": "ee4836e5-16a4-4d23-8bd6-342155d3a2af",
+    "created": true
+  },
+  "target_model": "Claude Sonnet 4.6",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 4,
+      "confirmed": 4
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "PLO-01",
+      "must_include": [
+        "Polymer Molding Line C",
+        "Electronics Assembly Line A"
+      ],
+      "expected_screenshot": "19-preview-plo01-line-health.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "PLO-02",
+      "must_include": [
+        "Functional Test",
+        "Robotic Welding",
+        "Injection Molding"
+      ],
+      "expected_screenshot": "20-preview-plo02-bottlenecks.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "PLO-03",
+      "must_include": [
+        "Option 1",
+        "Option 2",
+        "Quality improvement"
+      ],
+      "expected_screenshot": "21-preview-plo03-options.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "PLO-04",
+      "must_include": [
+        "Day",
+        "Swing",
+        "Night"
+      ],
+      "expected_screenshot": "22-preview-plo04-shift-plan.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "expected_frames": 23,
+    "manifest": "solutions/product-line-optimization/screenshots/manual/browserfilm.json",
+    "gif": "solutions/product-line-optimization/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/product-line-optimization/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "23-verify-draft-no-publish.jpg"
+  }
+}

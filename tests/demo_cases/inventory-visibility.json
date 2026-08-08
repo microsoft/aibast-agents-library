@@ -1,0 +1,14 @@
+{
+  "solution": "Inventory Visibility Agent",
+  "agent": "@aibast-agents-library/inventory-visibility",
+  "onepager": "34. Inventory Visibility Agent one-pager.pptx",
+  "agent_files": ["inventory_visibility_agent"],
+  "note": "One persona-language case per deterministic operation. Prompts do not expose operation names.",
+  "cases": [
+    {"id": "IV-01", "persona": "Inventory Planner", "operation": "inventory_dashboard", "arguments": {"location_id": "STR-001"}, "prompt": "As Inventory Planner, summarize the store snapshot and verification boundary.", "must_include": ["Prepared for:** Inventory Planner", "Inventory Visibility Snapshot", "no stock is reserved"]},
+    {"id": "IV-02", "persona": "Store Manager", "operation": "stock_alerts", "arguments": {}, "prompt": "As Store Manager, identify urgent review candidates without issuing transfer or replenishment commands.", "must_include": ["Prepared for:** Store Manager", "Draft Stock Review", "Review transfer candidate"]},
+    {"id": "IV-03", "persona": "Inventory Planner", "operation": "replenishment_plan", "arguments": {}, "prompt": "As Inventory Planner, show the fourteen-day replenishment scenario and its assumptions.", "must_include": ["Draft Replenishment Plan", "14-day supply", "Estimated Total Replenishment Cost"]},
+    {"id": "IV-04", "persona": "Category Manager", "operation": "channel_allocation", "arguments": {"sku_id": "SKU-1003"}, "prompt": "As Category Manager, compare the channel planning scenario without reserving any stock.", "must_include": ["Prepared for:** Category Manager", "Channel Allocation Scenario", "do not reserve units"]}
+  ],
+  "assertion_principle": "Route from persona language, assert deterministic synthetic evidence, and preserve read-only inventory safety."
+}

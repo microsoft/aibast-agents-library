@@ -1,0 +1,100 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/patient-intake",
+  "display_name": "Patient Intake and Scheduling Agent",
+  "source_path": "agents/@aibast-agents-library/healthcare_stacks/patient_intake_stack/patient_intake_agent.py",
+  "target_filename": "patient_intake_agent.py",
+  "expected_tool": "PatientIntakeAgent",
+  "data_source": "synthetic",
+  "operations": [
+    "intake_readiness",
+    "coverage_evidence",
+    "appointment_availability",
+    "pre_visit_summary"
+  ],
+  "smoke_test": {
+    "prompt": "What is still missing from the synthetic intake packet for Patient Alpha?",
+    "arguments": {
+      "operation": "intake_readiness"
+    },
+    "must_call": "PatientIntakeAgent",
+    "must_include": [
+      "SYN-PT-001",
+      "emergency contact confirmation"
+    ]
+  },
+  "manual_package": {
+    "global_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
+    "knowledge_files": [
+      "manual/knowledge/aibast_patient-intake-synthetic-records.md",
+      "manual/knowledge/aibast_patient-intake-review-rules.md"
+    ],
+    "skill_count": 4,
+    "skills": [
+      "manual/skills/intake-readiness/SKILL.md",
+      "manual/skills/coverage-evidence/SKILL.md",
+      "manual/skills/appointment-availability/SKILL.md",
+      "manual/skills/pre-visit-summary/SKILL.md"
+    ],
+    "locked_demo_cases": "../../tests/demo_cases/patient-intake.json",
+    "onepager_map": "evals/onepager-map.json",
+    "source_audit": "evals/source-audit.json"
+  },
+  "copilot_studio": {
+    "status": "package-ready-not-created",
+    "publish": false,
+    "publish_requires_confirmation": true,
+    "required_connections": [
+      "Dynamics 365 patient-access workflow",
+      "SharePoint governed intake documents"
+    ],
+    "external_actions": "not-configured",
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "authoring_mode": "cli-copilot",
+    "validated_manual": {
+      "display_name": "Patient Intake Manual",
+      "bot_id": "ea14a160-2d46-4381-af47-8866e118be5d",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "web_search_removed": true,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    },
+    "validated_pilot": {
+      "display_name": "Patient Intake Pilot",
+      "schema_name": "aibast_PatientIntakeandScheduling",
+      "bot_id": "5c004225-1b49-460e-9e57-1563401940d4",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "changes_pushed": 7,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    }
+  },
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/healthcare_stacks/patient_intake_stack/patient_intake_agent.py",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  }
+}

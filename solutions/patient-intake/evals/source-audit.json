@@ -1,0 +1,64 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/patient-intake",
+  "audited_source": "agents/@aibast-agents-library/healthcare_stacks/patient_intake_stack/patient_intake_agent.py",
+  "case_file": "tests/demo_cases/patient-intake.json",
+  "onepager": "31. Patient Intake and Scheduling Agent one-pager.pptx",
+  "operations": {
+    "intake_readiness": [
+      "PI-01"
+    ],
+    "coverage_evidence": [
+      "PI-02"
+    ],
+    "appointment_availability": [
+      "PI-03"
+    ],
+    "pre_visit_summary": [
+      "PI-04"
+    ]
+  },
+  "defects_fixed": [
+    {
+      "area": "routing and schema",
+      "before": "Operation filters were not consistently routed and the schema allowed behavior whose names implied side effects.",
+      "after": "A strict no-additional-properties schema exposes four read-only operations, routes optional synthetic identifiers, and preserves safe legacy aliases."
+    },
+    {
+      "area": "healthcare safety boundary",
+      "before": "The agent could imply eligibility, authorization, clinical interpretation, outreach, scheduling, or record mutation beyond evidence.",
+      "after": "Every route uses synthetic-only evidence, explicit uncertainty, no side effects, and a qualified human review gate."
+    }
+  ],
+  "claim_audit": [
+    {
+      "claim": "Verify insurance, referrals, and network status during patient intake",
+      "disposition": "bounded",
+      "implementation": "Coverage evidence is transcribed; live eligibility, referral, and network determinations remain in approved source systems."
+    },
+    {
+      "claim": "Deliver tailored digital packets with all required pre-visit forms",
+      "disposition": "bounded",
+      "implementation": "The agent produces a missing-item inventory but does not deliver packets or write records."
+    },
+    {
+      "claim": "Automate reminders across multiple scheduled touchpoints",
+      "disposition": "excluded",
+      "implementation": "No outbound communication or scheduling mutation is configured."
+    },
+    {
+      "claim": "Ensure clinicians\u2019 availability and readiness through up-to-date scheduling data",
+      "disposition": "bounded",
+      "implementation": "Candidate synthetic source slots are displayed without booking or freshness claims."
+    }
+  ],
+  "routing_result": {
+    "cases_passed": 4,
+    "cases_total": 4,
+    "strict_isolation": true,
+    "loaded_tool": "PatientIntakeAgent",
+    "artifact": "solutions/patient-intake/evals/transcripts.json"
+  },
+  "claim_policy": "Catalog value claims are qualitative. Exact fields and identifiers are retained only as clearly labeled synthetic evidence.",
+  "unresolved_defects": []
+}

@@ -1,0 +1,494 @@
+{
+  "schema": "aibast-solution-export/1.0",
+  "solution": "@aibast-agents-library/energy-regulatory-reporting",
+  "raw_base": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/",
+  "github_folder": "https://github.com/microsoft/aibast-agents-library/tree/main/solutions/energy-regulatory-reporting",
+  "evidence_boundary": "Synthetic solution evidence only. Qualitative workflow proof is not a customer KPI, measured production result, or publication approval.",
+  "bundle": {
+    "label": "Complete Regulatory Reporting Agent source bundle",
+    "path": "solutions/energy-regulatory-reporting/exports/energy-regulatory-reporting-source.zip",
+    "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/exports/energy-regulatory-reporting-source.zip"
+  },
+  "files": [
+    {
+      "id": "portable-agent",
+      "label": "Portable source agent",
+      "path": "agents/@aibast-agents-library/energy_stacks/regulatory_reporting_stack/regulatory_reporting_agent.py",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/energy_stacks/regulatory_reporting_stack/regulatory_reporting_agent.py",
+      "use": "Local Brainstem runtime and production-logic reference",
+      "status": "ready"
+    },
+    {
+      "id": "deployment-recipe",
+      "label": "Deployment recipe",
+      "path": "solutions/energy-regulatory-reporting/deployment.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/deployment.json",
+      "use": "Easy-mode deployment contract",
+      "status": "ready"
+    },
+    {
+      "id": "field-guide",
+      "label": "Customer field guide",
+      "path": "solutions/energy-regulatory-reporting/FIELD-GUIDE.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/FIELD-GUIDE.md",
+      "use": "Facilitation, evidence boundaries, gates, and recovery",
+      "status": "ready"
+    },
+    {
+      "id": "manual-instructions",
+      "label": "Manual global instructions",
+      "path": "solutions/energy-regulatory-reporting/manual/GLOBAL-INSTRUCTIONS.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/manual/GLOBAL-INSTRUCTIONS.md",
+      "use": "Reviewed instructions for literal browser construction",
+      "status": "ready"
+    },
+    {
+      "id": "settings",
+      "label": "Copilot Studio settings",
+      "path": "solutions/energy-regulatory-reporting/copilot-studio/settings.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/copilot-studio/settings.mcs.yml",
+      "use": "Easy-mode agent settings and instruction copy",
+      "status": "ready"
+    },
+    {
+      "id": "agent-sync",
+      "label": "Copilot Studio component manifest",
+      "path": "solutions/energy-regulatory-reporting/copilot-studio/agent.sync.yaml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/copilot-studio/agent.sync.yaml",
+      "use": "Easy-mode component synchronization",
+      "status": "ready"
+    },
+    {
+      "id": "knowledge-energy-regulatory-reporting-rules-and-controls",
+      "label": "Energy Regulatory Reporting Rules And Controls",
+      "path": "solutions/energy-regulatory-reporting/manual/knowledge/energy-regulatory-reporting-rules-and-controls.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/manual/knowledge/energy-regulatory-reporting-rules-and-controls.md",
+      "use": "Manual knowledge upload",
+      "status": "ready"
+    },
+    {
+      "id": "knowledge-energy-regulatory-reporting-synthetic-records",
+      "label": "Energy Regulatory Reporting Synthetic Records",
+      "path": "solutions/energy-regulatory-reporting/manual/knowledge/energy-regulatory-reporting-synthetic-records.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/manual/knowledge/energy-regulatory-reporting-synthetic-records.md",
+      "use": "Manual knowledge upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-audit-readiness",
+      "label": "Manual skill: aibast audit readiness",
+      "path": "solutions/energy-regulatory-reporting/manual/skills/aibast_audit-readiness/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/manual/skills/aibast_audit-readiness/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-data-validation",
+      "label": "Manual skill: aibast data validation",
+      "path": "solutions/energy-regulatory-reporting/manual/skills/aibast_data-validation/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/manual/skills/aibast_data-validation/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-report-status",
+      "label": "Manual skill: aibast report status",
+      "path": "solutions/energy-regulatory-reporting/manual/skills/aibast_report-status/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/manual/skills/aibast_report-status/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-submission-tracker",
+      "label": "Manual skill: aibast submission tracker",
+      "path": "solutions/energy-regulatory-reporting/manual/skills/aibast_submission-tracker/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/manual/skills/aibast_submission-tracker/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "easy-knowledge-energy-regulatory-reporting-rules-and-controls",
+      "label": "Energy Regulatory Reporting Rules And Controls",
+      "path": "solutions/energy-regulatory-reporting/copilot-studio/capabilities/knowledge/files/energy-regulatory-reporting-rules-and-controls.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/copilot-studio/capabilities/knowledge/files/energy-regulatory-reporting-rules-and-controls.md",
+      "use": "Copilot Studio knowledge source or synchronization metadata",
+      "status": "ready"
+    },
+    {
+      "id": "easy-knowledge-energy-regulatory-reporting-rules-and-controls-md-mcs",
+      "label": "Energy Regulatory Reporting Rules And Controls.Md.Mcs",
+      "path": "solutions/energy-regulatory-reporting/copilot-studio/capabilities/knowledge/files/energy-regulatory-reporting-rules-and-controls.md.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/copilot-studio/capabilities/knowledge/files/energy-regulatory-reporting-rules-and-controls.md.mcs.yml",
+      "use": "Copilot Studio knowledge source or synchronization metadata",
+      "status": "ready"
+    },
+    {
+      "id": "easy-knowledge-energy-regulatory-reporting-synthetic-records",
+      "label": "Energy Regulatory Reporting Synthetic Records",
+      "path": "solutions/energy-regulatory-reporting/copilot-studio/capabilities/knowledge/files/energy-regulatory-reporting-synthetic-records.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/copilot-studio/capabilities/knowledge/files/energy-regulatory-reporting-synthetic-records.md",
+      "use": "Copilot Studio knowledge source or synchronization metadata",
+      "status": "ready"
+    },
+    {
+      "id": "easy-knowledge-energy-regulatory-reporting-synthetic-records-md-mcs",
+      "label": "Energy Regulatory Reporting Synthetic Records.Md.Mcs",
+      "path": "solutions/energy-regulatory-reporting/copilot-studio/capabilities/knowledge/files/energy-regulatory-reporting-synthetic-records.md.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/copilot-studio/capabilities/knowledge/files/energy-regulatory-reporting-synthetic-records.md.mcs.yml",
+      "use": "Copilot Studio knowledge source or synchronization metadata",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-energy-regulatory-reporting-audit-readiness-mcs",
+      "label": "Aibast Energy Regulatory Reporting Audit Readiness.Mcs",
+      "path": "solutions/energy-regulatory-reporting/copilot-studio/behaviors/aibast_energy-regulatory-reporting-audit-readiness.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/copilot-studio/behaviors/aibast_energy-regulatory-reporting-audit-readiness.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-energy-regulatory-reporting-data-validation-mcs",
+      "label": "Aibast Energy Regulatory Reporting Data Validation.Mcs",
+      "path": "solutions/energy-regulatory-reporting/copilot-studio/behaviors/aibast_energy-regulatory-reporting-data-validation.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/copilot-studio/behaviors/aibast_energy-regulatory-reporting-data-validation.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-energy-regulatory-reporting-report-status-mcs",
+      "label": "Aibast Energy Regulatory Reporting Report Status.Mcs",
+      "path": "solutions/energy-regulatory-reporting/copilot-studio/behaviors/aibast_energy-regulatory-reporting-report-status.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/copilot-studio/behaviors/aibast_energy-regulatory-reporting-report-status.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-energy-regulatory-reporting-submission-tracker-mcs",
+      "label": "Aibast Energy Regulatory Reporting Submission Tracker.Mcs",
+      "path": "solutions/energy-regulatory-reporting/copilot-studio/behaviors/aibast_energy-regulatory-reporting-submission-tracker.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/copilot-studio/behaviors/aibast_energy-regulatory-reporting-submission-tracker.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-evidence-copilot-studio-preview-evidence",
+      "label": "Copilot Studio Preview Evidence",
+      "path": "solutions/energy-regulatory-reporting/evals/copilot-studio-preview-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/evals/copilot-studio-preview-evidence.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "manual-evidence",
+      "label": "Manual build evidence",
+      "path": "solutions/energy-regulatory-reporting/evals/manual-build-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/evals/manual-build-evidence.json",
+      "use": "Manual identity, inventory, Preview, and Draft-gate evidence",
+      "status": "ready"
+    },
+    {
+      "id": "onepager-map",
+      "label": "Onepager Map",
+      "path": "solutions/energy-regulatory-reporting/evals/onepager-map.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/evals/onepager-map.json",
+      "use": "Advertised-promise mapping evidence",
+      "status": "ready"
+    },
+    {
+      "id": "easy-evidence-source-audit",
+      "label": "Source Audit",
+      "path": "solutions/energy-regulatory-reporting/evals/source-audit.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/evals/source-audit.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "brainstem-transcripts",
+      "label": "Isolated Brainstem transcripts",
+      "path": "solutions/energy-regulatory-reporting/evals/transcripts.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/evals/transcripts.json",
+      "use": "Canonical source-agent acceptance evidence",
+      "status": "ready"
+    },
+    {
+      "id": "manual-browserfilm-manifest",
+      "label": "Manual browserfilm manifest",
+      "path": "solutions/energy-regulatory-reporting/screenshots/manual/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/manual/browserfilm.json",
+      "use": "Ordered literal-browser evidence frames",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-01",
+      "label": "Create a blank Copilot Studio agent",
+      "path": "solutions/energy-regulatory-reporting/screenshots/manual/01-create-blank-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/manual/01-create-blank-agent.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-02",
+      "label": "Name Regulatory Reporting Manual",
+      "path": "solutions/energy-regulatory-reporting/screenshots/manual/02-name-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/manual/02-name-agent.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-03",
+      "label": "Enter the reviewed global instructions",
+      "path": "solutions/energy-regulatory-reporting/screenshots/manual/03-enter-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/manual/03-enter-instructions.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-04",
+      "label": "Save the instruction policy",
+      "path": "solutions/energy-regulatory-reporting/screenshots/manual/04-save-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/manual/04-save-instructions.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-05",
+      "label": "Remove default web search",
+      "path": "solutions/energy-regulatory-reporting/screenshots/manual/05-remove-web-search.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/manual/05-remove-web-search.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-06",
+      "label": "Add knowledge: energy-regulatory-reporting-rules-and-controls.md",
+      "path": "solutions/energy-regulatory-reporting/screenshots/manual/06-add-energy-regulatory-reporting-rules-and-controls.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/manual/06-add-energy-regulatory-reporting-rules-and-controls.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-07",
+      "label": "Add knowledge: energy-regulatory-reporting-synthetic-records.md",
+      "path": "solutions/energy-regulatory-reporting/screenshots/manual/07-add-energy-regulatory-reporting-synthetic-records.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/manual/07-add-energy-regulatory-reporting-synthetic-records.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-08",
+      "label": "Add skill: aibast_audit-readiness",
+      "path": "solutions/energy-regulatory-reporting/screenshots/manual/08-add-aibast-audit-readiness.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/manual/08-add-aibast-audit-readiness.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-09",
+      "label": "Add skill: aibast_data-validation",
+      "path": "solutions/energy-regulatory-reporting/screenshots/manual/09-add-aibast-data-validation.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/manual/09-add-aibast-data-validation.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-10",
+      "label": "Add skill: aibast_report-status",
+      "path": "solutions/energy-regulatory-reporting/screenshots/manual/10-add-aibast-report-status.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/manual/10-add-aibast-report-status.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-11",
+      "label": "Add skill: aibast_submission-tracker",
+      "path": "solutions/energy-regulatory-reporting/screenshots/manual/11-add-aibast-submission-tracker.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/manual/11-add-aibast-submission-tracker.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-12",
+      "label": "Review model, skills, knowledge, and safety boundaries",
+      "path": "solutions/energy-regulatory-reporting/screenshots/manual/12-review-inventory.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/manual/12-review-inventory.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-13",
+      "label": "Open a fresh Preview conversation",
+      "path": "solutions/energy-regulatory-reporting/screenshots/manual/13-open-preview.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/manual/13-open-preview.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-14",
+      "label": "Pass ENERGY_REGULATORY_REPORTING-01: Regulatory Reporting Lead",
+      "path": "solutions/energy-regulatory-reporting/screenshots/manual/14-energy_regulatory_reporting-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/manual/14-energy_regulatory_reporting-01.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-15",
+      "label": "Pass ENERGY_REGULATORY_REPORTING-02: Data Analyst",
+      "path": "solutions/energy-regulatory-reporting/screenshots/manual/15-energy_regulatory_reporting-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/manual/15-energy_regulatory_reporting-02.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-16",
+      "label": "Pass ENERGY_REGULATORY_REPORTING-03: Compliance Manager",
+      "path": "solutions/energy-regulatory-reporting/screenshots/manual/16-energy_regulatory_reporting-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/manual/16-energy_regulatory_reporting-03.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-17",
+      "label": "Pass ENERGY_REGULATORY_REPORTING-04: Internal Auditor",
+      "path": "solutions/energy-regulatory-reporting/screenshots/manual/17-energy_regulatory_reporting-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/manual/17-energy_regulatory_reporting-04.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-18",
+      "label": "Confirm Draft and stop before publish",
+      "path": "solutions/energy-regulatory-reporting/screenshots/manual/18-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/manual/18-confirm-draft.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-browserfilm",
+      "label": "Manual browserfilm",
+      "path": "solutions/energy-regulatory-reporting/screenshots/manual/manual-build-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/manual/manual-build-walkthrough.gif",
+      "use": "Animated manual walkthrough",
+      "status": "ready"
+    },
+    {
+      "id": "manual-contact-sheet",
+      "label": "Manual contact sheet",
+      "path": "solutions/energy-regulatory-reporting/screenshots/manual/manual-build-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/manual/manual-build-contact-sheet.jpg",
+      "use": "Static manual evidence overview",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-browserfilm-manifest",
+      "label": "Copilot-assisted browserfilm manifest",
+      "path": "solutions/energy-regulatory-reporting/screenshots/assisted/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/assisted/browserfilm.json",
+      "use": "Ordered Easy-mode evidence frames",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-browserfilm",
+      "label": "Copilot-assisted browserfilm",
+      "path": "solutions/energy-regulatory-reporting/screenshots/assisted/copilot-assisted-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/assisted/copilot-assisted-walkthrough.gif",
+      "use": "Animated Easy-mode walkthrough",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-contact-sheet",
+      "label": "Copilot-assisted contact sheet",
+      "path": "solutions/energy-regulatory-reporting/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
+      "use": "Static Easy-mode evidence overview",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-01",
+      "label": "Pass ENERGY_REGULATORY_REPORTING-01: Regulatory Reporting Lead",
+      "path": "solutions/energy-regulatory-reporting/screenshots/assisted/01-energy_regulatory_reporting-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/assisted/01-energy_regulatory_reporting-01.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-02",
+      "label": "Pass ENERGY_REGULATORY_REPORTING-02: Data Analyst",
+      "path": "solutions/energy-regulatory-reporting/screenshots/assisted/02-energy_regulatory_reporting-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/assisted/02-energy_regulatory_reporting-02.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-03",
+      "label": "Pass ENERGY_REGULATORY_REPORTING-03: Compliance Manager",
+      "path": "solutions/energy-regulatory-reporting/screenshots/assisted/03-energy_regulatory_reporting-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/assisted/03-energy_regulatory_reporting-03.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-04",
+      "label": "Pass ENERGY_REGULATORY_REPORTING-04: Internal Auditor",
+      "path": "solutions/energy-regulatory-reporting/screenshots/assisted/04-energy_regulatory_reporting-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/assisted/04-energy_regulatory_reporting-04.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-05",
+      "label": "Confirm the validated agent remains Draft",
+      "path": "solutions/energy-regulatory-reporting/screenshots/assisted/05-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/assisted/05-confirm-draft.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "quest",
+      "label": "Guided field quest",
+      "path": "solutions/energy-regulatory-reporting/quest.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/quest.html",
+      "use": "Resumable Easy/Hard customer journey",
+      "status": "ready"
+    },
+    {
+      "id": "manual-tutorial",
+      "label": "Manual browser tutorial",
+      "path": "solutions/energy-regulatory-reporting/manual-tutorial.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/manual-tutorial.html",
+      "use": "One action per real manual evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "screenshots-readme",
+      "label": "Screenshot evidence README",
+      "path": "solutions/energy-regulatory-reporting/screenshots/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/README.md",
+      "use": "Evidence boundary and capture inventory",
+      "status": "ready"
+    },
+    {
+      "id": "manual-screenshots-readme",
+      "label": "Manual screenshot README",
+      "path": "solutions/energy-regulatory-reporting/screenshots/manual/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/manual/README.md",
+      "use": "Manual frame and film inventory",
+      "status": "ready"
+    },
+    {
+      "id": "exports-readme",
+      "label": "Export README",
+      "path": "solutions/energy-regulatory-reporting/exports/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/exports/README.md",
+      "use": "Bundle build instructions",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-screenshots-readme",
+      "label": "Assisted screenshot README",
+      "path": "solutions/energy-regulatory-reporting/screenshots/assisted/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/energy-regulatory-reporting/screenshots/assisted/README.md",
+      "use": "Copilot-assisted evidence inventory",
+      "status": "ready"
+    }
+  ]
+}

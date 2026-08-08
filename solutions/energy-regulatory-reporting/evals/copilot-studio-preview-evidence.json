@@ -1,0 +1,56 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T19:11:20.064Z",
+  "solution": "@aibast-agents-library/energy-regulatory-reporting",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Regulatory Reporting Pilot",
+  "schema_name": "aibast_RegulatoryReportingPilot",
+  "bot_id": "ea897f71-1385-40dd-bad9-ec67ba599549",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "ENERGY_REGULATORY_REPORTING-01",
+      "must_include": [
+        "PHMSA Annual Pipeline Safety Report",
+        "OVERDUE",
+        "Pipeline Operations"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "ENERGY_REGULATORY_REPORTING-02",
+      "must_include": [
+        "Data collection incomplete",
+        "Data quality score below threshold",
+        "authorized report owner"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "ENERGY_REGULATORY_REPORTING-03",
+      "must_include": [
+        "PHMSA Annual Pipeline Safety Report",
+        "OVERDUE",
+        "No regulator filing"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "ENERGY_REGULATORY_REPORTING-04",
+      "must_include": [
+        "Pipeline mileage discrepancy",
+        "HIGH",
+        "cannot predict an audit outcome"
+      ],
+      "must_not_include": [],
+      "passed": true
+    }
+  ]
+}

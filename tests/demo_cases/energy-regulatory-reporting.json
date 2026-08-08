@@ -1,0 +1,75 @@
+{
+  "schema": "aibast-persona-cases/1.0",
+  "solution": "Regulatory Reporting Agent",
+  "agent": "@aibast-agents-library/energy-regulatory-reporting",
+  "onepager": "Energy Operations Agent Suite one-pager (2).pptx",
+  "cases": [
+    {
+      "id": "ENERGY_REGULATORY_REPORTING-01",
+      "operation": "report_status",
+      "persona": "Regulatory Reporting Lead",
+      "prompt": "Which filing is overdue and who owns it?",
+      "kwargs": {
+        "operation": "report_status",
+        "report_id": "RPT-9006"
+      },
+      "must_include": [
+        "PHMSA Annual Pipeline Safety Report",
+        "OVERDUE",
+        "Pipeline Operations"
+      ],
+      "expects_agent": "RegulatoryReportingAgent"
+    },
+    {
+      "id": "ENERGY_REGULATORY_REPORTING-02",
+      "operation": "data_validation",
+      "persona": "Data Analyst",
+      "prompt": "Which report data is incomplete or below quality threshold?",
+      "kwargs": {
+        "operation": "data_validation"
+      },
+      "must_include": [
+        "Data collection incomplete",
+        "Data quality score below threshold",
+        "authorized report owner"
+      ],
+      "expects_agent": "RegulatoryReportingAgent"
+    },
+    {
+      "id": "ENERGY_REGULATORY_REPORTING-03",
+      "operation": "submission_tracker",
+      "persona": "Compliance Manager",
+      "prompt": "Show filing state and confirm you did not transmit anything.",
+      "kwargs": {
+        "operation": "submission_tracker",
+        "report_id": "RPT-9006"
+      },
+      "must_include": [
+        "PHMSA Annual Pipeline Safety Report",
+        "OVERDUE",
+        "No regulator filing"
+      ],
+      "expects_agent": "RegulatoryReportingAgent"
+    },
+    {
+      "id": "ENERGY_REGULATORY_REPORTING-04",
+      "operation": "audit_readiness",
+      "persona": "Internal Auditor",
+      "prompt": "What high-severity reporting evidence is still open?",
+      "kwargs": {
+        "operation": "audit_readiness",
+        "report_id": "RPT-9006"
+      },
+      "must_include": [
+        "Pipeline mileage discrepancy",
+        "HIGH",
+        "cannot predict an audit outcome"
+      ],
+      "expects_agent": "RegulatoryReportingAgent"
+    }
+  ],
+  "assertion_principle": "One persona case per operation; assertions use deterministic source evidence and explicit safety language.",
+  "agent_files": [
+    "regulatory_reporting_agent"
+  ]
+}

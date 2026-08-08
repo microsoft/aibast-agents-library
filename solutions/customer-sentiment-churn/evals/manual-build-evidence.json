@@ -1,0 +1,116 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-08-08T10:08:40.649Z",
+  "solution": "@aibast-agents-library/customer-sentiment-churn",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "Customer Sentiment Manual",
+    "bot_id": "c93c1ae6-304b-4656-ab29-8fdd9da5fbb6",
+    "created": true
+  },
+  "target_model": "Claude Sonnet 4.6",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 4,
+      "confirmed": 4
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "CSC-01",
+      "prompt": "What are customers telling us across channels, and which relationship needs attention first?",
+      "must_include": [
+        "CUST-8002",
+        "Negative"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "14-csc-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CSC-02",
+      "prompt": "Who should my team review first today, and what evidence drove the priority?",
+      "must_include": [
+        "CUST-8004",
+        "prioritize review"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "15-csc-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CSC-03",
+      "prompt": "Prepare options for Marcus that I can review before anyone contacts him or changes a fee.",
+      "must_include": [
+        "Marcus Johnson",
+        "No customer was contacted"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "16-csc-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CSC-04",
+      "prompt": "Which segment is under its experience benchmark, and what should we investigate?",
+      "must_include": [
+        "Mass Market",
+        "benchmark"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "17-csc-04.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/customer-sentiment-churn/screenshots/manual/browserfilm.json",
+    "gif": "solutions/customer-sentiment-churn/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/customer-sentiment-churn/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "18-confirm-draft.jpg"
+  }
+}

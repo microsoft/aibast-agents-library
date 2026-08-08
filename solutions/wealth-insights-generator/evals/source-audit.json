@@ -1,0 +1,39 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/wealth-insights-generator",
+  "audited_source": "agents/@aibast-agents-library/financial_services_stacks/wealth_insights_generator_stack/wealth_insights_generator_agent.py",
+  "source_sha256": "aec5aca3409747d4df2364772c4e92a0a7ae4f94f650d4a0bd7dcd55a5ca2355",
+  "case_file": "tests/demo_cases/wealth-insights-generator.json",
+  "onepager": "42. Wealth Insights Generator Agent one-pager.pptx",
+  "operations": {
+    "market_brief": [
+      "WIG-01"
+    ],
+    "client_insights": [
+      "WIG-02"
+    ],
+    "opportunity_alerts": [
+      "WIG-03"
+    ],
+    "performance_attribution": [
+      "WIG-04"
+    ],
+    "meeting_brief": [
+      "WIG-05"
+    ]
+  },
+  "defects_fixed": [
+    "Expanded tool routing descriptions so persona-language requests map to the intended operation.",
+    "Aligned implemented operations with approved one-pager promises and added missing decision-support workflows where needed.",
+    "Added synthetic-data labels, explicit human review, and no-advice/no-approval/no-transaction boundaries.",
+    "Rejected unknown record identifiers instead of silently substituting another fictional record.",
+    "Added exact persona-language routing phrases, operation selection guidance, and synthetic entity-to-identifier mappings for strict-isolation capture."
+  ],
+  "unresolved_defects": [],
+  "routing_result": {
+    "cases_passed": 5,
+    "cases_total": 5,
+    "strict_isolation": true,
+    "loaded_tool": "WealthInsightsGeneratorAgent"
+  }
+}

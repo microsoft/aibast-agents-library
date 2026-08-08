@@ -1,0 +1,60 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T21:15:10.838Z",
+  "solution": "@aibast-agents-library/supplier-risk-monitoring",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Supply Risk Monitoring Pilot",
+  "schema_name": "aibast_SupplyRiskMonitoringPilot",
+  "bot_id": "2e4550e2-3e3a-4987-9595-f84848a3c607",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "SR-01",
+      "must_include": [
+        "TechnoCore Semiconductor",
+        "CRITICAL"
+      ],
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "SR-02",
+      "must_include": [
+        "SUP-101",
+        "Geopolitical"
+      ],
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "SR-03",
+      "must_include": [
+        "SUP-104",
+        "force majeure"
+      ],
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "SR-04",
+      "must_include": [
+        "Murata Electronics",
+        "No supplier was contacted"
+      ],
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ],
+      "passed": true
+    }
+  ]
+}

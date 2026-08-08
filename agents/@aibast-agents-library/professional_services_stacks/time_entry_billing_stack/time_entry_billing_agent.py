@@ -15,7 +15,7 @@ from basic_agent import BasicAgent
 __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/time-entry-billing",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "display_name": "Time and Entry Billing Agent",
     "description": "Automate month-end billing cycles to accelerate invoicing, reduce risk, and ensure audit-ready compliance.",
     "author": "AIBAST",
@@ -104,6 +104,27 @@ INVOICE_HISTORY = [
      "status": "overdue", "days_outstanding": 45},
 ]
 
+DISPUTES = [
+    {
+        "dispute_id": "DSP-301",
+        "entry_id": "TE-9004",
+        "client": "Apex Manufacturing",
+        "reason": "Work description is missing, so the client cannot validate the charge.",
+        "evidence": "Project assignment and time record exist; consultant narrative and manager approval are missing.",
+        "recommended_action": "Return to Michael Chen for a factual description, then route to the project manager for approval.",
+        "status": "evidence_required",
+    },
+    {
+        "dispute_id": "DSP-302",
+        "entry_id": "TE-9011",
+        "client": "TechCorp Industries",
+        "reason": "Premium-rate migration work requires written cutover authorization.",
+        "evidence": "The entry uses the configured overtime rate, but approval is not attached.",
+        "recommended_action": "Attach the approved cutover authorization and obtain billing-manager sign-off before invoicing.",
+        "status": "approval_required",
+    },
+]
+
 
 # ---------------------------------------------------------------------------
 # Helper functions
@@ -162,13 +183,49 @@ class TimeEntryBillingAgent(BasicAgent):
         self.name = "TimeEntryBillingAgent"
         self.metadata = {
             "name": self.name,
-            "description": __manifest__["description"],
+            "description": (
+                "The professional-services month-end billing agent. Use it for unapproved "
+                "billable work, billing summaries, time-entry rule checks, invoice-package "
+                "preparation, or disputed-hour evidence. Use unbilled_report for revenue "
+                "leakage and outstanding invoices, billing_summary for project and consultant "
+                "rollups, time_entry_audit for missing narratives, hours, rates, and budget "
+                "checks, invoice_preparation for approval-gated T&M invoice packages and "
+                "fixed-fee holds, and dispute_resolution for evidence-backed resolution "
+                "recommendations. It never changes time, approves entries, recognizes revenue, "
+                "creates an accounting posting, or sends an invoice."
+            ),
             "operations": [
                 "unbilled_report",
                 "billing_summary",
                 "time_entry_audit",
                 "invoice_preparation",
+                "dispute_resolution",
             ],
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "operation": {
+                        "type": "string",
+                        "enum": [
+                            "unbilled_report",
+                            "billing_summary",
+                            "time_entry_audit",
+                            "invoice_preparation",
+                            "dispute_resolution",
+                        ],
+                        "description": (
+                            "unbilled_report: find billable entries blocked from invoicing and "
+                            "show outstanding invoices. billing_summary: summarize hours, value, "
+                            "budgets, and consultant activity. time_entry_audit: identify missing "
+                            "descriptions, excess hours, non-standard rates, and budget risk. "
+                            "invoice_preparation: prepare approved T&M support and hold fixed-fee "
+                            "work for milestone evidence. dispute_resolution: assemble the "
+                            "evidence gap and recommended approval path for disputed hours."
+                        ),
+                    }
+                },
+                "required": ["operation"],
+            },
         }
         super().__init__(name=self.name, metadata=self.metadata)
 
@@ -179,6 +236,7 @@ class TimeEntryBillingAgent(BasicAgent):
             "billing_summary": self._billing_summary,
             "time_entry_audit": self._time_entry_audit,
             "invoice_preparation": self._invoice_preparation,
+            "dispute_resolution": self._dispute_resolution,
         }
         handler = dispatch.get(operation)
         if handler is None:
@@ -219,6 +277,7 @@ class TimeEntryBillingAgent(BasicAgent):
                 )
         total_outstanding = sum(inv["amount"] for inv in INVOICE_HISTORY if inv["status"] != "paid")
         lines.append(f"\n**Total outstanding:** ${total_outstanding:,.2f}")
+        lines.append("\n> Synthetic month-end evidence; no entry or invoice status was changed.")
         return "\n".join(lines)
 
     # ------------------------------------------------------------------
@@ -268,6 +327,7 @@ class TimeEntryBillingAgent(BasicAgent):
         for name, data in sorted(consultant_data.items(), key=lambda x: x[1]["value"], reverse=True):
             avg_rate = round(data["value"] / data["hours"], 2) if data["hours"] else 0
             lines.append(f"| {name} | {data['hours']} | ${data['value']:,.2f} | ${avg_rate} |")
+        lines.append("\n> Synthetic billing summary; amounts are not posted revenue.")
         return "\n".join(lines)
 
     # ------------------------------------------------------------------
@@ -297,6 +357,7 @@ class TimeEntryBillingAgent(BasicAgent):
             used = _budget_status(proj)
             status = "CRITICAL" if used >= 95 else "WARNING" if used >= 80 else "OK"
             lines.append(f"| {proj[:24]} | {used}% | ${budget['remaining']:,.0f} | **{status}** |")
+        lines.append("\n> Flags require human correction and approval; the agent never rewrites a time entry.")
         return "\n".join(lines)
 
     # ------------------------------------------------------------------
@@ -304,10 +365,15 @@ class TimeEntryBillingAgent(BasicAgent):
         lines = ["## Invoice Preparation\n"]
         lines.append("### Invoices Ready to Generate\n")
 
-        # Group approved billable entries by project/client
+        # Group approved billable T&M entries by project/client.
         by_project = {}
         for te in TIME_ENTRIES:
-            if te["category"] == "billable" and te["approved"]:
+            budget = PROJECT_BUDGETS.get(te["project"], {})
+            if (
+                te["category"] == "billable"
+                and te["approved"]
+                and budget.get("contract_type") == "T&M"
+            ):
                 proj = te["project"]
                 if proj not in by_project:
                     by_project[proj] = {"hours": 0, "value": 0, "entries": 0}
@@ -332,6 +398,17 @@ class TimeEntryBillingAgent(BasicAgent):
         unbilled = _unbilled_entries()
         unbilled_val = sum(te["hours"] * te["rate"] for te in unbilled)
         lines.append(f"**Pending approval (not included):** ${unbilled_val:,.2f}")
+        fixed_fee_entries = [
+            te for te in TIME_ENTRIES
+            if te["category"] == "billable"
+            and te["approved"]
+            and PROJECT_BUDGETS.get(te["project"], {}).get("contract_type") == "Fixed Fee"
+        ]
+        if fixed_fee_entries:
+            lines.append(
+                "**Fixed-fee hold:** Pinnacle Energy ERP time is retained as delivery evidence; "
+                "invoice value requires the contractual milestone schedule."
+            )
 
         lines.append("\n### Invoice History\n")
         lines.append("| Invoice | Client | Amount | Date | Status |")
@@ -346,6 +423,27 @@ class TimeEntryBillingAgent(BasicAgent):
         lines.append(f"\n**Total billed (last cycle):** ${total_billed:,.2f}")
         lines.append(f"**Total collected:** ${total_collected:,.2f}")
         lines.append(f"**Collection rate:** {round(total_collected/total_billed*100,1)}%")
+        lines.append("\n> Draft invoice support only; no invoice was generated, posted, or sent.")
+        return "\n".join(lines)
+
+    # ------------------------------------------------------------------
+    def _dispute_resolution(self, **kwargs) -> str:
+        lines = ["## Disputed Hours Resolution Brief\n"]
+        lines.append("| Dispute | Entry | Client | Status | Evidence Gap |")
+        lines.append("|---------|-------|--------|--------|--------------|")
+        for dispute in DISPUTES:
+            lines.append(
+                f"| {dispute['dispute_id']} | {dispute['entry_id']} | {dispute['client']} | "
+                f"{dispute['status']} | {dispute['evidence']} |"
+            )
+        lines.append("\n### Recommended Resolution Path\n")
+        for dispute in DISPUTES:
+            lines.append(f"**{dispute['dispute_id']} — {dispute['reason']}**")
+            lines.append(f"- Recommended: {dispute['recommended_action']}")
+        lines.append(
+            "\n> Synthetic decision support only; do not invent narratives, alter hours, "
+            "waive charges, or contact a client without authorized review."
+        )
         return "\n".join(lines)
 
 

@@ -1,0 +1,64 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/care-gap-closure",
+  "onepager": "32. Care Gap Closure Agent one-pager.pptx",
+  "source_slide_sha256": "ac05a4c981e2137233e0bd82baf11f6c037428b49ab47c07870b2a7a04d1f53d",
+  "promises": [
+    {
+      "advertised_promise": "Analyze quality measures and surface high-priority gaps",
+      "operations": [
+        "gap_analysis"
+      ],
+      "demo_cases": [
+        "CG-01"
+      ],
+      "disposition": "bounded",
+      "synthetic_evidence": [
+        "Summarizes aggregate synthetic source counts and limitations without deciding measure eligibility.",
+        "Reports aggregate source-evidence queues; reviewers validate measure eligibility and exclusions."
+      ]
+    },
+    {
+      "advertised_promise": "Stratify outreach based on risk, condition severity, and engagement",
+      "operations": [
+        "cohort_review"
+      ],
+      "demo_cases": [
+        "CG-02"
+      ],
+      "disposition": "bounded",
+      "synthetic_evidence": [
+        "Organizes operational evidence-review cohorts without clinical risk scoring.",
+        "Uses operational evidence-review cohorts only, not clinical risk scoring."
+      ]
+    },
+    {
+      "advertised_promise": "Identify common barriers that impacted care completion",
+      "operations": [
+        "outreach_draft"
+      ],
+      "demo_cases": [
+        "CG-03"
+      ],
+      "disposition": "supported",
+      "synthetic_evidence": [
+        "Drafts privacy-aware language but does not contact anyone.",
+        "Summarizes synthetic aggregate evidence barriers with explicit limitations."
+      ]
+    },
+    {
+      "advertised_promise": "Launch targeted multi-channel outreach campaigns with real-time progress tracking",
+      "operations": [
+        "quality_dashboard"
+      ],
+      "demo_cases": [
+        "CG-04"
+      ],
+      "disposition": "excluded",
+      "synthetic_evidence": [
+        "Shows source-completeness signals for quality and clinical validation.",
+        "No outreach is launched, no patient is contacted, and no record is changed."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/fs-regulatory-compliance",
+  "audited_source": "agents/@aibast-agents-library/financial_services_stacks/regulatory_compliance_fs_stack/regulatory_compliance_fs_agent.py",
+  "case_file": "tests/demo_cases/fs-regulatory-compliance.json",
+  "onepager": "43. Regulatory Compliance Agent one-pager.pptx",
+  "operations": {
+    "compliance_dashboard": [
+      "RC-01",
+      "RC-05"
+    ],
+    "certification_tracker": [
+      "RC-02"
+    ],
+    "trade_surveillance": [
+      "RC-03"
+    ],
+    "documentation_review": [
+      "RC-04"
+    ],
+    "remediation_submission": []
+  },
+  "defects_fixed": [
+    {
+      "area": "remediation_submission",
+      "before": "The agent proposed ambiguous venue values, embedded rejection prose where a field name belonged, treated prepared corrections as applied, and projected full accuracy without an approval control.",
+      "after": "The agent stages deterministic source-backed values, distinguishes correction reports from new submissions, labels the run as synthetic, and requires authorized approval before transmission."
+    },
+    {
+      "area": "tool metadata and audit-readiness boundary",
+      "before": "Operation prose implied that the tool could file to an ARM portal, and the dashboard did not explicitly prevent a model from predicting an audit failure.",
+      "after": "Metadata states that remediation only prepares synthetic payloads for authorized review and never transmits. The dashboard classifies control gaps as at risk while explicitly disclaiming audit outcomes and legal or regulatory advice."
+    }
+  ],
+  "routing_result": {
+    "cases_passed": 5,
+    "cases_total": 5,
+    "strict_isolation": true,
+    "loaded_tool": "FSRegulatoryCompliance"
+  },
+  "claim_policy": "Catalog value claims are qualitative. Exact figures and identifiers are retained only as clearly labeled synthetic evidence.",
+  "unresolved_defects": []
+}

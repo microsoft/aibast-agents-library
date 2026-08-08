@@ -1,0 +1,69 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/clinical-notes-summarizer",
+  "audited_source": "agents/@aibast-agents-library/healthcare_stacks/clinical_notes_summarizer_stack/clinical_notes_summarizer_agent.py",
+  "case_file": "tests/demo_cases/clinical-notes-summarizer.json",
+  "onepager": "49. Clinical Notes Summarizer Agent one-pager.pptx",
+  "operations": {
+    "encounter_summary": [
+      "CN-01"
+    ],
+    "medication_inventory": [
+      "CN-02"
+    ],
+    "problem_list_extract": [
+      "CN-03"
+    ],
+    "referral_context": [
+      "CN-04"
+    ]
+  },
+  "defects_fixed": [
+    {
+      "area": "routing and schema",
+      "before": "Operation filters were not consistently routed and the schema allowed behavior whose names implied side effects.",
+      "after": "A strict no-additional-properties schema exposes four read-only operations, routes optional synthetic identifiers, and preserves safe legacy aliases."
+    },
+    {
+      "area": "healthcare safety boundary",
+      "before": "The agent could imply eligibility, authorization, clinical interpretation, outreach, scheduling, or record mutation beyond evidence.",
+      "after": "Every route uses synthetic-only evidence, explicit uncertainty, no side effects, and a qualified human review gate."
+    },
+    {
+      "area": "surgeon persona routing",
+      "before": "The live model did not select the clinical-notes tool for a source-coded problem-list extraction request.",
+      "after": "Tool and operation descriptions now map the exact persona intent to problem_list_extract, preserving source-coded type 2 diabetes and No diagnosis was added in the deterministic output."
+    }
+  ],
+  "claim_audit": [
+    {
+      "claim": "Automatically generate concise, clinically relevant patient summaries",
+      "disposition": "bounded",
+      "implementation": "Generates source-grounded synthetic drafts with mandatory clinician comparison."
+    },
+    {
+      "claim": "Surface key risks, comorbidities, and medication considerations",
+      "disposition": "bounded",
+      "implementation": "Extracts source-coded problems, observations, and medication inventory without risk inference or advice."
+    },
+    {
+      "claim": "Standardize documentation to support smoother surgical and anesthesia workflows",
+      "disposition": "supported",
+      "implementation": "Uses consistent draft sections while prohibiting clearance decisions."
+    },
+    {
+      "claim": "Send summaries through EHR and secure messaging systems",
+      "disposition": "excluded",
+      "implementation": "No transmission, EHR write, notification, scheduling, or record mutation occurs."
+    }
+  ],
+  "routing_result": {
+    "cases_passed": 4,
+    "cases_total": 4,
+    "strict_isolation": true,
+    "loaded_tool": "ClinicalNotesSummarizerAgent",
+    "artifact": "solutions/clinical-notes-summarizer/evals/transcripts.json"
+  },
+  "claim_policy": "Catalog value claims are qualitative. Exact fields and identifiers are retained only as clearly labeled synthetic evidence.",
+  "unresolved_defects": []
+}

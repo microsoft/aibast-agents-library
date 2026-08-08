@@ -1,0 +1,68 @@
+{
+  "solution": "Supply Risk Monitoring Agent",
+  "agent": "@aibast-agents-library/supplier-risk-monitoring",
+  "onepager": "Supply Risk Monitoring Agent one-pager.pptx",
+  "agent_files": [
+    "supplier_risk_monitoring_agent"
+  ],
+  "note": "One persona-language case per deterministic operation. Prompts do not expose operation names.",
+  "cases": [
+    {
+      "id": "SR-01",
+      "operation": "risk_dashboard",
+      "persona": "Supply Chain Director",
+      "prompt": "Where is supplier exposure concentrated, and which relationships should leadership review first?",
+      "must_include": [
+        "TechnoCore Semiconductor",
+        "CRITICAL"
+      ],
+      "expects_agent": "SupplierRiskMonitoringAgent",
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ]
+    },
+    {
+      "id": "SR-02",
+      "operation": "supplier_scorecard",
+      "persona": "Procurement Manager",
+      "prompt": "Explain why TechnoCore is elevated and show me the evidence by risk dimension.",
+      "must_include": [
+        "SUP-101",
+        "Geopolitical"
+      ],
+      "expects_agent": "SupplierRiskMonitoringAgent",
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ]
+    },
+    {
+      "id": "SR-03",
+      "operation": "disruption_alerts",
+      "persona": "Supply Chain Director",
+      "prompt": "Which recorded disruptions could threaten continuity, and what exposure should we validate?",
+      "must_include": [
+        "SUP-104",
+        "force majeure"
+      ],
+      "expects_agent": "SupplierRiskMonitoringAgent",
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ]
+    },
+    {
+      "id": "SR-04",
+      "operation": "alternative_sourcing",
+      "persona": "Procurement Manager",
+      "prompt": "Compare backup sourcing options for review, but do not contact, qualify, select, or order from any supplier.",
+      "must_include": [
+        "Murata Electronics",
+        "No supplier was contacted"
+      ],
+      "expects_agent": "SupplierRiskMonitoringAgent",
+      "must_not_include": [
+        "I do not have access to the synthetic pilot data"
+      ]
+    }
+  ],
+  "assertion_principle": "Route from persona language, assert deterministic source evidence, and preserve recommendation-only safety."
+}

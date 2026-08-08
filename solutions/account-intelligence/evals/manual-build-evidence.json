@@ -1,0 +1,154 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-08-08T07:18:36.005Z",
+  "solution": "@aibast-agents-library/account-intelligence",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "Account Intelligence Manual",
+    "bot_id": "b676ee45-2c5e-47c3-b0e4-d23931ccfa72",
+    "created": true
+  },
+  "target_model": "Claude Sonnet 4.6",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 6,
+      "confirmed": 6
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "AI-01",
+      "prompt": "Prepare a synthetic Acme Corporation account overview and show the evidence that deserves seller attention.",
+      "must_include": [
+        "Account Overview",
+        "Account Health Score",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "expected_screenshot": "16-ai-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "AI-02",
+      "prompt": "Map the synthetic Acme buying committee and show the relationship gaps without creating outreach tasks.",
+      "must_include": [
+        "Stakeholder Map",
+        "Relationship Gaps",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "expected_screenshot": "17-ai-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "AI-03",
+      "prompt": "Compare the synthetic competitor signals and positioning considerations for Acme Corporation.",
+      "must_include": [
+        "Competitive Intelligence",
+        "Competitor Activity",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "expected_screenshot": "18-ai-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "AI-04",
+      "prompt": "Draft persona-specific talking points for the synthetic Acme meeting; do not send messages.",
+      "must_include": [
+        "Draft Meeting Talking Points",
+        "Objection Handling",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "expected_screenshot": "19-ai-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "AI-05",
+      "prompt": "Assess the synthetic Acme deal risks and mitigation options without changing a forecast or CRM record.",
+      "must_include": [
+        "Deal Risk Assessment",
+        "Immediate Actions",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "expected_screenshot": "20-ai-05.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "AI-06",
+      "prompt": "Prepare a concise synthetic Acme pre-meeting briefing and review checklist.",
+      "must_include": [
+        "Account Intelligence Briefing",
+        "Pre-Meeting Checklist",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "expected_screenshot": "21-ai-06.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/account-intelligence/screenshots/manual/browserfilm.json",
+    "gif": "solutions/account-intelligence/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/account-intelligence/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "22-confirm-draft.jpg"
+  }
+}

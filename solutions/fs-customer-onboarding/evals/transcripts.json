@@ -1,0 +1,85 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:43:58.189670+00:00",
+  "solution": "@aibast-agents-library/fs-customer-onboarding",
+  "onepager": "Customer Onboarding Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "FSCustomerOnboardingAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/financial_services_stacks/customer_onboarding_fs_stack/customer_onboarding_fs_agent.py",
+      "sha256": "d2cd60c21ae267c2969f79396bfcc35eeb269419665152e426531107034d87c6"
+    }
+  ],
+  "case_file": "tests/demo_cases/fs-customer-onboarding.json",
+  "case_file_sha256": "f5e84de9d059ae6d9e1db7e132f6d638c6ad2e3cbcdf1770a2829647a966358d",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "FCO-01",
+      "persona": "Compliance Officer",
+      "onepager_promise": "Automate identity verification, document collection, and analysis",
+      "prompt": "What is holding up the enhanced due diligence case, and which checks need my review?",
+      "assistant_response": "**Ahmed Al-Rashid (APP-6003) is stuck on enhanced due diligence at 57.1% complete.**\n\n**What needs your review:**\n\n1. **PEP Screening \u2014 Flagged** \u2014 Political Exposed Person match detected; requires relationship documentation\n2. **Adverse Media \u2014 Review Needed** \u2014 Media screening results pending your assessment\n3. **Source of Wealth \u2014 Pending** \u2014 Primary blocker; wealth origin documentation required\n\n**Bottleneck:** Source of wealth verification is the critical hold-up. Until that's documented and approved, the case can't advance to account setup.\n\n**Owner:** Jessica Nguyen (Relationship Manager)\n\nSince this is high-risk ($5.8M wealth management account), you'll need to review the PEP documentation and adverse media findings before Jessica can finalize source of wealth clearance.",
+      "agent_logs": "[FSCustomerOnboardingAgent] > **SYNTHETIC DEMO DATA \u2014 HUMAN REVIEW REQUIRED.** Fictional records only. This output is operational decision support, not legal, compliance, or financial advice. It does not verify a real identity, approve an application, provision an account, or complete a transaction.\n\n# Customer Onboarding Pipeline\n\n**Applications:** 4\n**Total Estimated Assets:** $8,465,000\n\n## Pipeline Status\n\n- Kyc In Progress: 1\n- Document Review: 1\n- Enhanced Due Diligence: 1\n- Setup Review Ready: 1\n\n## Application Details\n\n| App ID | Applicant | Account | Risk | Est. Assets | Status | RM |\n|---|---|---|---|---|---|---|\n| APP-6001 | Sarah Chen | Premium Checking | Low | $250,000 | Kyc In Progress | Michael Torres |\n| APP-6002 | Blackwood Capital Partners LLC | Commercial Checking | Medium | $2,400,000 | Document Review | Jessica Nguyen |\n| APP-6003 | Ahmed Al-Rashid | Wealth Management | High | $5,800,000 | Enhanced Due Diligence | Jessica Nguyen |\n| APP-6004 | Maria Fontaine | Basic Savings | Low | $15,000 | Setup Review Ready | Michael Torres |\n[FSCustomerOnboardingAgent] > **SYNTHETIC DEMO DATA \u2014 HUMAN REVIEW REQUIRED.** Fictional records only. This output is operational decision support, not legal, compliance, or financial advice. It does not verify a real identity, approve an application, provision an account, or complete a transaction.\n\n# KYC Verification: APP-6003\n\n- **Applicant:** Ahmed Al-Rashid\n- **Type:** Individual\n- **Risk Rating:** High\n- **KYC Progress:** 57.1%\n\n## Verification Checks\n\n| Check | Status |\n|---|---|\n| Id Verification | Complete |\n| Ssn Verification | Complete |\n| Address Verification | Complete |\n| Ofac Screening | Clear |\n| Pep Screening | Flagged |\n| Adverse Media | Review Needed |\n| Source Of Wealth | Pending |\n\n## Enhanced Due Diligence Required\n\n- Source of wealth verification\n- PEP relationship documentation\n- Enhanced transaction monitoring parameters",
+      "expected_agent": "FSCustomerOnboardingAgent",
+      "must_include": [
+        "APP-6003",
+        "PEP"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "FCO-02",
+      "persona": "Onboarding Specialist",
+      "onepager_promise": "Configure accounts, treasury services, and credit facilities",
+      "prompt": "Which approved-looking file is ready for account setup review, and what product is being prepared?",
+      "assistant_response": "**Maria Fontaine's file (APP-6004)** is ready for account setup review.\n\n**Product being prepared:** Basic Savings account\n- Minimum deposit: $25\n- Features: Online banking, mobile deposit, ATM access\n- APY: 0.5%\n\nThis is synthetic demo data only \u2014 an authorized human reviewer must validate all KYC evidence, product eligibility, disclosures, and customer consent before any account is opened.",
+      "agent_logs": "[FSCustomerOnboardingAgent] > **SYNTHETIC DEMO DATA \u2014 HUMAN REVIEW REQUIRED.** Fictional records only. This output is operational decision support, not legal, compliance, or financial advice. It does not verify a real identity, approve an application, provision an account, or complete a transaction.\n\n# Account Setup Preparation Reference\n\n| Account Type | Min Deposit | Monthly Fee | APY | Features |\n|---|---|---|---|---|\n| Basic Savings | $25 | $0 | 0.5% | Online banking, Mobile deposit, ATM access |\n| Premium Checking | $1,000 | $12 | 0.15% | No ATM fees, Overdraft protection, Bill pay |\n| Commercial Checking | $5,000 | $25 | 0.1% | Treasury management, ACH origination, Wire transfers |\n| Wealth Management | $250,000 | $0 | 1.25% | Dedicated advisor, Investment management, Trust services |\n\n## Applications Ready for Authorized Setup Review\n\n### APP-6004: Maria Fontaine\n\n- **Account:** Basic Savings\n- **Min Deposit:** $25\n- **Features:** Online banking, Mobile deposit, ATM access\n\n\nNo account has been opened or provisioned. An authorized onboarding reviewer must validate KYC evidence, product eligibility, disclosures, and customer consent before action.",
+      "expected_agent": "FSCustomerOnboardingAgent",
+      "must_include": [
+        "APP-6004",
+        "Basic Savings"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "FCO-03",
+      "persona": "Relationship Manager",
+      "onepager_promise": "Automate identity verification, document collection, and analysis",
+      "prompt": "Give me the business onboarding document list for Blackwood before I call them.",
+      "assistant_response": "Here's Blackwood's checklist:\n\n**Required:**\n- Articles of Incorporation/Formation\n- EIN verification letter\n- Certificate of Good Standing\n- Operating Agreement/Bylaws\n- Beneficial ownership declaration (FinCEN BOI)\n- Government ID for all authorized signers\n\n**Optional:**\n- Business license\n- Financial statements (last 2 years)\n\n**Key point:** All docs must be current (within 90 days) and certified or notarized for a business account. This is demo data\u2014have your compliance team review before you proceed.",
+      "agent_logs": "[FSCustomerOnboardingAgent] > **SYNTHETIC DEMO DATA \u2014 HUMAN REVIEW REQUIRED.** Fictional records only. This output is operational decision support, not legal, compliance, or financial advice. It does not verify a real identity, approve an application, provision an account, or complete a transaction.\n\n# Document Checklist: APP-6002\n\n**Applicant:** Blackwood Capital Partners LLC\n**Type:** Business\n\n## Required Documents\n\n- [ ] Articles of Incorporation / Formation (Required)\n- [ ] EIN verification letter (Required)\n- [ ] Certificate of Good Standing (Required)\n- [ ] Operating Agreement / Bylaws (Required)\n- [ ] Beneficial ownership declaration (FinCEN BOI) (Required)\n- [ ] Government ID for all authorized signers (Required)\n- [ ] Business license (Optional)\n- [ ] Financial statements (last 2 years) (Optional)\n\n## Compliance Notes\n\n- All documents must be current (within 90 days)\n- Copies must be certified or notarized for business accounts\n- BSA/AML requirements apply to all account openings\n- CIP (Customer Identification Program) verification mandatory",
+      "expected_agent": "FSCustomerOnboardingAgent",
+      "must_include": [
+        "APP-6002",
+        "Beneficial ownership"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "FCO-04",
+      "persona": "Head of Onboarding",
+      "onepager_promise": "Gain real-time updates on client profiles and KYC processes",
+      "prompt": "Where is the onboarding queue stuck, and who owns each application?",
+      "assistant_response": "## Summary\n\n**Stuck Points:**\n\n1. **APP-6001 (Sarah Chen)** \u2014 *Kyc In Progress* \u2192 **Owner: Michael Torres**  \n   Low-risk Premium Checking application waiting on KYC verification completion.\n\n2. **APP-6002 (Blackwood Capital Partners LLC)** \u2014 *Document Review* \u2192 **Owner: Jessica Nguyen**  \n   Medium-risk Commercial Checking. Business onboarding docs are under review.\n\n3. **APP-6003 (Ahmed Al-Rashid)** \u2014 *Enhanced Due Diligence* \u2192 **Owner: Jessica Nguyen**  \n   High-risk Wealth Management ($5.8M). Enhanced due diligence is the bottleneck here.\n\n4. **APP-6004 (Maria Fontaine)** \u2014 *Setup Review Ready* \u2192 **Owner: Michael Torres**  \n   Ready to move forward \u2014 waiting on account setup review.\n\n**Jessica Nguyen** is managing the two heavier-lift cases (Blackwood and Ahmed Al-Rashid). **Michael Torres** owns the simpler applications. The furthest back is Ahmed Al-Rashid's enhanced due diligence \u2014 that's your highest-friction case.",
+      "agent_logs": "[FSCustomerOnboardingAgent] > **SYNTHETIC DEMO DATA \u2014 HUMAN REVIEW REQUIRED.** Fictional records only. This output is operational decision support, not legal, compliance, or financial advice. It does not verify a real identity, approve an application, provision an account, or complete a transaction.\n\n# Customer Onboarding Pipeline\n\n**Applications:** 4\n**Total Estimated Assets:** $8,465,000\n\n## Pipeline Status\n\n- Kyc In Progress: 1\n- Document Review: 1\n- Enhanced Due Diligence: 1\n- Setup Review Ready: 1\n\n## Application Details\n\n| App ID | Applicant | Account | Risk | Est. Assets | Status | RM |\n|---|---|---|---|---|---|---|\n| APP-6001 | Sarah Chen | Premium Checking | Low | $250,000 | Kyc In Progress | Michael Torres |\n| APP-6002 | Blackwood Capital Partners LLC | Commercial Checking | Medium | $2,400,000 | Document Review | Jessica Nguyen |\n| APP-6003 | Ahmed Al-Rashid | Wealth Management | High | $5,800,000 | Enhanced Due Diligence | Jessica Nguyen |\n| APP-6004 | Maria Fontaine | Basic Savings | Low | $15,000 | Setup Review Ready | Michael Torres |",
+      "expected_agent": "FSCustomerOnboardingAgent",
+      "must_include": [
+        "APP-6001",
+        "APP-6003"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

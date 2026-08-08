@@ -16,7 +16,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/omnichannel-engagement",
     "version": "1.0.0",
     "display_name": "Omnichannel Engagement Agent",
-    "description": "Deliver a single, unified view of cross-channel interactions for more strategic, streamlined support and stronger engagement.",
+    "description": "Analyze synthetic aggregate channel performance and draft privacy-safe journey, engagement, and attribution recommendations for review.",
     "author": "AIBAST",
     "tags": ["omnichannel", "engagement", "journey", "attribution", "campaign", "b2c"],
     "category": "b2c_sales",
@@ -78,6 +78,28 @@ CAMPAIGN_RESULTS = {
     "CAMP-305": {"name": "App Push — Loyalty Members", "channel": "mobile_app", "sent": 85000, "opens": 42500, "clicks": 17000, "conversions": 5100, "revenue": 765000, "cost": 2000},
 }
 
+APPROVED_PERSONAS = {
+    "Customer Experience Leader": "cross-channel continuity, service quality, and governance",
+    "Digital Engagement Manager": "channel strategy, consent, and measurement",
+    "Contact Center Supervisor": "handoff friction, unresolved needs, and service consistency",
+}
+
+SAFETY_NOTICE = (
+    "> Synthetic aggregate analytics. Recommendations only; no identity stitching, "
+    "sensitive profiling, outreach, message, offer, reward, or purchase action occurs."
+)
+
+
+def _response_header(persona):
+    role = persona if persona in APPROVED_PERSONAS else "Customer Experience Leader"
+    return [
+        f"**Prepared for:** {role}",
+        f"**Role focus:** {APPROVED_PERSONAS[role]}",
+        "",
+        SAFETY_NOTICE,
+        "",
+    ]
+
 
 # ---------------------------------------------------------------------------
 # Helper functions
@@ -131,13 +153,30 @@ class OmnichannelEngagementAgent(BasicAgent):
                     },
                     "channel": {"type": "string"},
                     "campaign_id": {"type": "string"},
+                    "persona": {
+                        "type": "string",
+                        "enum": list(APPROVED_PERSONAS),
+                    },
+                    "data_source": {"type": "string", "enum": ["synthetic"]},
                 },
                 "required": ["operation"],
+                "additionalProperties": False,
             },
         }
         super().__init__(name=self.name, metadata=self.metadata)
 
     def perform(self, **kwargs) -> str:
+        if kwargs.get("data_source", "synthetic") != "synthetic":
+            return "data_source must be `synthetic` for this package."
+        channel = kwargs.get("channel")
+        campaign_id = kwargs.get("campaign_id")
+        if channel and channel not in CHANNELS:
+            return f"Unknown channel `{channel}`. Valid: {', '.join(CHANNELS)}"
+        if campaign_id and campaign_id not in CAMPAIGN_RESULTS:
+            return (
+                f"Unknown campaign_id `{campaign_id}`. Valid: "
+                f"{', '.join(CAMPAIGN_RESULTS)}"
+            )
         operation = kwargs.get("operation", "channel_performance")
         dispatch = {
             "channel_performance": self._channel_performance,
@@ -151,14 +190,16 @@ class OmnichannelEngagementAgent(BasicAgent):
         return handler(**kwargs)
 
     def _channel_performance(self, **kwargs) -> str:
-        total_revenue = sum(c["revenue_30d"] for c in CHANNELS.values())
-        total_conversions = sum(c["conversions_30d"] for c in CHANNELS.values())
-        lines = ["# Channel Performance (30-Day)\n"]
+        channel = kwargs.get("channel")
+        channels = {channel: CHANNELS[channel]} if channel else CHANNELS
+        total_revenue = sum(c["revenue_30d"] for c in channels.values())
+        total_conversions = sum(c["conversions_30d"] for c in channels.values())
+        lines = _response_header(kwargs.get("persona")) + ["# Synthetic Channel Performance (30-Day)\n"]
         lines.append(f"**Total Revenue:** ${total_revenue:,.0f}")
         lines.append(f"**Total Conversions:** {total_conversions:,}\n")
         lines.append("| Channel | Sessions | Conversions | CVR | Revenue | Cost | ROAS |")
         lines.append("|---|---|---|---|---|---|---|")
-        for ch_name, ch in CHANNELS.items():
+        for ch_name, ch in channels.items():
             cvr = _channel_conversion_rate(ch)
             roas = _channel_roas(ch)
             lines.append(
@@ -166,13 +207,13 @@ class OmnichannelEngagementAgent(BasicAgent):
                 f"| {cvr}% | ${ch['revenue_30d']:,.0f} | ${ch['cost_30d']:,.0f} | {roas}x |"
             )
         lines.append("\n## Revenue Share by Channel\n")
-        for ch_name, ch in CHANNELS.items():
+        for ch_name, ch in channels.items():
             share = round((ch["revenue_30d"] / total_revenue) * 100, 1) if total_revenue else 0
             lines.append(f"- {ch_name.replace('_', ' ').title()}: {share}%")
         return "\n".join(lines)
 
     def _journey_analysis(self, **kwargs) -> str:
-        lines = ["# Customer Journey Analysis\n"]
+        lines = _response_header(kwargs.get("persona")) + ["# Aggregate Customer Journey Analysis\n"]
         for jid, j in CUSTOMER_JOURNEYS.items():
             lines.append(f"## {j['name']}\n")
             lines.append(f"- **Avg Duration:** {j['avg_days']} days")
@@ -186,12 +227,12 @@ class OmnichannelEngagementAgent(BasicAgent):
         lines.append("## Journey Optimization Opportunities\n")
         lines.append("- **Discovery:** Shorten path by enabling social commerce checkout")
         lines.append("- **Repeat:** Leverage push notifications for faster re-engagement")
-        lines.append("- **Win-Back:** Test earlier SMS touchpoint (day 7 vs day 14)")
+        lines.append("- **Win-Back:** Test a consented service reminder window in a controlled experiment")
         lines.append("- **Impulse:** Optimize social ad creative for direct conversion")
         return "\n".join(lines)
 
     def _engagement_optimization(self, **kwargs) -> str:
-        lines = ["# Engagement Optimization Report\n"]
+        lines = _response_header(kwargs.get("persona")) + ["# Draft Engagement Optimization Report\n"]
         lines.append("## Channel Efficiency Ranking\n")
         ranked = []
         for ch_name, ch in CHANNELS.items():
@@ -218,19 +259,25 @@ class OmnichannelEngagementAgent(BasicAgent):
         lines.append(f"**Total Revenue:** ${total_rev:,.0f}")
         lines.append(f"**Blended ROAS:** {round(total_rev / total_cost, 1)}x")
         lines.append("\n## Optimization Actions\n")
-        lines.append("1. Shift 10% of social media budget to mobile app push campaigns")
-        lines.append("2. Implement progressive profiling on email signups")
-        lines.append("3. Launch A/B test on checkout flow for web paid traffic")
-        lines.append("4. Increase SMS frequency for high-value customer segment")
+        lines.append("1. Model a budget shift from social media to consented app engagement")
+        lines.append("2. Ask only for optional preferences needed to improve service")
+        lines.append("3. Design an A/B test for the web-paid checkout journey")
+        lines.append("4. Review contact frequency caps across consented aggregate cohorts")
         return "\n".join(lines)
 
     def _campaign_attribution(self, **kwargs) -> str:
-        lines = ["# Campaign Attribution Report\n"]
+        lines = _response_header(kwargs.get("persona")) + ["# Synthetic Campaign Attribution Report\n"]
         lines.append("| Campaign | Channel | Conversions | Revenue | Cost | ROI |")
         lines.append("|---|---|---|---|---|---|")
         total_rev = 0
         total_cost = 0
-        for cid, c in CAMPAIGN_RESULTS.items():
+        campaign_id = kwargs.get("campaign_id")
+        campaigns = (
+            {campaign_id: CAMPAIGN_RESULTS[campaign_id]}
+            if campaign_id
+            else CAMPAIGN_RESULTS
+        )
+        for cid, c in campaigns.items():
             roi = _campaign_roi(c)
             total_rev += c["revenue"]
             total_cost += c["cost"]
@@ -243,7 +290,7 @@ class OmnichannelEngagementAgent(BasicAgent):
         overall_roi = round(((total_rev - total_cost) / total_cost) * 100, 1) if total_cost else 0
         lines.append(f"**Overall Campaign ROI:** {overall_roi}%")
         lines.append("\n## Campaign Detail\n")
-        for cid, c in CAMPAIGN_RESULTS.items():
+        for cid, c in campaigns.items():
             lines.append(f"### {c['name']} ({cid})\n")
             if c["sent"] > 0:
                 open_rate = round((c["opens"] / c["sent"]) * 100, 1)

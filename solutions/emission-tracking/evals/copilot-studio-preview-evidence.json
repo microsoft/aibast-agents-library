@@ -1,0 +1,54 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T19:08:09.863Z",
+  "solution": "@aibast-agents-library/emission-tracking",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Emissions Tracking Pilot",
+  "schema_name": "aibast_EmissionsTrackingPilot",
+  "bot_id": "239d1aa0-9095-443b-8985-084ed1d39834",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "EMISSION_TRACKING-01",
+      "must_include": [
+        "Ridgeline Coal Station",
+        "1,533,200",
+        "not verified emissions evidence"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "EMISSION_TRACKING-02",
+      "must_include": [
+        "BELOW SCREENING THRESHOLD",
+        "not a legal compliance determination"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "EMISSION_TRACKING-03",
+      "must_include": [
+        "Fuel switching to natural gas",
+        "engineering, finance, environmental, and executive review"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "EMISSION_TRACKING-04",
+      "must_include": [
+        "Appalachian Reforestation",
+        "No credit purchase",
+        "offset claim"
+      ],
+      "must_not_include": [],
+      "passed": true
+    }
+  ]
+}

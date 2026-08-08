@@ -1,0 +1,53 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/order-status-communication",
+  "onepager": "44. Order Status Communications Agent one-pager.pptx",
+  "source_slide_sha256": "76ee75da5ebcee95ff1eb00c8133004b842861363a66701d3e6a10bfb5524d3f",
+  "promises": [
+    {
+      "advertised_promise": "Monitor order and production status in real time to detect delays early and prevent customer surprises",
+      "operations": [
+        "order_lookup",
+        "shipment_tracking"
+      ],
+      "demo_cases": [
+        "OS-01",
+        "OS-02"
+      ],
+      "synthetic_evidence": [
+        "The deterministic snapshot surfaces order progress, delay state, and shipment evidence.",
+        "Real-time order, production, and carrier monitoring requires approved production integrations."
+      ]
+    },
+    {
+      "advertised_promise": "Automate tailored, multi-channel communications that keep customers informed and reduce inbound inquiries",
+      "operations": [
+        "delay_notification",
+        "customer_update"
+      ],
+      "demo_cases": [
+        "OS-03",
+        "OS-04"
+      ],
+      "synthetic_evidence": [
+        "Drafts reflect customer, order, recovery, owner, and preferred-channel context.",
+        "No customer communication is sent without an approved communication tool and authorized sender."
+      ]
+    },
+    {
+      "advertised_promise": "Generate and execute recovery plans instantly to minimize disruption and preserve customer confidence",
+      "operations": [
+        "delay_notification",
+        "customer_update"
+      ],
+      "demo_cases": [
+        "OS-03",
+        "OS-04"
+      ],
+      "synthetic_evidence": [
+        "The pilot prepares recovery evidence and customer-message drafts for review.",
+        "Schedule changes, sourcing, logistics, and customer updates remain production action seams."
+      ]
+    }
+  ]
+}

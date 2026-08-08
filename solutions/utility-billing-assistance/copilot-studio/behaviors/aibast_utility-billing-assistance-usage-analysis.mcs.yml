@@ -1,0 +1,32 @@
+mcs.metadata:
+  componentName: "utility-billing-assistance-usage-analysis"
+  description: "Use when a Billing Specialist asks to screen smart-meter history and prepare a non-binding estimate."
+kind: InlineAgentSkill
+content: |
+  ---
+  name: utility-billing-assistance-usage-analysis
+  description: Use when a Billing Specialist asks to screen smart-meter history and prepare a non-binding estimate.
+  ---
+  # Utility Billing and Assistance Agent: Usage Analysis
+
+  ## Route
+
+  Use the `usage_analysis` operation. The canonical persona prompt is:
+
+  > Does ACCT-90003 show a possible leak and what draft adjustment evidence is needed?
+
+  ## Procedure
+
+  1. Read the synthetic knowledge records and controls.
+  2. Call or reproduce only the `usage_analysis` operation behavior.
+  3. Lead with source-backed identifiers and evidence.
+  4. State uncertainty and the required authorized review.
+  5. End with the operation's no-write boundary.
+
+  ## Required evidence
+
+  - REVIEW POSSIBLE LEAK
+  - Draft policy estimate
+  - not a leak diagnosis
+
+  Never imply that a live system, filing, account, crew, supplier, shipment, emissions claim, or inventory position was changed.

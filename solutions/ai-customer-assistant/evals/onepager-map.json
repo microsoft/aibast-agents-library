@@ -1,0 +1,76 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/ai-customer-assistant",
+  "onepager": "Customer Escalations Agent one-pager.pptx",
+  "source_slide_sha256": "cb20b6eb67d4a95591b8e15cde43372595529b2755a3465480f5657742c97db3",
+  "source_audit": {
+    "status": "audited",
+    "source_path": "agents/@aibast-agents-library/general_stacks/ai_customer_assistant_stack/ai_customer_assistant_agent.py",
+    "implemented_operations": [
+      "handle_inquiry",
+      "knowledge_search",
+      "escalation_routing",
+      "satisfaction_survey"
+    ],
+    "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts or recommendations."
+  },
+  "promises": [
+    {
+      "advertised_promise": "Perform real-time inquiry analysis from full customer context to speed up escalation handling",
+      "operations": [
+        "handle_inquiry",
+        "satisfaction_survey"
+      ],
+      "demo_cases": [
+        "CES-01",
+        "CES-04"
+      ],
+      "synthetic_evidence": [
+        "INQ-4001",
+        "KB-104",
+        "Tier 1 Technical Support",
+        "Customer Satisfaction Dashboard",
+        "4.3/5.0",
+        "fictional pilot records"
+      ]
+    },
+    {
+      "advertised_promise": "Recommend resolutions aligned to policies, case studies, and playbooks to improve resolution success rates",
+      "operations": [
+        "knowledge_search",
+        "escalation_routing"
+      ],
+      "demo_cases": [
+        "CES-02",
+        "CES-03"
+      ],
+      "synthetic_evidence": [
+        "KB-104",
+        "Known Issue",
+        "Resolution Steps",
+        "INQ-4003",
+        "Tier 2 Engineering",
+        "2 hours"
+      ]
+    },
+    {
+      "advertised_promise": "Execute authorized actions like refunds, documentation, and follow ups to enhance customer experiences",
+      "operations": [
+        "handle_inquiry",
+        "escalation_routing"
+      ],
+      "demo_cases": [
+        "CES-01",
+        "CES-03"
+      ],
+      "synthetic_evidence": [
+        "INQ-4001",
+        "KB-104",
+        "Tier 1 Technical Support",
+        "INQ-4003",
+        "Tier 2 Engineering",
+        "2 hours"
+      ]
+    }
+  ]
+}

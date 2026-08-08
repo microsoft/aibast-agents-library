@@ -1,0 +1,84 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/supplier-risk-monitoring",
+  "display_name": "Supply Risk Monitoring Agent",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/manufacturing_stacks/supplier_risk_monitoring_stack/supplier_risk_monitoring_agent.py",
+  "target_filename": "supplier_risk_monitoring_agent.py",
+  "expected_tool": "SupplierRiskMonitoringAgent",
+  "smoke_test": {
+    "prompt": "Where is supplier exposure concentrated, and which relationships should leadership review first?",
+    "must_call": "SupplierRiskMonitoringAgent",
+    "must_include": [
+      "TechnoCore Semiconductor",
+      "CRITICAL"
+    ]
+  },
+  "copilot_studio": {
+    "authoring_mode": "manual-upload",
+    "status": "not_initialized",
+    "operations": [
+      "risk_dashboard",
+      "supplier_scorecard",
+      "disruption_alerts",
+      "alternative_sourcing"
+    ],
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_supplier-risk-monitoring-synthetic-records.md",
+      "manual/knowledge/aibast_supplier-risk-monitoring-review-rules.md"
+    ],
+    "manual_skill_count": 4,
+    "required_connections": [
+      "Approved ERP and supplier-management data",
+      "Financial and logistics risk feeds",
+      "Procurement workflow and contract systems",
+      "Microsoft Teams for approved collaboration"
+    ],
+    "publish_requires_confirmation": true,
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "validated_manual": {
+      "display_name": "Supply Risk Monitoring Manual",
+      "bot_id": "7b548b61-63bf-4622-83ba-6ff0ad185169",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "web_search_removed": true,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    },
+    "validated_pilot": {
+      "display_name": "Supply Risk Monitoring Pilot",
+      "schema_name": "aibast_SupplyRiskMonitoringPilot",
+      "bot_id": "2e4550e2-3e3a-4987-9595-f84848a3c607",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "changes_pushed": 7,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    }
+  },
+  "safety_boundary": "The agent recommends review options only and never contacts, qualifies, selects, or orders from suppliers.",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  }
+}

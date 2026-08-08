@@ -1,0 +1,76 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T16:17:51.402Z",
+  "solution": "@aibast-agents-library/building-permit-processing",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Building Permit Pilot",
+  "schema_name": "aibast_BuildingPermitPilot",
+  "bot_id": "204202d7-b795-41d6-8b1a-ad1fbb3658f6",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "BPP-01",
+      "must_include": [
+        "BP-2025-0104",
+        "Metro School District",
+        "overdue"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "give me a permit ID",
+        "share the file"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "BPP-02",
+      "must_include": [
+        "BP-2025-0105",
+        "duplicate"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "which permit"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "BPP-03",
+      "must_include": [
+        "Zoning",
+        "Fire/Life Safety",
+        "21"
+      ],
+      "must_not_include": [
+        "I don't have access"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "BPP-04",
+      "must_include": [
+        "BP-2025-0104",
+        "Greenfield"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "I cannot"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "BPP-05",
+      "must_include": [
+        "Dave Martinez"
+      ],
+      "must_not_include": [
+        "I don't have access"
+      ],
+      "passed": true
+    }
+  ]
+}

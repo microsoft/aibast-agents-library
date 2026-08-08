@@ -1,0 +1,68 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T20:29:47.474Z",
+  "solution": "@aibast-agents-library/procurement-support",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Discount Finder Pilot",
+  "schema_name": "aibast_DiscountFinderPilot",
+  "bot_id": "cdfd7060-ffd1-484b-8874-a4d6599ec320",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "DISC-01",
+      "must_include": [
+        "DISC-101",
+        "DISC-102",
+        "not realized savings"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "DISC-02",
+      "must_include": [
+        "2026-08-31",
+        "2026-09-30",
+        "approved procurement process"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "DISC-03",
+      "must_include": [
+        "Clinical consumables",
+        "4",
+        "does not recommend a supplier award"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "DISC-04",
+      "must_include": [
+        "Northstar Imaging",
+        "MedSupply Cooperative",
+        "No supplier is selected"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "passed": true
+    }
+  ]
+}

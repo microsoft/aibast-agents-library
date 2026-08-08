@@ -67,6 +67,11 @@ _SPEND_CATEGORIES = {
     "Travel": {"budget": 200000, "spent_ytd": 142000, "committed": 18000, "available": 40000, "trend": "-15% YoY"},
 }
 
+_PROCUREMENT_GATE = (
+    "Analysis only. No purchase order is created, no supplier is selected or "
+    "contacted, and no funds are committed without authorized procurement approval."
+)
+
 
 # ═══════════════════════════════════════════════════════════════
 # HELPERS
@@ -109,7 +114,16 @@ class ProcurementAgent(BasicAgent):
         self.name = "ProcurementAgent"
         self.metadata = {
             "name": self.name,
-            "description": __manifest__["description"],
+            "description": (
+                f"{__manifest__['description']} Always use this tool for a "
+                "purchase-request brief, cloud-upgrade request, vendor comparison, "
+                "approval path, or purchasing-budget pressure question. If the "
+                "user asks to walk through the cloud-upgrade request and identify "
+                "whose review it needs, use purchase_request with the default "
+                "synthetic PR-5001. Provide synthetic procurement decision support "
+                "only; never create a purchase order, select or contact a supplier, "
+                "or commit funds."
+            ),
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -119,11 +133,20 @@ class ProcurementAgent(BasicAgent):
                             "purchase_request", "vendor_comparison",
                             "approval_routing", "spend_analysis",
                         ],
-                        "description": "The procurement operation to perform",
+                        "description": (
+                            "Choose purchase_request for a request brief, cloud "
+                            "upgrade, amount, or required reviewer; vendor_comparison "
+                            "for a neutral approved-vendor view; approval_routing for "
+                            "the recommended approval path or SLA; and spend_analysis "
+                            "for budget pressure, category spend, or overspend."
+                        ),
                     },
                     "request_id": {
                         "type": "string",
-                        "description": "Purchase request ID (e.g. 'PR-5001')",
+                        "description": (
+                            "Synthetic purchase request ID. Use PR-5001 for the "
+                            "cloud infrastructure or cloud-upgrade request."
+                        ),
                     },
                 },
                 "required": ["operation"],
@@ -151,7 +174,7 @@ class ProcurementAgent(BasicAgent):
             pr = _PURCHASE_REQUESTS[req_id]
             approval = _get_approval_level(pr["amount"])
             return (
-                f"**Purchase Request: {pr['id']}**\n\n"
+                f"**Purchase Request Review: {pr['id']}**\n\n"
                 f"| Field | Detail |\n|---|---|\n"
                 f"| Title | {pr['title']} |\n"
                 f"| Requester | {pr['requester']} ({pr['department']}) |\n"
@@ -163,7 +186,8 @@ class ProcurementAgent(BasicAgent):
                 f"| Budget Code | {pr['budget_code']} |\n"
                 f"| Required Approver | {approval['approver']} |\n\n"
                 f"**Justification:** {pr['justification']}\n\n"
-                f"Source: [Procurement System]\nAgents: ProcurementAgent"
+                f"**Approval gate:** {_PROCUREMENT_GATE}\n\n"
+                f"Source: [Synthetic Procurement Snapshot]\nAgents: ProcurementAgent"
             )
         rows = ""
         for pr in _PURCHASE_REQUESTS.values():
@@ -172,7 +196,8 @@ class ProcurementAgent(BasicAgent):
             f"**Purchase Requests**\n\n"
             f"| ID | Title | Amount | Status | Priority |\n|---|---|---|---|---|\n"
             f"{rows}\n\n"
-            f"Source: [Procurement System]\nAgents: ProcurementAgent"
+            f"**Approval gate:** {_PROCUREMENT_GATE}\n\n"
+            f"Source: [Synthetic Procurement Snapshot]\nAgents: ProcurementAgent"
         )
 
     # ── vendor_comparison ──────────────────────────────────────
@@ -188,7 +213,9 @@ class ProcurementAgent(BasicAgent):
             f"- Strategic: Long-term partners, best pricing, dedicated support\n"
             f"- Preferred: Competitive pricing, standard support, pre-approved\n"
             f"- Approved: Vetted and available, standard terms\n\n"
-            f"Source: [Vendor Management System]\nAgents: ProcurementAgent"
+            f"Ratings and terms are comparison evidence, not a supplier award. "
+            f"{_PROCUREMENT_GATE}\n\n"
+            f"Source: [Synthetic Vendor Management Snapshot]\nAgents: ProcurementAgent"
         )
 
     # ── approval_routing ───────────────────────────────────────
@@ -212,7 +239,9 @@ class ProcurementAgent(BasicAgent):
             f"**Approval Thresholds:**\n\n"
             f"| Amount Limit | Approver | SLA |\n|---|---|---|\n"
             f"{threshold_rows}\n\n"
-            f"Source: [Approval Workflow Engine]\nAgents: ProcurementAgent"
+            f"Routing is a recommendation and does not record an approval. "
+            f"{_PROCUREMENT_GATE}\n\n"
+            f"Source: [Synthetic Approval Rules]\nAgents: ProcurementAgent"
         )
 
     # ── spend_analysis ─────────────────────────────────────────
@@ -237,7 +266,8 @@ class ProcurementAgent(BasicAgent):
             f"**Alerts:**\n"
             f"- Software category over budget by $60,000 - requires reallocation\n"
             f"- Technology committed spend approaching budget limit\n\n"
-            f"Source: [ERP + Finance System]\nAgents: ProcurementAgent"
+            f"{_PROCUREMENT_GATE}\n\n"
+            f"Source: [Synthetic ERP + Finance Snapshot]\nAgents: ProcurementAgent"
         )
 
 

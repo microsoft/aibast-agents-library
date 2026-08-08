@@ -1,0 +1,14 @@
+{
+  "solution": "Retail Store Associate Copilot",
+  "agent": "@aibast-agents-library/store-associate-copilot",
+  "onepager": "24. Retail Store Associate Copilot one-pager.pptx",
+  "agent_files": ["store_associate_copilot_agent"],
+  "note": "One persona-language case per deterministic operation. Prompts do not expose operation names.",
+  "cases": [
+    {"id": "SA-01", "persona": "Store Associate", "operation": "product_lookup", "arguments": {"sku_id": "SKU-1005"}, "prompt": "As Store Associate, give me the product facts, floor location, optional complements, and availability caveat for SKU-1005.", "must_include": ["Prepared for:** Store Associate", "Product Lookup Snapshot", "verify before advising"]},
+    {"id": "SA-02", "persona": "Store Associate", "operation": "customer_assist", "arguments": {"scenario": "complaint_handling"}, "prompt": "As Store Associate, draft respectful language for acknowledging a complaint while keeping the decision with an authorized reviewer.", "must_include": ["Draft Customer Assistance Guide", "Suggested Draft Language", "authorized associate"]},
+    {"id": "SA-03", "persona": "Floor Specialist", "operation": "task_checklist", "arguments": {"shift": "opening"}, "prompt": "As Floor Specialist, turn the opening work into a prioritized planning checklist without claiming execution.", "must_include": ["Prepared for:** Floor Specialist", "Daily Task Planning Checklist", "Opening Shift"]},
+    {"id": "SA-04", "persona": "Sales Manager", "operation": "performance_dashboard", "arguments": {}, "prompt": "As Sales Manager, summarize aggregate role-cohort coaching signals without ranking employees.", "must_include": ["Prepared for:** Sales Manager", "Synthetic Role-Cohort Performance Dashboard", "Aggregate Coaching Signals"]}
+  ],
+  "assertion_principle": "Route from persona language, assert deterministic synthetic evidence, and preserve transaction safety."
+}

@@ -1,0 +1,53 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/production-line-optimization",
+  "onepager": "Product Line Optimization Agent one-pager.pptx",
+  "source_slide_sha256": "f6d3fe589bf5e021e88ecbf815bd64960d072895459a02281f41ede0b509990c",
+  "promises": [
+    {
+      "advertised_promise": "Analyze production line performance in real time to identify bottlenecks and operational inefficiencies",
+      "operations": [
+        "line_efficiency",
+        "bottleneck_analysis"
+      ],
+      "demo_cases": [
+        "PLO-01",
+        "PLO-02"
+      ],
+      "synthetic_evidence": [
+        "All three lines expose availability, performance, quality, and actual-versus-design output",
+        "Functional Test, Robotic Welding, and Injection Molding are identified as constraining stations",
+        "Cycle time, takt time, and defect evidence support the ranking"
+      ]
+    },
+    {
+      "advertised_promise": "Recommend targeted equipment and process improvements to improve output quality and cycle times",
+      "operations": [
+        "throughput_optimization"
+      ],
+      "demo_cases": [
+        "PLO-03"
+      ],
+      "synthetic_evidence": [
+        "Each line receives process, parallel-capacity, and quality response options",
+        "The output identifies the target station and the tradeoff behind each option",
+        "Quality improvement is kept visible alongside throughput"
+      ]
+    },
+    {
+      "advertised_promise": "Plan and coordinate implementation, minimizing disruption and providing a high return on investment",
+      "operations": [
+        "shift_planning",
+        "throughput_optimization"
+      ],
+      "demo_cases": [
+        "PLO-04"
+      ],
+      "synthetic_evidence": [
+        "Day, swing, and night shifts are represented",
+        "Operator allocation is visible across the three lines",
+        "The plan can be evaluated before any projected benefit is treated as a commitment"
+      ]
+    }
+  ]
+}

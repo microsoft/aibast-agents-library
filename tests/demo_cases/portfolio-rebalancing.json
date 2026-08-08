@@ -1,0 +1,144 @@
+{
+  "solution": "Portfolio Rebalancing Agent",
+  "agent": "@aibast-agents-library/portfolio-rebalancing",
+  "onepager": "Portfolio Rebalancing Agent one-pager.pptx",
+  "agent_files": [
+    "portfolio_rebalancing_agent"
+  ],
+  "note": "Persona-language locked cases, exactly one per implemented operation. Prompts avoid operation names and assertions pin deterministic synthetic evidence plus safety boundaries.",
+  "cases": [
+    {
+      "id": "PRB-01",
+      "persona": "Portfolio Manager",
+      "operation": "portfolio_analysis",
+      "onepager_bullet": "Detect portfolio drift and analyze risk to keep client portfolios aligned to investment goals",
+      "prompt": "Which portfolio is outside its drift guardrails, and where is the largest gap?",
+      "must_include": [
+        "PORT-5001",
+        "VTI"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "PortfolioRebalancingAgent",
+      "arguments": {
+        "portfolio_id": "PORT-5001"
+      }
+    },
+    {
+      "id": "PRB-02",
+      "persona": "Financial Advisor",
+      "operation": "rebalance_recommendation",
+      "onepager_bullet": "Detect portfolio drift and analyze risk to keep client portfolios aligned to investment goals",
+      "prompt": "Show me the allocation changes I should review with the client before anyone trades.",
+      "must_include": [
+        "VTI",
+        "candidate"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "PortfolioRebalancingAgent",
+      "arguments": {
+        "portfolio_id": "PORT-5001"
+      }
+    },
+    {
+      "id": "PRB-03",
+      "persona": "Paraplanner",
+      "operation": "tax_impact",
+      "onepager_bullet": "Find tax-loss harvesting opportunities to maximize returns and minimize tax exposure",
+      "prompt": "What tax assumptions should the advisor validate for the rebalance candidate?",
+      "must_include": [
+        "Illustrative Tax Estimate",
+        "VTI"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "PortfolioRebalancingAgent",
+      "arguments": {
+        "portfolio_id": "PORT-5001"
+      }
+    },
+    {
+      "id": "PRB-04",
+      "persona": "Tax-Aware Portfolio Manager",
+      "operation": "tax_loss_harvest",
+      "onepager_bullet": "Find tax-loss harvesting opportunities to maximize returns and minimize tax exposure",
+      "prompt": "Which positions are loss candidates, and what controls stop us from treating that as tax advice?",
+      "must_include": [
+        "VEA",
+        "wash-sale"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "PortfolioRebalancingAgent",
+      "arguments": {
+        "portfolio_id": "PORT-5001"
+      }
+    },
+    {
+      "id": "PRB-05",
+      "persona": "Retirement Planning Specialist",
+      "operation": "retirement_scenario",
+      "onepager_bullet": "Generate rebalancing plans and model retirement success outcomes",
+      "prompt": "Frame the retirement scenarios we need to model without inventing a success probability.",
+      "must_include": [
+        "25 years",
+        "No success probability"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "PortfolioRebalancingAgent",
+      "arguments": {
+        "portfolio_id": "PORT-5001"
+      }
+    },
+    {
+      "id": "PRB-06",
+      "persona": "Trading Supervisor",
+      "operation": "execution_plan",
+      "onepager_bullet": "Generate rebalancing plans and model retirement success outcomes",
+      "prompt": "Prepare the controlled implementation checklist and make clear whether any order was sent.",
+      "must_include": [
+        "VTI",
+        "No order"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "PortfolioRebalancingAgent",
+      "arguments": {
+        "portfolio_id": "PORT-5001"
+      }
+    }
+  ],
+  "assertion_principle": "Routing is proven by the expected tool; deterministic source output proves capability coverage. All records are synthetic and every consequential action remains behind human review."
+}
