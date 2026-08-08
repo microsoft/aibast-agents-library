@@ -281,6 +281,23 @@ class AIBASTEasyModeAgent(BasicAgent):
         )
 
     def _prepare(self, solution):
+        if not _normalize(solution):
+            result = {
+                "schema": "aibast-easy-mode-state/1.0",
+                "status": "ready",
+                "active_solution": None,
+                "available_solutions": [
+                    workshop["display_name"]
+                    for workshop in WORKSHOPS.values()
+                ],
+                "next_prompt": (
+                    "Give me Time Entry and Billing using the Easy Mode agent "
+                    "and test it for me."
+                ),
+                "published": False,
+            }
+            self._write_state(result)
+            return result
         slug, workshop = self._resolve_solution(solution)
         path = self._install_workshop(slug, workshop)
         result = {

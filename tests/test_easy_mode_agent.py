@@ -66,6 +66,24 @@ def test_easy_mode_prepares_task_cartridge_from_solution_name(tmp_path):
     )
 
 
+def test_easy_mode_start_step_is_ready_without_a_named_solution(tmp_path):
+    _module, agent, _agents_dir = build_agent(tmp_path)
+
+    result = json.loads(agent.perform(operation="prepare"))
+
+    assert result == {
+        "schema": "aibast-easy-mode-state/1.0",
+        "status": "ready",
+        "active_solution": None,
+        "available_solutions": ["Time Entry and Billing"],
+        "next_prompt": (
+            "Give me Time Entry and Billing using the Easy Mode agent and test "
+            "it for me."
+        ),
+        "published": False,
+    }
+
+
 def test_easy_mode_builds_and_tests_named_solution_personlessly(tmp_path):
     _module, agent, agents_dir = build_agent(tmp_path)
 
