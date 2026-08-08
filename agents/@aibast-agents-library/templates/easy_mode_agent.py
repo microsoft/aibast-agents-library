@@ -45,6 +45,13 @@ DEFAULT_RAW_BASE = (
     "https://raw.githubusercontent.com/kody-w/"
     "aibast-agents-library/easy-mode-copilot-chat-pilot/"
 )
+GITHUB_COMMIT_API = (
+    "https://api.github.com/repos/kody-w/aibast-agents-library/"
+    "commits/easy-mode-copilot-chat-pilot"
+)
+IMMUTABLE_RAW_PREFIX = (
+    "https://raw.githubusercontent.com/kody-w/aibast-agents-library/"
+)
 WORKSHOPS = {
     "time-entry-billing": {
         "display_name": "Time Entry and Billing",
@@ -140,7 +147,10 @@ class AIBASTEasyModeAgent(BasicAgent):
             },
         }
         super().__init__(name=self.name, metadata=self.metadata)
-        base = raw_base or os.getenv("AIBAST_EASY_MODE_RAW_BASE") or DEFAULT_RAW_BASE
+        configured_base = raw_base or os.getenv("AIBAST_EASY_MODE_RAW_BASE")
+        base = configured_base or DEFAULT_RAW_BASE
+        self._raw_base_explicit = bool(configured_base)
+        self.source_revision = None
         self.raw_base = base.rstrip("/") + "/"
         self.agents_dir = Path(
             agents_dir or Path(__file__).resolve().parent
@@ -222,7 +232,28 @@ class AIBASTEasyModeAgent(BasicAgent):
             return _json_text(failure)
 
     def _url(self, relative):
+        self._pin_source_revision()
         return self.raw_base + relative.lstrip("/")
+
+    def _pin_source_revision(self):
+        if self._raw_base_explicit or self.source_revision:
+            return
+        request = urllib.request.Request(
+            GITHUB_COMMIT_API,
+            headers={
+                "Accept": "application/vnd.github+json",
+                "User-Agent": "AIBAST-Easy-Mode/1.0",
+            },
+        )
+        with urllib.request.urlopen(request, timeout=30) as response:
+            document = json.loads(response.read().decode("utf-8"))
+        revision = str(document.get("sha") or "")
+        if not re.fullmatch(r"[0-9a-f]{40}", revision):
+            raise EasyModeError(
+                "GitHub did not return an immutable Easy Mode source revision"
+            )
+        self.source_revision = revision
+        self.raw_base = IMMUTABLE_RAW_PREFIX + revision + "/"
 
     def _fetch(self, relative):
         request = urllib.request.Request(
@@ -327,6 +358,7 @@ class AIBASTEasyModeAgent(BasicAgent):
             "display_name": workshop["display_name"],
             "workshop_agent": str(path),
             "hot_loaded": True,
+            "source_revision": self.source_revision,
             "next_prompt": (
                 f"Give me {workshop['display_name']} using the Easy Mode agent "
                 "and test it for me."
@@ -357,6 +389,7 @@ class AIBASTEasyModeAgent(BasicAgent):
             "workshop_agent": str(path),
             "local_validation": result["local_validation"],
             "target_agent": result["target_agent"],
+            "source_revision": self.source_revision,
             "next_prompt": "Deploy it into Copilot Studio for me.",
             "published": False,
         }
@@ -386,6 +419,7 @@ class AIBASTEasyModeAgent(BasicAgent):
             "workshop_agent": str(path),
             "target_agent": result["target_agent"],
             "local_validation": result["local_validation"],
+            "source_revision": self.source_revision,
             "copilot_studio": result["copilot_studio"],
             "copilot_handoff": result["copilot_handoff"],
             "continue_until": (
