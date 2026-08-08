@@ -233,12 +233,16 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     scaffold("demo-journey", root=tmp_path)
 
     guide = (package / "FIELD-GUIDE.md").read_text(encoding="utf-8")
+    easy_prompts = (package / "EASY-MODE-COPILOT-CHAT.md").read_text(
+        encoding="utf-8"
+    )
     quest = (package / "quest.html").read_text(encoding="utf-8")
     tutorial = (package / "manual-tutorial.html").read_text(encoding="utf-8")
     manifest = json.loads((package / "export-manifest.json").read_text(encoding="utf-8"))
     readme = (package / "README.md").read_text(encoding="utf-8")
 
-    assert "Easy mode — Copilot-assisted" in guide
+    assert "Easy mode — GitHub Copilot Chat in VS Code" in guide
+    assert "natural-language instructions" in guide
     assert "Hard mode — literal browser construction" in guide
     assert "Production replacement seams" in guide
     assert "Failure recovery" in guide
@@ -252,12 +256,20 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
         assert DARK_THEME_VARIABLES in generated
         assert "Clawpilot" in generated
         assert "localStorage" in generated
-    assert "Copilot-assisted Easy mode" in quest
+    assert "Easy mode — GitHub Copilot Chat in VS Code" in quest
+    assert "select Agent mode" in quest
+    assert "Fast path — complete Easy mode in one message" in quest
+    assert quest.count("data-copy-target=") == 6
     assert "literal browser construction" in quest
     assert "Draft and is not published" in quest
     assert "manual-tutorial.html" in quest
     assert "copilot-assisted-walkthrough.gif" in quest
     assert "manual-build-walkthrough.gif" in quest
+    assert "GitHub Copilot Chat running in Agent mode in VS Code" in easy_prompts
+    assert "natural-language commands" in easy_prompts
+    assert "Show the synthetic review." in easy_prompts
+    assert "Do not ask me to open a terminal" in easy_prompts
+    assert "Stop before publish" in easy_prompts
 
     assert "0 of 6 complete" in tutorial
     assert tutorial.count("<strong>Action</strong>") == len(frames)
@@ -274,6 +286,7 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
         "portable-agent",
         "deployment-recipe",
         "field-guide",
+        "easy-copilot-chat-prompts",
         "settings",
         "agent-sync",
         "manual-instructions",
@@ -382,6 +395,7 @@ def test_optional_export_uses_existing_builder_semantics(tmp_path):
     with zipfile.ZipFile(bundle) as archive:
         names = set(archive.namelist())
     assert "solutions/demo-journey/FIELD-GUIDE.md" in names
+    assert "solutions/demo-journey/EASY-MODE-COPILOT-CHAT.md" in names
     assert "solutions/demo-journey/quest.html" in names
     assert "solutions/demo-journey/manual-tutorial.html" in names
     assert "agents/demo_agent.py" in names

@@ -14,23 +14,24 @@ blueprint, and decide what production integration would require.
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
-## Easy mode — Copilot-assisted
+## Easy mode — GitHub Copilot Chat in VS Code
 
-1. Review `deployment.json`, `evals/transcripts.json`, and the available
-   Easy-mode evidence before making a claim.
-2. Use the reviewed Copilot Studio source under `copilot-studio/`.
-3. Run the recorded cases without changing their acceptance identifiers.
-4. Compare the observed result with the evidence rather than promising an
-   operational outcome.
-5. Stop at **Draft**. Publishing is a separate human approval gate.
+1. Open this repository in VS Code.
+2. Open GitHub Copilot Chat and select **Agent mode**.
+3. Open `EASY-MODE-COPILOT-CHAT.md`.
+4. Paste the fast-path message, or paste messages 1–5 in order.
+5. Let Copilot own terminal commands, file edits, plugin calls, validation, and
+   evidence gathering. Do not translate its natural-language instructions into
+   shell commands for the user.
+6. Stop at **Draft**. Publishing remains a separate human approval gate.
 
-Recorded case prompts:
+The exact copy/paste messages include every recorded case prompt:
 
-- `TEB-01` — recorded prompt
-- `TEB-02` — recorded prompt
-- `TEB-03` — recorded prompt
-- `TEB-04` — recorded prompt
-- `TEB-05` — recorded prompt
+- `TEB-01` — What billable work is still blocked from this close, and what has to happen before it can move?
+- `TEB-02` — Give me the month-end billing rollup by project and consultant without treating it as posted revenue.
+- `TEB-03` — Which time cards would fail our billing review because of narrative, hours, rate, or budget concerns?
+- `TEB-04` — Prepare the invoice support that is actually ready, and keep anything without the right approval or milestone evidence out.
+- `TEB-05` — What evidence is missing on the disputed hours, and what is the safest resolution path before we go back to the clients?
 
 ## Hard mode — literal browser construction
 

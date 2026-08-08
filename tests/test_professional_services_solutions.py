@@ -274,6 +274,40 @@ def test_every_locked_case_has_factual_evidence_in_manual_knowledge():
                 assert fact.lower() in knowledge, (slug, case["id"], fact)
 
 
+def test_time_entry_easy_mode_is_literal_github_copilot_chat():
+    package = ROOT / "solutions" / "time-entry-billing"
+    prompts = (package / "EASY-MODE-COPILOT-CHAT.md").read_text(
+        encoding="utf-8"
+    )
+    quest = (package / "quest.html").read_text(encoding="utf-8")
+    cases = read_json(ROOT / "tests/demo_cases/time-entry-billing.json")[
+        "cases"
+    ]
+
+    for marker in (
+        "GitHub Copilot Chat",
+        "Agent mode",
+        "natural-language commands",
+        "Do not ask me to open a terminal",
+        "Microsoft Copilot Studio plugin",
+        "Stop before publish",
+        "Do not publish",
+    ):
+        assert marker in prompts
+    for case in cases:
+        assert case["id"] in prompts
+        assert case["prompt"] in prompts
+        for value in case["must_include"]:
+            assert value in prompts
+        for value in case["must_not_include"]:
+            assert value in prompts
+
+    assert "Easy mode — GitHub Copilot Chat in VS Code" in quest
+    assert "Fast path — complete Easy mode in one message" in quest
+    assert quest.count("data-copy-target=") == 6
+    assert "EASY-MODE-COPILOT-CHAT.md" in quest
+
+
 def test_contract_screen_never_passes_missing_evidence():
     agent = load_agent("contract-risk-review", CONFIG["contract-risk-review"])
     output = agent.perform(operation="compliance_check")

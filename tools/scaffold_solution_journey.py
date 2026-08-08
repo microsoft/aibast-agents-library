@@ -680,6 +680,16 @@ def collect_resources(ctx: JourneyContext) -> list[Resource]:
         )
     add_resource(resources, seen, ctx, "deployment-recipe", "Deployment recipe", ctx.package / "deployment.json", "Easy-mode deployment contract")
     add_resource(resources, seen, ctx, "field-guide", "Customer field guide", ctx.package / "FIELD-GUIDE.md", "Facilitation, evidence boundaries, gates, and recovery", generated=True)
+    add_resource(
+        resources,
+        seen,
+        ctx,
+        "easy-copilot-chat-prompts",
+        "Easy-mode GitHub Copilot Chat prompts",
+        ctx.package / "EASY-MODE-COPILOT-CHAT.md",
+        "Literal end-to-end natural-language messages for GitHub Copilot Chat in VS Code",
+        generated=True,
+    )
     add_resource(resources, seen, ctx, "manual-instructions", "Manual global instructions", ctx.package / "manual" / "GLOBAL-INSTRUCTIONS.md", "Reviewed instructions for literal browser construction")
 
     settings = ctx.package / "copilot-studio" / "settings.mcs.yml"
@@ -848,8 +858,14 @@ def production_seams(ctx: JourneyContext) -> list[str]:
     ]
 
 
-def easy_case_lines(ctx: JourneyContext) -> list[str]:
-    possible = []
+def easy_case_records(ctx: JourneyContext) -> list[dict[str, Any]]:
+    transcripts = {
+        str(item.get("case_id", "case")): item
+        for item in ctx.transcripts.get("transcripts", [])
+        if isinstance(item, dict)
+    }
+    possible: list[dict[str, Any]] = []
+    seen: set[str] = set()
     for name in ("copilot-studio-preview-evidence.json", "copilot-studio-transcripts.json"):
         path = ctx.package / "evals" / name
         if path.exists():
@@ -858,17 +874,178 @@ def easy_case_lines(ctx: JourneyContext) -> list[str]:
             if isinstance(cases, list):
                 for case in cases:
                     if isinstance(case, dict):
-                        case_id = case.get("case_id", "case")
-                        prompt = case.get("prompt", "recorded prompt")
-                        possible.append(f"`{case_id}` — {prompt}")
-    if possible:
-        return possible
-    for transcript in ctx.transcripts.get("transcripts", []):
-        if isinstance(transcript, dict):
-            possible.append(
-                f"`{transcript.get('case_id', 'case')}` — {transcript.get('prompt', 'recorded prompt')}"
-            )
+                        case_id = str(case.get("case_id", "case"))
+                        if case_id in seen:
+                            continue
+                        transcript = transcripts.get(case_id, {})
+                        possible.append(
+                            {
+                                "case_id": case_id,
+                                "prompt": str(
+                                    case.get("prompt")
+                                    or transcript.get("prompt")
+                                    or "recorded prompt"
+                                ),
+                                "must_include": list(
+                                    case.get("must_include")
+                                    or transcript.get("must_include")
+                                    or []
+                                ),
+                                "must_not_include": list(
+                                    case.get("must_not_include") or []
+                                ),
+                            }
+                        )
+                        seen.add(case_id)
+    for case_id, transcript in transcripts.items():
+        if case_id in seen:
+            continue
+        possible.append(
+            {
+                "case_id": case_id,
+                "prompt": str(transcript.get("prompt", "recorded prompt")),
+                "must_include": list(transcript.get("must_include") or []),
+                "must_not_include": [],
+            }
+        )
+        seen.add(case_id)
     return possible
+
+
+def easy_case_lines(ctx: JourneyContext) -> list[str]:
+    return [
+        f"`{case['case_id']}` — {case['prompt']}"
+        for case in easy_case_records(ctx)
+    ]
+
+
+def easy_case_contract(ctx: JourneyContext) -> str:
+    sections = []
+    for case in easy_case_records(ctx):
+        includes = ", ".join(case["must_include"]) or "the packaged expected evidence"
+        excludes = ", ".join(case["must_not_include"]) or "any unsupported side effect"
+        sections.append(
+            "\n".join(
+                [
+                    f"{case['case_id']}",
+                    f'Prompt: "{case["prompt"]}"',
+                    f"Must include: {includes}",
+                    f"Must not include: {excludes}",
+                ]
+            )
+        )
+    return "\n\n".join(sections) or (
+        "No locked case is available. Stop and report the missing evidence."
+    )
+
+
+def copilot_chat_prompt(value: str) -> str:
+    prefix = "You are GitHub Copilot Chat running in Agent mode in VS Code."
+    cleaned = re.sub(
+        r"^You are GitHub Copilot(?: Chat)? running in Agent mode(?: in VS Code)?\.\s*",
+        "",
+        value.strip(),
+        flags=re.IGNORECASE,
+    )
+    return f"{prefix} {cleaned}".strip()
+
+
+def easy_copilot_chat_prompts(ctx: JourneyContext) -> list[tuple[str, str]]:
+    package = f"solutions/{ctx.slug}"
+    deployment_url = ctx.raw(f"{package}/deployment.json")
+    manifest_url = ctx.raw(f"{package}/export-manifest.json")
+    source_url = str(ctx.deployment.get("source_url") or "the source in deployment.json")
+    expected_tool = str(ctx.deployment.get("expected_tool") or "the expected tool")
+    smoke = ctx.deployment.get("smoke_test", {})
+    smoke_prompt = str(smoke.get("prompt") or "the smoke prompt in deployment.json")
+    studio = ctx.deployment.get("copilot_studio", {})
+    plugin = str(studio.get("plugin") or "the Microsoft Copilot Studio plugin")
+    model = model_name(ctx)
+    knowledge = [
+        f"{package}/{value}"
+        for value in studio.get("manual_knowledge_files", [])
+        if isinstance(value, str)
+    ]
+    skills = [
+        ctx.rel(path)
+        for path in sorted((ctx.package / "manual" / "skills").rglob("SKILL.md"))
+    ]
+    connections = [
+        value
+        for value in studio.get("required_connections", [])
+        if isinstance(value, str)
+    ]
+    knowledge_text = "\n".join(f"- {value}" for value in knowledge)
+    skills_text = "\n".join(f"- {value}" for value in skills)
+    connections_text = ", ".join(connections) or "the documented production connections"
+    cases = easy_case_contract(ctx)
+
+    fast_path = copilot_chat_prompt(
+        f"""Complete the {ctx.title} Easy mode end to end and own every terminal, file, plugin, and validation step.
+
+Read {deployment_url} and {manifest_url}. Work from the reviewed package in `{package}`. Verify that the portable source is `{source_url}` and the expected tool is `{expected_tool}`. Install or start the repository's local Brainstem using its existing supported scripts, load the exact agent, confirm it appears in `/health`, run the smoke prompt "{smoke_prompt}", and show the evidence. Do not ask me to open a terminal, run a command, clone a repository, or install dependencies myself.
+
+Then use the Microsoft Copilot Studio plugin (`{plugin}`) to initialize or update the source-controlled Copilot Studio Draft from `{package}/copilot-studio`. Preserve the reviewed instructions, use model `{model}`, remove web search, upload the exact knowledge and skill files listed below, and leave production connections unbound unless an already-approved connection exists. Never invent a connection or substitute different content.
+
+Knowledge:
+{knowledge_text}
+
+Skills:
+{skills_text}
+
+Start a fresh Preview conversation for each locked case below. Send each prompt exactly as written, compare the response with the required and forbidden markers, and report pass or fail without retrying until it happens to pass.
+
+{cases}
+
+Finish with the local health result, smoke-test result, Copilot Studio display name and bot identity, model, inventory counts, case-by-case results, Git diff, and unresolved blockers. Stop with the agent in Draft. Stop before publish. Do not publish, send messages, modify customer systems, post revenue, change time entries, create invoices, or contact clients."""
+    )
+    inspect = copilot_chat_prompt(
+        f"""Take ownership of the {ctx.title} Easy mode. Read {deployment_url}, {manifest_url}, `{package}/deployment.json`, the portable source, global instructions, every knowledge file, every `SKILL.md`, Copilot Studio source, and locked evidence. Before modifying anything, tell me the exact source, expected tool, smoke prompt, model, knowledge files, skills, locked cases, safety boundaries, and Draft gate you will preserve. Identify any missing prerequisite as a blocker. Do not ask me to open a terminal or run commands myself."""
+    )
+    local = copilot_chat_prompt(
+        f"""Run the local proof for {ctx.title}. Use only the repository's existing Brainstem install/start flow. Own all terminal commands yourself. Load `{source_url}` as `{expected_tool}`, confirm it in `http://localhost:7071/health`, send the exact smoke prompt "{smoke_prompt}" to the local chat endpoint, and compare the result with deployment.json. Report the commands you ran and the observed evidence. Do not change source behavior, connect customer systems, or ask me to perform setup."""
+    )
+    author = copilot_chat_prompt(
+        f"""Create or update the {ctx.title} Copilot Studio Draft using the Microsoft Copilot Studio plugin (`{plugin}`) and the reviewed source under `{package}/copilot-studio`. Preserve the existing Draft identity when one is recorded. Use model `{model}`, exact global instructions, all {len(knowledge)} packaged knowledge files, and all {len(skills)} packaged skills. Remove web search and any unapproved tool. Keep {connections_text} as documented production seams; do not fabricate or bind a live connection. Synchronize changes and report the exact files changed and agent identity. Stop before publish."""
+    )
+    validate = copilot_chat_prompt(
+        f"""Validate the {ctx.title} Draft in Copilot Studio Preview. Start a fresh conversation for every case. Paste each prompt exactly, check every required and forbidden marker, capture the observed result, and report pass or fail. Do not paraphrase acceptance text, silently edit the agent, or retry until a response happens to pass.
+
+{cases}"""
+    )
+    audit = copilot_chat_prompt(
+        f"""Perform the final Easy-mode audit for {ctx.title}. Confirm the local tool loaded and passed its smoke test; the source-controlled Copilot Studio project matches deployment.json; model `{model}`, exact instructions, {len(knowledge)} knowledge files, {len(skills)} skills, and all locked cases are present; web search and unapproved tools are absent; every case passed; no external side effect occurred; and the agent is Draft and unpublished. Show the Git diff, evidence paths, agent identity, environment, inventory counts, case totals, and blockers. Do not publish or commit unless I explicitly ask."""
+    )
+    return [
+        ("Fast path — complete Easy mode in one message", fast_path),
+        ("1. Inspect the package and state the plan", inspect),
+        ("2. Install and prove the portable agent locally", local),
+        ("3. Create or update the Copilot Studio Draft", author),
+        ("4. Replay every locked validation prompt", validate),
+        ("5. Audit the result and stop at Draft", audit),
+    ]
+
+
+def render_easy_copilot_chat_markdown(ctx: JourneyContext) -> str:
+    sections = "\n\n".join(
+        f"## {title}\n\n```text\n{prompt}\n```"
+        for title, prompt in easy_copilot_chat_prompts(ctx)
+    )
+    return f"""# {ctx.title} — Easy mode in GitHub Copilot Chat
+
+Open this repository in VS Code, open **GitHub Copilot Chat**, select **Agent
+mode**, and paste either the fast-path message or messages 1–5 in order.
+These are natural-language commands for Copilot to perform the work; they are
+not shell commands for the user to translate or run.
+
+{sections}
+
+## Completion boundary
+
+Copilot may perform setup, local validation, source-controlled Copilot Studio
+authoring, and evidence checks. It must stop at **Draft**. Publishing and every
+production write remain separate human approval gates.
+"""
 
 
 def render_field_guide(ctx: JourneyContext) -> str:
@@ -895,17 +1072,18 @@ blueprint, and decide what production integration would require.
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
-## Easy mode — Copilot-assisted
+## Easy mode — GitHub Copilot Chat in VS Code
 
-1. Review `deployment.json`, `evals/transcripts.json`, and the available
-   Easy-mode evidence before making a claim.
-2. Use the reviewed Copilot Studio source under `copilot-studio/`.
-3. Run the recorded cases without changing their acceptance identifiers.
-4. Compare the observed result with the evidence rather than promising an
-   operational outcome.
-5. Stop at **Draft**. Publishing is a separate human approval gate.
+1. Open this repository in VS Code.
+2. Open GitHub Copilot Chat and select **Agent mode**.
+3. Open `EASY-MODE-COPILOT-CHAT.md`.
+4. Paste the fast-path message, or paste messages 1–5 in order.
+5. Let Copilot own terminal commands, file edits, plugin calls, validation, and
+   evidence gathering. Do not translate its natural-language instructions into
+   shell commands for the user.
+6. Stop at **Draft**. Publishing remains a separate human approval gate.
 
-Recorded case prompts:
+The exact copy/paste messages include every recorded case prompt:
 
 {markdown_list(easy_case_lines(ctx), "No Easy-mode case evidence is recorded; treat this checkpoint as pending.")}
 
@@ -1010,9 +1188,9 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
         '<div class="notice"><strong>Pending evidence:</strong> this page was generated '
         "with <code>--allow-pending</code>. Missing evidence is labeled and is not proof.</div>"
         if ctx.missing_evidence
-        else ""
+        else "<!-- No pending evidence. -->"
     )
-    steps_markup = "\n".join(step_cards) or (
+    steps_markup = "\n".join(card.strip() for card in step_cards) or (
         '<div class="notice"><strong>No manual frames are available.</strong> '
         "Capture manual evidence before using this tutorial as proof.</div>"
     )
@@ -1125,6 +1303,7 @@ def quest_resources(ctx: JourneyContext, resources: list[Resource]) -> str:
     preferred = {
         "deployment-recipe",
         "field-guide",
+        "easy-copilot-chat-prompts",
         "manual-instructions",
         "brainstem-transcripts",
         "manual-evidence",
@@ -1140,6 +1319,25 @@ def quest_resources(ctx: JourneyContext, resources: list[Resource]) -> str:
         cards.append(
             f'<li><a href="{html.escape(resource.path.removeprefix(f"solutions/{ctx.slug}/"))}">'
             f"{html.escape(resource.label)}</a> <span class=\"status\">{status}</span></li>"
+        )
+    return "\n".join(cards)
+
+
+def render_easy_prompt_cards(ctx: JourneyContext) -> str:
+    cards = []
+    for index, (title, prompt) in enumerate(
+        easy_copilot_chat_prompts(ctx),
+        start=1,
+    ):
+        target = f"easy-prompt-{index}"
+        cards.append(
+            f"""<article class="prompt-card">
+        <div class="prompt-heading">
+          <div><p class="prompt-kicker">GitHub Copilot Chat message {index}</p><h3>{html.escape(title)}</h3></div>
+          <button class="button primary" type="button" data-copy-target="{target}">Copy prompt</button>
+        </div>
+        <pre class="prompt-block" id="{target}">{html.escape(prompt)}</pre>
+      </article>"""
         )
     return "\n".join(cards)
 
@@ -1180,9 +1378,14 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .checkpoint strong, .checkpoint span {{ display: block; }}
     .checkpoint span {{ color: var(--cp-text-muted); }}
     .path[hidden] {{ display: none; }}
+    .prompt-card {{ margin: 16px 0; padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }}
+    .prompt-heading {{ display: flex; align-items: start; justify-content: space-between; gap: 16px; }}
+    .prompt-heading h3 {{ margin: 0; }}
+    .prompt-kicker {{ margin: 0 0 4px; color: var(--cp-accent); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }}
+    .prompt-block {{ overflow-x: auto; margin: 14px 0 0; padding: 16px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text); white-space: pre-wrap; word-break: break-word; font-family: Consolas, "Courier New", Courier, monospace; font-size: 13px; line-height: 1.55; }}
     .resource-list {{ columns: 2; padding-left: 22px; }}
     .resource-list li {{ break-inside: avoid; margin-bottom: 10px; }}
-    @media (max-width: 620px) {{ .resource-list {{ columns: 1; }} }}
+    @media (max-width: 620px) {{ .resource-list {{ columns: 1; }} .prompt-heading {{ display: block; }} .prompt-heading .button {{ margin-top: 12px; }} }}
   </style>
 </head>
 <body>
@@ -1194,7 +1397,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     <section class="hero">
       <p class="eyebrow">Evidence-grounded customer journey</p>
       <h1>{html.escape(ctx.title)}</h1>
-      <p class="lede">Choose Copilot-assisted Easy mode or literal browser construction in Hard mode. Progress resumes locally in this browser.</p>
+      <p class="lede">Choose literal GitHub Copilot Chat messages in Easy mode or literal browser construction in Hard mode. Progress resumes locally in this browser.</p>
       <div class="notice"><strong>Boundary:</strong> synthetic qualitative evidence only—not a customer KPI, measured production result, live connection, or publication approval.</div>
       <div class="mode-switch" role="tablist">
         <button class="mode active" data-mode="easy" role="tab">Easy</button>
@@ -1203,12 +1406,15 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     </section>
 
     <section class="path" data-path="easy">
-      <h2>Copilot-assisted Easy mode</h2>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="easy-source"><span><strong>Inspect source and evidence</strong><span>Review deployment, source, transcripts, and available Easy evidence before claiming a result.</span></span></label>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="easy-build"><span><strong>Build from reviewed Copilot Studio copy</strong><span>Use the packaged settings, behaviors, knowledge, and synchronization metadata without unrecorded edits.</span></span></label>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="easy-cases"><span><strong>Replay recorded cases</strong><span>Use exact prompts and identifiers. A qualitative match is evidence of workflow behavior, not a customer outcome.</span></span></label>
+      <h2>Easy mode — GitHub Copilot Chat in VS Code</h2>
+      <div class="notice"><strong>Where to run these:</strong> open this repository in VS Code, open GitHub Copilot Chat, select Agent mode, and paste a message exactly as shown. These are natural-language commands for Copilot—not shell commands for the user.</div>
+      <p>Use the fast-path message for a one-shot build, or paste messages 1–5 in order when you want to review every checkpoint.</p>
+      {render_easy_prompt_cards(ctx)}
+      <label class="checkpoint"><input type="checkbox" data-checkpoint="easy-source"><span><strong>Copilot inspected the source package</strong><span>It reported the source, tool, model, knowledge, skills, locked cases, and safety boundary before editing.</span></span></label>
+      <label class="checkpoint"><input type="checkbox" data-checkpoint="easy-build"><span><strong>Copilot completed local and Copilot Studio setup</strong><span>GitHub Copilot owned terminal and plugin actions, preserved reviewed files, and did not ask the user to translate messages into commands.</span></span></label>
+      <label class="checkpoint"><input type="checkbox" data-checkpoint="easy-cases"><span><strong>Copilot replayed every locked case</strong><span>It used exact prompts and identifiers and recorded pass/fail evidence without retrying until success.</span></span></label>
       <label class="checkpoint"><input type="checkbox" data-checkpoint="easy-draft"><span><strong>Stop at the Draft gate</strong><span>The agent must remain Draft and is not published. Publishing needs separate human approval.</span></span></label>
-      <p>{assisted_link}</p>
+      <p><a class="button" href="EASY-MODE-COPILOT-CHAT.md">Open all prompts as Markdown</a> {assisted_link}</p>
     </section>
 
     <section class="path" data-path="hard" hidden>
@@ -1251,6 +1457,22 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         localStorage.setItem(modeKey, mode);
       }}
       buttons.forEach((button) => button.addEventListener("click", () => selectMode(button.dataset.mode)));
+      document.querySelectorAll("[data-copy-target]").forEach((button) => {{
+        button.addEventListener("click", () => {{
+          const target = document.getElementById(button.dataset.copyTarget);
+          if (!target) {{
+            button.textContent = "Prompt missing";
+            return;
+          }}
+          const original = button.textContent;
+          navigator.clipboard.writeText(target.textContent).then(() => {{
+            button.textContent = "Copied";
+            window.setTimeout(() => {{ button.textContent = original; }}, 1400);
+          }}).catch(() => {{
+            button.textContent = "Copy failed";
+          }});
+        }});
+      }});
       selectMode(localStorage.getItem(modeKey) || "easy");
     }})();
   </script>
@@ -1315,6 +1537,10 @@ def readme_block(ctx: JourneyContext, resources: list[Resource]) -> str:
     pending = sum(resource.status != "ready" for resource in resources)
     rows = [
         ("Customer field guide", f"`solutions/{ctx.slug}/FIELD-GUIDE.md`"),
+        (
+            "Easy-mode GitHub Copilot Chat prompts",
+            f"`solutions/{ctx.slug}/EASY-MODE-COPILOT-CHAT.md`",
+        ),
         ("Guided Easy/Hard quest", f"`solutions/{ctx.slug}/quest.html`"),
         ("Literal browser tutorial", f"`solutions/{ctx.slug}/manual-tutorial.html`"),
         ("Raw export manifest", f"`solutions/{ctx.slug}/export-manifest.json`"),
@@ -1364,6 +1590,7 @@ def write_outputs(ctx: JourneyContext) -> list[Resource]:
     resources = collect_resources(ctx)
     outputs = {
         ctx.package / "FIELD-GUIDE.md": render_field_guide(ctx),
+        ctx.package / "EASY-MODE-COPILOT-CHAT.md": render_easy_copilot_chat_markdown(ctx),
         ctx.package / "quest.html": render_quest(ctx, resources),
         ctx.package / "manual-tutorial.html": render_manual_tutorial(ctx),
         ctx.package / "export-manifest.json": render_manifest(ctx, resources),
