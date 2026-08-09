@@ -54,6 +54,10 @@ def build_fixture(root):
         "class AIBASTEasyModeAgent:\n    pass\n",
     )
     write(
+        root / "skills" / "aibast-easy-mode" / "SKILL.md",
+        "---\nname: aibast-easy-mode\ndescription: fixture\n---\n",
+    )
+    write(
         package / "README.md",
         "# Demo Journey\n\nDomain narrative that the scaffolder must preserve.\n",
     )
@@ -258,7 +262,8 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
 
     assert "Easy mode — with Brainstem (default)" in guide
     assert "Easy mode — without Brainstem (comparison)" in guide
-    assert "three short messages" in guide
+    assert "two short messages" in guide
+    assert "personal, on-device training AI" in guide
     assert "Hard mode — literal browser construction" in guide
     assert "Production replacement seams" in guide
     assert "Failure recovery" in guide
@@ -277,30 +282,32 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "Personless harness" in quest
     assert "View workshop agent" in quest
     assert "Skeptic comparison" in quest
-    assert "Fast path — complete Easy mode in one message" in quest
-    assert quest.count("data-copy-target=") == 9
-    assert "Start the Brainstem and go and get the Easy Mode agent" in quest
-    assert "Give me Demo Journey using the Easy Mode agent and test it for me." in quest
+    assert quest.count("data-copy-target=") == 4
+    assert "Download SKILL.md" in quest
+    assert 'download="SKILL.md"' in quest
+    assert "Drag <code>SKILL.md</code> into GitHub Copilot Chat" in quest
+    assert "Give me Demo Journey using Easy Mode and test it for me." in quest
+    assert "Give me Demo Journey using Easy Mode without Brainstem and test it for me." in quest
     assert "Deploy it into Copilot Studio for me." in quest
     assert "What the workshop returns" in quest
     assert "Facilitator evidence and portable download" in quest
     assert "Raw resources" not in quest
+    assert "Compare and contrast while you build" in quest
+    assert "Both approaches are valid starting points" in quest
     assert "literal browser construction" in quest
     assert "Draft and is not published" in quest
     assert "manual-tutorial.html" in quest
     assert "copilot-assisted-walkthrough.gif" in quest
     assert "manual-build-walkthrough.gif" in quest
-    assert "Start the Brainstem and go and get the Easy Mode agent" in personless
-    assert "Give me Demo Journey using the Easy Mode agent and test it for me." in personless
+    assert "drag `SKILL.md` into the" in personless
+    assert "Give me Demo Journey using Easy Mode and test it for me." in personless
     assert "Deploy it into Copilot Studio for me." in personless
     assert "demo_workshop_agent.py" in personless
     assert "Brainstem + Copilot pull the harness" in personless
-    assert "GitHub Copilot Chat running in Agent mode in VS Code" in easy_prompts
     assert "Copilot-only Easy mode comparison" in easy_prompts
-    assert "natural-language commands" in easy_prompts
-    assert "Show the synthetic review." in easy_prompts
-    assert "Do not ask me to open a terminal" in easy_prompts
-    assert "Stop before publish" in easy_prompts
+    assert "drag `SKILL.md` into the" in easy_prompts
+    assert "Give me Demo Journey using Easy Mode without Brainstem" in easy_prompts
+    assert "Deploy it into Copilot Studio for me." in easy_prompts
 
     assert "0 of 6 complete" in tutorial
     assert tutorial.count("<strong>Action</strong>") == len(frames)
@@ -318,6 +325,7 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
         "deployment-recipe",
         "field-guide",
         "easy-personless-guide",
+        "easy-mode-skill",
         "easy-mode-agent",
         "easy-personless-agent",
         "easy-copilot-chat-prompts",
@@ -430,6 +438,7 @@ def test_optional_export_uses_existing_builder_semantics(tmp_path):
         names = set(archive.namelist())
     assert "solutions/demo-journey/FIELD-GUIDE.md" in names
     assert "solutions/demo-journey/EASY-MODE-PERSONLESS.md" in names
+    assert "skills/aibast-easy-mode/SKILL.md" in names
     assert "agents/@aibast-agents-library/templates/easy_mode_agent.py" in names
     assert "solutions/demo-journey/easy/demo_workshop_agent.py" in names
     assert "solutions/demo-journey/EASY-MODE-COPILOT-CHAT.md" in names

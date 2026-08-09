@@ -700,6 +700,17 @@ def collect_resources(ctx: JourneyContext) -> list[Resource]:
         "Detailed GitHub Copilot-only prompts retained for the skeptic comparison",
         generated=True,
     )
+    easy_skill = easy_mode_skill_path(ctx)
+    if easy_skill:
+        add_resource(
+            resources,
+            seen,
+            ctx,
+            "easy-mode-skill",
+            "Shared AIBAST Easy Mode skill",
+            easy_skill,
+            "Download-and-drag GitHub Copilot Chat harness for both Easy lanes",
+        )
     easy_agent = easy_mode_agent_path(ctx)
     if easy_agent:
         add_resource(
@@ -983,78 +994,19 @@ def copilot_chat_prompt(value: str) -> str:
 
 
 def easy_copilot_chat_prompts(ctx: JourneyContext) -> list[tuple[str, str]]:
-    package = f"solutions/{ctx.slug}"
-    deployment_url = ctx.raw(f"{package}/deployment.json")
-    manifest_url = ctx.raw(f"{package}/export-manifest.json")
-    source_url = str(ctx.deployment.get("source_url") or "the source in deployment.json")
-    expected_tool = str(ctx.deployment.get("expected_tool") or "the expected tool")
-    smoke = ctx.deployment.get("smoke_test", {})
-    smoke_prompt = str(smoke.get("prompt") or "the smoke prompt in deployment.json")
-    studio = ctx.deployment.get("copilot_studio", {})
-    plugin = str(studio.get("plugin") or "the Microsoft Copilot Studio plugin")
-    model = model_name(ctx)
-    knowledge = [
-        f"{package}/{value}"
-        for value in studio.get("manual_knowledge_files", [])
-        if isinstance(value, str)
-    ]
-    skills = [
-        ctx.rel(path)
-        for path in sorted((ctx.package / "manual" / "skills").rglob("SKILL.md"))
-    ]
-    connections = [
-        value
-        for value in studio.get("required_connections", [])
-        if isinstance(value, str)
-    ]
-    knowledge_text = "\n".join(f"- {value}" for value in knowledge)
-    skills_text = "\n".join(f"- {value}" for value in skills)
-    connections_text = ", ".join(connections) or "the documented production connections"
-    cases = easy_case_contract(ctx)
-
-    fast_path = copilot_chat_prompt(
-        f"""Complete the {ctx.title} Easy mode end to end and own every terminal, file, plugin, and validation step.
-
-Read {deployment_url} and {manifest_url}. Work from the reviewed package in `{package}`. Verify that the portable source is `{source_url}` and the expected tool is `{expected_tool}`. Install or start the repository's local Brainstem using its existing supported scripts, load the exact agent, confirm it appears in `/health`, run the smoke prompt "{smoke_prompt}", and show the evidence. Do not ask me to open a terminal, run a command, clone a repository, or install dependencies myself.
-
-Then use the Microsoft Copilot Studio plugin (`{plugin}`) to initialize or update the source-controlled Copilot Studio Draft from `{package}/copilot-studio`. Preserve the reviewed instructions, use model `{model}`, remove web search, upload the exact knowledge and skill files listed below, and leave production connections unbound unless an already-approved connection exists. Never invent a connection or substitute different content.
-
-Knowledge:
-{knowledge_text}
-
-Skills:
-{skills_text}
-
-Start a fresh Preview conversation for each locked case below. Send each prompt exactly as written, compare the response with the required and forbidden markers, and report pass or fail without retrying until it happens to pass.
-
-{cases}
-
-Finish with the local health result, smoke-test result, Copilot Studio display name and bot identity, model, inventory counts, case-by-case results, Git diff, and unresolved blockers. Stop with the agent in Draft. Stop before publish. Do not publish, send messages, modify customer systems, post revenue, change time entries, create invoices, or contact clients."""
-    )
-    inspect = copilot_chat_prompt(
-        f"""Take ownership of the {ctx.title} Easy mode. Read {deployment_url}, {manifest_url}, `{package}/deployment.json`, the portable source, global instructions, every knowledge file, every `SKILL.md`, Copilot Studio source, and locked evidence. Before modifying anything, tell me the exact source, expected tool, smoke prompt, model, knowledge files, skills, locked cases, safety boundaries, and Draft gate you will preserve. Identify any missing prerequisite as a blocker. Do not ask me to open a terminal or run commands myself."""
-    )
-    local = copilot_chat_prompt(
-        f"""Run the local proof for {ctx.title}. Use only the repository's existing Brainstem install/start flow. Own all terminal commands yourself. Load `{source_url}` as `{expected_tool}`, confirm it in `http://localhost:7071/health`, send the exact smoke prompt "{smoke_prompt}" to the local chat endpoint, and compare the result with deployment.json. Report the commands you ran and the observed evidence. Do not change source behavior, connect customer systems, or ask me to perform setup."""
-    )
-    author = copilot_chat_prompt(
-        f"""Create or update the {ctx.title} Copilot Studio Draft using the Microsoft Copilot Studio plugin (`{plugin}`) and the reviewed source under `{package}/copilot-studio`. Preserve the existing Draft identity when one is recorded. Use model `{model}`, exact global instructions, all {len(knowledge)} packaged knowledge files, and all {len(skills)} packaged skills. Remove web search and any unapproved tool. Keep {connections_text} as documented production seams; do not fabricate or bind a live connection. Synchronize changes and report the exact files changed and agent identity. Stop before publish."""
-    )
-    validate = copilot_chat_prompt(
-        f"""Validate the {ctx.title} Draft in Copilot Studio Preview. Start a fresh conversation for every case. Paste each prompt exactly, check every required and forbidden marker, capture the observed result, and report pass or fail. Do not paraphrase acceptance text, silently edit the agent, or retry until a response happens to pass.
-
-{cases}"""
-    )
-    audit = copilot_chat_prompt(
-        f"""Perform the final Easy-mode audit for {ctx.title}. Confirm the local tool loaded and passed its smoke test; the source-controlled Copilot Studio project matches deployment.json; model `{model}`, exact instructions, {len(knowledge)} knowledge files, {len(skills)} skills, and all locked cases are present; web search and unapproved tools are absent; every case passed; no external side effect occurred; and the agent is Draft and unpublished. Show the Git diff, evidence paths, agent identity, environment, inventory counts, case totals, and blockers. Do not publish or commit unless I explicitly ask."""
-    )
+    solution = easy_mode_solution_name(ctx)
     return [
-        ("Fast path — complete Easy mode in one message", fast_path),
-        ("1. Inspect the package and state the plan", inspect),
-        ("2. Install and prove the portable agent locally", local),
-        ("3. Create or update the Copilot Studio Draft", author),
-        ("4. Replay every locked validation prompt", validate),
-        ("5. Audit the result and stop at Draft", audit),
+        (
+            "2. Build and test without Brainstem",
+            (
+                f"Give me {solution} using Easy Mode without Brainstem and "
+                "test it for me."
+            ),
+        ),
+        (
+            "3. Deploy the validated Draft",
+            "Deploy it into Copilot Studio for me.",
+        ),
     ]
 
 
@@ -1074,6 +1026,16 @@ def easy_mode_agent_path(ctx: JourneyContext) -> Path | None:
     return path if path.exists() else None
 
 
+def easy_mode_skill_path(ctx: JourneyContext) -> Path | None:
+    path = (
+        ctx.root
+        / "skills"
+        / "aibast-easy-mode"
+        / "SKILL.md"
+    )
+    return path if path.exists() else None
+
+
 def easy_mode_solution_name(ctx: JourneyContext) -> str:
     return re.sub(r"\s+Agent$", "", ctx.title).strip()
 
@@ -1082,17 +1044,9 @@ def personless_prompts(ctx: JourneyContext) -> list[tuple[str, str]]:
     solution = easy_mode_solution_name(ctx)
     return [
         (
-            "1. Start the engine",
-            (
-                "Start the Brainstem and go and get the Easy Mode agent from "
-                "the AIBAST Agents Library."
-            ),
-        ),
-        (
             "2. Build and test the solution",
             (
-                f"Give me {solution} using the Easy Mode agent and test it "
-                "for me."
+                f"Give me {solution} using Easy Mode and test it for me."
             ),
         ),
         (
@@ -1103,8 +1057,12 @@ def personless_prompts(ctx: JourneyContext) -> list[tuple[str, str]]:
 
 
 def render_personless_easy_markdown(ctx: JourneyContext) -> str:
+    skill = easy_mode_skill_path(ctx)
     easy_agent = easy_mode_agent_path(ctx)
     workshop_agent = personless_agent_path(ctx)
+    skill_link = (
+        ctx.raw(ctx.rel(skill)) if skill else "AIBAST Easy Mode skill pending"
+    )
     easy_agent_link = (
         ctx.raw(ctx.rel(easy_agent)) if easy_agent else "Easy Mode agent pending"
     )
@@ -1119,14 +1077,24 @@ def render_personless_easy_markdown(ctx: JourneyContext) -> str:
     )
     return f"""# {ctx.title} — personless Easy mode
 
-Assume the Brainstem one-line installer is available. Open GitHub Copilot Chat
-in VS Code, select **Agent mode**, and send these three short messages in order:
+## 1. Attach the shared skill
+
+Download [{skill.name if skill else "SKILL.md"}]({skill_link}), open GitHub
+Copilot Chat in VS Code, select **Agent mode**, and drag `SKILL.md` into the
+chat. The skill defaults to Brainstem and owns startup, agent acquisition,
+testing, deployment, browser validation, and the final verdict.
+
+Brainstem is the learner's personal, on-device training AI. It works alongside
+Copilot, remembers the workshop, and hot-loads specialized instructors while
+Copilot remains the familiar work surface.
+
+Then send these two short messages:
 
 {prompts}
 
 ## What pulls the harness
 
-1. Copilot starts the installed Brainstem, finds
+1. The attached skill starts the installed Brainstem, finds
    `@aibast-agents-library/easy-mode` in the AIBAST registry, and imports it
    through `/agents/import`.
 2. `AIBASTEasyModeAgent` resolves the named solution, integrity-checks and
@@ -1149,20 +1117,28 @@ verdict; Brainstem + Copilot pull the harness.
 
 
 def render_easy_copilot_chat_markdown(ctx: JourneyContext) -> str:
+    skill = easy_mode_skill_path(ctx)
+    skill_link = (
+        ctx.raw(ctx.rel(skill)) if skill else "AIBAST Easy Mode skill pending"
+    )
     sections = "\n\n".join(
         f"## {title}\n\n```text\n{prompt}\n```"
         for title, prompt in easy_copilot_chat_prompts(ctx)
     )
     return f"""# {ctx.title} — Copilot-only Easy mode comparison
 
-Open this repository in VS Code, open **GitHub Copilot Chat**, select **Agent
-mode**, and paste either the fast-path message or messages 1–5 in order.
-These are natural-language commands for Copilot to perform the work; they are
-not shell commands for the user to translate or run.
+## 1. Attach the shared skill
+
+Download [{skill.name if skill else "SKILL.md"}]({skill_link}), open GitHub
+Copilot Chat in VS Code, select **Agent mode**, and drag `SKILL.md` into the
+chat.
 
 This comparison lane intentionally omits Brainstem so workshop participants can
-answer “why not just use GitHub Copilot by itself?” It is retained behind the
-default Brainstem + Copilot personless lane.
+answer “why not just use GitHub Copilot by itself?” The attached skill carries
+the discovery, testing, deployment, and validation harness so the attendee
+still uses short messages instead of supplying URLs and mechanics.
+
+Then send these two short messages:
 
 {sections}
 
@@ -1200,24 +1176,42 @@ blueprint, and decide what production integration would require.
 
 ## Easy mode — with Brainstem (default)
 
+Brainstem is the learner's personal, on-device training AI working alongside
+GitHub Copilot. Copilot stays the familiar work surface; Brainstem remembers
+the workshop and hot-loads the specialized instructors.
+
 1. Open GitHub Copilot Chat in VS Code and select **Agent mode**.
-2. Open `EASY-MODE-PERSONLESS.md`.
-3. Send its three short messages in order: start the engine, build and test the
-   named solution, then deploy the validated Draft.
-4. Copilot installs the reusable AIBAST Easy Mode agent into the local
-   Brainstem.
-5. Easy Mode resolves and hot-loads the task-specific workshop cartridge.
-6. Brainstem retrieves the reviewed GitHub assets, hot-loads the business
+2. Download `skills/aibast-easy-mode/SKILL.md` and drag it into the chat.
+3. Open `EASY-MODE-PERSONLESS.md`.
+4. Send its two short messages in order: build and test the named solution,
+   then deploy the validated Draft.
+5. The attached skill starts Brainstem and installs the reusable AIBAST Easy
+   Mode agent into the learner's personal, on-device training AI.
+6. Easy Mode resolves and hot-loads the task-specific workshop cartridge.
+7. Brainstem retrieves the reviewed GitHub assets, hot-loads the business
    agent, proves it locally, drives Draft setup, and returns front-door actions.
-7. Copilot executes each handoff and sends evidence back until Brainstem
+8. Copilot executes each handoff and sends evidence back until Brainstem
    returns `status: complete`.
-8. Stop at **Draft**. Publishing remains a separate human approval gate.
+9. Stop at **Draft**. Publishing remains a separate human approval gate.
 
 ## Easy mode — without Brainstem (comparison)
 
-`EASY-MODE-COPILOT-CHAT.md` retains the detailed GitHub Copilot-only prompts
-for participants who ask why Copilot cannot do the same work alone. That lane
-keeps the person in the harness; it is deliberately secondary.
+The same `SKILL.md` supports the skeptic comparison. The participant explicitly
+asks for Easy Mode **without Brainstem**, and the skill performs discovery,
+testing, deployment, and Preview validation directly through GitHub Copilot.
+That lane is deliberately secondary.
+
+## Teaching comparison
+
+| Dimension | With Brainstem | GitHub Copilot only |
+| --- | --- | --- |
+| Strength | Persistent state, reusable hot-loaded agents, autonomous handoffs, and a durable verdict | Familiar VS Code entry point with no additional engine for the participant to understand |
+| Tradeoff | Requires the governed local Brainstem runtime | Orchestration and state live primarily in the active Copilot session |
+| Person's role | Set the destination and read the engine verdict | Attach the skill, steer through Copilot, and read its verdict |
+| Workshop lesson | Shows the personless harness and reusable engine model | Shows how far Copilot Agent mode can go with a strong portable skill |
+
+Both approaches are valid for getting started. They use the same immutable
+assets, locked cases, real Preview gate, and `published: false` boundary.
 
 Both Easy lanes preserve every recorded case prompt:
 
@@ -1471,7 +1465,7 @@ def render_easy_prompt_cards(ctx: JourneyContext) -> str:
         cards.append(
             f"""<article class="prompt-card">
         <div class="prompt-heading">
-          <div><p class="prompt-kicker">GitHub Copilot Chat message {index}</p><h3>{html.escape(title)}</h3></div>
+          <div><p class="prompt-kicker">Workshop message {index + 1} of 3</p><h3>{html.escape(title)}</h3></div>
           <button class="button primary" type="button" data-copy-target="{target}">Copy prompt</button>
         </div>
         <pre class="prompt-block" id="{target}">{html.escape(prompt)}</pre>
@@ -1487,7 +1481,7 @@ def render_personless_prompt_cards(ctx: JourneyContext) -> str:
         cards.append(
             f"""<article class="prompt-card">
         <div class="prompt-heading">
-          <div><p class="prompt-kicker">Message {index} of 3</p><h3>{html.escape(title)}</h3></div>
+          <div><p class="prompt-kicker">Workshop message {index + 1} of 3</p><h3>{html.escape(title)}</h3></div>
           <button class="button primary" type="button" data-copy-target="{target}">Copy message</button>
         </div>
         <pre class="prompt-block" id="{target}">{html.escape(prompt)}</pre>
@@ -1519,6 +1513,17 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         if workshop_agent
         else '<span class="button" aria-disabled="true">Workshop agent pending</span>'
     )
+    easy_skill = easy_mode_skill_path(ctx)
+    skill_href = (
+        "../../" + ctx.rel(easy_skill)
+        if easy_skill
+        else ""
+    )
+    skill_download = (
+        f'<a class="button primary" href="{html.escape(skill_href)}" download="SKILL.md">Download SKILL.md</a>'
+        if easy_skill
+        else '<span class="button" aria-disabled="true">SKILL.md pending</span>'
+    )
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -1545,6 +1550,10 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .engine-flow {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 18px 0; }}
     .engine-node {{ padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface); text-align: center; font-weight: 750; }}
     .comparison-note {{ margin: 14px 0; padding: 14px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft); color: var(--cp-text-muted); }}
+    .skill-onboarding {{ display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px; align-items: center; margin: 16px 0 8px; padding: 20px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }}
+    .skill-onboarding h3 {{ margin: 0 0 6px; }}
+    .skill-onboarding p {{ margin: 0; color: var(--cp-text-muted); }}
+    .drag-target {{ margin-top: 10px; padding: 12px; border: 1px dashed var(--cp-border-strong); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text); font-weight: 700; }}
     .outcome-grid {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }}
     .outcome-card {{ padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }}
     .outcome-card strong {{ display: block; margin-bottom: 6px; }}
@@ -1552,6 +1561,9 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .facilitator-details {{ margin-top: 18px; padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); }}
     .facilitator-details summary {{ cursor: pointer; font-weight: 750; }}
     .facilitator-actions {{ display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }}
+    .comparison-table {{ width: 100%; margin-top: 14px; border-collapse: collapse; }}
+    .comparison-table th, .comparison-table td {{ padding: 12px; border: 1px solid var(--cp-border); text-align: left; vertical-align: top; }}
+    .comparison-table th {{ background: var(--cp-surface-soft); }}
     .prompt-card {{ margin: 16px 0; padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }}
     .prompt-heading {{ display: flex; align-items: start; justify-content: space-between; gap: 16px; }}
     .prompt-heading h3 {{ margin: 0; }}
@@ -1559,7 +1571,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .prompt-block {{ overflow-x: auto; margin: 14px 0 0; padding: 16px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text); white-space: pre-wrap; word-break: break-word; font-family: Consolas, "Courier New", Courier, monospace; font-size: 13px; line-height: 1.55; }}
     .resource-list {{ columns: 2; padding-left: 22px; }}
     .resource-list li {{ break-inside: avoid; margin-bottom: 10px; }}
-    @media (max-width: 760px) {{ .engine-flow, .outcome-grid {{ grid-template-columns: 1fr; }} }}
+    @media (max-width: 760px) {{ .engine-flow, .outcome-grid, .skill-onboarding {{ grid-template-columns: 1fr; }} }}
     @media (max-width: 620px) {{ .resource-list {{ columns: 1; }} .prompt-heading {{ display: block; }} .prompt-heading .button {{ margin-top: 12px; }} .easy-lane-switch {{ display: grid; }} }}
   </style>
 </head>
@@ -1582,13 +1594,22 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
 
     <section class="path" data-path="easy">
       <h2>Easy mode</h2>
+      <section class="skill-onboarding">
+        <div>
+          <p class="prompt-kicker">Workshop step 1 of 3 · shared entry point</p>
+          <h3>Download and attach the Easy Mode skill</h3>
+          <p>Download <code>SKILL.md</code>, open GitHub Copilot Chat in VS Code, select Agent mode, and drag the file into the chat. The same skill powers both lanes and fetches every other resource autonomously.</p>
+          <div class="drag-target">Drag <code>SKILL.md</code> into GitHub Copilot Chat before sending the next message.</div>
+        </div>
+        <div>{skill_download}</div>
+      </section>
       <div class="easy-lane-switch" role="tablist" aria-label="Easy mode harness">
         <button class="easy-lane-button active" type="button" data-easy-lane-button="brainstem">With Brainstem — default</button>
         <button class="easy-lane-button" type="button" data-easy-lane-button="copilot">GitHub Copilot only</button>
       </div>
 
       <div class="easy-lane" data-easy-lane="brainstem">
-        <div class="notice"><strong>Personless harness:</strong> the attendee sends three short messages. Brainstem remembers the active workshop and does the heavy lifting between them.</div>
+        <div class="notice"><strong>Brainstem is the default:</strong> it is the learner’s personal, on-device training AI working alongside Copilot. After the skill is attached, the attendee sends two short messages; Brainstem remembers the workshop, hot-loads specialized instructors, and does the heavy lifting.</div>
         {render_personless_prompt_cards(ctx)}
         <div class="engine-flow" aria-label="Personless harness loop">
           <div class="engine-node">1. Start + install Easy Mode</div>
@@ -1604,8 +1625,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
       </div>
 
       <div class="easy-lane" data-easy-lane="copilot" hidden>
-        <div class="comparison-note"><strong>Skeptic comparison:</strong> this lane proves GitHub Copilot can perform the work without Brainstem, but the attendee remains the horse—feeding the sequence, checking each stage, and deciding what happens next.</div>
-        <p>Use the fast-path prompt or messages 1–5 in order. These detailed prompts remain intentionally behind the Brainstem-default lane.</p>
+        <div class="comparison-note"><strong>Skeptic comparison:</strong> the same attached skill performs the harness directly in GitHub Copilot. The attendee still uses two short messages, but Copilot carries the engine logic itself instead of delegating it to Brainstem.</div>
         {render_easy_prompt_cards(ctx)}
         <label class="checkpoint"><input type="checkbox" data-checkpoint="copilot-source"><span><strong>Copilot inspected the source package</strong><span>It reported the source, tool, model, knowledge, skills, locked cases, and safety boundary before editing.</span></span></label>
         <label class="checkpoint"><input type="checkbox" data-checkpoint="copilot-build"><span><strong>Copilot completed local and Copilot Studio setup</strong><span>GitHub Copilot owned terminal and plugin actions, but the user still supplied the detailed harness.</span></span></label>
@@ -1613,6 +1633,20 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         <label class="checkpoint"><input type="checkbox" data-checkpoint="copilot-draft"><span><strong>Stop at the Draft gate</strong><span>The agent must remain Draft and is not published. Publishing needs separate human approval.</span></span></label>
         <p><a class="button" href="EASY-MODE-COPILOT-CHAT.md">Open Copilot-only prompts</a> {assisted_link}</p>
       </div>
+
+      <section class="card">
+        <h3>Compare and contrast while you build</h3>
+        <p>Both approaches are valid starting points and use the same reviewed skill, solution assets, locked cases, and Draft gate. The difference is what pulls the harness.</p>
+        <table class="comparison-table">
+          <thead><tr><th>Dimension</th><th>With Brainstem — default</th><th>GitHub Copilot only</th></tr></thead>
+          <tbody>
+            <tr><th>Best strength</th><td>A personal, on-device training AI with persistent state, hot-loaded instructors, reusable tools, and autonomous handoffs across turns.</td><td>Fastest entry from the familiar VS Code surface with no additional runtime to understand.</td></tr>
+            <tr><th>Tradeoff</th><td>Requires the local Brainstem engine and its governed agent inventory.</td><td>Copilot carries orchestration in the active session, so persistence and unattended continuation are more limited.</td></tr>
+            <tr><th>What the person does</th><td>Sets the destination, sends short messages, and reads Brainstem’s verdict.</td><td>Attaches the skill, sends short messages, and relies on Copilot to retain and execute the harness.</td></tr>
+            <tr><th>What students learn</th><td>How an on-device training AI works alongside Copilot to make specialized learning persistent and reusable.</td><td>How far GitHub Copilot Agent mode can go by itself when given a strong portable skill.</td></tr>
+          </tbody>
+        </table>
+      </section>
     </section>
 
     <section class="path" data-path="hard" hidden>
@@ -1756,6 +1790,10 @@ def readme_block(ctx: JourneyContext, resources: list[Resource]) -> str:
     pending = sum(resource.status != "ready" for resource in resources)
     rows = [
         ("Customer field guide", f"`solutions/{ctx.slug}/FIELD-GUIDE.md`"),
+        (
+            "Shared Easy Mode skill",
+            "`skills/aibast-easy-mode/SKILL.md`",
+        ),
         (
             "Personless Easy-mode guide",
             f"`solutions/{ctx.slug}/EASY-MODE-PERSONLESS.md`",

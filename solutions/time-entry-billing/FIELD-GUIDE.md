@@ -16,24 +16,42 @@ blueprint, and decide what production integration would require.
 
 ## Easy mode — with Brainstem (default)
 
+Brainstem is the learner's personal, on-device training AI working alongside
+GitHub Copilot. Copilot stays the familiar work surface; Brainstem remembers
+the workshop and hot-loads the specialized instructors.
+
 1. Open GitHub Copilot Chat in VS Code and select **Agent mode**.
-2. Open `EASY-MODE-PERSONLESS.md`.
-3. Send its three short messages in order: start the engine, build and test the
-   named solution, then deploy the validated Draft.
-4. Copilot installs the reusable AIBAST Easy Mode agent into the local
-   Brainstem.
-5. Easy Mode resolves and hot-loads the task-specific workshop cartridge.
-6. Brainstem retrieves the reviewed GitHub assets, hot-loads the business
+2. Download `skills/aibast-easy-mode/SKILL.md` and drag it into the chat.
+3. Open `EASY-MODE-PERSONLESS.md`.
+4. Send its two short messages in order: build and test the named solution,
+   then deploy the validated Draft.
+5. The attached skill starts Brainstem and installs the reusable AIBAST Easy
+   Mode agent into the learner's personal, on-device training AI.
+6. Easy Mode resolves and hot-loads the task-specific workshop cartridge.
+7. Brainstem retrieves the reviewed GitHub assets, hot-loads the business
    agent, proves it locally, drives Draft setup, and returns front-door actions.
-7. Copilot executes each handoff and sends evidence back until Brainstem
+8. Copilot executes each handoff and sends evidence back until Brainstem
    returns `status: complete`.
-8. Stop at **Draft**. Publishing remains a separate human approval gate.
+9. Stop at **Draft**. Publishing remains a separate human approval gate.
 
 ## Easy mode — without Brainstem (comparison)
 
-`EASY-MODE-COPILOT-CHAT.md` retains the detailed GitHub Copilot-only prompts
-for participants who ask why Copilot cannot do the same work alone. That lane
-keeps the person in the harness; it is deliberately secondary.
+The same `SKILL.md` supports the skeptic comparison. The participant explicitly
+asks for Easy Mode **without Brainstem**, and the skill performs discovery,
+testing, deployment, and Preview validation directly through GitHub Copilot.
+That lane is deliberately secondary.
+
+## Teaching comparison
+
+| Dimension | With Brainstem | GitHub Copilot only |
+| --- | --- | --- |
+| Strength | Persistent state, reusable hot-loaded agents, autonomous handoffs, and a durable verdict | Familiar VS Code entry point with no additional engine for the participant to understand |
+| Tradeoff | Requires the governed local Brainstem runtime | Orchestration and state live primarily in the active Copilot session |
+| Person's role | Set the destination and read the engine verdict | Attach the skill, steer through Copilot, and read its verdict |
+| Workshop lesson | Shows the personless harness and reusable engine model | Shows how far Copilot Agent mode can go with a strong portable skill |
+
+Both approaches are valid for getting started. They use the same immutable
+assets, locked cases, real Preview gate, and `published: false` boundary.
 
 Both Easy lanes preserve every recorded case prompt:
 

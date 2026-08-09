@@ -1,18 +1,22 @@
 # Time Entry and Billing Agent — personless Easy mode
 
-Assume the Brainstem one-line installer is available. Open GitHub Copilot Chat
-in VS Code, select **Agent mode**, and send these three short messages in order:
+## 1. Attach the shared skill
 
-## 1. Start the engine
+Download [SKILL.md](https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/skills/aibast-easy-mode/SKILL.md), open GitHub
+Copilot Chat in VS Code, select **Agent mode**, and drag `SKILL.md` into the
+chat. The skill defaults to Brainstem and owns startup, agent acquisition,
+testing, deployment, browser validation, and the final verdict.
 
-```text
-Start the Brainstem and go and get the Easy Mode agent from the AIBAST Agents Library.
-```
+Brainstem is the learner's personal, on-device training AI. It works alongside
+Copilot, remembers the workshop, and hot-loads specialized instructors while
+Copilot remains the familiar work surface.
+
+Then send these two short messages:
 
 ## 2. Build and test the solution
 
 ```text
-Give me Time Entry and Billing using the Easy Mode agent and test it for me.
+Give me Time Entry and Billing using Easy Mode and test it for me.
 ```
 
 ## 3. Deploy the validated Draft
@@ -23,7 +27,7 @@ Deploy it into Copilot Studio for me.
 
 ## What pulls the harness
 
-1. Copilot starts the installed Brainstem, finds
+1. The attached skill starts the installed Brainstem, finds
    `@aibast-agents-library/easy-mode` in the AIBAST registry, and imports it
    through `/agents/import`.
 2. `AIBASTEasyModeAgent` resolves the named solution, integrity-checks and

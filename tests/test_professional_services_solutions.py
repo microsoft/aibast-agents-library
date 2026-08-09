@@ -282,14 +282,17 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     prompts = (package / "EASY-MODE-COPILOT-CHAT.md").read_text(
         encoding="utf-8"
     )
+    skill = (ROOT / "skills/aibast-easy-mode/SKILL.md").read_text(
+        encoding="utf-8"
+    )
     quest = (package / "quest.html").read_text(encoding="utf-8")
     cases = read_json(ROOT / "tests/demo_cases/time-entry-billing.json")[
         "cases"
     ]
 
     for marker in (
-        "Start the Brainstem and go and get the Easy Mode agent",
-        "Give me Time Entry and Billing using the Easy Mode agent and test it for me.",
+        "drag `SKILL.md` into the",
+        "Give me Time Entry and Billing using Easy Mode and test it for me.",
         "Deploy it into Copilot Studio for me.",
         "AIBASTEasyModeAgent",
         "Task workshop cartridge",
@@ -298,33 +301,37 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     ):
         assert marker in personless
     for marker in (
-        "GitHub Copilot Chat",
-        "Agent mode",
-        "natural-language commands",
-        "Do not ask me to open a terminal",
-        "Microsoft Copilot Studio plugin",
-        "Stop before publish",
-        "Do not publish",
+        "Copilot-only Easy mode comparison",
+        "drag `SKILL.md` into the",
+        "Give me Time Entry and Billing using Easy Mode without Brainstem",
+        "Deploy it into Copilot Studio for me.",
     ):
         assert marker in prompts
-    for case in cases:
-        assert case["id"] in prompts
-        assert case["prompt"] in prompts
-        for value in case["must_include"]:
-            assert value in prompts
-        for value in case["must_not_include"]:
-            assert value in prompts
+    for marker in (
+        "**Default:** Brainstem + Copilot personless harness",
+        "without Brainstem",
+        "tests/demo_cases/<slug>.json",
+        "must_include",
+        "must_not_include",
+        "one immutable commit SHA",
+        "Never ask the user to open a terminal",
+        "Never publish",
+    ):
+        assert marker in skill
+    assert len(cases) == 5
 
     assert "With Brainstem — default" in quest
     assert "GitHub Copilot only" in quest
     assert "Personless harness" in quest
     assert "Skeptic comparison" in quest
-    assert "Fast path — complete Easy mode in one message" in quest
-    assert quest.count("data-copy-target=") == 9
-    assert "Start the Brainstem and go and get the Easy Mode agent" in quest
-    assert "Give me Time Entry and Billing using the Easy Mode agent and test it for me." in quest
+    assert quest.count("data-copy-target=") == 4
+    assert "Download SKILL.md" in quest
+    assert 'download="SKILL.md"' in quest
+    assert "Give me Time Entry and Billing using Easy Mode and test it for me." in quest
+    assert "Give me Time Entry and Billing using Easy Mode without Brainstem and test it for me." in quest
     assert "Deploy it into Copilot Studio for me." in quest
     assert "What the workshop returns" in quest
+    assert "Compare and contrast while you build" in quest
     assert "Raw resources" not in quest
     assert "EASY-MODE-PERSONLESS.md" in quest
     assert "EASY-MODE-COPILOT-CHAT.md" in quest
