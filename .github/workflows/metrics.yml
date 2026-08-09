@@ -9,10 +9,13 @@ on:
     paths:
       - 'scripts/build_metrics.py'
       - 'metrics.html'
+      - 'registry.json'
+      - 'solutions/catalog.json'
       - '.github/workflows/metrics.yml'
 
 permissions:
   contents: write
+  issues: read
 
 concurrency:
   group: metrics-snapshot
@@ -35,8 +38,10 @@ jobs:
         # workflow permission — so it returns 403 for traffic and only the CDN,
         # release and catalog metrics refresh.
         #
-        # To unlock live clone counts in CI, add a fine-grained PAT scoped to
-        # this repository with "Administration: read", stored as METRICS_TOKEN:
+        # To unlock live clone, view, and popular-path counts in CI, add a
+        # fine-grained PAT scoped to this repository with
+        # "Administration: read". Add "Issues: read" when workshop-feedback
+        # issue metrics should be collected. Store it as METRICS_TOKEN:
         #     gh secret set METRICS_TOKEN
         #
         # Without it, build_metrics.py reuses the last successful traffic read
@@ -49,12 +54,36 @@ jobs:
       - name: Report traffic source
         run: |
           python - <<'PY'
-          import json
-          t = json.load(open('state/metrics.json'))['traffic']
+          import json, sys
+          snapshot = json.load(open('state/metrics.json'))
+          t = snapshot['traffic']
           if t.get('live'):
               print('traffic read live from the GitHub API')
           else:
               print(f"traffic unavailable (no METRICS_TOKEN) - reusing last read from {t.get('as_of')}")
+          workshops = snapshot.get('workshops', {})
+          rows = workshops.get('rows', [])
+          workshop_slugs = {row.get('slug') for row in rows}
+          file_rows = snapshot.get('file_metrics', {}).get('rows', [])
+          agent_rows = snapshot.get('agent_metrics', [])
+          print(
+              f"workshop metrics: {len(rows)} rows; "
+              f"{workshops.get('totals', {}).get('usage_events')} observed events; "
+              f"agent upvotes={snapshot.get('totals', {}).get('agent_upvotes')}"
+          )
+          print(f"file metrics: {len(file_rows)} tracked files; agent metrics: {len(agent_rows)} rows")
+          if len(rows) != 51:
+              print('expected exactly 51 catalog-advertised workshop rows', file=sys.stderr)
+              raise SystemExit(1)
+          if 'grid-outage-response' in workshop_slugs:
+              print('Grid Outage must remain excluded from advertised workshop metrics', file=sys.stderr)
+              raise SystemExit(1)
+          if not file_rows or not any(row.get('kind') == 'skill' for row in file_rows):
+              print('tracked-file metrics must include SKILL.md rows', file=sys.stderr)
+              raise SystemExit(1)
+          if len(agent_rows) != snapshot.get('totals', {}).get('agents'):
+              print('agent_metrics rows must match the registry agent count', file=sys.stderr)
+              raise SystemExit(1)
           PY
 
       - name: Commit snapshot

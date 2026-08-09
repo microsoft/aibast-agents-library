@@ -996,7 +996,7 @@ def _load_trusted_baseline(
         return None
     try:
         repo_text = _git_output(
-            guide_path.parent,
+            ROOT,
             "rev-parse",
             "--show-toplevel",
         ).strip()

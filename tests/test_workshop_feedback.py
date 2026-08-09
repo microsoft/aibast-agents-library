@@ -11,10 +11,25 @@ def test_workshop_feedback_workflow_detects_structured_signal():
     assert "types: [opened, edited, reopened]" in text
     assert "issues: write" in text
     assert "<!-- aibast-workshop-feedback:v1 -->" in text
+    assert "<!-- aibast-agent-upvote:v1 -->" in text
+    assert "||" in text
     assert "workshop-feedback" in text
     assert "needs-triage" in text
+    assert "agent-upvote" in text
     assert "createLabel" in text
     assert "addLabels" in text
+    assert "removeLabel" in text
+
+
+def test_workflow_applies_signal_specific_labels_and_descriptions():
+    text = WORKFLOW.read_text(encoding="utf-8")
+
+    assert 'const isAgentUpvote = body.includes("<!-- aibast-agent-upvote:v1 -->")' in text
+    assert '? ["agent-upvote"]' in text
+    assert ': ["workshop-feedback", "needs-triage"]' in text
+    assert "Structured feedback submitted from an AIBAST workshop." in text
+    assert "Public community preference signal for an AIBAST library agent." in text
+    assert "AIBAST Beta workshop" not in text
 
 
 def test_generated_workshops_expose_contextual_beta_reports():

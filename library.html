@@ -11,6 +11,7 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="data:," rel="icon">
 <title>AI BAST Agent Library</title>
 <meta name="description" content="Find AI BAST industry agents by outcome, industry, persona, and Microsoft AI product.">
 <meta property="og:title" content="AI BAST Agent Library">
@@ -523,6 +524,14 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   font-size: 0.73rem;
 }
 .results-head strong { color: var(--cp-text); }
+.upvote-explainer {
+  margin: 0;
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--cp-border);
+  color: var(--cp-text-muted);
+  font-size: 0.69rem;
+  line-height: 1.45;
+}
 .grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -708,6 +717,20 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.card-actions, .agent-upvote {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.card-actions { flex-shrink: 0; }
+.upvote-count {
+  min-width: 1.4em;
+  color: var(--cp-text-muted);
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+.detail-head .agent-upvote { margin-top: 12px; }
 .empty, .loading {
   grid-column: 1 / -1;
   padding: 70px 20px;
@@ -1171,6 +1194,7 @@ footer {
     </div>
 
     <div class="active-filters" id="active-filters"></div>
+    <p class="upvote-explainer">Agent upvotes are public structured GitHub issue signals, not repository stars. Opening an upvote does not submit it; submit the prefilled issue to count. Metrics refresh after the scheduled snapshot.</p>
     <div class="results-head">
       <span id="result-count">Loading agents...</span>
       <span id="result-context"></span>
@@ -1192,6 +1216,7 @@ footer {
 const OWNER = "microsoft";
 const REPO = "aibast-agents-library";
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main`;
+const SITE = `https://${OWNER}.github.io/${REPO}/`;
 const BLOB = `https://github.com/${OWNER}/${REPO}/blob/main`;
 const AGENT_DIR = "~/.brainstem/src/rapp_brainstem/agents";
 
@@ -1199,6 +1224,7 @@ const state = {
   agents: [],
   stacks: [],
   stats: {},
+  agentUpvotes: new Map(),
   view: "solutions",
   query: "",
   industry: "",
@@ -1302,7 +1328,10 @@ async function getJSON(paths) {
 
 async function init() {
   const stamp = `?t=${Date.now()}`;
-  const registry = await getJSON([`registry.json${stamp}`, `${RAW}/registry.json${stamp}`]);
+  const [registry, metrics] = await Promise.all([
+    getJSON([`registry.json${stamp}`, `${RAW}/registry.json${stamp}`]),
+    getJSON([`state/metrics.json${stamp}`, `${SITE}state/metrics.json${stamp}`])
+  ]);
   if (!registry) {
     $("grid").innerHTML = `<div class="empty"><h3>Library unavailable</h3><p>Could not load <code>registry.json</code>.</p></div>`;
     return;
@@ -1310,6 +1339,7 @@ async function init() {
   state.agents = registry.agents || [];
   state.stacks = registry.stacks || [];
   state.stats = registry.stats || {};
+  state.agentUpvotes = buildAgentUpvoteMap(metrics, state.agents);
   restoreState();
   renderStats();
   buildFilters();
@@ -1653,6 +1683,65 @@ function journeyGroups(rows) {
     `).join("");
 }
 
+function buildAgentUpvoteMap(metrics, agents) {
+  const supplied = new Map();
+  const rows = metrics && Array.isArray(metrics.agent_metrics)
+    ? metrics.agent_metrics
+    : [];
+  rows.forEach(row => {
+    if (!row || typeof row.name !== "string") return;
+    const count = row.upvotes;
+    supplied.set(row.name, Number.isSafeInteger(count) && count >= 0 ? count : null);
+  });
+  return new Map(agents.map(agent => [
+    agent.name,
+    supplied.has(agent.name) ? supplied.get(agent.name) : null
+  ]));
+}
+
+function aggregateUpvotesFor(agentName) {
+  const count = state.agentUpvotes.get(agentName);
+  return Number.isSafeInteger(count) && count >= 0 ? count : null;
+}
+
+function agentUpvoteControl(agent) {
+  const count = aggregateUpvotesFor(agent.name);
+  const countText = count === null ? "—" : count.toLocaleString();
+  const countLabel = count === null
+    ? "Aggregate upvotes unavailable"
+    : `${count.toLocaleString()} aggregate upvote${count === 1 ? "" : "s"}`;
+  return `
+    <div class="agent-upvote">
+      <button class="button small" type="button" data-action="upvote-agent"
+        data-agent-name="${enc(agent.name)}"
+        aria-label="Upvote ${esc(shown(agent))} with a prefilled GitHub issue">Upvote</button>
+      <span class="upvote-count" aria-label="${esc(countLabel)}" title="${esc(countLabel)}">${countText}</span>
+    </div>`;
+}
+
+function agentUpvoteIssueBody(agentName) {
+  return [
+    "<!-- aibast-agent-upvote:v1 -->",
+    "- Schema: `aibast-agent-upvote/1.0`",
+    `- Agent: \`${agentName}\``,
+    "- Source: library.html",
+    "",
+    "Submit this issue to count your agent upvote.",
+    "One GitHub account counts once per agent.",
+    "Duplicate issues from the same account/agent are deduped.",
+    "No free-text or sensitive information is needed."
+  ].join("\n");
+}
+
+function openAgentUpvote(agentName) {
+  const agent = state.agents.find(item => item.name === agentName);
+  if (!agent) return;
+  const title = `[Agent upvote] ${shown(agent)}`;
+  const body = agentUpvoteIssueBody(agent.name);
+  const url = `https://github.com/${OWNER}/${REPO}/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+  window.open(url, '_blank', 'noopener');
+}
+
 function agentCard(agent) {
   const solution = solutionOf(agent);
   const tools = microsoftTools(agent).slice(0, 3);
@@ -1686,7 +1775,10 @@ function agentCard(agent) {
         </div>
         <div class="card-foot">
           <span class="persona">For ${esc(persona)}</span>
-          <button class="button primary small" type="button" data-action="open-agent" data-name="${enc(agent.name)}">View agent</button>
+          <div class="card-actions">
+            ${agentUpvoteControl(agent)}
+            <button class="button primary small" type="button" data-action="open-agent" data-name="${enc(agent.name)}">View agent</button>
+          </div>
         </div>
       </div>
     </article>`;
@@ -1865,6 +1957,7 @@ function openAgent(name) {
             ${solution.has_demo_video ? `<span class="badge demo">Recorded demo</span>` : ""}
             ${solution.has_onepager ? `<span class="badge">One-pager</span>` : ""}
           </div>
+          ${agentUpvoteControl(agent)}
         </div>
       </header>
       ${architecture ? `<div class="detail-tabs">
@@ -2125,6 +2218,10 @@ document.addEventListener("click", event => {
     render();
   } else if (action === "clear-all") {
     clearAll();
+  } else if (action === "upvote-agent") {
+    event.preventDefault();
+    event.stopPropagation();
+    openAgentUpvote(dec(target.dataset.agentName));
   } else if (action === "open-agent") {
     $("suggestions").classList.remove("visible");
     openAgent(dec(target.dataset.name));

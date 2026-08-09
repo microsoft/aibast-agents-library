@@ -1,0 +1,970 @@
+{
+  "contract_schema": "aibast-metrics-page-contract/1.0",
+  "provenance": {
+    "commit": "9788f8faa24f7de33cc830da218f3aced6585584",
+    "path": "metrics.html",
+    "blob": "d78c8422eca6fdf22f73e8ecae4950ff5756a3f6",
+    "blob_sha256": "2b033bb241ec76b6c21083c3ef37128ef990dd542380c82d83457c4c3a2ef180",
+    "extraction": "git cat-file blob"
+  },
+  "preservation": {
+    "headings": [
+      {
+        "level": "h1",
+        "text": "Public library metrics"
+      },
+      {
+        "level": "h2",
+        "text": "Traffic over time"
+      },
+      {
+        "level": "h2",
+        "text": "Agent leaderboards"
+      },
+      {
+        "level": "h2",
+        "text": "Stacks"
+      },
+      {
+        "level": "h2",
+        "text": "Verticals"
+      },
+      {
+        "level": "h2",
+        "text": "Categories"
+      },
+      {
+        "level": "h2",
+        "text": "Quality tiers"
+      },
+      {
+        "level": "h2",
+        "text": "Most downloaded files"
+      },
+      {
+        "level": "h2",
+        "text": "Most visited pages"
+      },
+      {
+        "level": "h2",
+        "text": "Traffic sources"
+      },
+      {
+        "level": "h2",
+        "text": "Releases"
+      },
+      {
+        "level": "h2",
+        "text": "Where these numbers come from"
+      }
+    ],
+    "required_ids": [
+      "board",
+      "board-hint",
+      "cat-bars",
+      "cdn-files",
+      "chart",
+      "kpis",
+      "paths",
+      "referrers",
+      "refresh",
+      "releases",
+      "sources",
+      "stack-hint",
+      "stack-table",
+      "stamp-mode",
+      "stamp-src",
+      "stamp-time",
+      "stamp-window",
+      "tabs",
+      "tier-bars",
+      "traffic-gap",
+      "vert-bars"
+    ],
+    "chart_ids": [
+      "chart"
+    ],
+    "table_ids": [
+      "stack-table"
+    ],
+    "static_hrefs": [
+      "index.html",
+      "library.html",
+      "docs/rapp-guide.html",
+      "https://github.com/microsoft/aibast-agents-library",
+      "state/metrics.json"
+    ],
+    "href_templates": [
+      "library.html#agent/${encodeURIComponent(r.name)}",
+      "${url}",
+      "https://github.com/${OWNER}/${REPO}/tree/main/${encodeURI(s.path)}",
+      "https://github.com${esc(p.path)}",
+      "https://github.com/${OWNER}/${REPO}/releases/tag/${encodeURIComponent(r.tag)}",
+      "${esc(s.url)}"
+    ],
+    "public_data_sources": [
+      "state/metrics.json",
+      "https://microsoft.github.io/aibast-agents-library/state/metrics.json",
+      "https://api.github.com/repos/${OWNER}/${REPO}",
+      "https://data.jsdelivr.com/v1/stats/packages/gh/${OWNER}/${REPO}?period=year"
+    ],
+    "functions": [
+      "load",
+      "getJSON",
+      "liveTopUp",
+      "render",
+      "renderKPIs",
+      "renderChart",
+      "renderBoards",
+      "renderStacks",
+      "renderBars",
+      "renderCDNFiles",
+      "renderPaths",
+      "renderReferrers",
+      "renderReleases",
+      "renderSources"
+    ],
+    "function_targets": {
+      "getJSON": [],
+      "load": [
+        "kpis"
+      ],
+      "liveTopUp": [
+        "stamp-mode"
+      ],
+      "render": [
+        "board-hint",
+        "stamp-src",
+        "stamp-time",
+        "stamp-window",
+        "traffic-gap"
+      ],
+      "renderKPIs": [
+        "kpis"
+      ],
+      "renderChart": [
+        "chart"
+      ],
+      "renderBoards": [
+        "board",
+        "tabs"
+      ],
+      "renderStacks": [
+        "stack-hint",
+        "stack-table"
+      ],
+      "renderBars": [],
+      "renderCDNFiles": [
+        "cdn-files"
+      ],
+      "renderPaths": [
+        "paths"
+      ],
+      "renderReferrers": [
+        "referrers"
+      ],
+      "renderReleases": [
+        "releases"
+      ],
+      "renderSources": [
+        "sources"
+      ]
+    },
+    "function_data": {
+      "getJSON": [
+        "paths",
+        "fetch(",
+        "cache: 'no-store'",
+        ".ok",
+        ".json()",
+        "return null"
+      ],
+      "load": [
+        "state/metrics.json",
+        "M=",
+        "render()",
+        "liveTopUp()"
+      ],
+      "liveTopUp": [
+        "api.github.com/repos/",
+        "data.jsdelivr.com/v1/stats/packages/gh/",
+        "M.repo.stars",
+        "M.repo.forks",
+        "M.repo.open_issues",
+        "M.totals.downloads",
+        "M.totals.cdn_hits",
+        "renderKPIs()"
+      ],
+      "render": [
+        "M.generated_at",
+        "M.traffic",
+        "tr.live",
+        "tr.as_of",
+        "tr.unavailable_reason",
+        "M.totals",
+        "t.tracking_since",
+        "t.days_tracked",
+        "t.agents"
+      ],
+      "renderKPIs": [
+        "M.totals",
+        "M.repo",
+        "t.downloads",
+        "t.clones",
+        "t.cdn_hits",
+        "t.release_downloads",
+        "t.agent_file_downloads",
+        "t.installer_downloads",
+        "t.agents",
+        "t.stacks",
+        "t.verticals",
+        "t.total_lines",
+        "t.total_kb",
+        "t.clone_uniques_14d",
+        "t.clone_uniques_daily_sum",
+        "t.tracking_since",
+        "t.page_views",
+        "t.view_uniques_14d",
+        "r.stars",
+        "r.forks",
+        "r.open_issues"
+      ],
+      "renderChart": [
+        "M.daily",
+        "d.date",
+        "d.clones",
+        "d.views",
+        "d.cdn"
+      ],
+      "renderBoards": [
+        "M.leaderboards",
+        "r[cfg.metric]",
+        "r.file",
+        "r.name",
+        "r.display_name",
+        "r.tier",
+        "r.category",
+        "r.stack"
+      ],
+      "renderStacks": [
+        "M.leaderboards",
+        ".stacks",
+        "M.totals.stacks",
+        "s.path",
+        "s.display_name",
+        "s.vertical",
+        "s.agents",
+        "s.lines",
+        "s.downloads"
+      ],
+      "renderBars": [
+        "r.label",
+        "r.value"
+      ],
+      "renderCDNFiles": [
+        "M.cdn",
+        "f.file",
+        "f.agent",
+        "f.kind",
+        "f.hits",
+        "M.cdn.total_hits",
+        "M.cdn.bandwidth",
+        "M.cdn.rank"
+      ],
+      "renderPaths": [
+        "M.traffic",
+        ".paths",
+        "p.path",
+        "p.count"
+      ],
+      "renderReferrers": [
+        "M.traffic",
+        ".referrers",
+        "r.referrer",
+        "r.count"
+      ],
+      "renderReleases": [
+        "M.releases",
+        "rel.releases",
+        "r.tag",
+        "r.name",
+        "r.published_at",
+        "r.assets",
+        "r.downloads"
+      ],
+      "renderSources": [
+        "M.sources",
+        "s.name",
+        "s.metric",
+        "s.url"
+      ]
+    },
+    "boards": [
+      {
+        "id": "most_downloaded",
+        "label": "Most downloaded",
+        "metric": "downloads",
+        "unit": "CDN fetches"
+      },
+      {
+        "id": "newest",
+        "label": "Newest",
+        "metric": "added_at",
+        "unit": "added"
+      },
+      {
+        "id": "largest",
+        "label": "Most code",
+        "metric": "lines",
+        "unit": "lines"
+      }
+    ],
+    "active_board": "most_downloaded",
+    "schema_fields_consumed": [
+      "generated_at",
+      "repo.stars",
+      "repo.forks",
+      "repo.open_issues",
+      "totals.downloads",
+      "totals.clones",
+      "totals.cdn_hits",
+      "totals.release_downloads",
+      "totals.agent_file_downloads",
+      "totals.installer_downloads",
+      "totals.page_views",
+      "totals.clone_uniques_14d",
+      "totals.view_uniques_14d",
+      "totals.clone_uniques_daily_sum",
+      "totals.days_tracked",
+      "totals.tracking_since",
+      "totals.agents",
+      "totals.stacks",
+      "totals.verticals",
+      "totals.total_lines",
+      "totals.total_kb",
+      "daily[].date",
+      "daily[].clones",
+      "daily[].views",
+      "daily[].cdn",
+      "traffic.live",
+      "traffic.as_of",
+      "traffic.unavailable_reason",
+      "traffic.paths[].path",
+      "traffic.paths[].count",
+      "traffic.referrers[].referrer",
+      "traffic.referrers[].count",
+      "cdn.total_hits",
+      "cdn.bandwidth",
+      "cdn.rank",
+      "cdn.files[].file",
+      "cdn.files[].agent",
+      "cdn.files[].kind",
+      "cdn.files[].hits",
+      "releases.releases[].tag",
+      "releases.releases[].name",
+      "releases.releases[].published_at",
+      "releases.releases[].assets",
+      "releases.releases[].downloads",
+      "leaderboards.most_downloaded",
+      "leaderboards.most_downloaded[].name",
+      "leaderboards.most_downloaded[].display_name",
+      "leaderboards.most_downloaded[].file",
+      "leaderboards.most_downloaded[].tier",
+      "leaderboards.most_downloaded[].category",
+      "leaderboards.most_downloaded[].stack",
+      "leaderboards.most_downloaded[].downloads",
+      "leaderboards.newest",
+      "leaderboards.newest[].name",
+      "leaderboards.newest[].display_name",
+      "leaderboards.newest[].file",
+      "leaderboards.newest[].tier",
+      "leaderboards.newest[].category",
+      "leaderboards.newest[].stack",
+      "leaderboards.newest[].added_at",
+      "leaderboards.largest",
+      "leaderboards.largest[].name",
+      "leaderboards.largest[].display_name",
+      "leaderboards.largest[].file",
+      "leaderboards.largest[].tier",
+      "leaderboards.largest[].category",
+      "leaderboards.largest[].stack",
+      "leaderboards.largest[].lines",
+      "leaderboards.stacks",
+      "leaderboards.stacks[].path",
+      "leaderboards.stacks[].display_name",
+      "leaderboards.stacks[].vertical",
+      "leaderboards.stacks[].agents",
+      "leaderboards.stacks[].lines",
+      "leaderboards.stacks[].downloads",
+      "leaderboards.verticals",
+      "leaderboards.verticals[].name",
+      "leaderboards.verticals[].agents",
+      "leaderboards.verticals[].stacks",
+      "leaderboards.categories",
+      "leaderboards.categories[].name",
+      "leaderboards.categories[].agents",
+      "leaderboards.categories[].lines",
+      "leaderboards.tiers",
+      "sources[].name",
+      "sources[].metric",
+      "sources[].url"
+    ],
+    "schema_evidence": {
+      "generated_at": [
+        "M.generated_at"
+      ],
+      "repo.stars": [
+        "r.stars",
+        "M.repo.stars"
+      ],
+      "repo.forks": [
+        "r.forks",
+        "M.repo.forks"
+      ],
+      "repo.open_issues": [
+        "r.open_issues",
+        "M.repo.open_issues"
+      ],
+      "totals.downloads": [
+        "t.downloads",
+        "M.totals.downloads"
+      ],
+      "totals.clones": [
+        "t.clones"
+      ],
+      "totals.cdn_hits": [
+        "t.cdn_hits",
+        "M.totals.cdn_hits"
+      ],
+      "totals.release_downloads": [
+        "t.release_downloads"
+      ],
+      "totals.agent_file_downloads": [
+        "t.agent_file_downloads"
+      ],
+      "totals.installer_downloads": [
+        "t.installer_downloads"
+      ],
+      "totals.page_views": [
+        "t.page_views"
+      ],
+      "totals.clone_uniques_14d": [
+        "t.clone_uniques_14d"
+      ],
+      "totals.view_uniques_14d": [
+        "t.view_uniques_14d"
+      ],
+      "totals.clone_uniques_daily_sum": [
+        "t.clone_uniques_daily_sum"
+      ],
+      "totals.days_tracked": [
+        "t.days_tracked"
+      ],
+      "totals.tracking_since": [
+        "t.tracking_since"
+      ],
+      "totals.agents": [
+        "t.agents"
+      ],
+      "totals.stacks": [
+        "t.stacks",
+        "M.totals.stacks"
+      ],
+      "totals.verticals": [
+        "t.verticals"
+      ],
+      "totals.total_lines": [
+        "t.total_lines"
+      ],
+      "totals.total_kb": [
+        "t.total_kb"
+      ],
+      "daily[].date": [
+        "d.date"
+      ],
+      "daily[].clones": [
+        "d.clones"
+      ],
+      "daily[].views": [
+        "d.views"
+      ],
+      "daily[].cdn": [
+        "d.cdn"
+      ],
+      "traffic.live": [
+        "tr.live"
+      ],
+      "traffic.as_of": [
+        "tr.as_of"
+      ],
+      "traffic.unavailable_reason": [
+        "tr.unavailable_reason"
+      ],
+      "traffic.paths[].path": [
+        "p.path"
+      ],
+      "traffic.paths[].count": [
+        "p.count"
+      ],
+      "traffic.referrers[].referrer": [
+        "r.referrer"
+      ],
+      "traffic.referrers[].count": [
+        "r.count"
+      ],
+      "cdn.total_hits": [
+        "M.cdn.total_hits"
+      ],
+      "cdn.bandwidth": [
+        "M.cdn.bandwidth"
+      ],
+      "cdn.rank": [
+        "M.cdn.rank"
+      ],
+      "cdn.files[].file": [
+        "f.file"
+      ],
+      "cdn.files[].agent": [
+        "f.agent"
+      ],
+      "cdn.files[].kind": [
+        "f.kind"
+      ],
+      "cdn.files[].hits": [
+        "f.hits"
+      ],
+      "releases.releases[].tag": [
+        "r.tag"
+      ],
+      "releases.releases[].name": [
+        "r.name"
+      ],
+      "releases.releases[].published_at": [
+        "r.published_at"
+      ],
+      "releases.releases[].assets": [
+        "r.assets"
+      ],
+      "releases.releases[].downloads": [
+        "r.downloads"
+      ],
+      "leaderboards.most_downloaded": [
+        "most_downloaded"
+      ],
+      "leaderboards.most_downloaded[].name": [
+        "r.name"
+      ],
+      "leaderboards.most_downloaded[].display_name": [
+        "r.display_name"
+      ],
+      "leaderboards.most_downloaded[].file": [
+        "r.file"
+      ],
+      "leaderboards.most_downloaded[].tier": [
+        "r.tier"
+      ],
+      "leaderboards.most_downloaded[].category": [
+        "r.category"
+      ],
+      "leaderboards.most_downloaded[].stack": [
+        "r.stack"
+      ],
+      "leaderboards.most_downloaded[].downloads": [
+        "metric: 'downloads'"
+      ],
+      "leaderboards.newest": [
+        "newest"
+      ],
+      "leaderboards.newest[].name": [
+        "r.name"
+      ],
+      "leaderboards.newest[].display_name": [
+        "r.display_name"
+      ],
+      "leaderboards.newest[].file": [
+        "r.file"
+      ],
+      "leaderboards.newest[].tier": [
+        "r.tier"
+      ],
+      "leaderboards.newest[].category": [
+        "r.category"
+      ],
+      "leaderboards.newest[].stack": [
+        "r.stack"
+      ],
+      "leaderboards.newest[].added_at": [
+        "metric: 'added_at'"
+      ],
+      "leaderboards.largest": [
+        "largest"
+      ],
+      "leaderboards.largest[].name": [
+        "r.name"
+      ],
+      "leaderboards.largest[].display_name": [
+        "r.display_name"
+      ],
+      "leaderboards.largest[].file": [
+        "r.file"
+      ],
+      "leaderboards.largest[].tier": [
+        "r.tier"
+      ],
+      "leaderboards.largest[].category": [
+        "r.category"
+      ],
+      "leaderboards.largest[].stack": [
+        "r.stack"
+      ],
+      "leaderboards.largest[].lines": [
+        "metric: 'lines'"
+      ],
+      "leaderboards.stacks": [
+        ".stacks"
+      ],
+      "leaderboards.stacks[].path": [
+        "s.path"
+      ],
+      "leaderboards.stacks[].display_name": [
+        "s.display_name"
+      ],
+      "leaderboards.stacks[].vertical": [
+        "s.vertical"
+      ],
+      "leaderboards.stacks[].agents": [
+        "s.agents"
+      ],
+      "leaderboards.stacks[].lines": [
+        "s.lines"
+      ],
+      "leaderboards.stacks[].downloads": [
+        "s.downloads"
+      ],
+      "leaderboards.verticals": [
+        ".verticals"
+      ],
+      "leaderboards.verticals[].name": [
+        "v.name"
+      ],
+      "leaderboards.verticals[].agents": [
+        "v.agents"
+      ],
+      "leaderboards.verticals[].stacks": [
+        "v.stacks"
+      ],
+      "leaderboards.categories": [
+        ".categories"
+      ],
+      "leaderboards.categories[].name": [
+        "c.name"
+      ],
+      "leaderboards.categories[].agents": [
+        "c.agents"
+      ],
+      "leaderboards.categories[].lines": [
+        "c.lines"
+      ],
+      "leaderboards.tiers": [
+        ".tiers"
+      ],
+      "sources[].name": [
+        "s.name"
+      ],
+      "sources[].metric": [
+        "s.metric"
+      ],
+      "sources[].url": [
+        "s.url"
+      ]
+    },
+    "source_explanations": [
+      {
+        "sha256": "18b37217a2d4d620da9e83e421b327fa5929d9f5c5b8f697348f4cf3eb3ce126",
+        "normalized_text": "downloads = git clones + jsdelivr cdn file hits + github release asset downloads. a clone pulls the whole library; a cdn hit is a single file fetched by an installer, an agent, or a browser. github only exposes a rolling 14-day traffic window, so scripts/build_metrics.py snapshots it into state/metrics_history.json , deduplicated by date — the all-time total grows from the first day of tracking and never double-counts."
+      },
+      {
+        "sha256": "0e14786a83daa37aab6c3651c559d368a254970522ee0eb2446137c2354db5ea",
+        "normalized_text": "what is not counted. the install one-liners fetch over raw.githubusercontent.com , which publishes no counter of any kind. installs that take that path are invisible here, so treat every figure on this page as a floor, never a total. installer fetches counts only the copies served through the cdn."
+      },
+      {
+        "sha256": "af5bdca7241895a4c2ecd18cee4e4bc624dfc89dc3ae2e6655ae0ff83390825b",
+        "normalized_text": "on clones. github counts every actions/checkout as a clone, and this repository runs registry-build and preflight workflows on push. the estimated ci baseline is published as ci_clone_estimate alongside clones_excluding_ci_estimate in the snapshot. agent file fetches is the narrowest and most trustworthy number on this page."
+      },
+      {
+        "sha256": "7e0f5aa9b9f3a825d67c51738ca4ec07eba4c37dff2f48759f9dfd5ce12552c0",
+        "normalized_text": "on unique counts. github reports uniques per 14-day window, not per day, so daily unique figures cannot be summed into a true all-time unique. the headline unique cloners figure is github's own 14-day number; the daily-unique sum beside it is an upper bound, since one machine cloning on three days counts three times. clone counts and cdn hits have no such caveat — they are plain event counts and do accumulate exactly."
+      },
+      {
+        "sha256": "837f6b774fa29946ed86d70b94747edc8cc72b2b6b9ff07eb1aa6ec689e0c1ee",
+        "normalized_text": "on traffic gaps. the github traffic endpoints need a token with repository administration read access, which the actions github_token cannot be granted. without a metrics_token secret the snapshot reuses the last authorized read rather than zeroing the figures, and the stamp above says so."
+      }
+    ],
+    "download_formula": {
+      "components": [
+        "totals.clones",
+        "totals.cdn_hits",
+        "totals.release_downloads"
+      ],
+      "live_top_up": "M.totals.downloads += (hits - M.totals.cdn_hits)"
+    },
+    "distinct_fetch_metrics": [
+      "totals.agent_file_downloads",
+      "totals.installer_downloads"
+    ],
+    "render_inventory": {
+      "renderKPIs": [
+        "kpis"
+      ],
+      "renderChart": [
+        "chart"
+      ],
+      "renderBoards": [
+        "tabs",
+        "board"
+      ],
+      "renderStacks": [
+        "stack-table"
+      ],
+      "renderBars": [
+        "vert-bars",
+        "cat-bars",
+        "tier-bars"
+      ],
+      "renderCDNFiles": [
+        "cdn-files"
+      ],
+      "renderPaths": [
+        "paths"
+      ],
+      "renderReferrers": [
+        "referrers"
+      ],
+      "renderReleases": [
+        "releases"
+      ],
+      "renderSources": [
+        "sources"
+      ]
+    }
+  },
+  "post_migration": {
+    "headline": "Downloads, agent upvotes, and workshop usage",
+    "heading": "Workshop adoption",
+    "required_ids": [
+      "workshop-summary",
+      "workshop-hint",
+      "workshop-coverage",
+      "workshop-tabs",
+      "workshop-table"
+    ],
+    "functions": [
+      "renderWorkshops",
+      "renderWorkshopControls"
+    ],
+    "visible_phrases": [
+      "Views cover only observed GitHub top popular-path rows in the 14-day API window",
+      "Raw GitHub and direct GitHub Pages fetches are uncounted",
+      "This is a floor and an event sum, not people, users, or unique usage",
+      "These sources use mixed measurement windows",
+      "one person or action can create multiple events",
+      "Agent upvotes are preference signals shown separately and are never added to usage events"
+    ],
+    "agent_upvote_phrases": [
+      "structured public GitHub issue submissions",
+      "One GitHub account counts once per agent",
+      "Opening the form is not a vote",
+      "issue must be submitted"
+    ],
+    "forbidden_upvote_phrases": [
+      "Community upvotes",
+      "Upvote on GitHub"
+    ],
+    "kpi_fields": [
+      "usage_events",
+      "workshops"
+    ],
+    "row_fields": [
+      "slug",
+      "display_name",
+      "views_14d",
+      "view_uniques_14d",
+      "file_downloads",
+      "bundle_downloads",
+      "feedback_reports",
+      "usage_events",
+      "agent_upvotes",
+      "agent_name"
+    ],
+    "quest_template": "solutions/${encodeURIComponent(row.slug)}/quest.html",
+    "sorts": [
+      {
+        "id": "usage_events",
+        "label": "Usage"
+      },
+      {
+        "id": "views_14d",
+        "label": "Views"
+      },
+      {
+        "id": "file_downloads",
+        "label": "File downloads"
+      },
+      {
+        "id": "bundle_downloads",
+        "label": "Bundle downloads"
+      },
+      {
+        "id": "feedback_reports",
+        "label": "Feedback"
+      }
+    ],
+    "agent_upvote_sort": {
+      "id": "agent_upvotes",
+      "label": "Agent upvotes"
+    },
+    "agent_upvote_board": {
+      "id": "most_upvoted",
+      "label": "Most upvoted",
+      "metric": "upvotes",
+      "unit": "agent upvotes"
+    },
+    "agent_metrics_fields": [
+      "name",
+      "display_name",
+      "file",
+      "tier",
+      "category",
+      "stack",
+      "upvotes"
+    ],
+    "admin_setup_href": "docs/metrics-admin-setup.html",
+    "admin_guidance": [
+      "METRICS_TOKEN",
+      "Administration: read",
+      "SSO"
+    ],
+    "file_ledger": {
+      "heading": "File downloads",
+      "required_ids": [
+        "file-download-ledger",
+        "file-ledger-search",
+        "file-ledger-kind",
+        "file-ledger-sort",
+        "file-ledger-summary",
+        "file-ledger-table",
+        "file-ledger-prev",
+        "file-ledger-next",
+        "file-ledger-page"
+      ],
+      "functions": [
+        "fileKindLabel",
+        "renderFileLedgerControls",
+        "renderFileLedger"
+      ],
+      "visible_phrases": [
+        "Every tracked repository file is represented",
+        "raw.githubusercontent.com",
+        "GitHub Pages",
+        "direct GitHub downloads",
+        "remain unobservable",
+        "Complete coverage can report zero",
+        "censored coverage keeps downloads unavailable",
+        "null",
+        "Workshop file and source-bundle totals reconcile from this ledger"
+      ],
+      "row_fields": [
+        "path",
+        "kind",
+        "agent_name",
+        "workshop_slug",
+        "downloads",
+        "status"
+      ],
+      "skill_kind": "Skill (SKILL.md)"
+    }
+  },
+  "workshop_theme": {
+    "first_script": "(() => {\n    const param = new URLSearchParams(window.location.search).get(\"scoutTheme\");\n    const theme =\n      param || (window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\");\n    document.documentElement.setAttribute(\"data-theme\", theme);\n  })();",
+    "light_variables": {
+      "--cp-bg": "#f7f4ef",
+      "--cp-bg-elevated": "#fcfbf8",
+      "--cp-surface": "#ffffff",
+      "--cp-surface-soft": "#f5f5f5",
+      "--cp-border": "#dedede",
+      "--cp-border-strong": "#919191",
+      "--cp-text": "#242424",
+      "--cp-text-muted": "#5c5c5c",
+      "--cp-text-soft": "#6f6f6f",
+      "--cp-accent": "#b11f4b",
+      "--cp-accent-hover": "#9a1a41",
+      "--cp-accent-soft": "rgba(177, 31, 75, 0.08)",
+      "--cp-accent-fg": "#ffffff",
+      "--cp-success": "#16a34a",
+      "--cp-danger": "#dc2626",
+      "--cp-warning": "#f59e0b",
+      "--cp-link": "#0078d4",
+      "--cp-shadow": "0 18px 48px rgba(0, 0, 0, 0.12)",
+      "--cp-overlay": "rgba(255, 255, 255, 0.8)",
+      "--cp-panel": "rgba(255, 255, 255, 0.86)",
+      "--cp-panel-strong": "rgba(255, 255, 255, 0.96)",
+      "--cp-sheen": "rgba(255, 255, 255, 0.55)",
+      "--cp-highlight": "rgba(177, 31, 75, 0.12)"
+    },
+    "dark_variables": {
+      "--cp-bg": "#3d3b3a",
+      "--cp-bg-elevated": "#343231",
+      "--cp-surface": "#292929",
+      "--cp-surface-soft": "#2e2e2e",
+      "--cp-border": "#474747",
+      "--cp-border-strong": "#5f5f5f",
+      "--cp-text": "#dedede",
+      "--cp-text-muted": "#919191",
+      "--cp-text-soft": "#b0b0b0",
+      "--cp-accent": "#fd8ea1",
+      "--cp-accent-hover": "#fb7b91",
+      "--cp-accent-soft": "rgba(253, 142, 161, 0.14)",
+      "--cp-accent-fg": "#1a1a1a",
+      "--cp-success": "#4ade80",
+      "--cp-danger": "#f87171",
+      "--cp-warning": "#fbbf24",
+      "--cp-link": "#4da6ff",
+      "--cp-shadow": "0 18px 48px rgba(0, 0, 0, 0.32)",
+      "--cp-overlay": "rgba(41, 41, 41, 0.88)",
+      "--cp-panel": "rgba(41, 41, 41, 0.72)",
+      "--cp-panel-strong": "rgba(41, 41, 41, 0.96)",
+      "--cp-sheen": "rgba(255, 255, 255, 0.04)",
+      "--cp-highlight": "rgba(253, 142, 161, 0.12)"
+    },
+    "sans_fonts": [
+      "Segoe UI",
+      "Aptos"
+    ],
+    "mono_font": "Consolas",
+    "topbar_links": [
+      {
+        "label": "Library",
+        "href": "library.html"
+      },
+      {
+        "label": "Production Guide",
+        "href": "docs/rapp-guide.html"
+      },
+      {
+        "label": "Workshop settings",
+        "href": "solutions/_shared/workshop-settings.html"
+      },
+      {
+        "label": "Metrics",
+        "href": "metrics.html",
+        "current": true
+      },
+      {
+        "label": "Report an issue",
+        "href_prefix": "https://github.com/microsoft/aibast-agents-library/issues/new"
+      }
+    ],
+    "feedback_marker": "aibast-workshop-feedback:v1",
+    "feedback_schema": "aibast-workshop-feedback/1.0"
+  }
+}
