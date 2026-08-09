@@ -680,6 +680,17 @@ def collect_resources(ctx: JourneyContext) -> list[Resource]:
         )
     add_resource(resources, seen, ctx, "deployment-recipe", "Deployment recipe", ctx.package / "deployment.json", "Easy-mode deployment contract")
     add_resource(resources, seen, ctx, "field-guide", "Customer field guide", ctx.package / "FIELD-GUIDE.md", "Facilitation, evidence boundaries, gates, and recovery", generated=True)
+    visual_audit = ctx.package / "VISUAL-EVIDENCE-AUDIT.md"
+    if visual_audit.exists():
+        add_resource(
+            resources,
+            seen,
+            ctx,
+            "visual-evidence-audit",
+            "Visual evidence audit",
+            visual_audit,
+            "Browser-reviewed per-screenshot findings and remediation requirements",
+        )
     add_resource(
         resources,
         seen,
@@ -1688,6 +1699,11 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         if studio_url
         else '<span class="button" aria-disabled="true">Copilot Studio link unavailable</span>'
     )
+    visual_audit_link = (
+        '<a class="button" href="VISUAL-EVIDENCE-AUDIT.md">Visual evidence audit</a>'
+        if (ctx.package / "VISUAL-EVIDENCE-AUDIT.md").exists()
+        else ""
+    )
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -1879,6 +1895,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         <div class="facilitator-actions">
           <a class="button" href="FIELD-GUIDE.md">Field guide</a>
           <a class="button" href="evals/transcripts.json">Locked evidence</a>
+          {visual_audit_link}
           <a class="button" href="export-manifest.json">Audit manifest</a>
           <a class="button" href="exports/{html.escape(ctx.slug)}-source.zip">Portable bundle</a>
           {workshop_agent_link}
@@ -2032,6 +2049,14 @@ def readme_block(ctx: JourneyContext, resources: list[Resource]) -> str:
         ("Manual evidence", f"`solutions/{ctx.slug}/evals/manual-build-evidence.json`"),
         ("Manual browserfilm", f"`solutions/{ctx.slug}/screenshots/manual/browserfilm.json`"),
     ]
+    if (ctx.package / "VISUAL-EVIDENCE-AUDIT.md").exists():
+        rows.insert(
+            1,
+            (
+                "Visual evidence audit",
+                f"`solutions/{ctx.slug}/VISUAL-EVIDENCE-AUDIT.md`",
+            ),
+        )
     table = "\n".join(f"| {label} | {path} |" for label, path in rows)
     status = (
         f"**Scaffold status:** {ready} resources ready; {pending} pending. "

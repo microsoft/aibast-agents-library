@@ -293,6 +293,9 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
         encoding="utf-8"
     )
     quest = (package / "quest.html").read_text(encoding="utf-8")
+    visual_audit = (package / "VISUAL-EVIDENCE-AUDIT.md").read_text(
+        encoding="utf-8"
+    )
     cases = read_json(ROOT / "tests/demo_cases/time-entry-billing.json")[
         "cases"
     ]
@@ -356,6 +359,7 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     assert "Draft · published false" in quest
     assert "Final expected verdict" in quest
     assert "Troubleshooting" in quest
+    assert "Visual evidence audit" in quest
     for case in cases:
         assert case["id"] in quest
         assert case["prompt"] in quest
@@ -364,6 +368,16 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
         for value in case["must_not_include"]:
             assert value in quest
     assert "Raw resources" not in quest
+    for marker in (
+        "**Needs remediation.**",
+        "| Pass | 4 |",
+        "| Partial | 15 |",
+        "| Fail | 7 |",
+        "Nine Hard-mode screenshots are byte-for-byte identical",
+        "grounding files are not present",
+        "Do not present the current Hard-mode run as proven end to end",
+    ):
+        assert marker in visual_audit
 
 
 def test_contract_screen_never_passes_missing_evidence():
