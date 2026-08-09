@@ -1,20 +1,20 @@
 {
   "schema": "aibast-solution-export/1.0",
   "solution": "@aibast-agents-library/time-entry-billing",
-  "raw_base": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/",
+  "raw_base": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/",
   "github_folder": "https://github.com/microsoft/aibast-agents-library/tree/main/solutions/time-entry-billing",
   "evidence_boundary": "Synthetic solution evidence only. Qualitative workflow proof is not a customer KPI, measured production result, or publication approval.",
   "bundle": {
     "label": "Complete Time Entry and Billing Agent source bundle",
     "path": "solutions/time-entry-billing/exports/time-entry-billing-source.zip",
-    "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/exports/time-entry-billing-source.zip"
+    "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/exports/time-entry-billing-source.zip"
   },
   "files": [
     {
       "id": "portable-agent",
       "label": "Portable source agent",
       "path": "agents/@aibast-agents-library/professional_services_stacks/time_entry_billing_stack/time_entry_billing_agent.py",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/agents/@aibast-agents-library/professional_services_stacks/time_entry_billing_stack/time_entry_billing_agent.py",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/professional_services_stacks/time_entry_billing_stack/time_entry_billing_agent.py",
       "use": "Local Brainstem runtime and production-logic reference",
       "status": "ready"
     },
@@ -22,7 +22,7 @@
       "id": "deployment-recipe",
       "label": "Deployment recipe",
       "path": "solutions/time-entry-billing/deployment.json",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/deployment.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/deployment.json",
       "use": "Easy-mode deployment contract",
       "status": "ready"
     },
@@ -30,7 +30,7 @@
       "id": "field-guide",
       "label": "Customer field guide",
       "path": "solutions/time-entry-billing/field-guide.html",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/field-guide.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/field-guide.html",
       "use": "Styled facilitation, evidence boundaries, gates, and recovery",
       "status": "ready"
     },
@@ -38,7 +38,7 @@
       "id": "field-guide-source",
       "label": "Field guide source",
       "path": "solutions/time-entry-billing/FIELD-GUIDE.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/FIELD-GUIDE.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/FIELD-GUIDE.md",
       "use": "Markdown source retained for audit and export",
       "status": "ready"
     },
@@ -46,7 +46,7 @@
       "id": "visual-evidence-audit",
       "label": "Visual evidence audit",
       "path": "solutions/time-entry-billing/VISUAL-EVIDENCE-AUDIT.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/VISUAL-EVIDENCE-AUDIT.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/VISUAL-EVIDENCE-AUDIT.md",
       "use": "Browser-reviewed per-screenshot findings and remediation requirements",
       "status": "ready"
     },
@@ -54,7 +54,7 @@
       "id": "easy-personless-guide",
       "label": "Personless Easy-mode guide",
       "path": "solutions/time-entry-billing/EASY-MODE-PERSONLESS.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/EASY-MODE-PERSONLESS.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/EASY-MODE-PERSONLESS.md",
       "use": "Brainstem lane skill attachment, two-message workshop, and engine loop",
       "status": "ready"
     },
@@ -62,7 +62,7 @@
       "id": "easy-copilot-chat-prompts",
       "label": "Copilot-only Easy-mode comparison",
       "path": "solutions/time-entry-billing/EASY-MODE-COPILOT-CHAT.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/EASY-MODE-COPILOT-CHAT.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/EASY-MODE-COPILOT-CHAT.md",
       "use": "Copilot-only lane skill attachment and the same two workshop messages",
       "status": "ready"
     },
@@ -70,7 +70,7 @@
       "id": "easy-mode-brainstem-skill",
       "label": "Brainstem Easy Mode skill",
       "path": "skills/aibast-easy-mode-brainstem/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/skills/aibast-easy-mode-brainstem/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-brainstem/SKILL.md",
       "use": "Download-and-drag harness that defaults workshop execution to Brainstem",
       "status": "ready"
     },
@@ -78,7 +78,7 @@
       "id": "easy-mode-copilot-skill",
       "label": "Copilot-only Easy Mode skill",
       "path": "skills/aibast-easy-mode-copilot/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/skills/aibast-easy-mode-copilot/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-copilot/SKILL.md",
       "use": "Download-and-drag harness that runs the workshop directly in GitHub Copilot",
       "status": "ready"
     },
@@ -86,7 +86,7 @@
       "id": "generic-workshop-agent",
       "label": "Generic AIBAST Workshop agent",
       "path": "agents/@aibast-agents-library/templates/workshop_agent.py",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/agents/@aibast-agents-library/templates/workshop_agent.py",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/workshop_agent.py",
       "use": "Registry-driven Brainstem engine shared by every packaged solution",
       "status": "ready"
     },
@@ -94,7 +94,7 @@
       "id": "manual-instructions",
       "label": "Manual global instructions",
       "path": "solutions/time-entry-billing/manual/GLOBAL-INSTRUCTIONS.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/manual/GLOBAL-INSTRUCTIONS.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/manual/GLOBAL-INSTRUCTIONS.md",
       "use": "Reviewed instructions for literal browser construction",
       "status": "ready"
     },
@@ -102,7 +102,7 @@
       "id": "settings",
       "label": "Copilot Studio settings",
       "path": "solutions/time-entry-billing/copilot-studio/settings.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/copilot-studio/settings.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/copilot-studio/settings.mcs.yml",
       "use": "Easy-mode agent settings and instruction copy",
       "status": "ready"
     },
@@ -110,7 +110,7 @@
       "id": "agent-sync",
       "label": "Copilot Studio component manifest",
       "path": "solutions/time-entry-billing/copilot-studio/agent.sync.yaml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/copilot-studio/agent.sync.yaml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/copilot-studio/agent.sync.yaml",
       "use": "Easy-mode component synchronization",
       "status": "ready"
     },
@@ -118,7 +118,7 @@
       "id": "knowledge-aibast-billing-rules-and-disputes",
       "label": "Aibast Billing Rules And Disputes",
       "path": "solutions/time-entry-billing/manual/knowledge/aibast_billing-rules-and-disputes.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/manual/knowledge/aibast_billing-rules-and-disputes.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/manual/knowledge/aibast_billing-rules-and-disputes.md",
       "use": "Manual knowledge upload",
       "status": "ready"
     },
@@ -126,7 +126,7 @@
       "id": "knowledge-aibast-billing-synthetic-ledger",
       "label": "Aibast Billing Synthetic Ledger",
       "path": "solutions/time-entry-billing/manual/knowledge/aibast_billing-synthetic-ledger.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/manual/knowledge/aibast_billing-synthetic-ledger.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/manual/knowledge/aibast_billing-synthetic-ledger.md",
       "use": "Manual knowledge upload",
       "status": "ready"
     },
@@ -134,7 +134,7 @@
       "id": "skill-billing-summary",
       "label": "Manual skill: billing summary",
       "path": "solutions/time-entry-billing/manual/skills/billing-summary/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/manual/skills/billing-summary/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/manual/skills/billing-summary/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -142,7 +142,7 @@
       "id": "skill-dispute-resolution",
       "label": "Manual skill: dispute resolution",
       "path": "solutions/time-entry-billing/manual/skills/dispute-resolution/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/manual/skills/dispute-resolution/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/manual/skills/dispute-resolution/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -150,7 +150,7 @@
       "id": "skill-invoice-preparation",
       "label": "Manual skill: invoice preparation",
       "path": "solutions/time-entry-billing/manual/skills/invoice-preparation/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/manual/skills/invoice-preparation/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/manual/skills/invoice-preparation/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -158,7 +158,7 @@
       "id": "skill-time-entry-audit",
       "label": "Manual skill: time entry audit",
       "path": "solutions/time-entry-billing/manual/skills/time-entry-audit/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/manual/skills/time-entry-audit/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/manual/skills/time-entry-audit/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -166,7 +166,7 @@
       "id": "skill-unbilled-report",
       "label": "Manual skill: unbilled report",
       "path": "solutions/time-entry-billing/manual/skills/unbilled-report/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/manual/skills/unbilled-report/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/manual/skills/unbilled-report/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -174,7 +174,7 @@
       "id": "easy-knowledge-aibast-billing-rules-and-disputes",
       "label": "Aibast Billing Rules And Disputes",
       "path": "solutions/time-entry-billing/copilot-studio/capabilities/knowledge/files/aibast_billing-rules-and-disputes.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/copilot-studio/capabilities/knowledge/files/aibast_billing-rules-and-disputes.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/copilot-studio/capabilities/knowledge/files/aibast_billing-rules-and-disputes.md",
       "use": "Copilot Studio knowledge source or synchronization metadata",
       "status": "ready"
     },
@@ -182,7 +182,7 @@
       "id": "easy-knowledge-aibast-billing-rules-and-disputes-md-mcs",
       "label": "Aibast Billing Rules And Disputes.Md.Mcs",
       "path": "solutions/time-entry-billing/copilot-studio/capabilities/knowledge/files/aibast_billing-rules-and-disputes.md.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/copilot-studio/capabilities/knowledge/files/aibast_billing-rules-and-disputes.md.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/copilot-studio/capabilities/knowledge/files/aibast_billing-rules-and-disputes.md.mcs.yml",
       "use": "Copilot Studio knowledge source or synchronization metadata",
       "status": "ready"
     },
@@ -190,7 +190,7 @@
       "id": "easy-knowledge-aibast-billing-synthetic-ledger",
       "label": "Aibast Billing Synthetic Ledger",
       "path": "solutions/time-entry-billing/copilot-studio/capabilities/knowledge/files/aibast_billing-synthetic-ledger.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/copilot-studio/capabilities/knowledge/files/aibast_billing-synthetic-ledger.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/copilot-studio/capabilities/knowledge/files/aibast_billing-synthetic-ledger.md",
       "use": "Copilot Studio knowledge source or synchronization metadata",
       "status": "ready"
     },
@@ -198,7 +198,7 @@
       "id": "easy-knowledge-aibast-billing-synthetic-ledger-md-mcs",
       "label": "Aibast Billing Synthetic Ledger.Md.Mcs",
       "path": "solutions/time-entry-billing/copilot-studio/capabilities/knowledge/files/aibast_billing-synthetic-ledger.md.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/copilot-studio/capabilities/knowledge/files/aibast_billing-synthetic-ledger.md.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/copilot-studio/capabilities/knowledge/files/aibast_billing-synthetic-ledger.md.mcs.yml",
       "use": "Copilot Studio knowledge source or synchronization metadata",
       "status": "ready"
     },
@@ -206,7 +206,7 @@
       "id": "easy-skill-aibast-approval-gated-invoice-support-mcs",
       "label": "Aibast Approval Gated Invoice Support.Mcs",
       "path": "solutions/time-entry-billing/copilot-studio/behaviors/aibast_approval-gated-invoice-support.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/copilot-studio/behaviors/aibast_approval-gated-invoice-support.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/copilot-studio/behaviors/aibast_approval-gated-invoice-support.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -214,7 +214,7 @@
       "id": "easy-skill-aibast-billing-close-summary-mcs",
       "label": "Aibast Billing Close Summary.Mcs",
       "path": "solutions/time-entry-billing/copilot-studio/behaviors/aibast_billing-close-summary.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/copilot-studio/behaviors/aibast_billing-close-summary.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/copilot-studio/behaviors/aibast_billing-close-summary.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -222,7 +222,7 @@
       "id": "easy-skill-aibast-disputed-hours-evidence-brief-mcs",
       "label": "Aibast Disputed Hours Evidence Brief.Mcs",
       "path": "solutions/time-entry-billing/copilot-studio/behaviors/aibast_disputed-hours-evidence-brief.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/copilot-studio/behaviors/aibast_disputed-hours-evidence-brief.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/copilot-studio/behaviors/aibast_disputed-hours-evidence-brief.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -230,7 +230,7 @@
       "id": "easy-skill-aibast-month-end-billing-blockers-mcs",
       "label": "Aibast Month End Billing Blockers.Mcs",
       "path": "solutions/time-entry-billing/copilot-studio/behaviors/aibast_month-end-billing-blockers.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/copilot-studio/behaviors/aibast_month-end-billing-blockers.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/copilot-studio/behaviors/aibast_month-end-billing-blockers.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -238,7 +238,7 @@
       "id": "easy-skill-aibast-time-entry-audit-mcs",
       "label": "Aibast Time Entry Audit.Mcs",
       "path": "solutions/time-entry-billing/copilot-studio/behaviors/aibast_time-entry-audit.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/copilot-studio/behaviors/aibast_time-entry-audit.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/copilot-studio/behaviors/aibast_time-entry-audit.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -246,7 +246,7 @@
       "id": "easy-evidence-copilot-studio-preview-evidence",
       "label": "Copilot Studio Preview Evidence",
       "path": "solutions/time-entry-billing/evals/copilot-studio-preview-evidence.json",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/evals/copilot-studio-preview-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/evals/copilot-studio-preview-evidence.json",
       "use": "Easy-mode deployment or Preview evidence",
       "status": "ready"
     },
@@ -254,7 +254,7 @@
       "id": "manual-evidence",
       "label": "Manual build evidence",
       "path": "solutions/time-entry-billing/evals/manual-build-evidence.json",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/evals/manual-build-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/evals/manual-build-evidence.json",
       "use": "Manual identity, inventory, Preview, and Draft-gate evidence",
       "status": "ready"
     },
@@ -262,7 +262,7 @@
       "id": "onepager-map",
       "label": "Onepager Map",
       "path": "solutions/time-entry-billing/evals/onepager-map.json",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/evals/onepager-map.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/evals/onepager-map.json",
       "use": "Advertised-promise mapping evidence",
       "status": "ready"
     },
@@ -270,7 +270,7 @@
       "id": "brainstem-transcripts",
       "label": "Isolated Brainstem transcripts",
       "path": "solutions/time-entry-billing/evals/transcripts.json",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/evals/transcripts.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/evals/transcripts.json",
       "use": "Canonical source-agent acceptance evidence",
       "status": "ready"
     },
@@ -278,7 +278,7 @@
       "id": "easy-evidence-visual-checkpoints",
       "label": "Visual Checkpoints",
       "path": "solutions/time-entry-billing/evals/visual-checkpoints.json",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/evals/visual-checkpoints.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/evals/visual-checkpoints.json",
       "use": "Easy-mode deployment or Preview evidence",
       "status": "ready"
     },
@@ -286,7 +286,7 @@
       "id": "annotated-evidence-01-teb-01",
       "label": "Annotated visual checkpoint: easy-teb-01",
       "path": "solutions/time-entry-billing/screenshots/assisted/annotated/01-teb-01.png",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/assisted/annotated/01-teb-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/assisted/annotated/01-teb-01.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -294,7 +294,7 @@
       "id": "annotated-evidence-02-teb-02",
       "label": "Annotated visual checkpoint: easy-teb-02",
       "path": "solutions/time-entry-billing/screenshots/assisted/annotated/02-teb-02.png",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/assisted/annotated/02-teb-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/assisted/annotated/02-teb-02.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -302,7 +302,7 @@
       "id": "annotated-evidence-03-teb-03",
       "label": "Annotated visual checkpoint: easy-teb-03",
       "path": "solutions/time-entry-billing/screenshots/assisted/annotated/03-teb-03.png",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/assisted/annotated/03-teb-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/assisted/annotated/03-teb-03.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -310,7 +310,7 @@
       "id": "annotated-evidence-04-teb-04",
       "label": "Annotated visual checkpoint: easy-teb-04",
       "path": "solutions/time-entry-billing/screenshots/assisted/annotated/04-teb-04.png",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/assisted/annotated/04-teb-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/assisted/annotated/04-teb-04.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -318,7 +318,7 @@
       "id": "annotated-evidence-01-create-blank-agent",
       "label": "Annotated visual checkpoint: hard-step-01",
       "path": "solutions/time-entry-billing/screenshots/manual/annotated/01-create-blank-agent.png",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/annotated/01-create-blank-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/annotated/01-create-blank-agent.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -326,7 +326,7 @@
       "id": "annotated-evidence-02-name-agent",
       "label": "Annotated visual checkpoint: hard-step-02",
       "path": "solutions/time-entry-billing/screenshots/manual/annotated/02-name-agent.png",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/annotated/02-name-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/annotated/02-name-agent.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -334,7 +334,7 @@
       "id": "annotated-evidence-03-enter-instructions",
       "label": "Annotated visual checkpoint: hard-step-03",
       "path": "solutions/time-entry-billing/screenshots/manual/annotated/03-enter-instructions.png",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/annotated/03-enter-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/annotated/03-enter-instructions.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -342,7 +342,7 @@
       "id": "annotated-evidence-04-save-instructions",
       "label": "Annotated visual checkpoint: hard-step-04",
       "path": "solutions/time-entry-billing/screenshots/manual/annotated/04-save-instructions.png",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/annotated/04-save-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/annotated/04-save-instructions.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -350,7 +350,7 @@
       "id": "annotated-evidence-05-remove-web-search",
       "label": "Annotated visual checkpoint: hard-step-05",
       "path": "solutions/time-entry-billing/screenshots/manual/annotated/05-remove-web-search.png",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/annotated/05-remove-web-search.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/annotated/05-remove-web-search.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -358,7 +358,7 @@
       "id": "annotated-evidence-08-add-billing-summary",
       "label": "Annotated visual checkpoint: hard-step-08",
       "path": "solutions/time-entry-billing/screenshots/manual/annotated/08-add-billing-summary.png",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/annotated/08-add-billing-summary.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/annotated/08-add-billing-summary.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -366,7 +366,7 @@
       "id": "annotated-evidence-09-add-dispute-resolution",
       "label": "Annotated visual checkpoint: hard-step-09",
       "path": "solutions/time-entry-billing/screenshots/manual/annotated/09-add-dispute-resolution.png",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/annotated/09-add-dispute-resolution.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/annotated/09-add-dispute-resolution.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -374,7 +374,7 @@
       "id": "annotated-evidence-10-add-invoice-preparation",
       "label": "Annotated visual checkpoint: hard-step-10",
       "path": "solutions/time-entry-billing/screenshots/manual/annotated/10-add-invoice-preparation.png",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/annotated/10-add-invoice-preparation.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/annotated/10-add-invoice-preparation.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -382,7 +382,7 @@
       "id": "annotated-evidence-11-add-time-entry-audit",
       "label": "Annotated visual checkpoint: hard-step-11",
       "path": "solutions/time-entry-billing/screenshots/manual/annotated/11-add-time-entry-audit.png",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/annotated/11-add-time-entry-audit.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/annotated/11-add-time-entry-audit.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -390,7 +390,7 @@
       "id": "annotated-evidence-12-add-unbilled-report",
       "label": "Annotated visual checkpoint: hard-step-12",
       "path": "solutions/time-entry-billing/screenshots/manual/annotated/12-add-unbilled-report.png",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/annotated/12-add-unbilled-report.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/annotated/12-add-unbilled-report.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -398,7 +398,7 @@
       "id": "annotated-evidence-13-review-inventory",
       "label": "Annotated visual checkpoint: hard-step-13",
       "path": "solutions/time-entry-billing/screenshots/manual/annotated/13-review-inventory.png",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/annotated/13-review-inventory.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/annotated/13-review-inventory.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -406,7 +406,7 @@
       "id": "annotated-evidence-14-open-preview",
       "label": "Annotated visual checkpoint: hard-step-14",
       "path": "solutions/time-entry-billing/screenshots/manual/annotated/14-open-preview.png",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/annotated/14-open-preview.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/annotated/14-open-preview.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -414,7 +414,7 @@
       "id": "annotated-evidence-15-teb-01",
       "label": "Annotated visual checkpoint: hard-teb-01",
       "path": "solutions/time-entry-billing/screenshots/manual/annotated/15-teb-01.png",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/annotated/15-teb-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/annotated/15-teb-01.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -422,7 +422,7 @@
       "id": "annotated-evidence-19-teb-05",
       "label": "Annotated visual checkpoint: hard-teb-05",
       "path": "solutions/time-entry-billing/screenshots/manual/annotated/19-teb-05.png",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/annotated/19-teb-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/annotated/19-teb-05.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -430,7 +430,7 @@
       "id": "annotated-evidence-20-confirm-draft",
       "label": "Annotated visual checkpoint: hard-draft",
       "path": "solutions/time-entry-billing/screenshots/manual/annotated/20-confirm-draft.png",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/annotated/20-confirm-draft.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/annotated/20-confirm-draft.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -438,7 +438,7 @@
       "id": "manual-browserfilm-manifest",
       "label": "Manual browserfilm manifest",
       "path": "solutions/time-entry-billing/screenshots/manual/browserfilm.json",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/browserfilm.json",
       "use": "Ordered literal-browser evidence frames",
       "status": "ready"
     },
@@ -446,7 +446,7 @@
       "id": "manual-frame-01",
       "label": "Create a blank Copilot Studio agent",
       "path": "solutions/time-entry-billing/screenshots/manual/01-create-blank-agent.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/01-create-blank-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/01-create-blank-agent.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -454,7 +454,7 @@
       "id": "manual-frame-02",
       "label": "Name Time Entry and Billing Manual",
       "path": "solutions/time-entry-billing/screenshots/manual/02-name-agent.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/02-name-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/02-name-agent.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -462,7 +462,7 @@
       "id": "manual-frame-03",
       "label": "Enter the reviewed global instructions",
       "path": "solutions/time-entry-billing/screenshots/manual/03-enter-instructions.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/03-enter-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/03-enter-instructions.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -470,7 +470,7 @@
       "id": "manual-frame-04",
       "label": "Save the instruction policy",
       "path": "solutions/time-entry-billing/screenshots/manual/04-save-instructions.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/04-save-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/04-save-instructions.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -478,7 +478,7 @@
       "id": "manual-frame-05",
       "label": "Remove default web search",
       "path": "solutions/time-entry-billing/screenshots/manual/05-remove-web-search.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/05-remove-web-search.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/05-remove-web-search.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -486,7 +486,7 @@
       "id": "manual-frame-06",
       "label": "Add knowledge: aibast_billing-rules-and-disputes.md",
       "path": "solutions/time-entry-billing/screenshots/manual/06-add-aibast-billing-rules-and-disputes.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/06-add-aibast-billing-rules-and-disputes.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/06-add-aibast-billing-rules-and-disputes.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -494,7 +494,7 @@
       "id": "manual-frame-07",
       "label": "Add knowledge: aibast_billing-synthetic-ledger.md",
       "path": "solutions/time-entry-billing/screenshots/manual/07-add-aibast-billing-synthetic-ledger.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/07-add-aibast-billing-synthetic-ledger.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/07-add-aibast-billing-synthetic-ledger.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -502,7 +502,7 @@
       "id": "manual-frame-08",
       "label": "Add skill: billing-summary",
       "path": "solutions/time-entry-billing/screenshots/manual/08-add-billing-summary.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/08-add-billing-summary.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/08-add-billing-summary.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -510,7 +510,7 @@
       "id": "manual-frame-09",
       "label": "Add skill: dispute-resolution",
       "path": "solutions/time-entry-billing/screenshots/manual/09-add-dispute-resolution.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/09-add-dispute-resolution.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/09-add-dispute-resolution.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -518,7 +518,7 @@
       "id": "manual-frame-10",
       "label": "Add skill: invoice-preparation",
       "path": "solutions/time-entry-billing/screenshots/manual/10-add-invoice-preparation.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/10-add-invoice-preparation.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/10-add-invoice-preparation.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -526,7 +526,7 @@
       "id": "manual-frame-11",
       "label": "Add skill: time-entry-audit",
       "path": "solutions/time-entry-billing/screenshots/manual/11-add-time-entry-audit.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/11-add-time-entry-audit.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/11-add-time-entry-audit.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -534,7 +534,7 @@
       "id": "manual-frame-12",
       "label": "Add skill: unbilled-report",
       "path": "solutions/time-entry-billing/screenshots/manual/12-add-unbilled-report.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/12-add-unbilled-report.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/12-add-unbilled-report.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -542,7 +542,7 @@
       "id": "manual-frame-13",
       "label": "Review model, skills, knowledge, and safety boundaries",
       "path": "solutions/time-entry-billing/screenshots/manual/13-review-inventory.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/13-review-inventory.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/13-review-inventory.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -550,7 +550,7 @@
       "id": "manual-frame-14",
       "label": "Open a fresh Preview conversation",
       "path": "solutions/time-entry-billing/screenshots/manual/14-open-preview.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/14-open-preview.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/14-open-preview.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -558,7 +558,7 @@
       "id": "manual-frame-15",
       "label": "Pass TEB-01: Billing Manager",
       "path": "solutions/time-entry-billing/screenshots/manual/15-teb-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/15-teb-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/15-teb-01.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -566,7 +566,7 @@
       "id": "manual-frame-16",
       "label": "Pass TEB-02: Finance Vice President",
       "path": "solutions/time-entry-billing/screenshots/manual/16-teb-02.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/16-teb-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/16-teb-02.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -574,7 +574,7 @@
       "id": "manual-frame-17",
       "label": "Pass TEB-03: Billing Compliance Lead",
       "path": "solutions/time-entry-billing/screenshots/manual/17-teb-03.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/17-teb-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/17-teb-03.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -582,7 +582,7 @@
       "id": "manual-frame-18",
       "label": "Pass TEB-04: Billing Manager",
       "path": "solutions/time-entry-billing/screenshots/manual/18-teb-04.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/18-teb-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/18-teb-04.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -590,7 +590,7 @@
       "id": "manual-frame-19",
       "label": "Pass TEB-05: Client Finance Partner",
       "path": "solutions/time-entry-billing/screenshots/manual/19-teb-05.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/19-teb-05.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/19-teb-05.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -598,7 +598,7 @@
       "id": "manual-frame-20",
       "label": "Confirm Draft and stop before publish",
       "path": "solutions/time-entry-billing/screenshots/manual/20-confirm-draft.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/20-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/20-confirm-draft.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -606,7 +606,7 @@
       "id": "manual-browserfilm",
       "label": "Manual browserfilm",
       "path": "solutions/time-entry-billing/screenshots/manual/manual-build-walkthrough.gif",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/manual-build-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/manual-build-walkthrough.gif",
       "use": "Animated manual walkthrough",
       "status": "ready"
     },
@@ -614,7 +614,7 @@
       "id": "manual-contact-sheet",
       "label": "Manual contact sheet",
       "path": "solutions/time-entry-billing/screenshots/manual/manual-build-contact-sheet.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/manual-build-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/manual-build-contact-sheet.jpg",
       "use": "Static manual evidence overview",
       "status": "ready"
     },
@@ -622,7 +622,7 @@
       "id": "assisted-browserfilm-manifest",
       "label": "Copilot-assisted browserfilm manifest",
       "path": "solutions/time-entry-billing/screenshots/assisted/browserfilm.json",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/assisted/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/assisted/browserfilm.json",
       "use": "Ordered Easy-mode evidence frames",
       "status": "ready"
     },
@@ -630,7 +630,7 @@
       "id": "assisted-browserfilm",
       "label": "Copilot-assisted browserfilm",
       "path": "solutions/time-entry-billing/screenshots/assisted/copilot-assisted-walkthrough.gif",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/assisted/copilot-assisted-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/assisted/copilot-assisted-walkthrough.gif",
       "use": "Animated Easy-mode walkthrough",
       "status": "ready"
     },
@@ -638,7 +638,7 @@
       "id": "assisted-contact-sheet",
       "label": "Copilot-assisted contact sheet",
       "path": "solutions/time-entry-billing/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
       "use": "Static Easy-mode evidence overview",
       "status": "ready"
     },
@@ -646,7 +646,7 @@
       "id": "assisted-frame-01",
       "label": "Pass TEB-01: Billing Manager",
       "path": "solutions/time-entry-billing/screenshots/assisted/01-teb-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/assisted/01-teb-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/assisted/01-teb-01.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -654,7 +654,7 @@
       "id": "assisted-frame-02",
       "label": "Pass TEB-02: Finance Vice President",
       "path": "solutions/time-entry-billing/screenshots/assisted/02-teb-02.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/assisted/02-teb-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/assisted/02-teb-02.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -662,7 +662,7 @@
       "id": "assisted-frame-03",
       "label": "Pass TEB-03: Billing Compliance Lead",
       "path": "solutions/time-entry-billing/screenshots/assisted/03-teb-03.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/assisted/03-teb-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/assisted/03-teb-03.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -670,7 +670,7 @@
       "id": "assisted-frame-04",
       "label": "Pass TEB-04: Billing Manager",
       "path": "solutions/time-entry-billing/screenshots/assisted/04-teb-04.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/assisted/04-teb-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/assisted/04-teb-04.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -678,7 +678,7 @@
       "id": "assisted-frame-05",
       "label": "Pass TEB-05: Client Finance Partner",
       "path": "solutions/time-entry-billing/screenshots/assisted/05-teb-05.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/assisted/05-teb-05.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/assisted/05-teb-05.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -686,7 +686,7 @@
       "id": "assisted-frame-06",
       "label": "Confirm the validated agent remains Draft",
       "path": "solutions/time-entry-billing/screenshots/assisted/06-confirm-draft.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/assisted/06-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/assisted/06-confirm-draft.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -694,7 +694,7 @@
       "id": "workshop-settings",
       "label": "Global workshop settings",
       "path": "solutions/_shared/workshop-settings.html",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/_shared/workshop-settings.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/_shared/workshop-settings.html",
       "use": "Site-wide persisted Easy-mode harness preference",
       "status": "ready"
     },
@@ -702,7 +702,7 @@
       "id": "evidence-report",
       "label": "Styled evidence report",
       "path": "solutions/time-entry-billing/evidence-report.html",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/evidence-report.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/evidence-report.html",
       "use": "Learner-safe HTML summary of deterministic and visual evidence",
       "status": "ready"
     },
@@ -710,7 +710,7 @@
       "id": "quest",
       "label": "Guided field quest",
       "path": "solutions/time-entry-billing/quest.html",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/quest.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/quest.html",
       "use": "Resumable Easy/Hard customer journey",
       "status": "ready"
     },
@@ -718,7 +718,7 @@
       "id": "manual-tutorial",
       "label": "Manual browser tutorial",
       "path": "solutions/time-entry-billing/manual-tutorial.html",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/manual-tutorial.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/manual-tutorial.html",
       "use": "One action per real manual evidence frame",
       "status": "ready"
     },
@@ -726,7 +726,7 @@
       "id": "screenshots-readme",
       "label": "Screenshot evidence README",
       "path": "solutions/time-entry-billing/screenshots/README.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/README.md",
       "use": "Evidence boundary and capture inventory",
       "status": "ready"
     },
@@ -734,7 +734,7 @@
       "id": "manual-screenshots-readme",
       "label": "Manual screenshot README",
       "path": "solutions/time-entry-billing/screenshots/manual/README.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/manual/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/README.md",
       "use": "Manual frame and film inventory",
       "status": "ready"
     },
@@ -742,7 +742,7 @@
       "id": "exports-readme",
       "label": "Export README",
       "path": "solutions/time-entry-billing/exports/README.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/exports/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/exports/README.md",
       "use": "Bundle build instructions",
       "status": "ready"
     },
@@ -750,7 +750,7 @@
       "id": "assisted-screenshots-readme",
       "label": "Assisted screenshot README",
       "path": "solutions/time-entry-billing/screenshots/assisted/README.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/screenshots/assisted/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/assisted/README.md",
       "use": "Copilot-assisted evidence inventory",
       "status": "ready"
     }

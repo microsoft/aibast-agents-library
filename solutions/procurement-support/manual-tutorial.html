@@ -12,7 +12,10 @@
       document.documentElement.setAttribute("data-theme", theme);
     })();
     (() => {
-      if (new URLSearchParams(window.location.search).get("embedded") === "1") {
+      if (
+        new URLSearchParams(window.location.search).get("embedded") === "1" &&
+        window.parent !== window
+      ) {
         document.documentElement.setAttribute("data-embedded", "true");
       }
     })();
@@ -195,6 +198,7 @@
     .report-button { border-color: var(--cp-accent); color: var(--cp-accent); }
     .feedback-notice { margin-top: 14px; padding: 14px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
     .step footer { display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+    .agi-manual-note { margin-top: 10px; color: var(--cp-text-muted); font-size: 13px; }
     .troubleshooting details { padding: 14px 0; border-bottom: 1px solid var(--cp-border); }
     summary { cursor: pointer; font-weight: 700; }
     html[data-embedded="true"] body { background: var(--cp-bg-elevated); }
@@ -214,6 +218,8 @@
     <aside class="sidebar">
       <strong id="progress-label">0 of 18 complete</strong>
       <div class="progress"><span id="progress-bar"></span></div>
+      <p class="agi-manual-note">Hard-mode progress earns self-paced local Agent Growth &amp; Impact points on this device.</p>
+      <p class="agi-manual-note" id="agi-manual-toast" role="status" aria-live="polite" aria-atomic="true"></p>
       <nav class="toc" aria-label="Tutorial actions"><a href="#step-1">1. Create a blank Copilot Studio agent</a>
 <a href="#step-2">2. Name Discount Finder Manual</a>
 <a href="#step-3">3. Enter the reviewed global instructions</a>
@@ -595,21 +601,228 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
   </div>
   <script>
     (() => {
+
+      const AGI_PROFILE_KEY = "aibast:agi-profile:v1";
+      const AGI_WORKSHOP_SLUG = "procurement-support";
+      const AGI_BADGES = Object.freeze([{"id":"started","label":"Started","points":5},{"id":"local-proof","label":"Local proof","points":15},{"id":"draft-builder","label":"Draft builder","points":20},{"id":"preview-proven","label":"Preview proven","points":25},{"id":"workshop-complete","label":"Workshop complete","points":35},{"id":"hard-mode-complete","label":"Hard mode complete","points":50}]);
+      const AGI_BADGE_IDS = new Set(AGI_BADGES.map((badge) => badge.id));
+
+      function emptyAgiProfile() {
+        return { score: 0, workshops: {}, updatedAt: null };
+      }
+
+      function validAgiTimestamp(value) {
+        return typeof value === "string" && !Number.isNaN(Date.parse(value))
+          ? value
+          : null;
+      }
+
+      function agiCount(value) {
+        return Number.isInteger(value) && value >= 0 ? value : 0;
+      }
+
+      function sanitizeAgiProfile(value) {
+        const clean = emptyAgiProfile();
+        const source =
+          value && typeof value === "object" && !Array.isArray(value) ? value : {};
+        const workshops =
+          source.workshops && typeof source.workshops === "object"
+            ? source.workshops
+            : {};
+        Object.entries(workshops).forEach(([key, rawWorkshop]) => {
+          if (!rawWorkshop || typeof rawWorkshop !== "object") return;
+          const candidate =
+            typeof rawWorkshop.slug === "string" ? rawWorkshop.slug : key;
+          if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(candidate)) return;
+          const rawProgress =
+            rawWorkshop.progress && typeof rawWorkshop.progress === "object"
+              ? rawWorkshop.progress
+              : {};
+          const progress = {
+            easyChecked: agiCount(rawProgress.easyChecked),
+            easyTotal: agiCount(rawProgress.easyTotal),
+            hardChecked: agiCount(rawProgress.hardChecked),
+            hardTotal: agiCount(rawProgress.hardTotal),
+            easyComplete: rawProgress.easyComplete === true,
+            hardComplete: rawProgress.hardComplete === true,
+            updatedAt: validAgiTimestamp(rawProgress.updatedAt),
+          };
+          const achievements = {};
+          const rawAchievements =
+            rawWorkshop.achievements &&
+            typeof rawWorkshop.achievements === "object"
+              ? rawWorkshop.achievements
+              : {};
+          AGI_BADGES.forEach((badge) => {
+            const raw = rawAchievements[badge.id];
+            const earned =
+              raw === true ||
+              (raw && typeof raw === "object" && raw.earned === true);
+            if (earned) {
+              achievements[badge.id] = {
+                earned: true,
+                earnedAt: validAgiTimestamp(raw?.earnedAt),
+              };
+            }
+          });
+          clean.workshops[candidate] = {
+            slug: candidate,
+            mode: rawWorkshop.mode === "hard" ? "hard" : "easy",
+            progress,
+            achievements,
+          };
+        });
+        clean.score = Object.values(clean.workshops).reduce(
+          (total, workshop) =>
+            total +
+            AGI_BADGES.reduce(
+              (subtotal, badge) =>
+                subtotal +
+                (workshop.achievements[badge.id]?.earned ? badge.points : 0),
+              0,
+            ),
+          0,
+        );
+        clean.updatedAt = validAgiTimestamp(source.updatedAt);
+        return clean;
+      }
+
+      function readAgiProfile() {
+        try {
+          return sanitizeAgiProfile(
+            JSON.parse(localStorage.getItem(AGI_PROFILE_KEY) || "{}"),
+          );
+        } catch (_error) {
+          return emptyAgiProfile();
+        }
+      }
+
+      function writeAgiProfile(profile) {
+        const clean = sanitizeAgiProfile(profile);
+        clean.updatedAt = new Date().toISOString();
+        localStorage.setItem(AGI_PROFILE_KEY, JSON.stringify(clean));
+        return clean;
+      }
+
+      function ensureAgiWorkshop(profile, mode = "easy") {
+        if (!profile.workshops[AGI_WORKSHOP_SLUG]) {
+          profile.workshops[AGI_WORKSHOP_SLUG] = {
+            slug: AGI_WORKSHOP_SLUG,
+            mode: mode === "hard" ? "hard" : "easy",
+            progress: {
+              easyChecked: 0,
+              easyTotal: 0,
+              hardChecked: 0,
+              hardTotal: 0,
+              easyComplete: false,
+              hardComplete: false,
+              updatedAt: null,
+            },
+            achievements: {},
+          };
+        }
+        const workshop = profile.workshops[AGI_WORKSHOP_SLUG];
+        workshop.mode = mode === "hard" ? "hard" : "easy";
+        return workshop;
+      }
+
+      function setAgiWorkshopProgress(profile, mode, patch) {
+        const workshop = ensureAgiWorkshop(profile, mode);
+        workshop.progress = {
+          ...workshop.progress,
+          ...patch,
+          updatedAt: new Date().toISOString(),
+        };
+        return writeAgiProfile(profile);
+      }
+
+      function awardAgi(profile, badgeId, mode = "easy") {
+        if (!AGI_BADGE_IDS.has(badgeId)) {
+          return { profile: sanitizeAgiProfile(profile), awarded: null };
+        }
+        const workshop = ensureAgiWorkshop(profile, mode);
+        if (workshop.achievements[badgeId]?.earned) {
+          return { profile: sanitizeAgiProfile(profile), awarded: null };
+        }
+        workshop.achievements[badgeId] = {
+          earned: true,
+          earnedAt: new Date().toISOString(),
+        };
+        return {
+          profile: writeAgiProfile(profile),
+          awarded: AGI_BADGES.find((badge) => badge.id === badgeId),
+        };
+      }
+
+      function aibastSignalIssueUrl() {
+        const pagesOwner = String(globalThis.location?.hostname || "")
+          .match(/^([a-z0-9-]+)\.github\.io$/i)?.[1];
+        const owner = pagesOwner || "microsoft";
+        return new URL(
+          `https://github.com/${owner}/aibast-agents-library/issues/new`,
+        );
+      }
+
       const key = "aibast:procurement-support:manual-progress";
       const boxes = Array.from(document.querySelectorAll(".complete"));
       const label = document.getElementById("progress-label");
       const bar = document.getElementById("progress-bar");
+      const agiToast = document.getElementById("agi-manual-toast");
       let saved = [];
-      try { saved = JSON.parse(localStorage.getItem(key) || "[]"); } catch (_error) { saved = []; }
+      try {
+        const parsed = JSON.parse(localStorage.getItem(key) || "[]");
+        saved = Array.isArray(parsed)
+          ? parsed.filter((step) => typeof step === "string")
+          : [];
+      } catch (_error) {
+        saved = [];
+      }
       boxes.forEach((box) => {
         box.checked = saved.includes(box.dataset.step);
         box.addEventListener("change", update);
       });
       function update() {
         const done = boxes.filter((box) => box.checked).map((box) => box.dataset.step);
+        const complete = boxes.length > 0 && done.length === boxes.length;
         localStorage.setItem(key, JSON.stringify(done));
         label.textContent = `${done.length} of ${boxes.length} complete`;
         bar.style.width = boxes.length ? `${(done.length / boxes.length) * 100}%` : "0%";
+        const embedded = document.documentElement.dataset.embedded === "true";
+        if (!embedded) {
+          let profile = readAgiProfile();
+          profile = setAgiWorkshopProgress(profile, "hard", {
+            hardChecked: done.length,
+            hardTotal: boxes.length,
+            hardComplete: complete,
+          });
+          const badgeIds = [];
+          if (done.length > 0) badgeIds.push("started");
+          if (complete) badgeIds.push("hard-mode-complete");
+          badgeIds.forEach((badgeId) => {
+            const result = awardAgi(profile, badgeId, "hard");
+            profile = result.profile;
+            if (result.awarded && agiToast) {
+              agiToast.textContent =
+                `${result.awarded.label} earned: +${result.awarded.points} local AGI points.`;
+            }
+          });
+        } else {
+          const message = {
+            type: "aibast-agi-hard-progress",
+            workshop: AGI_WORKSHOP_SLUG,
+            mode: "hard",
+            checked: done.length,
+            total: boxes.length,
+            complete,
+          };
+          window.parent.postMessage(message, window.location.origin);
+          if (complete) {
+            window.parent.postMessage(
+              { ...message, type: "aibast-agi-hard-complete" },
+              window.location.origin,
+            );
+          }
+        }
       }
       document.querySelectorAll("[data-copy-target]").forEach((button) => {
         button.addEventListener("click", () => {
@@ -660,7 +873,7 @@ Describe what was inaccurate or missing.
 3. Record the visible Copilot Studio state.
 
 > Workshop feedback report. Do not include credentials, tokens, customer data, or other sensitive information.`;
-          const url = new URL("https://github.com/microsoft/aibast-agents-library/issues/new");
+          const url = aibastSignalIssueUrl();
           url.searchParams.set("title", title);
           url.searchParams.set("body", body);
           window.open(url.toString(), "_blank", "noopener");
@@ -679,6 +892,15 @@ Describe what was inaccurate or missing.
         };
         new ResizeObserver(notifyHeight).observe(document.documentElement);
         window.addEventListener("load", notifyHeight);
+        window.addEventListener("message", (event) => {
+          if (
+            event.origin === window.location.origin &&
+            event.source === window.parent &&
+            event.data?.type === "aibast-agi-request-hard-progress"
+          ) {
+            update();
+          }
+        });
         notifyHeight();
       }
     })();

@@ -1,20 +1,20 @@
 {
   "schema": "aibast-solution-export/1.0",
   "solution": "@aibast-agents-library/building-permit-processing",
-  "raw_base": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/",
+  "raw_base": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/",
   "github_folder": "https://github.com/microsoft/aibast-agents-library/tree/main/solutions/building-permit-processing",
   "evidence_boundary": "Synthetic solution evidence only. Qualitative workflow proof is not a customer KPI, measured production result, or publication approval.",
   "bundle": {
     "label": "Complete Building Permit Processing Agent source bundle",
     "path": "solutions/building-permit-processing/exports/building-permit-processing-source.zip",
-    "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/exports/building-permit-processing-source.zip"
+    "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/exports/building-permit-processing-source.zip"
   },
   "files": [
     {
       "id": "portable-agent",
       "label": "Portable source agent",
       "path": "agents/@aibast-agents-library/slg_government_stacks/building_permit_processing_stack/building_permit_processing_agent.py",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/agents/@aibast-agents-library/slg_government_stacks/building_permit_processing_stack/building_permit_processing_agent.py",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/slg_government_stacks/building_permit_processing_stack/building_permit_processing_agent.py",
       "use": "Local Brainstem runtime and production-logic reference",
       "status": "ready"
     },
@@ -22,7 +22,7 @@
       "id": "deployment-recipe",
       "label": "Deployment recipe",
       "path": "solutions/building-permit-processing/deployment.json",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/deployment.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/deployment.json",
       "use": "Easy-mode deployment contract",
       "status": "ready"
     },
@@ -30,7 +30,7 @@
       "id": "field-guide",
       "label": "Customer field guide",
       "path": "solutions/building-permit-processing/field-guide.html",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/field-guide.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/field-guide.html",
       "use": "Styled facilitation, evidence boundaries, gates, and recovery",
       "status": "ready"
     },
@@ -38,7 +38,7 @@
       "id": "field-guide-source",
       "label": "Field guide source",
       "path": "solutions/building-permit-processing/FIELD-GUIDE.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/FIELD-GUIDE.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/FIELD-GUIDE.md",
       "use": "Markdown source retained for audit and export",
       "status": "ready"
     },
@@ -46,7 +46,7 @@
       "id": "easy-personless-guide",
       "label": "Personless Easy-mode guide",
       "path": "solutions/building-permit-processing/EASY-MODE-PERSONLESS.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/EASY-MODE-PERSONLESS.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/EASY-MODE-PERSONLESS.md",
       "use": "Brainstem lane skill attachment, two-message workshop, and engine loop",
       "status": "ready"
     },
@@ -54,7 +54,7 @@
       "id": "easy-copilot-chat-prompts",
       "label": "Copilot-only Easy-mode comparison",
       "path": "solutions/building-permit-processing/EASY-MODE-COPILOT-CHAT.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/EASY-MODE-COPILOT-CHAT.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/EASY-MODE-COPILOT-CHAT.md",
       "use": "Copilot-only lane skill attachment and the same two workshop messages",
       "status": "ready"
     },
@@ -62,7 +62,7 @@
       "id": "easy-mode-brainstem-skill",
       "label": "Brainstem Easy Mode skill",
       "path": "skills/aibast-easy-mode-brainstem/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/skills/aibast-easy-mode-brainstem/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-brainstem/SKILL.md",
       "use": "Download-and-drag harness that defaults workshop execution to Brainstem",
       "status": "ready"
     },
@@ -70,7 +70,7 @@
       "id": "easy-mode-copilot-skill",
       "label": "Copilot-only Easy Mode skill",
       "path": "skills/aibast-easy-mode-copilot/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/skills/aibast-easy-mode-copilot/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-copilot/SKILL.md",
       "use": "Download-and-drag harness that runs the workshop directly in GitHub Copilot",
       "status": "ready"
     },
@@ -78,7 +78,7 @@
       "id": "generic-workshop-agent",
       "label": "Generic AIBAST Workshop agent",
       "path": "agents/@aibast-agents-library/templates/workshop_agent.py",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/agents/@aibast-agents-library/templates/workshop_agent.py",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/workshop_agent.py",
       "use": "Registry-driven Brainstem engine shared by every packaged solution",
       "status": "ready"
     },
@@ -86,7 +86,7 @@
       "id": "manual-instructions",
       "label": "Manual global instructions",
       "path": "solutions/building-permit-processing/manual/GLOBAL-INSTRUCTIONS.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/manual/GLOBAL-INSTRUCTIONS.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/manual/GLOBAL-INSTRUCTIONS.md",
       "use": "Reviewed instructions for literal browser construction",
       "status": "ready"
     },
@@ -94,7 +94,7 @@
       "id": "settings",
       "label": "Copilot Studio settings",
       "path": "solutions/building-permit-processing/copilot-studio/settings.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/copilot-studio/settings.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/copilot-studio/settings.mcs.yml",
       "use": "Easy-mode agent settings and instruction copy",
       "status": "ready"
     },
@@ -102,7 +102,7 @@
       "id": "agent-sync",
       "label": "Copilot Studio component manifest",
       "path": "solutions/building-permit-processing/copilot-studio/agent.sync.yaml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/copilot-studio/agent.sync.yaml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/copilot-studio/agent.sync.yaml",
       "use": "Easy-mode component synchronization",
       "status": "ready"
     },
@@ -110,7 +110,7 @@
       "id": "knowledge-aibast-building-permit-synthetic-records",
       "label": "Aibast Building Permit Synthetic Records",
       "path": "solutions/building-permit-processing/copilot-studio/capabilities/knowledge/files/aibast_building-permit-synthetic-records.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/copilot-studio/capabilities/knowledge/files/aibast_building-permit-synthetic-records.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/copilot-studio/capabilities/knowledge/files/aibast_building-permit-synthetic-records.md",
       "use": "Manual knowledge upload",
       "status": "ready"
     },
@@ -118,7 +118,7 @@
       "id": "knowledge-aibast-permit-rules-and-schedules",
       "label": "Aibast Permit Rules And Schedules",
       "path": "solutions/building-permit-processing/copilot-studio/capabilities/knowledge/files/aibast_permit-rules-and-schedules.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/copilot-studio/capabilities/knowledge/files/aibast_permit-rules-and-schedules.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/copilot-studio/capabilities/knowledge/files/aibast_permit-rules-and-schedules.md",
       "use": "Manual knowledge upload",
       "status": "ready"
     },
@@ -126,7 +126,7 @@
       "id": "skill-aibast-applicant-updates-bp03",
       "label": "Manual skill: aibast applicant updates bp03",
       "path": "solutions/building-permit-processing/manual/skills/aibast_applicant-updates_bp03/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/manual/skills/aibast_applicant-updates_bp03/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/manual/skills/aibast_applicant-updates_bp03/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -134,7 +134,7 @@
       "id": "skill-aibast-fee-calculation-bp07",
       "label": "Manual skill: aibast fee calculation bp07",
       "path": "solutions/building-permit-processing/manual/skills/aibast_fee-calculation_bp07/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/manual/skills/aibast_fee-calculation_bp07/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/manual/skills/aibast_fee-calculation_bp07/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -142,7 +142,7 @@
       "id": "skill-aibast-inspector-assignment-bp06",
       "label": "Manual skill: aibast inspector assignment bp06",
       "path": "solutions/building-permit-processing/manual/skills/aibast_inspector-assignment_bp06/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/manual/skills/aibast_inspector-assignment_bp06/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/manual/skills/aibast_inspector-assignment_bp06/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -150,7 +150,7 @@
       "id": "skill-aibast-intake-triage-bp02",
       "label": "Manual skill: aibast intake triage bp02",
       "path": "solutions/building-permit-processing/manual/skills/aibast_intake-triage_bp02/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/manual/skills/aibast_intake-triage_bp02/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/manual/skills/aibast_intake-triage_bp02/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -158,7 +158,7 @@
       "id": "skill-aibast-permit-backlog-bp01",
       "label": "Manual skill: aibast permit backlog bp01",
       "path": "solutions/building-permit-processing/manual/skills/aibast_permit-backlog_bp01/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/manual/skills/aibast_permit-backlog_bp01/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/manual/skills/aibast_permit-backlog_bp01/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -166,7 +166,7 @@
       "id": "skill-aibast-permit-status-bp04",
       "label": "Manual skill: aibast permit status bp04",
       "path": "solutions/building-permit-processing/manual/skills/aibast_permit-status_bp04/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/manual/skills/aibast_permit-status_bp04/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/manual/skills/aibast_permit-status_bp04/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -174,7 +174,7 @@
       "id": "skill-aibast-review-checklist-bp05",
       "label": "Manual skill: aibast review checklist bp05",
       "path": "solutions/building-permit-processing/manual/skills/aibast_review-checklist_bp05/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/manual/skills/aibast_review-checklist_bp05/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/manual/skills/aibast_review-checklist_bp05/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -182,7 +182,7 @@
       "id": "easy-knowledge-aibast-building-permit-synthetic-records-md-mcs",
       "label": "Aibast Building Permit Synthetic Records.Md.Mcs",
       "path": "solutions/building-permit-processing/copilot-studio/capabilities/knowledge/files/aibast_building-permit-synthetic-records.md.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/copilot-studio/capabilities/knowledge/files/aibast_building-permit-synthetic-records.md.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/copilot-studio/capabilities/knowledge/files/aibast_building-permit-synthetic-records.md.mcs.yml",
       "use": "Copilot Studio knowledge source or synchronization metadata",
       "status": "ready"
     },
@@ -190,7 +190,7 @@
       "id": "easy-knowledge-aibast-permit-rules-and-schedules-md-mcs",
       "label": "Aibast Permit Rules And Schedules.Md.Mcs",
       "path": "solutions/building-permit-processing/copilot-studio/capabilities/knowledge/files/aibast_permit-rules-and-schedules.md.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/copilot-studio/capabilities/knowledge/files/aibast_permit-rules-and-schedules.md.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/copilot-studio/capabilities/knowledge/files/aibast_permit-rules-and-schedules.md.mcs.yml",
       "use": "Copilot Studio knowledge source or synchronization metadata",
       "status": "ready"
     },
@@ -198,7 +198,7 @@
       "id": "easy-skill-aibast-applicant-updates-bp03-mcs",
       "label": "Aibast Applicant Updates Bp03.Mcs",
       "path": "solutions/building-permit-processing/copilot-studio/behaviors/aibast_applicant-updates_bp03.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/copilot-studio/behaviors/aibast_applicant-updates_bp03.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/copilot-studio/behaviors/aibast_applicant-updates_bp03.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -206,7 +206,7 @@
       "id": "easy-skill-aibast-fee-calculation-bp07-mcs",
       "label": "Aibast Fee Calculation Bp07.Mcs",
       "path": "solutions/building-permit-processing/copilot-studio/behaviors/aibast_fee-calculation_bp07.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/copilot-studio/behaviors/aibast_fee-calculation_bp07.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/copilot-studio/behaviors/aibast_fee-calculation_bp07.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -214,7 +214,7 @@
       "id": "easy-skill-aibast-inspector-assignment-bp06-mcs",
       "label": "Aibast Inspector Assignment Bp06.Mcs",
       "path": "solutions/building-permit-processing/copilot-studio/behaviors/aibast_inspector-assignment_bp06.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/copilot-studio/behaviors/aibast_inspector-assignment_bp06.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/copilot-studio/behaviors/aibast_inspector-assignment_bp06.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -222,7 +222,7 @@
       "id": "easy-skill-aibast-intake-triage-bp02-mcs",
       "label": "Aibast Intake Triage Bp02.Mcs",
       "path": "solutions/building-permit-processing/copilot-studio/behaviors/aibast_intake-triage_bp02.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/copilot-studio/behaviors/aibast_intake-triage_bp02.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/copilot-studio/behaviors/aibast_intake-triage_bp02.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -230,7 +230,7 @@
       "id": "easy-skill-aibast-permit-backlog-bp01-mcs",
       "label": "Aibast Permit Backlog Bp01.Mcs",
       "path": "solutions/building-permit-processing/copilot-studio/behaviors/aibast_permit-backlog_bp01.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/copilot-studio/behaviors/aibast_permit-backlog_bp01.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/copilot-studio/behaviors/aibast_permit-backlog_bp01.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -238,7 +238,7 @@
       "id": "easy-skill-aibast-permit-status-bp04-mcs",
       "label": "Aibast Permit Status Bp04.Mcs",
       "path": "solutions/building-permit-processing/copilot-studio/behaviors/aibast_permit-status_bp04.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/copilot-studio/behaviors/aibast_permit-status_bp04.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/copilot-studio/behaviors/aibast_permit-status_bp04.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -246,7 +246,7 @@
       "id": "easy-skill-aibast-review-checklist-bp05-mcs",
       "label": "Aibast Review Checklist Bp05.Mcs",
       "path": "solutions/building-permit-processing/copilot-studio/behaviors/aibast_review-checklist_bp05.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/copilot-studio/behaviors/aibast_review-checklist_bp05.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/copilot-studio/behaviors/aibast_review-checklist_bp05.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -254,7 +254,7 @@
       "id": "easy-evidence-copilot-studio-preview-evidence",
       "label": "Copilot Studio Preview Evidence",
       "path": "solutions/building-permit-processing/evals/copilot-studio-preview-evidence.json",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/evals/copilot-studio-preview-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/evals/copilot-studio-preview-evidence.json",
       "use": "Easy-mode deployment or Preview evidence",
       "status": "ready"
     },
@@ -262,7 +262,7 @@
       "id": "easy-evidence-copilot-studio-transcripts",
       "label": "Copilot Studio Transcripts",
       "path": "solutions/building-permit-processing/evals/copilot-studio-transcripts.json",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/evals/copilot-studio-transcripts.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/evals/copilot-studio-transcripts.json",
       "use": "Easy-mode deployment or Preview evidence",
       "status": "ready"
     },
@@ -270,7 +270,7 @@
       "id": "easy-evidence-deployment-evidence",
       "label": "Deployment Evidence",
       "path": "solutions/building-permit-processing/evals/deployment-evidence.json",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/evals/deployment-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/evals/deployment-evidence.json",
       "use": "Easy-mode deployment or Preview evidence",
       "status": "ready"
     },
@@ -278,7 +278,7 @@
       "id": "manual-evidence",
       "label": "Manual build evidence",
       "path": "solutions/building-permit-processing/evals/manual-build-evidence.json",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/evals/manual-build-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/evals/manual-build-evidence.json",
       "use": "Manual identity, inventory, Preview, and Draft-gate evidence",
       "status": "ready"
     },
@@ -286,7 +286,7 @@
       "id": "onepager-map",
       "label": "Onepager Map",
       "path": "solutions/building-permit-processing/evals/onepager-map.json",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/evals/onepager-map.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/evals/onepager-map.json",
       "use": "Advertised-promise mapping evidence",
       "status": "ready"
     },
@@ -294,7 +294,7 @@
       "id": "brainstem-transcripts",
       "label": "Isolated Brainstem transcripts",
       "path": "solutions/building-permit-processing/evals/transcripts.json",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/evals/transcripts.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/evals/transcripts.json",
       "use": "Canonical source-agent acceptance evidence",
       "status": "ready"
     },
@@ -302,7 +302,7 @@
       "id": "easy-evidence-visual-checkpoints",
       "label": "Visual Checkpoints",
       "path": "solutions/building-permit-processing/evals/visual-checkpoints.json",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/evals/visual-checkpoints.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/evals/visual-checkpoints.json",
       "use": "Easy-mode deployment or Preview evidence",
       "status": "ready"
     },
@@ -310,7 +310,7 @@
       "id": "manual-browserfilm-manifest",
       "label": "Manual browserfilm manifest",
       "path": "solutions/building-permit-processing/screenshots/manual/browserfilm.json",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/browserfilm.json",
       "use": "Ordered literal-browser evidence frames",
       "status": "ready"
     },
@@ -318,7 +318,7 @@
       "id": "manual-frame-01",
       "label": "Create a blank Copilot Studio agent",
       "path": "solutions/building-permit-processing/screenshots/manual/01-create-blank-agent.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/01-create-blank-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/01-create-blank-agent.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -326,7 +326,7 @@
       "id": "manual-frame-02",
       "label": "Name the manual agent",
       "path": "solutions/building-permit-processing/screenshots/manual/02-name-agent.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/02-name-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/02-name-agent.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -334,7 +334,7 @@
       "id": "manual-frame-03",
       "label": "Enter the full global instruction policy",
       "path": "solutions/building-permit-processing/screenshots/manual/03-enter-instructions.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/03-enter-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/03-enter-instructions.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -342,7 +342,7 @@
       "id": "manual-frame-04",
       "label": "Save the instruction changes",
       "path": "solutions/building-permit-processing/screenshots/manual/04-save-instructions.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/04-save-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/04-save-instructions.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -350,7 +350,7 @@
       "id": "manual-frame-05",
       "label": "Open the knowledge-source picker",
       "path": "solutions/building-permit-processing/screenshots/manual/05-open-knowledge-upload.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/05-open-knowledge-upload.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/05-open-knowledge-upload.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -358,7 +358,7 @@
       "id": "manual-frame-06",
       "label": "Upload the synthetic permit records",
       "path": "solutions/building-permit-processing/screenshots/manual/06-select-records-file.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/06-select-records-file.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/06-select-records-file.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -366,7 +366,7 @@
       "id": "manual-frame-07",
       "label": "Wait for Dataverse ingestion",
       "path": "solutions/building-permit-processing/screenshots/manual/07-records-file-added.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/07-records-file-added.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/07-records-file-added.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -374,7 +374,7 @@
       "id": "manual-frame-08",
       "label": "Upload the rules and schedules",
       "path": "solutions/building-permit-processing/screenshots/manual/08-select-rules-file.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/08-select-rules-file.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/08-select-rules-file.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -382,7 +382,7 @@
       "id": "manual-frame-09",
       "label": "Verify both knowledge sources",
       "path": "solutions/building-permit-processing/screenshots/manual/09-two-knowledge-files-added.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/09-two-knowledge-files-added.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/09-two-knowledge-files-added.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -390,7 +390,7 @@
       "id": "manual-frame-10",
       "label": "Open the SKILL.md uploader",
       "path": "solutions/building-permit-processing/screenshots/manual/10-open-skill-upload.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/10-open-skill-upload.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/10-open-skill-upload.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -398,7 +398,7 @@
       "id": "manual-frame-11",
       "label": "Add backlog and complaint-risk logic",
       "path": "solutions/building-permit-processing/screenshots/manual/11-add-backlog-skill.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/11-add-backlog-skill.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/11-add-backlog-skill.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -406,7 +406,7 @@
       "id": "manual-frame-12",
       "label": "Add intake triage and routing",
       "path": "solutions/building-permit-processing/screenshots/manual/12-add-intake-skill.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/12-add-intake-skill.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/12-add-intake-skill.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -414,7 +414,7 @@
       "id": "manual-frame-13",
       "label": "Add proactive applicant updates",
       "path": "solutions/building-permit-processing/screenshots/manual/13-add-applicant-updates-skill.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/13-add-applicant-updates-skill.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/13-add-applicant-updates-skill.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -422,7 +422,7 @@
       "id": "manual-frame-14",
       "label": "Add permit status and zoning detail",
       "path": "solutions/building-permit-processing/screenshots/manual/14-add-permit-status-skill.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/14-add-permit-status-skill.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/14-add-permit-status-skill.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -430,7 +430,7 @@
       "id": "manual-frame-15",
       "label": "Add the review checklist",
       "path": "solutions/building-permit-processing/screenshots/manual/15-add-checklist-skill.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/15-add-checklist-skill.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/15-add-checklist-skill.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -438,7 +438,7 @@
       "id": "manual-frame-16",
       "label": "Diagnose a SKILL.md validation failure",
       "path": "solutions/building-permit-processing/screenshots/manual/16-inspector-skill-validation-error.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/16-inspector-skill-validation-error.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/16-inspector-skill-validation-error.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -446,7 +446,7 @@
       "id": "manual-frame-17",
       "label": "Correct and add inspector coverage",
       "path": "solutions/building-permit-processing/screenshots/manual/17-retry-inspector-skill.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/17-retry-inspector-skill.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/17-retry-inspector-skill.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -454,7 +454,7 @@
       "id": "manual-frame-18",
       "label": "Add deterministic fee estimates",
       "path": "solutions/building-permit-processing/screenshots/manual/18-add-fee-skill.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/18-add-fee-skill.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/18-add-fee-skill.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -462,7 +462,7 @@
       "id": "manual-frame-19",
       "label": "Review the available model choices",
       "path": "solutions/building-permit-processing/screenshots/manual/19-open-model-picker.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/19-open-model-picker.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/19-open-model-picker.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -470,7 +470,7 @@
       "id": "manual-frame-20",
       "label": "Match the Easy-mode model",
       "path": "solutions/building-permit-processing/screenshots/manual/20-select-sonnet-model.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/20-select-sonnet-model.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/20-select-sonnet-model.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -478,7 +478,7 @@
       "id": "manual-frame-21",
       "label": "Audit every skill description",
       "path": "solutions/building-permit-processing/screenshots/manual/21-review-all-skills.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/21-review-all-skills.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/21-review-all-skills.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -486,7 +486,7 @@
       "id": "manual-frame-22",
       "label": "Open Preview",
       "path": "solutions/building-permit-processing/screenshots/manual/22-open-preview.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/22-open-preview.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/22-open-preview.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -494,7 +494,7 @@
       "id": "manual-frame-23",
       "label": "Run the canonical backlog prompt",
       "path": "solutions/building-permit-processing/screenshots/manual/23-run-canonical-prompt.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/23-run-canonical-prompt.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/23-run-canonical-prompt.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -502,7 +502,7 @@
       "id": "manual-frame-24",
       "label": "Verify the same permit and decision",
       "path": "solutions/building-permit-processing/screenshots/manual/24-verify-preview-result.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/24-verify-preview-result.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/24-verify-preview-result.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -510,7 +510,7 @@
       "id": "manual-browserfilm",
       "label": "Manual browserfilm",
       "path": "solutions/building-permit-processing/screenshots/manual/manual-build-walkthrough.gif",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/manual-build-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/manual-build-walkthrough.gif",
       "use": "Animated manual walkthrough",
       "status": "ready"
     },
@@ -518,7 +518,7 @@
       "id": "manual-contact-sheet",
       "label": "Manual contact sheet",
       "path": "solutions/building-permit-processing/screenshots/manual/manual-build-contact-sheet.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/manual-build-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/manual-build-contact-sheet.jpg",
       "use": "Static manual evidence overview",
       "status": "ready"
     },
@@ -526,7 +526,7 @@
       "id": "assisted-browserfilm-manifest",
       "label": "Copilot-assisted browserfilm manifest",
       "path": "solutions/building-permit-processing/screenshots/assisted/browserfilm.json",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/assisted/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/assisted/browserfilm.json",
       "use": "Ordered Easy-mode evidence frames",
       "status": "ready"
     },
@@ -534,7 +534,7 @@
       "id": "assisted-browserfilm",
       "label": "Copilot-assisted browserfilm",
       "path": "solutions/building-permit-processing/screenshots/assisted/copilot-assisted-walkthrough.gif",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/assisted/copilot-assisted-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/assisted/copilot-assisted-walkthrough.gif",
       "use": "Animated Easy-mode walkthrough",
       "status": "ready"
     },
@@ -542,7 +542,7 @@
       "id": "assisted-contact-sheet",
       "label": "Copilot-assisted contact sheet",
       "path": "solutions/building-permit-processing/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
       "use": "Static Easy-mode evidence overview",
       "status": "ready"
     },
@@ -550,7 +550,7 @@
       "id": "assisted-frame-01",
       "label": "Review the Copilot-assisted Draft configuration",
       "path": "solutions/building-permit-processing/screenshots/assisted/01-review-build.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/assisted/01-review-build.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/assisted/01-review-build.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -558,7 +558,7 @@
       "id": "assisted-frame-02",
       "label": "Pass BPP-01: Development Services Director",
       "path": "solutions/building-permit-processing/screenshots/assisted/02-bpp-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/assisted/02-bpp-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/assisted/02-bpp-01.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -566,7 +566,7 @@
       "id": "assisted-frame-03",
       "label": "Pass BPP-02: Permit Technician",
       "path": "solutions/building-permit-processing/screenshots/assisted/03-bpp-02.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/assisted/03-bpp-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/assisted/03-bpp-02.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -574,7 +574,7 @@
       "id": "assisted-frame-04",
       "label": "Pass BPP-03: Permit Technician",
       "path": "solutions/building-permit-processing/screenshots/assisted/04-bpp-03.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/assisted/04-bpp-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/assisted/04-bpp-03.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -582,7 +582,7 @@
       "id": "assisted-frame-05",
       "label": "Pass BPP-04: Customer Service Lead",
       "path": "solutions/building-permit-processing/screenshots/assisted/05-bpp-04.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/assisted/05-bpp-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/assisted/05-bpp-04.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -590,7 +590,7 @@
       "id": "assisted-frame-06",
       "label": "Pass BPP-05: Chief Building Inspector",
       "path": "solutions/building-permit-processing/screenshots/assisted/06-bpp-05.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/assisted/06-bpp-05.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/assisted/06-bpp-05.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -598,7 +598,7 @@
       "id": "assisted-frame-07",
       "label": "Confirm the validated agent remains Draft",
       "path": "solutions/building-permit-processing/screenshots/assisted/07-confirm-draft.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/assisted/07-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/assisted/07-confirm-draft.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -606,7 +606,7 @@
       "id": "workshop-settings",
       "label": "Global workshop settings",
       "path": "solutions/_shared/workshop-settings.html",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/_shared/workshop-settings.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/_shared/workshop-settings.html",
       "use": "Site-wide persisted Easy-mode harness preference",
       "status": "ready"
     },
@@ -614,7 +614,7 @@
       "id": "evidence-report",
       "label": "Styled evidence report",
       "path": "solutions/building-permit-processing/evidence-report.html",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/evidence-report.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/evidence-report.html",
       "use": "Learner-safe HTML summary of deterministic and visual evidence",
       "status": "ready"
     },
@@ -622,7 +622,7 @@
       "id": "quest",
       "label": "Guided field quest",
       "path": "solutions/building-permit-processing/quest.html",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/quest.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/quest.html",
       "use": "Resumable Easy/Hard customer journey",
       "status": "ready"
     },
@@ -630,7 +630,7 @@
       "id": "manual-tutorial",
       "label": "Manual browser tutorial",
       "path": "solutions/building-permit-processing/manual-tutorial.html",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/manual-tutorial.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/manual-tutorial.html",
       "use": "One action per real manual evidence frame",
       "status": "ready"
     },
@@ -638,7 +638,7 @@
       "id": "screenshots-readme",
       "label": "Screenshot evidence README",
       "path": "solutions/building-permit-processing/screenshots/README.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/README.md",
       "use": "Evidence boundary and capture inventory",
       "status": "ready"
     },
@@ -646,7 +646,7 @@
       "id": "manual-screenshots-readme",
       "label": "Manual screenshot README",
       "path": "solutions/building-permit-processing/screenshots/manual/README.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/manual/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/manual/README.md",
       "use": "Manual frame and film inventory",
       "status": "ready"
     },
@@ -654,7 +654,7 @@
       "id": "exports-readme",
       "label": "Export README",
       "path": "solutions/building-permit-processing/exports/README.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/exports/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/exports/README.md",
       "use": "Bundle build instructions",
       "status": "ready"
     },
@@ -662,7 +662,7 @@
       "id": "assisted-screenshots-readme",
       "label": "Assisted screenshot README",
       "path": "solutions/building-permit-processing/screenshots/assisted/README.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/building-permit-processing/screenshots/assisted/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/building-permit-processing/screenshots/assisted/README.md",
       "use": "Copilot-assisted evidence inventory",
       "status": "ready"
     }

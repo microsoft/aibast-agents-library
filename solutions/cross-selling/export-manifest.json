@@ -1,20 +1,20 @@
 {
   "schema": "aibast-solution-export/1.0",
   "solution": "@aibast-agents-library/cross-selling",
-  "raw_base": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/",
+  "raw_base": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/",
   "github_folder": "https://github.com/microsoft/aibast-agents-library/tree/main/solutions/cross-selling",
   "evidence_boundary": "Synthetic solution evidence only. Qualitative workflow proof is not a customer KPI, measured production result, or publication approval.",
   "bundle": {
     "label": "Complete Cross-Selling Opportunities Agent source bundle",
     "path": "solutions/cross-selling/exports/cross-selling-source.zip",
-    "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/exports/cross-selling-source.zip"
+    "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/exports/cross-selling-source.zip"
   },
   "files": [
     {
       "id": "portable-agent",
       "label": "Portable source agent",
       "path": "agents/@aibast-agents-library/general_stacks/cross_selling_opportunities_stack/cross_selling_agent.py",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/agents/@aibast-agents-library/general_stacks/cross_selling_opportunities_stack/cross_selling_agent.py",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/general_stacks/cross_selling_opportunities_stack/cross_selling_agent.py",
       "use": "Local Brainstem runtime and production-logic reference",
       "status": "ready"
     },
@@ -22,7 +22,7 @@
       "id": "deployment-recipe",
       "label": "Deployment recipe",
       "path": "solutions/cross-selling/deployment.json",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/deployment.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/deployment.json",
       "use": "Easy-mode deployment contract",
       "status": "ready"
     },
@@ -30,7 +30,7 @@
       "id": "field-guide",
       "label": "Customer field guide",
       "path": "solutions/cross-selling/field-guide.html",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/field-guide.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/field-guide.html",
       "use": "Styled facilitation, evidence boundaries, gates, and recovery",
       "status": "ready"
     },
@@ -38,7 +38,7 @@
       "id": "field-guide-source",
       "label": "Field guide source",
       "path": "solutions/cross-selling/FIELD-GUIDE.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/FIELD-GUIDE.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/FIELD-GUIDE.md",
       "use": "Markdown source retained for audit and export",
       "status": "ready"
     },
@@ -46,7 +46,7 @@
       "id": "easy-personless-guide",
       "label": "Personless Easy-mode guide",
       "path": "solutions/cross-selling/EASY-MODE-PERSONLESS.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/EASY-MODE-PERSONLESS.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/EASY-MODE-PERSONLESS.md",
       "use": "Brainstem lane skill attachment, two-message workshop, and engine loop",
       "status": "ready"
     },
@@ -54,7 +54,7 @@
       "id": "easy-copilot-chat-prompts",
       "label": "Copilot-only Easy-mode comparison",
       "path": "solutions/cross-selling/EASY-MODE-COPILOT-CHAT.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/EASY-MODE-COPILOT-CHAT.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/EASY-MODE-COPILOT-CHAT.md",
       "use": "Copilot-only lane skill attachment and the same two workshop messages",
       "status": "ready"
     },
@@ -62,7 +62,7 @@
       "id": "easy-mode-brainstem-skill",
       "label": "Brainstem Easy Mode skill",
       "path": "skills/aibast-easy-mode-brainstem/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/skills/aibast-easy-mode-brainstem/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-brainstem/SKILL.md",
       "use": "Download-and-drag harness that defaults workshop execution to Brainstem",
       "status": "ready"
     },
@@ -70,7 +70,7 @@
       "id": "easy-mode-copilot-skill",
       "label": "Copilot-only Easy Mode skill",
       "path": "skills/aibast-easy-mode-copilot/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/skills/aibast-easy-mode-copilot/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-copilot/SKILL.md",
       "use": "Download-and-drag harness that runs the workshop directly in GitHub Copilot",
       "status": "ready"
     },
@@ -78,7 +78,7 @@
       "id": "generic-workshop-agent",
       "label": "Generic AIBAST Workshop agent",
       "path": "agents/@aibast-agents-library/templates/workshop_agent.py",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/agents/@aibast-agents-library/templates/workshop_agent.py",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/workshop_agent.py",
       "use": "Registry-driven Brainstem engine shared by every packaged solution",
       "status": "ready"
     },
@@ -86,7 +86,7 @@
       "id": "manual-instructions",
       "label": "Manual global instructions",
       "path": "solutions/cross-selling/manual/GLOBAL-INSTRUCTIONS.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/manual/GLOBAL-INSTRUCTIONS.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/manual/GLOBAL-INSTRUCTIONS.md",
       "use": "Reviewed instructions for literal browser construction",
       "status": "ready"
     },
@@ -94,7 +94,7 @@
       "id": "settings",
       "label": "Copilot Studio settings",
       "path": "solutions/cross-selling/copilot-studio/settings.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/copilot-studio/settings.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/copilot-studio/settings.mcs.yml",
       "use": "Easy-mode agent settings and instruction copy",
       "status": "ready"
     },
@@ -102,7 +102,7 @@
       "id": "agent-sync",
       "label": "Copilot Studio component manifest",
       "path": "solutions/cross-selling/copilot-studio/agent.sync.yaml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/copilot-studio/agent.sync.yaml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/copilot-studio/agent.sync.yaml",
       "use": "Easy-mode component synchronization",
       "status": "ready"
     },
@@ -110,7 +110,7 @@
       "id": "knowledge-aibast-cross-selling-operating-rules",
       "label": "Aibast Cross Selling Operating Rules",
       "path": "solutions/cross-selling/manual/knowledge/aibast_cross-selling-operating-rules.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/manual/knowledge/aibast_cross-selling-operating-rules.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/manual/knowledge/aibast_cross-selling-operating-rules.md",
       "use": "Manual knowledge upload",
       "status": "ready"
     },
@@ -118,7 +118,7 @@
       "id": "knowledge-aibast-cross-selling-synthetic-records",
       "label": "Aibast Cross Selling Synthetic Records",
       "path": "solutions/cross-selling/manual/knowledge/aibast_cross-selling-synthetic-records.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/manual/knowledge/aibast_cross-selling-synthetic-records.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/manual/knowledge/aibast_cross-selling-synthetic-records.md",
       "use": "Manual knowledge upload",
       "status": "ready"
     },
@@ -126,7 +126,7 @@
       "id": "skill-opportunity-scan",
       "label": "Manual skill: opportunity scan",
       "path": "solutions/cross-selling/manual/skills/opportunity-scan/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/manual/skills/opportunity-scan/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/manual/skills/opportunity-scan/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -134,7 +134,7 @@
       "id": "skill-product-affinity",
       "label": "Manual skill: product affinity",
       "path": "solutions/cross-selling/manual/skills/product-affinity/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/manual/skills/product-affinity/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/manual/skills/product-affinity/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -142,7 +142,7 @@
       "id": "skill-recommendation-engine",
       "label": "Manual skill: recommendation engine",
       "path": "solutions/cross-selling/manual/skills/recommendation-engine/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/manual/skills/recommendation-engine/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/manual/skills/recommendation-engine/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -150,7 +150,7 @@
       "id": "skill-revenue-impact",
       "label": "Manual skill: revenue impact",
       "path": "solutions/cross-selling/manual/skills/revenue-impact/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/manual/skills/revenue-impact/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/manual/skills/revenue-impact/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -158,7 +158,7 @@
       "id": "easy-knowledge-aibast-cross-selling-operating-rules",
       "label": "Aibast Cross Selling Operating Rules",
       "path": "solutions/cross-selling/copilot-studio/capabilities/knowledge/files/aibast_cross-selling-operating-rules.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/copilot-studio/capabilities/knowledge/files/aibast_cross-selling-operating-rules.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/copilot-studio/capabilities/knowledge/files/aibast_cross-selling-operating-rules.md",
       "use": "Copilot Studio knowledge source or synchronization metadata",
       "status": "ready"
     },
@@ -166,7 +166,7 @@
       "id": "easy-knowledge-aibast-cross-selling-operating-rules-md-mcs",
       "label": "Aibast Cross Selling Operating Rules.Md.Mcs",
       "path": "solutions/cross-selling/copilot-studio/capabilities/knowledge/files/aibast_cross-selling-operating-rules.md.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/copilot-studio/capabilities/knowledge/files/aibast_cross-selling-operating-rules.md.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/copilot-studio/capabilities/knowledge/files/aibast_cross-selling-operating-rules.md.mcs.yml",
       "use": "Copilot Studio knowledge source or synchronization metadata",
       "status": "ready"
     },
@@ -174,7 +174,7 @@
       "id": "easy-knowledge-aibast-cross-selling-synthetic-records",
       "label": "Aibast Cross Selling Synthetic Records",
       "path": "solutions/cross-selling/copilot-studio/capabilities/knowledge/files/aibast_cross-selling-synthetic-records.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/copilot-studio/capabilities/knowledge/files/aibast_cross-selling-synthetic-records.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/copilot-studio/capabilities/knowledge/files/aibast_cross-selling-synthetic-records.md",
       "use": "Copilot Studio knowledge source or synchronization metadata",
       "status": "ready"
     },
@@ -182,7 +182,7 @@
       "id": "easy-knowledge-aibast-cross-selling-synthetic-records-md-mcs",
       "label": "Aibast Cross Selling Synthetic Records.Md.Mcs",
       "path": "solutions/cross-selling/copilot-studio/capabilities/knowledge/files/aibast_cross-selling-synthetic-records.md.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/copilot-studio/capabilities/knowledge/files/aibast_cross-selling-synthetic-records.md.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/copilot-studio/capabilities/knowledge/files/aibast_cross-selling-synthetic-records.md.mcs.yml",
       "use": "Copilot Studio knowledge source or synchronization metadata",
       "status": "ready"
     },
@@ -190,7 +190,7 @@
       "id": "easy-skill-aibast-cross-selling-opportunity-scan-mcs",
       "label": "Aibast Cross Selling Opportunity Scan.Mcs",
       "path": "solutions/cross-selling/copilot-studio/behaviors/aibast_cross-selling-opportunity-scan.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/copilot-studio/behaviors/aibast_cross-selling-opportunity-scan.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/copilot-studio/behaviors/aibast_cross-selling-opportunity-scan.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -198,7 +198,7 @@
       "id": "easy-skill-aibast-cross-selling-product-affinity-mcs",
       "label": "Aibast Cross Selling Product Affinity.Mcs",
       "path": "solutions/cross-selling/copilot-studio/behaviors/aibast_cross-selling-product-affinity.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/copilot-studio/behaviors/aibast_cross-selling-product-affinity.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/copilot-studio/behaviors/aibast_cross-selling-product-affinity.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -206,7 +206,7 @@
       "id": "easy-skill-aibast-cross-selling-recommendation-engine-mcs",
       "label": "Aibast Cross Selling Recommendation Engine.Mcs",
       "path": "solutions/cross-selling/copilot-studio/behaviors/aibast_cross-selling-recommendation-engine.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/copilot-studio/behaviors/aibast_cross-selling-recommendation-engine.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/copilot-studio/behaviors/aibast_cross-selling-recommendation-engine.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -214,7 +214,7 @@
       "id": "easy-skill-aibast-cross-selling-revenue-impact-mcs",
       "label": "Aibast Cross Selling Revenue Impact.Mcs",
       "path": "solutions/cross-selling/copilot-studio/behaviors/aibast_cross-selling-revenue-impact.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/copilot-studio/behaviors/aibast_cross-selling-revenue-impact.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/copilot-studio/behaviors/aibast_cross-selling-revenue-impact.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -222,7 +222,7 @@
       "id": "easy-evidence-copilot-studio-preview-evidence",
       "label": "Copilot Studio Preview Evidence",
       "path": "solutions/cross-selling/evals/copilot-studio-preview-evidence.json",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/evals/copilot-studio-preview-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/evals/copilot-studio-preview-evidence.json",
       "use": "Easy-mode deployment or Preview evidence",
       "status": "ready"
     },
@@ -230,7 +230,7 @@
       "id": "easy-evidence-demo-cases",
       "label": "Demo Cases",
       "path": "solutions/cross-selling/evals/demo-cases.json",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/evals/demo-cases.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/evals/demo-cases.json",
       "use": "Easy-mode deployment or Preview evidence",
       "status": "ready"
     },
@@ -238,7 +238,7 @@
       "id": "manual-evidence",
       "label": "Manual build evidence",
       "path": "solutions/cross-selling/evals/manual-build-evidence.json",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/evals/manual-build-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/evals/manual-build-evidence.json",
       "use": "Manual identity, inventory, Preview, and Draft-gate evidence",
       "status": "ready"
     },
@@ -246,7 +246,7 @@
       "id": "onepager-map",
       "label": "Onepager Map",
       "path": "solutions/cross-selling/evals/onepager-map.json",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/evals/onepager-map.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/evals/onepager-map.json",
       "use": "Advertised-promise mapping evidence",
       "status": "ready"
     },
@@ -254,7 +254,7 @@
       "id": "brainstem-transcripts",
       "label": "Isolated Brainstem transcripts",
       "path": "solutions/cross-selling/evals/transcripts.json",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/evals/transcripts.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/evals/transcripts.json",
       "use": "Canonical source-agent acceptance evidence",
       "status": "ready"
     },
@@ -262,7 +262,7 @@
       "id": "easy-evidence-visual-checkpoints",
       "label": "Visual Checkpoints",
       "path": "solutions/cross-selling/evals/visual-checkpoints.json",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/evals/visual-checkpoints.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/evals/visual-checkpoints.json",
       "use": "Easy-mode deployment or Preview evidence",
       "status": "ready"
     },
@@ -270,7 +270,7 @@
       "id": "manual-browserfilm-manifest",
       "label": "Manual browserfilm manifest",
       "path": "solutions/cross-selling/screenshots/manual/browserfilm.json",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/manual/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/manual/browserfilm.json",
       "use": "Ordered literal-browser evidence frames",
       "status": "ready"
     },
@@ -278,7 +278,7 @@
       "id": "manual-frame-01",
       "label": "Create a blank Copilot Studio agent",
       "path": "solutions/cross-selling/screenshots/manual/01-create-blank-agent.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/manual/01-create-blank-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/manual/01-create-blank-agent.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -286,7 +286,7 @@
       "id": "manual-frame-02",
       "label": "Name Cross-Selling Manual",
       "path": "solutions/cross-selling/screenshots/manual/02-name-agent.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/manual/02-name-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/manual/02-name-agent.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -294,7 +294,7 @@
       "id": "manual-frame-03",
       "label": "Enter the reviewed global instructions",
       "path": "solutions/cross-selling/screenshots/manual/03-enter-instructions.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/manual/03-enter-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/manual/03-enter-instructions.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -302,7 +302,7 @@
       "id": "manual-frame-04",
       "label": "Save the instruction policy",
       "path": "solutions/cross-selling/screenshots/manual/04-save-instructions.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/manual/04-save-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/manual/04-save-instructions.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -310,7 +310,7 @@
       "id": "manual-frame-05",
       "label": "Remove default web search",
       "path": "solutions/cross-selling/screenshots/manual/05-remove-web-search.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/manual/05-remove-web-search.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/manual/05-remove-web-search.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -318,7 +318,7 @@
       "id": "manual-frame-06",
       "label": "Add knowledge: aibast_cross-selling-operating-rules.md",
       "path": "solutions/cross-selling/screenshots/manual/06-add-aibast-cross-selling-operating-rules.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/manual/06-add-aibast-cross-selling-operating-rules.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/manual/06-add-aibast-cross-selling-operating-rules.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -326,7 +326,7 @@
       "id": "manual-frame-07",
       "label": "Add knowledge: aibast_cross-selling-synthetic-records.md",
       "path": "solutions/cross-selling/screenshots/manual/07-add-aibast-cross-selling-synthetic-records.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/manual/07-add-aibast-cross-selling-synthetic-records.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/manual/07-add-aibast-cross-selling-synthetic-records.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -334,7 +334,7 @@
       "id": "manual-frame-08",
       "label": "Add skill: opportunity-scan",
       "path": "solutions/cross-selling/screenshots/manual/08-add-opportunity-scan.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/manual/08-add-opportunity-scan.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/manual/08-add-opportunity-scan.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -342,7 +342,7 @@
       "id": "manual-frame-09",
       "label": "Add skill: product-affinity",
       "path": "solutions/cross-selling/screenshots/manual/09-add-product-affinity.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/manual/09-add-product-affinity.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/manual/09-add-product-affinity.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -350,7 +350,7 @@
       "id": "manual-frame-10",
       "label": "Add skill: recommendation-engine",
       "path": "solutions/cross-selling/screenshots/manual/10-add-recommendation-engine.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/manual/10-add-recommendation-engine.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/manual/10-add-recommendation-engine.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -358,7 +358,7 @@
       "id": "manual-frame-11",
       "label": "Add skill: revenue-impact",
       "path": "solutions/cross-selling/screenshots/manual/11-add-revenue-impact.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/manual/11-add-revenue-impact.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/manual/11-add-revenue-impact.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -366,7 +366,7 @@
       "id": "manual-frame-12",
       "label": "Review model, skills, knowledge, and safety boundaries",
       "path": "solutions/cross-selling/screenshots/manual/12-review-inventory.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/manual/12-review-inventory.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/manual/12-review-inventory.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -374,7 +374,7 @@
       "id": "manual-frame-13",
       "label": "Open a fresh Preview conversation",
       "path": "solutions/cross-selling/screenshots/manual/13-open-preview.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/manual/13-open-preview.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/manual/13-open-preview.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -382,7 +382,7 @@
       "id": "manual-frame-14",
       "label": "Pass CS-01: Sales Operations Manager",
       "path": "solutions/cross-selling/screenshots/manual/14-cs-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/manual/14-cs-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/manual/14-cs-01.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -390,7 +390,7 @@
       "id": "manual-frame-15",
       "label": "Pass CS-02: Enablement Manager",
       "path": "solutions/cross-selling/screenshots/manual/15-cs-02.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/manual/15-cs-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/manual/15-cs-02.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -398,7 +398,7 @@
       "id": "manual-frame-16",
       "label": "Pass CS-03: Enablement Manager",
       "path": "solutions/cross-selling/screenshots/manual/16-cs-03.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/manual/16-cs-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/manual/16-cs-03.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -406,7 +406,7 @@
       "id": "manual-frame-17",
       "label": "Pass CS-04: Sales Leader",
       "path": "solutions/cross-selling/screenshots/manual/17-cs-04.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/manual/17-cs-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/manual/17-cs-04.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -414,7 +414,7 @@
       "id": "manual-frame-18",
       "label": "Confirm Draft and stop before publish",
       "path": "solutions/cross-selling/screenshots/manual/18-confirm-draft.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/manual/18-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/manual/18-confirm-draft.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -422,7 +422,7 @@
       "id": "manual-browserfilm",
       "label": "Manual browserfilm",
       "path": "solutions/cross-selling/screenshots/manual/manual-build-walkthrough.gif",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/manual/manual-build-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/manual/manual-build-walkthrough.gif",
       "use": "Animated manual walkthrough",
       "status": "ready"
     },
@@ -430,7 +430,7 @@
       "id": "manual-contact-sheet",
       "label": "Manual contact sheet",
       "path": "solutions/cross-selling/screenshots/manual/manual-build-contact-sheet.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/manual/manual-build-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/manual/manual-build-contact-sheet.jpg",
       "use": "Static manual evidence overview",
       "status": "ready"
     },
@@ -438,7 +438,7 @@
       "id": "assisted-browserfilm-manifest",
       "label": "Copilot-assisted browserfilm manifest",
       "path": "solutions/cross-selling/screenshots/assisted/browserfilm.json",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/assisted/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/assisted/browserfilm.json",
       "use": "Ordered Easy-mode evidence frames",
       "status": "ready"
     },
@@ -446,7 +446,7 @@
       "id": "assisted-browserfilm",
       "label": "Copilot-assisted browserfilm",
       "path": "solutions/cross-selling/screenshots/assisted/copilot-assisted-walkthrough.gif",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/assisted/copilot-assisted-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/assisted/copilot-assisted-walkthrough.gif",
       "use": "Animated Easy-mode walkthrough",
       "status": "ready"
     },
@@ -454,7 +454,7 @@
       "id": "assisted-contact-sheet",
       "label": "Copilot-assisted contact sheet",
       "path": "solutions/cross-selling/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
       "use": "Static Easy-mode evidence overview",
       "status": "ready"
     },
@@ -462,7 +462,7 @@
       "id": "assisted-frame-01",
       "label": "Pass CS-01: Sales Operations Manager",
       "path": "solutions/cross-selling/screenshots/assisted/01-cs-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/assisted/01-cs-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/assisted/01-cs-01.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -470,7 +470,7 @@
       "id": "assisted-frame-02",
       "label": "Pass CS-02: Enablement Manager",
       "path": "solutions/cross-selling/screenshots/assisted/02-cs-02.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/assisted/02-cs-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/assisted/02-cs-02.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -478,7 +478,7 @@
       "id": "assisted-frame-03",
       "label": "Pass CS-03: Enablement Manager",
       "path": "solutions/cross-selling/screenshots/assisted/03-cs-03.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/assisted/03-cs-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/assisted/03-cs-03.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -486,7 +486,7 @@
       "id": "assisted-frame-04",
       "label": "Pass CS-04: Sales Leader",
       "path": "solutions/cross-selling/screenshots/assisted/04-cs-04.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/assisted/04-cs-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/assisted/04-cs-04.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -494,7 +494,7 @@
       "id": "assisted-frame-05",
       "label": "Confirm the validated agent remains Draft",
       "path": "solutions/cross-selling/screenshots/assisted/05-confirm-draft.jpg",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/assisted/05-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/assisted/05-confirm-draft.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -502,7 +502,7 @@
       "id": "workshop-settings",
       "label": "Global workshop settings",
       "path": "solutions/_shared/workshop-settings.html",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/_shared/workshop-settings.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/_shared/workshop-settings.html",
       "use": "Site-wide persisted Easy-mode harness preference",
       "status": "ready"
     },
@@ -510,7 +510,7 @@
       "id": "evidence-report",
       "label": "Styled evidence report",
       "path": "solutions/cross-selling/evidence-report.html",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/evidence-report.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/evidence-report.html",
       "use": "Learner-safe HTML summary of deterministic and visual evidence",
       "status": "ready"
     },
@@ -518,7 +518,7 @@
       "id": "quest",
       "label": "Guided field quest",
       "path": "solutions/cross-selling/quest.html",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/quest.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/quest.html",
       "use": "Resumable Easy/Hard customer journey",
       "status": "ready"
     },
@@ -526,7 +526,7 @@
       "id": "manual-tutorial",
       "label": "Manual browser tutorial",
       "path": "solutions/cross-selling/manual-tutorial.html",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/manual-tutorial.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/manual-tutorial.html",
       "use": "One action per real manual evidence frame",
       "status": "ready"
     },
@@ -534,7 +534,7 @@
       "id": "screenshots-readme",
       "label": "Screenshot evidence README",
       "path": "solutions/cross-selling/screenshots/README.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/README.md",
       "use": "Evidence boundary and capture inventory",
       "status": "ready"
     },
@@ -542,7 +542,7 @@
       "id": "manual-screenshots-readme",
       "label": "Manual screenshot README",
       "path": "solutions/cross-selling/screenshots/manual/README.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/manual/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/manual/README.md",
       "use": "Manual frame and film inventory",
       "status": "ready"
     },
@@ -550,7 +550,7 @@
       "id": "exports-readme",
       "label": "Export README",
       "path": "solutions/cross-selling/exports/README.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/exports/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/exports/README.md",
       "use": "Bundle build instructions",
       "status": "ready"
     },
@@ -558,7 +558,7 @@
       "id": "assisted-screenshots-readme",
       "label": "Assisted screenshot README",
       "path": "solutions/cross-selling/screenshots/assisted/README.md",
-      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/cross-selling/screenshots/assisted/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cross-selling/screenshots/assisted/README.md",
       "use": "Copilot-assisted evidence inventory",
       "status": "ready"
     }

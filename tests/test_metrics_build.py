@@ -25,6 +25,26 @@ def workshop_catalog():
     return build_metrics.build_workshop_catalog(load_registry())
 
 
+def agi_claim_body(
+    achievements=("started",),
+    workshop="account-intelligence",
+    agent="@aibast-agents-library/account-intelligence",
+    source="achievements.html",
+    extra="",
+):
+    achievement_list = ", ".join(achievements)
+    return (
+        "<!-- aibast-agi-progress:v1 -->\n"
+        "## Agent Growth & Impact progress\n\n"
+        "- Schema: `aibast-agi-progress/1.0`\n"
+        f"- Workshop: `{workshop}`\n"
+        f"- Agent: `{agent}`\n"
+        f"- Achievements: `{achievement_list}`\n"
+        f"- Source quest URL: {source}\n"
+        f"{extra}"
+    )
+
+
 def test_registry_exposes_stacks():
     reg = load_registry()
     assert reg["stats"]["total_stacks"] > 0
@@ -129,6 +149,29 @@ def test_metrics_build_offline_without_prior_marks_remote_unavailable(tmp_path):
     )
     assert doc["leaderboards"]["stacks"], "stack leaderboard must not be empty"
     assert doc["leaderboards"]["verticals"], "vertical breakdown must not be empty"
+    agi = doc["agi"]
+    assert agi["status"] == "unavailable"
+    assert agi["as_of"] is None
+    assert agi["carried_forward"] is False
+    assert agi["profiles"] == []
+    assert len(agi["workshops"]) == 51
+    assert len(agi["achievements"]) == 6
+    assert all(value is None for value in agi["totals"].values())
+    assert all(
+        row[field] is None
+        for row in agi["workshops"]
+        for field in (
+            "starts",
+            "workshop_completions",
+            "hard_completions",
+            "achievements",
+            "participants",
+            "points",
+            "completion_rate",
+            "hard_completion_rate",
+            "achievement_completion_rate",
+        )
+    )
 
 
 def test_offline_mode_makes_zero_network_calls(monkeypatch, tmp_path):
@@ -140,6 +183,7 @@ def test_offline_mode_makes_zero_network_calls(monkeypatch, tmp_path):
     monkeypatch.setattr(build_metrics, "fetch_traffic", fail_network)
     monkeypatch.setattr(build_metrics, "fetch_jsdelivr", fail_network)
     monkeypatch.setattr(build_metrics, "fetch_workshop_feedback", fail_network)
+    monkeypatch.setattr(build_metrics, "fetch_agi_progress", fail_network)
     monkeypatch.setattr(
         sys,
         "argv",
@@ -147,6 +191,447 @@ def test_offline_mode_makes_zero_network_calls(monkeypatch, tmp_path):
     )
 
     assert build_metrics.main() == 0
+
+
+def test_agi_claim_parser_requires_exact_canonical_fields_and_mapping():
+    catalog = workshop_catalog()
+    assert "authenticated issue authorship" in build_metrics.AGI_CAVEAT
+    assert "canonical claim format only" in build_metrics.AGI_CAVEAT
+    assert "self-reported" in build_metrics.AGI_CAVEAT
+    assert "not independently proven" in build_metrics.AGI_CAVEAT
+    assert build_metrics.AGI_POINTS == {
+        "started": 5,
+        "local-proof": 15,
+        "draft-builder": 20,
+        "preview-proven": 25,
+        "workshop-completed": 35,
+        "hard-mode-completed": 50,
+    }
+    valid = agi_claim_body(
+        achievements=build_metrics.AGI_ACHIEVEMENT_ORDER,
+        extra="This optional prose is ignored and never persisted.\n",
+    )
+
+    assert build_metrics.parse_agi_claim(valid, catalog) == {
+        "workshop": "account-intelligence",
+        "agent": "@aibast-agents-library/account-intelligence",
+        "achievements": list(build_metrics.AGI_ACHIEVEMENT_ORDER),
+        "source": "achievements.html",
+    }
+    invalid = (
+        "\n" + valid,
+        valid.replace("aibast-agi-progress/1.0", "wrong/1.0"),
+        valid.replace(
+            "- Workshop: `account-intelligence`",
+            "- Workshop: `grid-outage-response`",
+        ),
+        valid.replace(
+            "- Agent: `@aibast-agents-library/account-intelligence`",
+            "- Agent: `@aibast-agents-library/deal-progression`",
+        ),
+        valid.replace("- Source quest URL: achievements.html\n", ""),
+        valid + "- Achievements: `started`\n",
+        valid + "- Source: duplicate-source\n",
+        valid.replace(
+            "- Achievements:",
+            "> - Achievements:",
+        ),
+        valid.replace(
+            "- Achievements: `started, local-proof, draft-builder, preview-proven, workshop-completed, hard-mode-completed`",
+            '- Achievements: "started"',
+        ),
+        agi_claim_body(achievements=("started", "started")),
+        agi_claim_body(achievements=("started", "unknown-achievement")),
+        agi_claim_body(achievements=("local-proof", "started")),
+        agi_claim_body(achievements=("local-proof",)),
+        agi_claim_body(achievements=("started", "workshop-completed")),
+        agi_claim_body(achievements=("hard-mode-completed",)),
+        valid.replace(
+            "<!-- aibast-agi-progress:v1 -->",
+            "<!-- aibast-agi-achievement:v1 -->",
+        ),
+        valid + "- Event: `completed`\n",
+        valid + "- Points: 999999\n",
+        valid + "- Point: 999999\n",
+        valid + "- Score: 999999\n",
+        valid + "- points: 999999\n",
+        valid + "- SCORE: 999999\n",
+        valid + "> - Points: 999999\n",
+    )
+    assert all(
+        build_metrics.parse_agi_claim(body, catalog) is None
+        for body in invalid
+    )
+
+
+def test_agi_hard_completion_remains_separate_and_does_not_infer_badges():
+    result = build_metrics.group_agi_progress(
+        [
+            {
+                "user": {"login": "HardUser"},
+                "body": agi_claim_body(
+                    achievements=("started", "hard-mode-completed"),
+                ),
+            }
+        ],
+        workshop_catalog(),
+    )
+
+    profile = result["profiles"][0]
+    assert profile["points"] == 55
+    assert profile["achievement_count"] == 2
+    assert profile["starts"] == 1
+    assert profile["workshop_completions"] == 0
+    assert profile["hard_completions"] == 1
+    assert profile["completed_workshops"] == []
+    assert profile["achievement_ids"] == [
+        "account-intelligence:started",
+        "account-intelligence:hard-mode-completed",
+    ]
+    assert result["totals"]["achievement_completion_rate"] == 33.3
+
+
+def test_fetch_agi_progress_uses_only_the_new_marker(monkeypatch):
+    current = {
+        "state": "closed",
+        "user": {"login": "CurrentUser"},
+        "body": agi_claim_body(
+            achievements=("started", "local-proof"),
+        ),
+    }
+    obsolete = {
+        "state": "open",
+        "user": {"login": "OldUser"},
+        "body": agi_claim_body().replace(
+            "<!-- aibast-agi-progress:v1 -->",
+            "<!-- aibast-agi-achievement:v1 -->",
+        ),
+    }
+    monkeypatch.setattr(
+        build_metrics,
+        "fetch_issue_pages",
+        lambda _token: {
+            "available": True,
+            "complete": True,
+            "pages": 1,
+            "issues": [obsolete, current],
+        },
+    )
+
+    result = build_metrics.fetch_agi_progress(
+        "token",
+        workshop_catalog(),
+        as_of="2026-08-09T12:00:00Z",
+    )
+
+    assert result["status"] == "available"
+    assert result["coverage"]["issues_scanned"] == 1
+    assert result["totals"]["participants"] == 1
+    assert result["totals"]["points"] == 20
+    assert result["profiles"][0]["login"] == "CurrentUser"
+
+
+def test_agi_progress_union_scores_every_explicit_badge_once_and_is_idempotent():
+    catalog = workshop_catalog()
+    issues = [
+        {
+            "number": 1,
+            "state": "open",
+            "user": {"login": "Alice"},
+            "body": agi_claim_body(
+                extra="This free text must not persist.\n"
+            ),
+        },
+        {
+            "number": 2,
+            "state": "closed",
+            "user": {"login": "alice"},
+            "body": agi_claim_body(),
+        },
+        {
+            "number": 3,
+            "state": "edited",
+            "user": {"login": "ALICE"},
+            "body": agi_claim_body(
+                achievements=("started", "local-proof", "draft-builder"),
+            ),
+        },
+        {
+            "id": 9004,
+            "state": "closed",
+            "user": {"login": "alice"},
+            "body": agi_claim_body(
+                achievements=(
+                    "started",
+                    "local-proof",
+                    "draft-builder",
+                    "preview-proven",
+                    "workshop-completed",
+                ),
+                source="https://example.invalid/private-source",
+            ),
+        },
+        {
+            "id": 9005,
+            "state": "closed",
+            "user": {"login": "Bob"},
+            "body": agi_claim_body(
+                achievements=build_metrics.AGI_ACHIEVEMENT_ORDER,
+            ),
+        },
+        {
+            "number": 6,
+            "state": "open",
+            "user": {"login": "carol"},
+            "body": agi_claim_body(
+                workshop="deal-progression",
+                agent="@aibast-agents-library/deal-progression",
+            ),
+        },
+    ]
+
+    result = build_metrics.group_agi_progress(
+        issues,
+        catalog,
+        as_of="2026-08-09T12:00:00Z",
+    )
+    replay = build_metrics.group_agi_progress(
+        list(reversed(issues)),
+        catalog,
+        as_of="2026-08-09T12:00:00Z",
+    )
+
+    assert result == replay
+    assert result["totals"] == {
+        "participants": 3,
+        "points": 255,
+        "achievements": 12,
+        "starts": 3,
+        "workshop_completions": 2,
+        "hard_completions": 1,
+        "completion_rate": 66.7,
+        "hard_completion_rate": 33.3,
+        "achievement_completion_rate": 66.7,
+    }
+    assert [profile["login"].casefold() for profile in result["profiles"]] == [
+        "bob",
+        "alice",
+        "carol",
+    ]
+    alice = result["profiles"][1]
+    assert alice == {
+        "login": "ALICE",
+        "points": 100,
+        "achievement_count": 5,
+        "starts": 1,
+        "workshop_completions": 1,
+        "hard_completions": 0,
+        "badges": [
+            {
+                "workshop": "account-intelligence",
+                "achievement": achievement_id,
+                "points": build_metrics.AGI_POINTS[achievement_id],
+            }
+            for achievement_id in build_metrics.AGI_ACHIEVEMENT_ORDER[:-1]
+        ],
+        "achievement_ids": [
+            f"account-intelligence:{achievement_id}"
+            for achievement_id in build_metrics.AGI_ACHIEVEMENT_ORDER[:-1]
+        ],
+        "completed_workshops": ["account-intelligence"],
+    }
+    bob = result["profiles"][0]
+    assert bob["starts"] == 1
+    assert bob["workshop_completions"] == 1
+    assert bob["hard_completions"] == 1
+    assert bob["points"] == 150
+    assert result["coverage"]["diagnostics"]["accepted_issues"] == 6
+    assert result["coverage"]["diagnostics"]["accepted_achievements"] == 12
+    assert result["coverage"]["diagnostics"]["duplicate_achievements"] == 5
+    account = next(
+        row
+        for row in result["workshops"]
+        if row["slug"] == "account-intelligence"
+    )
+    assert account["starts"] == 2
+    assert account["workshop_completions"] == 2
+    assert account["hard_completions"] == 1
+    assert account["points"] == 250
+    assert account["achievements"] == 11
+    assert account["completion_rate"] == 100.0
+    assert account["hard_completion_rate"] == 50.0
+    assert account["achievement_completion_rate"] == 91.7
+    assert account["achievement_counts"]["started"] == 2
+    assert account["achievement_counts"]["hard-mode-completed"] == 1
+    started = result["achievements"][0]
+    assert started["id"] == "started"
+    assert started["claims"] == 3
+    assert started["attainment_rate"] == 100.0
+    serialized = json.dumps(result)
+    for forbidden in (
+        "This free text must not persist",
+        "private-source",
+        '"number"',
+        '"body"',
+        "9004",
+        "9005",
+    ):
+        assert forbidden not in serialized
+
+
+def test_agi_rejects_prs_unknown_users_and_invalid_claims_without_leaking_identity():
+    catalog = workshop_catalog()
+    issues = [
+        {
+            "number": 1,
+            "user": {"login": "Valid-user"},
+            "body": agi_claim_body(),
+            "pull_request": {"url": "https://example.invalid/pr/1"},
+        },
+        {"number": 2, "user": None, "body": agi_claim_body()},
+        {
+            "number": 3,
+            "user": {"login": "invalid_user"},
+            "body": agi_claim_body(),
+        },
+        {
+            "number": 4,
+            "user": {"login": "Mallory"},
+            "body": agi_claim_body(
+                workshop="unknown-workshop",
+                agent="@aibast-agents-library/account-intelligence",
+            ),
+        },
+        {
+            "number": 5,
+            "user": {"login": "Oscar"},
+            "body": agi_claim_body() + "- Source: duplicate\n",
+        },
+    ]
+
+    result = build_metrics.group_agi_progress(issues, catalog)
+
+    assert result["profiles"] == []
+    assert result["totals"]["participants"] == 0
+    assert result["coverage"]["diagnostics"] == {
+        "accepted_issues": 0,
+        "accepted_achievements": 0,
+        "duplicate_achievements": 0,
+        "invalid_issues": 2,
+        "invalid_users": 2,
+        "pull_requests": 1,
+    }
+    serialized = json.dumps(result)
+    assert "Mallory" not in serialized
+    assert "Oscar" not in serialized
+
+
+def test_offline_carries_agi_profiles_and_no_prior_leaves_nulls(tmp_path):
+    catalog = workshop_catalog()
+    prior_at = "2026-08-08T10:00:00Z"
+    prior_agi = build_metrics.group_agi_progress(
+        [
+            {
+                "state": "closed",
+                "user": {"login": "OptedIn"},
+                "body": agi_claim_body(
+                    achievements=build_metrics.AGI_ACHIEVEMENT_ORDER,
+                ),
+            }
+        ],
+        catalog,
+        as_of=prior_at,
+    )
+    prior_agi["caveat"] = "Legacy caveat without verification scope."
+    out = tmp_path / "metrics.json"
+    out.write_text(
+        json.dumps({
+            "schema": "aibast-metrics/1.0",
+            "generated_at": prior_at,
+            "agi": prior_agi,
+        }),
+        encoding="utf-8",
+    )
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(REPO_ROOT / "scripts" / "build_metrics.py"),
+            "--offline",
+            "--out",
+            str(out),
+        ],
+        capture_output=True,
+        text=True,
+        timeout=120,
+        cwd=str(REPO_ROOT),
+    )
+
+    assert result.returncode == 0, result.stderr
+    agi = json.loads(out.read_text(encoding="utf-8"))["agi"]
+    assert agi["carried_forward"] is True
+    assert agi["as_of"] == prior_at
+    assert agi["coverage"]["carried_forward"] is True
+    assert agi["totals"] == prior_agi["totals"]
+    assert agi["profiles"] == prior_agi["profiles"]
+    assert agi["caveat"] == build_metrics.AGI_CAVEAT
+
+
+def test_obsolete_event_snapshot_is_not_carried_forward():
+    catalog = workshop_catalog()
+    prior = {
+        "generated_at": "2026-08-08T10:00:00Z",
+        "agi": {
+            "schema": "aibast-agi/1.0",
+            "status": "available",
+            "profiles": [{"login": "OldEventProfile", "score": 100}],
+            "workshops": [{"slug": row["slug"]} for row in catalog],
+        },
+    }
+
+    agi = build_metrics.carry_forward_agi(prior, catalog)
+
+    assert agi["schema"] == "aibast-agi/2.0"
+    assert agi["status"] == "unavailable"
+    assert agi["profiles"] == []
+    assert all(value is None for value in agi["totals"].values())
+
+
+def test_agi_points_never_enter_usage_upvotes_or_download_totals():
+    catalog = workshop_catalog()
+    agi = build_metrics.group_agi_progress(
+        [
+            {
+                "user": {"login": "Participant"},
+                "body": agi_claim_body(
+                    achievements=build_metrics.AGI_ACHIEVEMENT_ORDER,
+                ),
+            }
+        ],
+        catalog,
+    )
+    workshop_metrics = build_metrics.build_workshop_metrics(
+        catalog,
+        path_rows=[],
+        download_counts={
+            row["slug"]: {"file_downloads": 0, "bundle_downloads": 0}
+            for row in catalog
+        },
+        feedback_counts={
+            row["slug"]: {
+                "feedback_reports": 0,
+                "feedback_open": 0,
+                "feedback_closed": 0,
+            }
+            for row in catalog
+        },
+        agent_upvotes={row["catalog_key"]: 0 for row in catalog},
+    )
+
+    assert agi["totals"]["points"] == 150
+    assert workshop_metrics["totals"]["usage_events"] == 0
+    assert workshop_metrics["totals"]["agent_upvotes"] == 0
+    assert "points" not in workshop_metrics["totals"]
 
 
 def test_offline_carries_remote_blocks_and_recomputes_local_scope(tmp_path):
@@ -1144,6 +1629,79 @@ def test_metrics_page_binds_workshop_adoption_schema():
     html = METRICS_PAGE.read_text(encoding="utf-8")
 
     for element_id in (
+        "agi-points",
+        "agi-heading",
+        "agi-summary",
+        "agi-coverage",
+        "agi-profile-hint",
+        "agi-leaderboard",
+        "agi-workshop-hint",
+        "agi-workshop-table",
+        "agi-rollup-heading",
+        "agi-rollup-hint",
+        "agi-rollup-table",
+    ):
+        assert f'id="{element_id}"' in html
+    assert "function renderAgiPoints(" in html
+    assert "renderAgiPoints();" in html
+    for field in (
+        "M.agi || {}",
+        "agi.totals || {}",
+        "agi.profiles",
+        "agi.workshops",
+        "agi.achievements",
+        "totals.participants",
+        "totals.points",
+        "totals.achievements",
+        "totals.starts",
+        "totals.workshop_completions",
+        "totals.hard_completions",
+        "totals.completion_rate",
+        "totals.achievement_completion_rate",
+        "profile.login",
+        "profile.points",
+        "profile.achievement_count",
+        "profile.starts",
+        "profile.workshop_completions",
+        "profile.hard_completions",
+        "profile.achievement_ids",
+        "row.starts",
+        "row.achievements",
+        "row.workshop_completions",
+        "row.hard_completions",
+        "row.achievement_completion_rate",
+        "row.points",
+        "row.attainment_rate",
+    ):
+        assert field in html
+    for phrase in (
+        "Agent Growth &amp; Impact (AGI) Points",
+        "Verified participants",
+        "Verified badges",
+        "Verified starts",
+        "Workshop completions",
+        "Hard completions",
+        "Completion rate",
+        "Public AGI leaderboard",
+        "Workshop achievement completion",
+        "Achievement rollup",
+        "Local self-paced AGI is different",
+        "explicitly opted into public display",
+        "never repository stars, agent upvotes, downloads, or workshop usage events",
+        "at most 150 points per workshop",
+        "never duplicates points",
+        "Missing prerequisite badges are not inferred",
+        "Verification scope.",
+        "GitHub verification confirms authenticated issue authorship and canonical claim format only",
+        "achievement completion remains self-reported and is not independently proven",
+    ):
+        assert phrase in html
+    assert "aibast-agi-achievement" not in html
+    assert html.count('href="achievements.html"') >= 2
+    assert 'aria-label="Verified public AGI profile leaderboard"' in html
+    assert 'aria-label="Verified AGI per-workshop achievement completion"' in html
+
+    for element_id in (
         "workshop-summary",
         "workshop-hint",
         "workshop-coverage",
@@ -1229,3 +1787,13 @@ def test_metrics_page_binds_workshop_adoption_schema():
     assert "setSnapshotRepository(M.repo)" in html
     assert "(repo || {}).owner" in html
     assert "(repo || {}).name" in html
+    agi_renderer = html.split("function renderAgiPoints()", 1)[1].split(
+        "const WORKSHOP_SORTS", 1
+    )[0]
+    for forbidden in (
+        "M.totals.downloads +=",
+        "row.usage_events +",
+        "row.agent_upvotes +",
+        "M.repo.stars +",
+    ):
+        assert forbidden not in agi_renderer

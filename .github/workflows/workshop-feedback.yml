@@ -2,24 +2,25 @@ name: workshop feedback triage
 
 on:
   issues:
-    types: [opened, edited, reopened]
+    types: [opened, edited, closed, reopened]
 
 permissions:
+  actions: write
   issues: write
 
 jobs:
   label:
-    if: >-
-      contains(github.event.issue.body, '<!-- aibast-workshop-feedback:v1 -->') ||
-      contains(github.event.issue.body, '<!-- aibast-agent-upvote:v1 -->')
     runs-on: ubuntu-latest
     steps:
-      - name: Label structured community signal
+      - name: Reconcile structured community signal labels
+        id: process-signal
         uses: actions/github-script@v7
         with:
           script: |
             const body = context.payload.issue.body || "";
+            const isWorkshopFeedback = body.includes("<!-- aibast-workshop-feedback:v1 -->");
             const isAgentUpvote = body.includes("<!-- aibast-agent-upvote:v1 -->");
+            const isAgiProgress = body.includes("<!-- aibast-agi-progress:v1 -->");
             const definitions = {
               "workshop-feedback": {
                 name: "workshop-feedback",
@@ -35,11 +36,30 @@ jobs:
                 name: "agent-upvote",
                 color: "1f6feb",
                 description: "Public community preference signal for an AIBAST library agent."
+              },
+              "agi-progress": {
+                name: "agi-progress",
+                color: "8250df",
+                description: "Opt-in public Agent Growth & Impact progress sync."
               }
             };
-            const selectedNames = isAgentUpvote
-              ? ["agent-upvote"]
-              : ["workshop-feedback", "needs-triage"];
+            const managedNames = new Set(Object.keys(definitions));
+            const currentNames = (context.payload.issue.labels || []).map((label) =>
+              typeof label === "string" ? label : label.name
+            );
+            const hasCurrentMarker = isWorkshopFeedback || isAgentUpvote || isAgiProgress;
+            const hasManagedLabel = currentNames.some((name) => managedNames.has(name));
+            if (!hasCurrentMarker && !hasManagedLabel) {
+              return false;
+            }
+
+            const selectedNames = isAgiProgress
+              ? ["agi-progress"]
+              : isAgentUpvote
+                ? ["agent-upvote"]
+                : isWorkshopFeedback
+                  ? ["workshop-feedback", "needs-triage"]
+                  : [];
             const labels = selectedNames.map((name) => definitions[name]);
 
             for (const label of labels) {
@@ -59,10 +79,6 @@ jobs:
               }
             }
 
-            const managedNames = new Set(Object.keys(definitions));
-            const currentNames = (context.payload.issue.labels || []).map((label) =>
-              typeof label === "string" ? label : label.name
-            );
             for (const name of currentNames) {
               if (!managedNames.has(name) || selectedNames.includes(name)) continue;
               try {
@@ -77,9 +93,28 @@ jobs:
               }
             }
 
-            await github.rest.issues.addLabels({
+            if (labels.length) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                labels: labels.map((label) => label.name)
+              });
+            }
+            return true;
+
+      - name: Dispatch metrics compilation on default branch
+        if: steps.process-signal.outputs.result == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const defaultBranch = context.payload.repository.default_branch;
+            if (!defaultBranch) {
+              throw new Error("Repository default branch is unavailable.");
+            }
+            await github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: context.issue.number,
-              labels: labels.map((label) => label.name)
+              workflow_id: "metrics.yml",
+              ref: defaultBranch
             });

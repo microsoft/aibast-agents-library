@@ -2,7 +2,7 @@
 
 ## 1. Attach the Brainstem skill
 
-Download [SKILL.md](https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/skills/aibast-easy-mode-brainstem/SKILL.md), open GitHub
+Download [SKILL.md](https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-brainstem/SKILL.md), open GitHub
 Copilot Chat in VS Code, select **Agent mode**, and drag `SKILL.md` into the
 chat. This skill fixes the lane to Brainstem and owns startup, agent
 acquisition, testing, deployment, browser validation, and the final verdict.
@@ -39,7 +39,7 @@ Deploy it into Copilot Studio for me.
    `status: complete`.
 5. The final gate requires **Draft** and `published: false`.
 
-Generic workshop engine: https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/agents/@aibast-agents-library/templates/workshop_agent.py
+Generic workshop engine: https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/workshop_agent.py
 
 The person sets the destination and reads the
 verdict; Brainstem + Copilot pull the harness.

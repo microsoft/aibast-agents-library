@@ -85,7 +85,23 @@ DARK_THEME_VARIABLES = """--cp-bg: #3d3b3a;
       --cp-sheen: rgba(255, 255, 255, 0.04);
       --cp-highlight: rgba(253, 142, 161, 0.12);"""
 
-ISSUE_URL = "https://github.com/microsoft/aibast-agents-library/issues/new"
+AGI_PROFILE_KEY = "aibast:agi-profile:v1"
+AGI_POINTS = {
+    "started": 5,
+    "local-proof": 15,
+    "draft-builder": 20,
+    "preview-proven": 25,
+    "workshop-complete": 35,
+    "hard-mode-complete": 50,
+}
+AGI_LABELS = {
+    "started": "Started",
+    "local-proof": "Local proof",
+    "draft-builder": "Draft builder",
+    "preview-proven": "Preview proven",
+    "workshop-complete": "Workshop complete",
+    "hard-mode-complete": "Hard mode complete",
+}
 
 COMMON_CSS = f"""
     :root {{
@@ -191,6 +207,180 @@ COMMON_CSS = f"""
       .hero {{ padding: 24px 20px; }}
     }}
 """
+
+
+def render_agi_runtime(slug: str) -> str:
+    badges = [
+        {"id": badge_id, "label": AGI_LABELS[badge_id], "points": points}
+        for badge_id, points in AGI_POINTS.items()
+    ]
+    return (
+        """
+      const AGI_PROFILE_KEY = __PROFILE_KEY__;
+      const AGI_WORKSHOP_SLUG = __WORKSHOP_SLUG__;
+      const AGI_BADGES = Object.freeze(__BADGES__);
+      const AGI_BADGE_IDS = new Set(AGI_BADGES.map((badge) => badge.id));
+
+      function emptyAgiProfile() {
+        return { score: 0, workshops: {}, updatedAt: null };
+      }
+
+      function validAgiTimestamp(value) {
+        return typeof value === "string" && !Number.isNaN(Date.parse(value))
+          ? value
+          : null;
+      }
+
+      function agiCount(value) {
+        return Number.isInteger(value) && value >= 0 ? value : 0;
+      }
+
+      function sanitizeAgiProfile(value) {
+        const clean = emptyAgiProfile();
+        const source =
+          value && typeof value === "object" && !Array.isArray(value) ? value : {};
+        const workshops =
+          source.workshops && typeof source.workshops === "object"
+            ? source.workshops
+            : {};
+        Object.entries(workshops).forEach(([key, rawWorkshop]) => {
+          if (!rawWorkshop || typeof rawWorkshop !== "object") return;
+          const candidate =
+            typeof rawWorkshop.slug === "string" ? rawWorkshop.slug : key;
+          if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(candidate)) return;
+          const rawProgress =
+            rawWorkshop.progress && typeof rawWorkshop.progress === "object"
+              ? rawWorkshop.progress
+              : {};
+          const progress = {
+            easyChecked: agiCount(rawProgress.easyChecked),
+            easyTotal: agiCount(rawProgress.easyTotal),
+            hardChecked: agiCount(rawProgress.hardChecked),
+            hardTotal: agiCount(rawProgress.hardTotal),
+            easyComplete: rawProgress.easyComplete === true,
+            hardComplete: rawProgress.hardComplete === true,
+            updatedAt: validAgiTimestamp(rawProgress.updatedAt),
+          };
+          const achievements = {};
+          const rawAchievements =
+            rawWorkshop.achievements &&
+            typeof rawWorkshop.achievements === "object"
+              ? rawWorkshop.achievements
+              : {};
+          AGI_BADGES.forEach((badge) => {
+            const raw = rawAchievements[badge.id];
+            const earned =
+              raw === true ||
+              (raw && typeof raw === "object" && raw.earned === true);
+            if (earned) {
+              achievements[badge.id] = {
+                earned: true,
+                earnedAt: validAgiTimestamp(raw?.earnedAt),
+              };
+            }
+          });
+          clean.workshops[candidate] = {
+            slug: candidate,
+            mode: rawWorkshop.mode === "hard" ? "hard" : "easy",
+            progress,
+            achievements,
+          };
+        });
+        clean.score = Object.values(clean.workshops).reduce(
+          (total, workshop) =>
+            total +
+            AGI_BADGES.reduce(
+              (subtotal, badge) =>
+                subtotal +
+                (workshop.achievements[badge.id]?.earned ? badge.points : 0),
+              0,
+            ),
+          0,
+        );
+        clean.updatedAt = validAgiTimestamp(source.updatedAt);
+        return clean;
+      }
+
+      function readAgiProfile() {
+        try {
+          return sanitizeAgiProfile(
+            JSON.parse(localStorage.getItem(AGI_PROFILE_KEY) || "{}"),
+          );
+        } catch (_error) {
+          return emptyAgiProfile();
+        }
+      }
+
+      function writeAgiProfile(profile) {
+        const clean = sanitizeAgiProfile(profile);
+        clean.updatedAt = new Date().toISOString();
+        localStorage.setItem(AGI_PROFILE_KEY, JSON.stringify(clean));
+        return clean;
+      }
+
+      function ensureAgiWorkshop(profile, mode = "easy") {
+        if (!profile.workshops[AGI_WORKSHOP_SLUG]) {
+          profile.workshops[AGI_WORKSHOP_SLUG] = {
+            slug: AGI_WORKSHOP_SLUG,
+            mode: mode === "hard" ? "hard" : "easy",
+            progress: {
+              easyChecked: 0,
+              easyTotal: 0,
+              hardChecked: 0,
+              hardTotal: 0,
+              easyComplete: false,
+              hardComplete: false,
+              updatedAt: null,
+            },
+            achievements: {},
+          };
+        }
+        const workshop = profile.workshops[AGI_WORKSHOP_SLUG];
+        workshop.mode = mode === "hard" ? "hard" : "easy";
+        return workshop;
+      }
+
+      function setAgiWorkshopProgress(profile, mode, patch) {
+        const workshop = ensureAgiWorkshop(profile, mode);
+        workshop.progress = {
+          ...workshop.progress,
+          ...patch,
+          updatedAt: new Date().toISOString(),
+        };
+        return writeAgiProfile(profile);
+      }
+
+      function awardAgi(profile, badgeId, mode = "easy") {
+        if (!AGI_BADGE_IDS.has(badgeId)) {
+          return { profile: sanitizeAgiProfile(profile), awarded: null };
+        }
+        const workshop = ensureAgiWorkshop(profile, mode);
+        if (workshop.achievements[badgeId]?.earned) {
+          return { profile: sanitizeAgiProfile(profile), awarded: null };
+        }
+        workshop.achievements[badgeId] = {
+          earned: true,
+          earnedAt: new Date().toISOString(),
+        };
+        return {
+          profile: writeAgiProfile(profile),
+          awarded: AGI_BADGES.find((badge) => badge.id === badgeId),
+        };
+      }
+
+      function aibastSignalIssueUrl() {
+        const pagesOwner = String(globalThis.location?.hostname || "")
+          .match(/^([a-z0-9-]+)\\.github\\.io$/i)?.[1];
+        const owner = pagesOwner || "microsoft";
+        return new URL(
+          `https://github.com/${owner}/aibast-agents-library/issues/new`,
+        );
+      }
+"""
+        .replace("__PROFILE_KEY__", json.dumps(AGI_PROFILE_KEY))
+        .replace("__WORKSHOP_SLUG__", json.dumps(slug))
+        .replace("__BADGES__", json.dumps(badges, separators=(",", ":")))
+    )
 
 
 class ScaffoldError(RuntimeError):
@@ -1785,7 +1975,10 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
   <script>
     {THEME_SCRIPT}
     (() => {{
-      if (new URLSearchParams(window.location.search).get("embedded") === "1") {{
+      if (
+        new URLSearchParams(window.location.search).get("embedded") === "1" &&
+        window.parent !== window
+      ) {{
         document.documentElement.setAttribute("data-embedded", "true");
       }}
     }})();
@@ -1821,6 +2014,7 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
     .report-button {{ border-color: var(--cp-accent); color: var(--cp-accent); }}
     .feedback-notice {{ margin-top: 14px; padding: 14px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }}
     .step footer {{ display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }}
+    .agi-manual-note {{ margin-top: 10px; color: var(--cp-text-muted); font-size: 13px; }}
     .troubleshooting details {{ padding: 14px 0; border-bottom: 1px solid var(--cp-border); }}
     summary {{ cursor: pointer; font-weight: 700; }}
     html[data-embedded="true"] body {{ background: var(--cp-bg-elevated); }}
@@ -1840,6 +2034,8 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
     <aside class="sidebar">
       <strong id="progress-label">0 of {frame_count} complete</strong>
       <div class="progress"><span id="progress-bar"></span></div>
+      <p class="agi-manual-note">Hard-mode progress earns self-paced local Agent Growth &amp; Impact points on this device.</p>
+      <p class="agi-manual-note" id="agi-manual-toast" role="status" aria-live="polite" aria-atomic="true"></p>
       <nav class="toc" aria-label="Tutorial actions">{toc_markup}</nav>
     </aside>
     <main>
@@ -1866,21 +2062,67 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
   </div>
   <script>
     (() => {{
+{render_agi_runtime(ctx.slug)}
       const key = "aibast:{html.escape(ctx.slug)}:manual-progress";
       const boxes = Array.from(document.querySelectorAll(".complete"));
       const label = document.getElementById("progress-label");
       const bar = document.getElementById("progress-bar");
+      const agiToast = document.getElementById("agi-manual-toast");
       let saved = [];
-      try {{ saved = JSON.parse(localStorage.getItem(key) || "[]"); }} catch (_error) {{ saved = []; }}
+      try {{
+        const parsed = JSON.parse(localStorage.getItem(key) || "[]");
+        saved = Array.isArray(parsed)
+          ? parsed.filter((step) => typeof step === "string")
+          : [];
+      }} catch (_error) {{
+        saved = [];
+      }}
       boxes.forEach((box) => {{
         box.checked = saved.includes(box.dataset.step);
         box.addEventListener("change", update);
       }});
       function update() {{
         const done = boxes.filter((box) => box.checked).map((box) => box.dataset.step);
+        const complete = boxes.length > 0 && done.length === boxes.length;
         localStorage.setItem(key, JSON.stringify(done));
         label.textContent = `${{done.length}} of ${{boxes.length}} complete`;
         bar.style.width = boxes.length ? `${{(done.length / boxes.length) * 100}}%` : "0%";
+        const embedded = document.documentElement.dataset.embedded === "true";
+        if (!embedded) {{
+          let profile = readAgiProfile();
+          profile = setAgiWorkshopProgress(profile, "hard", {{
+            hardChecked: done.length,
+            hardTotal: boxes.length,
+            hardComplete: complete,
+          }});
+          const badgeIds = [];
+          if (done.length > 0) badgeIds.push("started");
+          if (complete) badgeIds.push("hard-mode-complete");
+          badgeIds.forEach((badgeId) => {{
+            const result = awardAgi(profile, badgeId, "hard");
+            profile = result.profile;
+            if (result.awarded && agiToast) {{
+              agiToast.textContent =
+                `${{result.awarded.label}} earned: +${{result.awarded.points}} local AGI points.`;
+            }}
+          }});
+        }} else {{
+          const message = {{
+            type: "aibast-agi-hard-progress",
+            workshop: AGI_WORKSHOP_SLUG,
+            mode: "hard",
+            checked: done.length,
+            total: boxes.length,
+            complete,
+          }};
+          window.parent.postMessage(message, window.location.origin);
+          if (complete) {{
+            window.parent.postMessage(
+              {{ ...message, type: "aibast-agi-hard-complete" }},
+              window.location.origin,
+            );
+          }}
+        }}
       }}
       document.querySelectorAll("[data-copy-target]").forEach((button) => {{
         button.addEventListener("click", () => {{
@@ -1931,7 +2173,7 @@ Describe what was inaccurate or missing.
 3. Record the visible Copilot Studio state.
 
 > Workshop feedback report. Do not include credentials, tokens, customer data, or other sensitive information.`;
-          const url = new URL("{ISSUE_URL}");
+          const url = aibastSignalIssueUrl();
           url.searchParams.set("title", title);
           url.searchParams.set("body", body);
           window.open(url.toString(), "_blank", "noopener");
@@ -1950,6 +2192,15 @@ Describe what was inaccurate or missing.
         }};
         new ResizeObserver(notifyHeight).observe(document.documentElement);
         window.addEventListener("load", notifyHeight);
+        window.addEventListener("message", (event) => {{
+          if (
+            event.origin === window.location.origin &&
+            event.source === window.parent &&
+            event.data?.type === "aibast-agi-request-hard-progress"
+          ) {{
+            update();
+          }}
+        }});
         notifyHeight();
       }}
     }})();
@@ -2125,7 +2376,7 @@ def render_lane_learning_steps(
           <p>{html.escape(skill_explanation)}</p>
           <div class="action-panel"><strong>Do this</strong><ol><li>Download the lane-specific <code>SKILL.md</code>.</li><li>Open GitHub Copilot Chat in VS Code.</li><li>Select <strong>Agent mode</strong>.</li><li>Drag the downloaded file into the chat.</li></ol>{skill_download}</div>
           <div class="expected-panel"><strong>Expected result</strong><p>The attachment appears in Copilot Chat. From this point forward, the selected skill—not extra wording in your prompts—determines which harness runs.</p></div>
-          <label class="step-complete"><input type="checkbox" data-checkpoint="{prefix}-skill"><span>I attached the correct lane skill.</span></label>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="{prefix}-skill" data-agi-group="onboarding" data-agi-path="{prefix}"><span>I attached the correct lane skill.</span></label>
         </div>
       </article>
 
@@ -2136,7 +2387,7 @@ def render_lane_learning_steps(
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="{prefix}-build-prompt">Copy message</button></div>
           <pre class="prompt-block" id="{prefix}-build-prompt">{html.escape(build_prompt)}</pre>
           <div class="expected-panel"><strong>Expected result</strong><p>{html.escape(local_expected)}</p><p>Copilot should end by suggesting the next message: <code>Deploy it into Copilot Studio for me.</code></p></div>
-          <label class="step-complete"><input type="checkbox" data-checkpoint="{prefix}-local"><span>I saw every locked local case pass.</span></label>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="{prefix}-local" data-agi-group="local-proof" data-agi-path="{prefix}"><span>I saw every locked local case pass.</span></label>
         </div>
       </article>
 
@@ -2147,7 +2398,7 @@ def render_lane_learning_steps(
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="{prefix}-deploy-prompt">Copy message</button></div>
           <pre class="prompt-block" id="{prefix}-deploy-prompt">{html.escape(deploy_prompt)}</pre>
           <div class="expected-panel"><strong>Expected result</strong><ul><li>Draft: <code>{html.escape(display_name)}</code></li><li>Model: <code>{html.escape(model)}</code></li><li>Knowledge files: <code>{html.escape(str(knowledge_count))}</code></li><li>Skills: <code>{html.escape(str(skill_count))}</code></li><li>Status: <strong>Draft</strong>; published: <code>false</code></li></ul><p>The harness then validates the real Preview front door before returning its final verdict.</p></div>
-          <label class="step-complete"><input type="checkbox" data-checkpoint="{prefix}-draft"><span>I saw the Draft identity and unpublished state.</span></label>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="{prefix}-draft" data-agi-group="draft-builder" data-agi-path="{prefix}"><span>I saw the Draft identity and unpublished state.</span></label>
         </div>
       </article>"""
 
@@ -2195,7 +2446,7 @@ def render_preview_case_cards(ctx: JourneyContext) -> str:
           <div class="marker-group"><strong>Must include</strong><div>{marker_chips(case.get("must_include", []), "Reviewed evidence")}</div></div>
           <div class="marker-group"><strong>Must not claim</strong><div>{marker_chips(case.get("must_not_include", []), "No unsupported side effect")}</div></div>
           {screenshot_html}
-          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-{html.escape(slugify(case_id))}"><span>The Preview response matched this contract.</span></label>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-{html.escape(slugify(case_id))}" data-agi-group="preview-proven" data-agi-path="shared"><span>The Preview response matched this contract.</span></label>
         </article>"""
         )
     return "\n".join(cards)
@@ -2244,7 +2495,7 @@ def render_completion_state(ctx: JourneyContext) -> str:
           </div>
           {screenshot}
           <div class="expected-panel"><strong>Final expected verdict</strong><p>The harness reports <code>status: complete</code>, exact case totals, the Draft identity, and <code>published: false</code>. The module ends here; it does not offer publication.</p></div>
-          <label class="step-complete"><input type="checkbox" data-checkpoint="easy-complete"><span>I confirmed the final Draft verdict.</span></label>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="easy-complete" data-agi-group="final-verdict" data-agi-path="shared"><span>I confirmed the final Draft verdict.</span></label>
         </div>
       </section>"""
 
@@ -2345,6 +2596,19 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .report-actions {{ display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }}
     .report-button {{ border-color: var(--cp-accent); color: var(--cp-accent); }}
     .feedback-notice {{ margin-top: 14px; padding: 14px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }}
+    .agi-panel {{ display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(260px, .8fr); gap: 18px; margin: 20px 0; padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }}
+    .agi-panel h2, .agi-panel h3, .agi-panel p {{ margin-top: 0; }}
+    .agi-panel h2 {{ margin-bottom: 4px; font-size: 20px; }}
+    .agi-score-line {{ display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 18px; }}
+    .agi-score {{ color: var(--cp-accent); font-size: 30px; font-weight: 800; }}
+    .agi-badges {{ display: flex; flex-wrap: wrap; gap: 7px; margin: 12px 0; padding: 0; list-style: none; }}
+    .agi-badge {{ padding: 5px 8px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface-soft); font-size: 12px; }}
+    .agi-claims {{ padding-left: 18px; border-left: 1px solid var(--cp-border); }}
+    .agi-claim-actions {{ display: flex; flex-wrap: wrap; gap: 8px; }}
+    .agi-claim-actions [hidden] {{ display: none; }}
+    .agi-fine-print {{ margin: 10px 0 0; color: var(--cp-text-muted); font-size: 13px; }}
+    .agi-toast {{ position: fixed; right: 18px; bottom: 18px; z-index: 50; max-width: 360px; padding: 12px 14px; border: 1px solid var(--cp-accent); border-radius: 10px; background: var(--cp-panel-strong); box-shadow: var(--cp-shadow); }}
+    .agi-toast:empty {{ display: none; }}
     .marker-group {{ margin: 12px 0; }}
     .marker-group > strong {{ display: block; margin-bottom: 6px; }}
     .marker-chip {{ display: inline-flex; margin: 0 6px 6px 0; padding: 5px 8px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface); color: var(--cp-text-muted); font-size: 12px; }}
@@ -2367,7 +2631,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .prompt-block {{ overflow-x: auto; margin: 14px 0 0; padding: 16px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text); white-space: pre-wrap; word-break: break-word; font-family: Consolas, "Courier New", Courier, monospace; font-size: 13px; line-height: 1.55; }}
     .resource-list {{ columns: 2; padding-left: 22px; }}
     .resource-list li {{ break-inside: avoid; margin-bottom: 10px; }}
-    @media (max-width: 760px) {{ .engine-flow, .outcome-grid, .skill-onboarding, .module-summary, .preview-grid, .done-grid {{ grid-template-columns: 1fr; }} }}
+    @media (max-width: 760px) {{ .engine-flow, .outcome-grid, .skill-onboarding, .module-summary, .preview-grid, .done-grid, .agi-panel {{ grid-template-columns: 1fr; }} .agi-claims {{ padding: 16px 0 0; border-top: 1px solid var(--cp-border); border-left: 0; }} }}
     @media (max-width: 620px) {{ .resource-list {{ columns: 1; }} .prompt-heading {{ display: block; }} .prompt-heading .button {{ margin-top: 12px; }} }}
   </style>
 </head>
@@ -2388,6 +2652,30 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         <button class="mode" data-mode="hard" role="tab">Hard</button>
       </div>
     </section>
+
+    <section class="agi-panel" aria-labelledby="agi-panel-title">
+      <div>
+        <p class="eyebrow">Self-paced local achievements</p>
+        <h2 id="agi-panel-title">Agent Growth &amp; Impact (AGI) Points</h2>
+        <div class="agi-score-line">
+          <span><strong class="agi-score" id="agi-total-score">0</strong> total points</span>
+          <span><strong id="agi-workshop-score">0</strong> in this workshop</span>
+        </div>
+        <p id="agi-progress-label">0 of 0 Easy checkpoints complete</p>
+        <div class="progress" aria-hidden="true"><span id="agi-progress-bar"></span></div>
+        <ul class="agi-badges" id="agi-badge-list" aria-label="Badges earned in this workshop"><li class="agi-badge">No badges yet</li></ul>
+        <a href="../../achievements.html">View AGI achievements and local profile</a>
+      </div>
+      <div class="agi-claims">
+        <h3>Optional public verification</h3>
+        <p class="agi-fine-print">These points and badges are local, self-reported workshop progress—not externally verified proof or a capability claim.</p>
+        <div class="agi-claim-actions">
+          <button class="button primary" type="button" data-agi-sync hidden>Sync AGI Points to GitHub</button>
+        </div>
+        <p class="agi-fine-print">This opens one prefilled progress issue containing every badge currently earned here. Nothing syncs until you submit it. Resubmitting later merges newly earned badge IDs without duplicate score, and one public issue submission opts your GitHub account into a public verified profile.</p>
+      </div>
+    </section>
+    <div class="agi-toast" id="agi-badge-toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
     <section class="path" data-path="easy">
       <div class="module-summary">
@@ -2476,25 +2764,164 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
   </main>
   <script>
     (() => {{
+{render_agi_runtime(ctx.slug)}
+      const AGI_CANONICAL_AGENT = {json.dumps(str(ctx.deployment.get("name") or f"@aibast-agents-library/{ctx.slug}"))};
+      const AGI_SYNC_ORDER = Object.freeze([
+        {{ localId: "started", claimId: "started" }},
+        {{ localId: "local-proof", claimId: "local-proof" }},
+        {{ localId: "draft-builder", claimId: "draft-builder" }},
+        {{ localId: "preview-proven", claimId: "preview-proven" }},
+        {{ localId: "workshop-complete", claimId: "workshop-completed" }},
+        {{ localId: "hard-mode-complete", claimId: "hard-mode-completed" }},
+      ]);
       const modeKey = "aibast:{html.escape(ctx.slug)}:quest-mode";
       const globalEngineKey = "aibast:workshop-engine";
       const progressKey = "aibast:{html.escape(ctx.slug)}:quest-progress";
       const buttons = Array.from(document.querySelectorAll("[data-mode]"));
       const paths = Array.from(document.querySelectorAll("[data-path]"));
       const boxes = Array.from(document.querySelectorAll("[data-checkpoint]"));
+      const agiTotalScore = document.getElementById("agi-total-score");
+      const agiWorkshopScore = document.getElementById("agi-workshop-score");
+      const agiProgressLabel = document.getElementById("agi-progress-label");
+      const agiProgressBar = document.getElementById("agi-progress-bar");
+      const agiBadgeList = document.getElementById("agi-badge-list");
+      const agiToast = document.getElementById("agi-badge-toast");
       let saved = {{}};
-      try {{ saved = JSON.parse(localStorage.getItem(progressKey) || "{{}}"); }} catch (_error) {{ saved = {{}}; }}
+      try {{
+        const parsed = JSON.parse(localStorage.getItem(progressKey) || "{{}}");
+        saved =
+          parsed && typeof parsed === "object" && !Array.isArray(parsed)
+            ? parsed
+            : {{}};
+      }} catch (_error) {{
+        saved = {{}};
+      }}
       boxes.forEach((box) => {{
-        box.checked = Boolean(saved[box.dataset.checkpoint]);
+        box.checked = saved[box.dataset.checkpoint] === true;
         box.addEventListener("change", () => {{
           saved[box.dataset.checkpoint] = box.checked;
           localStorage.setItem(progressKey, JSON.stringify(saved));
+          evaluateAgi(true);
         }});
       }});
+
+      function currentEasyPath() {{
+        return localStorage.getItem(globalEngineKey) === "brainstem"
+          ? "brainstem"
+          : "copilot";
+      }}
+
+      function requiredEasyBoxes() {{
+        const path = currentEasyPath();
+        return boxes.filter(
+          (box) => box.dataset.agiPath === path || box.dataset.agiPath === "shared",
+        );
+      }}
+
+      function agiGroupComplete(group) {{
+        const path = currentEasyPath();
+        const members = boxes.filter(
+          (box) =>
+            box.dataset.agiGroup === group &&
+            (box.dataset.agiPath === path || box.dataset.agiPath === "shared"),
+        );
+        return members.length > 0 && members.every((box) => box.checked);
+      }}
+
+      function announceAgiBadge(badge) {{
+        if (!badge || !agiToast) return;
+        agiToast.textContent =
+          `${{badge.label}} earned: +${{badge.points}} local AGI points.`;
+        window.setTimeout(() => {{
+          if (agiToast.textContent.includes(badge.label)) agiToast.textContent = "";
+        }}, 5000);
+      }}
+
+      function earnedAgiSyncIds(achievements) {{
+        return AGI_SYNC_ORDER.filter(
+          (entry) => achievements[entry.localId]?.earned,
+        ).map((entry) => entry.claimId);
+      }}
+
+      function renderAgiPanel(profile, mode) {{
+        const workshop = profile.workshops[AGI_WORKSHOP_SLUG];
+        const achievements = workshop?.achievements || {{}};
+        const workshopPoints = AGI_BADGES.reduce(
+          (total, badge) =>
+            total + (achievements[badge.id]?.earned ? badge.points : 0),
+          0,
+        );
+        agiTotalScore.textContent = String(profile.score);
+        agiWorkshopScore.textContent = String(workshopPoints);
+        const easyRequired = requiredEasyBoxes();
+        const easyChecked = easyRequired.filter((box) => box.checked).length;
+        const hardChecked = workshop?.progress?.hardChecked || 0;
+        const hardTotal = workshop?.progress?.hardTotal || 0;
+        const checked = mode === "hard" ? hardChecked : easyChecked;
+        const total = mode === "hard" ? hardTotal : easyRequired.length;
+        agiProgressLabel.textContent =
+          `${{checked}} of ${{total}} ${{mode === "hard" ? "Hard steps" : "Easy checkpoints"}} complete`;
+        agiProgressBar.style.width = total ? `${{(checked / total) * 100}}%` : "0%";
+        agiBadgeList.replaceChildren();
+        const earned = AGI_BADGES.filter(
+          (badge) => achievements[badge.id]?.earned,
+        );
+        if (!earned.length) {{
+          const item = document.createElement("li");
+          item.className = "agi-badge";
+          item.textContent = "No badges yet";
+          agiBadgeList.append(item);
+        }} else {{
+          earned.forEach((badge) => {{
+            const item = document.createElement("li");
+            item.className = "agi-badge";
+            item.textContent = `${{badge.label}} · +${{badge.points}}`;
+            agiBadgeList.append(item);
+          }});
+        }}
+        document.querySelector("[data-agi-sync]").hidden =
+          earnedAgiSyncIds(achievements).length === 0;
+      }}
+
+      function evaluateAgi(announce = false) {{
+        const mode = localStorage.getItem(modeKey) === "hard" ? "hard" : "easy";
+        const easyRequired = requiredEasyBoxes();
+        const easyChecked = easyRequired.filter((box) => box.checked).length;
+        const hasCheckpoint = boxes.some((box) => box.checked);
+        let profile = readAgiProfile();
+        const existing = profile.workshops[AGI_WORKSHOP_SLUG];
+        if (hasCheckpoint || existing) {{
+          profile = setAgiWorkshopProgress(profile, mode, {{
+            easyChecked,
+            easyTotal: easyRequired.length,
+            easyComplete:
+              easyRequired.length > 0 && easyChecked === easyRequired.length,
+          }});
+          const earnedByCondition = [
+            ["started", hasCheckpoint],
+            ["local-proof", agiGroupComplete("local-proof")],
+            ["draft-builder", agiGroupComplete("draft-builder")],
+            ["preview-proven", agiGroupComplete("preview-proven")],
+            [
+              "workshop-complete",
+              easyRequired.length > 0 && easyChecked === easyRequired.length,
+            ],
+          ];
+          earnedByCondition.forEach(([badgeId, condition]) => {{
+            if (!condition) return;
+            const result = awardAgi(profile, badgeId, mode);
+            profile = result.profile;
+            if (announce) announceAgiBadge(result.awarded);
+          }});
+        }}
+        renderAgiPanel(profile, mode);
+      }}
+
       function selectMode(mode) {{
         buttons.forEach((button) => button.classList.toggle("active", button.dataset.mode === mode));
         paths.forEach((path) => {{ path.hidden = path.dataset.path !== mode; }});
         localStorage.setItem(modeKey, mode);
+        evaluateAgi(false);
       }}
       buttons.forEach((button) => button.addEventListener("click", () => selectMode(button.dataset.mode)));
       document.querySelectorAll("[data-copy-target]").forEach((button) => {{
@@ -2549,11 +2976,40 @@ Describe what was inaccurate or missing.
 4. Record the visible result and any Copilot response.
 
 > Workshop feedback report. Do not include credentials, tokens, customer data, or other sensitive information.`;
-          const url = new URL("{ISSUE_URL}");
+          const url = aibastSignalIssueUrl();
           url.searchParams.set("title", title);
           url.searchParams.set("body", body);
           window.open(url.toString(), "_blank", "noopener");
         }});
+      }});
+      function openAgiSync() {{
+        const profile = readAgiProfile();
+        const achievements =
+          profile.workshops[AGI_WORKSHOP_SLUG]?.achievements || {{}};
+        const earnedIds = earnedAgiSyncIds(achievements);
+        if (!earnedIds.length) return;
+        const source = new URL(window.location.href);
+        source.search = "";
+        source.hash = "";
+        const body = `<!-- aibast-agi-progress:v1 -->
+## Agent Growth & Impact progress
+
+- Schema: \\`aibast-agi-progress/1.0\\`
+- Workshop: \\`${{AGI_WORKSHOP_SLUG}}\\`
+- Agent: \\`${{AGI_CANONICAL_AGENT}}\\`
+- Achievements: ${{earnedIds.join(", ")}}
+- Source: ${{source.toString()}}
+
+Opening this form does not sync anything. Submit the issue to sync these earned IDs. Resubmitting later merges newly earned IDs without duplicate score; the server computes the verified score. One public GitHub issue submission opts this account into a public verified profile.
+
+> Do not add credentials, tokens, customer data, or other sensitive information.`;
+        const url = aibastSignalIssueUrl();
+        url.searchParams.set("title", `[AGI progress] {ctx.title}`);
+        url.searchParams.set("body", body);
+        window.open(url.toString(), "_blank", "noopener");
+      }}
+      document.querySelector("[data-agi-sync]").addEventListener("click", () => {{
+        openAgiSync();
       }});
       const hardFrame = document.getElementById("hard-mode-tutorial");
       const resizeHardFrame = () => {{
@@ -2561,18 +3017,70 @@ Describe what was inaccurate or missing.
         hardFrame.style.height =
           `${{hardFrame.contentDocument.documentElement.scrollHeight}}px`;
       }};
-      hardFrame?.addEventListener("load", resizeHardFrame);
+      hardFrame?.addEventListener("load", () => {{
+        resizeHardFrame();
+        hardFrame.contentWindow?.postMessage(
+          {{ type: "aibast-agi-request-hard-progress" }},
+          window.location.origin,
+        );
+      }});
       window.addEventListener("message", (event) => {{
         if (
           event.origin === window.location.origin &&
+          event.source === hardFrame?.contentWindow &&
           event.data?.type === "aibast-hard-mode-height" &&
           Number.isFinite(event.data.height)
         ) {{
           hardFrame.style.height = `${{event.data.height}}px`;
         }}
+        if (
+          event.origin === window.location.origin &&
+          event.source === hardFrame?.contentWindow &&
+          ["aibast-agi-hard-progress", "aibast-agi-hard-complete"].includes(
+            event.data?.type,
+          ) &&
+          event.data.workshop === AGI_WORKSHOP_SLUG &&
+          Number.isInteger(event.data.checked) &&
+          Number.isInteger(event.data.total)
+        ) {{
+          const hardComplete =
+            event.data.complete === true &&
+            event.data.total > 0 &&
+            event.data.checked === event.data.total;
+          const activeMode =
+            localStorage.getItem(modeKey) === "hard" ? "hard" : "easy";
+          let profile = readAgiProfile();
+          if (
+            event.data.checked === 0 &&
+            !profile.workshops[AGI_WORKSHOP_SLUG]
+          ) {{
+            renderAgiPanel(profile, activeMode);
+            return;
+          }}
+          profile = setAgiWorkshopProgress(profile, activeMode, {{
+            hardChecked: event.data.checked,
+            hardTotal: event.data.total,
+            hardComplete,
+          }});
+          if (event.data.checked > 0) {{
+            const result = awardAgi(profile, "started", activeMode);
+            profile = result.profile;
+            announceAgiBadge(result.awarded);
+          }}
+          if (hardComplete) {{
+            const result = awardAgi(
+              profile,
+              "hard-mode-complete",
+              activeMode,
+            );
+            profile = result.profile;
+            announceAgiBadge(result.awarded);
+          }}
+          renderAgiPanel(profile, activeMode);
+        }}
       }});
       window.addEventListener("resize", resizeHardFrame);
-      selectMode(localStorage.getItem(modeKey) || "easy");
+      selectMode(localStorage.getItem(modeKey) === "hard" ? "hard" : "easy");
     }})();
   </script>
 </body>

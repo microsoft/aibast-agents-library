@@ -15,6 +15,55 @@ from tools.audit_metrics_page import (
 CONTRACT = load_contract(DEFAULT_CONTRACT)
 
 
+def test_actual_page_exposes_accessible_verified_agi_surface():
+    html = DEFAULT_PAGE.read_text(encoding="utf-8")
+    for element_id in (
+        "agi-points",
+        "agi-heading",
+        "agi-summary",
+        "agi-coverage",
+        "agi-profile-hint",
+        "agi-leaderboard",
+        "agi-workshop-hint",
+        "agi-workshop-table",
+        "agi-rollup-heading",
+        "agi-rollup-hint",
+        "agi-rollup-table",
+    ):
+        assert f'id="{element_id}"' in html
+    assert 'aria-labelledby="agi-heading"' in html
+    assert 'role="status"' in html.split('id="agi-coverage"', 1)[1].split(
+        ">", 1
+    )[0]
+    assert 'aria-live="polite"' in html.split('id="agi-summary"', 1)[1].split(
+        ">", 1
+    )[0]
+    assert '<caption>Verified public AGI profiles ranked by points</caption>' in html
+    assert '<caption>Canonical workshops ranked by verified achievement points</caption>' in html
+    assert '<caption>Verified claims by canonical AGI achievement</caption>' in html
+    assert "function renderAgiPoints()" in html
+    assert "renderAgiPoints();" in html
+    assert "href=\"achievements.html\"" in html
+    assert "href=\"docs/metrics-admin-setup.html\"" in html
+    assert ".agi-card {\n  min-width: 0;\n}" in html
+
+
+def test_feedback_targets_pages_owner_with_microsoft_fallback():
+    html = DEFAULT_PAGE.read_text(encoding="utf-8")
+    assert "function resolveFeedbackOwner(hostname)" in html
+    assert r"\.github\.io$/i" in html
+    assert "return pagesHost ? pagesHost[1] : 'microsoft';" in html
+    assert "const issueOwner = resolveFeedbackOwner(location.hostname);" in html
+    assert (
+        "new URL(`https://github.com/${issueOwner}/aibast-agents-library/issues/new`)"
+        in html
+    )
+    feedback_function = html.split("function wireFeedback()", 1)[1].split(
+        "$('tabs').addEventListener", 1
+    )[0]
+    assert "github.com/microsoft/aibast-agents-library/issues/new" not in feedback_function
+
+
 def _theme_block(selector, variables):
     declarations = "\n".join(f"  {name}: {value};" for name, value in variables.items())
     return f"{selector} {{\n{declarations}\n}}"

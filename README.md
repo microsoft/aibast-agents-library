@@ -94,7 +94,9 @@ The [**Agent Library**](https://microsoft.github.io/aibast-agents-library/librar
 
 The files themselves live under [`agents/@aibast-agents-library/`](agents/@aibast-agents-library/), grouped into `*_stacks/*_stack/` folders — a stack is the set of agents that solves one industry scenario end to end. Review a template, adapt it to your environment, then drag the trusted `*_agent.py` file into the Brainstem chat or place it in the configured agents directory. Agent files are Python code and execute locally, so review them before installation.
 
-[**Library metrics**](https://microsoft.github.io/aibast-agents-library/metrics.html) publishes the catalog's public numbers — downloads, installer fetches, and composition — every figure traceable to a public API. `scripts/build_metrics.py` builds the snapshot; the dashboard states plainly which paths it cannot count.
+[**Agent Growth & Impact (AGI) Points**](https://microsoft.github.io/aibast-agents-library/achievements.html) records self-paced workshop achievements locally and lets learners explicitly sync canonical badges to a public GitHub-attributed profile.
+
+[**Library metrics**](https://microsoft.github.io/aibast-agents-library/metrics.html) publishes public downloads, every-file observations, per-agent upvotes, workshop adoption, and opt-in AGI rollups, with every figure traceable to a public source. `scripts/build_metrics.py` builds the snapshot; the dashboard states plainly which paths it cannot count.
 
 ---
 

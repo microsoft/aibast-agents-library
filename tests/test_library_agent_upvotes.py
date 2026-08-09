@@ -19,7 +19,7 @@ def library_script():
     return scripts[-1]
 
 
-def run_library_node(probe):
+def run_library_node(probe, hostname=""):
     assert shutil.which("node"), "Node.js is required to validate library scripts"
     script = library_script()
     script = re.sub(r"\ninit\(\);\s*$", "\n", script)
@@ -40,14 +40,19 @@ globalThis.window = {
   isSecureContext: false,
   open(...args) { globalThis.openArgs = args; }
 };
-globalThis.location = { hash: "", search: "", pathname: "/library.html" };
+globalThis.location = {
+  hash: "",
+  search: "",
+  pathname: "/library.html",
+  hostname: __HOSTNAME__
+};
 globalThis.history = { replaceState() {} };
 globalThis.localStorage = { getItem() { return null; } };
 globalThis.navigator = {};
 """
     result = subprocess.run(
         ["node"],
-        input=harness + script + "\n" + probe,
+        input=harness.replace("__HOSTNAME__", json.dumps(hostname)) + script + "\n" + probe,
         capture_output=True,
         text=True,
         check=False,
@@ -175,6 +180,26 @@ console.log(JSON.stringify({body, openArgs}));
     assert features == "noopener"
 
 
+def test_upvote_signal_targets_the_current_github_pages_fork():
+    result = run_library_node(
+        """
+const agent = {
+  name: "@aibast-agents-library/example",
+  display_name: "Example Agent",
+  _solution: {}
+};
+state.agents = [agent];
+openAgentUpvote(agent.name);
+console.log(JSON.stringify({openArgs}));
+""",
+        hostname="kody-w.github.io",
+    )
+
+    assert result["openArgs"][0].startswith(
+        "https://github.com/kody-w/aibast-agents-library/issues/new?"
+    )
+
+
 def test_upvote_action_stops_card_open_and_never_increments_count():
     text = library_text()
     handler = text[text.index('document.addEventListener("click"'):text.index(
@@ -202,4 +227,5 @@ def test_upvote_action_stops_card_open_and_never_increments_count():
 def test_library_explains_public_agent_signal_and_snapshot_refresh():
     text = library_text()
     assert "public structured GitHub issue signals, not repository stars" in text
-    assert "Metrics refresh after the scheduled snapshot." in text
+    assert "metrics workflow refreshes automatically" in text
+    assert '<a href="achievements.html">AGI Points</a>' in text

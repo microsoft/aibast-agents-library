@@ -203,6 +203,11 @@ def test_required_setup_permissions_commands_and_acceptance_checks_are_present()
         "Settings → Secrets and variables → Actions",
         "Read and write permissions",
         "workflow GITHUB_TOKEN",
+        "Authorize the autonomous compiler workflows",
+        "repository default branch",
+        "receives issue events for opened, edited, closed, and reopened activity",
+        "manage signal labels",
+        "dispatch metrics.yml",
         "traffic read live",
         "workshop scope is 51",
         "Grid Outage excluded",
@@ -213,6 +218,18 @@ def test_required_setup_permissions_commands_and_acceptance_checks_are_present()
         "aibast-agent-upvote/1.0",
         "aibast-workshop-feedback:v1",
         "aibast-workshop-feedback/1.0",
+        "aibast-agi-progress:v1",
+        "aibast-agi-progress/1.0",
+        "Agent Growth & Impact",
+        "Submitting the public issue explicitly opts the GitHub login",
+        "maximum of 150 per workshop",
+        "never infers missing prerequisite IDs",
+        "Claims containing a",
+        "agi-progress",
+        "agi.totals",
+        "agi.profiles",
+        "agi.workshops",
+        "agi.achievements",
         "one GitHub account counts at most once per agent",
         "stores only aggregates",
         "labels recognized upvote issues",
@@ -240,6 +257,8 @@ def test_required_setup_permissions_commands_and_acceptance_checks_are_present()
         "gh secret set METRICS_TOKEN --repo microsoft/aibast-agents-library",
         "contents: write",
         "issues: read",
+        "actions: write",
+        "issues: write",
         "gh workflow run metrics.yml --repo microsoft/aibast-agents-library --ref main",
         'read -s -p "Fine-grained PAT: " GH_TOKEN',
         "export GH_TOKEN",
@@ -251,14 +270,41 @@ def test_required_setup_permissions_commands_and_acceptance_checks_are_present()
         assert command in HTML
 
 
-def test_issues_read_is_required_for_both_structured_issue_sources():
+def test_issues_read_is_required_for_all_structured_issue_sources():
     text = visible_text()
     assert "Issues Read-only (required)" in text
     assert "required Issues: Read-only" in text
     assert "structured agent-upvote and workshop-feedback issues" in text
+    assert "opt-in AGI progress issues" in text
     assert "required issues: read" in text.lower()
     assert not re.search(r"\boptional\b.{0,80}\bIssues\b", text, re.IGNORECASE)
     assert not re.search(r"\bIssues\b.{0,80}\boptional\b", text, re.IGNORECASE)
+
+
+def test_autonomous_compiler_permissions_and_marker_removal_go_live_are_checked():
+    text = visible_text()
+    for workflow_path in (
+        ".github/workflows/workshop-feedback.yml",
+        ".github/workflows/metrics.yml",
+    ):
+        assert workflow_path in HTML
+    for permission in (
+        "actions: write",
+        "issues: write",
+        "issues: read",
+        "contents: write",
+    ):
+        assert f"<code>{permission}</code>" in HTML or permission in HTML
+    for phrase in (
+        "exists on the repository default branch",
+        "receives issue events for opened, edited, closed, and reopened activity",
+        "dispatch metrics.yml on the repository default branch",
+        "Editing a marker away removes stale managed signal labels and still triggers recompilation",
+        "unrelated issues without a marker or pre-existing managed signal label do not dispatch",
+        "remove its marker removes stale managed labels and triggers default-branch metrics recompilation",
+        "rather than refreshing only when a claim is created",
+    ):
+        assert phrase.lower() in text.lower(), phrase
 
 
 def test_per_agent_upvote_ingestion_deduplication_privacy_and_labels_are_checked():
@@ -275,6 +321,81 @@ def test_per_agent_upvote_ingestion_deduplication_privacy_and_labels_are_checked
         "never GitHub logins",
     ):
         assert phrase.lower() in text.lower(), phrase
+
+
+def test_agi_marker_schema_consent_dedupe_scoring_aggregates_and_privacy_are_checked():
+    text = visible_text()
+    assert "aibast-agi-achievement" not in HTML
+    for phrase in (
+        "<!-- aibast-agi-progress:v1 -->",
+        "aibast-agi-progress/1.0",
+        "canonical 51 with Grid Outage excluded",
+        "canonical primary agent",
+        "started",
+        "local-proof",
+        "draft-builder",
+        "preview-proven",
+        "workshop-completed",
+        "hard-mode-completed",
+        "case-insensitive GitHub login + workshop + achievement",
+        "Re-sync adds new badges without duplicating points",
+        "maximum of 150 per workshop",
+        "Claims containing a",
+        "explicitly opts the GitHub login into a public profile",
+        "Invalid, quoted, duplicate-field, conflicting, pull-request, unknown-user",
+        "only the agi-progress label",
+        "persists no issue body, free text, source issue ID",
+        "Offline runs carry forward the prior AGI block",
+    ):
+        assert phrase.lower() in text.lower(), phrase
+    canonical_ids = (
+        "started",
+        "local-proof",
+        "draft-builder",
+        "preview-proven",
+        "workshop-completed",
+        "hard-mode-completed",
+    )
+    positions = [HTML.index(f"<code>{value}</code>") for value in canonical_ids]
+    assert positions == sorted(positions)
+    for forbidden in ("Points", "Point", "Score"):
+        assert f"<code>{forbidden}</code>" in HTML
+    assert (
+        "GitHub verification confirms authenticated issue authorship and canonical "
+        "claim format only; achievement completion remains self-reported and is "
+        "not independently proven."
+    ) in text
+
+
+def test_agi_snapshot_and_page_checks_keep_all_other_metrics_separate():
+    for field in (
+        "agi.status",
+        "agi.as_of",
+        "agi.coverage",
+        "agi.caveat",
+        "agi.totals",
+        "agi.profiles",
+        "agi.workshops",
+        "agi.achievements",
+        "usage_events",
+        "totals.agent_upvotes",
+        "repo.stars",
+    ):
+        assert field in HTML
+    text = visible_text().lower()
+    assert "maximum of 150 per workshop" in text
+    assert "fixed server points" in text
+    assert "independently from" in text
+    for metric in (
+        "usage_events",
+        "agent upvotes",
+        "downloads",
+        "repository stars",
+    ):
+        assert metric in text
+    assert "without cross-metric double counting" in text
+    assert "local self-paced agi" in text
+    assert "verified public agi" in text
 
 
 def test_snapshot_contract_uses_per_agent_upvotes_not_repository_stars():

@@ -13,9 +13,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="data:," rel="icon">
 <title>Library Metrics — AIBAST Agents Library</title>
-<meta name="description" content="Public download, per-agent upvote, and workshop usage metrics for the AIBAST Agents Library. Every number is sourced from a public API.">
+<meta name="description" content="Public download, per-agent upvote, workshop usage, and verified Agent Growth & Impact Points for the AIBAST Agents Library.">
 <meta property="og:title" content="AIBAST Library Metrics">
-<meta property="og:description" content="Downloads, agent upvotes, workshop usage, installer fetches, and catalog composition. All public data.">
+<meta property="og:description" content="Downloads, agent upvotes, workshop usage, verified AGI Points, installer fetches, and catalog composition. All public data.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://microsoft.github.io/aibast-agents-library/metrics.html">
 <style>
@@ -446,6 +446,38 @@ code,
   font-size: .8rem;
 }
 
+.agi-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+}
+
+.agi-card {
+  min-width: 0;
+}
+
+.agi-card h3 {
+  margin: 0 0 5px;
+  font-size: 1rem;
+}
+
+.agi-card .hint {
+  margin-bottom: 12px;
+}
+
+.agi-card.wide {
+  grid-column: 1 / -1;
+}
+
+.agi-login {
+  font-weight: 750;
+}
+
+.agi-badges {
+  color: var(--cp-text-soft);
+  font-size: .72rem;
+}
+
 .workshop-controls {
   margin-top: 18px;
 }
@@ -863,7 +895,8 @@ footer {
   }
 
   .grid2,
-  .grid3 {
+  .grid3,
+  .agi-grid {
     grid-template-columns: 1fr;
   }
 
@@ -957,7 +990,7 @@ footer {
   <section class="page-head" aria-labelledby="page-title">
     <p class="eyebrow">Downloads, agent upvotes, and workshop usage</p>
     <h1 id="page-title">Public library metrics</h1>
-    <p>Every number below comes from a public, verifiable API — the GitHub traffic and releases endpoints, the jsDelivr CDN, and the catalog's own <code>registry.json</code>. No private analytics, no tracking pixel, nothing about who you are.</p>
+    <p>Every number below comes from a public, verifiable API — GitHub traffic, releases and opt-in issues, the jsDelivr CDN, and the catalog's own <code>registry.json</code>. There is no private analytics or tracking pixel. Identity appears only in verified AGI profiles whose GitHub users explicitly opted into public display by submitting a claim.</p>
     <div class="upvote-note">
       <p><b>Agent upvotes</b> are structured public GitHub issue submissions launched from the library. One GitHub account counts once per agent, including closed submissions. Opening the form is not a vote until the issue is submitted and passes the marker, schema, and canonical-agent checks.</p>
       <a class="upvote-action" href="library.html">Browse agents</a>
@@ -975,6 +1008,55 @@ footer {
   <section aria-label="Key library metrics">
     <div class="kpis" id="kpis" aria-live="polite" aria-busy="true">
       <div class="kpi">Loading metrics&hellip;</div>
+    </div>
+  </section>
+
+  <section class="section" id="agi-points" aria-labelledby="agi-heading">
+    <div class="section-head">
+      <h2 id="agi-heading">Agent Growth &amp; Impact (AGI) Points</h2>
+      <div class="hint">verified public progress synced through opt-in GitHub issues</div>
+    </div>
+    <div class="workshop-summary" id="agi-summary" aria-live="polite"></div>
+    <p class="coverage-status" id="agi-coverage" role="status" aria-live="polite" aria-atomic="true">Verified AGI coverage is loading.</p>
+    <div class="card">
+      <p class="coverage-note"><b>Verification scope.</b> GitHub verification confirms authenticated issue authorship and canonical claim format only; achievement completion remains self-reported and is not independently proven.</p>
+      <p class="coverage-note"><b>Verified public AGI</b> is server-scored from submitted public GitHub progress issues. Fixed achievement values are: started 5, local proof 15, draft builder 20, preview proven 25, workshop completed 35, and hard mode completed 50, for at most 150 points per workshop. Re-syncing unions explicitly claimed achievement IDs and never duplicates points. Missing prerequisite badges are not inferred.</p>
+      <p class="coverage-note"><b>Local self-paced AGI is different.</b> Progress on <a href="achievements.html">achievements.html</a> stays local until a person deliberately submits a verification issue. Submission explicitly opts that GitHub login into the public verified profile and leaderboard. Verified AGI Points are never repository stars, agent upvotes, downloads, or workshop usage events, and they are not added to those metrics. Administrators can review the <a href="docs/metrics-admin-setup.html">AGI metrics setup and privacy checklist</a>.</p>
+      <div class="agi-grid">
+        <section class="agi-card" aria-labelledby="agi-leaderboard-heading">
+          <h3 id="agi-leaderboard-heading">Public AGI leaderboard</h3>
+          <div class="hint" id="agi-profile-hint">Profiles are public only after opt-in submission</div>
+          <div class="table-scroll">
+            <table id="agi-leaderboard" aria-label="Verified public AGI profile leaderboard">
+              <caption>Verified public AGI profiles ranked by points</caption>
+              <thead><tr><th scope="col">GitHub login</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Hard completions</th></tr></thead>
+              <tbody><tr><td colspan="6">Loading verified AGI profiles&hellip;</td></tr></tbody>
+            </table>
+          </div>
+        </section>
+        <section class="agi-card" aria-labelledby="agi-workshop-heading">
+          <h3 id="agi-workshop-heading">Workshop achievement completion</h3>
+          <div class="hint" id="agi-workshop-hint">Canonical 51-workshop verified scope</div>
+          <div class="table-scroll">
+            <table id="agi-workshop-table" aria-label="Verified AGI per-workshop achievement completion">
+              <caption>Canonical workshops ranked by verified achievement points</caption>
+              <thead><tr><th scope="col">Workshop</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Hard completions</th><th class="num" scope="col">Achievement completion</th></tr></thead>
+              <tbody><tr><td colspan="7">Loading verified workshop achievements&hellip;</td></tr></tbody>
+            </table>
+          </div>
+        </section>
+        <section class="agi-card wide" aria-labelledby="agi-rollup-heading">
+          <h3 id="agi-rollup-heading">Achievement rollup</h3>
+          <div class="hint" id="agi-rollup-hint">Fixed server values and verified attainment</div>
+          <div class="table-scroll">
+            <table id="agi-rollup-table" aria-label="Verified AGI achievement rollup">
+              <caption>Verified claims by canonical AGI achievement</caption>
+              <thead><tr><th scope="col">Achievement</th><th class="num" scope="col">Points each</th><th class="num" scope="col">Claims</th><th class="num" scope="col">Participants</th><th class="num" scope="col">Workshops</th><th class="num" scope="col">Attainment</th></tr></thead>
+              <tbody><tr><td colspan="6">Loading verified achievement rollups&hellip;</td></tr></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
     </div>
   </section>
 
@@ -1188,12 +1270,18 @@ footer {
         which the Actions <code>GITHUB_TOKEN</code> cannot be granted. Without a <code>METRICS_TOKEN</code> secret the
         snapshot reuses the last authorized read rather than zeroing the figures, and the stamp above says so.
       </p>
+      <p class="note note-follow">
+        <b>On verified AGI Points.</b> Public profiles exist only after an opt-in GitHub issue submission passes the
+        strict achievement schema and canonical workshop/agent checks. The collector deduplicates by login, workshop,
+        and event, computes points itself, and publishes no issue body, free text, or issue identifier.
+      </p>
     </div>
   </section>
 
   <footer>
     Generated by <code>scripts/build_metrics.py</code> &middot; data in
     <a href="state/metrics.json">state/metrics.json</a> &middot;
+    <a href="achievements.html">AGI achievements</a> &middot;
     <a href="library.html">browse the agents</a> &middot;
     <a href="docs/metrics-admin-setup.html">Admin setup checklist</a> &middot;
     <a href="https://github.com/microsoft/aibast-agents-library" target="_blank" rel="noopener">microsoft/aibast-agents-library</a>
@@ -1208,6 +1296,7 @@ let OWNER = DEFAULT_OWNER, REPO = DEFAULT_REPO;
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const $ = id => document.getElementById(id);
 const num = n => (n === null || n === undefined || isNaN(n)) ? '—' : Number(n).toLocaleString();
+const percent = n => (n === null || n === undefined || isNaN(n)) ? '—' : `${Number(n).toLocaleString(undefined, { maximumFractionDigits: 1 })}%`;
 const esc = s => String(s == null ? '' : s).replace(/[&<>"'`]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','`':'&#96;'}[c]));
 const bytes = b => !b ? '—' : b > 1e9 ? (b/1e9).toFixed(1)+' GB' : b > 1e6 ? (b/1e6).toFixed(1)+' MB' : (b/1e3).toFixed(0)+' KB';
 const short = s => String(s || '').replace(/^@[^/]+\//, '');
@@ -1340,6 +1429,7 @@ function render() {
     trafficGap.appendChild(callout);
   }
   renderKPIs();
+  renderAgiPoints();
   renderWorkshops();
   $('board-hint').textContent = `ranked across ${num(t.agents)} single-file agents`;
   renderChart();
@@ -1360,8 +1450,10 @@ function render() {
 function renderKPIs() {
   const t = M.totals, r = M.repo || {};
   const workshopTotals = (M.workshops || {}).totals || {};
+  const agiTotals = (M.agi || {}).totals || {};
   const cards = [
     { primary: true, label: 'Total downloads', value: num(t.downloads), sub: `${num(t.clones)} repository clones (includes this repo's own CI) · ${num(t.cdn_hits)} CDN hits · ${num(t.release_downloads)} release assets` },
+    { primary: true, label: 'Verified AGI points', value: num(agiTotals.points), sub: `${num(agiTotals.participants)} opt-in public participants · ${num(agiTotals.achievements)} badges · ${num(agiTotals.starts)} starts · ${num(agiTotals.workshop_completions)} workshop completions · ${num(agiTotals.hard_completions)} hard completions` },
     { label: 'Agent upvotes', value: num(t.agent_upvotes), sub: 'validated public issue submissions · one GitHub account per agent' },
     { label: 'Workshop usage events', value: num(workshopTotals.usage_events), sub: `${num(workshopTotals.workshops)} advertised workshops · public event-count floor, not users` },
     { label: 'Repository stars', value: num(r.stars), sub: `${num(r.forks)} forks · ${num(r.open_issues)} open issues · separate from agent upvotes` },
@@ -1379,6 +1471,113 @@ function renderKPIs() {
        <div class="value">${card.value}</div>
        <div class="sub">${esc(card.sub)}</div>
      </article>`).join('');
+}
+
+function renderAgiPoints() {
+  const agi = M.agi || {};
+  const totals = agi.totals || {};
+  const profiles = Array.isArray(agi.profiles) ? agi.profiles.slice() : [];
+  const workshops = Array.isArray(agi.workshops) ? agi.workshops.slice() : [];
+  const achievements = Array.isArray(agi.achievements) ? agi.achievements.slice() : [];
+  const summary = [
+    { label: 'Verified participants', value: totals.participants },
+    { label: 'AGI Points', value: totals.points },
+    { label: 'Verified badges', value: totals.achievements },
+    { label: 'Verified starts', value: totals.starts },
+    { label: 'Workshop completions', value: totals.workshop_completions },
+    { label: 'Hard completions', value: totals.hard_completions },
+    { label: 'Completion rate', value: percent(totals.completion_rate), formatted: true },
+    { label: 'Achievement completion', value: percent(totals.achievement_completion_rate), formatted: true }
+  ];
+  $('agi-summary').innerHTML = summary.map(item =>
+    `<div class="workshop-stat"><b>${item.formatted ? item.value : num(item.value)}</b><span>${esc(item.label)}</span></div>`).join('');
+
+  const coverage = agi.coverage || {};
+  const status = agi.status || coverage.status || 'unavailable';
+  const agiCoverage = $('agi-coverage');
+  const coverageText = status === 'unavailable'
+    ? 'Verified public AGI claims are unavailable in this snapshot. Null values are not verified zeros.'
+    : `${status === 'partial' ? 'Partial' : 'Available'} verified AGI coverage · ${num((coverage.diagnostics || {}).accepted_achievements)} unique achievements from ${num(coverage.issues_scanned)} marker-matched public issues.`;
+  agiCoverage.textContent = agi.carried_forward
+    ? `Carried forward from ${agi.as_of || 'the prior snapshot'} · ${coverageText}`
+    : coverageText;
+  if (status === 'unavailable') appendAdminSetupNotice(agiCoverage);
+
+  profiles.sort((left, right) =>
+    (Number(right.points) || 0) - (Number(left.points) || 0)
+    || (Number(right.achievement_count) || 0) - (Number(left.achievement_count) || 0)
+    || (Number(right.workshop_completions) || 0) - (Number(left.workshop_completions) || 0)
+    || (Number(right.hard_completions) || 0) - (Number(left.hard_completions) || 0)
+    || String(left.login).localeCompare(String(right.login), undefined, { sensitivity: 'base' })
+  );
+  $('agi-profile-hint').textContent = profiles.length
+    ? `${num(profiles.length)} opt-in public profile${profiles.length === 1 ? '' : 's'}`
+    : 'Profiles are public only after opt-in submission';
+  const profileTable = $('agi-leaderboard');
+  profileTable.innerHTML = `<caption>Verified public AGI profiles ranked by points</caption>
+    <thead><tr><th scope="col">GitHub login</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Hard completions</th></tr></thead>
+    <tbody>${profiles.length ? profiles.map(profile => {
+      const login = String(profile.login || '');
+      const profileUrl = /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?$/.test(login)
+        ? `https://github.com/${encodeURIComponent(login)}`
+        : `https://github.com/${OWNER}/${REPO}`;
+      const achievementIds = Array.isArray(profile.achievement_ids)
+        ? profile.achievement_ids
+        : [];
+      return `<tr>
+        <td class="agi-login"><a href="${profileUrl}" target="_blank" rel="noopener">${esc(login)}</a></td>
+        <td class="num">${num(profile.points)}</td>
+        <td class="num agi-badges" title="${esc(achievementIds.join(', '))}">${num(profile.achievement_count)}</td>
+        <td class="num">${num(profile.starts)}</td>
+        <td class="num">${num(profile.workshop_completions)}</td>
+        <td class="num">${num(profile.hard_completions)}</td>
+      </tr>`;
+    }).join('') : '<tr><td class="empty" colspan="6">No opt-in verified AGI profiles are available in this snapshot.</td></tr>'}</tbody>`;
+
+  workshops.sort((left, right) =>
+    (Number(right.points) || 0) - (Number(left.points) || 0)
+    || (Number(right.achievements) || 0) - (Number(left.achievements) || 0)
+    || (Number(right.workshop_completions) || 0) - (Number(left.workshop_completions) || 0)
+    || (Number(right.hard_completions) || 0) - (Number(left.hard_completions) || 0)
+    || (Number(right.starts) || 0) - (Number(left.starts) || 0)
+    || String(left.display_name || left.slug).localeCompare(String(right.display_name || right.slug))
+  );
+  $('agi-workshop-hint').textContent = workshops.length
+    ? `${num(workshops.length)} canonical workshops; Grid Outage excluded`
+    : 'Canonical workshop achievement rows are unavailable';
+  const workshopTable = $('agi-workshop-table');
+  workshopTable.innerHTML = `<caption>Canonical workshops ranked by verified achievement points</caption>
+    <thead><tr><th scope="col">Workshop</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Hard completions</th><th class="num" scope="col">Achievement completion</th></tr></thead>
+    <tbody>${workshops.length ? workshops.map(row => {
+      const slug = String(row.slug || '');
+      const quest = /^[a-z0-9-]+$/.test(slug)
+        ? `solutions/${encodeURIComponent(slug)}/quest.html`
+        : 'library.html';
+      return `<tr>
+        <td><a href="${quest}">${esc(row.display_name || pretty(row.slug))}</a><div class="rank-meta mono">${esc(row.agent_name || '')}</div></td>
+        <td class="num">${num(row.points)}</td>
+        <td class="num">${num(row.achievements)}</td>
+        <td class="num">${num(row.starts)}</td>
+        <td class="num">${num(row.workshop_completions)}</td>
+        <td class="num">${num(row.hard_completions)}</td>
+        <td class="num">${percent(row.achievement_completion_rate)}</td>
+      </tr>`;
+    }).join('') : '<tr><td class="empty" colspan="7">No canonical AGI workshop rows are available. Regenerate the metrics snapshot.</td></tr>'}</tbody>`;
+
+  $('agi-rollup-hint').textContent = achievements.length
+    ? `${num(achievements.length)} canonical achievement IDs`
+    : 'Canonical achievement rollup is unavailable';
+  const achievementTable = $('agi-rollup-table');
+  achievementTable.innerHTML = `<caption>Verified claims by canonical AGI achievement</caption>
+    <thead><tr><th scope="col">Achievement</th><th class="num" scope="col">Points each</th><th class="num" scope="col">Claims</th><th class="num" scope="col">Participants</th><th class="num" scope="col">Workshops</th><th class="num" scope="col">Attainment</th></tr></thead>
+    <tbody>${achievements.length ? achievements.map(row => `<tr>
+      <td><span class="agi-login">${esc(row.label || pretty(row.id))}</span><div class="rank-meta mono">${esc(row.id || '')}</div></td>
+      <td class="num">${num(row.points)}</td>
+      <td class="num">${num(row.claims)}</td>
+      <td class="num">${num(row.participants)}</td>
+      <td class="num">${num(row.workshops)}</td>
+      <td class="num">${percent(row.attainment_rate)}</td>
+    </tr>`).join('') : '<tr><td class="empty" colspan="6">No AGI achievement rollup is available.</td></tr>'}</tbody>`;
 }
 
 const WORKSHOP_SORTS = [
@@ -1807,8 +2006,16 @@ function toggleTheme() {
 }
 
 const feedbackSchema = 'aibast-workshop-feedback/1.0';
+function resolveFeedbackOwner(hostname) {
+  const pagesHost = hostname.match(
+    /^([a-z0-9](?:[a-z0-9-]{0,37}[a-z0-9])?)\.github\.io$/i
+  );
+  return pagesHost ? pagesHost[1] : 'microsoft';
+}
+
 function wireFeedback() {
-  const issueUrl = new URL('https://github.com/microsoft/aibast-agents-library/issues/new');
+  const issueOwner = resolveFeedbackOwner(location.hostname);
+  const issueUrl = new URL(`https://github.com/${issueOwner}/aibast-agents-library/issues/new`);
   issueUrl.searchParams.set('title', '[Metrics] Dashboard feedback');
   issueUrl.searchParams.set('body', `<!-- aibast-workshop-feedback:v1 -->
 Feedback schema: ${feedbackSchema}
