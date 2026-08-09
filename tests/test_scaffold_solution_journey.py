@@ -295,11 +295,11 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "Raw resources" not in quest
     assert "Compare and contrast while you build" in quest
     assert "Both approaches are valid starting points" in quest
-    assert "literal browser construction" in quest
+    assert "Build it manually, one captured step at a time." in quest
     assert "Draft and is not published" in quest
     assert "manual-tutorial.html" in quest
     assert "copilot-assisted-walkthrough.gif" in quest
-    assert "manual-build-walkthrough.gif" in quest
+    assert "Open the manual tutorial" in quest
     assert "Attach the Brainstem skill" in personless
     assert "drag `SKILL.md` into the" in personless
     assert "Give me Demo Journey using Easy Mode and test it for me." in personless

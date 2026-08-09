@@ -1481,20 +1481,10 @@ def render_personless_prompt_cards(ctx: JourneyContext) -> str:
 
 def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     assisted_gif = ctx.package / "screenshots" / "assisted" / "copilot-assisted-walkthrough.gif"
-    manual_gif = referenced_media_path(
-        ctx,
-        "gif",
-        ctx.package / "screenshots" / "manual" / "manual-build-walkthrough.gif",
-    )
     assisted_link = (
         '<a class="button" href="screenshots/assisted/copilot-assisted-walkthrough.gif">Watch assisted film</a>'
         if assisted_gif.exists()
         else '<span class="button" aria-disabled="true">Assisted film pending</span>'
-    )
-    manual_link = (
-        '<a class="button" href="screenshots/manual/manual-build-walkthrough.gif">Watch manual film</a>'
-        if manual_gif.exists()
-        else '<span class="button" aria-disabled="true">Manual film pending</span>'
     )
     workshop_agent = workshop_agent_path(ctx)
     workshop_agent_link = (
@@ -1649,13 +1639,12 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     </section>
 
     <section class="path" data-path="hard" hidden>
-      <h2>Hard mode — literal browser construction</h2>
-      <p>Do not use PAC CLI or YAML import in Hard mode. Do not use a plugin architect.</p>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="hard-tutorial"><span><strong>Open the manual tutorial</strong><span>Use <a href="manual-tutorial.html">manual-tutorial.html</a>; it maps one action to each real browserfilm frame.</span></span></label>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="hard-parity"><span><strong>Match reviewed components</strong><span>Use the exact manual instructions, knowledge, skills, and reviewed model.</span></span></label>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="hard-cases"><span><strong>Replay manual Preview evidence</strong><span>Compare only with recorded case identifiers and screenshots; do not invent missing proof.</span></span></label>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="hard-draft"><span><strong>Record the explicit Draft gate</strong><span>Do not choose Publish. The manual duplicate remains Draft and is not published.</span></span></label>
-      <p>{manual_link}</p>
+      <section class="card">
+        <p class="eyebrow">Hard mode</p>
+        <h2>Build it manually, one captured step at a time.</h2>
+        <p class="lede">The manual tutorial is the complete Hard-mode experience: every browser action, reviewed file, expected result, screenshot, Preview case, and Draft gate in order.</p>
+        <p><a class="button primary" href="manual-tutorial.html">Open the manual tutorial</a></p>
+      </section>
     </section>
 
     <section class="card">
