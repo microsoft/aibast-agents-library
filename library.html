@@ -900,6 +900,28 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.workshop-launch {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid var(--cp-border);
+  border-left: 4px solid var(--cp-accent);
+  border-radius: 10px;
+  background: var(--cp-accent-soft);
+}
+.workshop-launch strong {
+  font-size: 0.76rem;
+}
+.workshop-launch span {
+  color: var(--cp-text-muted);
+  font-size: 0.69rem;
+  line-height: 1.45;
+}
+.workshop-launch .button {
+  justify-content: center;
+  width: 100%;
+}
 .blueprint-row {
   padding: 8px 0;
   border-bottom: 1px solid var(--cp-border);
@@ -1789,7 +1811,7 @@ function architectureHTML(architecture, solution) {
         `).join("")}
       </div>
       <h3>Learn and build</h3>
-      <p>The Beta workshop is the single entry point. It teaches the use case, runs the globally configured Easy harness, and keeps the complete manual Hard mode inline on the same page.</p>
+      <p>The workshop is the single entry point. It teaches the use case, runs the globally configured Easy harness, and keeps the complete manual Hard mode inline on the same page.</p>
       <div class="capability-grid">
         <article class="capability-card">
           <code>Guided Easy mode</code>
@@ -1803,7 +1825,7 @@ function architectureHTML(architecture, solution) {
         </article>
       </div>
       <div class="detail-actions">
-        ${questUrl ? `<a class="button primary" href="${esc(questUrl)}">Open Beta workshop</a>` : `<span class="button" aria-disabled="true">Workshop pending</span>`}
+        ${questUrl ? `<a class="button primary" href="${esc(questUrl)}">Open workshop</a>` : `<span class="button" aria-disabled="true">Workshop pending</span>`}
         <a class="button" href="solutions/_shared/workshop-settings.html?return=../../library.html">Workshop settings</a>
         ${fieldGuideUrl ? `<a class="button" href="${esc(fieldGuideUrl)}">Open field guide</a>` : ""}
       </div>
@@ -1917,9 +1939,11 @@ function openAgent(name) {
             <div class="asset"><strong>One-pager</strong><span title="${esc(solution.onepager || "")}">${esc(solution.onepager || "Not listed")}</span></div>
             <div class="asset"><strong>Demo video</strong><span title="${esc(solution.demo_video || "")}">${esc(solution.demo_video || "Not listed")}</span></div>
             ${solution.source_verified ? `<div class="asset"><strong>Content source</strong><span>Approved AI BAST PowerPoint</span></div>` : ""}
-            ${solution.package ? `<div class="detail-actions" style="margin-top:10px">
-              ${solution.package.quest_url ? `<a class="button primary small" href="${esc(solution.package.quest_url)}">Open Beta workshop</a>` : ""}
-              ${solution.package.slug ? `<a class="button small" href="solutions/${esc(solution.package.slug)}/field-guide.html">Open field guide</a>` : ""}
+            ${solution.package ? `<div class="workshop-launch">
+              <strong>Hands-on workshop</strong>
+              <span>Use the guided Easy path or switch to the complete inline Hard mode from one focused learning page.</span>
+              ${solution.package.quest_url ? `<a class="button primary" href="${esc(solution.package.quest_url)}">Open workshop</a>` : ""}
+              ${solution.package.slug ? `<a class="button" href="solutions/${esc(solution.package.slug)}/field-guide.html">Open field guide</a>` : ""}
             </div>` : ""}
           </section>
           ${stack ? `<section class="aside-block"><h3>Stack</h3><button class="button full" type="button" data-action="open-stack" data-key="${enc(`${stack.vertical}/${stack.stack}`)}">${esc(stack.display_name)} · ${stack.agent_count} agents</button></section>` : ""}

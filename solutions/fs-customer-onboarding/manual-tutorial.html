@@ -193,8 +193,7 @@
     .look-for strong { color: var(--cp-text); }
     .look-for p { margin: 8px 0 0; }
     .report-button { border-color: var(--cp-accent); color: var(--cp-accent); }
-    .beta-badge { display: inline-flex; align-items: center; margin-bottom: 12px; padding: 5px 9px; border-radius: 999px; background: var(--cp-warning); color: var(--cp-accent-fg); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
-    .beta-notice { margin-top: 14px; padding: 14px; border: 1px solid var(--cp-warning); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
+    .feedback-notice { margin-top: 14px; padding: 14px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
     .step footer { display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
     .troubleshooting details { padding: 14px 0; border-bottom: 1px solid var(--cp-border); }
     summary { cursor: pointer; font-weight: 700; }
@@ -236,12 +235,11 @@
     </aside>
     <main>
       <section class="hero">
-        <span class="beta-badge">Beta workshop</span>
         <p class="eyebrow">Hard mode · literal browser construction</p>
         <h1>Build Customer Onboarding Agent manually.</h1>
         <p class="lede">No PAC CLI, YAML import, or plugin architect. Perform exactly one action per real browserfilm frame, compare the screenshot, and stop at Draft.</p>
         <div class="notice"><strong>Synthetic disclosure:</strong> this is qualitative workflow evidence using packaged synthetic inputs. It is not a customer KPI or a live-system result.</div>
-        <div class="beta-notice"><strong>Help improve this Beta:</strong> use the report button on any step when the action, expected result, or visible product state is inaccurate. It opens a prefilled GitHub issue and does not submit automatically.</div>
+        <div class="feedback-notice"><strong>Found something inaccurate?</strong> Use <em>Report an issue</em> on that step. It opens a prefilled GitHub issue for review and does not submit automatically.</div>
         <!-- No pending evidence. -->
       </section>
       <h2>Build and verify</h2>
@@ -627,7 +625,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
           const locationLabel = button.dataset.reportLocation || "Hard-mode step";
           const expected = button.dataset.reportExpected || "Describe the expected result.";
           const evidence = button.dataset.reportEvidence || "No evidence path supplied.";
-          const title = `[Beta workshop] Customer Onboarding Agent: ${locationLabel}`;
+          const title = `[Workshop feedback] Customer Onboarding Agent: ${locationLabel}`;
           const body = `<!-- aibast-workshop-feedback:v1 -->
 ## Workshop signal
 
@@ -652,7 +650,7 @@ Describe what was inaccurate or missing.
 2. Follow the step shown above.
 3. Record the visible Copilot Studio state.
 
-> Beta workshop report. Do not include credentials, tokens, customer data, or other sensitive information.`;
+> Workshop feedback report. Do not include credentials, tokens, customer data, or other sensitive information.`;
           const url = new URL("https://github.com/microsoft/aibast-agents-library/issues/new");
           url.searchParams.set("title", title);
           url.searchParams.set("body", body);

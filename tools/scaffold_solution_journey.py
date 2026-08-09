@@ -1544,7 +1544,7 @@ def render_evidence_report_html(ctx: JourneyContext) -> str:
   </header>
   <main class="page">
     <section class="hero">
-      <p class="eyebrow">Beta workshop evidence</p>
+      <p class="eyebrow">Workshop evidence</p>
       <h1>{html.escape(ctx.title)}</h1>
       <p class="lede">This report separates the deterministic machine gate from learner-facing visual checkpoints. A screenshot can support a positive observation; it never replaces the full locked-case validation.</p>
     </section>
@@ -1819,8 +1819,7 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
     .look-for strong {{ color: var(--cp-text); }}
     .look-for p {{ margin: 8px 0 0; }}
     .report-button {{ border-color: var(--cp-accent); color: var(--cp-accent); }}
-    .beta-badge {{ display: inline-flex; align-items: center; margin-bottom: 12px; padding: 5px 9px; border-radius: 999px; background: var(--cp-warning); color: var(--cp-accent-fg); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }}
-    .beta-notice {{ margin-top: 14px; padding: 14px; border: 1px solid var(--cp-warning); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }}
+    .feedback-notice {{ margin-top: 14px; padding: 14px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }}
     .step footer {{ display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }}
     .troubleshooting details {{ padding: 14px 0; border-bottom: 1px solid var(--cp-border); }}
     summary {{ cursor: pointer; font-weight: 700; }}
@@ -1845,12 +1844,11 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
     </aside>
     <main>
       <section class="hero">
-        <span class="beta-badge">Beta workshop</span>
         <p class="eyebrow">Hard mode · literal browser construction</p>
         <h1>Build {html.escape(ctx.title)} manually.</h1>
         <p class="lede">No PAC CLI, YAML import, or plugin architect. Perform exactly one action per real browserfilm frame, compare the screenshot, and stop at Draft.</p>
         <div class="notice"><strong>Synthetic disclosure:</strong> this is qualitative workflow evidence using packaged synthetic inputs. It is not a customer KPI or a live-system result.</div>
-        <div class="beta-notice"><strong>Help improve this Beta:</strong> use the report button on any step when the action, expected result, or visible product state is inaccurate. It opens a prefilled GitHub issue and does not submit automatically.</div>
+        <div class="feedback-notice"><strong>Found something inaccurate?</strong> Use <em>Report an issue</em> on that step. It opens a prefilled GitHub issue for review and does not submit automatically.</div>
         {pending_notice}
       </section>
       <h2>Build and verify</h2>
@@ -1907,7 +1905,7 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
           const locationLabel = button.dataset.reportLocation || "Hard-mode step";
           const expected = button.dataset.reportExpected || "Describe the expected result.";
           const evidence = button.dataset.reportEvidence || "No evidence path supplied.";
-          const title = `[Beta workshop] {ctx.title}: ${{locationLabel}}`;
+          const title = `[Workshop feedback] {ctx.title}: ${{locationLabel}}`;
           const body = `<!-- aibast-workshop-feedback:v1 -->
 ## Workshop signal
 
@@ -1932,7 +1930,7 @@ Describe what was inaccurate or missing.
 2. Follow the step shown above.
 3. Record the visible Copilot Studio state.
 
-> Beta workshop report. Do not include credentials, tokens, customer data, or other sensitive information.`;
+> Workshop feedback report. Do not include credentials, tokens, customer data, or other sensitive information.`;
           const url = new URL("{ISSUE_URL}");
           url.searchParams.set("title", title);
           url.searchParams.set("body", body);
@@ -2346,8 +2344,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .preview-case h4 {{ margin: 0; }}
     .report-actions {{ display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }}
     .report-button {{ border-color: var(--cp-accent); color: var(--cp-accent); }}
-    .beta-badge {{ display: inline-flex; align-items: center; margin-bottom: 12px; padding: 5px 9px; border-radius: 999px; background: var(--cp-warning); color: var(--cp-accent-fg); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }}
-    .beta-notice {{ margin-top: 14px; padding: 14px; border: 1px solid var(--cp-warning); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }}
+    .feedback-notice {{ margin-top: 14px; padding: 14px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }}
     .marker-group {{ margin: 12px 0; }}
     .marker-group > strong {{ display: block; margin-bottom: 6px; }}
     .marker-chip {{ display: inline-flex; margin: 0 6px 6px 0; padding: 5px 8px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface); color: var(--cp-text-muted); font-size: 12px; }}
@@ -2381,12 +2378,11 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
   </header>
   <main class="page">
     <section class="hero">
-      <span class="beta-badge">Beta workshop</span>
       <p class="eyebrow">Evidence-grounded customer journey</p>
       <h1>{html.escape(ctx.title)}</h1>
       <p class="lede">Use your globally configured Easy-mode harness, or reproduce every action directly in Hard mode.</p>
       <div class="notice"><strong>Boundary:</strong> synthetic qualitative evidence only—not a customer KPI, measured production result, live connection, or publication approval.</div>
-      <div class="beta-notice"><strong>Help improve this Beta:</strong> use the report buttons when a prompt, expected result, screenshot, or product state is inaccurate. The button opens a prefilled GitHub issue for review; it does not submit anything automatically.</div>
+      <div class="feedback-notice"><strong>Found something inaccurate?</strong> Use <em>Report an issue</em> at that point. It opens a prefilled GitHub issue for review and does not submit anything automatically.</div>
       <div class="mode-switch" role="tablist">
         <button class="mode active" data-mode="easy" role="tab">Easy</button>
         <button class="mode" data-mode="hard" role="tab">Hard</button>
@@ -2522,7 +2518,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
           const locationLabel = button.dataset.reportLocation || "Workshop";
           const expected = button.dataset.reportExpected || "Describe the expected result.";
           const evidence = button.dataset.reportEvidence || "No evidence path supplied.";
-          const title = `[Beta workshop] {ctx.title}: ${{locationLabel}}`;
+          const title = `[Workshop feedback] {ctx.title}: ${{locationLabel}}`;
           const body = `<!-- aibast-workshop-feedback:v1 -->
 ## Workshop signal
 
@@ -2535,7 +2531,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
 
 ## Workshop context
 
-This issue was opened from a contextual Beta workshop report button.
+This issue was opened from a contextual workshop <em>Report an issue</em> button.
 
 ## Expected
 
@@ -2552,7 +2548,7 @@ Describe what was inaccurate or missing.
 3. Follow the step or Preview case.
 4. Record the visible result and any Copilot response.
 
-> Beta workshop report. Do not include credentials, tokens, customer data, or other sensitive information.`;
+> Workshop feedback report. Do not include credentials, tokens, customer data, or other sensitive information.`;
           const url = new URL("{ISSUE_URL}");
           url.searchParams.set("title", title);
           url.searchParams.set("body", body);

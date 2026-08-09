@@ -401,8 +401,10 @@ def check_quest(
 ) -> None:
     label = "quest.html"
     lowered = text.lower()
-    if "beta workshop" not in lowered:
-        failures.add(f"{label}: missing Beta workshop label")
+    if "aibast guided workshop" not in lowered:
+        failures.add(f"{label}: missing AIBAST guided workshop label")
+    if "beta workshop" in lowered:
+        failures.add(f"{label}: contains obsolete Beta workshop label")
     if "aibast:workshop-engine" not in text:
         failures.add(f"{label}: missing global aibast:workshop-engine key")
     if not has_href(parser, "workshop-settings.html"):
@@ -570,8 +572,10 @@ def check_manual(
 ) -> None:
     label = "manual-tutorial.html"
     lowered = text.lower()
-    if "beta workshop" not in lowered:
-        failures.add(f"{label}: missing Beta workshop label")
+    if "aibast manual workshop" not in lowered:
+        failures.add(f"{label}: missing AIBAST manual workshop label")
+    if "beta workshop" in lowered:
+        failures.add(f"{label}: contains obsolete Beta workshop label")
     required_protocol = (
         'get("embedded")',
         '=== "1"',

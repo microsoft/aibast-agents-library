@@ -223,8 +223,7 @@
     .preview-case h4 { margin: 0; }
     .report-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
     .report-button { border-color: var(--cp-accent); color: var(--cp-accent); }
-    .beta-badge { display: inline-flex; align-items: center; margin-bottom: 12px; padding: 5px 9px; border-radius: 999px; background: var(--cp-warning); color: var(--cp-accent-fg); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
-    .beta-notice { margin-top: 14px; padding: 14px; border: 1px solid var(--cp-warning); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
+    .feedback-notice { margin-top: 14px; padding: 14px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
     .marker-group { margin: 12px 0; }
     .marker-group > strong { display: block; margin-bottom: 6px; }
     .marker-chip { display: inline-flex; margin: 0 6px 6px 0; padding: 5px 8px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface); color: var(--cp-text-muted); font-size: 12px; }
@@ -258,12 +257,11 @@
   </header>
   <main class="page">
     <section class="hero">
-      <span class="beta-badge">Beta workshop</span>
       <p class="eyebrow">Evidence-grounded customer journey</p>
       <h1>Returns and Complaints Resolution Agent</h1>
       <p class="lede">Use your globally configured Easy-mode harness, or reproduce every action directly in Hard mode.</p>
       <div class="notice"><strong>Boundary:</strong> synthetic qualitative evidence only—not a customer KPI, measured production result, live connection, or publication approval.</div>
-      <div class="beta-notice"><strong>Help improve this Beta:</strong> use the report buttons when a prompt, expected result, screenshot, or product state is inaccurate. The button opens a prefilled GitHub issue for review; it does not submit anything automatically.</div>
+      <div class="feedback-notice"><strong>Found something inaccurate?</strong> Use <em>Report an issue</em> at that point. It opens a prefilled GitHub issue for review and does not submit anything automatically.</div>
       <div class="mode-switch" role="tablist">
         <button class="mode active" data-mode="easy" role="tab">Easy</button>
         <button class="mode" data-mode="hard" role="tab">Hard</button>
@@ -513,7 +511,7 @@
           const locationLabel = button.dataset.reportLocation || "Workshop";
           const expected = button.dataset.reportExpected || "Describe the expected result.";
           const evidence = button.dataset.reportEvidence || "No evidence path supplied.";
-          const title = `[Beta workshop] Returns and Complaints Resolution Agent: ${locationLabel}`;
+          const title = `[Workshop feedback] Returns and Complaints Resolution Agent: ${locationLabel}`;
           const body = `<!-- aibast-workshop-feedback:v1 -->
 ## Workshop signal
 
@@ -526,7 +524,7 @@
 
 ## Workshop context
 
-This issue was opened from a contextual Beta workshop report button.
+This issue was opened from a contextual workshop <em>Report an issue</em> button.
 
 ## Expected
 
@@ -543,7 +541,7 @@ Describe what was inaccurate or missing.
 3. Follow the step or Preview case.
 4. Record the visible result and any Copilot response.
 
-> Beta workshop report. Do not include credentials, tokens, customer data, or other sensitive information.`;
+> Workshop feedback report. Do not include credentials, tokens, customer data, or other sensitive information.`;
           const url = new URL("https://github.com/microsoft/aibast-agents-library/issues/new");
           url.searchParams.set("title", title);
           url.searchParams.set("body", body);

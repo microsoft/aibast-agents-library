@@ -26,8 +26,9 @@ def test_generated_workshops_expose_contextual_beta_reports():
     ).read_text(encoding="utf-8")
 
     for document in (quest, manual):
-        assert "Beta workshop" in document
         assert "Report an issue" in document
+        assert "Workshop feedback" in document
+        assert "Beta workshop" not in document
         assert "<!-- aibast-workshop-feedback:v1 -->" in document
         assert "aibast-workshop-feedback/1.0" in document
         assert "issues/new" in document

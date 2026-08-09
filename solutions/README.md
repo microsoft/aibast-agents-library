@@ -14,7 +14,7 @@ solutions/
 └── <solution-slug>/
     ├── README.md                        # Package map and quality status
     ├── deployment.json                  # Machine-readable no-terminal deployment recipe
-    ├── quest.html                       # Guided Easy/Hard Beta workshop
+    ├── quest.html                       # Guided Easy/Hard workshop
     ├── field-guide.html                 # Styled facilitator and learner guide
     ├── evidence-report.html             # Styled deterministic/visual evidence summary
     ├── manual-tutorial.html             # Screenshot-by-screenshot no-assistance build

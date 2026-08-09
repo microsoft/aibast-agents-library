@@ -14,7 +14,7 @@ def test_library_routes_architecture_into_the_beta_workshop():
         "Learn and build",
         "Guided Easy mode",
         "Hard mode — inline manual tutorial",
-        "Open Beta workshop",
+        "Open workshop",
         "Workshop settings",
         "Open field guide",
         'localStorage.getItem("aibast:workshop-engine")',
@@ -31,6 +31,8 @@ def test_library_routes_architecture_into_the_beta_workshop():
         "Copy Copilot Studio prompt",
         'data-action="deploy-mode"',
         "PAC command sequence",
+        "Open Beta workshop",
+        "Beta workshop",
     ):
         assert obsolete not in text
 

@@ -68,7 +68,7 @@ def valid_pages() -> dict[str, str]:
 <a href="../_shared/workshop-settings.html?return=quest.html">Workshop settings</a>
 <a href="field-guide.html">Field guide</a>
 <a href="evidence-report.html">Evidence report</a></header>
-<main><span>Beta workshop</span><section data-easy-lane="brainstem">Brainstem lane</section>
+<main><section data-easy-lane="brainstem">Brainstem lane</section>
 <section data-easy-lane="copilot">GitHub Copilot only lane</section>
 {reports}
 <article class="preview-case">
@@ -86,7 +86,7 @@ if (new URLSearchParams(window.location.search).get("embedded") === "1") {{
   document.documentElement.setAttribute("data-embedded", "true");
 }}
 </script><style>body{{color:#222}}</style></head>
-<body>AIBAST manual tutorial <span>Beta workshop</span>
+<body>AIBAST manual workshop
 <article class="step"><header>{report_button("hard-step-1")}</header>
 <img src="screenshots/manual/annotated/01-step.png" alt="Reusable evidence">
 <footer><a href="source.py" download>Download source: Agent</a></footer>
@@ -369,12 +369,13 @@ def test_rejects_manual_film_when_hard_capture_requires_reshoot(tmp_path):
     manual = package / "manual-tutorial.html"
     manual.write_text(
         manual.read_text(encoding="utf-8").replace(
-            "<body>AIBAST manual tutorial",
+            "<body>AIBAST manual workshop",
             '<body><a href="screenshots/manual/manual-build-walkthrough.gif">'
-            "Watch the manual film</a>AIBAST manual tutorial",
+            "Watch the manual film</a>AIBAST manual workshop",
         ),
         encoding="utf-8",
     )
+    build_zip(tmp_path)
 
     assert_failure(
         audit_fixture(tmp_path),

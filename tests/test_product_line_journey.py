@@ -187,7 +187,8 @@ def test_manual_tutorial_uses_exact_theme_and_matches_browserfilm_actions():
     assert THEME_VARIABLES in tutorial
     assert "AIBAST" in tutorial
     assert "Clawpilot" not in tutorial
-    assert "Beta workshop" in tutorial
+    assert "Report an issue" in tutorial
+    assert "Beta workshop" not in tutorial
     assert "Watch assisted film" not in tutorial
     for token in (
         'get("embedded")',
@@ -274,7 +275,8 @@ def test_quest_exposes_beta_course_shell_and_global_easy_lanes():
     assert re.sub(r"\s+", " ", THEME_VARIABLES) in compact_quest
     assert "AIBAST guided workshop" in quest
     assert "Clawpilot" not in quest
-    assert "Beta workshop" in quest
+    assert "Report an issue" in quest
+    assert "Beta workshop" not in quest
     assert "workshop-settings.html" in quest
     assert "field-guide.html" in quest
     assert "evidence-report.html" in quest

@@ -149,7 +149,8 @@ def test_manual_tutorial_is_aibast_themed_and_matches_browserfilm_actions():
 
     assert "AIBAST" in tutorial
     assert "Clawpilot" not in tutorial
-    assert "Beta workshop" in tutorial
+    assert "Report an issue" in tutorial
+    assert "Beta workshop" not in tutorial
     assert "Watch assisted film" not in tutorial
     assert "scoutTheme" in tutorial
     assert 'document.documentElement.setAttribute("data-theme", theme);' in tutorial
@@ -264,7 +265,8 @@ def test_quest_exposes_beta_course_shell_and_global_easy_lanes():
 
     assert "AIBAST guided workshop" in quest
     assert "Clawpilot" not in quest
-    assert "Beta workshop" in quest
+    assert "Report an issue" in quest
+    assert "Beta workshop" not in quest
     assert "workshop-settings.html" in quest
     assert "field-guide.html" in quest
     assert "evidence-report.html" in quest
