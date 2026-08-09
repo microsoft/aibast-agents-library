@@ -54,8 +54,12 @@ def build_fixture(root):
         "class AIBASTEasyModeAgent:\n    pass\n",
     )
     write(
-        root / "skills" / "aibast-easy-mode" / "SKILL.md",
-        "---\nname: aibast-easy-mode\ndescription: fixture\n---\n",
+        root / "skills" / "aibast-easy-mode-brainstem" / "SKILL.md",
+        "---\nname: aibast-easy-mode-brainstem\ndescription: fixture\n---\n",
+    )
+    write(
+        root / "skills" / "aibast-easy-mode-copilot" / "SKILL.md",
+        "---\nname: aibast-easy-mode-copilot\ndescription: fixture\n---\n",
     )
     write(
         package / "README.md",
@@ -283,11 +287,12 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "View workshop agent" in quest
     assert "Skeptic comparison" in quest
     assert quest.count("data-copy-target=") == 4
-    assert "Download SKILL.md" in quest
-    assert 'download="SKILL.md"' in quest
-    assert "Drag <code>SKILL.md</code> into GitHub Copilot Chat" in quest
+    assert "Download Brainstem SKILL.md" in quest
+    assert "Download Copilot-only SKILL.md" in quest
+    assert quest.count('download="SKILL.md"') == 2
+    assert "drag the downloaded <code>SKILL.md</code> into the chat" in quest
     assert "Give me Demo Journey using Easy Mode and test it for me." in quest
-    assert "Give me Demo Journey using Easy Mode without Brainstem and test it for me." in quest
+    assert "using Easy Mode without Brainstem" not in quest
     assert "Deploy it into Copilot Studio for me." in quest
     assert "What the workshop returns" in quest
     assert "Facilitator evidence and portable download" in quest
@@ -299,14 +304,17 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "manual-tutorial.html" in quest
     assert "copilot-assisted-walkthrough.gif" in quest
     assert "manual-build-walkthrough.gif" in quest
+    assert "Attach the Brainstem skill" in personless
     assert "drag `SKILL.md` into the" in personless
     assert "Give me Demo Journey using Easy Mode and test it for me." in personless
     assert "Deploy it into Copilot Studio for me." in personless
     assert "demo_workshop_agent.py" in personless
     assert "Brainstem + Copilot pull the harness" in personless
     assert "Copilot-only Easy mode comparison" in easy_prompts
+    assert "Attach the Copilot-only skill" in easy_prompts
     assert "drag `SKILL.md` into the" in easy_prompts
-    assert "Give me Demo Journey using Easy Mode without Brainstem" in easy_prompts
+    assert "Give me Demo Journey using Easy Mode and test it for me." in easy_prompts
+    assert "using Easy Mode without Brainstem" not in easy_prompts
     assert "Deploy it into Copilot Studio for me." in easy_prompts
 
     assert "0 of 6 complete" in tutorial
@@ -325,7 +333,8 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
         "deployment-recipe",
         "field-guide",
         "easy-personless-guide",
-        "easy-mode-skill",
+        "easy-mode-brainstem-skill",
+        "easy-mode-copilot-skill",
         "easy-mode-agent",
         "easy-personless-agent",
         "easy-copilot-chat-prompts",
@@ -438,7 +447,8 @@ def test_optional_export_uses_existing_builder_semantics(tmp_path):
         names = set(archive.namelist())
     assert "solutions/demo-journey/FIELD-GUIDE.md" in names
     assert "solutions/demo-journey/EASY-MODE-PERSONLESS.md" in names
-    assert "skills/aibast-easy-mode/SKILL.md" in names
+    assert "skills/aibast-easy-mode-brainstem/SKILL.md" in names
+    assert "skills/aibast-easy-mode-copilot/SKILL.md" in names
     assert "agents/@aibast-agents-library/templates/easy_mode_agent.py" in names
     assert "solutions/demo-journey/easy/demo_workshop_agent.py" in names
     assert "solutions/demo-journey/EASY-MODE-COPILOT-CHAT.md" in names

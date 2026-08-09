@@ -2,21 +2,61 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parent.parent
-SKILL = ROOT / "skills" / "aibast-easy-mode" / "SKILL.md"
+BRAINSTEM_SKILL = (
+    ROOT / "skills" / "aibast-easy-mode-brainstem" / "SKILL.md"
+)
+COPILOT_SKILL = (
+    ROOT / "skills" / "aibast-easy-mode-copilot" / "SKILL.md"
+)
 
 
-def test_easy_mode_skill_is_shared_entry_point_for_both_lanes():
-    text = SKILL.read_text(encoding="utf-8")
-    assert text.startswith("---\nname: aibast-easy-mode\n")
-    assert "**Default:** Brainstem + Copilot personless harness" in text
-    assert "Comparison lane — GitHub Copilot only" in text
-    assert "without Brainstem" in text
-    assert ".aibast/easy-mode-state.json" in text
-    assert "Deploy it into Copilot Studio for me" in text
+def test_lane_selection_is_encoded_by_the_downloaded_skill():
+    brainstem = BRAINSTEM_SKILL.read_text(encoding="utf-8")
+    copilot = COPILOT_SKILL.read_text(encoding="utf-8")
+
+    assert brainstem.startswith(
+        "---\nname: aibast-easy-mode-brainstem\n"
+    )
+    assert copilot.startswith(
+        "---\nname: aibast-easy-mode-copilot\n"
+    )
+    assert "personal, on-device training AI" in brainstem
+    assert "use the Brainstem personless harness" in " ".join(
+        brainstem.split()
+    )
+    compact = " ".join(copilot.split())
+    assert "run the complete Easy Mode harness directly in Copilot" in compact
+    assert "The user never needs to say “without Brainstem”" in compact
 
 
-def test_easy_mode_skill_discovers_every_resource_autonomously():
-    text = SKILL.read_text(encoding="utf-8")
+def test_both_skills_accept_the_same_short_messages():
+    brainstem = BRAINSTEM_SKILL.read_text(encoding="utf-8")
+    copilot = COPILOT_SKILL.read_text(encoding="utf-8")
+    messages = (
+        "Give me <solution> using Easy Mode and test it for me",
+        "Deploy it into Copilot Studio for me",
+    )
+    for message in messages:
+        assert message in brainstem
+        assert message in copilot
+
+
+def test_brainstem_skill_owns_engine_startup_and_handoffs():
+    text = BRAINSTEM_SKILL.read_text(encoding="utf-8")
+    for marker in (
+        "http://localhost:7071/health",
+        "~/.copilot/bin/brainstem start",
+        "@aibast-agents-library/easy-mode",
+        "POST http://localhost:7071/agents/import",
+        "POST http://localhost:7071/chat",
+        "real Copilot Studio front door",
+        "status: complete",
+    ):
+        assert marker in text
+
+
+def test_copilot_skill_discovers_every_resource_autonomously():
+    text = COPILOT_SKILL.read_text(encoding="utf-8")
     for marker in (
         "one immutable commit SHA",
         "registry.json",
@@ -27,14 +67,14 @@ def test_easy_mode_skill_discovers_every_resource_autonomously():
         "must_not_include",
         "Resolve the active PAC environment",
         "clone and reconnect automatically",
-        "real Copilot Studio front door",
     ):
         assert marker in text
-    assert "Never ask the user to open a terminal" in text
-    assert "Never publish" in text
 
 
-def test_easy_mode_skill_never_contains_a_publish_command():
-    text = SKILL.read_text(encoding="utf-8")
-    assert "pac copilot publish" not in text
-    assert "published: false" in text
+def test_neither_skill_can_publish_or_delegate_setup_to_the_user():
+    for path in (BRAINSTEM_SKILL, COPILOT_SKILL):
+        text = path.read_text(encoding="utf-8")
+        assert "pac copilot publish" not in text
+        assert "published: false" in text
+        assert "Never ask the user" in text
+        assert "Never publish" in text

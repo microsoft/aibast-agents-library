@@ -220,21 +220,21 @@
 
     <section class="path" data-path="easy">
       <h2>Easy mode</h2>
-      <section class="skill-onboarding">
-        <div>
-          <p class="prompt-kicker">Workshop step 1 of 3 · shared entry point</p>
-          <h3>Download and attach the Easy Mode skill</h3>
-          <p>Download <code>SKILL.md</code>, open GitHub Copilot Chat in VS Code, select Agent mode, and drag the file into the chat. The same skill powers both lanes and fetches every other resource autonomously.</p>
-          <div class="drag-target">Drag <code>SKILL.md</code> into GitHub Copilot Chat before sending the next message.</div>
-        </div>
-        <div><a class="button primary" href="../../skills/aibast-easy-mode/SKILL.md" download="SKILL.md">Download SKILL.md</a></div>
-      </section>
       <div class="easy-lane-switch" role="tablist" aria-label="Easy mode harness">
         <button class="easy-lane-button active" type="button" data-easy-lane-button="brainstem">With Brainstem — default</button>
         <button class="easy-lane-button" type="button" data-easy-lane-button="copilot">GitHub Copilot only</button>
       </div>
 
       <div class="easy-lane" data-easy-lane="brainstem">
+        <section class="skill-onboarding">
+          <div>
+            <p class="prompt-kicker">Workshop step 1 of 3 · Brainstem lane</p>
+            <h3>Download and attach the Brainstem skill</h3>
+            <p>This skill fixes the workshop mode to Brainstem. Open GitHub Copilot Chat in VS Code, select Agent mode, and drag the downloaded <code>SKILL.md</code> into the chat.</p>
+            <div class="drag-target">After this file is attached, the next two messages do not need to mention Brainstem.</div>
+          </div>
+          <div><a class="button primary" href="../../skills/aibast-easy-mode-brainstem/SKILL.md" download="SKILL.md">Download Brainstem SKILL.md</a></div>
+        </section>
         <div class="notice"><strong>Brainstem is the default:</strong> it is the learner’s personal, on-device training AI working alongside Copilot. After the skill is attached, the attendee sends two short messages; Brainstem remembers the workshop, hot-loads specialized instructors, and does the heavy lifting.</div>
         <article class="prompt-card">
         <div class="prompt-heading">
@@ -264,13 +264,22 @@
       </div>
 
       <div class="easy-lane" data-easy-lane="copilot" hidden>
-        <div class="comparison-note"><strong>Skeptic comparison:</strong> the same attached skill performs the harness directly in GitHub Copilot. The attendee still uses two short messages, but Copilot carries the engine logic itself instead of delegating it to Brainstem.</div>
+        <section class="skill-onboarding">
+          <div>
+            <p class="prompt-kicker">Workshop step 1 of 3 · Copilot-only lane</p>
+            <h3>Download and attach the Copilot-only skill</h3>
+            <p>This skill fixes the workshop mode to GitHub Copilot alone. Open GitHub Copilot Chat in VS Code, select Agent mode, and drag the downloaded <code>SKILL.md</code> into the chat.</p>
+            <div class="drag-target">After this file is attached, use the same two messages as the Brainstem lane.</div>
+          </div>
+          <div><a class="button primary" href="../../skills/aibast-easy-mode-copilot/SKILL.md" download="SKILL.md">Download Copilot-only SKILL.md</a></div>
+        </section>
+        <div class="comparison-note"><strong>Skeptic comparison:</strong> this lane-specific skill performs the harness directly in GitHub Copilot. The prompts stay identical; the selected skill changes what pulls the work.</div>
         <article class="prompt-card">
         <div class="prompt-heading">
-          <div><p class="prompt-kicker">Workshop message 2 of 3</p><h3>2. Build and test without Brainstem</h3></div>
+          <div><p class="prompt-kicker">Workshop message 2 of 3</p><h3>2. Build and test the solution</h3></div>
           <button class="button primary" type="button" data-copy-target="easy-prompt-1">Copy prompt</button>
         </div>
-        <pre class="prompt-block" id="easy-prompt-1">Give me Time Entry and Billing using Easy Mode without Brainstem and test it for me.</pre>
+        <pre class="prompt-block" id="easy-prompt-1">Give me Time Entry and Billing using Easy Mode and test it for me.</pre>
       </article>
 <article class="prompt-card">
         <div class="prompt-heading">
@@ -280,7 +289,7 @@
         <pre class="prompt-block" id="easy-prompt-2">Deploy it into Copilot Studio for me.</pre>
       </article>
         <label class="checkpoint"><input type="checkbox" data-checkpoint="copilot-source"><span><strong>Copilot inspected the source package</strong><span>It reported the source, tool, model, knowledge, skills, locked cases, and safety boundary before editing.</span></span></label>
-        <label class="checkpoint"><input type="checkbox" data-checkpoint="copilot-build"><span><strong>Copilot completed local and Copilot Studio setup</strong><span>GitHub Copilot owned terminal and plugin actions, but the user still supplied the detailed harness.</span></span></label>
+        <label class="checkpoint"><input type="checkbox" data-checkpoint="copilot-build"><span><strong>Copilot completed local and Copilot Studio setup</strong><span>The attached Copilot-only skill supplied the complete harness while GitHub Copilot owned terminal and plugin actions.</span></span></label>
         <label class="checkpoint"><input type="checkbox" data-checkpoint="copilot-cases"><span><strong>Copilot replayed every locked case</strong><span>It used exact prompts and identifiers and recorded pass/fail evidence without retrying until success.</span></span></label>
         <label class="checkpoint"><input type="checkbox" data-checkpoint="copilot-draft"><span><strong>Stop at the Draft gate</strong><span>The agent must remain Draft and is not published. Publishing needs separate human approval.</span></span></label>
         <p><a class="button" href="EASY-MODE-COPILOT-CHAT.md">Open Copilot-only prompts</a> <a class="button" href="screenshots/assisted/copilot-assisted-walkthrough.gif">Watch assisted film</a></p>
@@ -288,7 +297,7 @@
 
       <section class="card">
         <h3>Compare and contrast while you build</h3>
-        <p>Both approaches are valid starting points and use the same reviewed skill, solution assets, locked cases, and Draft gate. The difference is what pulls the harness.</p>
+        <p>Both approaches are valid starting points and use parallel reviewed skills, the same solution assets, locked cases, messages, and Draft gate. The downloaded skill determines what pulls the harness.</p>
         <table class="comparison-table">
           <thead><tr><th>Dimension</th><th>With Brainstem — default</th><th>GitHub Copilot only</th></tr></thead>
           <tbody>

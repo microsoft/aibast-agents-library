@@ -282,7 +282,14 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     prompts = (package / "EASY-MODE-COPILOT-CHAT.md").read_text(
         encoding="utf-8"
     )
-    skill = (ROOT / "skills/aibast-easy-mode/SKILL.md").read_text(
+    brainstem_skill = (
+        ROOT / "skills/aibast-easy-mode-brainstem/SKILL.md"
+    ).read_text(
+        encoding="utf-8"
+    )
+    copilot_skill = (
+        ROOT / "skills/aibast-easy-mode-copilot/SKILL.md"
+    ).read_text(
         encoding="utf-8"
     )
     quest = (package / "quest.html").read_text(encoding="utf-8")
@@ -302,22 +309,30 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
         assert marker in personless
     for marker in (
         "Copilot-only Easy mode comparison",
+        "Attach the Copilot-only skill",
         "drag `SKILL.md` into the",
-        "Give me Time Entry and Billing using Easy Mode without Brainstem",
+        "Give me Time Entry and Billing using Easy Mode and test it for me.",
         "Deploy it into Copilot Studio for me.",
     ):
         assert marker in prompts
     for marker in (
-        "**Default:** Brainstem + Copilot personless harness",
-        "without Brainstem",
+        "personal, on-device training AI",
+        "http://localhost:7071/health",
+        "@aibast-agents-library/easy-mode",
+        "Never ask the user",
+        "Never publish",
+    ):
+        assert marker in brainstem_skill
+    for marker in (
+        "GitHub Copilot only",
         "tests/demo_cases/<slug>.json",
         "must_include",
         "must_not_include",
         "one immutable commit SHA",
-        "Never ask the user to open a terminal",
+        "Never ask the user",
         "Never publish",
     ):
-        assert marker in skill
+        assert marker in copilot_skill
     assert len(cases) == 5
 
     assert "With Brainstem — default" in quest
@@ -325,10 +340,11 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     assert "Personless harness" in quest
     assert "Skeptic comparison" in quest
     assert quest.count("data-copy-target=") == 4
-    assert "Download SKILL.md" in quest
-    assert 'download="SKILL.md"' in quest
+    assert "Download Brainstem SKILL.md" in quest
+    assert "Download Copilot-only SKILL.md" in quest
+    assert quest.count('download="SKILL.md"') == 2
     assert "Give me Time Entry and Billing using Easy Mode and test it for me." in quest
-    assert "Give me Time Entry and Billing using Easy Mode without Brainstem and test it for me." in quest
+    assert "using Easy Mode without Brainstem" not in quest
     assert "Deploy it into Copilot Studio for me." in quest
     assert "What the workshop returns" in quest
     assert "Compare and contrast while you build" in quest

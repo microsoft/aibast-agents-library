@@ -21,7 +21,8 @@ GitHub Copilot. Copilot stays the familiar work surface; Brainstem remembers
 the workshop and hot-loads the specialized instructors.
 
 1. Open GitHub Copilot Chat in VS Code and select **Agent mode**.
-2. Download `skills/aibast-easy-mode/SKILL.md` and drag it into the chat.
+2. Download `skills/aibast-easy-mode-brainstem/SKILL.md` and drag it into the
+   chat.
 3. Open `EASY-MODE-PERSONLESS.md`.
 4. Send its two short messages in order: build and test the named solution,
    then deploy the validated Draft.
@@ -36,10 +37,10 @@ the workshop and hot-loads the specialized instructors.
 
 ## Easy mode — without Brainstem (comparison)
 
-The same `SKILL.md` supports the skeptic comparison. The participant explicitly
-asks for Easy Mode **without Brainstem**, and the skill performs discovery,
+Download `skills/aibast-easy-mode-copilot/SKILL.md` instead. That skill fixes
+the harness to GitHub Copilot alone, so the participant uses the exact same two
+messages without repeatedly saying “without Brainstem.” It performs discovery,
 testing, deployment, and Preview validation directly through GitHub Copilot.
-That lane is deliberately secondary.
 
 ## Teaching comparison
 

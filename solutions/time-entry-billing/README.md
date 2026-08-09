@@ -26,7 +26,8 @@ accounting system, contacts clients, or sends invoices.
 | Surface | Location |
 | --- | --- |
 | Customer field guide | `solutions/time-entry-billing/FIELD-GUIDE.md` |
-| Shared Easy Mode skill | `skills/aibast-easy-mode/SKILL.md` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/time-entry-billing/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/time-entry-billing/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Hard quest | `solutions/time-entry-billing/quest.html` |
@@ -36,7 +37,7 @@ accounting system, contacts clients, or sends invoices.
 | Manual evidence | `solutions/time-entry-billing/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/time-entry-billing/screenshots/manual/browserfilm.json` |
 
-**Scaffold status:** 69 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 70 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.
