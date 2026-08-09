@@ -178,6 +178,7 @@ function render() {
   if (trafficUnavailable) appendAdminSetupNotice($('traffic-gap'));
   $('board-hint').textContent = t.agents;
   renderKPIs();
+  renderEcosystem();
   renderWorkshops();
   renderChart();
   renderBoards();
@@ -212,6 +213,16 @@ function renderKPIs() {
     workshopTotals.usage_events, workshopTotals.workshops
   ];
   $('kpis').textContent = `Total downloads Workshop usage events Agent file fetches Skill downloads Installer fetches ${cards.map(card => `${card.label} ${card.value}`).join(' ')} ${fields.join(' ')}`;
+}
+function renderEcosystem() {
+  const ecosystem = M.ecosystem || {};
+  const totals = ecosystem.totals || {};
+  const rows = Array.isArray(ecosystem.agents) ? ecosystem.agents.slice() : [];
+  $('ecosystem-summary').textContent = `${totals.combined_agent_distribution_fetch_events || 0}`;
+  $('ecosystem-coverage').textContent = ecosystem.status || 'unavailable';
+  $('ecosystem-agent-table').innerHTML = rows.map(row =>
+    `<tr><td>${row.logical_name}</td><td>${row.combined_distribution_fetch_events}</td></tr>`
+  ).join('');
 }
 const WORKSHOP_SORTS = [
   { id: 'usage_events', label: 'Usage' },
@@ -457,7 +468,7 @@ wireFeedback();
 <button id="themeToggle" type="button" aria-label="Toggle theme" aria-pressed="false" data-theme-toggle>Theme</button>
 </header>
 <main id="mainContent">
-<p>Downloads, agent upvotes, and workshop usage</p>
+<p>Global agent distribution, engagement, and learning impact</p>
 <p>Agent upvotes are structured public GitHub issue submissions. One GitHub account counts once per agent.
 Opening the form is not a vote; the issue must be submitted and pass validation.</p>
 <a href="library.html">Browse agents</a>
@@ -465,6 +476,15 @@ Opening the form is not a vote; the issue must be submitted and pass validation.
 <span id="stamp-time"></span><span id="stamp-window"></span><span id="stamp-src"></span>
 <span id="stamp-mode" role="status" aria-live="polite" aria-atomic="true"></span>
 <div id="traffic-gap"></div>
+<section id="global-agent-ecosystem">
+<h2>Global agent ecosystem</h2>
+<p>AIBAST direct distribution plus the public kody-w/RAR community channel.</p>
+<p>Distribution fetch events are fetches, not people. RAR acquisitions and usage
+signals are separate. Missing agent rows are unavailable, not verified zero.</p>
+<div id="ecosystem-summary"></div>
+<p id="ecosystem-coverage"></p>
+<table id="ecosystem-agent-table"><tbody></tbody></table>
+</section>
 <section aria-labelledby="workshop-heading">
 <h2 id="workshop-heading">Workshop adoption</h2>
 <div id="workshop-hint"></div>
@@ -573,8 +593,8 @@ def test_altered_download_formula_fails_closed():
 
 def test_repository_stars_cannot_be_presented_as_upvotes():
     html = valid_fixture().replace(
-        "<p>Downloads, agent upvotes, and workshop usage</p>",
-        "<p>Downloads, agent upvotes, and workshop usage</p>"
+        "<p>Global agent distribution, engagement, and learning impact</p>",
+        "<p>Global agent distribution, engagement, and learning impact</p>"
         "<p>Community upvotes are public GitHub stars.</p>",
     )
     result = audit_html(html, CONTRACT)

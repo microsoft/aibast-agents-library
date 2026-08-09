@@ -111,12 +111,15 @@ def audit_generated_workshops(
         "globalThis.location?.hostname",
         "earnedAgiSyncIds(achievements)",
         "Opening this form does not sync anything",
+        "manual-progress",
+        "updateHardProgress",
+        "hardProgressToast.textContent = complete",
     )
     required_manual = (
         scaffold_solution_journey.AGI_PROFILE_KEY,
-        "aibast-agi-hard-progress",
-        "aibast-agi-hard-complete",
-        "window.parent.postMessage(message, window.location.origin)",
+        "manual-progress",
+        'badgeIds.push("hard-mode-complete")',
+        "hardComplete: complete",
         "aibastSignalIssueUrl()",
     )
     forbidden_network = ("fetch(", "XMLHttpRequest", "sendBeacon", ".submit(")
@@ -133,6 +136,9 @@ def audit_generated_workshops(
         for token in required_manual:
             if token not in manual:
                 failures.add(f"{label}/manual-tutorial.html: missing {token}")
+        for token in ("postMessage", "ResizeObserver", "data-embedded"):
+            if token in quest or token in manual:
+                failures.add(f"{label}: obsolete iframe protocol remains ({token})")
         if f'const AGI_WORKSHOP_SLUG = "{slug}";' not in quest:
             failures.add(f"{label}/quest.html: wrong AGI workshop slug")
         if f"const AGI_CANONICAL_AGENT = {json.dumps(agent)};" not in quest:

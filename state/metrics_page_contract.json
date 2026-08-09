@@ -749,16 +749,21 @@
     }
   },
   "post_migration": {
-    "headline": "Downloads, agent upvotes, and workshop usage",
+    "headline": "Global agent distribution, engagement, and learning impact",
     "heading": "Workshop adoption",
     "required_ids": [
       "workshop-summary",
       "workshop-hint",
       "workshop-coverage",
       "workshop-tabs",
-      "workshop-table"
+      "workshop-table",
+      "global-agent-ecosystem",
+      "ecosystem-summary",
+      "ecosystem-coverage",
+      "ecosystem-agent-table"
     ],
     "functions": [
+      "renderEcosystem",
       "renderWorkshops",
       "renderWorkshopControls"
     ],
@@ -768,7 +773,11 @@
       "This is a floor and an event sum, not people, users, or unique usage",
       "These sources use mixed measurement windows",
       "one person or action can create multiple events",
-      "Agent upvotes are preference signals shown separately and are never added to usage events"
+      "Agent upvotes are preference signals shown separately and are never added to usage events",
+      "AIBAST direct distribution plus the public kody-w/RAR community channel",
+      "Distribution fetch events",
+      "RAR acquisitions and usage signals are separate",
+      "Missing agent rows are unavailable, not verified zero"
     ],
     "agent_upvote_phrases": [
       "structured public GitHub issue submissions",

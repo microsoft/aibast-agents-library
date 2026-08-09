@@ -396,6 +396,7 @@ def check_quest(
     text: str,
     parser: DocumentParser,
     locked_cases: list[dict[str, Any]] | None,
+    manual_frames: list[dict[str, Any]],
     failures: Failures,
     metrics: dict[str, Any],
 ) -> None:
@@ -433,12 +434,30 @@ def check_quest(
     )
     if not default_script:
         failures.add(f"{label}: Copilot-default global engine script is not measurable")
-    iframe_sources = [
-        tag.attrs.get("src") or ""
-        for tag in parser.find("iframe")
+    if parser.find("iframe"):
+        failures.add(f"{label}: Hard mode must not use an iframe")
+    hard_paths = [
+        tag
+        for tag in parser.tags
+        if (tag.attrs.get("data-path") or "").lower() == "hard"
     ]
-    if "manual-tutorial.html?embedded=1" not in iframe_sources:
-        failures.add(f"{label}: missing embedded manual-tutorial.html?embedded=1")
+    hard_steps: list[Tag] = []
+    if len(hard_paths) != 1:
+        failures.add(f"{label}: expected one native Hard-mode path")
+    else:
+        hard_steps = [
+            tag
+            for tag in parser.descendants(hard_paths[0])
+            if tag.name == "article" and "step" in tag.classes
+        ]
+        if len(hard_steps) != len(manual_frames):
+            failures.add(
+                f"{label}: native Hard steps {len(hard_steps)} != "
+                f"browserfilm frames {len(manual_frames)}"
+            )
+    metrics["quest_hard_steps"] = len(hard_steps)
+    if not has_href(parser, "manual-tutorial.html"):
+        failures.add(f"{label}: missing standalone manual-tutorial.html link")
     if not has_href(parser, "field-guide.html"):
         failures.add(f"{label}: missing field-guide.html link")
     if not has_href(parser, "evidence-report.html"):
@@ -471,11 +490,12 @@ def check_quest(
     if locked_cases is None:
         failures.add(f"{label}: report-button total cannot be measured without locked cases")
     else:
-        expected_reports = 7 + len(locked_cases)
+        expected_reports = 7 + len(locked_cases) + len(manual_frames)
         if len(report_buttons) != expected_reports:
             failures.add(
                 f"{label}: report buttons {len(report_buttons)} != "
-                f"7 + {len(locked_cases)} locked cases ({expected_reports})"
+                f"7 + {len(locked_cases)} locked cases + "
+                f"{len(manual_frames)} native Hard steps ({expected_reports})"
             )
         if len(preview_prompts) != len(locked_cases):
             failures.add(
@@ -576,17 +596,17 @@ def check_manual(
         failures.add(f"{label}: missing AIBAST manual workshop label")
     if "beta workshop" in lowered:
         failures.add(f"{label}: contains obsolete Beta workshop label")
-    required_protocol = (
-        'get("embedded")',
-        '=== "1"',
-        "data-embedded",
-        "aibast-hard-mode-height",
-        "postMessage",
-        "ResizeObserver",
+    required_progress = (
+        "manual-progress",
+        'badgeIds.push("hard-mode-complete")',
+        "hardComplete: complete",
     )
-    for token in required_protocol:
+    for token in required_progress:
         if token not in text:
-            failures.add(f"{label}: embedded-height protocol lacks {token}")
+            failures.add(f"{label}: direct Hard-progress runtime lacks {token}")
+    for token in ("postMessage", "ResizeObserver", "data-embedded"):
+        if token in text:
+            failures.add(f"{label}: obsolete iframe protocol remains ({token})")
     if "<!-- aibast-workshop-feedback:v1 -->" not in text:
         failures.add(f"{label}: missing contextual feedback marker")
     if "aibast-workshop-feedback/1.0" not in text:
@@ -676,7 +696,7 @@ def check_evidence_report(
     for phrase in (
         "deterministic case contract",
         "displayed visual checkpoints",
-        "hidden visual gaps",
+        "reference-only visual gaps",
         "downloads for audit",
     ):
         if phrase not in visible:
@@ -748,8 +768,9 @@ def displayed_screenshots(
     package: Path,
     documents: Iterable[tuple[Path, DocumentParser]],
     failures: Failures,
-) -> set[Path]:
-    displayed: set[Path] = set()
+) -> tuple[set[Path], set[Path]]:
+    proof: set[Path] = set()
+    reference_only: set[Path] = set()
     screenshot_root = (package / "screenshots").resolve()
     for page, parser in documents:
         for image in parser.find("img"):
@@ -759,13 +780,16 @@ def displayed_screenshots(
             source = relative_path(root, page.parent, source_raw)
             if source is None or not _is_within(source, screenshot_root):
                 continue
-            displayed.add(source)
+            if image.attrs.get("data-evidence-status") == "reference-only":
+                reference_only.add(source)
+            else:
+                proof.add(source)
             if not source.is_file():
                 failures.add(
                     f"{page.name}: learner-displayed screenshot is missing "
                     f"({source_raw})"
                 )
-    return displayed
+    return proof, reference_only
 
 
 def check_visual_contract(
@@ -774,6 +798,7 @@ def check_visual_contract(
     data: Any,
     browserfilm_references: set[tuple[str, str, str | int]],
     displayed: set[Path],
+    reference_only: set[Path],
     failures: Failures,
     metrics: dict[str, Any],
 ) -> tuple[int | None, int | None]:
@@ -960,6 +985,13 @@ def check_visual_contract(
                 f"{label}: learner-displayed screenshot has no reusable checkpoint "
                 f"({repo_name(root, path)})"
             )
+    for path in sorted(reference_only):
+        if path not in reshoot_paths:
+            failures.add(
+                f"{label}: reference-only learner screenshot is not classified "
+                f"reshoot-required ({repo_name(root, path)})"
+            )
+    metrics["visual_reference_only_displayed"] = len(reference_only)
     return reusable_count, reshoot_count
 
 
@@ -1123,6 +1155,7 @@ def audit_solution(
             package,
             *documents["quest.html"],
             locked_cases,
+            manual_frames,
             failures,
             metrics,
         )
@@ -1146,7 +1179,7 @@ def audit_solution(
         for name in ("quest.html", "manual-tutorial.html")
         if name in documents
     ]
-    displayed = displayed_screenshots(
+    displayed, reference_only = displayed_screenshots(
         root, package, learner_documents, failures
     )
     reusable, reshoot = check_visual_contract(
@@ -1155,6 +1188,7 @@ def audit_solution(
         visual_data,
         assisted_refs | manual_refs,
         displayed,
+        reference_only,
         failures,
         metrics,
     )

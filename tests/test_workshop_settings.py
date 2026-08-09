@@ -5,6 +5,7 @@ from pathlib import Path
 
 from tools.scaffold_solution_journey import (
     DARK_THEME_VARIABLES,
+    THEME_PREFERENCE_SCRIPT,
     THEME_SCRIPT,
     THEME_VARIABLES,
     WORKSHOP_ENGINE_SCRIPT,
@@ -20,6 +21,7 @@ MANUAL = ROOT / "solutions/time-entry-billing/manual-tutorial.html"
 def test_global_workshop_settings_default_to_copilot_and_persist():
     text = SETTINGS.read_text(encoding="utf-8")
     assert THEME_SCRIPT in text
+    assert THEME_PREFERENCE_SCRIPT in text
     assert THEME_VARIABLES in text
     assert DARK_THEME_VARIABLES in text
     assert 'const key = "aibast:workshop-engine"' in text
@@ -31,6 +33,8 @@ def test_global_workshop_settings_default_to_copilot_and_persist():
     assert "GitHub Copilot + Brainstem" in text
     assert "applies to every AIBAST workshop" in text
     assert "localStorage.setItem(key" in text
+    assert 'const theme = explicit || stored || "light"' in text
+    assert "data-theme-toggle" in text
 
 
 def run_settings_script(tmp_path, return_value):
@@ -126,19 +130,22 @@ def test_quest_renders_only_the_global_engine_and_links_settings():
     assert "Default to the Brainstem" not in text
 
 
-def test_hard_mode_embeds_the_complete_manual_tutorial():
+def test_hard_mode_renders_the_complete_manual_tutorial_natively():
     quest = QUEST.read_text(encoding="utf-8")
     manual = MANUAL.read_text(encoding="utf-8")
-    assert (
-        'src="manual-tutorial.html?embedded=1"'
-        in quest
+    assert "<iframe" not in quest
+    assert 'class="path" data-path="hard"' in quest
+    assert "Build and verify" in quest
+    assert quest.count('<article class="step"') == manual.count(
+        '<article class="step"'
     )
-    assert 'id="hard-mode-tutorial"' in quest
-    assert "aibast-hard-mode-height" in quest
-    assert "aibast-hard-mode-height" in manual
-    assert 'data-embedded", "true"' in manual
-    assert 'html[data-embedded="true"] .topbar' in manual
-    assert ">Open the manual tutorial<" not in quest
+    assert "manual-progress" in quest
+    assert "manual-progress" in manual
+    assert "updateHardProgress" in quest
+    for token in ("aibast-hard-mode-height", "data-embedded", "postMessage"):
+        assert token not in quest
+        assert token not in manual
+    assert "Open standalone Hard-mode guide" in quest
 
 
 def test_new_html_scripts_parse(tmp_path):

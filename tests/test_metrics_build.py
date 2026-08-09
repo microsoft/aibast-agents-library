@@ -172,6 +172,14 @@ def test_metrics_build_offline_without_prior_marks_remote_unavailable(tmp_path):
             "achievement_completion_rate",
         )
     )
+    ecosystem = doc["ecosystem"]
+    assert ecosystem["status"] == "unavailable"
+    assert ecosystem["sources"]["rar"]["status"] == "unavailable"
+    assert (
+        ecosystem["totals"]["combined_agent_distribution_fetch_events"]
+        is None
+    )
+    assert doc["totals"]["global_agent_distribution_fetch_events"] is None
 
 
 def test_offline_mode_makes_zero_network_calls(monkeypatch, tmp_path):
@@ -184,6 +192,7 @@ def test_offline_mode_makes_zero_network_calls(monkeypatch, tmp_path):
     monkeypatch.setattr(build_metrics, "fetch_jsdelivr", fail_network)
     monkeypatch.setattr(build_metrics, "fetch_workshop_feedback", fail_network)
     monkeypatch.setattr(build_metrics, "fetch_agi_progress", fail_network)
+    monkeypatch.setattr(build_metrics, "fetch_rar_source", fail_network)
     monkeypatch.setattr(
         sys,
         "argv",
@@ -191,6 +200,246 @@ def test_offline_mode_makes_zero_network_calls(monkeypatch, tmp_path):
     )
 
     assert build_metrics.main() == 0
+
+
+def test_merge_history_records_source_specific_tracking_windows(tmp_path):
+    history_path = tmp_path / "metrics_history.json"
+    traffic = {
+        "clones": {"daily": []},
+        "views": {
+            "daily": [
+                {"date": "2026-08-01", "count": 3, "uniques": 2}
+            ]
+        },
+    }
+    jsdelivr = {
+        "package_available": True,
+        "daily": [],
+    }
+
+    build_metrics.merge_history(
+        traffic,
+        jsdelivr,
+        history_path,
+        run_at="2026-08-01T12:00:00Z",
+    )
+    build_metrics.merge_history(
+        traffic,
+        jsdelivr,
+        history_path,
+        run_at="2026-08-09T12:00:00Z",
+    )
+
+    history = json.loads(history_path.read_text())
+    assert history["tracking"] == {
+        "clones_since": "2026-08-01",
+        "clones_last": "2026-08-09",
+        "views_since": "2026-08-01",
+        "views_last": "2026-08-09",
+        "cdn_since": "2026-08-01",
+        "cdn_last": "2026-08-09",
+    }
+    assert history["views"]["2026-08-01"] == {
+        "count": 3,
+        "uniques": 2,
+    }
+
+
+def test_rar_federation_separates_fetches_acquisitions_and_usage():
+    registry = {
+        "schema": build_metrics.RAR_REGISTRY_SCHEMA,
+        "agents": [
+            {
+                "name": "@aibast-agents-library/account_intelligence",
+                "display_name": "Account Intelligence",
+                "_file": "agents/@aibast/account_intelligence_agent.py",
+                "_install_filename": "account_intelligence.py",
+                "_sha256": "a" * 64,
+            },
+            {
+                "name": "@rapp/learn_new",
+                "display_name": "Learn New",
+                "_file": "agents/@rapp/learn_new_agent.py",
+                "_install_filename": "learn_new.py",
+                "_sha256": "b" * 64,
+            },
+            {
+                "name": "@rapp/no_observed_download",
+                "display_name": "No Observed Download",
+                "_file": "agents/@rapp/no_observed_download_agent.py",
+                "_install_filename": "no_observed_download.py",
+                "_sha256": "c" * 64,
+            },
+        ],
+    }
+    metrics = {
+        "schema": build_metrics.RAR_METRICS_SCHEMA,
+        "generated_at": "2026-08-09T12:00:00Z",
+        "totals": {
+            "agent_file_downloads": 5,
+            "downloads": 100,
+            "clones": 90,
+            "page_views": 50,
+        },
+        "cdn": {
+            "files": [
+                {
+                    "agent": "@aibast-agents-library/account_intelligence",
+                    "hits": 3,
+                    "kind": "agent",
+                },
+                {
+                    "agent": "@rapp/learn_new",
+                    "hits": 2,
+                    "kind": "agent",
+                },
+            ]
+        },
+        "traffic": {"as_of": "2026-08-09T12:00:00Z"},
+    }
+    ratings = {
+        "schema": build_metrics.RAR_DISCUSSION_SCHEMA,
+        "agents": {
+            "@aibast-agents-library/account_intelligence": {
+                "downloads": 1,
+                "upvotes": 2,
+                "comments": 1,
+                "signals": {
+                    "worked": 1,
+                    "did_not_work": 0,
+                    "stuck": 0,
+                    "regular_use": 1,
+                    "shipped": 0,
+                    "want_to_try": 1,
+                    "saved_time": 1,
+                },
+                "url": "https://github.com/kody-w/RAR/discussions/1",
+            },
+            "@rapp/learn_new": {
+                "downloads": 2,
+                "upvotes": 1,
+                "comments": 3,
+                "signals": {
+                    "worked": 2,
+                    "did_not_work": 1,
+                    "stuck": 0,
+                    "regular_use": 1,
+                    "shipped": 1,
+                    "want_to_try": 2,
+                    "saved_time": 1,
+                },
+                "url": "https://github.com/kody-w/RAR/discussions/2",
+            },
+        },
+    }
+    releases = [
+        {
+            "assets": [
+                {
+                    "name": "account_intelligence.py",
+                    "download_count": 4,
+                },
+                {"name": "learn_new.py", "download_count": 1},
+                {"name": "unmapped.zip", "download_count": 2},
+            ]
+        }
+    ]
+
+    rar = build_metrics.build_rar_source(
+        registry,
+        metrics,
+        ratings,
+        releases,
+        generated_at="2026-08-09T12:00:00Z",
+    )
+
+    assert rar["status"] == "partial"
+    assert rar["totals"]["agent_cdn_fetches"] == 5
+    assert rar["totals"]["agent_release_fetches"] == 5
+    assert rar["totals"]["unmapped_release_fetches"] == 2
+    assert rar["totals"]["agent_acquisitions"] == 3
+    assert rar["totals"]["positive_reactions"] == 3
+    assert rar["totals"]["usage_signals"]["worked"] == 3
+    assert rar["totals"]["usage_signals"]["shipped"] == 1
+    no_observation = next(
+        row
+        for row in rar["agents"]
+        if row["rar_name"] == "@rapp/no_observed_download"
+    )
+    assert no_observation["rar_cdn_fetches"] is None
+    assert no_observation["rar_release_fetches"] == 0
+    assert no_observation["rar_acquisitions"] is None
+
+    local_agents = {
+        "@aibast-agents-library/account-intelligence": {
+            "display_name": "Account Intelligence",
+            "downloads": 10,
+        },
+        "@aibast-agents-library/local-only": {
+            "display_name": "Local Only",
+            "downloads": 1,
+        },
+    }
+    ecosystem = build_metrics.build_ecosystem_metrics(
+        local_agents,
+        11,
+        rar,
+        generated_at="2026-08-09T12:00:00Z",
+    )
+    assert ecosystem["totals"][
+        "combined_agent_distribution_fetch_events"
+    ] == 21
+    assert ecosystem["totals"]["rar_agent_acquisitions"] == 3
+    assert ecosystem["totals"]["overlap_agents"] == 1
+    assert ecosystem["totals"]["distribution_entries"] == 5
+    account = next(
+        row
+        for row in ecosystem["agents"]
+        if row["logical_name"]
+        == "@aibast-agents-library/account-intelligence"
+    )
+    assert account["channels"] == ["aibast", "rar"]
+    assert account["combined_distribution_fetch_events"] == 17
+
+
+def test_current_federated_snapshot_reconciles_and_is_privacy_safe():
+    snapshot = json.loads(
+        (REPO_ROOT / "state" / "metrics.json").read_text(encoding="utf-8")
+    )
+    ecosystem = snapshot["ecosystem"]
+    totals = ecosystem["totals"]
+    rar = ecosystem["sources"]["rar"]
+    rows = ecosystem["agents"]
+
+    assert ecosystem["schema"] == "aibast-ecosystem-metrics/1.0"
+    assert rar["schema"] == "aibast-rar-federation/1.0"
+    assert len(rows) == totals["logical_agents"]
+    assert totals["combined_agent_distribution_fetch_events"] == sum(
+        value
+        for value in (
+            totals["aibast_direct_agent_fetches"],
+            totals["rar_agent_cdn_fetches"],
+            totals["rar_agent_release_fetches"],
+        )
+        if value is not None
+    )
+    assert snapshot["totals"][
+        "global_agent_distribution_fetch_events"
+    ] == totals["combined_agent_distribution_fetch_events"]
+    assert snapshot["totals"]["rar_agent_acquisitions"] == totals[
+        "rar_agent_acquisitions"
+    ]
+    assert totals["rar_agent_acquisitions"] == sum(
+        row["rar_acquisitions"] or 0 for row in rows
+    )
+    for signal, value in totals["rar_usage_signals"].items():
+        assert value == sum(
+            (row.get("rar_usage_signals") or {}).get(signal) or 0
+            for row in rows
+        )
+    serialized = json.dumps(ecosystem)
+    for forbidden in ('"login"', '"email"', '"token"', '"body"'):
+        assert forbidden not in serialized
 
 
 def test_agi_claim_parser_requires_exact_canonical_fields_and_mapping():
@@ -1756,12 +2005,36 @@ def test_metrics_page_binds_workshop_adoption_schema():
     assert "Community upvotes" not in html
     assert "Upvote on GitHub" not in html
     assert "Repository stars" in html
-    assert "Downloads, agent upvotes, and workshop usage" in html
+    assert "Global agent distribution, engagement, and learning impact" in html
     assert "label: 'Most upvoted'" in html
     assert "t.agent_upvotes" in html
     assert "Array.isArray(M.agent_metrics) ? M.agent_metrics : []" in html
     assert "Opening the form is not a vote" in html
     assert "One GitHub account counts once per agent" in html
+    for element_id in (
+        "global-agent-ecosystem",
+        "ecosystem-summary",
+        "ecosystem-coverage",
+        "ecosystem-agent-table",
+    ):
+        assert f'id="{element_id}"' in html
+    assert "function renderEcosystem(" in html
+    assert "renderEcosystem();" in html
+    for field in (
+        "M.ecosystem || {}",
+        "totals.combined_agent_distribution_fetch_events",
+        "totals.rar_agent_acquisitions",
+        "totals.rar_usage_signals",
+        "row.aibast_direct_agent_fetches",
+        "row.rar_cdn_fetches",
+        "row.rar_release_fetches",
+        "row.combined_distribution_fetch_events",
+        "row.rar_acquisitions",
+        "row.rar_usage_signals",
+    ):
+        assert field in html
+    assert "public kody-w/RAR community channel" in html
+    assert "Missing agent rows are unavailable, not verified zero" in html
     for element_id in (
         "file-ledger-search",
         "file-ledger-kind",

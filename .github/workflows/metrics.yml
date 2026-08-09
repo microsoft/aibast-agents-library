@@ -8,6 +8,8 @@ on:
     branches: [main]
     paths:
       - 'scripts/build_metrics.py'
+      - 'scripts/build_impact_report.py'
+      - 'scripts/impact-report-requirements.txt'
       - 'metrics.html'
       - 'registry.json'
       - 'solutions/catalog.json'
@@ -52,7 +54,43 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.METRICS_TOKEN || secrets.GITHUB_TOKEN }}
           METRICS_OWNER: ${{ github.repository_owner }}
           METRICS_REPO: ${{ github.event.repository.name }}
+          RAR_METRICS_TOKEN: ${{ secrets.RAR_METRICS_TOKEN }}
+          RAR_METRICS_OWNER: kody-w
+          RAR_METRICS_REPO: RAR
         run: python scripts/build_metrics.py
+
+      - name: Build weekly and monthly impact report
+        run: |
+          python -m pip install -q -r scripts/impact-report-requirements.txt
+          python scripts/build_impact_report.py
+
+      - name: Validate impact report exports
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(Path('reports/impact-report.json').read_text())
+          assert report['schema'] == 'aibast-impact-report/1.0'
+          assert set(report['periods']) == {'week', 'month'}
+          assert report['periods']['week']['days'] == 7
+          assert report['periods']['month']['days'] == 30
+          metric_ids = {
+              row['id'] for row in report['current']['metrics']
+          }
+          required = {
+              'total_downloads', 'page_views', 'agent_upvotes',
+              'workshop_usage_events', 'agi_points', 'agi_completions',
+              'global_agent_fetch_events', 'rar_agent_acquisitions',
+              'tracked_files', 'skills',
+          }
+          assert required <= metric_ids
+          assert Path('reports/impact-report.pdf').read_bytes().startswith(b'%PDF-')
+          assert 'Subject:' in Path(
+              'reports/impact-report-email.txt'
+          ).read_text()
+          assert '<table>' in Path('reports/impact-report.html').read_text()
+          PY
 
       - name: Report traffic source
         run: |
@@ -93,6 +131,53 @@ jobs:
               raise SystemExit(1)
           if len(agent_rows) != snapshot.get('totals', {}).get('agents'):
               print('agent_metrics rows must match the registry agent count', file=sys.stderr)
+              raise SystemExit(1)
+          ecosystem = snapshot.get('ecosystem', {})
+          ecosystem_totals = ecosystem.get('totals', {})
+          rar = ecosystem.get('sources', {}).get('rar', {})
+          rar_totals = rar.get('totals', {})
+          ecosystem_agents = ecosystem.get('agents', [])
+          if ecosystem.get('schema') != 'aibast-ecosystem-metrics/1.0':
+              print('global ecosystem schema is missing or unsupported', file=sys.stderr)
+              raise SystemExit(1)
+          if rar.get('schema') != 'aibast-rar-federation/1.0':
+              print('public RAR federation schema is missing or unsupported', file=sys.stderr)
+              raise SystemExit(1)
+          known_fetches = [
+              value for value in (
+                  ecosystem_totals.get('aibast_direct_agent_fetches'),
+                  ecosystem_totals.get('rar_agent_cdn_fetches'),
+                  ecosystem_totals.get('rar_agent_release_fetches'),
+              )
+              if isinstance(value, int)
+          ]
+          expected_fetches = sum(known_fetches) if known_fetches else None
+          if (
+              ecosystem_totals.get('combined_agent_distribution_fetch_events')
+              != expected_fetches
+              or snapshot.get('totals', {}).get(
+                  'global_agent_distribution_fetch_events'
+              ) != expected_fetches
+          ):
+              print('global agent fetch totals do not reconcile', file=sys.stderr)
+              raise SystemExit(1)
+          if (
+              snapshot.get('totals', {}).get('rar_agent_acquisitions')
+              != rar_totals.get('agent_acquisitions')
+              or ecosystem_totals.get('rar_agent_acquisitions')
+              != rar_totals.get('agent_acquisitions')
+          ):
+              print('RAR acquisition totals do not reconcile', file=sys.stderr)
+              raise SystemExit(1)
+          if len(ecosystem_agents) != ecosystem_totals.get('logical_agents'):
+              print('global logical-agent rows do not reconcile', file=sys.stderr)
+              raise SystemExit(1)
+          signal_ids = {
+              'worked', 'did_not_work', 'stuck', 'regular_use',
+              'shipped', 'want_to_try', 'saved_time'
+          }
+          if set(ecosystem_totals.get('rar_usage_signals', {})) != signal_ids:
+              print('RAR usage signal contract is incomplete', file=sys.stderr)
               raise SystemExit(1)
           if agi.get('status') in {'available', 'partial'}:
               achievement_order = [
@@ -347,11 +432,30 @@ jobs:
                   raise SystemExit(1)
           PY
 
+      - name: Upload shareable impact report
+        uses: actions/upload-artifact@v4
+        with:
+          name: aibast-impact-report
+          path: |
+            reports/impact-report.pdf
+            reports/impact-report.html
+            reports/impact-report-email.txt
+            reports/impact-report-email.md
+            reports/impact-report.json
+
       - name: Commit snapshot
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add state/metrics.json state/metrics_history.json
+          git add \
+            state/metrics.json \
+            state/metrics_history.json \
+            state/impact_history.json \
+            reports/impact-report.pdf \
+            reports/impact-report.html \
+            reports/impact-report-email.txt \
+            reports/impact-report-email.md \
+            reports/impact-report.json
           if git diff --staged --quiet; then
             echo "No metrics change"
           else

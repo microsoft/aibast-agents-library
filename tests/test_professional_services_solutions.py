@@ -348,7 +348,7 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     assert "aibast:workshop-engine" in quest
     assert "data-easy-lane-button" not in quest
     assert "Workshop settings" in quest
-    assert quest.count("data-copy-target=") == 9
+    assert quest.count("data-copy-target=") == 16
     assert "Download Brainstem SKILL.md" in quest
     assert "Download Copilot-only SKILL.md" in quest
     assert quest.count('download="SKILL.md"') == 2
@@ -376,8 +376,9 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
         for value in case["must_not_include"]:
             assert value in quest
     assert "Raw resources" not in quest
-    assert 'src="manual-tutorial.html?embedded=1"' in quest
-    assert ">Open the manual tutorial<" not in quest
+    assert "<iframe" not in quest
+    assert 'class="path" data-path="hard"' in quest
+    assert "Open standalone Hard-mode guide" in quest
     assert manual_tutorial.count(
         'data-copy-target="hard-copy-'
     ) == 7

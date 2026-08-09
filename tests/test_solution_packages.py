@@ -300,7 +300,9 @@ def test_rapp_browserfilm_assets_are_reproducible():
     assert "workshop-settings.html" in quest
     assert "field-guide.html" in quest
     assert "evidence-report.html" in quest
-    assert 'src="manual-tutorial.html?embedded=1"' in quest
+    assert "<iframe" not in quest
+    assert 'class="path" data-path="hard"' in quest
+    assert "Open standalone Hard-mode guide" in quest
     assert 'data-easy-lane="copilot"' in quest
     assert 'data-easy-lane="brainstem"' in quest
     assert 'localStorage.getItem("aibast:workshop-engine") === "brainstem"' in quest
@@ -308,7 +310,7 @@ def test_rapp_browserfilm_assets_are_reproducible():
     assert "GitHub Copilot only" in quest
     assert "GitHub Copilot + Brainstem" in quest
     assert len(re.findall(r"<[^>]+\bdata-report-location=", quest)) == (
-        7 + len(cases)
+        7 + len(cases) + len(manual_manifest["frames"])
     )
     assert "aibast-workshop-feedback/1.0" in quest
     assert "Watch assisted film" not in quest
@@ -366,14 +368,12 @@ def test_manual_tutorial_matches_browserfilm_and_visual_contract():
         "--cp-warning:",
         "--cp-link:",
         "--cp-shadow:",
-        'get("embedded")',
-        '=== "1"',
-        "data-embedded",
-        "aibast-hard-mode-height",
-        "postMessage",
-        "ResizeObserver",
     ):
         assert token in tutorial
+    for token in ("data-embedded", "aibast-hard-mode-height", "postMessage"):
+        assert token not in tutorial
+    assert "manual-progress" in tutorial
+    assert 'badgeIds.push("hard-mode-complete")' in tutorial
 
     frames = browserfilm["frames"]
     assert len(steps) == len(frames)
@@ -399,8 +399,9 @@ def test_manual_tutorial_matches_browserfilm_and_visual_contract():
         checkpoint = hard_visuals[index]
         assert checkpoint["source"].endswith(frame["file"])
         if checkpoint["status"] == "reshoot_required":
-            assert not step["images"]
-            assert "What to look for" in step["text"]
+            assert step["images"]
+            assert "Reference capture" in step["text"]
+            assert "not approved proof" in step["text"]
             assert checkpoint["reason"]
         else:
             assert checkpoint["status"] == "reusable"

@@ -34,9 +34,11 @@ def test_only_lane_skills_are_markdown_learner_actions():
         PAGES[0].read_text(encoding="utf-8"),
         "html.parser",
     )
+    easy_path = quest.select_one('[data-path="easy"]')
+    assert easy_path is not None
     markdown_downloads = [
         anchor
-        for anchor in quest.select("a[href][download]")
+        for anchor in easy_path.select("a[href][download]")
         if Path(urlparse(anchor["href"]).path).suffix.lower() == ".md"
     ]
     assert {

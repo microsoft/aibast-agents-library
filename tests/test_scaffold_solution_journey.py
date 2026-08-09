@@ -10,6 +10,7 @@ import pytest
 
 from tools.scaffold_solution_journey import (
     DARK_THEME_VARIABLES,
+    THEME_PREFERENCE_SCRIPT,
     THEME_SCRIPT,
     THEME_VARIABLES,
     ScaffoldError,
@@ -287,6 +288,7 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
 
     for generated in (guide_html, evidence_html, quest, tutorial):
         assert THEME_SCRIPT in generated
+        assert THEME_PREFERENCE_SCRIPT in generated
         assert THEME_VARIABLES in generated
         assert DARK_THEME_VARIABLES in generated
         assert "AIBAST" in generated
@@ -305,7 +307,7 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert 'href="FIELD-GUIDE.md"' not in quest
     assert 'href="evidence-report.html"' in quest
     assert 'href="VISUAL-EVIDENCE-AUDIT.md"' not in quest
-    assert quest.count("data-copy-target=") == 5
+    assert quest.count("data-copy-target=") == 7
     assert "Download Brainstem SKILL.md" in quest
     assert "Download Copilot-only SKILL.md" in quest
     assert quest.count('download="SKILL.md"') == 2
@@ -331,13 +333,16 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "Reshoot required" not in quest
     assert "No approved visual checkpoint" not in quest
     assert "Compare and contrast while you build" not in quest
-    assert 'id="hard-mode-tutorial"' in quest
-    assert 'src="manual-tutorial.html?embedded=1"' in quest
+    assert "<iframe" not in quest
+    assert 'class="path" data-path="hard"' in quest
+    assert quest.count('<article class="step"') == len(frames)
+    assert "manually on this page." in quest
+    assert "manual-progress" in quest
     assert "Draft · published false" in quest
     assert "manual-tutorial.html" in quest
     assert "Watch assisted film" not in quest
     assert "copilot-assisted-walkthrough.gif" not in quest
-    assert ">Open the manual tutorial<" not in quest
+    assert "Open standalone Hard-mode guide" in quest
     assert "Attach the Brainstem skill" in personless
     assert "drag `SKILL.md` into the" in personless
     assert "Give me Demo Journey using Easy Mode and test it for me." in personless
@@ -363,6 +368,8 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "Use only synthetic fixture records." in tutorial
     assert "Show the synthetic review." in tutorial
     assert "No PAC CLI, YAML import, or plugin architect" in tutorial
+    assert "postMessage" not in tutorial
+    assert "data-embedded" not in tutorial
     assert "Do not choose Publish" in tutorial
     assert "Open Preview in a fresh conversation before running DJ-01" in tutorial
     assert "Shown without browser upscaling" in tutorial

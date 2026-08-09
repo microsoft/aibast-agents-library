@@ -12,12 +12,41 @@
       document.documentElement.setAttribute("data-theme", theme);
     })();
     (() => {
-      if (
-        new URLSearchParams(window.location.search).get("embedded") === "1" &&
-        window.parent !== window
-      ) {
-        document.documentElement.setAttribute("data-embedded", "true");
+      const key = "aibast:theme";
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const explicit = param === "dark" || param === "light" ? param : null;
+      let stored = null;
+      try {
+        const candidate = localStorage.getItem(key);
+        stored = candidate === "dark" || candidate === "light" ? candidate : null;
+      } catch (_error) {
+        stored = null;
       }
+      const theme = explicit || stored || "light";
+      document.documentElement.setAttribute("data-theme", theme);
+      document.addEventListener("DOMContentLoaded", () => {
+        const button = document.querySelector("[data-theme-toggle]");
+        if (!button) return;
+        const render = () => {
+          const dark = document.documentElement.getAttribute("data-theme") === "dark";
+          button.textContent = dark ? "Use light mode" : "Use dark mode";
+          button.setAttribute("aria-pressed", String(dark));
+        };
+        button.addEventListener("click", () => {
+          const next =
+            document.documentElement.getAttribute("data-theme") === "dark"
+              ? "light"
+              : "dark";
+          document.documentElement.setAttribute("data-theme", next);
+          try {
+            localStorage.setItem(key, next);
+          } catch (_error) {
+            /* The visible theme still changes when storage is unavailable. */
+          }
+          render();
+        });
+        render();
+      });
     })();
   </script>
   <style>
@@ -97,6 +126,7 @@
       border-bottom: 1px solid var(--cp-border);
       background: var(--cp-panel-strong);
     }
+    .topbar-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
     .brand { display: flex; align-items: center; gap: 10px; font-weight: 750; }
     .brand-mark {
       display: grid;
@@ -165,6 +195,7 @@
     @media (max-width: 760px) {
       .grid { grid-template-columns: 1fr; }
       .topbar { align-items: flex-start; padding: 12px 16px; }
+      .topbar-actions { justify-content: flex-start; }
       .page { width: min(100% - 24px, 1120px); padding-top: 24px; }
       .hero { padding: 24px 20px; }
     }
@@ -191,6 +222,9 @@
     .shot-link { display: block; text-align: center; }
     .shot { display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }
     .capture-meta { margin: 8px 0 0; color: var(--cp-text-muted); font-size: 12px; text-align: center; }
+    .reference-shot-wrap { margin: 16px 0; }
+    .quality-warning { margin: 10px 0 0; padding: 14px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft); color: var(--cp-text-muted); text-align: left; }
+    .quality-warning strong { color: var(--cp-text); }
     .missing { padding: 32px; border: 2px dashed var(--cp-warning); border-radius: 10px; color: var(--cp-text-muted); }
     .look-for { padding: 20px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
     .look-for strong { color: var(--cp-text); }
@@ -201,10 +235,6 @@
     .agi-manual-note { margin-top: 10px; color: var(--cp-text-muted); font-size: 13px; }
     .troubleshooting details { padding: 14px 0; border-bottom: 1px solid var(--cp-border); }
     summary { cursor: pointer; font-weight: 700; }
-    html[data-embedded="true"] body { background: var(--cp-bg-elevated); }
-    html[data-embedded="true"] .topbar { display: none; }
-    html[data-embedded="true"] .layout { grid-template-columns: 230px minmax(0, 1fr); max-width: none; padding: 8px 0 32px; }
-    html[data-embedded="true"] .hero { box-shadow: none; }
     @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } .sidebar { position: static; max-height: none; } }
     @media (max-width: 620px) { .instruction-grid { grid-template-columns: 1fr; } }
   </style>
@@ -212,7 +242,7 @@
 <body>
   <header class="topbar">
     <div class="brand"><span class="brand-mark">A</span><span>AIBAST manual workshop</span></div>
-    <div> <a class="button primary" href="exports/fs-regulatory-compliance-source.zip">Download source bundle</a></div>
+    <div class="topbar-actions"><button class="button" type="button" data-theme-toggle aria-pressed="false">Use dark mode</button> <a class="button primary" href="exports/fs-regulatory-compliance-source.zip">Download source bundle</a></div>
   </header>
   <div class="layout">
     <aside class="sidebar">
@@ -265,7 +295,7 @@
             <div class="instruction expected"><strong>Expected result</strong>A blank Copilot Studio agent is visible in the captured Draft workspace.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>A blank Copilot Studio agent is visible in the captured Draft workspace.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/01-create-blank-agent.jpg" download="01-create-blank-agent.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/01-create-blank-agent.jpg" alt="Create a blank Copilot Studio agent reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1280×780 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>A blank Copilot Studio agent is visible in the captured Draft workspace.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="1"> Mark complete</label>
@@ -280,7 +310,7 @@
             <div class="instruction expected"><strong>Expected result</strong>The page header shows the recorded manual build name: Regulatory Manual Build.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The page header shows the recorded manual build name: Regulatory Manual Build.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/02-name-manual-agent.jpg" download="02-name-manual-agent.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/02-name-manual-agent.jpg" alt="Name the manual agent reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1280×780 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The page header shows the recorded manual build name: Regulatory Manual Build.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="2"> Mark complete</label>
@@ -339,7 +369,7 @@ the uploaded pilot knowledge and skills.
             <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/03-enter-global-instructions.jpg" download="03-enter-global-instructions.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/03-enter-global-instructions.jpg" alt="Enter the reviewed global instructions reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1280×780 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
             <label><input class="complete" type="checkbox" data-step="3"> Mark complete</label>
@@ -354,7 +384,7 @@ the uploaded pilot knowledge and skills.
             <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/04-save-global-instructions.jpg" download="04-save-global-instructions.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/04-save-global-instructions.jpg" alt="Save the instruction policy reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1280×780 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
             <label><input class="complete" type="checkbox" data-step="4"> Mark complete</label>
@@ -369,7 +399,7 @@ the uploaded pilot knowledge and skills.
             <div class="instruction expected"><strong>Expected result</strong>The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/05-open-web-search-settings.jpg" download="05-open-web-search-settings.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/05-open-web-search-settings.jpg" alt="Locate the default web-search capability reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1280×780 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="export-manifest.json" download>Download source: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="5"> Mark complete</label>
@@ -384,7 +414,7 @@ the uploaded pilot knowledge and skills.
             <div class="instruction expected"><strong>Expected result</strong>The captured inventory no longer lists the default web-search capability.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The captured inventory no longer lists the default web-search capability.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/06-remove-web-search.jpg" download="06-remove-web-search.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/06-remove-web-search.jpg" alt="Remove default web search reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1280×780 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured inventory no longer lists the default web-search capability.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="export-manifest.json" download>Download source: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="6"> Mark complete</label>
@@ -399,7 +429,7 @@ the uploaded pilot knowledge and skills.
             <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/07-open-knowledge-upload.jpg" download="07-open-knowledge-upload.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/07-open-knowledge-upload.jpg" alt="Open the knowledge uploader reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1280×780 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="export-manifest.json" download>Download source: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="7"> Mark complete</label>
@@ -414,7 +444,7 @@ the uploaded pilot knowledge and skills.
             <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/08-upload-synthetic-records.jpg" download="08-upload-synthetic-records.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/08-upload-synthetic-records.jpg" alt="Upload synthetic compliance records reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1280×780 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="manual/knowledge/aibast_fs-regulatory-compliance-rules-and-controls.md" download>Download source: Aibast Fs Regulatory Compliance Rules And Controls</a>
             <label><input class="complete" type="checkbox" data-step="8"> Mark complete</label>
@@ -429,7 +459,7 @@ the uploaded pilot knowledge and skills.
             <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/09-upload-rules-controls.jpg" download="09-upload-rules-controls.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/09-upload-rules-controls.jpg" alt="Upload rules and controls reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1280×780 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="manual/knowledge/aibast_fs-regulatory-compliance-synthetic-records.md" download>Download source: Aibast Fs Regulatory Compliance Synthetic Records</a>
             <label><input class="complete" type="checkbox" data-step="9"> Mark complete</label>
@@ -444,7 +474,7 @@ the uploaded pilot knowledge and skills.
             <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/10-verify-two-knowledge-files.jpg" download="10-verify-two-knowledge-files.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/10-verify-two-knowledge-files.jpg" alt="Verify both knowledge sources reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1280×780 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="export-manifest.json" download>Download source: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="10"> Mark complete</label>
@@ -459,7 +489,7 @@ the uploaded pilot knowledge and skills.
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/11-open-skill-upload.jpg" download="11-open-skill-upload.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/11-open-skill-upload.jpg" alt="Open the SKILL.md uploader reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1280×780 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="export-manifest.json" download>Download source: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="11"> Mark complete</label>
@@ -474,7 +504,7 @@ the uploaded pilot knowledge and skills.
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/12-upload-dashboard-skill.jpg" download="12-upload-dashboard-skill.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/12-upload-dashboard-skill.jpg" alt="Upload compliance dashboard skill reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1280×780 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="manual/skills/aibast_certification-tracker_rc05/SKILL.md" download>Download source: Manual skill: aibast certification tracker rc05</a>
             <label><input class="complete" type="checkbox" data-step="12"> Mark complete</label>
@@ -489,7 +519,7 @@ the uploaded pilot knowledge and skills.
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/13-upload-surveillance-skill.jpg" download="13-upload-surveillance-skill.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/13-upload-surveillance-skill.jpg" alt="Upload trade surveillance skill reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1280×780 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="manual/skills/aibast_compliance-dashboard_rc01/SKILL.md" download>Download source: Manual skill: aibast compliance dashboard rc01</a>
             <label><input class="complete" type="checkbox" data-step="13"> Mark complete</label>
@@ -504,7 +534,7 @@ the uploaded pilot knowledge and skills.
             <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Sonnet 4.6, 5 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The screenshot visibly confirms Claude Sonnet 4.6, 5 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/14-upload-documentation-skill.jpg" download="14-upload-documentation-skill.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/14-upload-documentation-skill.jpg" alt="Upload documentation review skill reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1280×780 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The screenshot visibly confirms Claude Sonnet 4.6, 5 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="manual/skills/aibast_documentation-review_rc03/SKILL.md" download>Download source: Manual skill: aibast documentation review rc03</a>
             <label><input class="complete" type="checkbox" data-step="14"> Mark complete</label>
@@ -519,7 +549,7 @@ the uploaded pilot knowledge and skills.
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/15-upload-remediation-skill.jpg" download="15-upload-remediation-skill.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/15-upload-remediation-skill.jpg" alt="Upload remediation preparation skill reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1280×780 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="manual/skills/aibast_remediation-submission_rc04/SKILL.md" download>Download source: Manual skill: aibast remediation submission rc04</a>
             <label><input class="complete" type="checkbox" data-step="15"> Mark complete</label>
@@ -534,7 +564,7 @@ the uploaded pilot knowledge and skills.
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/16-upload-certification-skill.jpg" download="16-upload-certification-skill.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/16-upload-certification-skill.jpg" alt="Upload certification readiness skill reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1280×780 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="manual/skills/aibast_trade-surveillance_rc02/SKILL.md" download>Download source: Manual skill: aibast trade surveillance rc02</a>
             <label><input class="complete" type="checkbox" data-step="16"> Mark complete</label>
@@ -549,7 +579,7 @@ the uploaded pilot knowledge and skills.
             <div class="instruction expected"><strong>Expected result</strong>The model picker or inventory shows Claude Sonnet 4.6, matching the recorded evidence.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The model picker or inventory shows Claude Sonnet 4.6, matching the recorded evidence.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/17-open-model-picker.jpg" download="17-open-model-picker.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/17-open-model-picker.jpg" alt="Open the model picker reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1280×780 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The model picker or inventory shows Claude Sonnet 4.6, matching the recorded evidence.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="17"> Mark complete</label>
@@ -564,7 +594,7 @@ the uploaded pilot knowledge and skills.
             <div class="instruction expected"><strong>Expected result</strong>The model picker or inventory shows Claude Sonnet 4.6, matching the recorded evidence.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The model picker or inventory shows Claude Sonnet 4.6, matching the recorded evidence.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/18-select-sonnet46.jpg" download="18-select-sonnet46.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/18-select-sonnet46.jpg" alt="Select Claude Sonnet 4.6 reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1280×780 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The model picker or inventory shows Claude Sonnet 4.6, matching the recorded evidence.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="export-manifest.json" download>Download source: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="18"> Mark complete</label>
@@ -579,7 +609,7 @@ the uploaded pilot knowledge and skills.
             <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/19-review-complete-inventory.jpg" download="19-review-complete-inventory.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/19-review-complete-inventory.jpg" alt="Review instructions, knowledge, skills, and tools reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1280×780 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
             <label><input class="complete" type="checkbox" data-step="19"> Mark complete</label>
@@ -594,7 +624,7 @@ the uploaded pilot knowledge and skills.
             <div class="instruction expected"><strong>Expected result</strong>A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/20-open-preview.jpg" download="20-open-preview.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/20-open-preview.jpg" alt="Open a fresh Preview conversation reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1280×780 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="export-manifest.json" download>Download source: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="20"> Mark complete</label>
@@ -609,7 +639,7 @@ the uploaded pilot knowledge and skills.
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records RC-01 with the recorded identifiers T-2041, T-2233; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running RC-01. A previous response must not influence the evidence.</p></div>
-          <div class="look-for"><strong>What to look for</strong><p>The captured Preview evidence records RC-01 with the recorded identifiers T-2041, T-2233; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/21-preview-rc01-audit-readiness.jpg" download="21-preview-rc01-audit-readiness.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/21-preview-rc01-audit-readiness.jpg" alt="Pass RC-01 audit readiness reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1280×780 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured Preview evidence records RC-01 with the recorded identifiers T-2041, T-2233; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="21"> Mark complete</label>
@@ -624,7 +654,7 @@ the uploaded pilot knowledge and skills.
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records RC-02 with the recorded identifiers T-2041, T-2233; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running RC-02. A previous response must not influence the evidence.</p></div>
-          <div class="look-for"><strong>What to look for</strong><p>The captured Preview evidence records RC-02 with the recorded identifiers T-2041, T-2233; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/22-preview-rc02-certifications.jpg" download="22-preview-rc02-certifications.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/22-preview-rc02-certifications.jpg" alt="Pass RC-02 certifications reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1280×780 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured Preview evidence records RC-02 with the recorded identifiers T-2041, T-2233; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="22"> Mark complete</label>
@@ -639,7 +669,7 @@ the uploaded pilot knowledge and skills.
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records RC-03 with the recorded identifiers TRD-88133, field; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running RC-03. A previous response must not influence the evidence.</p></div>
-          <div class="look-for"><strong>What to look for</strong><p>The captured Preview evidence records RC-03 with the recorded identifiers TRD-88133, field; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/23-preview-rc03-trade-surveillance.jpg" download="23-preview-rc03-trade-surveillance.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/23-preview-rc03-trade-surveillance.jpg" alt="Pass RC-03 trade surveillance reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1280×780 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured Preview evidence records RC-03 with the recorded identifiers TRD-88133, field; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="23"> Mark complete</label>
@@ -654,7 +684,7 @@ the uploaded pilot knowledge and skills.
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records RC-04 with the recorded identifiers ALGO-POV-NL; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running RC-04. A previous response must not influence the evidence.</p></div>
-          <div class="look-for"><strong>What to look for</strong><p>The captured Preview evidence records RC-04 with the recorded identifiers ALGO-POV-NL; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/24-preview-rc04-algorithm-go-live.jpg" download="24-preview-rc04-algorithm-go-live.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/24-preview-rc04-algorithm-go-live.jpg" alt="Pass RC-04 algorithm go-live reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1280×780 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured Preview evidence records RC-04 with the recorded identifiers ALGO-POV-NL; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="24"> Mark complete</label>
@@ -669,7 +699,7 @@ the uploaded pilot knowledge and skills.
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records RC-05 with the recorded identifiers TRD-88133; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running RC-05. A previous response must not influence the evidence.</p></div>
-          <div class="look-for"><strong>What to look for</strong><p>The captured Preview evidence records RC-05 with the recorded identifiers TRD-88133; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/25-preview-rc05-board-evidence.jpg" download="25-preview-rc05-board-evidence.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/25-preview-rc05-board-evidence.jpg" alt="Pass RC-05 board evidence reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1280×780 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured Preview evidence records RC-05 with the recorded identifiers TRD-88133; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="25"> Mark complete</label>
@@ -684,7 +714,7 @@ the uploaded pilot knowledge and skills.
             <div class="instruction expected"><strong>Expected result</strong>The agent remains Draft and no Publish action is taken.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The agent remains Draft and no Publish action is taken.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/26-confirm-draft-no-publish.jpg" download="26-confirm-draft-no-publish.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/26-confirm-draft-no-publish.jpg" alt="Confirm Draft and stop before publish reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1280×780 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The agent remains Draft and no Publish action is taken.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="26"> Mark complete</label>
@@ -890,9 +920,8 @@ the uploaded pilot knowledge and skills.
         localStorage.setItem(key, JSON.stringify(done));
         label.textContent = `${done.length} of ${boxes.length} complete`;
         bar.style.width = boxes.length ? `${(done.length / boxes.length) * 100}%` : "0%";
-        const embedded = document.documentElement.dataset.embedded === "true";
-        if (!embedded) {
-          let profile = readAgiProfile();
+        let profile = readAgiProfile();
+        if (done.length > 0 || profile.workshops[AGI_WORKSHOP_SLUG]) {
           profile = setAgiWorkshopProgress(profile, "hard", {
             hardChecked: done.length,
             hardTotal: boxes.length,
@@ -909,22 +938,6 @@ the uploaded pilot knowledge and skills.
                 `${result.awarded.label} earned: +${result.awarded.points} local AGI points.`;
             }
           });
-        } else {
-          const message = {
-            type: "aibast-agi-hard-progress",
-            workshop: AGI_WORKSHOP_SLUG,
-            mode: "hard",
-            checked: done.length,
-            total: boxes.length,
-            complete,
-          };
-          window.parent.postMessage(message, window.location.origin);
-          if (complete) {
-            window.parent.postMessage(
-              { ...message, type: "aibast-agi-hard-complete" },
-              window.location.origin,
-            );
-          }
         }
       }
       document.querySelectorAll("[data-copy-target]").forEach((button) => {
@@ -983,29 +996,6 @@ Describe what was inaccurate or missing.
         });
       });
       update();
-      if (document.documentElement.dataset.embedded === "true") {
-        const notifyHeight = () => {
-          window.parent.postMessage(
-            {
-              type: "aibast-hard-mode-height",
-              height: document.documentElement.scrollHeight,
-            },
-            window.location.origin,
-          );
-        };
-        new ResizeObserver(notifyHeight).observe(document.documentElement);
-        window.addEventListener("load", notifyHeight);
-        window.addEventListener("message", (event) => {
-          if (
-            event.origin === window.location.origin &&
-            event.source === window.parent &&
-            event.data?.type === "aibast-agi-request-hard-progress"
-          ) {
-            update();
-          }
-        });
-        notifyHeight();
-      }
     })();
   </script>
 </body>

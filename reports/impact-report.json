@@ -1,0 +1,2854 @@
+{
+  "caveats": [
+    "This report uses public GitHub, jsDelivr, release, and opt-in issue signals. It contains no private analytics or tracking pixel.",
+    "Raw GitHub, raw.githubusercontent.com, and direct GitHub Pages file downloads expose no public per-file counter, so download figures are a measurable floor rather than total use.",
+    "GitHub traffic and popular paths require repository Administration: read. Unavailable traffic remains unavailable instead of becoming a fabricated zero.",
+    "Workshop usage combines mixed-window public events and is not a user count. Agent upvotes and AGI Points remain separate signals.",
+    "Verified AGI confirms authenticated GitHub issue authorship and schema only; the underlying self-reported achievement completion is not independently proven.",
+    "Global agent fetch events add distinct observable AIBAST and public RAR distribution channels. They are fetch events, not people, and RAR's censored CDN file list makes the combined figure a floor.",
+    "RAR signed-in acquisitions and worked, regular-use, shipped, and other reactions are separate opt-in signals. They are never added to fetches or interpreted as unique users."
+  ],
+  "coverage": {
+    "agent_upvotes": {
+      "as_of": "2026-08-09T18:30:24Z",
+      "status": "available"
+    },
+    "agi": {
+      "as_of": "2026-08-09T18:30:24Z",
+      "status": "available"
+    },
+    "file_downloads": {
+      "as_of": "2026-08-09T18:30:24Z",
+      "status": "complete"
+    },
+    "global_ecosystem": {
+      "as_of": "2026-08-09T18:30:24Z",
+      "status": "partial"
+    },
+    "public_rar": {
+      "as_of": "2026-08-09T06:02:41Z",
+      "status": "partial"
+    },
+    "traffic": {
+      "as_of": "2026-08-09T18:30:24Z",
+      "reason": null,
+      "status": "live"
+    },
+    "workshops": {
+      "as_of": "2026-08-09T18:30:24Z",
+      "status": "partial"
+    }
+  },
+  "current": {
+    "agents": {
+      "@aibast-agents-library/account-intelligence": {
+        "display_name": "Account Intelligence Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/account-intelligence-orchestrator": {
+        "display_name": "Account Intelligence Orchestrator",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/account-messaging": {
+        "display_name": "Account Messaging",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/account-risk-assessment": {
+        "display_name": "Account Risk Assessment",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/action-prioritization": {
+        "display_name": "Action Prioritization",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/activity-gap": {
+        "display_name": "Activity Gap Analyzer",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/ai-customer-assistant": {
+        "display_name": "Customer Escalations Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/ask-hr": {
+        "display_name": "Ask HR Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/asset-maintenance-forecast": {
+        "display_name": "Asset Maintenance Forecast Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/building-permit-processing": {
+        "display_name": "Building Permit Processing Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/care-gap-closure": {
+        "display_name": "Care Gap Closure Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/cart-abandonment-recovery": {
+        "display_name": "Cart Abandonment Recovery Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/claims-processing": {
+        "display_name": "Claims Processing Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/client-health-score": {
+        "display_name": "Client Health Score Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/clinical-notes-summarizer": {
+        "display_name": "Clinical Notes Summarizer Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/competitive-intelligence": {
+        "display_name": "Competitive Intelligence",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/contract-risk-review": {
+        "display_name": "Contract Risk Review Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/cross-selling": {
+        "display_name": "Cross Selling Opportunities Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/customer-loyalty-rewards": {
+        "display_name": "Customer Loyalty and Rewards Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/customer-sentiment-churn": {
+        "display_name": "Customer Sentiment and Churn Prediction Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/deal-competitor-intel": {
+        "display_name": "Deal Competitor Intelligence",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/deal-health-score": {
+        "display_name": "Deal Health Score",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/deal-progression": {
+        "display_name": "Deal Progression Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/deal-risk-assessment": {
+        "display_name": "Deal Risk Assessment",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/deal-stakeholder-engagement": {
+        "display_name": "Stakeholder Engagement",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/deal-tracking": {
+        "display_name": "Deal Tracking",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/emission-tracking": {
+        "display_name": "Emissions Tracking Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/energy-regulatory-reporting": {
+        "display_name": "Regulatory Reporting Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/field-service-dispatch": {
+        "display_name": "Field Service Dispatch Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/financial-advisor-copilot": {
+        "display_name": "Financial Advisor Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/fraud-detection-alert": {
+        "display_name": "Fraud Detection and Alert Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/fs-customer-onboarding": {
+        "display_name": "Customer Onboarding Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/fs-regulatory-compliance": {
+        "display_name": "Regulatory Compliance Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/grid-outage-response": {
+        "display_name": "Grid Outage Response Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/industry-agent-generator": {
+        "display_name": "Industry Agent Generator",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/inventory-rebalancing": {
+        "display_name": "Inventory Rebalancing Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/inventory-visibility": {
+        "display_name": "Inventory Visibility Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/license-renewal-expansion": {
+        "display_name": "License Renewal and Expansion Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/loan-origination-assistant": {
+        "display_name": "Loan Origination Assistant",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/maintenance-scheduling": {
+        "display_name": "Maintenance Scheduling Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/meeting-prep": {
+        "display_name": "Meeting Prep",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/next-best-action": {
+        "display_name": "Next Best Action",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/omnichannel-engagement": {
+        "display_name": "Omnichannel Engagement Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/order-status-communication": {
+        "display_name": "Order Status Communications Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/patient-intake": {
+        "display_name": "Patient Intake and Scheduling Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/permit-license-management": {
+        "display_name": "Permit Management Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/personalized-marketing": {
+        "display_name": "Personalized Marketing Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/personalized-shopping-assistant": {
+        "display_name": "Personalized Shopping Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/pipeline-velocity": {
+        "display_name": "Pipeline Velocity",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/portfolio-rebalancing": {
+        "display_name": "Portfolio Rebalancing Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/prior-authorization": {
+        "display_name": "Prior Authorization Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/procurement-agent": {
+        "display_name": "Procurement Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/procurement-support": {
+        "display_name": "Discount Finder Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/product-feedback-synthesizer": {
+        "display_name": "Product Feedback Synthesizer Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/production-line-optimization": {
+        "display_name": "Product Line Optimization Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/proposal-generation": {
+        "display_name": "Proposal Generation Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/resource-utilization": {
+        "display_name": "Resource Utilization Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/returns-complaints-resolution": {
+        "display_name": "Returns and Complaints Resolution Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/revenue-forecast": {
+        "display_name": "Revenue Forecast",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/sales-qualification": {
+        "display_name": "Sales Qualification Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/stakeholder-intelligence": {
+        "display_name": "Stakeholder Intelligence",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/stalled-deal-detection": {
+        "display_name": "Stalled Deal Detection",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/store-associate-copilot": {
+        "display_name": "Retail Store Associate Copilot",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/supplier-risk-monitoring": {
+        "display_name": "Supply Risk Monitoring Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/supply-chain-disruption-alert": {
+        "display_name": "Supply Chain Disruption Alert Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/time-entry-billing": {
+        "display_name": "Time and Entry Billing Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/underwriting-support": {
+        "display_name": "Underwriting Support Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/utility-billing-assistance": {
+        "display_name": "Utility Billing and Assistance Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/wealth-insights-generator": {
+        "display_name": "Wealth Insights Generator Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/win-loss-analysis": {
+        "display_name": "Win Loss Analysis Agent",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/win-probability": {
+        "display_name": "Win Probability",
+        "downloads": 0,
+        "upvotes": 0
+      },
+      "@aibast-agents-library/workshop": {
+        "display_name": "AIBAST Workshop Engine",
+        "downloads": 0,
+        "upvotes": 0
+      }
+    },
+    "ecosystem_leaderboards": {
+      "acquisitions": [
+        {
+          "channels": [
+            "aibast",
+            "rar"
+          ],
+          "display_name": "Account Risk Assessment",
+          "name": "@aibast-agents-library/account-risk-assessment",
+          "value": 1
+        },
+        {
+          "channels": [
+            "rar"
+          ],
+          "display_name": "Borg",
+          "name": "@borg/borg_agent",
+          "value": 1
+        },
+        {
+          "channels": [
+            "rar"
+          ],
+          "display_name": "Hacker News",
+          "name": "@rapp/hacker_news",
+          "value": 1
+        },
+        {
+          "channels": [
+            "rar"
+          ],
+          "display_name": "PowerAppsCodeApp",
+          "name": "@kody-w/power_apps_code_app_agent",
+          "value": 1
+        }
+      ],
+      "distribution_fetches": [
+        {
+          "channels": [
+            "rar"
+          ],
+          "display_name": "LearnNew",
+          "name": "@rapp/learn_new",
+          "value": 8
+        },
+        {
+          "channels": [
+            "rar"
+          ],
+          "display_name": "AgentTeam",
+          "name": "@kody-w/agent_team_agent",
+          "value": 4
+        },
+        {
+          "channels": [
+            "rar"
+          ],
+          "display_name": "Customer 360 & Speech Agent",
+          "name": "@aibast-agents-library/customer_360_speech",
+          "value": 3
+        },
+        {
+          "channels": [
+            "aibast",
+            "rar"
+          ],
+          "display_name": "Customer Loyalty and Rewards Agent",
+          "name": "@aibast-agents-library/customer-loyalty-rewards",
+          "value": 3
+        }
+      ],
+      "regular_use": [],
+      "shipped": [],
+      "worked": []
+    },
+    "metrics": [
+      {
+        "daily_fields": [
+          "clones",
+          "cdn"
+        ],
+        "id": "total_downloads",
+        "kind": "cumulative",
+        "label": "AIBAST observed repository downloads",
+        "path": [
+          "totals",
+          "downloads"
+        ],
+        "section": "Reach and consumption",
+        "source": "downloads",
+        "status": "available",
+        "unit": "count",
+        "value": 1505
+      },
+      {
+        "daily_fields": [
+          "clones"
+        ],
+        "id": "git_clones",
+        "kind": "cumulative",
+        "label": "Git clones",
+        "path": [
+          "totals",
+          "clones"
+        ],
+        "section": "Reach and consumption",
+        "source": "traffic",
+        "status": "available",
+        "unit": "count",
+        "value": 1117
+      },
+      {
+        "id": "clones_excluding_ci",
+        "kind": "cumulative",
+        "label": "Clones excluding CI estimate",
+        "path": [
+          "totals",
+          "clones_excluding_ci_estimate"
+        ],
+        "section": "Reach and consumption",
+        "source": "traffic",
+        "status": "available",
+        "unit": "count",
+        "value": 1117
+      },
+      {
+        "daily_fields": [
+          "views"
+        ],
+        "id": "page_views",
+        "kind": "cumulative",
+        "label": "AIBAST repository and Pages views",
+        "path": [
+          "totals",
+          "page_views"
+        ],
+        "section": "Reach and consumption",
+        "source": "traffic",
+        "status": "available",
+        "unit": "count",
+        "value": 7
+      },
+      {
+        "daily_fields": [
+          "cdn"
+        ],
+        "id": "cdn_hits",
+        "kind": "cumulative",
+        "label": "jsDelivr file hits",
+        "path": [
+          "totals",
+          "cdn_hits"
+        ],
+        "section": "Reach and consumption",
+        "source": "cdn",
+        "status": "available",
+        "unit": "count",
+        "value": 388
+      },
+      {
+        "id": "release_downloads",
+        "kind": "cumulative",
+        "label": "Release asset downloads",
+        "path": [
+          "totals",
+          "release_downloads"
+        ],
+        "section": "Reach and consumption",
+        "source": "releases",
+        "status": "available",
+        "unit": "count",
+        "value": 0
+      },
+      {
+        "id": "agent_file_downloads",
+        "kind": "cumulative",
+        "label": "AIBAST direct agent file downloads",
+        "path": [
+          "totals",
+          "agent_file_downloads"
+        ],
+        "section": "Reach and consumption",
+        "source": "file_metrics",
+        "status": "available",
+        "unit": "count",
+        "value": 0
+      },
+      {
+        "id": "skill_downloads",
+        "kind": "cumulative",
+        "label": "AIBAST skill file downloads",
+        "path": [
+          "totals",
+          "skill_downloads"
+        ],
+        "section": "Reach and consumption",
+        "source": "file_metrics",
+        "status": "available",
+        "unit": "count",
+        "value": 0
+      },
+      {
+        "id": "installer_downloads",
+        "kind": "cumulative",
+        "label": "AIBAST installer file downloads",
+        "path": [
+          "totals",
+          "installer_downloads"
+        ],
+        "section": "Reach and consumption",
+        "source": "file_metrics",
+        "status": "available",
+        "unit": "count",
+        "value": 0
+      },
+      {
+        "id": "clone_uniques_14d",
+        "kind": "rolling",
+        "label": "Unique cloners (14-day window)",
+        "path": [
+          "totals",
+          "clone_uniques_14d"
+        ],
+        "section": "Reach and consumption",
+        "source": "traffic",
+        "status": "available",
+        "unit": "count",
+        "value": 135
+      },
+      {
+        "id": "view_uniques_14d",
+        "kind": "rolling",
+        "label": "Unique visitors (14-day window)",
+        "path": [
+          "totals",
+          "view_uniques_14d"
+        ],
+        "section": "Reach and consumption",
+        "source": "traffic",
+        "status": "available",
+        "unit": "count",
+        "value": 3
+      },
+      {
+        "id": "global_agent_fetch_events",
+        "kind": "cumulative",
+        "label": "Global observable agent fetch events",
+        "path": [
+          "ecosystem",
+          "totals",
+          "combined_agent_distribution_fetch_events"
+        ],
+        "section": "Global agent ecosystem",
+        "source": "ecosystem",
+        "status": "partial",
+        "unit": "count",
+        "value": 18
+      },
+      {
+        "id": "aibast_direct_agent_fetches",
+        "kind": "cumulative",
+        "label": "AIBAST direct agent fetches",
+        "path": [
+          "ecosystem",
+          "totals",
+          "aibast_direct_agent_fetches"
+        ],
+        "section": "Global agent ecosystem",
+        "source": "file_metrics",
+        "status": "available",
+        "unit": "count",
+        "value": 0
+      },
+      {
+        "id": "rar_agent_cdn_fetches",
+        "kind": "cumulative",
+        "label": "RAR community agent CDN fetches",
+        "path": [
+          "ecosystem",
+          "totals",
+          "rar_agent_cdn_fetches"
+        ],
+        "section": "Global agent ecosystem",
+        "source": "rar_cdn",
+        "status": "partial",
+        "unit": "count",
+        "value": 18
+      },
+      {
+        "id": "rar_agent_release_fetches",
+        "kind": "cumulative",
+        "label": "RAR community agent release fetches",
+        "path": [
+          "ecosystem",
+          "totals",
+          "rar_agent_release_fetches"
+        ],
+        "section": "Global agent ecosystem",
+        "source": "rar_releases",
+        "status": "available",
+        "unit": "count",
+        "value": 0
+      },
+      {
+        "id": "rar_agent_acquisitions",
+        "kind": "gauge",
+        "label": "RAR signed-in agent acquisitions",
+        "path": [
+          "ecosystem",
+          "totals",
+          "rar_agent_acquisitions"
+        ],
+        "section": "Global agent ecosystem",
+        "source": "rar_discussions",
+        "status": "available",
+        "unit": "count",
+        "value": 4
+      },
+      {
+        "id": "rar_positive_reactions",
+        "kind": "gauge",
+        "label": "RAR positive agent reactions",
+        "path": [
+          "ecosystem",
+          "totals",
+          "rar_positive_reactions"
+        ],
+        "section": "Global agent ecosystem",
+        "source": "rar_discussions",
+        "status": "available",
+        "unit": "count",
+        "value": 3
+      },
+      {
+        "id": "rar_signal_worked",
+        "kind": "gauge",
+        "label": "RAR usage signal: worked",
+        "path": [
+          "ecosystem",
+          "totals",
+          "rar_usage_signals",
+          "worked"
+        ],
+        "section": "Global agent ecosystem",
+        "source": "rar_discussions",
+        "status": "available",
+        "unit": "count",
+        "value": 0
+      },
+      {
+        "id": "rar_signal_did_not_work",
+        "kind": "gauge",
+        "label": "RAR usage signal: did not work",
+        "path": [
+          "ecosystem",
+          "totals",
+          "rar_usage_signals",
+          "did_not_work"
+        ],
+        "section": "Global agent ecosystem",
+        "source": "rar_discussions",
+        "status": "available",
+        "unit": "count",
+        "value": 0
+      },
+      {
+        "id": "rar_signal_stuck",
+        "kind": "gauge",
+        "label": "RAR usage signal: stuck",
+        "path": [
+          "ecosystem",
+          "totals",
+          "rar_usage_signals",
+          "stuck"
+        ],
+        "section": "Global agent ecosystem",
+        "source": "rar_discussions",
+        "status": "available",
+        "unit": "count",
+        "value": 0
+      },
+      {
+        "id": "rar_signal_regular_use",
+        "kind": "gauge",
+        "label": "RAR usage signal: regular use",
+        "path": [
+          "ecosystem",
+          "totals",
+          "rar_usage_signals",
+          "regular_use"
+        ],
+        "section": "Global agent ecosystem",
+        "source": "rar_discussions",
+        "status": "available",
+        "unit": "count",
+        "value": 0
+      },
+      {
+        "id": "rar_signal_shipped",
+        "kind": "gauge",
+        "label": "RAR usage signal: shipped",
+        "path": [
+          "ecosystem",
+          "totals",
+          "rar_usage_signals",
+          "shipped"
+        ],
+        "section": "Global agent ecosystem",
+        "source": "rar_discussions",
+        "status": "available",
+        "unit": "count",
+        "value": 0
+      },
+      {
+        "id": "rar_signal_want_to_try",
+        "kind": "gauge",
+        "label": "RAR usage signal: want to try",
+        "path": [
+          "ecosystem",
+          "totals",
+          "rar_usage_signals",
+          "want_to_try"
+        ],
+        "section": "Global agent ecosystem",
+        "source": "rar_discussions",
+        "status": "available",
+        "unit": "count",
+        "value": 0
+      },
+      {
+        "id": "rar_signal_saved_time",
+        "kind": "gauge",
+        "label": "RAR usage signal: saved time",
+        "path": [
+          "ecosystem",
+          "totals",
+          "rar_usage_signals",
+          "saved_time"
+        ],
+        "section": "Global agent ecosystem",
+        "source": "rar_discussions",
+        "status": "available",
+        "unit": "count",
+        "value": 0
+      },
+      {
+        "id": "global_agent_distribution_entries",
+        "kind": "catalog",
+        "label": "Agent entries across both channels",
+        "path": [
+          "ecosystem",
+          "totals",
+          "distribution_entries"
+        ],
+        "section": "Global agent ecosystem",
+        "source": "ecosystem",
+        "status": "partial",
+        "unit": "count",
+        "value": 354
+      },
+      {
+        "id": "global_logical_agents",
+        "kind": "catalog",
+        "label": "Deduplicated logical agents",
+        "path": [
+          "ecosystem",
+          "totals",
+          "logical_agents"
+        ],
+        "section": "Global agent ecosystem",
+        "source": "ecosystem",
+        "status": "partial",
+        "unit": "count",
+        "value": 285
+      },
+      {
+        "id": "global_overlap_agents",
+        "kind": "catalog",
+        "label": "Agents distributed through AIBAST and RAR",
+        "path": [
+          "ecosystem",
+          "totals",
+          "overlap_agents"
+        ],
+        "section": "Global agent ecosystem",
+        "source": "ecosystem",
+        "status": "partial",
+        "unit": "count",
+        "value": 69
+      },
+      {
+        "id": "stars",
+        "kind": "gauge",
+        "label": "GitHub stars",
+        "path": [
+          "repo",
+          "stars"
+        ],
+        "section": "Community engagement",
+        "source": "repo",
+        "status": "available",
+        "unit": "count",
+        "value": 0
+      },
+      {
+        "id": "forks",
+        "kind": "gauge",
+        "label": "GitHub forks",
+        "path": [
+          "repo",
+          "forks"
+        ],
+        "section": "Community engagement",
+        "source": "repo",
+        "status": "available",
+        "unit": "count",
+        "value": 0
+      },
+      {
+        "id": "watchers",
+        "kind": "gauge",
+        "label": "GitHub watchers",
+        "path": [
+          "repo",
+          "watchers"
+        ],
+        "section": "Community engagement",
+        "source": "repo",
+        "status": "available",
+        "unit": "count",
+        "value": 0
+      },
+      {
+        "id": "open_issues",
+        "kind": "gauge",
+        "label": "Open GitHub issues",
+        "path": [
+          "repo",
+          "open_issues"
+        ],
+        "section": "Community engagement",
+        "source": "repo",
+        "status": "available",
+        "unit": "count",
+        "value": 1
+      },
+      {
+        "id": "agent_upvotes",
+        "kind": "gauge",
+        "label": "Agent upvotes",
+        "path": [
+          "totals",
+          "agent_upvotes"
+        ],
+        "section": "Community engagement",
+        "source": "agent_upvotes",
+        "status": "available",
+        "unit": "count",
+        "value": 0
+      },
+      {
+        "id": "workshop_usage_events",
+        "kind": "gauge",
+        "label": "Workshop usage events",
+        "path": [
+          "workshops",
+          "totals",
+          "usage_events"
+        ],
+        "section": "Community engagement",
+        "source": "workshops",
+        "status": "partial",
+        "unit": "count",
+        "value": 0
+      },
+      {
+        "id": "workshop_views_14d",
+        "kind": "rolling",
+        "label": "Workshop views (14-day top paths)",
+        "path": [
+          "workshops",
+          "totals",
+          "views_14d"
+        ],
+        "section": "Community engagement",
+        "source": "workshop_views",
+        "status": "unavailable",
+        "unit": "count",
+        "value": null
+      },
+      {
+        "id": "workshop_file_downloads",
+        "kind": "cumulative",
+        "label": "Workshop file downloads",
+        "path": [
+          "workshops",
+          "totals",
+          "file_downloads"
+        ],
+        "section": "Community engagement",
+        "source": "workshop_downloads",
+        "status": "available",
+        "unit": "count",
+        "value": 0
+      },
+      {
+        "id": "workshop_bundle_downloads",
+        "kind": "cumulative",
+        "label": "Workshop bundle downloads",
+        "path": [
+          "workshops",
+          "totals",
+          "bundle_downloads"
+        ],
+        "section": "Community engagement",
+        "source": "workshop_downloads",
+        "status": "available",
+        "unit": "count",
+        "value": 0
+      },
+      {
+        "id": "workshop_feedback",
+        "kind": "gauge",
+        "label": "Workshop feedback reports",
+        "path": [
+          "workshops",
+          "totals",
+          "feedback_reports"
+        ],
+        "section": "Community engagement",
+        "source": "workshop_feedback",
+        "status": "available",
+        "unit": "count",
+        "value": 0
+      },
+      {
+        "id": "agi_participants",
+        "kind": "gauge",
+        "label": "Verified AGI participants",
+        "path": [
+          "agi",
+          "totals",
+          "participants"
+        ],
+        "section": "Learning impact",
+        "source": "agi",
+        "status": "available",
+        "unit": "count",
+        "value": 1
+      },
+      {
+        "id": "agi_points",
+        "kind": "gauge",
+        "label": "Verified AGI Points",
+        "path": [
+          "agi",
+          "totals",
+          "points"
+        ],
+        "section": "Learning impact",
+        "source": "agi",
+        "status": "available",
+        "unit": "count",
+        "value": 5
+      },
+      {
+        "id": "agi_achievements",
+        "kind": "gauge",
+        "label": "Verified AGI achievements",
+        "path": [
+          "agi",
+          "totals",
+          "achievements"
+        ],
+        "section": "Learning impact",
+        "source": "agi",
+        "status": "available",
+        "unit": "count",
+        "value": 1
+      },
+      {
+        "id": "agi_starts",
+        "kind": "gauge",
+        "label": "Workshop starts",
+        "path": [
+          "agi",
+          "totals",
+          "starts"
+        ],
+        "section": "Learning impact",
+        "source": "agi",
+        "status": "available",
+        "unit": "count",
+        "value": 1
+      },
+      {
+        "id": "agi_completions",
+        "kind": "gauge",
+        "label": "Workshop completions",
+        "path": [
+          "agi",
+          "totals",
+          "workshop_completions"
+        ],
+        "section": "Learning impact",
+        "source": "agi",
+        "status": "available",
+        "unit": "count",
+        "value": 0
+      },
+      {
+        "id": "agi_hard_completions",
+        "kind": "gauge",
+        "label": "Hard-mode completions",
+        "path": [
+          "agi",
+          "totals",
+          "hard_completions"
+        ],
+        "section": "Learning impact",
+        "source": "agi",
+        "status": "available",
+        "unit": "count",
+        "value": 0
+      },
+      {
+        "id": "agi_completion_rate",
+        "kind": "rate",
+        "label": "Workshop completion rate",
+        "path": [
+          "agi",
+          "totals",
+          "completion_rate"
+        ],
+        "section": "Learning impact",
+        "source": "agi",
+        "status": "available",
+        "unit": "percent",
+        "value": 0.0
+      },
+      {
+        "id": "agi_hard_completion_rate",
+        "kind": "rate",
+        "label": "Hard-mode completion rate",
+        "path": [
+          "agi",
+          "totals",
+          "hard_completion_rate"
+        ],
+        "section": "Learning impact",
+        "source": "agi",
+        "status": "available",
+        "unit": "percent",
+        "value": 0.0
+      },
+      {
+        "id": "agi_achievement_rate",
+        "kind": "rate",
+        "label": "Achievement completion rate",
+        "path": [
+          "agi",
+          "totals",
+          "achievement_completion_rate"
+        ],
+        "section": "Learning impact",
+        "source": "agi",
+        "status": "available",
+        "unit": "percent",
+        "value": 16.7
+      },
+      {
+        "id": "tracked_files",
+        "kind": "catalog",
+        "label": "Tracked repository files",
+        "path": [
+          "file_metrics",
+          "totals",
+          "files"
+        ],
+        "section": "Library footprint",
+        "source": "catalog",
+        "status": "available",
+        "unit": "count",
+        "value": 4004
+      },
+      {
+        "id": "observed_files",
+        "kind": "catalog",
+        "label": "Files covered by download observations",
+        "path": [
+          "file_metrics",
+          "totals",
+          "observed_files"
+        ],
+        "section": "Library footprint",
+        "source": "file_metrics",
+        "status": "available",
+        "unit": "count",
+        "value": 4004
+      },
+      {
+        "id": "agents",
+        "kind": "catalog",
+        "label": "Catalog agents",
+        "path": [
+          "totals",
+          "agents"
+        ],
+        "section": "Library footprint",
+        "source": "catalog",
+        "status": "available",
+        "unit": "count",
+        "value": 72
+      },
+      {
+        "id": "skills",
+        "kind": "catalog",
+        "label": "Tracked SKILL.md files",
+        "path": [
+          "file_metrics",
+          "totals",
+          "by_kind",
+          "skill",
+          "files"
+        ],
+        "section": "Library footprint",
+        "source": "catalog",
+        "status": "available",
+        "unit": "count",
+        "value": 234
+      },
+      {
+        "id": "workshops",
+        "kind": "catalog",
+        "label": "Canonical workshops",
+        "path": [
+          "workshops",
+          "totals",
+          "workshops"
+        ],
+        "section": "Library footprint",
+        "source": "catalog",
+        "status": "available",
+        "unit": "count",
+        "value": 51
+      },
+      {
+        "id": "stacks",
+        "kind": "catalog",
+        "label": "Deployable stacks",
+        "path": [
+          "totals",
+          "stacks"
+        ],
+        "section": "Library footprint",
+        "source": "catalog",
+        "status": "available",
+        "unit": "count",
+        "value": 52
+      },
+      {
+        "id": "verticals",
+        "kind": "catalog",
+        "label": "Industry verticals",
+        "path": [
+          "totals",
+          "verticals"
+        ],
+        "section": "Library footprint",
+        "source": "catalog",
+        "status": "available",
+        "unit": "count",
+        "value": 12
+      }
+    ],
+    "workshops": {
+      "account-intelligence": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Account Intelligence Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "ai-customer-assistant": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Customer Escalations Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "ask-hr": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Ask HR Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "asset-maintenance-forecast": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Asset Maintenance Forecast Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "building-permit-processing": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Building Permit Processing Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "care-gap-closure": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Care Gap Closure Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "cart-abandonment-recovery": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Cart Abandonment Recovery Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "claims-processing": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Claims Processing Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "client-health-score": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Client Health Score Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "clinical-notes-summarizer": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Clinical Notes Summarizer Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "contract-risk-review": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Contract Risk Review Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "cross-selling": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Cross-Selling Opportunities Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "customer-loyalty-rewards": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Customer Loyalty and Rewards Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "customer-sentiment-churn": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Customer Sentiment and Churn Prediction Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "deal-progression": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Deal Progression Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "emission-tracking": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Emissions Tracking Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "energy-regulatory-reporting": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Regulatory Reporting Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "field-service-dispatch": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Field Service Dispatch Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "financial-advisor-copilot": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Financial Advisor Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "fraud-detection-alert": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Fraud Detection and Alert Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "fs-customer-onboarding": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Customer Onboarding Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "fs-regulatory-compliance": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Regulatory Compliance Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "inventory-rebalancing": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Inventory Rebalancing Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "inventory-visibility": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Inventory Visibility Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "license-renewal-expansion": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "License Renewal and Expansion Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "loan-origination-assistant": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Loan Origination Assistant",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "maintenance-scheduling": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Maintenance Scheduling Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "omnichannel-engagement": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Omnichannel Engagement Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "order-status-communication": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Order Status Communications Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "patient-intake": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Patient Intake and Scheduling Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "permit-license-management": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Permit Management Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "personalized-marketing": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Personalized Marketing Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "personalized-shopping-assistant": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Personalized Shopping Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "portfolio-rebalancing": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Portfolio Rebalancing Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "prior-authorization": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Prior Authorization Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "procurement-agent": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Procurement Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "procurement-support": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Discount Finder Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "product-feedback-synthesizer": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Product Feedback Synthesizer Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "product-line-optimization": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Product Line Optimization Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "proposal-generation": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Proposal Generation Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "resource-utilization": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Resource Utilization Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "returns-complaints-resolution": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Returns and Complaints Resolution Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "sales-qualification": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Sales Qualification Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "store-associate-copilot": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Retail Store Associate Copilot",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "supplier-risk-monitoring": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Supply Risk Monitoring Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "supply-chain-disruption-alert": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Supply Chain Disruption Alert Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "time-entry-billing": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 5,
+        "agi_starts": 1,
+        "bundle_downloads": 0,
+        "display_name": "Time Entry and Billing Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "underwriting-support": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Underwriting Support Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "utility-billing-assistance": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Utility Billing and Assistance Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "wealth-insights-generator": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Wealth Insights Generator Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      },
+      "win-loss-analysis": {
+        "agent_upvotes": 0,
+        "agi_completions": 0,
+        "agi_hard_completions": 0,
+        "agi_points": 0,
+        "agi_starts": 0,
+        "bundle_downloads": 0,
+        "display_name": "Win/Loss Analysis Agent",
+        "feedback_reports": 0,
+        "file_downloads": 0,
+        "usage_events": 0,
+        "views_14d": null
+      }
+    }
+  },
+  "generated_at": "2026-08-09T18:30:24Z",
+  "links": {
+    "email": "https://kody-w.github.io/aibast-agents-library/reports/impact-report-email.txt",
+    "html": "https://kody-w.github.io/aibast-agents-library/reports/impact-report.html",
+    "json": "https://kody-w.github.io/aibast-agents-library/reports/impact-report.json",
+    "metrics": "https://kody-w.github.io/aibast-agents-library/metrics.html",
+    "pdf": "https://kody-w.github.io/aibast-agents-library/reports/impact-report.pdf",
+    "site": "https://kody-w.github.io/aibast-agents-library/"
+  },
+  "periods": {
+    "month": {
+      "baseline_at": null,
+      "days": 30,
+      "metrics": {
+        "agent_file_downloads": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "agent_upvotes": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "agents": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 72
+        },
+        "agi_achievement_rate": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 16.7
+        },
+        "agi_achievements": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 1
+        },
+        "agi_completion_rate": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0.0
+        },
+        "agi_completions": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "agi_hard_completion_rate": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0.0
+        },
+        "agi_hard_completions": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "agi_participants": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 1
+        },
+        "agi_points": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 5
+        },
+        "agi_starts": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 1
+        },
+        "aibast_direct_agent_fetches": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "cdn_hits": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 388
+        },
+        "clone_uniques_14d": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 135
+        },
+        "clones_excluding_ci": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 1117
+        },
+        "forks": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "git_clones": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 1117
+        },
+        "global_agent_distribution_entries": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 354
+        },
+        "global_agent_fetch_events": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 18
+        },
+        "global_logical_agents": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 285
+        },
+        "global_overlap_agents": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 69
+        },
+        "installer_downloads": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "observed_files": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 4004
+        },
+        "open_issues": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 1
+        },
+        "page_views": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 7
+        },
+        "rar_agent_acquisitions": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 4
+        },
+        "rar_agent_cdn_fetches": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 18
+        },
+        "rar_agent_release_fetches": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "rar_positive_reactions": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 3
+        },
+        "rar_signal_did_not_work": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "rar_signal_regular_use": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "rar_signal_saved_time": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "rar_signal_shipped": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "rar_signal_stuck": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "rar_signal_want_to_try": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "rar_signal_worked": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "release_downloads": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "skill_downloads": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "skills": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 234
+        },
+        "stacks": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 52
+        },
+        "stars": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "total_downloads": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 1505
+        },
+        "tracked_files": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 4004
+        },
+        "verticals": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 12
+        },
+        "view_uniques_14d": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 3
+        },
+        "watchers": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "workshop_bundle_downloads": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "workshop_feedback": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "workshop_file_downloads": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "workshop_usage_events": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "workshop_views_14d": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "current_unavailable",
+          "value": null
+        },
+        "workshops": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 51
+        }
+      },
+      "movers": {
+        "agent_downloads": [],
+        "agent_upvotes": [],
+        "workshop_agi_points": [],
+        "workshop_usage": []
+      },
+      "name": "Monthly",
+      "observed_days": null,
+      "status": "baseline_pending"
+    },
+    "week": {
+      "baseline_at": null,
+      "days": 7,
+      "metrics": {
+        "agent_file_downloads": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "agent_upvotes": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "agents": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 72
+        },
+        "agi_achievement_rate": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 16.7
+        },
+        "agi_achievements": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 1
+        },
+        "agi_completion_rate": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0.0
+        },
+        "agi_completions": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "agi_hard_completion_rate": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0.0
+        },
+        "agi_hard_completions": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "agi_participants": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 1
+        },
+        "agi_points": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 5
+        },
+        "agi_starts": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 1
+        },
+        "aibast_direct_agent_fetches": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "cdn_hits": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 388
+        },
+        "clone_uniques_14d": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 135
+        },
+        "clones_excluding_ci": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 1117
+        },
+        "forks": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "git_clones": {
+          "baseline": null,
+          "calculation": "period_activity",
+          "change": 1111,
+          "change_percent": null,
+          "status": "available",
+          "value": 1111
+        },
+        "global_agent_distribution_entries": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 354
+        },
+        "global_agent_fetch_events": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 18
+        },
+        "global_logical_agents": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 285
+        },
+        "global_overlap_agents": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 69
+        },
+        "installer_downloads": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "observed_files": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 4004
+        },
+        "open_issues": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 1
+        },
+        "page_views": {
+          "baseline": null,
+          "calculation": "period_activity",
+          "change": 7,
+          "change_percent": null,
+          "status": "available",
+          "value": 7
+        },
+        "rar_agent_acquisitions": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 4
+        },
+        "rar_agent_cdn_fetches": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 18
+        },
+        "rar_agent_release_fetches": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "rar_positive_reactions": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 3
+        },
+        "rar_signal_did_not_work": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "rar_signal_regular_use": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "rar_signal_saved_time": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "rar_signal_shipped": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "rar_signal_stuck": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "rar_signal_want_to_try": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "rar_signal_worked": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "release_downloads": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "skill_downloads": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "skills": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 234
+        },
+        "stacks": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 52
+        },
+        "stars": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "total_downloads": {
+          "baseline": null,
+          "calculation": "period_activity",
+          "change": 1111,
+          "change_percent": null,
+          "status": "partial",
+          "value": 1111
+        },
+        "tracked_files": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 4004
+        },
+        "verticals": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 12
+        },
+        "view_uniques_14d": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 3
+        },
+        "watchers": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "workshop_bundle_downloads": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "workshop_feedback": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "workshop_file_downloads": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "workshop_usage_events": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "workshop_views_14d": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "current_unavailable",
+          "value": null
+        },
+        "workshops": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 51
+        }
+      },
+      "movers": {
+        "agent_downloads": [],
+        "agent_upvotes": [],
+        "workshop_agi_points": [],
+        "workshop_usage": []
+      },
+      "name": "Weekly",
+      "observed_days": null,
+      "status": "baseline_pending"
+    }
+  },
+  "repo": {
+    "as_of": "2026-08-09T18:30:24Z",
+    "carried_forward": false,
+    "created_at": "2025-10-20T18:22:14Z",
+    "description": "Main repository for AI BAST Specialist Teal AI Agents Library",
+    "forks": 0,
+    "homepage": null,
+    "name": "aibast-agents-library",
+    "open_issues": 1,
+    "owner": "kody-w",
+    "pushed_at": "2026-08-09T18:20:06Z",
+    "site": "https://kody-w.github.io/aibast-agents-library/",
+    "size_kb": 2726151,
+    "stars": 0,
+    "url": "https://github.com/kody-w/aibast-agents-library",
+    "watchers": 0
+  },
+  "schema": "aibast-impact-report/1.0",
+  "subject": "AIBAST + RAR weekly and monthly impact report - August 9, 2026"
+}

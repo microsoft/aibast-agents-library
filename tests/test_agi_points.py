@@ -252,35 +252,36 @@ console.log(aibastSignalIssueUrl().toString());
     )
 
 
-def test_manual_updates_local_profile_and_posts_same_origin_progress(agi_pages):
+def test_manual_and_quest_share_direct_local_hard_progress(agi_pages):
     manual = agi_pages["manual"]
     quest = agi_pages["quest"]
     assert AGI_PROFILE_KEY in manual
-    assert 'type: "aibast-agi-hard-progress"' in manual
-    assert 'type: "aibast-agi-hard-complete"' in manual
-    assert "window.parent.postMessage(message, window.location.origin)" in manual
-    assert "window.parent !== window" in manual
+    assert 'const key = "aibast:demo-journey:manual-progress"' in manual
     assert 'badgeIds.push("started")' in manual
     assert 'badgeIds.push("hard-mode-complete")' in manual
     assert "hardComplete: complete" in manual
     assert "fetch(" not in manual
+    assert "postMessage" not in manual
 
-    assert "event.origin === window.location.origin" in quest
-    assert "event.source === hardFrame?.contentWindow" in quest
-    height_guard = quest.split(
-        'event.data?.type === "aibast-hard-mode-height"', 1
-    )[0].rsplit("if (", 1)[1]
-    assert "event.source === hardFrame?.contentWindow" in height_guard
-    assert '"aibast-agi-hard-progress", "aibast-agi-hard-complete"' in quest
-    assert "event.data.checked === event.data.total" in quest
-    assert '"hard-mode-complete",\n              activeMode' in quest
+    assert (
+        'const hardProgressKey = "aibast:demo-journey:manual-progress"'
+        in quest
+    )
+    assert 'document.querySelectorAll(".complete[data-step]")' in quest
+    assert "function updateHardProgress" in quest
+    assert "localStorage.setItem(hardProgressKey, JSON.stringify(done))" in quest
+    assert "hardBoxes.length > 0 && done.length === hardBoxes.length" in quest
+    assert "setAgiWorkshopProgress(profile, activeMode" in quest
+    assert 'awardAgi(profile, "started", activeMode)' in quest
+    assert '"hard-mode-complete"' in quest
+    assert "postMessage" not in quest
+    assert "hardFrame" not in quest
 
 
 def test_hidden_hard_progress_preserves_active_quest_mode(agi_pages):
     quest = agi_pages["quest"]
-    start = quest.index("const hardComplete =", quest.index("window.addEventListener"))
-    first_render = quest.index("renderAgiPanel(profile, activeMode);", start)
-    end = quest.index("renderAgiPanel(profile, activeMode);", first_render + 1)
+    start = quest.index("function updateHardProgress")
+    end = quest.index("function earnedAgiSyncIds", start)
     handler = quest[start:end]
 
     assert (
@@ -288,19 +289,18 @@ def test_hidden_hard_progress_preserves_active_quest_mode(agi_pages):
     )
     assert "setAgiWorkshopProgress(profile, activeMode" in handler
     assert 'awardAgi(profile, "started", activeMode)' in handler
-    assert '"hard-mode-complete",\n              activeMode' in handler
+    assert '"hard-mode-complete"' in handler
     assert 'setAgiWorkshopProgress(profile, "hard"' not in handler
     assert 'awardAgi(profile, "started", "hard")' not in handler
 
 
 def test_fresh_zero_hard_progress_does_not_create_workshop(agi_pages):
     quest = agi_pages["quest"]
-    start = quest.index("const hardComplete =", quest.index("window.addEventListener"))
-    first_render = quest.index("renderAgiPanel(profile, activeMode);", start)
-    second_render = quest.index("renderAgiPanel(profile, activeMode);", first_render + 1)
-    handler = quest[start:second_render]
+    start = quest.index("function updateHardProgress")
+    end = quest.index("function earnedAgiSyncIds", start)
+    handler = quest[start:end]
 
-    zero_guard = "event.data.checked === 0"
+    zero_guard = "done.length === 0"
     missing_workshop_guard = "!profile.workshops[AGI_WORKSHOP_SLUG]"
     progress_write = "setAgiWorkshopProgress(profile, activeMode"
     assert zero_guard in handler

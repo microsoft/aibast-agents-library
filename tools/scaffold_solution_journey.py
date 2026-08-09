@@ -29,6 +29,44 @@ THEME_SCRIPT = """(() => {
       document.documentElement.setAttribute("data-theme", theme);
     })();"""
 
+THEME_PREFERENCE_SCRIPT = """(() => {
+      const key = "aibast:theme";
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const explicit = param === "dark" || param === "light" ? param : null;
+      let stored = null;
+      try {
+        const candidate = localStorage.getItem(key);
+        stored = candidate === "dark" || candidate === "light" ? candidate : null;
+      } catch (_error) {
+        stored = null;
+      }
+      const theme = explicit || stored || "light";
+      document.documentElement.setAttribute("data-theme", theme);
+      document.addEventListener("DOMContentLoaded", () => {
+        const button = document.querySelector("[data-theme-toggle]");
+        if (!button) return;
+        const render = () => {
+          const dark = document.documentElement.getAttribute("data-theme") === "dark";
+          button.textContent = dark ? "Use light mode" : "Use dark mode";
+          button.setAttribute("aria-pressed", String(dark));
+        };
+        button.addEventListener("click", () => {
+          const next =
+            document.documentElement.getAttribute("data-theme") === "dark"
+              ? "light"
+              : "dark";
+          document.documentElement.setAttribute("data-theme", next);
+          try {
+            localStorage.setItem(key, next);
+          } catch (_error) {
+            /* The visible theme still changes when storage is unavailable. */
+          }
+          render();
+        });
+        render();
+      });
+    })();"""
+
 WORKSHOP_ENGINE_SCRIPT = """(() => {
       const engine =
         localStorage.getItem("aibast:workshop-engine") === "brainstem"
@@ -135,6 +173,7 @@ COMMON_CSS = f"""
       border-bottom: 1px solid var(--cp-border);
       background: var(--cp-panel-strong);
     }}
+    .topbar-actions {{ display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }}
     .brand {{ display: flex; align-items: center; gap: 10px; font-weight: 750; }}
     .brand-mark {{
       display: grid;
@@ -203,6 +242,7 @@ COMMON_CSS = f"""
     @media (max-width: 760px) {{
       .grid {{ grid-template-columns: 1fr; }}
       .topbar {{ align-items: flex-start; padding: 12px 16px; }}
+      .topbar-actions {{ justify-content: flex-start; }}
       .page {{ width: min(100% - 24px, 1120px); padding-top: 24px; }}
       .hero {{ padding: 24px 20px; }}
     }}
@@ -420,6 +460,15 @@ class JourneyContext:
 
     def raw(self, path: str) -> str:
         return f"{self.raw_base}{path}"
+
+
+@dataclass
+class ManualTutorialContent:
+    steps_markup: str
+    toc_markup: str
+    frame_count: int
+    pending_notice: str
+    gif_button: str
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -1568,6 +1617,7 @@ def render_field_guide_html(ctx: JourneyContext) -> str:
   <title>{html.escape(ctx.title)} field guide</title>
   <script>
     {THEME_SCRIPT}
+    {THEME_PREFERENCE_SCRIPT}
     {WORKSHOP_ENGINE_SCRIPT}
   </script>
   <style>
@@ -1587,7 +1637,7 @@ def render_field_guide_html(ctx: JourneyContext) -> str:
 <body>
   <header class="topbar">
     <div class="brand"><span class="brand-mark">A</span><span>AIBAST field guide</span></div>
-    <div><a class="button" href="../_shared/workshop-settings.html?return=../{html.escape(ctx.slug)}/field-guide.html">Workshop settings</a> <a class="button primary" href="quest.html">Back to workshop</a></div>
+    <div class="topbar-actions"><button class="button" type="button" data-theme-toggle aria-pressed="false">Use dark mode</button><a class="button" href="../_shared/workshop-settings.html?return=../{html.escape(ctx.slug)}/field-guide.html">Workshop settings</a><a class="button primary" href="quest.html">Back to workshop</a></div>
   </header>
   <main class="page">
     <section class="hero">
@@ -1634,7 +1684,7 @@ def render_field_guide_html(ctx: JourneyContext) -> str:
           <li><strong>Source:</strong> deployment source and isolated transcripts exist.</li>
           <li><strong>Local:</strong> every locked business-agent case passes.</li>
           <li><strong>Preview:</strong> every front-door case passes in a fresh chat.</li>
-          <li><strong>Visual:</strong> only positively provable annotated checkpoints are displayed.</li>
+          <li><strong>Visual:</strong> only approved annotated checkpoints count as proof; review-required captures may appear only as clearly labeled orientation references.</li>
           <li><strong>Draft:</strong> the package records <code>published: false</code>.</li>
           <li><strong>Customer:</strong> governance, telemetry, support, and success measures are agreed before production.</li>
         </ul>
@@ -1711,6 +1761,7 @@ def render_evidence_report_html(ctx: JourneyContext) -> str:
   <title>{html.escape(ctx.title)} evidence report</title>
   <script>
     {THEME_SCRIPT}
+    {THEME_PREFERENCE_SCRIPT}
   </script>
   <style>
 {COMMON_CSS}
@@ -1730,7 +1781,7 @@ def render_evidence_report_html(ctx: JourneyContext) -> str:
 <body>
   <header class="topbar">
     <div class="brand"><span class="brand-mark">A</span><span>AIBAST evidence report</span></div>
-    <a class="button primary" href="quest.html">Back to workshop</a>
+    <div class="topbar-actions"><button class="button" type="button" data-theme-toggle aria-pressed="false">Use dark mode</button><a class="button primary" href="quest.html">Back to workshop</a></div>
   </header>
   <main class="page">
     <section class="hero">
@@ -1741,7 +1792,7 @@ def render_evidence_report_html(ctx: JourneyContext) -> str:
 
     <div class="summary-grid">
       <article><strong>{html.escape(str(summary.get("reusable", 0)))}</strong><span>Reusable positive checkpoints</span></article>
-      <article><strong>{html.escape(str(summary.get("reshoot_required", 0)))}</strong><span>Reshoot-required captures hidden from learner proof</span></article>
+      <article><strong>{html.escape(str(summary.get("reshoot_required", 0)))}</strong><span>Reference-only captures excluded from learner proof</span></article>
       <article><strong>{html.escape(str(summary.get("new_learn_step_captures_recommended", 0)))}</strong><span>Optional future Learn-step captures</span></article>
     </div>
 
@@ -1755,16 +1806,16 @@ def render_evidence_report_html(ctx: JourneyContext) -> str:
 
     <h2>Displayed visual checkpoints</h2>
     <section class="card">
-      <p>Only positive, visible evidence appears in the learner tutorial. Annotated paths are included for facilitator traceability.</p>
+      <p>Only approved positive checkpoints count as learner proof. Annotated paths are included for facilitator traceability.</p>
       <table>
         <thead><tr><th>Checkpoint</th><th>Mode</th><th>Visible evidence</th><th>Annotated asset</th></tr></thead>
         <tbody>{reusable_rows}</tbody>
       </table>
     </section>
 
-    <h2>Hidden visual gaps</h2>
+    <h2>Reference-only visual gaps</h2>
     <section class="card">
-      <p>These images are not shown to learners. The tutorial presents only the expected verification contract for these steps.</p>
+      <p>These real captures may remain visible for orientation, but every one is labeled as reference-only and excluded from proof until its review or reshoot requirement is resolved.</p>
       <table>
         <thead><tr><th>Checkpoint</th><th>Mode</th><th>Reason</th></tr></thead>
         <tbody>{gap_rows}</tbody>
@@ -1830,7 +1881,11 @@ def manual_copy_payload(
     return None
 
 
-def render_manual_tutorial(ctx: JourneyContext) -> str:
+def render_manual_tutorial(
+    ctx: JourneyContext,
+    *,
+    content_only: bool = False,
+) -> str | ManualTutorialContent:
     resources = choose_frame_resources(ctx)
     step_cards = []
     toc_links = []
@@ -1873,12 +1928,37 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
             ),
             step=index,
         )
-        if checkpoint and checkpoint.get("status") == "reshoot_required":
+        if (
+            checkpoint
+            and checkpoint.get("status") == "reshoot_required"
+            and screenshot.exists()
+        ):
+            reason = str(
+                checkpoint.get("reason")
+                or "This capture has not been approved as visual proof."
+            )
             screenshot_html = (
-                '<div class="look-for"><strong>What to look for</strong>'
+                '<div class="reference-shot-wrap">'
+                f'<a class="shot-link" href="screenshots/manual/{html.escape(filename)}" download="{html.escape(filename)}">'
+                f'<img class="shot" data-evidence-status="reference-only" '
+                f'src="screenshots/manual/{html.escape(filename)}" '
+                f'alt="{html.escape(action)} reference capture" loading="lazy"></a>'
+                '<p class="quality-warning"><strong>Reference capture — not approved proof.</strong> '
+                "This real frame remains visible for orientation, but the evidence "
+                f"contract requires review or reshoot: {html.escape(reason)}</p>"
+                f'<p class="capture-meta">Source capture: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. '
+                "Download the original to inspect at 100%.</p></div>"
+                '<div class="look-for"><strong>What to verify yourself</strong>'
                 f"<p>{html.escape(expected)}</p>"
                 "<p>Continue only when the visible product state and the "
                 "deterministic gate agree.</p></div>"
+            )
+        elif checkpoint and checkpoint.get("status") == "reshoot_required":
+            screenshot_html = (
+                '<div class="look-for"><strong>What to verify yourself</strong>'
+                f"<p>{html.escape(expected)}</p>"
+                "<p>The reference capture is unavailable. Continue only when the "
+                "visible product state and the deterministic gate agree.</p></div>"
             )
         elif checkpoint and checkpoint.get("status") == "reusable":
             annotated = ctx.root / str(checkpoint["annotated"])
@@ -1888,7 +1968,7 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
             )
             screenshot_html = (
                 f'<a class="shot-link" href="screenshots/manual/{html.escape(filename)}" download="{html.escape(filename)}">'
-                f'<img class="shot" src="{html.escape(annotated_url)}" '
+                f'<img class="shot" data-evidence-status="reusable" src="{html.escape(annotated_url)}" '
                 f'alt="{html.escape(action)} annotated evidence" loading="lazy"></a>'
                 f'<p class="capture-meta">Positive visual checkpoint: {html.escape(anchors)}. '
                 f"Source capture: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. "
@@ -1966,6 +2046,15 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
         if manual_film_approved
         else ""
     )
+    content = ManualTutorialContent(
+        steps_markup=steps_markup,
+        toc_markup=toc_markup,
+        frame_count=frame_count,
+        pending_notice=pending_notice,
+        gif_button=gif_button,
+    )
+    if content_only:
+        return content
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -1974,14 +2063,7 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
   <title>Build {html.escape(ctx.title)} manually</title>
   <script>
     {THEME_SCRIPT}
-    (() => {{
-      if (
-        new URLSearchParams(window.location.search).get("embedded") === "1" &&
-        window.parent !== window
-      ) {{
-        document.documentElement.setAttribute("data-embedded", "true");
-      }}
-    }})();
+    {THEME_PREFERENCE_SCRIPT}
   </script>
   <style>
 {COMMON_CSS}
@@ -2007,6 +2089,9 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
     .shot-link {{ display: block; text-align: center; }}
     .shot {{ display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }}
     .capture-meta {{ margin: 8px 0 0; color: var(--cp-text-muted); font-size: 12px; text-align: center; }}
+    .reference-shot-wrap {{ margin: 16px 0; }}
+    .quality-warning {{ margin: 10px 0 0; padding: 14px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft); color: var(--cp-text-muted); text-align: left; }}
+    .quality-warning strong {{ color: var(--cp-text); }}
     .missing {{ padding: 32px; border: 2px dashed var(--cp-warning); border-radius: 10px; color: var(--cp-text-muted); }}
     .look-for {{ padding: 20px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }}
     .look-for strong {{ color: var(--cp-text); }}
@@ -2017,10 +2102,6 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
     .agi-manual-note {{ margin-top: 10px; color: var(--cp-text-muted); font-size: 13px; }}
     .troubleshooting details {{ padding: 14px 0; border-bottom: 1px solid var(--cp-border); }}
     summary {{ cursor: pointer; font-weight: 700; }}
-    html[data-embedded="true"] body {{ background: var(--cp-bg-elevated); }}
-    html[data-embedded="true"] .topbar {{ display: none; }}
-    html[data-embedded="true"] .layout {{ grid-template-columns: 230px minmax(0, 1fr); max-width: none; padding: 8px 0 32px; }}
-    html[data-embedded="true"] .hero {{ box-shadow: none; }}
     @media (max-width: 900px) {{ .layout {{ grid-template-columns: 1fr; }} .sidebar {{ position: static; max-height: none; }} }}
     @media (max-width: 620px) {{ .instruction-grid {{ grid-template-columns: 1fr; }} }}
   </style>
@@ -2028,7 +2109,7 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
 <body>
   <header class="topbar">
     <div class="brand"><span class="brand-mark">A</span><span>AIBAST manual workshop</span></div>
-    <div>{gif_button} <a class="button primary" href="exports/{html.escape(ctx.slug)}-source.zip">Download source bundle</a></div>
+    <div class="topbar-actions"><button class="button" type="button" data-theme-toggle aria-pressed="false">Use dark mode</button>{gif_button} <a class="button primary" href="exports/{html.escape(ctx.slug)}-source.zip">Download source bundle</a></div>
   </header>
   <div class="layout">
     <aside class="sidebar">
@@ -2087,9 +2168,8 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
         localStorage.setItem(key, JSON.stringify(done));
         label.textContent = `${{done.length}} of ${{boxes.length}} complete`;
         bar.style.width = boxes.length ? `${{(done.length / boxes.length) * 100}}%` : "0%";
-        const embedded = document.documentElement.dataset.embedded === "true";
-        if (!embedded) {{
-          let profile = readAgiProfile();
+        let profile = readAgiProfile();
+        if (done.length > 0 || profile.workshops[AGI_WORKSHOP_SLUG]) {{
           profile = setAgiWorkshopProgress(profile, "hard", {{
             hardChecked: done.length,
             hardTotal: boxes.length,
@@ -2106,22 +2186,6 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
                 `${{result.awarded.label}} earned: +${{result.awarded.points}} local AGI points.`;
             }}
           }});
-        }} else {{
-          const message = {{
-            type: "aibast-agi-hard-progress",
-            workshop: AGI_WORKSHOP_SLUG,
-            mode: "hard",
-            checked: done.length,
-            total: boxes.length,
-            complete,
-          }};
-          window.parent.postMessage(message, window.location.origin);
-          if (complete) {{
-            window.parent.postMessage(
-              {{ ...message, type: "aibast-agi-hard-complete" }},
-              window.location.origin,
-            );
-          }}
         }}
       }}
       document.querySelectorAll("[data-copy-target]").forEach((button) => {{
@@ -2180,29 +2244,6 @@ Describe what was inaccurate or missing.
         }});
       }});
       update();
-      if (document.documentElement.dataset.embedded === "true") {{
-        const notifyHeight = () => {{
-          window.parent.postMessage(
-            {{
-              type: "aibast-hard-mode-height",
-              height: document.documentElement.scrollHeight,
-            }},
-            window.location.origin,
-          );
-        }};
-        new ResizeObserver(notifyHeight).observe(document.documentElement);
-        window.addEventListener("load", notifyHeight);
-        window.addEventListener("message", (event) => {{
-          if (
-            event.origin === window.location.origin &&
-            event.source === window.parent &&
-            event.data?.type === "aibast-agi-request-hard-progress"
-          ) {{
-            update();
-          }}
-        }});
-        notifyHeight();
-      }}
     }})();
   </script>
 </body>
@@ -2416,8 +2457,32 @@ def render_preview_case_cards(ctx: JourneyContext) -> str:
         )
         capture_width = (ctx.assisted_browserfilm or {}).get("width", "unknown")
         capture_height = (ctx.assisted_browserfilm or {}).get("height", "unknown")
-        if checkpoint and checkpoint.get("status") == "reshoot_required":
-            screenshot_html = ""
+        if (
+            checkpoint
+            and checkpoint.get("status") == "reshoot_required"
+            and screenshot
+            and (ctx.package / "screenshots" / "assisted" / screenshot).is_file()
+        ):
+            reason = str(
+                checkpoint.get("reason")
+                or "This capture has not been approved as visual proof."
+            )
+            screenshot_html = (
+                '<div class="preview-shot-wrap reference-shot-wrap">'
+                f'<img class="preview-shot" data-evidence-status="reference-only" '
+                f'src="screenshots/assisted/{html.escape(screenshot)}" '
+                f'alt="{html.escape(case_id)} reference capture" loading="lazy">'
+                '<p class="quality-warning"><strong>Reference capture — not approved proof.</strong> '
+                "This real frame remains visible for orientation, but the evidence "
+                f"contract requires review or reshoot: {html.escape(reason)}</p>"
+                f'<p class="capture-meta">Source: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. '
+                f'<a href="screenshots/assisted/{html.escape(screenshot)}" download="{html.escape(screenshot)}">Download original</a>.</p></div>'
+            )
+        elif checkpoint and checkpoint.get("status") == "reshoot_required":
+            screenshot_html = (
+                '<div class="missing">A reference capture is recorded for this case '
+                "but is not available in the package. Verify the visible contract directly.</div>"
+            )
         elif checkpoint and checkpoint.get("status") == "reusable":
             annotated = ctx.root / str(checkpoint["annotated"])
             annotated_url = annotated.relative_to(ctx.package).as_posix()
@@ -2425,7 +2490,7 @@ def render_preview_case_cards(ctx: JourneyContext) -> str:
                 str(value) for value in checkpoint.get("visible_anchors", [])
             )
             screenshot_html = (
-                f'<div class="preview-shot-wrap"><img class="preview-shot" src="{html.escape(annotated_url)}" alt="{html.escape(case_id)} positive visual checkpoint" loading="lazy">'
+                f'<div class="preview-shot-wrap"><img class="preview-shot" data-evidence-status="reusable" src="{html.escape(annotated_url)}" alt="{html.escape(case_id)} positive visual checkpoint" loading="lazy">'
                 f'<p class="capture-meta">Visible positive anchors: {html.escape(anchors)}. '
                 "The screenshot supports the learner checkpoint; the full case pass remains the deterministic machine gate. "
                 f'Source: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. '
@@ -2463,13 +2528,34 @@ def render_completion_state(ctx: JourneyContext) -> str:
     )
     capture_width = (ctx.assisted_browserfilm or {}).get("width", "unknown")
     capture_height = (ctx.assisted_browserfilm or {}).get("height", "unknown")
-    if checkpoint and checkpoint.get("status") == "reshoot_required":
+    if (
+        checkpoint
+        and checkpoint.get("status") == "reshoot_required"
+        and draft_frame
+        and (ctx.package / "screenshots" / "assisted" / draft_frame).is_file()
+    ):
+        reason = str(
+            checkpoint.get("reason")
+            or "This capture has not been approved as visual proof."
+        )
+        screenshot = (
+            '<div class="preview-shot-wrap reference-shot-wrap">'
+            f'<img class="preview-shot" data-evidence-status="reference-only" '
+            f'src="screenshots/assisted/{html.escape(draft_frame)}" '
+            'alt="Draft-state reference capture" loading="lazy">'
+            '<p class="quality-warning"><strong>Reference capture — not approved proof.</strong> '
+            "Use this real frame for orientation only; confirm the current Draft "
+            f"state yourself. Evidence note: {html.escape(reason)}</p>"
+            f'<p class="capture-meta">Source: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. '
+            f'<a href="screenshots/assisted/{html.escape(draft_frame)}" download="{html.escape(draft_frame)}">Download original</a>.</p></div>'
+        )
+    elif checkpoint and checkpoint.get("status") == "reshoot_required":
         screenshot = ""
     elif checkpoint and checkpoint.get("status") == "reusable":
         annotated = ctx.root / str(checkpoint["annotated"])
         annotated_url = annotated.relative_to(ctx.package).as_posix()
         screenshot = (
-            f'<div class="preview-shot-wrap"><img class="preview-shot" src="{html.escape(annotated_url)}" alt="Validated agent remains Draft" loading="lazy">'
+            f'<div class="preview-shot-wrap"><img class="preview-shot" data-evidence-status="reusable" src="{html.escape(annotated_url)}" alt="Validated agent remains Draft" loading="lazy">'
             f'<p class="capture-meta">Positive visual checkpoint. Source: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. '
             f'<a href="screenshots/assisted/{html.escape(draft_frame or "")}" download="{html.escape(draft_frame or "draft.jpg")}">Download original</a>.</p></div>'
         )
@@ -2501,6 +2587,9 @@ def render_completion_state(ctx: JourneyContext) -> str:
 
 
 def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
+    manual_content = render_manual_tutorial(ctx, content_only=True)
+    if not isinstance(manual_content, ManualTutorialContent):
+        raise ScaffoldError("Hard-mode tutorial content could not be generated")
     workshop_agent = workshop_agent_path(ctx)
     workshop_agent_link = (
         f'<a class="button" href="../../{html.escape(ctx.rel(workshop_agent))}" download>Download generic workshop agent</a>'
@@ -2536,6 +2625,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
   <title>{html.escape(ctx.title)} workshop</title>
   <script>
     {THEME_SCRIPT}
+    {THEME_PREFERENCE_SCRIPT}
     {WORKSHOP_ENGINE_SCRIPT}
   </script>
   <style>
@@ -2613,9 +2703,11 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .marker-group > strong {{ display: block; margin-bottom: 6px; }}
     .marker-chip {{ display: inline-flex; margin: 0 6px 6px 0; padding: 5px 8px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface); color: var(--cp-text-muted); font-size: 12px; }}
     .preview-shot-wrap {{ margin-top: 14px; text-align: center; }}
+    .reference-shot-wrap {{ margin-top: 14px; }}
     .preview-shot {{ display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }}
     .capture-meta {{ margin: 8px 0 0; color: var(--cp-text-muted); font-size: 12px; text-align: center; }}
     .quality-warning {{ margin: 16px 0; padding: 14px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft); color: var(--cp-text-muted); }}
+    .quality-warning strong {{ color: var(--cp-text); }}
     .done-grid {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }}
     .done-grid article {{ padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); }}
     .done-grid strong, .done-grid span {{ display: block; }}
@@ -2623,7 +2715,37 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .troubleshooting-table {{ width: 100%; border-collapse: collapse; }}
     .troubleshooting-table th, .troubleshooting-table td {{ padding: 12px; border: 1px solid var(--cp-border); text-align: left; vertical-align: top; }}
     .troubleshooting-table th {{ background: var(--cp-surface-soft); }}
-    .hard-tutorial-frame {{ display: block; width: 100%; min-height: 1600px; border: 0; border-radius: 16px; background: var(--cp-surface); }}
+    .hard-overview {{ margin-top: 20px; }}
+    .hard-overview h2 {{ margin-top: 0; }}
+    .hard-actions {{ display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }}
+    .hard-progress-card {{ margin: 20px 0; padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }}
+    .hard-progress-heading {{ display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 18px; align-items: baseline; margin-bottom: 10px; }}
+    .hard-progress-heading p {{ margin: 0; color: var(--cp-text-muted); }}
+    .hard-toc {{ display: flex; gap: 8px; margin-top: 14px; padding-bottom: 4px; overflow-x: auto; }}
+    .hard-toc a {{ flex: 0 0 auto; padding: 7px 10px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text); text-decoration: none; font-size: 13px; }}
+    .step {{ scroll-margin-top: 90px; margin: 0 0 28px; overflow: hidden; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }}
+    .step header {{ display: grid; grid-template-columns: 36px 1fr auto; gap: 14px; align-items: center; padding: 20px 22px; border-bottom: 1px solid var(--cp-border); }}
+    .step header > span {{ display: grid; width: 36px; height: 36px; place-items: center; border-radius: 10px; background: var(--cp-accent-soft); color: var(--cp-accent); font-weight: 800; }}
+    .step h3, .step header p {{ margin: 0; }}
+    .step header p {{ color: var(--cp-text-muted); font-size: 13px; }}
+    .step-body {{ padding: 22px; }}
+    .instruction-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }}
+    .instruction {{ padding: 14px; border-radius: 10px; background: var(--cp-surface-soft); }}
+    .instruction strong {{ display: block; margin-bottom: 6px; }}
+    .instruction-heading {{ display: flex; align-items: start; justify-content: space-between; gap: 10px; margin-bottom: 6px; }}
+    .instruction-heading strong {{ margin: 0; }}
+    .copy-button {{ min-height: 34px; padding: 6px 10px; font-size: 13px; }}
+    .copy-source {{ display: none; }}
+    .instruction.expected {{ border-left: 4px solid var(--cp-success); }}
+    .shot-link {{ display: block; text-align: center; }}
+    .shot {{ display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }}
+    .missing {{ padding: 32px; border: 2px dashed var(--cp-warning); border-radius: 10px; color: var(--cp-text-muted); }}
+    .look-for {{ margin: 16px 0; padding: 20px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }}
+    .look-for strong {{ color: var(--cp-text); }}
+    .look-for p {{ margin: 8px 0 0; }}
+    .step footer {{ display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }}
+    .complete {{ width: 20px; height: 20px; accent-color: var(--cp-accent); }}
+    .hard-troubleshooting details {{ padding: 14px 0; border-bottom: 1px solid var(--cp-border); }}
     .prompt-card {{ margin: 16px 0; padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }}
     .prompt-heading {{ display: flex; align-items: start; justify-content: space-between; gap: 16px; }}
     .prompt-heading h3 {{ margin: 0; }}
@@ -2632,13 +2754,13 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .resource-list {{ columns: 2; padding-left: 22px; }}
     .resource-list li {{ break-inside: avoid; margin-bottom: 10px; }}
     @media (max-width: 760px) {{ .engine-flow, .outcome-grid, .skill-onboarding, .module-summary, .preview-grid, .done-grid, .agi-panel {{ grid-template-columns: 1fr; }} .agi-claims {{ padding: 16px 0 0; border-top: 1px solid var(--cp-border); border-left: 0; }} }}
-    @media (max-width: 620px) {{ .resource-list {{ columns: 1; }} .prompt-heading {{ display: block; }} .prompt-heading .button {{ margin-top: 12px; }} }}
+    @media (max-width: 620px) {{ .resource-list {{ columns: 1; }} .prompt-heading {{ display: block; }} .prompt-heading .button {{ margin-top: 12px; }} .instruction-grid {{ grid-template-columns: 1fr; }} .step header {{ grid-template-columns: 36px 1fr; }} .step header .report-button {{ grid-column: 1 / -1; }} }}
   </style>
 </head>
 <body>
   <header class="topbar">
     <div class="brand"><span class="brand-mark">A</span><span>AIBAST guided workshop</span></div>
-    <div><a class="button" href="../_shared/workshop-settings.html?return=../{html.escape(ctx.slug)}/quest.html">Workshop settings</a> <a class="button primary" href="field-guide.html">Open field guide</a></div>
+    <div class="topbar-actions"><button class="button" type="button" data-theme-toggle aria-pressed="false">Use dark mode</button><a class="button" href="../_shared/workshop-settings.html?return=../{html.escape(ctx.slug)}/quest.html">Workshop settings</a><a class="button primary" href="field-guide.html">Open field guide</a></div>
   </header>
   <main class="page">
     <section class="hero">
@@ -2758,7 +2880,41 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     </section>
 
     <section class="path" data-path="hard" hidden>
-      <iframe class="hard-tutorial-frame" id="hard-mode-tutorial" src="manual-tutorial.html?embedded=1" title="Hard mode manual tutorial"></iframe>
+      <section class="card hard-overview">
+        <p class="eyebrow">Hard mode · literal browser construction</p>
+        <h2>Build {html.escape(ctx.title)} manually on this page.</h2>
+        <p class="lede">No PAC CLI, YAML import, plugin architect, or nested tutorial frame. Perform one action per real browserfilm frame, compare the screenshot, and stop at Draft.</p>
+        <div class="notice"><strong>Synthetic disclosure:</strong> this is qualitative workflow evidence using packaged synthetic inputs. It is not a customer KPI or a live-system result.</div>
+        <div class="feedback-notice"><strong>Found something inaccurate?</strong> Use <em>Report an issue</em> on that step. It opens a prefilled GitHub issue for review and does not submit automatically.</div>
+        {manual_content.pending_notice}
+        <div class="hard-actions">
+          <a class="button" href="manual-tutorial.html" target="_blank" rel="noopener">Open standalone Hard-mode guide ↗</a>
+          <a class="button primary" href="exports/{html.escape(ctx.slug)}-source.zip">Download source bundle</a>
+        </div>
+      </section>
+
+      <section class="hard-progress-card" aria-labelledby="hard-progress-label">
+        <div class="hard-progress-heading">
+          <strong id="hard-progress-label">0 of {manual_content.frame_count} complete</strong>
+          <p>Hard-mode progress is saved on this device and contributes to the same AGI profile.</p>
+        </div>
+        <div class="progress" aria-hidden="true"><span id="hard-progress-bar"></span></div>
+        <p class="muted" id="hard-progress-toast" role="status" aria-live="polite" aria-atomic="true"></p>
+        <nav class="hard-toc" aria-label="Hard-mode tutorial actions">{manual_content.toc_markup}</nav>
+      </section>
+
+      <h2>Build and verify</h2>
+      {manual_content.steps_markup}
+
+      <h2 id="hard-troubleshooting">Hard-mode troubleshooting</h2>
+      <section class="card hard-troubleshooting">
+        <details open><summary>A screenshot or browserfilm frame is missing</summary><p>Stop. Do not invent, recreate, or substitute an image. Capture the real frame, update the browserfilm manifest, and regenerate without <code>--allow-pending</code>.</p></details>
+        <details><summary>A knowledge file is still processing</summary><p>Wait for ingestion to finish before Preview. A partial answer is not evidence.</p></details>
+        <details><summary>A skill upload fails</summary><p>Use the linked raw <code>SKILL.md</code>. Fix the reviewed source deliberately; do not silently skip the action.</p></details>
+        <details><summary>The model differs from Easy mode</summary><p>Record the substitution and stop the parity claim until Easy and Hard use the same reviewed model.</p></details>
+        <details><summary>The Preview answer misses an identifier</summary><p>Mark the recorded case failed, inspect instructions and inventory, then replay the exact prompt in a fresh conversation.</p></details>
+        <details><summary>Should I publish?</summary><p>No. Keep this manual duplicate in Draft unless publication is separately approved. Do not choose Publish as part of this tutorial.</p></details>
+      </section>
     </section>
 
   </main>
@@ -2777,15 +2933,20 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
       const modeKey = "aibast:{html.escape(ctx.slug)}:quest-mode";
       const globalEngineKey = "aibast:workshop-engine";
       const progressKey = "aibast:{html.escape(ctx.slug)}:quest-progress";
+      const hardProgressKey = "aibast:{html.escape(ctx.slug)}:manual-progress";
       const buttons = Array.from(document.querySelectorAll("[data-mode]"));
       const paths = Array.from(document.querySelectorAll("[data-path]"));
       const boxes = Array.from(document.querySelectorAll("[data-checkpoint]"));
+      const hardBoxes = Array.from(document.querySelectorAll(".complete[data-step]"));
       const agiTotalScore = document.getElementById("agi-total-score");
       const agiWorkshopScore = document.getElementById("agi-workshop-score");
       const agiProgressLabel = document.getElementById("agi-progress-label");
       const agiProgressBar = document.getElementById("agi-progress-bar");
       const agiBadgeList = document.getElementById("agi-badge-list");
       const agiToast = document.getElementById("agi-badge-toast");
+      const hardProgressLabel = document.getElementById("hard-progress-label");
+      const hardProgressBar = document.getElementById("hard-progress-bar");
+      const hardProgressToast = document.getElementById("hard-progress-toast");
       let saved = {{}};
       try {{
         const parsed = JSON.parse(localStorage.getItem(progressKey) || "{{}}");
@@ -2803,6 +2964,19 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
           localStorage.setItem(progressKey, JSON.stringify(saved));
           evaluateAgi(true);
         }});
+      }});
+      let hardSaved = [];
+      try {{
+        const parsed = JSON.parse(localStorage.getItem(hardProgressKey) || "[]");
+        hardSaved = Array.isArray(parsed)
+          ? parsed.filter((step) => typeof step === "string")
+          : [];
+      }} catch (_error) {{
+        hardSaved = [];
+      }}
+      hardBoxes.forEach((box) => {{
+        box.checked = hardSaved.includes(box.dataset.step);
+        box.addEventListener("change", () => updateHardProgress(true));
       }});
 
       function currentEasyPath() {{
@@ -2835,6 +3009,56 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         window.setTimeout(() => {{
           if (agiToast.textContent.includes(badge.label)) agiToast.textContent = "";
         }}, 5000);
+      }}
+
+      function updateHardProgress(announce = false) {{
+        const done = hardBoxes
+          .filter((box) => box.checked)
+          .map((box) => box.dataset.step);
+        const complete =
+          hardBoxes.length > 0 && done.length === hardBoxes.length;
+        localStorage.setItem(hardProgressKey, JSON.stringify(done));
+        if (hardProgressLabel) {{
+          hardProgressLabel.textContent =
+            `${{done.length}} of ${{hardBoxes.length}} complete`;
+        }}
+        if (hardProgressBar) {{
+          hardProgressBar.style.width = hardBoxes.length
+            ? `${{(done.length / hardBoxes.length) * 100}}%`
+            : "0%";
+        }}
+        const activeMode =
+          localStorage.getItem(modeKey) === "hard" ? "hard" : "easy";
+        let profile = readAgiProfile();
+        if (done.length === 0 && !profile.workshops[AGI_WORKSHOP_SLUG]) {{
+          renderAgiPanel(profile, activeMode);
+          return;
+        }}
+        profile = setAgiWorkshopProgress(profile, activeMode, {{
+          hardChecked: done.length,
+          hardTotal: hardBoxes.length,
+          hardComplete: complete,
+        }});
+        if (done.length > 0) {{
+          const result = awardAgi(profile, "started", activeMode);
+          profile = result.profile;
+          if (announce) announceAgiBadge(result.awarded);
+        }}
+        if (complete) {{
+          const result = awardAgi(
+            profile,
+            "hard-mode-complete",
+            activeMode,
+          );
+          profile = result.profile;
+          if (announce) announceAgiBadge(result.awarded);
+        }}
+        if (hardProgressToast) {{
+          hardProgressToast.textContent = complete
+            ? "Hard mode complete. The achievement is saved in this device's AGI profile."
+            : "";
+        }}
+        renderAgiPanel(profile, activeMode);
       }}
 
       function earnedAgiSyncIds(achievements) {{
@@ -2945,6 +3169,11 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
           const locationLabel = button.dataset.reportLocation || "Workshop";
           const expected = button.dataset.reportExpected || "Describe the expected result.";
           const evidence = button.dataset.reportEvidence || "No evidence path supplied.";
+          const reportMode = button.closest('[data-path="hard"]')
+            ? "hard"
+            : localStorage.getItem(globalEngineKey) === "brainstem"
+              ? "brainstem"
+              : "copilot";
           const title = `[Workshop feedback] {ctx.title}: ${{locationLabel}}`;
           const body = `<!-- aibast-workshop-feedback:v1 -->
 ## Workshop signal
@@ -2952,7 +3181,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
 - Schema: \\`aibast-workshop-feedback/1.0\\`
 - Solution: \\`{ctx.deployment.get("name") or f"@aibast-agents-library/{ctx.slug}"}\\`
 - Page: ${{location.href}}
-- Mode: \\`${{localStorage.getItem(globalEngineKey) === "brainstem" ? "brainstem" : "copilot"}}\\`
+- Mode: \\`${{reportMode}}\\`
 - Location: ${{locationLabel}}
 - Evidence: \\`${{evidence}}\\`
 
@@ -3011,76 +3240,8 @@ Opening this form does not sync anything. Submit the issue to sync these earned 
       document.querySelector("[data-agi-sync]").addEventListener("click", () => {{
         openAgiSync();
       }});
-      const hardFrame = document.getElementById("hard-mode-tutorial");
-      const resizeHardFrame = () => {{
-        if (!hardFrame?.contentDocument) return;
-        hardFrame.style.height =
-          `${{hardFrame.contentDocument.documentElement.scrollHeight}}px`;
-      }};
-      hardFrame?.addEventListener("load", () => {{
-        resizeHardFrame();
-        hardFrame.contentWindow?.postMessage(
-          {{ type: "aibast-agi-request-hard-progress" }},
-          window.location.origin,
-        );
-      }});
-      window.addEventListener("message", (event) => {{
-        if (
-          event.origin === window.location.origin &&
-          event.source === hardFrame?.contentWindow &&
-          event.data?.type === "aibast-hard-mode-height" &&
-          Number.isFinite(event.data.height)
-        ) {{
-          hardFrame.style.height = `${{event.data.height}}px`;
-        }}
-        if (
-          event.origin === window.location.origin &&
-          event.source === hardFrame?.contentWindow &&
-          ["aibast-agi-hard-progress", "aibast-agi-hard-complete"].includes(
-            event.data?.type,
-          ) &&
-          event.data.workshop === AGI_WORKSHOP_SLUG &&
-          Number.isInteger(event.data.checked) &&
-          Number.isInteger(event.data.total)
-        ) {{
-          const hardComplete =
-            event.data.complete === true &&
-            event.data.total > 0 &&
-            event.data.checked === event.data.total;
-          const activeMode =
-            localStorage.getItem(modeKey) === "hard" ? "hard" : "easy";
-          let profile = readAgiProfile();
-          if (
-            event.data.checked === 0 &&
-            !profile.workshops[AGI_WORKSHOP_SLUG]
-          ) {{
-            renderAgiPanel(profile, activeMode);
-            return;
-          }}
-          profile = setAgiWorkshopProgress(profile, activeMode, {{
-            hardChecked: event.data.checked,
-            hardTotal: event.data.total,
-            hardComplete,
-          }});
-          if (event.data.checked > 0) {{
-            const result = awardAgi(profile, "started", activeMode);
-            profile = result.profile;
-            announceAgiBadge(result.awarded);
-          }}
-          if (hardComplete) {{
-            const result = awardAgi(
-              profile,
-              "hard-mode-complete",
-              activeMode,
-            );
-            profile = result.profile;
-            announceAgiBadge(result.awarded);
-          }}
-          renderAgiPanel(profile, activeMode);
-        }}
-      }});
-      window.addEventListener("resize", resizeHardFrame);
       selectMode(localStorage.getItem(modeKey) === "hard" ? "hard" : "easy");
+      updateHardProgress(false);
     }})();
   </script>
 </body>

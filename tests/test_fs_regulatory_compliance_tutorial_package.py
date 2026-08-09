@@ -166,15 +166,10 @@ def test_manual_tutorial_is_aibast_themed_and_matches_browserfilm_actions():
         "--cp-shadow:",
     ):
         assert token in tutorial
-    for token in (
-        'get("embedded")',
-        '=== "1"',
-        "data-embedded",
-        "aibast-hard-mode-height",
-        "postMessage",
-        "ResizeObserver",
-    ):
-        assert token in tutorial
+    for token in ("data-embedded", "aibast-hard-mode-height", "postMessage"):
+        assert token not in tutorial
+    assert "manual-progress" in tutorial
+    assert 'badgeIds.push("hard-mode-complete")' in tutorial
 
     assert browserfilm["schema"] == "rapp-browserfilm/1.0"
     assert browserfilm["status"] == "captured"
@@ -203,8 +198,9 @@ def test_manual_tutorial_is_aibast_themed_and_matches_browserfilm_actions():
         checkpoint = hard_visuals[index]
         assert checkpoint["source"].endswith(frame["file"])
         if checkpoint["status"] == "reshoot_required":
-            assert not step["images"]
-            assert "What to look for" in step["text"]
+            assert step["images"]
+            assert "Reference capture" in step["text"]
+            assert "not approved proof" in step["text"]
             assert checkpoint["reason"]
         else:
             assert checkpoint["status"] == "reusable"
@@ -262,6 +258,9 @@ def test_browserfilm_and_manual_evidence_are_captured():
 def test_quest_exposes_beta_course_shell_and_global_easy_lanes():
     quest = (PACKAGE / "quest.html").read_text(encoding="utf-8")
     cases = read_json(CASE_FILE)["cases"]
+    manual_frames = read_json(
+        PACKAGE / "screenshots" / "manual" / "browserfilm.json"
+    )["frames"]
 
     assert "AIBAST guided workshop" in quest
     assert "Clawpilot" not in quest
@@ -270,7 +269,9 @@ def test_quest_exposes_beta_course_shell_and_global_easy_lanes():
     assert "workshop-settings.html" in quest
     assert "field-guide.html" in quest
     assert "evidence-report.html" in quest
-    assert 'src="manual-tutorial.html?embedded=1"' in quest
+    assert "<iframe" not in quest
+    assert 'class="path" data-path="hard"' in quest
+    assert "Open standalone Hard-mode guide" in quest
     assert 'data-easy-lane="copilot"' in quest
     assert 'data-easy-lane="brainstem"' in quest
     assert 'localStorage.getItem("aibast:workshop-engine") === "brainstem"' in quest
@@ -280,7 +281,7 @@ def test_quest_exposes_beta_course_shell_and_global_easy_lanes():
     assert "GitHub Copilot only" in quest
     assert "GitHub Copilot + Brainstem" in quest
     assert len(re.findall(r"<[^>]+\bdata-report-location=", quest)) == (
-        7 + len(cases)
+        7 + len(cases) + len(manual_frames)
     )
     assert "aibast-workshop-feedback/1.0" in quest
     assert "Watch assisted film" not in quest

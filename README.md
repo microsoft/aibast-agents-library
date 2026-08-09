@@ -96,7 +96,7 @@ The files themselves live under [`agents/@aibast-agents-library/`](agents/@aibas
 
 [**Agent Growth & Impact (AGI) Points**](https://microsoft.github.io/aibast-agents-library/achievements.html) records self-paced workshop achievements locally and lets learners explicitly sync canonical badges to a public GitHub-attributed profile.
 
-[**Library metrics**](https://microsoft.github.io/aibast-agents-library/metrics.html) publishes public downloads, every-file observations, per-agent upvotes, workshop adoption, and opt-in AGI rollups, with every figure traceable to a public source. `scripts/build_metrics.py` builds the snapshot; the dashboard states plainly which paths it cannot count.
+[**Library metrics**](https://microsoft.github.io/aibast-agents-library/metrics.html) publishes public downloads, every-file observations, per-agent upvotes, workshop adoption, opt-in AGI rollups, and a federated global agent view spanning direct AIBAST distribution plus the public [`kody-w/RAR`](https://github.com/kody-w/RAR) community channel. RAR CDN/release fetches, signed-in acquisitions, and usage reactions remain separate metrics so they cannot be mistaken for users. Each run also generates a shareable weekly/monthly PDF plus email-ready text under `reports/`. `scripts/build_metrics.py` builds the snapshot, and `scripts/build_impact_report.py` turns its dated history into the exportable impact report without converting unavailable coverage to zero.
 
 ---
 

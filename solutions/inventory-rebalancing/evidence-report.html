@@ -11,6 +11,43 @@
         param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
       document.documentElement.setAttribute("data-theme", theme);
     })();
+    (() => {
+      const key = "aibast:theme";
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const explicit = param === "dark" || param === "light" ? param : null;
+      let stored = null;
+      try {
+        const candidate = localStorage.getItem(key);
+        stored = candidate === "dark" || candidate === "light" ? candidate : null;
+      } catch (_error) {
+        stored = null;
+      }
+      const theme = explicit || stored || "light";
+      document.documentElement.setAttribute("data-theme", theme);
+      document.addEventListener("DOMContentLoaded", () => {
+        const button = document.querySelector("[data-theme-toggle]");
+        if (!button) return;
+        const render = () => {
+          const dark = document.documentElement.getAttribute("data-theme") === "dark";
+          button.textContent = dark ? "Use light mode" : "Use dark mode";
+          button.setAttribute("aria-pressed", String(dark));
+        };
+        button.addEventListener("click", () => {
+          const next =
+            document.documentElement.getAttribute("data-theme") === "dark"
+              ? "light"
+              : "dark";
+          document.documentElement.setAttribute("data-theme", next);
+          try {
+            localStorage.setItem(key, next);
+          } catch (_error) {
+            /* The visible theme still changes when storage is unavailable. */
+          }
+          render();
+        });
+        render();
+      });
+    })();
   </script>
   <style>
 
@@ -89,6 +126,7 @@
       border-bottom: 1px solid var(--cp-border);
       background: var(--cp-panel-strong);
     }
+    .topbar-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
     .brand { display: flex; align-items: center; gap: 10px; font-weight: 750; }
     .brand-mark {
       display: grid;
@@ -157,6 +195,7 @@
     @media (max-width: 760px) {
       .grid { grid-template-columns: 1fr; }
       .topbar { align-items: flex-start; padding: 12px 16px; }
+      .topbar-actions { justify-content: flex-start; }
       .page { width: min(100% - 24px, 1120px); padding-top: 24px; }
       .hero { padding: 24px 20px; }
     }
@@ -177,7 +216,7 @@
 <body>
   <header class="topbar">
     <div class="brand"><span class="brand-mark">A</span><span>AIBAST evidence report</span></div>
-    <a class="button primary" href="quest.html">Back to workshop</a>
+    <div class="topbar-actions"><button class="button" type="button" data-theme-toggle aria-pressed="false">Use dark mode</button><a class="button primary" href="quest.html">Back to workshop</a></div>
   </header>
   <main class="page">
     <section class="hero">
@@ -188,7 +227,7 @@
 
     <div class="summary-grid">
       <article><strong>0</strong><span>Reusable positive checkpoints</span></article>
-      <article><strong>28</strong><span>Reshoot-required captures hidden from learner proof</span></article>
+      <article><strong>28</strong><span>Reference-only captures excluded from learner proof</span></article>
       <article><strong>0</strong><span>Optional future Learn-step captures</span></article>
     </div>
 
@@ -221,16 +260,16 @@
 
     <h2>Displayed visual checkpoints</h2>
     <section class="card">
-      <p>Only positive, visible evidence appears in the learner tutorial. Annotated paths are included for facilitator traceability.</p>
+      <p>Only approved positive checkpoints count as learner proof. Annotated paths are included for facilitator traceability.</p>
       <table>
         <thead><tr><th>Checkpoint</th><th>Mode</th><th>Visible evidence</th><th>Annotated asset</th></tr></thead>
         <tbody></tbody>
       </table>
     </section>
 
-    <h2>Hidden visual gaps</h2>
+    <h2>Reference-only visual gaps</h2>
     <section class="card">
-      <p>These images are not shown to learners. The tutorial presents only the expected verification contract for these steps.</p>
+      <p>These real captures may remain visible for orientation, but every one is labeled as reference-only and excluded from proof until its review or reshoot requirement is resolved.</p>
       <table>
         <thead><tr><th>Checkpoint</th><th>Mode</th><th>Reason</th></tr></thead>
         <tbody><tr>

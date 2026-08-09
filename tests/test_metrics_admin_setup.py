@@ -248,6 +248,16 @@ def test_required_setup_permissions_commands_and_acceptance_checks_are_present()
         "Rotate before expiry",
         "revoke the credential immediately",
         "snapshots reuse the last authorized traffic read instead of zeroing",
+        "aibast-impact-report",
+        "weekly/monthly impact exports",
+        "Baseline pending",
+        "impact-report-email.txt",
+        "public RAR federation",
+        "kody-w/RAR",
+        "RAR_METRICS_TOKEN",
+        "combined_agent_distribution_fetch_events",
+        "rar-discussion-ratings/1.0",
+        "Censored or absent agent download rows remain null",
         "never commit a token",
     )
     for phrase in required_visible_phrases:

@@ -226,5 +226,6 @@ def test_generated_workshops_expose_contextual_beta_reports():
         assert "issues/new" in document
         assert "does not submit" in document
 
-    assert quest.count('data-report-location=') == 12
-    assert manual.count('data-report-location=') == 20
+    manual_reports = manual.count('data-report-location=')
+    assert manual_reports == 20
+    assert quest.count('data-report-location=') == 12 + manual_reports

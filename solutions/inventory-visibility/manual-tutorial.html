@@ -12,12 +12,41 @@
       document.documentElement.setAttribute("data-theme", theme);
     })();
     (() => {
-      if (
-        new URLSearchParams(window.location.search).get("embedded") === "1" &&
-        window.parent !== window
-      ) {
-        document.documentElement.setAttribute("data-embedded", "true");
+      const key = "aibast:theme";
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const explicit = param === "dark" || param === "light" ? param : null;
+      let stored = null;
+      try {
+        const candidate = localStorage.getItem(key);
+        stored = candidate === "dark" || candidate === "light" ? candidate : null;
+      } catch (_error) {
+        stored = null;
       }
+      const theme = explicit || stored || "light";
+      document.documentElement.setAttribute("data-theme", theme);
+      document.addEventListener("DOMContentLoaded", () => {
+        const button = document.querySelector("[data-theme-toggle]");
+        if (!button) return;
+        const render = () => {
+          const dark = document.documentElement.getAttribute("data-theme") === "dark";
+          button.textContent = dark ? "Use light mode" : "Use dark mode";
+          button.setAttribute("aria-pressed", String(dark));
+        };
+        button.addEventListener("click", () => {
+          const next =
+            document.documentElement.getAttribute("data-theme") === "dark"
+              ? "light"
+              : "dark";
+          document.documentElement.setAttribute("data-theme", next);
+          try {
+            localStorage.setItem(key, next);
+          } catch (_error) {
+            /* The visible theme still changes when storage is unavailable. */
+          }
+          render();
+        });
+        render();
+      });
     })();
   </script>
   <style>
@@ -97,6 +126,7 @@
       border-bottom: 1px solid var(--cp-border);
       background: var(--cp-panel-strong);
     }
+    .topbar-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
     .brand { display: flex; align-items: center; gap: 10px; font-weight: 750; }
     .brand-mark {
       display: grid;
@@ -165,6 +195,7 @@
     @media (max-width: 760px) {
       .grid { grid-template-columns: 1fr; }
       .topbar { align-items: flex-start; padding: 12px 16px; }
+      .topbar-actions { justify-content: flex-start; }
       .page { width: min(100% - 24px, 1120px); padding-top: 24px; }
       .hero { padding: 24px 20px; }
     }
@@ -191,6 +222,9 @@
     .shot-link { display: block; text-align: center; }
     .shot { display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }
     .capture-meta { margin: 8px 0 0; color: var(--cp-text-muted); font-size: 12px; text-align: center; }
+    .reference-shot-wrap { margin: 16px 0; }
+    .quality-warning { margin: 10px 0 0; padding: 14px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft); color: var(--cp-text-muted); text-align: left; }
+    .quality-warning strong { color: var(--cp-text); }
     .missing { padding: 32px; border: 2px dashed var(--cp-warning); border-radius: 10px; color: var(--cp-text-muted); }
     .look-for { padding: 20px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
     .look-for strong { color: var(--cp-text); }
@@ -201,10 +235,6 @@
     .agi-manual-note { margin-top: 10px; color: var(--cp-text-muted); font-size: 13px; }
     .troubleshooting details { padding: 14px 0; border-bottom: 1px solid var(--cp-border); }
     summary { cursor: pointer; font-weight: 700; }
-    html[data-embedded="true"] body { background: var(--cp-bg-elevated); }
-    html[data-embedded="true"] .topbar { display: none; }
-    html[data-embedded="true"] .layout { grid-template-columns: 230px minmax(0, 1fr); max-width: none; padding: 8px 0 32px; }
-    html[data-embedded="true"] .hero { box-shadow: none; }
     @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } .sidebar { position: static; max-height: none; } }
     @media (max-width: 620px) { .instruction-grid { grid-template-columns: 1fr; } }
   </style>
@@ -212,7 +242,7 @@
 <body>
   <header class="topbar">
     <div class="brand"><span class="brand-mark">A</span><span>AIBAST manual workshop</span></div>
-    <div> <a class="button primary" href="exports/inventory-visibility-source.zip">Download source bundle</a></div>
+    <div class="topbar-actions"><button class="button" type="button" data-theme-toggle aria-pressed="false">Use dark mode</button> <a class="button primary" href="exports/inventory-visibility-source.zip">Download source bundle</a></div>
   </header>
   <div class="layout">
     <aside class="sidebar">
@@ -257,7 +287,7 @@
             <div class="instruction expected"><strong>Expected result</strong>A blank Copilot Studio agent is visible in the captured Draft workspace.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>A blank Copilot Studio agent is visible in the captured Draft workspace.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/01-create-blank-agent.jpg" download="01-create-blank-agent.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/01-create-blank-agent.jpg" alt="Create a blank Copilot Studio agent reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1424×863 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>A blank Copilot Studio agent is visible in the captured Draft workspace.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="1"> Mark complete</label>
@@ -272,7 +302,7 @@
             <div class="instruction expected"><strong>Expected result</strong>The page header shows the recorded manual build name: Inventory Visibility Manual.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The page header shows the recorded manual build name: Inventory Visibility Manual.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/02-name-agent.jpg" download="02-name-agent.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/02-name-agent.jpg" alt="Name Inventory Visibility Manual reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1424×863 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The page header shows the recorded manual build name: Inventory Visibility Manual.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="2"> Mark complete</label>
@@ -312,7 +342,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/03-enter-instructions.jpg" download="03-enter-instructions.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/03-enter-instructions.jpg" alt="Enter the reviewed global instructions reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1424×863 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
             <label><input class="complete" type="checkbox" data-step="3"> Mark complete</label>
@@ -327,7 +357,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/04-save-instructions.jpg" download="04-save-instructions.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/04-save-instructions.jpg" alt="Save the instruction policy reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1424×863 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
             <label><input class="complete" type="checkbox" data-step="4"> Mark complete</label>
@@ -342,7 +372,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured inventory no longer lists the default web-search capability.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The captured inventory no longer lists the default web-search capability.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/05-remove-web-search.jpg" download="05-remove-web-search.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/05-remove-web-search.jpg" alt="Remove default web search reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1424×863 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured inventory no longer lists the default web-search capability.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="export-manifest.json" download>Download source: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="5"> Mark complete</label>
@@ -357,7 +387,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/06-add-aibast-inventory-visibility-rules-and-safety.jpg" download="06-add-aibast-inventory-visibility-rules-and-safety.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/06-add-aibast-inventory-visibility-rules-and-safety.jpg" alt="Add knowledge: aibast_inventory-visibility-rules-and-safety.md reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1424×863 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="manual/knowledge/aibast_inventory-visibility-rules-and-safety.md" download>Download source: Aibast Inventory Visibility Rules And Safety</a>
             <label><input class="complete" type="checkbox" data-step="6"> Mark complete</label>
@@ -372,7 +402,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/07-add-aibast-inventory-visibility-synthetic-records.jpg" download="07-add-aibast-inventory-visibility-synthetic-records.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/07-add-aibast-inventory-visibility-synthetic-records.jpg" alt="Add knowledge: aibast_inventory-visibility-synthetic-records.md reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1424×863 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="manual/knowledge/aibast_inventory-visibility-synthetic-records.md" download>Download source: Aibast Inventory Visibility Synthetic Records</a>
             <label><input class="complete" type="checkbox" data-step="7"> Mark complete</label>
@@ -387,7 +417,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 4 skills.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The captured skill inventory reflects the reviewed uploads; the evidence records 4 skills.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/08-add-channel-allocation.jpg" download="08-add-channel-allocation.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/08-add-channel-allocation.jpg" alt="Add skill: channel-allocation reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1424×863 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured skill inventory reflects the reviewed uploads; the evidence records 4 skills.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="manual/skills/channel-allocation/SKILL.md" download>Download source: Manual skill: channel allocation</a>
             <label><input class="complete" type="checkbox" data-step="8"> Mark complete</label>
@@ -402,7 +432,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Sonnet 4.6, 4 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The screenshot visibly confirms Claude Sonnet 4.6, 4 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/09-add-inventory-dashboard.jpg" download="09-add-inventory-dashboard.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/09-add-inventory-dashboard.jpg" alt="Add skill: inventory-dashboard reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1424×863 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The screenshot visibly confirms Claude Sonnet 4.6, 4 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="manual/skills/inventory-dashboard/SKILL.md" download>Download source: Manual skill: inventory dashboard</a>
             <label><input class="complete" type="checkbox" data-step="9"> Mark complete</label>
@@ -417,7 +447,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 4 skills.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The captured skill inventory reflects the reviewed uploads; the evidence records 4 skills.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/10-add-replenishment-plan.jpg" download="10-add-replenishment-plan.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/10-add-replenishment-plan.jpg" alt="Add skill: replenishment-plan reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1424×863 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured skill inventory reflects the reviewed uploads; the evidence records 4 skills.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="manual/skills/replenishment-plan/SKILL.md" download>Download source: Manual skill: replenishment plan</a>
             <label><input class="complete" type="checkbox" data-step="10"> Mark complete</label>
@@ -432,7 +462,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 4 skills.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The captured skill inventory reflects the reviewed uploads; the evidence records 4 skills.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/11-add-stock-alerts.jpg" download="11-add-stock-alerts.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/11-add-stock-alerts.jpg" alt="Add skill: stock-alerts reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1424×863 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured skill inventory reflects the reviewed uploads; the evidence records 4 skills.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="manual/skills/stock-alerts/SKILL.md" download>Download source: Manual skill: stock alerts</a>
             <label><input class="complete" type="checkbox" data-step="11"> Mark complete</label>
@@ -447,7 +477,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Sonnet 4.6, 4 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The screenshot visibly confirms Claude Sonnet 4.6, 4 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/12-review-inventory.jpg" download="12-review-inventory.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/12-review-inventory.jpg" alt="Review model, skills, knowledge, and safety boundaries reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1424×863 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The screenshot visibly confirms Claude Sonnet 4.6, 4 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="12"> Mark complete</label>
@@ -462,7 +492,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/13-open-preview.jpg" download="13-open-preview.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/13-open-preview.jpg" alt="Open a fresh Preview conversation reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1424×863 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="export-manifest.json" download>Download source: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="13"> Mark complete</label>
@@ -477,7 +507,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records IV-01 with the recorded identifiers Prepared for:** Inventory Planner, Inventory Visibility Snapshot, no stock is reserved; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running IV-01. A previous response must not influence the evidence.</p></div>
-          <div class="look-for"><strong>What to look for</strong><p>The captured Preview evidence records IV-01 with the recorded identifiers Prepared for:** Inventory Planner, Inventory Visibility Snapshot, no stock is reserved; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/14-iv-01.jpg" download="14-iv-01.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/14-iv-01.jpg" alt="Pass IV-01: Inventory Planner reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1424×863 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured Preview evidence records IV-01 with the recorded identifiers Prepared for:** Inventory Planner, Inventory Visibility Snapshot, no stock is reserved; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="14"> Mark complete</label>
@@ -492,7 +522,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records IV-02 with the recorded identifiers Prepared for:** Store Manager, Draft Stock Review, Review transfer candidate; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running IV-02. A previous response must not influence the evidence.</p></div>
-          <div class="look-for"><strong>What to look for</strong><p>The captured Preview evidence records IV-02 with the recorded identifiers Prepared for:** Store Manager, Draft Stock Review, Review transfer candidate; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/15-iv-02.jpg" download="15-iv-02.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/15-iv-02.jpg" alt="Pass IV-02: Store Manager reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1424×863 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured Preview evidence records IV-02 with the recorded identifiers Prepared for:** Store Manager, Draft Stock Review, Review transfer candidate; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="15"> Mark complete</label>
@@ -507,7 +537,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records IV-03 with the recorded identifiers Draft Replenishment Plan, 14-day supply, Estimated Total Replenishment Cost; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running IV-03. A previous response must not influence the evidence.</p></div>
-          <div class="look-for"><strong>What to look for</strong><p>The captured Preview evidence records IV-03 with the recorded identifiers Draft Replenishment Plan, 14-day supply, Estimated Total Replenishment Cost; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/16-iv-03.jpg" download="16-iv-03.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/16-iv-03.jpg" alt="Pass IV-03: Inventory Planner reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1424×863 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured Preview evidence records IV-03 with the recorded identifiers Draft Replenishment Plan, 14-day supply, Estimated Total Replenishment Cost; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="16"> Mark complete</label>
@@ -522,7 +552,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records IV-04 with the recorded identifiers Prepared for:** Category Manager, Channel Allocation Scenario, do not reserve units; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running IV-04. A previous response must not influence the evidence.</p></div>
-          <div class="look-for"><strong>What to look for</strong><p>The captured Preview evidence records IV-04 with the recorded identifiers Prepared for:** Category Manager, Channel Allocation Scenario, do not reserve units; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/17-iv-04.jpg" download="17-iv-04.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/17-iv-04.jpg" alt="Pass IV-04: Category Manager reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1424×863 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured Preview evidence records IV-04 with the recorded identifiers Prepared for:** Category Manager, Channel Allocation Scenario, do not reserve units; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="17"> Mark complete</label>
@@ -537,7 +567,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The agent remains Draft and no Publish action is taken.</div>
           </div>
 
-          <div class="look-for"><strong>What to look for</strong><p>The agent remains Draft and no Publish action is taken.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/18-confirm-draft.jpg" download="18-confirm-draft.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/18-confirm-draft.jpg" alt="Confirm Draft and stop before publish reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</p><p class="capture-meta">Source capture: 1424×863 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The agent remains Draft and no Publish action is taken.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="18"> Mark complete</label>
@@ -743,9 +773,8 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         localStorage.setItem(key, JSON.stringify(done));
         label.textContent = `${done.length} of ${boxes.length} complete`;
         bar.style.width = boxes.length ? `${(done.length / boxes.length) * 100}%` : "0%";
-        const embedded = document.documentElement.dataset.embedded === "true";
-        if (!embedded) {
-          let profile = readAgiProfile();
+        let profile = readAgiProfile();
+        if (done.length > 0 || profile.workshops[AGI_WORKSHOP_SLUG]) {
           profile = setAgiWorkshopProgress(profile, "hard", {
             hardChecked: done.length,
             hardTotal: boxes.length,
@@ -762,22 +791,6 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
                 `${result.awarded.label} earned: +${result.awarded.points} local AGI points.`;
             }
           });
-        } else {
-          const message = {
-            type: "aibast-agi-hard-progress",
-            workshop: AGI_WORKSHOP_SLUG,
-            mode: "hard",
-            checked: done.length,
-            total: boxes.length,
-            complete,
-          };
-          window.parent.postMessage(message, window.location.origin);
-          if (complete) {
-            window.parent.postMessage(
-              { ...message, type: "aibast-agi-hard-complete" },
-              window.location.origin,
-            );
-          }
         }
       }
       document.querySelectorAll("[data-copy-target]").forEach((button) => {
@@ -836,29 +849,6 @@ Describe what was inaccurate or missing.
         });
       });
       update();
-      if (document.documentElement.dataset.embedded === "true") {
-        const notifyHeight = () => {
-          window.parent.postMessage(
-            {
-              type: "aibast-hard-mode-height",
-              height: document.documentElement.scrollHeight,
-            },
-            window.location.origin,
-          );
-        };
-        new ResizeObserver(notifyHeight).observe(document.documentElement);
-        window.addEventListener("load", notifyHeight);
-        window.addEventListener("message", (event) => {
-          if (
-            event.origin === window.location.origin &&
-            event.source === window.parent &&
-            event.data?.type === "aibast-agi-request-hard-progress"
-          ) {
-            update();
-          }
-        });
-        notifyHeight();
-      }
     })();
   </script>
 </body>

@@ -1522,6 +1522,23 @@ function promptRecordsFor(agent) {
   }));
 }
 
+function workshopPackageFor(agent) {
+  const direct = solutionOf(agent).package || {};
+  if (direct.quest_url) return direct;
+  if (!agent._stack || !agent._stack_vertical) return {};
+  const packagedSibling = state.agents.find(candidate =>
+    candidate._stack === agent._stack
+    && candidate._stack_vertical === agent._stack_vertical
+    && (solutionOf(candidate).package || {}).quest_url
+  );
+  return packagedSibling ? solutionOf(packagedSibling).package || {} : {};
+}
+
+function interactiveDemoUrl(agent, prompt) {
+  if (prompt && prompt.demo_url) return prompt.demo_url;
+  return workshopPackageFor(agent).quest_url || "";
+}
+
 function normalize(value) {
   return compact(value).toLowerCase()
     .replace(/&/g, " and ")
@@ -1940,7 +1957,10 @@ function openAgent(name) {
   const personas = solution.personas || [];
   const industries = solution.industries || [CATEGORY_NAMES[agent.category] || pretty(agent.category)];
   const tools = microsoftTools(agent);
-  const prompts = promptRecordsFor(agent);
+  const prompts = promptRecordsFor(agent).map(item => ({
+    ...item,
+    interactive_demo_url: interactiveDemoUrl(agent, item),
+  }));
   const install = installCommand(agent);
   const architecture = solution.architecture;
   const stack = state.stacks.find(item =>
@@ -2000,7 +2020,7 @@ function openAgent(name) {
                 <p><strong>${esc(item.label)}</strong><br>${esc(item.prompt)}</p>
                 <div class="detail-actions">
                   <button class="button small" type="button" data-action="copy" data-text="${enc(item.prompt)}">Copy</button>
-                  ${item.demo_url ? `<a class="button primary small" href="${esc(item.demo_url)}" target="_blank" rel="noopener">Open demo ↗</a>` : ""}
+                  ${item.interactive_demo_url ? `<a class="button primary small" href="${esc(item.interactive_demo_url)}" target="_blank" rel="noopener">Open interactive demo ↗</a>` : ""}
                 </div>
               </div>
             `).join("")}

@@ -77,15 +77,17 @@ def valid_pages() -> dict[str, str]:
 <pre id="preview-prompt-case-01">Run the locked case.</pre>
 <img src="screenshots/assisted/annotated/01-case.png" alt="Reusable evidence">
 </article>
-<iframe src="manual-tutorial.html?embedded=1"></iframe>
+<section data-path="hard">
+<a href="manual-tutorial.html">Standalone manual tutorial</a>
+<article class="step"><header>{report_button("native-hard-step-1")}</header>
+<img src="screenshots/manual/annotated/01-step.png" alt="Reusable evidence">
+<footer><a href="source.py" download>Download source: Agent</a></footer>
+</article>
+</section>
 </main>{feedback}</body></html>"""
     manual = f"""<!doctype html>
 <html><head><title>Manual tutorial</title>
-<script>
-if (new URLSearchParams(window.location.search).get("embedded") === "1") {{
-  document.documentElement.setAttribute("data-embedded", "true");
-}}
-</script><style>body{{color:#222}}</style></head>
+<style>body{{color:#222}}</style></head>
 <body>AIBAST manual workshop
 <article class="step"><header>{report_button("hard-step-1")}</header>
 <img src="screenshots/manual/annotated/01-step.png" alt="Reusable evidence">
@@ -93,13 +95,10 @@ if (new URLSearchParams(window.location.search).get("embedded") === "1") {{
 </article>
 {feedback}
 <script>
-if (document.documentElement.dataset.embedded === "true") {{
- const notifyHeight = () => window.parent.postMessage(
-  {{type: "aibast-hard-mode-height", height: document.documentElement.scrollHeight}},
-  window.location.origin
- );
- new ResizeObserver(notifyHeight).observe(document.documentElement);
-}}
+const key = "aibast:time-entry-billing:manual-progress";
+const badgeIds = [];
+badgeIds.push("hard-mode-complete");
+const hardProgress = {{hardComplete: complete}};
 </script></body></html>"""
     field = f"""<!doctype html>
 <html><head><title>Field guide</title>{engine}<script>
@@ -122,7 +121,7 @@ document.documentElement.setAttribute("data-theme", "light");
 <strong>0</strong> Images hidden from learner proof</div>
 <h2>Deterministic case contract</h2><section id="locked-cases">CASE-01</section>
 <h2>Displayed visual checkpoints</h2>
-<h2>Hidden visual gaps</h2>
+<h2>Reference-only visual gaps</h2>
 <h2>Downloads for audit</h2>
 <a href="evals/visual-checkpoints.json" download>Visual contract</a>
 <a href="export-manifest.json" download>Manifest</a>

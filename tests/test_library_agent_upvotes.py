@@ -73,6 +73,50 @@ def test_library_scripts_parse_with_node():
     assert result.returncode == 0, result.stderr
 
 
+def test_example_prompts_open_direct_or_inherited_interactive_demo():
+    result = run_library_node(
+        """
+const primary = {
+  name: "@aibast-agents-library/account-intelligence",
+  _stack: "account_intelligence",
+  _stack_vertical: "b2b_sales",
+  _solution: {
+    package: {
+      slug: "account-intelligence",
+      quest_url: "solutions/account-intelligence/quest.html"
+    }
+  }
+};
+const orchestrator = {
+  name: "@aibast-agents-library/account-intelligence-orchestrator",
+  _stack: "account_intelligence",
+  _stack_vertical: "b2b_sales",
+  _solution: {}
+};
+const unrelated = {
+  name: "@aibast-agents-library/unrelated",
+  _solution: {}
+};
+state.agents = [primary, orchestrator, unrelated];
+console.log(JSON.stringify({
+  curated: interactiveDemoUrl(primary, {
+    demo_url: "solutions/_shared/m365-copilot-demo.html?scenario=account"
+  }),
+  inherited: interactiveDemoUrl(orchestrator, {demo_url: null}),
+  unavailable: interactiveDemoUrl(unrelated, {demo_url: null})
+}));
+"""
+    )
+
+    assert result == {
+        "curated": (
+            "solutions/_shared/m365-copilot-demo.html?scenario=account"
+        ),
+        "inherited": "solutions/account-intelligence/quest.html",
+        "unavailable": "",
+    }
+
+
 def test_metrics_load_is_optional_and_builds_canonical_map():
     text = library_text()
     assert "const [registry, metrics] = await Promise.all([" in text

@@ -402,7 +402,7 @@ FUNCTION_DATA = {
 }
 
 POST_MIGRATION_REQUIREMENTS = {
-    "headline": "Downloads, agent upvotes, and workshop usage",
+    "headline": "Global agent distribution, engagement, and learning impact",
     "heading": "Workshop adoption",
     "required_ids": [
         "workshop-summary",
@@ -410,8 +410,16 @@ POST_MIGRATION_REQUIREMENTS = {
         "workshop-coverage",
         "workshop-tabs",
         "workshop-table",
+        "global-agent-ecosystem",
+        "ecosystem-summary",
+        "ecosystem-coverage",
+        "ecosystem-agent-table",
     ],
-    "functions": ["renderWorkshops", "renderWorkshopControls"],
+    "functions": [
+        "renderEcosystem",
+        "renderWorkshops",
+        "renderWorkshopControls",
+    ],
     "visible_phrases": [
         "Views cover only observed GitHub top popular-path rows in the 14-day API window",
         "Raw GitHub and direct GitHub Pages fetches are uncounted",
@@ -419,6 +427,10 @@ POST_MIGRATION_REQUIREMENTS = {
         "These sources use mixed measurement windows",
         "one person or action can create multiple events",
         "Agent upvotes are preference signals shown separately and are never added to usage events",
+        "AIBAST direct distribution plus the public kody-w/RAR community channel",
+        "Distribution fetch events",
+        "RAR acquisitions and usage signals are separate",
+        "Missing agent rows are unavailable, not verified zero",
     ],
     "agent_upvote_phrases": [
         "structured public GitHub issue submissions",
@@ -1055,6 +1067,12 @@ def audit_html(html: str, contract: dict) -> AuditResult:
     )
     require(
         result,
+        re.search(r"\brenderEcosystem\s*\(", render_body) is not None,
+        "workshops",
+        "render() must invoke renderEcosystem()",
+    )
+    require(
+        result,
         re.search(r"\brenderWorkshopControls\s*\(", workshops_body) is not None,
         "workshops",
         "renderWorkshops() must invoke renderWorkshopControls()",
@@ -1608,7 +1626,7 @@ def audit_html(html: str, contract: dict) -> AuditResult:
         result,
         normalized_text(post_migration["headline"]) in visible_page_text,
         "upvotes",
-        "headline must say Downloads, agent upvotes, and workshop usage",
+        "headline must say Global agent distribution, engagement, and learning impact",
     )
     kpi_body = bodies.get("renderKPIs", "")
     require(

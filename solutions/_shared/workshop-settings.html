@@ -8,6 +8,43 @@
         param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
       document.documentElement.setAttribute("data-theme", theme);
     })();
+    (() => {
+      const key = "aibast:theme";
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const explicit = param === "dark" || param === "light" ? param : null;
+      let stored = null;
+      try {
+        const candidate = localStorage.getItem(key);
+        stored = candidate === "dark" || candidate === "light" ? candidate : null;
+      } catch (_error) {
+        stored = null;
+      }
+      const theme = explicit || stored || "light";
+      document.documentElement.setAttribute("data-theme", theme);
+      document.addEventListener("DOMContentLoaded", () => {
+        const button = document.querySelector("[data-theme-toggle]");
+        if (!button) return;
+        const render = () => {
+          const dark = document.documentElement.getAttribute("data-theme") === "dark";
+          button.textContent = dark ? "Use light mode" : "Use dark mode";
+          button.setAttribute("aria-pressed", String(dark));
+        };
+        button.addEventListener("click", () => {
+          const next =
+            document.documentElement.getAttribute("data-theme") === "dark"
+              ? "light"
+              : "dark";
+          document.documentElement.setAttribute("data-theme", next);
+          try {
+            localStorage.setItem(key, next);
+          } catch (_error) {
+            /* The visible theme still changes when storage is unavailable. */
+          }
+          render();
+        });
+        render();
+      });
+    })();
   </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -185,6 +222,7 @@
       <div class="actions">
         <button class="button primary" type="submit">Save workshop setting</button>
         <a class="button" id="back-link" href="../../library.html">Cancel</a>
+        <button class="button" type="button" data-theme-toggle aria-pressed="false">Use dark mode</button>
       </div>
       <div class="note"><strong>Change it later:</strong> use the generic <em>Workshop settings</em> link. Your preference stays on this device and browser until you change or clear it.</div>
     </form>

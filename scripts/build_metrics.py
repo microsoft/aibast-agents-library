@@ -54,6 +54,8 @@ HISTORY = ROOT / "state" / "metrics_history.json"
 
 OWNER = os.environ.get("METRICS_OWNER", "microsoft")
 REPO = os.environ.get("METRICS_REPO", "aibast-agents-library")
+RAR_OWNER = os.environ.get("RAR_METRICS_OWNER", "kody-w")
+RAR_REPO = os.environ.get("RAR_METRICS_REPO", "RAR")
 GH_API = "https://api.github.com"
 JSDELIVR = "https://data.jsdelivr.com/v1"
 USER_AGENT = "aibast-metrics-builder"
@@ -133,6 +135,18 @@ FALLBACK_EXCLUDED_DIRS = {
     ".ruff_cache",
     "node_modules",
 }
+RAR_REGISTRY_SCHEMA = "rapp-registry/1.1"
+RAR_METRICS_SCHEMA = "rar-metrics/1.0"
+RAR_DISCUSSION_SCHEMA = "rar-discussion-ratings/1.0"
+RAR_SIGNAL_IDS = (
+    "worked",
+    "did_not_work",
+    "stuck",
+    "regular_use",
+    "shipped",
+    "want_to_try",
+    "saved_time",
+)
 
 
 def now_iso():
@@ -226,6 +240,514 @@ def build_agent_index(registry):
         if rec["file"]:
             by_file["/" + rec["file"].lstrip("/")] = name
     return agents, by_file
+
+
+def logical_agent_key(name):
+    """Normalize a cross-registry logical identity without merging publishers."""
+    value = str(name or "").strip().casefold()
+    if "/" not in value:
+        return None
+    publisher, slug = value.split("/", 1)
+    slug = re.sub(r"[_\s]+", "-", slug)
+    slug = re.sub(r"-+", "-", slug).strip("-")
+    if slug.endswith("-agent"):
+        slug = slug[:-6].rstrip("-")
+    return f"{publisher}/{slug}" if publisher and slug else None
+
+
+def _sum_known(values):
+    known = [value for value in values if _nonnegative_int(value) is not None]
+    return sum(known) if known else None
+
+
+def build_rar_source(
+    registry,
+    metrics,
+    discussion_ratings,
+    releases,
+    *,
+    generated_at,
+):
+    """Build a privacy-safe public RAR distribution and usage snapshot."""
+    registry_valid = (
+        isinstance(registry, dict)
+        and registry.get("schema") == RAR_REGISTRY_SCHEMA
+        and isinstance(registry.get("agents"), list)
+    )
+    if not registry_valid:
+        return {
+            "schema": "aibast-rar-federation/1.0",
+            "status": "unavailable",
+            "as_of": None,
+            "carried_forward": False,
+            "repo": f"{RAR_OWNER}/{RAR_REPO}",
+            "coverage": {
+                "registry": "unavailable",
+                "cdn": "unavailable",
+                "release_assets": "unavailable",
+                "discussions": "unavailable",
+                "traffic": "admin-token-required",
+            },
+            "totals": {
+                "agents": None,
+                "aibast_origin_agents": None,
+                "agent_cdn_fetches": None,
+                "agent_release_fetches": None,
+                "agent_acquisitions": None,
+                "positive_reactions": None,
+                "comments": None,
+                "usage_signals": {
+                    signal: None for signal in RAR_SIGNAL_IDS
+                },
+                "repository_downloads": None,
+                "repository_clones": None,
+                "repository_page_views": None,
+            },
+            "aibast_origin": {},
+            "agents": [],
+        }
+
+    agents = [
+        agent
+        for agent in registry["agents"]
+        if isinstance(agent, dict)
+        and isinstance(agent.get("name"), str)
+        and agent["name"].startswith("@")
+    ]
+    registry_by_name = {agent["name"]: agent for agent in agents}
+    metrics_valid = (
+        isinstance(metrics, dict)
+        and metrics.get("schema") == RAR_METRICS_SCHEMA
+    )
+    ratings_valid = (
+        isinstance(discussion_ratings, dict)
+        and discussion_ratings.get("schema") == RAR_DISCUSSION_SCHEMA
+        and isinstance(discussion_ratings.get("agents"), dict)
+    )
+    releases_valid = isinstance(releases, list)
+
+    cdn_by_agent = defaultdict(int)
+    cdn_observed = set()
+    if metrics_valid:
+        for item in (metrics.get("cdn") or {}).get("files", []):
+            if not isinstance(item, dict):
+                continue
+            name = item.get("agent")
+            hits = _nonnegative_int(item.get("hits"))
+            if name in registry_by_name and hits is not None:
+                cdn_by_agent[name] += hits
+                cdn_observed.add(name)
+
+    install_names = {
+        agent.get("_install_filename"): name
+        for name, agent in registry_by_name.items()
+        if agent.get("_install_filename")
+    }
+    release_by_agent = {
+        name: 0 for name in registry_by_name
+    } if releases_valid else {}
+    unmapped_release_fetches = 0
+    if releases_valid:
+        for release in releases:
+            if not isinstance(release, dict):
+                continue
+            for asset in release.get("assets", []):
+                if not isinstance(asset, dict):
+                    continue
+                downloads = _nonnegative_int(asset.get("download_count"))
+                if downloads is None:
+                    continue
+                agent_name = install_names.get(asset.get("name"))
+                if agent_name:
+                    release_by_agent[agent_name] += downloads
+                else:
+                    unmapped_release_fetches += downloads
+
+    rating_rows = (
+        discussion_ratings.get("agents", {})
+        if ratings_valid
+        else {}
+    )
+    rows = []
+    usage_totals = {signal: 0 for signal in RAR_SIGNAL_IDS}
+    acquisitions = 0
+    positive_reactions = 0
+    comments = 0
+    for name, agent in sorted(registry_by_name.items()):
+        rating = rating_rows.get(name) if ratings_valid else None
+        signals = {}
+        for signal in RAR_SIGNAL_IDS:
+            value = (
+                _nonnegative_int((rating.get("signals") or {}).get(signal))
+                if isinstance(rating, dict)
+                else None
+            )
+            signals[signal] = value
+            if value is not None:
+                usage_totals[signal] += value
+        acquisition = (
+            _nonnegative_int(rating.get("downloads"))
+            if isinstance(rating, dict)
+            else None
+        )
+        upvotes = (
+            _nonnegative_int(rating.get("upvotes"))
+            if isinstance(rating, dict)
+            else None
+        )
+        comment_count = (
+            _nonnegative_int(rating.get("comments"))
+            if isinstance(rating, dict)
+            else None
+        )
+        if acquisition is not None:
+            acquisitions += acquisition
+        if upvotes is not None:
+            positive_reactions += upvotes
+        if comment_count is not None:
+            comments += comment_count
+        publisher = name.split("/", 1)[0]
+        rows.append({
+            "rar_name": name,
+            "display_name": agent.get("display_name") or name,
+            "publisher": publisher,
+            "file": agent.get("_file"),
+            "install_filename": agent.get("_install_filename"),
+            "sha256": agent.get("_sha256"),
+            "logical_key": logical_agent_key(name),
+            "aibast_origin": publisher == "@aibast-agents-library",
+            "rar_cdn_fetches": (
+                cdn_by_agent[name] if name in cdn_observed else None
+            ),
+            "rar_release_fetches": (
+                release_by_agent.get(name) if releases_valid else None
+            ),
+            "rar_acquisitions": acquisition,
+            "rar_positive_reactions": upvotes,
+            "rar_comments": comment_count,
+            "signals": signals,
+            "discussion_url": (
+                rating.get("url") if isinstance(rating, dict) else None
+            ),
+        })
+
+    metric_totals = metrics.get("totals", {}) if metrics_valid else {}
+    cdn_total = (
+        _nonnegative_int(metric_totals.get("agent_file_downloads"))
+        if metrics_valid
+        else None
+    )
+    release_total = (
+        sum(release_by_agent.values()) if releases_valid else None
+    )
+    aibast_rows = [row for row in rows if row["aibast_origin"]]
+    coverage = {
+        "registry": "available",
+        "cdn": "censored" if metrics_valid else "unavailable",
+        "release_assets": "available" if releases_valid else "unavailable",
+        "discussions": "available" if ratings_valid else "unavailable",
+        "traffic": (
+            "available"
+            if metrics_valid and (metrics.get("traffic") or {}).get("as_of")
+            else "admin-token-required"
+        ),
+    }
+    status = (
+        "partial"
+        if any(value != "available" for value in coverage.values())
+        else "available"
+    )
+    return {
+        "schema": "aibast-rar-federation/1.0",
+        "status": status,
+        "as_of": (
+            metrics.get("generated_at")
+            if metrics_valid
+            else generated_at
+        ),
+        "carried_forward": False,
+        "repo": f"{RAR_OWNER}/{RAR_REPO}",
+        "site": f"https://{RAR_OWNER}.github.io/{RAR_REPO}/",
+        "coverage": coverage,
+        "totals": {
+            "agents": len(rows),
+            "aibast_origin_agents": len(aibast_rows),
+            "agent_cdn_fetches": cdn_total,
+            "agent_cdn_attributed_fetches": sum(cdn_by_agent.values()),
+            "agent_release_fetches": release_total,
+            "unmapped_release_fetches": (
+                unmapped_release_fetches if releases_valid else None
+            ),
+            "agent_acquisitions": acquisitions if ratings_valid else None,
+            "positive_reactions": (
+                positive_reactions if ratings_valid else None
+            ),
+            "comments": comments if ratings_valid else None,
+            "usage_signals": {
+                signal: usage_totals[signal] if ratings_valid else None
+                for signal in RAR_SIGNAL_IDS
+            },
+            "repository_downloads": (
+                _nonnegative_int(metric_totals.get("downloads"))
+                if metrics_valid
+                else None
+            ),
+            "repository_clones": (
+                _nonnegative_int(metric_totals.get("clones"))
+                if metrics_valid
+                else None
+            ),
+            "repository_page_views": (
+                _nonnegative_int(metric_totals.get("page_views"))
+                if metrics_valid
+                else None
+            ),
+        },
+        "aibast_origin": {
+            "agents": len(aibast_rows),
+            "cdn_fetches": _sum_known(
+                row["rar_cdn_fetches"] for row in aibast_rows
+            ),
+            "release_fetches": _sum_known(
+                row["rar_release_fetches"] for row in aibast_rows
+            ),
+            "acquisitions": _sum_known(
+                row["rar_acquisitions"] for row in aibast_rows
+            ),
+            "usage_signals": {
+                signal: _sum_known(
+                    row["signals"][signal] for row in aibast_rows
+                )
+                for signal in RAR_SIGNAL_IDS
+            },
+        },
+        "agents": rows,
+        "caveat": (
+            "RAR CDN and release fetches are distribution events, Discussion "
+            "downloads are signed-in acquisition signals, and usage reactions "
+            "are independent self-reports. They are never added together as users. "
+            "Raw GitHub and Pages downloads remain unobservable."
+        ),
+    }
+
+
+def fetch_public_releases(owner, repo, token=None, max_pages=20):
+    releases = []
+    for page in range(1, max_pages + 1):
+        rows = fetch_public(
+            f"{GH_API}/repos/{owner}/{repo}/releases"
+            f"?per_page=100&page={page}",
+            token,
+        )
+        if not isinstance(rows, list):
+            return None
+        releases.extend(rows)
+        if len(rows) < 100:
+            return releases
+    return releases
+
+
+def fetch_rar_source(token, generated_at):
+    raw_base = (
+        f"https://raw.githubusercontent.com/{RAR_OWNER}/{RAR_REPO}/main/"
+    )
+    registry = fetch_json(raw_base + "registry.json")
+    metrics = fetch_json(raw_base + "state/metrics.json")
+    discussion_ratings = fetch_json(
+        raw_base + "state/discussion_ratings.json"
+    )
+    releases = fetch_public_releases(
+        RAR_OWNER,
+        RAR_REPO,
+        token,
+    )
+    return build_rar_source(
+        registry,
+        metrics,
+        discussion_ratings,
+        releases,
+        generated_at=generated_at,
+    )
+
+
+def carry_forward_rar_source(prior):
+    previous = (
+        (prior.get("ecosystem") or {}).get("sources") or {}
+    ).get("rar")
+    if not isinstance(previous, dict) or not previous.get("agents"):
+        return build_rar_source(
+            None,
+            None,
+            None,
+            None,
+            generated_at=now_iso(),
+        )
+    carried = json.loads(json.dumps(previous))
+    carried["status"] = "partial"
+    carried["carried_forward"] = True
+    return carried
+
+
+def build_ecosystem_metrics(
+    agents,
+    aibast_agent_fetches,
+    rar_source,
+    *,
+    generated_at,
+):
+    local_keys = defaultdict(list)
+    local_files = defaultdict(list)
+    for name in agents:
+        key = logical_agent_key(name)
+        if key:
+            local_keys[key].append(name)
+        file_path = str(agents[name].get("file") or "").lstrip("/")
+        if file_path:
+            local_files[file_path].append(name)
+
+    rar_rows = []
+    matched_local = set()
+    for row in rar_source.get("agents", []):
+        item = dict(row)
+        file_matches = local_files.get(
+            str(item.get("file") or "").lstrip("/"),
+            [],
+        )
+        matches = (
+            file_matches
+            if len(file_matches) == 1
+            else local_keys.get(item.get("logical_key"), [])
+        )
+        canonical = matches[0] if len(matches) == 1 else None
+        item["canonical_aibast_name"] = canonical
+        if canonical:
+            matched_local.add(canonical)
+        rar_rows.append(item)
+    rar_by_canonical = {
+        row["canonical_aibast_name"]: row
+        for row in rar_rows
+        if row.get("canonical_aibast_name")
+    }
+
+    combined_rows = []
+    for name, agent in sorted(agents.items()):
+        rar = rar_by_canonical.get(name, {})
+        direct = _nonnegative_int(agent.get("downloads"))
+        rar_cdn = _nonnegative_int(rar.get("rar_cdn_fetches"))
+        rar_release = _nonnegative_int(rar.get("rar_release_fetches"))
+        combined_rows.append({
+            "logical_name": name,
+            "display_name": agent.get("display_name") or name,
+            "publisher": name.split("/", 1)[0],
+            "channels": ["aibast"] + (["rar"] if rar else []),
+            "aibast_direct_agent_fetches": direct,
+            "rar_name": rar.get("rar_name"),
+            "rar_cdn_fetches": rar_cdn,
+            "rar_release_fetches": rar_release,
+            "combined_distribution_fetch_events": _sum_known(
+                (direct, rar_cdn, rar_release)
+            ),
+            "rar_acquisitions": rar.get("rar_acquisitions"),
+            "rar_positive_reactions": rar.get("rar_positive_reactions"),
+            "rar_discussion_url": rar.get("discussion_url"),
+            "rar_usage_signals": rar.get("signals") or {
+                signal: None for signal in RAR_SIGNAL_IDS
+            },
+        })
+    for rar in rar_rows:
+        if rar.get("canonical_aibast_name"):
+            continue
+        rar_cdn = _nonnegative_int(rar.get("rar_cdn_fetches"))
+        rar_release = _nonnegative_int(rar.get("rar_release_fetches"))
+        combined_rows.append({
+            "logical_name": rar["rar_name"],
+            "display_name": rar.get("display_name") or rar["rar_name"],
+            "publisher": rar.get("publisher"),
+            "channels": ["rar"],
+            "aibast_direct_agent_fetches": None,
+            "rar_name": rar["rar_name"],
+            "rar_cdn_fetches": rar_cdn,
+            "rar_release_fetches": rar_release,
+            "combined_distribution_fetch_events": _sum_known(
+                (rar_cdn, rar_release)
+            ),
+            "rar_acquisitions": rar.get("rar_acquisitions"),
+            "rar_positive_reactions": rar.get("rar_positive_reactions"),
+            "rar_discussion_url": rar.get("discussion_url"),
+            "rar_usage_signals": rar.get("signals") or {
+                signal: None for signal in RAR_SIGNAL_IDS
+            },
+        })
+    combined_rows.sort(
+        key=lambda row: (
+            -(row.get("combined_distribution_fetch_events") or 0),
+            -(row.get("rar_acquisitions") or 0),
+            row["logical_name"],
+        )
+    )
+
+    rar_totals = rar_source.get("totals") or {}
+    rar_cdn = _nonnegative_int(rar_totals.get("agent_cdn_fetches"))
+    rar_release = _nonnegative_int(
+        rar_totals.get("agent_release_fetches")
+    )
+    aibast_fetches = _nonnegative_int(aibast_agent_fetches)
+    logical_keys = {
+        key for key in local_keys if key
+    } | {
+        row["logical_key"]
+        for row in rar_rows
+        if row.get("logical_key")
+    }
+    rar_status = rar_source.get("status", "unavailable")
+    status = (
+        "available"
+        if rar_status == "available" and aibast_fetches is not None
+        else "partial"
+        if rar_status in {"available", "partial"} or aibast_fetches is not None
+        else "unavailable"
+    )
+    return {
+        "schema": "aibast-ecosystem-metrics/1.0",
+        "status": status,
+        "as_of": generated_at,
+        "totals": {
+            "distribution_entries": len(agents)
+            + (rar_totals.get("agents") or 0),
+            "logical_agents": len(logical_keys),
+            "overlap_agents": len(matched_local),
+            "aibast_direct_agent_fetches": aibast_fetches,
+            "rar_agent_cdn_fetches": rar_cdn,
+            "rar_agent_release_fetches": rar_release,
+            "combined_agent_distribution_fetch_events": _sum_known(
+                (aibast_fetches, rar_cdn, rar_release)
+            ),
+            "rar_agent_acquisitions": rar_totals.get(
+                "agent_acquisitions"
+            ),
+            "rar_positive_reactions": rar_totals.get(
+                "positive_reactions"
+            ),
+            "rar_usage_signals": rar_totals.get("usage_signals") or {
+                signal: None for signal in RAR_SIGNAL_IDS
+            },
+        },
+        "sources": {
+            "aibast": {
+                "repo": f"{OWNER}/{REPO}",
+                "agent_fetches": aibast_fetches,
+                "agents": len(agents),
+            },
+            "rar": rar_source,
+        },
+        "agents": combined_rows,
+        "caveat": (
+            "Global distribution fetch events sum distinct observable AIBAST "
+            "and RAR delivery channels. They do not identify people. RAR "
+            "acquisitions and usage reactions remain separate because one person "
+            "can create several signals and can remove a reaction later."
+        ),
+    }
 
 
 def build_workshop_catalog(registry, solution_catalog=None):
@@ -1823,6 +2345,7 @@ def fetch_jsdelivr(by_file, agents, workshop_slugs=()):
         "daily": [],
         "files": [],
         "period": "year",
+        "package_available": False,
         "files_available": False,
         "files_complete": False,
         "file_pages": 0,
@@ -1832,7 +2355,8 @@ def fetch_jsdelivr(by_file, agents, workshop_slugs=()):
         "workshop_download_diagnostics": {},
     }
     pkg = fetch_json(f"{JSDELIVR}/stats/packages/gh/{OWNER}/{REPO}?period=year")
-    if pkg:
+    if isinstance(pkg, dict):
+        out["package_available"] = True
         out["total_hits"] = pkg.get("hits", {}).get("total", 0)
         out["bandwidth"] = pkg.get("bandwidth", {}).get("total", 0)
         out["rank"] = pkg.get("hits", {}).get("rank")
@@ -1878,14 +2402,26 @@ def fetch_jsdelivr(by_file, agents, workshop_slugs=()):
 
 # ------------------------------------------------------------------ history
 
-def merge_history(traffic, jsd, history=HISTORY):
+def merge_history(traffic, jsd, history=HISTORY, run_at=None):
     """Accumulate rolling-window daily rows so totals survive the 14-day cutoff.
 
     Also remembers the last successful traffic read. The Actions GITHUB_TOKEN is
     403 on the traffic endpoints, so an unauthenticated or CI run must not blank
     out figures a previous authorized run already established.
     """
-    hist = load_json(history, {"clones": {}, "views": {}, "cdn": {}, "snapshots": []})
+    hist = load_json(
+        history,
+        {
+            "clones": {},
+            "views": {},
+            "cdn": {},
+            "tracking": {},
+            "snapshots": [],
+        },
+    )
+    run_at = run_at or now_iso()
+    run_day = run_at[:10]
+    tracking = hist.setdefault("tracking", {})
     for bucket, rows in (("clones", traffic.get("clones", {}).get("daily", [])),
                          ("views", traffic.get("views", {}).get("daily", []))):
         store = hist.setdefault(bucket, {})
@@ -1895,9 +2431,18 @@ def merge_history(traffic, jsd, history=HISTORY):
                 "count": max(prev.get("count", 0), row["count"]),
                 "uniques": max(prev.get("uniques", 0), row["uniques"]),
             }
+        if traffic.get(bucket):
+            tracking.setdefault(
+                f"{bucket}_since",
+                min(store) if store else run_day,
+            )
+            tracking[f"{bucket}_last"] = run_day
     cdn = hist.setdefault("cdn", {})
     for row in jsd.get("daily", []):
         cdn[row["date"]] = max(cdn.get(row["date"], 0), row["count"])
+    if jsd.get("package_available"):
+        tracking.setdefault("cdn_since", min(cdn) if cdn else run_day)
+        tracking["cdn_last"] = run_day
 
     last = hist.setdefault("last_known", {})
     if traffic.get("clones"):
@@ -1922,7 +2467,7 @@ def merge_history(traffic, jsd, history=HISTORY):
         "days_tracked": len(hist["clones"]),
         "first_day": min(hist["clones"]) if hist["clones"] else None,
     }
-    snap = {"at": now_iso(), **totals}
+    snap = {"at": run_at, **totals}
     hist.setdefault("snapshots", []).append(snap)
     hist["snapshots"] = hist["snapshots"][-365:]
 
@@ -2220,6 +2765,10 @@ def main():
     prior = load_json(out_path, {})
     generated_at = now_iso()
     token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
+    rar_token = (
+        os.environ.get("RAR_METRICS_TOKEN")
+        or os.environ.get("RAR_GITHUB_TOKEN")
+    )
     registry = load_json(REGISTRY, {})
     if not registry:
         log("✗ registry.json missing or unreadable — run build_registry.py first")
@@ -2234,6 +2783,7 @@ def main():
     stats = registry.get("stats", {})
 
     if args.offline:
+        rar_source = carry_forward_rar_source(prior)
         repo = carried_block(prior, "repo") or {
             "stars": None,
             "forks": None,
@@ -2345,6 +2895,10 @@ def main():
         cdn["installer_hits"] = remote_totals["installer_downloads"]
         cdn["files"] = file_download_summary(file_metrics)
     else:
+        log("· public RAR federation")
+        rar_source = fetch_rar_source(rar_token, generated_at)
+        if rar_source["status"] == "unavailable":
+            rar_source = carry_forward_rar_source(prior)
         repo = {}
         log("· github repo")
         repo = fetch_repo(token)
@@ -2403,7 +2957,12 @@ def main():
         releases["carried_forward"] = False
 
         history = out_path.parent / HISTORY.name
-        hist_totals, daily, last_known = merge_history(traffic_raw, jsd, history)
+        hist_totals, daily, last_known = merge_history(
+            traffic_raw,
+            jsd,
+            history,
+            run_at=generated_at,
+        )
         traffic_live = bool(traffic_raw.get("clones"))
         traffic_error = traffic_raw.get("_error")
         traffic_paths = (
@@ -2593,6 +3152,13 @@ def main():
             "carried_forward": False,
         }
 
+    ecosystem = build_ecosystem_metrics(
+        agents,
+        remote_totals.get("agent_file_downloads"),
+        rar_source,
+        generated_at=generated_at,
+    )
+
     doc = {
         "schema": "aibast-metrics/1.0",
         "generated_at": generated_at,
@@ -2601,6 +3167,12 @@ def main():
                  "site": f"https://{OWNER}.github.io/{REPO}/", **repo},
         "totals": {
             **remote_totals,
+            "global_agent_distribution_fetch_events": ecosystem[
+                "totals"
+            ]["combined_agent_distribution_fetch_events"],
+            "rar_agent_acquisitions": ecosystem["totals"][
+                "rar_agent_acquisitions"
+            ],
             "agents": stats.get("total_agents", len(agents)),
             "stacks": stats.get("total_stacks", 0),
             "verticals": stats.get("total_verticals", 0),
@@ -2619,12 +3191,14 @@ def main():
         "file_metrics": file_metrics,
         "workshops": workshops,
         "agi": agi,
+        "ecosystem": ecosystem,
         "sources": [
             {"name": "GitHub Traffic API", "metric": "clones, views, popular paths (clones include this repo's own CI checkouts)", "url": f"{GH_API}/repos/{OWNER}/{REPO}/traffic/clones"},
             {"name": "jsDelivr CDN", "metric": "per-file download observations across every tracked repository file, including agents, skills, workshops, installers, documentation, code, and assets", "url": f"{JSDELIVR}/stats/packages/gh/{OWNER}/{REPO}"},
             {"name": "GitHub Releases", "metric": "release asset downloads", "url": f"{GH_API}/repos/{OWNER}/{REPO}/releases"},
             {"name": "GitHub Issues", "metric": "structured public agent upvotes, workshop feedback, and opt-in verified AGI progress syncs validated from issue bodies", "url": f"{GH_API}/repos/{OWNER}/{REPO}/issues?state=all"},
             {"name": "registry.json", "metric": "agents, stacks, verticals, categories", "url": f"https://{OWNER}.github.io/{REPO}/registry.json"},
+            {"name": "Public RAR federation", "metric": "community agent CDN/release fetches, signed-in acquisitions, and separate usage reactions", "url": f"https://{RAR_OWNER}.github.io/{RAR_REPO}/stats.html"},
         ],
     }
 
@@ -2643,6 +3217,12 @@ def main():
         f"  agi_status={agi['status']} "
         f"agi_participants={agi['totals']['participants']} "
         f"agi_points={agi['totals']['points']}"
+    )
+    log(
+        f"  ecosystem_status={ecosystem['status']} "
+        f"global_agent_fetches="
+        f"{ecosystem['totals']['combined_agent_distribution_fetch_events']} "
+        f"rar_acquisitions={ecosystem['totals']['rar_agent_acquisitions']}"
     )
     return 0
 
