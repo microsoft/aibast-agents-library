@@ -338,6 +338,11 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert tutorial.count("<strong>Action</strong>") == len(frames)
     assert tutorial.count("<strong>Expected result</strong>") == len(frames)
     assert tutorial.count("Raw download:") == len(frames)
+    assert tutorial.count('data-copy-target="hard-copy-') == 2
+    assert "Copy instructions" in tutorial
+    assert "Copy Preview prompt" in tutorial
+    assert "Use only synthetic fixture records." in tutorial
+    assert "Show the synthetic review." in tutorial
     assert "No PAC CLI, YAML import, or plugin architect" in tutorial
     assert "Do not choose Publish" in tutorial
     assert "Shown without browser upscaling" in tutorial

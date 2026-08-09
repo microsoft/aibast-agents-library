@@ -1335,6 +1335,41 @@ def raw_link(ctx: JourneyContext, path: Path) -> str:
     return ctx.raw(ctx.rel(path))
 
 
+def manual_copy_payload(
+    ctx: JourneyContext,
+    action: str,
+    filename: str,
+) -> tuple[str, str] | None:
+    case = case_for_frame(ctx, filename)
+    if case:
+        prompt = case.get("prompt")
+        if not isinstance(prompt, str):
+            case_id = case.get("case_id")
+            prompt = next(
+                (
+                    item.get("prompt")
+                    for item in ctx.transcripts.get("transcripts", [])
+                    if isinstance(item, dict)
+                    and item.get("case_id") == case_id
+                    and isinstance(item.get("prompt"), str)
+                ),
+                None,
+            )
+        if isinstance(prompt, str):
+            return "Copy Preview prompt", prompt
+    lower = action.lower()
+    if "name" in lower and "agent" not in lower:
+        return "Copy agent name", manual_display_name(ctx)
+    if "name " in lower or lower.startswith("name"):
+        return "Copy agent name", manual_display_name(ctx)
+    if "enter" in lower and "instruction" in lower:
+        instructions = (
+            ctx.package / "manual" / "GLOBAL-INSTRUCTIONS.md"
+        ).read_text(encoding="utf-8")
+        return "Copy instructions", instructions
+    return None
+
+
 def render_manual_tutorial(ctx: JourneyContext) -> str:
     resources = choose_frame_resources(ctx)
     step_cards = []
@@ -1343,6 +1378,18 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
         filename = str(frame.get("file", ""))
         action = clean_frame_label(str(frame.get("label", "")), f"Review frame {index}")
         expected = expected_result(ctx, action, filename)
+        copy_payload = manual_copy_payload(
+            ctx,
+            action,
+            filename,
+        )
+        copy_id = f"hard-copy-{index}"
+        copy_markup = (
+            f'<button class="button copy-button" type="button" data-copy-target="{copy_id}">{html.escape(copy_payload[0])}</button>'
+            f'<pre class="copy-source" id="{copy_id}" hidden>{html.escape(copy_payload[1])}</pre>'
+            if copy_payload
+            else ""
+        )
         screenshot = ctx.manual_browserfilm_path.parent / filename
         capture_width = (ctx.manual_browserfilm or {}).get("width", "unknown")
         capture_height = (ctx.manual_browserfilm or {}).get("height", "unknown")
@@ -1405,7 +1452,7 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
         <header><span>{index}</span><div><h3>{html.escape(action)}</h3><p>Step {index} of {len(ctx.manual_frames)}</p></div>{report_button(ctx, location=f"Hard mode — step {index}: {action}", expected=expected, evidence=ctx.rel(screenshot))}</header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>{html.escape(action)}</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong>{copy_markup}</div><span>{html.escape(action)}</span></div>
             <div class="instruction expected"><strong>Expected result</strong>{html.escape(expected)}</div>
           </div>
           {screenshot_html}
@@ -1469,6 +1516,10 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
     .instruction-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }}
     .instruction {{ padding: 14px; border-radius: 10px; background: var(--cp-surface-soft); }}
     .instruction strong {{ display: block; margin-bottom: 6px; }}
+    .instruction-heading {{ display: flex; align-items: start; justify-content: space-between; gap: 10px; margin-bottom: 6px; }}
+    .instruction-heading strong {{ margin: 0; }}
+    .copy-button {{ min-height: 34px; padding: 6px 10px; font-size: 13px; }}
+    .copy-source {{ display: none; }}
     .instruction.expected {{ border-left: 4px solid var(--cp-success); }}
     .shot-link {{ display: block; text-align: center; }}
     .shot {{ display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }}
@@ -1543,6 +1594,24 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
         label.textContent = `${{done.length}} of ${{boxes.length}} complete`;
         bar.style.width = boxes.length ? `${{(done.length / boxes.length) * 100}}%` : "0%";
       }}
+      document.querySelectorAll("[data-copy-target]").forEach((button) => {{
+        button.addEventListener("click", () => {{
+          const target = document.getElementById(button.dataset.copyTarget);
+          if (!target) {{
+            button.textContent = "Text unavailable";
+            return;
+          }}
+          const original = button.textContent;
+          navigator.clipboard.writeText(target.textContent).then(() => {{
+            button.textContent = "Copied";
+            window.setTimeout(() => {{
+              button.textContent = original;
+            }}, 1400);
+          }}).catch(() => {{
+            button.textContent = "Copy failed";
+          }});
+        }});
+      }});
       document.querySelectorAll("[data-report-location]").forEach((button) => {{
         button.addEventListener("click", () => {{
           const locationLabel = button.dataset.reportLocation || "Hard-mode step";

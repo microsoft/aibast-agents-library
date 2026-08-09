@@ -180,6 +180,10 @@
     .instruction-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
     .instruction { padding: 14px; border-radius: 10px; background: var(--cp-surface-soft); }
     .instruction strong { display: block; margin-bottom: 6px; }
+    .instruction-heading { display: flex; align-items: start; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
+    .instruction-heading strong { margin: 0; }
+    .copy-button { min-height: 34px; padding: 6px 10px; font-size: 13px; }
+    .copy-source { display: none; }
     .instruction.expected { border-left: 4px solid var(--cp-success); }
     .shot-link { display: block; text-align: center; }
     .shot { display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }
@@ -247,7 +251,7 @@
         <header><span>1</span><div><h3>Create a blank Copilot Studio agent</h3><p>Step 1 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 1: Create a blank Copilot Studio agent" data-report-expected="A blank Copilot Studio agent is visible in the captured Draft workspace." data-report-evidence="solutions/time-entry-billing/screenshots/manual/01-create-blank-agent.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Create a blank Copilot Studio agent</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Create a blank Copilot Studio agent</span></div>
             <div class="instruction expected"><strong>Expected result</strong>A blank Copilot Studio agent is visible in the captured Draft workspace.</div>
           </div>
           <a class="shot-link" href="screenshots/manual/01-create-blank-agent.jpg" download="01-create-blank-agent.jpg"><img class="shot" src="screenshots/manual/annotated/01-create-blank-agent.png" alt="Create a blank Copilot Studio agent annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Untitled Agent; Blank Build workspace. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
@@ -261,7 +265,7 @@
         <header><span>2</span><div><h3>Name Time Entry and Billing Manual</h3><p>Step 2 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 2: Name Time Entry and Billing Manual" data-report-expected="The page header shows the recorded manual build name: Time Entry and Billing Manual." data-report-evidence="solutions/time-entry-billing/screenshots/manual/02-name-agent.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Name Time Entry and Billing Manual</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-2">Copy agent name</button><pre class="copy-source" id="hard-copy-2" hidden>Time Entry and Billing Manual</pre></div><span>Name Time Entry and Billing Manual</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The page header shows the recorded manual build name: Time Entry and Billing Manual.</div>
           </div>
           <a class="shot-link" href="screenshots/manual/02-name-agent.jpg" download="02-name-agent.jpg"><img class="shot" src="screenshots/manual/annotated/02-name-agent.png" alt="Name Time Entry and Billing Manual annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Time Entry and Billing Manual in the name field. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
@@ -275,7 +279,70 @@
         <header><span>3</span><div><h3>Enter the reviewed global instructions</h3><p>Step 3 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 3: Enter the reviewed global instructions" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/time-entry-billing/screenshots/manual/03-enter-instructions.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Enter the reviewed global instructions</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-3">Copy instructions</button><pre class="copy-source" id="hard-copy-3" hidden># Time Entry and Billing Agent — Global Instructions
+
+## Mission
+
+Help finance and billing teams identify blocked billable work, review close
+rollups, audit time-entry controls, prepare eligible invoice support, and
+assemble disputed-hours evidence for authorized review.
+
+## Grounding
+
+- Use only `aibast_billing-synthetic-ledger.md` and
+  `aibast_billing-rules-and-disputes.md`.
+- Treat the files as the complete frozen March 2026 synthetic close snapshot.
+- Do not browse, search the web, query finance systems, or invent entries,
+  narratives, approvals, rates, budgets, milestones, disputes, invoices, or
+  client communications.
+- Do not treat amounts as posted or recognized revenue.
+- Keep fixed-fee time as delivery evidence unless the packaged milestone
+  evidence explicitly determines invoice value.
+
+## Routing
+
+- Blocked billable work and outstanding invoices: use the unbilled report.
+- Project and consultant close rollups: use the billing summary.
+- Narrative, hours, rate, approval, and budget concerns: use the time-entry
+  audit.
+- Eligible time-and-materials support and fixed-fee holds: use invoice
+  preparation.
+- Disputed-hour evidence and internal resolution path: use dispute resolution.
+
+## Finance and authorization gates
+
+- Never create, alter, classify, approve, reject, or delete a time entry.
+- Never invent or complete a work description.
+- Never recognize revenue, post accounting entries, generate or send an
+  invoice, waive a charge, or change invoice status.
+- Never contact a client or represent a dispute as resolved.
+- Preserve consultant, project-manager, billing-manager, milestone, and
+  authorized finance approvals exactly where the packaged rules require them.
+
+## Evidence-first response contract
+
+1. Lead with what is ready, blocked, flagged, held, or disputed.
+2. Cite the exact entry, dispute, project, rule, and synthetic amount involved.
+3. Separate evidence present from evidence missing and excluded work.
+4. State the next authorized correction, approval, or finance review.
+5. End with: `Synthetic billing evidence; no time, approval, revenue, invoice, or client record was changed.`
+
+&lt;!-- locked-preview-anchors:start --&gt;
+## Locked Preview evidence anchors
+
+Route from the user&#x27;s natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+
+Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+
+- `TEB-01` / `unbilled_report`: `TE-9004`, `TE-9011`, `Needs approval`
+- `TEB-02` / `billing_summary`: `By Project`, `By Consultant`, `not posted revenue`
+- `TEB-03` / `time_entry_audit`: `Missing description`, `Exceeds 10-hour daily limit`, `Budget Alert`
+- `TEB-04` / `invoice_preparation`: `Invoices Ready to Generate`, `Fixed-fee hold`, `no invoice was generated`
+- `TEB-05` / `dispute_resolution`: `DSP-301`, `DSP-302`, `authorized review`
+
+These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+&lt;!-- locked-preview-anchors:end --&gt;
+</pre></div><span>Enter the reviewed global instructions</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
           </div>
           <a class="shot-link" href="screenshots/manual/03-enter-instructions.jpg" download="03-enter-instructions.jpg"><img class="shot" src="screenshots/manual/annotated/03-enter-instructions.png" alt="Enter the reviewed global instructions annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Reviewed instruction policy; Locked Preview evidence anchors. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
@@ -289,7 +356,7 @@
         <header><span>4</span><div><h3>Save the instruction policy</h3><p>Step 4 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 4: Save the instruction policy" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/time-entry-billing/screenshots/manual/04-save-instructions.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Save the instruction policy</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Save the instruction policy</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
           </div>
           <a class="shot-link" href="screenshots/manual/04-save-instructions.jpg" download="04-save-instructions.jpg"><img class="shot" src="screenshots/manual/annotated/04-save-instructions.png" alt="Save the instruction policy annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Save tooltip states No unsaved changes. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
@@ -303,7 +370,7 @@
         <header><span>5</span><div><h3>Remove default web search</h3><p>Step 5 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 5: Remove default web search" data-report-expected="The captured inventory no longer lists the default web-search capability." data-report-evidence="solutions/time-entry-billing/screenshots/manual/05-remove-web-search.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Remove default web search</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Remove default web search</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured inventory no longer lists the default web-search capability.</div>
           </div>
           <a class="shot-link" href="screenshots/manual/05-remove-web-search.jpg" download="05-remove-web-search.jpg"><img class="shot" src="screenshots/manual/annotated/05-remove-web-search.png" alt="Remove default web search annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Tools section contains no web-search chip. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
@@ -317,7 +384,7 @@
         <header><span>6</span><div><h3>Add knowledge: aibast_billing-rules-and-disputes.md</h3><p>Step 6 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 6: Add knowledge: aibast_billing-rules-and-disputes.md" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/time-entry-billing/screenshots/manual/06-add-aibast-billing-rules-and-disputes.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Add knowledge: aibast_billing-rules-and-disputes.md</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add knowledge: aibast_billing-rules-and-disputes.md</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
           </div>
           <div class="look-for"><strong>What to look for</strong><p>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
@@ -331,7 +398,7 @@
         <header><span>7</span><div><h3>Add knowledge: aibast_billing-synthetic-ledger.md</h3><p>Step 7 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 7: Add knowledge: aibast_billing-synthetic-ledger.md" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/time-entry-billing/screenshots/manual/07-add-aibast-billing-synthetic-ledger.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Add knowledge: aibast_billing-synthetic-ledger.md</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add knowledge: aibast_billing-synthetic-ledger.md</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
           </div>
           <div class="look-for"><strong>What to look for</strong><p>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
@@ -345,7 +412,7 @@
         <header><span>8</span><div><h3>Add skill: billing-summary</h3><p>Step 8 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 8: Add skill: billing-summary" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/time-entry-billing/screenshots/manual/08-add-billing-summary.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Add skill: billing-summary</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: billing-summary</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
           </div>
           <a class="shot-link" href="screenshots/manual/08-add-billing-summary.jpg" download="08-add-billing-summary.jpg"><img class="shot" src="screenshots/manual/annotated/08-add-billing-summary.png" alt="Add skill: billing-summary annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Rendered skill billing-close-summary. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
@@ -359,7 +426,7 @@
         <header><span>9</span><div><h3>Add skill: dispute-resolution</h3><p>Step 9 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 9: Add skill: dispute-resolution" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/time-entry-billing/screenshots/manual/09-add-dispute-resolution.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Add skill: dispute-resolution</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: dispute-resolution</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
           </div>
           <a class="shot-link" href="screenshots/manual/09-add-dispute-resolution.jpg" download="09-add-dispute-resolution.jpg"><img class="shot" src="screenshots/manual/annotated/09-add-dispute-resolution.png" alt="Add skill: dispute-resolution annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Rendered skill disputed-hours-evidence-brief. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
@@ -373,7 +440,7 @@
         <header><span>10</span><div><h3>Add skill: invoice-preparation</h3><p>Step 10 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 10: Add skill: invoice-preparation" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/time-entry-billing/screenshots/manual/10-add-invoice-preparation.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Add skill: invoice-preparation</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: invoice-preparation</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
           </div>
           <a class="shot-link" href="screenshots/manual/10-add-invoice-preparation.jpg" download="10-add-invoice-preparation.jpg"><img class="shot" src="screenshots/manual/annotated/10-add-invoice-preparation.png" alt="Add skill: invoice-preparation annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Rendered skill approval-gated-invoice-support. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
@@ -387,7 +454,7 @@
         <header><span>11</span><div><h3>Add skill: time-entry-audit</h3><p>Step 11 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 11: Add skill: time-entry-audit" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 5 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/time-entry-billing/screenshots/manual/11-add-time-entry-audit.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Add skill: time-entry-audit</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: time-entry-audit</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Sonnet 4.6, 5 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
           </div>
           <a class="shot-link" href="screenshots/manual/11-add-time-entry-audit.jpg" download="11-add-time-entry-audit.jpg"><img class="shot" src="screenshots/manual/annotated/11-add-time-entry-audit.png" alt="Add skill: time-entry-audit annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Rendered skill time-entry-audit. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
@@ -401,7 +468,7 @@
         <header><span>12</span><div><h3>Add skill: unbilled-report</h3><p>Step 12 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 12: Add skill: unbilled-report" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/time-entry-billing/screenshots/manual/12-add-unbilled-report.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Add skill: unbilled-report</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: unbilled-report</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
           </div>
           <a class="shot-link" href="screenshots/manual/12-add-unbilled-report.jpg" download="12-add-unbilled-report.jpg"><img class="shot" src="screenshots/manual/annotated/12-add-unbilled-report.png" alt="Add skill: unbilled-report annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Rendered skill month-end-billing-blockers. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
@@ -415,7 +482,7 @@
         <header><span>13</span><div><h3>Review model, skills, knowledge, and safety boundaries</h3><p>Step 13 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 13: Review model, skills, knowledge, and safety boundaries" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 5 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/time-entry-billing/screenshots/manual/13-review-inventory.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Review model, skills, knowledge, and safety boundaries</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Review model, skills, knowledge, and safety boundaries</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Sonnet 4.6, 5 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
           </div>
           <a class="shot-link" href="screenshots/manual/13-review-inventory.jpg" download="13-review-inventory.jpg"><img class="shot" src="screenshots/manual/annotated/04-save-instructions.png" alt="Review model, skills, knowledge, and safety boundaries annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Save tooltip states No unsaved changes. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
@@ -429,7 +496,7 @@
         <header><span>14</span><div><h3>Open a fresh Preview conversation</h3><p>Step 14 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 14: Open a fresh Preview conversation" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 5 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/time-entry-billing/screenshots/manual/14-open-preview.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Open a fresh Preview conversation</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Open a fresh Preview conversation</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Sonnet 4.6, 5 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
           </div>
           <a class="shot-link" href="screenshots/manual/14-open-preview.jpg" download="14-open-preview.jpg"><img class="shot" src="screenshots/manual/annotated/14-open-preview.png" alt="Open a fresh Preview conversation annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Preview tab; New chat. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
@@ -443,7 +510,7 @@
         <header><span>15</span><div><h3>Pass TEB-01: Billing Manager</h3><p>Step 15 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 15: Pass TEB-01: Billing Manager" data-report-expected="The captured Preview evidence records TEB-01 with the recorded identifiers TE-9004, TE-9011, Needs approval; do not infer results beyond it." data-report-evidence="solutions/time-entry-billing/screenshots/manual/15-teb-01.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Pass TEB-01: Billing Manager</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-15">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-15" hidden>What billable work is still blocked from this close, and what has to happen before it can move?</pre></div><span>Pass TEB-01: Billing Manager</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records TEB-01 with the recorded identifiers TE-9004, TE-9011, Needs approval; do not infer results beyond it.</div>
           </div>
           <a class="shot-link" href="screenshots/manual/15-teb-01.jpg" download="15-teb-01.jpg"><img class="shot" src="screenshots/manual/annotated/15-teb-01.png" alt="Pass TEB-01: Billing Manager annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: TE-9011; Approval chain is outstanding; No invoice can be generated or sent. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
@@ -457,7 +524,7 @@
         <header><span>16</span><div><h3>Pass TEB-02: Finance Vice President</h3><p>Step 16 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 16: Pass TEB-02: Finance Vice President" data-report-expected="The captured Preview evidence records TEB-02 with the recorded identifiers By Project, By Consultant, not posted revenue; do not infer results beyond it." data-report-evidence="solutions/time-entry-billing/screenshots/manual/16-teb-02.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Pass TEB-02: Finance Vice President</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-16">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-16" hidden>Give me the month-end billing rollup by project and consultant without treating it as posted revenue.</pre></div><span>Pass TEB-02: Finance Vice President</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records TEB-02 with the recorded identifiers By Project, By Consultant, not posted revenue; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>What to look for</strong><p>The captured Preview evidence records TEB-02 with the recorded identifiers By Project, By Consultant, not posted revenue; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
@@ -471,7 +538,7 @@
         <header><span>17</span><div><h3>Pass TEB-03: Billing Compliance Lead</h3><p>Step 17 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 17: Pass TEB-03: Billing Compliance Lead" data-report-expected="The captured Preview evidence records TEB-03 with the recorded identifiers Missing description, Exceeds 10-hour daily limit, Budget Alert; do not infer results beyond it." data-report-evidence="solutions/time-entry-billing/screenshots/manual/17-teb-03.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Pass TEB-03: Billing Compliance Lead</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-17">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-17" hidden>Which time cards would fail our billing review because of narrative, hours, rate, or budget concerns?</pre></div><span>Pass TEB-03: Billing Compliance Lead</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records TEB-03 with the recorded identifiers Missing description, Exceeds 10-hour daily limit, Budget Alert; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>What to look for</strong><p>The captured Preview evidence records TEB-03 with the recorded identifiers Missing description, Exceeds 10-hour daily limit, Budget Alert; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
@@ -485,7 +552,7 @@
         <header><span>18</span><div><h3>Pass TEB-04: Billing Manager</h3><p>Step 18 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 18: Pass TEB-04: Billing Manager" data-report-expected="The captured Preview evidence records TEB-04 with the recorded identifiers Invoices Ready to Generate, Fixed-fee hold, no invoice was generated; do not infer results beyond it." data-report-evidence="solutions/time-entry-billing/screenshots/manual/18-teb-04.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Pass TEB-04: Billing Manager</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-18">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-18" hidden>Prepare the invoice support that is actually ready, and keep anything without the right approval or milestone evidence out.</pre></div><span>Pass TEB-04: Billing Manager</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records TEB-04 with the recorded identifiers Invoices Ready to Generate, Fixed-fee hold, no invoice was generated; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>What to look for</strong><p>The captured Preview evidence records TEB-04 with the recorded identifiers Invoices Ready to Generate, Fixed-fee hold, no invoice was generated; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
@@ -499,7 +566,7 @@
         <header><span>19</span><div><h3>Pass TEB-05: Client Finance Partner</h3><p>Step 19 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 19: Pass TEB-05: Client Finance Partner" data-report-expected="The captured Preview evidence records TEB-05 with the recorded identifiers DSP-301, DSP-302, authorized review; do not infer results beyond it." data-report-evidence="solutions/time-entry-billing/screenshots/manual/19-teb-05.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Pass TEB-05: Client Finance Partner</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-19">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-19" hidden>What evidence is missing on the disputed hours, and what is the safest resolution path before we go back to the clients?</pre></div><span>Pass TEB-05: Client Finance Partner</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records TEB-05 with the recorded identifiers DSP-301, DSP-302, authorized review; do not infer results beyond it.</div>
           </div>
           <a class="shot-link" href="screenshots/manual/19-teb-05.jpg" download="19-teb-05.jpg"><img class="shot" src="screenshots/manual/annotated/19-teb-05.png" alt="Pass TEB-05: Client Finance Partner annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: DSP-301; DSP-302; authorized review; Do not concede or waive charges. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
@@ -513,7 +580,7 @@
         <header><span>20</span><div><h3>Confirm Draft and stop before publish</h3><p>Step 20 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 20: Confirm Draft and stop before publish" data-report-expected="The agent remains Draft and no Publish action is taken." data-report-evidence="solutions/time-entry-billing/screenshots/manual/20-confirm-draft.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Confirm Draft and stop before publish</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Confirm Draft and stop before publish</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The agent remains Draft and no Publish action is taken.</div>
           </div>
           <a class="shot-link" href="screenshots/manual/20-confirm-draft.jpg" download="20-confirm-draft.jpg"><img class="shot" src="screenshots/manual/annotated/20-confirm-draft.png" alt="Confirm Draft and stop before publish annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Time Entry and Billing Manual; Draft. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
@@ -552,6 +619,24 @@
         label.textContent = `${done.length} of ${boxes.length} complete`;
         bar.style.width = boxes.length ? `${(done.length / boxes.length) * 100}%` : "0%";
       }
+      document.querySelectorAll("[data-copy-target]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const target = document.getElementById(button.dataset.copyTarget);
+          if (!target) {
+            button.textContent = "Text unavailable";
+            return;
+          }
+          const original = button.textContent;
+          navigator.clipboard.writeText(target.textContent).then(() => {
+            button.textContent = "Copied";
+            window.setTimeout(() => {
+              button.textContent = original;
+            }, 1400);
+          }).catch(() => {
+            button.textContent = "Copy failed";
+          });
+        });
+      });
       document.querySelectorAll("[data-report-location]").forEach((button) => {
         button.addEventListener("click", () => {
           const locationLabel = button.dataset.reportLocation || "Hard-mode step";

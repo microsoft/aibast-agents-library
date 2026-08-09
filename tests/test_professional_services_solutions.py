@@ -296,6 +296,9 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     visual_audit = (package / "VISUAL-EVIDENCE-AUDIT.md").read_text(
         encoding="utf-8"
     )
+    manual_tutorial = (package / "manual-tutorial.html").read_text(
+        encoding="utf-8"
+    )
     cases = read_json(ROOT / "tests/demo_cases/time-entry-billing.json")[
         "cases"
     ]
@@ -375,6 +378,15 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     assert "Raw resources" not in quest
     assert 'src="manual-tutorial.html?embedded=1"' in quest
     assert ">Open the manual tutorial<" not in quest
+    assert manual_tutorial.count(
+        'data-copy-target="hard-copy-'
+    ) == 7
+    assert "Copy agent name" in manual_tutorial
+    assert "Copy instructions" in manual_tutorial
+    assert manual_tutorial.count("Copy Preview prompt") == 5
+    assert "Time Entry and Billing Manual" in manual_tutorial
+    for case in cases:
+        assert case["prompt"] in manual_tutorial
     for marker in (
         "**Needs remediation.**",
         "| Pass | 4 |",
