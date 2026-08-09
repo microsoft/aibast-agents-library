@@ -360,6 +360,8 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     assert "Final expected verdict" in quest
     assert "Troubleshooting" in quest
     assert "Visual evidence audit" in quest
+    assert "Reshoot required" not in quest
+    assert "No approved visual checkpoint" not in quest
     for case in cases:
         assert case["id"] in quest
         assert case["prompt"] in quest

@@ -180,6 +180,9 @@
     .shot { display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }
     .capture-meta { margin: 8px 0 0; color: var(--cp-text-muted); font-size: 12px; text-align: center; }
     .missing { padding: 32px; border: 2px dashed var(--cp-warning); border-radius: 10px; color: var(--cp-text-muted); }
+    .look-for { padding: 20px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
+    .look-for strong { color: var(--cp-text); }
+    .look-for p { margin: 8px 0 0; }
     .step footer { display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
     .troubleshooting details { padding: 14px 0; border-bottom: 1px solid var(--cp-border); }
     summary { cursor: pointer; font-weight: 700; }
@@ -233,7 +236,7 @@
             <div class="instruction"><strong>Action</strong>Create a blank Copilot Studio agent</div>
             <div class="instruction expected"><strong>Expected result</strong>A blank Copilot Studio agent is visible in the captured Draft workspace.</div>
           </div>
-          <a class="shot-link" href="screenshots/manual/01-create-blank-agent.jpg" download="01-create-blank-agent.jpg"><img class="shot" src="screenshots/manual/01-create-blank-agent.jpg" alt="Create a blank Copilot Studio agent evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
+          <a class="shot-link" href="screenshots/manual/01-create-blank-agent.jpg" download="01-create-blank-agent.jpg"><img class="shot" src="screenshots/manual/annotated/01-create-blank-agent.png" alt="Create a blank Copilot Studio agent annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Untitled Agent; Blank Build workspace. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/deployment.json">Raw download: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="1"> Mark complete</label>
@@ -247,7 +250,7 @@
             <div class="instruction"><strong>Action</strong>Name Time Entry and Billing Manual</div>
             <div class="instruction expected"><strong>Expected result</strong>The page header shows the recorded manual build name: Time Entry and Billing Manual.</div>
           </div>
-          <a class="shot-link" href="screenshots/manual/02-name-agent.jpg" download="02-name-agent.jpg"><img class="shot" src="screenshots/manual/02-name-agent.jpg" alt="Name Time Entry and Billing Manual evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
+          <a class="shot-link" href="screenshots/manual/02-name-agent.jpg" download="02-name-agent.jpg"><img class="shot" src="screenshots/manual/annotated/02-name-agent.png" alt="Name Time Entry and Billing Manual annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Time Entry and Billing Manual in the name field. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/deployment.json">Raw download: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="2"> Mark complete</label>
@@ -261,7 +264,7 @@
             <div class="instruction"><strong>Action</strong>Enter the reviewed global instructions</div>
             <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
           </div>
-          <a class="shot-link" href="screenshots/manual/03-enter-instructions.jpg" download="03-enter-instructions.jpg"><img class="shot" src="screenshots/manual/03-enter-instructions.jpg" alt="Enter the reviewed global instructions evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
+          <a class="shot-link" href="screenshots/manual/03-enter-instructions.jpg" download="03-enter-instructions.jpg"><img class="shot" src="screenshots/manual/annotated/03-enter-instructions.png" alt="Enter the reviewed global instructions annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Reviewed instruction policy; Locked Preview evidence anchors. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/manual/GLOBAL-INSTRUCTIONS.md">Raw download: Global Instructions</a>
             <label><input class="complete" type="checkbox" data-step="3"> Mark complete</label>
@@ -275,7 +278,7 @@
             <div class="instruction"><strong>Action</strong>Save the instruction policy</div>
             <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
           </div>
-          <a class="shot-link" href="screenshots/manual/04-save-instructions.jpg" download="04-save-instructions.jpg"><img class="shot" src="screenshots/manual/04-save-instructions.jpg" alt="Save the instruction policy evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
+          <a class="shot-link" href="screenshots/manual/04-save-instructions.jpg" download="04-save-instructions.jpg"><img class="shot" src="screenshots/manual/annotated/04-save-instructions.png" alt="Save the instruction policy annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Save tooltip states No unsaved changes. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/manual/GLOBAL-INSTRUCTIONS.md">Raw download: Global Instructions</a>
             <label><input class="complete" type="checkbox" data-step="4"> Mark complete</label>
@@ -289,7 +292,7 @@
             <div class="instruction"><strong>Action</strong>Remove default web search</div>
             <div class="instruction expected"><strong>Expected result</strong>The captured inventory no longer lists the default web-search capability.</div>
           </div>
-          <a class="shot-link" href="screenshots/manual/05-remove-web-search.jpg" download="05-remove-web-search.jpg"><img class="shot" src="screenshots/manual/05-remove-web-search.jpg" alt="Remove default web search evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
+          <a class="shot-link" href="screenshots/manual/05-remove-web-search.jpg" download="05-remove-web-search.jpg"><img class="shot" src="screenshots/manual/annotated/05-remove-web-search.png" alt="Remove default web search annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Tools section contains no web-search chip. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/export-manifest.json">Raw download: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="5"> Mark complete</label>
@@ -303,7 +306,7 @@
             <div class="instruction"><strong>Action</strong>Add knowledge: aibast_billing-rules-and-disputes.md</div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
           </div>
-          <a class="shot-link" href="screenshots/manual/06-add-aibast-billing-rules-and-disputes.jpg" download="06-add-aibast-billing-rules-and-disputes.jpg"><img class="shot" src="screenshots/manual/06-add-aibast-billing-rules-and-disputes.jpg" alt="Add knowledge: aibast_billing-rules-and-disputes.md evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
+          <div class="look-for"><strong>What to look for</strong><p>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/manual/knowledge/aibast_billing-rules-and-disputes.md">Raw download: Aibast Billing Rules And Disputes</a>
             <label><input class="complete" type="checkbox" data-step="6"> Mark complete</label>
@@ -317,7 +320,7 @@
             <div class="instruction"><strong>Action</strong>Add knowledge: aibast_billing-synthetic-ledger.md</div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
           </div>
-          <a class="shot-link" href="screenshots/manual/07-add-aibast-billing-synthetic-ledger.jpg" download="07-add-aibast-billing-synthetic-ledger.jpg"><img class="shot" src="screenshots/manual/07-add-aibast-billing-synthetic-ledger.jpg" alt="Add knowledge: aibast_billing-synthetic-ledger.md evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
+          <div class="look-for"><strong>What to look for</strong><p>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/manual/knowledge/aibast_billing-synthetic-ledger.md">Raw download: Aibast Billing Synthetic Ledger</a>
             <label><input class="complete" type="checkbox" data-step="7"> Mark complete</label>
@@ -331,7 +334,7 @@
             <div class="instruction"><strong>Action</strong>Add skill: billing-summary</div>
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
           </div>
-          <a class="shot-link" href="screenshots/manual/08-add-billing-summary.jpg" download="08-add-billing-summary.jpg"><img class="shot" src="screenshots/manual/08-add-billing-summary.jpg" alt="Add skill: billing-summary evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
+          <a class="shot-link" href="screenshots/manual/08-add-billing-summary.jpg" download="08-add-billing-summary.jpg"><img class="shot" src="screenshots/manual/annotated/08-add-billing-summary.png" alt="Add skill: billing-summary annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Rendered skill billing-close-summary. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/manual/skills/billing-summary/SKILL.md">Raw download: Manual skill: billing summary</a>
             <label><input class="complete" type="checkbox" data-step="8"> Mark complete</label>
@@ -345,7 +348,7 @@
             <div class="instruction"><strong>Action</strong>Add skill: dispute-resolution</div>
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
           </div>
-          <a class="shot-link" href="screenshots/manual/09-add-dispute-resolution.jpg" download="09-add-dispute-resolution.jpg"><img class="shot" src="screenshots/manual/09-add-dispute-resolution.jpg" alt="Add skill: dispute-resolution evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
+          <a class="shot-link" href="screenshots/manual/09-add-dispute-resolution.jpg" download="09-add-dispute-resolution.jpg"><img class="shot" src="screenshots/manual/annotated/09-add-dispute-resolution.png" alt="Add skill: dispute-resolution annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Rendered skill disputed-hours-evidence-brief. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/manual/skills/dispute-resolution/SKILL.md">Raw download: Manual skill: dispute resolution</a>
             <label><input class="complete" type="checkbox" data-step="9"> Mark complete</label>
@@ -359,7 +362,7 @@
             <div class="instruction"><strong>Action</strong>Add skill: invoice-preparation</div>
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
           </div>
-          <a class="shot-link" href="screenshots/manual/10-add-invoice-preparation.jpg" download="10-add-invoice-preparation.jpg"><img class="shot" src="screenshots/manual/10-add-invoice-preparation.jpg" alt="Add skill: invoice-preparation evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
+          <a class="shot-link" href="screenshots/manual/10-add-invoice-preparation.jpg" download="10-add-invoice-preparation.jpg"><img class="shot" src="screenshots/manual/annotated/10-add-invoice-preparation.png" alt="Add skill: invoice-preparation annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Rendered skill approval-gated-invoice-support. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/manual/skills/invoice-preparation/SKILL.md">Raw download: Manual skill: invoice preparation</a>
             <label><input class="complete" type="checkbox" data-step="10"> Mark complete</label>
@@ -371,9 +374,9 @@
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><strong>Action</strong>Add skill: time-entry-audit</div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
+            <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Sonnet 4.6, 5 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
           </div>
-          <a class="shot-link" href="screenshots/manual/11-add-time-entry-audit.jpg" download="11-add-time-entry-audit.jpg"><img class="shot" src="screenshots/manual/11-add-time-entry-audit.jpg" alt="Add skill: time-entry-audit evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
+          <a class="shot-link" href="screenshots/manual/11-add-time-entry-audit.jpg" download="11-add-time-entry-audit.jpg"><img class="shot" src="screenshots/manual/annotated/11-add-time-entry-audit.png" alt="Add skill: time-entry-audit annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Rendered skill time-entry-audit. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/export-manifest.json">Raw download: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="11"> Mark complete</label>
@@ -387,7 +390,7 @@
             <div class="instruction"><strong>Action</strong>Add skill: unbilled-report</div>
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
           </div>
-          <a class="shot-link" href="screenshots/manual/12-add-unbilled-report.jpg" download="12-add-unbilled-report.jpg"><img class="shot" src="screenshots/manual/12-add-unbilled-report.jpg" alt="Add skill: unbilled-report evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
+          <a class="shot-link" href="screenshots/manual/12-add-unbilled-report.jpg" download="12-add-unbilled-report.jpg"><img class="shot" src="screenshots/manual/annotated/12-add-unbilled-report.png" alt="Add skill: unbilled-report annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Rendered skill month-end-billing-blockers. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/manual/skills/time-entry-audit/SKILL.md">Raw download: Manual skill: time entry audit</a>
             <label><input class="complete" type="checkbox" data-step="12"> Mark complete</label>
@@ -399,9 +402,9 @@
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><strong>Action</strong>Review model, skills, knowledge, and safety boundaries</div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
+            <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Sonnet 4.6, 5 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
           </div>
-          <a class="shot-link" href="screenshots/manual/13-review-inventory.jpg" download="13-review-inventory.jpg"><img class="shot" src="screenshots/manual/13-review-inventory.jpg" alt="Review model, skills, knowledge, and safety boundaries evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
+          <a class="shot-link" href="screenshots/manual/13-review-inventory.jpg" download="13-review-inventory.jpg"><img class="shot" src="screenshots/manual/annotated/04-save-instructions.png" alt="Review model, skills, knowledge, and safety boundaries annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Save tooltip states No unsaved changes. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/deployment.json">Raw download: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="13"> Mark complete</label>
@@ -413,9 +416,9 @@
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><strong>Action</strong>Open a fresh Preview conversation</div>
-            <div class="instruction expected"><strong>Expected result</strong>A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass.</div>
+            <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Sonnet 4.6, 5 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
           </div>
-          <a class="shot-link" href="screenshots/manual/14-open-preview.jpg" download="14-open-preview.jpg"><img class="shot" src="screenshots/manual/14-open-preview.jpg" alt="Open a fresh Preview conversation evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
+          <a class="shot-link" href="screenshots/manual/14-open-preview.jpg" download="14-open-preview.jpg"><img class="shot" src="screenshots/manual/annotated/14-open-preview.png" alt="Open a fresh Preview conversation annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Preview tab; New chat. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/export-manifest.json">Raw download: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="14"> Mark complete</label>
@@ -429,7 +432,7 @@
             <div class="instruction"><strong>Action</strong>Pass TEB-01: Billing Manager</div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records TEB-01 with the recorded identifiers TE-9004, TE-9011, Needs approval; do not infer results beyond it.</div>
           </div>
-          <a class="shot-link" href="screenshots/manual/15-teb-01.jpg" download="15-teb-01.jpg"><img class="shot" src="screenshots/manual/15-teb-01.jpg" alt="Pass TEB-01: Billing Manager evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
+          <a class="shot-link" href="screenshots/manual/15-teb-01.jpg" download="15-teb-01.jpg"><img class="shot" src="screenshots/manual/annotated/15-teb-01.png" alt="Pass TEB-01: Billing Manager annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: TE-9011; Approval chain is outstanding; No invoice can be generated or sent. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/evals/manual-build-evidence.json">Raw download: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="15"> Mark complete</label>
@@ -443,7 +446,7 @@
             <div class="instruction"><strong>Action</strong>Pass TEB-02: Finance Vice President</div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records TEB-02 with the recorded identifiers By Project, By Consultant, not posted revenue; do not infer results beyond it.</div>
           </div>
-          <a class="shot-link" href="screenshots/manual/16-teb-02.jpg" download="16-teb-02.jpg"><img class="shot" src="screenshots/manual/16-teb-02.jpg" alt="Pass TEB-02: Finance Vice President evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
+          <div class="look-for"><strong>What to look for</strong><p>The captured Preview evidence records TEB-02 with the recorded identifiers By Project, By Consultant, not posted revenue; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/evals/manual-build-evidence.json">Raw download: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="16"> Mark complete</label>
@@ -457,7 +460,7 @@
             <div class="instruction"><strong>Action</strong>Pass TEB-03: Billing Compliance Lead</div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records TEB-03 with the recorded identifiers Missing description, Exceeds 10-hour daily limit, Budget Alert; do not infer results beyond it.</div>
           </div>
-          <a class="shot-link" href="screenshots/manual/17-teb-03.jpg" download="17-teb-03.jpg"><img class="shot" src="screenshots/manual/17-teb-03.jpg" alt="Pass TEB-03: Billing Compliance Lead evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
+          <div class="look-for"><strong>What to look for</strong><p>The captured Preview evidence records TEB-03 with the recorded identifiers Missing description, Exceeds 10-hour daily limit, Budget Alert; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/evals/manual-build-evidence.json">Raw download: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="17"> Mark complete</label>
@@ -471,7 +474,7 @@
             <div class="instruction"><strong>Action</strong>Pass TEB-04: Billing Manager</div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records TEB-04 with the recorded identifiers Invoices Ready to Generate, Fixed-fee hold, no invoice was generated; do not infer results beyond it.</div>
           </div>
-          <a class="shot-link" href="screenshots/manual/18-teb-04.jpg" download="18-teb-04.jpg"><img class="shot" src="screenshots/manual/18-teb-04.jpg" alt="Pass TEB-04: Billing Manager evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
+          <div class="look-for"><strong>What to look for</strong><p>The captured Preview evidence records TEB-04 with the recorded identifiers Invoices Ready to Generate, Fixed-fee hold, no invoice was generated; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/evals/manual-build-evidence.json">Raw download: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="18"> Mark complete</label>
@@ -485,7 +488,7 @@
             <div class="instruction"><strong>Action</strong>Pass TEB-05: Client Finance Partner</div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records TEB-05 with the recorded identifiers DSP-301, DSP-302, authorized review; do not infer results beyond it.</div>
           </div>
-          <a class="shot-link" href="screenshots/manual/19-teb-05.jpg" download="19-teb-05.jpg"><img class="shot" src="screenshots/manual/19-teb-05.jpg" alt="Pass TEB-05: Client Finance Partner evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
+          <a class="shot-link" href="screenshots/manual/19-teb-05.jpg" download="19-teb-05.jpg"><img class="shot" src="screenshots/manual/annotated/19-teb-05.png" alt="Pass TEB-05: Client Finance Partner annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: DSP-301; DSP-302; authorized review; Do not concede or waive charges. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/evals/manual-build-evidence.json">Raw download: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="19"> Mark complete</label>
@@ -499,7 +502,7 @@
             <div class="instruction"><strong>Action</strong>Confirm Draft and stop before publish</div>
             <div class="instruction expected"><strong>Expected result</strong>The agent remains Draft and no Publish action is taken.</div>
           </div>
-          <a class="shot-link" href="screenshots/manual/20-confirm-draft.jpg" download="20-confirm-draft.jpg"><img class="shot" src="screenshots/manual/20-confirm-draft.jpg" alt="Confirm Draft and stop before publish evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
+          <a class="shot-link" href="screenshots/manual/20-confirm-draft.jpg" download="20-confirm-draft.jpg"><img class="shot" src="screenshots/manual/annotated/20-confirm-draft.png" alt="Confirm Draft and stop before publish annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Time Entry and Billing Manual; Draft. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/deployment.json">Raw download: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="20"> Mark complete</label>

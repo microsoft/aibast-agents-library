@@ -298,7 +298,6 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "Prove the solution locally" in quest
     assert "Create the reviewed Draft" in quest
     assert "Confirm the Draft in Copilot Studio Preview" in quest
-    assert "Legacy capture quality" in quest
     assert "Shown at or below natural size" in quest
     assert ".preview-shot { display: block; width: auto; max-width: 100%" in quest
     assert "Confirm the expected evidence" in quest
@@ -306,6 +305,8 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "Know what “done” looks like" in quest
     assert "Final expected verdict" in quest
     assert "Troubleshooting" in quest
+    assert "Reshoot required" not in quest
+    assert "No approved visual checkpoint" not in quest
     assert "Compare and contrast while you build" in quest
     assert "Both approaches are valid starting points" in quest
     assert "Build it manually, one captured step at a time." in quest

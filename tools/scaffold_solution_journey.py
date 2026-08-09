@@ -231,6 +231,31 @@ def read_json(path: Path) -> dict[str, Any]:
     return value
 
 
+def visual_checkpoint_document(ctx: JourneyContext) -> dict[str, Any]:
+    path = ctx.package / "evals" / "visual-checkpoints.json"
+    return read_json(path) if path.exists() else {}
+
+
+def visual_checkpoint(
+    ctx: JourneyContext,
+    *,
+    mode: str,
+    source: str | None = None,
+    case_id: str | None = None,
+    step: int | None = None,
+) -> dict[str, Any] | None:
+    for item in visual_checkpoint_document(ctx).get("captures", []):
+        if not isinstance(item, dict) or item.get("mode") != mode:
+            continue
+        if case_id and item.get("case_id") == case_id:
+            return item
+        if step is not None and item.get("step") == step:
+            return item
+        if source and Path(str(item.get("source", ""))).name == source:
+            return item
+    return None
+
+
 def slugify(value: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
 
@@ -567,6 +592,13 @@ def expected_result(ctx: JourneyContext, action: str, filename: str) -> str:
         return "The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits."
     if "web search" in lower:
         return "The captured inventory no longer lists the default web-search capability."
+    if "inventory" in lower or "review" in lower or "audit" in lower:
+        return (
+            f"The screenshot visibly confirms {model_name(ctx)}, "
+            f"{component_count(ctx.manual_evidence, 'skills')} rendered skills, "
+            "and no tools. Knowledge is verified separately in the two "
+            "knowledge-upload checkpoints."
+        )
     if "knowledge" in lower or "record" in lower or "rules" in lower:
         return f"The captured Knowledge inventory reflects the reviewed files; the evidence records {component_count(ctx.manual_evidence, 'knowledge_files')} knowledge sources."
     if "skill" in lower:
@@ -577,8 +609,6 @@ def expected_result(ctx: JourneyContext, action: str, filename: str) -> str:
         return "A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass."
     if "draft" in lower or "publish" in lower:
         return "The agent remains Draft and no Publish action is taken."
-    if "inventory" in lower or "review" in lower or "audit" in lower:
-        return "The captured inventory can be compared with the manual evidence counts without adding unrecorded components."
     return "The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot."
 
 
@@ -775,6 +805,23 @@ def collect_resources(ctx: JourneyContext) -> list[Resource]:
         else:
             identifier, label, use = resource_id("easy-evidence", path), generic_label(path), "Easy-mode deployment or Preview evidence"
         add_resource(resources, seen, ctx, identifier, label, path, use)
+    visual_document = visual_checkpoint_document(ctx)
+    for item in visual_document.get("captures", []):
+        if not isinstance(item, dict):
+            continue
+        annotated = item.get("annotated")
+        if item.get("status") != "reusable" or not isinstance(annotated, str):
+            continue
+        annotated_path = ctx.root / annotated
+        add_resource(
+            resources,
+            seen,
+            ctx,
+            resource_id("annotated-evidence", annotated_path),
+            f"Annotated visual checkpoint: {item.get('id', annotated_path.stem)}",
+            annotated_path,
+            "Positive deterministic evidence highlighted for learner verification",
+        )
     if not ctx.manual_evidence_path.exists():
         add_resource(resources, seen, ctx, "manual-evidence", "Manual build evidence", ctx.manual_evidence_path, "Required manual identity, Preview, and Draft-gate evidence")
 
@@ -1288,17 +1335,50 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
         screenshot = ctx.manual_browserfilm_path.parent / filename
         capture_width = (ctx.manual_browserfilm or {}).get("width", "unknown")
         capture_height = (ctx.manual_browserfilm or {}).get("height", "unknown")
-        screenshot_html = (
-            f'<a class="shot-link" href="screenshots/manual/{html.escape(filename)}" download="{html.escape(filename)}">'
-            f'<img class="shot" src="screenshots/manual/{html.escape(filename)}" '
-            f'alt="{html.escape(action)} evidence" loading="lazy"></a>'
-            f'<p class="capture-meta">Source capture: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>'
-            if screenshot.exists()
-            else (
+        checkpoint = visual_checkpoint(
+            ctx,
+            mode="hard",
+            source=filename,
+            case_id=(
+                str(case_for_frame(ctx, filename).get("case_id"))
+                if case_for_frame(ctx, filename)
+                else None
+            ),
+            step=index,
+        )
+        if checkpoint and checkpoint.get("status") == "reshoot_required":
+            screenshot_html = (
+                '<div class="look-for"><strong>What to look for</strong>'
+                f"<p>{html.escape(expected)}</p>"
+                "<p>Continue only when the visible product state and the "
+                "deterministic gate agree.</p></div>"
+            )
+        elif checkpoint and checkpoint.get("status") == "reusable":
+            annotated = ctx.root / str(checkpoint["annotated"])
+            annotated_url = annotated.relative_to(ctx.package).as_posix()
+            anchors = "; ".join(
+                str(value) for value in checkpoint.get("visible_anchors", [])
+            )
+            screenshot_html = (
+                f'<a class="shot-link" href="screenshots/manual/{html.escape(filename)}" download="{html.escape(filename)}">'
+                f'<img class="shot" src="{html.escape(annotated_url)}" '
+                f'alt="{html.escape(action)} annotated evidence" loading="lazy"></a>'
+                f'<p class="capture-meta">Positive visual checkpoint: {html.escape(anchors)}. '
+                f"Source capture: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. "
+                "The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>"
+            )
+        elif screenshot.exists():
+            screenshot_html = (
+                f'<a class="shot-link" href="screenshots/manual/{html.escape(filename)}" download="{html.escape(filename)}">'
+                f'<img class="shot" src="screenshots/manual/{html.escape(filename)}" '
+                f'alt="{html.escape(action)} evidence" loading="lazy"></a>'
+                f'<p class="capture-meta">Source capture: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>'
+            )
+        else:
+            screenshot_html = (
                 '<div class="missing">Evidence pending. No screenshot is shown and '
                 "this action must not be claimed as captured.</div>"
             )
-        )
         source = resources[index - 1]
         source_label = (
             "Export manifest"
@@ -1378,6 +1458,9 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
     .shot {{ display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }}
     .capture-meta {{ margin: 8px 0 0; color: var(--cp-text-muted); font-size: 12px; text-align: center; }}
     .missing {{ padding: 32px; border: 2px dashed var(--cp-warning); border-radius: 10px; color: var(--cp-text-muted); }}
+    .look-for {{ padding: 20px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }}
+    .look-for strong {{ color: var(--cp-text); }}
+    .look-for p {{ margin: 8px 0 0; }}
     .step footer {{ display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }}
     .troubleshooting details {{ padding: 14px 0; border-bottom: 1px solid var(--cp-border); }}
     summary {{ cursor: pointer; font-weight: 700; }}
@@ -1626,14 +1709,35 @@ def render_preview_case_cards(ctx: JourneyContext) -> str:
         case_id = str(case["case_id"])
         target = f"preview-prompt-{slugify(case_id)}"
         screenshot = assisted_frame_for_case(ctx, case_id, index)
+        checkpoint = visual_checkpoint(
+            ctx,
+            mode="easy",
+            case_id=case_id,
+        )
         capture_width = (ctx.assisted_browserfilm or {}).get("width", "unknown")
         capture_height = (ctx.assisted_browserfilm or {}).get("height", "unknown")
-        screenshot_html = (
-            f'<div class="preview-shot-wrap"><img class="preview-shot" src="screenshots/assisted/{html.escape(screenshot)}" alt="{html.escape(case_id)} passed in Copilot Studio Preview" loading="lazy">'
-            f'<p class="capture-meta">Source capture: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. Shown at or below natural size. <a href="screenshots/assisted/{html.escape(screenshot)}" download="{html.escape(screenshot)}">Download original</a>.</p></div>'
-            if screenshot
-            else '<div class="missing">No assisted Preview screenshot is packaged for this case.</div>'
-        )
+        if checkpoint and checkpoint.get("status") == "reshoot_required":
+            screenshot_html = ""
+        elif checkpoint and checkpoint.get("status") == "reusable":
+            annotated = ctx.root / str(checkpoint["annotated"])
+            annotated_url = annotated.relative_to(ctx.package).as_posix()
+            anchors = "; ".join(
+                str(value) for value in checkpoint.get("visible_anchors", [])
+            )
+            screenshot_html = (
+                f'<div class="preview-shot-wrap"><img class="preview-shot" src="{html.escape(annotated_url)}" alt="{html.escape(case_id)} positive visual checkpoint" loading="lazy">'
+                f'<p class="capture-meta">Visible positive anchors: {html.escape(anchors)}. '
+                "The screenshot supports the learner checkpoint; the full case pass remains the deterministic machine gate. "
+                f'Source: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. '
+                f'<a href="screenshots/assisted/{html.escape(screenshot or "")}" download="{html.escape(screenshot or case_id + ".jpg")}">Download original</a>.</p></div>'
+            )
+        elif screenshot:
+            screenshot_html = (
+                f'<div class="preview-shot-wrap"><img class="preview-shot" src="screenshots/assisted/{html.escape(screenshot)}" alt="{html.escape(case_id)} passed in Copilot Studio Preview" loading="lazy">'
+                f'<p class="capture-meta">Source capture: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. Shown at or below natural size. <a href="screenshots/assisted/{html.escape(screenshot)}" download="{html.escape(screenshot)}">Download original</a>.</p></div>'
+            )
+        else:
+            screenshot_html = '<div class="missing">No assisted Preview screenshot is packaged for this case.</div>'
         cards.append(
             f"""
         <article class="preview-case">
@@ -1652,14 +1756,30 @@ def render_completion_state(ctx: JourneyContext) -> str:
     pilot = validated_pilot(ctx)
     case_total = len(easy_case_records(ctx))
     draft_frame = assisted_draft_frame(ctx)
+    checkpoint = visual_checkpoint(
+        ctx,
+        mode="easy",
+        source=draft_frame,
+    )
     capture_width = (ctx.assisted_browserfilm or {}).get("width", "unknown")
     capture_height = (ctx.assisted_browserfilm or {}).get("height", "unknown")
-    screenshot = (
-        f'<div class="preview-shot-wrap"><img class="preview-shot" src="screenshots/assisted/{html.escape(draft_frame)}" alt="Validated agent remains Draft" loading="lazy">'
-        f'<p class="capture-meta">Source capture: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. Shown at or below natural size. <a href="screenshots/assisted/{html.escape(draft_frame)}" download="{html.escape(draft_frame)}">Download original</a>.</p></div>'
-        if draft_frame
-        else ""
-    )
+    if checkpoint and checkpoint.get("status") == "reshoot_required":
+        screenshot = ""
+    elif checkpoint and checkpoint.get("status") == "reusable":
+        annotated = ctx.root / str(checkpoint["annotated"])
+        annotated_url = annotated.relative_to(ctx.package).as_posix()
+        screenshot = (
+            f'<div class="preview-shot-wrap"><img class="preview-shot" src="{html.escape(annotated_url)}" alt="Validated agent remains Draft" loading="lazy">'
+            f'<p class="capture-meta">Positive visual checkpoint. Source: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. '
+            f'<a href="screenshots/assisted/{html.escape(draft_frame or "")}" download="{html.escape(draft_frame or "draft.jpg")}">Download original</a>.</p></div>'
+        )
+    elif draft_frame:
+        screenshot = (
+            f'<div class="preview-shot-wrap"><img class="preview-shot" src="screenshots/assisted/{html.escape(draft_frame)}" alt="Validated agent remains Draft" loading="lazy">'
+            f'<p class="capture-meta">Source capture: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. Shown at or below natural size. <a href="screenshots/assisted/{html.escape(draft_frame)}" download="{html.escape(draft_frame)}">Download original</a>.</p></div>'
+        )
+    else:
+        screenshot = ""
     return f"""
       <section class="learn-step" id="easy-step-5">
         <header class="learn-step-header"><span>5</span><div><p>Recognize completion</p><h3>Know what “done” looks like</h3></div></header>
@@ -1865,7 +1985,6 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         <div class="learn-step-body">
           <p>The harness already runs these checks automatically. Repeat them here so you understand what was proven and can recognize a correct result yourself.</p>
           <div class="preview-intro"><ol><li>Open the validated Draft.</li><li>Select <strong>Preview</strong>.</li><li>Choose <strong>New chat</strong> before each case.</li><li>Paste the exact prompt.</li><li>Compare the answer with the required and forbidden markers.</li></ol><div>{studio_button} {assisted_link}</div></div>
-          <div class="quality-warning"><strong>Legacy capture quality:</strong> the current evidence images are 1424×863 JPEGs averaging about 82 KB. This example prevents browser upscaling and offers the original download, but the captures still require a Retina-quality recapture before final publication.</div>
           <div class="expected-panel"><strong>Expected result</strong><p>Every case passes in a fresh Preview conversation, and the agent still appears as <strong>Draft</strong>.</p></div>
           <div class="preview-grid">
             {render_preview_case_cards(ctx)}

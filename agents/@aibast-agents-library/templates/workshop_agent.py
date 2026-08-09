@@ -641,7 +641,68 @@ class AIBASTWorkshopAgent(BasicAgent):
         result["published"] = False
         return result
 
-    def _front_door_handoff(self, solution, cases, studio):
+    def _visual_evidence_plan(self, solution, source_root):
+        path = (
+            source_root
+            / "solutions"
+            / solution["slug"]
+            / "evals"
+            / "visual-checkpoints.json"
+        )
+        if not path.exists():
+            return {
+                "status": "not_configured",
+                "reusable": 0,
+                "reshoot_required": 0,
+                "reshoot_jobs": [],
+                "new_capture_jobs": [],
+            }
+        document = json.loads(path.read_text(encoding="utf-8"))
+        captures = [
+            item
+            for item in document.get("captures", [])
+            if isinstance(item, dict)
+        ]
+        reshoots = [
+            {
+                "id": item.get("id"),
+                "mode": item.get("mode"),
+                "case_id": item.get("case_id"),
+                "step": item.get("step"),
+                "source": item.get("source"),
+                "reason": item.get("reason"),
+            }
+            for item in captures
+            if item.get("status") == "reshoot_required"
+        ]
+        return {
+            "status": (
+                "reshoot_required" if reshoots else "ready"
+            ),
+            "policy": document.get("policy", {}),
+            "reusable": sum(
+                item.get("status") == "reusable"
+                for item in captures
+            ),
+            "reshoot_required": len(reshoots),
+            "reshoot_jobs": reshoots,
+            "new_capture_jobs": (
+                document.get("reshoot_plan", {})
+                .get("new_learn_step_captures", [])
+            ),
+            "replacement_captures": (
+                document.get("reshoot_plan", {})
+                .get("replacement_captures", [])
+            ),
+        }
+
+    def _front_door_handoff(
+        self,
+        solution,
+        cases,
+        studio,
+        visual_evidence,
+    ):
         return {
             "executor": "GitHub Copilot Agent mode",
             "instruction": (
@@ -657,6 +718,7 @@ class AIBASTWorkshopAgent(BasicAgent):
                 self._workshop_home(solution)
                 / "copilot-studio-projects"
             ),
+            "visual_evidence": visual_evidence,
             "cases": [
                 {
                     "case_id": case["id"],
@@ -696,6 +758,10 @@ class AIBASTWorkshopAgent(BasicAgent):
             deployment,
             environment_id,
         )
+        visual_evidence = self._visual_evidence_plan(
+            solution,
+            source_root,
+        )
         state = {
             "schema": "aibast-workshop-state/1.0",
             "status": "awaiting_front_door_validation",
@@ -715,10 +781,13 @@ class AIBASTWorkshopAgent(BasicAgent):
                 "cases": results,
             },
             "copilot_studio": studio,
+            "workspace": str(source_root),
+            "visual_evidence": visual_evidence,
             "copilot_handoff": self._front_door_handoff(
                 solution,
                 cases,
                 studio,
+                visual_evidence,
             ),
             "published": False,
         }
@@ -788,9 +857,25 @@ class AIBASTWorkshopAgent(BasicAgent):
                 "Front-door Preview evidence failed: " + _json_text(results)
             )
         previous = self._read_state()
+        visual_evidence = previous.get(
+            "visual_evidence",
+            {
+                "status": "not_configured",
+                "reshoot_required": 0,
+            },
+        )
+        visual_reshoots = int(
+            visual_evidence.get("reshoot_required", 0) or 0
+        )
+        overall_status = (
+            "functional_complete_visual_remediation_required"
+            if visual_reshoots
+            else "complete"
+        )
         state = {
             **previous,
-            "status": "complete",
+            "status": overall_status,
+            "functional_status": "complete",
             "front_door_validation": {
                 "passed": len(results),
                 "total": len(results),
@@ -801,8 +886,14 @@ class AIBASTWorkshopAgent(BasicAgent):
             "verdict": (
                 f"{solution['display_name']} workshop complete. The generic "
                 "engine discovered, hot-loaded, tested, deployed, and validated "
-                "the package; the Copilot Studio agent remains Draft. The "
-                "workshop ends here and must not offer publication."
+                "the package; the Copilot Studio agent remains Draft. "
+                + (
+                    f"Visual evidence still requires {visual_reshoots} "
+                    "replacement captures before the teaching package is "
+                    "complete."
+                    if visual_reshoots
+                    else "The workshop ends here and must not offer publication."
+                )
             ),
         }
         self._write_state(state)
