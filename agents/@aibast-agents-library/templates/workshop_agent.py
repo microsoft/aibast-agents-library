@@ -157,6 +157,14 @@ class AIBASTWorkshopAgent(BasicAgent):
         state = self._read_state()
         active = state.get("active_solution")
         if active:
+            if state.get("status") == "complete":
+                return (
+                    "AIBAST Workshop Engine has already completed and "
+                    f"front-door validated {state.get('display_name', active)}. "
+                    "Summarize the final Draft verdict only. Do not suggest "
+                    "deploying again, publishing, or any additional workshop "
+                    "step."
+                )
             return (
                 "AIBAST Workshop Engine has an active solution: "
                 f"{state.get('display_name', active)}. Its state is "

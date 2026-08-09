@@ -164,6 +164,9 @@ def test_generic_engine_closes_marker_only_front_door_evidence(tmp_path):
     assert result["front_door_validation"]["total"] == 5
     assert result["published"] is False
     assert "generic engine" in result["verdict"]
+    context = agent.system_context()
+    assert "already completed and front-door validated" in context
+    assert "Do not suggest deploying again" in context
 
 
 def test_workshop_agent_is_registry_ready_and_never_publishes():
