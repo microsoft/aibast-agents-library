@@ -1,6 +1,6 @@
 {
  "schema": "aibast-metrics/1.0",
- "generated_at": "2026-08-09T19:56:44Z",
+ "generated_at": "2026-08-09T20:11:59Z",
  "repo": {
   "owner": "kody-w",
   "name": "aibast-agents-library",
@@ -15,7 +15,7 @@
   "pushed_at": "2026-08-09T18:48:21Z",
   "description": "Main repository for AI BAST Specialist Teal AI Agents Library",
   "homepage": null,
-  "as_of": "2026-08-09T19:56:44Z",
+  "as_of": "2026-08-09T20:11:59Z",
   "carried_forward": false
  },
  "totals": {
@@ -182,7 +182,7 @@
   "clones_14d": 1117,
   "views_14d": 7,
   "live": true,
-  "as_of": "2026-08-09T19:56:44Z",
+  "as_of": "2026-08-09T20:11:59Z",
   "unavailable_reason": null,
   "carried_forward": false
  },
@@ -193,7 +193,7 @@
   "agent_hits": 0,
   "installer_hits": 0,
   "files": [],
-  "as_of": "2026-08-09T19:56:44Z",
+  "as_of": "2026-08-09T20:11:59Z",
   "carried_forward": false
  },
  "releases": {
@@ -208,7 +208,7 @@
     "assets": []
    }
   ],
-  "as_of": "2026-08-09T19:56:44Z",
+  "as_of": "2026-08-09T20:11:59Z",
   "carried_forward": false
  },
  "leaderboards": {
@@ -1992,7 +1992,7 @@
  ],
  "agent_discussion_coverage": {
   "status": "available",
-  "as_of": "2026-08-09T19:56:44Z",
+  "as_of": "2026-08-09T20:11:59Z",
   "pages": 3,
   "discussions_scanned": 144,
   "diagnostics": {
@@ -2019,7 +2019,7 @@
  },
  "agent_upvote_coverage": {
   "status": "available",
-  "as_of": "2026-08-09T19:56:44Z",
+  "as_of": "2026-08-09T20:11:59Z",
   "pages": 3,
   "discussions_scanned": 144,
   "discussions": 72,
@@ -2036,7 +2036,7 @@
  },
  "agent_acquisition_coverage": {
   "status": "available",
-  "as_of": "2026-08-09T19:56:44Z",
+  "as_of": "2026-08-09T20:11:59Z",
   "pages": 3,
   "discussions_scanned": 144,
   "discussions": 72,
@@ -2054,11 +2054,11 @@
  "file_metrics": {
   "schema": "aibast-file-metrics/1.0",
   "source_status": "complete",
-  "as_of": "2026-08-09T19:56:44Z",
+  "as_of": "2026-08-09T20:11:59Z",
   "carried_forward": false,
   "totals": {
-   "files": 4004,
-   "observed_files": 4004,
+   "files": 4007,
+   "observed_files": 4007,
    "downloads": 0,
    "by_kind": {
     "agent": {
@@ -2097,13 +2097,13 @@
      "downloads": 0
     },
     "code": {
-     "files": 136,
-     "observed_files": 136,
+     "files": 138,
+     "observed_files": 138,
      "downloads": 0
     },
     "asset": {
-     "files": 89,
-     "observed_files": 89,
+     "files": 90,
+     "observed_files": 90,
      "downloads": 0
     }
    }
@@ -4064,6 +4064,14 @@
    {
     "path": "scripts/impact-report-requirements.txt",
     "kind": "documentation",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "scripts/sync_agent_discussions.py",
+    "kind": "code",
     "agent_name": null,
     "workshop_slug": null,
     "downloads": 0,
@@ -33102,6 +33110,14 @@
     "status": "observed_zero"
    },
    {
+    "path": "state/agent_discussions.json",
+    "kind": "asset",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
     "path": "state/impact_history.json",
     "kind": "asset",
     "agent_name": null,
@@ -33623,6 +33639,14 @@
    },
    {
     "path": "tests/test_agent_contract.py",
+    "kind": "code",
+    "agent_name": null,
+    "workshop_slug": null,
+    "downloads": 0,
+    "status": "observed_zero"
+   },
+   {
+    "path": "tests/test_agent_discussions.py",
     "kind": "code",
     "agent_name": null,
     "workshop_slug": null,
@@ -34162,7 +34186,7 @@
    "feedback_reports": 0,
    "feedback_open": 0,
    "feedback_closed": 0,
-   "agent_upvotes": 1
+   "agent_upvotes": 0
   },
   "source_totals": {
    "views_14d": null,
@@ -34270,7 +34294,7 @@
     "feedback_reports": 0,
     "feedback_open": 0,
     "feedback_closed": 0,
-    "agent_upvotes": 1,
+    "agent_upvotes": 0,
     "usage_events": 0
    },
    {
@@ -35045,7 +35069,7 @@
    "mixed_windows": true,
    "views": {
     "status": "live popular-path response",
-    "as_of": "2026-08-09T19:56:44Z",
+    "as_of": "2026-08-09T20:11:59Z",
     "censored": true,
     "diagnostics": {
      "duplicate_rows": 0,
@@ -35059,7 +35083,7 @@
    },
    "downloads": {
     "status": "complete paginated jsDelivr file response",
-    "as_of": "2026-08-09T19:56:44Z",
+    "as_of": "2026-08-09T20:11:59Z",
     "pages": 1,
     "pagination": "complete",
     "diagnostics": {
@@ -35072,7 +35096,7 @@
    },
    "feedback": {
     "status": "workshop-feedback label + body marker union",
-    "as_of": "2026-08-09T19:56:44Z",
+    "as_of": "2026-08-09T20:11:59Z",
     "issues_scanned": 0,
     "pages": 2,
     "diagnostics": {
@@ -35084,7 +35108,7 @@
    },
    "agent_upvotes": {
     "status": "available",
-    "as_of": "2026-08-09T19:56:44Z",
+    "as_of": "2026-08-09T20:11:59Z",
     "scope": "Native upvotes on each primary agent's canonical rating Discussion. This preference signal is separate from usage_events and acquisition Discussions."
    }
   },
@@ -35115,13 +35139,13 @@
     "url": "https://kody-w.github.io/aibast-agents-library/registry.json"
    }
   ],
-  "as_of": "2026-08-09T19:56:44Z",
+  "as_of": "2026-08-09T20:11:59Z",
   "carried_forward": false
  },
  "agi": {
   "schema": "aibast-agi/2.0",
   "status": "available",
-  "as_of": "2026-08-09T19:56:44Z",
+  "as_of": "2026-08-09T20:11:59Z",
   "carried_forward": false,
   "caveat": "Verified achievement points are server-scored from opt-in public GitHub progress claims. Each explicitly claimed achievement has a fixed value: started 5, local-proof 15, draft-builder 20, preview-proven 25, workshop-completed 35, and hard-mode-completed 50, for at most 150 points per workshop. Re-syncing unions achievement IDs without duplicating points. Profiles are public by explicit submission consent. GitHub verification confirms authenticated issue authorship and canonical claim format only; achievement completion remains self-reported and is not independently proven. Verified public achievements remain separate from local self-paced state, repository stars, agent upvotes, downloads, and workshop usage events.",
   "totals": {
@@ -36354,7 +36378,7 @@
  "ecosystem": {
   "schema": "aibast-ecosystem-metrics/1.0",
   "status": "available",
-  "as_of": "2026-08-09T19:56:44Z",
+  "as_of": "2026-08-09T20:11:59Z",
   "sources": {
    "aibast": {
     "status": "available",
