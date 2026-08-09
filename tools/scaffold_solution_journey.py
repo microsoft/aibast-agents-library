@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import html
 import json
+import os
 import re
 import subprocess
 import sys
@@ -719,7 +720,8 @@ def collect_resources(ctx: JourneyContext) -> list[Resource]:
             "Local Brainstem runtime and production-logic reference",
         )
     add_resource(resources, seen, ctx, "deployment-recipe", "Deployment recipe", ctx.package / "deployment.json", "Easy-mode deployment contract")
-    add_resource(resources, seen, ctx, "field-guide", "Customer field guide", ctx.package / "FIELD-GUIDE.md", "Facilitation, evidence boundaries, gates, and recovery", generated=True)
+    add_resource(resources, seen, ctx, "field-guide", "Customer field guide", ctx.package / "field-guide.html", "Styled facilitation, evidence boundaries, gates, and recovery", generated=True)
+    add_resource(resources, seen, ctx, "field-guide-source", "Field guide source", ctx.package / "FIELD-GUIDE.md", "Markdown source retained for audit and export", generated=True)
     visual_audit = ctx.package / "VISUAL-EVIDENCE-AUDIT.md"
     if visual_audit.exists():
         add_resource(
@@ -895,6 +897,7 @@ def collect_resources(ctx: JourneyContext) -> list[Resource]:
 
     generated = [
         ("workshop-settings", "Global workshop settings", ctx.root / "solutions" / "_shared" / "workshop-settings.html", "Site-wide persisted Easy-mode harness preference"),
+        ("evidence-report", "Styled evidence report", ctx.package / "evidence-report.html", "Learner-safe HTML summary of deterministic and visual evidence"),
         ("quest", "Guided field quest", ctx.package / "quest.html", "Resumable Easy/Hard customer journey"),
         ("manual-tutorial", "Manual browser tutorial", ctx.package / "manual-tutorial.html", "One action per real manual evidence frame"),
         ("screenshots-readme", "Screenshot evidence README", ctx.package / "screenshots" / "README.md", "Evidence boundary and capture inventory"),
@@ -1331,8 +1334,257 @@ an approved production tool returns evidence that it succeeded.
 {missing}"""
 
 
+def render_field_guide_html(ctx: JourneyContext) -> str:
+    rows = "\n".join(
+        f"""<tr>
+          <td><code>{html.escape(str(case["case_id"]))}</code></td>
+          <td>{html.escape(str(case.get("persona", "Workshop learner")))}</td>
+          <td>{html.escape(str(case["prompt"]))}</td>
+        </tr>"""
+        for case in easy_case_records(ctx)
+    )
+    seams = "\n".join(
+        f"<li>{html.escape(value)}</li>"
+        for value in production_seams(ctx)
+    )
+    build_prompt, deploy_prompt = [
+        prompt for _title, prompt in personless_prompts(ctx)
+    ]
+    brainstem_skill = easy_mode_skill_path(ctx, "brainstem")
+    copilot_skill = easy_mode_skill_path(ctx, "copilot")
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{html.escape(ctx.title)} field guide</title>
+  <script>
+    {THEME_SCRIPT}
+    {WORKSHOP_ENGINE_SCRIPT}
+  </script>
+  <style>
+{COMMON_CSS}
+    .grid {{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }}
+    .engine-panel {{ display: none; }}
+    html[data-workshop-engine="copilot"] .engine-panel.copilot {{ display: block; }}
+    html[data-workshop-engine="brainstem"] .engine-panel.brainstem {{ display: block; }}
+    .prompt {{ padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); white-space: pre-wrap; font-family: Consolas, "Courier New", Courier, monospace; }}
+    table {{ width: 100%; border-collapse: collapse; }}
+    th, td {{ padding: 11px; border: 1px solid var(--cp-border); text-align: left; vertical-align: top; }}
+    th {{ background: var(--cp-surface-soft); }}
+    .gate-list li, .seam-list li {{ margin-bottom: 8px; }}
+    @media (max-width: 760px) {{ .grid {{ grid-template-columns: 1fr; }} }}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">C</span><span>Clawpilot field guide</span></div>
+    <div><a class="button" href="../_shared/workshop-settings.html?return=../{html.escape(ctx.slug)}/field-guide.html">Workshop settings</a> <a class="button primary" href="quest.html">Back to workshop</a></div>
+  </header>
+  <main class="page">
+    <section class="hero">
+      <p class="eyebrow">Facilitator and learner guide</p>
+      <h1>{html.escape(ctx.title)}</h1>
+      <p class="lede">Use this guide to understand the workshop boundary, expected proof, production seams, and recovery paths before or during the hands-on module.</p>
+      <div class="notice"><strong>Evidence boundary:</strong> all packaged records and outcomes are synthetic qualitative evidence—not customer KPIs, measured production results, live connections, or publication approval.</div>
+    </section>
+
+    <h2>Use your configured Easy-mode harness</h2>
+    <section class="engine-panel copilot card">
+      <h3>GitHub Copilot only</h3>
+      <p>Attach the Copilot-only skill. It carries discovery, local testing, Draft deployment, and Preview validation directly in the active Copilot session.</p>
+      <p><a class="button primary" href="../../{html.escape(ctx.rel(copilot_skill))}" download="SKILL.md">Download Copilot-only SKILL.md</a></p>
+      <div class="prompt">{html.escape(build_prompt)}</div>
+      <div class="prompt">{html.escape(deploy_prompt)}</div>
+    </section>
+    <section class="engine-panel brainstem card">
+      <h3>GitHub Copilot + Brainstem</h3>
+      <p>Attach the Brainstem skill. Copilot remains the work surface while the personal, on-device training AI persists the workshop and executes the generic engine handoffs.</p>
+      <p><a class="button primary" href="../../{html.escape(ctx.rel(brainstem_skill))}" download="SKILL.md">Download Brainstem SKILL.md</a></p>
+      <div class="prompt">{html.escape(build_prompt)}</div>
+      <div class="prompt">{html.escape(deploy_prompt)}</div>
+    </section>
+
+    <h2>Locked Preview corpus</h2>
+    <section class="card">
+      <p>Run every case in a fresh Copilot Studio Preview conversation. The deterministic validator—not phrasing similarity—defines the complete pass.</p>
+      <table>
+        <thead><tr><th>Case</th><th>Persona</th><th>Prompt</th></tr></thead>
+        <tbody>{rows}</tbody>
+      </table>
+    </section>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Production replacement seams</h2>
+        <ul class="seam-list">{seams}</ul>
+        <p>The pilot must never claim a live lookup or external write unless an approved production tool returns evidence that it succeeded.</p>
+      </section>
+      <section class="card">
+        <h2>Evidence gates</h2>
+        <ul class="gate-list">
+          <li><strong>Source:</strong> deployment source and isolated transcripts exist.</li>
+          <li><strong>Local:</strong> every locked business-agent case passes.</li>
+          <li><strong>Preview:</strong> every front-door case passes in a fresh chat.</li>
+          <li><strong>Visual:</strong> only positively provable annotated checkpoints are displayed.</li>
+          <li><strong>Draft:</strong> the package records <code>published: false</code>.</li>
+          <li><strong>Customer:</strong> governance, telemetry, support, and success measures are agreed before production.</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2>Failure recovery</h2>
+    <section class="card">
+      <table>
+        <thead><tr><th>Symptom</th><th>Recovery</th></tr></thead>
+        <tbody>
+          <tr><td>A required source is missing</td><td>Stop. Restore the reviewed file; never substitute invented content.</td></tr>
+          <tr><td>Knowledge is still processing</td><td>Wait for ingestion before Preview. A partial answer is not evidence.</td></tr>
+          <tr><td>A case misses a marker</td><td>Keep the case failed and inspect the package. Never retry until it happens to pass.</td></tr>
+          <tr><td>The existing Draft is found</td><td>The harness should clone and reconnect automatically.</td></tr>
+          <tr><td>The agent appears Published</td><td>Stop immediately. This workshop ends at Draft.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <p><a class="button primary" href="quest.html">Start the workshop</a> <a class="button" href="manual-tutorial.html">Open Hard mode directly</a></p>
+  </main>
+</body>
+</html>
+"""
+
+
+def render_evidence_report_html(ctx: JourneyContext) -> str:
+    document = visual_checkpoint_document(ctx)
+    summary = document.get("summary", {})
+    captures = [
+        item
+        for item in document.get("captures", [])
+        if isinstance(item, dict)
+    ]
+    reusable_rows = "\n".join(
+        f"""<tr>
+          <td><code>{html.escape(str(item.get("id", "")))}</code></td>
+          <td>{html.escape(str(item.get("mode", "")))}</td>
+          <td>{html.escape("; ".join(str(value) for value in item.get("visible_anchors", [])))}</td>
+          <td>{html.escape(str(item.get("annotated", "")))}</td>
+        </tr>"""
+        for item in captures
+        if item.get("status") == "reusable"
+    )
+    gap_rows = "\n".join(
+        f"""<tr>
+          <td><code>{html.escape(str(item.get("id", "")))}</code></td>
+          <td>{html.escape(str(item.get("mode", "")))}</td>
+          <td>{html.escape(str(item.get("reason", "")))}</td>
+        </tr>"""
+        for item in captures
+        if item.get("status") == "reshoot_required"
+    )
+    case_rows = "\n".join(
+        f"""<tr>
+          <td><code>{html.escape(str(case["case_id"]))}</code></td>
+          <td>{marker_chips(case.get("must_include", []), "Reviewed evidence")}</td>
+          <td>{marker_chips(case.get("must_not_include", []), "No unsupported side effect")}</td>
+        </tr>"""
+        for case in easy_case_records(ctx)
+    )
+    visual_audit = ctx.package / "VISUAL-EVIDENCE-AUDIT.md"
+    audit_download = (
+        f'<a class="button" href="{html.escape(visual_audit.name)}" download>Download detailed audit source</a>'
+        if visual_audit.exists()
+        else ""
+    )
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{html.escape(ctx.title)} evidence report</title>
+  <script>
+    {THEME_SCRIPT}
+  </script>
+  <style>
+{COMMON_CSS}
+    .summary-grid {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 20px 0; }}
+    .summary-grid article {{ padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }}
+    .summary-grid strong, .summary-grid span {{ display: block; }}
+    .summary-grid strong {{ font-size: 28px; color: var(--cp-accent); }}
+    .summary-grid span {{ color: var(--cp-text-muted); }}
+    table {{ width: 100%; border-collapse: collapse; }}
+    th, td {{ padding: 11px; border: 1px solid var(--cp-border); text-align: left; vertical-align: top; }}
+    th {{ background: var(--cp-surface-soft); }}
+    .marker-chip {{ display: inline-flex; margin: 0 6px 6px 0; padding: 5px 8px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface-soft); color: var(--cp-text-muted); font-size: 12px; }}
+    .downloads {{ display: flex; flex-wrap: wrap; gap: 8px; }}
+    @media (max-width: 760px) {{ .summary-grid {{ grid-template-columns: 1fr; }} }}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">C</span><span>Clawpilot evidence report</span></div>
+    <a class="button primary" href="quest.html">Back to workshop</a>
+  </header>
+  <main class="page">
+    <section class="hero">
+      <p class="eyebrow">Beta workshop evidence</p>
+      <h1>{html.escape(ctx.title)}</h1>
+      <p class="lede">This report separates the deterministic machine gate from learner-facing visual checkpoints. A screenshot can support a positive observation; it never replaces the full locked-case validation.</p>
+    </section>
+
+    <div class="summary-grid">
+      <article><strong>{html.escape(str(summary.get("reusable", 0)))}</strong><span>Reusable positive checkpoints</span></article>
+      <article><strong>{html.escape(str(summary.get("reshoot_required", 0)))}</strong><span>Images hidden from learner proof</span></article>
+      <article><strong>{html.escape(str(summary.get("new_learn_step_captures_recommended", 0)))}</strong><span>Optional future Learn-step captures</span></article>
+    </div>
+
+    <h2>Deterministic case contract</h2>
+    <section class="card" id="locked-cases">
+      <table>
+        <thead><tr><th>Case</th><th>Must include</th><th>Must not claim</th></tr></thead>
+        <tbody>{case_rows}</tbody>
+      </table>
+    </section>
+
+    <h2>Displayed visual checkpoints</h2>
+    <section class="card">
+      <p>Only positive, visible evidence appears in the learner tutorial. Annotated paths are included for facilitator traceability.</p>
+      <table>
+        <thead><tr><th>Checkpoint</th><th>Mode</th><th>Visible evidence</th><th>Annotated asset</th></tr></thead>
+        <tbody>{reusable_rows}</tbody>
+      </table>
+    </section>
+
+    <h2>Hidden visual gaps</h2>
+    <section class="card">
+      <p>These images are not shown to learners. The tutorial presents only the expected verification contract for these steps.</p>
+      <table>
+        <thead><tr><th>Checkpoint</th><th>Mode</th><th>Reason</th></tr></thead>
+        <tbody>{gap_rows}</tbody>
+      </table>
+    </section>
+
+    <h2>Downloads for audit</h2>
+    <section class="card downloads">
+      <a class="button" href="evals/transcripts.json" download>Download locked transcripts</a>
+      <a class="button" href="evals/visual-checkpoints.json" download>Download visual checkpoint contract</a>
+      <a class="button" href="export-manifest.json" download>Download export manifest</a>
+      <a class="button" href="exports/{html.escape(ctx.slug)}-source.zip" download>Download portable bundle</a>
+      {audit_download}
+    </section>
+  </main>
+</body>
+</html>
+"""
+
+
 def raw_link(ctx: JourneyContext, path: Path) -> str:
     return ctx.raw(ctx.rel(path))
+
+
+def page_relative_path(ctx: JourneyContext, path: Path) -> str:
+    return Path(
+        os.path.relpath(path.resolve(), start=ctx.package.resolve())
+    ).as_posix()
 
 
 def manual_copy_payload(
@@ -1457,7 +1709,7 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
           </div>
           {screenshot_html}
           <footer>
-            <a href="{html.escape(raw_link(ctx, source))}">Raw download: {html.escape(source_label)}</a>
+            <a href="{html.escape(page_relative_path(ctx, source))}" download>Download source: {html.escape(source_label)}</a>
             <label><input class="complete" type="checkbox" data-step="{index}"> Mark complete</label>
           </footer>
         </div>
@@ -1962,15 +2214,9 @@ def render_completion_state(ctx: JourneyContext) -> str:
 
 
 def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
-    assisted_gif = ctx.package / "screenshots" / "assisted" / "copilot-assisted-walkthrough.gif"
-    assisted_link = (
-        '<a class="button" href="screenshots/assisted/copilot-assisted-walkthrough.gif">Watch assisted film</a>'
-        if assisted_gif.exists()
-        else '<span class="button" aria-disabled="true">Assisted film pending</span>'
-    )
     workshop_agent = workshop_agent_path(ctx)
     workshop_agent_link = (
-        f'<a class="button" href="../../{html.escape(ctx.rel(workshop_agent))}">View generic workshop agent</a>'
+        f'<a class="button" href="../../{html.escape(ctx.rel(workshop_agent))}" download>Download generic workshop agent</a>'
         if workshop_agent
         else '<span class="button" aria-disabled="true">Workshop agent pending</span>'
     )
@@ -1993,9 +2239,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         else '<span class="button" aria-disabled="true">Copilot Studio link unavailable</span>'
     )
     visual_audit_link = (
-        '<a class="button" href="VISUAL-EVIDENCE-AUDIT.md">Visual evidence audit</a>'
-        if (ctx.package / "VISUAL-EVIDENCE-AUDIT.md").exists()
-        else ""
+        '<a class="button" href="evidence-report.html">Evidence report</a>'
     )
     return f"""<!doctype html>
 <html lang="en">
@@ -2095,7 +2339,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
 <body>
   <header class="topbar">
     <div class="brand"><span class="brand-mark">C</span><span>Clawpilot deployment quest</span></div>
-    <div><a class="button" href="../_shared/workshop-settings.html?return=../{html.escape(ctx.slug)}/quest.html">Workshop settings</a> <a class="button primary" href="FIELD-GUIDE.md">Open field guide</a></div>
+    <div><a class="button" href="../_shared/workshop-settings.html?return=../{html.escape(ctx.slug)}/quest.html">Workshop settings</a> <a class="button primary" href="field-guide.html">Open field guide</a></div>
   </header>
   <main class="page">
     <section class="hero">
@@ -2151,7 +2395,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         <header class="learn-step-header"><span>4</span><div><p>Verify the real experience</p><h3>Confirm the Draft in Copilot Studio Preview</h3></div></header>
         <div class="learn-step-body">
           <p>The harness already runs these checks automatically. Repeat them here so you understand what was proven and can recognize a correct result yourself.</p>
-          <div class="preview-intro"><ol><li>Open the validated Draft.</li><li>Select <strong>Preview</strong>.</li><li>Choose <strong>New chat</strong> before each case.</li><li>Paste the exact prompt.</li><li>Compare the answer with the required and forbidden markers.</li></ol><div>{studio_button} {assisted_link}</div></div>
+          <div class="preview-intro"><ol><li>Open the validated Draft.</li><li>Select <strong>Preview</strong>.</li><li>Choose <strong>New chat</strong> before each case.</li><li>Paste the exact prompt.</li><li>Compare the answer with the required and forbidden markers.</li></ol><div>{studio_button}</div></div>
           <div class="expected-panel"><strong>Expected result</strong><p>Every case passes in a fresh Preview conversation, and the agent still appears as <strong>Draft</strong>.</p></div>
           <div class="preview-grid">
             {render_preview_case_cards(ctx)}
@@ -2180,11 +2424,11 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         <summary>Facilitator evidence and portable download</summary>
         <p>These links support audit, troubleshooting, and offline delivery. They are not learner steps.</p>
         <div class="facilitator-actions">
-          <a class="button" href="FIELD-GUIDE.md">Field guide</a>
-          <a class="button" href="evals/transcripts.json">Locked evidence</a>
+          <a class="button" href="field-guide.html">Field guide</a>
+          <a class="button" href="evidence-report.html#locked-cases">Locked evidence</a>
           {visual_audit_link}
-          <a class="button" href="export-manifest.json">Audit manifest</a>
-          <a class="button" href="exports/{html.escape(ctx.slug)}-source.zip">Portable bundle</a>
+          <a class="button" href="export-manifest.json" download>Download audit manifest</a>
+          <a class="button" href="exports/{html.escape(ctx.slug)}-source.zip" download>Download portable bundle</a>
           {workshop_agent_link}
           <a class="button" href="https://kodyw.com/the-personless-harness/" target="_blank" rel="noopener">Personless harness article ↗</a>
         </div>
@@ -2357,7 +2601,8 @@ def readme_block(ctx: JourneyContext, resources: list[Resource]) -> str:
     ready = sum(resource.status == "ready" for resource in resources)
     pending = sum(resource.status != "ready" for resource in resources)
     rows = [
-        ("Customer field guide", f"`solutions/{ctx.slug}/FIELD-GUIDE.md`"),
+        ("Customer field guide", f"`solutions/{ctx.slug}/field-guide.html`"),
+        ("Evidence report", f"`solutions/{ctx.slug}/evidence-report.html`"),
         (
             "Brainstem Easy Mode skill",
             "`skills/aibast-easy-mode-brainstem/SKILL.md`",
@@ -2435,6 +2680,8 @@ def write_outputs(ctx: JourneyContext) -> list[Resource]:
     resources = collect_resources(ctx)
     outputs = {
         ctx.package / "FIELD-GUIDE.md": render_field_guide(ctx),
+        ctx.package / "field-guide.html": render_field_guide_html(ctx),
+        ctx.package / "evidence-report.html": render_evidence_report_html(ctx),
         ctx.package / "EASY-MODE-PERSONLESS.md": render_personless_easy_markdown(ctx),
         ctx.package / "EASY-MODE-COPILOT-CHAT.md": render_easy_copilot_chat_markdown(ctx),
         ctx.package / "quest.html": render_quest(ctx, resources),

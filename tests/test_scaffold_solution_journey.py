@@ -253,6 +253,12 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     scaffold("demo-journey", root=tmp_path)
 
     guide = (package / "FIELD-GUIDE.md").read_text(encoding="utf-8")
+    guide_html = (package / "field-guide.html").read_text(
+        encoding="utf-8"
+    )
+    evidence_html = (package / "evidence-report.html").read_text(
+        encoding="utf-8"
+    )
     personless = (package / "EASY-MODE-PERSONLESS.md").read_text(
         encoding="utf-8"
     )
@@ -275,20 +281,25 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "synthetic" in guide.lower()
     assert "customer KPI" in guide
 
-    for generated in (quest, tutorial):
+    for generated in (guide_html, evidence_html, quest, tutorial):
         assert THEME_SCRIPT in generated
         assert THEME_VARIABLES in generated
         assert DARK_THEME_VARIABLES in generated
         assert "Clawpilot" in generated
+    for generated in (guide_html, quest, tutorial):
         assert "localStorage" in generated
     assert "GitHub Copilot + Brainstem" in quest
     assert "GitHub Copilot only" in quest
     assert "Personless harness" in quest
-    assert "View generic workshop agent" in quest
+    assert "Download generic workshop agent" in quest
     assert "Skeptic comparison" in quest
     assert "aibast:workshop-engine" in quest
     assert 'data-easy-lane-button' not in quest
     assert "Workshop settings" in quest
+    assert 'href="field-guide.html"' in quest
+    assert 'href="FIELD-GUIDE.md"' not in quest
+    assert 'href="evidence-report.html"' in quest
+    assert 'href="VISUAL-EVIDENCE-AUDIT.md"' not in quest
     assert quest.count("data-copy-target=") == 5
     assert "Download Brainstem SKILL.md" in quest
     assert "Download Copilot-only SKILL.md" in quest
@@ -319,7 +330,8 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert 'src="manual-tutorial.html?embedded=1"' in quest
     assert "Draft · published false" in quest
     assert "manual-tutorial.html" in quest
-    assert "copilot-assisted-walkthrough.gif" in quest
+    assert "Watch assisted film" not in quest
+    assert "copilot-assisted-walkthrough.gif" not in quest
     assert ">Open the manual tutorial<" not in quest
     assert "Attach the Brainstem skill" in personless
     assert "drag `SKILL.md` into the" in personless
@@ -337,7 +349,7 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "0 of 6 complete" in tutorial
     assert tutorial.count("<strong>Action</strong>") == len(frames)
     assert tutorial.count("<strong>Expected result</strong>") == len(frames)
-    assert tutorial.count("Raw download:") == len(frames)
+    assert tutorial.count("Download source:") == len(frames)
     assert tutorial.count('data-copy-target="hard-copy-') == 2
     assert "Copy instructions" in tutorial
     assert "Copy Preview prompt" in tutorial
@@ -356,6 +368,8 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
         "portable-agent",
         "deployment-recipe",
         "field-guide",
+        "field-guide-source",
+        "evidence-report",
         "easy-personless-guide",
         "easy-mode-brainstem-skill",
         "easy-mode-copilot-skill",
@@ -388,6 +402,8 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "Customer journey package map" in readme
     assert "resources ready; 0 pending" in readme
     assert (package / "screenshots" / "README.md").exists()
+    assert (package / "field-guide.html").exists()
+    assert (package / "evidence-report.html").exists()
     assert (package / "screenshots" / "manual" / "README.md").exists()
     assert (package / "screenshots" / "assisted" / "README.md").exists()
     assert (package / "exports" / "README.md").exists()
@@ -469,6 +485,8 @@ def test_optional_export_uses_existing_builder_semantics(tmp_path):
     with zipfile.ZipFile(bundle) as archive:
         names = set(archive.namelist())
     assert "solutions/demo-journey/FIELD-GUIDE.md" in names
+    assert "solutions/demo-journey/field-guide.html" in names
+    assert "solutions/demo-journey/evidence-report.html" in names
     assert "solutions/demo-journey/EASY-MODE-PERSONLESS.md" in names
     assert "skills/aibast-easy-mode-brainstem/SKILL.md" in names
     assert "skills/aibast-easy-mode-copilot/SKILL.md" in names
