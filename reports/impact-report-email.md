@@ -2,7 +2,7 @@
 
 # AIBAST + Public RAR - Weekly & Monthly Impact
 
-**Snapshot:** `2026-08-09T18:37:37Z`
+**Snapshot:** `2026-08-09T18:48:12Z`
 **Site:** https://kody-w.github.io/aibast-agents-library/
 
 ## Reach and consumption
@@ -49,8 +49,8 @@
 | GitHub stars | 0 | Baseline pending | Baseline pending |
 | GitHub forks | 0 | Baseline pending | Baseline pending |
 | GitHub watchers | 0 | Baseline pending | Baseline pending |
-| Open GitHub issues | 1 | Baseline pending | Baseline pending |
-| Agent upvotes | 0 | Baseline pending | Baseline pending |
+| Open GitHub issues | 2 | Baseline pending | Baseline pending |
+| Agent upvotes | 1 | Baseline pending | Baseline pending |
 | Workshop usage events | 0 | Baseline pending | Baseline pending |
 | Workshop views (14-day top paths) | Unavailable | Unavailable | Unavailable |
 | Workshop file downloads | 0 | Baseline pending | Baseline pending |
