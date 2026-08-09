@@ -520,6 +520,199 @@ def test_allow_pending_labels_missing_evidence_without_fabricating_image(tmp_pat
     assert "--allow-pending" in tutorial
 
 
+def test_reshoot_images_are_withheld_while_reusable_annotations_remain_visible(
+    tmp_path,
+):
+    package, _frames = build_fixture(tmp_path)
+    captures = [
+        {
+            "id": "easy-dj-01",
+            "mode": "easy",
+            "case_id": "DJ-01",
+            "source": (
+                "solutions/demo-journey/screenshots/assisted/"
+                "05-preview-dj01.jpg"
+            ),
+            "annotated": (
+                "solutions/demo-journey/screenshots/assisted/annotated/"
+                "05-preview-dj01.png"
+            ),
+            "status": "reusable",
+            "visible_anchors": ["Synthetic Record A"],
+            "boxes": [{"x": 0, "y": 0, "width": 1, "height": 1}],
+        },
+        {
+            "id": "easy-confirm-draft",
+            "mode": "easy",
+            "source": (
+                "solutions/demo-journey/screenshots/assisted/"
+                "01-assisted-draft.jpg"
+            ),
+            "status": "reshoot_required",
+            "reason": "The Draft identity is cropped.",
+        },
+        {
+            "id": "hard-step-01",
+            "mode": "hard",
+            "step": 1,
+            "source": (
+                "solutions/demo-journey/screenshots/manual/"
+                "01-create-agent.jpg"
+            ),
+            "annotated": (
+                "solutions/demo-journey/screenshots/manual/annotated/"
+                "01-create-agent.png"
+            ),
+            "status": "reusable",
+            "visible_anchors": ["Blank agent"],
+            "boxes": [{"x": 0, "y": 0, "width": 1, "height": 1}],
+        },
+        {
+            "id": "hard-step-02",
+            "mode": "hard",
+            "step": 2,
+            "source": (
+                "solutions/demo-journey/screenshots/manual/"
+                "02-enter-instructions.jpg"
+            ),
+            "status": "reshoot_required",
+            "reason": "The reviewed instructions are not legible.",
+        },
+    ]
+    write(
+        package / "evals" / "visual-checkpoints.json",
+        json.dumps(
+            {
+                "schema": "aibast-visual-checkpoints/1.0",
+                "summary": {
+                    "total_existing_captures": 4,
+                    "reusable": 2,
+                    "reshoot_required": 2,
+                },
+                "captures": captures,
+            }
+        ),
+    )
+    write(
+        package
+        / "screenshots"
+        / "assisted"
+        / "annotated"
+        / "05-preview-dj01.png",
+        b"annotated",
+    )
+    write(
+        package
+        / "screenshots"
+        / "manual"
+        / "annotated"
+        / "01-create-agent.png",
+        b"annotated",
+    )
+
+    scaffold("demo-journey", root=tmp_path)
+
+    quest = (package / "quest.html").read_text(encoding="utf-8")
+    tutorial = (package / "manual-tutorial.html").read_text(encoding="utf-8")
+    evidence = (package / "evidence-report.html").read_text(encoding="utf-8")
+    learner_html = quest + tutorial
+
+    assert 'src="screenshots/assisted/annotated/05-preview-dj01.png"' in quest
+    assert 'download="05-preview-dj01.png"' in quest
+    assert 'class="preview-case preview-case-wide"' in quest
+    assert 'src="screenshots/manual/annotated/01-create-agent.png"' in tutorial
+    assert 'download="01-create-agent.png"' in tutorial
+    assert 'src="screenshots/assisted/01-assisted-draft.jpg"' not in learner_html
+    assert 'src="screenshots/manual/02-enter-instructions.jpg"' not in learner_html
+    assert 'href="screenshots/assisted/01-assisted-draft.jpg"' not in learner_html
+    assert 'href="screenshots/manual/02-enter-instructions.jpg"' not in learner_html
+    assert 'data-evidence-status="reference-only"' not in learner_html
+    assert "Withheld checkpoint — reshoot required" in learner_html
+    assert "Expected state:" in learner_html
+    assert "01-assisted-draft.jpg" in evidence
+    assert "02-enter-instructions.jpg" in evidence
+
+
+def test_reusable_original_downloads_use_checkpoint_sources(tmp_path):
+    package, _frames = build_fixture(tmp_path)
+    captures = [
+        {
+            "id": "easy-dj-01",
+            "mode": "easy",
+            "case_id": "DJ-01",
+            "source": (
+                "solutions/demo-journey/screenshots/assisted/"
+                "reviewed-case-original.png"
+            ),
+            "annotated": (
+                "solutions/demo-journey/screenshots/assisted/annotated/"
+                "reviewed-case.png"
+            ),
+            "status": "reusable",
+            "visible_anchors": ["Synthetic Record A"],
+            "boxes": [{"x": 0, "y": 0, "width": 1, "height": 1}],
+        },
+        {
+            "id": "easy-confirm-draft",
+            "mode": "easy",
+            "source": (
+                "solutions/demo-journey/screenshots/assisted/"
+                "01-assisted-draft.jpg"
+            ),
+            "annotated": (
+                "solutions/demo-journey/screenshots/assisted/annotated/"
+                "reviewed-draft.png"
+            ),
+            "status": "reusable",
+            "visible_anchors": ["Draft", "Published false"],
+            "boxes": [{"x": 0, "y": 0, "width": 1, "height": 1}],
+        },
+        {
+            "id": "hard-step-01",
+            "mode": "hard",
+            "step": 1,
+            "source": (
+                "solutions/demo-journey/screenshots/manual/"
+                "reviewed-hard-original.png"
+            ),
+            "annotated": (
+                "solutions/demo-journey/screenshots/manual/annotated/"
+                "reviewed-hard.png"
+            ),
+            "status": "reusable",
+            "visible_anchors": ["Blank agent"],
+            "boxes": [{"x": 0, "y": 0, "width": 1, "height": 1}],
+        },
+    ]
+    write(
+        package / "evals" / "visual-checkpoints.json",
+        json.dumps(
+            {
+                "schema": "aibast-visual-checkpoints/1.0",
+                "summary": {
+                    "total_existing_captures": 3,
+                    "reusable": 3,
+                    "reshoot_required": 0,
+                },
+                "captures": captures,
+            }
+        ),
+    )
+    for capture in captures:
+        write(tmp_path / capture["source"], b"source")
+        write(tmp_path / capture["annotated"], b"annotated")
+
+    scaffold("demo-journey", root=tmp_path)
+
+    quest = (package / "quest.html").read_text(encoding="utf-8")
+    tutorial = (package / "manual-tutorial.html").read_text(encoding="utf-8")
+    assert 'href="screenshots/assisted/reviewed-case-original.png"' in quest
+    assert 'href="screenshots/assisted/01-assisted-draft.jpg"' in quest
+    assert 'href="screenshots/manual/reviewed-hard-original.png"' in tutorial
+    assert 'href="screenshots/assisted/05-preview-dj01.jpg"' not in quest
+    assert 'href="screenshots/manual/01-create-agent.jpg"' not in tutorial
+
+
 def test_refuses_unpassed_manual_evidence_unless_allow_pending(tmp_path):
     package, _frames = build_fixture(tmp_path)
     evidence_path = package / "evals" / "manual-build-evidence.json"

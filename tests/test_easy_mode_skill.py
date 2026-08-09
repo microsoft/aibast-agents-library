@@ -77,9 +77,12 @@ def test_copilot_skill_bootstraps_official_studio_plugin_and_pac():
     text = COPILOT_SKILL.read_text(encoding="utf-8")
     compact = " ".join(text.split())
     for marker in (
+        "python3 tools/easy_mode_preflight.py --json",
+        "repository-owned, fail-closed setup step",
         "microsoft/copilot-studio-plugin",
         "copilot plugin marketplace add microsoft/copilot-studio-plugin",
         "copilot plugin install mcs-assistant@copilot-studio-plugin",
+        "dotnet tool update --global Microsoft.PowerApps.CLI.Tool",
         "newer than 2.9.3",
         "pac --version",
         "manage, describe,",
@@ -91,6 +94,7 @@ def test_copilot_skill_bootstraps_official_studio_plugin_and_pac():
     assert "Never deploy without the verified Microsoft Copilot Studio plugin" in (
         text
     )
+    assert "Stop when it exits nonzero or reports `passed: false`" in text
 
 
 def test_neither_skill_can_publish_or_delegate_setup_to_the_user():

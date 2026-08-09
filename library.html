@@ -1920,6 +1920,15 @@ function installCommand(agent) {
   return `curl -fsSL ${RAW}/${encodeURI(file)} -o ${AGENT_DIR}/${target}`;
 }
 
+function agentDownload(agent) {
+  const file = agent._file || "";
+  const base = file.split("/").pop();
+  const filename = base.endsWith("_agent.py")
+    ? base
+    : base.replace(/\.py$/, "_agent.py");
+  return {href: encodeURI(file), filename};
+}
+
 function architectureHTML(architecture, solution) {
   if (!architecture) return "";
   const flow = architecture.business_flow || [];
@@ -1988,7 +1997,7 @@ function openAgent(name) {
     ...item,
     interactive_demo_url: interactiveDemoUrl(agent, item),
   }));
-  const install = installCommand(agent);
+  const download = agentDownload(agent);
   const architecture = solution.architecture;
   const stack = state.stacks.find(item =>
     item.stack_type === "multi_agent"
@@ -2053,14 +2062,14 @@ function openAgent(name) {
             `).join("")}
           </section>
           <section class="detail-section">
-            <h3>Install</h3>
-            <pre class="code">${esc(install)}</pre>
+            <h3>Download agent.py</h3>
+            <p>Download the reviewed portable Python agent directly. Review the source before running it locally.</p>
             <div class="detail-actions">
-              <button class="button primary" type="button" data-action="copy" data-text="${enc(install)}">Copy install command</button>
+              <a class="button primary" href="${esc(download.href)}" download="${esc(download.filename)}">Download agent.py</a>
               ${agentAcquisitionControl(agent)}
               <a class="button" href="${BLOB}/${encodeURI(agent._file)}" target="_blank" rel="noopener">View source ↗</a>
             </div>
-            <p class="detail-note">Copying remains immediate. Use the acquisition Discussion once per GitHub account to add a traceable signed-in acquisition signal; CDN and release transfers are reported separately.</p>
+            <p class="detail-note">The download stays immediate. Use the acquisition Discussion once per GitHub account to add a traceable signed-in acquisition signal; CDN and release transfers are reported separately.</p>
           </section>
         </div>
         <aside class="detail-aside">

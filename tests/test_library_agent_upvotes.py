@@ -232,6 +232,39 @@ console.log(JSON.stringify({unavailable, available, acquisition}));
     assert ">3</span>" in result["acquisition"]
 
 
+def test_agent_detail_downloads_python_file_instead_of_showing_one_liner():
+    text = library_text()
+    detail = text[text.index("function openAgent"):text.index("function openStack")]
+
+    assert "<h3>Download agent.py</h3>" in detail
+    assert 'download="${esc(download.filename)}"' in detail
+    assert ">Download agent.py</a>" in detail
+    assert "Copy install command" not in detail
+    assert '<pre class="code">${esc(install)}</pre>' not in detail
+
+    result = run_library_node(
+        """
+const direct = agentDownload({
+  _file: "agents/example_agent.py"
+});
+const renamed = agentDownload({
+  _file: "agents/orchestrator.py"
+});
+console.log(JSON.stringify({direct, renamed}));
+"""
+    )
+    assert result == {
+        "direct": {
+            "href": "agents/example_agent.py",
+            "filename": "example_agent.py",
+        },
+        "renamed": {
+            "href": "agents/orchestrator.py",
+            "filename": "orchestrator_agent.py",
+        },
+    }
+
+
 def test_upvote_and_acquisition_open_canonical_discussions():
     result = run_library_node(
         """

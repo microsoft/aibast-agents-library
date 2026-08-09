@@ -512,6 +512,37 @@ def visual_checkpoint(
     return None
 
 
+def checkpoint_asset(ctx: JourneyContext, checkpoint: dict[str, Any], key: str) -> Path:
+    value = checkpoint.get(key)
+    if not isinstance(value, str) or not value.strip():
+        raise ScaffoldError(f"Reusable visual checkpoint has no {key} path")
+    return resolve_repo_path(ctx.root, ctx.package, value, ctx.package / value)
+
+
+def draft_visual_checkpoint(
+    ctx: JourneyContext,
+    source: str | None,
+) -> dict[str, Any] | None:
+    if not source:
+        return None
+    matches = [
+        item
+        for item in visual_checkpoint_document(ctx).get("captures", [])
+        if isinstance(item, dict)
+        and item.get("mode") == "easy"
+        and not (
+            isinstance(item.get("case_id"), str)
+            and item["case_id"].strip()
+        )
+        and Path(str(item.get("source", ""))).name == source
+    ]
+    if len(matches) > 1:
+        raise ScaffoldError(
+            f"Multiple Draft visual checkpoints use source {source}"
+        )
+    return matches[0] if matches else None
+
+
 def slugify(value: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
 
@@ -1748,6 +1779,7 @@ def render_evidence_report_html(ctx: JourneyContext) -> str:
         f"""<tr>
           <td><code>{html.escape(str(item.get("id", "")))}</code></td>
           <td>{html.escape(str(item.get("mode", "")))}</td>
+          <td>{html.escape(str(item.get("source", "")))}</td>
           <td>{html.escape(str(item.get("reason", "")))}</td>
         </tr>"""
         for item in captures
@@ -1829,9 +1861,9 @@ def render_evidence_report_html(ctx: JourneyContext) -> str:
 
     <h2>Reference-only visual gaps</h2>
     <section class="card">
-      <p>These real captures may remain visible for orientation, but every one is labeled as reference-only and excluded from proof until its review or reshoot requirement is resolved.</p>
+      <p>These real source captures are inventoried for facilitators but withheld from learner pages until their review or reshoot requirement is resolved.</p>
       <table>
-        <thead><tr><th>Checkpoint</th><th>Mode</th><th>Reason</th></tr></thead>
+        <thead><tr><th>Checkpoint</th><th>Mode</th><th>Source asset</th><th>Reason</th></tr></thead>
         <tbody>{gap_rows}</tbody>
       </table>
     </section>
@@ -1952,41 +1984,40 @@ def render_manual_tutorial(
                 or "This capture has not been approved as visual proof."
             )
             screenshot_html = (
-                '<div class="reference-shot-wrap">'
-                f'<a class="shot-link" href="screenshots/manual/{html.escape(filename)}" download="{html.escape(filename)}">'
-                f'<img class="shot" data-evidence-status="reference-only" '
-                f'src="screenshots/manual/{html.escape(filename)}" '
-                f'alt="{html.escape(action)} reference capture" loading="lazy"></a>'
-                '<p class="quality-warning"><strong>Reference capture — not approved proof.</strong> '
-                "This real frame remains visible for orientation, but the evidence "
-                f"contract requires review or reshoot: {html.escape(reason)}</p>"
-                f'<p class="capture-meta">Source capture: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. '
-                "Download the original to inspect at 100%.</p></div>"
-                '<div class="look-for"><strong>What to verify yourself</strong>'
-                f"<p>{html.escape(expected)}</p>"
+                '<div class="look-for withheld-checkpoint">'
+                "<strong>Withheld checkpoint — reshoot required</strong>"
+                "<p>The recorded screenshot is not approved for learner display "
+                f"and has been withheld. Review note: {html.escape(reason)}</p>"
+                f"<p><strong>Expected state:</strong> {html.escape(expected)}</p>"
                 "<p>Continue only when the visible product state and the "
                 "deterministic gate agree.</p></div>"
             )
         elif checkpoint and checkpoint.get("status") == "reshoot_required":
             screenshot_html = (
-                '<div class="look-for"><strong>What to verify yourself</strong>'
-                f"<p>{html.escape(expected)}</p>"
-                "<p>The reference capture is unavailable. Continue only when the "
-                "visible product state and the deterministic gate agree.</p></div>"
+                '<div class="look-for withheld-checkpoint">'
+                "<strong>Withheld checkpoint — reshoot required</strong>"
+                "<p>The recorded screenshot is not approved for learner display "
+                "and is unavailable in this package.</p>"
+                f"<p><strong>Expected state:</strong> {html.escape(expected)}</p>"
+                "<p>Continue only when the visible product state and the "
+                "deterministic gate agree.</p></div>"
             )
         elif checkpoint and checkpoint.get("status") == "reusable":
-            annotated = ctx.root / str(checkpoint["annotated"])
-            annotated_url = annotated.relative_to(ctx.package).as_posix()
+            annotated = checkpoint_asset(ctx, checkpoint, "annotated")
+            annotated_url = page_relative_path(ctx, annotated)
+            original = checkpoint_asset(ctx, checkpoint, "source")
+            original_url = page_relative_path(ctx, original)
             anchors = "; ".join(
                 str(value) for value in checkpoint.get("visible_anchors", [])
             )
             screenshot_html = (
-                f'<a class="shot-link" href="screenshots/manual/{html.escape(filename)}" download="{html.escape(filename)}">'
+                f'<a class="shot-link" href="{html.escape(annotated_url)}" download="{html.escape(annotated.name)}">'
                 f'<img class="shot" data-evidence-status="reusable" src="{html.escape(annotated_url)}" '
                 f'alt="{html.escape(action)} annotated evidence" loading="lazy"></a>'
                 f'<p class="capture-meta">Positive visual checkpoint: {html.escape(anchors)}. '
                 f"Source capture: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. "
-                "The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>"
+                "The full pass remains the deterministic machine gate. "
+                f'<a href="{html.escape(original_url)}" download="{html.escape(original.name)}">Download original</a>.</p>'
             )
         elif screenshot.exists():
             screenshot_html = (
@@ -2484,33 +2515,37 @@ def render_preview_case_cards(ctx: JourneyContext) -> str:
                 or "This capture has not been approved as visual proof."
             )
             screenshot_html = (
-                '<div class="preview-shot-wrap reference-shot-wrap">'
-                f'<img class="preview-shot" data-evidence-status="reference-only" '
-                f'src="screenshots/assisted/{html.escape(screenshot)}" '
-                f'alt="{html.escape(case_id)} reference capture" loading="lazy">'
-                '<p class="quality-warning"><strong>Reference capture — not approved proof.</strong> '
-                "This real frame remains visible for orientation, but the evidence "
-                f"contract requires review or reshoot: {html.escape(reason)}</p>"
-                f'<p class="capture-meta">Source: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. '
-                f'<a href="screenshots/assisted/{html.escape(screenshot)}" download="{html.escape(screenshot)}">Download original</a>.</p></div>'
+                '<div class="missing withheld-checkpoint">'
+                "<strong>Withheld checkpoint — reshoot required.</strong> "
+                "The recorded screenshot is not approved for learner display. "
+                f"Review note: {html.escape(reason)} "
+                f"Expected state: the {html.escape(case_id)} response visibly "
+                "matches every reviewed marker above.</div>"
             )
         elif checkpoint and checkpoint.get("status") == "reshoot_required":
             screenshot_html = (
-                '<div class="missing">A reference capture is recorded for this case '
-                "but is not available in the package. Verify the visible contract directly.</div>"
+                '<div class="missing withheld-checkpoint">'
+                "<strong>Withheld checkpoint — reshoot required.</strong> "
+                "The recorded screenshot is not approved for learner display. "
+                f"Expected state: the {html.escape(case_id)} response visibly "
+                "matches every reviewed marker above.</div>"
             )
         elif checkpoint and checkpoint.get("status") == "reusable":
-            annotated = ctx.root / str(checkpoint["annotated"])
-            annotated_url = annotated.relative_to(ctx.package).as_posix()
+            annotated = checkpoint_asset(ctx, checkpoint, "annotated")
+            annotated_url = page_relative_path(ctx, annotated)
+            original = checkpoint_asset(ctx, checkpoint, "source")
+            original_url = page_relative_path(ctx, original)
             anchors = "; ".join(
                 str(value) for value in checkpoint.get("visible_anchors", [])
             )
             screenshot_html = (
-                f'<div class="preview-shot-wrap"><img class="preview-shot" data-evidence-status="reusable" src="{html.escape(annotated_url)}" alt="{html.escape(case_id)} positive visual checkpoint" loading="lazy">'
+                '<div class="preview-shot-wrap">'
+                f'<a href="{html.escape(annotated_url)}" download="{html.escape(annotated.name)}">'
+                f'<img class="preview-shot" data-evidence-status="reusable" src="{html.escape(annotated_url)}" alt="{html.escape(case_id)} positive visual checkpoint" loading="lazy"></a>'
                 f'<p class="capture-meta">Visible positive anchors: {html.escape(anchors)}. '
                 "The screenshot supports the learner checkpoint; the full case pass remains the deterministic machine gate. "
                 f'Source: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. '
-                f'<a href="screenshots/assisted/{html.escape(screenshot or "")}" download="{html.escape(screenshot or case_id + ".jpg")}">Download original</a>.</p></div>'
+                f'<a href="{html.escape(original_url)}" download="{html.escape(original.name)}">Download original</a>.</p></div>'
             )
         elif screenshot:
             screenshot_html = (
@@ -2538,10 +2573,8 @@ def render_completion_state(ctx: JourneyContext) -> str:
     pilot = validated_pilot(ctx)
     case_total = len(easy_case_records(ctx))
     draft_frame = assisted_draft_frame(ctx)
-    checkpoint = visual_checkpoint(
-        ctx,
-        mode="easy",
-        source=draft_frame,
+    checkpoint = draft_visual_checkpoint(ctx, draft_frame) or visual_checkpoint(
+        ctx, mode="easy", source=draft_frame
     )
     capture_width = (ctx.assisted_browserfilm or {}).get("width", "unknown")
     capture_height = (ctx.assisted_browserfilm or {}).get("height", "unknown")
@@ -2556,25 +2589,32 @@ def render_completion_state(ctx: JourneyContext) -> str:
             or "This capture has not been approved as visual proof."
         )
         screenshot = (
-            '<div class="preview-shot-wrap reference-shot-wrap">'
-            f'<img class="preview-shot" data-evidence-status="reference-only" '
-            f'src="screenshots/assisted/{html.escape(draft_frame)}" '
-            'alt="Draft-state reference capture" loading="lazy">'
-            '<p class="quality-warning"><strong>Reference capture — not approved proof.</strong> '
-            "Use this real frame for orientation only; confirm the current Draft "
-            f"state yourself. Evidence note: {html.escape(reason)}</p>"
-            f'<p class="capture-meta">Source: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. '
-            f'<a href="screenshots/assisted/{html.escape(draft_frame)}" download="{html.escape(draft_frame)}">Download original</a>.</p></div>'
+            '<div class="missing withheld-checkpoint">'
+            "<strong>Withheld checkpoint — reshoot required.</strong> "
+            "The recorded screenshot is not approved for learner display. "
+            f"Review note: {html.escape(reason)} "
+            "<strong>Expected state:</strong> the target agent is visibly Draft "
+            "and publication remains off.</div>"
         )
     elif checkpoint and checkpoint.get("status") == "reshoot_required":
-        screenshot = ""
-    elif checkpoint and checkpoint.get("status") == "reusable":
-        annotated = ctx.root / str(checkpoint["annotated"])
-        annotated_url = annotated.relative_to(ctx.package).as_posix()
         screenshot = (
-            f'<div class="preview-shot-wrap"><img class="preview-shot" data-evidence-status="reusable" src="{html.escape(annotated_url)}" alt="Validated agent remains Draft" loading="lazy">'
+            '<div class="missing withheld-checkpoint">'
+            "<strong>Withheld checkpoint — reshoot required.</strong> "
+            "The recorded screenshot is not approved for learner display. "
+            "<strong>Expected state:</strong> the target agent is visibly Draft "
+            "and publication remains off.</div>"
+        )
+    elif checkpoint and checkpoint.get("status") == "reusable":
+        annotated = checkpoint_asset(ctx, checkpoint, "annotated")
+        annotated_url = page_relative_path(ctx, annotated)
+        original = checkpoint_asset(ctx, checkpoint, "source")
+        original_url = page_relative_path(ctx, original)
+        screenshot = (
+            '<div class="preview-shot-wrap">'
+            f'<a href="{html.escape(annotated_url)}" download="{html.escape(annotated.name)}">'
+            f'<img class="preview-shot" data-evidence-status="reusable" src="{html.escape(annotated_url)}" alt="Validated agent remains Draft" loading="lazy"></a>'
             f'<p class="capture-meta">Positive visual checkpoint. Source: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. '
-            f'<a href="screenshots/assisted/{html.escape(draft_frame or "")}" download="{html.escape(draft_frame or "draft.jpg")}">Download original</a>.</p></div>'
+            f'<a href="{html.escape(original_url)}" download="{html.escape(original.name)}">Download original</a>.</p></div>'
         )
     elif draft_frame:
         screenshot = (

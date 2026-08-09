@@ -567,20 +567,31 @@ def load_browserfilm(
                 f"{label}: frame {index} source dimensions cannot be measured "
                 f"({frame['file']})"
             )
-        label_text = str(frame.get("label", ""))
-        case_match = re.search(
-            r"(?<![A-Z0-9_])([A-Z][A-Z0-9_]*-\d+)(?![A-Z0-9_])",
-            label_text,
-        )
-        if case_match:
-            references.add((mode, "case", case_match.group(1)))
-        elif mode == "hard":
-            references.add((mode, "step", index))
-        elif "draft" in label_text.lower():
-            references.add((mode, "draft", "draft"))
+        reference = browserfilm_frame_reference(mode, index, frame)
+        if reference is not None:
+            references.add(reference)
         else:
             failures.add(f"{label}: frame {index} reference cannot be classified")
     return frames, references, sources
+
+
+def browserfilm_frame_reference(
+    mode: str,
+    index: int,
+    frame: dict[str, Any],
+) -> tuple[str, str, str | int] | None:
+    label_text = str(frame.get("label", ""))
+    case_match = re.search(
+        r"(?<![A-Z0-9_])([A-Z][A-Z0-9_]*-\d+)(?![A-Z0-9_])",
+        label_text,
+    )
+    if case_match:
+        return mode, "case", case_match.group(1)
+    if mode == "hard":
+        return mode, "step", index
+    if "draft" in label_text.lower() or "confirm" in label_text.lower():
+        return mode, "draft", "draft"
+    return None
 
 
 def check_manual(

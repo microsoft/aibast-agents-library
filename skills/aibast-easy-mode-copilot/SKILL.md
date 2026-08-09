@@ -26,8 +26,19 @@ and verification status.
 
 ## Required local Copilot Studio plugin
 
-Before resolving or deploying a workshop, ensure the official Microsoft
-Copilot Studio plugin is installed in the active GitHub Copilot host.
+Before resolving or deploying a workshop, run the repository-owned,
+fail-closed setup step:
+
+```bash
+python3 tools/easy_mode_preflight.py --json
+```
+
+Stop when it exits nonzero or reports `passed: false`. Record the reported
+installed plugin/version and PAC CLI version in
+`.aibast/easy-mode-state.json`.
+
+The preflight owns plugin discovery, installation, and PAC remediation. Its
+explicitly reviewed CLI sequence is:
 
 1. Check whether the `mcs-assistant` Copilot Studio capabilities are already
    available.
@@ -39,12 +50,19 @@ Copilot Studio plugin is installed in the active GitHub Copilot host.
    copilot plugin install mcs-assistant@copilot-studio-plugin
    ```
 
-3. Resolve `microsoft/copilot-studio-plugin` through the GitHub API and record
+3. Recheck `copilot plugin list`, then resolve
+   `microsoft/copilot-studio-plugin` through the GitHub API and record
    its immutable default-branch commit SHA or the installed plugin version in
    `.aibast/easy-mode-state.json`.
-4. Run `pac --version`. The plugin requires a Power Platform CLI version newer
-   than 2.9.3. Install or update the supported PAC CLI before continuing when
-   that requirement is not met.
+4. Inspect `pac --version`, including version output from a nonzero exit. The
+   plugin requires a Power Platform CLI version newer than 2.9.3. When PAC is
+   too old and .NET is available, run:
+
+   ```bash
+   dotnet tool update --global Microsoft.PowerApps.CLI.Tool
+   ```
+
+   Recheck PAC and otherwise stop with the reported remediation.
 5. Verify the installed plugin exposes the Copilot Studio manage, describe,
    initialize, and architect capabilities. Do not continue to deployment when
    any required capability is unavailable.
@@ -58,7 +76,8 @@ generated YAML and stop on schema or PAC validation errors.
 
 When the user says `Give me <solution> using Easy Mode and test it for me`:
 
-1. Install and verify the required local Copilot Studio plugin and PAC CLI.
+1. Run `python3 tools/easy_mode_preflight.py --json` and require
+   `passed: true`.
 2. Resolve the requested solution from immutable `registry.json`.
 3. Fetch its `deployment.json`, `export-manifest.json`, portable `*_agent.py`,
    `tests/demo_cases/<slug>.json`, reviewed instructions, knowledge, skills,
