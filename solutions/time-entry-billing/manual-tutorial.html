@@ -176,7 +176,9 @@
     .instruction { padding: 14px; border-radius: 10px; background: var(--cp-surface-soft); }
     .instruction strong { display: block; margin-bottom: 6px; }
     .instruction.expected { border-left: 4px solid var(--cp-success); }
-    .shot { display: block; width: 100%; border: 1px solid var(--cp-border); border-radius: 10px; }
+    .shot-link { display: block; text-align: center; }
+    .shot { display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }
+    .capture-meta { margin: 8px 0 0; color: var(--cp-text-muted); font-size: 12px; text-align: center; }
     .missing { padding: 32px; border: 2px dashed var(--cp-warning); border-radius: 10px; color: var(--cp-text-muted); }
     .step footer { display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
     .troubleshooting details { padding: 14px 0; border-bottom: 1px solid var(--cp-border); }
@@ -231,7 +233,7 @@
             <div class="instruction"><strong>Action</strong>Create a blank Copilot Studio agent</div>
             <div class="instruction expected"><strong>Expected result</strong>A blank Copilot Studio agent is visible in the captured Draft workspace.</div>
           </div>
-          <img class="shot" src="screenshots/manual/01-create-blank-agent.jpg" alt="Create a blank Copilot Studio agent evidence">
+          <a class="shot-link" href="screenshots/manual/01-create-blank-agent.jpg" download="01-create-blank-agent.jpg"><img class="shot" src="screenshots/manual/01-create-blank-agent.jpg" alt="Create a blank Copilot Studio agent evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/deployment.json">Raw download: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="1"> Mark complete</label>
@@ -245,7 +247,7 @@
             <div class="instruction"><strong>Action</strong>Name Time Entry and Billing Manual</div>
             <div class="instruction expected"><strong>Expected result</strong>The page header shows the recorded manual build name: Time Entry and Billing Manual.</div>
           </div>
-          <img class="shot" src="screenshots/manual/02-name-agent.jpg" alt="Name Time Entry and Billing Manual evidence">
+          <a class="shot-link" href="screenshots/manual/02-name-agent.jpg" download="02-name-agent.jpg"><img class="shot" src="screenshots/manual/02-name-agent.jpg" alt="Name Time Entry and Billing Manual evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/deployment.json">Raw download: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="2"> Mark complete</label>
@@ -259,7 +261,7 @@
             <div class="instruction"><strong>Action</strong>Enter the reviewed global instructions</div>
             <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
           </div>
-          <img class="shot" src="screenshots/manual/03-enter-instructions.jpg" alt="Enter the reviewed global instructions evidence">
+          <a class="shot-link" href="screenshots/manual/03-enter-instructions.jpg" download="03-enter-instructions.jpg"><img class="shot" src="screenshots/manual/03-enter-instructions.jpg" alt="Enter the reviewed global instructions evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/manual/GLOBAL-INSTRUCTIONS.md">Raw download: Global Instructions</a>
             <label><input class="complete" type="checkbox" data-step="3"> Mark complete</label>
@@ -273,7 +275,7 @@
             <div class="instruction"><strong>Action</strong>Save the instruction policy</div>
             <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
           </div>
-          <img class="shot" src="screenshots/manual/04-save-instructions.jpg" alt="Save the instruction policy evidence">
+          <a class="shot-link" href="screenshots/manual/04-save-instructions.jpg" download="04-save-instructions.jpg"><img class="shot" src="screenshots/manual/04-save-instructions.jpg" alt="Save the instruction policy evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/manual/GLOBAL-INSTRUCTIONS.md">Raw download: Global Instructions</a>
             <label><input class="complete" type="checkbox" data-step="4"> Mark complete</label>
@@ -287,7 +289,7 @@
             <div class="instruction"><strong>Action</strong>Remove default web search</div>
             <div class="instruction expected"><strong>Expected result</strong>The captured inventory no longer lists the default web-search capability.</div>
           </div>
-          <img class="shot" src="screenshots/manual/05-remove-web-search.jpg" alt="Remove default web search evidence">
+          <a class="shot-link" href="screenshots/manual/05-remove-web-search.jpg" download="05-remove-web-search.jpg"><img class="shot" src="screenshots/manual/05-remove-web-search.jpg" alt="Remove default web search evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/export-manifest.json">Raw download: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="5"> Mark complete</label>
@@ -301,7 +303,7 @@
             <div class="instruction"><strong>Action</strong>Add knowledge: aibast_billing-rules-and-disputes.md</div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
           </div>
-          <img class="shot" src="screenshots/manual/06-add-aibast-billing-rules-and-disputes.jpg" alt="Add knowledge: aibast_billing-rules-and-disputes.md evidence">
+          <a class="shot-link" href="screenshots/manual/06-add-aibast-billing-rules-and-disputes.jpg" download="06-add-aibast-billing-rules-and-disputes.jpg"><img class="shot" src="screenshots/manual/06-add-aibast-billing-rules-and-disputes.jpg" alt="Add knowledge: aibast_billing-rules-and-disputes.md evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/manual/knowledge/aibast_billing-rules-and-disputes.md">Raw download: Aibast Billing Rules And Disputes</a>
             <label><input class="complete" type="checkbox" data-step="6"> Mark complete</label>
@@ -315,7 +317,7 @@
             <div class="instruction"><strong>Action</strong>Add knowledge: aibast_billing-synthetic-ledger.md</div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
           </div>
-          <img class="shot" src="screenshots/manual/07-add-aibast-billing-synthetic-ledger.jpg" alt="Add knowledge: aibast_billing-synthetic-ledger.md evidence">
+          <a class="shot-link" href="screenshots/manual/07-add-aibast-billing-synthetic-ledger.jpg" download="07-add-aibast-billing-synthetic-ledger.jpg"><img class="shot" src="screenshots/manual/07-add-aibast-billing-synthetic-ledger.jpg" alt="Add knowledge: aibast_billing-synthetic-ledger.md evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/manual/knowledge/aibast_billing-synthetic-ledger.md">Raw download: Aibast Billing Synthetic Ledger</a>
             <label><input class="complete" type="checkbox" data-step="7"> Mark complete</label>
@@ -329,7 +331,7 @@
             <div class="instruction"><strong>Action</strong>Add skill: billing-summary</div>
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
           </div>
-          <img class="shot" src="screenshots/manual/08-add-billing-summary.jpg" alt="Add skill: billing-summary evidence">
+          <a class="shot-link" href="screenshots/manual/08-add-billing-summary.jpg" download="08-add-billing-summary.jpg"><img class="shot" src="screenshots/manual/08-add-billing-summary.jpg" alt="Add skill: billing-summary evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/manual/skills/billing-summary/SKILL.md">Raw download: Manual skill: billing summary</a>
             <label><input class="complete" type="checkbox" data-step="8"> Mark complete</label>
@@ -343,7 +345,7 @@
             <div class="instruction"><strong>Action</strong>Add skill: dispute-resolution</div>
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
           </div>
-          <img class="shot" src="screenshots/manual/09-add-dispute-resolution.jpg" alt="Add skill: dispute-resolution evidence">
+          <a class="shot-link" href="screenshots/manual/09-add-dispute-resolution.jpg" download="09-add-dispute-resolution.jpg"><img class="shot" src="screenshots/manual/09-add-dispute-resolution.jpg" alt="Add skill: dispute-resolution evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/manual/skills/dispute-resolution/SKILL.md">Raw download: Manual skill: dispute resolution</a>
             <label><input class="complete" type="checkbox" data-step="9"> Mark complete</label>
@@ -357,7 +359,7 @@
             <div class="instruction"><strong>Action</strong>Add skill: invoice-preparation</div>
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
           </div>
-          <img class="shot" src="screenshots/manual/10-add-invoice-preparation.jpg" alt="Add skill: invoice-preparation evidence">
+          <a class="shot-link" href="screenshots/manual/10-add-invoice-preparation.jpg" download="10-add-invoice-preparation.jpg"><img class="shot" src="screenshots/manual/10-add-invoice-preparation.jpg" alt="Add skill: invoice-preparation evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/manual/skills/invoice-preparation/SKILL.md">Raw download: Manual skill: invoice preparation</a>
             <label><input class="complete" type="checkbox" data-step="10"> Mark complete</label>
@@ -371,7 +373,7 @@
             <div class="instruction"><strong>Action</strong>Add skill: time-entry-audit</div>
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
           </div>
-          <img class="shot" src="screenshots/manual/11-add-time-entry-audit.jpg" alt="Add skill: time-entry-audit evidence">
+          <a class="shot-link" href="screenshots/manual/11-add-time-entry-audit.jpg" download="11-add-time-entry-audit.jpg"><img class="shot" src="screenshots/manual/11-add-time-entry-audit.jpg" alt="Add skill: time-entry-audit evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/export-manifest.json">Raw download: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="11"> Mark complete</label>
@@ -385,7 +387,7 @@
             <div class="instruction"><strong>Action</strong>Add skill: unbilled-report</div>
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
           </div>
-          <img class="shot" src="screenshots/manual/12-add-unbilled-report.jpg" alt="Add skill: unbilled-report evidence">
+          <a class="shot-link" href="screenshots/manual/12-add-unbilled-report.jpg" download="12-add-unbilled-report.jpg"><img class="shot" src="screenshots/manual/12-add-unbilled-report.jpg" alt="Add skill: unbilled-report evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/manual/skills/time-entry-audit/SKILL.md">Raw download: Manual skill: time entry audit</a>
             <label><input class="complete" type="checkbox" data-step="12"> Mark complete</label>
@@ -399,7 +401,7 @@
             <div class="instruction"><strong>Action</strong>Review model, skills, knowledge, and safety boundaries</div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
           </div>
-          <img class="shot" src="screenshots/manual/13-review-inventory.jpg" alt="Review model, skills, knowledge, and safety boundaries evidence">
+          <a class="shot-link" href="screenshots/manual/13-review-inventory.jpg" download="13-review-inventory.jpg"><img class="shot" src="screenshots/manual/13-review-inventory.jpg" alt="Review model, skills, knowledge, and safety boundaries evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/deployment.json">Raw download: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="13"> Mark complete</label>
@@ -413,7 +415,7 @@
             <div class="instruction"><strong>Action</strong>Open a fresh Preview conversation</div>
             <div class="instruction expected"><strong>Expected result</strong>A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass.</div>
           </div>
-          <img class="shot" src="screenshots/manual/14-open-preview.jpg" alt="Open a fresh Preview conversation evidence">
+          <a class="shot-link" href="screenshots/manual/14-open-preview.jpg" download="14-open-preview.jpg"><img class="shot" src="screenshots/manual/14-open-preview.jpg" alt="Open a fresh Preview conversation evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/export-manifest.json">Raw download: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="14"> Mark complete</label>
@@ -427,7 +429,7 @@
             <div class="instruction"><strong>Action</strong>Pass TEB-01: Billing Manager</div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records TEB-01 with the recorded identifiers TE-9004, TE-9011, Needs approval; do not infer results beyond it.</div>
           </div>
-          <img class="shot" src="screenshots/manual/15-teb-01.jpg" alt="Pass TEB-01: Billing Manager evidence">
+          <a class="shot-link" href="screenshots/manual/15-teb-01.jpg" download="15-teb-01.jpg"><img class="shot" src="screenshots/manual/15-teb-01.jpg" alt="Pass TEB-01: Billing Manager evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/evals/manual-build-evidence.json">Raw download: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="15"> Mark complete</label>
@@ -441,7 +443,7 @@
             <div class="instruction"><strong>Action</strong>Pass TEB-02: Finance Vice President</div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records TEB-02 with the recorded identifiers By Project, By Consultant, not posted revenue; do not infer results beyond it.</div>
           </div>
-          <img class="shot" src="screenshots/manual/16-teb-02.jpg" alt="Pass TEB-02: Finance Vice President evidence">
+          <a class="shot-link" href="screenshots/manual/16-teb-02.jpg" download="16-teb-02.jpg"><img class="shot" src="screenshots/manual/16-teb-02.jpg" alt="Pass TEB-02: Finance Vice President evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/evals/manual-build-evidence.json">Raw download: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="16"> Mark complete</label>
@@ -455,7 +457,7 @@
             <div class="instruction"><strong>Action</strong>Pass TEB-03: Billing Compliance Lead</div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records TEB-03 with the recorded identifiers Missing description, Exceeds 10-hour daily limit, Budget Alert; do not infer results beyond it.</div>
           </div>
-          <img class="shot" src="screenshots/manual/17-teb-03.jpg" alt="Pass TEB-03: Billing Compliance Lead evidence">
+          <a class="shot-link" href="screenshots/manual/17-teb-03.jpg" download="17-teb-03.jpg"><img class="shot" src="screenshots/manual/17-teb-03.jpg" alt="Pass TEB-03: Billing Compliance Lead evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/evals/manual-build-evidence.json">Raw download: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="17"> Mark complete</label>
@@ -469,7 +471,7 @@
             <div class="instruction"><strong>Action</strong>Pass TEB-04: Billing Manager</div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records TEB-04 with the recorded identifiers Invoices Ready to Generate, Fixed-fee hold, no invoice was generated; do not infer results beyond it.</div>
           </div>
-          <img class="shot" src="screenshots/manual/18-teb-04.jpg" alt="Pass TEB-04: Billing Manager evidence">
+          <a class="shot-link" href="screenshots/manual/18-teb-04.jpg" download="18-teb-04.jpg"><img class="shot" src="screenshots/manual/18-teb-04.jpg" alt="Pass TEB-04: Billing Manager evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/evals/manual-build-evidence.json">Raw download: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="18"> Mark complete</label>
@@ -483,7 +485,7 @@
             <div class="instruction"><strong>Action</strong>Pass TEB-05: Client Finance Partner</div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records TEB-05 with the recorded identifiers DSP-301, DSP-302, authorized review; do not infer results beyond it.</div>
           </div>
-          <img class="shot" src="screenshots/manual/19-teb-05.jpg" alt="Pass TEB-05: Client Finance Partner evidence">
+          <a class="shot-link" href="screenshots/manual/19-teb-05.jpg" download="19-teb-05.jpg"><img class="shot" src="screenshots/manual/19-teb-05.jpg" alt="Pass TEB-05: Client Finance Partner evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/evals/manual-build-evidence.json">Raw download: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="19"> Mark complete</label>
@@ -497,7 +499,7 @@
             <div class="instruction"><strong>Action</strong>Confirm Draft and stop before publish</div>
             <div class="instruction expected"><strong>Expected result</strong>The agent remains Draft and no Publish action is taken.</div>
           </div>
-          <img class="shot" src="screenshots/manual/20-confirm-draft.jpg" alt="Confirm Draft and stop before publish evidence">
+          <a class="shot-link" href="screenshots/manual/20-confirm-draft.jpg" download="20-confirm-draft.jpg"><img class="shot" src="screenshots/manual/20-confirm-draft.jpg" alt="Confirm Draft and stop before publish evidence" loading="lazy"></a><p class="capture-meta">Source capture: 1424×863 JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>
           <footer>
             <a href="https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/time-entry-billing/deployment.json">Raw download: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="20"> Mark complete</label>

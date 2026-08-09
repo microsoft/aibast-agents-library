@@ -298,6 +298,9 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "Prove the solution locally" in quest
     assert "Create the reviewed Draft" in quest
     assert "Confirm the Draft in Copilot Studio Preview" in quest
+    assert "Legacy capture quality" in quest
+    assert "Shown at or below natural size" in quest
+    assert ".preview-shot { display: block; width: auto; max-width: 100%" in quest
     assert "Confirm the expected evidence" in quest
     assert "Preview response matched this contract" in quest
     assert "Know what “done” looks like" in quest
@@ -329,8 +332,10 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert tutorial.count("Raw download:") == len(frames)
     assert "No PAC CLI, YAML import, or plugin architect" in tutorial
     assert "Do not choose Publish" in tutorial
+    assert "Shown without browser upscaling" in tutorial
+    assert ".shot { display: block; width: auto; max-width: 100%" in tutorial
     for filename, label in frames:
-        assert tutorial.count(filename) == 1
+        assert tutorial.count(filename) == 3
         assert label.split("·", 1)[1].strip() in tutorial
 
     resources = {item["id"]: item for item in manifest["files"]}

@@ -1286,9 +1286,13 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
         action = clean_frame_label(str(frame.get("label", "")), f"Review frame {index}")
         expected = expected_result(ctx, action, filename)
         screenshot = ctx.manual_browserfilm_path.parent / filename
+        capture_width = (ctx.manual_browserfilm or {}).get("width", "unknown")
+        capture_height = (ctx.manual_browserfilm or {}).get("height", "unknown")
         screenshot_html = (
+            f'<a class="shot-link" href="screenshots/manual/{html.escape(filename)}" download="{html.escape(filename)}">'
             f'<img class="shot" src="screenshots/manual/{html.escape(filename)}" '
-            f'alt="{html.escape(action)} evidence">'
+            f'alt="{html.escape(action)} evidence" loading="lazy"></a>'
+            f'<p class="capture-meta">Source capture: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. Shown without browser upscaling. Download the original to inspect at 100%.</p>'
             if screenshot.exists()
             else (
                 '<div class="missing">Evidence pending. No screenshot is shown and '
@@ -1370,7 +1374,9 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
     .instruction {{ padding: 14px; border-radius: 10px; background: var(--cp-surface-soft); }}
     .instruction strong {{ display: block; margin-bottom: 6px; }}
     .instruction.expected {{ border-left: 4px solid var(--cp-success); }}
-    .shot {{ display: block; width: 100%; border: 1px solid var(--cp-border); border-radius: 10px; }}
+    .shot-link {{ display: block; text-align: center; }}
+    .shot {{ display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }}
+    .capture-meta {{ margin: 8px 0 0; color: var(--cp-text-muted); font-size: 12px; text-align: center; }}
     .missing {{ padding: 32px; border: 2px dashed var(--cp-warning); border-radius: 10px; color: var(--cp-text-muted); }}
     .step footer {{ display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }}
     .troubleshooting details {{ padding: 14px 0; border-bottom: 1px solid var(--cp-border); }}
@@ -1620,8 +1626,11 @@ def render_preview_case_cards(ctx: JourneyContext) -> str:
         case_id = str(case["case_id"])
         target = f"preview-prompt-{slugify(case_id)}"
         screenshot = assisted_frame_for_case(ctx, case_id, index)
+        capture_width = (ctx.assisted_browserfilm or {}).get("width", "unknown")
+        capture_height = (ctx.assisted_browserfilm or {}).get("height", "unknown")
         screenshot_html = (
-            f'<a class="preview-shot-link" href="screenshots/assisted/{html.escape(screenshot)}"><img class="preview-shot" src="screenshots/assisted/{html.escape(screenshot)}" alt="{html.escape(case_id)} passed in Copilot Studio Preview"></a>'
+            f'<div class="preview-shot-wrap"><img class="preview-shot" src="screenshots/assisted/{html.escape(screenshot)}" alt="{html.escape(case_id)} passed in Copilot Studio Preview" loading="lazy">'
+            f'<p class="capture-meta">Source capture: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. Shown at or below natural size. <a href="screenshots/assisted/{html.escape(screenshot)}" download="{html.escape(screenshot)}">Download original</a>.</p></div>'
             if screenshot
             else '<div class="missing">No assisted Preview screenshot is packaged for this case.</div>'
         )
@@ -1643,8 +1652,11 @@ def render_completion_state(ctx: JourneyContext) -> str:
     pilot = validated_pilot(ctx)
     case_total = len(easy_case_records(ctx))
     draft_frame = assisted_draft_frame(ctx)
+    capture_width = (ctx.assisted_browserfilm or {}).get("width", "unknown")
+    capture_height = (ctx.assisted_browserfilm or {}).get("height", "unknown")
     screenshot = (
-        f'<a class="preview-shot-link" href="screenshots/assisted/{html.escape(draft_frame)}"><img class="preview-shot" src="screenshots/assisted/{html.escape(draft_frame)}" alt="Validated agent remains Draft"></a>'
+        f'<div class="preview-shot-wrap"><img class="preview-shot" src="screenshots/assisted/{html.escape(draft_frame)}" alt="Validated agent remains Draft" loading="lazy">'
+        f'<p class="capture-meta">Source capture: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. Shown at or below natural size. <a href="screenshots/assisted/{html.escape(draft_frame)}" download="{html.escape(draft_frame)}">Download original</a>.</p></div>'
         if draft_frame
         else ""
     )
@@ -1769,8 +1781,10 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .marker-group {{ margin: 12px 0; }}
     .marker-group > strong {{ display: block; margin-bottom: 6px; }}
     .marker-chip {{ display: inline-flex; margin: 0 6px 6px 0; padding: 5px 8px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface); color: var(--cp-text-muted); font-size: 12px; }}
-    .preview-shot-link {{ display: block; margin-top: 14px; }}
-    .preview-shot {{ display: block; width: 100%; border: 1px solid var(--cp-border); border-radius: 10px; }}
+    .preview-shot-wrap {{ margin-top: 14px; text-align: center; }}
+    .preview-shot {{ display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }}
+    .capture-meta {{ margin: 8px 0 0; color: var(--cp-text-muted); font-size: 12px; text-align: center; }}
+    .quality-warning {{ margin: 16px 0; padding: 14px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft); color: var(--cp-text-muted); }}
     .done-grid {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }}
     .done-grid article {{ padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); }}
     .done-grid strong, .done-grid span {{ display: block; }}
@@ -1851,6 +1865,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         <div class="learn-step-body">
           <p>The harness already runs these checks automatically. Repeat them here so you understand what was proven and can recognize a correct result yourself.</p>
           <div class="preview-intro"><ol><li>Open the validated Draft.</li><li>Select <strong>Preview</strong>.</li><li>Choose <strong>New chat</strong> before each case.</li><li>Paste the exact prompt.</li><li>Compare the answer with the required and forbidden markers.</li></ol><div>{studio_button} {assisted_link}</div></div>
+          <div class="quality-warning"><strong>Legacy capture quality:</strong> the current evidence images are 1424×863 JPEGs averaging about 82 KB. This example prevents browser upscaling and offers the original download, but the captures still require a Retina-quality recapture before final publication.</div>
           <div class="expected-panel"><strong>Expected result</strong><p>Every case passes in a fresh Preview conversation, and the agent still appears as <strong>Draft</strong>.</p></div>
           <div class="preview-grid">
             {render_preview_case_cards(ctx)}

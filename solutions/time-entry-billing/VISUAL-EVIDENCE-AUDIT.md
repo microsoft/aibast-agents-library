@@ -41,6 +41,35 @@ instructions, or refusal text.
 6. **The Learn-style Easy steps 1–3 have no screenshots.** There is no packaged
    visual proof of either skill being attached in VS Code, the local 5/5
    verdict, or the deploy response with the expected Draft inventory.
+7. **All 26 source screenshots are low-resolution legacy captures.** Every file
+   is 1424×863 JPEG; sizes range from 30.5 KB to 110.0 KB, averaging 82.4 KB.
+   Text softens visibly when the browser or a Retina display enlarges them.
+
+## Resolution and presentation finding
+
+The current files are suitable for internal evidence triage, not polished
+Microsoft Learn-style publication. Upscaling them would only enlarge JPEG
+artifacts and must not be presented as a quality fix.
+
+The tutorial now:
+
+- never renders a screenshot wider than its natural pixel dimensions;
+- identifies the source dimensions and format;
+- offers the original file as a download rather than linking to an enlarged
+  browser view; and
+- labels the images as legacy captures requiring recapture.
+
+### Required recapture standard
+
+- Capture text-heavy UI as **PNG**, not low-quality JPEG.
+- Minimum source dimensions: **2560×1440**.
+- Prefer a 2× device-pixel-ratio capture when the environment supports it.
+- Keep browser zoom at 100% and verify body text is legible at 100% image size.
+- Frame the exact control or final answer the tutorial asks the learner to
+  verify; do not depend on content outside the viewport.
+- Preserve enough Copilot Studio chrome to prove the agent identity, Preview
+  tab, and Draft state.
+- Reject duplicate hashes for distinct tutorial steps.
 
 ## Easy-mode screenshots
 
@@ -123,6 +152,8 @@ grounded behavior.
     and completion.
 12. Add this visual audit as a mandatory rollout gate before a journey can be
     reported complete.
+13. Recapture all accepted evidence at the resolution standard above; do not
+    use AI upscaling as a substitute for a native UI capture.
 
 ## Release recommendation
 

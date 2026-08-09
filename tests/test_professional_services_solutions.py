@@ -375,6 +375,9 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
         "| Fail | 7 |",
         "Nine Hard-mode screenshots are byte-for-byte identical",
         "grounding files are not present",
+        "All 26 source screenshots are low-resolution legacy captures",
+        "2560×1440",
+        "use AI upscaling as a substitute",
         "Do not present the current Hard-mode run as proven end to end",
     ):
         assert marker in visual_audit

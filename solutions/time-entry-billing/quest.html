@@ -215,8 +215,10 @@
     .marker-group { margin: 12px 0; }
     .marker-group > strong { display: block; margin-bottom: 6px; }
     .marker-chip { display: inline-flex; margin: 0 6px 6px 0; padding: 5px 8px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface); color: var(--cp-text-muted); font-size: 12px; }
-    .preview-shot-link { display: block; margin-top: 14px; }
-    .preview-shot { display: block; width: 100%; border: 1px solid var(--cp-border); border-radius: 10px; }
+    .preview-shot-wrap { margin-top: 14px; text-align: center; }
+    .preview-shot { display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }
+    .capture-meta { margin: 8px 0 0; color: var(--cp-text-muted); font-size: 12px; text-align: center; }
+    .quality-warning { margin: 16px 0; padding: 14px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft); color: var(--cp-text-muted); }
     .done-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
     .done-grid article { padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); }
     .done-grid strong, .done-grid span { display: block; }
@@ -359,6 +361,7 @@
         <div class="learn-step-body">
           <p>The harness already runs these checks automatically. Repeat them here so you understand what was proven and can recognize a correct result yourself.</p>
           <div class="preview-intro"><ol><li>Open the validated Draft.</li><li>Select <strong>Preview</strong>.</li><li>Choose <strong>New chat</strong> before each case.</li><li>Paste the exact prompt.</li><li>Compare the answer with the required and forbidden markers.</li></ol><div><a class="button primary" href="https://copilotstudio.preview.microsoft.com/environments/ee67a404-325c-e726-a18a-886fe708ca0b/agents/eef12393-69b8-47c9-b37b-ac3f194f102f" target="_blank" rel="noopener">Open the Copilot Studio Draft ↗</a> <a class="button" href="screenshots/assisted/copilot-assisted-walkthrough.gif">Watch assisted film</a></div></div>
+          <div class="quality-warning"><strong>Legacy capture quality:</strong> the current evidence images are 1424×863 JPEGs averaging about 82 KB. This example prevents browser upscaling and offers the original download, but the captures still require a Retina-quality recapture before final publication.</div>
           <div class="expected-panel"><strong>Expected result</strong><p>Every case passes in a fresh Preview conversation, and the agent still appears as <strong>Draft</strong>.</p></div>
           <div class="preview-grid">
 
@@ -367,7 +370,7 @@
           <pre class="prompt-block" id="preview-prompt-teb-01">What billable work is still blocked from this close, and what has to happen before it can move?</pre>
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">TE-9004</span><span class="marker-chip">TE-9011</span><span class="marker-chip">Needs approval</span></div></div>
           <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">entries were approved automatically</span></div></div>
-          <a class="preview-shot-link" href="screenshots/assisted/01-teb-01.jpg"><img class="preview-shot" src="screenshots/assisted/01-teb-01.jpg" alt="TEB-01 passed in Copilot Studio Preview"></a>
+          <div class="preview-shot-wrap"><img class="preview-shot" src="screenshots/assisted/01-teb-01.jpg" alt="TEB-01 passed in Copilot Studio Preview" loading="lazy"><p class="capture-meta">Source capture: 1424×863 JPEG. Shown at or below natural size. <a href="screenshots/assisted/01-teb-01.jpg" download="01-teb-01.jpg">Download original</a>.</p></div>
           <label class="step-complete"><input type="checkbox" data-checkpoint="preview-teb-01"><span>The Preview response matched this contract.</span></label>
         </article>
 
@@ -376,7 +379,7 @@
           <pre class="prompt-block" id="preview-prompt-teb-02">Give me the month-end billing rollup by project and consultant without treating it as posted revenue.</pre>
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">By Project</span><span class="marker-chip">By Consultant</span><span class="marker-chip">not posted revenue</span></div></div>
           <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">revenue recognized</span></div></div>
-          <a class="preview-shot-link" href="screenshots/assisted/02-teb-02.jpg"><img class="preview-shot" src="screenshots/assisted/02-teb-02.jpg" alt="TEB-02 passed in Copilot Studio Preview"></a>
+          <div class="preview-shot-wrap"><img class="preview-shot" src="screenshots/assisted/02-teb-02.jpg" alt="TEB-02 passed in Copilot Studio Preview" loading="lazy"><p class="capture-meta">Source capture: 1424×863 JPEG. Shown at or below natural size. <a href="screenshots/assisted/02-teb-02.jpg" download="02-teb-02.jpg">Download original</a>.</p></div>
           <label class="step-complete"><input type="checkbox" data-checkpoint="preview-teb-02"><span>The Preview response matched this contract.</span></label>
         </article>
 
@@ -385,7 +388,7 @@
           <pre class="prompt-block" id="preview-prompt-teb-03">Which time cards would fail our billing review because of narrative, hours, rate, or budget concerns?</pre>
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">Missing description</span><span class="marker-chip">Exceeds 10-hour daily limit</span><span class="marker-chip">Budget Alert</span></div></div>
           <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">description completed automatically</span></div></div>
-          <a class="preview-shot-link" href="screenshots/assisted/03-teb-03.jpg"><img class="preview-shot" src="screenshots/assisted/03-teb-03.jpg" alt="TEB-03 passed in Copilot Studio Preview"></a>
+          <div class="preview-shot-wrap"><img class="preview-shot" src="screenshots/assisted/03-teb-03.jpg" alt="TEB-03 passed in Copilot Studio Preview" loading="lazy"><p class="capture-meta">Source capture: 1424×863 JPEG. Shown at or below natural size. <a href="screenshots/assisted/03-teb-03.jpg" download="03-teb-03.jpg">Download original</a>.</p></div>
           <label class="step-complete"><input type="checkbox" data-checkpoint="preview-teb-03"><span>The Preview response matched this contract.</span></label>
         </article>
 
@@ -394,7 +397,7 @@
           <pre class="prompt-block" id="preview-prompt-teb-04">Prepare the invoice support that is actually ready, and keep anything without the right approval or milestone evidence out.</pre>
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">Invoices Ready to Generate</span><span class="marker-chip">Fixed-fee hold</span><span class="marker-chip">no invoice was generated</span></div></div>
           <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">Pinnacle Energy ERP | Pinnacle Energy</span></div></div>
-          <a class="preview-shot-link" href="screenshots/assisted/04-teb-04.jpg"><img class="preview-shot" src="screenshots/assisted/04-teb-04.jpg" alt="TEB-04 passed in Copilot Studio Preview"></a>
+          <div class="preview-shot-wrap"><img class="preview-shot" src="screenshots/assisted/04-teb-04.jpg" alt="TEB-04 passed in Copilot Studio Preview" loading="lazy"><p class="capture-meta">Source capture: 1424×863 JPEG. Shown at or below natural size. <a href="screenshots/assisted/04-teb-04.jpg" download="04-teb-04.jpg">Download original</a>.</p></div>
           <label class="step-complete"><input type="checkbox" data-checkpoint="preview-teb-04"><span>The Preview response matched this contract.</span></label>
         </article>
 
@@ -403,7 +406,7 @@
           <pre class="prompt-block" id="preview-prompt-teb-05">What evidence is missing on the disputed hours, and what is the safest resolution path before we go back to the clients?</pre>
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">DSP-301</span><span class="marker-chip">DSP-302</span><span class="marker-chip">authorized review</span></div></div>
           <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">contacted the client</span><span class="marker-chip">charge was waived</span></div></div>
-          <a class="preview-shot-link" href="screenshots/assisted/05-teb-05.jpg"><img class="preview-shot" src="screenshots/assisted/05-teb-05.jpg" alt="TEB-05 passed in Copilot Studio Preview"></a>
+          <div class="preview-shot-wrap"><img class="preview-shot" src="screenshots/assisted/05-teb-05.jpg" alt="TEB-05 passed in Copilot Studio Preview" loading="lazy"><p class="capture-meta">Source capture: 1424×863 JPEG. Shown at or below natural size. <a href="screenshots/assisted/05-teb-05.jpg" download="05-teb-05.jpg">Download original</a>.</p></div>
           <label class="step-complete"><input type="checkbox" data-checkpoint="preview-teb-05"><span>The Preview response matched this contract.</span></label>
         </article>
           </div>
@@ -423,7 +426,7 @@
             <article><strong>Inventory</strong><span>2 knowledge · 5 skills</span></article>
             <article><strong>Publication gate</strong><span>Draft · published false</span></article>
           </div>
-          <a class="preview-shot-link" href="screenshots/assisted/06-confirm-draft.jpg"><img class="preview-shot" src="screenshots/assisted/06-confirm-draft.jpg" alt="Validated agent remains Draft"></a>
+          <div class="preview-shot-wrap"><img class="preview-shot" src="screenshots/assisted/06-confirm-draft.jpg" alt="Validated agent remains Draft" loading="lazy"><p class="capture-meta">Source capture: 1424×863 JPEG. Shown at or below natural size. <a href="screenshots/assisted/06-confirm-draft.jpg" download="06-confirm-draft.jpg">Download original</a>.</p></div>
           <div class="expected-panel"><strong>Final expected verdict</strong><p>The harness reports <code>status: complete</code>, exact case totals, the Draft identity, and <code>published: false</code>. The module ends here; it does not offer publication.</p></div>
           <label class="step-complete"><input type="checkbox" data-checkpoint="easy-complete"><span>I confirmed the final Draft verdict.</span></label>
         </div>
