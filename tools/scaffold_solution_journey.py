@@ -1378,7 +1378,7 @@ def render_field_guide_html(ctx: JourneyContext) -> str:
 </head>
 <body>
   <header class="topbar">
-    <div class="brand"><span class="brand-mark">C</span><span>Clawpilot field guide</span></div>
+    <div class="brand"><span class="brand-mark">A</span><span>AIBAST field guide</span></div>
     <div><a class="button" href="../_shared/workshop-settings.html?return=../{html.escape(ctx.slug)}/field-guide.html">Workshop settings</a> <a class="button primary" href="quest.html">Back to workshop</a></div>
   </header>
   <main class="page">
@@ -1521,7 +1521,7 @@ def render_evidence_report_html(ctx: JourneyContext) -> str:
 </head>
 <body>
   <header class="topbar">
-    <div class="brand"><span class="brand-mark">C</span><span>Clawpilot evidence report</span></div>
+    <div class="brand"><span class="brand-mark">A</span><span>AIBAST evidence report</span></div>
     <a class="button primary" href="quest.html">Back to workshop</a>
   </header>
   <main class="page">
@@ -1796,7 +1796,7 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
 </head>
 <body>
   <header class="topbar">
-    <div class="brand"><span class="brand-mark">C</span><span>Clawpilot manual journey</span></div>
+    <div class="brand"><span class="brand-mark">A</span><span>AIBAST manual workshop</span></div>
     <div>{gif_button} <a class="button primary" href="exports/{html.escape(ctx.slug)}-source.zip">Download source bundle</a></div>
   </header>
   <div class="layout">
@@ -2246,7 +2246,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{html.escape(ctx.title)} deployment quest</title>
+  <title>{html.escape(ctx.title)} workshop</title>
   <script>
     {THEME_SCRIPT}
     {WORKSHOP_ENGINE_SCRIPT}
@@ -2338,7 +2338,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
 </head>
 <body>
   <header class="topbar">
-    <div class="brand"><span class="brand-mark">C</span><span>Clawpilot deployment quest</span></div>
+    <div class="brand"><span class="brand-mark">A</span><span>AIBAST guided workshop</span></div>
     <div><a class="button" href="../_shared/workshop-settings.html?return=../{html.escape(ctx.slug)}/quest.html">Workshop settings</a> <a class="button primary" href="field-guide.html">Open field guide</a></div>
   </header>
   <main class="page">

@@ -285,7 +285,8 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
         assert THEME_SCRIPT in generated
         assert THEME_VARIABLES in generated
         assert DARK_THEME_VARIABLES in generated
-        assert "Clawpilot" in generated
+        assert "AIBAST" in generated
+        assert "Clawpilot" not in generated
     for generated in (guide_html, quest, tutorial):
         assert "localStorage" in generated
     assert "GitHub Copilot + Brainstem" in quest

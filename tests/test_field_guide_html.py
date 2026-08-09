@@ -24,6 +24,8 @@ def test_prominent_field_guide_navigation_uses_styled_html():
     assert WORKSHOP_ENGINE_SCRIPT in guide
     assert THEME_VARIABLES in guide
     assert DARK_THEME_VARIABLES in guide
+    assert "AIBAST field guide" in guide
+    assert "Clawpilot" not in guide
     assert "Facilitator and learner guide" in guide
     assert "Locked Preview corpus" in guide
     assert "Production replacement seams" in guide
