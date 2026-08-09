@@ -330,7 +330,7 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     ):
         assert marker in brainstem_skill
     for marker in (
-        "GitHub Copilot only",
+        "AIBAST Easy Mode — GitHub Copilot",
         "tests/demo_cases/<slug>.json",
         "must_include",
         "must_not_include",
@@ -339,6 +339,7 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
         "Never publish",
     ):
         assert marker in copilot_skill
+    assert "brainstem" not in copilot_skill.lower()
     assert len(cases) == 5
 
     assert "GitHub Copilot + Brainstem" in quest

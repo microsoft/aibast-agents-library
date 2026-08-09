@@ -1,13 +1,13 @@
 ---
 name: aibast-easy-mode-copilot
-description: Run supported AIBAST workshops directly through GitHub Copilot Agent mode without using Brainstem.
+description: Run supported AIBAST workshops directly through GitHub Copilot Agent mode.
 ---
 
-# AIBAST Easy Mode — GitHub Copilot only
+# AIBAST Easy Mode — GitHub Copilot
 
 Once this file is dragged into GitHub Copilot Chat in VS Code, run the complete
-Easy Mode harness directly in Copilot. The user never needs to say “without
-Brainstem”; this skill selection already made that choice.
+Easy Mode harness directly in Copilot. This skill owns discovery, local testing,
+Draft deployment, Preview validation, and evidence capture.
 
 ## Public source
 

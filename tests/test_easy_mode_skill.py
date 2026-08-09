@@ -26,7 +26,8 @@ def test_lane_selection_is_encoded_by_the_downloaded_skill():
     )
     compact = " ".join(copilot.split())
     assert "run the complete Easy Mode harness directly in Copilot" in compact
-    assert "The user never needs to say “without Brainstem”" in compact
+    assert "Draft deployment, Preview validation, and evidence capture" in compact
+    assert "brainstem" not in copilot.lower()
 
 
 def test_both_skills_accept_the_same_short_messages():
