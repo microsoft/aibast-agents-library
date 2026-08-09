@@ -1,27 +1,27 @@
 {
  "schema": "aibast-metrics/1.0",
- "generated_at": "2026-08-09T16:07:29Z",
+ "generated_at": "2026-08-09T16:33:52Z",
  "repo": {
-  "owner": "microsoft",
+  "owner": "kody-w",
   "name": "aibast-agents-library",
-  "url": "https://github.com/microsoft/aibast-agents-library",
-  "site": "https://microsoft.github.io/aibast-agents-library/",
-  "stars": 4,
-  "forks": 2,
+  "url": "https://github.com/kody-w/aibast-agents-library",
+  "site": "https://kody-w.github.io/aibast-agents-library/",
+  "stars": 0,
+  "forks": 0,
   "watchers": 0,
-  "open_issues": 6,
-  "size_kb": 2935,
-  "created_at": "2025-10-17T16:17:53Z",
-  "pushed_at": "2026-07-20T14:54:29Z",
+  "open_issues": 1,
+  "size_kb": 2316194,
+  "created_at": "2025-10-20T18:22:14Z",
+  "pushed_at": "2026-08-09T16:32:15Z",
   "description": "Main repository for AI BAST Specialist Teal AI Agents Library",
   "homepage": null,
-  "as_of": "2026-08-09T16:07:29Z",
+  "as_of": "2026-08-09T16:33:52Z",
   "carried_forward": false
  },
  "totals": {
-  "downloads": 0,
+  "downloads": 388,
   "clones": 0,
-  "cdn_hits": 0,
+  "cdn_hits": 388,
   "release_downloads": 0,
   "agent_file_downloads": 0,
   "installer_downloads": 0,
@@ -44,7 +44,15 @@
   "total_lines": 30695,
   "total_kb": 1503.4
  },
- "daily": [],
+ "daily": [
+  {
+   "date": "2026-08-06",
+   "clones": 0,
+   "clone_uniques": 0,
+   "views": 0,
+   "cdn": 388
+  }
+ ],
  "traffic": {
   "paths": [],
   "referrers": [],
@@ -52,24 +60,32 @@
   "views_14d": 0,
   "live": false,
   "as_of": null,
-  "unavailable_reason": "The token is not SSO-authorized for the owning organization. Authorize it for the org, or set METRICS_TOKEN to one that is.",
+  "unavailable_reason": "GitHub returned 403: Resource not accessible by integration",
   "carried_forward": false
  },
  "cdn": {
-  "total_hits": 0,
-  "bandwidth": 0,
-  "rank": null,
+  "total_hits": 388,
+  "bandwidth": 764036509,
+  "rank": 665064,
   "agent_hits": 0,
   "installer_hits": 0,
   "files": [],
-  "as_of": "2026-08-09T16:07:29Z",
+  "as_of": "2026-08-09T16:33:52Z",
   "carried_forward": false
  },
  "releases": {
   "total_downloads": 0,
-  "count": 0,
-  "releases": [],
-  "as_of": "2026-08-09T16:07:29Z",
+  "count": 1,
+  "releases": [
+   {
+    "tag": "v1.0.0",
+    "name": "v1.0.0 \u2014 ecosystem snapshot",
+    "published_at": "2026-05-26T17:55:21Z",
+    "downloads": 0,
+    "assets": []
+   }
+  ],
+  "as_of": "2026-08-09T16:33:52Z",
   "carried_forward": false
  },
  "leaderboards": {
@@ -1546,7 +1562,7 @@
  ],
  "agent_upvote_coverage": {
   "status": "available",
-  "as_of": "2026-08-09T16:07:29Z",
+  "as_of": "2026-08-09T16:33:52Z",
   "pages": 1,
   "issues_scanned": 0,
   "diagnostics": {
@@ -1562,7 +1578,7 @@
  "file_metrics": {
   "schema": "aibast-file-metrics/1.0",
   "source_status": "complete",
-  "as_of": "2026-08-09T16:07:29Z",
+  "as_of": "2026-08-09T16:33:52Z",
   "carried_forward": false,
   "totals": {
    "files": 3994,
@@ -33574,8 +33590,8 @@
    "duplicate_rows": 0,
    "conflicting_duplicates": [],
    "invalid_rows": 0,
-   "unmapped_rows": 0,
-   "unscoped_observed_files": 0
+   "unmapped_rows": 10,
+   "unscoped_observed_files": 10
   },
   "caveat": "Only jsDelivr per-file observations are measurable. raw.githubusercontent.com, GitHub Pages, and direct GitHub downloads do not expose public per-file counters here."
  },
@@ -34487,20 +34503,20 @@
    },
    "downloads": {
     "status": "complete paginated jsDelivr file response",
-    "as_of": "2026-08-09T16:07:29Z",
+    "as_of": "2026-08-09T16:33:52Z",
     "pages": 1,
     "pagination": "complete",
     "diagnostics": {
      "duplicate_rows": 0,
      "conflicting_duplicates": [],
      "invalid_rows": 0,
-     "unmapped_rows": 0
+     "unmapped_rows": 10
     },
     "scope": "Validated jsDelivr observations from the canonical tracked-file ledger. Every file mapped to a workshop contributes once; source bundles are partitioned from non-bundle files. Package totals are not added. Raw GitHub, direct GitHub Pages, and unattributed releases are uncounted."
    },
    "feedback": {
     "status": "workshop-feedback label + body marker union",
-    "as_of": "2026-08-09T16:07:29Z",
+    "as_of": "2026-08-09T16:33:52Z",
     "issues_scanned": 0,
     "pages": 2,
     "diagnostics": {
@@ -34512,7 +34528,7 @@
    },
    "agent_upvotes": {
     "status": "available",
-    "as_of": "2026-08-09T16:07:29Z",
+    "as_of": "2026-08-09T16:33:52Z",
     "scope": "Validated public agent-upvote issues mapped through each workshop's canonical primary agent. This preference signal is separate from usage_events."
    }
   },
@@ -34520,51 +34536,125 @@
    {
     "name": "GitHub Popular Paths API",
     "metric": "14-day workshop path views and path-level uniques; not complete GitHub Pages analytics",
-    "url": "https://api.github.com/repos/microsoft/aibast-agents-library/traffic/popular/paths"
+    "url": "https://api.github.com/repos/kody-w/aibast-agents-library/traffic/popular/paths"
    },
    {
     "name": "jsDelivr File Stats",
     "metric": "paginated workshop files under /solutions/<slug>/ and bundles at /exports/<slug>-source.zip",
-    "url": "https://data.jsdelivr.com/v1/stats/packages/gh/microsoft/aibast-agents-library@main/files?period=year&limit=100&page=1"
+    "url": "https://data.jsdelivr.com/v1/stats/packages/gh/kody-w/aibast-agents-library@main/files?period=year&limit=100&page=1"
    },
    {
     "name": "GitHub Issues API",
     "metric": "public workshop feedback issues identified by label or feedback marker",
-    "url": "https://api.github.com/repos/microsoft/aibast-agents-library/issues?state=all"
+    "url": "https://api.github.com/repos/kody-w/aibast-agents-library/issues?state=all"
    },
    {
     "name": "GitHub Agent Upvote Issues",
     "metric": "validated per-agent preference events mapped to canonical workshop primaries; excluded from usage_events",
-    "url": "https://api.github.com/repos/microsoft/aibast-agents-library/issues?state=all"
+    "url": "https://api.github.com/repos/kody-w/aibast-agents-library/issues?state=all"
    },
    {
     "name": "registry.json",
     "metric": "advertised workshop slugs, display names, and quest URLs",
-    "url": "https://microsoft.github.io/aibast-agents-library/registry.json"
+    "url": "https://kody-w.github.io/aibast-agents-library/registry.json"
    }
   ],
-  "as_of": "2026-08-09T16:07:29Z",
+  "as_of": "2026-08-09T16:33:52Z",
   "carried_forward": false
  },
  "agi": {
   "schema": "aibast-agi/2.0",
   "status": "available",
-  "as_of": "2026-08-09T16:07:29Z",
+  "as_of": "2026-08-09T16:33:52Z",
   "carried_forward": false,
   "caveat": "Agent Growth & Impact (AGI) Points are server-scored from opt-in public GitHub progress claims. Each explicitly claimed achievement has a fixed value: started 5, local-proof 15, draft-builder 20, preview-proven 25, workshop-completed 35, and hard-mode-completed 50, for at most 150 points per workshop. Re-syncing unions achievement IDs without duplicating points. Profiles are public by explicit submission consent. GitHub verification confirms authenticated issue authorship and canonical claim format only; achievement completion remains self-reported and is not independently proven. Verified public AGI remains separate from local self-paced state, repository stars, agent upvotes, downloads, and workshop usage events.",
   "totals": {
-   "participants": 0,
-   "points": 0,
-   "achievements": 0,
-   "starts": 0,
-   "workshop_completions": 0,
-   "hard_completions": 0,
-   "completion_rate": 0.0,
-   "hard_completion_rate": 0.0,
-   "achievement_completion_rate": 0.0
+   "participants": 1,
+   "points": 150,
+   "achievements": 6,
+   "starts": 1,
+   "workshop_completions": 1,
+   "hard_completions": 1,
+   "completion_rate": 100.0,
+   "hard_completion_rate": 100.0,
+   "achievement_completion_rate": 100.0
   },
-  "profiles": [],
+  "profiles": [
+   {
+    "login": "kody-w",
+    "points": 150,
+    "achievement_count": 6,
+    "starts": 1,
+    "workshop_completions": 1,
+    "hard_completions": 1,
+    "badges": [
+     {
+      "workshop": "time-entry-billing",
+      "achievement": "started",
+      "points": 5
+     },
+     {
+      "workshop": "time-entry-billing",
+      "achievement": "local-proof",
+      "points": 15
+     },
+     {
+      "workshop": "time-entry-billing",
+      "achievement": "draft-builder",
+      "points": 20
+     },
+     {
+      "workshop": "time-entry-billing",
+      "achievement": "preview-proven",
+      "points": 25
+     },
+     {
+      "workshop": "time-entry-billing",
+      "achievement": "workshop-completed",
+      "points": 35
+     },
+     {
+      "workshop": "time-entry-billing",
+      "achievement": "hard-mode-completed",
+      "points": 50
+     }
+    ],
+    "achievement_ids": [
+     "time-entry-billing:started",
+     "time-entry-billing:local-proof",
+     "time-entry-billing:draft-builder",
+     "time-entry-billing:preview-proven",
+     "time-entry-billing:workshop-completed",
+     "time-entry-billing:hard-mode-completed"
+    ],
+    "completed_workshops": [
+     "time-entry-billing"
+    ]
+   }
+  ],
   "workshops": [
+   {
+    "slug": "time-entry-billing",
+    "display_name": "Time Entry and Billing Agent",
+    "agent_name": "@aibast-agents-library/time-entry-billing",
+    "participants": 1,
+    "points": 150,
+    "achievements": 6,
+    "starts": 1,
+    "workshop_completions": 1,
+    "hard_completions": 1,
+    "achievement_counts": {
+     "started": 1,
+     "local-proof": 1,
+     "draft-builder": 1,
+     "preview-proven": 1,
+     "workshop-completed": 1,
+     "hard-mode-completed": 1
+    },
+    "completion_rate": 100.0,
+    "hard_completion_rate": 100.0,
+    "achievement_completion_rate": 100.0
+   },
    {
     "slug": "account-intelligence",
     "display_name": "Account Intelligence Agent",
@@ -35578,28 +35668,6 @@
     "achievement_completion_rate": 0.0
    },
    {
-    "slug": "time-entry-billing",
-    "display_name": "Time Entry and Billing Agent",
-    "agent_name": "@aibast-agents-library/time-entry-billing",
-    "participants": 0,
-    "points": 0,
-    "achievements": 0,
-    "starts": 0,
-    "workshop_completions": 0,
-    "hard_completions": 0,
-    "achievement_counts": {
-     "started": 0,
-     "local-proof": 0,
-     "draft-builder": 0,
-     "preview-proven": 0,
-     "workshop-completed": 0,
-     "hard-mode-completed": 0
-    },
-    "completion_rate": 0.0,
-    "hard_completion_rate": 0.0,
-    "achievement_completion_rate": 0.0
-   },
-   {
     "slug": "underwriting-support",
     "display_name": "Underwriting Support Agent",
     "agent_name": "@aibast-agents-library/underwriting-support",
@@ -35693,97 +35761,97 @@
     "id": "started",
     "label": "Started",
     "points": 5,
-    "claims": 0,
-    "participants": 0,
-    "workshops": 0,
-    "attainment_rate": 0.0
+    "claims": 1,
+    "participants": 1,
+    "workshops": 1,
+    "attainment_rate": 100.0
    },
    {
     "id": "local-proof",
     "label": "Local proof",
     "points": 15,
-    "claims": 0,
-    "participants": 0,
-    "workshops": 0,
-    "attainment_rate": 0.0
+    "claims": 1,
+    "participants": 1,
+    "workshops": 1,
+    "attainment_rate": 100.0
    },
    {
     "id": "draft-builder",
     "label": "Draft builder",
     "points": 20,
-    "claims": 0,
-    "participants": 0,
-    "workshops": 0,
-    "attainment_rate": 0.0
+    "claims": 1,
+    "participants": 1,
+    "workshops": 1,
+    "attainment_rate": 100.0
    },
    {
     "id": "preview-proven",
     "label": "Preview proven",
     "points": 25,
-    "claims": 0,
-    "participants": 0,
-    "workshops": 0,
-    "attainment_rate": 0.0
+    "claims": 1,
+    "participants": 1,
+    "workshops": 1,
+    "attainment_rate": 100.0
    },
    {
     "id": "workshop-completed",
     "label": "Workshop completed",
     "points": 35,
-    "claims": 0,
-    "participants": 0,
-    "workshops": 0,
-    "attainment_rate": 0.0
+    "claims": 1,
+    "participants": 1,
+    "workshops": 1,
+    "attainment_rate": 100.0
    },
    {
     "id": "hard-mode-completed",
     "label": "Hard mode completed",
     "points": 50,
-    "claims": 0,
-    "participants": 0,
-    "workshops": 0,
-    "attainment_rate": 0.0
+    "claims": 1,
+    "participants": 1,
+    "workshops": 1,
+    "attainment_rate": 100.0
    }
   ],
   "coverage": {
    "status": "available",
    "scope": "Public state=all GitHub issues whose body begins with the AGI progress marker and passes the exact schema, canonical workshop-primary-agent, ordered achievement subset, dependency, source, and public-login checks. Open, closed, and edited claims union by case-insensitive login/workshop/achievement.",
    "diagnostics": {
-    "accepted_issues": 0,
-    "accepted_achievements": 0,
+    "accepted_issues": 1,
+    "accepted_achievements": 6,
     "duplicate_achievements": 0,
     "invalid_issues": 0,
     "invalid_users": 0,
     "pull_requests": 0
    },
    "pages": 1,
-   "issues_scanned": 0
+   "issues_scanned": 1
   }
  },
  "sources": [
   {
    "name": "GitHub Traffic API",
    "metric": "clones, views, popular paths (clones include this repo's own CI checkouts)",
-   "url": "https://api.github.com/repos/microsoft/aibast-agents-library/traffic/clones"
+   "url": "https://api.github.com/repos/kody-w/aibast-agents-library/traffic/clones"
   },
   {
    "name": "jsDelivr CDN",
    "metric": "per-file download observations across every tracked repository file, including agents, skills, workshops, installers, documentation, code, and assets",
-   "url": "https://data.jsdelivr.com/v1/stats/packages/gh/microsoft/aibast-agents-library"
+   "url": "https://data.jsdelivr.com/v1/stats/packages/gh/kody-w/aibast-agents-library"
   },
   {
    "name": "GitHub Releases",
    "metric": "release asset downloads",
-   "url": "https://api.github.com/repos/microsoft/aibast-agents-library/releases"
+   "url": "https://api.github.com/repos/kody-w/aibast-agents-library/releases"
   },
   {
    "name": "GitHub Issues",
    "metric": "structured public agent upvotes, workshop feedback, and opt-in verified AGI progress syncs validated from issue bodies",
-   "url": "https://api.github.com/repos/microsoft/aibast-agents-library/issues?state=all"
+   "url": "https://api.github.com/repos/kody-w/aibast-agents-library/issues?state=all"
   },
   {
    "name": "registry.json",
    "metric": "agents, stacks, verticals, categories",
-   "url": "https://microsoft.github.io/aibast-agents-library/registry.json"
+   "url": "https://kody-w.github.io/aibast-agents-library/registry.json"
   }
  ]
 }
