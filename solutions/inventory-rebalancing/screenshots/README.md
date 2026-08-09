@@ -1,12 +1,12 @@
-# Copilot Studio screenshot evidence
+# Screenshot evidence
 
-Only real kodyv8 screenshots are included. No frame is a mockup.
+Only real browser captures belong in this tree. Do not add mockups, generated
+screens, recreated UI, or claims that are not visible in the evidence.
 
-- `assisted/` contains a compact three-frame Easy film: IR-01 routing, the
-  resulting capacity/SKU evidence, and the final agents list showing both
-  inventory agents in Draft.
-- `manual/` contains the exact 22-step literal-browser sequence, including four
-  corrected Preview gates and the Draft gate.
+- Copilot-assisted frames recorded: 6
+- Literal-browser manual frames recorded: 22
+- Manual sequence: `manual/browserfilm.json`
+- Assisted sequence: `assisted/browserfilm.json` when available
 
-Each directory has a deterministic `browserfilm.json`, animated GIF, contact
-sheet, and source JPEGs.
+All inputs and demonstrated outcomes are synthetic. These captures provide
+qualitative workflow evidence, not customer KPIs or proof of a live connection.

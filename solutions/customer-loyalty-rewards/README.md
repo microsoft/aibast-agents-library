@@ -23,7 +23,12 @@ redemption, refund, order, or purchase is issued or changed.
 
 | Surface | Location |
 | --- | --- |
-| Customer field guide | `solutions/customer-loyalty-rewards/FIELD-GUIDE.md` |
+| Customer field guide | `solutions/customer-loyalty-rewards/field-guide.html` |
+| Evidence report | `solutions/customer-loyalty-rewards/evidence-report.html` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/customer-loyalty-rewards/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/customer-loyalty-rewards/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Hard quest | `solutions/customer-loyalty-rewards/quest.html` |
 | Literal browser tutorial | `solutions/customer-loyalty-rewards/manual-tutorial.html` |
 | Raw export manifest | `solutions/customer-loyalty-rewards/export-manifest.json` |
@@ -31,7 +36,7 @@ redemption, refund, order, or purchase is issued or changed.
 | Manual evidence | `solutions/customer-loyalty-rewards/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/customer-loyalty-rewards/screenshots/manual/browserfilm.json` |
 
-**Scaffold status:** 60 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 69 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

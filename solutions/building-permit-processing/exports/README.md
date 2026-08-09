@@ -1,13 +1,12 @@
 # Export bundle
 
-`building-permit-processing-source.zip` is generated from
-`../export-manifest.json`:
+Build `building-permit-processing-source.zip` from the generated manifest:
 
 ```text
 python3 tools/build_solution_export.py \
   solutions/building-permit-processing/export-manifest.json
 ```
 
-The bundle includes the portable agent, deployment recipe, field guide,
-Copilot Studio YAML, uploadable knowledge, uploadable `SKILL.md` files,
-evaluation evidence, tutorial, screenshots, GIFs, and source manifests.
+The existing builder includes the complete solution package plus every
+non-pending resource declared by the manifest. Items marked `pending_capture`
+are intentionally excluded until real evidence exists.

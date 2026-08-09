@@ -1,20 +1,20 @@
 {
   "schema": "aibast-solution-export/1.0",
   "solution": "@aibast-agents-library/asset-maintenance-forecast",
-  "raw_base": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/",
+  "raw_base": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/",
   "github_folder": "https://github.com/microsoft/aibast-agents-library/tree/main/solutions/asset-maintenance-forecast",
   "evidence_boundary": "Synthetic solution evidence only. Qualitative workflow proof is not a customer KPI, measured production result, or publication approval.",
   "bundle": {
     "label": "Complete Asset Maintenance Forecast Agent source bundle",
     "path": "solutions/asset-maintenance-forecast/exports/asset-maintenance-forecast-source.zip",
-    "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/exports/asset-maintenance-forecast-source.zip"
+    "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/exports/asset-maintenance-forecast-source.zip"
   },
   "files": [
     {
       "id": "portable-agent",
       "label": "Portable source agent",
       "path": "agents/@aibast-agents-library/energy_stacks/asset_maintenance_forecast_stack/asset_maintenance_forecast_agent.py",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/energy_stacks/asset_maintenance_forecast_stack/asset_maintenance_forecast_agent.py",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/agents/@aibast-agents-library/energy_stacks/asset_maintenance_forecast_stack/asset_maintenance_forecast_agent.py",
       "use": "Local Brainstem runtime and production-logic reference",
       "status": "ready"
     },
@@ -22,23 +22,71 @@
       "id": "deployment-recipe",
       "label": "Deployment recipe",
       "path": "solutions/asset-maintenance-forecast/deployment.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/deployment.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/deployment.json",
       "use": "Easy-mode deployment contract",
       "status": "ready"
     },
     {
       "id": "field-guide",
       "label": "Customer field guide",
+      "path": "solutions/asset-maintenance-forecast/field-guide.html",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/field-guide.html",
+      "use": "Styled facilitation, evidence boundaries, gates, and recovery",
+      "status": "ready"
+    },
+    {
+      "id": "field-guide-source",
+      "label": "Field guide source",
       "path": "solutions/asset-maintenance-forecast/FIELD-GUIDE.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/FIELD-GUIDE.md",
-      "use": "Facilitation, evidence boundaries, gates, and recovery",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/FIELD-GUIDE.md",
+      "use": "Markdown source retained for audit and export",
+      "status": "ready"
+    },
+    {
+      "id": "easy-personless-guide",
+      "label": "Personless Easy-mode guide",
+      "path": "solutions/asset-maintenance-forecast/EASY-MODE-PERSONLESS.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/EASY-MODE-PERSONLESS.md",
+      "use": "Brainstem lane skill attachment, two-message workshop, and engine loop",
+      "status": "ready"
+    },
+    {
+      "id": "easy-copilot-chat-prompts",
+      "label": "Copilot-only Easy-mode comparison",
+      "path": "solutions/asset-maintenance-forecast/EASY-MODE-COPILOT-CHAT.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/EASY-MODE-COPILOT-CHAT.md",
+      "use": "Copilot-only lane skill attachment and the same two workshop messages",
+      "status": "ready"
+    },
+    {
+      "id": "easy-mode-brainstem-skill",
+      "label": "Brainstem Easy Mode skill",
+      "path": "skills/aibast-easy-mode-brainstem/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/skills/aibast-easy-mode-brainstem/SKILL.md",
+      "use": "Download-and-drag harness that defaults workshop execution to Brainstem",
+      "status": "ready"
+    },
+    {
+      "id": "easy-mode-copilot-skill",
+      "label": "Copilot-only Easy Mode skill",
+      "path": "skills/aibast-easy-mode-copilot/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/skills/aibast-easy-mode-copilot/SKILL.md",
+      "use": "Download-and-drag harness that runs the workshop directly in GitHub Copilot",
+      "status": "ready"
+    },
+    {
+      "id": "generic-workshop-agent",
+      "label": "Generic AIBAST Workshop agent",
+      "path": "agents/@aibast-agents-library/templates/workshop_agent.py",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/agents/@aibast-agents-library/templates/workshop_agent.py",
+      "use": "Registry-driven Brainstem engine shared by every packaged solution",
       "status": "ready"
     },
     {
       "id": "manual-instructions",
       "label": "Manual global instructions",
       "path": "solutions/asset-maintenance-forecast/manual/GLOBAL-INSTRUCTIONS.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/manual/GLOBAL-INSTRUCTIONS.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/manual/GLOBAL-INSTRUCTIONS.md",
       "use": "Reviewed instructions for literal browser construction",
       "status": "ready"
     },
@@ -46,7 +94,7 @@
       "id": "settings",
       "label": "Copilot Studio settings",
       "path": "solutions/asset-maintenance-forecast/copilot-studio/settings.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/copilot-studio/settings.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/copilot-studio/settings.mcs.yml",
       "use": "Easy-mode agent settings and instruction copy",
       "status": "ready"
     },
@@ -54,7 +102,7 @@
       "id": "agent-sync",
       "label": "Copilot Studio component manifest",
       "path": "solutions/asset-maintenance-forecast/copilot-studio/agent.sync.yaml",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/copilot-studio/agent.sync.yaml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/copilot-studio/agent.sync.yaml",
       "use": "Easy-mode component synchronization",
       "status": "ready"
     },
@@ -62,7 +110,7 @@
       "id": "knowledge-asset-maintenance-forecast-rules-and-controls",
       "label": "Asset Maintenance Forecast Rules And Controls",
       "path": "solutions/asset-maintenance-forecast/manual/knowledge/asset-maintenance-forecast-rules-and-controls.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/manual/knowledge/asset-maintenance-forecast-rules-and-controls.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/manual/knowledge/asset-maintenance-forecast-rules-and-controls.md",
       "use": "Manual knowledge upload",
       "status": "ready"
     },
@@ -70,7 +118,7 @@
       "id": "knowledge-asset-maintenance-forecast-synthetic-records",
       "label": "Asset Maintenance Forecast Synthetic Records",
       "path": "solutions/asset-maintenance-forecast/manual/knowledge/asset-maintenance-forecast-synthetic-records.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/manual/knowledge/asset-maintenance-forecast-synthetic-records.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/manual/knowledge/asset-maintenance-forecast-synthetic-records.md",
       "use": "Manual knowledge upload",
       "status": "ready"
     },
@@ -78,7 +126,7 @@
       "id": "skill-aibast-asset-health",
       "label": "Manual skill: aibast asset health",
       "path": "solutions/asset-maintenance-forecast/manual/skills/aibast_asset-health/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/manual/skills/aibast_asset-health/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/manual/skills/aibast_asset-health/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -86,7 +134,7 @@
       "id": "skill-aibast-budget-projection",
       "label": "Manual skill: aibast budget projection",
       "path": "solutions/asset-maintenance-forecast/manual/skills/aibast_budget-projection/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/manual/skills/aibast_budget-projection/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/manual/skills/aibast_budget-projection/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -94,7 +142,7 @@
       "id": "skill-aibast-maintenance-forecast",
       "label": "Manual skill: aibast maintenance forecast",
       "path": "solutions/asset-maintenance-forecast/manual/skills/aibast_maintenance-forecast/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/manual/skills/aibast_maintenance-forecast/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/manual/skills/aibast_maintenance-forecast/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -102,7 +150,7 @@
       "id": "skill-aibast-work-order-plan",
       "label": "Manual skill: aibast work order plan",
       "path": "solutions/asset-maintenance-forecast/manual/skills/aibast_work-order-plan/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/manual/skills/aibast_work-order-plan/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/manual/skills/aibast_work-order-plan/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -110,7 +158,7 @@
       "id": "easy-knowledge-asset-maintenance-forecast-rules-and-controls",
       "label": "Asset Maintenance Forecast Rules And Controls",
       "path": "solutions/asset-maintenance-forecast/copilot-studio/capabilities/knowledge/files/asset-maintenance-forecast-rules-and-controls.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/copilot-studio/capabilities/knowledge/files/asset-maintenance-forecast-rules-and-controls.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/copilot-studio/capabilities/knowledge/files/asset-maintenance-forecast-rules-and-controls.md",
       "use": "Copilot Studio knowledge source or synchronization metadata",
       "status": "ready"
     },
@@ -118,7 +166,7 @@
       "id": "easy-knowledge-asset-maintenance-forecast-rules-and-controls-md-mcs",
       "label": "Asset Maintenance Forecast Rules And Controls.Md.Mcs",
       "path": "solutions/asset-maintenance-forecast/copilot-studio/capabilities/knowledge/files/asset-maintenance-forecast-rules-and-controls.md.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/copilot-studio/capabilities/knowledge/files/asset-maintenance-forecast-rules-and-controls.md.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/copilot-studio/capabilities/knowledge/files/asset-maintenance-forecast-rules-and-controls.md.mcs.yml",
       "use": "Copilot Studio knowledge source or synchronization metadata",
       "status": "ready"
     },
@@ -126,7 +174,7 @@
       "id": "easy-knowledge-asset-maintenance-forecast-synthetic-records",
       "label": "Asset Maintenance Forecast Synthetic Records",
       "path": "solutions/asset-maintenance-forecast/copilot-studio/capabilities/knowledge/files/asset-maintenance-forecast-synthetic-records.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/copilot-studio/capabilities/knowledge/files/asset-maintenance-forecast-synthetic-records.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/copilot-studio/capabilities/knowledge/files/asset-maintenance-forecast-synthetic-records.md",
       "use": "Copilot Studio knowledge source or synchronization metadata",
       "status": "ready"
     },
@@ -134,7 +182,7 @@
       "id": "easy-knowledge-asset-maintenance-forecast-synthetic-records-md-mcs",
       "label": "Asset Maintenance Forecast Synthetic Records.Md.Mcs",
       "path": "solutions/asset-maintenance-forecast/copilot-studio/capabilities/knowledge/files/asset-maintenance-forecast-synthetic-records.md.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/copilot-studio/capabilities/knowledge/files/asset-maintenance-forecast-synthetic-records.md.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/copilot-studio/capabilities/knowledge/files/asset-maintenance-forecast-synthetic-records.md.mcs.yml",
       "use": "Copilot Studio knowledge source or synchronization metadata",
       "status": "ready"
     },
@@ -142,7 +190,7 @@
       "id": "easy-skill-aibast-asset-maintenance-forecast-asset-health-mcs",
       "label": "Aibast Asset Maintenance Forecast Asset Health.Mcs",
       "path": "solutions/asset-maintenance-forecast/copilot-studio/behaviors/aibast_asset-maintenance-forecast-asset-health.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/copilot-studio/behaviors/aibast_asset-maintenance-forecast-asset-health.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/copilot-studio/behaviors/aibast_asset-maintenance-forecast-asset-health.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -150,7 +198,7 @@
       "id": "easy-skill-aibast-asset-maintenance-forecast-budget-projection-mcs",
       "label": "Aibast Asset Maintenance Forecast Budget Projection.Mcs",
       "path": "solutions/asset-maintenance-forecast/copilot-studio/behaviors/aibast_asset-maintenance-forecast-budget-projection.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/copilot-studio/behaviors/aibast_asset-maintenance-forecast-budget-projection.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/copilot-studio/behaviors/aibast_asset-maintenance-forecast-budget-projection.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -158,7 +206,7 @@
       "id": "easy-skill-aibast-asset-maintenance-forecast-maintenance-forecast-mcs",
       "label": "Aibast Asset Maintenance Forecast Maintenance Forecast.Mcs",
       "path": "solutions/asset-maintenance-forecast/copilot-studio/behaviors/aibast_asset-maintenance-forecast-maintenance-forecast.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/copilot-studio/behaviors/aibast_asset-maintenance-forecast-maintenance-forecast.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/copilot-studio/behaviors/aibast_asset-maintenance-forecast-maintenance-forecast.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -166,7 +214,7 @@
       "id": "easy-skill-aibast-asset-maintenance-forecast-work-order-plan-mcs",
       "label": "Aibast Asset Maintenance Forecast Work Order Plan.Mcs",
       "path": "solutions/asset-maintenance-forecast/copilot-studio/behaviors/aibast_asset-maintenance-forecast-work-order-plan.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/copilot-studio/behaviors/aibast_asset-maintenance-forecast-work-order-plan.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/copilot-studio/behaviors/aibast_asset-maintenance-forecast-work-order-plan.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -174,7 +222,7 @@
       "id": "easy-evidence-copilot-studio-preview-evidence",
       "label": "Copilot Studio Preview Evidence",
       "path": "solutions/asset-maintenance-forecast/evals/copilot-studio-preview-evidence.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/evals/copilot-studio-preview-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/evals/copilot-studio-preview-evidence.json",
       "use": "Easy-mode deployment or Preview evidence",
       "status": "ready"
     },
@@ -182,7 +230,7 @@
       "id": "manual-evidence",
       "label": "Manual build evidence",
       "path": "solutions/asset-maintenance-forecast/evals/manual-build-evidence.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/evals/manual-build-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/evals/manual-build-evidence.json",
       "use": "Manual identity, inventory, Preview, and Draft-gate evidence",
       "status": "ready"
     },
@@ -190,7 +238,7 @@
       "id": "onepager-map",
       "label": "Onepager Map",
       "path": "solutions/asset-maintenance-forecast/evals/onepager-map.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/evals/onepager-map.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/evals/onepager-map.json",
       "use": "Advertised-promise mapping evidence",
       "status": "ready"
     },
@@ -198,7 +246,7 @@
       "id": "easy-evidence-source-audit",
       "label": "Source Audit",
       "path": "solutions/asset-maintenance-forecast/evals/source-audit.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/evals/source-audit.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/evals/source-audit.json",
       "use": "Easy-mode deployment or Preview evidence",
       "status": "ready"
     },
@@ -206,15 +254,23 @@
       "id": "brainstem-transcripts",
       "label": "Isolated Brainstem transcripts",
       "path": "solutions/asset-maintenance-forecast/evals/transcripts.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/evals/transcripts.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/evals/transcripts.json",
       "use": "Canonical source-agent acceptance evidence",
+      "status": "ready"
+    },
+    {
+      "id": "easy-evidence-visual-checkpoints",
+      "label": "Visual Checkpoints",
+      "path": "solutions/asset-maintenance-forecast/evals/visual-checkpoints.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/evals/visual-checkpoints.json",
+      "use": "Easy-mode deployment or Preview evidence",
       "status": "ready"
     },
     {
       "id": "manual-browserfilm-manifest",
       "label": "Manual browserfilm manifest",
       "path": "solutions/asset-maintenance-forecast/screenshots/manual/browserfilm.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/manual/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/manual/browserfilm.json",
       "use": "Ordered literal-browser evidence frames",
       "status": "ready"
     },
@@ -222,7 +278,7 @@
       "id": "manual-frame-01",
       "label": "Create a blank Copilot Studio agent",
       "path": "solutions/asset-maintenance-forecast/screenshots/manual/01-create-blank-agent.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/manual/01-create-blank-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/manual/01-create-blank-agent.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -230,7 +286,7 @@
       "id": "manual-frame-02",
       "label": "Name Asset Maintenance Manual",
       "path": "solutions/asset-maintenance-forecast/screenshots/manual/02-name-agent.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/manual/02-name-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/manual/02-name-agent.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -238,7 +294,7 @@
       "id": "manual-frame-03",
       "label": "Enter the reviewed global instructions",
       "path": "solutions/asset-maintenance-forecast/screenshots/manual/03-enter-instructions.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/manual/03-enter-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/manual/03-enter-instructions.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -246,7 +302,7 @@
       "id": "manual-frame-04",
       "label": "Save the instruction policy",
       "path": "solutions/asset-maintenance-forecast/screenshots/manual/04-save-instructions.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/manual/04-save-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/manual/04-save-instructions.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -254,7 +310,7 @@
       "id": "manual-frame-05",
       "label": "Remove default web search",
       "path": "solutions/asset-maintenance-forecast/screenshots/manual/05-remove-web-search.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/manual/05-remove-web-search.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/manual/05-remove-web-search.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -262,7 +318,7 @@
       "id": "manual-frame-06",
       "label": "Add knowledge: asset-maintenance-forecast-rules-and-controls.md",
       "path": "solutions/asset-maintenance-forecast/screenshots/manual/06-add-asset-maintenance-forecast-rules-and-controls.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/manual/06-add-asset-maintenance-forecast-rules-and-controls.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/manual/06-add-asset-maintenance-forecast-rules-and-controls.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -270,7 +326,7 @@
       "id": "manual-frame-07",
       "label": "Add knowledge: asset-maintenance-forecast-synthetic-records.md",
       "path": "solutions/asset-maintenance-forecast/screenshots/manual/07-add-asset-maintenance-forecast-synthetic-records.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/manual/07-add-asset-maintenance-forecast-synthetic-records.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/manual/07-add-asset-maintenance-forecast-synthetic-records.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -278,7 +334,7 @@
       "id": "manual-frame-08",
       "label": "Add skill: aibast_asset-health",
       "path": "solutions/asset-maintenance-forecast/screenshots/manual/08-add-aibast-asset-health.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/manual/08-add-aibast-asset-health.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/manual/08-add-aibast-asset-health.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -286,7 +342,7 @@
       "id": "manual-frame-09",
       "label": "Add skill: aibast_budget-projection",
       "path": "solutions/asset-maintenance-forecast/screenshots/manual/09-add-aibast-budget-projection.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/manual/09-add-aibast-budget-projection.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/manual/09-add-aibast-budget-projection.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -294,7 +350,7 @@
       "id": "manual-frame-10",
       "label": "Add skill: aibast_maintenance-forecast",
       "path": "solutions/asset-maintenance-forecast/screenshots/manual/10-add-aibast-maintenance-forecast.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/manual/10-add-aibast-maintenance-forecast.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/manual/10-add-aibast-maintenance-forecast.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -302,7 +358,7 @@
       "id": "manual-frame-11",
       "label": "Add skill: aibast_work-order-plan",
       "path": "solutions/asset-maintenance-forecast/screenshots/manual/11-add-aibast-work-order-plan.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/manual/11-add-aibast-work-order-plan.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/manual/11-add-aibast-work-order-plan.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -310,7 +366,7 @@
       "id": "manual-frame-12",
       "label": "Review model, skills, knowledge, and safety boundaries",
       "path": "solutions/asset-maintenance-forecast/screenshots/manual/12-review-inventory.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/manual/12-review-inventory.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/manual/12-review-inventory.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -318,7 +374,7 @@
       "id": "manual-frame-13",
       "label": "Open a fresh Preview conversation",
       "path": "solutions/asset-maintenance-forecast/screenshots/manual/13-open-preview.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/manual/13-open-preview.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/manual/13-open-preview.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -326,7 +382,7 @@
       "id": "manual-frame-14",
       "label": "Pass ASSET_MAINTENANCE_FORECAST-01: Plant Manager",
       "path": "solutions/asset-maintenance-forecast/screenshots/manual/14-asset_maintenance_forecast-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/manual/14-asset_maintenance_forecast-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/manual/14-asset_maintenance_forecast-01.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -334,7 +390,7 @@
       "id": "manual-frame-15",
       "label": "Pass ASSET_MAINTENANCE_FORECAST-02: Reliability Engineer",
       "path": "solutions/asset-maintenance-forecast/screenshots/manual/15-asset_maintenance_forecast-02.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/manual/15-asset_maintenance_forecast-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/manual/15-asset_maintenance_forecast-02.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -342,7 +398,7 @@
       "id": "manual-frame-16",
       "label": "Pass ASSET_MAINTENANCE_FORECAST-03: Finance Business Partner",
       "path": "solutions/asset-maintenance-forecast/screenshots/manual/16-asset_maintenance_forecast-03.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/manual/16-asset_maintenance_forecast-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/manual/16-asset_maintenance_forecast-03.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -350,7 +406,7 @@
       "id": "manual-frame-17",
       "label": "Pass ASSET_MAINTENANCE_FORECAST-04: Maintenance Planner",
       "path": "solutions/asset-maintenance-forecast/screenshots/manual/17-asset_maintenance_forecast-04.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/manual/17-asset_maintenance_forecast-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/manual/17-asset_maintenance_forecast-04.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -358,7 +414,7 @@
       "id": "manual-frame-18",
       "label": "Confirm Draft and stop before publish",
       "path": "solutions/asset-maintenance-forecast/screenshots/manual/18-confirm-draft.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/manual/18-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/manual/18-confirm-draft.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -366,7 +422,7 @@
       "id": "manual-browserfilm",
       "label": "Manual browserfilm",
       "path": "solutions/asset-maintenance-forecast/screenshots/manual/manual-build-walkthrough.gif",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/manual/manual-build-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/manual/manual-build-walkthrough.gif",
       "use": "Animated manual walkthrough",
       "status": "ready"
     },
@@ -374,7 +430,7 @@
       "id": "manual-contact-sheet",
       "label": "Manual contact sheet",
       "path": "solutions/asset-maintenance-forecast/screenshots/manual/manual-build-contact-sheet.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/manual/manual-build-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/manual/manual-build-contact-sheet.jpg",
       "use": "Static manual evidence overview",
       "status": "ready"
     },
@@ -382,7 +438,7 @@
       "id": "assisted-browserfilm-manifest",
       "label": "Copilot-assisted browserfilm manifest",
       "path": "solutions/asset-maintenance-forecast/screenshots/assisted/browserfilm.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/assisted/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/assisted/browserfilm.json",
       "use": "Ordered Easy-mode evidence frames",
       "status": "ready"
     },
@@ -390,7 +446,7 @@
       "id": "assisted-browserfilm",
       "label": "Copilot-assisted browserfilm",
       "path": "solutions/asset-maintenance-forecast/screenshots/assisted/copilot-assisted-walkthrough.gif",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/assisted/copilot-assisted-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/assisted/copilot-assisted-walkthrough.gif",
       "use": "Animated Easy-mode walkthrough",
       "status": "ready"
     },
@@ -398,7 +454,7 @@
       "id": "assisted-contact-sheet",
       "label": "Copilot-assisted contact sheet",
       "path": "solutions/asset-maintenance-forecast/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
       "use": "Static Easy-mode evidence overview",
       "status": "ready"
     },
@@ -406,7 +462,7 @@
       "id": "assisted-frame-01",
       "label": "Review the Copilot-assisted Draft configuration",
       "path": "solutions/asset-maintenance-forecast/screenshots/assisted/01-review-build.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/assisted/01-review-build.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/assisted/01-review-build.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -414,7 +470,7 @@
       "id": "assisted-frame-02",
       "label": "Pass ASSET_MAINTENANCE_FORECAST-01: Plant Manager",
       "path": "solutions/asset-maintenance-forecast/screenshots/assisted/02-asset_maintenance_forecast-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/assisted/02-asset_maintenance_forecast-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/assisted/02-asset_maintenance_forecast-01.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -422,7 +478,7 @@
       "id": "assisted-frame-03",
       "label": "Pass ASSET_MAINTENANCE_FORECAST-02: Reliability Engineer",
       "path": "solutions/asset-maintenance-forecast/screenshots/assisted/03-asset_maintenance_forecast-02.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/assisted/03-asset_maintenance_forecast-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/assisted/03-asset_maintenance_forecast-02.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -430,7 +486,7 @@
       "id": "assisted-frame-04",
       "label": "Pass ASSET_MAINTENANCE_FORECAST-03: Finance Business Partner",
       "path": "solutions/asset-maintenance-forecast/screenshots/assisted/04-asset_maintenance_forecast-03.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/assisted/04-asset_maintenance_forecast-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/assisted/04-asset_maintenance_forecast-03.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -438,7 +494,7 @@
       "id": "assisted-frame-05",
       "label": "Pass ASSET_MAINTENANCE_FORECAST-04: Maintenance Planner",
       "path": "solutions/asset-maintenance-forecast/screenshots/assisted/05-asset_maintenance_forecast-04.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/assisted/05-asset_maintenance_forecast-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/assisted/05-asset_maintenance_forecast-04.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -446,15 +502,31 @@
       "id": "assisted-frame-06",
       "label": "Confirm the validated agent remains Draft",
       "path": "solutions/asset-maintenance-forecast/screenshots/assisted/06-confirm-draft.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/assisted/06-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/assisted/06-confirm-draft.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "workshop-settings",
+      "label": "Global workshop settings",
+      "path": "solutions/_shared/workshop-settings.html",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/_shared/workshop-settings.html",
+      "use": "Site-wide persisted Easy-mode harness preference",
+      "status": "ready"
+    },
+    {
+      "id": "evidence-report",
+      "label": "Styled evidence report",
+      "path": "solutions/asset-maintenance-forecast/evidence-report.html",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/evidence-report.html",
+      "use": "Learner-safe HTML summary of deterministic and visual evidence",
       "status": "ready"
     },
     {
       "id": "quest",
       "label": "Guided field quest",
       "path": "solutions/asset-maintenance-forecast/quest.html",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/quest.html",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/quest.html",
       "use": "Resumable Easy/Hard customer journey",
       "status": "ready"
     },
@@ -462,7 +534,7 @@
       "id": "manual-tutorial",
       "label": "Manual browser tutorial",
       "path": "solutions/asset-maintenance-forecast/manual-tutorial.html",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/manual-tutorial.html",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/manual-tutorial.html",
       "use": "One action per real manual evidence frame",
       "status": "ready"
     },
@@ -470,7 +542,7 @@
       "id": "screenshots-readme",
       "label": "Screenshot evidence README",
       "path": "solutions/asset-maintenance-forecast/screenshots/README.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/README.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/README.md",
       "use": "Evidence boundary and capture inventory",
       "status": "ready"
     },
@@ -478,7 +550,7 @@
       "id": "manual-screenshots-readme",
       "label": "Manual screenshot README",
       "path": "solutions/asset-maintenance-forecast/screenshots/manual/README.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/manual/README.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/manual/README.md",
       "use": "Manual frame and film inventory",
       "status": "ready"
     },
@@ -486,7 +558,7 @@
       "id": "exports-readme",
       "label": "Export README",
       "path": "solutions/asset-maintenance-forecast/exports/README.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/exports/README.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/exports/README.md",
       "use": "Bundle build instructions",
       "status": "ready"
     },
@@ -494,7 +566,7 @@
       "id": "assisted-screenshots-readme",
       "label": "Assisted screenshot README",
       "path": "solutions/asset-maintenance-forecast/screenshots/assisted/README.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/asset-maintenance-forecast/screenshots/assisted/README.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/asset-maintenance-forecast/screenshots/assisted/README.md",
       "use": "Copilot-assisted evidence inventory",
       "status": "ready"
     }

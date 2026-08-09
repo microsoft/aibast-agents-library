@@ -1,20 +1,20 @@
 {
   "schema": "aibast-solution-export/1.0",
   "solution": "@aibast-agents-library/client-health-score",
-  "raw_base": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/",
+  "raw_base": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/",
   "github_folder": "https://github.com/microsoft/aibast-agents-library/tree/main/solutions/client-health-score",
   "evidence_boundary": "Synthetic solution evidence only. Qualitative workflow proof is not a customer KPI, measured production result, or publication approval.",
   "bundle": {
     "label": "Complete Client Health Score Agent source bundle",
     "path": "solutions/client-health-score/exports/client-health-score-source.zip",
-    "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/exports/client-health-score-source.zip"
+    "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/exports/client-health-score-source.zip"
   },
   "files": [
     {
       "id": "portable-agent",
       "label": "Portable source agent",
       "path": "agents/@aibast-agents-library/professional_services_stacks/client_health_score_stack/client_health_score_agent.py",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/professional_services_stacks/client_health_score_stack/client_health_score_agent.py",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/agents/@aibast-agents-library/professional_services_stacks/client_health_score_stack/client_health_score_agent.py",
       "use": "Local Brainstem runtime and production-logic reference",
       "status": "ready"
     },
@@ -22,23 +22,71 @@
       "id": "deployment-recipe",
       "label": "Deployment recipe",
       "path": "solutions/client-health-score/deployment.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/deployment.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/deployment.json",
       "use": "Easy-mode deployment contract",
       "status": "ready"
     },
     {
       "id": "field-guide",
       "label": "Customer field guide",
+      "path": "solutions/client-health-score/field-guide.html",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/field-guide.html",
+      "use": "Styled facilitation, evidence boundaries, gates, and recovery",
+      "status": "ready"
+    },
+    {
+      "id": "field-guide-source",
+      "label": "Field guide source",
       "path": "solutions/client-health-score/FIELD-GUIDE.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/FIELD-GUIDE.md",
-      "use": "Facilitation, evidence boundaries, gates, and recovery",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/FIELD-GUIDE.md",
+      "use": "Markdown source retained for audit and export",
+      "status": "ready"
+    },
+    {
+      "id": "easy-personless-guide",
+      "label": "Personless Easy-mode guide",
+      "path": "solutions/client-health-score/EASY-MODE-PERSONLESS.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/EASY-MODE-PERSONLESS.md",
+      "use": "Brainstem lane skill attachment, two-message workshop, and engine loop",
+      "status": "ready"
+    },
+    {
+      "id": "easy-copilot-chat-prompts",
+      "label": "Copilot-only Easy-mode comparison",
+      "path": "solutions/client-health-score/EASY-MODE-COPILOT-CHAT.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/EASY-MODE-COPILOT-CHAT.md",
+      "use": "Copilot-only lane skill attachment and the same two workshop messages",
+      "status": "ready"
+    },
+    {
+      "id": "easy-mode-brainstem-skill",
+      "label": "Brainstem Easy Mode skill",
+      "path": "skills/aibast-easy-mode-brainstem/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/skills/aibast-easy-mode-brainstem/SKILL.md",
+      "use": "Download-and-drag harness that defaults workshop execution to Brainstem",
+      "status": "ready"
+    },
+    {
+      "id": "easy-mode-copilot-skill",
+      "label": "Copilot-only Easy Mode skill",
+      "path": "skills/aibast-easy-mode-copilot/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/skills/aibast-easy-mode-copilot/SKILL.md",
+      "use": "Download-and-drag harness that runs the workshop directly in GitHub Copilot",
+      "status": "ready"
+    },
+    {
+      "id": "generic-workshop-agent",
+      "label": "Generic AIBAST Workshop agent",
+      "path": "agents/@aibast-agents-library/templates/workshop_agent.py",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/agents/@aibast-agents-library/templates/workshop_agent.py",
+      "use": "Registry-driven Brainstem engine shared by every packaged solution",
       "status": "ready"
     },
     {
       "id": "manual-instructions",
       "label": "Manual global instructions",
       "path": "solutions/client-health-score/manual/GLOBAL-INSTRUCTIONS.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/manual/GLOBAL-INSTRUCTIONS.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/manual/GLOBAL-INSTRUCTIONS.md",
       "use": "Reviewed instructions for literal browser construction",
       "status": "ready"
     },
@@ -46,7 +94,7 @@
       "id": "settings",
       "label": "Copilot Studio settings",
       "path": "solutions/client-health-score/copilot-studio/settings.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/copilot-studio/settings.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/copilot-studio/settings.mcs.yml",
       "use": "Easy-mode agent settings and instruction copy",
       "status": "ready"
     },
@@ -54,7 +102,7 @@
       "id": "agent-sync",
       "label": "Copilot Studio component manifest",
       "path": "solutions/client-health-score/copilot-studio/agent.sync.yaml",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/copilot-studio/agent.sync.yaml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/copilot-studio/agent.sync.yaml",
       "use": "Easy-mode component synchronization",
       "status": "ready"
     },
@@ -62,7 +110,7 @@
       "id": "knowledge-aibast-client-health-retention-playbook",
       "label": "Aibast Client Health Retention Playbook",
       "path": "solutions/client-health-score/manual/knowledge/aibast_client-health-retention-playbook.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/manual/knowledge/aibast_client-health-retention-playbook.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/manual/knowledge/aibast_client-health-retention-playbook.md",
       "use": "Manual knowledge upload",
       "status": "ready"
     },
@@ -70,7 +118,7 @@
       "id": "knowledge-aibast-client-health-synthetic-portfolio",
       "label": "Aibast Client Health Synthetic Portfolio",
       "path": "solutions/client-health-score/manual/knowledge/aibast_client-health-synthetic-portfolio.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/manual/knowledge/aibast_client-health-synthetic-portfolio.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/manual/knowledge/aibast_client-health-synthetic-portfolio.md",
       "use": "Manual knowledge upload",
       "status": "ready"
     },
@@ -78,7 +126,7 @@
       "id": "skill-at-risk-clients",
       "label": "Manual skill: at risk clients",
       "path": "solutions/client-health-score/manual/skills/at-risk-clients/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/manual/skills/at-risk-clients/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/manual/skills/at-risk-clients/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -86,7 +134,7 @@
       "id": "skill-engagement-analysis",
       "label": "Manual skill: engagement analysis",
       "path": "solutions/client-health-score/manual/skills/engagement-analysis/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/manual/skills/engagement-analysis/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/manual/skills/engagement-analysis/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -94,7 +142,7 @@
       "id": "skill-health-dashboard",
       "label": "Manual skill: health dashboard",
       "path": "solutions/client-health-score/manual/skills/health-dashboard/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/manual/skills/health-dashboard/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/manual/skills/health-dashboard/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -102,7 +150,7 @@
       "id": "skill-retention-plan",
       "label": "Manual skill: retention plan",
       "path": "solutions/client-health-score/manual/skills/retention-plan/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/manual/skills/retention-plan/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/manual/skills/retention-plan/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -110,7 +158,7 @@
       "id": "skill-satisfaction-trend",
       "label": "Manual skill: satisfaction trend",
       "path": "solutions/client-health-score/manual/skills/satisfaction-trend/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/manual/skills/satisfaction-trend/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/manual/skills/satisfaction-trend/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -118,7 +166,7 @@
       "id": "easy-knowledge-aibast-client-health-retention-playbook",
       "label": "Aibast Client Health Retention Playbook",
       "path": "solutions/client-health-score/copilot-studio/capabilities/knowledge/files/aibast_client-health-retention-playbook.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/copilot-studio/capabilities/knowledge/files/aibast_client-health-retention-playbook.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/copilot-studio/capabilities/knowledge/files/aibast_client-health-retention-playbook.md",
       "use": "Copilot Studio knowledge source or synchronization metadata",
       "status": "ready"
     },
@@ -126,7 +174,7 @@
       "id": "easy-knowledge-aibast-client-health-retention-playbook-md-mcs",
       "label": "Aibast Client Health Retention Playbook.Md.Mcs",
       "path": "solutions/client-health-score/copilot-studio/capabilities/knowledge/files/aibast_client-health-retention-playbook.md.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/copilot-studio/capabilities/knowledge/files/aibast_client-health-retention-playbook.md.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/copilot-studio/capabilities/knowledge/files/aibast_client-health-retention-playbook.md.mcs.yml",
       "use": "Copilot Studio knowledge source or synchronization metadata",
       "status": "ready"
     },
@@ -134,7 +182,7 @@
       "id": "easy-knowledge-aibast-client-health-synthetic-portfolio",
       "label": "Aibast Client Health Synthetic Portfolio",
       "path": "solutions/client-health-score/copilot-studio/capabilities/knowledge/files/aibast_client-health-synthetic-portfolio.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/copilot-studio/capabilities/knowledge/files/aibast_client-health-synthetic-portfolio.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/copilot-studio/capabilities/knowledge/files/aibast_client-health-synthetic-portfolio.md",
       "use": "Copilot Studio knowledge source or synchronization metadata",
       "status": "ready"
     },
@@ -142,7 +190,7 @@
       "id": "easy-knowledge-aibast-client-health-synthetic-portfolio-md-mcs",
       "label": "Aibast Client Health Synthetic Portfolio.Md.Mcs",
       "path": "solutions/client-health-score/copilot-studio/capabilities/knowledge/files/aibast_client-health-synthetic-portfolio.md.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/copilot-studio/capabilities/knowledge/files/aibast_client-health-synthetic-portfolio.md.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/copilot-studio/capabilities/knowledge/files/aibast_client-health-synthetic-portfolio.md.mcs.yml",
       "use": "Copilot Studio knowledge source or synchronization metadata",
       "status": "ready"
     },
@@ -150,7 +198,7 @@
       "id": "easy-skill-aibast-at-risk-client-prioritization-mcs",
       "label": "Aibast At Risk Client Prioritization.Mcs",
       "path": "solutions/client-health-score/copilot-studio/behaviors/aibast_at-risk-client-prioritization.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/copilot-studio/behaviors/aibast_at-risk-client-prioritization.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/copilot-studio/behaviors/aibast_at-risk-client-prioritization.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -158,7 +206,7 @@
       "id": "easy-skill-aibast-client-engagement-analysis-mcs",
       "label": "Aibast Client Engagement Analysis.Mcs",
       "path": "solutions/client-health-score/copilot-studio/behaviors/aibast_client-engagement-analysis.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/copilot-studio/behaviors/aibast_client-engagement-analysis.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/copilot-studio/behaviors/aibast_client-engagement-analysis.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -166,7 +214,7 @@
       "id": "easy-skill-aibast-client-portfolio-health-dashboard-mcs",
       "label": "Aibast Client Portfolio Health Dashboard.Mcs",
       "path": "solutions/client-health-score/copilot-studio/behaviors/aibast_client-portfolio-health-dashboard.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/copilot-studio/behaviors/aibast_client-portfolio-health-dashboard.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/copilot-studio/behaviors/aibast_client-portfolio-health-dashboard.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -174,7 +222,7 @@
       "id": "easy-skill-aibast-client-retention-playbook-mcs",
       "label": "Aibast Client Retention Playbook.Mcs",
       "path": "solutions/client-health-score/copilot-studio/behaviors/aibast_client-retention-playbook.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/copilot-studio/behaviors/aibast_client-retention-playbook.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/copilot-studio/behaviors/aibast_client-retention-playbook.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -182,7 +230,7 @@
       "id": "easy-skill-aibast-client-satisfaction-trend-mcs",
       "label": "Aibast Client Satisfaction Trend.Mcs",
       "path": "solutions/client-health-score/copilot-studio/behaviors/aibast_client-satisfaction-trend.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/copilot-studio/behaviors/aibast_client-satisfaction-trend.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/copilot-studio/behaviors/aibast_client-satisfaction-trend.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -190,7 +238,7 @@
       "id": "easy-evidence-copilot-studio-preview-evidence",
       "label": "Copilot Studio Preview Evidence",
       "path": "solutions/client-health-score/evals/copilot-studio-preview-evidence.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/evals/copilot-studio-preview-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/evals/copilot-studio-preview-evidence.json",
       "use": "Easy-mode deployment or Preview evidence",
       "status": "ready"
     },
@@ -198,7 +246,7 @@
       "id": "manual-evidence",
       "label": "Manual build evidence",
       "path": "solutions/client-health-score/evals/manual-build-evidence.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/evals/manual-build-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/evals/manual-build-evidence.json",
       "use": "Manual identity, inventory, Preview, and Draft-gate evidence",
       "status": "ready"
     },
@@ -206,7 +254,7 @@
       "id": "onepager-map",
       "label": "Onepager Map",
       "path": "solutions/client-health-score/evals/onepager-map.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/evals/onepager-map.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/evals/onepager-map.json",
       "use": "Advertised-promise mapping evidence",
       "status": "ready"
     },
@@ -214,15 +262,23 @@
       "id": "brainstem-transcripts",
       "label": "Isolated Brainstem transcripts",
       "path": "solutions/client-health-score/evals/transcripts.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/evals/transcripts.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/evals/transcripts.json",
       "use": "Canonical source-agent acceptance evidence",
+      "status": "ready"
+    },
+    {
+      "id": "easy-evidence-visual-checkpoints",
+      "label": "Visual Checkpoints",
+      "path": "solutions/client-health-score/evals/visual-checkpoints.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/evals/visual-checkpoints.json",
+      "use": "Easy-mode deployment or Preview evidence",
       "status": "ready"
     },
     {
       "id": "manual-browserfilm-manifest",
       "label": "Manual browserfilm manifest",
       "path": "solutions/client-health-score/screenshots/manual/browserfilm.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/manual/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/manual/browserfilm.json",
       "use": "Ordered literal-browser evidence frames",
       "status": "ready"
     },
@@ -230,7 +286,7 @@
       "id": "manual-frame-01",
       "label": "Create a blank Copilot Studio agent",
       "path": "solutions/client-health-score/screenshots/manual/01-create-blank-agent.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/manual/01-create-blank-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/manual/01-create-blank-agent.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -238,7 +294,7 @@
       "id": "manual-frame-02",
       "label": "Name Client Health Score Manual",
       "path": "solutions/client-health-score/screenshots/manual/02-name-agent.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/manual/02-name-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/manual/02-name-agent.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -246,7 +302,7 @@
       "id": "manual-frame-03",
       "label": "Enter the reviewed global instructions",
       "path": "solutions/client-health-score/screenshots/manual/03-enter-instructions.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/manual/03-enter-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/manual/03-enter-instructions.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -254,7 +310,7 @@
       "id": "manual-frame-04",
       "label": "Save the instruction policy",
       "path": "solutions/client-health-score/screenshots/manual/04-save-instructions.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/manual/04-save-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/manual/04-save-instructions.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -262,7 +318,7 @@
       "id": "manual-frame-05",
       "label": "Remove default web search",
       "path": "solutions/client-health-score/screenshots/manual/05-remove-web-search.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/manual/05-remove-web-search.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/manual/05-remove-web-search.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -270,7 +326,7 @@
       "id": "manual-frame-06",
       "label": "Add knowledge: aibast_client-health-retention-playbook.md",
       "path": "solutions/client-health-score/screenshots/manual/06-add-aibast-client-health-retention-playbook.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/manual/06-add-aibast-client-health-retention-playbook.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/manual/06-add-aibast-client-health-retention-playbook.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -278,7 +334,7 @@
       "id": "manual-frame-07",
       "label": "Add knowledge: aibast_client-health-synthetic-portfolio.md",
       "path": "solutions/client-health-score/screenshots/manual/07-add-aibast-client-health-synthetic-portfolio.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/manual/07-add-aibast-client-health-synthetic-portfolio.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/manual/07-add-aibast-client-health-synthetic-portfolio.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -286,7 +342,7 @@
       "id": "manual-frame-08",
       "label": "Add skill: at-risk-clients",
       "path": "solutions/client-health-score/screenshots/manual/08-add-at-risk-clients.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/manual/08-add-at-risk-clients.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/manual/08-add-at-risk-clients.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -294,7 +350,7 @@
       "id": "manual-frame-09",
       "label": "Add skill: engagement-analysis",
       "path": "solutions/client-health-score/screenshots/manual/09-add-engagement-analysis.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/manual/09-add-engagement-analysis.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/manual/09-add-engagement-analysis.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -302,7 +358,7 @@
       "id": "manual-frame-10",
       "label": "Add skill: health-dashboard",
       "path": "solutions/client-health-score/screenshots/manual/10-add-health-dashboard.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/manual/10-add-health-dashboard.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/manual/10-add-health-dashboard.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -310,7 +366,7 @@
       "id": "manual-frame-11",
       "label": "Add skill: retention-plan",
       "path": "solutions/client-health-score/screenshots/manual/11-add-retention-plan.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/manual/11-add-retention-plan.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/manual/11-add-retention-plan.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -318,7 +374,7 @@
       "id": "manual-frame-12",
       "label": "Add skill: satisfaction-trend",
       "path": "solutions/client-health-score/screenshots/manual/12-add-satisfaction-trend.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/manual/12-add-satisfaction-trend.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/manual/12-add-satisfaction-trend.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -326,7 +382,7 @@
       "id": "manual-frame-13",
       "label": "Review model, skills, knowledge, and safety boundaries",
       "path": "solutions/client-health-score/screenshots/manual/13-review-inventory.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/manual/13-review-inventory.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/manual/13-review-inventory.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -334,7 +390,7 @@
       "id": "manual-frame-14",
       "label": "Open a fresh Preview conversation",
       "path": "solutions/client-health-score/screenshots/manual/14-open-preview.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/manual/14-open-preview.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/manual/14-open-preview.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -342,7 +398,7 @@
       "id": "manual-frame-15",
       "label": "Pass CHS-01: Client Success Leader",
       "path": "solutions/client-health-score/screenshots/manual/15-chs-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/manual/15-chs-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/manual/15-chs-01.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -350,7 +406,7 @@
       "id": "manual-frame-16",
       "label": "Pass CHS-02: Account Manager",
       "path": "solutions/client-health-score/screenshots/manual/16-chs-02.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/manual/16-chs-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/manual/16-chs-02.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -358,7 +414,7 @@
       "id": "manual-frame-17",
       "label": "Pass CHS-03: Client Experience Director",
       "path": "solutions/client-health-score/screenshots/manual/17-chs-03.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/manual/17-chs-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/manual/17-chs-03.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -366,7 +422,7 @@
       "id": "manual-frame-18",
       "label": "Pass CHS-04: Client Success Leader",
       "path": "solutions/client-health-score/screenshots/manual/18-chs-04.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/manual/18-chs-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/manual/18-chs-04.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -374,7 +430,7 @@
       "id": "manual-frame-19",
       "label": "Pass CHS-05: Account Manager",
       "path": "solutions/client-health-score/screenshots/manual/19-chs-05.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/manual/19-chs-05.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/manual/19-chs-05.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -382,7 +438,7 @@
       "id": "manual-frame-20",
       "label": "Confirm Draft and stop before publish",
       "path": "solutions/client-health-score/screenshots/manual/20-confirm-draft.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/manual/20-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/manual/20-confirm-draft.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -390,7 +446,7 @@
       "id": "manual-browserfilm",
       "label": "Manual browserfilm",
       "path": "solutions/client-health-score/screenshots/manual/manual-build-walkthrough.gif",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/manual/manual-build-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/manual/manual-build-walkthrough.gif",
       "use": "Animated manual walkthrough",
       "status": "ready"
     },
@@ -398,7 +454,7 @@
       "id": "manual-contact-sheet",
       "label": "Manual contact sheet",
       "path": "solutions/client-health-score/screenshots/manual/manual-build-contact-sheet.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/manual/manual-build-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/manual/manual-build-contact-sheet.jpg",
       "use": "Static manual evidence overview",
       "status": "ready"
     },
@@ -406,7 +462,7 @@
       "id": "assisted-browserfilm-manifest",
       "label": "Copilot-assisted browserfilm manifest",
       "path": "solutions/client-health-score/screenshots/assisted/browserfilm.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/assisted/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/assisted/browserfilm.json",
       "use": "Ordered Easy-mode evidence frames",
       "status": "ready"
     },
@@ -414,7 +470,7 @@
       "id": "assisted-browserfilm",
       "label": "Copilot-assisted browserfilm",
       "path": "solutions/client-health-score/screenshots/assisted/copilot-assisted-walkthrough.gif",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/assisted/copilot-assisted-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/assisted/copilot-assisted-walkthrough.gif",
       "use": "Animated Easy-mode walkthrough",
       "status": "ready"
     },
@@ -422,7 +478,7 @@
       "id": "assisted-contact-sheet",
       "label": "Copilot-assisted contact sheet",
       "path": "solutions/client-health-score/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
       "use": "Static Easy-mode evidence overview",
       "status": "ready"
     },
@@ -430,7 +486,7 @@
       "id": "assisted-frame-01",
       "label": "Pass CHS-01: Client Success Leader",
       "path": "solutions/client-health-score/screenshots/assisted/01-chs-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/assisted/01-chs-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/assisted/01-chs-01.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -438,7 +494,7 @@
       "id": "assisted-frame-02",
       "label": "Pass CHS-02: Account Manager",
       "path": "solutions/client-health-score/screenshots/assisted/02-chs-02.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/assisted/02-chs-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/assisted/02-chs-02.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -446,7 +502,7 @@
       "id": "assisted-frame-03",
       "label": "Pass CHS-03: Client Experience Director",
       "path": "solutions/client-health-score/screenshots/assisted/03-chs-03.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/assisted/03-chs-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/assisted/03-chs-03.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -454,7 +510,7 @@
       "id": "assisted-frame-04",
       "label": "Pass CHS-04: Client Success Leader",
       "path": "solutions/client-health-score/screenshots/assisted/04-chs-04.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/assisted/04-chs-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/assisted/04-chs-04.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -462,7 +518,7 @@
       "id": "assisted-frame-05",
       "label": "Pass CHS-05: Account Manager",
       "path": "solutions/client-health-score/screenshots/assisted/05-chs-05.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/assisted/05-chs-05.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/assisted/05-chs-05.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -470,15 +526,31 @@
       "id": "assisted-frame-06",
       "label": "Confirm the validated agent remains Draft",
       "path": "solutions/client-health-score/screenshots/assisted/06-confirm-draft.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/assisted/06-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/assisted/06-confirm-draft.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "workshop-settings",
+      "label": "Global workshop settings",
+      "path": "solutions/_shared/workshop-settings.html",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/_shared/workshop-settings.html",
+      "use": "Site-wide persisted Easy-mode harness preference",
+      "status": "ready"
+    },
+    {
+      "id": "evidence-report",
+      "label": "Styled evidence report",
+      "path": "solutions/client-health-score/evidence-report.html",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/evidence-report.html",
+      "use": "Learner-safe HTML summary of deterministic and visual evidence",
       "status": "ready"
     },
     {
       "id": "quest",
       "label": "Guided field quest",
       "path": "solutions/client-health-score/quest.html",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/quest.html",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/quest.html",
       "use": "Resumable Easy/Hard customer journey",
       "status": "ready"
     },
@@ -486,7 +558,7 @@
       "id": "manual-tutorial",
       "label": "Manual browser tutorial",
       "path": "solutions/client-health-score/manual-tutorial.html",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/manual-tutorial.html",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/manual-tutorial.html",
       "use": "One action per real manual evidence frame",
       "status": "ready"
     },
@@ -494,7 +566,7 @@
       "id": "screenshots-readme",
       "label": "Screenshot evidence README",
       "path": "solutions/client-health-score/screenshots/README.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/README.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/README.md",
       "use": "Evidence boundary and capture inventory",
       "status": "ready"
     },
@@ -502,7 +574,7 @@
       "id": "manual-screenshots-readme",
       "label": "Manual screenshot README",
       "path": "solutions/client-health-score/screenshots/manual/README.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/manual/README.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/manual/README.md",
       "use": "Manual frame and film inventory",
       "status": "ready"
     },
@@ -510,7 +582,7 @@
       "id": "exports-readme",
       "label": "Export README",
       "path": "solutions/client-health-score/exports/README.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/exports/README.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/exports/README.md",
       "use": "Bundle build instructions",
       "status": "ready"
     },
@@ -518,7 +590,7 @@
       "id": "assisted-screenshots-readme",
       "label": "Assisted screenshot README",
       "path": "solutions/client-health-score/screenshots/assisted/README.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/client-health-score/screenshots/assisted/README.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/client-health-score/screenshots/assisted/README.md",
       "use": "Copilot-assisted evidence inventory",
       "status": "ready"
     }

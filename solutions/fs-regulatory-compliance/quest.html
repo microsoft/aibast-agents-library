@@ -1,269 +1,583 @@
 <!doctype html>
 <html lang="en">
 <head>
-<script>
-  (() => {
-    const param = new URLSearchParams(window.location.search).get("scoutTheme");
-    const theme =
-      param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-    document.documentElement.setAttribute("data-theme", theme);
-  })();
-</script>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Regulatory Compliance Deployment Quest</title>
-<style>
-:root {
-  color-scheme: light;
-  --cp-bg: #f7f4ef;
-  --cp-bg-elevated: #fcfbf8;
-  --cp-surface: #ffffff;
-  --cp-surface-soft: #f5f5f5;
-  --cp-border: #dedede;
-  --cp-border-strong: #919191;
-  --cp-text: #242424;
-  --cp-text-muted: #5c5c5c;
-  --cp-text-soft: #6f6f6f;
-  --cp-accent: #b11f4b;
-  --cp-accent-hover: #9a1a41;
-  --cp-accent-soft: rgba(177, 31, 75, 0.08);
-  --cp-accent-fg: #ffffff;
-  --cp-success: #16a34a;
-  --cp-danger: #dc2626;
-  --cp-warning: #f59e0b;
-  --cp-link: #0078d4;
-  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
-  --cp-overlay: rgba(255, 255, 255, 0.8);
-  --cp-panel: rgba(255, 255, 255, 0.86);
-  --cp-panel-strong: rgba(255, 255, 255, 0.96);
-  --cp-sheen: rgba(255, 255, 255, 0.55);
-  --cp-highlight: rgba(177, 31, 75, 0.12);
-}
-html[data-theme="dark"] {
-  color-scheme: dark;
-  --cp-bg: #3d3b3a;
-  --cp-bg-elevated: #343231;
-  --cp-surface: #292929;
-  --cp-surface-soft: #2e2e2e;
-  --cp-border: #474747;
-  --cp-border-strong: #5f5f5f;
-  --cp-text: #dedede;
-  --cp-text-muted: #919191;
-  --cp-text-soft: #b0b0b0;
-  --cp-accent: #fd8ea1;
-  --cp-accent-hover: #fb7b91;
-  --cp-accent-soft: rgba(253, 142, 161, 0.14);
-  --cp-accent-fg: #1a1a1a;
-  --cp-success: #4ade80;
-  --cp-danger: #f87171;
-  --cp-warning: #fbbf24;
-  --cp-link: #4da6ff;
-  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
-  --cp-overlay: rgba(41, 41, 41, 0.88);
-  --cp-panel: rgba(41, 41, 41, 0.72);
-  --cp-panel-strong: rgba(41, 41, 41, 0.96);
-  --cp-sheen: rgba(255, 255, 255, 0.04);
-  --cp-highlight: rgba(253, 142, 161, 0.12);
-}
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  min-height: 100vh;
-  background: var(--cp-bg);
-  color: var(--cp-text);
-  font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
-}
-button, a { font: inherit; }
-a { color: var(--cp-link); }
-.topbar {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  display: grid;
-  grid-template-columns: 1fr minmax(220px, 420px) 1fr;
-  gap: 16px;
-  align-items: center;
-  padding: 10px 24px;
-  border-bottom: 1px solid var(--cp-border);
-  background: var(--cp-panel-strong);
-}
-.brand { font-size: 14px; font-weight: 800; }
-.brand span { color: var(--cp-accent); }
-.progress { display: flex; align-items: center; gap: 10px; }
-.track { height: 8px; flex: 1; overflow: hidden; border-radius: 0.625rem; background: var(--cp-border); }
-.fill { width: 0; height: 100%; background: var(--cp-accent); transition: width 180ms ease; }
-.progress-label { color: var(--cp-text-muted); font-size: 12px; white-space: nowrap; }
-.top-actions { display: flex; justify-content: flex-end; gap: 8px; }
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 12px;
-  border: 1px solid var(--cp-border-strong);
-  border-radius: 0.625rem;
-  background: var(--cp-surface);
-  color: var(--cp-text);
-  text-decoration: none;
-  cursor: pointer;
-}
-.button.primary { border-color: var(--cp-accent); background: var(--cp-accent); color: var(--cp-accent-fg); }
-.button.primary:hover { background: var(--cp-accent-hover); }
-.page { width: min(1160px, calc(100% - 32px)); margin: 0 auto; padding: 40px 0 72px; }
-.hero { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; margin-bottom: 22px; }
-.eyebrow { color: var(--cp-accent); font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
-h1 { margin: 8px 0; font-size: clamp(36px, 7vw, 68px); line-height: 0.98; letter-spacing: -0.055em; }
-.hero p { max-width: 760px; margin: 0; color: var(--cp-text-muted); line-height: 1.55; }
-.mode-switch { display: flex; gap: 4px; padding: 4px; border: 1px solid var(--cp-border); border-radius: 0.625rem; background: var(--cp-surface); }
-.mode { border: 0; border-radius: 0.625rem; background: transparent; color: var(--cp-text-muted); cursor: pointer; padding: 9px 14px; font-weight: 700; }
-.mode.active { background: var(--cp-accent); color: var(--cp-accent-fg); }
-.notice { margin: 0 0 18px; padding: 14px 16px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface); }
-.mission { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 18px; }
-.path { display: grid; gap: 10px; }
-.step {
-  display: grid;
-  grid-template-columns: 44px 1fr auto;
-  gap: 14px;
-  align-items: center;
-  width: 100%;
-  padding: 14px;
-  border: 1px solid var(--cp-border);
-  border-radius: 16px;
-  background: var(--cp-surface);
-  color: var(--cp-text);
-  text-align: left;
-  cursor: pointer;
-  box-shadow: 0 0 2px var(--cp-border);
-}
-.step:hover, .step.active { border-color: var(--cp-accent); }
-.step.active { background: var(--cp-accent-soft); }
-.step.complete { border-color: var(--cp-success); }
-.step-icon { display: grid; width: 40px; height: 40px; place-items: center; border: 1px solid var(--cp-border-strong); border-radius: 0.625rem; font-weight: 800; }
-.step.complete .step-icon { border-color: var(--cp-success); color: var(--cp-success); }
-.step strong, .step span { display: block; }
-.step span span { margin-top: 4px; color: var(--cp-text-muted); font-size: 12px; line-height: 1.4; }
-.step small { color: var(--cp-text-muted); }
-.panel {
-  position: sticky;
-  top: 78px;
-  align-self: start;
-  min-height: 440px;
-  padding: 20px;
-  border: 1px solid var(--cp-border);
-  border-radius: 16px;
-  background: var(--cp-surface);
-  box-shadow: 0 0 2px var(--cp-border);
-}
-.placeholder { display: grid; min-height: 390px; place-items: center; color: var(--cp-text-muted); text-align: center; }
-.panel h2 { margin: 0 0 6px; }
-.time, .description { color: var(--cp-text-muted); }
-.description { line-height: 1.55; }
-.checklist { padding-left: 20px; }
-.checklist li { margin-bottom: 8px; color: var(--cp-text-muted); }
-.resources { display: grid; gap: 8px; margin: 16px 0; }
-.resource { padding: 10px; border: 1px solid var(--cp-border); border-radius: 0.625rem; background: var(--cp-surface-soft); color: var(--cp-text); text-decoration: none; }
-.resource strong, .resource span { display: block; }
-.resource span { margin-top: 3px; color: var(--cp-text-muted); font-size: 12px; }
-.done { width: 100%; padding: 10px; border: 1px solid var(--cp-border-strong); border-radius: 0.625rem; background: var(--cp-surface); color: var(--cp-text); cursor: pointer; font-weight: 700; }
-.done.complete { border-color: var(--cp-success); color: var(--cp-success); }
-@media (max-width: 860px) {
-  .topbar { grid-template-columns: 1fr; text-align: center; }
-  .top-actions { justify-content: center; }
-  .hero, .mission { grid-template-columns: 1fr; }
-  .panel { position: static; }
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Regulatory Compliance Agent workshop</title>
+  <script>
+    (() => {
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const theme =
+        param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+    (() => {
+      const engine =
+        localStorage.getItem("aibast:workshop-engine") === "brainstem"
+          ? "brainstem"
+          : "copilot";
+      document.documentElement.setAttribute("data-workshop-engine", engine);
+    })();
+  </script>
+  <style>
+
+    :root {
+      color-scheme: light;
+      --cp-bg: #f7f4ef;
+      --cp-bg-elevated: #fcfbf8;
+      --cp-surface: #ffffff;
+      --cp-surface-soft: #f5f5f5;
+      --cp-border: #dedede;
+      --cp-border-strong: #919191;
+      --cp-text: #242424;
+      --cp-text-muted: #5c5c5c;
+      --cp-text-soft: #6f6f6f;
+      --cp-accent: #b11f4b;
+      --cp-accent-hover: #9a1a41;
+      --cp-accent-soft: rgba(177, 31, 75, 0.08);
+      --cp-accent-fg: #ffffff;
+      --cp-success: #16a34a;
+      --cp-danger: #dc2626;
+      --cp-warning: #f59e0b;
+      --cp-link: #0078d4;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+      --cp-overlay: rgba(255, 255, 255, 0.8);
+      --cp-panel: rgba(255, 255, 255, 0.86);
+      --cp-panel-strong: rgba(255, 255, 255, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.55);
+      --cp-highlight: rgba(177, 31, 75, 0.12);
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --cp-bg: #3d3b3a;
+      --cp-bg-elevated: #343231;
+      --cp-surface: #292929;
+      --cp-surface-soft: #2e2e2e;
+      --cp-border: #474747;
+      --cp-border-strong: #5f5f5f;
+      --cp-text: #dedede;
+      --cp-text-muted: #919191;
+      --cp-text-soft: #b0b0b0;
+      --cp-accent: #fd8ea1;
+      --cp-accent-hover: #fb7b91;
+      --cp-accent-soft: rgba(253, 142, 161, 0.14);
+      --cp-accent-fg: #1a1a1a;
+      --cp-success: #4ade80;
+      --cp-danger: #f87171;
+      --cp-warning: #fbbf24;
+      --cp-link: #4da6ff;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+      --cp-overlay: rgba(41, 41, 41, 0.88);
+      --cp-panel: rgba(41, 41, 41, 0.72);
+      --cp-panel-strong: rgba(41, 41, 41, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.04);
+      --cp-highlight: rgba(253, 142, 161, 0.12);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--cp-bg);
+      color: var(--cp-text);
+      font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.55;
+    }
+    a { color: var(--cp-link); }
+    button, .button { font: inherit; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 24px;
+      border-bottom: 1px solid var(--cp-border);
+      background: var(--cp-panel-strong);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 750; }
+    .brand-mark {
+      display: grid;
+      width: 32px;
+      height: 32px;
+      place-items: center;
+      border-radius: 10px;
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 8px 14px;
+      border: 1px solid var(--cp-border-strong);
+      border-radius: 10px;
+      background: var(--cp-surface);
+      color: var(--cp-text);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .button.primary {
+      border-color: var(--cp-accent);
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+    }
+    .page { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 40px 0 80px; }
+    .hero {
+      padding: 32px;
+      border: 1px solid var(--cp-border);
+      border-radius: 18px;
+      background: var(--cp-surface);
+      box-shadow: var(--cp-shadow);
+    }
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--cp-accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+    h1 { margin: 0; font-size: clamp(34px, 7vw, 64px); line-height: 1; letter-spacing: -.045em; }
+    h2 { margin-top: 42px; }
+    .lede { max-width: 760px; color: var(--cp-text-muted); font-size: 18px; }
+    .notice {
+      margin-top: 18px;
+      padding: 15px;
+      border-left: 4px solid var(--cp-warning);
+      background: var(--cp-surface-soft);
+    }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .card {
+      border: 1px solid var(--cp-border);
+      border-radius: 14px;
+      background: var(--cp-surface);
+      padding: 20px;
+    }
+    .card h3 { margin-top: 0; }
+    .muted { color: var(--cp-text-muted); }
+    .status { color: var(--cp-accent); font-weight: 750; }
+    .progress { height: 8px; overflow: hidden; border-radius: 999px; background: var(--cp-border); }
+    .progress span { display: block; width: 0; height: 100%; background: var(--cp-accent); }
+    @media (max-width: 760px) {
+      .grid { grid-template-columns: 1fr; }
+      .topbar { align-items: flex-start; padding: 12px 16px; }
+      .page { width: min(100% - 24px, 1120px); padding-top: 24px; }
+      .hero { padding: 24px 20px; }
+    }
+
+    .mode-switch { display: inline-flex; gap: 6px; margin-top: 20px; padding: 5px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface-soft); }
+    .mode { border: 0; border-radius: 999px; padding: 9px 14px; background: transparent; color: var(--cp-text-muted); cursor: pointer; font-weight: 750; }
+    .mode.active { background: var(--cp-accent); color: var(--cp-accent-fg); }
+    .checkpoint { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start; margin: 12px 0; padding: 16px; border: 1px solid var(--cp-border); border-radius: 12px; background: var(--cp-surface); }
+    .checkpoint input { width: 20px; height: 20px; margin-top: 3px; accent-color: var(--cp-accent); }
+    .checkpoint strong, .checkpoint span { display: block; }
+    .checkpoint span { color: var(--cp-text-muted); }
+    .path[hidden] { display: none; }
+    .easy-lane { display: none; }
+    html[data-workshop-engine="brainstem"] .easy-lane[data-easy-lane="brainstem"] { display: block; }
+    html[data-workshop-engine="copilot"] .easy-lane[data-easy-lane="copilot"] { display: block; }
+    .engine-label { display: none; color: var(--cp-accent); }
+    html[data-workshop-engine="brainstem"] .engine-label.brainstem { display: inline; }
+    html[data-workshop-engine="copilot"] .engine-label.copilot { display: inline; }
+    .engine-flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 18px 0; }
+    .engine-node { padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface); text-align: center; font-weight: 750; }
+    .comparison-note { margin: 14px 0; padding: 14px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft); color: var(--cp-text-muted); }
+    .skill-onboarding { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px; align-items: center; margin: 16px 0 8px; padding: 20px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
+    .skill-onboarding h3 { margin: 0 0 6px; }
+    .skill-onboarding p { margin: 0; color: var(--cp-text-muted); }
+    .drag-target { margin-top: 10px; padding: 12px; border: 1px dashed var(--cp-border-strong); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text); font-weight: 700; }
+    .outcome-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .outcome-card { padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
+    .outcome-card strong { display: block; margin-bottom: 6px; }
+    .outcome-card p { margin: 0; color: var(--cp-text-muted); }
+    .facilitator-details { margin-top: 18px; padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); }
+    .facilitator-details summary { cursor: pointer; font-weight: 750; }
+    .facilitator-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .comparison-table { width: 100%; margin-top: 14px; border-collapse: collapse; }
+    .comparison-table th, .comparison-table td { padding: 12px; border: 1px solid var(--cp-border); text-align: left; vertical-align: top; }
+    .comparison-table th { background: var(--cp-surface-soft); }
+    .module-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+    .module-summary article { padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
+    .module-summary h3 { margin-top: 0; }
+    .module-summary ul { margin-bottom: 0; padding-left: 20px; }
+    .learn-step { margin: 22px 0; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); overflow: hidden; }
+    .learn-step-header { display: grid; grid-template-columns: 44px 1fr auto; gap: 14px; align-items: center; padding: 18px 20px; border-bottom: 1px solid var(--cp-border); background: var(--cp-surface-soft); }
+    .learn-step-header > span { display: grid; width: 40px; height: 40px; place-items: center; border-radius: 10px; background: var(--cp-accent); color: var(--cp-accent-fg); font-weight: 800; }
+    .learn-step-header p { margin: 0; color: var(--cp-accent); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    .learn-step-header h3 { margin: 2px 0 0; }
+    .learn-step-body { padding: 20px; }
+    .action-panel, .expected-panel { margin: 16px 0; padding: 16px; border-radius: 10px; }
+    .action-panel { border: 1px solid var(--cp-border); background: var(--cp-surface-soft); }
+    .action-panel > strong, .expected-panel > strong { display: block; margin-bottom: 8px; }
+    .action-panel ol, .expected-panel ul { margin: 8px 0 12px; padding-left: 22px; }
+    .expected-panel { border-left: 4px solid var(--cp-success); background: var(--cp-surface-soft); }
+    .step-complete { display: flex; gap: 10px; align-items: center; margin-top: 14px; padding: 12px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-bg-elevated); font-weight: 700; }
+    .step-complete input { width: 20px; height: 20px; accent-color: var(--cp-accent); }
+    .preview-intro { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .preview-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .preview-case { padding: 16px; border: 1px solid var(--cp-border); border-radius: 14px; background: var(--cp-bg-elevated); }
+    .preview-case header { display: flex; justify-content: space-between; gap: 12px; align-items: start; }
+    .preview-case h4 { margin: 0; }
+    .report-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+    .report-button { border-color: var(--cp-accent); color: var(--cp-accent); }
+    .beta-badge { display: inline-flex; align-items: center; margin-bottom: 12px; padding: 5px 9px; border-radius: 999px; background: var(--cp-warning); color: var(--cp-accent-fg); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    .beta-notice { margin-top: 14px; padding: 14px; border: 1px solid var(--cp-warning); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
+    .marker-group { margin: 12px 0; }
+    .marker-group > strong { display: block; margin-bottom: 6px; }
+    .marker-chip { display: inline-flex; margin: 0 6px 6px 0; padding: 5px 8px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface); color: var(--cp-text-muted); font-size: 12px; }
+    .preview-shot-wrap { margin-top: 14px; text-align: center; }
+    .preview-shot { display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }
+    .capture-meta { margin: 8px 0 0; color: var(--cp-text-muted); font-size: 12px; text-align: center; }
+    .quality-warning { margin: 16px 0; padding: 14px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft); color: var(--cp-text-muted); }
+    .done-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+    .done-grid article { padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); }
+    .done-grid strong, .done-grid span { display: block; }
+    .done-grid span { margin-top: 5px; color: var(--cp-text-muted); }
+    .troubleshooting-table { width: 100%; border-collapse: collapse; }
+    .troubleshooting-table th, .troubleshooting-table td { padding: 12px; border: 1px solid var(--cp-border); text-align: left; vertical-align: top; }
+    .troubleshooting-table th { background: var(--cp-surface-soft); }
+    .hard-tutorial-frame { display: block; width: 100%; min-height: 1600px; border: 0; border-radius: 16px; background: var(--cp-surface); }
+    .prompt-card { margin: 16px 0; padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
+    .prompt-heading { display: flex; align-items: start; justify-content: space-between; gap: 16px; }
+    .prompt-heading h3 { margin: 0; }
+    .prompt-kicker { margin: 0 0 4px; color: var(--cp-accent); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    .prompt-block { overflow-x: auto; margin: 14px 0 0; padding: 16px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text); white-space: pre-wrap; word-break: break-word; font-family: Consolas, "Courier New", Courier, monospace; font-size: 13px; line-height: 1.55; }
+    .resource-list { columns: 2; padding-left: 22px; }
+    .resource-list li { break-inside: avoid; margin-bottom: 10px; }
+    @media (max-width: 760px) { .engine-flow, .outcome-grid, .skill-onboarding, .module-summary, .preview-grid, .done-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 620px) { .resource-list { columns: 1; } .prompt-heading { display: block; } .prompt-heading .button { margin-top: 12px; } }
+  </style>
 </head>
 <body>
-<header class="topbar">
-  <div class="brand"><span>AI BAST</span> · Regulatory Compliance Quest</div>
-  <div class="progress"><div class="track"><div class="fill" id="fill"></div></div><div class="progress-label" id="progress-label"></div></div>
-  <div class="top-actions"><a class="button" href="FIELD-GUIDE.md">Field guide</a><button class="button" id="reset">Reset</button></div>
-</header>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">A</span><span>AIBAST guided workshop</span></div>
+    <div><a class="button" href="../_shared/workshop-settings.html?return=../fs-regulatory-compliance/quest.html">Workshop settings</a> <a class="button primary" href="field-guide.html">Open field guide</a></div>
+  </header>
+  <main class="page">
+    <section class="hero">
+      <span class="beta-badge">Beta workshop</span>
+      <p class="eyebrow">Evidence-grounded customer journey</p>
+      <h1>Regulatory Compliance Agent</h1>
+      <p class="lede">Use your globally configured Easy-mode harness, or reproduce every action directly in Hard mode.</p>
+      <div class="notice"><strong>Boundary:</strong> synthetic qualitative evidence only—not a customer KPI, measured production result, live connection, or publication approval.</div>
+      <div class="beta-notice"><strong>Help improve this Beta:</strong> use the report buttons when a prompt, expected result, screenshot, or product state is inaccurate. The button opens a prefilled GitHub issue for review; it does not submit anything automatically.</div>
+      <div class="mode-switch" role="tablist">
+        <button class="mode active" data-mode="easy" role="tab">Easy</button>
+        <button class="mode" data-mode="hard" role="tab">Hard</button>
+      </div>
+    </section>
 
-<main class="page">
-  <section class="hero">
-    <div>
-      <div class="eyebrow">Governed deployment quest</div>
-      <h1>Prove the control path.</h1>
-      <p>Use Easy mode for the portable Brainstem proof, or Hard mode to construct the agent one browser action at a time. Neither path authorizes a regulatory filing or publication.</p>
-    </div>
-    <div class="mode-switch"><button class="mode active" data-mode="easy">Easy mode</button><button class="mode" data-mode="hard">Manual Hard mode</button></div>
-  </section>
-  <div class="notice"><strong>Evidence state:</strong> Brainstem, Easy-mode Preview, manual screenshots, all five manual Preview cases, and the Draft confirmation are captured.</div>
-  <section class="mission">
-    <div class="path" id="path"></div>
-    <aside class="panel" id="panel"><div class="placeholder">Choose a checkpoint to begin.</div></aside>
-  </section>
-</main>
+    <section class="path" data-path="easy">
+      <div class="module-summary">
+        <article>
+          <h3>What you will learn</h3>
+          <ul>
+            <li>Use your globally configured Easy-mode harness.</li>
+            <li>Use the lane skill to build and prove the portable agent.</li>
+            <li>Deploy the reviewed solution as an unpublished Draft.</li>
+            <li>Confirm the behavior yourself in Copilot Studio Preview.</li>
+            <li>Recognize the evidence that means the module is complete.</li>
+          </ul>
+        </article>
+        <article>
+          <h3>Before you begin</h3>
+          <ul>
+            <li>Use VS Code with GitHub Copilot Chat in Agent mode.</li>
+            <li>Sign in to GitHub with Copilot access.</li>
+            <li>Have access to a Copilot Studio environment.</li>
+            <li>Your workshop preference is saved globally; use <strong>Workshop settings</strong> to change it.</li>
+            <li>Do not publish. This module ends with a validated Draft.</li>
+          </ul>
+        </article>
+      </div>
 
-<script>
-const KEY = "aibast-regulatory-compliance-quest-v1";
-let mode = "easy";
-let completed = JSON.parse(localStorage.getItem(KEY) || "{}");
-let manifest = null;
+      <h2>Easy mode <span class="engine-label copilot">— GitHub Copilot only</span><span class="engine-label brainstem">— GitHub Copilot + Brainstem</span></h2>
 
-const EASY = [
-  {id:"easy-recipe", icon:"1", title:"Open the deployment contract", time:"2 min", description:"Start with the reviewed recipe rather than a hand-written install command.", resources:["deployment-recipe","portable-agent"], steps:["Give the customer the keyboard.","Open GitHub Copilot Chat in Agent mode.","Ask Copilot to own the deployment recipe end to end."]},
-  {id:"easy-runtime", icon:"2", title:"Verify the isolated runtime", time:"3–8 min", description:"Require source verification, Brainstem health, the expected tool, and the smoke prompt.", resources:["deployment-recipe","brainstem-transcripts"], steps:["Do not ask the customer to open a terminal.","Require the registry SHA-256 check.","Confirm FSRegulatoryCompliance appears in /health."]},
-  {id:"easy-cases", icon:"3", title:"Replay all five cases", time:"8–12 min", description:"Use the locked persona prompts and compare stable entities with the canonical transcripts.", resources:["brainstem-transcripts","onepager-map"], steps:["Run RC-01 through RC-05 in fresh conversations.","Treat exact figures as synthetic evidence.","Reject any certain audit-outcome claim."]},
-  {id:"easy-boundary", icon:"4", title:"Inspect the approval boundaries", time:"4 min", description:"Confirm that remediation prepares payloads for authorized review and never transmits.", resources:["source-audit","field-guide","global-instructions"], steps:["Check the audit-readiness disclaimer.","Check the no-legal-advice boundary.","Check the remediation no-transmit boundary."]},
-  {id:"easy-handoff", icon:"5", title:"Validate the Copilot Studio Draft", time:"8–12 min", description:"Inspect the pushed Easy agent and its five passing Preview cases, then stop before publication.", resources:["studio-preview-evidence","assisted-browserfilm","field-guide","manual-tutorial","manual-evidence","manual-browserfilm"], steps:["Confirm schema aibast_RegulatoryCompliancePilot and the kodyv8 environment.","Confirm five skills, two knowledge files, Sonnet46, and zero external tools.","Record unresolved connectors and governance.","Stop before publication."]}
-];
+      <div class="easy-lane" data-easy-lane="brainstem">
+        <div class="notice"><strong>Brainstem lane:</strong> Brainstem is the learner’s personal, on-device training AI working alongside Copilot. It persists the workshop, loads the generic engine, and continues every handoff.</div>
 
-const HARD = [
-  {id:"hard-download", icon:"1", title:"Download the reviewed sources", time:"4 min", description:"Use the exact instructions, knowledge files, and skills from this package.", resources:["global-instructions","knowledge-records","knowledge-rules","skill-compliance-dashboard","skill-trade-surveillance","skill-documentation-review","skill-remediation-submission","skill-certification-tracker"], steps:["Keep each file unchanged.","Upload files individually.","Use the tutorial's deterministic screenshot names."]},
-  {id:"hard-blank", icon:"2", title:"Create the blank agent", time:"5 min", description:"Create Regulatory Manual Build and save the reviewed global instructions.", resources:["global-instructions","manual-tutorial"], steps:["Start from a blank agent.","Set the exact display name.","Paste and save the full instruction policy."]},
-  {id:"hard-grounding", icon:"3", title:"Remove web search and add knowledge", time:"8–15 min", description:"Disable default web search, then upload exactly two Markdown knowledge files.", resources:["knowledge-records","knowledge-rules"], steps:["Remove web search before testing.","Wait for both files to appear.","Do not add external websites."]},
-  {id:"hard-skills", icon:"4", title:"Upload five SKILL.md files", time:"12–20 min", description:"Add each operation as a separate uploadable skill.", resources:["skill-compliance-dashboard","skill-trade-surveillance","skill-documentation-review","skill-remediation-submission","skill-certification-tracker"], steps:["Use Add skill five times.","Upload a file literally named SKILL.md each time.","Review every routing description."]},
-  {id:"hard-model", icon:"5", title:"Select Sonnet46 and review inventory", time:"6 min", description:"Set Claude Sonnet 4.6 and verify the complete component inventory.", resources:["manual-tutorial","manual-evidence"], steps:["Confirm two knowledge files.","Confirm five skills and zero external tools.","Confirm web search is absent."]},
-  {id:"hard-preview", icon:"6", title:"Run the five-case Preview", time:"15–25 min", description:"Start a fresh Preview conversation for each locked case and inspect the captured result.", resources:["brainstem-transcripts","manual-evidence","manual-browserfilm"], steps:["Run RC-01 through RC-05 exactly.","Check stable identifiers and safety boundaries.","Confirm all five passed fields are recorded."]},
-  {id:"hard-stop", icon:"7", title:"Enforce the no-publish gate", time:"2 min", description:"Capture the Draft state and stop. Preview evidence is not publication approval.", resources:["manual-evidence","manual-browserfilm"], steps:["Do not choose Publish.","Record the agent identity and environment.","Hand evidence back to the parent owner."]}
-];
+      <article class="learn-step" id="brainstem-step-1">
+        <header class="learn-step-header"><span>1</span><div><p>Prepare your Copilot</p><h3>Download and attach the Brainstem skill</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 1: attach skill" data-report-expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat." data-report-evidence="">Report an issue</button></header>
+        <div class="learn-step-body">
+          <p>This file fixes the workshop to Brainstem. Copilot remains the work surface while the learner&#x27;s on-device training AI persists state, loads the generic workshop engine, and continues every handoff.</p>
+          <div class="action-panel"><strong>Do this</strong><ol><li>Download the lane-specific <code>SKILL.md</code>.</li><li>Open GitHub Copilot Chat in VS Code.</li><li>Select <strong>Agent mode</strong>.</li><li>Drag the downloaded file into the chat.</li></ol><a class="button primary" href="../../skills/aibast-easy-mode-brainstem/SKILL.md" download="SKILL.md">Download Brainstem SKILL.md</a></div>
+          <div class="expected-panel"><strong>Expected result</strong><p>The attachment appears in Copilot Chat. From this point forward, the selected skill—not extra wording in your prompts—determines which harness runs.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="brainstem-skill"><span>I attached the correct lane skill.</span></label>
+        </div>
+      </article>
 
-function currentSteps() { return mode === "easy" ? EASY : HARD; }
-function resources(ids) {
-  if (!manifest) return [];
-  return manifest.files.filter(file => ids.includes(file.id));
-}
-function render() {
-  document.querySelectorAll(".mode").forEach(button => button.classList.toggle("active", button.dataset.mode === mode));
-  const list = currentSteps();
-  document.getElementById("path").innerHTML = list.map((step, index) => {
-    const done = Boolean(completed[step.id]);
-    return `<button class="step ${done ? "complete" : ""}" data-step="${step.id}"><span class="step-icon">${done ? "✓" : step.icon}</span><span><strong>${index + 1}. ${step.title}</strong><span>${step.description}</span></span><small>${step.time}</small></button>`;
-  }).join("");
-  const count = list.filter(step => completed[step.id]).length;
-  document.getElementById("fill").style.width = `${(count / list.length) * 100}%`;
-  document.getElementById("progress-label").textContent = `${count} of ${list.length}`;
-  document.querySelectorAll("[data-step]").forEach(button => button.addEventListener("click", () => openStep(button.dataset.step)));
-}
-function openStep(id) {
-  const step = currentSteps().find(item => item.id === id);
-  if (!step) return;
-  document.querySelectorAll(".step").forEach(button => button.classList.toggle("active", button.dataset.step === id));
-  const links = resources(step.resources);
-  document.getElementById("panel").innerHTML = `<h2>${step.title}</h2><div class="time">${step.time}</div><p class="description">${step.description}</p><div class="resources">${links.map(file => `<a class="resource" href="${file.raw_url}" target="_blank" rel="noopener"><strong>${file.label}</strong><span>${file.use}</span></a>`).join("")}</div><ul class="checklist">${step.steps.map(item => `<li>${item}</li>`).join("")}</ul>${id === "hard-preview" || id === "hard-blank" ? `<a class="button primary" href="manual-tutorial.html">Open the 26-action tutorial</a>` : ""}<button class="done ${completed[id] ? "complete" : ""}" data-done="${id}">${completed[id] ? "Completed ✓" : "Mark checkpoint complete"}</button>`;
-  document.querySelector("[data-done]").addEventListener("click", event => {
-    completed[event.currentTarget.dataset.done] = !completed[event.currentTarget.dataset.done];
-    localStorage.setItem(KEY, JSON.stringify(completed));
-    render();
-    openStep(id);
-  });
-}
-document.querySelectorAll(".mode").forEach(button => button.addEventListener("click", () => {
-  mode = button.dataset.mode;
-  document.getElementById("panel").innerHTML = `<div class="placeholder">Choose a checkpoint to begin.</div>`;
-  render();
-}));
-document.getElementById("reset").addEventListener("click", () => {
-  completed = {};
-  localStorage.removeItem(KEY);
-  render();
-});
-fetch("export-manifest.json", {cache:"no-store"}).then(response => response.json()).then(data => {
-  manifest = data;
-  render();
-}).catch(render);
-</script>
+      <article class="learn-step" id="brainstem-step-2">
+        <header class="learn-step-header"><span>2</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test Regulatory Compliance</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 2: local proof" data-report-expected="Brainstem reports the generic AIBAST Workshop Engine and FSRegulatoryCompliance loaded, with 5/5 locked local cases passed." data-report-evidence="">Report an issue</button></header>
+        <div class="learn-step-body">
+          <p>This step proves the portable business logic before any Copilot Studio work begins. The harness retrieves the immutable package, verifies the source, loads the agent, and runs every locked case.</p>
+          <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="brainstem-build-prompt">Copy message</button></div>
+          <pre class="prompt-block" id="brainstem-build-prompt">Give me Regulatory Compliance using Easy Mode and test it for me.</pre>
+          <div class="expected-panel"><strong>Expected result</strong><p>Brainstem reports the generic AIBAST Workshop Engine and FSRegulatoryCompliance loaded, with 5/5 locked local cases passed.</p><p>Copilot should end by suggesting the next message: <code>Deploy it into Copilot Studio for me.</code></p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="brainstem-local"><span>I saw every locked local case pass.</span></label>
+        </div>
+      </article>
+
+      <article class="learn-step" id="brainstem-step-3">
+        <header class="learn-step-header"><span>3</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 3: Draft deployment" data-report-expected="Draft Regulatory Compliance Pilot; model Sonnet46; 2 knowledge files; 5 skills; published false." data-report-evidence="">Report an issue</button></header>
+        <div class="learn-step-body">
+          <p>The harness now reuses or creates the source-controlled Copilot Studio Draft, synchronizes the reviewed instructions and assets, and leaves publication off.</p>
+          <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="brainstem-deploy-prompt">Copy message</button></div>
+          <pre class="prompt-block" id="brainstem-deploy-prompt">Deploy it into Copilot Studio for me.</pre>
+          <div class="expected-panel"><strong>Expected result</strong><ul><li>Draft: <code>Regulatory Compliance Pilot</code></li><li>Model: <code>Sonnet46</code></li><li>Knowledge files: <code>2</code></li><li>Skills: <code>5</code></li><li>Status: <strong>Draft</strong>; published: <code>false</code></li></ul><p>The harness then validates the real Preview front door before returning its final verdict.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="brainstem-draft"><span>I saw the Draft identity and unpublished state.</span></label>
+        </div>
+      </article>
+      </div>
+
+      <div class="easy-lane" data-easy-lane="copilot">
+        <div class="comparison-note"><strong>Skeptic comparison — Copilot-only lane:</strong> GitHub Copilot carries the same harness directly in the active session. The skill still discovers every asset and runs every gate; there is no persistent Brainstem engine between turns.</div>
+
+      <article class="learn-step" id="copilot-step-1">
+        <header class="learn-step-header"><span>1</span><div><p>Prepare your Copilot</p><h3>Download and attach the Copilot-only skill</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 1: attach skill" data-report-expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat." data-report-evidence="">Report an issue</button></header>
+        <div class="learn-step-body">
+          <p>This file fixes the workshop to GitHub Copilot alone. The skill carries the same discovery, testing, deployment, and validation contract directly in the active Copilot session.</p>
+          <div class="action-panel"><strong>Do this</strong><ol><li>Download the lane-specific <code>SKILL.md</code>.</li><li>Open GitHub Copilot Chat in VS Code.</li><li>Select <strong>Agent mode</strong>.</li><li>Drag the downloaded file into the chat.</li></ol><a class="button primary" href="../../skills/aibast-easy-mode-copilot/SKILL.md" download="SKILL.md">Download Copilot-only SKILL.md</a></div>
+          <div class="expected-panel"><strong>Expected result</strong><p>The attachment appears in Copilot Chat. From this point forward, the selected skill—not extra wording in your prompts—determines which harness runs.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="copilot-skill"><span>I attached the correct lane skill.</span></label>
+        </div>
+      </article>
+
+      <article class="learn-step" id="copilot-step-2">
+        <header class="learn-step-header"><span>2</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test Regulatory Compliance</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 2: local proof" data-report-expected="Copilot reports an isolated workspace, a verified source hash, and 5/5 locked local cases passed." data-report-evidence="">Report an issue</button></header>
+        <div class="learn-step-body">
+          <p>This step proves the portable business logic before any Copilot Studio work begins. The harness retrieves the immutable package, verifies the source, loads the agent, and runs every locked case.</p>
+          <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="copilot-build-prompt">Copy message</button></div>
+          <pre class="prompt-block" id="copilot-build-prompt">Give me Regulatory Compliance using Easy Mode and test it for me.</pre>
+          <div class="expected-panel"><strong>Expected result</strong><p>Copilot reports an isolated workspace, a verified source hash, and 5/5 locked local cases passed.</p><p>Copilot should end by suggesting the next message: <code>Deploy it into Copilot Studio for me.</code></p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="copilot-local"><span>I saw every locked local case pass.</span></label>
+        </div>
+      </article>
+
+      <article class="learn-step" id="copilot-step-3">
+        <header class="learn-step-header"><span>3</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 3: Draft deployment" data-report-expected="Draft Regulatory Compliance Pilot; model Sonnet46; 2 knowledge files; 5 skills; published false." data-report-evidence="">Report an issue</button></header>
+        <div class="learn-step-body">
+          <p>The harness now reuses or creates the source-controlled Copilot Studio Draft, synchronizes the reviewed instructions and assets, and leaves publication off.</p>
+          <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="copilot-deploy-prompt">Copy message</button></div>
+          <pre class="prompt-block" id="copilot-deploy-prompt">Deploy it into Copilot Studio for me.</pre>
+          <div class="expected-panel"><strong>Expected result</strong><ul><li>Draft: <code>Regulatory Compliance Pilot</code></li><li>Model: <code>Sonnet46</code></li><li>Knowledge files: <code>2</code></li><li>Skills: <code>5</code></li><li>Status: <strong>Draft</strong>; published: <code>false</code></li></ul><p>The harness then validates the real Preview front door before returning its final verdict.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="copilot-draft"><span>I saw the Draft identity and unpublished state.</span></label>
+        </div>
+      </article>
+      </div>
+
+      <section class="learn-step" id="easy-step-4">
+        <header class="learn-step-header"><span>4</span><div><p>Verify the real experience</p><h3>Confirm the Draft in Copilot Studio Preview</h3></div></header>
+        <div class="learn-step-body">
+          <p>The harness already runs these checks automatically. Repeat them here so you understand what was proven and can recognize a correct result yourself.</p>
+          <div class="preview-intro"><ol><li>Open the validated Draft.</li><li>Select <strong>Preview</strong>.</li><li>Choose <strong>New chat</strong> before each case.</li><li>Paste the exact prompt.</li><li>Compare the answer with the required and forbidden markers.</li></ol><div><a class="button primary" href="https://copilotstudio.preview.microsoft.com/environments/ee67a404-325c-e726-a18a-886fe708ca0b/agents/1a5fb3de-2e07-4415-89f9-40c5620c0cc5" target="_blank" rel="noopener">Open the Copilot Studio Draft ↗</a></div></div>
+          <div class="expected-panel"><strong>Expected result</strong><p>Every case passes in a fresh Preview conversation, and the agent still appears as <strong>Draft</strong>.</p></div>
+          <div class="preview-grid">
+
+        <article class="preview-case">
+          <header><div><p class="prompt-kicker">RC-01 · Chief Compliance Officer</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-rc-01">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — RC-01" data-report-expected="Must include: T-2041, T-2233; must not include: I don&#x27;t have access, provide the trade, give me a trade, which trade would you" data-report-evidence="solutions/fs-regulatory-compliance/screenshots/assisted/02-rc-01.jpg">Report an issue</button></div></header>
+          <pre class="prompt-block" id="preview-prompt-rc-01">Are we going to fail our next MiFID audit? What&#x27;s actually broken on the desk right now?</pre>
+          <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">T-2041</span><span class="marker-chip">T-2233</span></div></div>
+          <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">I don&#x27;t have access</span><span class="marker-chip">provide the trade</span><span class="marker-chip">give me a trade</span><span class="marker-chip">which trade would you</span></div></div>
+
+          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-rc-01"><span>The Preview response matched this contract.</span></label>
+        </article>
+
+        <article class="preview-case">
+          <header><div><p class="prompt-kicker">RC-02 · Trading Desk Supervisor</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-rc-02">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — RC-02" data-report-expected="Must include: T-2041, T-2233; must not include: I don&#x27;t have access, provide the trader" data-report-evidence="solutions/fs-regulatory-compliance/screenshots/assisted/03-rc-02.jpg">Report an issue</button></div></header>
+          <pre class="prompt-block" id="preview-prompt-rc-02">Which of my traders can&#x27;t legally trade today, and who do I have to call?</pre>
+          <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">T-2041</span><span class="marker-chip">T-2233</span></div></div>
+          <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">I don&#x27;t have access</span><span class="marker-chip">provide the trader</span></div></div>
+
+          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-rc-02"><span>The Preview response matched this contract.</span></label>
+        </article>
+
+        <article class="preview-case">
+          <header><div><p class="prompt-kicker">RC-03 · Compliance Manager</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-rc-03">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — RC-03" data-report-expected="Must include: TRD-88133, field; must not include: I don&#x27;t have access, upload" data-report-evidence="solutions/fs-regulatory-compliance/screenshots/assisted/04-rc-03.jpg">Report an issue</button></div></header>
+          <pre class="prompt-block" id="preview-prompt-rc-03">We executed a few hundred trades this week. Which ones will the regulator reject, and why exactly?</pre>
+          <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">TRD-88133</span><span class="marker-chip">field</span></div></div>
+          <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">I don&#x27;t have access</span><span class="marker-chip">upload</span></div></div>
+
+          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-rc-03"><span>The Preview response matched this contract.</span></label>
+        </article>
+
+        <article class="preview-case">
+          <header><div><p class="prompt-kicker">RC-04 · Head of Quant Execution</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-rc-04">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — RC-04" data-report-expected="Must include: ALGO-POV-NL; must not include: I don&#x27;t have access" data-report-evidence="solutions/fs-regulatory-compliance/screenshots/assisted/05-rc-04.jpg">Report an issue</button></div></header>
+          <pre class="prompt-block" id="preview-prompt-rc-04">Is anything about to go live that shouldn&#x27;t?</pre>
+          <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">ALGO-POV-NL</span></div></div>
+          <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">I don&#x27;t have access</span></div></div>
+
+          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-rc-04"><span>The Preview response matched this contract.</span></label>
+        </article>
+
+        <article class="preview-case">
+          <header><div><p class="prompt-kicker">RC-05 · Chief Risk Officer</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-rc-05">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — RC-05" data-report-expected="Must include: TRD-88133; must not include: I don&#x27;t have access" data-report-evidence="solutions/fs-regulatory-compliance/screenshots/assisted/06-rc-05.jpg">Report an issue</button></div></header>
+          <pre class="prompt-block" id="preview-prompt-rc-05">My head of trading says the reporting is fine. Prove him wrong with specifics I can take to the board.</pre>
+          <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">TRD-88133</span></div></div>
+          <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">I don&#x27;t have access</span></div></div>
+
+          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-rc-05"><span>The Preview response matched this contract.</span></label>
+        </article>
+          </div>
+        </div>
+      </section>
+
+
+      <section class="learn-step" id="easy-step-5">
+        <header class="learn-step-header"><span>5</span><div><p>Recognize completion</p><h3>Know what “done” looks like</h3></div><button class="button report-button" type="button" data-report-location="Easy mode — final completion verdict" data-report-expected="Local 5/5; Preview 5/5; Draft Regulatory Compliance Pilot; published false." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/assisted/01-review-build.jpg">Report an issue</button></header>
+        <div class="learn-step-body">
+          <p>The workshop is complete only when both the portable agent and the Copilot Studio front door prove the same behavior.</p>
+          <div class="done-grid">
+            <article><strong>Local proof</strong><span>5/5 locked cases passed</span></article>
+            <article><strong>Preview proof</strong><span>5/5 locked cases passed</span></article>
+            <article><strong>Draft identity</strong><span>Regulatory Compliance Pilot</span></article>
+            <article><strong>Model</strong><span>Sonnet46</span></article>
+            <article><strong>Inventory</strong><span>2 knowledge · 5 skills</span></article>
+            <article><strong>Publication gate</strong><span>Draft · published false</span></article>
+          </div>
+
+          <div class="expected-panel"><strong>Final expected verdict</strong><p>The harness reports <code>status: complete</code>, exact case totals, the Draft identity, and <code>published: false</code>. The module ends here; it does not offer publication.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="easy-complete"><span>I confirmed the final Draft verdict.</span></label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h3>Troubleshooting</h3>
+        <table class="troubleshooting-table">
+          <thead><tr><th>What you see</th><th>What it means</th><th>What to do</th></tr></thead>
+          <tbody>
+            <tr><td>Copilot ignores the lane</td><td>The wrong skill is attached, or the chat began before attachment.</td><td>Start a new Agent-mode chat and attach the correct lane-specific <code>SKILL.md</code> first.</td></tr>
+            <tr><td>Local validation is not 5/5</td><td>The portable source, package, or locked behavior does not match.</td><td>Stop. Do not deploy. Let the harness report the exact failed case and marker.</td></tr>
+            <tr><td>No active Copilot Studio environment</td><td>PAC has no selected environment.</td><td>Sign in or select the intended environment, then resend the deploy message.</td></tr>
+            <tr><td>The Draft already exists</td><td>The recorded schema is already in the environment.</td><td>The harness should clone and reconnect automatically. Treat an attendee choice prompt as a harness defect.</td></tr>
+            <tr><td>A Preview case misses a marker</td><td>The real front door does not match the reviewed contract.</td><td>Keep the case failed. Inspect instructions and assets; do not retry until it happens to pass.</td></tr>
+            <tr><td>The agent is Published</td><td>The workshop crossed its safety boundary.</td><td>Stop immediately. The module must end at Draft with <code>published: false</code>.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <details class="facilitator-details">
+        <summary>Facilitator evidence and portable download</summary>
+        <p>These links support audit, troubleshooting, and offline delivery. They are not learner steps.</p>
+        <div class="facilitator-actions">
+          <a class="button" href="field-guide.html">Field guide</a>
+          <a class="button" href="evidence-report.html#locked-cases">Locked evidence</a>
+          <a class="button" href="evidence-report.html">Evidence report</a>
+          <a class="button" href="export-manifest.json" download>Download audit manifest</a>
+          <a class="button" href="exports/fs-regulatory-compliance-source.zip" download>Download portable bundle</a>
+          <a class="button" href="../../agents/@aibast-agents-library/templates/workshop_agent.py" download>Download generic workshop agent</a>
+          <a class="button" href="https://kodyw.com/the-personless-harness/" target="_blank" rel="noopener">Personless harness article ↗</a>
+        </div>
+      </details>
+    </section>
+
+    <section class="path" data-path="hard" hidden>
+      <iframe class="hard-tutorial-frame" id="hard-mode-tutorial" src="manual-tutorial.html?embedded=1" title="Hard mode manual tutorial"></iframe>
+    </section>
+
+  </main>
+  <script>
+    (() => {
+      const modeKey = "aibast:fs-regulatory-compliance:quest-mode";
+      const globalEngineKey = "aibast:workshop-engine";
+      const progressKey = "aibast:fs-regulatory-compliance:quest-progress";
+      const buttons = Array.from(document.querySelectorAll("[data-mode]"));
+      const paths = Array.from(document.querySelectorAll("[data-path]"));
+      const boxes = Array.from(document.querySelectorAll("[data-checkpoint]"));
+      let saved = {};
+      try { saved = JSON.parse(localStorage.getItem(progressKey) || "{}"); } catch (_error) { saved = {}; }
+      boxes.forEach((box) => {
+        box.checked = Boolean(saved[box.dataset.checkpoint]);
+        box.addEventListener("change", () => {
+          saved[box.dataset.checkpoint] = box.checked;
+          localStorage.setItem(progressKey, JSON.stringify(saved));
+        });
+      });
+      function selectMode(mode) {
+        buttons.forEach((button) => button.classList.toggle("active", button.dataset.mode === mode));
+        paths.forEach((path) => { path.hidden = path.dataset.path !== mode; });
+        localStorage.setItem(modeKey, mode);
+      }
+      buttons.forEach((button) => button.addEventListener("click", () => selectMode(button.dataset.mode)));
+      document.querySelectorAll("[data-copy-target]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const target = document.getElementById(button.dataset.copyTarget);
+          if (!target) {
+            button.textContent = "Prompt missing";
+            return;
+          }
+          const original = button.textContent;
+          navigator.clipboard.writeText(target.textContent).then(() => {
+            button.textContent = "Copied";
+            window.setTimeout(() => { button.textContent = original; }, 1400);
+          }).catch(() => {
+            button.textContent = "Copy failed";
+          });
+        });
+      });
+      document.querySelectorAll("[data-report-location]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const locationLabel = button.dataset.reportLocation || "Workshop";
+          const expected = button.dataset.reportExpected || "Describe the expected result.";
+          const evidence = button.dataset.reportEvidence || "No evidence path supplied.";
+          const title = `[Beta workshop] Regulatory Compliance Agent: ${locationLabel}`;
+          const body = `<!-- aibast-workshop-feedback:v1 -->
+## Workshop signal
+
+- Schema: \`aibast-workshop-feedback/1.0\`
+- Solution: \`@aibast-agents-library/fs-regulatory-compliance\`
+- Page: ${location.href}
+- Mode: \`${localStorage.getItem(globalEngineKey) === "brainstem" ? "brainstem" : "copilot"}\`
+- Location: ${locationLabel}
+- Evidence: \`${evidence}\`
+
+## Workshop context
+
+This issue was opened from a contextual Beta workshop report button.
+
+## Expected
+
+${expected}
+
+## What happened instead
+
+Describe what was inaccurate or missing.
+
+## Reproduction
+
+1. Open the workshop page.
+2. Select the mode shown above.
+3. Follow the step or Preview case.
+4. Record the visible result and any Copilot response.
+
+> Beta workshop report. Do not include credentials, tokens, customer data, or other sensitive information.`;
+          const url = new URL("https://github.com/microsoft/aibast-agents-library/issues/new");
+          url.searchParams.set("title", title);
+          url.searchParams.set("body", body);
+          window.open(url.toString(), "_blank", "noopener");
+        });
+      });
+      const hardFrame = document.getElementById("hard-mode-tutorial");
+      const resizeHardFrame = () => {
+        if (!hardFrame?.contentDocument) return;
+        hardFrame.style.height =
+          `${hardFrame.contentDocument.documentElement.scrollHeight}px`;
+      };
+      hardFrame?.addEventListener("load", resizeHardFrame);
+      window.addEventListener("message", (event) => {
+        if (
+          event.origin === window.location.origin &&
+          event.data?.type === "aibast-hard-mode-height" &&
+          Number.isFinite(event.data.height)
+        ) {
+          hardFrame.style.height = `${event.data.height}px`;
+        }
+      });
+      window.addEventListener("resize", resizeHardFrame);
+      selectMode(localStorage.getItem(modeKey) || "easy");
+    })();
+  </script>
 </body>
 </html>

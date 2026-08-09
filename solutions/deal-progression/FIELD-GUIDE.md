@@ -14,24 +14,41 @@ blueprint, and decide what production integration would require.
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
-## Easy mode — Copilot-assisted
+## Easy mode — GitHub Copilot (default)
 
-1. Review `deployment.json`, `evals/transcripts.json`, and the available
-   Easy-mode evidence before making a claim.
-2. Use the reviewed Copilot Studio source under `copilot-studio/`.
-3. Run the recorded cases without changing their acceptance identifiers.
-4. Compare the observed result with the evidence rather than promising an
-   operational outcome.
-5. Stop at **Draft**. Publishing is a separate human approval gate.
+1. Open GitHub Copilot Chat in VS Code and select **Agent mode**.
+2. Download `skills/aibast-easy-mode-copilot/SKILL.md` and drag it into the
+   chat.
+3. Open `EASY-MODE-COPILOT-CHAT.md`.
+4. Send its two short messages in order: build and test the named solution,
+   then deploy the validated Draft.
+5. The skill performs discovery, testing, deployment, and Preview validation
+   directly through GitHub Copilot.
+6. Stop at **Draft**. Publishing remains a separate human approval gate.
 
-Recorded case prompts:
+## Easy mode — GitHub Copilot + Brainstem (optional)
 
-- `DP-01` — recorded prompt
-- `DP-02` — recorded prompt
-- `DP-03` — recorded prompt
-- `DP-04` — recorded prompt
-- `DP-05` — recorded prompt
-- `DP-06` — recorded prompt
+Brainstem is the learner's personal, on-device training AI working alongside
+GitHub Copilot. Copilot stays the familiar work surface; Brainstem remembers
+the workshop and hot-loads the specialized instructors.
+
+Download `skills/aibast-easy-mode-brainstem/SKILL.md`, drag it into Copilot
+Chat, open `EASY-MODE-PERSONLESS.md`, and send the same two short messages.
+The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
+continues its front-door handoffs until functional validation returns
+`status: complete`.
+
+Both lanes use the same immutable assets, locked cases, real Preview gate, and
+`published: false` boundary.
+
+Both Easy lanes preserve every recorded case prompt:
+
+- `DP-01` — Which opportunities need attention in the synthetic pipeline, and what evidence should I review before changing the forecast?
+- `DP-02` — Which synthetic deals have genuinely stalled, and what blocker evidence explains the loss of momentum?
+- `DP-03` — Draft reviewable intervention plans for the stalled synthetic deals, but do not assign work or contact anyone.
+- `DP-04` — Which synthetic timing options could move pipeline review forward without turning scenario value into a forecast commitment?
+- `DP-05` — Map candidate follow-up work to the synthetic rep capacity for my review; do not create tasks or alerts.
+- `DP-06` — Give me a leadership-ready summary of the synthetic pipeline findings and the decisions that still require human review.
 
 ## Hard mode — literal browser construction
 

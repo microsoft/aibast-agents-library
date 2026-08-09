@@ -30,7 +30,12 @@ The local agent uses fictional records and produces decision support only. It do
 
 | Surface | Location |
 | --- | --- |
-| Customer field guide | `solutions/permit-license-management/FIELD-GUIDE.md` |
+| Customer field guide | `solutions/permit-license-management/field-guide.html` |
+| Evidence report | `solutions/permit-license-management/evidence-report.html` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/permit-license-management/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/permit-license-management/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Hard quest | `solutions/permit-license-management/quest.html` |
 | Literal browser tutorial | `solutions/permit-license-management/manual-tutorial.html` |
 | Raw export manifest | `solutions/permit-license-management/export-manifest.json` |
@@ -38,7 +43,7 @@ The local agent uses fictional records and produces decision support only. It do
 | Manual evidence | `solutions/permit-license-management/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/permit-license-management/screenshots/manual/browserfilm.json` |
 
-**Scaffold status:** 60 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 69 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

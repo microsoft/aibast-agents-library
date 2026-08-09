@@ -41,5 +41,5 @@ Deploy it into Copilot Studio for me.
 
 Generic workshop engine: https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/agents/@aibast-agents-library/templates/workshop_agent.py
 
-This is the default Easy path. The person sets the destination and reads the
+The person sets the destination and reads the
 verdict; Brainstem + Copilot pull the harness.

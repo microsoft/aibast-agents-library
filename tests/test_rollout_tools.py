@@ -160,6 +160,14 @@ def test_draft_promoter_refreshes_an_existing_project(tmp_path, monkeypatch):
     package = tmp_path / "solutions" / "test-solution"
     (package / "manual" / "skills" / "review").mkdir(parents=True)
     (package / "manual" / "knowledge").mkdir(parents=True)
+    fallback = (
+        package
+        / "copilot-studio"
+        / "capabilities"
+        / "knowledge"
+        / "files"
+    )
+    fallback.mkdir(parents=True)
     (package / "deployment.json").write_text(
         json.dumps({"display_name": "Test Agent"}),
         encoding="utf-8",
@@ -174,6 +182,10 @@ def test_draft_promoter_refreshes_an_existing_project(tmp_path, monkeypatch):
     )
     (package / "manual" / "knowledge" / "records.md").write_text(
         "# Records\n",
+        encoding="utf-8",
+    )
+    (fallback / "fallback.md").write_text(
+        "# Fallback\n",
         encoding="utf-8",
     )
 
@@ -211,7 +223,72 @@ def test_draft_promoter_refreshes_an_existing_project(tmp_path, monkeypatch):
     assert (
         project / "capabilities" / "knowledge" / "files" / "records.md"
     ).exists()
+    assert not (
+        project / "capabilities" / "knowledge" / "files" / "fallback.md"
+    ).exists()
     assert (package / "copilot-studio" / "settings.mcs.yml").exists()
+
+
+def test_draft_promoter_uses_reviewed_studio_knowledge_fallback(
+    tmp_path,
+    monkeypatch,
+):
+    module = load("promote_solution_draft")
+    monkeypatch.setattr(module, "ROOT", tmp_path)
+    package = tmp_path / "solutions" / "test-solution"
+    (package / "manual" / "skills" / "review").mkdir(parents=True)
+    fallback = (
+        package
+        / "copilot-studio"
+        / "capabilities"
+        / "knowledge"
+        / "files"
+    )
+    fallback.mkdir(parents=True)
+    (package / "deployment.json").write_text(
+        json.dumps({"display_name": "Test Agent"}),
+        encoding="utf-8",
+    )
+    (package / "manual" / "GLOBAL-INSTRUCTIONS.md").write_text(
+        "# Role\n\nUse only synthetic evidence.",
+        encoding="utf-8",
+    )
+    (package / "manual" / "skills" / "review" / "SKILL.md").write_text(
+        "---\nname: review\ndescription: Review synthetic evidence.\n---\n# Review\n",
+        encoding="utf-8",
+    )
+    (fallback / "reviewed-records.md").write_text(
+        "# Reviewed records\n",
+        encoding="utf-8",
+    )
+
+    project = tmp_path / "project"
+    (project / "settings.mcs.yml").parent.mkdir(parents=True)
+    (project / "settings.mcs.yml").write_text(
+        "displayName: Old\nschemaName: aibast_TestPilot\n",
+        encoding="utf-8",
+    )
+    (project / "agent.sync.yaml").write_text("components: []\n", encoding="utf-8")
+
+    result = module.promote(
+        "test-solution",
+        project,
+        "environment-id",
+        "aibast",
+        False,
+        update_existing=True,
+    )
+
+    assert result["knowledge_files"] == 1
+    copied = (
+        project
+        / "capabilities"
+        / "knowledge"
+        / "files"
+        / "reviewed-records.md"
+    )
+    assert copied.read_text(encoding="utf-8") == "# Reviewed records\n"
+    assert (copied.parent / "reviewed-records.md.mcs.yml").exists()
 
 
 def test_promotion_batch_selects_only_missing_studio_sources(tmp_path, monkeypatch):

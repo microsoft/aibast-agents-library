@@ -3,13 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Win/Loss Analysis Agent deployment quest</title>
+  <title>Win/Loss Analysis Agent workshop</title>
   <script>
     (() => {
       const param = new URLSearchParams(window.location.search).get("scoutTheme");
       const theme =
         param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
       document.documentElement.setAttribute("data-theme", theme);
+    })();
+    (() => {
+      const engine =
+        localStorage.getItem("aibast:workshop-engine") === "brainstem"
+          ? "brainstem"
+          : "copilot";
+      document.documentElement.setAttribute("data-workshop-engine", engine);
     })();
   </script>
   <style>
@@ -169,22 +176,94 @@
     .checkpoint strong, .checkpoint span { display: block; }
     .checkpoint span { color: var(--cp-text-muted); }
     .path[hidden] { display: none; }
+    .easy-lane { display: none; }
+    html[data-workshop-engine="brainstem"] .easy-lane[data-easy-lane="brainstem"] { display: block; }
+    html[data-workshop-engine="copilot"] .easy-lane[data-easy-lane="copilot"] { display: block; }
+    .engine-label { display: none; color: var(--cp-accent); }
+    html[data-workshop-engine="brainstem"] .engine-label.brainstem { display: inline; }
+    html[data-workshop-engine="copilot"] .engine-label.copilot { display: inline; }
+    .engine-flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 18px 0; }
+    .engine-node { padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface); text-align: center; font-weight: 750; }
+    .comparison-note { margin: 14px 0; padding: 14px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft); color: var(--cp-text-muted); }
+    .skill-onboarding { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px; align-items: center; margin: 16px 0 8px; padding: 20px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
+    .skill-onboarding h3 { margin: 0 0 6px; }
+    .skill-onboarding p { margin: 0; color: var(--cp-text-muted); }
+    .drag-target { margin-top: 10px; padding: 12px; border: 1px dashed var(--cp-border-strong); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text); font-weight: 700; }
+    .outcome-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .outcome-card { padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
+    .outcome-card strong { display: block; margin-bottom: 6px; }
+    .outcome-card p { margin: 0; color: var(--cp-text-muted); }
+    .facilitator-details { margin-top: 18px; padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); }
+    .facilitator-details summary { cursor: pointer; font-weight: 750; }
+    .facilitator-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .comparison-table { width: 100%; margin-top: 14px; border-collapse: collapse; }
+    .comparison-table th, .comparison-table td { padding: 12px; border: 1px solid var(--cp-border); text-align: left; vertical-align: top; }
+    .comparison-table th { background: var(--cp-surface-soft); }
+    .module-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+    .module-summary article { padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
+    .module-summary h3 { margin-top: 0; }
+    .module-summary ul { margin-bottom: 0; padding-left: 20px; }
+    .learn-step { margin: 22px 0; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); overflow: hidden; }
+    .learn-step-header { display: grid; grid-template-columns: 44px 1fr auto; gap: 14px; align-items: center; padding: 18px 20px; border-bottom: 1px solid var(--cp-border); background: var(--cp-surface-soft); }
+    .learn-step-header > span { display: grid; width: 40px; height: 40px; place-items: center; border-radius: 10px; background: var(--cp-accent); color: var(--cp-accent-fg); font-weight: 800; }
+    .learn-step-header p { margin: 0; color: var(--cp-accent); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    .learn-step-header h3 { margin: 2px 0 0; }
+    .learn-step-body { padding: 20px; }
+    .action-panel, .expected-panel { margin: 16px 0; padding: 16px; border-radius: 10px; }
+    .action-panel { border: 1px solid var(--cp-border); background: var(--cp-surface-soft); }
+    .action-panel > strong, .expected-panel > strong { display: block; margin-bottom: 8px; }
+    .action-panel ol, .expected-panel ul { margin: 8px 0 12px; padding-left: 22px; }
+    .expected-panel { border-left: 4px solid var(--cp-success); background: var(--cp-surface-soft); }
+    .step-complete { display: flex; gap: 10px; align-items: center; margin-top: 14px; padding: 12px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-bg-elevated); font-weight: 700; }
+    .step-complete input { width: 20px; height: 20px; accent-color: var(--cp-accent); }
+    .preview-intro { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .preview-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .preview-case { padding: 16px; border: 1px solid var(--cp-border); border-radius: 14px; background: var(--cp-bg-elevated); }
+    .preview-case header { display: flex; justify-content: space-between; gap: 12px; align-items: start; }
+    .preview-case h4 { margin: 0; }
+    .report-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+    .report-button { border-color: var(--cp-accent); color: var(--cp-accent); }
+    .beta-badge { display: inline-flex; align-items: center; margin-bottom: 12px; padding: 5px 9px; border-radius: 999px; background: var(--cp-warning); color: var(--cp-accent-fg); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    .beta-notice { margin-top: 14px; padding: 14px; border: 1px solid var(--cp-warning); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
+    .marker-group { margin: 12px 0; }
+    .marker-group > strong { display: block; margin-bottom: 6px; }
+    .marker-chip { display: inline-flex; margin: 0 6px 6px 0; padding: 5px 8px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface); color: var(--cp-text-muted); font-size: 12px; }
+    .preview-shot-wrap { margin-top: 14px; text-align: center; }
+    .preview-shot { display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }
+    .capture-meta { margin: 8px 0 0; color: var(--cp-text-muted); font-size: 12px; text-align: center; }
+    .quality-warning { margin: 16px 0; padding: 14px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft); color: var(--cp-text-muted); }
+    .done-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+    .done-grid article { padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); }
+    .done-grid strong, .done-grid span { display: block; }
+    .done-grid span { margin-top: 5px; color: var(--cp-text-muted); }
+    .troubleshooting-table { width: 100%; border-collapse: collapse; }
+    .troubleshooting-table th, .troubleshooting-table td { padding: 12px; border: 1px solid var(--cp-border); text-align: left; vertical-align: top; }
+    .troubleshooting-table th { background: var(--cp-surface-soft); }
+    .hard-tutorial-frame { display: block; width: 100%; min-height: 1600px; border: 0; border-radius: 16px; background: var(--cp-surface); }
+    .prompt-card { margin: 16px 0; padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
+    .prompt-heading { display: flex; align-items: start; justify-content: space-between; gap: 16px; }
+    .prompt-heading h3 { margin: 0; }
+    .prompt-kicker { margin: 0 0 4px; color: var(--cp-accent); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    .prompt-block { overflow-x: auto; margin: 14px 0 0; padding: 16px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text); white-space: pre-wrap; word-break: break-word; font-family: Consolas, "Courier New", Courier, monospace; font-size: 13px; line-height: 1.55; }
     .resource-list { columns: 2; padding-left: 22px; }
     .resource-list li { break-inside: avoid; margin-bottom: 10px; }
-    @media (max-width: 620px) { .resource-list { columns: 1; } }
+    @media (max-width: 760px) { .engine-flow, .outcome-grid, .skill-onboarding, .module-summary, .preview-grid, .done-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 620px) { .resource-list { columns: 1; } .prompt-heading { display: block; } .prompt-heading .button { margin-top: 12px; } }
   </style>
 </head>
 <body>
   <header class="topbar">
-    <div class="brand"><span class="brand-mark">C</span><span>Clawpilot deployment quest</span></div>
-    <a class="button primary" href="FIELD-GUIDE.md">Open field guide</a>
+    <div class="brand"><span class="brand-mark">A</span><span>AIBAST guided workshop</span></div>
+    <div><a class="button" href="../_shared/workshop-settings.html?return=../win-loss-analysis/quest.html">Workshop settings</a> <a class="button primary" href="field-guide.html">Open field guide</a></div>
   </header>
   <main class="page">
     <section class="hero">
+      <span class="beta-badge">Beta workshop</span>
       <p class="eyebrow">Evidence-grounded customer journey</p>
       <h1>Win/Loss Analysis Agent</h1>
-      <p class="lede">Choose Copilot-assisted Easy mode or literal browser construction in Hard mode. Progress resumes locally in this browser.</p>
+      <p class="lede">Use your globally configured Easy-mode harness, or reproduce every action directly in Hard mode.</p>
       <div class="notice"><strong>Boundary:</strong> synthetic qualitative evidence only—not a customer KPI, measured production result, live connection, or publication approval.</div>
+      <div class="beta-notice"><strong>Help improve this Beta:</strong> use the report buttons when a prompt, expected result, screenshot, or product state is inaccurate. The button opens a prefilled GitHub issue for review; it does not submit anything automatically.</div>
       <div class="mode-switch" role="tablist">
         <button class="mode active" data-mode="easy" role="tab">Easy</button>
         <button class="mode" data-mode="hard" role="tab">Hard</button>
@@ -192,42 +271,226 @@
     </section>
 
     <section class="path" data-path="easy">
-      <h2>Copilot-assisted Easy mode</h2>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="easy-source"><span><strong>Inspect source and evidence</strong><span>Review deployment, source, transcripts, and available Easy evidence before claiming a result.</span></span></label>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="easy-build"><span><strong>Build from reviewed Copilot Studio copy</strong><span>Use the packaged settings, behaviors, knowledge, and synchronization metadata without unrecorded edits.</span></span></label>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="easy-cases"><span><strong>Replay recorded cases</strong><span>Use exact prompts and identifiers. A qualitative match is evidence of workflow behavior, not a customer outcome.</span></span></label>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="easy-draft"><span><strong>Stop at the Draft gate</strong><span>The agent must remain Draft and is not published. Publishing needs separate human approval.</span></span></label>
-      <p><a class="button" href="screenshots/assisted/copilot-assisted-walkthrough.gif">Watch assisted film</a></p>
+      <div class="module-summary">
+        <article>
+          <h3>What you will learn</h3>
+          <ul>
+            <li>Use your globally configured Easy-mode harness.</li>
+            <li>Use the lane skill to build and prove the portable agent.</li>
+            <li>Deploy the reviewed solution as an unpublished Draft.</li>
+            <li>Confirm the behavior yourself in Copilot Studio Preview.</li>
+            <li>Recognize the evidence that means the module is complete.</li>
+          </ul>
+        </article>
+        <article>
+          <h3>Before you begin</h3>
+          <ul>
+            <li>Use VS Code with GitHub Copilot Chat in Agent mode.</li>
+            <li>Sign in to GitHub with Copilot access.</li>
+            <li>Have access to a Copilot Studio environment.</li>
+            <li>Your workshop preference is saved globally; use <strong>Workshop settings</strong> to change it.</li>
+            <li>Do not publish. This module ends with a validated Draft.</li>
+          </ul>
+        </article>
+      </div>
+
+      <h2>Easy mode <span class="engine-label copilot">— GitHub Copilot only</span><span class="engine-label brainstem">— GitHub Copilot + Brainstem</span></h2>
+
+      <div class="easy-lane" data-easy-lane="brainstem">
+        <div class="notice"><strong>Brainstem lane:</strong> Brainstem is the learner’s personal, on-device training AI working alongside Copilot. It persists the workshop, loads the generic engine, and continues every handoff.</div>
+
+      <article class="learn-step" id="brainstem-step-1">
+        <header class="learn-step-header"><span>1</span><div><p>Prepare your Copilot</p><h3>Download and attach the Brainstem skill</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 1: attach skill" data-report-expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat." data-report-evidence="">Report an issue</button></header>
+        <div class="learn-step-body">
+          <p>This file fixes the workshop to Brainstem. Copilot remains the work surface while the learner&#x27;s on-device training AI persists state, loads the generic workshop engine, and continues every handoff.</p>
+          <div class="action-panel"><strong>Do this</strong><ol><li>Download the lane-specific <code>SKILL.md</code>.</li><li>Open GitHub Copilot Chat in VS Code.</li><li>Select <strong>Agent mode</strong>.</li><li>Drag the downloaded file into the chat.</li></ol><a class="button primary" href="../../skills/aibast-easy-mode-brainstem/SKILL.md" download="SKILL.md">Download Brainstem SKILL.md</a></div>
+          <div class="expected-panel"><strong>Expected result</strong><p>The attachment appears in Copilot Chat. From this point forward, the selected skill—not extra wording in your prompts—determines which harness runs.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="brainstem-skill"><span>I attached the correct lane skill.</span></label>
+        </div>
+      </article>
+
+      <article class="learn-step" id="brainstem-step-2">
+        <header class="learn-step-header"><span>2</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test Win/Loss Analysis</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 2: local proof" data-report-expected="Brainstem reports the generic AIBAST Workshop Engine and WinLossAnalysisAgent loaded, with 6/6 locked local cases passed." data-report-evidence="">Report an issue</button></header>
+        <div class="learn-step-body">
+          <p>This step proves the portable business logic before any Copilot Studio work begins. The harness retrieves the immutable package, verifies the source, loads the agent, and runs every locked case.</p>
+          <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="brainstem-build-prompt">Copy message</button></div>
+          <pre class="prompt-block" id="brainstem-build-prompt">Give me Win/Loss Analysis using Easy Mode and test it for me.</pre>
+          <div class="expected-panel"><strong>Expected result</strong><p>Brainstem reports the generic AIBAST Workshop Engine and WinLossAnalysisAgent loaded, with 6/6 locked local cases passed.</p><p>Copilot should end by suggesting the next message: <code>Deploy it into Copilot Studio for me.</code></p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="brainstem-local"><span>I saw every locked local case pass.</span></label>
+        </div>
+      </article>
+
+      <article class="learn-step" id="brainstem-step-3">
+        <header class="learn-step-header"><span>3</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 3: Draft deployment" data-report-expected="Draft Win/Loss Analysis Pilot; model Sonnet46; 2 knowledge files; 6 skills; published false." data-report-evidence="">Report an issue</button></header>
+        <div class="learn-step-body">
+          <p>The harness now reuses or creates the source-controlled Copilot Studio Draft, synchronizes the reviewed instructions and assets, and leaves publication off.</p>
+          <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="brainstem-deploy-prompt">Copy message</button></div>
+          <pre class="prompt-block" id="brainstem-deploy-prompt">Deploy it into Copilot Studio for me.</pre>
+          <div class="expected-panel"><strong>Expected result</strong><ul><li>Draft: <code>Win/Loss Analysis Pilot</code></li><li>Model: <code>Sonnet46</code></li><li>Knowledge files: <code>2</code></li><li>Skills: <code>6</code></li><li>Status: <strong>Draft</strong>; published: <code>false</code></li></ul><p>The harness then validates the real Preview front door before returning its final verdict.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="brainstem-draft"><span>I saw the Draft identity and unpublished state.</span></label>
+        </div>
+      </article>
+      </div>
+
+      <div class="easy-lane" data-easy-lane="copilot">
+        <div class="comparison-note"><strong>Skeptic comparison — Copilot-only lane:</strong> GitHub Copilot carries the same harness directly in the active session. The skill still discovers every asset and runs every gate; there is no persistent Brainstem engine between turns.</div>
+
+      <article class="learn-step" id="copilot-step-1">
+        <header class="learn-step-header"><span>1</span><div><p>Prepare your Copilot</p><h3>Download and attach the Copilot-only skill</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 1: attach skill" data-report-expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat." data-report-evidence="">Report an issue</button></header>
+        <div class="learn-step-body">
+          <p>This file fixes the workshop to GitHub Copilot alone. The skill carries the same discovery, testing, deployment, and validation contract directly in the active Copilot session.</p>
+          <div class="action-panel"><strong>Do this</strong><ol><li>Download the lane-specific <code>SKILL.md</code>.</li><li>Open GitHub Copilot Chat in VS Code.</li><li>Select <strong>Agent mode</strong>.</li><li>Drag the downloaded file into the chat.</li></ol><a class="button primary" href="../../skills/aibast-easy-mode-copilot/SKILL.md" download="SKILL.md">Download Copilot-only SKILL.md</a></div>
+          <div class="expected-panel"><strong>Expected result</strong><p>The attachment appears in Copilot Chat. From this point forward, the selected skill—not extra wording in your prompts—determines which harness runs.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="copilot-skill"><span>I attached the correct lane skill.</span></label>
+        </div>
+      </article>
+
+      <article class="learn-step" id="copilot-step-2">
+        <header class="learn-step-header"><span>2</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test Win/Loss Analysis</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 2: local proof" data-report-expected="Copilot reports an isolated workspace, a verified source hash, and 6/6 locked local cases passed." data-report-evidence="">Report an issue</button></header>
+        <div class="learn-step-body">
+          <p>This step proves the portable business logic before any Copilot Studio work begins. The harness retrieves the immutable package, verifies the source, loads the agent, and runs every locked case.</p>
+          <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="copilot-build-prompt">Copy message</button></div>
+          <pre class="prompt-block" id="copilot-build-prompt">Give me Win/Loss Analysis using Easy Mode and test it for me.</pre>
+          <div class="expected-panel"><strong>Expected result</strong><p>Copilot reports an isolated workspace, a verified source hash, and 6/6 locked local cases passed.</p><p>Copilot should end by suggesting the next message: <code>Deploy it into Copilot Studio for me.</code></p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="copilot-local"><span>I saw every locked local case pass.</span></label>
+        </div>
+      </article>
+
+      <article class="learn-step" id="copilot-step-3">
+        <header class="learn-step-header"><span>3</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 3: Draft deployment" data-report-expected="Draft Win/Loss Analysis Pilot; model Sonnet46; 2 knowledge files; 6 skills; published false." data-report-evidence="">Report an issue</button></header>
+        <div class="learn-step-body">
+          <p>The harness now reuses or creates the source-controlled Copilot Studio Draft, synchronizes the reviewed instructions and assets, and leaves publication off.</p>
+          <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="copilot-deploy-prompt">Copy message</button></div>
+          <pre class="prompt-block" id="copilot-deploy-prompt">Deploy it into Copilot Studio for me.</pre>
+          <div class="expected-panel"><strong>Expected result</strong><ul><li>Draft: <code>Win/Loss Analysis Pilot</code></li><li>Model: <code>Sonnet46</code></li><li>Knowledge files: <code>2</code></li><li>Skills: <code>6</code></li><li>Status: <strong>Draft</strong>; published: <code>false</code></li></ul><p>The harness then validates the real Preview front door before returning its final verdict.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="copilot-draft"><span>I saw the Draft identity and unpublished state.</span></label>
+        </div>
+      </article>
+      </div>
+
+      <section class="learn-step" id="easy-step-4">
+        <header class="learn-step-header"><span>4</span><div><p>Verify the real experience</p><h3>Confirm the Draft in Copilot Studio Preview</h3></div></header>
+        <div class="learn-step-body">
+          <p>The harness already runs these checks automatically. Repeat them here so you understand what was proven and can recognize a correct result yourself.</p>
+          <div class="preview-intro"><ol><li>Open the validated Draft.</li><li>Select <strong>Preview</strong>.</li><li>Choose <strong>New chat</strong> before each case.</li><li>Paste the exact prompt.</li><li>Compare the answer with the required and forbidden markers.</li></ol><div><a class="button primary" href="https://copilotstudio.preview.microsoft.com/environments/ee67a404-325c-e726-a18a-886fe708ca0b/agents/6346a181-d9a1-4094-9313-5f7234f91432" target="_blank" rel="noopener">Open the Copilot Studio Draft ↗</a></div></div>
+          <div class="expected-panel"><strong>Expected result</strong><p>Every case passes in a fresh Preview conversation, and the agent still appears as <strong>Draft</strong>.</p></div>
+          <div class="preview-grid">
+
+        <article class="preview-case">
+          <header><div><p class="prompt-kicker">WL-01 · Sales Operations Manager</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-wl-01">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — WL-01" data-report-expected="Must include: Q3 Win/Loss Overview, Loss Analysis by Competitor, Evidence boundary; must not include: I don&#x27;t have access, provide the record, message was sent, CRM record updated successfully" data-report-evidence="solutions/win-loss-analysis/screenshots/assisted/01-wl-01.jpg">Report an issue</button></div></header>
+          <pre class="prompt-block" id="preview-prompt-wl-01">Compare the bundled synthetic Q3 and Q2 win and loss patterns and show where the decline is concentrated.</pre>
+          <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">Q3 Win/Loss Overview</span><span class="marker-chip">Loss Analysis by Competitor</span><span class="marker-chip">Evidence boundary</span></div></div>
+          <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">I don&#x27;t have access</span><span class="marker-chip">provide the record</span><span class="marker-chip">message was sent</span><span class="marker-chip">CRM record updated successfully</span></div></div>
+
+          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-wl-01"><span>The Preview response matched this contract.</span></label>
+        </article>
+
+        <article class="preview-case">
+          <header><div><p class="prompt-kicker">WL-02 · Enablement Manager</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-wl-02">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — WL-02" data-report-expected="Must include: Root Cause Analysis, Deep Dive, Evidence boundary; must not include: I don&#x27;t have access, provide the record, message was sent, CRM record updated successfully" data-report-evidence="solutions/win-loss-analysis/screenshots/assisted/02-wl-02.jpg">Report an issue</button></div></header>
+          <pre class="prompt-block" id="preview-prompt-wl-02">Identify the evidence-backed synthetic loss drivers and buyer feedback themes that enablement should review.</pre>
+          <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">Root Cause Analysis</span><span class="marker-chip">Deep Dive</span><span class="marker-chip">Evidence boundary</span></div></div>
+          <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">I don&#x27;t have access</span><span class="marker-chip">provide the record</span><span class="marker-chip">message was sent</span><span class="marker-chip">CRM record updated successfully</span></div></div>
+
+          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-wl-02"><span>The Preview response matched this contract.</span></label>
+        </article>
+
+        <article class="preview-case">
+          <header><div><p class="prompt-kicker">WL-03 · Enablement Manager</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-wl-03">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — WL-03" data-report-expected="Must include: Counter-Strategies, Updated Talk Track, Evidence boundary; must not include: I don&#x27;t have access, provide the record, message was sent, CRM record updated successfully" data-report-evidence="solutions/win-loss-analysis/screenshots/assisted/03-wl-03.jpg">Report an issue</button></div></header>
+          <pre class="prompt-block" id="preview-prompt-wl-03">Draft counter-strategy and talk-track options from the synthetic loss evidence for enablement review.</pre>
+          <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">Counter-Strategies</span><span class="marker-chip">Updated Talk Track</span><span class="marker-chip">Evidence boundary</span></div></div>
+          <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">I don&#x27;t have access</span><span class="marker-chip">provide the record</span><span class="marker-chip">message was sent</span><span class="marker-chip">CRM record updated successfully</span></div></div>
+
+          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-wl-03"><span>The Preview response matched this contract.</span></label>
+        </article>
+
+        <article class="preview-case">
+          <header><div><p class="prompt-kicker">WL-04 · Sales Leader</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-wl-04">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — WL-04" data-report-expected="Must include: Synthetic Revenue Scenario Model, Illustrative scenario value, Evidence boundary; must not include: I don&#x27;t have access, provide the record, message was sent, CRM record updated successfully" data-report-evidence="solutions/win-loss-analysis/screenshots/assisted/04-wl-04.jpg">Report an issue</button></div></header>
+          <pre class="prompt-block" id="preview-prompt-wl-04">Model synthetic intervention scenarios without presenting them as realized or committed revenue.</pre>
+          <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">Synthetic Revenue Scenario Model</span><span class="marker-chip">Illustrative scenario value</span><span class="marker-chip">Evidence boundary</span></div></div>
+          <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">I don&#x27;t have access</span><span class="marker-chip">provide the record</span><span class="marker-chip">message was sent</span><span class="marker-chip">CRM record updated successfully</span></div></div>
+
+          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-wl-04"><span>The Preview response matched this contract.</span></label>
+        </article>
+
+        <article class="preview-case">
+          <header><div><p class="prompt-kicker">WL-05 · Sales Leader</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-wl-05">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — WL-05" data-report-expected="Must include: Board Presentation, Decision for authorized leaders, Evidence boundary; must not include: I don&#x27;t have access, provide the record, message was sent, CRM record updated successfully" data-report-evidence="solutions/win-loss-analysis/screenshots/assisted/05-wl-05.jpg">Report an issue</button></div></header>
+          <pre class="prompt-block" id="preview-prompt-wl-05">Draft a board-level synthetic win and loss narrative with all investment and performance values labeled as scenarios.</pre>
+          <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">Board Presentation</span><span class="marker-chip">Decision for authorized leaders</span><span class="marker-chip">Evidence boundary</span></div></div>
+          <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">I don&#x27;t have access</span><span class="marker-chip">provide the record</span><span class="marker-chip">message was sent</span><span class="marker-chip">CRM record updated successfully</span></div></div>
+
+          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-wl-05"><span>The Preview response matched this contract.</span></label>
+        </article>
+
+        <article class="preview-case">
+          <header><div><p class="prompt-kicker">WL-06 · Sales Operations Manager</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-wl-06">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — WL-06" data-report-expected="Must include: Complete Summary, Draft Next-Step Options, Evidence boundary; must not include: I don&#x27;t have access, provide the record, message was sent, CRM record updated successfully" data-report-evidence="solutions/win-loss-analysis/screenshots/assisted/06-wl-06.jpg">Report an issue</button></div></header>
+          <pre class="prompt-block" id="preview-prompt-wl-06">Summarize the synthetic findings and candidate next steps without activating programs or approvals.</pre>
+          <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">Complete Summary</span><span class="marker-chip">Draft Next-Step Options</span><span class="marker-chip">Evidence boundary</span></div></div>
+          <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">I don&#x27;t have access</span><span class="marker-chip">provide the record</span><span class="marker-chip">message was sent</span><span class="marker-chip">CRM record updated successfully</span></div></div>
+
+          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-wl-06"><span>The Preview response matched this contract.</span></label>
+        </article>
+          </div>
+        </div>
+      </section>
+
+
+      <section class="learn-step" id="easy-step-5">
+        <header class="learn-step-header"><span>5</span><div><p>Recognize completion</p><h3>Know what “done” looks like</h3></div><button class="button report-button" type="button" data-report-location="Easy mode — final completion verdict" data-report-expected="Local 6/6; Preview 6/6; Draft Win/Loss Analysis Pilot; published false." data-report-evidence="solutions/win-loss-analysis/screenshots/assisted/07-confirm-draft.jpg">Report an issue</button></header>
+        <div class="learn-step-body">
+          <p>The workshop is complete only when both the portable agent and the Copilot Studio front door prove the same behavior.</p>
+          <div class="done-grid">
+            <article><strong>Local proof</strong><span>6/6 locked cases passed</span></article>
+            <article><strong>Preview proof</strong><span>6/6 locked cases passed</span></article>
+            <article><strong>Draft identity</strong><span>Win/Loss Analysis Pilot</span></article>
+            <article><strong>Model</strong><span>Sonnet46</span></article>
+            <article><strong>Inventory</strong><span>2 knowledge · 6 skills</span></article>
+            <article><strong>Publication gate</strong><span>Draft · published false</span></article>
+          </div>
+
+          <div class="expected-panel"><strong>Final expected verdict</strong><p>The harness reports <code>status: complete</code>, exact case totals, the Draft identity, and <code>published: false</code>. The module ends here; it does not offer publication.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="easy-complete"><span>I confirmed the final Draft verdict.</span></label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h3>Troubleshooting</h3>
+        <table class="troubleshooting-table">
+          <thead><tr><th>What you see</th><th>What it means</th><th>What to do</th></tr></thead>
+          <tbody>
+            <tr><td>Copilot ignores the lane</td><td>The wrong skill is attached, or the chat began before attachment.</td><td>Start a new Agent-mode chat and attach the correct lane-specific <code>SKILL.md</code> first.</td></tr>
+            <tr><td>Local validation is not 6/6</td><td>The portable source, package, or locked behavior does not match.</td><td>Stop. Do not deploy. Let the harness report the exact failed case and marker.</td></tr>
+            <tr><td>No active Copilot Studio environment</td><td>PAC has no selected environment.</td><td>Sign in or select the intended environment, then resend the deploy message.</td></tr>
+            <tr><td>The Draft already exists</td><td>The recorded schema is already in the environment.</td><td>The harness should clone and reconnect automatically. Treat an attendee choice prompt as a harness defect.</td></tr>
+            <tr><td>A Preview case misses a marker</td><td>The real front door does not match the reviewed contract.</td><td>Keep the case failed. Inspect instructions and assets; do not retry until it happens to pass.</td></tr>
+            <tr><td>The agent is Published</td><td>The workshop crossed its safety boundary.</td><td>Stop immediately. The module must end at Draft with <code>published: false</code>.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <details class="facilitator-details">
+        <summary>Facilitator evidence and portable download</summary>
+        <p>These links support audit, troubleshooting, and offline delivery. They are not learner steps.</p>
+        <div class="facilitator-actions">
+          <a class="button" href="field-guide.html">Field guide</a>
+          <a class="button" href="evidence-report.html#locked-cases">Locked evidence</a>
+          <a class="button" href="evidence-report.html">Evidence report</a>
+          <a class="button" href="export-manifest.json" download>Download audit manifest</a>
+          <a class="button" href="exports/win-loss-analysis-source.zip" download>Download portable bundle</a>
+          <a class="button" href="../../agents/@aibast-agents-library/templates/workshop_agent.py" download>Download generic workshop agent</a>
+          <a class="button" href="https://kodyw.com/the-personless-harness/" target="_blank" rel="noopener">Personless harness article ↗</a>
+        </div>
+      </details>
     </section>
 
     <section class="path" data-path="hard" hidden>
-      <h2>Hard mode — literal browser construction</h2>
-      <p>Do not use PAC CLI or YAML import in Hard mode. Do not use a plugin architect.</p>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="hard-tutorial"><span><strong>Open the manual tutorial</strong><span>Use <a href="manual-tutorial.html">manual-tutorial.html</a>; it maps one action to each real browserfilm frame.</span></span></label>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="hard-parity"><span><strong>Match reviewed components</strong><span>Use the exact manual instructions, knowledge, skills, and reviewed model.</span></span></label>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="hard-cases"><span><strong>Replay manual Preview evidence</strong><span>Compare only with recorded case identifiers and screenshots; do not invent missing proof.</span></span></label>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="hard-draft"><span><strong>Record the explicit Draft gate</strong><span>Do not choose Publish. The manual duplicate remains Draft and is not published.</span></span></label>
-      <p><a class="button" href="screenshots/manual/manual-build-walkthrough.gif">Watch manual film</a></p>
+      <iframe class="hard-tutorial-frame" id="hard-mode-tutorial" src="manual-tutorial.html?embedded=1" title="Hard mode manual tutorial"></iframe>
     </section>
 
-    <section class="card">
-      <h2>Raw resources</h2>
-      <ul class="resource-list">
-        <li><a href="deployment.json">Deployment recipe</a> <span class="status">Ready</span></li>
-<li><a href="FIELD-GUIDE.md">Customer field guide</a> <span class="status">Ready</span></li>
-<li><a href="manual/GLOBAL-INSTRUCTIONS.md">Manual global instructions</a> <span class="status">Ready</span></li>
-<li><a href="evals/manual-build-evidence.json">Manual build evidence</a> <span class="status">Ready</span></li>
-<li><a href="evals/transcripts.json">Isolated Brainstem transcripts</a> <span class="status">Ready</span></li>
-<li><a href="screenshots/manual/manual-build-walkthrough.gif">Manual browserfilm</a> <span class="status">Ready</span></li>
-<li><a href="screenshots/assisted/copilot-assisted-walkthrough.gif">Copilot-assisted browserfilm</a> <span class="status">Ready</span></li>
-<li><a href="manual-tutorial.html">Manual browser tutorial</a> <span class="status">Ready</span></li>
-      </ul>
-      <p><a href="export-manifest.json">Open the complete raw resource manifest</a> · <a href="exports/win-loss-analysis-source.zip">Download the source bundle</a></p>
-    </section>
   </main>
   <script>
     (() => {
       const modeKey = "aibast:win-loss-analysis:quest-mode";
+      const globalEngineKey = "aibast:workshop-engine";
       const progressKey = "aibast:win-loss-analysis:quest-progress";
       const buttons = Array.from(document.querySelectorAll("[data-mode]"));
       const paths = Array.from(document.querySelectorAll("[data-path]"));
@@ -247,6 +510,81 @@
         localStorage.setItem(modeKey, mode);
       }
       buttons.forEach((button) => button.addEventListener("click", () => selectMode(button.dataset.mode)));
+      document.querySelectorAll("[data-copy-target]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const target = document.getElementById(button.dataset.copyTarget);
+          if (!target) {
+            button.textContent = "Prompt missing";
+            return;
+          }
+          const original = button.textContent;
+          navigator.clipboard.writeText(target.textContent).then(() => {
+            button.textContent = "Copied";
+            window.setTimeout(() => { button.textContent = original; }, 1400);
+          }).catch(() => {
+            button.textContent = "Copy failed";
+          });
+        });
+      });
+      document.querySelectorAll("[data-report-location]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const locationLabel = button.dataset.reportLocation || "Workshop";
+          const expected = button.dataset.reportExpected || "Describe the expected result.";
+          const evidence = button.dataset.reportEvidence || "No evidence path supplied.";
+          const title = `[Beta workshop] Win/Loss Analysis Agent: ${locationLabel}`;
+          const body = `<!-- aibast-workshop-feedback:v1 -->
+## Workshop signal
+
+- Schema: \`aibast-workshop-feedback/1.0\`
+- Solution: \`@aibast-agents-library/win-loss-analysis\`
+- Page: ${location.href}
+- Mode: \`${localStorage.getItem(globalEngineKey) === "brainstem" ? "brainstem" : "copilot"}\`
+- Location: ${locationLabel}
+- Evidence: \`${evidence}\`
+
+## Workshop context
+
+This issue was opened from a contextual Beta workshop report button.
+
+## Expected
+
+${expected}
+
+## What happened instead
+
+Describe what was inaccurate or missing.
+
+## Reproduction
+
+1. Open the workshop page.
+2. Select the mode shown above.
+3. Follow the step or Preview case.
+4. Record the visible result and any Copilot response.
+
+> Beta workshop report. Do not include credentials, tokens, customer data, or other sensitive information.`;
+          const url = new URL("https://github.com/microsoft/aibast-agents-library/issues/new");
+          url.searchParams.set("title", title);
+          url.searchParams.set("body", body);
+          window.open(url.toString(), "_blank", "noopener");
+        });
+      });
+      const hardFrame = document.getElementById("hard-mode-tutorial");
+      const resizeHardFrame = () => {
+        if (!hardFrame?.contentDocument) return;
+        hardFrame.style.height =
+          `${hardFrame.contentDocument.documentElement.scrollHeight}px`;
+      };
+      hardFrame?.addEventListener("load", resizeHardFrame);
+      window.addEventListener("message", (event) => {
+        if (
+          event.origin === window.location.origin &&
+          event.data?.type === "aibast-hard-mode-height" &&
+          Number.isFinite(event.data.height)
+        ) {
+          hardFrame.style.height = `${event.data.height}px`;
+        }
+      });
+      window.addEventListener("resize", resizeHardFrame);
       selectMode(localStorage.getItem(modeKey) || "easy");
     })();
   </script>

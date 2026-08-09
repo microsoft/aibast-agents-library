@@ -1,0 +1,244 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/inventory-rebalancing",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker or refusal.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 28,
+    "reusable": 0,
+    "reshoot_required": 28,
+    "new_learn_step_captures_recommended": 0
+  },
+  "captures": [
+    {
+      "id": "easy-draft",
+      "mode": "easy",
+      "source": "solutions/inventory-rebalancing/screenshots/assisted/01-review-build.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "easy-ir-01",
+      "mode": "easy",
+      "source": "solutions/inventory-rebalancing/screenshots/assisted/02-ir-01.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "IR-01"
+    },
+    {
+      "id": "easy-ir-02",
+      "mode": "easy",
+      "source": "solutions/inventory-rebalancing/screenshots/assisted/03-ir-02.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "IR-02"
+    },
+    {
+      "id": "easy-ir-03",
+      "mode": "easy",
+      "source": "solutions/inventory-rebalancing/screenshots/assisted/04-ir-03.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "IR-03"
+    },
+    {
+      "id": "easy-ir-04",
+      "mode": "easy",
+      "source": "solutions/inventory-rebalancing/screenshots/assisted/05-ir-04.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "IR-04"
+    },
+    {
+      "id": "easy-draft-02",
+      "mode": "easy",
+      "source": "solutions/inventory-rebalancing/screenshots/assisted/06-confirm-draft.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "step": 1,
+      "source": "solutions/inventory-rebalancing/screenshots/manual/01-create-blank-agent.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "step": 2,
+      "source": "solutions/inventory-rebalancing/screenshots/manual/02-name-agent.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "step": 3,
+      "source": "solutions/inventory-rebalancing/screenshots/manual/03-enter-instructions.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "step": 4,
+      "source": "solutions/inventory-rebalancing/screenshots/manual/04-save-instructions.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "step": 5,
+      "source": "solutions/inventory-rebalancing/screenshots/manual/05-remove-web-search.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "step": 6,
+      "source": "solutions/inventory-rebalancing/screenshots/manual/06-open-knowledge-upload.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "step": 7,
+      "source": "solutions/inventory-rebalancing/screenshots/manual/07-upload-synthetic-records.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "step": 8,
+      "source": "solutions/inventory-rebalancing/screenshots/manual/08-upload-review-rules.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "step": 9,
+      "source": "solutions/inventory-rebalancing/screenshots/manual/09-verify-two-knowledge-files.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "step": 10,
+      "source": "solutions/inventory-rebalancing/screenshots/manual/10-open-skill-upload.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "step": 11,
+      "source": "solutions/inventory-rebalancing/screenshots/manual/11-add-inventory-snapshot-skill.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "step": 12,
+      "source": "solutions/inventory-rebalancing/screenshots/manual/12-add-rebalance-recommendation-skill.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "step": 13,
+      "source": "solutions/inventory-rebalancing/screenshots/manual/13-add-transfer-plan-skill.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "step": 14,
+      "source": "solutions/inventory-rebalancing/screenshots/manual/14-add-cost-analysis-skill.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "step": 15,
+      "source": "solutions/inventory-rebalancing/screenshots/manual/15-select-sonnet46.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "step": 16,
+      "source": "solutions/inventory-rebalancing/screenshots/manual/16-review-inventory.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "step": 17,
+      "source": "solutions/inventory-rebalancing/screenshots/manual/17-open-preview.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "step": 18,
+      "source": "solutions/inventory-rebalancing/screenshots/manual/18-preview-ir01-capacity-review.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "IR-01"
+    },
+    {
+      "id": "hard-step-19",
+      "mode": "hard",
+      "step": 19,
+      "source": "solutions/inventory-rebalancing/screenshots/manual/19-preview-ir02-imbalance-review.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "IR-02"
+    },
+    {
+      "id": "hard-step-20",
+      "mode": "hard",
+      "step": 20,
+      "source": "solutions/inventory-rebalancing/screenshots/manual/20-preview-ir03-transfer-plan.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "IR-03"
+    },
+    {
+      "id": "hard-step-21",
+      "mode": "hard",
+      "step": 21,
+      "source": "solutions/inventory-rebalancing/screenshots/manual/21-preview-ir04-cost-analysis.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "IR-04"
+    },
+    {
+      "id": "hard-step-22",
+      "mode": "hard",
+      "step": 22,
+      "source": "solutions/inventory-rebalancing/screenshots/manual/22-verify-draft-no-publish.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    }
+  ]
+}

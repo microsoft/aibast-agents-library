@@ -11,6 +11,11 @@
         param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
       document.documentElement.setAttribute("data-theme", theme);
     })();
+    (() => {
+      if (new URLSearchParams(window.location.search).get("embedded") === "1") {
+        document.documentElement.setAttribute("data-embedded", "true");
+      }
+    })();
   </script>
   <style>
 
@@ -167,7 +172,7 @@
     .toc a { padding: 7px 9px; border-left: 3px solid var(--cp-border); color: var(--cp-text-muted); text-decoration: none; font-size: 13px; }
     .toc a:hover { border-left-color: var(--cp-accent); color: var(--cp-text); }
     .step { scroll-margin-top: 90px; margin: 0 0 28px; overflow: hidden; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
-    .step header { display: flex; gap: 14px; padding: 20px 22px; border-bottom: 1px solid var(--cp-border); }
+    .step header { display: grid; grid-template-columns: 36px 1fr auto; gap: 14px; align-items: center; padding: 20px 22px; border-bottom: 1px solid var(--cp-border); }
     .step header > span { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 10px; background: var(--cp-accent-soft); color: var(--cp-accent); font-weight: 800; }
     .step h3, .step header p { margin: 0; }
     .step header p { color: var(--cp-text-muted); font-size: 13px; }
@@ -175,20 +180,36 @@
     .instruction-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
     .instruction { padding: 14px; border-radius: 10px; background: var(--cp-surface-soft); }
     .instruction strong { display: block; margin-bottom: 6px; }
+    .instruction-heading { display: flex; align-items: start; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
+    .instruction-heading strong { margin: 0; }
+    .copy-button { min-height: 34px; padding: 6px 10px; font-size: 13px; }
+    .copy-source { display: none; }
     .instruction.expected { border-left: 4px solid var(--cp-success); }
-    .shot { display: block; width: 100%; border: 1px solid var(--cp-border); border-radius: 10px; }
+    .shot-link { display: block; text-align: center; }
+    .shot { display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }
+    .capture-meta { margin: 8px 0 0; color: var(--cp-text-muted); font-size: 12px; text-align: center; }
     .missing { padding: 32px; border: 2px dashed var(--cp-warning); border-radius: 10px; color: var(--cp-text-muted); }
+    .look-for { padding: 20px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
+    .look-for strong { color: var(--cp-text); }
+    .look-for p { margin: 8px 0 0; }
+    .report-button { border-color: var(--cp-accent); color: var(--cp-accent); }
+    .beta-badge { display: inline-flex; align-items: center; margin-bottom: 12px; padding: 5px 9px; border-radius: 999px; background: var(--cp-warning); color: var(--cp-accent-fg); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    .beta-notice { margin-top: 14px; padding: 14px; border: 1px solid var(--cp-warning); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
     .step footer { display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
     .troubleshooting details { padding: 14px 0; border-bottom: 1px solid var(--cp-border); }
     summary { cursor: pointer; font-weight: 700; }
+    html[data-embedded="true"] body { background: var(--cp-bg-elevated); }
+    html[data-embedded="true"] .topbar { display: none; }
+    html[data-embedded="true"] .layout { grid-template-columns: 230px minmax(0, 1fr); max-width: none; padding: 8px 0 32px; }
+    html[data-embedded="true"] .hero { box-shadow: none; }
     @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } .sidebar { position: static; max-height: none; } }
     @media (max-width: 620px) { .instruction-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
   <header class="topbar">
-    <div class="brand"><span class="brand-mark">C</span><span>Clawpilot manual journey</span></div>
-    <div><a class="button" href="screenshots/manual/manual-build-walkthrough.gif">Watch the manual film</a> <a class="button primary" href="exports/sales-qualification-source.zip">Download source bundle</a></div>
+    <div class="brand"><span class="brand-mark">A</span><span>AIBAST manual workshop</span></div>
+    <div> <a class="button primary" href="exports/sales-qualification-source.zip">Download source bundle</a></div>
   </header>
   <div class="layout">
     <aside class="sidebar">
@@ -219,339 +240,400 @@
     </aside>
     <main>
       <section class="hero">
+        <span class="beta-badge">Beta workshop</span>
         <p class="eyebrow">Hard mode · literal browser construction</p>
         <h1>Build Sales Qualification Agent manually.</h1>
         <p class="lede">No PAC CLI, YAML import, or plugin architect. Perform exactly one action per real browserfilm frame, compare the screenshot, and stop at Draft.</p>
         <div class="notice"><strong>Synthetic disclosure:</strong> this is qualitative workflow evidence using packaged synthetic inputs. It is not a customer KPI or a live-system result.</div>
-
+        <div class="beta-notice"><strong>Help improve this Beta:</strong> use the report button on any step when the action, expected result, or visible product state is inaccurate. It opens a prefilled GitHub issue and does not submit automatically.</div>
+        <!-- No pending evidence. -->
       </section>
       <h2>Build and verify</h2>
-
       <article class="step" id="step-1">
-        <header><span>1</span><div><h3>Create a blank Copilot Studio agent</h3><p>Frame 1 of 22</p></div></header>
+        <header><span>1</span><div><h3>Create a blank Copilot Studio agent</h3><p>Step 1 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 1: Create a blank Copilot Studio agent" data-report-expected="A blank Copilot Studio agent is visible in the captured Draft workspace." data-report-evidence="solutions/sales-qualification/screenshots/manual/01-create-blank-agent.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Create a blank Copilot Studio agent</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Create a blank Copilot Studio agent</span></div>
             <div class="instruction expected"><strong>Expected result</strong>A blank Copilot Studio agent is visible in the captured Draft workspace.</div>
           </div>
-          <img class="shot" src="screenshots/manual/01-create-blank-agent.jpg" alt="Create a blank Copilot Studio agent evidence">
+
+          <div class="look-for"><strong>What to look for</strong><p>A blank Copilot Studio agent is visible in the captured Draft workspace.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/sales-qualification/deployment.json">Raw download: Deployment</a>
+            <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="1"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-2">
-        <header><span>2</span><div><h3>Name Sales Qualification Manual</h3><p>Frame 2 of 22</p></div></header>
+<article class="step" id="step-2">
+        <header><span>2</span><div><h3>Name Sales Qualification Manual</h3><p>Step 2 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 2: Name Sales Qualification Manual" data-report-expected="The page header shows the recorded manual build name: Sales Qualification Manual." data-report-evidence="solutions/sales-qualification/screenshots/manual/02-name-agent.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Name Sales Qualification Manual</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-2">Copy agent name</button><pre class="copy-source" id="hard-copy-2" hidden>Sales Qualification Manual</pre></div><span>Name Sales Qualification Manual</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The page header shows the recorded manual build name: Sales Qualification Manual.</div>
           </div>
-          <img class="shot" src="screenshots/manual/02-name-agent.jpg" alt="Name Sales Qualification Manual evidence">
+
+          <div class="look-for"><strong>What to look for</strong><p>The page header shows the recorded manual build name: Sales Qualification Manual.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/sales-qualification/deployment.json">Raw download: Deployment</a>
+            <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="2"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-3">
-        <header><span>3</span><div><h3>Enter the reviewed global instructions</h3><p>Frame 3 of 22</p></div></header>
+<article class="step" id="step-3">
+        <header><span>3</span><div><h3>Enter the reviewed global instructions</h3><p>Step 3 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 3: Enter the reviewed global instructions" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/sales-qualification/screenshots/manual/03-enter-instructions.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Enter the reviewed global instructions</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-3">Copy instructions</button><pre class="copy-source" id="hard-copy-3" hidden># Sales Qualification Agent — Global Instructions
+
+## Role
+
+Make qualification consistent before outreach begins by reviewing the fixed synthetic lead snapshot, ICP and BANT evidence, draft outreach, routing recommendations, and SLA plans.
+
+## Allowed operations
+
+- `score_leads` — synthetic ICP scoring and tiering.
+- `bant_analysis` — budget, authority, need, and timeline evidence.
+- `create_outreach` — draft outreach ideas only.
+- `assign_leads` — recommended routing for manager review.
+- `setup_tracking` — draft SLA and escalation plan.
+- `qualification_report` — synthetic pipeline and assumption summary.
+
+Route outreach wording to `create_outreach`, routing questions to `assign_leads`, and SLA or alert planning to `setup_tracking`. None of these operations executes an action.
+
+## Fixed evidence policy
+
+- Use only the bundled synthetic leads, firmographics, technology, intent, engagement, team-capacity, territory, tier, and SLA rules.
+- Do not browse, enrich from the web, search social profiles, query CRM, or call enrichment, intent, email, calendar, or notification systems.
+- Never invent or substitute a lead, contact, company, signal, BANT field, score, tier, owner, territory, capacity, SLA status, conversion, or value.
+- If evidence is missing, identify the missing qualification field.
+- Treat every score, tier, percentage, amount, response assumption, and conversion scenario as synthetic, not predictive.
+
+## Prohibited actions
+
+Never send or schedule outreach, assign or reassign a lead, create a sequence, alert, task, meeting, or opportunity, update CRM, approve a qualification decision, change territory ownership, or claim a conversion or revenue outcome.
+
+## Human approval gates
+
+An authorized sales manager must approve qualification, routing, ownership, SLA rules, escalation, outreach content, and customer contact. Marketing, privacy, legal, and sales-operations review remain required where applicable.
+
+## Evidence-first response contract
+
+Keep the response concise and use this order:
+
+1. **Synthetic snapshot** — identify the lead scope and operation.
+2. **Evidence** — show exact fields, scoring inputs, and missing data.
+3. **Analysis** — explain the tier, BANT view, routing logic, or scenario assumptions.
+4. **Draft recommendation** — provide outreach, routing, or SLA options for review.
+5. **Approval gate** — name the sales-manager review and state that no CRM, assignment, sequence, alert, outreach, conversion, or customer action occurred.
+
+&lt;!-- locked-preview-anchors:start --&gt;
+## Locked Preview evidence anchors
+
+Route from the user&#x27;s natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+
+Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+
+- `SQ-01` / `score_leads`: `Lead Qualification Summary`, `Top Hot Leads`, `Evidence boundary`
+- `SQ-02` / `bant_analysis`: `BANT Analysis`, `Strongest Engagement Signals`, `Evidence boundary`
+- `SQ-03` / `create_outreach`: `Personalized Outreach`, `Draft Sequence Cadence`, `Evidence boundary`
+- `SQ-04` / `assign_leads`: `Recommended Lead Routing`, `Handoff Package`, `Evidence boundary`
+- `SQ-05` / `setup_tracking`: `Draft SLA Tracking Plan`, `Proposed Monitoring`, `Evidence boundary`
+- `SQ-06` / `qualification_report`: `Qualification Report`, `Synthetic Conversion Assumptions`, `Evidence boundary`
+
+These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+&lt;!-- locked-preview-anchors:end --&gt;
+</pre></div><span>Enter the reviewed global instructions</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
           </div>
-          <img class="shot" src="screenshots/manual/03-enter-instructions.jpg" alt="Enter the reviewed global instructions evidence">
+
+          <div class="look-for"><strong>What to look for</strong><p>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/sales-qualification/manual/GLOBAL-INSTRUCTIONS.md">Raw download: Global Instructions</a>
+            <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
             <label><input class="complete" type="checkbox" data-step="3"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-4">
-        <header><span>4</span><div><h3>Save the instruction policy</h3><p>Frame 4 of 22</p></div></header>
+<article class="step" id="step-4">
+        <header><span>4</span><div><h3>Save the instruction policy</h3><p>Step 4 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 4: Save the instruction policy" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/sales-qualification/screenshots/manual/04-save-instructions.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Save the instruction policy</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Save the instruction policy</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
           </div>
-          <img class="shot" src="screenshots/manual/04-save-instructions.jpg" alt="Save the instruction policy evidence">
+
+          <div class="look-for"><strong>What to look for</strong><p>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/sales-qualification/manual/GLOBAL-INSTRUCTIONS.md">Raw download: Global Instructions</a>
+            <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
             <label><input class="complete" type="checkbox" data-step="4"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-5">
-        <header><span>5</span><div><h3>Remove default web search</h3><p>Frame 5 of 22</p></div></header>
+<article class="step" id="step-5">
+        <header><span>5</span><div><h3>Remove default web search</h3><p>Step 5 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 5: Remove default web search" data-report-expected="The captured inventory no longer lists the default web-search capability." data-report-evidence="solutions/sales-qualification/screenshots/manual/05-remove-web-search.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Remove default web search</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Remove default web search</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured inventory no longer lists the default web-search capability.</div>
           </div>
-          <img class="shot" src="screenshots/manual/05-remove-web-search.jpg" alt="Remove default web search evidence">
+
+          <div class="look-for"><strong>What to look for</strong><p>The captured inventory no longer lists the default web-search capability.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/sales-qualification/export-manifest.json">Raw download: Export manifest</a>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="5"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-6">
-        <header><span>6</span><div><h3>Add knowledge: aibast_sales-qualification-operating-rules.md</h3><p>Frame 6 of 22</p></div></header>
+<article class="step" id="step-6">
+        <header><span>6</span><div><h3>Add knowledge: aibast_sales-qualification-operating-rules.md</h3><p>Step 6 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 6: Add knowledge: aibast_sales-qualification-operating-rules.md" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/sales-qualification/screenshots/manual/06-add-aibast-sales-qualification-operating-rules.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Add knowledge: aibast_sales-qualification-operating-rules.md</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add knowledge: aibast_sales-qualification-operating-rules.md</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
           </div>
-          <img class="shot" src="screenshots/manual/06-add-aibast-sales-qualification-operating-rules.jpg" alt="Add knowledge: aibast_sales-qualification-operating-rules.md evidence">
+
+          <div class="look-for"><strong>What to look for</strong><p>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/sales-qualification/manual/knowledge/aibast_sales-qualification-operating-rules.md">Raw download: Aibast Sales Qualification Operating Rules</a>
+            <a href="manual/knowledge/aibast_sales-qualification-operating-rules.md" download>Download source: Aibast Sales Qualification Operating Rules</a>
             <label><input class="complete" type="checkbox" data-step="6"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-7">
-        <header><span>7</span><div><h3>Add knowledge: aibast_sales-qualification-synthetic-records.md</h3><p>Frame 7 of 22</p></div></header>
+<article class="step" id="step-7">
+        <header><span>7</span><div><h3>Add knowledge: aibast_sales-qualification-synthetic-records.md</h3><p>Step 7 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 7: Add knowledge: aibast_sales-qualification-synthetic-records.md" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/sales-qualification/screenshots/manual/07-add-aibast-sales-qualification-synthetic-records.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Add knowledge: aibast_sales-qualification-synthetic-records.md</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add knowledge: aibast_sales-qualification-synthetic-records.md</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
           </div>
-          <img class="shot" src="screenshots/manual/07-add-aibast-sales-qualification-synthetic-records.jpg" alt="Add knowledge: aibast_sales-qualification-synthetic-records.md evidence">
+
+          <div class="look-for"><strong>What to look for</strong><p>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/sales-qualification/manual/knowledge/aibast_sales-qualification-synthetic-records.md">Raw download: Aibast Sales Qualification Synthetic Records</a>
+            <a href="manual/knowledge/aibast_sales-qualification-synthetic-records.md" download>Download source: Aibast Sales Qualification Synthetic Records</a>
             <label><input class="complete" type="checkbox" data-step="7"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-8">
-        <header><span>8</span><div><h3>Add skill: assign-leads</h3><p>Frame 8 of 22</p></div></header>
+<article class="step" id="step-8">
+        <header><span>8</span><div><h3>Add skill: assign-leads</h3><p>Step 8 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 8: Add skill: assign-leads" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills." data-report-evidence="solutions/sales-qualification/screenshots/manual/08-add-assign-leads.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Add skill: assign-leads</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: assign-leads</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills.</div>
           </div>
-          <img class="shot" src="screenshots/manual/08-add-assign-leads.jpg" alt="Add skill: assign-leads evidence">
+
+          <div class="look-for"><strong>What to look for</strong><p>The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/sales-qualification/manual/skills/assign-leads/SKILL.md">Raw download: Manual skill: assign leads</a>
+            <a href="manual/skills/assign-leads/SKILL.md" download>Download source: Manual skill: assign leads</a>
             <label><input class="complete" type="checkbox" data-step="8"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-9">
-        <header><span>9</span><div><h3>Add skill: bant-analysis</h3><p>Frame 9 of 22</p></div></header>
+<article class="step" id="step-9">
+        <header><span>9</span><div><h3>Add skill: bant-analysis</h3><p>Step 9 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 9: Add skill: bant-analysis" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills." data-report-evidence="solutions/sales-qualification/screenshots/manual/09-add-bant-analysis.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Add skill: bant-analysis</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: bant-analysis</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills.</div>
           </div>
-          <img class="shot" src="screenshots/manual/09-add-bant-analysis.jpg" alt="Add skill: bant-analysis evidence">
+
+          <div class="look-for"><strong>What to look for</strong><p>The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/sales-qualification/manual/skills/bant-analysis/SKILL.md">Raw download: Manual skill: bant analysis</a>
+            <a href="manual/skills/bant-analysis/SKILL.md" download>Download source: Manual skill: bant analysis</a>
             <label><input class="complete" type="checkbox" data-step="9"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-10">
-        <header><span>10</span><div><h3>Add skill: create-outreach</h3><p>Frame 10 of 22</p></div></header>
+<article class="step" id="step-10">
+        <header><span>10</span><div><h3>Add skill: create-outreach</h3><p>Step 10 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 10: Add skill: create-outreach" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills." data-report-evidence="solutions/sales-qualification/screenshots/manual/10-add-create-outreach.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Add skill: create-outreach</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: create-outreach</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills.</div>
           </div>
-          <img class="shot" src="screenshots/manual/10-add-create-outreach.jpg" alt="Add skill: create-outreach evidence">
+
+          <div class="look-for"><strong>What to look for</strong><p>The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/sales-qualification/manual/skills/create-outreach/SKILL.md">Raw download: Manual skill: create outreach</a>
+            <a href="manual/skills/create-outreach/SKILL.md" download>Download source: Manual skill: create outreach</a>
             <label><input class="complete" type="checkbox" data-step="10"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-11">
-        <header><span>11</span><div><h3>Add skill: qualification-report</h3><p>Frame 11 of 22</p></div></header>
+<article class="step" id="step-11">
+        <header><span>11</span><div><h3>Add skill: qualification-report</h3><p>Step 11 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 11: Add skill: qualification-report" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills." data-report-evidence="solutions/sales-qualification/screenshots/manual/11-add-qualification-report.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Add skill: qualification-report</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: qualification-report</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills.</div>
           </div>
-          <img class="shot" src="screenshots/manual/11-add-qualification-report.jpg" alt="Add skill: qualification-report evidence">
+
+          <div class="look-for"><strong>What to look for</strong><p>The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/sales-qualification/manual/skills/qualification-report/SKILL.md">Raw download: Manual skill: qualification report</a>
+            <a href="manual/skills/qualification-report/SKILL.md" download>Download source: Manual skill: qualification report</a>
             <label><input class="complete" type="checkbox" data-step="11"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-12">
-        <header><span>12</span><div><h3>Add skill: score-leads</h3><p>Frame 12 of 22</p></div></header>
+<article class="step" id="step-12">
+        <header><span>12</span><div><h3>Add skill: score-leads</h3><p>Step 12 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 12: Add skill: score-leads" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills." data-report-evidence="solutions/sales-qualification/screenshots/manual/12-add-score-leads.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Add skill: score-leads</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: score-leads</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills.</div>
           </div>
-          <img class="shot" src="screenshots/manual/12-add-score-leads.jpg" alt="Add skill: score-leads evidence">
+
+          <div class="look-for"><strong>What to look for</strong><p>The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/sales-qualification/manual/skills/score-leads/SKILL.md">Raw download: Manual skill: score leads</a>
+            <a href="manual/skills/score-leads/SKILL.md" download>Download source: Manual skill: score leads</a>
             <label><input class="complete" type="checkbox" data-step="12"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-13">
-        <header><span>13</span><div><h3>Add skill: setup-tracking</h3><p>Frame 13 of 22</p></div></header>
+<article class="step" id="step-13">
+        <header><span>13</span><div><h3>Add skill: setup-tracking</h3><p>Step 13 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 13: Add skill: setup-tracking" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills." data-report-evidence="solutions/sales-qualification/screenshots/manual/13-add-setup-tracking.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Add skill: setup-tracking</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: setup-tracking</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills.</div>
           </div>
-          <img class="shot" src="screenshots/manual/13-add-setup-tracking.jpg" alt="Add skill: setup-tracking evidence">
+
+          <div class="look-for"><strong>What to look for</strong><p>The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/sales-qualification/manual/skills/setup-tracking/SKILL.md">Raw download: Manual skill: setup tracking</a>
+            <a href="manual/skills/setup-tracking/SKILL.md" download>Download source: Manual skill: setup tracking</a>
             <label><input class="complete" type="checkbox" data-step="13"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-14">
-        <header><span>14</span><div><h3>Review model, skills, knowledge, and safety boundaries</h3><p>Frame 14 of 22</p></div></header>
+<article class="step" id="step-14">
+        <header><span>14</span><div><h3>Review model, skills, knowledge, and safety boundaries</h3><p>Step 14 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 14: Review model, skills, knowledge, and safety boundaries" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 6 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/sales-qualification/screenshots/manual/14-review-inventory.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Review model, skills, knowledge, and safety boundaries</div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Review model, skills, knowledge, and safety boundaries</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Sonnet 4.6, 6 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
           </div>
-          <img class="shot" src="screenshots/manual/14-review-inventory.jpg" alt="Review model, skills, knowledge, and safety boundaries evidence">
+
+          <div class="look-for"><strong>What to look for</strong><p>The screenshot visibly confirms Claude Sonnet 4.6, 6 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/sales-qualification/deployment.json">Raw download: Deployment</a>
+            <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="14"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-15">
-        <header><span>15</span><div><h3>Open a fresh Preview conversation</h3><p>Frame 15 of 22</p></div></header>
+<article class="step" id="step-15">
+        <header><span>15</span><div><h3>Open a fresh Preview conversation</h3><p>Step 15 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 15: Open a fresh Preview conversation" data-report-expected="A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass." data-report-evidence="solutions/sales-qualification/screenshots/manual/15-open-preview.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Open a fresh Preview conversation</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Open a fresh Preview conversation</span></div>
             <div class="instruction expected"><strong>Expected result</strong>A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass.</div>
           </div>
-          <img class="shot" src="screenshots/manual/15-open-preview.jpg" alt="Open a fresh Preview conversation evidence">
+
+          <div class="look-for"><strong>What to look for</strong><p>A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/sales-qualification/export-manifest.json">Raw download: Export manifest</a>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="15"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-16">
-        <header><span>16</span><div><h3>Pass SQ-01: Sales Manager</h3><p>Frame 16 of 22</p></div></header>
+<article class="step" id="step-16">
+        <header><span>16</span><div><h3>Pass SQ-01: Sales Manager</h3><p>Step 16 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 16: Pass SQ-01: Sales Manager" data-report-expected="The captured Preview evidence records SQ-01 with the recorded identifiers Lead Qualification Summary, Top Hot Leads, Evidence boundary; do not infer results beyond it." data-report-evidence="solutions/sales-qualification/screenshots/manual/16-sq-01.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Pass SQ-01: Sales Manager</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-16">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-16" hidden>Which bundled synthetic leads should my team review first, and why did they score that way?</pre></div><span>Pass SQ-01: Sales Manager</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records SQ-01 with the recorded identifiers Lead Qualification Summary, Top Hot Leads, Evidence boundary; do not infer results beyond it.</div>
           </div>
-          <img class="shot" src="screenshots/manual/16-sq-01.jpg" alt="Pass SQ-01: Sales Manager evidence">
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running SQ-01. A previous response must not influence the evidence.</p></div>
+          <div class="look-for"><strong>What to look for</strong><p>The captured Preview evidence records SQ-01 with the recorded identifiers Lead Qualification Summary, Top Hot Leads, Evidence boundary; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/sales-qualification/evals/manual-build-evidence.json">Raw download: Manual Build Evidence</a>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="16"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-17">
-        <header><span>17</span><div><h3>Pass SQ-02: Business Development Rep.</h3><p>Frame 17 of 22</p></div></header>
+<article class="step" id="step-17">
+        <header><span>17</span><div><h3>Pass SQ-02: Business Development Rep.</h3><p>Step 17 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 17: Pass SQ-02: Business Development Rep." data-report-expected="The captured Preview evidence records SQ-02 with the recorded identifiers BANT Analysis, Strongest Engagement Signals, Evidence boundary; do not infer results beyond it." data-report-evidence="solutions/sales-qualification/screenshots/manual/17-sq-02.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Pass SQ-02: Business Development Rep.</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-17">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-17" hidden>Show the BANT evidence and missing qualification details for the strongest synthetic leads.</pre></div><span>Pass SQ-02: Business Development Rep.</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records SQ-02 with the recorded identifiers BANT Analysis, Strongest Engagement Signals, Evidence boundary; do not infer results beyond it.</div>
           </div>
-          <img class="shot" src="screenshots/manual/17-sq-02.jpg" alt="Pass SQ-02: Business Development Rep. evidence">
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running SQ-02. A previous response must not influence the evidence.</p></div>
+          <div class="look-for"><strong>What to look for</strong><p>The captured Preview evidence records SQ-02 with the recorded identifiers BANT Analysis, Strongest Engagement Signals, Evidence boundary; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/sales-qualification/evals/manual-build-evidence.json">Raw download: Manual Build Evidence</a>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="17"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-18">
-        <header><span>18</span><div><h3>Pass SQ-03: Business Development Rep.</h3><p>Frame 18 of 22</p></div></header>
+<article class="step" id="step-18">
+        <header><span>18</span><div><h3>Pass SQ-03: Business Development Rep.</h3><p>Step 18 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 18: Pass SQ-03: Business Development Rep." data-report-expected="The captured Preview evidence records SQ-03 with the recorded identifiers Personalized Outreach, Draft Sequence Cadence, Evidence boundary; do not infer results beyond it." data-report-evidence="solutions/sales-qualification/screenshots/manual/18-sq-03.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Pass SQ-03: Business Development Rep.</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-18">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-18" hidden>Draft outreach ideas for the synthetic hot leads, but do not send or schedule any communication.</pre></div><span>Pass SQ-03: Business Development Rep.</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records SQ-03 with the recorded identifiers Personalized Outreach, Draft Sequence Cadence, Evidence boundary; do not infer results beyond it.</div>
           </div>
-          <img class="shot" src="screenshots/manual/18-sq-03.jpg" alt="Pass SQ-03: Business Development Rep. evidence">
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running SQ-03. A previous response must not influence the evidence.</p></div>
+          <div class="look-for"><strong>What to look for</strong><p>The captured Preview evidence records SQ-03 with the recorded identifiers Personalized Outreach, Draft Sequence Cadence, Evidence boundary; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/sales-qualification/evals/manual-build-evidence.json">Raw download: Manual Build Evidence</a>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="18"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-19">
-        <header><span>19</span><div><h3>Pass SQ-04: Sales Manager</h3><p>Frame 19 of 22</p></div></header>
+<article class="step" id="step-19">
+        <header><span>19</span><div><h3>Pass SQ-04: Sales Manager</h3><p>Step 19 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 19: Pass SQ-04: Sales Manager" data-report-expected="The captured Preview evidence records SQ-04 with the recorded identifiers Recommended Lead Routing, Handoff Package, Evidence boundary; do not infer results beyond it." data-report-evidence="solutions/sales-qualification/screenshots/manual/19-sq-04.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Pass SQ-04: Sales Manager</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-19">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-19" hidden>Recommend synthetic lead routing for manager review without assigning CRM owners.</pre></div><span>Pass SQ-04: Sales Manager</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records SQ-04 with the recorded identifiers Recommended Lead Routing, Handoff Package, Evidence boundary; do not infer results beyond it.</div>
           </div>
-          <img class="shot" src="screenshots/manual/19-sq-04.jpg" alt="Pass SQ-04: Sales Manager evidence">
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running SQ-04. A previous response must not influence the evidence.</p></div>
+          <div class="look-for"><strong>What to look for</strong><p>The captured Preview evidence records SQ-04 with the recorded identifiers Recommended Lead Routing, Handoff Package, Evidence boundary; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/sales-qualification/evals/manual-build-evidence.json">Raw download: Manual Build Evidence</a>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="19"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-20">
-        <header><span>20</span><div><h3>Pass SQ-05: Sales Manager</h3><p>Frame 20 of 22</p></div></header>
+<article class="step" id="step-20">
+        <header><span>20</span><div><h3>Pass SQ-05: Sales Manager</h3><p>Step 20 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 20: Pass SQ-05: Sales Manager" data-report-expected="The captured Preview evidence records SQ-05 with the recorded identifiers Draft SLA Tracking Plan, Proposed Monitoring, Evidence boundary; do not infer results beyond it." data-report-evidence="solutions/sales-qualification/screenshots/manual/20-sq-05.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Pass SQ-05: Sales Manager</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-20">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-20" hidden>Draft an SLA and escalation plan for the synthetic leads without activating alerts or automations.</pre></div><span>Pass SQ-05: Sales Manager</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records SQ-05 with the recorded identifiers Draft SLA Tracking Plan, Proposed Monitoring, Evidence boundary; do not infer results beyond it.</div>
           </div>
-          <img class="shot" src="screenshots/manual/20-sq-05.jpg" alt="Pass SQ-05: Sales Manager evidence">
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running SQ-05. A previous response must not influence the evidence.</p></div>
+          <div class="look-for"><strong>What to look for</strong><p>The captured Preview evidence records SQ-05 with the recorded identifiers Draft SLA Tracking Plan, Proposed Monitoring, Evidence boundary; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/sales-qualification/evals/manual-build-evidence.json">Raw download: Manual Build Evidence</a>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="20"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-21">
-        <header><span>21</span><div><h3>Pass SQ-06: Account Executive</h3><p>Frame 21 of 22</p></div></header>
+<article class="step" id="step-21">
+        <header><span>21</span><div><h3>Pass SQ-06: Account Executive</h3><p>Step 21 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 21: Pass SQ-06: Account Executive" data-report-expected="The captured Preview evidence records SQ-06 with the recorded identifiers Qualification Report, Synthetic Conversion Assumptions, Evidence boundary; do not infer results beyond it." data-report-evidence="solutions/sales-qualification/screenshots/manual/21-sq-06.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Pass SQ-06: Account Executive</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-21">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-21" hidden>Summarize the synthetic qualified pipeline and clearly label every conversion and value assumption.</pre></div><span>Pass SQ-06: Account Executive</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records SQ-06 with the recorded identifiers Qualification Report, Synthetic Conversion Assumptions, Evidence boundary; do not infer results beyond it.</div>
           </div>
-          <img class="shot" src="screenshots/manual/21-sq-06.jpg" alt="Pass SQ-06: Account Executive evidence">
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running SQ-06. A previous response must not influence the evidence.</p></div>
+          <div class="look-for"><strong>What to look for</strong><p>The captured Preview evidence records SQ-06 with the recorded identifiers Qualification Report, Synthetic Conversion Assumptions, Evidence boundary; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/sales-qualification/evals/manual-build-evidence.json">Raw download: Manual Build Evidence</a>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="21"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-22">
-        <header><span>22</span><div><h3>Confirm Draft and stop before publish</h3><p>Frame 22 of 22</p></div></header>
+<article class="step" id="step-22">
+        <header><span>22</span><div><h3>Confirm Draft and stop before publish</h3><p>Step 22 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 22: Confirm Draft and stop before publish" data-report-expected="The agent remains Draft and no Publish action is taken." data-report-evidence="solutions/sales-qualification/screenshots/manual/22-confirm-draft.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Confirm Draft and stop before publish</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Confirm Draft and stop before publish</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The agent remains Draft and no Publish action is taken.</div>
           </div>
-          <img class="shot" src="screenshots/manual/22-confirm-draft.jpg" alt="Confirm Draft and stop before publish evidence">
+
+          <div class="look-for"><strong>What to look for</strong><p>The agent remains Draft and no Publish action is taken.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/sales-qualification/deployment.json">Raw download: Deployment</a>
+            <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="22"> Mark complete</label>
           </footer>
         </div>
@@ -585,7 +667,76 @@
         label.textContent = `${done.length} of ${boxes.length} complete`;
         bar.style.width = boxes.length ? `${(done.length / boxes.length) * 100}%` : "0%";
       }
+      document.querySelectorAll("[data-copy-target]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const target = document.getElementById(button.dataset.copyTarget);
+          if (!target) {
+            button.textContent = "Text unavailable";
+            return;
+          }
+          const original = button.textContent;
+          navigator.clipboard.writeText(target.textContent).then(() => {
+            button.textContent = "Copied";
+            window.setTimeout(() => {
+              button.textContent = original;
+            }, 1400);
+          }).catch(() => {
+            button.textContent = "Copy failed";
+          });
+        });
+      });
+      document.querySelectorAll("[data-report-location]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const locationLabel = button.dataset.reportLocation || "Hard-mode step";
+          const expected = button.dataset.reportExpected || "Describe the expected result.";
+          const evidence = button.dataset.reportEvidence || "No evidence path supplied.";
+          const title = `[Beta workshop] Sales Qualification Agent: ${locationLabel}`;
+          const body = `<!-- aibast-workshop-feedback:v1 -->
+## Workshop signal
+
+- Schema: \`aibast-workshop-feedback/1.0\`
+- Solution: \`@aibast-agents-library/sales-qualification\`
+- Page: ${location.href}
+- Mode: \`hard\`
+- Location: ${locationLabel}
+- Evidence: \`${evidence}\`
+
+## Expected
+
+${expected}
+
+## What happened instead
+
+Describe what was inaccurate or missing.
+
+## Reproduction
+
+1. Open the Hard-mode tutorial.
+2. Follow the step shown above.
+3. Record the visible Copilot Studio state.
+
+> Beta workshop report. Do not include credentials, tokens, customer data, or other sensitive information.`;
+          const url = new URL("https://github.com/microsoft/aibast-agents-library/issues/new");
+          url.searchParams.set("title", title);
+          url.searchParams.set("body", body);
+          window.open(url.toString(), "_blank", "noopener");
+        });
+      });
       update();
+      if (document.documentElement.dataset.embedded === "true") {
+        const notifyHeight = () => {
+          window.parent.postMessage(
+            {
+              type: "aibast-hard-mode-height",
+              height: document.documentElement.scrollHeight,
+            },
+            window.location.origin,
+          );
+        };
+        new ResizeObserver(notifyHeight).observe(document.documentElement);
+        window.addEventListener("load", notifyHeight);
+        notifyHeight();
+      }
     })();
   </script>
 </body>

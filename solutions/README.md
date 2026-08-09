@@ -14,14 +14,17 @@ solutions/
 └── <solution-slug>/
     ├── README.md                        # Package map and quality status
     ├── deployment.json                  # Machine-readable no-terminal deployment recipe
-    ├── quest.html                       # Optional guided Easy/Hard field quest
+    ├── quest.html                       # Guided Easy/Hard Beta workshop
+    ├── field-guide.html                 # Styled facilitator and learner guide
+    ├── evidence-report.html             # Styled deterministic/visual evidence summary
     ├── manual-tutorial.html             # Screenshot-by-screenshot no-assistance build
     ├── export-manifest.json             # Raw GitHub file and bundle contract
     ├── manual/skills/*/SKILL.md          # Directly uploadable Copilot Studio skills
     ├── exports/*.zip                    # Complete customer download bundle
     ├── evals/
     │   ├── onepager-map.json            # Advertised promise -> operation -> prompt
-    │   └── transcripts.json             # Exact isolated Brainstem transcript corpus
+    │   ├── transcripts.json             # Exact isolated Brainstem transcript corpus
+    │   └── visual-checkpoints.json       # Reusable-versus-hidden screenshot contract
     └── screenshots/                     # Copilot-assisted and manual browser evidence
 ```
 

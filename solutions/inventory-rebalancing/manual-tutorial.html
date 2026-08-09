@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Build the Inventory Rebalancing agent manually</title>
+  <title>Build Inventory Rebalancing Agent manually</title>
   <script>
     (() => {
       const param = new URLSearchParams(window.location.search).get("scoutTheme");
@@ -11,8 +11,14 @@
         param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
       document.documentElement.setAttribute("data-theme", theme);
     })();
+    (() => {
+      if (new URLSearchParams(window.location.search).get("embedded") === "1") {
+        document.documentElement.setAttribute("data-embedded", "true");
+      }
+    })();
   </script>
   <style>
+
     :root {
       color-scheme: light;
       --cp-bg: #f7f4ef;
@@ -75,11 +81,11 @@
       line-height: 1.55;
     }
     a { color: var(--cp-link); }
-    button, a.button { font: inherit; }
+    button, .button { font: inherit; }
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 20;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -88,17 +94,16 @@
       border-bottom: 1px solid var(--cp-border);
       background: var(--cp-panel-strong);
     }
-    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 750; }
     .brand-mark {
       display: grid;
       width: 32px;
       height: 32px;
       place-items: center;
-      border-radius: 0.625rem;
+      border-radius: 10px;
       background: var(--cp-accent);
       color: var(--cp-accent-fg);
     }
-    .actions { display: flex; gap: 8px; flex-wrap: wrap; }
     .button {
       display: inline-flex;
       align-items: center;
@@ -106,330 +111,596 @@
       min-height: 38px;
       padding: 8px 14px;
       border: 1px solid var(--cp-border-strong);
-      border-radius: 0.625rem;
+      border-radius: 10px;
       background: var(--cp-surface);
       color: var(--cp-text);
       text-decoration: none;
       cursor: pointer;
     }
-    .button:hover { border-color: var(--cp-accent); }
     .button.primary {
       border-color: var(--cp-accent);
       background: var(--cp-accent);
       color: var(--cp-accent-fg);
     }
-    .button.primary:hover { background: var(--cp-accent-hover); }
-    .layout {
-      display: grid;
-      grid-template-columns: 270px minmax(0, 840px);
-      gap: 32px;
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 32px 24px 80px;
-    }
-    .sidebar { position: sticky; top: 82px; align-self: start; max-height: calc(100vh - 104px); overflow: auto; }
-    .sidebar h2 { margin: 0 0 12px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--cp-text-muted); }
-    .progress {
-      height: 8px;
-      margin-bottom: 16px;
-      overflow: hidden;
-      border-radius: 0.625rem;
-      background: var(--cp-border);
-    }
-    .progress > span { display: block; width: 0; height: 100%; background: var(--cp-accent); transition: width 180ms ease; }
-    .toc { display: grid; gap: 4px; }
-    .toc a {
-      padding: 8px 10px;
-      border-left: 3px solid var(--cp-border);
-      color: var(--cp-text-muted);
-      text-decoration: none;
-      font-size: 13px;
-    }
-    .toc a:hover, .toc a.active { border-left-color: var(--cp-accent); color: var(--cp-text); background: var(--cp-accent-soft); }
+    .page { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 40px 0 80px; }
     .hero {
       padding: 32px;
       border: 1px solid var(--cp-border);
-      border-radius: 16px;
+      border-radius: 18px;
       background: var(--cp-surface);
+      box-shadow: var(--cp-shadow);
     }
-    .eyebrow { margin: 0 0 8px; color: var(--cp-accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; font-size: 12px; }
-    h1 { margin: 0; font-size: clamp(32px, 6vw, 54px); line-height: 1.04; letter-spacing: -0.035em; }
-    .lede { max-width: 720px; margin: 18px 0 0; color: var(--cp-text-muted); font-size: 18px; }
-    .facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
-    .fact { padding: 12px; border: 1px solid var(--cp-border); border-radius: 0.625rem; background: var(--cp-surface-soft); }
-    .fact strong { display: block; font-size: 20px; }
-    .fact span { color: var(--cp-text-muted); font-size: 12px; }
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--cp-accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+    h1 { margin: 0; font-size: clamp(34px, 7vw, 64px); line-height: 1; letter-spacing: -.045em; }
+    h2 { margin-top: 42px; }
+    .lede { max-width: 760px; color: var(--cp-text-muted); font-size: 18px; }
     .notice {
-      margin-top: 20px;
-      padding: 16px;
+      margin-top: 18px;
+      padding: 15px;
       border-left: 4px solid var(--cp-warning);
       background: var(--cp-surface-soft);
     }
-    .section-heading { margin: 48px 0 16px; font-size: 28px; }
-    .step {
-      scroll-margin-top: 92px;
-      margin: 0 0 28px;
-      overflow: hidden;
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .card {
       border: 1px solid var(--cp-border);
-      border-radius: 16px;
+      border-radius: 14px;
       background: var(--cp-surface);
+      padding: 20px;
     }
-    .step-head { display: flex; align-items: flex-start; gap: 14px; padding: 20px 22px; border-bottom: 1px solid var(--cp-border); }
-    .step-number {
-      display: grid;
-      flex: 0 0 36px;
-      width: 36px;
-      height: 36px;
-      place-items: center;
-      border-radius: 0.625rem;
-      background: var(--cp-accent-soft);
-      color: var(--cp-accent);
-      font-weight: 800;
+    .card h3 { margin-top: 0; }
+    .muted { color: var(--cp-text-muted); }
+    .status { color: var(--cp-accent); font-weight: 750; }
+    .progress { height: 8px; overflow: hidden; border-radius: 999px; background: var(--cp-border); }
+    .progress span { display: block; width: 0; height: 100%; background: var(--cp-accent); }
+    @media (max-width: 760px) {
+      .grid { grid-template-columns: 1fr; }
+      .topbar { align-items: flex-start; padding: 12px 16px; }
+      .page { width: min(100% - 24px, 1120px); padding-top: 24px; }
+      .hero { padding: 24px 20px; }
     }
-    .step h3 { margin: 0; font-size: 22px; }
-    .step-kicker { margin-top: 4px; color: var(--cp-text-muted); font-size: 13px; }
+
+    .layout { display: grid; grid-template-columns: 270px minmax(0, 840px); gap: 32px; max-width: 1180px; margin: 0 auto; padding: 32px 24px 80px; }
+    .sidebar { position: sticky; top: 82px; align-self: start; max-height: calc(100vh - 104px); overflow: auto; }
+    .toc { display: grid; gap: 4px; margin-top: 14px; }
+    .toc a { padding: 7px 9px; border-left: 3px solid var(--cp-border); color: var(--cp-text-muted); text-decoration: none; font-size: 13px; }
+    .toc a:hover { border-left-color: var(--cp-accent); color: var(--cp-text); }
+    .step { scroll-margin-top: 90px; margin: 0 0 28px; overflow: hidden; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
+    .step header { display: grid; grid-template-columns: 36px 1fr auto; gap: 14px; align-items: center; padding: 20px 22px; border-bottom: 1px solid var(--cp-border); }
+    .step header > span { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 10px; background: var(--cp-accent-soft); color: var(--cp-accent); font-weight: 800; }
+    .step h3, .step header p { margin: 0; }
+    .step header p { color: var(--cp-text-muted); font-size: 13px; }
     .step-body { padding: 22px; }
     .instruction-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
-    .instruction { padding: 14px; border-radius: 0.625rem; background: var(--cp-surface-soft); }
+    .instruction { padding: 14px; border-radius: 10px; background: var(--cp-surface-soft); }
     .instruction strong { display: block; margin-bottom: 6px; }
+    .instruction-heading { display: flex; align-items: start; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
+    .instruction-heading strong { margin: 0; }
+    .copy-button { min-height: 34px; padding: 6px 10px; font-size: 13px; }
+    .copy-source { display: none; }
     .instruction.expected { border-left: 4px solid var(--cp-success); }
-    .instruction.caution { border-left: 4px solid var(--cp-warning); }
-    .shot {
-      display: block;
-      width: 100%;
-      border: 1px solid var(--cp-border);
-      border-radius: 0.625rem;
-      background: var(--cp-surface-soft);
-    }
-    .pending-shot {
-      display: none;
-      min-height: 180px;
-      place-items: center;
-      padding: 24px;
-      border: 1px dashed var(--cp-border-strong);
-      border-radius: 0.625rem;
-      background: var(--cp-surface-soft);
-      color: var(--cp-text-muted);
-      text-align: center;
-    }
-    .step-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
-    .complete {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--cp-text-muted);
-      cursor: pointer;
-    }
-    .complete input { width: 18px; height: 18px; accent-color: var(--cp-accent); }
-    .troubleshooting {
-      padding: 24px;
-      border: 1px solid var(--cp-border);
-      border-radius: 16px;
-      background: var(--cp-surface);
-    }
-    details { padding: 14px 0; border-bottom: 1px solid var(--cp-border); }
-    details:last-child { border-bottom: 0; }
+    .shot-link { display: block; text-align: center; }
+    .shot { display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }
+    .capture-meta { margin: 8px 0 0; color: var(--cp-text-muted); font-size: 12px; text-align: center; }
+    .missing { padding: 32px; border: 2px dashed var(--cp-warning); border-radius: 10px; color: var(--cp-text-muted); }
+    .look-for { padding: 20px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
+    .look-for strong { color: var(--cp-text); }
+    .look-for p { margin: 8px 0 0; }
+    .report-button { border-color: var(--cp-accent); color: var(--cp-accent); }
+    .beta-badge { display: inline-flex; align-items: center; margin-bottom: 12px; padding: 5px 9px; border-radius: 999px; background: var(--cp-warning); color: var(--cp-accent-fg); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    .beta-notice { margin-top: 14px; padding: 14px; border: 1px solid var(--cp-warning); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
+    .step footer { display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+    .troubleshooting details { padding: 14px 0; border-bottom: 1px solid var(--cp-border); }
     summary { cursor: pointer; font-weight: 700; }
-    code {
-      padding: 2px 5px;
-      border-radius: 0.625rem;
-      background: var(--cp-surface-soft);
-      font-family: Consolas, "Courier New", Courier, monospace;
-    }
-    .footer { margin-top: 42px; color: var(--cp-text-muted); font-size: 13px; }
-    @media (max-width: 900px) {
-      .layout { grid-template-columns: 1fr; }
-      .sidebar { position: static; max-height: none; }
-      .toc { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    @media (max-width: 620px) {
-      .topbar { align-items: flex-start; padding: 12px 16px; }
-      .brand span:last-child { display: none; }
-      .layout { padding: 20px 14px 64px; }
-      .hero { padding: 24px 20px; }
-      .facts, .instruction-grid, .toc { grid-template-columns: 1fr; }
-      .step-body { padding: 16px; }
-    }
+    html[data-embedded="true"] body { background: var(--cp-bg-elevated); }
+    html[data-embedded="true"] .topbar { display: none; }
+    html[data-embedded="true"] .layout { grid-template-columns: 230px minmax(0, 1fr); max-width: none; padding: 8px 0 32px; }
+    html[data-embedded="true"] .hero { box-shadow: none; }
+    @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } .sidebar { position: static; max-height: none; } }
+    @media (max-width: 620px) { .instruction-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
   <header class="topbar">
-    <div class="brand"><span class="brand-mark">A</span><span>AIBAST Agents Library</span></div>
-    <div class="actions">
-      <a class="button" href="screenshots/manual/manual-build-walkthrough.gif">Watch all 22 steps</a>
-      <a class="button primary" id="bundle-link" href="exports/inventory-rebalancing-source.zip">Download source bundle</a>
-    </div>
+    <div class="brand"><span class="brand-mark">A</span><span>AIBAST manual workshop</span></div>
+    <div> <a class="button primary" href="exports/inventory-rebalancing-source.zip">Download source bundle</a></div>
   </header>
-
   <div class="layout">
     <aside class="sidebar">
-      <h2 id="progress-label">0 of 22 complete</h2>
+      <strong id="progress-label">0 of 22 complete</strong>
       <div class="progress"><span id="progress-bar"></span></div>
-      <nav class="toc" id="toc" aria-label="Tutorial steps"></nav>
+      <nav class="toc" aria-label="Tutorial actions"><a href="#step-1">1. Create a blank Copilot Studio agent</a>
+<a href="#step-2">2. Name Inventory Manual Build</a>
+<a href="#step-3">3. Enter the reviewed global instructions</a>
+<a href="#step-4">4. Save the instruction changes</a>
+<a href="#step-5">5. Remove default web search</a>
+<a href="#step-6">6. Open the knowledge uploader</a>
+<a href="#step-7">7. Upload synthetic inventory records</a>
+<a href="#step-8">8. Upload cost and review rules</a>
+<a href="#step-9">9. Verify both complete knowledge files</a>
+<a href="#step-10">10. Open the SKILL.md uploader</a>
+<a href="#step-11">11. Add inventory snapshot</a>
+<a href="#step-12">12. Add rebalance recommendation</a>
+<a href="#step-13">13. Add transfer planning</a>
+<a href="#step-14">14. Add cost analysis</a>
+<a href="#step-15">15. Confirm Claude Sonnet 4.6</a>
+<a href="#step-16">16. Audit four skills and two knowledge files</a>
+<a href="#step-17">17. Open a fresh Preview conversation</a>
+<a href="#step-18">18. Pass corrected IR-01 capacity review</a>
+<a href="#step-19">19. Pass IR-02 imbalance review</a>
+<a href="#step-20">20. Pass IR-03 transfer plan</a>
+<a href="#step-21">21. Pass IR-04 cost routing and total cost</a>
+<a href="#step-22">22. Verify Draft and do not publish</a></nav>
     </aside>
-
     <main>
       <section class="hero">
-        <p class="eyebrow">Hard mode · AI skeptic edition</p>
-        <h1>Build the inventory planner manually.</h1>
-        <p class="lede">No PAC CLI, YAML import, or plugin architect. Construct the same four-skill inventory agent through the Copilot Studio browser, run all four canonical Preview cases, and stop at the Draft gate.</p>
-        <div class="facts">
-          <div class="fact"><strong>22</strong><span>captured actions</span></div>
-          <div class="fact"><strong>4</strong><span>skills uploaded</span></div>
-          <div class="fact"><strong>2</strong><span>knowledge files</span></div>
-          <div class="fact"><strong>4</strong><span>Preview gates</span></div>
+        <span class="beta-badge">Beta workshop</span>
+        <p class="eyebrow">Hard mode · literal browser construction</p>
+        <h1>Build Inventory Rebalancing Agent manually.</h1>
+        <p class="lede">No PAC CLI, YAML import, or plugin architect. Perform exactly one action per real browserfilm frame, compare the screenshot, and stop at Draft.</p>
+        <div class="notice"><strong>Synthetic disclosure:</strong> this is qualitative workflow evidence using packaged synthetic inputs. It is not a customer KPI or a live-system result.</div>
+        <div class="beta-notice"><strong>Help improve this Beta:</strong> use the report button on any step when the action, expected result, or visible product state is inaccurate. It opens a prefilled GitHub issue and does not submit automatically.</div>
+        <!-- No pending evidence. -->
+      </section>
+      <h2>Build and verify</h2>
+      <article class="step" id="step-1">
+        <header><span>1</span><div><h3>Create a blank Copilot Studio agent</h3><p>Step 1 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 1: Create a blank Copilot Studio agent" data-report-expected="A blank Copilot Studio agent is visible in the captured Draft workspace." data-report-evidence="solutions/inventory-rebalancing/screenshots/manual/01-create-blank-agent.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Create a blank Copilot Studio agent</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>A blank Copilot Studio agent is visible in the captured Draft workspace.</div>
+          </div>
+
+          <div class="look-for"><strong>What to look for</strong><p>A blank Copilot Studio agent is visible in the captured Draft workspace.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <footer>
+            <a href="deployment.json" download>Download source: Deployment</a>
+            <label><input class="complete" type="checkbox" data-step="1"> Mark complete</label>
+          </footer>
         </div>
-        <div class="notice"><strong>Capture status:</strong> all 22 browser actions and four Preview gates were captured from the real kodyv8 manual build. Both inventory agents remain Draft; nothing in this tutorial authorizes publication.</div>
+      </article>
+<article class="step" id="step-2">
+        <header><span>2</span><div><h3>Name Inventory Manual Build</h3><p>Step 2 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 2: Name Inventory Manual Build" data-report-expected="The page header shows the recorded manual build name: Inventory Manual Build." data-report-evidence="solutions/inventory-rebalancing/screenshots/manual/02-name-agent.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-2">Copy agent name</button><pre class="copy-source" id="hard-copy-2" hidden>Inventory Manual Build</pre></div><span>Name Inventory Manual Build</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The page header shows the recorded manual build name: Inventory Manual Build.</div>
+          </div>
+
+          <div class="look-for"><strong>What to look for</strong><p>The page header shows the recorded manual build name: Inventory Manual Build.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <footer>
+            <a href="deployment.json" download>Download source: Deployment</a>
+            <label><input class="complete" type="checkbox" data-step="2"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-3">
+        <header><span>3</span><div><h3>Enter the reviewed global instructions</h3><p>Step 3 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 3: Enter the reviewed global instructions" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/inventory-rebalancing/screenshots/manual/03-enter-instructions.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-3">Copy instructions</button><pre class="copy-source" id="hard-copy-3" hidden># Inventory Rebalancing Agent — Manual Global Instructions
+
+Use only the uploaded synthetic records, review rules, and operation skills. Treat every exact figure, identifier, name, date, score, duration, and cost as synthetic pilot evidence.
+
+## Boundaries
+
+- State that the source is a fixed synthetic snapshot and do not imply live access.
+- Do not browse or invent records, actions, confirmations, or outcomes.
+- The agent recommends options only; inventory movement and policy changes require approved tools and authorized owners.
+- Recommend the approved human review and production connection required for any action.
+
+## Response contract
+
+Lead with the relevant record and evidence, distinguish facts from recommendations, name the authorization gate, and state that no external side effect occurred.
+
+## Routing
+
+- Use `inventory-snapshot` for facility capacity and reorder-position review.
+- Use `rebalance-recommendation` for forecast-relative surplus and shortage.
+- Use `transfer-plan` for proposed inter-warehouse moves.
+- Use `cost-analysis` for inventory exposure, total annual holding cost, and
+  planning-meeting trade-offs.
+</pre></div><span>Enter the reviewed global instructions</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
+          </div>
+
+          <div class="look-for"><strong>What to look for</strong><p>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <footer>
+            <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
+            <label><input class="complete" type="checkbox" data-step="3"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-4">
+        <header><span>4</span><div><h3>Save the instruction changes</h3><p>Step 4 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 4: Save the instruction changes" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/inventory-rebalancing/screenshots/manual/04-save-instructions.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Save the instruction changes</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
+          </div>
+
+          <div class="look-for"><strong>What to look for</strong><p>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <footer>
+            <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
+            <label><input class="complete" type="checkbox" data-step="4"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-5">
+        <header><span>5</span><div><h3>Remove default web search</h3><p>Step 5 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 5: Remove default web search" data-report-expected="The captured inventory no longer lists the default web-search capability." data-report-evidence="solutions/inventory-rebalancing/screenshots/manual/05-remove-web-search.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Remove default web search</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured inventory no longer lists the default web-search capability.</div>
+          </div>
+
+          <div class="look-for"><strong>What to look for</strong><p>The captured inventory no longer lists the default web-search capability.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="5"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-6">
+        <header><span>6</span><div><h3>Open the knowledge uploader</h3><p>Step 6 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 6: Open the knowledge uploader" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/inventory-rebalancing/screenshots/manual/06-open-knowledge-upload.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Open the knowledge uploader</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
+          </div>
+
+          <div class="look-for"><strong>What to look for</strong><p>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="6"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-7">
+        <header><span>7</span><div><h3>Upload synthetic inventory records</h3><p>Step 7 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 7: Upload synthetic inventory records" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 4 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/inventory-rebalancing/screenshots/manual/07-upload-synthetic-records.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Upload synthetic inventory records</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Sonnet 4.6, 4 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
+          </div>
+
+          <div class="look-for"><strong>What to look for</strong><p>The screenshot visibly confirms Claude Sonnet 4.6, 4 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <footer>
+            <a href="manual/knowledge/aibast_inventory-rebalancing-review-rules.md" download>Download source: Aibast Inventory Rebalancing Review Rules</a>
+            <label><input class="complete" type="checkbox" data-step="7"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-8">
+        <header><span>8</span><div><h3>Upload cost and review rules</h3><p>Step 8 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 8: Upload cost and review rules" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 4 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/inventory-rebalancing/screenshots/manual/08-upload-review-rules.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Upload cost and review rules</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Sonnet 4.6, 4 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
+          </div>
+
+          <div class="look-for"><strong>What to look for</strong><p>The screenshot visibly confirms Claude Sonnet 4.6, 4 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <footer>
+            <a href="manual/knowledge/aibast_inventory-rebalancing-synthetic-records.md" download>Download source: Aibast Inventory Rebalancing Synthetic Records</a>
+            <label><input class="complete" type="checkbox" data-step="8"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-9">
+        <header><span>9</span><div><h3>Verify both complete knowledge files</h3><p>Step 9 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 9: Verify both complete knowledge files" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/inventory-rebalancing/screenshots/manual/09-verify-two-knowledge-files.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Verify both complete knowledge files</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
+          </div>
+
+          <div class="look-for"><strong>What to look for</strong><p>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="9"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-10">
+        <header><span>10</span><div><h3>Open the SKILL.md uploader</h3><p>Step 10 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 10: Open the SKILL.md uploader" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 4 skills." data-report-evidence="solutions/inventory-rebalancing/screenshots/manual/10-open-skill-upload.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Open the SKILL.md uploader</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 4 skills.</div>
+          </div>
+
+          <div class="look-for"><strong>What to look for</strong><p>The captured skill inventory reflects the reviewed uploads; the evidence records 4 skills.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="10"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-11">
+        <header><span>11</span><div><h3>Add inventory snapshot</h3><p>Step 11 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 11: Add inventory snapshot" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 4 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/inventory-rebalancing/screenshots/manual/11-add-inventory-snapshot-skill.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add inventory snapshot</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Sonnet 4.6, 4 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
+          </div>
+
+          <div class="look-for"><strong>What to look for</strong><p>The screenshot visibly confirms Claude Sonnet 4.6, 4 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="11"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-12">
+        <header><span>12</span><div><h3>Add rebalance recommendation</h3><p>Step 12 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 12: Add rebalance recommendation" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/inventory-rebalancing/screenshots/manual/12-add-rebalance-recommendation-skill.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add rebalance recommendation</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot.</div>
+          </div>
+
+          <div class="look-for"><strong>What to look for</strong><p>The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="12"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-13">
+        <header><span>13</span><div><h3>Add transfer planning</h3><p>Step 13 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 13: Add transfer planning" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/inventory-rebalancing/screenshots/manual/13-add-transfer-plan-skill.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add transfer planning</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot.</div>
+          </div>
+
+          <div class="look-for"><strong>What to look for</strong><p>The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="13"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-14">
+        <header><span>14</span><div><h3>Add cost analysis</h3><p>Step 14 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 14: Add cost analysis" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/inventory-rebalancing/screenshots/manual/14-add-cost-analysis-skill.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add cost analysis</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot.</div>
+          </div>
+
+          <div class="look-for"><strong>What to look for</strong><p>The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="14"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-15">
+        <header><span>15</span><div><h3>Confirm Claude Sonnet 4.6</h3><p>Step 15 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 15: Confirm Claude Sonnet 4.6" data-report-expected="The model picker or inventory shows Claude Sonnet 4.6, matching the recorded evidence." data-report-evidence="solutions/inventory-rebalancing/screenshots/manual/15-select-sonnet46.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Confirm Claude Sonnet 4.6</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The model picker or inventory shows Claude Sonnet 4.6, matching the recorded evidence.</div>
+          </div>
+
+          <div class="look-for"><strong>What to look for</strong><p>The model picker or inventory shows Claude Sonnet 4.6, matching the recorded evidence.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="15"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-16">
+        <header><span>16</span><div><h3>Audit four skills and two knowledge files</h3><p>Step 16 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 16: Audit four skills and two knowledge files" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 4 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/inventory-rebalancing/screenshots/manual/16-review-inventory.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Audit four skills and two knowledge files</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Sonnet 4.6, 4 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
+          </div>
+
+          <div class="look-for"><strong>What to look for</strong><p>The screenshot visibly confirms Claude Sonnet 4.6, 4 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="16"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-17">
+        <header><span>17</span><div><h3>Open a fresh Preview conversation</h3><p>Step 17 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 17: Open a fresh Preview conversation" data-report-expected="A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass." data-report-evidence="solutions/inventory-rebalancing/screenshots/manual/17-open-preview.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Open a fresh Preview conversation</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass.</div>
+          </div>
+
+          <div class="look-for"><strong>What to look for</strong><p>A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="17"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-18">
+        <header><span>18</span><div><h3>Pass corrected IR-01 capacity review</h3><p>Step 18 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 18: Pass corrected IR-01 capacity review" data-report-expected="The captured Preview evidence records IR-01 with the recorded identifiers Dallas Fulfillment Center, SKU-4406; do not infer results beyond it." data-report-evidence="solutions/inventory-rebalancing/screenshots/manual/18-preview-ir01-capacity-review.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-18">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-18" hidden>Which distribution centers are tight on space, and which SKU positions should my team review first?</pre></div><span>Pass corrected IR-01 capacity review</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records IR-01 with the recorded identifiers Dallas Fulfillment Center, SKU-4406; do not infer results beyond it.</div>
+          </div>
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running IR-01. A previous response must not influence the evidence.</p></div>
+          <div class="look-for"><strong>What to look for</strong><p>The captured Preview evidence records IR-01 with the recorded identifiers Dallas Fulfillment Center, SKU-4406; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <footer>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
+            <label><input class="complete" type="checkbox" data-step="18"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-19">
+        <header><span>19</span><div><h3>Pass IR-02 imbalance review</h3><p>Step 19 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 19: Pass IR-02 imbalance review" data-report-expected="The captured Preview evidence records IR-02 with the recorded identifiers SKU-4402, SLOW-MOVING; do not infer results beyond it." data-report-evidence="solutions/inventory-rebalancing/screenshots/manual/19-preview-ir02-imbalance-review.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-19">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-19" hidden>Where do we have forecast-relative shortages or excess that deserve a rebalancing review?</pre></div><span>Pass IR-02 imbalance review</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records IR-02 with the recorded identifiers SKU-4402, SLOW-MOVING; do not infer results beyond it.</div>
+          </div>
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running IR-02. A previous response must not influence the evidence.</p></div>
+          <div class="look-for"><strong>What to look for</strong><p>The captured Preview evidence records IR-02 with the recorded identifiers SKU-4402, SLOW-MOVING; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <footer>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
+            <label><input class="complete" type="checkbox" data-step="19"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-20">
+        <header><span>20</span><div><h3>Pass IR-03 transfer plan</h3><p>Step 20 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 20: Pass IR-03 transfer plan" data-report-expected="The captured Preview evidence records IR-03 with the recorded identifiers SKU-4401, No inventory has been reserved; do not infer results beyond it." data-report-evidence="solutions/inventory-rebalancing/screenshots/manual/20-preview-ir03-transfer-plan.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-20">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-20" hidden>Show me the proposed warehouse moves, but do not move or reserve anything.</pre></div><span>Pass IR-03 transfer plan</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records IR-03 with the recorded identifiers SKU-4401, No inventory has been reserved; do not infer results beyond it.</div>
+          </div>
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running IR-03. A previous response must not influence the evidence.</p></div>
+          <div class="look-for"><strong>What to look for</strong><p>The captured Preview evidence records IR-03 with the recorded identifiers SKU-4401, No inventory has been reserved; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <footer>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
+            <label><input class="complete" type="checkbox" data-step="20"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-21">
+        <header><span>21</span><div><h3>Pass IR-04 cost routing and total cost</h3><p>Step 21 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 21: Pass IR-04 cost routing and total cost" data-report-expected="The captured Preview evidence records IR-04 with the recorded identifiers Total annual holding cost, synthetic planning estimates; do not infer results beyond it." data-report-evidence="solutions/inventory-rebalancing/screenshots/manual/21-preview-ir04-cost-analysis.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-21">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-21" hidden>Where is inventory exposure concentrated, and what trade-offs should I take to the planning meeting?</pre></div><span>Pass IR-04 cost routing and total cost</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records IR-04 with the recorded identifiers Total annual holding cost, synthetic planning estimates; do not infer results beyond it.</div>
+          </div>
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running IR-04. A previous response must not influence the evidence.</p></div>
+          <div class="look-for"><strong>What to look for</strong><p>The captured Preview evidence records IR-04 with the recorded identifiers Total annual holding cost, synthetic planning estimates; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <footer>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
+            <label><input class="complete" type="checkbox" data-step="21"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-22">
+        <header><span>22</span><div><h3>Verify Draft and do not publish</h3><p>Step 22 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 22: Verify Draft and do not publish" data-report-expected="The agent remains Draft and no Publish action is taken." data-report-evidence="solutions/inventory-rebalancing/screenshots/manual/22-verify-draft-no-publish.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Verify Draft and do not publish</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The agent remains Draft and no Publish action is taken.</div>
+          </div>
+
+          <div class="look-for"><strong>What to look for</strong><p>The agent remains Draft and no Publish action is taken.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <footer>
+            <a href="deployment.json" download>Download source: Deployment</a>
+            <label><input class="complete" type="checkbox" data-step="22"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+      <h2 id="troubleshooting">Troubleshooting</h2>
+      <section class="card troubleshooting">
+        <details open><summary>A screenshot or browserfilm frame is missing</summary><p>Stop. Do not invent, recreate, or substitute an image. Capture the real frame, update the browserfilm manifest, and regenerate without <code>--allow-pending</code>.</p></details>
+        <details><summary>A knowledge file is still processing</summary><p>Wait for ingestion to finish before Preview. A partial answer is not evidence.</p></details>
+        <details><summary>A skill upload fails</summary><p>Use the linked raw <code>SKILL.md</code>. Fix the reviewed source deliberately; do not silently skip the action.</p></details>
+        <details><summary>The model differs from Easy mode</summary><p>Record the substitution and stop the parity claim until Easy and Hard use the same reviewed model.</p></details>
+        <details><summary>The Preview answer misses an identifier</summary><p>Mark the recorded case failed, inspect instructions and inventory, then replay the exact prompt in a fresh conversation.</p></details>
+        <details><summary>Should I publish?</summary><p>No. Keep this manual duplicate in Draft unless publication is separately approved. Do not choose Publish as part of this tutorial.</p></details>
       </section>
-
-      <h2 class="section-heading">Build and verify</h2>
-      <div id="steps"></div>
-
-      <h2 class="section-heading" id="troubleshooting">Troubleshooting</h2>
-      <section class="troubleshooting">
-        <details open>
-          <summary>Copilot Studio says a skill file has invalid frontmatter</summary>
-          <p>Download the raw file again and confirm the filename is exactly <code>SKILL.md</code>. Upload the file itself—not the containing folder or the <code>.mcs.yml</code> source component.</p>
-        </details>
-        <details>
-          <summary>A knowledge file appears but is still processing</summary>
-          <p>Wait for ingestion to finish before testing. Preview can return incomplete answers while a knowledge source is still being indexed.</p>
-        </details>
-        <details>
-          <summary>The model picker does not show Claude Sonnet 4.6</summary>
-          <p>Select an approved model available in your environment, then record the substitution. Easy and Hard mode should use the same model when you are comparing parity.</p>
-        </details>
-        <details>
-          <summary>A Preview response misses a required identifier</summary>
-          <p>Confirm both knowledge files are enabled, all four skills appear in the inventory, web search is removed, and the global instructions prohibit invented records. Start a fresh Preview conversation and replay the exact canonical prompt.</p>
-        </details>
-        <details>
-          <summary>Should I publish either pilot?</summary>
-          <p>No. Keep both agents in Draft unless publication is separately approved. The manual build exists to expose the browser-authoring path and gather reproducible Preview evidence.</p>
-        </details>
-      </section>
-
-      <p class="footer">Captured in the kodyv8 environment. Raw source links resolve from the public repository after these package files reach <code>main</code>.</p>
     </main>
   </div>
-
   <script>
-    const stepData = [
-      ["Create a blank agent", "In Copilot Studio, choose New agent and start with a blank agent.", "A new untitled agent opens on the Build page.", "01-create-blank-agent.jpg", "deployment-recipe"],
-      ["Name the manual build", "Set the display name to Inventory Manual Build.", "The new name appears in the page header.", "02-name-agent.jpg", "deployment-recipe"],
-      ["Enter global instructions", "Replace the starter text with the complete reviewed instruction policy.", "The editor contains the synthetic-evidence boundary, routing rules, authorization gate, and no-side-effect contract.", "03-enter-instructions.jpg", "global-instructions"],
-      ["Save the instructions", "Choose Save before adding knowledge or skills.", "The save operation completes without a validation error.", "04-save-instructions.jpg", "global-instructions"],
-      ["Remove web search", "Remove Search all websites from Knowledge.", "No web-search capability remains, keeping the pilot grounded in packaged evidence.", "05-remove-web-search.jpg", "settings"],
-      ["Open knowledge upload", "In Knowledge, choose Add knowledge and select the file upload path.", "The upload dialog is ready for a local Markdown file.", "06-open-knowledge-upload.jpg", "knowledge-records"],
-      ["Upload synthetic inventory records", "Download and upload the complete reviewed synthetic inventory records file.", "The warehouse, SKU, forecast, utilization, and cost source appears in Knowledge.", "07-upload-synthetic-records.jpg", "knowledge-records"],
-      ["Upload review rules", "Download and upload the complete reviewed inventory cost and review rules file.", "The routing, classification, transfer, holding-cost, and authorization rules are accepted.", "08-upload-review-rules.jpg", "knowledge-rules"],
-      ["Verify two complete knowledge files", "Return to Build and confirm both reviewed files are listed and available.", "Exactly two custom knowledge sources are visible; this is the corrected knowledge-parity state.", "09-verify-two-knowledge-files.jpg", "knowledge-rules"],
-      ["Open the skill uploader", "In Skills, choose Add skill and select Upload a skill.", "Copilot Studio requests a file named SKILL.md.", "10-open-skill-upload.jpg", "manual-evidence"],
-      ["Add inventory snapshot", "Upload the inventory-snapshot SKILL.md.", "Facility capacity, SKU position, and reorder exposure have a dedicated routing target.", "11-add-inventory-snapshot-skill.jpg", "skill-inventory-snapshot"],
-      ["Add rebalance recommendation", "Upload the rebalance-recommendation SKILL.md.", "Forecast-relative surplus, shortage, velocity, strategic value, and lifecycle review are covered.", "12-add-rebalance-recommendation-skill.jpg", "skill-rebalance"],
-      ["Add transfer planning", "Upload the transfer-plan SKILL.md.", "The agent can propose inter-warehouse moves without reserving or moving inventory.", "13-add-transfer-plan-skill.jpg", "skill-transfer"],
-      ["Add cost analysis", "Upload the corrected cost-analysis SKILL.md.", "Total annual holding cost, exposure, transfer estimates, and planning-meeting trade-offs route to cost analysis.", "14-add-cost-analysis-skill.jpg", "skill-cost"],
-      ["Select Claude Sonnet 4.6", "Set the model to Claude Sonnet 4.6 to match the validated Easy agent.", "Claude Sonnet 4.6 is shown as the active model.", "15-select-sonnet46.jpg", "settings"],
-      ["Audit the complete inventory", "Review the same captured Build state: four skills, two knowledge files, and no web search.", "The inventory is complete. This step truthfully reuses the model/inventory frame because it proves both checks.", "16-review-inventory.jpg", "manual-evidence"],
-      ["Open Preview", "Open Preview and start a fresh conversation.", "The agent is ready for the canonical acceptance prompts.", "17-open-preview.jpg", "brainstem-transcripts"],
-      ["Run IR-01 · capacity review", "Ask: Which distribution centers are tight on space, and which SKU positions should my team review first?", "The corrected answer names Dallas Fulfillment Center and SKU-4406 and keeps action behind authorization.", "18-preview-ir01-capacity-review.jpg", "brainstem-transcripts"],
-      ["Run IR-02 · imbalance review", "Ask: Where do we have forecast-relative shortages or excess that deserve a rebalancing review?", "The answer includes SKU-4402 and SLOW-MOVING classification grounded in the full knowledge files.", "19-preview-ir02-imbalance-review.jpg", "brainstem-transcripts"],
-      ["Run IR-03 · transfer plan", "Ask: Show me the proposed warehouse moves, but do not move or reserve anything.", "The answer includes SKU-4401 and states that no inventory has been reserved, picked, shipped, or moved.", "20-preview-ir03-transfer-plan.jpg", "brainstem-transcripts"],
-      ["Run IR-04 · cost analysis", "Ask: Where is inventory exposure concentrated, and what trade-offs should I take to the planning meeting?", "The corrected route shows total annual holding cost and labels all costs as synthetic planning estimates.", "21-preview-ir04-cost-analysis.jpg", "brainstem-transcripts"],
-      ["Record the Draft gate", "Return to the agents list and capture both inventory agents. Do not choose Publish.", "Inventory Manual Build and Inventory Rebalancing Pilot are visibly Draft; publication remains a separate approval.", "22-verify-draft-no-publish.jpg", "manual-evidence"]
-    ];
-
-    const fileById = new Map();
-    const STORAGE_KEY = "aibast-inventory-rebalancing-manual-tutorial-v1";
-    const completed = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"));
-    const toc = document.getElementById("toc");
-    const steps = document.getElementById("steps");
-
-    function updateProgress() {
-      const count = completed.size;
-      document.getElementById("progress-label").textContent = `${count} of ${stepData.length} complete`;
-      document.getElementById("progress-bar").style.width = `${(count / stepData.length) * 100}%`;
-      localStorage.setItem(STORAGE_KEY, JSON.stringify([...completed]));
-    }
-
-    function downloadFor(resourceId) {
-      return fileById.get(resourceId) || fileById.get("source-bundle") || {
-        label: "Complete source bundle",
-        raw_url: "exports/inventory-rebalancing-source.zip"
-      };
-    }
-
-    function render() {
-      toc.innerHTML = "";
-      steps.innerHTML = "";
-      stepData.forEach((step, index) => {
-        const number = index + 1;
-        const id = `step-${number}`;
-        const resource = downloadFor(step[4]);
-        const tocLink = document.createElement("a");
-        tocLink.href = `#${id}`;
-        tocLink.textContent = `${number}. ${step[0]}`;
-        toc.appendChild(tocLink);
-
-        const article = document.createElement("article");
-        article.className = "step";
-        article.id = id;
-        article.innerHTML = `
-          <div class="step-head">
-            <span class="step-number">${number}</span>
-            <div><h3>${step[0]}</h3><div class="step-kicker">Captured from the real manual agent build</div></div>
-          </div>
-          <div class="step-body">
-            <div class="instruction-grid">
-              <div class="instruction"><strong>Action</strong>${step[1]}</div>
-              <div class="instruction expected"><strong>Expected result</strong>${step[2]}</div>
-            </div>
-            <img class="shot" src="screenshots/manual/${step[3]}" alt="Step ${number}: ${step[0]}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
-            <div class="pending-shot"><strong>Capture pending</strong><br><code>screenshots/manual/${step[3]}</code></div>
-            <div class="step-footer">
-              <label class="complete"><input type="checkbox" data-step="${number}" ${completed.has(number) ? "checked" : ""}> Mark step complete</label>
-              <a class="button raw-link" data-resource="${step[4]}" href="${resource.raw_url}">Download: ${resource.label}</a>
-            </div>
-          </div>`;
-        steps.appendChild(article);
+    (() => {
+      const key = "aibast:inventory-rebalancing:manual-progress";
+      const boxes = Array.from(document.querySelectorAll(".complete"));
+      const label = document.getElementById("progress-label");
+      const bar = document.getElementById("progress-bar");
+      let saved = [];
+      try { saved = JSON.parse(localStorage.getItem(key) || "[]"); } catch (_error) { saved = []; }
+      boxes.forEach((box) => {
+        box.checked = saved.includes(box.dataset.step);
+        box.addEventListener("change", update);
       });
-
-      document.querySelectorAll(".complete input").forEach(input => {
-        input.addEventListener("change", event => {
-          const number = Number(event.currentTarget.dataset.step);
-          if (event.currentTarget.checked) completed.add(number);
-          else completed.delete(number);
-          updateProgress();
+      function update() {
+        const done = boxes.filter((box) => box.checked).map((box) => box.dataset.step);
+        localStorage.setItem(key, JSON.stringify(done));
+        label.textContent = `${done.length} of ${boxes.length} complete`;
+        bar.style.width = boxes.length ? `${(done.length / boxes.length) * 100}%` : "0%";
+      }
+      document.querySelectorAll("[data-copy-target]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const target = document.getElementById(button.dataset.copyTarget);
+          if (!target) {
+            button.textContent = "Text unavailable";
+            return;
+          }
+          const original = button.textContent;
+          navigator.clipboard.writeText(target.textContent).then(() => {
+            button.textContent = "Copied";
+            window.setTimeout(() => {
+              button.textContent = original;
+            }, 1400);
+          }).catch(() => {
+            button.textContent = "Copy failed";
+          });
         });
       });
-      updateProgress();
-    }
+      document.querySelectorAll("[data-report-location]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const locationLabel = button.dataset.reportLocation || "Hard-mode step";
+          const expected = button.dataset.reportExpected || "Describe the expected result.";
+          const evidence = button.dataset.reportEvidence || "No evidence path supplied.";
+          const title = `[Beta workshop] Inventory Rebalancing Agent: ${locationLabel}`;
+          const body = `<!-- aibast-workshop-feedback:v1 -->
+## Workshop signal
 
-    async function loadManifest() {
-      const response = await fetch("export-manifest.json", { cache: "no-store" });
-      const manifest = await response.json();
-      manifest.files.forEach(file => fileById.set(file.id, file));
-      fileById.set("source-bundle", {
-        label: "Complete source bundle",
-        raw_url: manifest.bundle.raw_url
+- Schema: \`aibast-workshop-feedback/1.0\`
+- Solution: \`@aibast-agents-library/inventory-rebalancing\`
+- Page: ${location.href}
+- Mode: \`hard\`
+- Location: ${locationLabel}
+- Evidence: \`${evidence}\`
+
+## Expected
+
+${expected}
+
+## What happened instead
+
+Describe what was inaccurate or missing.
+
+## Reproduction
+
+1. Open the Hard-mode tutorial.
+2. Follow the step shown above.
+3. Record the visible Copilot Studio state.
+
+> Beta workshop report. Do not include credentials, tokens, customer data, or other sensitive information.`;
+          const url = new URL("https://github.com/microsoft/aibast-agents-library/issues/new");
+          url.searchParams.set("title", title);
+          url.searchParams.set("body", body);
+          window.open(url.toString(), "_blank", "noopener");
+        });
       });
-      document.getElementById("bundle-link").href = manifest.bundle.raw_url;
-      render();
-    }
-
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        document.querySelectorAll(".toc a").forEach(link => link.classList.remove("active"));
-        const active = document.querySelector(`.toc a[href="#${entry.target.id}"]`);
-        if (active) active.classList.add("active");
-      });
-    }, { rootMargin: "-20% 0px -70% 0px" });
-
-    loadManifest().then(() => {
-      document.querySelectorAll(".step").forEach(step => observer.observe(step));
-    }).catch(() => render());
+      update();
+      if (document.documentElement.dataset.embedded === "true") {
+        const notifyHeight = () => {
+          window.parent.postMessage(
+            {
+              type: "aibast-hard-mode-height",
+              height: document.documentElement.scrollHeight,
+            },
+            window.location.origin,
+          );
+        };
+        new ResizeObserver(notifyHeight).observe(document.documentElement);
+        window.addEventListener("load", notifyHeight);
+        notifyHeight();
+      }
+    })();
   </script>
 </body>
 </html>

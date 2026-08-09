@@ -1,20 +1,20 @@
 {
   "schema": "aibast-solution-export/1.0",
   "solution": "@aibast-agents-library/maintenance-scheduling",
-  "raw_base": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/",
+  "raw_base": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/",
   "github_folder": "https://github.com/microsoft/aibast-agents-library/tree/main/solutions/maintenance-scheduling",
   "evidence_boundary": "Synthetic solution evidence only. Qualitative workflow proof is not a customer KPI, measured production result, or publication approval.",
   "bundle": {
     "label": "Complete Maintenance Scheduling Agent source bundle",
     "path": "solutions/maintenance-scheduling/exports/maintenance-scheduling-source.zip",
-    "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/exports/maintenance-scheduling-source.zip"
+    "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/exports/maintenance-scheduling-source.zip"
   },
   "files": [
     {
       "id": "portable-agent",
       "label": "Portable source agent",
       "path": "agents/@aibast-agents-library/manufacturing_stacks/maintenance_scheduling_stack/maintenance_scheduling_agent.py",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/manufacturing_stacks/maintenance_scheduling_stack/maintenance_scheduling_agent.py",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/agents/@aibast-agents-library/manufacturing_stacks/maintenance_scheduling_stack/maintenance_scheduling_agent.py",
       "use": "Local Brainstem runtime and production-logic reference",
       "status": "ready"
     },
@@ -22,23 +22,71 @@
       "id": "deployment-recipe",
       "label": "Deployment recipe",
       "path": "solutions/maintenance-scheduling/deployment.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/deployment.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/deployment.json",
       "use": "Easy-mode deployment contract",
       "status": "ready"
     },
     {
       "id": "field-guide",
       "label": "Customer field guide",
+      "path": "solutions/maintenance-scheduling/field-guide.html",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/field-guide.html",
+      "use": "Styled facilitation, evidence boundaries, gates, and recovery",
+      "status": "ready"
+    },
+    {
+      "id": "field-guide-source",
+      "label": "Field guide source",
       "path": "solutions/maintenance-scheduling/FIELD-GUIDE.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/FIELD-GUIDE.md",
-      "use": "Facilitation, evidence boundaries, gates, and recovery",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/FIELD-GUIDE.md",
+      "use": "Markdown source retained for audit and export",
+      "status": "ready"
+    },
+    {
+      "id": "easy-personless-guide",
+      "label": "Personless Easy-mode guide",
+      "path": "solutions/maintenance-scheduling/EASY-MODE-PERSONLESS.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/EASY-MODE-PERSONLESS.md",
+      "use": "Brainstem lane skill attachment, two-message workshop, and engine loop",
+      "status": "ready"
+    },
+    {
+      "id": "easy-copilot-chat-prompts",
+      "label": "Copilot-only Easy-mode comparison",
+      "path": "solutions/maintenance-scheduling/EASY-MODE-COPILOT-CHAT.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/EASY-MODE-COPILOT-CHAT.md",
+      "use": "Copilot-only lane skill attachment and the same two workshop messages",
+      "status": "ready"
+    },
+    {
+      "id": "easy-mode-brainstem-skill",
+      "label": "Brainstem Easy Mode skill",
+      "path": "skills/aibast-easy-mode-brainstem/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/skills/aibast-easy-mode-brainstem/SKILL.md",
+      "use": "Download-and-drag harness that defaults workshop execution to Brainstem",
+      "status": "ready"
+    },
+    {
+      "id": "easy-mode-copilot-skill",
+      "label": "Copilot-only Easy Mode skill",
+      "path": "skills/aibast-easy-mode-copilot/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/skills/aibast-easy-mode-copilot/SKILL.md",
+      "use": "Download-and-drag harness that runs the workshop directly in GitHub Copilot",
+      "status": "ready"
+    },
+    {
+      "id": "generic-workshop-agent",
+      "label": "Generic AIBAST Workshop agent",
+      "path": "agents/@aibast-agents-library/templates/workshop_agent.py",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/agents/@aibast-agents-library/templates/workshop_agent.py",
+      "use": "Registry-driven Brainstem engine shared by every packaged solution",
       "status": "ready"
     },
     {
       "id": "manual-instructions",
       "label": "Manual global instructions",
       "path": "solutions/maintenance-scheduling/manual/GLOBAL-INSTRUCTIONS.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/manual/GLOBAL-INSTRUCTIONS.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/manual/GLOBAL-INSTRUCTIONS.md",
       "use": "Reviewed instructions for literal browser construction",
       "status": "ready"
     },
@@ -46,7 +94,7 @@
       "id": "settings",
       "label": "Copilot Studio settings",
       "path": "solutions/maintenance-scheduling/copilot-studio/settings.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/copilot-studio/settings.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/copilot-studio/settings.mcs.yml",
       "use": "Easy-mode agent settings and instruction copy",
       "status": "ready"
     },
@@ -54,7 +102,7 @@
       "id": "agent-sync",
       "label": "Copilot Studio component manifest",
       "path": "solutions/maintenance-scheduling/copilot-studio/agent.sync.yaml",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/copilot-studio/agent.sync.yaml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/copilot-studio/agent.sync.yaml",
       "use": "Easy-mode component synchronization",
       "status": "ready"
     },
@@ -62,7 +110,7 @@
       "id": "knowledge-aibast-maintenance-scheduling-review-rules",
       "label": "Aibast Maintenance Scheduling Review Rules",
       "path": "solutions/maintenance-scheduling/manual/knowledge/aibast_maintenance-scheduling-review-rules.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/manual/knowledge/aibast_maintenance-scheduling-review-rules.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/manual/knowledge/aibast_maintenance-scheduling-review-rules.md",
       "use": "Manual knowledge upload",
       "status": "ready"
     },
@@ -70,7 +118,7 @@
       "id": "knowledge-aibast-maintenance-scheduling-synthetic-records",
       "label": "Aibast Maintenance Scheduling Synthetic Records",
       "path": "solutions/maintenance-scheduling/manual/knowledge/aibast_maintenance-scheduling-synthetic-records.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/manual/knowledge/aibast_maintenance-scheduling-synthetic-records.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/manual/knowledge/aibast_maintenance-scheduling-synthetic-records.md",
       "use": "Manual knowledge upload",
       "status": "ready"
     },
@@ -78,7 +126,7 @@
       "id": "skill-aibast-downtime-analysis",
       "label": "Manual skill: aibast downtime analysis",
       "path": "solutions/maintenance-scheduling/manual/skills/aibast_downtime_analysis/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/manual/skills/aibast_downtime_analysis/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/manual/skills/aibast_downtime_analysis/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -86,7 +134,7 @@
       "id": "skill-aibast-predictive-alerts",
       "label": "Manual skill: aibast predictive alerts",
       "path": "solutions/maintenance-scheduling/manual/skills/aibast_predictive_alerts/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/manual/skills/aibast_predictive_alerts/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/manual/skills/aibast_predictive_alerts/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -94,7 +142,7 @@
       "id": "skill-aibast-schedule-overview",
       "label": "Manual skill: aibast schedule overview",
       "path": "solutions/maintenance-scheduling/manual/skills/aibast_schedule_overview/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/manual/skills/aibast_schedule_overview/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/manual/skills/aibast_schedule_overview/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -102,7 +150,7 @@
       "id": "skill-aibast-work-order-plan",
       "label": "Manual skill: aibast work order plan",
       "path": "solutions/maintenance-scheduling/manual/skills/aibast_work_order_plan/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/manual/skills/aibast_work_order_plan/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/manual/skills/aibast_work_order_plan/SKILL.md",
       "use": "Manual skill upload",
       "status": "ready"
     },
@@ -110,7 +158,7 @@
       "id": "easy-knowledge-aibast-maintenance-scheduling-review-rules",
       "label": "Aibast Maintenance Scheduling Review Rules",
       "path": "solutions/maintenance-scheduling/copilot-studio/capabilities/knowledge/files/aibast_maintenance-scheduling-review-rules.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/copilot-studio/capabilities/knowledge/files/aibast_maintenance-scheduling-review-rules.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/copilot-studio/capabilities/knowledge/files/aibast_maintenance-scheduling-review-rules.md",
       "use": "Copilot Studio knowledge source or synchronization metadata",
       "status": "ready"
     },
@@ -118,7 +166,7 @@
       "id": "easy-knowledge-aibast-maintenance-scheduling-review-rules-md-mcs",
       "label": "Aibast Maintenance Scheduling Review Rules.Md.Mcs",
       "path": "solutions/maintenance-scheduling/copilot-studio/capabilities/knowledge/files/aibast_maintenance-scheduling-review-rules.md.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/copilot-studio/capabilities/knowledge/files/aibast_maintenance-scheduling-review-rules.md.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/copilot-studio/capabilities/knowledge/files/aibast_maintenance-scheduling-review-rules.md.mcs.yml",
       "use": "Copilot Studio knowledge source or synchronization metadata",
       "status": "ready"
     },
@@ -126,7 +174,7 @@
       "id": "easy-knowledge-aibast-maintenance-scheduling-synthetic-records",
       "label": "Aibast Maintenance Scheduling Synthetic Records",
       "path": "solutions/maintenance-scheduling/copilot-studio/capabilities/knowledge/files/aibast_maintenance-scheduling-synthetic-records.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/copilot-studio/capabilities/knowledge/files/aibast_maintenance-scheduling-synthetic-records.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/copilot-studio/capabilities/knowledge/files/aibast_maintenance-scheduling-synthetic-records.md",
       "use": "Copilot Studio knowledge source or synchronization metadata",
       "status": "ready"
     },
@@ -134,7 +182,7 @@
       "id": "easy-knowledge-aibast-maintenance-scheduling-synthetic-records-md-mcs",
       "label": "Aibast Maintenance Scheduling Synthetic Records.Md.Mcs",
       "path": "solutions/maintenance-scheduling/copilot-studio/capabilities/knowledge/files/aibast_maintenance-scheduling-synthetic-records.md.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/copilot-studio/capabilities/knowledge/files/aibast_maintenance-scheduling-synthetic-records.md.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/copilot-studio/capabilities/knowledge/files/aibast_maintenance-scheduling-synthetic-records.md.mcs.yml",
       "use": "Copilot Studio knowledge source or synchronization metadata",
       "status": "ready"
     },
@@ -142,7 +190,7 @@
       "id": "easy-skill-aibast-downtime-analysis-mcs",
       "label": "Aibast Downtime Analysis.Mcs",
       "path": "solutions/maintenance-scheduling/copilot-studio/behaviors/aibast_downtime-analysis.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/copilot-studio/behaviors/aibast_downtime-analysis.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/copilot-studio/behaviors/aibast_downtime-analysis.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -150,7 +198,7 @@
       "id": "easy-skill-aibast-predictive-alerts-mcs",
       "label": "Aibast Predictive Alerts.Mcs",
       "path": "solutions/maintenance-scheduling/copilot-studio/behaviors/aibast_predictive-alerts.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/copilot-studio/behaviors/aibast_predictive-alerts.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/copilot-studio/behaviors/aibast_predictive-alerts.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -158,7 +206,7 @@
       "id": "easy-skill-aibast-schedule-overview-mcs",
       "label": "Aibast Schedule Overview.Mcs",
       "path": "solutions/maintenance-scheduling/copilot-studio/behaviors/aibast_schedule-overview.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/copilot-studio/behaviors/aibast_schedule-overview.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/copilot-studio/behaviors/aibast_schedule-overview.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -166,7 +214,7 @@
       "id": "easy-skill-aibast-work-order-plan-mcs",
       "label": "Aibast Work Order Plan.Mcs",
       "path": "solutions/maintenance-scheduling/copilot-studio/behaviors/aibast_work-order-plan.mcs.yml",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/copilot-studio/behaviors/aibast_work-order-plan.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/copilot-studio/behaviors/aibast_work-order-plan.mcs.yml",
       "use": "Copilot Studio behavior source",
       "status": "ready"
     },
@@ -174,7 +222,7 @@
       "id": "easy-evidence-copilot-studio-preview-evidence",
       "label": "Copilot Studio Preview Evidence",
       "path": "solutions/maintenance-scheduling/evals/copilot-studio-preview-evidence.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/evals/copilot-studio-preview-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/evals/copilot-studio-preview-evidence.json",
       "use": "Easy-mode deployment or Preview evidence",
       "status": "ready"
     },
@@ -182,7 +230,7 @@
       "id": "manual-evidence",
       "label": "Manual build evidence",
       "path": "solutions/maintenance-scheduling/evals/manual-build-evidence.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/evals/manual-build-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/evals/manual-build-evidence.json",
       "use": "Manual identity, inventory, Preview, and Draft-gate evidence",
       "status": "ready"
     },
@@ -190,7 +238,7 @@
       "id": "onepager-map",
       "label": "Onepager Map",
       "path": "solutions/maintenance-scheduling/evals/onepager-map.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/evals/onepager-map.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/evals/onepager-map.json",
       "use": "Advertised-promise mapping evidence",
       "status": "ready"
     },
@@ -198,7 +246,7 @@
       "id": "easy-evidence-source-audit",
       "label": "Source Audit",
       "path": "solutions/maintenance-scheduling/evals/source-audit.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/evals/source-audit.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/evals/source-audit.json",
       "use": "Easy-mode deployment or Preview evidence",
       "status": "ready"
     },
@@ -206,15 +254,23 @@
       "id": "brainstem-transcripts",
       "label": "Isolated Brainstem transcripts",
       "path": "solutions/maintenance-scheduling/evals/transcripts.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/evals/transcripts.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/evals/transcripts.json",
       "use": "Canonical source-agent acceptance evidence",
+      "status": "ready"
+    },
+    {
+      "id": "easy-evidence-visual-checkpoints",
+      "label": "Visual Checkpoints",
+      "path": "solutions/maintenance-scheduling/evals/visual-checkpoints.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/evals/visual-checkpoints.json",
+      "use": "Easy-mode deployment or Preview evidence",
       "status": "ready"
     },
     {
       "id": "manual-browserfilm-manifest",
       "label": "Manual browserfilm manifest",
       "path": "solutions/maintenance-scheduling/screenshots/manual/browserfilm.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/manual/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/manual/browserfilm.json",
       "use": "Ordered literal-browser evidence frames",
       "status": "ready"
     },
@@ -222,7 +278,7 @@
       "id": "manual-frame-01",
       "label": "Create a blank Copilot Studio agent",
       "path": "solutions/maintenance-scheduling/screenshots/manual/01-create-blank-agent.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/manual/01-create-blank-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/manual/01-create-blank-agent.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -230,7 +286,7 @@
       "id": "manual-frame-02",
       "label": "Name Maintenance Scheduling Manual",
       "path": "solutions/maintenance-scheduling/screenshots/manual/02-name-agent.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/manual/02-name-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/manual/02-name-agent.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -238,7 +294,7 @@
       "id": "manual-frame-03",
       "label": "Enter the reviewed global instructions",
       "path": "solutions/maintenance-scheduling/screenshots/manual/03-enter-instructions.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/manual/03-enter-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/manual/03-enter-instructions.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -246,7 +302,7 @@
       "id": "manual-frame-04",
       "label": "Save the instruction policy",
       "path": "solutions/maintenance-scheduling/screenshots/manual/04-save-instructions.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/manual/04-save-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/manual/04-save-instructions.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -254,7 +310,7 @@
       "id": "manual-frame-05",
       "label": "Remove default web search",
       "path": "solutions/maintenance-scheduling/screenshots/manual/05-remove-web-search.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/manual/05-remove-web-search.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/manual/05-remove-web-search.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -262,7 +318,7 @@
       "id": "manual-frame-06",
       "label": "Add knowledge: aibast_maintenance-scheduling-review-rules.md",
       "path": "solutions/maintenance-scheduling/screenshots/manual/06-add-aibast-maintenance-scheduling-review-rules.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/manual/06-add-aibast-maintenance-scheduling-review-rules.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/manual/06-add-aibast-maintenance-scheduling-review-rules.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -270,7 +326,7 @@
       "id": "manual-frame-07",
       "label": "Add knowledge: aibast_maintenance-scheduling-synthetic-records.md",
       "path": "solutions/maintenance-scheduling/screenshots/manual/07-add-aibast-maintenance-scheduling-synthetic-records.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/manual/07-add-aibast-maintenance-scheduling-synthetic-records.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/manual/07-add-aibast-maintenance-scheduling-synthetic-records.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -278,7 +334,7 @@
       "id": "manual-frame-08",
       "label": "Add skill: aibast_downtime_analysis",
       "path": "solutions/maintenance-scheduling/screenshots/manual/08-add-aibast-downtime-analysis.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/manual/08-add-aibast-downtime-analysis.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/manual/08-add-aibast-downtime-analysis.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -286,7 +342,7 @@
       "id": "manual-frame-09",
       "label": "Add skill: aibast_predictive_alerts",
       "path": "solutions/maintenance-scheduling/screenshots/manual/09-add-aibast-predictive-alerts.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/manual/09-add-aibast-predictive-alerts.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/manual/09-add-aibast-predictive-alerts.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -294,7 +350,7 @@
       "id": "manual-frame-10",
       "label": "Add skill: aibast_schedule_overview",
       "path": "solutions/maintenance-scheduling/screenshots/manual/10-add-aibast-schedule-overview.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/manual/10-add-aibast-schedule-overview.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/manual/10-add-aibast-schedule-overview.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -302,7 +358,7 @@
       "id": "manual-frame-11",
       "label": "Add skill: aibast_work_order_plan",
       "path": "solutions/maintenance-scheduling/screenshots/manual/11-add-aibast-work-order-plan.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/manual/11-add-aibast-work-order-plan.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/manual/11-add-aibast-work-order-plan.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -310,7 +366,7 @@
       "id": "manual-frame-12",
       "label": "Review model, skills, knowledge, and safety boundaries",
       "path": "solutions/maintenance-scheduling/screenshots/manual/12-review-inventory.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/manual/12-review-inventory.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/manual/12-review-inventory.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -318,7 +374,7 @@
       "id": "manual-frame-13",
       "label": "Open a fresh Preview conversation",
       "path": "solutions/maintenance-scheduling/screenshots/manual/13-open-preview.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/manual/13-open-preview.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/manual/13-open-preview.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -326,7 +382,7 @@
       "id": "manual-frame-14",
       "label": "Pass MS-01: Maintenance Manager",
       "path": "solutions/maintenance-scheduling/screenshots/manual/14-ms-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/manual/14-ms-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/manual/14-ms-01.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -334,7 +390,7 @@
       "id": "manual-frame-15",
       "label": "Pass MS-02: Production Supervisor",
       "path": "solutions/maintenance-scheduling/screenshots/manual/15-ms-02.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/manual/15-ms-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/manual/15-ms-02.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -342,7 +398,7 @@
       "id": "manual-frame-16",
       "label": "Pass MS-03: Maintenance Manager",
       "path": "solutions/maintenance-scheduling/screenshots/manual/16-ms-03.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/manual/16-ms-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/manual/16-ms-03.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -350,7 +406,7 @@
       "id": "manual-frame-17",
       "label": "Pass MS-04: Operations Leader",
       "path": "solutions/maintenance-scheduling/screenshots/manual/17-ms-04.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/manual/17-ms-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/manual/17-ms-04.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -358,7 +414,7 @@
       "id": "manual-frame-18",
       "label": "Confirm Draft and stop before publish",
       "path": "solutions/maintenance-scheduling/screenshots/manual/18-confirm-draft.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/manual/18-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/manual/18-confirm-draft.jpg",
       "use": "Real manual browser evidence frame",
       "status": "ready"
     },
@@ -366,7 +422,7 @@
       "id": "manual-browserfilm",
       "label": "Manual browserfilm",
       "path": "solutions/maintenance-scheduling/screenshots/manual/manual-build-walkthrough.gif",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/manual/manual-build-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/manual/manual-build-walkthrough.gif",
       "use": "Animated manual walkthrough",
       "status": "ready"
     },
@@ -374,7 +430,7 @@
       "id": "manual-contact-sheet",
       "label": "Manual contact sheet",
       "path": "solutions/maintenance-scheduling/screenshots/manual/manual-build-contact-sheet.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/manual/manual-build-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/manual/manual-build-contact-sheet.jpg",
       "use": "Static manual evidence overview",
       "status": "ready"
     },
@@ -382,7 +438,7 @@
       "id": "assisted-browserfilm-manifest",
       "label": "Copilot-assisted browserfilm manifest",
       "path": "solutions/maintenance-scheduling/screenshots/assisted/browserfilm.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/assisted/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/assisted/browserfilm.json",
       "use": "Ordered Easy-mode evidence frames",
       "status": "ready"
     },
@@ -390,7 +446,7 @@
       "id": "assisted-browserfilm",
       "label": "Copilot-assisted browserfilm",
       "path": "solutions/maintenance-scheduling/screenshots/assisted/copilot-assisted-walkthrough.gif",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/assisted/copilot-assisted-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/assisted/copilot-assisted-walkthrough.gif",
       "use": "Animated Easy-mode walkthrough",
       "status": "ready"
     },
@@ -398,7 +454,7 @@
       "id": "assisted-contact-sheet",
       "label": "Copilot-assisted contact sheet",
       "path": "solutions/maintenance-scheduling/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
       "use": "Static Easy-mode evidence overview",
       "status": "ready"
     },
@@ -406,7 +462,7 @@
       "id": "assisted-frame-01",
       "label": "Review the Copilot-assisted Draft configuration",
       "path": "solutions/maintenance-scheduling/screenshots/assisted/01-review-build.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/assisted/01-review-build.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/assisted/01-review-build.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -414,7 +470,7 @@
       "id": "assisted-frame-02",
       "label": "Pass MS-01: Maintenance Manager",
       "path": "solutions/maintenance-scheduling/screenshots/assisted/02-ms-01.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/assisted/02-ms-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/assisted/02-ms-01.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -422,7 +478,7 @@
       "id": "assisted-frame-03",
       "label": "Pass MS-02: Production Supervisor",
       "path": "solutions/maintenance-scheduling/screenshots/assisted/03-ms-02.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/assisted/03-ms-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/assisted/03-ms-02.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -430,7 +486,7 @@
       "id": "assisted-frame-04",
       "label": "Pass MS-03: Maintenance Manager",
       "path": "solutions/maintenance-scheduling/screenshots/assisted/04-ms-03.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/assisted/04-ms-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/assisted/04-ms-03.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -438,7 +494,7 @@
       "id": "assisted-frame-05",
       "label": "Pass MS-04: Operations Leader",
       "path": "solutions/maintenance-scheduling/screenshots/assisted/05-ms-04.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/assisted/05-ms-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/assisted/05-ms-04.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
       "status": "ready"
     },
@@ -446,15 +502,31 @@
       "id": "assisted-frame-06",
       "label": "Confirm the validated agent remains Draft",
       "path": "solutions/maintenance-scheduling/screenshots/assisted/06-confirm-draft.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/assisted/06-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/assisted/06-confirm-draft.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "workshop-settings",
+      "label": "Global workshop settings",
+      "path": "solutions/_shared/workshop-settings.html",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/_shared/workshop-settings.html",
+      "use": "Site-wide persisted Easy-mode harness preference",
+      "status": "ready"
+    },
+    {
+      "id": "evidence-report",
+      "label": "Styled evidence report",
+      "path": "solutions/maintenance-scheduling/evidence-report.html",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/evidence-report.html",
+      "use": "Learner-safe HTML summary of deterministic and visual evidence",
       "status": "ready"
     },
     {
       "id": "quest",
       "label": "Guided field quest",
       "path": "solutions/maintenance-scheduling/quest.html",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/quest.html",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/quest.html",
       "use": "Resumable Easy/Hard customer journey",
       "status": "ready"
     },
@@ -462,7 +534,7 @@
       "id": "manual-tutorial",
       "label": "Manual browser tutorial",
       "path": "solutions/maintenance-scheduling/manual-tutorial.html",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/manual-tutorial.html",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/manual-tutorial.html",
       "use": "One action per real manual evidence frame",
       "status": "ready"
     },
@@ -470,7 +542,7 @@
       "id": "screenshots-readme",
       "label": "Screenshot evidence README",
       "path": "solutions/maintenance-scheduling/screenshots/README.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/README.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/README.md",
       "use": "Evidence boundary and capture inventory",
       "status": "ready"
     },
@@ -478,7 +550,7 @@
       "id": "manual-screenshots-readme",
       "label": "Manual screenshot README",
       "path": "solutions/maintenance-scheduling/screenshots/manual/README.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/manual/README.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/manual/README.md",
       "use": "Manual frame and film inventory",
       "status": "ready"
     },
@@ -486,7 +558,7 @@
       "id": "exports-readme",
       "label": "Export README",
       "path": "solutions/maintenance-scheduling/exports/README.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/exports/README.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/exports/README.md",
       "use": "Bundle build instructions",
       "status": "ready"
     },
@@ -494,7 +566,7 @@
       "id": "assisted-screenshots-readme",
       "label": "Assisted screenshot README",
       "path": "solutions/maintenance-scheduling/screenshots/assisted/README.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/maintenance-scheduling/screenshots/assisted/README.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/maintenance-scheduling/screenshots/assisted/README.md",
       "use": "Copilot-assisted evidence inventory",
       "status": "ready"
     }

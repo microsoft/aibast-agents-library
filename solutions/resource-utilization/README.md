@@ -24,7 +24,12 @@ employment records, book revenue, approve training, or contact anyone.
 
 | Surface | Location |
 | --- | --- |
-| Customer field guide | `solutions/resource-utilization/FIELD-GUIDE.md` |
+| Customer field guide | `solutions/resource-utilization/field-guide.html` |
+| Evidence report | `solutions/resource-utilization/evidence-report.html` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/resource-utilization/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/resource-utilization/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Hard quest | `solutions/resource-utilization/quest.html` |
 | Literal browser tutorial | `solutions/resource-utilization/manual-tutorial.html` |
 | Raw export manifest | `solutions/resource-utilization/export-manifest.json` |
@@ -32,7 +37,7 @@ employment records, book revenue, approve training, or contact anyone.
 | Manual evidence | `solutions/resource-utilization/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/resource-utilization/screenshots/manual/browserfilm.json` |
 
-**Scaffold status:** 64 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 73 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

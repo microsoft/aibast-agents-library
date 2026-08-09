@@ -1,13 +1,12 @@
 # Export bundle
 
-`fs-regulatory-compliance-source.zip` is generated from
-`../export-manifest.json`:
+Build `fs-regulatory-compliance-source.zip` from the generated manifest:
 
 ```text
 python3 tools/build_solution_export.py \
   solutions/fs-regulatory-compliance/export-manifest.json
 ```
 
-The bundle includes every reviewed source, uploadable knowledge and skill file,
-evaluation evidence, all 26 screenshots, the browserfilm, contact sheet, and
-the explicit Draft/no-publish gate.
+The existing builder includes the complete solution package plus every
+non-pending resource declared by the manifest. Items marked `pending_capture`
+are intentionally excluded until real evidence exists.

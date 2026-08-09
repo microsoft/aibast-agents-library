@@ -280,6 +280,10 @@ def clean_frame_label(label: str, fallback: str) -> str:
     return label or fallback
 
 
+def contains_word(value: str, word: str) -> bool:
+    return re.search(rf"\b{re.escape(word)}\b", value) is not None
+
+
 def resolve_repo_path(root: Path, package: Path, value: str | None, fallback: Path) -> Path:
     if not value:
         return fallback
@@ -337,21 +341,42 @@ def source_agent_path(root: Path, deployment: dict[str, Any], transcripts: dict[
     return None
 
 
+def manual_knowledge_files(package: Path) -> list[Path]:
+    manual = sorted(
+        path
+        for path in (package / "manual" / "knowledge").glob("*.md")
+        if path.is_file()
+    )
+    if manual:
+        return manual
+    return sorted(
+        path
+        for path in (
+            package
+            / "copilot-studio"
+            / "capabilities"
+            / "knowledge"
+            / "files"
+        ).glob("*.md")
+        if path.is_file()
+    )
+
+
 def require_foundation(root: Path, package: Path, deployment: dict[str, Any], transcripts: dict[str, Any]) -> list[str]:
     required = [
         package / "README.md",
         package / "deployment.json",
         package / "evals" / "transcripts.json",
         package / "manual" / "GLOBAL-INSTRUCTIONS.md",
-        package / "manual" / "knowledge",
         package / "manual" / "skills",
         package / "copilot-studio",
     ]
     missing = [str(path.relative_to(root)) for path in required if not path.exists()]
-    if (package / "manual" / "knowledge").exists() and not any(
-        path.is_file() for path in (package / "manual" / "knowledge").rglob("*")
-    ):
-        missing.append(f"solutions/{package.name}/manual/knowledge/<file>")
+    if not manual_knowledge_files(package):
+        missing.append(
+            f"solutions/{package.name}/manual/knowledge/<file> or "
+            "copilot-studio/capabilities/knowledge/files/<file>"
+        )
     if (package / "manual" / "skills").exists() and not list(
         (package / "manual" / "skills").rglob("SKILL.md")
     ):
@@ -595,36 +620,42 @@ def expected_result(ctx: JourneyContext, action: str, filename: str) -> str:
         identifiers = ", ".join(str(value) for value in case.get("must_include", []))
         suffix = f" with the recorded identifiers {identifiers}" if identifiers else ""
         return f"The captured Preview evidence records {case_id}{suffix}; do not infer results beyond it."
-    if "create" in lower and "agent" in lower:
+    if contains_word(lower, "create") and contains_word(lower, "agent"):
         return "A blank Copilot Studio agent is visible in the captured Draft workspace."
-    if "name" in lower:
+    if contains_word(lower, "name"):
         return f"The page header shows the recorded manual build name: {manual_display_name(ctx)}."
-    if "instruction" in lower:
+    if contains_word(lower, "instruction") or contains_word(lower, "instructions"):
         return "The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits."
     if "web search" in lower:
         return "The captured inventory no longer lists the default web-search capability."
-    if "inventory" in lower or "review" in lower or "audit" in lower:
+    if any(
+        contains_word(lower, word)
+        for word in ("inventory", "review", "audit")
+    ):
         return (
             f"The screenshot visibly confirms {model_name(ctx)}, "
             f"{component_count(ctx.manual_evidence, 'skills')} rendered skills, "
             "and no tools. Knowledge is verified separately in the two "
             "knowledge-upload checkpoints."
         )
-    if "knowledge" in lower or "record" in lower or "rules" in lower:
+    if any(
+        contains_word(lower, word)
+        for word in ("knowledge", "record", "records", "rule", "rules")
+    ):
         return f"The captured Knowledge inventory reflects the reviewed files; the evidence records {component_count(ctx.manual_evidence, 'knowledge_files')} knowledge sources."
-    if "skill" in lower:
+    if contains_word(lower, "skill") or contains_word(lower, "skills"):
         return f"The captured skill inventory reflects the reviewed uploads; the evidence records {component_count(ctx.manual_evidence, 'skills')} skills."
-    if "model" in lower or "sonnet" in lower:
+    if contains_word(lower, "model") or contains_word(lower, "sonnet"):
         return f"The model picker or inventory shows {model_name(ctx)}, matching the recorded evidence."
-    if "preview" in lower:
+    if contains_word(lower, "preview"):
         return "A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass."
-    if "draft" in lower or "publish" in lower:
+    if contains_word(lower, "draft") or contains_word(lower, "publish"):
         return "The agent remains Draft and no Publish action is taken."
     return "The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot."
 
 
 def choose_frame_resources(ctx: JourneyContext) -> list[Path]:
-    knowledge = sorted(path for path in (ctx.package / "manual" / "knowledge").rglob("*") if path.is_file())
+    knowledge = manual_knowledge_files(ctx.package)
     skills = sorted((ctx.package / "manual" / "skills").rglob("SKILL.md"))
     knowledge_index = 0
     skill_index = 0
@@ -639,8 +670,11 @@ def choose_frame_resources(ctx: JourneyContext) -> list[Path]:
         elif "instruction" in lower:
             selected.append(ctx.package / "manual" / "GLOBAL-INSTRUCTIONS.md")
         elif (
-            "skill" in lower
-            and not any(word in lower for word in ("open", "review", "audit", "inventory", "diagnose"))
+            (contains_word(lower, "skill") or contains_word(lower, "skills"))
+            and any(
+                contains_word(lower, verb)
+                for verb in ("add", "upload", "create", "install")
+            )
             and skills
         ):
             selected.append(skills[min(skill_index, len(skills) - 1)])
@@ -797,7 +831,7 @@ def collect_resources(ctx: JourneyContext) -> list[Resource]:
     if sync.exists():
         add_resource(resources, seen, ctx, "agent-sync", "Copilot Studio component manifest", sync, "Easy-mode component synchronization")
 
-    for path in sorted(path for path in (ctx.package / "manual" / "knowledge").rglob("*") if path.is_file()):
+    for path in manual_knowledge_files(ctx.package):
         add_resource(resources, seen, ctx, resource_id("knowledge", path), generic_label(path), path, "Manual knowledge upload")
     for path in sorted((ctx.package / "manual" / "skills").rglob("SKILL.md")):
         add_resource(resources, seen, ctx, resource_id("skill", path), generic_label(path), path, "Manual skill upload")
@@ -1177,7 +1211,7 @@ Then send these two short messages:
 
 Generic workshop engine: {workshop_agent_link}
 
-This is the default Easy path. The person sets the destination and reads the
+The person sets the destination and reads the
 verdict; Brainstem + Copilot pull the harness.
 """
 
@@ -1191,7 +1225,7 @@ def render_easy_copilot_chat_markdown(ctx: JourneyContext) -> str:
         f"## {title}\n\n```text\n{prompt}\n```"
         for title, prompt in easy_copilot_chat_prompts(ctx)
     )
-    return f"""# {ctx.title} — Copilot-only Easy mode comparison
+    return f"""# {ctx.title} — GitHub Copilot Easy mode
 
 ## 1. Attach the Copilot-only skill
 
@@ -1199,11 +1233,9 @@ Download [{skill.name if skill else "SKILL.md"}]({skill_link}), open GitHub
 Copilot Chat in VS Code, select **Agent mode**, and drag `SKILL.md` into the
 chat.
 
-This comparison lane intentionally omits Brainstem so workshop participants can
-answer “why not just use GitHub Copilot by itself?” The attached skill carries
-the discovery, testing, deployment, and validation harness so the attendee
-still uses the same short messages instead of supplying URLs, mechanics, or a
-repeated “without Brainstem” qualifier.
+The attached skill carries the discovery, testing, deployment, and validation
+harness directly in GitHub Copilot, so the attendee still uses the same short
+messages instead of supplying URLs or mechanics.
 
 Then send these two short messages:
 
@@ -1241,46 +1273,32 @@ blueprint, and decide what production integration would require.
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
-## Easy mode — with Brainstem (default)
+## Easy mode — GitHub Copilot (default)
+
+1. Open GitHub Copilot Chat in VS Code and select **Agent mode**.
+2. Download `skills/aibast-easy-mode-copilot/SKILL.md` and drag it into the
+   chat.
+3. Open `EASY-MODE-COPILOT-CHAT.md`.
+4. Send its two short messages in order: build and test the named solution,
+   then deploy the validated Draft.
+5. The skill performs discovery, testing, deployment, and Preview validation
+   directly through GitHub Copilot.
+6. Stop at **Draft**. Publishing remains a separate human approval gate.
+
+## Easy mode — GitHub Copilot + Brainstem (optional)
 
 Brainstem is the learner's personal, on-device training AI working alongside
 GitHub Copilot. Copilot stays the familiar work surface; Brainstem remembers
 the workshop and hot-loads the specialized instructors.
 
-1. Open GitHub Copilot Chat in VS Code and select **Agent mode**.
-2. Download `skills/aibast-easy-mode-brainstem/SKILL.md` and drag it into the
-   chat.
-3. Open `EASY-MODE-PERSONLESS.md`.
-4. Send its two short messages in order: build and test the named solution,
-   then deploy the validated Draft.
-5. The attached skill starts Brainstem and installs the generic AIBAST Workshop
-   agent into the learner's personal, on-device training AI.
-6. The workshop engine resolves the requested solution from the registry and
-   retrieves its standard package.
-7. Brainstem hot-loads the business agent, proves it locally, drives Draft
-   setup, and returns front-door actions.
-8. Copilot executes each handoff and sends evidence back until Brainstem
-   returns `status: complete`.
-9. Stop at **Draft**. Publishing remains a separate human approval gate.
+Download `skills/aibast-easy-mode-brainstem/SKILL.md`, drag it into Copilot
+Chat, open `EASY-MODE-PERSONLESS.md`, and send the same two short messages.
+The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
+continues its front-door handoffs until functional validation returns
+`status: complete`.
 
-## Easy mode — without Brainstem (comparison)
-
-Download `skills/aibast-easy-mode-copilot/SKILL.md` instead. That skill fixes
-the harness to GitHub Copilot alone, so the participant uses the exact same two
-messages without repeatedly saying “without Brainstem.” It performs discovery,
-testing, deployment, and Preview validation directly through GitHub Copilot.
-
-## Teaching comparison
-
-| Dimension | With Brainstem | GitHub Copilot only |
-| --- | --- | --- |
-| Strength | Persistent state, reusable hot-loaded agents, autonomous handoffs, and a durable verdict | Familiar VS Code entry point with no additional engine for the participant to understand |
-| Tradeoff | Requires the governed local Brainstem runtime | Orchestration and state live primarily in the active Copilot session |
-| Person's role | Set the destination and read the engine verdict | Attach the skill, steer through Copilot, and read its verdict |
-| Workshop lesson | Shows the personless harness and reusable engine model | Shows how far Copilot Agent mode can go with a strong portable skill |
-
-Both approaches are valid for getting started. They use the same immutable
-assets, locked cases, real Preview gate, and `published: false` boundary.
+Both lanes use the same immutable assets, locked cases, real Preview gate, and
+`published: false` boundary.
 
 Both Easy lanes preserve every recorded case prompt:
 
@@ -1533,7 +1551,7 @@ def render_evidence_report_html(ctx: JourneyContext) -> str:
 
     <div class="summary-grid">
       <article><strong>{html.escape(str(summary.get("reusable", 0)))}</strong><span>Reusable positive checkpoints</span></article>
-      <article><strong>{html.escape(str(summary.get("reshoot_required", 0)))}</strong><span>Images hidden from learner proof</span></article>
+      <article><strong>{html.escape(str(summary.get("reshoot_required", 0)))}</strong><span>Reshoot-required captures hidden from learner proof</span></article>
       <article><strong>{html.escape(str(summary.get("new_learn_step_captures_recommended", 0)))}</strong><span>Optional future Learn-step captures</span></article>
     </div>
 
@@ -1642,6 +1660,15 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
             if copy_payload
             else ""
         )
+        case = case_for_frame(ctx, filename)
+        preview_reset = (
+            '<div class="look-for"><strong>Before this case</strong>'
+            f'<p>Open Preview in a fresh conversation before running '
+            f'{html.escape(str(case.get("case_id", "this locked case")))}. '
+            "A previous response must not influence the evidence.</p></div>"
+            if case
+            else ""
+        )
         screenshot = ctx.manual_browserfilm_path.parent / filename
         capture_width = (ctx.manual_browserfilm or {}).get("width", "unknown")
         capture_height = (ctx.manual_browserfilm or {}).get("height", "unknown")
@@ -1707,6 +1734,7 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong>{copy_markup}</div><span>{html.escape(action)}</span></div>
             <div class="instruction expected"><strong>Expected result</strong>{html.escape(expected)}</div>
           </div>
+          {preview_reset}
           {screenshot_html}
           <footer>
             <a href="{html.escape(page_relative_path(ctx, source))}" download>Download source: {html.escape(source_label)}</a>
@@ -1733,10 +1761,20 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
         "gif",
         ctx.package / "screenshots" / "manual" / "manual-build-walkthrough.gif",
     )
+    hard_checkpoints = [
+        item
+        for item in visual_checkpoint_document(ctx).get("captures", [])
+        if isinstance(item, dict) and item.get("mode") == "hard"
+    ]
+    manual_film_approved = (
+        manual_gif.exists()
+        and bool(hard_checkpoints)
+        and all(item.get("status") == "reusable" for item in hard_checkpoints)
+    )
     gif_button = (
         '<a class="button" href="screenshots/manual/manual-build-walkthrough.gif">Watch the manual film</a>'
-        if manual_gif.exists()
-        else '<span class="button" aria-disabled="true">Manual film pending</span>'
+        if manual_film_approved
+        else ""
     )
     return f"""<!doctype html>
 <html lang="en">

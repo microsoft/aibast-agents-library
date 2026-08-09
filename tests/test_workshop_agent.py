@@ -125,13 +125,48 @@ def test_generic_engine_returns_front_door_handoff(tmp_path, monkeypatch):
     )
     assert len(handoff["cases"]) == 5
     assert "real Copilot Studio front door" in handoff["instruction"]
+    assert handoff["callback_schema"]["cases"][0]["response"] == (
+        "The actual Copilot Studio Preview response."
+    )
     assert result["visual_evidence"]["reusable"] == 19
     assert result["visual_evidence"]["reshoot_required"] == 7
     assert len(result["visual_evidence"]["reshoot_jobs"]) == 7
     assert len(result["visual_evidence"]["new_capture_jobs"]) == 8
 
 
-def test_generic_engine_closes_marker_only_front_door_evidence(tmp_path):
+def test_two_message_flow_resolves_it_from_the_active_solution(
+    tmp_path,
+    monkeypatch,
+):
+    _module, agent, _agents_dir = build_agent(tmp_path)
+    built = json.loads(
+        agent.perform(
+            operation="build_and_test",
+            solution="Field Service Dispatch",
+        )
+    )
+    assert built["active_solution"] == "field-service-dispatch"
+    monkeypatch.setattr(
+        agent,
+        "_deploy_draft",
+        lambda _solution, _source, _deployment, _environment: {
+            "display_name": "Field Service Dispatch Pilot",
+            "schema_name": "aibast_FieldServiceDispatchPilot",
+            "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+            "status": "Draft",
+            "published": False,
+        },
+    )
+
+    deployed = json.loads(agent.perform(operation="deploy"))
+
+    assert deployed["active_solution"] == "field-service-dispatch"
+    assert deployed["copilot_handoff"]["solution"] == (
+        "@aibast-agents-library/field-service-dispatch"
+    )
+
+
+def test_generic_engine_rejects_marker_only_front_door_evidence(tmp_path):
     _module, agent, _agents_dir = build_agent(tmp_path)
     agent.perform(
         operation="build_and_test",
@@ -163,13 +198,67 @@ def test_generic_engine_closes_marker_only_front_door_evidence(tmp_path):
         )
     )
 
+    assert result["status"] == "blocked"
+    assert "non-empty Preview response is required" in result["error"]
+
+
+def test_generic_engine_closes_actual_front_door_responses(tmp_path):
+    _module, agent, agents_dir = build_agent(tmp_path)
+    agent._deploy_draft = lambda _solution, _source, _deployment, _environment: {
+        "display_name": "Time Entry and Billing Pilot",
+        "schema_name": "aibast_TimeEntryandBillingPilot",
+        "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+        "status": "Draft",
+        "published": False,
+    }
+    agent.perform(
+        operation="deploy",
+        solution="Time Entry and Billing",
+    )
+    cases = json.loads(
+        (ROOT / "tests/demo_cases/time-entry-billing.json").read_text(
+            encoding="utf-8"
+        )
+    )["cases"]
+    source_agent = agent._load_target_agent(
+        agents_dir / "time_entry_billing_agent.py",
+        "TimeEntryBillingAgent",
+    )
+    evidence = {
+        "status": "Draft",
+        "published": False,
+        "cases": [
+            {
+                "case_id": case["id"],
+                "response": source_agent.perform(operation=case["operation"]),
+                "passed": True,
+            }
+            for case in cases
+        ],
+    }
+
+    result = json.loads(
+        agent.perform(
+            operation="complete",
+            preview_evidence=json.dumps(evidence),
+        )
+    )
+
     assert result["status"] == "complete"
     assert result["front_door_validation"]["passed"] == 5
     assert result["front_door_validation"]["total"] == 5
     assert result["published"] is False
+    assert result["visual_evidence"]["status"] == "reshoot_required"
+    assert result["visual_remediation_status"] == "required"
+    assert "replacement captures before the teaching package is complete" in (
+        result["verdict"]
+    )
+    assert "functional workshop complete" in result["verdict"]
     assert "generic engine" in result["verdict"]
     context = agent.system_context()
-    assert "already completed and front-door validated" in context
+    assert "already functionally completed and front-door validated" in context
+    assert "Teaching visuals are not complete" in context
+    assert "supplemental visual remediation" in context
     assert "Do not suggest deploying again" in context
 
 

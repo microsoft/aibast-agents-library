@@ -1,5 +1,6 @@
 import json
 import re
+import shutil
 import subprocess
 import zipfile
 from html.parser import HTMLParser
@@ -270,8 +271,11 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     manifest = json.loads((package / "export-manifest.json").read_text(encoding="utf-8"))
     readme = (package / "README.md").read_text(encoding="utf-8")
 
-    assert "Easy mode — with Brainstem (default)" in guide
-    assert "Easy mode — without Brainstem (comparison)" in guide
+    assert "Easy mode — GitHub Copilot (default)" in guide
+    assert "Easy mode — GitHub Copilot + Brainstem (optional)" in guide
+    assert guide.index("GitHub Copilot (default)") < guide.index(
+        "GitHub Copilot + Brainstem (optional)"
+    )
     assert "two short messages" in guide
     assert "personal, on-device training AI" in guide
     assert "Hard mode — literal browser construction" in guide
@@ -340,12 +344,14 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "Deploy it into Copilot Studio for me." in personless
     assert "AIBASTWorkshopAgent" in personless
     assert "Brainstem + Copilot pull the harness" in personless
-    assert "Copilot-only Easy mode comparison" in easy_prompts
+    assert "GitHub Copilot Easy mode" in easy_prompts
+    assert "comparison" not in easy_prompts.lower()
     assert "Attach the Copilot-only skill" in easy_prompts
     assert "drag `SKILL.md` into the" in easy_prompts
     assert "Give me Demo Journey using Easy Mode and test it for me." in easy_prompts
     assert "using Easy Mode without Brainstem" not in easy_prompts
     assert "Deploy it into Copilot Studio for me." in easy_prompts
+    assert "default Easy path" not in personless
 
     assert "0 of 6 complete" in tutorial
     assert tutorial.count("<strong>Action</strong>") == len(frames)
@@ -358,6 +364,7 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "Show the synthetic review." in tutorial
     assert "No PAC CLI, YAML import, or plugin architect" in tutorial
     assert "Do not choose Publish" in tutorial
+    assert "Open Preview in a fresh conversation before running DJ-01" in tutorial
     assert "Shown without browser upscaling" in tutorial
     assert ".shot { display: block; width: auto; max-width: 100%" in tutorial
     for filename, label in frames:
@@ -411,6 +418,48 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
 
     assert_html_and_javascript_valid(package / "quest.html", tmp_path)
     assert_html_and_javascript_valid(package / "manual-tutorial.html", tmp_path)
+
+    ctx = __import__(
+        "tools.scaffold_solution_journey",
+        fromlist=["load_context", "choose_frame_resources", "expected_result"],
+    )
+    loaded = ctx.load_context(
+        tmp_path,
+        "demo-journey",
+        allow_pending=False,
+        raw_base="https://example.test/raw/",
+    )
+    resources = ctx.choose_frame_resources(loaded)
+    assert resources[3] == package / "manual" / "skills" / "review" / "SKILL.md"
+    assert ctx.expected_result(
+        loaded,
+        "Open a fresh Preview conversation",
+        "unmatched.jpg",
+    ).startswith("A fresh Preview surface")
+
+
+def test_scaffolder_uses_reviewed_copilot_studio_knowledge_as_legacy_fallback(
+    tmp_path,
+):
+    package, _frames = build_fixture(tmp_path)
+    shutil.rmtree(package / "manual" / "knowledge")
+
+    scaffold(
+        "demo-journey",
+        root=tmp_path,
+        raw_base="https://example.test/raw/",
+    )
+
+    manifest = json.loads(
+        (package / "export-manifest.json").read_text(encoding="utf-8")
+    )
+    paths = {item["path"] for item in manifest["files"]}
+    assert (
+        "solutions/demo-journey/copilot-studio/capabilities/knowledge/files/"
+        "synthetic-records.md"
+    ) in paths
+    tutorial = (package / "manual-tutorial.html").read_text(encoding="utf-8")
+    assert "copilot-studio/capabilities/knowledge/files/synthetic-records.md" in tutorial
 
 
 def test_refuses_missing_referenced_screenshot_without_allow_pending(tmp_path):

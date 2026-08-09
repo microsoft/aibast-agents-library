@@ -1,200 +1,662 @@
 {
   "schema": "aibast-solution-export/1.0",
   "solution": "@aibast-agents-library/fs-regulatory-compliance",
-  "raw_base": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/",
+  "raw_base": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/",
   "github_folder": "https://github.com/microsoft/aibast-agents-library/tree/main/solutions/fs-regulatory-compliance",
+  "evidence_boundary": "Synthetic solution evidence only. Qualitative workflow proof is not a customer KPI, measured production result, or publication approval.",
   "bundle": {
-    "label": "Complete Regulatory Compliance source bundle",
+    "label": "Complete Regulatory Compliance Agent source bundle",
     "path": "solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-source.zip",
-    "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-source.zip",
-    "status": "complete"
+    "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-source.zip"
   },
   "files": [
     {
-      "id": "export-manifest",
-      "label": "Export resource manifest",
-      "path": "solutions/fs-regulatory-compliance/export-manifest.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/export-manifest.json",
-      "use": "Canonical raw-download index for the tutorial and quest"
-    },
-    {
       "id": "portable-agent",
-      "label": "Portable Brainstem agent.py",
+      "label": "Portable source agent",
       "path": "agents/@aibast-agents-library/financial_services_stacks/regulatory_compliance_fs_stack/regulatory_compliance_fs_agent.py",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/financial_services_stacks/regulatory_compliance_fs_stack/regulatory_compliance_fs_agent.py",
-      "use": "Local Brainstem runtime and production logic reference"
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/agents/@aibast-agents-library/financial_services_stacks/regulatory_compliance_fs_stack/regulatory_compliance_fs_agent.py",
+      "use": "Local Brainstem runtime and production-logic reference",
+      "status": "ready"
     },
     {
       "id": "deployment-recipe",
-      "label": "No-terminal deployment recipe",
+      "label": "Deployment recipe",
       "path": "solutions/fs-regulatory-compliance/deployment.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/deployment.json",
-      "use": "GitHub Copilot Easy-mode installation contract"
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/deployment.json",
+      "use": "Easy-mode deployment contract",
+      "status": "ready"
     },
     {
       "id": "field-guide",
       "label": "Customer field guide",
-      "path": "solutions/fs-regulatory-compliance/FIELD-GUIDE.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/FIELD-GUIDE.md",
-      "use": "Hands-on-keyboard facilitation, boundaries, and failure recovery"
+      "path": "solutions/fs-regulatory-compliance/field-guide.html",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/field-guide.html",
+      "use": "Styled facilitation, evidence boundaries, gates, and recovery",
+      "status": "ready"
     },
     {
-      "id": "global-instructions",
+      "id": "field-guide-source",
+      "label": "Field guide source",
+      "path": "solutions/fs-regulatory-compliance/FIELD-GUIDE.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/FIELD-GUIDE.md",
+      "use": "Markdown source retained for audit and export",
+      "status": "ready"
+    },
+    {
+      "id": "easy-personless-guide",
+      "label": "Personless Easy-mode guide",
+      "path": "solutions/fs-regulatory-compliance/EASY-MODE-PERSONLESS.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/EASY-MODE-PERSONLESS.md",
+      "use": "Brainstem lane skill attachment, two-message workshop, and engine loop",
+      "status": "ready"
+    },
+    {
+      "id": "easy-copilot-chat-prompts",
+      "label": "Copilot-only Easy-mode comparison",
+      "path": "solutions/fs-regulatory-compliance/EASY-MODE-COPILOT-CHAT.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/EASY-MODE-COPILOT-CHAT.md",
+      "use": "Copilot-only lane skill attachment and the same two workshop messages",
+      "status": "ready"
+    },
+    {
+      "id": "easy-mode-brainstem-skill",
+      "label": "Brainstem Easy Mode skill",
+      "path": "skills/aibast-easy-mode-brainstem/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/skills/aibast-easy-mode-brainstem/SKILL.md",
+      "use": "Download-and-drag harness that defaults workshop execution to Brainstem",
+      "status": "ready"
+    },
+    {
+      "id": "easy-mode-copilot-skill",
+      "label": "Copilot-only Easy Mode skill",
+      "path": "skills/aibast-easy-mode-copilot/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/skills/aibast-easy-mode-copilot/SKILL.md",
+      "use": "Download-and-drag harness that runs the workshop directly in GitHub Copilot",
+      "status": "ready"
+    },
+    {
+      "id": "generic-workshop-agent",
+      "label": "Generic AIBAST Workshop agent",
+      "path": "agents/@aibast-agents-library/templates/workshop_agent.py",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/agents/@aibast-agents-library/templates/workshop_agent.py",
+      "use": "Registry-driven Brainstem engine shared by every packaged solution",
+      "status": "ready"
+    },
+    {
+      "id": "manual-instructions",
       "label": "Manual global instructions",
       "path": "solutions/fs-regulatory-compliance/manual/GLOBAL-INSTRUCTIONS.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/manual/GLOBAL-INSTRUCTIONS.md",
-      "use": "Paste into the blank Copilot Studio agent"
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/manual/GLOBAL-INSTRUCTIONS.md",
+      "use": "Reviewed instructions for literal browser construction",
+      "status": "ready"
     },
     {
-      "id": "knowledge-records",
-      "label": "Synthetic compliance records",
-      "path": "solutions/fs-regulatory-compliance/manual/knowledge/aibast_fs-regulatory-compliance-synthetic-records.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/manual/knowledge/aibast_fs-regulatory-compliance-synthetic-records.md",
-      "use": "Upload directly as Copilot Studio knowledge"
+      "id": "settings",
+      "label": "Copilot Studio settings",
+      "path": "solutions/fs-regulatory-compliance/copilot-studio/settings.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/copilot-studio/settings.mcs.yml",
+      "use": "Easy-mode agent settings and instruction copy",
+      "status": "ready"
     },
     {
-      "id": "knowledge-rules",
-      "label": "Synthetic rules and controls",
+      "id": "agent-sync",
+      "label": "Copilot Studio component manifest",
+      "path": "solutions/fs-regulatory-compliance/copilot-studio/agent.sync.yaml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/copilot-studio/agent.sync.yaml",
+      "use": "Easy-mode component synchronization",
+      "status": "ready"
+    },
+    {
+      "id": "knowledge-aibast-fs-regulatory-compliance-rules-and-controls",
+      "label": "Aibast Fs Regulatory Compliance Rules And Controls",
       "path": "solutions/fs-regulatory-compliance/manual/knowledge/aibast_fs-regulatory-compliance-rules-and-controls.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/manual/knowledge/aibast_fs-regulatory-compliance-rules-and-controls.md",
-      "use": "Upload directly as Copilot Studio knowledge"
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/manual/knowledge/aibast_fs-regulatory-compliance-rules-and-controls.md",
+      "use": "Manual knowledge upload",
+      "status": "ready"
     },
     {
-      "id": "skill-compliance-dashboard",
-      "label": "Compliance dashboard skill",
-      "path": "solutions/fs-regulatory-compliance/manual/skills/aibast_compliance-dashboard_rc01/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/manual/skills/aibast_compliance-dashboard_rc01/SKILL.md",
-      "use": "Upload directly through Copilot Studio Add skill"
+      "id": "knowledge-aibast-fs-regulatory-compliance-synthetic-records",
+      "label": "Aibast Fs Regulatory Compliance Synthetic Records",
+      "path": "solutions/fs-regulatory-compliance/manual/knowledge/aibast_fs-regulatory-compliance-synthetic-records.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/manual/knowledge/aibast_fs-regulatory-compliance-synthetic-records.md",
+      "use": "Manual knowledge upload",
+      "status": "ready"
     },
     {
-      "id": "skill-trade-surveillance",
-      "label": "Trade surveillance skill",
-      "path": "solutions/fs-regulatory-compliance/manual/skills/aibast_trade-surveillance_rc02/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/manual/skills/aibast_trade-surveillance_rc02/SKILL.md",
-      "use": "Upload directly through Copilot Studio Add skill"
-    },
-    {
-      "id": "skill-documentation-review",
-      "label": "Algorithm documentation review skill",
-      "path": "solutions/fs-regulatory-compliance/manual/skills/aibast_documentation-review_rc03/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/manual/skills/aibast_documentation-review_rc03/SKILL.md",
-      "use": "Upload directly through Copilot Studio Add skill"
-    },
-    {
-      "id": "skill-remediation-submission",
-      "label": "Remediation preparation skill",
-      "path": "solutions/fs-regulatory-compliance/manual/skills/aibast_remediation-submission_rc04/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/manual/skills/aibast_remediation-submission_rc04/SKILL.md",
-      "use": "Upload directly through Copilot Studio Add skill"
-    },
-    {
-      "id": "skill-certification-tracker",
-      "label": "Certification readiness skill",
+      "id": "skill-aibast-certification-tracker-rc05",
+      "label": "Manual skill: aibast certification tracker rc05",
       "path": "solutions/fs-regulatory-compliance/manual/skills/aibast_certification-tracker_rc05/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/manual/skills/aibast_certification-tracker_rc05/SKILL.md",
-      "use": "Upload directly through Copilot Studio Add skill"
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/manual/skills/aibast_certification-tracker_rc05/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-compliance-dashboard-rc01",
+      "label": "Manual skill: aibast compliance dashboard rc01",
+      "path": "solutions/fs-regulatory-compliance/manual/skills/aibast_compliance-dashboard_rc01/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/manual/skills/aibast_compliance-dashboard_rc01/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-documentation-review-rc03",
+      "label": "Manual skill: aibast documentation review rc03",
+      "path": "solutions/fs-regulatory-compliance/manual/skills/aibast_documentation-review_rc03/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/manual/skills/aibast_documentation-review_rc03/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-remediation-submission-rc04",
+      "label": "Manual skill: aibast remediation submission rc04",
+      "path": "solutions/fs-regulatory-compliance/manual/skills/aibast_remediation-submission_rc04/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/manual/skills/aibast_remediation-submission_rc04/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-trade-surveillance-rc02",
+      "label": "Manual skill: aibast trade surveillance rc02",
+      "path": "solutions/fs-regulatory-compliance/manual/skills/aibast_trade-surveillance_rc02/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/manual/skills/aibast_trade-surveillance_rc02/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "easy-knowledge-aibast-fs-regulatory-compliance-rules-and-controls",
+      "label": "Aibast Fs Regulatory Compliance Rules And Controls",
+      "path": "solutions/fs-regulatory-compliance/copilot-studio/capabilities/knowledge/files/aibast_fs-regulatory-compliance-rules-and-controls.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/copilot-studio/capabilities/knowledge/files/aibast_fs-regulatory-compliance-rules-and-controls.md",
+      "use": "Copilot Studio knowledge source or synchronization metadata",
+      "status": "ready"
+    },
+    {
+      "id": "easy-knowledge-aibast-fs-regulatory-compliance-rules-and-controls-md-mcs",
+      "label": "Aibast Fs Regulatory Compliance Rules And Controls.Md.Mcs",
+      "path": "solutions/fs-regulatory-compliance/copilot-studio/capabilities/knowledge/files/aibast_fs-regulatory-compliance-rules-and-controls.md.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/copilot-studio/capabilities/knowledge/files/aibast_fs-regulatory-compliance-rules-and-controls.md.mcs.yml",
+      "use": "Copilot Studio knowledge source or synchronization metadata",
+      "status": "ready"
+    },
+    {
+      "id": "easy-knowledge-aibast-fs-regulatory-compliance-synthetic-records",
+      "label": "Aibast Fs Regulatory Compliance Synthetic Records",
+      "path": "solutions/fs-regulatory-compliance/copilot-studio/capabilities/knowledge/files/aibast_fs-regulatory-compliance-synthetic-records.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/copilot-studio/capabilities/knowledge/files/aibast_fs-regulatory-compliance-synthetic-records.md",
+      "use": "Copilot Studio knowledge source or synchronization metadata",
+      "status": "ready"
+    },
+    {
+      "id": "easy-knowledge-aibast-fs-regulatory-compliance-synthetic-records-md-mcs",
+      "label": "Aibast Fs Regulatory Compliance Synthetic Records.Md.Mcs",
+      "path": "solutions/fs-regulatory-compliance/copilot-studio/capabilities/knowledge/files/aibast_fs-regulatory-compliance-synthetic-records.md.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/copilot-studio/capabilities/knowledge/files/aibast_fs-regulatory-compliance-synthetic-records.md.mcs.yml",
+      "use": "Copilot Studio knowledge source or synchronization metadata",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-algorithm-documentation-and-go-live-review-mcs",
+      "label": "Aibast Algorithm Documentation And Go Live Review.Mcs",
+      "path": "solutions/fs-regulatory-compliance/copilot-studio/behaviors/aibast_algorithm-documentation-and-go-live-review.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/copilot-studio/behaviors/aibast_algorithm-documentation-and-go-live-review.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-compliance-dashboard-and-audit-readiness-mcs",
+      "label": "Aibast Compliance Dashboard And Audit Readiness.Mcs",
+      "path": "solutions/fs-regulatory-compliance/copilot-studio/behaviors/aibast_compliance-dashboard-and-audit-readiness.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/copilot-studio/behaviors/aibast_compliance-dashboard-and-audit-readiness.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-regulatory-correction-and-submission-preparation-mcs",
+      "label": "Aibast Regulatory Correction And Submission Preparation.Mcs",
+      "path": "solutions/fs-regulatory-compliance/copilot-studio/behaviors/aibast_regulatory-correction-and-submission-preparation.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/copilot-studio/behaviors/aibast_regulatory-correction-and-submission-preparation.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-trade-reporting-and-execution-surveillance-mcs",
+      "label": "Aibast Trade Reporting And Execution Surveillance.Mcs",
+      "path": "solutions/fs-regulatory-compliance/copilot-studio/behaviors/aibast_trade-reporting-and-execution-surveillance.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/copilot-studio/behaviors/aibast_trade-reporting-and-execution-surveillance.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-trader-certification-readiness-mcs",
+      "label": "Aibast Trader Certification Readiness.Mcs",
+      "path": "solutions/fs-regulatory-compliance/copilot-studio/behaviors/aibast_trader-certification-readiness.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/copilot-studio/behaviors/aibast_trader-certification-readiness.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-evidence-copilot-studio-preview-evidence",
+      "label": "Copilot Studio Preview Evidence",
+      "path": "solutions/fs-regulatory-compliance/evals/copilot-studio-preview-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/evals/copilot-studio-preview-evidence.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "manual-evidence",
+      "label": "Manual build evidence",
+      "path": "solutions/fs-regulatory-compliance/evals/manual-build-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/evals/manual-build-evidence.json",
+      "use": "Manual identity, inventory, Preview, and Draft-gate evidence",
+      "status": "ready"
     },
     {
       "id": "onepager-map",
-      "label": "One-pager promise map",
+      "label": "Onepager Map",
       "path": "solutions/fs-regulatory-compliance/evals/onepager-map.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/evals/onepager-map.json",
-      "use": "Approved one-pager promise coverage evidence"
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/evals/onepager-map.json",
+      "use": "Advertised-promise mapping evidence",
+      "status": "ready"
+    },
+    {
+      "id": "easy-evidence-source-audit",
+      "label": "Source Audit",
+      "path": "solutions/fs-regulatory-compliance/evals/source-audit.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/evals/source-audit.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
     },
     {
       "id": "brainstem-transcripts",
       "label": "Isolated Brainstem transcripts",
       "path": "solutions/fs-regulatory-compliance/evals/transcripts.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/evals/transcripts.json",
-      "use": "Canonical source-agent acceptance corpus"
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/evals/transcripts.json",
+      "use": "Canonical source-agent acceptance evidence",
+      "status": "ready"
     },
     {
-      "id": "source-audit",
-      "label": "Source and safety audit",
-      "path": "solutions/fs-regulatory-compliance/evals/source-audit.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/evals/source-audit.json",
-      "use": "Routing, behavior, and claim-boundary evidence"
-    },
-    {
-      "id": "studio-preview-evidence",
-      "label": "Copilot Studio Preview evidence",
-      "path": "solutions/fs-regulatory-compliance/evals/copilot-studio-preview-evidence.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/evals/copilot-studio-preview-evidence.json",
-      "use": "Five-case Easy-agent Preview parity and safety evidence"
-    },
-    {
-      "id": "assisted-browserfilm-manifest",
-      "label": "Copilot-assisted browserfilm manifest",
-      "path": "solutions/fs-regulatory-compliance/screenshots/assisted/browserfilm.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/screenshots/assisted/browserfilm.json",
-      "use": "Captured Easy-mode frame sequence"
-    },
-    {
-      "id": "assisted-browserfilm",
-      "label": "Copilot-assisted walkthrough",
-      "path": "solutions/fs-regulatory-compliance/screenshots/assisted/copilot-assisted-walkthrough.gif",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/screenshots/assisted/copilot-assisted-walkthrough.gif",
-      "use": "Animated proof of the pushed Easy agent"
-    },
-    {
-      "id": "assisted-contact-sheet",
-      "label": "Copilot-assisted contact sheet",
-      "path": "solutions/fs-regulatory-compliance/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
-      "use": "Static Easy-mode evidence overview"
-    },
-    {
-      "id": "manual-tutorial",
-      "label": "Manual browser-build tutorial",
-      "path": "solutions/fs-regulatory-compliance/manual-tutorial.html",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/manual-tutorial.html",
-      "use": "Clawpilot-themed 26-action manual walkthrough"
-    },
-    {
-      "id": "manual-evidence",
-      "label": "Manual-build evidence",
-      "path": "solutions/fs-regulatory-compliance/evals/manual-build-evidence.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/evals/manual-build-evidence.json",
-      "use": "Captured component, Preview, and publication-gate evidence",
-      "evidence_status": "captured"
+      "id": "easy-evidence-visual-checkpoints",
+      "label": "Visual Checkpoints",
+      "path": "solutions/fs-regulatory-compliance/evals/visual-checkpoints.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/evals/visual-checkpoints.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
     },
     {
       "id": "manual-browserfilm-manifest",
       "label": "Manual browserfilm manifest",
       "path": "solutions/fs-regulatory-compliance/screenshots/manual/browserfilm.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/screenshots/manual/browserfilm.json",
-      "use": "Deterministic screenshot filenames and capture order",
-      "evidence_status": "captured"
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/browserfilm.json",
+      "use": "Ordered literal-browser evidence frames",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-01",
+      "label": "Create a blank Copilot Studio agent",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/01-create-blank-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/01-create-blank-agent.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-02",
+      "label": "Name the manual agent",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/02-name-manual-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/02-name-manual-agent.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-03",
+      "label": "Enter the reviewed global instructions",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/03-enter-global-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/03-enter-global-instructions.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-04",
+      "label": "Save the instruction policy",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/04-save-global-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/04-save-global-instructions.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-05",
+      "label": "Locate the default web-search capability",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/05-open-web-search-settings.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/05-open-web-search-settings.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-06",
+      "label": "Remove default web search",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/06-remove-web-search.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/06-remove-web-search.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-07",
+      "label": "Open the knowledge uploader",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/07-open-knowledge-upload.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/07-open-knowledge-upload.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-08",
+      "label": "Upload synthetic compliance records",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/08-upload-synthetic-records.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/08-upload-synthetic-records.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-09",
+      "label": "Upload rules and controls",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/09-upload-rules-controls.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/09-upload-rules-controls.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-10",
+      "label": "Verify both knowledge sources",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/10-verify-two-knowledge-files.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/10-verify-two-knowledge-files.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-11",
+      "label": "Open the SKILL.md uploader",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/11-open-skill-upload.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/11-open-skill-upload.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-12",
+      "label": "Upload compliance dashboard skill",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/12-upload-dashboard-skill.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/12-upload-dashboard-skill.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-13",
+      "label": "Upload trade surveillance skill",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/13-upload-surveillance-skill.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/13-upload-surveillance-skill.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-14",
+      "label": "Upload documentation review skill",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/14-upload-documentation-skill.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/14-upload-documentation-skill.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-15",
+      "label": "Upload remediation preparation skill",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/15-upload-remediation-skill.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/15-upload-remediation-skill.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-16",
+      "label": "Upload certification readiness skill",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/16-upload-certification-skill.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/16-upload-certification-skill.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-17",
+      "label": "Open the model picker",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/17-open-model-picker.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/17-open-model-picker.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-18",
+      "label": "Select Claude Sonnet 4.6",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/18-select-sonnet46.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/18-select-sonnet46.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-19",
+      "label": "Review instructions, knowledge, skills, and tools",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/19-review-complete-inventory.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/19-review-complete-inventory.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-20",
+      "label": "Open a fresh Preview conversation",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/20-open-preview.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/20-open-preview.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-21",
+      "label": "Pass RC-01 audit readiness",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/21-preview-rc01-audit-readiness.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/21-preview-rc01-audit-readiness.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-22",
+      "label": "Pass RC-02 certifications",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/22-preview-rc02-certifications.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/22-preview-rc02-certifications.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-23",
+      "label": "Pass RC-03 trade surveillance",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/23-preview-rc03-trade-surveillance.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/23-preview-rc03-trade-surveillance.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-24",
+      "label": "Pass RC-04 algorithm go-live",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/24-preview-rc04-algorithm-go-live.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/24-preview-rc04-algorithm-go-live.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-25",
+      "label": "Pass RC-05 board evidence",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/25-preview-rc05-board-evidence.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/25-preview-rc05-board-evidence.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-26",
+      "label": "Confirm Draft and stop before publish",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/26-confirm-draft-no-publish.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/26-confirm-draft-no-publish.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
     },
     {
       "id": "manual-browserfilm",
-      "label": "Manual build browserfilm",
+      "label": "Manual browserfilm",
       "path": "solutions/fs-regulatory-compliance/screenshots/manual/manual-build-walkthrough.gif",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/screenshots/manual/manual-build-walkthrough.gif",
-      "use": "Animated proof of all 26 manual actions",
-      "evidence_status": "captured"
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/manual-build-walkthrough.gif",
+      "use": "Animated manual walkthrough",
+      "status": "ready"
     },
     {
       "id": "manual-contact-sheet",
-      "label": "Manual build contact sheet",
+      "label": "Manual contact sheet",
       "path": "solutions/fs-regulatory-compliance/screenshots/manual/manual-build-contact-sheet.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/screenshots/manual/manual-build-contact-sheet.jpg",
-      "use": "Static overview of all manual evidence",
-      "evidence_status": "captured"
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/manual-build-contact-sheet.jpg",
+      "use": "Static manual evidence overview",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-browserfilm-manifest",
+      "label": "Copilot-assisted browserfilm manifest",
+      "path": "solutions/fs-regulatory-compliance/screenshots/assisted/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/assisted/browserfilm.json",
+      "use": "Ordered Easy-mode evidence frames",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-browserfilm",
+      "label": "Copilot-assisted browserfilm",
+      "path": "solutions/fs-regulatory-compliance/screenshots/assisted/copilot-assisted-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/assisted/copilot-assisted-walkthrough.gif",
+      "use": "Animated Easy-mode walkthrough",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-contact-sheet",
+      "label": "Copilot-assisted contact sheet",
+      "path": "solutions/fs-regulatory-compliance/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
+      "use": "Static Easy-mode evidence overview",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-01",
+      "label": "Review the Copilot-assisted Draft configuration",
+      "path": "solutions/fs-regulatory-compliance/screenshots/assisted/01-review-build.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/assisted/01-review-build.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-02",
+      "label": "Pass RC-01: Chief Compliance Officer",
+      "path": "solutions/fs-regulatory-compliance/screenshots/assisted/02-rc-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/assisted/02-rc-01.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-03",
+      "label": "Pass RC-02: Trading Desk Supervisor",
+      "path": "solutions/fs-regulatory-compliance/screenshots/assisted/03-rc-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/assisted/03-rc-02.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-04",
+      "label": "Pass RC-03: Compliance Manager",
+      "path": "solutions/fs-regulatory-compliance/screenshots/assisted/04-rc-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/assisted/04-rc-03.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-05",
+      "label": "Pass RC-04: Head of Quant Execution",
+      "path": "solutions/fs-regulatory-compliance/screenshots/assisted/05-rc-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/assisted/05-rc-04.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-06",
+      "label": "Pass RC-05: Chief Risk Officer",
+      "path": "solutions/fs-regulatory-compliance/screenshots/assisted/06-rc-05.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/assisted/06-rc-05.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-07",
+      "label": "Confirm the validated agent remains Draft",
+      "path": "solutions/fs-regulatory-compliance/screenshots/assisted/07-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/assisted/07-confirm-draft.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "workshop-settings",
+      "label": "Global workshop settings",
+      "path": "solutions/_shared/workshop-settings.html",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/_shared/workshop-settings.html",
+      "use": "Site-wide persisted Easy-mode harness preference",
+      "status": "ready"
+    },
+    {
+      "id": "evidence-report",
+      "label": "Styled evidence report",
+      "path": "solutions/fs-regulatory-compliance/evidence-report.html",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/evidence-report.html",
+      "use": "Learner-safe HTML summary of deterministic and visual evidence",
+      "status": "ready"
     },
     {
       "id": "quest",
-      "label": "Easy and Hard deployment quest",
+      "label": "Guided field quest",
       "path": "solutions/fs-regulatory-compliance/quest.html",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/quest.html",
-      "use": "Interactive customer journey"
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/quest.html",
+      "use": "Resumable Easy/Hard customer journey",
+      "status": "ready"
+    },
+    {
+      "id": "manual-tutorial",
+      "label": "Manual browser tutorial",
+      "path": "solutions/fs-regulatory-compliance/manual-tutorial.html",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/manual-tutorial.html",
+      "use": "One action per real manual evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "screenshots-readme",
+      "label": "Screenshot evidence README",
+      "path": "solutions/fs-regulatory-compliance/screenshots/README.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/README.md",
+      "use": "Evidence boundary and capture inventory",
+      "status": "ready"
+    },
+    {
+      "id": "manual-screenshots-readme",
+      "label": "Manual screenshot README",
+      "path": "solutions/fs-regulatory-compliance/screenshots/manual/README.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/manual/README.md",
+      "use": "Manual frame and film inventory",
+      "status": "ready"
     },
     {
       "id": "exports-readme",
-      "label": "Export bundle instructions",
+      "label": "Export README",
       "path": "solutions/fs-regulatory-compliance/exports/README.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/fs-regulatory-compliance/exports/README.md",
-      "use": "Bundle generation and evidence gates"
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/exports/README.md",
+      "use": "Bundle build instructions",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-screenshots-readme",
+      "label": "Assisted screenshot README",
+      "path": "solutions/fs-regulatory-compliance/screenshots/assisted/README.md",
+      "raw_url": "https://raw.githubusercontent.com/kody-w/aibast-agents-library/easy-mode-copilot-chat-pilot/solutions/fs-regulatory-compliance/screenshots/assisted/README.md",
+      "use": "Copilot-assisted evidence inventory",
+      "status": "ready"
     }
   ]
 }

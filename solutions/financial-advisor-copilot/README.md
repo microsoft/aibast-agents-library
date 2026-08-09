@@ -35,7 +35,12 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 
 | Surface | Location |
 | --- | --- |
-| Customer field guide | `solutions/financial-advisor-copilot/FIELD-GUIDE.md` |
+| Customer field guide | `solutions/financial-advisor-copilot/field-guide.html` |
+| Evidence report | `solutions/financial-advisor-copilot/evidence-report.html` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/financial-advisor-copilot/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/financial-advisor-copilot/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Hard quest | `solutions/financial-advisor-copilot/quest.html` |
 | Literal browser tutorial | `solutions/financial-advisor-copilot/manual-tutorial.html` |
 | Raw export manifest | `solutions/financial-advisor-copilot/export-manifest.json` |
@@ -43,7 +48,7 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 | Manual evidence | `solutions/financial-advisor-copilot/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/financial-advisor-copilot/screenshots/manual/browserfilm.json` |
 
-**Scaffold status:** 70 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 79 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

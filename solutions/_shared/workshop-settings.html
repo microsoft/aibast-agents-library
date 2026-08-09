@@ -194,12 +194,23 @@
       const key = "aibast:workshop-engine";
       const params = new URLSearchParams(window.location.search);
       const requestedReturn = params.get("return");
-      const safeReturn =
-        requestedReturn &&
-        !requestedReturn.includes("://") &&
-        !requestedReturn.startsWith("//")
-          ? requestedReturn
-          : "../../library.html";
+      const fallbackReturn = new URL("../../library.html", window.location.href);
+      const resolveReturn = (value) => {
+        if (!value || /^\s*\/\//.test(value)) return fallbackReturn.href;
+        try {
+          const candidate = new URL(value, window.location.href);
+          if (
+            (candidate.protocol === "http:" || candidate.protocol === "https:") &&
+            candidate.origin === window.location.origin
+          ) {
+            return candidate.href;
+          }
+        } catch (_error) {
+          // Fall through to the library.
+        }
+        return fallbackReturn.href;
+      };
+      const safeReturn = resolveReturn(requestedReturn);
       const current = localStorage.getItem(key) === "brainstem"
         ? "brainstem"
         : "copilot";

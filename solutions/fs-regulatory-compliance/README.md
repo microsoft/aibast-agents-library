@@ -56,3 +56,27 @@ Preview, and remain Draft.
 
 The manual tutorial contains 26 captured browser actions and five passing
 Preview cases for `Regulatory Manual Build`.
+
+<!-- scaffold-solution-journey:start -->
+## Customer journey package map
+
+| Surface | Location |
+| --- | --- |
+| Customer field guide | `solutions/fs-regulatory-compliance/field-guide.html` |
+| Evidence report | `solutions/fs-regulatory-compliance/evidence-report.html` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/fs-regulatory-compliance/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/fs-regulatory-compliance/EASY-MODE-COPILOT-CHAT.md` |
+| Guided Easy/Hard quest | `solutions/fs-regulatory-compliance/quest.html` |
+| Literal browser tutorial | `solutions/fs-regulatory-compliance/manual-tutorial.html` |
+| Raw export manifest | `solutions/fs-regulatory-compliance/export-manifest.json` |
+| Source bundle | `solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-source.zip` |
+| Manual evidence | `solutions/fs-regulatory-compliance/evals/manual-build-evidence.json` |
+| Manual browserfilm | `solutions/fs-regulatory-compliance/screenshots/manual/browserfilm.json` |
+
+**Scaffold status:** 81 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+
+The journey uses synthetic inputs and qualitative proof. It is not a customer
+KPI, live-system result, production-readiness claim, or publication approval.
+<!-- scaffold-solution-journey:end -->

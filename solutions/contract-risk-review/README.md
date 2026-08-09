@@ -30,7 +30,12 @@ passing.
 
 | Surface | Location |
 | --- | --- |
-| Customer field guide | `solutions/contract-risk-review/FIELD-GUIDE.md` |
+| Customer field guide | `solutions/contract-risk-review/field-guide.html` |
+| Evidence report | `solutions/contract-risk-review/evidence-report.html` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/contract-risk-review/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/contract-risk-review/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Hard quest | `solutions/contract-risk-review/quest.html` |
 | Literal browser tutorial | `solutions/contract-risk-review/manual-tutorial.html` |
 | Raw export manifest | `solutions/contract-risk-review/export-manifest.json` |
@@ -38,7 +43,7 @@ passing.
 | Manual evidence | `solutions/contract-risk-review/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/contract-risk-review/screenshots/manual/browserfilm.json` |
 
-**Scaffold status:** 59 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 68 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

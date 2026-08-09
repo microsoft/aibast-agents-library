@@ -14,46 +14,32 @@ blueprint, and decide what production integration would require.
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
-## Easy mode — with Brainstem (default)
+## Easy mode — GitHub Copilot (default)
+
+1. Open GitHub Copilot Chat in VS Code and select **Agent mode**.
+2. Download `skills/aibast-easy-mode-copilot/SKILL.md` and drag it into the
+   chat.
+3. Open `EASY-MODE-COPILOT-CHAT.md`.
+4. Send its two short messages in order: build and test the named solution,
+   then deploy the validated Draft.
+5. The skill performs discovery, testing, deployment, and Preview validation
+   directly through GitHub Copilot.
+6. Stop at **Draft**. Publishing remains a separate human approval gate.
+
+## Easy mode — GitHub Copilot + Brainstem (optional)
 
 Brainstem is the learner's personal, on-device training AI working alongside
 GitHub Copilot. Copilot stays the familiar work surface; Brainstem remembers
 the workshop and hot-loads the specialized instructors.
 
-1. Open GitHub Copilot Chat in VS Code and select **Agent mode**.
-2. Download `skills/aibast-easy-mode-brainstem/SKILL.md` and drag it into the
-   chat.
-3. Open `EASY-MODE-PERSONLESS.md`.
-4. Send its two short messages in order: build and test the named solution,
-   then deploy the validated Draft.
-5. The attached skill starts Brainstem and installs the generic AIBAST Workshop
-   agent into the learner's personal, on-device training AI.
-6. The workshop engine resolves the requested solution from the registry and
-   retrieves its standard package.
-7. Brainstem hot-loads the business agent, proves it locally, drives Draft
-   setup, and returns front-door actions.
-8. Copilot executes each handoff and sends evidence back until Brainstem
-   returns `status: complete`.
-9. Stop at **Draft**. Publishing remains a separate human approval gate.
+Download `skills/aibast-easy-mode-brainstem/SKILL.md`, drag it into Copilot
+Chat, open `EASY-MODE-PERSONLESS.md`, and send the same two short messages.
+The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
+continues its front-door handoffs until functional validation returns
+`status: complete`.
 
-## Easy mode — without Brainstem (comparison)
-
-Download `skills/aibast-easy-mode-copilot/SKILL.md` instead. That skill fixes
-the harness to GitHub Copilot alone, so the participant uses the exact same two
-messages without repeatedly saying “without Brainstem.” It performs discovery,
-testing, deployment, and Preview validation directly through GitHub Copilot.
-
-## Teaching comparison
-
-| Dimension | With Brainstem | GitHub Copilot only |
-| --- | --- | --- |
-| Strength | Persistent state, reusable hot-loaded agents, autonomous handoffs, and a durable verdict | Familiar VS Code entry point with no additional engine for the participant to understand |
-| Tradeoff | Requires the governed local Brainstem runtime | Orchestration and state live primarily in the active Copilot session |
-| Person's role | Set the destination and read the engine verdict | Attach the skill, steer through Copilot, and read its verdict |
-| Workshop lesson | Shows the personless harness and reusable engine model | Shows how far Copilot Agent mode can go with a strong portable skill |
-
-Both approaches are valid for getting started. They use the same immutable
-assets, locked cases, real Preview gate, and `published: false` boundary.
+Both lanes use the same immutable assets, locked cases, real Preview gate, and
+`published: false` boundary.
 
 Both Easy lanes preserve every recorded case prompt:
 

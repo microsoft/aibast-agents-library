@@ -23,7 +23,12 @@ replenishes, allocates, promises, or purchases inventory.
 
 | Surface | Location |
 | --- | --- |
-| Customer field guide | `solutions/inventory-visibility/FIELD-GUIDE.md` |
+| Customer field guide | `solutions/inventory-visibility/field-guide.html` |
+| Evidence report | `solutions/inventory-visibility/evidence-report.html` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/inventory-visibility/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/inventory-visibility/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Hard quest | `solutions/inventory-visibility/quest.html` |
 | Literal browser tutorial | `solutions/inventory-visibility/manual-tutorial.html` |
 | Raw export manifest | `solutions/inventory-visibility/export-manifest.json` |
@@ -31,7 +36,7 @@ replenishes, allocates, promises, or purchases inventory.
 | Manual evidence | `solutions/inventory-visibility/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/inventory-visibility/screenshots/manual/browserfilm.json` |
 
-**Scaffold status:** 60 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 69 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

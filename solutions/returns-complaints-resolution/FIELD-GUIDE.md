@@ -14,22 +14,39 @@ blueprint, and decide what production integration would require.
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
-## Easy mode — Copilot-assisted
+## Easy mode — GitHub Copilot (default)
 
-1. Review `deployment.json`, `evals/transcripts.json`, and the available
-   Easy-mode evidence before making a claim.
-2. Use the reviewed Copilot Studio source under `copilot-studio/`.
-3. Run the recorded cases without changing their acceptance identifiers.
-4. Compare the observed result with the evidence rather than promising an
-   operational outcome.
-5. Stop at **Draft**. Publishing is a separate human approval gate.
+1. Open GitHub Copilot Chat in VS Code and select **Agent mode**.
+2. Download `skills/aibast-easy-mode-copilot/SKILL.md` and drag it into the
+   chat.
+3. Open `EASY-MODE-COPILOT-CHAT.md`.
+4. Send its two short messages in order: build and test the named solution,
+   then deploy the validated Draft.
+5. The skill performs discovery, testing, deployment, and Preview validation
+   directly through GitHub Copilot.
+6. Stop at **Draft**. Publishing remains a separate human approval gate.
 
-Recorded case prompts:
+## Easy mode — GitHub Copilot + Brainstem (optional)
 
-- `RCR-01` — recorded prompt
-- `RCR-02` — recorded prompt
-- `RCR-03` — recorded prompt
-- `RCR-04` — recorded prompt
+Brainstem is the learner's personal, on-device training AI working alongside
+GitHub Copilot. Copilot stays the familiar work surface; Brainstem remembers
+the workshop and hot-loads the specialized instructors.
+
+Download `skills/aibast-easy-mode-brainstem/SKILL.md`, drag it into Copilot
+Chat, open `EASY-MODE-PERSONLESS.md`, and send the same two short messages.
+The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
+continues its front-door handoffs until functional validation returns
+`status: complete`.
+
+Both lanes use the same immutable assets, locked cases, real Preview gate, and
+`published: false` boundary.
+
+Both Easy lanes preserve every recorded case prompt:
+
+- `RCR-01` — As Customer Service Agent, summarize the anonymous return review evidence and approval boundary.
+- `RCR-02` — As Customer Service Agent, classify this product concern without echoing personal information or sending a response.
+- `RCR-03` — As Customer Service Agent, draft a policy-grounded option and keep all actions behind authorization.
+- `RCR-04` — As Quality Team, summarize aggregate defect and return patterns without accusing any person.
 
 ## Hard mode — literal browser construction
 

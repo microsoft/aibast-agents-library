@@ -123,7 +123,8 @@ class AIBASTWorkshopAgent(BasicAgent):
                         "type": "string",
                         "description": (
                             "For complete, JSON captured from the real Copilot "
-                            "Studio Preview front door."
+                            "Studio Preview front door, including the non-empty "
+                            "actual response for every locked case."
                         ),
                     },
                 },
@@ -158,9 +159,18 @@ class AIBASTWorkshopAgent(BasicAgent):
         active = state.get("active_solution")
         if active:
             if state.get("status") == "complete":
+                visual_note = (
+                    " Teaching visuals are not complete: replacement captures "
+                    "remain required as supplemental visual remediation, not "
+                    "another functional or deployment step."
+                    if state.get("visual_remediation_status") == "required"
+                    else ""
+                )
                 return (
-                    "AIBAST Workshop Engine has already completed and "
-                    f"front-door validated {state.get('display_name', active)}. "
+                    "AIBAST Workshop Engine has already functionally completed "
+                    "and front-door validated "
+                    f"{state.get('display_name', active)}."
+                    f"{visual_note} "
                     "Summarize the final Draft verdict only. Do not suggest "
                     "deploying again, publishing, or any additional workshop "
                     "step."
@@ -708,8 +718,8 @@ class AIBASTWorkshopAgent(BasicAgent):
             "instruction": (
                 "Use the real Copilot Studio front door or configured browser "
                 "tools. Open the Draft, run every exact case in a fresh Preview "
-                "conversation, capture evidence, then ask AIBASTWorkshopAgent "
-                "to complete using that evidence."
+                "conversation, capture each full non-empty response, then ask "
+                "AIBASTWorkshopAgent to complete using that evidence."
             ),
             "solution": solution["agent_name"],
             "draft": studio,
@@ -734,6 +744,7 @@ class AIBASTWorkshopAgent(BasicAgent):
                 "cases": [
                     {
                         "case_id": "CASE-01",
+                        "response": "The actual Copilot Studio Preview response.",
                         "must_include": [],
                         "must_not_include": [],
                         "passed": True,
@@ -812,7 +823,7 @@ class AIBASTWorkshopAgent(BasicAgent):
         results = []
         for case in cases.get("cases", []):
             item = captured.get(case["id"], {})
-            response = str(item.get("response") or "")
+            response = str(item.get("response") or "").strip()
             if response:
                 lower = response.lower()
                 missing = [
@@ -827,23 +838,9 @@ class AIBASTWorkshopAgent(BasicAgent):
                 ]
                 passed = not missing and not forbidden
             else:
-                missing = (
-                    []
-                    if item.get("must_include")
-                    == case.get("must_include", [])
-                    else ["captured must_include contract differs"]
-                )
-                forbidden = (
-                    []
-                    if item.get("must_not_include")
-                    == case.get("must_not_include", [])
-                    else ["captured must_not_include contract differs"]
-                )
-                passed = (
-                    item.get("passed") is True
-                    and not missing
-                    and not forbidden
-                )
+                missing = ["non-empty Preview response is required"]
+                forbidden = []
+                passed = False
             results.append(
                 {
                     "case_id": case["id"],
@@ -867,15 +864,13 @@ class AIBASTWorkshopAgent(BasicAgent):
         visual_reshoots = int(
             visual_evidence.get("reshoot_required", 0) or 0
         )
-        overall_status = (
-            "functional_complete_visual_remediation_required"
-            if visual_reshoots
-            else "complete"
-        )
         state = {
             **previous,
-            "status": overall_status,
+            "status": "complete",
             "functional_status": "complete",
+            "visual_remediation_status": (
+                "required" if visual_reshoots else "not_required"
+            ),
             "front_door_validation": {
                 "passed": len(results),
                 "total": len(results),
@@ -884,9 +879,10 @@ class AIBASTWorkshopAgent(BasicAgent):
             "copilot_handoff": None,
             "published": False,
             "verdict": (
-                f"{solution['display_name']} workshop complete. The generic "
-                "engine discovered, hot-loaded, tested, deployed, and validated "
-                "the package; the Copilot Studio agent remains Draft. "
+                f"{solution['display_name']} functional workshop complete. "
+                "The generic engine discovered, hot-loaded, tested, deployed, "
+                "and validated the package; the Copilot Studio agent remains "
+                "Draft. "
                 + (
                     f"Visual evidence still requires {visual_reshoots} "
                     "replacement captures before the teaching package is "

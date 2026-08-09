@@ -1,144 +1,99 @@
 # Regulatory Compliance Agent — customer field guide
 
-This guide is for a seller, specialist, architect, or customer champion running
-the Regulatory Compliance Agent with the customer at the keyboard.
+Use this guide with the customer at the keyboard. The goal is to inspect the
+portable source, reproduce the synthetic workflow, review the deployment
+blueprint, and decide what production integration would require.
 
-The goal is to show a governed compliance workflow, not to make a legal
-determination. The pilot uses synthetic records to expose control gaps,
-evidence, owners, and approval points. It cannot determine whether an audit
-will pass or fail and does not provide legal or regulatory advice.
+## Evidence boundary
 
-## What is proven
+- All packaged records and outcomes are synthetic.
+- Recorded cases provide qualitative workflow evidence only.
+- They are not customer KPIs, measured production results, forecasts,
+  commitments, or proof of a live system connection.
+- A screenshot proves only the visible state in that frame.
+- No image, GIF, transcript, connector result, or publication state is implied
+  unless the corresponding file is present in `export-manifest.json`.
 
-The approved one-pager promises:
+## Easy mode — GitHub Copilot (default)
 
-1. Transaction-reporting and best-execution surveillance.
-2. Missing or outdated algorithm-documentation review.
-3. Correction and submission preparation.
-4. Trader-certification readiness and enrollment planning.
+1. Open GitHub Copilot Chat in VS Code and select **Agent mode**.
+2. Download `skills/aibast-easy-mode-copilot/SKILL.md` and drag it into the
+   chat.
+3. Open `EASY-MODE-COPILOT-CHAT.md`.
+4. Send its two short messages in order: build and test the named solution,
+   then deploy the validated Draft.
+5. The skill performs discovery, testing, deployment, and Preview validation
+   directly through GitHub Copilot.
+6. Stop at **Draft**. Publishing remains a separate human approval gate.
 
-Those promises are mapped in `evals/onepager-map.json`.
+## Easy mode — GitHub Copilot + Brainstem (optional)
 
-The Python agent was loaded by itself into Brainstem and all five locked
-persona-language cases passed. The exact responses are stored in
-`evals/transcripts.json`.
+Brainstem is the learner's personal, on-device training AI working alongside
+GitHub Copilot. Copilot stays the familiar work surface; Brainstem remembers
+the workshop and hot-loads the specialized instructors.
 
-The Easy and manual Copilot Studio builds are complete in Draft. The evidence
-contract is stored in `evals/manual-build-evidence.json` and
-`screenshots/manual/browserfilm.json`.
+Download `skills/aibast-easy-mode-brainstem/SKILL.md`, drag it into Copilot
+Chat, open `EASY-MODE-PERSONLESS.md`, and send the same two short messages.
+The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
+continues its front-door handoffs until functional validation returns
+`status: complete`.
 
-- Easy agent: `Regulatory Compliance Pilot`,
-  `aibast_RegulatoryCompliancePilot`, bot
-  `1a5fb3de-2e07-4415-89f9-40c5620c0cc5`.
-- Easy inventory: Sonnet46, five skills, two knowledge files, eight changes
-  pushed, 5/5 Preview cases passed, Draft.
-- Manual agent: `Regulatory Manual Build`, bot
-  `ad9993c3-ea7a-4ecf-a86b-40a9d39a4fa3`.
-- Manual inventory: Sonnet46, five skills, two knowledge files, no web search,
-  5/5 Preview cases passed, 26 screenshots, Draft.
+Both lanes use the same immutable assets, locked cases, real Preview gate, and
+`published: false` boundary.
 
-## Customer session: Easy mode
+Both Easy lanes preserve every recorded case prompt:
 
-**Audience:** nontechnical customer participants and account teams.
+- `RC-01` — Are we going to fail our next MiFID audit? What's actually broken on the desk right now?
+- `RC-02` — Which of my traders can't legally trade today, and who do I have to call?
+- `RC-03` — We executed a few hundred trades this week. Which ones will the regulator reject, and why exactly?
+- `RC-04` — Is anything about to go live that shouldn't?
+- `RC-05` — My head of trading says the reporting is fine. Prove him wrong with specifics I can take to the board.
 
-**Customer requirement:** GitHub Copilot Agent mode in VS Code and a browser for
-the supported GitHub/Copilot authentication step.
+## Hard mode — literal browser construction
 
-### Facilitation sequence
+Hard mode is for reviewers who want to reproduce the build in the browser.
+Do not use PAC CLI, YAML import, or a plugin architect in Hard mode.
 
-1. Open `deployment.json`.
-2. Give the customer control of the keyboard.
-3. Ask GitHub Copilot Agent mode to own the recipe end to end.
-4. Intervene only if a browser asks the customer to approve authentication.
-5. Do not continue until Copilot reports:
-   - Brainstem health is `ok`;
-   - the downloaded source matches the registry SHA-256;
-   - `FSRegulatoryCompliance` is loaded; and
-   - the smoke prompt fired that exact agent.
-6. Replay all five locked prompts and compare the live answers with
-   `evals/transcripts.json`.
-7. Inspect the validated Copilot Studio Draft and its five-case evidence.
-8. Stop before connecting customer systems or publishing anything.
-
-### Conversation starters
-
-- “Are we going to fail our next MiFID audit? What's actually broken on the
-  desk right now?”
-- “Which of my traders can't legally trade today, and who do I have to call?”
-- “We executed a few hundred trades this week. Which ones will the regulator
-  reject, and why exactly?”
-- “Is anything about to go live that shouldn't?”
-- “My head of trading says the reporting is fine. Prove him wrong with
-  specifics I can take to the board.”
-
-### What to say while it runs
-
-- “The exact records and figures are synthetic evidence, not customer claims.”
-- “Audit readiness is reported as control gaps and at-risk areas, not a
-  predicted audit outcome.”
-- “Remediation prepares payloads for authorized review; it does not transmit a
-  filing.”
-- “Production connectors and approval policy remain customer decisions.”
-
-## Customer session: true manual Hard mode
-
-Open `manual-tutorial.html`. The walkthrough is intentionally literal and uses
-one expected screenshot per browser action:
-
-1. Create a blank Copilot Studio agent.
-2. Name the manual build.
-3. Enter and save the reviewed global instructions.
-4. Remove default web search.
-5. Upload the two synthetic Markdown knowledge files.
-6. Upload five `SKILL.md` files individually.
-7. Select Claude Sonnet 4.6.
-8. Review the complete inventory.
-9. Run all five locked cases in Preview.
-10. Stop at the explicit no-publish gate.
-
-All 26 screenshots exist under `screenshots/manual/` and are rendered as
-`screenshots/manual/manual-build-walkthrough.gif`.
+1. Open `manual-tutorial.html`.
+2. Perform exactly one browser action per captured frame.
+3. Use the linked `manual/GLOBAL-INSTRUCTIONS.md`, knowledge files, and
+   `SKILL.md` files; do not retype or silently revise them.
+4. Compare each action with its real screenshot and expected-result boundary.
+5. Replay only the Preview cases recorded in `evals/manual-build-evidence.json`.
+6. Keep the manual duplicate in **Draft**. Do not choose Publish.
 
 ## Production replacement seams
 
-For production:
+- Replace packaged synthetic inputs with an approved Order-management or transaction-reporting data through an approved connector or API connection; preserve the reviewed input and output contract.
+- Replace packaged synthetic inputs with an approved Approved Reporting Mechanism through Power Automate or a custom connector connection; preserve the reviewed input and output contract.
+- Replace packaged synthetic inputs with an approved Learning management system connection; preserve the reviewed input and output contract.
+- Replace packaged synthetic inputs with an approved Microsoft Teams connection; preserve the reviewed input and output contract.
 
-- replace synthetic trade records with approved order-management and
-  transaction-reporting data;
-- replace static reference data with governed instrument and venue sources;
-- connect remediation to an Approved Reporting Mechanism only behind an
-  authenticated approval workflow;
-- replace synthetic certification records with the approved learning system;
-- use Microsoft Teams for role-based review and escalation where appropriate.
-
-The agent must never claim a side effect occurred unless the production tool
-returns evidence that it succeeded.
+The pilot must never claim a side effect, live lookup, or system update unless
+an approved production tool returns evidence that it succeeded.
 
 ## Failure recovery
 
-| Symptom | Response |
+| Symptom | Recovery |
 | --- | --- |
-| Brainstem health is unavailable | Have Copilot rerun the official installer and launcher from the deployment recipe. |
-| Downloaded hash differs | Stop. Refresh `registry.json`; do not install an unverified source file. |
-| The wrong agent answers | Restore strict isolation and fix routing metadata rather than retrying blindly. |
-| A knowledge file remains processing | Wait for indexing to finish before Preview. |
-| A skill upload fails | Download the raw file again and upload the file literally named `SKILL.md`. |
-| Web answers appear | Confirm the default web-search capability was removed. |
-| Preview predicts an audit outcome | Recheck global instructions and the compliance-dashboard skill boundary. |
-| Remediation claims a filing was sent | Treat the build as failed; the pilot may only prepare payloads for authorized review. |
+| A required evidence file is missing | Stop. Capture or restore the real file; never substitute a mockup. |
+| A browser frame disagrees with the tutorial | Treat the frame and evidence JSON as authoritative, correct the package metadata, and regenerate. |
+| Knowledge is still processing | Wait for ingestion to finish before Preview; do not interpret a partial answer as evidence. |
+| A skill upload fails | Download the linked raw `SKILL.md`, correct the reviewed source if necessary, and retry visibly. |
+| Easy and Hard inventories differ | Stop the comparison and restore exact instruction, knowledge, skill, and model parity. |
+| A recorded identifier is absent | Mark the case failed and investigate; do not retry until it happens to pass. |
+| Publish is offered | Stop at Draft unless a separate approver explicitly authorizes publication. |
 
-## Evidence that must leave the session
+## Evidence gates
 
-- source-agent and one-pager SHA-256 values;
-- isolated Brainstem transcripts;
-- environment and manual-agent identity;
-- model selection;
-- two knowledge-source confirmations;
-- five skill confirmations;
-- all five Preview responses;
-- 26 browser screenshots and browserfilm manifest;
-- explicit Draft/no-publish confirmation;
-- unresolved connector or governance work.
-
-The Copilot Studio path is validated for this synthetic Draft pilot; production
-connectors, security review, legal review, and publication remain separate.
+- **Source gate:** deployment source and isolated transcripts exist.
+- **Easy gate:** available Easy evidence identifies the agent, environment,
+  model, inventory, cases, and Draft state.
+- **Manual gate:** manual evidence passes, every browserfilm frame exists, and
+  the tutorial maps one action to each frame.
+- **Parity gate:** Easy and Hard use the reviewed instructions, knowledge,
+  skills, model, and case identifiers.
+- **Draft gate:** the package records `published: false`; publication is not
+  part of scaffolding.
+- **Customer gate:** replacement connections, governance, telemetry, support,
+  and success measures are agreed before production.

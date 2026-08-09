@@ -1,0 +1,285 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/fs-regulatory-compliance",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker or refusal.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 33,
+    "reusable": 0,
+    "reshoot_required": 33,
+    "new_learn_step_captures_recommended": 0
+  },
+  "captures": [
+    {
+      "id": "easy-draft",
+      "mode": "easy",
+      "source": "solutions/fs-regulatory-compliance/screenshots/assisted/01-review-build.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "easy-rc-01",
+      "mode": "easy",
+      "source": "solutions/fs-regulatory-compliance/screenshots/assisted/02-rc-01.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "RC-01"
+    },
+    {
+      "id": "easy-rc-02",
+      "mode": "easy",
+      "source": "solutions/fs-regulatory-compliance/screenshots/assisted/03-rc-02.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "RC-02"
+    },
+    {
+      "id": "easy-rc-03",
+      "mode": "easy",
+      "source": "solutions/fs-regulatory-compliance/screenshots/assisted/04-rc-03.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "RC-03"
+    },
+    {
+      "id": "easy-rc-04",
+      "mode": "easy",
+      "source": "solutions/fs-regulatory-compliance/screenshots/assisted/05-rc-04.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "RC-04"
+    },
+    {
+      "id": "easy-rc-05",
+      "mode": "easy",
+      "source": "solutions/fs-regulatory-compliance/screenshots/assisted/06-rc-05.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "RC-05"
+    },
+    {
+      "id": "easy-draft-02",
+      "mode": "easy",
+      "source": "solutions/fs-regulatory-compliance/screenshots/assisted/07-confirm-draft.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "step": 1,
+      "source": "solutions/fs-regulatory-compliance/screenshots/manual/01-create-blank-agent.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "step": 2,
+      "source": "solutions/fs-regulatory-compliance/screenshots/manual/02-name-manual-agent.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "step": 3,
+      "source": "solutions/fs-regulatory-compliance/screenshots/manual/03-enter-global-instructions.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "step": 4,
+      "source": "solutions/fs-regulatory-compliance/screenshots/manual/04-save-global-instructions.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "step": 5,
+      "source": "solutions/fs-regulatory-compliance/screenshots/manual/05-open-web-search-settings.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "step": 6,
+      "source": "solutions/fs-regulatory-compliance/screenshots/manual/06-remove-web-search.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "step": 7,
+      "source": "solutions/fs-regulatory-compliance/screenshots/manual/07-open-knowledge-upload.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "step": 8,
+      "source": "solutions/fs-regulatory-compliance/screenshots/manual/08-upload-synthetic-records.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "step": 9,
+      "source": "solutions/fs-regulatory-compliance/screenshots/manual/09-upload-rules-controls.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "step": 10,
+      "source": "solutions/fs-regulatory-compliance/screenshots/manual/10-verify-two-knowledge-files.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "step": 11,
+      "source": "solutions/fs-regulatory-compliance/screenshots/manual/11-open-skill-upload.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "step": 12,
+      "source": "solutions/fs-regulatory-compliance/screenshots/manual/12-upload-dashboard-skill.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "step": 13,
+      "source": "solutions/fs-regulatory-compliance/screenshots/manual/13-upload-surveillance-skill.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "step": 14,
+      "source": "solutions/fs-regulatory-compliance/screenshots/manual/14-upload-documentation-skill.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "step": 15,
+      "source": "solutions/fs-regulatory-compliance/screenshots/manual/15-upload-remediation-skill.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "step": 16,
+      "source": "solutions/fs-regulatory-compliance/screenshots/manual/16-upload-certification-skill.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "step": 17,
+      "source": "solutions/fs-regulatory-compliance/screenshots/manual/17-open-model-picker.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "step": 18,
+      "source": "solutions/fs-regulatory-compliance/screenshots/manual/18-select-sonnet46.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-19",
+      "mode": "hard",
+      "step": 19,
+      "source": "solutions/fs-regulatory-compliance/screenshots/manual/19-review-complete-inventory.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-20",
+      "mode": "hard",
+      "step": 20,
+      "source": "solutions/fs-regulatory-compliance/screenshots/manual/20-open-preview.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-21",
+      "mode": "hard",
+      "step": 21,
+      "source": "solutions/fs-regulatory-compliance/screenshots/manual/21-preview-rc01-audit-readiness.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "RC-01"
+    },
+    {
+      "id": "hard-step-22",
+      "mode": "hard",
+      "step": 22,
+      "source": "solutions/fs-regulatory-compliance/screenshots/manual/22-preview-rc02-certifications.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "RC-02"
+    },
+    {
+      "id": "hard-step-23",
+      "mode": "hard",
+      "step": 23,
+      "source": "solutions/fs-regulatory-compliance/screenshots/manual/23-preview-rc03-trade-surveillance.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "RC-03"
+    },
+    {
+      "id": "hard-step-24",
+      "mode": "hard",
+      "step": 24,
+      "source": "solutions/fs-regulatory-compliance/screenshots/manual/24-preview-rc04-algorithm-go-live.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "RC-04"
+    },
+    {
+      "id": "hard-step-25",
+      "mode": "hard",
+      "step": 25,
+      "source": "solutions/fs-regulatory-compliance/screenshots/manual/25-preview-rc05-board-evidence.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "RC-05"
+    },
+    {
+      "id": "hard-step-26",
+      "mode": "hard",
+      "step": 26,
+      "source": "solutions/fs-regulatory-compliance/screenshots/manual/26-confirm-draft-no-publish.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    }
+  ]
+}

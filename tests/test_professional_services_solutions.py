@@ -314,7 +314,6 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     ):
         assert marker in personless
     for marker in (
-        "Copilot-only Easy mode comparison",
         "Attach the Copilot-only skill",
         "drag `SKILL.md` into the",
         "Give me Time Entry and Billing using Easy Mode and test it for me.",

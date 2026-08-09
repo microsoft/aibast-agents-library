@@ -1,5 +1,6 @@
 import re
 import subprocess
+import json
 from pathlib import Path
 
 from tools.scaffold_solution_journey import (
@@ -30,6 +31,83 @@ def test_global_workshop_settings_default_to_copilot_and_persist():
     assert "GitHub Copilot + Brainstem" in text
     assert "applies to every AIBAST workshop" in text
     assert "localStorage.setItem(key" in text
+
+
+def run_settings_script(tmp_path, return_value):
+    text = SETTINGS.read_text(encoding="utf-8")
+    script = re.findall(r"<script>(.*?)</script>", text, re.DOTALL)[-1]
+    location = (
+        "https://example.test/solutions/_shared/workshop-settings.html"
+        f"?return={return_value}"
+    )
+    harness = f"""
+const assigned = [];
+global.window = {{
+  location: {{
+    href: {json.dumps(location)},
+    origin: "https://example.test",
+    search: new URL({json.dumps(location)}).search,
+    assign: (value) => assigned.push(value),
+  }},
+}};
+const listeners = {{}};
+const form = {{
+  elements: {{ engine: {{ value: "" }} }},
+  addEventListener: (name, callback) => listeners[name] = callback,
+}};
+const back = {{ href: "" }};
+global.document = {{
+  getElementById: (id) => id === "settings-form" ? form : back,
+}};
+const stored = {{}};
+global.localStorage = {{
+  getItem: (key) => stored[key] || null,
+  setItem: (key, value) => stored[key] = value,
+}};
+{script}
+form.elements.engine.value = "brainstem";
+listeners.submit({{ preventDefault: () => {{}} }});
+console.log(JSON.stringify({{
+  href: back.href,
+  assigned: assigned[0],
+  stored: stored["aibast:workshop-engine"],
+}}));
+"""
+    script_path = tmp_path / "workshop-settings-harness.js"
+    script_path.write_text(harness, encoding="utf-8")
+    result = subprocess.run(
+        ["node", str(script_path)],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr
+    return json.loads(result.stdout)
+
+
+def test_workshop_settings_accept_valid_relative_return_and_persist(tmp_path):
+    result = run_settings_script(tmp_path, "..%2Ftime-entry-billing%2Fquest.html")
+    expected = "https://example.test/solutions/time-entry-billing/quest.html"
+    assert result == {
+        "href": expected,
+        "assigned": expected,
+        "stored": "brainstem",
+    }
+
+
+def test_workshop_settings_reject_hostile_returns(tmp_path):
+    fallback = "https://example.test/library.html"
+    for value in (
+        "javascript%3Aalert(1)",
+        "data%3Atext%2Fhtml%2Cbad",
+        "%2F%2Fevil.example%2Fpath",
+        "https%3A%2F%2Fevil.example%2Fpath",
+        "http%3A%2F%2F%5Binvalid",
+    ):
+        result = run_settings_script(tmp_path, value)
+        assert result["href"] == fallback
+        assert result["assigned"] == fallback
+        assert result["stored"] == "brainstem"
 
 
 def test_quest_renders_only_the_global_engine_and_links_settings():

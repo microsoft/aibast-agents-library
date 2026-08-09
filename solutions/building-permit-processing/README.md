@@ -39,3 +39,27 @@ again in the target environment.
 - Manual duplicate agent: Draft by design; not published
 - Public-main no-terminal recipe: must be rerun after these package paths and
   fixed agent source are merged
+
+<!-- scaffold-solution-journey:start -->
+## Customer journey package map
+
+| Surface | Location |
+| --- | --- |
+| Customer field guide | `solutions/building-permit-processing/field-guide.html` |
+| Evidence report | `solutions/building-permit-processing/evidence-report.html` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/building-permit-processing/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/building-permit-processing/EASY-MODE-COPILOT-CHAT.md` |
+| Guided Easy/Hard quest | `solutions/building-permit-processing/quest.html` |
+| Literal browser tutorial | `solutions/building-permit-processing/manual-tutorial.html` |
+| Raw export manifest | `solutions/building-permit-processing/export-manifest.json` |
+| Source bundle | `solutions/building-permit-processing/exports/building-permit-processing-source.zip` |
+| Manual evidence | `solutions/building-permit-processing/evals/manual-build-evidence.json` |
+| Manual browserfilm | `solutions/building-permit-processing/screenshots/manual/browserfilm.json` |
+
+**Scaffold status:** 82 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+
+The journey uses synthetic inputs and qualitative proof. It is not a customer
+KPI, live-system result, production-readiness claim, or publication approval.
+<!-- scaffold-solution-journey:end -->

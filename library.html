@@ -1978,8 +1978,8 @@ function openAgent(name) {
             <div class="asset"><strong>Demo video</strong><span title="${esc(solution.demo_video || "")}">${esc(solution.demo_video || "Not listed")}</span></div>
             ${solution.source_verified ? `<div class="asset"><strong>Content source</strong><span>Approved AI BAST PowerPoint</span></div>` : ""}
             ${solution.package ? `<div class="detail-actions" style="margin-top:10px">
-              ${solution.package.quest_url ? `<a class="button primary small" href="${esc(solution.package.quest_url)}">Open deployment quest</a>` : ""}
-              ${solution.package.manual_tutorial_url ? `<a class="button small" href="${esc(solution.package.manual_tutorial_url)}">Open Hard tutorial</a>` : ""}
+              ${solution.package.quest_url ? `<a class="button primary small" href="${esc(solution.package.quest_url)}">Open Beta workshop</a>` : ""}
+              ${solution.package.manual_tutorial_url ? `<a class="button small" href="${esc(solution.package.manual_tutorial_url)}">Open Hard mode</a>` : ""}
             </div>` : ""}
           </section>
           ${stack ? `<section class="aside-block"><h3>Stack</h3><button class="button full" type="button" data-action="open-stack" data-key="${enc(`${stack.vertical}/${stack.stack}`)}">${esc(stack.display_name)} · ${stack.agent_count} agents</button></section>` : ""}

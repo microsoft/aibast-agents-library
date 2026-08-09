@@ -14,24 +14,41 @@ blueprint, and decide what production integration would require.
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
-## Easy mode — Copilot-assisted
+## Easy mode — GitHub Copilot (default)
 
-1. Review `deployment.json`, `evals/transcripts.json`, and the available
-   Easy-mode evidence before making a claim.
-2. Use the reviewed Copilot Studio source under `copilot-studio/`.
-3. Run the recorded cases without changing their acceptance identifiers.
-4. Compare the observed result with the evidence rather than promising an
-   operational outcome.
-5. Stop at **Draft**. Publishing is a separate human approval gate.
+1. Open GitHub Copilot Chat in VS Code and select **Agent mode**.
+2. Download `skills/aibast-easy-mode-copilot/SKILL.md` and drag it into the
+   chat.
+3. Open `EASY-MODE-COPILOT-CHAT.md`.
+4. Send its two short messages in order: build and test the named solution,
+   then deploy the validated Draft.
+5. The skill performs discovery, testing, deployment, and Preview validation
+   directly through GitHub Copilot.
+6. Stop at **Draft**. Publishing remains a separate human approval gate.
 
-Recorded case prompts:
+## Easy mode — GitHub Copilot + Brainstem (optional)
 
-- `PG-01` — recorded prompt
-- `PG-02` — recorded prompt
-- `PG-03` — recorded prompt
-- `PG-04` — recorded prompt
-- `PG-05` — recorded prompt
-- `PG-06` — recorded prompt
+Brainstem is the learner's personal, on-device training AI working alongside
+GitHub Copilot. Copilot stays the familiar work surface; Brainstem remembers
+the workshop and hot-loads the specialized instructors.
+
+Download `skills/aibast-easy-mode-brainstem/SKILL.md`, drag it into Copilot
+Chat, open `EASY-MODE-PERSONLESS.md`, and send the same two short messages.
+The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
+continues its front-door handoffs until functional validation returns
+`status: complete`.
+
+Both lanes use the same immutable assets, locked cases, real Preview gate, and
+`published: false` boundary.
+
+Both Easy lanes preserve every recorded case prompt:
+
+- `PG-01` — Analyze the synthetic Meridian Healthcare RFP and show the traceable requirement checklist.
+- `PG-02` — Draft an executive summary for the synthetic Meridian Healthcare opportunity that reflects the buyer priorities and remains subject to review.
+- `PG-03` — Compare the synthetic solution and pricing assumptions for Meridian Healthcare without approving a price, discount, or concession.
+- `PG-04` — Prepare synthetic reference and competitive positioning options for Meridian Healthcare, with availability checks before use.
+- `PG-05` — Outline the synthetic Meridian Healthcare proposal package and every human review required before delivery.
+- `PG-06` — Summarize the synthetic Meridian Healthcare draft readiness and the decisions authorized reviewers must make next.
 
 ## Hard mode — literal browser construction
 

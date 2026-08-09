@@ -23,7 +23,12 @@ refund, credit, replacement, shipment, reservation, or customer message.
 
 | Surface | Location |
 | --- | --- |
-| Customer field guide | `solutions/returns-complaints-resolution/FIELD-GUIDE.md` |
+| Customer field guide | `solutions/returns-complaints-resolution/field-guide.html` |
+| Evidence report | `solutions/returns-complaints-resolution/evidence-report.html` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/returns-complaints-resolution/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/returns-complaints-resolution/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Hard quest | `solutions/returns-complaints-resolution/quest.html` |
 | Literal browser tutorial | `solutions/returns-complaints-resolution/manual-tutorial.html` |
 | Raw export manifest | `solutions/returns-complaints-resolution/export-manifest.json` |
@@ -31,7 +36,7 @@ refund, credit, replacement, shipment, reservation, or customer message.
 | Manual evidence | `solutions/returns-complaints-resolution/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/returns-complaints-resolution/screenshots/manual/browserfilm.json` |
 
-**Scaffold status:** 60 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 69 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

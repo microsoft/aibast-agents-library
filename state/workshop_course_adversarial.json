@@ -1,0 +1,635 @@
+{
+  "schema": "aibast-workshop-course-adversarial/1.0",
+  "generated_at": "2026-08-09T04:51:12Z",
+  "total": 51,
+  "passed": 51,
+  "failed": 0,
+  "factory_runs": [
+    "5c21a090-122e-40de-bc4b-3c2ab04b1476",
+    "12b8f52c-3b09-4db7-987f-4e1a649ee2e2"
+  ],
+  "repairs": [
+    "Hide manual films whenever any Hard capture requires reshoot.",
+    "Map Add skill steps to the same-named SKILL.md, including names containing review or audit.",
+    "Treat Preview as its own action and require a fresh conversation before every locked Hard case.",
+    "Label reshoot-required evidence explicitly.",
+    "Require actual Preview response text before functional completion.",
+    "Validate every ZIP manifest file and its current bytes."
+  ],
+  "adjudications": [
+    {
+      "slug": "field-service-dispatch",
+      "result": "false_positive",
+      "reason": "The active solution is persisted and the invariant Deploy it message is the approved two-message contract."
+    },
+    {
+      "slug": "procurement-support",
+      "result": "repaired_and_passed",
+      "reason": "Every Hard case now includes a text-only fresh Preview checkpoint without fabricated visual proof."
+    }
+  ],
+  "reviews": [
+    {
+      "slug": "account-intelligence",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "Package is target-specific: deployment title is \"Account Intelligence Agent\"; 6 operation controls, 6 locked cases, and both \"preview_cases_passed\": 6 counts align. All 6 prompts are account-intelligence-specific.",
+        "Required boundaries are present: \"AIBAST guided workshop\", \"Beta workshop evidence\", \"Workshop settings\", embedded Hard mode, and \"This workshop ends at Draft.\" All 7 required files exist.",
+        "One Hard capture is \"reshoot_required\"; evidence-report.html labels the count as 1 and states it \"is hidden from learner pages until independently approved.\" manual-tutorial.html has 0 manual-build-walkthrough.gif references.",
+        "All .md/.json/.py anchors have download attributes; Add-skill mappings match their SKILL.md names. Open Preview requires fresh Preview state. Forbidden-content and unapproved-media counts are 0."
+      ],
+      "gate": "AIBAST workshop-course rollout: 1/1 passed; 0 failed \u2014 PASS account-intelligence"
+    },
+    {
+      "slug": "ai-customer-assistant",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "tools/audit_workshop_course_rollout.py: \"1/1 passed; 0 failed\" and \"PASS ai-customer-assistant\".",
+        "deployment.json: \"Customer Escalations Agent\"; 4 operations, 4 skills, 2 knowledge files, both previews 4/4, Draft and unpublished.",
+        "tests/demo_cases/ai-customer-assistant.json: 4/4 locked CES prompts are customer-escalation-specific.",
+        "evals/visual-checkpoints.json: \"reshoot_required\": 24; all 18 Hard captures require reshoot. manual-tutorial.html links manual-build-walkthrough.gif 0 times; evidence-report.html explicitly labels the 24 reshoot-required captures.",
+        "HTML checks: all required pages exist; raw anchors have download attributes; 4/4 Add-skill links match NAME/SKILL.md; Open Preview expects fresh Preview state; prohibited content and unapproved displayed captures count 0."
+      ],
+      "gate": "clean \u2014 AIBAST workshop-course rollout: 1/1 passed; 0 failed"
+    },
+    {
+      "slug": "ask-hr",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "deployment.json declares \"display_name\": \"Ask HR Agent\"; all four inspected pages use Ask HR Agent in their title/H1.",
+        "All six locked prompts appear exactly once in quest.html, matching six article.preview-case controls.",
+        "AIBAST, Beta, Workshop settings, Report an issue, and embedded Hard-mode controls are present.",
+        "No Clawpilot, assisted-film, publication offer, or generic foreign-solution prompt was found.",
+        "visual-checkpoints.json reports 30 existing captures, 0 reusable, and 30 reshoot_required; no source screenshot media element is rendered on the inspected pages."
+      ],
+      "gate": "exit code 0\nAIBAST workshop-course rollout: 1/1 passed; 0 failed\nBuilders: 1 non-reference; critics: 1 including time-entry-billing\nEXCLUDED_NON_ADVERTISED grid-outage-response: GENERATED - not SharePoint-advertised. Proves the generator; must be advertised before it ships (Article I.1).\nPASS ask-hr"
+    },
+    {
+      "slug": "asset-maintenance-forecast",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "solutions/asset-maintenance-forecast/deployment.json: title \"Asset Maintenance Forecast Agent\"; operations=4, skills=4, knowledge files=2; both validated builds are \"Draft\" and published=false.",
+        "tests/demo_cases/asset-maintenance-forecast.json: 4/4 locked prompts are asset-maintenance-specific; no unmatched foreign locked prompts found.",
+        "solutions/asset-maintenance-forecast/evals/visual-checkpoints.json: total captures=24, reshoot_required=24, reusable=0. manual-tutorial.html has 0 references to \"manual-build-walkthrough.gif\" and displays 0 unapproved captures. evidence-report.html explicitly labels the reshoot-required count as 24.",
+        "quest.html, manual-tutorial.html, field-guide.html, and evidence-report.html: AIBAST/Beta/Settings/report/embedded Hard/Draft-only boundaries are present; all raw .md/.json/.py anchors use download; 4/4 \"Add skill\" downloads match their named SKILL.md; required pages and local links are present."
+      ],
+      "gate": "PASS asset-maintenance-forecast \u2014 1/1 passed; 0 failed"
+    },
+    {
+      "slug": "building-permit-processing",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "Audit gate reported \"1/1 passed; 0 failed\" and \"PASS building-permit-processing\".",
+        "deployment.json title is \"Building Permit Processing Agent\".",
+        "All seven required artifacts were present and inspected; requested boundaries and exclusions verified."
+      ],
+      "gate": "clean \u2014 AIBAST workshop-course rollout: 1/1 passed; 0 failed"
+    },
+    {
+      "slug": "care-gap-closure",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "solutions/care-gap-closure/deployment.json: title is \"Care Gap Closure Agent\"; 4 skills, 2 knowledge files, and both previews are 4/4, \"Draft\", published=false.",
+        "tests/demo_cases/care-gap-closure.json: 4/4 locked prompts are target-specific; 0 foreign-solution prompts.",
+        "solutions/care-gap-closure/evals/visual-checkpoints.json: Hard reshoot_required count=1; evidence-report.html labels \"Reshoot-required: 1\"; manual-tutorial.html has 0 \"manual-build-walkthrough.gif\" references.",
+        "manual-tutorial.html: all 4 \"Add skill\" steps match their SKILL.md downloads; \"Open Preview\" expects fresh Preview state, not inventory review.",
+        "Required HTML files preserve \"AIBAST\", \"Beta\", \"Settings\", \"report\", embedded \"Hard\", and \"Draft-only\" boundaries. Raw-link violations=0; forbidden-content matches=0; missing required pages=0."
+      ],
+      "gate": "clean \u2014 audit reported \"AIBAST workshop-course rollout: 1/1 passed; 0 failed\" and \"PASS care-gap-closure\""
+    },
+    {
+      "slug": "cart-abandonment-recovery",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "All 7 required files exist; 10 required-page links checked, 0 broken.",
+        "deployment.json counts match: 4 operations, 4 cases, 4 skills, 2 knowledge files, Preview 4/4, publish=false.",
+        "tests/demo_cases/cart-abandonment-recovery.json has 4 target-specific locked prompts; foreign prompts=0.",
+        "quest.html boundary counts include \"AIBAST\"=15, \"Beta\"=9, \"Settings\"=3, \"report\"=77, \"embedded\"=1, \"Hard\"=19; deployment.json has \"mode\": \"draft-only\".",
+        "manual-tutorial.html has 4/4 matching Add-skill/SKILL.md downloads; all 27 raw-file hrefs are explicit download anchors.",
+        "evals/visual-checkpoints.json has Hard reshoot_required=18/18; manual-build-walkthrough.gif references=0.",
+        "evidence-report.html explicitly says \"23 Reshoot-required captures hidden from learner proof\"; displayed unapproved media=0; Clawpilot=0; assisted-film=0; affirmative publication offers=0."
+      ],
+      "gate": "AIBAST workshop-course rollout: 1/1 passed; 0 failed; PASS cart-abandonment-recovery."
+    },
+    {
+      "slug": "claims-processing",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "All required artifacts exist and remain claims-processing-specific.",
+        "Controls, Draft-only boundaries, downloads, Preview steps, and evidence labels are consistent.",
+        "No prohibited prompts, publication offers, unapproved media, or broken required pages found."
+      ],
+      "gate": "PASS claims-processing \u2014 1/1 passed; 0 failed"
+    },
+    {
+      "slug": "client-health-score",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "deployment.json: \"Client Health Score Agent\"; 5 skills and 5/5 target-specific prompts.",
+        "manual-tutorial.html: 20 Hard steps, 5/5 matching SKILL.md downloads, 0 GIF links; Draft-only and fresh Preview boundaries present.",
+        "evidence-report.html labels \"Reshoot required\" as 26; visual-checkpoints.json agrees. Seven required files exist; 0 prohibited terms/raw-link violations."
+      ],
+      "gate": "AIBAST workshop-course rollout: 1/1 passed; 0 failed; PASS client-health-score"
+    },
+    {
+      "slug": "clinical-notes-summarizer",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "tools/audit_workshop_course_rollout.py: \"1/1 passed; 0 failed\" and \"PASS clinical-notes-summarizer\".",
+        "solutions/clinical-notes-summarizer/deployment.json: title \"Clinical Notes Summarizer Agent\", 4 skills, 2 knowledge files, Draft/unpublished, previews 4/4; tests/demo_cases/clinical-notes-summarizer.json contains 4 exact target-specific prompts.",
+        "solutions/clinical-notes-summarizer/evals/visual-checkpoints.json: reshoot_required=23 and Hard reshoots=18; manual-tutorial.html has 0 \"manual-build-walkthrough.gif\" occurrences. Required pages are 4/4; raw-link, skill-download, fresh-Preview, boundary, forbidden-content, and unapproved-media violations=0; evidence-report.html labels 23 reshoot-required captures."
+      ],
+      "gate": "clean \u2014 audit exit 0; zero BLOCKER or MAJOR findings"
+    },
+    {
+      "slug": "contract-risk-review",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "deployment.json declares 4 skills, 2 knowledge files, 4 scenarios, and 4/4 Preview passes; manual-tutorial.html has 18 numbered steps and 18 controls.",
+        "tests/demo_cases/contract-risk-review.json contains 4 target-specific locked prompts; each appears once in quest.html, manual-tutorial.html, and field-guide.html.",
+        "visual-checkpoints.json records 23 reshoot-required captures, including 18 Hard; manual-tutorial.html has 0 manual-build-walkthrough.gif references. evidence-report.html explicitly says \"23 Reshoot-required captures hidden from learner proof\".",
+        "manual-tutorial.html correctly pairs all four \"Add skill\" steps with their matching SKILL.md downloads and says \"Open a fresh Preview conversation\" with \"A fresh Preview surface\" expected.",
+        "All 27 raw-file HTML links are download anchors. Required pages exist; displayed images, Clawpilot, assisted-film, foreign-solution content, and affirmative publication offers each count 0. Draft boundary says \"Should I publish? No.\""
+      ],
+      "gate": "PASS \u2014 python3 tools/audit_workshop_course_rollout.py --slug contract-risk-review: \"1/1 passed; 0 failed\" and \"PASS contract-risk-review\"."
+    },
+    {
+      "slug": "cross-selling",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "Audit: \"AIBAST workshop-course rollout: 1/1 passed; 0 failed\" and \"PASS cross-selling\".",
+        "solutions/cross-selling/deployment.json: title is \"Cross-Selling Opportunities Agent\"; locked prompt includes \"Scan the synthetic CUST-001 ownership record for evidence-backed product gaps.\" Required files: 7/7 present.",
+        "Inspected HTML/JSON: 0 raw-link violations, skill-download mismatches, Preview-state mismatches, forbidden prompts, affirmative publication offers, or disallowed GIF links. Required boundaries and explicit reshoot-required count are present."
+      ],
+      "gate": "clean \u2014 1/1 passed; 0 failed; 0 BLOCKER; 0 MAJOR"
+    },
+    {
+      "slug": "customer-loyalty-rewards",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "All 7 required files are present.",
+        "deployment.json: \"Customer Loyalty and Rewards Agent\" is target-specific.",
+        "Prompt, control, boundary, reshoot, download, preview, publication, and prohibited-content assertions passed."
+      ],
+      "gate": "PASS customer-loyalty-rewards \u2014 1/1 passed; 0 failed"
+    },
+    {
+      "slug": "customer-sentiment-churn",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "Gate: \"1/1 passed; 0 failed\" and \"PASS customer-sentiment-churn\".",
+        "All 7 required files exist and parsed successfully; target-specific prompts, controls, counts, and boundaries passed.",
+        "Required link, reshoot, skill-download, Preview-state, prohibited-content, and page checks found 0 violations."
+      ],
+      "gate": "clean"
+    },
+    {
+      "slug": "deal-progression",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "Gate command exited 0: \"AIBAST workshop-course rollout: 1/1 passed; 0 failed\" and \"PASS deal-progression\".",
+        "solutions/deal-progression/deployment.json: \"display_name\": \"Deal Progression Agent\"; \"name\": \"@aibast-agents-library/deal-progression\"; operations count=6. Target-specific prompts, controls, boundaries, downloads, Preview state, and capture rules passed.",
+        "All required pages exist and were inspected: quest.html=593 lines, manual-tutorial.html=722, field-guide.html=289, evidence-report.html=405; prohibited-content and broken-page count=0."
+      ],
+      "gate": "clean: PASS deal-progression"
+    },
+    {
+      "slug": "emission-tracking",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "Gate passed: \"AIBAST workshop-course rollout: 1/1 passed; 0 failed\" and \"PASS emission-tracking\".",
+        "All seven required artifacts were present and readable; deployment title is \"Emissions Tracking Agent\".",
+        "Targeting, boundaries, capture/link rules, skill downloads, Preview expectation, and prohibited-content checks were clean."
+      ],
+      "gate": "clean"
+    },
+    {
+      "slug": "energy-regulatory-reporting",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "Audit: 1/1 passed, 0 failed; PASS energy-regulatory-reporting.",
+        "solutions/energy-regulatory-reporting/deployment.json: \"Regulatory Reporting Agent\"; 4 operations, 4 skills, 2 knowledge files, 4/4 previews, Draft and unpublished. tests/demo_cases/energy-regulatory-reporting.json: 4 target-specific prompts.",
+        "All required pages exist. Hard reshoot-required count is explicitly reported; manual-build-walkthrough.gif links=0. Raw-link, skill-target, Preview-state, forbidden-content, publication-offer, and unapproved-image violations=0."
+      ],
+      "gate": "clean \u2014 python3 tools/audit_workshop_course_rollout.py --slug energy-regulatory-reporting exited 0 with 1/1 passed and 0 failed"
+    },
+    {
+      "slug": "field-service-dispatch",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "Per-slug course gate passes.",
+        "The first message persists field-service-dispatch as the active solution.",
+        "The shared second message resolves it from active state and refuses missing or ambiguous state.",
+        "A dedicated build-then-deploy-without-solution regression test passes."
+      ],
+      "gate": "Independent GPT-5.6 Sol adjudication: FALSE POSITIVE; shared two-message contract is deterministic."
+    },
+    {
+      "slug": "financial-advisor-copilot",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "Audit reported \"1/1 passed; 0 failed\" and \"PASS financial-advisor-copilot\".",
+        "solutions/financial-advisor-copilot/deployment.json names \"Financial Advisor Agent\"; target-specific prompts, controls/counts, and required boundaries passed.",
+        "Raw-download, Add skill/SKILL.md, fresh Preview, reshoot/GIF, and evidence-count assertions passed with 0 violations.",
+        "All 7 required files exist; prohibited content and unapproved displayed screenshots: 0."
+      ],
+      "gate": "clean"
+    },
+    {
+      "slug": "fraud-detection-alert",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "All seven required files exist and passed current-state checks.",
+        "No prohibited content, boundary violations, mismatched skill downloads, raw-navigation issues, or unapproved captures detected."
+      ],
+      "gate": "PASS \u2014 audit reported \"1/1 passed; 0 failed\" and \"PASS fraud-detection-alert\"."
+    },
+    {
+      "slug": "fs-customer-onboarding",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "deployment.json: title \"Customer Onboarding Agent\"; 4 skills; preview 4/4; Draft and unpublished.",
+        "tests/demo_cases/fs-customer-onboarding.json: 4 target-specific locked prompts.",
+        "Required pages, download boundaries, reshoot labeling, and Preview workflow verified.",
+        "No forbidden branding, publication offer, unapproved capture, or missing required page detected."
+      ],
+      "gate": "PASS \u2014 1/1 passed; 0 failed"
+    },
+    {
+      "slug": "fs-regulatory-compliance",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "deployment.json identifies \"@aibast-agents-library/fs-regulatory-compliance\" as \"Regulatory Compliance Agent\".",
+        "All 7/7 required artifacts were readable; no required page was missing.",
+        "Current-content checks found zero BLOCKER or MAJOR issues."
+      ],
+      "gate": "Clean: \"AIBAST workshop-course rollout: 1/1 passed; 0 failed\"; \"PASS fs-regulatory-compliance\"."
+    },
+    {
+      "slug": "inventory-rebalancing",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "deployment.json title is \"Inventory Rebalancing Agent\"; locked-prompt and control/count mismatches: 0.",
+        "evals/visual-checkpoints.json has 1 Hard \"reshoot_required\" capture; manual-tutorial.html links \"manual-build-walkthrough.gif\" 0 times; evidence-report.html labels the count as 1.",
+        "Raw .md/.json/.py navigation violations: 0; Add-skill filename mismatches: 0; Open Preview requires a \"fresh Preview state\" and not \"inventory review\".",
+        "Required AIBAST, Beta, Settings, report, Hard, and Draft-only boundaries are present. Forbidden-content, publication-offer, unapproved-screenshot, and missing-page counts: 0. All 7 inspected files exist."
+      ],
+      "gate": "python3 tools/audit_workshop_course_rollout.py --slug inventory-rebalancing: AIBAST workshop-course rollout: 1/1 passed; 0 failed; PASS inventory-rebalancing"
+    },
+    {
+      "slug": "inventory-visibility",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "deployment.json identifies \"Inventory Visibility Agent\"; prompts, controls, counts, and required boundaries remain target-specific.",
+        "Cross-file checks found 0 prohibited references, 0 raw-link download violations, and no disallowed Hard-capture walkthrough link.",
+        "Required pages exist; reshoot labeling, skill-name downloads, and fresh Preview expectations are consistent."
+      ],
+      "gate": "clean \u2014 AIBAST workshop-course rollout: 1/1 passed; 0 failed; PASS inventory-visibility"
+    },
+    {
+      "slug": "license-renewal-expansion",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "Title and all 4 locked prompts are target-specific; operations and 4/4 preview controls match.",
+        "23 captures are reshoot-required, including 18 Hard captures; manual-build-walkthrough.gif links: 0.",
+        "evidence-report.html explicitly says \"23 Reshoot-required captures hidden from learner proof\".",
+        "All 27 raw artifact anchors use download; all 4 Add skill steps map to the matching SKILL.md.",
+        "AIBAST, Beta, settings, report, embedded Hard, and Draft/no-publish boundaries exist; forbidden-content and displayed-unapproved-capture counts are 0."
+      ],
+      "gate": "PASS \u2014 audit reported 1/1 passed; 0 failed."
+    },
+    {
+      "slug": "loan-origination-assistant",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "deployment.json declares \"display_name\": \"Loan Origination Assistant\"; all four pages use that package-specific title/H1.",
+        "tests/demo_cases/loan-origination-assistant.json defines 5 cases; each locked prompt appears exactly once in quest.html, with five LOA-01\u2013LOA-05 Preview controls and 5/5 totals.",
+        "evals/visual-checkpoints.json reports reusable=0 and reshoot_required=26; evidence-report.html states \"26 Reshoot-required captures hidden from learner proof\". All four pages contain zero image/video/media tags, so zero browserfilms are rendered.",
+        "quest.html includes AIBAST branding, \"Beta workshop\", Workshop settings, reporting buttons, a Hard tab, and embedded manual-tutorial.html?embedded=1; manual-tutorial.html implements embedded mode.",
+        "Across the four reviewed pages, Clawpilot, assisted-film, raw-file, publication-offer, and foreign-solution markers each occur zero times. Publication text consistently requires Draft/published false and explicitly says it \"does not offer publication\"."
+      ],
+      "gate": "Command: python3 tools/audit_workshop_course_rollout.py --slug loan-origination-assistant\nExit code: 0\nOutput:\nAIBAST workshop-course rollout: 1/1 passed; 0 failed\nBuilders: 1 non-reference; critics: 1 including time-entry-billing\nEXCLUDED_NON_ADVERTISED grid-outage-response: GENERATED - not SharePoint-advertised. Proves the generator; must be advertised before it ships (Article I.1).\nPASS loan-origination-assistant"
+    },
+    {
+      "slug": "maintenance-scheduling",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "deployment.json and quest.html consistently use \u201cMaintenance Scheduling Agent\u201d; quest title and H1 match.",
+        "quest.html contains each locked MS-01 through MS-04 prompt exactly once; four cases match the demo-case contract.",
+        "visual-checkpoints.json reports 24 existing captures, 0 reusable, and 24 reshoot_required; the clean gate confirms unreviewed captures remain hidden.",
+        "AIBAST branding, Beta reporting, workshop settings, embedded Hard mode, and package-specific prompts are present; prohibited Clawpilot, assisted-film, publication-offer, and foreign-solution content was not found."
+      ],
+      "gate": "AIBAST workshop-course rollout: 1/1 passed; 0 failed\nBuilders: 1 non-reference; critics: 1 including time-entry-billing\nEXCLUDED_NON_ADVERTISED grid-outage-response: GENERATED - not SharePoint-advertised. Proves the generator; must be advertised before it ships (Article I.1).\nPASS maintenance-scheduling\nExit code: 0"
+    },
+    {
+      "slug": "omnichannel-engagement",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "All four pages use the package title \u201cOmnichannel Engagement Agent\u201d.",
+        "All four locked prompts appear exactly once in quest.html; four Preview controls match four cases. Hard mode has 18 steps, checkboxes, and report controls matching 18 Hard captures.",
+        "AIBAST, Beta, reporting, settings, Easy/Hard, and embedded Hard-mode controls exist. No Clawpilot, assisted-film, foreign-solution prompt, publication offer, or navigable raw-file link was found.",
+        "All pages contain zero image/video elements. The evidence report states \u201c23 Reshoot-required captures hidden from learner proof,\u201d matching visual-checkpoints.json\u2019s 23 reshoot-required captures."
+      ],
+      "gate": "exit_code=0\nAIBAST workshop-course rollout: 1/1 passed; 0 failed\nBuilders: 1 non-reference; critics: 1 including time-entry-billing\nEXCLUDED_NON_ADVERTISED grid-outage-response: GENERATED - not SharePoint-advertised. Proves the generator; must be advertised before it ships (Article I.1).\nPASS omnichannel-engagement"
+    },
+    {
+      "slug": "order-status-communication",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "Audit gate: \"AIBAST workshop-course rollout: 1/1 passed; 0 failed\" and \"PASS order-status-communication\".",
+        "deployment.json/tests demo: \"Order Status Communications Agent\"; 4 operations, 4 skills, 4 target-specific cases; both validations are Draft, unpublished, and 4/4.",
+        "visual-checkpoints.json: 23/23 reshoot-required, including 18/18 Hard. manual-tutorial.html has 0 walkthrough-GIF references; evidence-report.html labels \"23 Reshoot-required captures hidden from learner proof\". All 27 raw anchors use download; all four skill downloads match; Preview requires \"A fresh Preview surface\". Required pages and boundaries exist; prohibited-content counts are 0."
+      ],
+      "gate": "clean"
+    },
+    {
+      "slug": "patient-intake",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "deployment.json and demo cases use \"Patient Intake and Scheduling Agent\"; 4 operations, 4 skills, 2 knowledge files, and 4/4 previews match.",
+        "All four required HTML pages exist with target-specific titles and locked prompts. Required AIBAST/Beta/Settings/report/Hard/Draft-only boundaries are present.",
+        "manual-tutorial.html has 0 links to \"manual-build-walkthrough.gif\"; evidence-report.html labels the matching reshoot-required count.",
+        "All raw .md/.json/.py links use download anchors; 4/4 \"Add skill\" steps match their SKILL.md files, and \"Open Preview\" requires fresh Preview state.",
+        "0 Clawpilot, assisted-film, foreign-solution, affirmative-publication, unapproved-screenshot, or broken required-page violations."
+      ],
+      "gate": "clean \u2014 AIBAST workshop-course rollout: 1/1 passed; 0 failed; PASS patient-intake"
+    },
+    {
+      "slug": "permit-license-management",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "Display name is consistently \"Permit Management Agent\" in deployment.json, demo cases, and all four generated page titles.",
+        "All four locked prompts appear exactly once in quest.html; 4 cases match 4 preview cards and 4 copy controls.",
+        "18 Hard browserfilm captures match 18 tutorial steps, navigation links, completion controls, and report controls.",
+        "AIBAST, Beta, reporting, settings, and embedded Hard controls are present; forbidden terms and raw-file navigation are absent.",
+        "evidence-report.html clearly reports 23 reshoot-required captures; learner pages contain 0 image tags and 0 displayed checkpoint rows."
+      ],
+      "gate": "Exit code 0\nAIBAST workshop-course rollout: 1/1 passed; 0 failed\nBuilders: 1 non-reference; critics: 1 including time-entry-billing\nEXCLUDED_NON_ADVERTISED grid-outage-response: GENERATED - not SharePoint-advertised. Proves the generator; must be advertised before it ships (Article I.1).\nPASS permit-license-management"
+    },
+    {
+      "slug": "personalized-marketing",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "Gate: 1/1 passed; 0 failed; PASS personalized-marketing.",
+        "Title, 4 operations, 4 locked prompts, 4 skills, 2 knowledge files, Draft/unpublished controls match.",
+        "AIBAST, Beta, Settings, Report, embedded Hard mode, and Draft-stop boundaries exist.",
+        "All raw links have download attributes; all four skill downloads match their names; Preview requires a fresh state.",
+        "23 reshoot-required captures are explicitly labeled; 18 are Hard. No GIF link, prohibited content, displayed screenshots, or missing required pages."
+      ],
+      "gate": "AIBAST workshop-course rollout: 1/1 passed; 0 failed; PASS personalized-marketing"
+    },
+    {
+      "slug": "personalized-shopping-assistant",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "deployment.json: \"Personalized Shopping Agent\" with 4 target-specific operations; 2 knowledge files, 4 skills, and \"publish\":false.",
+        "All 4 required HTML pages exist; locked prompts, controls, skill downloads, Preview state, raw-link downloads, boundaries, and capture rules passed.",
+        "Forbidden-content counts: 0 Clawpilot, 0 assisted-film, 0 affirmative publication offers, 0 displayed unapproved screenshots."
+      ],
+      "gate": "AIBAST workshop-course rollout: 1/1 passed; 0 failed \u2014 PASS personalized-shopping-assistant"
+    },
+    {
+      "slug": "portfolio-rebalancing",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "deployment.json and quest.html use \u201cPortfolio Rebalancing Agent\u201d; all 6 locked prompts appear exactly once across 6 quest preview-case controls.",
+        "Counts align: deployment has 6 scenarios; quest has 6 cases; manual-tutorial.html has 22 browserfilm articles and 22 completion controls.",
+        "quest.html includes AIBAST, Beta, settings, 13 reporting controls, Hard mode, and embedded manual-tutorial.html?embedded=1. Prohibited content was absent; raw sources are download-only.",
+        "visual-checkpoints.json reports 29 total, 0 reusable, 29 reshoot-required. evidence-report.html states \u201c29 Reshoot-required captures hidden from learner proof\u201d; all four pages contain 0 images."
+      ],
+      "gate": "AIBAST workshop-course rollout: 1/1 passed; 0 failed\nBuilders: 1 non-reference; critics: 1 including time-entry-billing\nEXCLUDED_NON_ADVERTISED grid-outage-response: GENERATED - not SharePoint-advertised. Proves the generator; must be advertised before it ships (Article I.1).\nPASS portfolio-rebalancing"
+    },
+    {
+      "slug": "prior-authorization",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "All 7 required files exist; target-specific titles, locked prompts, controls, counts, and boundaries passed.",
+        "Hard-reshoot/GIF, raw-download, reshoot-count, skill-download, fresh Preview, forbidden-content, screenshot, and page checks passed."
+      ],
+      "gate": "clean \u2014 \"AIBAST workshop-course rollout: 1/1 passed; 0 failed\"; \"PASS prior-authorization\""
+    },
+    {
+      "slug": "procurement-agent",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "Audit: \"1/1 passed; 0 failed\" and \"PASS procurement-agent\".",
+        "deployment.json: \"Procurement Agent\" / \"ProcurementAgent\"; 0 target-specific prompt or control mismatches.",
+        "All 7 required files exist; raw-download, skill-name, Preview-state, boundary, publication, screenshot, and forbidden-term violations: 0.",
+        "visual-checkpoints.json/manual-tutorial.html/evidence-report.html: Hard-reshoot handling and explicitly labeled reshoot count verified; violations: 0."
+      ],
+      "gate": "clean \u2014 AIBAST workshop-course rollout: 1/1 passed; 0 failed"
+    },
+    {
+      "slug": "procurement-support",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "Per-slug course gate passes.",
+        "Every locked Hard case now requires opening Preview in a fresh conversation.",
+        "The reset is text-only; all unreviewed captures remain reshoot_required and hidden.",
+        "Tutorial steps, BrowserFilm frames, and Hard checkpoints remain 18/18/18."
+      ],
+      "gate": "Independent GPT-5.6 Sol re-review: PASS"
+    },
+    {
+      "slug": "product-feedback-synthesizer",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "deployment.json: title is \"Product Feedback Synthesizer Agent\"; 4 skills and both Preview gates are 4/4, Draft, unpublished.",
+        "visual-checkpoints.json: 23 captures, 23 reshoot_required, including 18 Hard; manual-tutorial.html has 0 manual-build-walkthrough.gif references; evidence-report.html labels 23 reshoots.",
+        "All required pages exist; raw-link, skill-download, Preview-state, boundary, forbidden-content, publication-offer, and unapproved-image checks passed."
+      ],
+      "gate": "python3 tools/audit_workshop_course_rollout.py --slug product-feedback-synthesizer \u2014 \"1/1 passed; 0 failed\" and \"PASS product-feedback-synthesizer\"."
+    },
+    {
+      "slug": "product-line-optimization",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "tools/audit_workshop_course_rollout.py: \"1/1 passed; 0 failed\" and \"PASS product-line-optimization\".",
+        "solutions/product-line-optimization/deployment.json: \"Product Line Optimization Agent\", 4 skills, 4/4 preview cases, \"Draft\", published=false.",
+        "All specified pages and assertions passed, including download, reshoot, Preview, boundary, publication, and forbidden-content checks."
+      ],
+      "gate": "clean"
+    },
+    {
+      "slug": "proposal-generation",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "solutions/proposal-generation/deployment.json: title \"Proposal Generation Agent\", skill_count 6; tests/demo_cases/proposal-generation.json contains 6 target-specific prompts.",
+        "31 raw .md/.json/.py anchors across inspected pages all have download attributes; Clawpilot, assisted-film, and inventory-review counts are 0.",
+        "solutions/proposal-generation/evals/visual-checkpoints.json has 29 reshoot_required captures; evidence-report.html labels \"29 Reshoot-required captures\"; manual-tutorial.html has 0 manual-build-walkthrough.gif links."
+      ],
+      "gate": "CLEAN \u2014 audit reported \"AIBAST workshop-course rollout: 1/1 passed; 0 failed\" and \"PASS proposal-generation\"."
+    },
+    {
+      "slug": "resource-utilization",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "deployment.json and demo case titles are \"Resource Utilization Agent\"; all 6 locked prompts are resource-specific.",
+        "Counts align: 5 scenarios, 5 cases, 5 operations, and 5 manual skills.",
+        "visual-checkpoints.json matches 26 total and 26 reshoot-required captures; 20 are Hard. The manual omits the prohibited GIF link, and evidence-report.html labels the reshoot-required count.",
+        "All 7 required files exist; download, skill-name, fresh Preview, Draft-only, AIBAST/Beta/Settings/report, publication, and forbidden-content assertions are clean."
+      ],
+      "gate": "PASS \u2014 python3 tools/audit_workshop_course_rollout.py --slug resource-utilization: 1/1 passed; 0 failed; PASS resource-utilization"
+    },
+    {
+      "slug": "returns-complaints-resolution",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "deployment.json: title is \"Returns and Complaints Resolution Agent\"; 4 skills, 2 knowledge files, publish=false, Draft statuses, and 4/4 previews.",
+        "tests/demo_cases/returns-complaints-resolution.json: 4 target-specific locked prompts; zero unexpected persona prompts.",
+        "evals/visual-checkpoints.json: 23/23 captures require reshoot, including 18 Hard captures; manual-tutorial.html has zero walkthrough GIF or unapproved capture references.",
+        "manual-tutorial.html: 18 report controls for 18 steps; all four skill steps download their matching SKILL.md. All 27 raw-file anchors use download attributes.",
+        "evidence-report.html: explicitly states \"23 Reshoot-required captures hidden from learner proof\". Required boundaries exist; prohibited-content counts are zero."
+      ],
+      "gate": "clean \u2014 AIBAST workshop-course rollout: 1/1 passed; 0 failed; PASS returns-complaints-resolution"
+    },
+    {
+      "slug": "sales-qualification",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "Gate returned \"AIBAST workshop-course rollout: 1/1 passed; 0 failed\" and \"PASS sales-qualification\".",
+        "solutions/sales-qualification/deployment.json: \"display_name\": \"Sales Qualification Agent\"; operation count 6; locked smoke prompt is sales-specific.",
+        "tests/demo_cases/sales-qualification.json: 6/6 prompts are qualification-specific; combined locked-prompt count is 7/7 target-specific.",
+        "All 7 required artifacts exist. Gate assertions passed for boundaries, controls/counts, reshoot handling, download anchors, skill mappings, fresh Preview state, publication limits, screenshots, and required pages."
+      ],
+      "gate": "clean \u2014 1/1 passed; 0 failed; PASS sales-qualification"
+    },
+    {
+      "slug": "store-associate-copilot",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "deployment.json title is \"Retail Store Associate Copilot\"; locked prompts, controls, and counts remain target-specific and aligned.",
+        "Required boundaries are present; reshoot-required evidence is labeled, with 0 manual-build-walkthrough.gif links.",
+        "Raw artifact links use download anchors; skill downloads match names; Preview expects fresh state. Forbidden-content counts are 0; all required pages exist."
+      ],
+      "gate": "PASS store-associate-copilot \u2014 1/1 passed; 0 failed"
+    },
+    {
+      "slug": "supplier-risk-monitoring",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "tools/audit_workshop_course_rollout.py \u2014 \"1/1 passed; 0 failed\" and \"PASS supplier-risk-monitoring\".",
+        "solutions/supplier-risk-monitoring/deployment.json \u2014 \"Supply Risk Monitoring Agent\"; operations=4, skills=4, knowledge files=2, previews=4/4, status=\"Draft\", published=false.",
+        "solutions/supplier-risk-monitoring/evals/visual-checkpoints.json \u2014 captures=23, reshoot_required=23, reusable=0; solutions/supplier-risk-monitoring/manual-tutorial.html \u2014 \"manual-build-walkthrough.gif\" links=0.",
+        "solutions/supplier-risk-monitoring/evidence-report.html \u2014 explicitly labels \"23 reshoot-required\"; required AIBAST/Beta/Settings/report/embedded Hard/Draft-only boundaries are present.",
+        "Inspected HTML pages \u2014 raw-link violations=0, mismatched Add-skill downloads=0, unapproved screenshots displayed=0, prohibited-content matches=0, missing required pages=0."
+      ],
+      "gate": "clean: audit exited 0 with 1/1 passed and 0 failed"
+    },
+    {
+      "slug": "supply-chain-disruption-alert",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "solutions/supply-chain-disruption-alert/deployment.json title is \"Supply Chain Disruption Alert Agent\"; locked prompts remain target-specific and counts align.",
+        "Hard reshoot policy, matching SKILL.md downloads, fresh Preview expectation, download attributes, and evidence-report reshoot count are consistent.",
+        "All 7 required artifacts exist; prohibited-content and affirmative-publication findings: 0."
+      ],
+      "gate": "clean: AIBAST workshop-course rollout: 1/1 passed; 0 failed"
+    },
+    {
+      "slug": "time-entry-billing",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "solutions/time-entry-billing/deployment.json: \"display_name\": \"Time Entry and Billing Agent\".",
+        "All 7 required files exist; assertion review found 0 BLOCKER/MAJOR violations.",
+        "Gate output: \"AIBAST workshop-course rollout: 1/1 passed; 0 failed\" and \"PASS time-entry-billing\"."
+      ],
+      "gate": "clean"
+    },
+    {
+      "slug": "underwriting-support",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "deployment.json: \"Underwriting Support Agent\"; 4 skills, 2 knowledge files, Draft/unpublished, 4/4 preview cases.",
+        "tests/demo_cases/underwriting-support.json: 4 target-specific locked prompts.",
+        "evals/visual-checkpoints.json: 23 captures; 23 \"reshoot_required\"; 18 Hard captures."
+      ],
+      "gate": "AIBAST workshop-course rollout: 1/1 passed; 0 failed \u2014 PASS underwriting-support"
+    },
+    {
+      "slug": "utility-billing-assistance",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "deployment.json title is \"Utility Billing and Assistance Agent\"; all 4 locked prompts are utility-specific.",
+        "Counts align: 4 operations, 4 skills, 2 knowledge files, and 4/4 Preview cases.",
+        "visual-checkpoints.json records 18 Hard reshoots; manual-tutorial.html has 0 manual-build-walkthrough.gif links.",
+        "All 27 raw-file anchors use download; evidence-report.html labels \"23 Reshoot-required captures hidden from learner proof\".",
+        "All required pages exist; 0 broken internal links, displayed screenshots, Clawpilot, or assisted-film references."
+      ],
+      "gate": "PASS \u2014 AIBAST workshop-course rollout: 1/1 passed; 0 failed"
+    },
+    {
+      "slug": "wealth-insights-generator",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "solutions/wealth-insights-generator/deployment.json: title \"Wealth Insights Generator Agent\"; manual_skill_count=5; safety gate requires \"no-advice/no-approval/no-transaction behavior before publish.\"",
+        "tests/demo_cases/wealth-insights-generator.json: 5/5 locked prompts are wealth-specific; controls and case counts match the five manual skills.",
+        "solutions/wealth-insights-generator/manual-tutorial.html: all 5 \"Add skill\" steps download the matching SKILL.md; raw artifact links have download attributes; manual-build-walkthrough.gif link count=0.",
+        "solutions/wealth-insights-generator/evals/visual-checkpoints.json: Hard captures=20 and reshoot_required=26; solutions/wealth-insights-generator/evidence-report.html explicitly labels \"26 Reshoot-required\"; no unapproved screenshot is displayed.",
+        "quest.html, manual-tutorial.html, field-guide.html, and evidence-report.html contain the required AIBAST/Beta/settings/report/Hard/Draft boundaries; forbidden-term counts are Clawpilot=0, assisted-film=0, foreign-solution=0."
+      ],
+      "gate": "AIBAST workshop-course rollout: 1/1 passed; 0 failed \u2014 PASS wealth-insights-generator"
+    },
+    {
+      "slug": "win-loss-analysis",
+      "verdict": "pass",
+      "findings": [],
+      "fine": [
+        "deployment.json title is \"Win/Loss Analysis Agent\"; locked-prompt and control/count mismatch counts are 0.",
+        "evidence-report.html labels \"Reshoot required\" = 1; manual-tutorial.html has 0 links to \"manual-build-walkthrough.gif\". Required AIBAST/Beta/Settings/report/embedded Hard/Draft-only boundaries are present.",
+        "Raw anchors missing download: 0; Add-skill target mismatches: 0; forbidden references/offers/screenshots and broken required pages: 0. \"Open Preview\" expects a fresh Preview state."
+      ],
+      "gate": "PASS win-loss-analysis \u2014 AIBAST workshop-course rollout: 1/1 passed; 0 failed"
+    }
+  ]
+}

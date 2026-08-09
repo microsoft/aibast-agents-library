@@ -1,7 +1,8 @@
-# Manual build capture
+# Literal browser hard-mode evidence
 
-The 23 real JPEGs follow `browserfilm.json` exactly: blank-agent creation,
-instructions, web-search removal, two knowledge uploads, four skill uploads,
-Sonnet46 selection, inventory review, all four Preview cases, and the Draft
-gate. `manual-build-walkthrough.gif` and `manual-build-contact-sheet.jpg` are
-generated from those frames.
+`browserfilm.json` is the ordered authority for 23 real browser frames.
+`manual-build-walkthrough.gif` and `manual-build-contact-sheet.jpg` summarize those frames when the files are present.
+
+Do not replace a missing capture with a generated image or describe a pending
+asset as evidence. The package uses synthetic inputs and qualitative language;
+no frame is a customer KPI, production result, or publication approval.

@@ -1,0 +1,205 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/fraud-detection-alert",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker or refusal.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 23,
+    "reusable": 0,
+    "reshoot_required": 23,
+    "new_learn_step_captures_recommended": 0
+  },
+  "captures": [
+    {
+      "id": "easy-fda-01",
+      "mode": "easy",
+      "source": "solutions/fraud-detection-alert/screenshots/assisted/01-fda-01.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "FDA-01"
+    },
+    {
+      "id": "easy-fda-02",
+      "mode": "easy",
+      "source": "solutions/fraud-detection-alert/screenshots/assisted/02-fda-02.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "FDA-02"
+    },
+    {
+      "id": "easy-fda-03",
+      "mode": "easy",
+      "source": "solutions/fraud-detection-alert/screenshots/assisted/03-fda-03.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "FDA-03"
+    },
+    {
+      "id": "easy-fda-04",
+      "mode": "easy",
+      "source": "solutions/fraud-detection-alert/screenshots/assisted/04-fda-04.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "FDA-04"
+    },
+    {
+      "id": "easy-draft",
+      "mode": "easy",
+      "source": "solutions/fraud-detection-alert/screenshots/assisted/05-confirm-draft.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "step": 1,
+      "source": "solutions/fraud-detection-alert/screenshots/manual/01-create-blank-agent.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "step": 2,
+      "source": "solutions/fraud-detection-alert/screenshots/manual/02-name-agent.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "step": 3,
+      "source": "solutions/fraud-detection-alert/screenshots/manual/03-enter-instructions.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "step": 4,
+      "source": "solutions/fraud-detection-alert/screenshots/manual/04-save-instructions.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "step": 5,
+      "source": "solutions/fraud-detection-alert/screenshots/manual/05-remove-web-search.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "step": 6,
+      "source": "solutions/fraud-detection-alert/screenshots/manual/06-add-aibast-fraud-detection-alert-controls-and-review.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "step": 7,
+      "source": "solutions/fraud-detection-alert/screenshots/manual/07-add-aibast-fraud-detection-alert-synthetic-records.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "step": 8,
+      "source": "solutions/fraud-detection-alert/screenshots/manual/08-add-aibast-alert-triage-01.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "step": 9,
+      "source": "solutions/fraud-detection-alert/screenshots/manual/09-add-aibast-investigation-summary-04.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "step": 10,
+      "source": "solutions/fraud-detection-alert/screenshots/manual/10-add-aibast-pattern-detection-03.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "step": 11,
+      "source": "solutions/fraud-detection-alert/screenshots/manual/11-add-aibast-transaction-analysis-02.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "step": 12,
+      "source": "solutions/fraud-detection-alert/screenshots/manual/12-review-inventory.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "step": 13,
+      "source": "solutions/fraud-detection-alert/screenshots/manual/13-open-preview.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "step": 14,
+      "source": "solutions/fraud-detection-alert/screenshots/manual/14-fda-01.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "FDA-01"
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "step": 15,
+      "source": "solutions/fraud-detection-alert/screenshots/manual/15-fda-02.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "FDA-02"
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "step": 16,
+      "source": "solutions/fraud-detection-alert/screenshots/manual/16-fda-03.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "FDA-03"
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "step": 17,
+      "source": "solutions/fraud-detection-alert/screenshots/manual/17-fda-04.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "FDA-04"
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "step": 18,
+      "source": "solutions/fraud-detection-alert/screenshots/manual/18-confirm-draft.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    }
+  ]
+}

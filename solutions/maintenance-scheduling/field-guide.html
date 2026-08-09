@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maintenance Scheduling Agent field guide</title>
+  <script>
+    (() => {
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const theme =
+        param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+    (() => {
+      const engine =
+        localStorage.getItem("aibast:workshop-engine") === "brainstem"
+          ? "brainstem"
+          : "copilot";
+      document.documentElement.setAttribute("data-workshop-engine", engine);
+    })();
+  </script>
+  <style>
+
+    :root {
+      color-scheme: light;
+      --cp-bg: #f7f4ef;
+      --cp-bg-elevated: #fcfbf8;
+      --cp-surface: #ffffff;
+      --cp-surface-soft: #f5f5f5;
+      --cp-border: #dedede;
+      --cp-border-strong: #919191;
+      --cp-text: #242424;
+      --cp-text-muted: #5c5c5c;
+      --cp-text-soft: #6f6f6f;
+      --cp-accent: #b11f4b;
+      --cp-accent-hover: #9a1a41;
+      --cp-accent-soft: rgba(177, 31, 75, 0.08);
+      --cp-accent-fg: #ffffff;
+      --cp-success: #16a34a;
+      --cp-danger: #dc2626;
+      --cp-warning: #f59e0b;
+      --cp-link: #0078d4;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+      --cp-overlay: rgba(255, 255, 255, 0.8);
+      --cp-panel: rgba(255, 255, 255, 0.86);
+      --cp-panel-strong: rgba(255, 255, 255, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.55);
+      --cp-highlight: rgba(177, 31, 75, 0.12);
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --cp-bg: #3d3b3a;
+      --cp-bg-elevated: #343231;
+      --cp-surface: #292929;
+      --cp-surface-soft: #2e2e2e;
+      --cp-border: #474747;
+      --cp-border-strong: #5f5f5f;
+      --cp-text: #dedede;
+      --cp-text-muted: #919191;
+      --cp-text-soft: #b0b0b0;
+      --cp-accent: #fd8ea1;
+      --cp-accent-hover: #fb7b91;
+      --cp-accent-soft: rgba(253, 142, 161, 0.14);
+      --cp-accent-fg: #1a1a1a;
+      --cp-success: #4ade80;
+      --cp-danger: #f87171;
+      --cp-warning: #fbbf24;
+      --cp-link: #4da6ff;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+      --cp-overlay: rgba(41, 41, 41, 0.88);
+      --cp-panel: rgba(41, 41, 41, 0.72);
+      --cp-panel-strong: rgba(41, 41, 41, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.04);
+      --cp-highlight: rgba(253, 142, 161, 0.12);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--cp-bg);
+      color: var(--cp-text);
+      font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.55;
+    }
+    a { color: var(--cp-link); }
+    button, .button { font: inherit; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 24px;
+      border-bottom: 1px solid var(--cp-border);
+      background: var(--cp-panel-strong);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 750; }
+    .brand-mark {
+      display: grid;
+      width: 32px;
+      height: 32px;
+      place-items: center;
+      border-radius: 10px;
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 8px 14px;
+      border: 1px solid var(--cp-border-strong);
+      border-radius: 10px;
+      background: var(--cp-surface);
+      color: var(--cp-text);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .button.primary {
+      border-color: var(--cp-accent);
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+    }
+    .page { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 40px 0 80px; }
+    .hero {
+      padding: 32px;
+      border: 1px solid var(--cp-border);
+      border-radius: 18px;
+      background: var(--cp-surface);
+      box-shadow: var(--cp-shadow);
+    }
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--cp-accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+    h1 { margin: 0; font-size: clamp(34px, 7vw, 64px); line-height: 1; letter-spacing: -.045em; }
+    h2 { margin-top: 42px; }
+    .lede { max-width: 760px; color: var(--cp-text-muted); font-size: 18px; }
+    .notice {
+      margin-top: 18px;
+      padding: 15px;
+      border-left: 4px solid var(--cp-warning);
+      background: var(--cp-surface-soft);
+    }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .card {
+      border: 1px solid var(--cp-border);
+      border-radius: 14px;
+      background: var(--cp-surface);
+      padding: 20px;
+    }
+    .card h3 { margin-top: 0; }
+    .muted { color: var(--cp-text-muted); }
+    .status { color: var(--cp-accent); font-weight: 750; }
+    .progress { height: 8px; overflow: hidden; border-radius: 999px; background: var(--cp-border); }
+    .progress span { display: block; width: 0; height: 100%; background: var(--cp-accent); }
+    @media (max-width: 760px) {
+      .grid { grid-template-columns: 1fr; }
+      .topbar { align-items: flex-start; padding: 12px 16px; }
+      .page { width: min(100% - 24px, 1120px); padding-top: 24px; }
+      .hero { padding: 24px 20px; }
+    }
+
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .engine-panel { display: none; }
+    html[data-workshop-engine="copilot"] .engine-panel.copilot { display: block; }
+    html[data-workshop-engine="brainstem"] .engine-panel.brainstem { display: block; }
+    .prompt { padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); white-space: pre-wrap; font-family: Consolas, "Courier New", Courier, monospace; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 11px; border: 1px solid var(--cp-border); text-align: left; vertical-align: top; }
+    th { background: var(--cp-surface-soft); }
+    .gate-list li, .seam-list li { margin-bottom: 8px; }
+    @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">A</span><span>AIBAST field guide</span></div>
+    <div><a class="button" href="../_shared/workshop-settings.html?return=../maintenance-scheduling/field-guide.html">Workshop settings</a> <a class="button primary" href="quest.html">Back to workshop</a></div>
+  </header>
+  <main class="page">
+    <section class="hero">
+      <p class="eyebrow">Facilitator and learner guide</p>
+      <h1>Maintenance Scheduling Agent</h1>
+      <p class="lede">Use this guide to understand the workshop boundary, expected proof, production seams, and recovery paths before or during the hands-on module.</p>
+      <div class="notice"><strong>Evidence boundary:</strong> all packaged records and outcomes are synthetic qualitative evidence—not customer KPIs, measured production results, live connections, or publication approval.</div>
+    </section>
+
+    <h2>Use your configured Easy-mode harness</h2>
+    <section class="engine-panel copilot card">
+      <h3>GitHub Copilot only</h3>
+      <p>Attach the Copilot-only skill. It carries discovery, local testing, Draft deployment, and Preview validation directly in the active Copilot session.</p>
+      <p><a class="button primary" href="../../skills/aibast-easy-mode-copilot/SKILL.md" download="SKILL.md">Download Copilot-only SKILL.md</a></p>
+      <div class="prompt">Give me Maintenance Scheduling using Easy Mode and test it for me.</div>
+      <div class="prompt">Deploy it into Copilot Studio for me.</div>
+    </section>
+    <section class="engine-panel brainstem card">
+      <h3>GitHub Copilot + Brainstem</h3>
+      <p>Attach the Brainstem skill. Copilot remains the work surface while the personal, on-device training AI persists the workshop and executes the generic engine handoffs.</p>
+      <p><a class="button primary" href="../../skills/aibast-easy-mode-brainstem/SKILL.md" download="SKILL.md">Download Brainstem SKILL.md</a></p>
+      <div class="prompt">Give me Maintenance Scheduling using Easy Mode and test it for me.</div>
+      <div class="prompt">Deploy it into Copilot Studio for me.</div>
+    </section>
+
+    <h2>Locked Preview corpus</h2>
+    <section class="card">
+      <p>Run every case in a fresh Copilot Studio Preview conversation. The deterministic validator—not phrasing similarity—defines the complete pass.</p>
+      <table>
+        <thead><tr><th>Case</th><th>Persona</th><th>Prompt</th></tr></thead>
+        <tbody><tr>
+          <td><code>MS-01</code></td>
+          <td>Maintenance Manager</td>
+          <td>Give me the equipment and technician-capacity picture I should review before the weekly maintenance meeting.</td>
+        </tr>
+<tr>
+          <td><code>MS-02</code></td>
+          <td>Production Supervisor</td>
+          <td>Which asset signals deserve immediate human review before the next production run?</td>
+        </tr>
+<tr>
+          <td><code>MS-03</code></td>
+          <td>Maintenance Manager</td>
+          <td>Draft the maintenance candidates with crew, parts, and backup checks, but do not create or dispatch work orders.</td>
+        </tr>
+<tr>
+          <td><code>MS-04</code></td>
+          <td>Operations Leader</td>
+          <td>What synthetic downtime exposure and preventive trade-offs should leadership review?</td>
+        </tr></tbody>
+      </table>
+    </section>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Production replacement seams</h2>
+        <ul class="seam-list"><li>Replace packaged synthetic inputs with an approved Approved condition monitoring and IoT data connection; preserve the reviewed input and output contract.</li>
+<li>Replace packaged synthetic inputs with an approved CMMS work management connection; preserve the reviewed input and output contract.</li>
+<li>Replace packaged synthetic inputs with an approved MES production schedules connection; preserve the reviewed input and output contract.</li>
+<li>Replace packaged synthetic inputs with an approved Parts inventory and technician rosters connection; preserve the reviewed input and output contract.</li>
+<li>Replace packaged synthetic inputs with an approved Microsoft Teams for approved collaboration connection; preserve the reviewed input and output contract.</li></ul>
+        <p>The pilot must never claim a live lookup or external write unless an approved production tool returns evidence that it succeeded.</p>
+      </section>
+      <section class="card">
+        <h2>Evidence gates</h2>
+        <ul class="gate-list">
+          <li><strong>Source:</strong> deployment source and isolated transcripts exist.</li>
+          <li><strong>Local:</strong> every locked business-agent case passes.</li>
+          <li><strong>Preview:</strong> every front-door case passes in a fresh chat.</li>
+          <li><strong>Visual:</strong> only positively provable annotated checkpoints are displayed.</li>
+          <li><strong>Draft:</strong> the package records <code>published: false</code>.</li>
+          <li><strong>Customer:</strong> governance, telemetry, support, and success measures are agreed before production.</li>
+        </ul>
+      </section>
+    </div>
+
+    <h2>Failure recovery</h2>
+    <section class="card">
+      <table>
+        <thead><tr><th>Symptom</th><th>Recovery</th></tr></thead>
+        <tbody>
+          <tr><td>A required source is missing</td><td>Stop. Restore the reviewed file; never substitute invented content.</td></tr>
+          <tr><td>Knowledge is still processing</td><td>Wait for ingestion before Preview. A partial answer is not evidence.</td></tr>
+          <tr><td>A case misses a marker</td><td>Keep the case failed and inspect the package. Never retry until it happens to pass.</td></tr>
+          <tr><td>The existing Draft is found</td><td>The harness should clone and reconnect automatically.</td></tr>
+          <tr><td>The agent appears Published</td><td>Stop immediately. This workshop ends at Draft.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <p><a class="button primary" href="quest.html">Start the workshop</a> <a class="button" href="manual-tutorial.html">Open Hard mode directly</a></p>
+  </main>
+</body>
+</html>

@@ -1,109 +1,97 @@
-# Product Line Optimization — customer field guide
+# Product Line Optimization Agent — customer field guide
 
-Use this guide with the customer at the keyboard. The goal is to install and
-exercise the portable agent, inspect the Copilot Studio pilot, and identify the
-production integration seams without presenting synthetic figures as outcomes.
+Use this guide with the customer at the keyboard. The goal is to inspect the
+portable source, reproduce the synthetic workflow, review the deployment
+blueprint, and decide what production integration would require.
 
-## Evidence already established
+## Evidence boundary
 
-- Strict-isolation Brainstem: PLO-01 through PLO-04 passed (4/4).
-- Copilot Studio Preview: PLO-01 through PLO-04 passed in kodyv8.
-- Agent identity: `Product Line Optimization Pilot`,
-  `aibast_ProductLineOptimizationPilot`,
-  bot `643beb44-c693-44b6-b58d-7631cd1f190c`.
-- Model and inventory: Sonnet46, four skills, two knowledge files.
-- Deployment state: seven changes pushed; **Draft, not published**.
-- Manual agent: `Product Line Manual Build`, bot
-  `ee4836e5-16a4-4d23-8bd6-342155d3a2af`; 23 screenshots and 4/4 Preview
-  cases captured; **Draft, not published**.
+- All packaged records and outcomes are synthetic.
+- Recorded cases provide qualitative workflow evidence only.
+- They are not customer KPIs, measured production results, forecasts,
+  commitments, or proof of a live system connection.
+- A screenshot proves only the visible state in that frame.
+- No image, GIF, transcript, connector result, or publication state is implied
+  unless the corresponding file is present in `export-manifest.json`.
 
-`evals/transcripts.json`, `evals/copilot-studio-preview-evidence.json`, and
-`evals/manual-build-evidence.json` record the source, Easy, and Hard evidence.
+## Easy mode — GitHub Copilot (default)
 
-## Easy mode — Copilot-assisted
+1. Open GitHub Copilot Chat in VS Code and select **Agent mode**.
+2. Download `skills/aibast-easy-mode-copilot/SKILL.md` and drag it into the
+   chat.
+3. Open `EASY-MODE-COPILOT-CHAT.md`.
+4. Send its two short messages in order: build and test the named solution,
+   then deploy the validated Draft.
+5. The skill performs discovery, testing, deployment, and Preview validation
+   directly through GitHub Copilot.
+6. Stop at **Draft**. Publishing remains a separate human approval gate.
 
-**Audience:** customer participants, sellers, and specialists.
+## Easy mode — GitHub Copilot + Brainstem (optional)
 
-The customer opens GitHub Copilot Agent mode and pastes the Easy-mode prompt
-from the library or `quest.html`. Copilot performs the terminal work: checks the
-platform, installs or reuses Brainstem, downloads the portable source, verifies
-it, starts the service, and runs the smoke case.
+Brainstem is the learner's personal, on-device training AI working alongside
+GitHub Copilot. Copilot stays the familiar work surface; Brainstem remembers
+the workshop and hot-loads the specialized instructors.
 
-Do not continue until the evidence shows:
+Download `skills/aibast-easy-mode-brainstem/SKILL.md`, drag it into Copilot
+Chat, open `EASY-MODE-PERSONLESS.md`, and send the same two short messages.
+The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
+continues its front-door handoffs until functional validation returns
+`status: complete`.
 
-1. Brainstem health is `ok`.
-2. `ProductionLineOptimizationAgent` is the loaded tool.
-3. The smoke prompt called that exact tool.
-4. The answer names Polymer Molding Line C and Electronics Assembly Line A.
+Both lanes use the same immutable assets, locked cases, real Preview gate, and
+`published: false` boundary.
 
-Then use the four canonical prompts:
+Both Easy lanes preserve every recorded case prompt:
 
-- PLO-01: “Which production line needs attention today, and what is driving the loss?”
-- PLO-02: “Where is the bottleneck on each line, and which station should the plant team address first?”
-- PLO-03: “Give me the practical options to improve throughput without hiding the quality tradeoffs.”
-- PLO-04: “Translate the current line performance into a day, swing, and night shift plan.”
-
-Say explicitly: “The workflow is real; every figure is synthetic planning
-evidence and is not a customer KPI.”
+- `PLO-01` — Which production line needs attention today, and what is driving the loss?
+- `PLO-02` — Where is the bottleneck on each line, and which station should the plant team address first?
+- `PLO-03` — Give me the practical options to improve throughput without hiding the quality tradeoffs.
+- `PLO-04` — Translate the current line performance into a day, swing, and night shift plan.
 
 ## Hard mode — literal browser construction
 
-Hard mode does **not** use PAC CLI, Copilot Studio YAML import, or the plugin
-architect. Open `manual-tutorial.html` and reproduce the agent through the
-Copilot Studio browser:
+Hard mode is for reviewers who want to reproduce the build in the browser.
+Do not use PAC CLI, YAML import, or a plugin architect in Hard mode.
 
-1. Create a blank agent and name the manual duplicate.
-2. Enter and save the reviewed instructions.
-3. Remove default web search.
-4. Upload both knowledge files.
-5. Upload all four `SKILL.md` files individually.
-6. Select Claude Sonnet 4.6.
-7. Audit four skills, two knowledge files, and no web search.
-8. Run PLO-01 through PLO-04 in Preview.
-9. Capture the Draft state and do not publish.
-
-The captured 23-frame sequence is declared in
-`screenshots/manual/browserfilm.json` and rendered as
-`screenshots/manual/manual-build-walkthrough.gif`.
+1. Open `manual-tutorial.html`.
+2. Perform exactly one browser action per captured frame.
+3. Use the linked `manual/GLOBAL-INSTRUCTIONS.md`, knowledge files, and
+   `SKILL.md` files; do not retype or silently revise them.
+4. Compare each action with its real screenshot and expected-result boundary.
+5. Replay only the Preview cases recorded in `evals/manual-build-evidence.json`.
+6. Keep the manual duplicate in **Draft**. Do not choose Publish.
 
 ## Production replacement seams
 
-The pilot is self-contained. For production, replace:
+- Replace packaged synthetic inputs with an approved Dynamics 365 ERP connection; preserve the reviewed input and output contract.
+- Replace packaged synthetic inputs with an approved Azure IoT Hub through an approved connector, workflow, or API connection; preserve the reviewed input and output contract.
+- Replace packaged synthetic inputs with an approved Power BI connection; preserve the reviewed input and output contract.
 
-- synthetic line and order context with approved Dynamics 365 ERP access;
-- synthetic station and downtime records with approved Azure IoT Hub, MES, or
-  plant API access;
-- packaged reporting views with governed Power BI semantic models;
-- recommendation-only outputs with approved workflows that require human
-  authorization before maintenance, scheduling, staffing, or investment action.
-
-Preserve the routing, evidence boundary, quality tradeoff, non-invention rule,
-and “recommend only” safety contract. Never claim a side effect occurred unless
-the production tool returns evidence of success.
+The pilot must never claim a side effect, live lookup, or system update unless
+an approved production tool returns evidence that it succeeded.
 
 ## Failure recovery
 
 | Symptom | Recovery |
 | --- | --- |
-| Brainstem health is unavailable | Have Copilot rerun the official installer and policy-clean launcher from `deployment.json`. |
-| Source verification fails | Stop. Refresh the registry and recheck the raw source path before installing. |
-| Wrong agent answers | Remove other solution agents and rerun strict isolation; fix routing rather than retrying blindly. |
-| Knowledge remains processing | Wait. Do not run Preview until both files are accepted and available. |
-| A skill upload fails | Redownload the raw `SKILL.md`, preserve that exact filename, and upload the file rather than its folder or `.mcs.yml`. |
-| Required Preview identifier is missing | Treat the case as failed. Check instructions, knowledge, skill inventory, model, and web-search removal; then start a fresh Preview conversation. |
-| Model is unavailable | Use an approved substitute, record it, and avoid claiming model parity. |
-| Publish is offered | Stop at Draft unless publication has a separate explicit approval and governance record. |
+| A required evidence file is missing | Stop. Capture or restore the real file; never substitute a mockup. |
+| A browser frame disagrees with the tutorial | Treat the frame and evidence JSON as authoritative, correct the package metadata, and regenerate. |
+| Knowledge is still processing | Wait for ingestion to finish before Preview; do not interpret a partial answer as evidence. |
+| A skill upload fails | Download the linked raw `SKILL.md`, correct the reviewed source if necessary, and retry visibly. |
+| Easy and Hard inventories differ | Stop the comparison and restore exact instruction, knowledge, skill, and model parity. |
+| A recorded identifier is absent | Mark the case failed and investigate; do not retry until it happens to pass. |
+| Publish is offered | Stop at Draft unless a separate approver explicitly authorizes publication. |
 
 ## Evidence gates
 
-Before calling the package reproducible, retain:
-
-- portable-agent source identity and strict-isolation transcripts;
-- environment ID, schema, bot ID, model, component inventory, and push result;
-- all four Preview prompts, responses, expected identifiers, and timestamps;
-- 23 real manual screenshots using the declared filenames;
-- manual and Easy-mode Draft status;
-- unresolved connector, security, data-governance, and human-approval work.
-
-Do not call the pilot production-ready and do not translate synthetic deltas,
-costs, gains, or projected scores into customer KPI claims.
+- **Source gate:** deployment source and isolated transcripts exist.
+- **Easy gate:** available Easy evidence identifies the agent, environment,
+  model, inventory, cases, and Draft state.
+- **Manual gate:** manual evidence passes, every browserfilm frame exists, and
+  the tutorial maps one action to each frame.
+- **Parity gate:** Easy and Hard use the reviewed instructions, knowledge,
+  skills, model, and case identifiers.
+- **Draft gate:** the package records `published: false`; publication is not
+  part of scaffolding.
+- **Customer gate:** replacement connections, governance, telemetry, support,
+  and success measures are agreed before production.

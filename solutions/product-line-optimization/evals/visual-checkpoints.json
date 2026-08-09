@@ -1,0 +1,252 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/production-line-optimization",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker or refusal.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 29,
+    "reusable": 0,
+    "reshoot_required": 29,
+    "new_learn_step_captures_recommended": 0
+  },
+  "captures": [
+    {
+      "id": "easy-draft",
+      "mode": "easy",
+      "source": "solutions/product-line-optimization/screenshots/assisted/01-review-build.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "easy-plo-01",
+      "mode": "easy",
+      "source": "solutions/product-line-optimization/screenshots/assisted/02-plo-01.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "PLO-01"
+    },
+    {
+      "id": "easy-plo-02",
+      "mode": "easy",
+      "source": "solutions/product-line-optimization/screenshots/assisted/03-plo-02.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "PLO-02"
+    },
+    {
+      "id": "easy-plo-03",
+      "mode": "easy",
+      "source": "solutions/product-line-optimization/screenshots/assisted/04-plo-03.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "PLO-03"
+    },
+    {
+      "id": "easy-plo-04",
+      "mode": "easy",
+      "source": "solutions/product-line-optimization/screenshots/assisted/05-plo-04.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "PLO-04"
+    },
+    {
+      "id": "easy-draft-02",
+      "mode": "easy",
+      "source": "solutions/product-line-optimization/screenshots/assisted/06-confirm-draft.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "step": 1,
+      "source": "solutions/product-line-optimization/screenshots/manual/01-create-blank-agent.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "step": 2,
+      "source": "solutions/product-line-optimization/screenshots/manual/02-name-agent.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "step": 3,
+      "source": "solutions/product-line-optimization/screenshots/manual/03-enter-instructions.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "step": 4,
+      "source": "solutions/product-line-optimization/screenshots/manual/04-save-instructions.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "step": 5,
+      "source": "solutions/product-line-optimization/screenshots/manual/05-remove-web-search.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "step": 6,
+      "source": "solutions/product-line-optimization/screenshots/manual/06-open-knowledge-upload.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "step": 7,
+      "source": "solutions/product-line-optimization/screenshots/manual/07-upload-production-records.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "step": 8,
+      "source": "solutions/product-line-optimization/screenshots/manual/08-upload-optimization-rules.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "step": 9,
+      "source": "solutions/product-line-optimization/screenshots/manual/09-verify-two-knowledge-files.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "step": 10,
+      "source": "solutions/product-line-optimization/screenshots/manual/10-open-skill-upload.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "step": 11,
+      "source": "solutions/product-line-optimization/screenshots/manual/11-add-line-health-skill.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "step": 12,
+      "source": "solutions/product-line-optimization/screenshots/manual/12-add-bottleneck-skill.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "step": 13,
+      "source": "solutions/product-line-optimization/screenshots/manual/13-add-throughput-options-skill.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "step": 14,
+      "source": "solutions/product-line-optimization/screenshots/manual/14-add-shift-plan-skill.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "step": 15,
+      "source": "solutions/product-line-optimization/screenshots/manual/15-open-model-picker.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "step": 16,
+      "source": "solutions/product-line-optimization/screenshots/manual/16-select-sonnet46.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "step": 17,
+      "source": "solutions/product-line-optimization/screenshots/manual/17-review-inventory.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "step": 18,
+      "source": "solutions/product-line-optimization/screenshots/manual/18-open-preview.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    },
+    {
+      "id": "hard-step-19",
+      "mode": "hard",
+      "step": 19,
+      "source": "solutions/product-line-optimization/screenshots/manual/19-preview-plo01-line-health.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "PLO-01"
+    },
+    {
+      "id": "hard-step-20",
+      "mode": "hard",
+      "step": 20,
+      "source": "solutions/product-line-optimization/screenshots/manual/20-preview-plo02-bottlenecks.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "PLO-02"
+    },
+    {
+      "id": "hard-step-21",
+      "mode": "hard",
+      "step": 21,
+      "source": "solutions/product-line-optimization/screenshots/manual/21-preview-plo03-options.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "PLO-03"
+    },
+    {
+      "id": "hard-step-22",
+      "mode": "hard",
+      "step": 22,
+      "source": "solutions/product-line-optimization/screenshots/manual/22-preview-plo04-shift-plan.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
+      "case_id": "PLO-04"
+    },
+    {
+      "id": "hard-step-23",
+      "mode": "hard",
+      "step": 23,
+      "source": "solutions/product-line-optimization/screenshots/manual/23-verify-draft-no-publish.jpg",
+      "status": "reshoot_required",
+      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+    }
+  ]
+}

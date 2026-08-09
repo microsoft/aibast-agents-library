@@ -30,7 +30,12 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 4 `SKILL.md` 
 
 | Surface | Location |
 | --- | --- |
-| Customer field guide | `solutions/procurement-support/FIELD-GUIDE.md` |
+| Customer field guide | `solutions/procurement-support/field-guide.html` |
+| Evidence report | `solutions/procurement-support/evidence-report.html` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/procurement-support/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/procurement-support/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Hard quest | `solutions/procurement-support/quest.html` |
 | Literal browser tutorial | `solutions/procurement-support/manual-tutorial.html` |
 | Raw export manifest | `solutions/procurement-support/export-manifest.json` |
@@ -38,7 +43,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 4 `SKILL.md` 
 | Manual evidence | `solutions/procurement-support/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/procurement-support/screenshots/manual/browserfilm.json` |
 
-**Scaffold status:** 60 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 69 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

@@ -1,4 +1,4 @@
-# Time Entry and Billing Agent — Copilot-only Easy mode comparison
+# Time Entry and Billing Agent — GitHub Copilot Easy mode
 
 ## 1. Attach the Copilot-only skill
 
@@ -6,11 +6,9 @@ Download [SKILL.md](https://raw.githubusercontent.com/kody-w/aibast-agents-libra
 Copilot Chat in VS Code, select **Agent mode**, and drag `SKILL.md` into the
 chat.
 
-This comparison lane intentionally omits Brainstem so workshop participants can
-answer “why not just use GitHub Copilot by itself?” The attached skill carries
-the discovery, testing, deployment, and validation harness so the attendee
-still uses the same short messages instead of supplying URLs, mechanics, or a
-repeated “without Brainstem” qualifier.
+The attached skill carries the discovery, testing, deployment, and validation
+harness directly in GitHub Copilot, so the attendee still uses the same short
+messages instead of supplying URLs or mechanics.
 
 Then send these two short messages:
 

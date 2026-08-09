@@ -127,6 +127,27 @@ def render_knowledge_sidecar(filename):
     )
 
 
+def reviewed_knowledge_files(package):
+    manual = sorted(
+        path
+        for path in (package / "manual" / "knowledge").glob("*.md")
+        if path.is_file()
+    )
+    if manual:
+        return manual
+    return sorted(
+        path
+        for path in (
+            package
+            / "copilot-studio"
+            / "capabilities"
+            / "knowledge"
+            / "files"
+        ).glob("*.md")
+        if path.is_file()
+    )
+
+
 def run(command):
     result = subprocess.run(
         command,
@@ -217,14 +238,16 @@ def promote(
             raise ValueError(f"behavior filename is too long: {filename}")
         (behaviors / filename).write_text(content, encoding="utf-8")
 
+    knowledge = [
+        (path.name, path.read_bytes())
+        for path in reviewed_knowledge_files(package)
+    ]
     knowledge_target = project / "capabilities" / "knowledge" / "files"
     if knowledge_target.exists():
         shutil.rmtree(knowledge_target)
     knowledge_target.mkdir(parents=True)
-    knowledge = sorted((package / "manual" / "knowledge").glob("*.md"))
-    for path in knowledge:
-        filename = path.name
-        shutil.copy2(path, knowledge_target / filename)
+    for filename, content in knowledge:
+        (knowledge_target / filename).write_bytes(content)
         (knowledge_target / f"{filename}.mcs.yml").write_text(
             render_knowledge_sidecar(filename),
             encoding="utf-8",
