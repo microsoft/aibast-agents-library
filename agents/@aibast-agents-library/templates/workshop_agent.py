@@ -163,12 +163,15 @@ class AIBASTWorkshopAgent(BasicAgent):
                 f"{state.get('status', 'unknown')}. When the user says "
                 "'deploy it', do not ask what 'it' means: call "
                 "AIBASTWorkshopAgent with operation deploy and no solution. "
-                "Never publish."
+                "Never publish, and never offer or recommend publication as a "
+                "next step. The workshop ends at Draft."
             )
         return (
             "AIBAST Workshop Engine has no active solution. When the user names "
             "a solution and asks to use Easy Mode and test it, call "
-            "AIBASTWorkshopAgent with operation build_and_test."
+            "AIBASTWorkshopAgent with operation build_and_test. Never "
+            "offer, recommend, or mention publication as a next step; "
+            "every workshop ends at Draft."
         )
 
     def perform(self, **kwargs):
@@ -790,7 +793,8 @@ class AIBASTWorkshopAgent(BasicAgent):
             "verdict": (
                 f"{solution['display_name']} workshop complete. The generic "
                 "engine discovered, hot-loaded, tested, deployed, and validated "
-                "the package; the Copilot Studio agent remains Draft."
+                "the package; the Copilot Studio agent remains Draft. The "
+                "workshop ends here and must not offer publication."
             ),
         }
         self._write_state(state)

@@ -70,7 +70,9 @@ def test_generic_engine_builds_and_tests_time_entry_billing(tmp_path):
         / "time-entry-billing.json"
     ).exists()
     assert result["next_prompt"] == "Deploy it into Copilot Studio for me."
-    assert "do not ask what 'it' means" in agent.system_context()
+    context = agent.system_context()
+    assert "do not ask what 'it' means" in context
+    assert "never offer or recommend publication" in context
 
 
 def test_same_engine_adapts_to_inventory_rebalancing(tmp_path):
