@@ -195,7 +195,7 @@
     .module-summary h3 { margin-top: 0; }
     .module-summary ul { margin-bottom: 0; padding-left: 20px; }
     .learn-step { margin: 22px 0; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); overflow: hidden; }
-    .learn-step-header { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: center; padding: 18px 20px; border-bottom: 1px solid var(--cp-border); background: var(--cp-surface-soft); }
+    .learn-step-header { display: grid; grid-template-columns: 44px 1fr auto; gap: 14px; align-items: center; padding: 18px 20px; border-bottom: 1px solid var(--cp-border); background: var(--cp-surface-soft); }
     .learn-step-header > span { display: grid; width: 40px; height: 40px; place-items: center; border-radius: 10px; background: var(--cp-accent); color: var(--cp-accent-fg); font-weight: 800; }
     .learn-step-header p { margin: 0; color: var(--cp-accent); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
     .learn-step-header h3 { margin: 2px 0 0; }
@@ -212,6 +212,10 @@
     .preview-case { padding: 16px; border: 1px solid var(--cp-border); border-radius: 14px; background: var(--cp-bg-elevated); }
     .preview-case header { display: flex; justify-content: space-between; gap: 12px; align-items: start; }
     .preview-case h4 { margin: 0; }
+    .report-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+    .report-button { border-color: var(--cp-accent); color: var(--cp-accent); }
+    .beta-badge { display: inline-flex; align-items: center; margin-bottom: 12px; padding: 5px 9px; border-radius: 999px; background: var(--cp-warning); color: var(--cp-accent-fg); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    .beta-notice { margin-top: 14px; padding: 14px; border: 1px solid var(--cp-warning); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
     .marker-group { margin: 12px 0; }
     .marker-group > strong { display: block; margin-bottom: 6px; }
     .marker-chip { display: inline-flex; margin: 0 6px 6px 0; padding: 5px 8px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface); color: var(--cp-text-muted); font-size: 12px; }
@@ -244,10 +248,12 @@
   </header>
   <main class="page">
     <section class="hero">
+      <span class="beta-badge">Beta workshop</span>
       <p class="eyebrow">Evidence-grounded customer journey</p>
       <h1>Time Entry and Billing Agent</h1>
       <p class="lede">Default to the Brainstem + Copilot personless harness, compare it with Copilot alone, or reproduce every click in Hard mode.</p>
       <div class="notice"><strong>Boundary:</strong> synthetic qualitative evidence only—not a customer KPI, measured production result, live connection, or publication approval.</div>
+      <div class="beta-notice"><strong>Help improve this Beta:</strong> use the report buttons when a prompt, expected result, screenshot, or product state is inaccurate. The button opens a prefilled GitHub issue for review; it does not submit anything automatically.</div>
       <div class="mode-switch" role="tablist">
         <button class="mode active" data-mode="easy" role="tab">Easy</button>
         <button class="mode" data-mode="hard" role="tab">Hard</button>
@@ -288,7 +294,7 @@
         <div class="notice"><strong>Brainstem lane:</strong> Brainstem is the learner’s personal, on-device training AI working alongside Copilot. It persists the workshop, loads the generic engine, and continues every handoff.</div>
 
       <article class="learn-step" id="brainstem-step-1">
-        <header class="learn-step-header"><span>1</span><div><p>Prepare your Copilot</p><h3>Download and attach the Brainstem skill</h3></div></header>
+        <header class="learn-step-header"><span>1</span><div><p>Prepare your Copilot</p><h3>Download and attach the Brainstem skill</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 1: attach skill" data-report-expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>This file fixes the workshop to Brainstem. Copilot remains the work surface while the learner&#x27;s on-device training AI persists state, loads the generic workshop engine, and continues every handoff.</p>
           <div class="action-panel"><strong>Do this</strong><ol><li>Download the lane-specific <code>SKILL.md</code>.</li><li>Open GitHub Copilot Chat in VS Code.</li><li>Select <strong>Agent mode</strong>.</li><li>Drag the downloaded file into the chat.</li></ol><a class="button primary" href="../../skills/aibast-easy-mode-brainstem/SKILL.md" download="SKILL.md">Download Brainstem SKILL.md</a></div>
@@ -298,7 +304,7 @@
       </article>
 
       <article class="learn-step" id="brainstem-step-2">
-        <header class="learn-step-header"><span>2</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test Time Entry and Billing</h3></div></header>
+        <header class="learn-step-header"><span>2</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test Time Entry and Billing</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 2: local proof" data-report-expected="Brainstem reports the generic AIBAST Workshop Engine and TimeEntryBillingAgent loaded, with 5/5 locked local cases passed." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>This step proves the portable business logic before any Copilot Studio work begins. The harness retrieves the immutable package, verifies the source, loads the agent, and runs every locked case.</p>
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="brainstem-build-prompt">Copy message</button></div>
@@ -309,7 +315,7 @@
       </article>
 
       <article class="learn-step" id="brainstem-step-3">
-        <header class="learn-step-header"><span>3</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div></header>
+        <header class="learn-step-header"><span>3</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 3: Draft deployment" data-report-expected="Draft Time Entry and Billing Pilot; model Sonnet46; 2 knowledge files; 5 skills; published false." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>The harness now reuses or creates the source-controlled Copilot Studio Draft, synchronizes the reviewed instructions and assets, and leaves publication off.</p>
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="brainstem-deploy-prompt">Copy message</button></div>
@@ -324,7 +330,7 @@
         <div class="comparison-note"><strong>Skeptic comparison — Copilot-only lane:</strong> GitHub Copilot carries the same harness directly in the active session. The skill still discovers every asset and runs every gate; there is no persistent Brainstem engine between turns.</div>
 
       <article class="learn-step" id="copilot-step-1">
-        <header class="learn-step-header"><span>1</span><div><p>Prepare your Copilot</p><h3>Download and attach the Copilot-only skill</h3></div></header>
+        <header class="learn-step-header"><span>1</span><div><p>Prepare your Copilot</p><h3>Download and attach the Copilot-only skill</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 1: attach skill" data-report-expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>This file fixes the workshop to GitHub Copilot alone. The skill carries the same discovery, testing, deployment, and validation contract directly in the active Copilot session.</p>
           <div class="action-panel"><strong>Do this</strong><ol><li>Download the lane-specific <code>SKILL.md</code>.</li><li>Open GitHub Copilot Chat in VS Code.</li><li>Select <strong>Agent mode</strong>.</li><li>Drag the downloaded file into the chat.</li></ol><a class="button primary" href="../../skills/aibast-easy-mode-copilot/SKILL.md" download="SKILL.md">Download Copilot-only SKILL.md</a></div>
@@ -334,7 +340,7 @@
       </article>
 
       <article class="learn-step" id="copilot-step-2">
-        <header class="learn-step-header"><span>2</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test Time Entry and Billing</h3></div></header>
+        <header class="learn-step-header"><span>2</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test Time Entry and Billing</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 2: local proof" data-report-expected="Copilot reports an isolated workspace, a verified source hash, and 5/5 locked local cases passed." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>This step proves the portable business logic before any Copilot Studio work begins. The harness retrieves the immutable package, verifies the source, loads the agent, and runs every locked case.</p>
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="copilot-build-prompt">Copy message</button></div>
@@ -345,7 +351,7 @@
       </article>
 
       <article class="learn-step" id="copilot-step-3">
-        <header class="learn-step-header"><span>3</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div></header>
+        <header class="learn-step-header"><span>3</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 3: Draft deployment" data-report-expected="Draft Time Entry and Billing Pilot; model Sonnet46; 2 knowledge files; 5 skills; published false." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>The harness now reuses or creates the source-controlled Copilot Studio Draft, synchronizes the reviewed instructions and assets, and leaves publication off.</p>
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="copilot-deploy-prompt">Copy message</button></div>
@@ -365,7 +371,7 @@
           <div class="preview-grid">
 
         <article class="preview-case">
-          <header><div><p class="prompt-kicker">TEB-01 · Billing Manager</p><h4>Confirm the expected evidence</h4></div><button class="button" type="button" data-copy-target="preview-prompt-teb-01">Copy Preview prompt</button></header>
+          <header><div><p class="prompt-kicker">TEB-01 · Billing Manager</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-teb-01">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — TEB-01" data-report-expected="Must include: TE-9004, TE-9011, Needs approval; must not include: entries were approved automatically" data-report-evidence="solutions/time-entry-billing/screenshots/assisted/annotated/01-teb-01.png">Report an issue</button></div></header>
           <pre class="prompt-block" id="preview-prompt-teb-01">What billable work is still blocked from this close, and what has to happen before it can move?</pre>
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">TE-9004</span><span class="marker-chip">TE-9011</span><span class="marker-chip">Needs approval</span></div></div>
           <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">entries were approved automatically</span></div></div>
@@ -374,7 +380,7 @@
         </article>
 
         <article class="preview-case">
-          <header><div><p class="prompt-kicker">TEB-02 · Finance Vice President</p><h4>Confirm the expected evidence</h4></div><button class="button" type="button" data-copy-target="preview-prompt-teb-02">Copy Preview prompt</button></header>
+          <header><div><p class="prompt-kicker">TEB-02 · Finance Vice President</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-teb-02">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — TEB-02" data-report-expected="Must include: By Project, By Consultant, not posted revenue; must not include: revenue recognized" data-report-evidence="solutions/time-entry-billing/screenshots/assisted/annotated/02-teb-02.png">Report an issue</button></div></header>
           <pre class="prompt-block" id="preview-prompt-teb-02">Give me the month-end billing rollup by project and consultant without treating it as posted revenue.</pre>
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">By Project</span><span class="marker-chip">By Consultant</span><span class="marker-chip">not posted revenue</span></div></div>
           <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">revenue recognized</span></div></div>
@@ -383,7 +389,7 @@
         </article>
 
         <article class="preview-case">
-          <header><div><p class="prompt-kicker">TEB-03 · Billing Compliance Lead</p><h4>Confirm the expected evidence</h4></div><button class="button" type="button" data-copy-target="preview-prompt-teb-03">Copy Preview prompt</button></header>
+          <header><div><p class="prompt-kicker">TEB-03 · Billing Compliance Lead</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-teb-03">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — TEB-03" data-report-expected="Must include: Missing description, Exceeds 10-hour daily limit, Budget Alert; must not include: description completed automatically" data-report-evidence="solutions/time-entry-billing/screenshots/assisted/annotated/03-teb-03.png">Report an issue</button></div></header>
           <pre class="prompt-block" id="preview-prompt-teb-03">Which time cards would fail our billing review because of narrative, hours, rate, or budget concerns?</pre>
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">Missing description</span><span class="marker-chip">Exceeds 10-hour daily limit</span><span class="marker-chip">Budget Alert</span></div></div>
           <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">description completed automatically</span></div></div>
@@ -392,7 +398,7 @@
         </article>
 
         <article class="preview-case">
-          <header><div><p class="prompt-kicker">TEB-04 · Billing Manager</p><h4>Confirm the expected evidence</h4></div><button class="button" type="button" data-copy-target="preview-prompt-teb-04">Copy Preview prompt</button></header>
+          <header><div><p class="prompt-kicker">TEB-04 · Billing Manager</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-teb-04">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — TEB-04" data-report-expected="Must include: Invoices Ready to Generate, Fixed-fee hold, no invoice was generated; must not include: Pinnacle Energy ERP | Pinnacle Energy" data-report-evidence="solutions/time-entry-billing/screenshots/assisted/annotated/04-teb-04.png">Report an issue</button></div></header>
           <pre class="prompt-block" id="preview-prompt-teb-04">Prepare the invoice support that is actually ready, and keep anything without the right approval or milestone evidence out.</pre>
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">Invoices Ready to Generate</span><span class="marker-chip">Fixed-fee hold</span><span class="marker-chip">no invoice was generated</span></div></div>
           <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">Pinnacle Energy ERP | Pinnacle Energy</span></div></div>
@@ -401,7 +407,7 @@
         </article>
 
         <article class="preview-case">
-          <header><div><p class="prompt-kicker">TEB-05 · Client Finance Partner</p><h4>Confirm the expected evidence</h4></div><button class="button" type="button" data-copy-target="preview-prompt-teb-05">Copy Preview prompt</button></header>
+          <header><div><p class="prompt-kicker">TEB-05 · Client Finance Partner</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-teb-05">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — TEB-05" data-report-expected="Must include: DSP-301, DSP-302, authorized review; must not include: contacted the client, charge was waived" data-report-evidence="solutions/time-entry-billing/screenshots/assisted/05-teb-05.jpg">Report an issue</button></div></header>
           <pre class="prompt-block" id="preview-prompt-teb-05">What evidence is missing on the disputed hours, and what is the safest resolution path before we go back to the clients?</pre>
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">DSP-301</span><span class="marker-chip">DSP-302</span><span class="marker-chip">authorized review</span></div></div>
           <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">contacted the client</span><span class="marker-chip">charge was waived</span></div></div>
@@ -414,7 +420,7 @@
 
 
       <section class="learn-step" id="easy-step-5">
-        <header class="learn-step-header"><span>5</span><div><p>Recognize completion</p><h3>Know what “done” looks like</h3></div></header>
+        <header class="learn-step-header"><span>5</span><div><p>Recognize completion</p><h3>Know what “done” looks like</h3></div><button class="button report-button" type="button" data-report-location="Easy mode — final completion verdict" data-report-expected="Local 5/5; Preview 5/5; Draft Time Entry and Billing Pilot; published false." data-report-evidence="solutions/time-entry-billing/screenshots/assisted/06-confirm-draft.jpg">Report an issue</button></header>
         <div class="learn-step-body">
           <p>The workshop is complete only when both the portable agent and the Copilot Studio front door prove the same behavior.</p>
           <div class="done-grid">
@@ -530,6 +536,48 @@
           }).catch(() => {
             button.textContent = "Copy failed";
           });
+        });
+      });
+      document.querySelectorAll("[data-report-location]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const locationLabel = button.dataset.reportLocation || "Workshop";
+          const expected = button.dataset.reportExpected || "Describe the expected result.";
+          const evidence = button.dataset.reportEvidence || "No evidence path supplied.";
+          const title = `[Beta workshop] Time Entry and Billing Agent: ${locationLabel}`;
+          const body = `<!-- aibast-workshop-feedback:v1 -->
+## Workshop signal
+
+- Schema: \`aibast-workshop-feedback/1.0\`
+- Solution: \`@aibast-agents-library/time-entry-billing\`
+- Page: ${location.href}
+- Mode: \`${localStorage.getItem(easyLaneKey) || "brainstem"}\`
+- Location: ${locationLabel}
+- Evidence: \`${evidence}\`
+
+## Workshop context
+
+This issue was opened from a contextual Beta workshop report button.
+
+## Expected
+
+${expected}
+
+## What happened instead
+
+Describe what was inaccurate or missing.
+
+## Reproduction
+
+1. Open the workshop page.
+2. Select the mode shown above.
+3. Follow the step or Preview case.
+4. Record the visible result and any Copilot response.
+
+> Beta workshop report. Do not include credentials, tokens, customer data, or other sensitive information.`;
+          const url = new URL("https://github.com/microsoft/aibast-agents-library/issues/new");
+          url.searchParams.set("title", title);
+          url.searchParams.set("body", body);
+          window.open(url.toString(), "_blank", "noopener");
         });
       });
       selectEasyLane(localStorage.getItem(easyLaneKey) || "brainstem");

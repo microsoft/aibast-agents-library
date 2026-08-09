@@ -125,6 +125,10 @@ def test_generic_engine_returns_front_door_handoff(tmp_path, monkeypatch):
     )
     assert len(handoff["cases"]) == 5
     assert "real Copilot Studio front door" in handoff["instruction"]
+    assert result["visual_evidence"]["reusable"] == 19
+    assert result["visual_evidence"]["reshoot_required"] == 7
+    assert len(result["visual_evidence"]["reshoot_jobs"]) == 7
+    assert len(result["visual_evidence"]["new_capture_jobs"]) == 8
 
 
 def test_generic_engine_closes_marker_only_front_door_evidence(tmp_path):

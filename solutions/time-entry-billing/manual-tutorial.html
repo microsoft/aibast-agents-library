@@ -167,7 +167,7 @@
     .toc a { padding: 7px 9px; border-left: 3px solid var(--cp-border); color: var(--cp-text-muted); text-decoration: none; font-size: 13px; }
     .toc a:hover { border-left-color: var(--cp-accent); color: var(--cp-text); }
     .step { scroll-margin-top: 90px; margin: 0 0 28px; overflow: hidden; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
-    .step header { display: flex; gap: 14px; padding: 20px 22px; border-bottom: 1px solid var(--cp-border); }
+    .step header { display: grid; grid-template-columns: 36px 1fr auto; gap: 14px; align-items: center; padding: 20px 22px; border-bottom: 1px solid var(--cp-border); }
     .step header > span { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 10px; background: var(--cp-accent-soft); color: var(--cp-accent); font-weight: 800; }
     .step h3, .step header p { margin: 0; }
     .step header p { color: var(--cp-text-muted); font-size: 13px; }
@@ -183,6 +183,9 @@
     .look-for { padding: 20px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
     .look-for strong { color: var(--cp-text); }
     .look-for p { margin: 8px 0 0; }
+    .report-button { border-color: var(--cp-accent); color: var(--cp-accent); }
+    .beta-badge { display: inline-flex; align-items: center; margin-bottom: 12px; padding: 5px 9px; border-radius: 999px; background: var(--cp-warning); color: var(--cp-accent-fg); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    .beta-notice { margin-top: 14px; padding: 14px; border: 1px solid var(--cp-warning); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
     .step footer { display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
     .troubleshooting details { padding: 14px 0; border-bottom: 1px solid var(--cp-border); }
     summary { cursor: pointer; font-weight: 700; }
@@ -222,15 +225,17 @@
     </aside>
     <main>
       <section class="hero">
+        <span class="beta-badge">Beta workshop</span>
         <p class="eyebrow">Hard mode · literal browser construction</p>
         <h1>Build Time Entry and Billing Agent manually.</h1>
         <p class="lede">No PAC CLI, YAML import, or plugin architect. Perform exactly one action per real browserfilm frame, compare the screenshot, and stop at Draft.</p>
         <div class="notice"><strong>Synthetic disclosure:</strong> this is qualitative workflow evidence using packaged synthetic inputs. It is not a customer KPI or a live-system result.</div>
+        <div class="beta-notice"><strong>Help improve this Beta:</strong> use the report button on any step when the action, expected result, or visible product state is inaccurate. It opens a prefilled GitHub issue and does not submit automatically.</div>
         <!-- No pending evidence. -->
       </section>
       <h2>Build and verify</h2>
       <article class="step" id="step-1">
-        <header><span>1</span><div><h3>Create a blank Copilot Studio agent</h3><p>Frame 1 of 20</p></div></header>
+        <header><span>1</span><div><h3>Create a blank Copilot Studio agent</h3><p>Step 1 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 1: Create a blank Copilot Studio agent" data-report-expected="A blank Copilot Studio agent is visible in the captured Draft workspace." data-report-evidence="solutions/time-entry-billing/screenshots/manual/01-create-blank-agent.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><strong>Action</strong>Create a blank Copilot Studio agent</div>
@@ -244,7 +249,7 @@
         </div>
       </article>
 <article class="step" id="step-2">
-        <header><span>2</span><div><h3>Name Time Entry and Billing Manual</h3><p>Frame 2 of 20</p></div></header>
+        <header><span>2</span><div><h3>Name Time Entry and Billing Manual</h3><p>Step 2 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 2: Name Time Entry and Billing Manual" data-report-expected="The page header shows the recorded manual build name: Time Entry and Billing Manual." data-report-evidence="solutions/time-entry-billing/screenshots/manual/02-name-agent.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><strong>Action</strong>Name Time Entry and Billing Manual</div>
@@ -258,7 +263,7 @@
         </div>
       </article>
 <article class="step" id="step-3">
-        <header><span>3</span><div><h3>Enter the reviewed global instructions</h3><p>Frame 3 of 20</p></div></header>
+        <header><span>3</span><div><h3>Enter the reviewed global instructions</h3><p>Step 3 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 3: Enter the reviewed global instructions" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/time-entry-billing/screenshots/manual/03-enter-instructions.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><strong>Action</strong>Enter the reviewed global instructions</div>
@@ -272,7 +277,7 @@
         </div>
       </article>
 <article class="step" id="step-4">
-        <header><span>4</span><div><h3>Save the instruction policy</h3><p>Frame 4 of 20</p></div></header>
+        <header><span>4</span><div><h3>Save the instruction policy</h3><p>Step 4 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 4: Save the instruction policy" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/time-entry-billing/screenshots/manual/04-save-instructions.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><strong>Action</strong>Save the instruction policy</div>
@@ -286,7 +291,7 @@
         </div>
       </article>
 <article class="step" id="step-5">
-        <header><span>5</span><div><h3>Remove default web search</h3><p>Frame 5 of 20</p></div></header>
+        <header><span>5</span><div><h3>Remove default web search</h3><p>Step 5 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 5: Remove default web search" data-report-expected="The captured inventory no longer lists the default web-search capability." data-report-evidence="solutions/time-entry-billing/screenshots/manual/05-remove-web-search.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><strong>Action</strong>Remove default web search</div>
@@ -300,7 +305,7 @@
         </div>
       </article>
 <article class="step" id="step-6">
-        <header><span>6</span><div><h3>Add knowledge: aibast_billing-rules-and-disputes.md</h3><p>Frame 6 of 20</p></div></header>
+        <header><span>6</span><div><h3>Add knowledge: aibast_billing-rules-and-disputes.md</h3><p>Step 6 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 6: Add knowledge: aibast_billing-rules-and-disputes.md" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/time-entry-billing/screenshots/manual/06-add-aibast-billing-rules-and-disputes.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><strong>Action</strong>Add knowledge: aibast_billing-rules-and-disputes.md</div>
@@ -314,7 +319,7 @@
         </div>
       </article>
 <article class="step" id="step-7">
-        <header><span>7</span><div><h3>Add knowledge: aibast_billing-synthetic-ledger.md</h3><p>Frame 7 of 20</p></div></header>
+        <header><span>7</span><div><h3>Add knowledge: aibast_billing-synthetic-ledger.md</h3><p>Step 7 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 7: Add knowledge: aibast_billing-synthetic-ledger.md" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/time-entry-billing/screenshots/manual/07-add-aibast-billing-synthetic-ledger.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><strong>Action</strong>Add knowledge: aibast_billing-synthetic-ledger.md</div>
@@ -328,7 +333,7 @@
         </div>
       </article>
 <article class="step" id="step-8">
-        <header><span>8</span><div><h3>Add skill: billing-summary</h3><p>Frame 8 of 20</p></div></header>
+        <header><span>8</span><div><h3>Add skill: billing-summary</h3><p>Step 8 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 8: Add skill: billing-summary" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/time-entry-billing/screenshots/manual/08-add-billing-summary.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><strong>Action</strong>Add skill: billing-summary</div>
@@ -342,7 +347,7 @@
         </div>
       </article>
 <article class="step" id="step-9">
-        <header><span>9</span><div><h3>Add skill: dispute-resolution</h3><p>Frame 9 of 20</p></div></header>
+        <header><span>9</span><div><h3>Add skill: dispute-resolution</h3><p>Step 9 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 9: Add skill: dispute-resolution" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/time-entry-billing/screenshots/manual/09-add-dispute-resolution.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><strong>Action</strong>Add skill: dispute-resolution</div>
@@ -356,7 +361,7 @@
         </div>
       </article>
 <article class="step" id="step-10">
-        <header><span>10</span><div><h3>Add skill: invoice-preparation</h3><p>Frame 10 of 20</p></div></header>
+        <header><span>10</span><div><h3>Add skill: invoice-preparation</h3><p>Step 10 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 10: Add skill: invoice-preparation" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/time-entry-billing/screenshots/manual/10-add-invoice-preparation.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><strong>Action</strong>Add skill: invoice-preparation</div>
@@ -370,7 +375,7 @@
         </div>
       </article>
 <article class="step" id="step-11">
-        <header><span>11</span><div><h3>Add skill: time-entry-audit</h3><p>Frame 11 of 20</p></div></header>
+        <header><span>11</span><div><h3>Add skill: time-entry-audit</h3><p>Step 11 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 11: Add skill: time-entry-audit" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 5 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/time-entry-billing/screenshots/manual/11-add-time-entry-audit.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><strong>Action</strong>Add skill: time-entry-audit</div>
@@ -384,7 +389,7 @@
         </div>
       </article>
 <article class="step" id="step-12">
-        <header><span>12</span><div><h3>Add skill: unbilled-report</h3><p>Frame 12 of 20</p></div></header>
+        <header><span>12</span><div><h3>Add skill: unbilled-report</h3><p>Step 12 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 12: Add skill: unbilled-report" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/time-entry-billing/screenshots/manual/12-add-unbilled-report.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><strong>Action</strong>Add skill: unbilled-report</div>
@@ -398,7 +403,7 @@
         </div>
       </article>
 <article class="step" id="step-13">
-        <header><span>13</span><div><h3>Review model, skills, knowledge, and safety boundaries</h3><p>Frame 13 of 20</p></div></header>
+        <header><span>13</span><div><h3>Review model, skills, knowledge, and safety boundaries</h3><p>Step 13 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 13: Review model, skills, knowledge, and safety boundaries" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 5 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/time-entry-billing/screenshots/manual/13-review-inventory.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><strong>Action</strong>Review model, skills, knowledge, and safety boundaries</div>
@@ -412,7 +417,7 @@
         </div>
       </article>
 <article class="step" id="step-14">
-        <header><span>14</span><div><h3>Open a fresh Preview conversation</h3><p>Frame 14 of 20</p></div></header>
+        <header><span>14</span><div><h3>Open a fresh Preview conversation</h3><p>Step 14 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 14: Open a fresh Preview conversation" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 5 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/time-entry-billing/screenshots/manual/14-open-preview.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><strong>Action</strong>Open a fresh Preview conversation</div>
@@ -426,7 +431,7 @@
         </div>
       </article>
 <article class="step" id="step-15">
-        <header><span>15</span><div><h3>Pass TEB-01: Billing Manager</h3><p>Frame 15 of 20</p></div></header>
+        <header><span>15</span><div><h3>Pass TEB-01: Billing Manager</h3><p>Step 15 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 15: Pass TEB-01: Billing Manager" data-report-expected="The captured Preview evidence records TEB-01 with the recorded identifiers TE-9004, TE-9011, Needs approval; do not infer results beyond it." data-report-evidence="solutions/time-entry-billing/screenshots/manual/15-teb-01.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><strong>Action</strong>Pass TEB-01: Billing Manager</div>
@@ -440,7 +445,7 @@
         </div>
       </article>
 <article class="step" id="step-16">
-        <header><span>16</span><div><h3>Pass TEB-02: Finance Vice President</h3><p>Frame 16 of 20</p></div></header>
+        <header><span>16</span><div><h3>Pass TEB-02: Finance Vice President</h3><p>Step 16 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 16: Pass TEB-02: Finance Vice President" data-report-expected="The captured Preview evidence records TEB-02 with the recorded identifiers By Project, By Consultant, not posted revenue; do not infer results beyond it." data-report-evidence="solutions/time-entry-billing/screenshots/manual/16-teb-02.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><strong>Action</strong>Pass TEB-02: Finance Vice President</div>
@@ -454,7 +459,7 @@
         </div>
       </article>
 <article class="step" id="step-17">
-        <header><span>17</span><div><h3>Pass TEB-03: Billing Compliance Lead</h3><p>Frame 17 of 20</p></div></header>
+        <header><span>17</span><div><h3>Pass TEB-03: Billing Compliance Lead</h3><p>Step 17 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 17: Pass TEB-03: Billing Compliance Lead" data-report-expected="The captured Preview evidence records TEB-03 with the recorded identifiers Missing description, Exceeds 10-hour daily limit, Budget Alert; do not infer results beyond it." data-report-evidence="solutions/time-entry-billing/screenshots/manual/17-teb-03.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><strong>Action</strong>Pass TEB-03: Billing Compliance Lead</div>
@@ -468,7 +473,7 @@
         </div>
       </article>
 <article class="step" id="step-18">
-        <header><span>18</span><div><h3>Pass TEB-04: Billing Manager</h3><p>Frame 18 of 20</p></div></header>
+        <header><span>18</span><div><h3>Pass TEB-04: Billing Manager</h3><p>Step 18 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 18: Pass TEB-04: Billing Manager" data-report-expected="The captured Preview evidence records TEB-04 with the recorded identifiers Invoices Ready to Generate, Fixed-fee hold, no invoice was generated; do not infer results beyond it." data-report-evidence="solutions/time-entry-billing/screenshots/manual/18-teb-04.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><strong>Action</strong>Pass TEB-04: Billing Manager</div>
@@ -482,7 +487,7 @@
         </div>
       </article>
 <article class="step" id="step-19">
-        <header><span>19</span><div><h3>Pass TEB-05: Client Finance Partner</h3><p>Frame 19 of 20</p></div></header>
+        <header><span>19</span><div><h3>Pass TEB-05: Client Finance Partner</h3><p>Step 19 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 19: Pass TEB-05: Client Finance Partner" data-report-expected="The captured Preview evidence records TEB-05 with the recorded identifiers DSP-301, DSP-302, authorized review; do not infer results beyond it." data-report-evidence="solutions/time-entry-billing/screenshots/manual/19-teb-05.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><strong>Action</strong>Pass TEB-05: Client Finance Partner</div>
@@ -496,7 +501,7 @@
         </div>
       </article>
 <article class="step" id="step-20">
-        <header><span>20</span><div><h3>Confirm Draft and stop before publish</h3><p>Frame 20 of 20</p></div></header>
+        <header><span>20</span><div><h3>Confirm Draft and stop before publish</h3><p>Step 20 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 20: Confirm Draft and stop before publish" data-report-expected="The agent remains Draft and no Publish action is taken." data-report-evidence="solutions/time-entry-billing/screenshots/manual/20-confirm-draft.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><strong>Action</strong>Confirm Draft and stop before publish</div>
@@ -538,6 +543,43 @@
         label.textContent = `${done.length} of ${boxes.length} complete`;
         bar.style.width = boxes.length ? `${(done.length / boxes.length) * 100}%` : "0%";
       }
+      document.querySelectorAll("[data-report-location]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const locationLabel = button.dataset.reportLocation || "Hard-mode step";
+          const expected = button.dataset.reportExpected || "Describe the expected result.";
+          const evidence = button.dataset.reportEvidence || "No evidence path supplied.";
+          const title = `[Beta workshop] Time Entry and Billing Agent: ${locationLabel}`;
+          const body = `<!-- aibast-workshop-feedback:v1 -->
+## Workshop signal
+
+- Schema: \`aibast-workshop-feedback/1.0\`
+- Solution: \`@aibast-agents-library/time-entry-billing\`
+- Page: ${location.href}
+- Mode: \`hard\`
+- Location: ${locationLabel}
+- Evidence: \`${evidence}\`
+
+## Expected
+
+${expected}
+
+## What happened instead
+
+Describe what was inaccurate or missing.
+
+## Reproduction
+
+1. Open the Hard-mode tutorial.
+2. Follow the step shown above.
+3. Record the visible Copilot Studio state.
+
+> Beta workshop report. Do not include credentials, tokens, customer data, or other sensitive information.`;
+          const url = new URL("https://github.com/microsoft/aibast-agents-library/issues/new");
+          url.searchParams.set("title", title);
+          url.searchParams.set("body", body);
+          window.open(url.toString(), "_blank", "noopener");
+        });
+      });
       update();
     })();
   </script>

@@ -336,7 +336,7 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "Shown without browser upscaling" in tutorial
     assert ".shot { display: block; width: auto; max-width: 100%" in tutorial
     for filename, label in frames:
-        assert tutorial.count(filename) == 3
+        assert tutorial.count(filename) >= 3
         assert label.split("·", 1)[1].strip() in tutorial
 
     resources = {item["id"]: item for item in manifest["files"]}

@@ -76,6 +76,8 @@ DARK_THEME_VARIABLES = """--cp-bg: #3d3b3a;
       --cp-sheen: rgba(255, 255, 255, 0.04);
       --cp-highlight: rgba(253, 142, 161, 0.12);"""
 
+ISSUE_URL = "https://github.com/microsoft/aibast-agents-library/issues/new"
+
 COMMON_CSS = f"""
     :root {{
       color-scheme: light;
@@ -1391,7 +1393,7 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
         step_cards.append(
             f"""
       <article class="step" id="step-{index}">
-        <header><span>{index}</span><div><h3>{html.escape(action)}</h3><p>Frame {index} of {len(ctx.manual_frames)}</p></div></header>
+        <header><span>{index}</span><div><h3>{html.escape(action)}</h3><p>Step {index} of {len(ctx.manual_frames)}</p></div>{report_button(ctx, location=f"Hard mode — step {index}: {action}", expected=expected, evidence=ctx.rel(screenshot))}</header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><strong>Action</strong>{html.escape(action)}</div>
@@ -1445,7 +1447,7 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
     .toc a {{ padding: 7px 9px; border-left: 3px solid var(--cp-border); color: var(--cp-text-muted); text-decoration: none; font-size: 13px; }}
     .toc a:hover {{ border-left-color: var(--cp-accent); color: var(--cp-text); }}
     .step {{ scroll-margin-top: 90px; margin: 0 0 28px; overflow: hidden; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }}
-    .step header {{ display: flex; gap: 14px; padding: 20px 22px; border-bottom: 1px solid var(--cp-border); }}
+    .step header {{ display: grid; grid-template-columns: 36px 1fr auto; gap: 14px; align-items: center; padding: 20px 22px; border-bottom: 1px solid var(--cp-border); }}
     .step header > span {{ display: grid; width: 36px; height: 36px; place-items: center; border-radius: 10px; background: var(--cp-accent-soft); color: var(--cp-accent); font-weight: 800; }}
     .step h3, .step header p {{ margin: 0; }}
     .step header p {{ color: var(--cp-text-muted); font-size: 13px; }}
@@ -1461,6 +1463,9 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
     .look-for {{ padding: 20px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }}
     .look-for strong {{ color: var(--cp-text); }}
     .look-for p {{ margin: 8px 0 0; }}
+    .report-button {{ border-color: var(--cp-accent); color: var(--cp-accent); }}
+    .beta-badge {{ display: inline-flex; align-items: center; margin-bottom: 12px; padding: 5px 9px; border-radius: 999px; background: var(--cp-warning); color: var(--cp-accent-fg); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }}
+    .beta-notice {{ margin-top: 14px; padding: 14px; border: 1px solid var(--cp-warning); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }}
     .step footer {{ display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }}
     .troubleshooting details {{ padding: 14px 0; border-bottom: 1px solid var(--cp-border); }}
     summary {{ cursor: pointer; font-weight: 700; }}
@@ -1481,10 +1486,12 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
     </aside>
     <main>
       <section class="hero">
+        <span class="beta-badge">Beta workshop</span>
         <p class="eyebrow">Hard mode · literal browser construction</p>
         <h1>Build {html.escape(ctx.title)} manually.</h1>
         <p class="lede">No PAC CLI, YAML import, or plugin architect. Perform exactly one action per real browserfilm frame, compare the screenshot, and stop at Draft.</p>
         <div class="notice"><strong>Synthetic disclosure:</strong> this is qualitative workflow evidence using packaged synthetic inputs. It is not a customer KPI or a live-system result.</div>
+        <div class="beta-notice"><strong>Help improve this Beta:</strong> use the report button on any step when the action, expected result, or visible product state is inaccurate. It opens a prefilled GitHub issue and does not submit automatically.</div>
         {pending_notice}
       </section>
       <h2>Build and verify</h2>
@@ -1518,6 +1525,43 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
         label.textContent = `${{done.length}} of ${{boxes.length}} complete`;
         bar.style.width = boxes.length ? `${{(done.length / boxes.length) * 100}}%` : "0%";
       }}
+      document.querySelectorAll("[data-report-location]").forEach((button) => {{
+        button.addEventListener("click", () => {{
+          const locationLabel = button.dataset.reportLocation || "Hard-mode step";
+          const expected = button.dataset.reportExpected || "Describe the expected result.";
+          const evidence = button.dataset.reportEvidence || "No evidence path supplied.";
+          const title = `[Beta workshop] {ctx.title}: ${{locationLabel}}`;
+          const body = `<!-- aibast-workshop-feedback:v1 -->
+## Workshop signal
+
+- Schema: \\`aibast-workshop-feedback/1.0\\`
+- Solution: \\`{ctx.deployment.get("name") or f"@aibast-agents-library/{ctx.slug}"}\\`
+- Page: ${{location.href}}
+- Mode: \\`hard\\`
+- Location: ${{locationLabel}}
+- Evidence: \\`${{evidence}}\\`
+
+## Expected
+
+${{expected}}
+
+## What happened instead
+
+Describe what was inaccurate or missing.
+
+## Reproduction
+
+1. Open the Hard-mode tutorial.
+2. Follow the step shown above.
+3. Record the visible Copilot Studio state.
+
+> Beta workshop report. Do not include credentials, tokens, customer data, or other sensitive information.`;
+          const url = new URL("{ISSUE_URL}");
+          url.searchParams.set("title", title);
+          url.searchParams.set("body", body);
+          window.open(url.toString(), "_blank", "noopener");
+        }});
+      }});
       update();
     }})();
   </script>
@@ -1621,6 +1665,22 @@ def marker_chips(values: Iterable[str], empty: str) -> str:
     return "".join(rendered) or f'<span class="marker-chip">{html.escape(empty)}</span>'
 
 
+def report_button(
+    ctx: JourneyContext,
+    *,
+    location: str,
+    expected: str,
+    evidence: str = "",
+) -> str:
+    return (
+        '<button class="button report-button" type="button" '
+        f'data-report-location="{html.escape(location, quote=True)}" '
+        f'data-report-expected="{html.escape(expected, quote=True)}" '
+        f'data-report-evidence="{html.escape(evidence, quote=True)}">'
+        "Report an issue</button>"
+    )
+
+
 def render_lane_learning_steps(
     ctx: JourneyContext,
     lane: str,
@@ -1671,7 +1731,7 @@ def render_lane_learning_steps(
     )
     return f"""
       <article class="learn-step" id="{prefix}-step-1">
-        <header class="learn-step-header"><span>1</span><div><p>Prepare your Copilot</p><h3>{html.escape(skill_title)}</h3></div></header>
+        <header class="learn-step-header"><span>1</span><div><p>Prepare your Copilot</p><h3>{html.escape(skill_title)}</h3></div>{report_button(ctx, location=f"{lane} lane — step 1: attach skill", expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat.")}</header>
         <div class="learn-step-body">
           <p>{html.escape(skill_explanation)}</p>
           <div class="action-panel"><strong>Do this</strong><ol><li>Download the lane-specific <code>SKILL.md</code>.</li><li>Open GitHub Copilot Chat in VS Code.</li><li>Select <strong>Agent mode</strong>.</li><li>Drag the downloaded file into the chat.</li></ol>{skill_download}</div>
@@ -1681,7 +1741,7 @@ def render_lane_learning_steps(
       </article>
 
       <article class="learn-step" id="{prefix}-step-2">
-        <header class="learn-step-header"><span>2</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test {html.escape(easy_mode_solution_name(ctx))}</h3></div></header>
+        <header class="learn-step-header"><span>2</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test {html.escape(easy_mode_solution_name(ctx))}</h3></div>{report_button(ctx, location=f"{lane} lane — step 2: local proof", expected=local_expected)}</header>
         <div class="learn-step-body">
           <p>This step proves the portable business logic before any Copilot Studio work begins. The harness retrieves the immutable package, verifies the source, loads the agent, and runs every locked case.</p>
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="{prefix}-build-prompt">Copy message</button></div>
@@ -1692,7 +1752,7 @@ def render_lane_learning_steps(
       </article>
 
       <article class="learn-step" id="{prefix}-step-3">
-        <header class="learn-step-header"><span>3</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div></header>
+        <header class="learn-step-header"><span>3</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div>{report_button(ctx, location=f"{lane} lane — step 3: Draft deployment", expected=f"Draft {display_name}; model {model}; {knowledge_count} knowledge files; {skill_count} skills; published false.")}</header>
         <div class="learn-step-body">
           <p>The harness now reuses or creates the source-controlled Copilot Studio Draft, synchronizes the reviewed instructions and assets, and leaves publication off.</p>
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="{prefix}-deploy-prompt">Copy message</button></div>
@@ -1741,7 +1801,7 @@ def render_preview_case_cards(ctx: JourneyContext) -> str:
         cards.append(
             f"""
         <article class="preview-case">
-          <header><div><p class="prompt-kicker">{html.escape(case_id)} · {html.escape(str(case.get("persona", "Workshop learner")))}</p><h4>Confirm the expected evidence</h4></div><button class="button" type="button" data-copy-target="{target}">Copy Preview prompt</button></header>
+          <header><div><p class="prompt-kicker">{html.escape(case_id)} · {html.escape(str(case.get("persona", "Workshop learner")))}</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="{target}">Copy Preview prompt</button>{report_button(ctx, location=f"Easy Preview — {case_id}", expected=f"Must include: {', '.join(case.get('must_include', []))}; must not include: {', '.join(case.get('must_not_include', []))}", evidence=str((checkpoint or {}).get("annotated") or (checkpoint or {}).get("source") or screenshot or ""))}</div></header>
           <pre class="prompt-block" id="{target}">{html.escape(str(case["prompt"]))}</pre>
           <div class="marker-group"><strong>Must include</strong><div>{marker_chips(case.get("must_include", []), "Reviewed evidence")}</div></div>
           <div class="marker-group"><strong>Must not claim</strong><div>{marker_chips(case.get("must_not_include", []), "No unsupported side effect")}</div></div>
@@ -1782,7 +1842,7 @@ def render_completion_state(ctx: JourneyContext) -> str:
         screenshot = ""
     return f"""
       <section class="learn-step" id="easy-step-5">
-        <header class="learn-step-header"><span>5</span><div><p>Recognize completion</p><h3>Know what “done” looks like</h3></div></header>
+        <header class="learn-step-header"><span>5</span><div><p>Recognize completion</p><h3>Know what “done” looks like</h3></div>{report_button(ctx, location="Easy mode — final completion verdict", expected=f"Local {case_total}/{case_total}; Preview {case_total}/{case_total}; Draft {pilot.get('display_name') or ctx.title}; published false.", evidence=str((checkpoint or {}).get("annotated") or (checkpoint or {}).get("source") or draft_frame or ""))}</header>
         <div class="learn-step-body">
           <p>The workshop is complete only when both the portable agent and the Copilot Studio front door prove the same behavior.</p>
           <div class="done-grid">
@@ -1881,7 +1941,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .module-summary h3 {{ margin-top: 0; }}
     .module-summary ul {{ margin-bottom: 0; padding-left: 20px; }}
     .learn-step {{ margin: 22px 0; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); overflow: hidden; }}
-    .learn-step-header {{ display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: center; padding: 18px 20px; border-bottom: 1px solid var(--cp-border); background: var(--cp-surface-soft); }}
+    .learn-step-header {{ display: grid; grid-template-columns: 44px 1fr auto; gap: 14px; align-items: center; padding: 18px 20px; border-bottom: 1px solid var(--cp-border); background: var(--cp-surface-soft); }}
     .learn-step-header > span {{ display: grid; width: 40px; height: 40px; place-items: center; border-radius: 10px; background: var(--cp-accent); color: var(--cp-accent-fg); font-weight: 800; }}
     .learn-step-header p {{ margin: 0; color: var(--cp-accent); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }}
     .learn-step-header h3 {{ margin: 2px 0 0; }}
@@ -1898,6 +1958,10 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .preview-case {{ padding: 16px; border: 1px solid var(--cp-border); border-radius: 14px; background: var(--cp-bg-elevated); }}
     .preview-case header {{ display: flex; justify-content: space-between; gap: 12px; align-items: start; }}
     .preview-case h4 {{ margin: 0; }}
+    .report-actions {{ display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }}
+    .report-button {{ border-color: var(--cp-accent); color: var(--cp-accent); }}
+    .beta-badge {{ display: inline-flex; align-items: center; margin-bottom: 12px; padding: 5px 9px; border-radius: 999px; background: var(--cp-warning); color: var(--cp-accent-fg); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }}
+    .beta-notice {{ margin-top: 14px; padding: 14px; border: 1px solid var(--cp-warning); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }}
     .marker-group {{ margin: 12px 0; }}
     .marker-group > strong {{ display: block; margin-bottom: 6px; }}
     .marker-chip {{ display: inline-flex; margin: 0 6px 6px 0; padding: 5px 8px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface); color: var(--cp-text-muted); font-size: 12px; }}
@@ -1930,10 +1994,12 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
   </header>
   <main class="page">
     <section class="hero">
+      <span class="beta-badge">Beta workshop</span>
       <p class="eyebrow">Evidence-grounded customer journey</p>
       <h1>{html.escape(ctx.title)}</h1>
       <p class="lede">Default to the Brainstem + Copilot personless harness, compare it with Copilot alone, or reproduce every click in Hard mode.</p>
       <div class="notice"><strong>Boundary:</strong> synthetic qualitative evidence only—not a customer KPI, measured production result, live connection, or publication approval.</div>
+      <div class="beta-notice"><strong>Help improve this Beta:</strong> use the report buttons when a prompt, expected result, screenshot, or product state is inaccurate. The button opens a prefilled GitHub issue for review; it does not submit anything automatically.</div>
       <div class="mode-switch" role="tablist">
         <button class="mode active" data-mode="easy" role="tab">Easy</button>
         <button class="mode" data-mode="hard" role="tab">Hard</button>
@@ -2093,6 +2159,48 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
           }}).catch(() => {{
             button.textContent = "Copy failed";
           }});
+        }});
+      }});
+      document.querySelectorAll("[data-report-location]").forEach((button) => {{
+        button.addEventListener("click", () => {{
+          const locationLabel = button.dataset.reportLocation || "Workshop";
+          const expected = button.dataset.reportExpected || "Describe the expected result.";
+          const evidence = button.dataset.reportEvidence || "No evidence path supplied.";
+          const title = `[Beta workshop] {ctx.title}: ${{locationLabel}}`;
+          const body = `<!-- aibast-workshop-feedback:v1 -->
+## Workshop signal
+
+- Schema: \\`aibast-workshop-feedback/1.0\\`
+- Solution: \\`{ctx.deployment.get("name") or f"@aibast-agents-library/{ctx.slug}"}\\`
+- Page: ${{location.href}}
+- Mode: \\`${{localStorage.getItem(easyLaneKey) || "brainstem"}}\\`
+- Location: ${{locationLabel}}
+- Evidence: \\`${{evidence}}\\`
+
+## Workshop context
+
+This issue was opened from a contextual Beta workshop report button.
+
+## Expected
+
+${{expected}}
+
+## What happened instead
+
+Describe what was inaccurate or missing.
+
+## Reproduction
+
+1. Open the workshop page.
+2. Select the mode shown above.
+3. Follow the step or Preview case.
+4. Record the visible result and any Copilot response.
+
+> Beta workshop report. Do not include credentials, tokens, customer data, or other sensitive information.`;
+          const url = new URL("{ISSUE_URL}");
+          url.searchParams.set("title", title);
+          url.searchParams.set("body", body);
+          window.open(url.toString(), "_blank", "noopener");
         }});
       }});
       selectEasyLane(localStorage.getItem(easyLaneKey) || "brainstem");
