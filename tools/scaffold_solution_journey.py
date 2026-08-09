@@ -140,6 +140,12 @@ AGI_LABELS = {
     "workshop-complete": "Workshop complete",
     "hard-mode-complete": "Hard mode complete",
 }
+WORKSHOP_MISSION = (
+    "Turn motivated, open-minded, non-technical sales professionals into AI "
+    "superheroes who can match the practical output and problem-solving pace "
+    "of technical peers who are not using AI, while staying evidence-grounded, "
+    "governed, and honest about what the tools proved."
+)
 
 COMMON_CSS = f"""
     :root {{
@@ -1474,7 +1480,9 @@ chat.
 
 The attached skill carries the discovery, testing, deployment, and validation
 harness directly in GitHub Copilot, so the attendee still uses the same short
-messages instead of supplying URLs or mechanics.
+messages instead of supplying URLs or mechanics. Before deployment it installs
+and verifies the official `microsoft/copilot-studio-plugin`, its
+`mcs-assistant@copilot-studio-plugin` capabilities, and a supported PAC CLI.
 
 Then send these two short messages:
 
@@ -1502,6 +1510,10 @@ Use this guide with the customer at the keyboard. The goal is to inspect the
 portable source, reproduce the synthetic workflow, review the deployment
 blueprint, and decide what production integration would require.
 
+## Workshop mission
+
+{WORKSHOP_MISSION}
+
 ## Evidence boundary
 
 - All packaged records and outcomes are synthetic.
@@ -1520,8 +1532,9 @@ blueprint, and decide what production integration would require.
 3. Open `EASY-MODE-COPILOT-CHAT.md`.
 4. Send its two short messages in order: build and test the named solution,
    then deploy the validated Draft.
-5. The skill performs discovery, testing, deployment, and Preview validation
-   directly through GitHub Copilot.
+5. The skill installs and verifies the official Microsoft Copilot Studio
+   plugin and supported PAC CLI, then performs discovery, testing, deployment,
+   and Preview validation directly through GitHub Copilot.
 6. Stop at **Draft**. Publishing remains a separate human approval gate.
 
 ## Easy mode — GitHub Copilot + Brainstem (optional)
@@ -1644,6 +1657,7 @@ def render_field_guide_html(ctx: JourneyContext) -> str:
       <p class="eyebrow">Facilitator and learner guide</p>
       <h1>{html.escape(ctx.title)}</h1>
       <p class="lede">Use this guide to understand the workshop boundary, expected proof, production seams, and recovery paths before or during the hands-on module.</p>
+      <div class="notice"><strong>Workshop mission:</strong> {html.escape(WORKSHOP_MISSION)}</div>
       <div class="notice"><strong>Evidence boundary:</strong> all packaged records and outcomes are synthetic qualitative evidence—not customer KPIs, measured production results, live connections, or publication approval.</div>
     </section>
 
@@ -2183,7 +2197,7 @@ def render_manual_tutorial(
             profile = result.profile;
             if (result.awarded && agiToast) {{
               agiToast.textContent =
-                `${{result.awarded.label}} earned: +${{result.awarded.points}} local AGI points.`;
+                `${{result.awarded.label}} earned: +${{result.awarded.points}} local achievement points.`;
             }}
           }});
         }}
@@ -2381,7 +2395,8 @@ def render_lane_learning_steps(
         if is_brainstem
         else "This file fixes the workshop to GitHub Copilot alone. The skill "
         "carries the same discovery, testing, deployment, and validation "
-        "contract directly in the active Copilot session."
+        "contract directly in the active Copilot session and bootstraps the "
+        "official Microsoft Copilot Studio plugin."
     )
     local_expected = (
         "Brainstem reports the generic AIBAST Workshop Engine and "
@@ -2389,7 +2404,8 @@ def render_lane_learning_steps(
         f"with {len(easy_case_records(ctx))}/{len(easy_case_records(ctx))} "
         "locked local cases passed."
         if is_brainstem
-        else "Copilot reports an isolated workspace, a verified source hash, "
+        else "Copilot reports the verified mcs-assistant plugin and PAC CLI, "
+        "an isolated workspace, a verified source hash, "
         f"and {len(easy_case_records(ctx))}/{len(easy_case_records(ctx))} "
         "locked local cases passed."
     )
@@ -2435,7 +2451,7 @@ def render_lane_learning_steps(
       <article class="learn-step" id="{prefix}-step-3">
         <header class="learn-step-header"><span>3</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div>{report_button(ctx, location=f"{lane} lane — step 3: Draft deployment", expected=f"Draft {display_name}; model {model}; {knowledge_count} knowledge files; {skill_count} skills; published false.")}</header>
         <div class="learn-step-body">
-          <p>The harness now reuses or creates the source-controlled Copilot Studio Draft, synchronizes the reviewed instructions and assets, and leaves publication off.</p>
+          <p>The harness now uses the verified Microsoft Copilot Studio plugin to reuse or create the source-controlled Draft, synchronize the reviewed instructions and assets, validate the PAC project, and leave publication off.</p>
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="{prefix}-deploy-prompt">Copy message</button></div>
           <pre class="prompt-block" id="{prefix}-deploy-prompt">{html.escape(deploy_prompt)}</pre>
           <div class="expected-panel"><strong>Expected result</strong><ul><li>Draft: <code>{html.escape(display_name)}</code></li><li>Model: <code>{html.escape(model)}</code></li><li>Knowledge files: <code>{html.escape(str(knowledge_count))}</code></li><li>Skills: <code>{html.escape(str(skill_count))}</code></li><li>Status: <strong>Draft</strong>; published: <code>false</code></li></ul><p>The harness then validates the real Preview front door before returning its final verdict.</p></div>
@@ -2503,9 +2519,10 @@ def render_preview_case_cards(ctx: JourneyContext) -> str:
             )
         else:
             screenshot_html = '<div class="missing">No assisted Preview screenshot is packaged for this case.</div>'
+        card_classes = "preview-case preview-case-wide" if "<img " in screenshot_html else "preview-case"
         cards.append(
             f"""
-        <article class="preview-case">
+        <article class="{card_classes}">
           <header><div><p class="prompt-kicker">{html.escape(case_id)} · {html.escape(str(case.get("persona", "Workshop learner")))}</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="{target}">Copy Preview prompt</button>{report_button(ctx, location=f"Easy Preview — {case_id}", expected=f"Must include: {', '.join(case.get('must_include', []))}; must not include: {', '.join(case.get('must_not_include', []))}", evidence=str((checkpoint or {}).get("annotated") or (checkpoint or {}).get("source") or screenshot or ""))}</div></header>
           <pre class="prompt-block" id="{target}">{html.escape(str(case["prompt"]))}</pre>
           <div class="marker-group"><strong>Must include</strong><div>{marker_chips(case.get("must_include", []), "Reviewed evidence")}</div></div>
@@ -2681,6 +2698,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .preview-intro {{ display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin-bottom: 16px; }}
     .preview-grid {{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }}
     .preview-case {{ padding: 16px; border: 1px solid var(--cp-border); border-radius: 14px; background: var(--cp-bg-elevated); }}
+    .preview-case-wide {{ grid-column: 1 / -1; }}
     .preview-case header {{ display: flex; justify-content: space-between; gap: 12px; align-items: start; }}
     .preview-case h4 {{ margin: 0; }}
     .report-actions {{ display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }}
@@ -2704,7 +2722,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .marker-chip {{ display: inline-flex; margin: 0 6px 6px 0; padding: 5px 8px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface); color: var(--cp-text-muted); font-size: 12px; }}
     .preview-shot-wrap {{ margin-top: 14px; text-align: center; }}
     .reference-shot-wrap {{ margin-top: 14px; }}
-    .preview-shot {{ display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }}
+    .preview-shot {{ display: block; width: 100%; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }}
     .capture-meta {{ margin: 8px 0 0; color: var(--cp-text-muted); font-size: 12px; text-align: center; }}
     .quality-warning {{ margin: 16px 0; padding: 14px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft); color: var(--cp-text-muted); }}
     .quality-warning strong {{ color: var(--cp-text); }}
@@ -2738,7 +2756,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .copy-source {{ display: none; }}
     .instruction.expected {{ border-left: 4px solid var(--cp-success); }}
     .shot-link {{ display: block; text-align: center; }}
-    .shot {{ display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }}
+    .shot {{ display: block; width: 100%; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }}
     .missing {{ padding: 32px; border: 2px dashed var(--cp-warning); border-radius: 10px; color: var(--cp-text-muted); }}
     .look-for {{ margin: 16px 0; padding: 20px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }}
     .look-for strong {{ color: var(--cp-text); }}
@@ -2767,6 +2785,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
       <p class="eyebrow">Evidence-grounded customer journey</p>
       <h1>{html.escape(ctx.title)}</h1>
       <p class="lede">Use your globally configured Easy-mode harness, or reproduce every action directly in Hard mode.</p>
+      <div class="notice"><strong>Workshop mission:</strong> {html.escape(WORKSHOP_MISSION)}</div>
       <div class="notice"><strong>Boundary:</strong> synthetic qualitative evidence only—not a customer KPI, measured production result, live connection, or publication approval.</div>
       <div class="feedback-notice"><strong>Found something inaccurate?</strong> Use <em>Report an issue</em> at that point. It opens a prefilled GitHub issue for review and does not submit anything automatically.</div>
       <div class="mode-switch" role="tablist">
@@ -2778,7 +2797,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     <section class="agi-panel" aria-labelledby="agi-panel-title">
       <div>
         <p class="eyebrow">Self-paced local achievements</p>
-        <h2 id="agi-panel-title">Agent Growth &amp; Impact (AGI) Points</h2>
+        <h2 id="agi-panel-title">Workshop achievements</h2>
         <div class="agi-score-line">
           <span><strong class="agi-score" id="agi-total-score">0</strong> total points</span>
           <span><strong id="agi-workshop-score">0</strong> in this workshop</span>
@@ -2786,13 +2805,13 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         <p id="agi-progress-label">0 of 0 Easy checkpoints complete</p>
         <div class="progress" aria-hidden="true"><span id="agi-progress-bar"></span></div>
         <ul class="agi-badges" id="agi-badge-list" aria-label="Badges earned in this workshop"><li class="agi-badge">No badges yet</li></ul>
-        <a href="../../achievements.html">View AGI achievements and local profile</a>
+        <a href="../../achievements.html">View achievements and local profile</a>
       </div>
       <div class="agi-claims">
         <h3>Optional public verification</h3>
         <p class="agi-fine-print">These points and badges are local, self-reported workshop progress—not externally verified proof or a capability claim.</p>
         <div class="agi-claim-actions">
-          <button class="button primary" type="button" data-agi-sync hidden>Sync AGI Points to GitHub</button>
+          <button class="button primary" type="button" data-agi-sync hidden>Sync achievements to GitHub</button>
         </div>
         <p class="agi-fine-print">This opens one prefilled progress issue containing every badge currently earned here. Nothing syncs until you submit it. Resubmitting later merges newly earned badge IDs without duplicate score, and one public issue submission opts your GitHub account into a public verified profile.</p>
       </div>
@@ -2896,7 +2915,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
       <section class="hard-progress-card" aria-labelledby="hard-progress-label">
         <div class="hard-progress-heading">
           <strong id="hard-progress-label">0 of {manual_content.frame_count} complete</strong>
-          <p>Hard-mode progress is saved on this device and contributes to the same AGI profile.</p>
+          <p>Hard-mode progress is saved on this device and contributes to the same achievement profile.</p>
         </div>
         <div class="progress" aria-hidden="true"><span id="hard-progress-bar"></span></div>
         <p class="muted" id="hard-progress-toast" role="status" aria-live="polite" aria-atomic="true"></p>
@@ -3005,7 +3024,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
       function announceAgiBadge(badge) {{
         if (!badge || !agiToast) return;
         agiToast.textContent =
-          `${{badge.label}} earned: +${{badge.points}} local AGI points.`;
+          `${{badge.label}} earned: +${{badge.points}} local achievement points.`;
         window.setTimeout(() => {{
           if (agiToast.textContent.includes(badge.label)) agiToast.textContent = "";
         }}, 5000);
@@ -3055,7 +3074,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         }}
         if (hardProgressToast) {{
           hardProgressToast.textContent = complete
-            ? "Hard mode complete. The achievement is saved in this device's AGI profile."
+            ? "Hard mode complete. The achievement is saved in this device's achievement profile."
             : "";
         }}
         renderAgiPanel(profile, activeMode);
@@ -3221,7 +3240,7 @@ Describe what was inaccurate or missing.
         source.search = "";
         source.hash = "";
         const body = `<!-- aibast-agi-progress:v1 -->
-## Agent Growth & Impact progress
+## Workshop achievement progress
 
 - Schema: \\`aibast-agi-progress/1.0\\`
 - Workshop: \\`${{AGI_WORKSHOP_SLUG}}\\`
@@ -3233,7 +3252,7 @@ Opening this form does not sync anything. Submit the issue to sync these earned 
 
 > Do not add credentials, tokens, customer data, or other sensitive information.`;
         const url = aibastSignalIssueUrl();
-        url.searchParams.set("title", `[AGI progress] {ctx.title}`);
+        url.searchParams.set("title", `[Achievement progress] {ctx.title}`);
         url.searchParams.set("body", body);
         window.open(url.toString(), "_blank", "noopener");
       }}

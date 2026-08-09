@@ -8,6 +8,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/build_metrics.py'
+      - 'scripts/sync_agent_discussions.py'
       - 'scripts/build_impact_report.py'
       - 'scripts/impact-report-requirements.txt'
       - 'metrics.html'
@@ -17,6 +18,7 @@ on:
 
 permissions:
   contents: write
+  discussions: write
   issues: read
 
 concurrency:
@@ -28,10 +30,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
+      - name: Synchronize AIBAST agent Discussions
+        env:
+          DISCUSSIONS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          METRICS_OWNER: ${{ github.repository_owner }}
+          METRICS_REPO: ${{ github.event.repository.name }}
+        run: python scripts/sync_agent_discussions.py
 
       - name: Collect public metrics
         # GitHub's traffic endpoints (clones, views, popular paths) require a
@@ -42,8 +53,9 @@ jobs:
         #
         # To unlock live clone, view, and popular-path counts in CI, add a
         # fine-grained PAT scoped to this repository with
-        # "Administration: read" and "Issues: read" so structured feedback,
-        # upvote, and opt-in AGI progress syncs can be collected. Store it
+        # "Administration: read" and "Issues: read" so structured feedback
+        # and opt-in achievement progress syncs can be collected. Native Discussion
+        # upvotes use the workflow GITHUB_TOKEN instead. Store the PAT
         # as METRICS_TOKEN:
         #     gh secret set METRICS_TOKEN
         #
@@ -52,11 +64,9 @@ jobs:
         # they just stop advancing until an authorized run happens.
         env:
           GITHUB_TOKEN: ${{ secrets.METRICS_TOKEN || secrets.GITHUB_TOKEN }}
+          DISCUSSIONS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           METRICS_OWNER: ${{ github.repository_owner }}
           METRICS_REPO: ${{ github.event.repository.name }}
-          RAR_METRICS_TOKEN: ${{ secrets.RAR_METRICS_TOKEN }}
-          RAR_METRICS_OWNER: kody-w
-          RAR_METRICS_REPO: RAR
         run: python scripts/build_metrics.py
 
       - name: Build weekly and monthly impact report
@@ -80,9 +90,9 @@ jobs:
           }
           required = {
               'total_downloads', 'page_views', 'agent_upvotes',
+              'agent_acquisitions',
               'workshop_usage_events', 'agi_points', 'agi_completions',
-              'global_agent_fetch_events', 'rar_agent_acquisitions',
-              'tracked_files', 'skills',
+              'agent_file_downloads', 'tracked_files', 'skills',
           }
           assert required <= metric_ids
           assert Path('reports/impact-report.pdf').read_bytes().startswith(b'%PDF-')
@@ -115,9 +125,9 @@ jobs:
               f"workshop metrics: {len(rows)} rows; "
               f"{workshops.get('totals', {}).get('usage_events')} observed events; "
               f"agent upvotes={snapshot.get('totals', {}).get('agent_upvotes')}; "
-              f"AGI status={agi.get('status')}; "
-              f"AGI participants={agi_totals.get('participants')}; "
-              f"AGI points={agi_totals.get('points')}"
+              f"achievement status={agi.get('status')}; "
+              f"achievement participants={agi_totals.get('participants')}; "
+              f"achievement points={agi_totals.get('points')}"
           )
           print(f"file metrics: {len(file_rows)} tracked files; agent metrics: {len(agent_rows)} rows")
           if len(rows) != 51:
@@ -134,24 +144,16 @@ jobs:
               raise SystemExit(1)
           ecosystem = snapshot.get('ecosystem', {})
           ecosystem_totals = ecosystem.get('totals', {})
-          rar = ecosystem.get('sources', {}).get('rar', {})
-          rar_totals = rar.get('totals', {})
           ecosystem_agents = ecosystem.get('agents', [])
           if ecosystem.get('schema') != 'aibast-ecosystem-metrics/1.0':
-              print('global ecosystem schema is missing or unsupported', file=sys.stderr)
+              print('AIBAST ecosystem schema is missing or unsupported', file=sys.stderr)
               raise SystemExit(1)
-          if rar.get('schema') != 'aibast-rar-federation/1.0':
-              print('public RAR federation schema is missing or unsupported', file=sys.stderr)
+          if ecosystem.get('sources', {}).get('rar', {}).get('status') != 'excluded':
+              print('RAR must remain excluded from AIBAST counts', file=sys.stderr)
               raise SystemExit(1)
-          known_fetches = [
-              value for value in (
-                  ecosystem_totals.get('aibast_direct_agent_fetches'),
-                  ecosystem_totals.get('rar_agent_cdn_fetches'),
-                  ecosystem_totals.get('rar_agent_release_fetches'),
-              )
-              if isinstance(value, int)
-          ]
-          expected_fetches = sum(known_fetches) if known_fetches else None
+          expected_fetches = ecosystem_totals.get(
+              'aibast_direct_agent_fetches'
+          )
           if (
               ecosystem_totals.get('combined_agent_distribution_fetch_events')
               != expected_fetches
@@ -159,25 +161,10 @@ jobs:
                   'global_agent_distribution_fetch_events'
               ) != expected_fetches
           ):
-              print('global agent fetch totals do not reconcile', file=sys.stderr)
-              raise SystemExit(1)
-          if (
-              snapshot.get('totals', {}).get('rar_agent_acquisitions')
-              != rar_totals.get('agent_acquisitions')
-              or ecosystem_totals.get('rar_agent_acquisitions')
-              != rar_totals.get('agent_acquisitions')
-          ):
-              print('RAR acquisition totals do not reconcile', file=sys.stderr)
+              print('AIBAST agent fetch totals do not reconcile', file=sys.stderr)
               raise SystemExit(1)
           if len(ecosystem_agents) != ecosystem_totals.get('logical_agents'):
-              print('global logical-agent rows do not reconcile', file=sys.stderr)
-              raise SystemExit(1)
-          signal_ids = {
-              'worked', 'did_not_work', 'stuck', 'regular_use',
-              'shipped', 'want_to_try', 'saved_time'
-          }
-          if set(ecosystem_totals.get('rar_usage_signals', {})) != signal_ids:
-              print('RAR usage signal contract is incomplete', file=sys.stderr)
+              print('AIBAST logical-agent rows do not reconcile', file=sys.stderr)
               raise SystemExit(1)
           if agi.get('status') in {'available', 'partial'}:
               achievement_order = [
@@ -198,15 +185,15 @@ jobs:
                   'achievement_ids', 'completed_workshops'
               }
               if agi.get('schema') != 'aibast-agi/2.0':
-                  print('AGI snapshot schema is missing or unsupported', file=sys.stderr)
+                  print('Achievement snapshot schema is missing or unsupported', file=sys.stderr)
                   raise SystemExit(1)
               if len(agi_rows) != 51 or {
                   row.get('slug') for row in agi_rows
               } != workshop_slugs:
-                  print('AGI workshop rows must match the canonical 51-workshop scope', file=sys.stderr)
+                  print('Achievement workshop rows must match the canonical 51-workshop scope', file=sys.stderr)
                   raise SystemExit(1)
               if any(set(profile) != allowed_profile_keys for profile in agi_profiles):
-                  print('AGI profiles contain unexpected or privacy-unsafe fields', file=sys.stderr)
+                  print('Achievement profiles contain unexpected or privacy-unsafe fields', file=sys.stderr)
                   raise SystemExit(1)
               expected_profiles = sorted(
                   agi_profiles,
@@ -220,7 +207,7 @@ jobs:
                   ),
               )
               if agi_profiles != expected_profiles:
-                  print('AGI profiles are not sorted by points/badges/completions/login', file=sys.stderr)
+                  print('Achievement profiles are not sorted by points/badges/completions/login', file=sys.stderr)
                   raise SystemExit(1)
               for profile in agi_profiles:
                   badges = profile['badges']
@@ -230,14 +217,14 @@ jobs:
                       or badge['points'] != achievement_points[badge['achievement']]
                       for badge in badges
                   ):
-                      print('AGI badges contain invalid IDs, points, or fields', file=sys.stderr)
+                      print('Achievement badges contain invalid IDs, points, or fields', file=sys.stderr)
                       raise SystemExit(1)
                   badge_ids = [
                       f"{badge['workshop']}:{badge['achievement']}"
                       for badge in badges
                   ]
                   if profile['achievement_ids'] != badge_ids or len(badge_ids) != len(set(badge_ids)):
-                      print('AGI profile achievement IDs do not reconcile or dedupe', file=sys.stderr)
+                      print('Achievement profile IDs do not reconcile or dedupe', file=sys.stderr)
                       raise SystemExit(1)
                   expected_badges = sorted(
                       badges,
@@ -247,7 +234,7 @@ jobs:
                       ),
                   )
                   if badges != expected_badges:
-                      print('AGI profile badges are not in canonical order', file=sys.stderr)
+                      print('Achievement profile badges are not in canonical order', file=sys.stderr)
                       raise SystemExit(1)
                   by_workshop = {}
                   for badge in badges:
@@ -269,14 +256,14 @@ jobs:
                       )
                       for claimed in by_workshop.values()
                   ):
-                      print('AGI profile contains logically impossible progress', file=sys.stderr)
+                      print('Achievement profile contains logically impossible progress', file=sys.stderr)
                       raise SystemExit(1)
                   expected_completed = sorted(
                       slug for slug, claimed in by_workshop.items()
                       if 'workshop-completed' in claimed
                   )
                   if profile['completed_workshops'] != expected_completed:
-                      print('AGI completed workshop slugs do not reconcile', file=sys.stderr)
+                      print('Achievement completed workshop slugs do not reconcile', file=sys.stderr)
                       raise SystemExit(1)
                   expected = {
                       'points': sum(badge['points'] for badge in badges),
@@ -295,63 +282,63 @@ jobs:
                       ),
                   }
                   if any(profile[key] != value for key, value in expected.items()):
-                      print('AGI profile rollups do not reconcile', file=sys.stderr)
+                      print('Achievement profile rollups do not reconcile', file=sys.stderr)
                       raise SystemExit(1)
                   if profile['points'] > profile['starts'] * 150:
-                      print('AGI profile exceeds 150 points per started workshop', file=sys.stderr)
+                      print('Achievement profile exceeds 150 points per started workshop', file=sys.stderr)
                       raise SystemExit(1)
               if agi_totals.get('participants') != len(agi_profiles):
-                  print('AGI participant total does not reconcile', file=sys.stderr)
+                  print('Achievement participant total does not reconcile', file=sys.stderr)
                   raise SystemExit(1)
               if agi_totals.get('points') != sum(
                   profile['points'] for profile in agi_profiles
               ):
-                  print('AGI point total does not reconcile', file=sys.stderr)
+                  print('Achievement point total does not reconcile', file=sys.stderr)
                   raise SystemExit(1)
               if agi_totals.get('achievements') != sum(
                   profile['achievement_count'] for profile in agi_profiles
               ):
-                  print('AGI achievement total does not reconcile', file=sys.stderr)
+                  print('Achievement total does not reconcile', file=sys.stderr)
                   raise SystemExit(1)
               if agi_totals.get('starts') != sum(
                   profile['starts'] for profile in agi_profiles
               ):
-                  print('AGI start total does not reconcile', file=sys.stderr)
+                  print('Achievement start total does not reconcile', file=sys.stderr)
                   raise SystemExit(1)
               if agi_totals.get('workshop_completions') != sum(
                   profile['workshop_completions'] for profile in agi_profiles
               ):
-                  print('AGI workshop completion total does not reconcile', file=sys.stderr)
+                  print('Achievement workshop completion total does not reconcile', file=sys.stderr)
                   raise SystemExit(1)
               if agi_totals.get('hard_completions') != sum(
                   profile['hard_completions'] for profile in agi_profiles
               ):
-                  print('AGI hard completion total does not reconcile', file=sys.stderr)
+                  print('Achievement hard completion total does not reconcile', file=sys.stderr)
                   raise SystemExit(1)
               if agi_totals.get('starts') != sum(
                   row['starts'] for row in agi_rows
               ):
-                  print('AGI workshop starts do not reconcile', file=sys.stderr)
+                  print('Achievement workshop starts do not reconcile', file=sys.stderr)
                   raise SystemExit(1)
               if agi_totals.get('workshop_completions') != sum(
                   row['workshop_completions'] for row in agi_rows
               ):
-                  print('AGI workshop completions do not reconcile', file=sys.stderr)
+                  print('Achievement workshop completions do not reconcile', file=sys.stderr)
                   raise SystemExit(1)
               if agi_totals.get('hard_completions') != sum(
                   row['hard_completions'] for row in agi_rows
               ):
-                  print('AGI workshop hard completions do not reconcile', file=sys.stderr)
+                  print('Achievement workshop hard completions do not reconcile', file=sys.stderr)
                   raise SystemExit(1)
               if agi_totals.get('points') != sum(
                   row['points'] for row in agi_rows
               ):
-                  print('AGI workshop points do not reconcile', file=sys.stderr)
+                  print('Achievement workshop points do not reconcile', file=sys.stderr)
                   raise SystemExit(1)
               if agi_totals.get('achievements') != sum(
                   row['achievements'] for row in agi_rows
               ):
-                  print('AGI workshop achievement counts do not reconcile', file=sys.stderr)
+                  print('Achievement workshop counts do not reconcile', file=sys.stderr)
                   raise SystemExit(1)
               catalog_agents = {
                   row['slug']: row.get('catalog_key') or row.get('agent_name')
@@ -376,7 +363,7 @@ jobs:
                           row['starts'] * len(achievement_order),
                       )
                   ):
-                      print('AGI workshop identity, counts, or rates do not reconcile', file=sys.stderr)
+                      print('Achievement workshop identity, counts, or rates do not reconcile', file=sys.stderr)
                       raise SystemExit(1)
               if (
                   agi_totals.get('completion_rate') != rate(
@@ -390,7 +377,7 @@ jobs:
                       agi_totals['starts'] * len(achievement_order),
                   )
               ):
-                  print('AGI global completion rates do not reconcile', file=sys.stderr)
+                  print('Achievement completion rates do not reconcile', file=sys.stderr)
                   raise SystemExit(1)
               achievement_rows = agi.get('achievements', [])
               if (
@@ -428,7 +415,7 @@ jobs:
                       for row in achievement_rows
                   )
               ):
-                  print('AGI achievement rollups do not reconcile', file=sys.stderr)
+                  print('Achievement rollups do not reconcile', file=sys.stderr)
                   raise SystemExit(1)
           PY
 
@@ -448,6 +435,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add \
+            state/agent_discussions.json \
             state/metrics.json \
             state/metrics_history.json \
             state/impact_history.json \

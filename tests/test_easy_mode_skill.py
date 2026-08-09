@@ -58,6 +58,7 @@ def test_brainstem_skill_owns_engine_startup_and_handoffs():
 
 def test_copilot_skill_discovers_every_resource_autonomously():
     text = COPILOT_SKILL.read_text(encoding="utf-8")
+    compact = " ".join(text.split())
     for marker in (
         "one immutable commit SHA",
         "registry.json",
@@ -69,7 +70,27 @@ def test_copilot_skill_discovers_every_resource_autonomously():
         "Resolve the active PAC environment",
         "clone and reconnect automatically",
     ):
-        assert marker in text
+        assert marker in compact
+
+
+def test_copilot_skill_bootstraps_official_studio_plugin_and_pac():
+    text = COPILOT_SKILL.read_text(encoding="utf-8")
+    compact = " ".join(text.split())
+    for marker in (
+        "microsoft/copilot-studio-plugin",
+        "copilot plugin marketplace add microsoft/copilot-studio-plugin",
+        "copilot plugin install mcs-assistant@copilot-studio-plugin",
+        "newer than 2.9.3",
+        "pac --version",
+        "manage, describe,",
+        "plugin architect",
+        "plugin manager to push the Draft",
+        "Do not continue to deployment",
+    ):
+        assert marker in compact
+    assert "Never deploy without the verified Microsoft Copilot Studio plugin" in (
+        text
+    )
 
 
 def test_neither_skill_can_publish_or_delegate_setup_to_the_user():

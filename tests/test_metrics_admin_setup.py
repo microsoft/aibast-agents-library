@@ -197,7 +197,7 @@ def test_required_setup_permissions_commands_and_acceptance_checks_are_present()
         "Metadata read",
         "Issues read-only",
         "required Issues: Read-only",
-        "structured agent-upvote and workshop-feedback issues",
+        "workshop-feedback and opt-in achievement progress issues",
         "no Contents write is needed for the PAT itself",
         "Authorize the token for Microsoft SAML/SSO",
         "Settings → Secrets and variables → Actions",
@@ -206,21 +206,24 @@ def test_required_setup_permissions_commands_and_acceptance_checks_are_present()
         "Authorize the autonomous compiler workflows",
         "repository default branch",
         "receives issue events for opened, edited, closed, and reopened activity",
-        "manage signal labels",
+        "manage feedback and achievement labels",
         "dispatch metrics.yml",
+        "discussions: write",
+        "scripts/sync_agent_discussions.py",
+        "state/agent_discussions.json",
         "traffic read live",
         "workshop scope is 51",
         "Grid Outage excluded",
         "no unavailable_reason",
         "traffic.live",
         "traffic.as_of",
-        "aibast-agent-upvote:v1",
-        "aibast-agent-upvote/1.0",
+        "aibast-agent-discussion:v1",
+        "aibast-agent-discussion/1.0",
         "aibast-workshop-feedback:v1",
         "aibast-workshop-feedback/1.0",
         "aibast-agi-progress:v1",
         "aibast-agi-progress/1.0",
-        "Agent Growth & Impact",
+        "Achievement progress signal",
         "Submitting the public issue explicitly opts the GitHub login",
         "maximum of 150 per workshop",
         "never infers missing prerequisite IDs",
@@ -230,20 +233,23 @@ def test_required_setup_permissions_commands_and_acceptance_checks_are_present()
         "agi.profiles",
         "agi.workshops",
         "agi.achievements",
-        "one GitHub account counts at most once per agent",
-        "stores only aggregates",
-        "labels recognized upvote issues",
+        "one active upvote per signed-in GitHub account",
+        "publishes only the aggregate upvoteCount",
+        "never combines duplicate mirror threads",
         "totals.agent_upvotes",
+        "totals.agent_acquisitions",
         "agent_metrics",
         "leaderboards.most_upvoted",
+        "leaderboards.most_acquired",
         "agent_upvotes",
         "usage_events",
         "exactly 51 rows",
         "Download totals reconcile",
         "source and coverage caveats",
         "Refresh",
-        "Upvote on GitHub",
+        "Record acquisition",
         "Most upvoted",
+        "Most acquired",
         "workshop leaderboard",
         "Rotate before expiry",
         "revoke the credential immediately",
@@ -252,12 +258,7 @@ def test_required_setup_permissions_commands_and_acceptance_checks_are_present()
         "weekly/monthly impact exports",
         "Baseline pending",
         "impact-report-email.txt",
-        "public RAR federation",
-        "kody-w/RAR",
-        "RAR_METRICS_TOKEN",
-        "combined_agent_distribution_fetch_events",
-        "rar-discussion-ratings/1.0",
-        "Censored or absent agent download rows remain null",
+        "RAR is intentionally excluded",
         "never commit a token",
     )
     for phrase in required_visible_phrases:
@@ -266,6 +267,7 @@ def test_required_setup_permissions_commands_and_acceptance_checks_are_present()
     required_commands = (
         "gh secret set METRICS_TOKEN --repo microsoft/aibast-agents-library",
         "contents: write",
+        "discussions: write",
         "issues: read",
         "actions: write",
         "issues: write",
@@ -284,8 +286,8 @@ def test_issues_read_is_required_for_all_structured_issue_sources():
     text = visible_text()
     assert "Issues Read-only (required)" in text
     assert "required Issues: Read-only" in text
-    assert "structured agent-upvote and workshop-feedback issues" in text
-    assert "opt-in AGI progress issues" in text
+    assert "workshop-feedback and opt-in achievement progress issues" in text
+    assert "opt-in achievement progress issues" in text
     assert "required issues: read" in text.lower()
     assert not re.search(r"\boptional\b.{0,80}\bIssues\b", text, re.IGNORECASE)
     assert not re.search(r"\bIssues\b.{0,80}\boptional\b", text, re.IGNORECASE)
@@ -302,6 +304,7 @@ def test_autonomous_compiler_permissions_and_marker_removal_go_live_are_checked(
         "actions: write",
         "issues: write",
         "issues: read",
+        "discussions: write",
         "contents: write",
     ):
         assert f"<code>{permission}</code>" in HTML or permission in HTML
@@ -309,26 +312,28 @@ def test_autonomous_compiler_permissions_and_marker_removal_go_live_are_checked(
         "exists on the repository default branch",
         "receives issue events for opened, edited, closed, and reopened activity",
         "dispatch metrics.yml on the repository default branch",
-        "Editing a marker away removes stale managed signal labels and still triggers recompilation",
-        "unrelated issues without a marker or pre-existing managed signal label do not dispatch",
-        "remove its marker removes stale managed labels and triggers default-branch metrics recompilation",
-        "rather than refreshing only when a claim is created",
+        "synchronizes the canonical agent Discussions",
+        "runs before scripts/build_metrics.py",
+        "GitHub does not emit an Actions event for native Discussion upvotes",
+        "next scheduled or manually dispatched metrics run",
     ):
         assert phrase.lower() in text.lower(), phrase
 
 
-def test_per_agent_upvote_ingestion_deduplication_privacy_and_labels_are_checked():
+def test_per_agent_discussion_ingestion_deduplication_and_privacy_are_checked():
     text = visible_text()
     for phrase in (
-        "<!-- aibast-agent-upvote:v1 -->",
-        "aibast-agent-upvote/1.0",
+        "<!-- aibast-agent-discussion:v1 -->",
+        "aibast-agent-discussion/1.0",
+        "Signal: upvote",
+        "Signal: acquisition",
         "<!-- aibast-workshop-feedback:v1 -->",
         "aibast-workshop-feedback/1.0",
-        "One GitHub account counts at most once per agent",
-        "stores only aggregates",
-        "labels recognized upvote issues",
-        "configured agent-upvote label",
+        "one active upvote per signed-in GitHub account",
+        "publishes only the aggregate upvoteCount",
+        "never combines duplicate mirror threads",
         "never GitHub logins",
+        "never GitHub logins, account identifiers, or voter lists",
     ):
         assert phrase.lower() in text.lower(), phrase
 
@@ -355,7 +360,7 @@ def test_agi_marker_schema_consent_dedupe_scoring_aggregates_and_privacy_are_che
         "Invalid, quoted, duplicate-field, conflicting, pull-request, unknown-user",
         "only the agi-progress label",
         "persists no issue body, free text, source issue ID",
-        "Offline runs carry forward the prior AGI block",
+        "Offline runs carry forward that prior block",
     ):
         assert phrase.lower() in text.lower(), phrase
     canonical_ids = (
@@ -389,6 +394,7 @@ def test_agi_snapshot_and_page_checks_keep_all_other_metrics_separate():
         "agi.achievements",
         "usage_events",
         "totals.agent_upvotes",
+        "totals.agent_acquisitions",
         "repo.stars",
     ):
         assert field in HTML
@@ -399,20 +405,23 @@ def test_agi_snapshot_and_page_checks_keep_all_other_metrics_separate():
     for metric in (
         "usage_events",
         "agent upvotes",
+        "signed-in acquisitions",
         "downloads",
         "repository stars",
     ):
         assert metric in text
     assert "without cross-metric double counting" in text
-    assert "local self-paced agi" in text
-    assert "verified public agi" in text
+    assert "local self-paced achievements" in text
+    assert "verified public achievements" in text
 
 
 def test_snapshot_contract_uses_per_agent_upvotes_not_repository_stars():
     for field in (
         "totals.agent_upvotes",
+        "totals.agent_acquisitions",
         "agent_metrics",
         "leaderboards.most_upvoted",
+        "leaderboards.most_acquired",
         "agent_upvotes",
         "usage_events",
     ):
@@ -420,6 +429,7 @@ def test_snapshot_contract_uses_per_agent_upvotes_not_repository_stars():
 
     text = visible_text().lower()
     assert "agent_upvotes separately from usage_events" in text
+    assert "agent_acquisitions" in HTML
     assert "repo.stars" in HTML
     assert "never counted as an agent upvote" in text
     for forbidden in (
@@ -469,7 +479,7 @@ def test_troubleshooting_expected_outcomes_and_go_live_gate_are_complete():
         "403, SAML/SSO, or push-access error",
         "Workflow cannot push state/metrics.json",
         "Issue feedback metrics are missing",
-        "Agent upvotes are inflated or voter identities appear",
+        "Discussion counts are inflated, missing, or voter identities appear",
         "Zeros appear where data should be unavailable",
         "Final go-live checklist",
     ):

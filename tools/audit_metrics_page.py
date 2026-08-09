@@ -402,7 +402,7 @@ FUNCTION_DATA = {
 }
 
 POST_MIGRATION_REQUIREMENTS = {
-    "headline": "Global agent distribution, engagement, and learning impact",
+    "headline": "AIBAST distribution, engagement, and learning impact",
     "heading": "Workshop adoption",
     "required_ids": [
         "workshop-summary",
@@ -410,13 +410,8 @@ POST_MIGRATION_REQUIREMENTS = {
         "workshop-coverage",
         "workshop-tabs",
         "workshop-table",
-        "global-agent-ecosystem",
-        "ecosystem-summary",
-        "ecosystem-coverage",
-        "ecosystem-agent-table",
     ],
     "functions": [
-        "renderEcosystem",
         "renderWorkshops",
         "renderWorkshopControls",
     ],
@@ -426,17 +421,13 @@ POST_MIGRATION_REQUIREMENTS = {
         "This is a floor and an event sum, not people, users, or unique usage",
         "These sources use mixed measurement windows",
         "one person or action can create multiple events",
-        "Agent upvotes are preference signals shown separately and are never added to usage events",
-        "AIBAST direct distribution plus the public kody-w/RAR community channel",
-        "Distribution fetch events",
-        "RAR acquisitions and usage signals are separate",
-        "Missing agent rows are unavailable, not verified zero",
+        "Agent rating upvotes and signed-in acquisitions are Discussion signals shown separately and are never added to usage events",
+        "RAR is intentionally excluded from these counts",
     ],
     "agent_upvote_phrases": [
-        "structured public GitHub issue submissions",
-        "One GitHub account counts once per agent",
-        "Opening the form is not a vote",
-        "issue must be submitted",
+        "Agent Discussions provide two traceable counters",
+        "GitHub permits one active upvote per account",
+        "Acquisition signals are not substituted for observable CDN or release file transfers",
     ],
     "forbidden_upvote_phrases": [
         "Community upvotes",
@@ -470,6 +461,12 @@ POST_MIGRATION_REQUIREMENTS = {
         "metric": "upvotes",
         "unit": "agent upvotes",
     },
+    "agent_acquisition_board": {
+        "id": "most_acquired",
+        "label": "Most acquired",
+        "metric": "acquisitions",
+        "unit": "signed-in acquisitions",
+    },
     "agent_metrics_fields": [
         "name",
         "display_name",
@@ -478,6 +475,9 @@ POST_MIGRATION_REQUIREMENTS = {
         "category",
         "stack",
         "upvotes",
+        "acquisitions",
+        "upvote_discussion_url",
+        "acquisition_discussion_url",
     ],
     "admin_setup_href": "docs/metrics-admin-setup.html",
     "admin_guidance": ["METRICS_TOKEN", "Administration: read", "SSO"],
@@ -1067,12 +1067,6 @@ def audit_html(html: str, contract: dict) -> AuditResult:
     )
     require(
         result,
-        re.search(r"\brenderEcosystem\s*\(", render_body) is not None,
-        "workshops",
-        "render() must invoke renderEcosystem()",
-    )
-    require(
-        result,
         re.search(r"\brenderWorkshopControls\s*\(", workshops_body) is not None,
         "workshops",
         "renderWorkshops() must invoke renderWorkshopControls()",
@@ -1518,14 +1512,31 @@ def audit_html(html: str, contract: dict) -> AuditResult:
         "upvotes",
         "Most upvoted agent board definition or upvote metric binding is missing",
     )
+    acquisition_board = post_migration["agent_acquisition_board"]
+    require(
+        result,
+        re.search(
+            r"const\s+AGENT_ACQUISITION_BOARD\s*=\s*\{\s*"
+            rf"id:\s*['\"]{re.escape(acquisition_board['id'])}['\"]\s*,\s*"
+            rf"label:\s*['\"]{re.escape(acquisition_board['label'])}['\"]\s*,\s*"
+            rf"metric:\s*['\"]{re.escape(acquisition_board['metric'])}['\"]\s*,\s*"
+            rf"unit:\s*['\"]{re.escape(acquisition_board['unit'])}['\"]\s*\}}\s*;",
+            script,
+            re.S,
+        )
+        is not None,
+        "upvotes",
+        "Most acquired agent board definition is missing",
+    )
     render_boards_body = bodies.get("renderBoards", "")
     require(
         result,
         "ALL_BOARDS" in render_boards_body
         and "AGENT_UPVOTE_BOARD" in script
+        and "AGENT_ACQUISITION_BOARD" in script
         and "most_upvoted" in render_boards_body,
         "upvotes",
-        "Most upvoted agent board is not wired into renderBoards()",
+        "Discussion signal boards are not wired into renderBoards()",
     )
     require(
         result,
@@ -1540,15 +1551,21 @@ def audit_html(html: str, contract: dict) -> AuditResult:
             render_boards_body,
         )
         is not None
+        and re.search(
+            r"activeBoard\s*===\s*['\"]most_acquired['\"]",
+            render_boards_body,
+        )
+        is not None
         and "r[cfg.metric]" in render_boards_body,
         "upvotes",
-        "Most upvoted board must bind guarded agent_metrics upvote rows",
+        "Discussion boards must bind guarded agent_metrics signal rows",
     )
     for field_name in post_migration["agent_metrics_fields"]:
         evidence = (
             f"r.{field_name}" in render_boards_body
-            if field_name != "upvotes"
-            else agent_board["metric"] == field_name
+            if field_name not in {"upvotes", "acquisitions"}
+            else field_name
+            in {agent_board["metric"], acquisition_board["metric"]}
             and "r[cfg.metric]" in render_boards_body
         )
         require(
@@ -1626,7 +1643,7 @@ def audit_html(html: str, contract: dict) -> AuditResult:
         result,
         normalized_text(post_migration["headline"]) in visible_page_text,
         "upvotes",
-        "headline must say Global agent distribution, engagement, and learning impact",
+        "headline must say AIBAST distribution, engagement, and learning impact",
     )
     kpi_body = bodies.get("renderKPIs", "")
     require(
@@ -1634,6 +1651,13 @@ def audit_html(html: str, contract: dict) -> AuditResult:
         "Agent upvotes" in kpi_body and "t.agent_upvotes" in kpi_body,
         "upvotes",
         "Agent upvotes KPI must bind totals.agent_upvotes",
+    )
+    require(
+        result,
+        "Signed-in acquisitions" in kpi_body
+        and "t.agent_acquisitions" in kpi_body,
+        "upvotes",
+        "Signed-in acquisitions KPI must bind totals.agent_acquisitions",
     )
     for phrase in post_migration["agent_upvote_phrases"]:
         require(

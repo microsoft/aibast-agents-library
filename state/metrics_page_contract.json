@@ -749,21 +749,16 @@
     }
   },
   "post_migration": {
-    "headline": "Global agent distribution, engagement, and learning impact",
+    "headline": "AIBAST distribution, engagement, and learning impact",
     "heading": "Workshop adoption",
     "required_ids": [
       "workshop-summary",
       "workshop-hint",
       "workshop-coverage",
       "workshop-tabs",
-      "workshop-table",
-      "global-agent-ecosystem",
-      "ecosystem-summary",
-      "ecosystem-coverage",
-      "ecosystem-agent-table"
+      "workshop-table"
     ],
     "functions": [
-      "renderEcosystem",
       "renderWorkshops",
       "renderWorkshopControls"
     ],
@@ -773,17 +768,13 @@
       "This is a floor and an event sum, not people, users, or unique usage",
       "These sources use mixed measurement windows",
       "one person or action can create multiple events",
-      "Agent upvotes are preference signals shown separately and are never added to usage events",
-      "AIBAST direct distribution plus the public kody-w/RAR community channel",
-      "Distribution fetch events",
-      "RAR acquisitions and usage signals are separate",
-      "Missing agent rows are unavailable, not verified zero"
+      "Agent rating upvotes and signed-in acquisitions are Discussion signals shown separately and are never added to usage events",
+      "RAR is intentionally excluded from these counts"
     ],
     "agent_upvote_phrases": [
-      "structured public GitHub issue submissions",
-      "One GitHub account counts once per agent",
-      "Opening the form is not a vote",
-      "issue must be submitted"
+      "Agent Discussions provide two traceable counters",
+      "GitHub permits one active upvote per account",
+      "Acquisition signals are not substituted for observable CDN or release file transfers"
     ],
     "forbidden_upvote_phrases": [
       "Community upvotes",
@@ -838,6 +829,12 @@
       "metric": "upvotes",
       "unit": "agent upvotes"
     },
+    "agent_acquisition_board": {
+      "id": "most_acquired",
+      "label": "Most acquired",
+      "metric": "acquisitions",
+      "unit": "signed-in acquisitions"
+    },
     "agent_metrics_fields": [
       "name",
       "display_name",
@@ -845,7 +842,10 @@
       "tier",
       "category",
       "stack",
-      "upvotes"
+      "upvotes",
+      "acquisitions",
+      "upvote_discussion_url",
+      "acquisition_discussion_url"
     ],
     "admin_setup_href": "docs/metrics-admin-setup.html",
     "admin_guidance": [

@@ -19,7 +19,6 @@ jobs:
           script: |
             const body = context.payload.issue.body || "";
             const isWorkshopFeedback = body.includes("<!-- aibast-workshop-feedback:v1 -->");
-            const isAgentUpvote = body.includes("<!-- aibast-agent-upvote:v1 -->");
             const isAgiProgress = body.includes("<!-- aibast-agi-progress:v1 -->");
             const definitions = {
               "workshop-feedback": {
@@ -32,22 +31,17 @@ jobs:
                 color: "f59e0b",
                 description: "Requires review and routing."
               },
-              "agent-upvote": {
-                name: "agent-upvote",
-                color: "1f6feb",
-                description: "Public community preference signal for an AIBAST library agent."
-              },
               "agi-progress": {
                 name: "agi-progress",
                 color: "8250df",
-                description: "Opt-in public Agent Growth & Impact progress sync."
+                description: "Opt-in public workshop achievement progress sync."
               }
             };
             const managedNames = new Set(Object.keys(definitions));
             const currentNames = (context.payload.issue.labels || []).map((label) =>
               typeof label === "string" ? label : label.name
             );
-            const hasCurrentMarker = isWorkshopFeedback || isAgentUpvote || isAgiProgress;
+            const hasCurrentMarker = isWorkshopFeedback || isAgiProgress;
             const hasManagedLabel = currentNames.some((name) => managedNames.has(name));
             if (!hasCurrentMarker && !hasManagedLabel) {
               return false;
@@ -55,9 +49,7 @@ jobs:
 
             const selectedNames = isAgiProgress
               ? ["agi-progress"]
-              : isAgentUpvote
-                ? ["agent-upvote"]
-                : isWorkshopFeedback
+              : isWorkshopFeedback
                   ? ["workshop-feedback", "needs-triage"]
                   : [];
             const labels = selectedNames.map((name) => definitions[name]);

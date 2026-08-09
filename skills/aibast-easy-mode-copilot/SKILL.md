@@ -20,23 +20,56 @@ before downloading anything.
 
 Persist the active run in `.aibast/easy-mode-state.json`, including solution,
 revision, local test results, Copilot Studio identity, status, and
-`published: false`.
+`published: false`. Also persist the Copilot Studio plugin repository,
+installed plugin ID, resolved revision or installed version, PAC CLI version,
+and verification status.
+
+## Required local Copilot Studio plugin
+
+Before resolving or deploying a workshop, ensure the official Microsoft
+Copilot Studio plugin is installed in the active GitHub Copilot host.
+
+1. Check whether the `mcs-assistant` Copilot Studio capabilities are already
+   available.
+2. If they are missing, execute these GitHub Copilot plugin-manager commands
+   in order:
+
+   ```bash
+   copilot plugin marketplace add microsoft/copilot-studio-plugin
+   copilot plugin install mcs-assistant@copilot-studio-plugin
+   ```
+
+3. Resolve `microsoft/copilot-studio-plugin` through the GitHub API and record
+   its immutable default-branch commit SHA or the installed plugin version in
+   `.aibast/easy-mode-state.json`.
+4. Run `pac --version`. The plugin requires a Power Platform CLI version newer
+   than 2.9.3. Install or update the supported PAC CLI before continuing when
+   that requirement is not met.
+5. Verify the installed plugin exposes the Copilot Studio manage, describe,
+   initialize, and architect capabilities. Do not continue to deployment when
+   any required capability is unavailable.
+
+Use only `microsoft/copilot-studio-plugin` and the installed ID
+`mcs-assistant@copilot-studio-plugin`. Do not substitute a fork or execute
+unreviewed plugin source directly. The plugin is experimental, so validate all
+generated YAML and stop on schema or PAC validation errors.
 
 ## Build and test
 
 When the user says `Give me <solution> using Easy Mode and test it for me`:
 
-1. Resolve the requested solution from immutable `registry.json`.
-2. Fetch its `deployment.json`, `export-manifest.json`, portable `*_agent.py`,
+1. Install and verify the required local Copilot Studio plugin and PAC CLI.
+2. Resolve the requested solution from immutable `registry.json`.
+3. Fetch its `deployment.json`, `export-manifest.json`, portable `*_agent.py`,
    `tests/demo_cases/<slug>.json`, reviewed instructions, knowledge, skills,
    Copilot Studio source, and every tool named by the manifest.
-3. Verify the portable source SHA.
-4. Create an isolated workspace with only required files and BasicAgent.
-5. Import the class named by `deployment.json`.
-6. Execute every locked case with its operation and arguments.
-7. Validate every `must_include` and `must_not_include` marker.
-8. Persist `status: tested`.
-9. Return the verdict and:
+4. Verify the portable source SHA.
+5. Create an isolated workspace with only required files and BasicAgent.
+6. Import the class named by `deployment.json`.
+7. Execute every locked case with its operation and arguments.
+8. Validate every `must_include` and `must_not_include` marker.
+9. Persist `status: tested`.
+10. Return the verdict and:
    `Deploy it into Copilot Studio for me.`
 
 ## Deploy
@@ -44,21 +77,30 @@ When the user says `Give me <solution> using Easy Mode and test it for me`:
 When the user says `Deploy it into Copilot Studio for me`:
 
 1. Resolve `it` from `.aibast/easy-mode-state.json`.
-2. Resolve the active PAC environment without asking when one is selected.
-3. Fetch and run the reviewed promotion tool.
-4. If the recorded schema exists, clone and reconnect automatically.
-5. Assemble exact instructions, knowledge, skills, and model.
-6. Remove web search and unapproved tools.
-7. Push the Draft. Never invoke publish.
-8. Open the real Draft and run every locked case in a fresh Preview chat.
-9. Validate all markers and capture evidence.
-10. Persist `status: complete` and report exact totals and `published: false`.
+2. Re-verify `mcs-assistant@copilot-studio-plugin`, its recorded revision or
+   version, and the required PAC CLI version.
+3. Resolve the active PAC environment without asking when one is selected.
+4. Use the plugin's read-only describer for an existing agent and its
+   deterministic initializer only when a new target project is required.
+5. Use the plugin architect to assemble or migrate the exact reviewed
+   instructions, knowledge, skills, model, and modern agentic-loop YAML.
+6. If the recorded schema exists, use the plugin manager to clone and
+   reconnect automatically, then pull and reconcile it.
+7. Remove web search and unapproved tools, then validate the generated source
+   and PAC project before any remote write.
+8. Use the plugin manager to push the Draft. Never invoke publish.
+9. Open the real Draft and run every locked case in a fresh Preview chat.
+10. Validate all markers and capture evidence.
+11. Persist `status: complete` and report exact totals, plugin provenance, and
+    `published: false`.
 
 ## Rules
 
 - Own all terminal, file, PAC CLI, browser, and evidence work.
 - Never ask the user for URLs, environment IDs, commands, or test markers.
 - Never mix assets from different Git revisions.
+- Never deploy without the verified Microsoft Copilot Studio plugin and
+  supported PAC CLI.
 - Never invent a missing result or success-shaped fallback.
 - Never retry until a response happens to pass.
 - Stop at Draft. Never publish.

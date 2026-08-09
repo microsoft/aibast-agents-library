@@ -170,13 +170,23 @@ def build_fixture(root):
     write(package / "screenshots" / "manual" / "manual-build-contact-sheet.jpg", b"jpeg")
 
     assisted_frames = [
-        {"file": "01-assisted-draft.jpg", "label": "1 · Review Draft", "duration_ms": 1200}
+        {
+            "file": "01-assisted-draft.jpg",
+            "label": "1 · Review Draft",
+            "duration_ms": 1200,
+        },
+        {
+            "file": "05-preview-dj01.jpg",
+            "label": "5 · Run DJ-01",
+            "duration_ms": 1200,
+        },
     ]
     write(
         package / "screenshots" / "assisted" / "browserfilm.json",
         json.dumps({"frames": assisted_frames}),
     )
     write(package / "screenshots" / "assisted" / "01-assisted-draft.jpg", b"jpeg")
+    write(package / "screenshots" / "assisted" / "05-preview-dj01.jpg", b"jpeg")
     write(package / "screenshots" / "assisted" / "copilot-assisted-walkthrough.gif", b"GIF89a")
     write(package / "screenshots" / "assisted" / "copilot-assisted-contact-sheet.jpg", b"jpeg")
 
@@ -285,6 +295,8 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "Evidence gates" in guide
     assert "synthetic" in guide.lower()
     assert "customer KPI" in guide
+    assert "## Workshop mission" in guide
+    assert "non-technical sales professionals into AI superheroes" in guide
 
     for generated in (guide_html, evidence_html, quest, tutorial):
         assert THEME_SCRIPT in generated
@@ -318,13 +330,16 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "Facilitator evidence and portable download" in quest
     assert "Raw resources" not in quest
     assert "What you will learn" in quest
+    assert "<strong>Workshop mission:</strong>" in quest
+    assert "non-technical sales professionals into AI superheroes" in quest
     assert "Before you begin" in quest
     assert quest.count('class="learn-step"') == 8
     assert "Prove the solution locally" in quest
     assert "Create the reviewed Draft" in quest
     assert "Confirm the Draft in Copilot Studio Preview" in quest
     assert "Shown at or below natural size" in quest
-    assert ".preview-shot { display: block; width: auto; max-width: 100%" in quest
+    assert ".preview-shot { display: block; width: 100%; max-width: 100%" in quest
+    assert 'class="preview-case preview-case-wide"' in quest
     assert "Confirm the expected evidence" in quest
     assert "Preview response matched this contract" in quest
     assert "Know what “done” looks like" in quest
@@ -425,6 +440,14 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
 
     assert_html_and_javascript_valid(package / "quest.html", tmp_path)
     assert_html_and_javascript_valid(package / "manual-tutorial.html", tmp_path)
+    quest = (package / "quest.html").read_text(encoding="utf-8")
+    assert 'class="preview-case preview-case-wide"' in quest
+    assert ".preview-case-wide { grid-column: 1 / -1; }" in quest
+    assert (
+        ".preview-shot { display: block; width: 100%; max-width: 100%;"
+        in quest
+    )
+    assert ".shot { display: block; width: 100%; max-width: 100%;" in quest
 
     ctx = __import__(
         "tools.scaffold_solution_journey",

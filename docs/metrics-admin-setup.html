@@ -12,7 +12,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="data:," rel="icon">
-<meta name="description" content="Administrator deployment checklist for AIBAST workshop, per-agent upvote, download, and verified Agent Growth & Impact Points metrics.">
+<meta name="description" content="Administrator deployment checklist for AIBAST workshop achievements, per-agent Discussion upvotes, signed-in acquisitions, and download metrics.">
 <title>Metrics administrator setup — AIBAST Agents Library</title>
 <style>
 :root {
@@ -808,7 +808,7 @@ pre code {
 <main class="page-shell" id="mainContent" tabindex="-1">
   <section class="hero" aria-labelledby="pageTitle" data-feedback-section="overview">
     <p class="eyebrow">Microsoft repository administrator runbook</p>
-    <h1 id="pageTitle">Deploy workshop, upvote, AGI Points, and download metrics safely</h1>
+    <h1 id="pageTitle">Deploy workshop achievements, Discussions, and download metrics safely</h1>
     <p class="lede">A ten-step production checklist for granting the minimum repository access, publishing an authorized metrics snapshot, validating the public dashboard, and operating the credential without exposing it.</p>
     <div class="hero-meta" aria-label="Runbook properties">
       <span class="pill">Repository-scoped</span>
@@ -839,7 +839,7 @@ pre code {
     <h2 id="outcomesTitle">Expected outcomes</h2>
     <ul class="plain-list">
       <li>The scheduled and manually dispatched metrics workflow can read authorized GitHub traffic and commit the refreshed snapshot with its own <code>GITHUB_TOKEN</code>.</li>
-      <li><code>state/metrics.json</code> reports live traffic, deduplicated per-agent upvote aggregates, verified Agent Growth &amp; Impact (AGI) Points, download totals, and exactly 51 in-scope workshop rows.</li>
+      <li><code>state/metrics.json</code> reports live traffic, per-agent rating Discussion upvotes, signed-in acquisition Discussion aggregates, verified achievement points, download totals, and exactly 51 in-scope workshop rows.</li>
       <li>The public <code>metrics.html</code> works in light, dark, desktop, and mobile layouts with clear source and coverage explanations.</li>
       <li>Rotation, exposure response, unavailable-source behavior, and rollback are documented and repeatable.</li>
     </ul>
@@ -918,7 +918,7 @@ pre code {
               <tbody>
                 <tr><td>Repository Administration</td><td><strong>Read-only</strong></td><td>Reads repository traffic endpoints.</td></tr>
                 <tr><td>Metadata</td><td><strong>Read</strong> (automatic)</td><td>GitHub automatically includes repository metadata access.</td></tr>
-                <tr><td>Issues</td><td><strong>Read-only (required)</strong></td><td>Reads structured agent-upvote and workshop-feedback issues, plus opt-in AGI progress issues, without modifying them.</td></tr>
+                <tr><td>Issues</td><td><strong>Read-only (required)</strong></td><td>Reads structured workshop-feedback and opt-in achievement progress issues without modifying them. Agent preference and acquisition use Discussions instead.</td></tr>
                 <tr><td>Contents</td><td><strong>No access required</strong></td><td>No Contents write is needed for the PAT itself; the workflow <code>GITHUB_TOKEN</code> handles snapshot commits.</td></tr>
               </tbody>
             </table>
@@ -977,7 +977,7 @@ pre code {
               <input class="check-item" type="checkbox" data-check-id="step-5">
               <span>
                 <h2>Authorize the autonomous compiler workflows</h2>
-                <p>The issue workflow manages signal labels and dispatches the metrics workflow, which reads claims and writes the generated snapshot.</p>
+                <p>The issue workflow manages feedback and achievement labels. The metrics workflow synchronizes the canonical agent Discussions, reads all aggregate signals, and writes the generated snapshot.</p>
               </span>
             </label>
           </div>
@@ -986,8 +986,9 @@ pre code {
               <li>Open <strong>Settings → Actions → General → Workflow permissions</strong> and select <strong>Read and write permissions</strong> for <code>GITHUB_TOKEN</code>.</li>
               <li>Confirm <code>.github/workflows/workshop-feedback.yml</code> exists on the repository default branch and receives issue events for opened, edited, closed, and reopened activity.</li>
               <li>Keep its workflow-level permissions explicit: <code>issues: write</code> to reconcile managed signal labels and <code>actions: write</code> to dispatch <code>metrics.yml</code> on the repository default branch.</li>
-              <li>Confirm <code>.github/workflows/metrics.yml</code> retains <code>issues: read</code> for structured agent-upvote, workshop-feedback, and opt-in AGI progress claims plus <code>contents: write</code> for the snapshot commit.</li>
-              <li>Keep the public RAR federation least-privilege: <code>registry.json</code>, <code>state/metrics.json</code>, <code>state/discussion_ratings.json</code>, and release metadata from <code>kody-w/RAR</code> are public. Do not broaden the AIBAST <code>METRICS_TOKEN</code> to another repository. An optional repository-scoped <code>RAR_METRICS_TOKEN</code> may be supplied by the RAR owner for API reliability, but the federation must still work without it.</li>
+              <li>Confirm <code>.github/workflows/metrics.yml</code> retains <code>issues: read</code> for workshop-feedback and opt-in achievement progress claims, <code>discussions: write</code> for idempotent rating/acquisition mirror synchronization and aggregate reads, plus <code>contents: write</code> for the snapshot commit.</li>
+              <li>Confirm <code>scripts/sync_agent_discussions.py</code> runs before <code>scripts/build_metrics.py</code>. It must preserve existing rating Discussion numbers, create one parallel acquisition Discussion per current AIBAST agent, update renamed agents by stable file identity, and write <code>state/agent_discussions.json</code>.</li>
+              <li>Keep the population AIBAST-only. RAR is intentionally excluded from every dashboard, leaderboard, and report count in this release.</li>
               <li>Confirm the metrics workflow installs <code>scripts/impact-report-requirements.txt</code>, runs <code>scripts/build_impact_report.py</code>, commits the stable <code>reports/impact-report.*</code> exports, and uploads the same PDF, HTML, email text, Markdown, and JSON as the <code>aibast-impact-report</code> workflow artifact.</li>
               <li>Confirm branch protection permits the intended Actions identity and reviewed workflow to update the snapshot on <code>main</code>. Do not solve a push failure by adding Contents write to the PAT.</li>
             </ul>
@@ -1001,9 +1002,10 @@ permissions:
 # .github/workflows/metrics.yml
 permissions:
   contents: write
+  discussions: write
   issues: read</code></pre>
             </div>
-            <div class="outcome"><strong>Expected:</strong> The default-branch issue workflow can manage signal labels and dispatch the serialized metrics compiler; the metrics workflow can read issue claims and push the snapshot without expanding the collector PAT.</div>
+            <div class="outcome"><strong>Expected:</strong> The default-branch issue workflow can manage feedback and achievement labels and dispatch the serialized metrics compiler; the metrics workflow can synchronize Discussions, read issue claims, and push the snapshot without expanding the collector PAT.</div>
           </div>
         </li>
 
@@ -1031,32 +1033,33 @@ permissions:
               <li><strong>Grid Outage excluded</strong> from the workshop scope.</li>
               <li>There is <strong>no unavailable_reason</strong> for the authorized traffic read.</li>
               <li>The <strong>aibast-impact-report</strong> artifact contains the PDF plus email-ready text, and the committed report shows 7-day and 30-day values for every defined metric without converting unavailable coverage to zero.</li>
-              <li><code>ecosystem.totals.combined_agent_distribution_fetch_events</code> reconciles direct AIBAST agent fetches plus public RAR agent CDN and release fetches. RAR signed-in acquisitions and each usage reaction remain separate fields.</li>
+              <li><code>totals.agent_file_downloads</code> contains only observable AIBAST agent-file transfers. RAR does not contribute to any count.</li>
             </ul>
-            <p>Then verify structured issue ingestion using existing production issues or repository test fixtures—never synthetic issues that would pollute public totals:</p>
+            <p>Then verify Discussion synchronization and structured issue ingestion using existing production signals or repository test fixtures—never synthetic public signals that would pollute totals:</p>
             <div class="outcome"><strong>Verification scope:</strong> GitHub verification confirms authenticated issue authorship and canonical claim format only; achievement completion remains self-reported and is not independently proven.</div>
-            <table class="permissions" aria-label="Structured issue metrics acceptance checks">
+            <table class="permissions" aria-label="Discussion and structured issue metrics acceptance checks">
               <thead>
                 <tr><th scope="col">Check</th><th scope="col">Required result</th></tr>
               </thead>
               <tbody>
-                <tr><td>Agent-upvote signal</td><td>The workflow recognizes the HTML comment marker <code>&lt;!-- aibast-agent-upvote:v1 --&gt;</code> and schema <code>aibast-agent-upvote/1.0</code>.</td></tr>
+                <tr><td>Discussion mirror contract</td><td>Every current AIBAST agent has one rating and one acquisition Discussion beginning with <code>&lt;!-- aibast-agent-discussion:v1 --&gt;</code>, schema <code>aibast-agent-discussion/1.0</code>, one canonical <code>Signal</code>, <code>Agent</code>, and <code>File</code> field.</td></tr>
+                <tr><td>Rating signal</td><td>The rating Discussion uses <code>Signal: upvote</code>. Its native <code>upvoteCount</code> is community preference, with one active upvote per signed-in GitHub account.</td></tr>
+                <tr><td>Acquisition signal</td><td>The parallel Discussion uses <code>Signal: acquisition</code>. Its native <code>upvoteCount</code> is one signed-in account's declared download, copy, or install and remains separate from CDN/release file transfers.</td></tr>
                 <tr><td>Workshop-feedback signal</td><td>The workflow continues to recognize <code>&lt;!-- aibast-workshop-feedback:v1 --&gt;</code> and <code>aibast-workshop-feedback/1.0</code> as a separate feedback source.</td></tr>
-                <tr><td>AGI progress signal</td><td>The workflow recognizes <code>&lt;!-- aibast-agi-progress:v1 --&gt;</code> and schema <code>aibast-agi-progress/1.0</code>, with exactly one <code>Workshop</code>, <code>Agent</code>, comma-separated <code>Achievements</code>, and present <code>Source</code> or <code>Source quest URL</code> field.</td></tr>
-                <tr><td>AGI canonical validation</td><td>The workshop is one of the canonical 51 with Grid Outage excluded, and the agent equals that workshop's canonical primary agent. <code>Achievements</code> is a nonempty subset in canonical order: <code>started</code>, <code>local-proof</code>, <code>draft-builder</code>, <code>preview-proven</code>, <code>workshop-completed</code>, <code>hard-mode-completed</code>, with no unknown, conflicting, or duplicate IDs.</td></tr>
-                <tr><td>AGI dependency validation</td><td>Every dependent achievement requires explicitly claimed <code>started</code>. <code>workshop-completed</code> also requires explicitly claimed <code>local-proof</code>, <code>draft-builder</code>, and <code>preview-proven</code>. <code>hard-mode-completed</code> remains a separate achievement and requires <code>started</code>. The collector never infers missing prerequisite IDs.</td></tr>
-                <tr><td>AGI union and scoring</td><td>Across open, closed, and edited issues, claims union by case-insensitive GitHub login + workshop + achievement. Re-sync adds new badges without duplicating points. Server values are started 5, local-proof 15, draft-builder 20, preview-proven 25, workshop-completed 35, and hard-mode-completed 50: a maximum of 150 per workshop. Claims containing a <code>Points</code>, <code>Point</code>, or <code>Score</code> field are rejected.</td></tr>
-                <tr><td>AGI public identity consent</td><td>Submitting the public issue explicitly opts the GitHub login into a public profile, leaderboard, badges/achievement IDs, and completed-workshop list. Invalid, quoted, duplicate-field, conflicting, pull-request, unknown-user, unknown-workshop, and wrong-agent claims are excluded.</td></tr>
-                <tr><td>Deduplication</td><td>One GitHub account counts at most once per agent; repeat upvote issues from the same account for the same agent do not increase the aggregate.</td></tr>
-                <tr><td>Agent-upvote privacy</td><td>The agent-upvote output stores only aggregates—never GitHub logins, account identifiers, issue-body identity data, or voter lists. AGI separately publishes only the login that explicitly opted into the public profile.</td></tr>
-                <tr><td>Labeling</td><td>The repository automation labels recognized upvote issues with the configured agent-upvote label so administrators can audit the source set.</td></tr>
-                <tr><td>AGI labeling</td><td>The issue workflow applies only the <code>agi-progress</code> label to an AGI marker claim; workshop-feedback and agent-upvote label behavior remains unchanged.</td></tr>
+                <tr><td>Achievement progress signal</td><td>The workflow recognizes <code>&lt;!-- aibast-agi-progress:v1 --&gt;</code> and schema <code>aibast-agi-progress/1.0</code>, with exactly one <code>Workshop</code>, <code>Agent</code>, comma-separated <code>Achievements</code>, and present <code>Source</code> or <code>Source quest URL</code> field.</td></tr>
+                <tr><td>Achievement canonical validation</td><td>The workshop is one of the canonical 51 with Grid Outage excluded, and the agent equals that workshop's canonical primary agent. <code>Achievements</code> is a nonempty subset in canonical order: <code>started</code>, <code>local-proof</code>, <code>draft-builder</code>, <code>preview-proven</code>, <code>workshop-completed</code>, <code>hard-mode-completed</code>, with no unknown, conflicting, or duplicate IDs.</td></tr>
+                <tr><td>Achievement dependency validation</td><td>Every dependent achievement requires explicitly claimed <code>started</code>. <code>workshop-completed</code> also requires explicitly claimed <code>local-proof</code>, <code>draft-builder</code>, and <code>preview-proven</code>. <code>hard-mode-completed</code> remains a separate achievement and requires <code>started</code>. The collector never infers missing prerequisite IDs.</td></tr>
+                <tr><td>Achievement union and scoring</td><td>Across open, closed, and edited issues, claims union by case-insensitive GitHub login + workshop + achievement. Re-sync adds new badges without duplicating points. Server values are started 5, local-proof 15, draft-builder 20, preview-proven 25, workshop-completed 35, and hard-mode-completed 50: a maximum of 150 per workshop. Claims containing a <code>Points</code>, <code>Point</code>, or <code>Score</code> field are rejected.</td></tr>
+                <tr><td>Achievement public identity consent</td><td>Submitting the public issue explicitly opts the GitHub login into a public profile, leaderboard, badges/achievement IDs, and completed-workshop list. Invalid, quoted, duplicate-field, conflicting, pull-request, unknown-user, unknown-workshop, and wrong-agent claims are excluded.</td></tr>
+                <tr><td>Discussion deduplication</td><td>GitHub enforces one active native upvote per account per Discussion. The collector publishes only the aggregate <code>upvoteCount</code> and never combines duplicate mirror threads.</td></tr>
+                <tr><td>Discussion privacy</td><td>The rating and acquisition outputs store counts and canonical Discussion URLs only—never GitHub logins, account identifiers, or voter lists. Achievement profiles separately publish only the login that explicitly opted in.</td></tr>
+                <tr><td>Achievement labeling</td><td>The issue workflow applies only the <code>agi-progress</code> label to an achievement marker claim; workshop-feedback labeling remains separate.</td></tr>
                 <tr><td>Weekly/monthly impact exports</td><td>The workflow records a compact dated impact snapshot, calculates exact daily clone/view/CDN activity where available, calculates snapshot changes for every other metric, and publishes <code>reports/impact-report.pdf</code>, <code>impact-report.html</code>, <code>impact-report-email.txt</code>, <code>impact-report-email.md</code>, and <code>impact-report.json</code>. A missing 7-day or 30-day baseline is labeled <em>Baseline pending</em>.</td></tr>
-                <tr><td>Public RAR federation</td><td>The collector validates <code>rapp-registry/1.1</code>, <code>rar-metrics/1.0</code>, and <code>rar-discussion-ratings/1.0</code> from <code>kody-w/RAR</code>. It publishes per-agent channel provenance and keeps RAR CDN/release fetches, signed-in acquisitions, positive reactions, comments, and worked/did-not-work/stuck/regular-use/shipped/want-to-try/saved-time signals separate. Censored or absent agent download rows remain null, never zero.</td></tr>
-                <tr><td>Autonomous recompilation</td><td>Creating or changing a structured signal dispatches <code>metrics.yml</code> on the repository default branch. Editing a marker away removes stale managed signal labels and still triggers recompilation; unrelated issues without a marker or pre-existing managed signal label do not dispatch.</td></tr>
+                <tr><td>AIBAST-only population</td><td>The snapshot, dashboard, leaderboards, and reports include AIBAST agents only. The ecosystem compatibility block marks RAR <code>excluded</code> and no RAR value contributes to a total.</td></tr>
+                <tr><td>Refresh cadence</td><td>Issue changes dispatch <code>metrics.yml</code> on the repository default branch. GitHub does not emit an Actions event for native Discussion upvotes, so rating and acquisition changes appear on the next scheduled or manually dispatched metrics run.</td></tr>
               </tbody>
             </table>
-            <div class="outcome"><strong>Expected:</strong> The main-branch workflow succeeds, recognizes all three structured issue schemas, dedupes upvotes and AGI claims with their separate keys, labels each signal correctly, publishes consented AGI profiles but no source issue body/free text/ID, produces the shareable weekly/monthly report artifact and committed exports, and exposes no secret or non-consenting identity values in logs.</div>
+            <div class="outcome"><strong>Expected:</strong> The main-branch workflow succeeds, maintains two canonical Discussions per AIBAST agent, recognizes the feedback and achievement issue schemas, publishes aggregate Discussion counts and consented achievement profiles without voter lists or source issue body/free text/ID, produces the shareable weekly/monthly report artifact and committed exports, and exposes no secret or non-consenting identity values in logs.</div>
           </div>
         </li>
 
@@ -1104,20 +1107,22 @@ unset GH_TOKEN</code></pre>
             </div>
             <ul>
               <li><code>traffic.live</code> is <code>true</code>, <code>traffic.as_of</code> is current for the run, and <code>traffic.unavailable_reason</code> is empty or absent.</li>
-              <li><code>totals.agent_upvotes</code> is present and equals the sum of the deduplicated <code>upvotes</code> values in <code>agent_metrics</code>.</li>
-              <li>Every <code>agent_metrics</code> row exposes only its aggregate <code>upvotes</code> count, and <code>leaderboards.most_upvoted</code> ranks those same per-agent aggregates.</li>
+              <li><code>totals.agent_upvotes</code> equals the sum of available rating Discussion <code>upvotes</code> values in <code>agent_metrics</code>; <code>totals.agent_acquisitions</code> independently reconciles the acquisition Discussion values.</li>
+              <li>Every <code>agent_metrics</code> row exposes aggregate <code>upvotes</code>, <code>acquisitions</code>, <code>upvote_discussion_url</code>, and <code>acquisition_discussion_url</code>. <code>leaderboards.most_upvoted</code> and <code>leaderboards.most_acquired</code> rank those same aggregates.</li>
               <li>The workshops summary reports its totals and contains exactly <strong>51 rows</strong>; Grid Outage is excluded from that set. Each workshop row exposes <code>agent_upvotes</code> separately from <code>usage_events</code>, and both columns reconcile independently.</li>
-              <li><code>agi.status</code>, <code>agi.as_of</code>, <code>agi.coverage</code>, and <code>agi.caveat</code> explain freshness and availability. Offline runs carry forward the prior AGI block; without a prior block all AGI totals are unavailable/<code>null</code>, never fabricated zero.</li>
+              <li><code>agi.status</code>, <code>agi.as_of</code>, <code>agi.coverage</code>, and <code>agi.caveat</code> form the internal achievement block and explain freshness and availability. Offline runs carry forward that prior block; without one all achievement totals are unavailable/<code>null</code>, never fabricated zero.</li>
               <li><code>agi.totals</code> reconciles participants, points, achievement count, starts, workshop completions, hard completions, completion rate, hard-completion rate, and achievement-completion rate from <code>agi.profiles</code>. Profiles sort by points, badges, completions, then login.</li>
-              <li>Each AGI profile contains only the opted-in public GitHub <code>login</code>, <code>points</code>, <code>achievement_count</code>, <code>starts</code>, <code>workshop_completions</code>, <code>hard_completions</code>, server-defined <code>badges</code>/<code>achievement_ids</code>, and <code>completed_workshops</code>. The snapshot persists no issue body, free text, source issue ID, or body-supplied points.</li>
-              <li>The 51 <code>agi.workshops</code> rows match the canonical workshop slugs and primary agents. Their achievement counts, points, starts, workshop completions, hard completions, and rates reconcile independently from <code>usage_events</code>, agent upvotes, downloads, and repository stars.</li>
+              <li>Each achievement profile contains only the opted-in public GitHub <code>login</code>, <code>points</code>, <code>achievement_count</code>, <code>starts</code>, <code>workshop_completions</code>, <code>hard_completions</code>, server-defined <code>badges</code>/<code>achievement_ids</code>, and <code>completed_workshops</code>. The snapshot persists no issue body, free text, source issue ID, or body-supplied points.</li>
+              <li>The 51 <code>agi.workshops</code> rows match the canonical workshop slugs and primary agents. Their achievement counts, points, starts, workshop completions, hard completions, and rates reconcile independently from <code>usage_events</code>, agent upvotes, signed-in acquisitions, downloads, and repository stars.</li>
               <li>The six canonical <code>agi.achievements</code> rows use fixed server points and reconcile claims, participants, workshops, and attainment rates to the profile and workshop rollups. No profile can exceed 150 points per started workshop.</li>
               <li>Download totals reconcile to their documented components, including clones, CDN hits, and release downloads. Workshop rollups reconcile to the 51 rows.</li>
               <li><code>repo.stars</code>, if retained, is repository popularity only and is never counted as an agent upvote.</li>
-              <li>Source and coverage caveats explain GitHub's traffic window, CI clone effects, CDN coverage, deduplicated issue-based agent upvotes, workshop scope, and any unavailable source.</li>
+              <li><code>agent_discussion_coverage</code>, <code>agent_upvote_coverage</code>, and <code>agent_acquisition_coverage</code> explain Discussion completeness and freshness. Missing mirror threads remain partial/unavailable rather than becoming zero.</li>
+              <li><code>ecosystem.sources.rar.status</code> is <code>excluded</code>; RAR contributes to no count, row, leaderboard, or report.</li>
+              <li>Source and coverage caveats explain GitHub's traffic window, CI clone effects, CDN coverage, Discussion signals, workshop scope, and any unavailable source.</li>
             </ul>
             <p>Review the rendered repository file or a local checkout. Do not open or distribute a raw-document URL as an operational shortcut.</p>
-            <div class="outcome"><strong>Expected:</strong> The snapshot is fresh, internally consistent, scoped to 51 workshops, contains aggregate per-agent upvotes and only explicitly consented public AGI profiles, keeps AGI/upvotes separate from usage events and downloads, and is safe to publish.</div>
+            <div class="outcome"><strong>Expected:</strong> The snapshot is fresh, internally consistent, scoped to AIBAST and 51 workshops, contains aggregate per-agent rating and acquisition Discussion signals plus only explicitly consented public achievement profiles, keeps every signal separate from usage events and file transfers, and is safe to publish.</div>
           </div>
         </li>
 
@@ -1138,14 +1143,15 @@ unset GH_TOKEN</code></pre>
               <li>Light and dark themes remain readable with visible keyboard focus and no clipped content.</li>
               <li>Desktop and mobile layouts work at narrow widths without horizontal page overflow.</li>
               <li><strong>Refresh</strong> updates live public sources and communicates status.</li>
-              <li><strong>Upvote on GitHub</strong> opens a prefilled structured issue for the selected agent and includes the agent-upvote marker and schema; it does not ask the visitor to star the repository.</li>
-              <li>The agent leaderboard includes <strong>Most upvoted</strong> using deduplicated per-agent aggregates.</li>
-              <li>The <strong>Agent Growth &amp; Impact (AGI) Points</strong> section shows verified points, badges, starts, workshop completions, hard completions, completion rates, the public leaderboard, per-workshop achievement completion, and the canonical achievement rollup from <code>agi</code>.</li>
-              <li>The page distinguishes local self-paced AGI on <a href="../achievements.html">achievements.html</a> from verified public AGI and links this administrator checklist. Repository stars are never described as AGI Points.</li>
-              <li>Downloads, the workshop leaderboard, and all 51 in-scope workshops render with totals that match the snapshot. Workshop <strong>Agent upvotes</strong> remain visibly separate from <strong>Usage events</strong>.</li>
+              <li><strong>Upvote</strong> opens the selected agent's canonical rating Discussion. <strong>Record acquisition</strong> opens its parallel acquisition Discussion; neither control asks the visitor to star the repository.</li>
+              <li>The agent leaderboards include <strong>Most upvoted</strong> and <strong>Most acquired</strong> using the native per-Discussion aggregates.</li>
+              <li>The <strong>Verified workshop achievements</strong> section shows verified points, badges, starts, workshop completions, hard completions, completion rates, the public leaderboard, per-workshop achievement completion, and the canonical achievement rollup from <code>agi</code>.</li>
+              <li>The page distinguishes local self-paced achievements on <a href="../achievements.html">achievements.html</a> from verified public achievements and links this administrator checklist. Repository stars are never described as achievement points.</li>
+              <li>Downloads, signed-in acquisitions, the workshop leaderboard, and all 51 in-scope workshops render with totals that match the snapshot. Workshop <strong>Agent upvotes</strong> remain visibly separate from <strong>Usage events</strong>.</li>
+              <li>No RAR count, card, table, leaderboard, or report section appears.</li>
               <li>Source explanations distinguish live, historical, estimated, excluded, and unavailable data.</li>
             </ul>
-            <div class="outcome"><strong>Expected:</strong> Public controls, downloads, per-agent upvotes, workshop leaderboard, and source explanations work in light, dark, and mobile views without exposing voter identities.</div>
+            <div class="outcome"><strong>Expected:</strong> Public controls, AIBAST downloads, per-agent rating and acquisition signals, workshop leaderboard, and source explanations work in light, dark, and mobile views without exposing voter identities.</div>
           </div>
         </li>
 
@@ -1206,12 +1212,12 @@ unset GH_TOKEN</code></pre>
                 <td>Set PAT Issues to required read-only, keep workflow <code>issues: read</code>, verify both structured markers and schemas, confirm labeling, then rerun and reconcile aggregates.</td>
               </tr>
               <tr>
-                <td>Agent upvotes are inflated or voter identities appear</td>
-                <td>The collector is not deduping by GitHub account and agent, or it is publishing source identities instead of aggregates.</td>
-                <td>Stop publication, restore the last reviewed snapshot, enforce one GitHub account per agent, remove identity fields from public output, and rerun the aggregate-only checks.</td>
+                <td>Discussion counts are inflated, missing, or voter identities appear</td>
+                <td>A duplicate mirror exists, a canonical marker is malformed, the Discussion token lacks access, or source identities were published instead of native aggregates.</td>
+                <td>Stop publication, restore the last reviewed snapshot, run the idempotent synchronizer, require one rating and one acquisition Discussion per agent, remove identity fields from public output, and rerun the aggregate-only checks.</td>
               </tr>
               <tr>
-                <td>AGI Points are inflated, mismatched, or expose issue content</td>
+                <td>Achievement points are inflated, mismatched, or expose issue content</td>
                 <td>The collector accepted a noncanonical achievement list, duplicated an achievement during re-sync, inferred a prerequisite, exceeded 150 points per workshop, trusted body-supplied points, or persisted source issue content.</td>
                 <td>Stop publication, restore the reviewed snapshot, enforce the exact progress marker/schema/workshop-primary-agent/ordered-achievements/source checks, recompute fixed server scoring, remove issue body/free text/ID, and rerun profile, workshop, and achievement reconciliation.</td>
               </tr>
@@ -1231,9 +1237,9 @@ unset GH_TOKEN</code></pre>
           <label class="go-live-item"><input class="check-item" type="checkbox" data-check-id="go-live-owner"><span>Dedicated account, owners, expiration, and rotation date are recorded securely.</span></label>
           <label class="go-live-item"><input class="check-item" type="checkbox" data-check-id="go-live-scope"><span>PAT is limited to one repository with read-only Administration and required read-only Issues.</span></label>
           <label class="go-live-item"><input class="check-item" type="checkbox" data-check-id="go-live-secret"><span>Microsoft SAML/SSO is authorized and <code>METRICS_TOKEN</code> exists only as a masked Actions secret.</span></label>
-          <label class="go-live-item"><input class="check-item" type="checkbox" data-check-id="go-live-run"><span>The default-branch <code>workshop-feedback.yml</code> receives issue events with <code>issues: write</code> and <code>actions: write</code>; <code>metrics.yml</code> has <code>issues: read</code> and <code>contents: write</code>, recognizes all three schemas, passes live traffic and canonical 51-workshop checks, and publishes the <code>aibast-impact-report</code> PDF/email artifact plus stable report URLs. Editing a valid structured issue to remove its marker removes stale managed labels and triggers default-branch metrics recompilation, rather than refreshing only when a claim is created.</span></label>
-          <label class="go-live-item"><input class="check-item" type="checkbox" data-check-id="go-live-reconcile"><span><code>totals.agent_upvotes</code>, direct AIBAST downloads, public RAR distribution fetches, RAR acquisitions and usage reactions, workshop usage, and the separate AGI profile/workshop/totals scoring aggregates all reconcile without cross-metric double counting.</span></label>
-          <label class="go-live-item"><input class="check-item" type="checkbox" data-check-id="go-live-public"><span>Public light, dark, mobile, refresh, Upvote on GitHub, global AIBAST + RAR agent distribution, RAR usage-signal provenance, AGI Points, opt-in identity warning, local-versus-verified distinction, workshop rankings, source views, and PDF/email weekly-monthly impact downloads pass.</span></label>
+          <label class="go-live-item"><input class="check-item" type="checkbox" data-check-id="go-live-run"><span>The default-branch <code>workshop-feedback.yml</code> receives issue events with <code>issues: write</code> and <code>actions: write</code>; <code>metrics.yml</code> has <code>issues: read</code>, <code>discussions: write</code>, and <code>contents: write</code>, synchronizes both Discussion schemas, recognizes feedback and achievement claims, passes live traffic and canonical 51-workshop checks, and publishes the <code>aibast-impact-report</code> PDF/email artifact plus stable report URLs.</span></label>
+          <label class="go-live-item"><input class="check-item" type="checkbox" data-check-id="go-live-reconcile"><span><code>totals.agent_upvotes</code>, <code>totals.agent_acquisitions</code>, direct AIBAST downloads, workshop usage, and the separate achievement profile/workshop/totals scoring aggregates all reconcile without cross-metric double counting; RAR is excluded.</span></label>
+          <label class="go-live-item"><input class="check-item" type="checkbox" data-check-id="go-live-public"><span>Public light, dark, mobile, refresh, rating Discussion, acquisition Discussion, AIBAST downloads, achievements, opt-in identity warning, local-versus-verified distinction, workshop rankings, source views, and PDF/email weekly-monthly impact downloads pass.</span></label>
         </div>
       </section>
 

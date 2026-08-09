@@ -180,7 +180,7 @@ def test_named_checkpoint_conditions_and_existing_persistence(agi_pages):
 
 def test_quest_syncs_all_earned_ids_without_automatic_submission(agi_pages):
     quest = agi_pages["quest"]
-    assert "Agent Growth &amp; Impact (AGI) Points" in quest
+    assert "Workshop achievements" in quest
     assert "self-reported workshop progress" in quest
     assert 'id="agi-total-score"' in quest
     assert 'id="agi-workshop-score"' in quest
@@ -188,7 +188,7 @@ def test_quest_syncs_all_earned_ids_without_automatic_submission(agi_pages):
     assert 'href="../../achievements.html"' in quest
     assert 'role="status" aria-live="polite" aria-atomic="true"' in quest
     assert 'data-agi-sync hidden' in quest
-    assert "Sync AGI Points to GitHub" in quest
+    assert "Sync achievements to GitHub" in quest
     assert "Sync start to GitHub" not in quest
     assert "Claim verified completion" not in quest
     assert "data-agi-claim" not in quest

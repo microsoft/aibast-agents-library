@@ -59,13 +59,13 @@ def test_workshop_feedback_workflow_detects_structured_signal():
     assert "actions: write" in text
     assert "issues: write" in text
     assert "<!-- aibast-workshop-feedback:v1 -->" in text
-    assert "<!-- aibast-agent-upvote:v1 -->" in text
     assert "<!-- aibast-agi-progress:v1 -->" in text
+    assert "<!-- aibast-agent-upvote:v1 -->" not in text
     assert "aibast-agi-achievement" not in text
     assert "||" in text
     assert "workshop-feedback" in text
     assert "needs-triage" in text
-    assert "agent-upvote" in text
+    assert "agent-upvote" not in text
     assert "agi-progress" in text
     assert "createLabel" in text
     assert "addLabels" in text
@@ -92,7 +92,7 @@ def test_signal_classification_fails_closed_and_reconciles_removed_markers():
 
     assert 'id: process-signal' in text
     assert 'const isWorkshopFeedback = body.includes("<!-- aibast-workshop-feedback:v1 -->")' in text
-    assert "const hasCurrentMarker = isWorkshopFeedback || isAgentUpvote || isAgiProgress;" in text
+    assert "const hasCurrentMarker = isWorkshopFeedback || isAgiProgress;" in text
     assert "const hasManagedLabel = currentNames.some((name) => managedNames.has(name));" in text
     assert "if (!hasCurrentMarker && !hasManagedLabel)" in text
     assert "return false;" in text
@@ -161,19 +161,20 @@ def test_metrics_workflow_compiles_issues_from_its_own_repository():
     assert "METRICS_REPO: ${{ github.event.repository.name }}" in collect_step
     assert "run: python scripts/build_metrics.py" in collect_step
     assert "METRICS_OWNER: microsoft" not in collect_step
+    assert "DISCUSSIONS_TOKEN: ${{ secrets.GITHUB_TOKEN }}" in text
+    assert "discussions: write" in text
+    assert "python scripts/sync_agent_discussions.py" in text
 
 
 def test_workflow_applies_signal_specific_labels_and_descriptions():
     text = WORKFLOW.read_text(encoding="utf-8")
 
-    assert 'const isAgentUpvote = body.includes("<!-- aibast-agent-upvote:v1 -->")' in text
     assert 'const isAgiProgress = body.includes("<!-- aibast-agi-progress:v1 -->")' in text
     assert '? ["agi-progress"]' in text
-    assert '? ["agent-upvote"]' in text
     assert '? ["workshop-feedback", "needs-triage"]' in text
     assert "Structured feedback submitted from an AIBAST workshop." in text
-    assert "Public community preference signal for an AIBAST library agent." in text
-    assert "Opt-in public Agent Growth & Impact progress sync." in text
+    assert "Opt-in public workshop achievement progress sync." in text
+    assert "agent-upvote" not in text
     assert "AIBAST Beta workshop" not in text
 
 
@@ -182,8 +183,6 @@ def test_agi_progress_gets_only_agi_label_without_changing_other_signal_labels()
 
     assert "const selectedNames = isAgiProgress" in text
     assert '? ["agi-progress"]' in text
-    assert ': isAgentUpvote' in text
-    assert '? ["agent-upvote"]' in text
     assert '? ["workshop-feedback", "needs-triage"]' in text
     assert 'const managedNames = new Set(Object.keys(definitions));' in text
 
@@ -201,11 +200,11 @@ def test_metrics_workflow_reads_issues_and_verifies_agi_profiles_and_scoring():
     assert "'achievement_ids', 'completed_workshops'" in text
     assert "'hard-mode-completed': 50" in text
     assert "profile['points'] > profile['starts'] * 150" in text
-    assert "AGI profile contains logically impossible progress" in text
-    assert "AGI achievement rollups do not reconcile" in text
-    assert "AGI global completion rates do not reconcile" in text
-    assert "AGI profiles contain unexpected or privacy-unsafe fields" in text
-    assert "AGI point total does not reconcile" in text
+    assert "Achievement profile contains logically impossible progress" in text
+    assert "Achievement rollups do not reconcile" in text
+    assert "Achievement completion rates do not reconcile" in text
+    assert "Achievement profiles contain unexpected or privacy-unsafe fields" in text
+    assert "Achievement point total does not reconcile" in text
     assert "aibast-agi/1.0" not in text
 
 

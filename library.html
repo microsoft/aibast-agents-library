@@ -1128,7 +1128,7 @@ footer {
     <a class="keep-mobile" href="#library">Library</a>
     <a href="solutions/_shared/workshop-settings.html?return=../../library.html">Workshop settings</a>
     <a href="docs/rapp-guide.html">Guide</a>
-    <a href="achievements.html">AGI Points</a>
+    <a href="achievements.html">Achievements</a>
     <a href="metrics.html">Metrics</a>
     <a href="https://github.com/microsoft/aibast-agents-library" target="_blank" rel="noopener">GitHub</a>
     <button class="icon-button" type="button" data-action="toggle-theme" aria-label="Toggle color theme">◐</button>
@@ -1195,7 +1195,7 @@ footer {
     </div>
 
     <div class="active-filters" id="active-filters"></div>
-    <p class="upvote-explainer">Agent upvotes are public structured GitHub issue signals, not repository stars. Opening an upvote does not submit it; submit the prefilled issue to count. The metrics workflow refreshes automatically after a structured signal changes.</p>
+    <p class="upvote-explainer">Each AIBAST agent has two stable public GitHub Discussions: one for community preference and one for signed-in acquisition. GitHub's native upvote control counts one active signal per account. Acquisition signals remain separate from observable CDN and release file transfers, and neither signal is a repository star.</p>
     <div class="results-head">
       <span id="result-count">Loading agents...</span>
       <span id="result-context"></span>
@@ -1206,7 +1206,7 @@ footer {
   <footer>
     AI BAST Agent Library · <a href="registry.json">registry.json</a> ·
     <a href="docs/rapp-guide.html">Production guide</a> ·
-    <a href="achievements.html">AGI Points</a> ·
+    <a href="achievements.html">Achievements</a> ·
     <a href="https://github.com/microsoft/aibast-agents-library" target="_blank" rel="noopener">Source</a>
   </footer>
 </main>
@@ -1226,7 +1226,7 @@ const state = {
   agents: [],
   stacks: [],
   stats: {},
-  agentUpvotes: new Map(),
+  agentSignals: new Map(),
   view: "solutions",
   query: "",
   industry: "",
@@ -1341,7 +1341,7 @@ async function init() {
   state.agents = registry.agents || [];
   state.stacks = registry.stacks || [];
   state.stats = registry.stats || {};
-  state.agentUpvotes = buildAgentUpvoteMap(metrics, state.agents);
+  state.agentSignals = buildAgentSignalMap(metrics, state.agents);
   restoreState();
   renderStats();
   buildFilters();
@@ -1702,29 +1702,41 @@ function journeyGroups(rows) {
     `).join("");
 }
 
-function buildAgentUpvoteMap(metrics, agents) {
+function buildAgentSignalMap(metrics, agents) {
   const supplied = new Map();
   const rows = metrics && Array.isArray(metrics.agent_metrics)
     ? metrics.agent_metrics
     : [];
   rows.forEach(row => {
     if (!row || typeof row.name !== "string") return;
-    const count = row.upvotes;
-    supplied.set(row.name, Number.isSafeInteger(count) && count >= 0 ? count : null);
+    const upvotes = row.upvotes;
+    const acquisitions = row.acquisitions;
+    supplied.set(row.name, {
+      upvotes: Number.isSafeInteger(upvotes) && upvotes >= 0 ? upvotes : null,
+      acquisitions: Number.isSafeInteger(acquisitions) && acquisitions >= 0 ? acquisitions : null,
+      upvoteUrl: typeof row.upvote_discussion_url === "string" ? row.upvote_discussion_url : "",
+      acquisitionUrl: typeof row.acquisition_discussion_url === "string" ? row.acquisition_discussion_url : ""
+    });
   });
   return new Map(agents.map(agent => [
     agent.name,
-    supplied.has(agent.name) ? supplied.get(agent.name) : null
+    supplied.has(agent.name) ? supplied.get(agent.name) : {
+      upvotes: null,
+      acquisitions: null,
+      upvoteUrl: "",
+      acquisitionUrl: ""
+    }
   ]));
 }
 
-function aggregateUpvotesFor(agentName) {
-  const count = state.agentUpvotes.get(agentName);
+function aggregateAgentSignal(agentName, signal) {
+  const record = state.agentSignals.get(agentName) || {};
+  const count = record[signal];
   return Number.isSafeInteger(count) && count >= 0 ? count : null;
 }
 
 function agentUpvoteControl(agent) {
-  const count = aggregateUpvotesFor(agent.name);
+  const count = aggregateAgentSignal(agent.name, "upvotes");
   const countText = count === null ? "—" : count.toLocaleString();
   const countLabel = count === null
     ? "Aggregate upvotes unavailable"
@@ -1733,35 +1745,50 @@ function agentUpvoteControl(agent) {
     <div class="agent-upvote">
       <button class="button small" type="button" data-action="upvote-agent"
         data-agent-name="${enc(agent.name)}"
-        aria-label="Upvote ${esc(shown(agent))} with a prefilled GitHub issue">Upvote</button>
+        aria-label="Open the canonical rating Discussion for ${esc(shown(agent))}">Upvote</button>
       <span class="upvote-count" aria-label="${esc(countLabel)}" title="${esc(countLabel)}">${countText}</span>
     </div>`;
 }
 
-function agentUpvoteIssueBody(agentName) {
-  return [
-    "<!-- aibast-agent-upvote:v1 -->",
-    "- Schema: `aibast-agent-upvote/1.0`",
-    `- Agent: \`${agentName}\``,
-    "- Source: library.html",
-    "",
-    "Submit this issue to count your agent upvote.",
-    "One GitHub account counts once per agent.",
-    "Duplicate issues from the same account/agent are deduped.",
-    "No free-text or sensitive information is needed."
-  ].join("\n");
+function agentAcquisitionControl(agent) {
+  const count = aggregateAgentSignal(agent.name, "acquisitions");
+  const countText = count === null ? "—" : count.toLocaleString();
+  const countLabel = count === null
+    ? "Signed-in acquisitions unavailable"
+    : `${count.toLocaleString()} signed-in acquisition${count === 1 ? "" : "s"}`;
+  return `
+    <div class="agent-upvote">
+      <button class="button" type="button" data-action="record-agent-acquisition"
+        data-agent-name="${enc(agent.name)}"
+        aria-label="Open the canonical acquisition Discussion for ${esc(shown(agent))}">Record acquisition ↗</button>
+      <span class="upvote-count" aria-label="${esc(countLabel)}" title="${esc(countLabel)}">${countText}</span>
+    </div>`;
 }
 
-function openAgentUpvote(agentName) {
-  const agent = state.agents.find(item => item.name === agentName);
-  if (!agent) return;
-  const title = `[Agent upvote] ${shown(agent)}`;
-  const body = agentUpvoteIssueBody(agent.name);
+function discussionFallbackUrl(agentName, signal) {
   const pagesOwner = String(globalThis.location?.hostname || "")
     .match(/^([a-z0-9-]+)\.github\.io$/i)?.[1];
   const signalOwner = pagesOwner || OWNER;
-  const url = `https://github.com/${signalOwner}/${REPO}/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+  const title = signal === "acquisition"
+    ? `[Acquisition] ${agentName}`
+    : agentName;
+  return `https://github.com/${signalOwner}/${REPO}/discussions?discussions_q=${encodeURIComponent(`"${title}"`)}`;
+}
+
+function openAgentSignal(agentName, signal) {
+  const agent = state.agents.find(item => item.name === agentName);
+  if (!agent) return;
+  const record = state.agentSignals.get(agentName) || {};
+  const url = (
+    signal === "acquisition"
+      ? record.acquisitionUrl
+      : record.upvoteUrl
+  ) || discussionFallbackUrl(agentName, signal);
   window.open(url, '_blank', 'noopener');
+}
+
+function openAgentUpvote(agentName) {
+  openAgentSignal(agentName, "upvote");
 }
 
 function agentCard(agent) {
@@ -2030,8 +2057,10 @@ function openAgent(name) {
             <pre class="code">${esc(install)}</pre>
             <div class="detail-actions">
               <button class="button primary" type="button" data-action="copy" data-text="${enc(install)}">Copy install command</button>
+              ${agentAcquisitionControl(agent)}
               <a class="button" href="${BLOB}/${encodeURI(agent._file)}" target="_blank" rel="noopener">View source ↗</a>
             </div>
+            <p class="detail-note">Copying remains immediate. Use the acquisition Discussion once per GitHub account to add a traceable signed-in acquisition signal; CDN and release transfers are reported separately.</p>
           </section>
         </div>
         <aside class="detail-aside">
@@ -2247,6 +2276,10 @@ document.addEventListener("click", event => {
     event.preventDefault();
     event.stopPropagation();
     openAgentUpvote(dec(target.dataset.agentName));
+  } else if (action === "record-agent-acquisition") {
+    event.preventDefault();
+    event.stopPropagation();
+    openAgentSignal(dec(target.dataset.agentName), "acquisition");
   } else if (action === "open-agent") {
     $("suggestions").classList.remove("visible");
     openAgent(dec(target.dataset.name));

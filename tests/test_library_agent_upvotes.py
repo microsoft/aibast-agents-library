@@ -117,26 +117,35 @@ console.log(JSON.stringify({
     }
 
 
-def test_metrics_load_is_optional_and_builds_canonical_map():
+def test_metrics_load_is_optional_and_builds_canonical_signal_map():
     text = library_text()
     assert "const [registry, metrics] = await Promise.all([" in text
     assert "state/metrics.json${stamp}" in text
     assert "${SITE}state/metrics.json${stamp}" in text
-    assert "state.agentUpvotes = buildAgentUpvoteMap(metrics, state.agents);" in text
+    assert (
+        "state.agentSignals = buildAgentSignalMap(metrics, state.agents);"
+        in text
+    )
     assert 'if (!registry)' in text
     assert 'if (!metrics)' not in text
 
     result = run_library_node(
         """
 const agents = [{name: "canonical-a"}, {name: "canonical-b"}, {name: "canonical-c"}];
-const available = buildAgentUpvoteMap({
+const available = buildAgentSignalMap({
   agent_metrics: [
-    {name: "canonical-a", upvotes: 7},
-    {name: "canonical-b", upvotes: null},
+    {
+      name: "canonical-a",
+      upvotes: 7,
+      acquisitions: 4,
+      upvote_discussion_url: "https://github.com/example/repo/discussions/1",
+      acquisition_discussion_url: "https://github.com/example/repo/discussions/2"
+    },
+    {name: "canonical-b", upvotes: null, acquisitions: 0},
     {name: "not-in-registry", upvotes: 99}
   ]
 }, agents);
-const unavailable = buildAgentUpvoteMap(null, agents);
+const unavailable = buildAgentSignalMap(null, agents);
 console.log(JSON.stringify({
   available: Object.fromEntries(available),
   unavailable: Object.fromEntries(unavailable)
@@ -144,14 +153,35 @@ console.log(JSON.stringify({
 """
     )
     assert result["available"] == {
-        "canonical-a": 7,
-        "canonical-b": None,
-        "canonical-c": None,
+        "canonical-a": {
+            "upvotes": 7,
+            "acquisitions": 4,
+            "upvoteUrl": "https://github.com/example/repo/discussions/1",
+            "acquisitionUrl": (
+                "https://github.com/example/repo/discussions/2"
+            ),
+        },
+        "canonical-b": {
+            "upvotes": None,
+            "acquisitions": 0,
+            "upvoteUrl": "",
+            "acquisitionUrl": "",
+        },
+        "canonical-c": {
+            "upvotes": None,
+            "acquisitions": None,
+            "upvoteUrl": "",
+            "acquisitionUrl": "",
+        },
     }
     assert result["unavailable"] == {
-        "canonical-a": None,
-        "canonical-b": None,
-        "canonical-c": None,
+        name: {
+            "upvotes": None,
+            "acquisitions": None,
+            "upvoteUrl": "",
+            "acquisitionUrl": "",
+        }
+        for name in ("canonical-a", "canonical-b", "canonical-c")
     }
 
 
@@ -177,19 +207,32 @@ const agent = {
   category: "general",
   _solution: {}
 };
-state.agentUpvotes = new Map([[agent.name, null]]);
+state.agentSignals = new Map([[agent.name, {
+  upvotes: null,
+  acquisitions: null,
+  upvoteUrl: "",
+  acquisitionUrl: ""
+}]]);
 const unavailable = agentUpvoteControl(agent);
-state.agentUpvotes = new Map([[agent.name, 12]]);
+state.agentSignals = new Map([[agent.name, {
+  upvotes: 12,
+  acquisitions: 3,
+  upvoteUrl: "https://github.com/example/repo/discussions/1",
+  acquisitionUrl: "https://github.com/example/repo/discussions/2"
+}]]);
 const available = agentUpvoteControl(agent);
-console.log(JSON.stringify({unavailable, available}));
+const acquisition = agentAcquisitionControl(agent);
+console.log(JSON.stringify({unavailable, available, acquisition}));
 """
     )
     assert ">—</span>" in result["unavailable"]
     assert ">0</span>" not in result["unavailable"]
     assert ">12</span>" in result["available"]
+    assert "Record acquisition" in result["acquisition"]
+    assert ">3</span>" in result["acquisition"]
 
 
-def test_upvote_issue_is_exact_structured_signal_and_only_opens_form():
+def test_upvote_and_acquisition_open_canonical_discussions():
     result = run_library_node(
         """
 const agent = {
@@ -198,33 +241,26 @@ const agent = {
   _solution: {}
 };
 state.agents = [agent];
-const body = agentUpvoteIssueBody(agent.name);
+state.agentSignals = new Map([[agent.name, {
+  upvotes: 8,
+  acquisitions: 5,
+  upvoteUrl: "https://github.com/microsoft/aibast-agents-library/discussions/10",
+  acquisitionUrl: "https://github.com/microsoft/aibast-agents-library/discussions/11"
+}]]);
 openAgentUpvote(agent.name);
-console.log(JSON.stringify({body, openArgs}));
+const upvoteArgs = openArgs;
+openAgentSignal(agent.name, "acquisition");
+console.log(JSON.stringify({upvoteArgs, acquisitionArgs: openArgs}));
 """
     )
-    body = result["body"]
-    assert body.startswith("<!-- aibast-agent-upvote:v1 -->")
-    assert body.count("- Schema: `aibast-agent-upvote/1.0`") == 1
-    assert body.count("- Agent: `@aibast-agents-library/example`") == 1
-    assert body.count("\n- Agent: ") == 1
-    assert body.count("- Source: library.html") == 1
-    assert "Submit this issue to count" in body
-    assert "One GitHub account counts once per agent." in body
-    assert "Duplicate issues from the same account/agent are deduped." in body
-    assert "No free-text or sensitive information is needed." in body
-    assert "star" not in body.lower()
-
-    url, target, features = result["openArgs"]
-    assert url.startswith(
-        "https://github.com/microsoft/aibast-agents-library/issues/new?"
-    )
-    assert "title=%5BAgent%20upvote%5D%20Example%20Agent" in url
+    url, target, features = result["upvoteArgs"]
+    assert url.endswith("/discussions/10")
     assert target == "_blank"
     assert features == "noopener"
+    assert result["acquisitionArgs"][0].endswith("/discussions/11")
 
 
-def test_upvote_signal_targets_the_current_github_pages_fork():
+def test_missing_discussion_url_falls_back_to_current_pages_fork_search():
     result = run_library_node(
         """
 const agent = {
@@ -233,15 +269,25 @@ const agent = {
   _solution: {}
 };
 state.agents = [agent];
+state.agentSignals = new Map([[agent.name, {
+  upvotes: null,
+  acquisitions: null,
+  upvoteUrl: "",
+  acquisitionUrl: ""
+}]]);
 openAgentUpvote(agent.name);
-console.log(JSON.stringify({openArgs}));
+const upvoteArgs = openArgs;
+openAgentSignal(agent.name, "acquisition");
+console.log(JSON.stringify({upvoteArgs, acquisitionArgs: openArgs}));
 """,
         hostname="kody-w.github.io",
     )
 
-    assert result["openArgs"][0].startswith(
-        "https://github.com/kody-w/aibast-agents-library/issues/new?"
+    assert result["upvoteArgs"][0].startswith(
+        "https://github.com/kody-w/aibast-agents-library/discussions?"
     )
+    assert "%40aibast-agents-library%2Fexample" in result["upvoteArgs"][0]
+    assert "%5BAcquisition%5D" in result["acquisitionArgs"][0]
 
 
 def test_upvote_action_stops_card_open_and_never_increments_count():
@@ -260,16 +306,17 @@ def test_upvote_action_stops_card_open_and_never_increments_count():
     assert "event.stopPropagation();" in upvote_branch
     assert "openAgentUpvote(dec(target.dataset.agentName));" in upvote_branch
 
-    opener = text[text.index("function openAgentUpvote"):text.index(
+    opener = text[text.index("function openAgentSignal"):text.index(
         "function agentCard"
     )]
-    assert "state.agentUpvotes" not in opener
+    assert "state.agentSignals.set" not in opener
     assert ".set(" not in opener
     assert "++" not in opener
 
 
 def test_library_explains_public_agent_signal_and_snapshot_refresh():
     text = library_text()
-    assert "public structured GitHub issue signals, not repository stars" in text
-    assert "metrics workflow refreshes automatically" in text
-    assert '<a href="achievements.html">AGI Points</a>' in text
+    assert "two stable public GitHub Discussions" in text
+    assert "signed-in acquisition" in text
+    assert "observable CDN and release file transfers" in text
+    assert '<a href="achievements.html">Achievements</a>' in text

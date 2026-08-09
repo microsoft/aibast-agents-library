@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail-closed acceptance gate for local and globally synced AGI Points."""
+"""Fail-closed acceptance gate for local and synced workshop achievements."""
 
 from __future__ import annotations
 
@@ -93,7 +93,7 @@ def audit_point_contract(failures: Failures) -> None:
                 f"{local_points.get(local_id)} != {server_points.get(claim_id)}"
             )
     if sum(server_points.values()) != 150:
-        failures.add("canonical AGI Points must total 150 per workshop")
+        failures.add("canonical achievement points must total 150 per workshop")
 
 
 def audit_generated_workshops(
@@ -103,8 +103,8 @@ def audit_generated_workshops(
 ) -> None:
     required_quest = (
         scaffold_solution_journey.AGI_PROFILE_KEY,
-        "Agent Growth &amp; Impact (AGI) Points",
-        "Sync AGI Points to GitHub",
+        "Workshop achievements",
+        "Sync achievements to GitHub",
         "<!-- aibast-agi-progress:v1 -->",
         "aibast-agi-progress/1.0",
         "aibastSignalIssueUrl()",
@@ -140,16 +140,16 @@ def audit_generated_workshops(
             if token in quest or token in manual:
                 failures.add(f"{label}: obsolete iframe protocol remains ({token})")
         if f'const AGI_WORKSHOP_SLUG = "{slug}";' not in quest:
-            failures.add(f"{label}/quest.html: wrong AGI workshop slug")
+            failures.add(f"{label}/quest.html: wrong achievement workshop slug")
         if f"const AGI_CANONICAL_AGENT = {json.dumps(agent)};" not in quest:
-            failures.add(f"{label}/quest.html: wrong canonical AGI agent")
+            failures.add(f"{label}/quest.html: wrong canonical achievement agent")
         for claim_id in build_metrics.AGI_ACHIEVEMENT_ORDER:
             if f'claimId: "{claim_id}"' not in quest:
                 failures.add(
                     f"{label}/quest.html: missing canonical claim ID {claim_id}"
                 )
         if "aibast-agi-achievement" in quest or "aibast-agi-achievement" in manual:
-            failures.add(f"{label}: obsolete AGI achievement schema remains")
+            failures.add(f"{label}: obsolete achievement schema remains")
         for token in forbidden_network:
             if token in quest or token in manual:
                 failures.add(f"{label}: automatic network/write primitive found ({token})")
@@ -198,8 +198,8 @@ def audit_public_pages(root: Path, failures: Failures) -> None:
         if token not in metrics:
             failures.add(f"metrics.html: missing {token}")
 
-    if '<a href="achievements.html">AGI Points</a>' not in library:
-        failures.add("library.html: AGI Points navigation is missing")
+    if '<a href="achievements.html">Achievements</a>' not in library:
+        failures.add("library.html: Achievements navigation is missing")
     if "globalThis.location?.hostname" not in library:
         failures.add("library.html: structured signals are not fork-aware")
 
@@ -248,7 +248,7 @@ def audit_parser(
     achievement_list = ", ".join(build_metrics.AGI_ACHIEVEMENT_ORDER)
     body = (
         f"{build_metrics.AGI_PROGRESS_MARKER}\n"
-        "## Agent Growth & Impact progress\n\n"
+        "## Workshop achievement progress\n\n"
         f"- Schema: `{build_metrics.AGI_PROGRESS_SCHEMA}`\n"
         f"- Workshop: `{workshop['slug']}`\n"
         f"- Agent: `{workshop['catalog_key']}`\n"
@@ -259,10 +259,10 @@ def audit_parser(
     if not claim or claim.get("achievements") != list(
         build_metrics.AGI_ACHIEVEMENT_ORDER
     ):
-        failures.add("strict AGI parser rejected the canonical claim")
+        failures.add("strict achievement parser rejected the canonical claim")
         return
     if build_metrics.parse_agi_claim(body + "- Points: 999999\n", catalog):
-        failures.add("strict AGI parser accepted body-supplied points")
+        failures.add("strict achievement parser accepted body-supplied points")
     grouped = build_metrics.group_agi_progress(
         [{"user": {"login": "AuditUser"}, "body": body}],
         catalog,
@@ -272,7 +272,7 @@ def audit_parser(
         or grouped["totals"]["participants"] != 1
         or grouped["profiles"][0]["points"] != 150
     ):
-        failures.add("canonical AGI score does not reconcile to 150")
+        failures.add("canonical achievement score does not reconcile to 150")
 
 
 def audit_snapshot(
@@ -283,22 +283,22 @@ def audit_snapshot(
     snapshot = read_json(root / "state" / "metrics.json", failures)
     agi = snapshot.get("agi") if isinstance(snapshot, dict) else None
     if not isinstance(agi, dict) or agi.get("schema") != "aibast-agi/2.0":
-        failures.add("state/metrics.json: AGI schema is missing or stale")
+        failures.add("state/metrics.json: achievement schema is missing or stale")
         return
     expected_slugs = {row["slug"] for row in catalog}
     rows = agi.get("workshops", [])
     if {row.get("slug") for row in rows} != expected_slugs:
-        failures.add("state/metrics.json: AGI workshop scope does not match 51")
+        failures.add("state/metrics.json: achievement workshop scope does not match 51")
     profiles = agi.get("profiles", [])
     if any(set(profile) != PROFILE_KEYS for profile in profiles):
-        failures.add("state/metrics.json: public AGI profile fields are unsafe")
+        failures.add("state/metrics.json: public achievement profile fields are unsafe")
     serialized = json.dumps(agi)
     for token in ('"body"', '"source"', '"issue_id"', '"email"', '"token"'):
         if token in serialized:
             failures.add(f"state/metrics.json: private/source field persisted ({token})")
     if agi.get("status") == "unavailable":
         if profiles or any(value is not None for value in agi.get("totals", {}).values()):
-            failures.add("state/metrics.json: unavailable AGI data fabricates zeros")
+            failures.add("state/metrics.json: unavailable achievement data fabricates zeros")
         return
     totals = agi.get("totals", {})
     expected = {
@@ -314,12 +314,12 @@ def audit_snapshot(
         ),
     }
     if any(totals.get(key) != value for key, value in expected.items()):
-        failures.add("state/metrics.json: AGI totals do not reconcile to profiles")
+        failures.add("state/metrics.json: achievement totals do not reconcile to profiles")
     for profile in profiles:
         badges = profile.get("badges", [])
         if profile.get("points") != sum(badge.get("points", 0) for badge in badges):
             failures.add(
-                f"state/metrics.json: AGI profile score mismatch for {profile.get('login')}"
+                f"state/metrics.json: achievement profile score mismatch for {profile.get('login')}"
             )
 
 
@@ -352,9 +352,9 @@ def main(argv: list[str] | None = None) -> int:
     if args.json:
         print(json.dumps(result, indent=2))
     elif result["status"] == "pass":
-        print(f"[PASS] AGI Points contract: {result['workshops']} workshops")
+        print(f"[PASS] Achievement contract: {result['workshops']} workshops")
     else:
-        print("[FAIL] AGI Points contract", file=sys.stderr)
+        print("[FAIL] Achievement contract", file=sys.stderr)
         for failure in result["failures"]:
             print(f"- {failure}", file=sys.stderr)
     return 0 if result["status"] == "pass" else 1

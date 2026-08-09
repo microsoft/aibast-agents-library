@@ -37,6 +37,7 @@ def metrics_fixture(
             "installer_downloads": 5,
             "skill_downloads": 15,
             "agent_upvotes": 6,
+            "agent_acquisitions": 4,
             "clones_excluding_ci_estimate": 80,
             "page_views": 400,
             "clone_uniques_14d": 18,
@@ -76,6 +77,10 @@ def metrics_fixture(
         "cdn": {"as_of": generated_at},
         "releases": {"as_of": generated_at},
         "agent_upvote_coverage": {
+            "status": "available",
+            "as_of": generated_at,
+        },
+        "agent_acquisition_coverage": {
             "status": "available",
             "as_of": generated_at,
         },
@@ -147,6 +152,7 @@ def metrics_fixture(
                 "display_name": "Account Intelligence",
                 "downloads": 20,
                 "upvotes": 6,
+                "acquisitions": 4,
             }
         ],
         "ecosystem": {
@@ -292,13 +298,10 @@ def test_report_calculates_weekly_monthly_and_daily_activity():
         week["metrics"]["agi_completion_rate"],
     ) == "+10.0 pp"
     current = {row["id"]: row for row in report["current"]["metrics"]}
-    assert current["global_agent_fetch_events"]["value"] == 25
-    assert current["global_agent_fetch_events"]["status"] == "partial"
-    assert current["rar_agent_cdn_fetches"]["status"] == "partial"
-    assert current["rar_agent_acquisitions"]["status"] == "available"
-    leaders = report["current"]["ecosystem_leaderboards"]
-    assert leaders["distribution_fetches"][0]["display_name"] == "Learn New"
-    assert leaders["shipped"][0]["display_name"] == "Account Intelligence"
+    assert current["agent_acquisitions"]["value"] == 4
+    assert current["agent_acquisitions"]["status"] == "available"
+    assert "ecosystem_leaderboards" not in report["current"]
+    assert "RAR is excluded from every count" in report["caveats"][0]
 
 
 def test_unavailable_traffic_is_not_reported_as_zero():
@@ -466,8 +469,8 @@ def test_writes_email_html_json_exports(tmp_path):
     assert "30-day impact" in html_text
     assert "Subject:" in email_text
     assert "MEASUREMENT STATUS" in email_text
-    assert "GLOBAL AGENT LEADERS" in email_text
-    assert "Learn New (rar): 5" in email_text
+    assert "GLOBAL AGENT LEADERS" not in email_text
+    assert "AIBAST - WEEKLY & MONTHLY IMPACT" in email_text
     assert "| Metric | Current | 7-day impact | 30-day impact |" in markdown
     assert payload["schema"] == build_impact_report.REPORT_SCHEMA
     serialized = json.dumps(payload)
@@ -535,10 +538,11 @@ def test_metrics_workflow_and_dashboard_publish_report_exports():
         "reports/impact-report.html",
         "reports/impact-report.pdf",
         "reports/impact-report-email.txt",
-        'id="global-agent-ecosystem"',
-        "function renderEcosystem()",
-        "public kody-w/RAR community channel",
+        "Signed-in acquisitions",
+        "RAR is intentionally excluded from these counts",
     ):
         assert token in dashboard
+    assert 'id="global-agent-ecosystem"' not in dashboard
+    assert "function renderEcosystem()" not in dashboard
     assert "Baseline pending" in admin
     assert "Weekly/monthly impact exports" in admin

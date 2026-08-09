@@ -4,6 +4,10 @@ Use this guide with the customer at the keyboard. The goal is to inspect the
 portable source, reproduce the synthetic workflow, review the deployment
 blueprint, and decide what production integration would require.
 
+## Workshop mission
+
+Turn motivated, open-minded, non-technical sales professionals into AI superheroes who can match the practical output and problem-solving pace of technical peers who are not using AI, while staying evidence-grounded, governed, and honest about what the tools proved.
+
 ## Evidence boundary
 
 - All packaged records and outcomes are synthetic.
@@ -22,8 +26,9 @@ blueprint, and decide what production integration would require.
 3. Open `EASY-MODE-COPILOT-CHAT.md`.
 4. Send its two short messages in order: build and test the named solution,
    then deploy the validated Draft.
-5. The skill performs discovery, testing, deployment, and Preview validation
-   directly through GitHub Copilot.
+5. The skill installs and verifies the official Microsoft Copilot Studio
+   plugin and supported PAC CLI, then performs discovery, testing, deployment,
+   and Preview validation directly through GitHub Copilot.
 6. Stop at **Draft**. Publishing remains a separate human approval gate.
 
 ## Easy mode — GitHub Copilot + Brainstem (optional)

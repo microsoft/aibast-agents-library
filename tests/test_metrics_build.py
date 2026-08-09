@@ -35,7 +35,7 @@ def agi_claim_body(
     achievement_list = ", ".join(achievements)
     return (
         "<!-- aibast-agi-progress:v1 -->\n"
-        "## Agent Growth & Impact progress\n\n"
+        "## Workshop achievement progress\n\n"
         "- Schema: `aibast-agi-progress/1.0`\n"
         f"- Workshop: `{workshop}`\n"
         f"- Agent: `{agent}`\n"
@@ -174,7 +174,7 @@ def test_metrics_build_offline_without_prior_marks_remote_unavailable(tmp_path):
     )
     ecosystem = doc["ecosystem"]
     assert ecosystem["status"] == "unavailable"
-    assert ecosystem["sources"]["rar"]["status"] == "unavailable"
+    assert ecosystem["sources"]["rar"]["status"] == "excluded"
     assert (
         ecosystem["totals"]["combined_agent_distribution_fetch_events"]
         is None
@@ -402,7 +402,7 @@ def test_rar_federation_separates_fetches_acquisitions_and_usage():
     assert account["combined_distribution_fetch_events"] == 17
 
 
-def test_current_federated_snapshot_reconciles_and_is_privacy_safe():
+def test_current_aibast_only_snapshot_reconciles_and_is_privacy_safe():
     snapshot = json.loads(
         (REPO_ROOT / "state" / "metrics.json").read_text(encoding="utf-8")
     )
@@ -412,31 +412,27 @@ def test_current_federated_snapshot_reconciles_and_is_privacy_safe():
     rows = ecosystem["agents"]
 
     assert ecosystem["schema"] == "aibast-ecosystem-metrics/1.0"
-    assert rar["schema"] == "aibast-rar-federation/1.0"
+    assert rar == {
+        "status": "excluded",
+        "reason": (
+            "RAR federation is intentionally excluded from AIBAST library "
+            "counts."
+        ),
+    }
     assert len(rows) == totals["logical_agents"]
-    assert totals["combined_agent_distribution_fetch_events"] == sum(
-        value
-        for value in (
-            totals["aibast_direct_agent_fetches"],
-            totals["rar_agent_cdn_fetches"],
-            totals["rar_agent_release_fetches"],
-        )
-        if value is not None
-    )
+    assert totals["combined_agent_distribution_fetch_events"] == totals[
+        "aibast_direct_agent_fetches"
+    ]
     assert snapshot["totals"][
         "global_agent_distribution_fetch_events"
     ] == totals["combined_agent_distribution_fetch_events"]
-    assert snapshot["totals"]["rar_agent_acquisitions"] == totals[
-        "rar_agent_acquisitions"
-    ]
-    assert totals["rar_agent_acquisitions"] == sum(
-        row["rar_acquisitions"] or 0 for row in rows
+    assert not any(key.startswith("rar_") for key in snapshot["totals"])
+    assert not any(key.startswith("rar_") for key in totals)
+    assert all(row["channels"] == ["aibast"] for row in rows)
+    assert all(
+        not any(key.startswith("rar_") for key in row)
+        for row in rows
     )
-    for signal, value in totals["rar_usage_signals"].items():
-        assert value == sum(
-            (row.get("rar_usage_signals") or {}).get(signal) or 0
-            for row in rows
-        )
     serialized = json.dumps(ecosystem)
     for forbidden in ('"login"', '"email"', '"token"', '"body"'):
         assert forbidden not in serialized
@@ -1606,135 +1602,172 @@ def test_issue_pagination_fetches_state_all_pages(monkeypatch):
     assert "page=1" in calls[0] and "page=2" in calls[1]
 
 
-def test_agent_upvotes_validate_schema_dedupe_account_agent_and_count_closed():
+def test_agent_discussions_validate_schema_and_keep_signals_separate():
     agents = {
         "@aibast-agents-library/account-intelligence",
         "@aibast-agents-library/deal-progression",
     }
 
-    def body(agent, schema=build_metrics.AGENT_UPVOTE_SCHEMA):
+    def body(agent, signal="upvote", schema=build_metrics.AGENT_DISCUSSION_SCHEMA):
         return (
-            "<!-- aibast-agent-upvote:v1 -->\n"
+            "<!-- aibast-agent-discussion:v1 -->\n"
             f"- Schema: `{schema}`\n"
+            f"- Signal: `{signal}`\n"
             f"- Agent: `{agent}`\n"
+            f"- File: `agents/{agent.rsplit('/', 1)[-1]}.py`\n"
         )
 
     valid_body = body("@aibast-agents-library/account-intelligence")
-    assert build_metrics.parse_agent_upvote(valid_body, agents) == (
-        "@aibast-agents-library/account-intelligence"
-    )
-    assert build_metrics.parse_agent_upvote(
-        "<!-- aibast-agent-upvote:v1 -->\n"
-        "- Schema: aibast-agent-upvote/1.0\n"
+    assert build_metrics.parse_agent_discussion(valid_body) == {
+        "signal": "upvote",
+        "agent": "@aibast-agents-library/account-intelligence",
+        "file": "agents/account-intelligence.py",
+    }
+    assert build_metrics.parse_agent_discussion(
+        "<!-- aibast-agent-discussion:v1 -->\n"
+        "- Schema: aibast-agent-discussion/1.0\n"
+        "- Signal: acquisition\n"
         "- Agent: @aibast-agents-library/account-intelligence\n",
-        agents,
-    ) == "@aibast-agents-library/account-intelligence"
-    assert build_metrics.parse_agent_upvote("\n" + valid_body, agents) is None
-    assert build_metrics.parse_agent_upvote(
-        valid_body + "- Agent: `@aibast-agents-library/deal-progression`\n",
-        agents,
+    ) is None
+    assert build_metrics.parse_agent_discussion("\n" + valid_body) is None
+    assert build_metrics.parse_agent_discussion(
+        valid_body + "- Signal: `acquisition`\n",
     ) is None
 
-    issues = [
+    discussions = [
         {
             "number": 1,
-            "state": "open",
-            "user": {"login": "Alice"},
             "body": body("@aibast-agents-library/account-intelligence"),
+            "upvoteCount": 3,
+            "url": "https://github.com/example/repo/discussions/1",
         },
         {
             "number": 2,
-            "state": "closed",
-            "user": {"login": "alice"},
-            "body": body("@aibast-agents-library/account-intelligence"),
+            "body": body(
+                "@aibast-agents-library/account-intelligence",
+                signal="acquisition",
+            ),
+            "upvoteCount": 2,
+            "url": "https://github.com/example/repo/discussions/2",
         },
         {
             "number": 3,
-            "state": "closed",
-            "user": {"login": "Bob"},
             "body": body("@aibast-agents-library/account-intelligence"),
+            "upvoteCount": 50,
+            "url": "https://github.com/example/repo/discussions/3",
         },
         {
             "number": 4,
-            "state": "closed",
-            "user": {"login": "Bob"},
             "body": body("@aibast-agents-library/deal-progression"),
+            "upvoteCount": 1,
+            "url": "https://github.com/example/repo/discussions/4",
         },
         {
             "number": 5,
-            "state": "open",
-            "user": {"login": "Charlie"},
-            "body": body("@aibast-agents-library/account-intelligence"),
-            "pull_request": {"url": "https://example.invalid/pr/5"},
+            "body": body("@aibast-agents-library/not-registered"),
+            "upvoteCount": 8,
+            "url": "https://github.com/example/repo/discussions/5",
         },
         {
             "number": 6,
-            "state": "open",
-            "user": {"login": "Dana"},
-            "body": body("@aibast-agents-library/not-registered"),
-        },
-        {
-            "number": 7,
-            "state": "open",
-            "user": {"login": "Eve"},
             "body": body(
                 "@aibast-agents-library/account-intelligence",
                 schema="wrong",
             ),
+            "upvoteCount": 4,
+            "url": "https://github.com/example/repo/discussions/6",
         },
     ]
 
-    grouped = build_metrics.group_agent_upvotes(issues, agents, complete=True)
+    grouped = build_metrics.group_agent_discussions(
+        discussions, agents, complete=True
+    )
 
-    assert grouped["counts"] == {
-        "@aibast-agents-library/account-intelligence": 2,
+    assert grouped["status"] == "partial"
+    assert grouped["signals"]["upvote"]["counts"] == {
+        "@aibast-agents-library/account-intelligence": 3,
         "@aibast-agents-library/deal-progression": 1,
     }
-    assert grouped["total"] == 3
-    assert grouped["diagnostics"] == {
-        "duplicate_votes": 1,
-        "invalid_issues": 2,
-        "pull_requests": 1,
-        "open_votes": 1,
-        "closed_votes": 2,
+    assert grouped["signals"]["acquisition"]["counts"] == {
+        "@aibast-agents-library/account-intelligence": 2,
+        "@aibast-agents-library/deal-progression": None,
     }
-    assert "issues" not in grouped
-    assert "Alice" not in json.dumps(grouped)
-    assert "body" not in grouped
+    assert grouped["signals"]["upvote"]["total"] == 4
+    assert grouped["signals"]["acquisition"]["total"] is None
+    assert grouped["diagnostics"] == {
+        "duplicate_discussions": 1,
+        "invalid_discussions": 1,
+        "stale_agent_discussions": 1,
+        "upvote_discussions": 2,
+        "acquisition_discussions": 1,
+    }
+    assert "discussions" not in grouped
+    assert "body" not in json.dumps(grouped)
 
 
-def test_agent_upvote_fetch_complete_zero_and_partial_null(monkeypatch):
+def test_agent_discussion_fetch_complete_zero_and_partial_null(monkeypatch):
     names = {
         "@aibast-agents-library/account-intelligence",
         "@aibast-agents-library/deal-progression",
     }
+    discussions = []
+    number = 0
+    for agent in sorted(names):
+        for signal in build_metrics.AGENT_DISCUSSION_SIGNALS:
+            number += 1
+            discussions.append(
+                {
+                    "number": number,
+                    "body": (
+                        "<!-- aibast-agent-discussion:v1 -->\n"
+                        "- Schema: `aibast-agent-discussion/1.0`\n"
+                        f"- Signal: `{signal}`\n"
+                        f"- Agent: `{agent}`\n"
+                        f"- File: `agents/{number}.py`\n"
+                    ),
+                    "upvoteCount": 0,
+                    "url": (
+                        "https://github.com/example/repo/discussions/"
+                        f"{number}"
+                    ),
+                }
+            )
     monkeypatch.setattr(
         build_metrics,
-        "fetch_issue_pages",
+        "fetch_discussion_pages",
         lambda _token: {
-            "issues": [],
+            "discussions": discussions,
             "available": True,
             "complete": True,
             "pages": 1,
+            "error": None,
         },
     )
-    complete = build_metrics.fetch_agent_upvotes(None, names)
-    assert complete["total"] == 0
-    assert set(complete["counts"].values()) == {0}
+    complete = build_metrics.fetch_agent_discussion_signals("token", names)
+    assert complete["status"] == "available"
+    assert complete["signals"]["upvote"]["total"] == 0
+    assert complete["signals"]["acquisition"]["total"] == 0
+    assert set(
+        complete["signals"]["upvote"]["counts"].values()
+    ) == {0}
 
     monkeypatch.setattr(
         build_metrics,
-        "fetch_issue_pages",
+        "fetch_discussion_pages",
         lambda _token: {
-            "issues": [],
+            "discussions": [],
             "available": True,
             "complete": False,
             "pages": 1,
+            "error": "truncated",
         },
     )
-    partial = build_metrics.fetch_agent_upvotes(None, names)
-    assert partial["total"] is None
-    assert set(partial["counts"].values()) == {None}
+    partial = build_metrics.fetch_agent_discussion_signals("token", names)
+    assert partial["status"] == "partial"
+    assert partial["signals"]["upvote"]["total"] is None
+    assert set(
+        partial["signals"]["upvote"]["counts"].values()
+    ) == {None}
 
 
 def test_agent_metrics_array_total_and_most_upvoted_leaderboard():
@@ -1742,6 +1775,7 @@ def test_agent_metrics_array_total_and_most_upvoted_leaderboard():
     agents, _by_file = build_metrics.build_agent_index(registry)
     for agent in agents.values():
         agent["upvotes"] = 0
+        agent["acquisitions"] = 0
     agents["@aibast-agents-library/account-intelligence"].update(
         upvotes=2, downloads=5
     )
@@ -1749,20 +1783,31 @@ def test_agent_metrics_array_total_and_most_upvoted_leaderboard():
         upvotes=2, downloads=7
     )
     agents["@aibast-agents-library/proposal-generation"].update(
-        upvotes=3, downloads=1
+        upvotes=3, acquisitions=4, downloads=1
     )
+    agents["@aibast-agents-library/deal-progression"]["acquisitions"] = 2
 
     metrics = build_metrics.build_agent_metrics(agents)
-    leaderboard = build_metrics.build_leaderboards(agents, registry)["most_upvoted"]
+    leaderboards = build_metrics.build_leaderboards(agents, registry)
+    leaderboard = leaderboards["most_upvoted"]
 
     assert isinstance(metrics, list)
     assert len(metrics) == len(registry["agents"])
-    assert all({"name", "downloads", "upvotes"} <= set(row) for row in metrics)
+    assert all(
+        {"name", "downloads", "upvotes", "acquisitions"} <= set(row)
+        for row in metrics
+    )
     assert sum(row["upvotes"] for row in metrics) == 7
     assert [row["name"] for row in leaderboard[:3]] == [
         "@aibast-agents-library/proposal-generation",
         "@aibast-agents-library/deal-progression",
         "@aibast-agents-library/account-intelligence",
+    ]
+    assert [
+        row["name"] for row in leaderboards["most_acquired"][:2]
+    ] == [
+        "@aibast-agents-library/proposal-generation",
+        "@aibast-agents-library/deal-progression",
     ]
 
 
@@ -1924,17 +1969,17 @@ def test_metrics_page_binds_workshop_adoption_schema():
     ):
         assert field in html
     for phrase in (
-        "Agent Growth &amp; Impact (AGI) Points",
+        "Verified workshop achievements",
         "Verified participants",
         "Verified badges",
         "Verified starts",
         "Workshop completions",
         "Hard completions",
         "Completion rate",
-        "Public AGI leaderboard",
+        "Public achievement leaderboard",
         "Workshop achievement completion",
         "Achievement rollup",
-        "Local self-paced AGI is different",
+        "Local self-paced achievements are different",
         "explicitly opted into public display",
         "never repository stars, agent upvotes, downloads, or workshop usage events",
         "at most 150 points per workshop",
@@ -1947,8 +1992,14 @@ def test_metrics_page_binds_workshop_adoption_schema():
         assert phrase in html
     assert "aibast-agi-achievement" not in html
     assert html.count('href="achievements.html"') >= 2
-    assert 'aria-label="Verified public AGI profile leaderboard"' in html
-    assert 'aria-label="Verified AGI per-workshop achievement completion"' in html
+    assert (
+        'aria-label="Verified public achievement profile leaderboard"'
+        in html
+    )
+    assert (
+        'aria-label="Verified per-workshop achievement completion"'
+        in html
+    )
 
     for element_id in (
         "workshop-summary",
@@ -2005,36 +2056,17 @@ def test_metrics_page_binds_workshop_adoption_schema():
     assert "Community upvotes" not in html
     assert "Upvote on GitHub" not in html
     assert "Repository stars" in html
-    assert "Global agent distribution, engagement, and learning impact" in html
+    assert "AIBAST distribution, engagement, and learning impact" in html
     assert "label: 'Most upvoted'" in html
+    assert "label: 'Most acquired'" in html
     assert "t.agent_upvotes" in html
+    assert "t.agent_acquisitions" in html
     assert "Array.isArray(M.agent_metrics) ? M.agent_metrics : []" in html
-    assert "Opening the form is not a vote" in html
-    assert "One GitHub account counts once per agent" in html
-    for element_id in (
-        "global-agent-ecosystem",
-        "ecosystem-summary",
-        "ecosystem-coverage",
-        "ecosystem-agent-table",
-    ):
-        assert f'id="{element_id}"' in html
-    assert "function renderEcosystem(" in html
-    assert "renderEcosystem();" in html
-    for field in (
-        "M.ecosystem || {}",
-        "totals.combined_agent_distribution_fetch_events",
-        "totals.rar_agent_acquisitions",
-        "totals.rar_usage_signals",
-        "row.aibast_direct_agent_fetches",
-        "row.rar_cdn_fetches",
-        "row.rar_release_fetches",
-        "row.combined_distribution_fetch_events",
-        "row.rar_acquisitions",
-        "row.rar_usage_signals",
-    ):
-        assert field in html
-    assert "public kody-w/RAR community channel" in html
-    assert "Missing agent rows are unavailable, not verified zero" in html
+    assert "GitHub permits one active upvote per account" in html
+    assert "RAR is intentionally excluded from these counts" in html
+    assert 'id="global-agent-ecosystem"' not in html
+    assert "function renderEcosystem(" not in html
+    assert "renderEcosystem();" not in html
     for element_id in (
         "file-ledger-search",
         "file-ledger-kind",

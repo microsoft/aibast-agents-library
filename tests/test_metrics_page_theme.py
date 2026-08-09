@@ -38,9 +38,12 @@ def test_actual_page_exposes_accessible_verified_agi_surface():
     assert 'aria-live="polite"' in html.split('id="agi-summary"', 1)[1].split(
         ">", 1
     )[0]
-    assert '<caption>Verified public AGI profiles ranked by points</caption>' in html
+    assert (
+        '<caption>Verified public achievement profiles ranked by points</caption>'
+        in html
+    )
     assert '<caption>Canonical workshops ranked by verified achievement points</caption>' in html
-    assert '<caption>Verified claims by canonical AGI achievement</caption>' in html
+    assert '<caption>Verified claims by canonical achievement</caption>' in html
     assert "function renderAgiPoints()" in html
     assert "renderAgiPoints();" in html
     assert "href=\"achievements.html\"" in html
@@ -178,7 +181,6 @@ function render() {
   if (trafficUnavailable) appendAdminSetupNotice($('traffic-gap'));
   $('board-hint').textContent = t.agents;
   renderKPIs();
-  renderEcosystem();
   renderWorkshops();
   renderChart();
   renderBoards();
@@ -202,6 +204,7 @@ function renderKPIs() {
   const workshopTotals = (M.workshops || {}).totals || {};
   const cards = [
     { label: 'Agent upvotes', value: t.agent_upvotes },
+    { label: 'Signed-in acquisitions', value: t.agent_acquisitions },
     { label: 'Repository stars', value: r.stars }
   ];
   const fields = [
@@ -209,20 +212,11 @@ function renderKPIs() {
     t.agent_file_downloads, t.installer_downloads, t.skill_downloads, t.agents, t.stacks,
     t.verticals, t.total_lines, t.total_kb, t.clone_uniques_14d,
     t.clone_uniques_daily_sum, t.tracking_since, t.page_views,
-    t.view_uniques_14d, t.agent_upvotes, r.stars, r.forks, r.open_issues,
+    t.view_uniques_14d, t.agent_upvotes, t.agent_acquisitions,
+    r.stars, r.forks, r.open_issues,
     workshopTotals.usage_events, workshopTotals.workshops
   ];
   $('kpis').textContent = `Total downloads Workshop usage events Agent file fetches Skill downloads Installer fetches ${cards.map(card => `${card.label} ${card.value}`).join(' ')} ${fields.join(' ')}`;
-}
-function renderEcosystem() {
-  const ecosystem = M.ecosystem || {};
-  const totals = ecosystem.totals || {};
-  const rows = Array.isArray(ecosystem.agents) ? ecosystem.agents.slice() : [];
-  $('ecosystem-summary').textContent = `${totals.combined_agent_distribution_fetch_events || 0}`;
-  $('ecosystem-coverage').textContent = ecosystem.status || 'unavailable';
-  $('ecosystem-agent-table').innerHTML = rows.map(row =>
-    `<tr><td>${row.logical_name}</td><td>${row.combined_distribution_fetch_events}</td></tr>`
-  ).join('');
 }
 const WORKSHOP_SORTS = [
   { id: 'usage_events', label: 'Usage' },
@@ -287,7 +281,18 @@ const AGENT_UPVOTE_BOARD = {
   metric: 'upvotes',
   unit: 'agent upvotes'
 };
-const ALL_BOARDS = [BOARDS[0], AGENT_UPVOTE_BOARD, ...BOARDS.slice(1)];
+const AGENT_ACQUISITION_BOARD = {
+  id: 'most_acquired',
+  label: 'Most acquired',
+  metric: 'acquisitions',
+  unit: 'signed-in acquisitions'
+};
+const ALL_BOARDS = [
+  BOARDS[0],
+  AGENT_UPVOTE_BOARD,
+  AGENT_ACQUISITION_BOARD,
+  ...BOARDS.slice(1)
+];
 let activeBoard = 'most_downloaded';
 function renderBoards() {
   $('tabs').innerHTML = ALL_BOARDS.map(board =>
@@ -298,13 +303,18 @@ function renderBoards() {
   });
   const cfg = ALL_BOARDS.find(b => b.id === activeBoard);
   const agentMetrics = Array.isArray(M.agent_metrics) ? M.agent_metrics : [];
-  const rows = activeBoard === 'most_upvoted'
+  const signalBoard = activeBoard === 'most_upvoted'
+    || activeBoard === 'most_acquired';
+  const rows = signalBoard
     ? agentMetrics
     : (M.leaderboards || {})[activeBoard] || [];
   rows.forEach(r => {
     const url = r.file ? r.file : `https://github.com/${OWNER}/${REPO}`;
     const rowLinks = `<a href="library.html#agent/${encodeURIComponent(r.name)}"></a><a href="${url}"></a>`;
-    void [r[cfg.metric], r.file, r.name, r.display_name, r.tier, r.category, r.stack, rowLinks];
+    void [
+      r[cfg.metric], r.file, r.name, r.display_name, r.tier, r.category,
+      r.stack, r.upvote_discussion_url, r.acquisition_discussion_url, rowLinks
+    ];
   });
   $('board').innerHTML = 'No per-file CDN fetches recorded yet. Agent files pulled over raw.githubusercontent.com are not counted; only jsDelivr publishes per-file numbers.';
 }
@@ -468,23 +478,15 @@ wireFeedback();
 <button id="themeToggle" type="button" aria-label="Toggle theme" aria-pressed="false" data-theme-toggle>Theme</button>
 </header>
 <main id="mainContent">
-<p>Global agent distribution, engagement, and learning impact</p>
-<p>Agent upvotes are structured public GitHub issue submissions. One GitHub account counts once per agent.
-Opening the form is not a vote; the issue must be submitted and pass validation.</p>
+<p>AIBAST distribution, engagement, and learning impact</p>
+<p>Agent Discussions provide two traceable counters. GitHub permits one active
+upvote per account. Acquisition signals are not substituted for observable CDN
+or release file transfers. RAR is intentionally excluded from these counts.</p>
 <a href="library.html">Browse agents</a>
 <div id="kpis" class="cards"></div>
 <span id="stamp-time"></span><span id="stamp-window"></span><span id="stamp-src"></span>
 <span id="stamp-mode" role="status" aria-live="polite" aria-atomic="true"></span>
 <div id="traffic-gap"></div>
-<section id="global-agent-ecosystem">
-<h2>Global agent ecosystem</h2>
-<p>AIBAST direct distribution plus the public kody-w/RAR community channel.</p>
-<p>Distribution fetch events are fetches, not people. RAR acquisitions and usage
-signals are separate. Missing agent rows are unavailable, not verified zero.</p>
-<div id="ecosystem-summary"></div>
-<p id="ecosystem-coverage"></p>
-<table id="ecosystem-agent-table"><tbody></tbody></table>
-</section>
 <section aria-labelledby="workshop-heading">
 <h2 id="workshop-heading">Workshop adoption</h2>
 <div id="workshop-hint"></div>
@@ -492,8 +494,8 @@ signals are separate. Missing agent rows are unavailable, not verified zero.</p>
 <p id="workshop-coverage" role="status" aria-live="polite" aria-atomic="true"></p>
 <p>Workshop usage events are counted public signals. This is a floor and an event sum,
 not people, users, or unique usage. These sources use mixed measurement windows, and
-one person or action can create multiple events. Agent upvotes are preference signals
-shown separately and are never added to usage events.</p>
+one person or action can create multiple events. Agent rating upvotes and signed-in
+acquisitions are Discussion signals shown separately and are never added to usage events.</p>
 <p>Views cover only observed GitHub top popular-path rows in the 14-day API window.
 Raw GitHub and direct GitHub Pages fetches are uncounted.</p>
 <div id="workshop-tabs" role="group" aria-label="Sort workshop adoption table"></div>
@@ -593,8 +595,8 @@ def test_altered_download_formula_fails_closed():
 
 def test_repository_stars_cannot_be_presented_as_upvotes():
     html = valid_fixture().replace(
-        "<p>Global agent distribution, engagement, and learning impact</p>",
-        "<p>Global agent distribution, engagement, and learning impact</p>"
+        "<p>AIBAST distribution, engagement, and learning impact</p>",
+        "<p>AIBAST distribution, engagement, and learning impact</p>"
         "<p>Community upvotes are public GitHub stars.</p>",
     )
     result = audit_html(html, CONTRACT)
@@ -635,7 +637,7 @@ def test_agent_upvotes_cannot_be_added_into_usage_events():
                 "const agentMetrics = Array.isArray(M.agent_metrics) ? M.agent_metrics : [];",
                 "const agentMetrics = (M.leaderboards || {}).most_upvoted || [];",
             ),
-            "guarded agent_metrics upvote rows",
+            "guarded agent_metrics signal rows",
         ),
         (
             lambda html: html.replace(

@@ -8,7 +8,9 @@ chat.
 
 The attached skill carries the discovery, testing, deployment, and validation
 harness directly in GitHub Copilot, so the attendee still uses the same short
-messages instead of supplying URLs or mechanics.
+messages instead of supplying URLs or mechanics. Before deployment it installs
+and verifies the official `microsoft/copilot-studio-plugin`, its
+`mcs-assistant@copilot-studio-plugin` capabilities, and a supported PAC CLI.
 
 Then send these two short messages:
 

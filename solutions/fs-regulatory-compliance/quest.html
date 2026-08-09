@@ -258,6 +258,7 @@
     .preview-intro { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin-bottom: 16px; }
     .preview-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
     .preview-case { padding: 16px; border: 1px solid var(--cp-border); border-radius: 14px; background: var(--cp-bg-elevated); }
+    .preview-case-wide { grid-column: 1 / -1; }
     .preview-case header { display: flex; justify-content: space-between; gap: 12px; align-items: start; }
     .preview-case h4 { margin: 0; }
     .report-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
@@ -281,7 +282,7 @@
     .marker-chip { display: inline-flex; margin: 0 6px 6px 0; padding: 5px 8px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface); color: var(--cp-text-muted); font-size: 12px; }
     .preview-shot-wrap { margin-top: 14px; text-align: center; }
     .reference-shot-wrap { margin-top: 14px; }
-    .preview-shot { display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }
+    .preview-shot { display: block; width: 100%; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }
     .capture-meta { margin: 8px 0 0; color: var(--cp-text-muted); font-size: 12px; text-align: center; }
     .quality-warning { margin: 16px 0; padding: 14px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft); color: var(--cp-text-muted); }
     .quality-warning strong { color: var(--cp-text); }
@@ -315,7 +316,7 @@
     .copy-source { display: none; }
     .instruction.expected { border-left: 4px solid var(--cp-success); }
     .shot-link { display: block; text-align: center; }
-    .shot { display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }
+    .shot { display: block; width: 100%; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }
     .missing { padding: 32px; border: 2px dashed var(--cp-warning); border-radius: 10px; color: var(--cp-text-muted); }
     .look-for { margin: 16px 0; padding: 20px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
     .look-for strong { color: var(--cp-text); }
@@ -344,6 +345,7 @@
       <p class="eyebrow">Evidence-grounded customer journey</p>
       <h1>Regulatory Compliance Agent</h1>
       <p class="lede">Use your globally configured Easy-mode harness, or reproduce every action directly in Hard mode.</p>
+      <div class="notice"><strong>Workshop mission:</strong> Turn motivated, open-minded, non-technical sales professionals into AI superheroes who can match the practical output and problem-solving pace of technical peers who are not using AI, while staying evidence-grounded, governed, and honest about what the tools proved.</div>
       <div class="notice"><strong>Boundary:</strong> synthetic qualitative evidence only—not a customer KPI, measured production result, live connection, or publication approval.</div>
       <div class="feedback-notice"><strong>Found something inaccurate?</strong> Use <em>Report an issue</em> at that point. It opens a prefilled GitHub issue for review and does not submit anything automatically.</div>
       <div class="mode-switch" role="tablist">
@@ -355,7 +357,7 @@
     <section class="agi-panel" aria-labelledby="agi-panel-title">
       <div>
         <p class="eyebrow">Self-paced local achievements</p>
-        <h2 id="agi-panel-title">Agent Growth &amp; Impact (AGI) Points</h2>
+        <h2 id="agi-panel-title">Workshop achievements</h2>
         <div class="agi-score-line">
           <span><strong class="agi-score" id="agi-total-score">0</strong> total points</span>
           <span><strong id="agi-workshop-score">0</strong> in this workshop</span>
@@ -363,13 +365,13 @@
         <p id="agi-progress-label">0 of 0 Easy checkpoints complete</p>
         <div class="progress" aria-hidden="true"><span id="agi-progress-bar"></span></div>
         <ul class="agi-badges" id="agi-badge-list" aria-label="Badges earned in this workshop"><li class="agi-badge">No badges yet</li></ul>
-        <a href="../../achievements.html">View AGI achievements and local profile</a>
+        <a href="../../achievements.html">View achievements and local profile</a>
       </div>
       <div class="agi-claims">
         <h3>Optional public verification</h3>
         <p class="agi-fine-print">These points and badges are local, self-reported workshop progress—not externally verified proof or a capability claim.</p>
         <div class="agi-claim-actions">
-          <button class="button primary" type="button" data-agi-sync hidden>Sync AGI Points to GitHub</button>
+          <button class="button primary" type="button" data-agi-sync hidden>Sync achievements to GitHub</button>
         </div>
         <p class="agi-fine-print">This opens one prefilled progress issue containing every badge currently earned here. Nothing syncs until you submit it. Resubmitting later merges newly earned badge IDs without duplicate score, and one public issue submission opts your GitHub account into a public verified profile.</p>
       </div>
@@ -429,7 +431,7 @@
       <article class="learn-step" id="brainstem-step-3">
         <header class="learn-step-header"><span>3</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 3: Draft deployment" data-report-expected="Draft Regulatory Compliance Pilot; model Sonnet46; 2 knowledge files; 5 skills; published false." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
-          <p>The harness now reuses or creates the source-controlled Copilot Studio Draft, synchronizes the reviewed instructions and assets, and leaves publication off.</p>
+          <p>The harness now uses the verified Microsoft Copilot Studio plugin to reuse or create the source-controlled Draft, synchronize the reviewed instructions and assets, validate the PAC project, and leave publication off.</p>
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="brainstem-deploy-prompt">Copy message</button></div>
           <pre class="prompt-block" id="brainstem-deploy-prompt">Deploy it into Copilot Studio for me.</pre>
           <div class="expected-panel"><strong>Expected result</strong><ul><li>Draft: <code>Regulatory Compliance Pilot</code></li><li>Model: <code>Sonnet46</code></li><li>Knowledge files: <code>2</code></li><li>Skills: <code>5</code></li><li>Status: <strong>Draft</strong>; published: <code>false</code></li></ul><p>The harness then validates the real Preview front door before returning its final verdict.</p></div>
@@ -444,7 +446,7 @@
       <article class="learn-step" id="copilot-step-1">
         <header class="learn-step-header"><span>1</span><div><p>Prepare your Copilot</p><h3>Download and attach the Copilot-only skill</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 1: attach skill" data-report-expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
-          <p>This file fixes the workshop to GitHub Copilot alone. The skill carries the same discovery, testing, deployment, and validation contract directly in the active Copilot session.</p>
+          <p>This file fixes the workshop to GitHub Copilot alone. The skill carries the same discovery, testing, deployment, and validation contract directly in the active Copilot session and bootstraps the official Microsoft Copilot Studio plugin.</p>
           <div class="action-panel"><strong>Do this</strong><ol><li>Download the lane-specific <code>SKILL.md</code>.</li><li>Open GitHub Copilot Chat in VS Code.</li><li>Select <strong>Agent mode</strong>.</li><li>Drag the downloaded file into the chat.</li></ol><a class="button primary" href="../../skills/aibast-easy-mode-copilot/SKILL.md" download="SKILL.md">Download Copilot-only SKILL.md</a></div>
           <div class="expected-panel"><strong>Expected result</strong><p>The attachment appears in Copilot Chat. From this point forward, the selected skill—not extra wording in your prompts—determines which harness runs.</p></div>
           <label class="step-complete"><input type="checkbox" data-checkpoint="copilot-skill" data-agi-group="onboarding" data-agi-path="copilot"><span>I attached the correct lane skill.</span></label>
@@ -452,12 +454,12 @@
       </article>
 
       <article class="learn-step" id="copilot-step-2">
-        <header class="learn-step-header"><span>2</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test Regulatory Compliance</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 2: local proof" data-report-expected="Copilot reports an isolated workspace, a verified source hash, and 5/5 locked local cases passed." data-report-evidence="">Report an issue</button></header>
+        <header class="learn-step-header"><span>2</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test Regulatory Compliance</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 2: local proof" data-report-expected="Copilot reports the verified mcs-assistant plugin and PAC CLI, an isolated workspace, a verified source hash, and 5/5 locked local cases passed." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>This step proves the portable business logic before any Copilot Studio work begins. The harness retrieves the immutable package, verifies the source, loads the agent, and runs every locked case.</p>
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="copilot-build-prompt">Copy message</button></div>
           <pre class="prompt-block" id="copilot-build-prompt">Give me Regulatory Compliance using Easy Mode and test it for me.</pre>
-          <div class="expected-panel"><strong>Expected result</strong><p>Copilot reports an isolated workspace, a verified source hash, and 5/5 locked local cases passed.</p><p>Copilot should end by suggesting the next message: <code>Deploy it into Copilot Studio for me.</code></p></div>
+          <div class="expected-panel"><strong>Expected result</strong><p>Copilot reports the verified mcs-assistant plugin and PAC CLI, an isolated workspace, a verified source hash, and 5/5 locked local cases passed.</p><p>Copilot should end by suggesting the next message: <code>Deploy it into Copilot Studio for me.</code></p></div>
           <label class="step-complete"><input type="checkbox" data-checkpoint="copilot-local" data-agi-group="local-proof" data-agi-path="copilot"><span>I saw every locked local case pass.</span></label>
         </div>
       </article>
@@ -465,7 +467,7 @@
       <article class="learn-step" id="copilot-step-3">
         <header class="learn-step-header"><span>3</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 3: Draft deployment" data-report-expected="Draft Regulatory Compliance Pilot; model Sonnet46; 2 knowledge files; 5 skills; published false." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
-          <p>The harness now reuses or creates the source-controlled Copilot Studio Draft, synchronizes the reviewed instructions and assets, and leaves publication off.</p>
+          <p>The harness now uses the verified Microsoft Copilot Studio plugin to reuse or create the source-controlled Draft, synchronize the reviewed instructions and assets, validate the PAC project, and leave publication off.</p>
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="copilot-deploy-prompt">Copy message</button></div>
           <pre class="prompt-block" id="copilot-deploy-prompt">Deploy it into Copilot Studio for me.</pre>
           <div class="expected-panel"><strong>Expected result</strong><ul><li>Draft: <code>Regulatory Compliance Pilot</code></li><li>Model: <code>Sonnet46</code></li><li>Knowledge files: <code>2</code></li><li>Skills: <code>5</code></li><li>Status: <strong>Draft</strong>; published: <code>false</code></li></ul><p>The harness then validates the real Preview front door before returning its final verdict.</p></div>
@@ -482,7 +484,7 @@
           <div class="expected-panel"><strong>Expected result</strong><p>Every case passes in a fresh Preview conversation, and the agent still appears as <strong>Draft</strong>.</p></div>
           <div class="preview-grid">
 
-        <article class="preview-case">
+        <article class="preview-case preview-case-wide">
           <header><div><p class="prompt-kicker">RC-01 · Chief Compliance Officer</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-rc-01">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — RC-01" data-report-expected="Must include: T-2041, T-2233; must not include: I don&#x27;t have access, provide the trade, give me a trade, which trade would you" data-report-evidence="solutions/fs-regulatory-compliance/screenshots/assisted/02-rc-01.jpg">Report an issue</button></div></header>
           <pre class="prompt-block" id="preview-prompt-rc-01">Are we going to fail our next MiFID audit? What&#x27;s actually broken on the desk right now?</pre>
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">T-2041</span><span class="marker-chip">T-2233</span></div></div>
@@ -491,7 +493,7 @@
           <label class="step-complete"><input type="checkbox" data-checkpoint="preview-rc-01" data-agi-group="preview-proven" data-agi-path="shared"><span>The Preview response matched this contract.</span></label>
         </article>
 
-        <article class="preview-case">
+        <article class="preview-case preview-case-wide">
           <header><div><p class="prompt-kicker">RC-02 · Trading Desk Supervisor</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-rc-02">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — RC-02" data-report-expected="Must include: T-2041, T-2233; must not include: I don&#x27;t have access, provide the trader" data-report-evidence="solutions/fs-regulatory-compliance/screenshots/assisted/03-rc-02.jpg">Report an issue</button></div></header>
           <pre class="prompt-block" id="preview-prompt-rc-02">Which of my traders can&#x27;t legally trade today, and who do I have to call?</pre>
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">T-2041</span><span class="marker-chip">T-2233</span></div></div>
@@ -500,7 +502,7 @@
           <label class="step-complete"><input type="checkbox" data-checkpoint="preview-rc-02" data-agi-group="preview-proven" data-agi-path="shared"><span>The Preview response matched this contract.</span></label>
         </article>
 
-        <article class="preview-case">
+        <article class="preview-case preview-case-wide">
           <header><div><p class="prompt-kicker">RC-03 · Compliance Manager</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-rc-03">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — RC-03" data-report-expected="Must include: TRD-88133, field; must not include: I don&#x27;t have access, upload" data-report-evidence="solutions/fs-regulatory-compliance/screenshots/assisted/04-rc-03.jpg">Report an issue</button></div></header>
           <pre class="prompt-block" id="preview-prompt-rc-03">We executed a few hundred trades this week. Which ones will the regulator reject, and why exactly?</pre>
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">TRD-88133</span><span class="marker-chip">field</span></div></div>
@@ -509,7 +511,7 @@
           <label class="step-complete"><input type="checkbox" data-checkpoint="preview-rc-03" data-agi-group="preview-proven" data-agi-path="shared"><span>The Preview response matched this contract.</span></label>
         </article>
 
-        <article class="preview-case">
+        <article class="preview-case preview-case-wide">
           <header><div><p class="prompt-kicker">RC-04 · Head of Quant Execution</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-rc-04">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — RC-04" data-report-expected="Must include: ALGO-POV-NL; must not include: I don&#x27;t have access" data-report-evidence="solutions/fs-regulatory-compliance/screenshots/assisted/05-rc-04.jpg">Report an issue</button></div></header>
           <pre class="prompt-block" id="preview-prompt-rc-04">Is anything about to go live that shouldn&#x27;t?</pre>
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">ALGO-POV-NL</span></div></div>
@@ -518,7 +520,7 @@
           <label class="step-complete"><input type="checkbox" data-checkpoint="preview-rc-04" data-agi-group="preview-proven" data-agi-path="shared"><span>The Preview response matched this contract.</span></label>
         </article>
 
-        <article class="preview-case">
+        <article class="preview-case preview-case-wide">
           <header><div><p class="prompt-kicker">RC-05 · Chief Risk Officer</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-rc-05">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — RC-05" data-report-expected="Must include: TRD-88133; must not include: I don&#x27;t have access" data-report-evidence="solutions/fs-regulatory-compliance/screenshots/assisted/06-rc-05.jpg">Report an issue</button></div></header>
           <pre class="prompt-block" id="preview-prompt-rc-05">My head of trading says the reporting is fine. Prove him wrong with specifics I can take to the board.</pre>
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">TRD-88133</span></div></div>
@@ -596,7 +598,7 @@
       <section class="hard-progress-card" aria-labelledby="hard-progress-label">
         <div class="hard-progress-heading">
           <strong id="hard-progress-label">0 of 26 complete</strong>
-          <p>Hard-mode progress is saved on this device and contributes to the same AGI profile.</p>
+          <p>Hard-mode progress is saved on this device and contributes to the same achievement profile.</p>
         </div>
         <div class="progress" aria-hidden="true"><span id="hard-progress-bar"></span></div>
         <p class="muted" id="hard-progress-toast" role="status" aria-live="polite" aria-atomic="true"></p>
@@ -1324,7 +1326,7 @@ the uploaded pilot knowledge and skills.
       function announceAgiBadge(badge) {
         if (!badge || !agiToast) return;
         agiToast.textContent =
-          `${badge.label} earned: +${badge.points} local AGI points.`;
+          `${badge.label} earned: +${badge.points} local achievement points.`;
         window.setTimeout(() => {
           if (agiToast.textContent.includes(badge.label)) agiToast.textContent = "";
         }, 5000);
@@ -1374,7 +1376,7 @@ the uploaded pilot knowledge and skills.
         }
         if (hardProgressToast) {
           hardProgressToast.textContent = complete
-            ? "Hard mode complete. The achievement is saved in this device's AGI profile."
+            ? "Hard mode complete. The achievement is saved in this device's achievement profile."
             : "";
         }
         renderAgiPanel(profile, activeMode);
@@ -1540,7 +1542,7 @@ Describe what was inaccurate or missing.
         source.search = "";
         source.hash = "";
         const body = `<!-- aibast-agi-progress:v1 -->
-## Agent Growth & Impact progress
+## Workshop achievement progress
 
 - Schema: \`aibast-agi-progress/1.0\`
 - Workshop: \`${AGI_WORKSHOP_SLUG}\`
@@ -1552,7 +1554,7 @@ Opening this form does not sync anything. Submit the issue to sync these earned 
 
 > Do not add credentials, tokens, customer data, or other sensitive information.`;
         const url = aibastSignalIssueUrl();
-        url.searchParams.set("title", `[AGI progress] Regulatory Compliance Agent`);
+        url.searchParams.set("title", `[Achievement progress] Regulatory Compliance Agent`);
         url.searchParams.set("body", body);
         window.open(url.toString(), "_blank", "noopener");
       }

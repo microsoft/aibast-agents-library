@@ -5,7 +5,8 @@ build_metrics.py — collect public AIBAST Agents Library metrics into state/met
 Sources (all public; only the GitHub traffic endpoints need a token):
   - registry.json                       agents, stacks, verticals, sizes, dates
   - api.github.com/repos/...            repository stars, forks, watchers, issues, releases
-  - api.github.com/repos/.../issues     structured upvote, feedback, and AGI events
+  - api.github.com/graphql              mirrored agent Discussion signals
+  - api.github.com/repos/.../issues     feedback and achievement events
   - api.github.com/.../traffic/*        clones, views, popular paths/referrers
   - data.jsdelivr.com                   CDN download hits, per-file + per-day
 
@@ -57,14 +58,16 @@ REPO = os.environ.get("METRICS_REPO", "aibast-agents-library")
 RAR_OWNER = os.environ.get("RAR_METRICS_OWNER", "kody-w")
 RAR_REPO = os.environ.get("RAR_METRICS_REPO", "RAR")
 GH_API = "https://api.github.com"
+GH_GRAPHQL = f"{GH_API}/graphql"
 JSDELIVR = "https://data.jsdelivr.com/v1"
 USER_AGENT = "aibast-metrics-builder"
 TIMEOUT = 30
 WORKSHOP_FEEDBACK_MARKER = "<!-- aibast-workshop-feedback:v1 -->"
 WORKSHOP_FEEDBACK_SCHEMA = "aibast-workshop-feedback/1.0"
 WORKSHOP_FEEDBACK_LABEL = "workshop-feedback"
-AGENT_UPVOTE_MARKER = "<!-- aibast-agent-upvote:v1 -->"
-AGENT_UPVOTE_SCHEMA = "aibast-agent-upvote/1.0"
+AGENT_DISCUSSION_MARKER = "<!-- aibast-agent-discussion:v1 -->"
+AGENT_DISCUSSION_SCHEMA = "aibast-agent-discussion/1.0"
+AGENT_DISCUSSION_SIGNALS = ("upvote", "acquisition")
 AGI_PROGRESS_MARKER = "<!-- aibast-agi-progress:v1 -->"
 AGI_PROGRESS_SCHEMA = "aibast-agi-progress/1.0"
 AGI_PROGRESS_LABEL = "agi-progress"
@@ -93,15 +96,15 @@ AGI_LABELS = {
     "hard-mode-completed": "Hard mode completed",
 }
 AGI_CAVEAT = (
-    "Agent Growth & Impact (AGI) Points are server-scored from opt-in public "
-    "GitHub progress claims. Each explicitly claimed achievement has a fixed "
+    "Verified achievement points are server-scored from opt-in public GitHub "
+    "progress claims. Each explicitly claimed achievement has a fixed "
     "value: started 5, local-proof 15, draft-builder 20, preview-proven 25, "
     "workshop-completed 35, and hard-mode-completed 50, for at most 150 points "
     "per workshop. Re-syncing unions achievement IDs without duplicating "
     "points. Profiles are public by explicit submission consent. GitHub "
     "verification confirms authenticated issue authorship and canonical claim "
     "format only; achievement completion remains self-reported and is not "
-    "independently proven. Verified public AGI remains separate from local "
+    "independently proven. Verified public achievements remain separate from local "
     "self-paced state, repository stars, agent upvotes, downloads, and "
     "workshop usage events."
 )
@@ -180,6 +183,71 @@ def request_json(url, token=None):
     except Exception as e:
         log(f"  ! {type(e).__name__} {url}: {e}")
         return None, {"status": None, "message": f"{type(e).__name__}: {e}"}
+
+
+def request_graphql(query, variables, token):
+    """POST one GitHub GraphQL query and preserve explicit failure details."""
+    if not token:
+        return None, {
+            "status": None,
+            "message": "GitHub token required for Discussion metrics",
+        }
+    payload = json.dumps(
+        {"query": query, "variables": variables},
+        separators=(",", ":"),
+    ).encode("utf-8")
+    req = urllib.request.Request(
+        GH_GRAPHQL,
+        data=payload,
+        headers={
+            "User-Agent": USER_AGENT,
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        },
+        method="POST",
+    )
+    req.add_header("Authorization", f"Bearer {token}")
+    try:
+        with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
+            document = json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as exc:
+        detail = ""
+        try:
+            detail = (json.loads(exc.read().decode("utf-8")) or {}).get(
+                "message", ""
+            )
+        except Exception:
+            pass
+        log(
+            f"  ! {exc.code} {GH_GRAPHQL}"
+            f"{' — ' + detail if detail else ''}"
+        )
+        return None, {
+            "status": exc.code,
+            "message": detail or exc.reason,
+        }
+    except Exception as exc:
+        log(f"  ! {type(exc).__name__} {GH_GRAPHQL}: {exc}")
+        return None, {
+            "status": None,
+            "message": f"{type(exc).__name__}: {exc}",
+        }
+    errors = document.get("errors") if isinstance(document, dict) else None
+    if errors:
+        message = "; ".join(
+            str(error.get("message") or "GraphQL error")
+            for error in errors
+            if isinstance(error, dict)
+        ) or "GraphQL error"
+        log(f"  ! {GH_GRAPHQL} — {message}")
+        return None, {"status": None, "message": message}
+    data = document.get("data") if isinstance(document, dict) else None
+    if not isinstance(data, dict):
+        return None, {
+            "status": None,
+            "message": "GitHub GraphQL response did not contain data",
+        }
+    return data, None
 
 
 def fetch_json(url, token=None):
@@ -527,6 +595,77 @@ def build_rar_source(
             "downloads are signed-in acquisition signals, and usage reactions "
             "are independent self-reports. They are never added together as users. "
             "Raw GitHub and Pages downloads remain unobservable."
+        ),
+    }
+
+
+def build_aibast_ecosystem_metrics(
+    agents,
+    aibast_agent_fetches,
+    *,
+    generated_at,
+):
+    """Publish AIBAST-only distribution rows without federating RAR counts."""
+    rows = []
+    for name, agent in sorted(agents.items()):
+        direct = _nonnegative_int(agent.get("downloads"))
+        rows.append({
+            "logical_name": name,
+            "display_name": agent.get("display_name") or name,
+            "publisher": name.split("/", 1)[0],
+            "channels": ["aibast"],
+            "aibast_direct_agent_fetches": direct,
+            "combined_distribution_fetch_events": direct,
+        })
+    rows.sort(
+        key=lambda row: (
+            -(
+                row["combined_distribution_fetch_events"]
+                if row["combined_distribution_fetch_events"] is not None
+                else -1
+            ),
+            row["logical_name"],
+        )
+    )
+    direct_total = _nonnegative_int(aibast_agent_fetches)
+    logical_agents = len(
+        {
+            key
+            for key in (logical_agent_key(name) for name in agents)
+            if key
+        }
+    )
+    return {
+        "schema": "aibast-ecosystem-metrics/1.0",
+        "status": "available" if direct_total is not None else "unavailable",
+        "as_of": generated_at if direct_total is not None else None,
+        "sources": {
+            "aibast": {
+                "status": (
+                    "available" if direct_total is not None else "unavailable"
+                ),
+                "repo": f"{OWNER}/{REPO}",
+            },
+            "rar": {
+                "status": "excluded",
+                "reason": (
+                    "RAR federation is intentionally excluded from AIBAST "
+                    "library counts."
+                ),
+            },
+        },
+        "totals": {
+            "aibast_direct_agent_fetches": direct_total,
+            "combined_agent_distribution_fetch_events": direct_total,
+            "distribution_entries": len(rows),
+            "logical_agents": logical_agents,
+            "overlap_agents": 0,
+        },
+        "agents": rows,
+        "caveat": (
+            "This snapshot counts only AIBAST library channels. Direct agent "
+            "fetches are observable jsDelivr events, not people, and raw GitHub "
+            "or raw.githubusercontent.com transfers remain unobservable."
         ),
     }
 
@@ -1449,14 +1588,19 @@ def fetch_workshop_feedback(token, workshop_slugs):
     }
 
 
-def parse_agent_upvote(body, agent_names):
-    """Return a canonical agent only for the exact upvote issue schema."""
+def parse_agent_discussion(body):
+    """Return the exact machine-readable signal identity from a Discussion."""
     text = body or ""
-    if not text.startswith(AGENT_UPVOTE_MARKER):
+    if not text.startswith(AGENT_DISCUSSION_MARKER):
         return None
     schema_lines = re.findall(
-        rf"(?m)^- Schema: (?:`{re.escape(AGENT_UPVOTE_SCHEMA)}`|"
-        rf"{re.escape(AGENT_UPVOTE_SCHEMA)})$",
+        rf"(?m)^- Schema: (?:`{re.escape(AGENT_DISCUSSION_SCHEMA)}`|"
+        rf"{re.escape(AGENT_DISCUSSION_SCHEMA)})$",
+        text,
+    )
+    signal_matches = re.findall(
+        r"(?m)^- Signal: (?:`(upvote|acquisition)`|"
+        r"(upvote|acquisition))$",
         text,
     )
     agent_matches = re.findall(
@@ -1464,80 +1608,250 @@ def parse_agent_upvote(body, agent_names):
         r"(@aibast-agents-library/[a-z0-9-]+))$",
         text,
     )
+    file_matches = re.findall(
+        r"(?m)^- File: `([^`\r\n]+)`$",
+        text,
+    )
+    signal_lines = [quoted or plain for quoted, plain in signal_matches]
     agent_lines = [quoted or plain for quoted, plain in agent_matches]
     if (
         len(schema_lines) == 1
+        and len(signal_lines) == 1
         and len(agent_lines) == 1
-        and agent_lines[0] in set(agent_names)
+        and len(file_matches) == 1
     ):
-        return agent_lines[0]
+        return {
+            "signal": signal_lines[0],
+            "agent": agent_lines[0],
+            "file": file_matches[0],
+        }
     return None
 
 
-def group_agent_upvotes(issues, agent_names, complete=True):
-    """Aggregate one vote per GitHub account and canonical agent."""
+def group_agent_discussions(discussions, agent_names, complete=True):
+    """Aggregate one native GitHub upvote count per canonical signal thread."""
     names = set(agent_names)
-    default = 0 if complete else None
-    counts = {name: default for name in names}
-    seen_votes = set()
-    diagnostics = {
-        "duplicate_votes": 0,
-        "invalid_issues": 0,
-        "pull_requests": 0,
-        "open_votes": 0,
-        "closed_votes": 0,
+    counts = {
+        signal: {name: None for name in names}
+        for signal in AGENT_DISCUSSION_SIGNALS
     }
-    for issue in issues or []:
-        if issue.get("pull_request"):
-            diagnostics["pull_requests"] += 1
+    urls = {
+        signal: {name: None for name in names}
+        for signal in AGENT_DISCUSSION_SIGNALS
+    }
+    seen = set()
+    diagnostics = {
+        "duplicate_discussions": 0,
+        "invalid_discussions": 0,
+        "stale_agent_discussions": 0,
+        "upvote_discussions": 0,
+        "acquisition_discussions": 0,
+    }
+    candidates = sorted(
+        discussions or [],
+        key=lambda row: (
+            _nonnegative_int(row.get("number"))
+            if _nonnegative_int(row.get("number")) is not None
+            else sys.maxsize
+        ),
+    )
+    for discussion in candidates:
+        parsed = parse_agent_discussion(discussion.get("body", ""))
+        if not parsed:
+            diagnostics["invalid_discussions"] += 1
             continue
-        agent = parse_agent_upvote(issue.get("body", ""), names)
-        login = ((issue.get("user") or {}).get("login") or "").strip().casefold()
-        state = issue.get("state")
-        if not agent or not login or state not in {"open", "closed"}:
-            diagnostics["invalid_issues"] += 1
+        agent = parsed["agent"]
+        signal = parsed["signal"]
+        if agent not in names:
+            diagnostics["stale_agent_discussions"] += 1
             continue
-        vote_key = (login, agent)
-        if vote_key in seen_votes:
-            diagnostics["duplicate_votes"] += 1
+        key = (signal, agent)
+        if key in seen:
+            diagnostics["duplicate_discussions"] += 1
             continue
-        seen_votes.add(vote_key)
-        if counts[agent] is None:
-            counts[agent] = 0
-        counts[agent] += 1
-        diagnostics[f"{state}_votes"] += 1
+        count = _nonnegative_int(discussion.get("upvoteCount"))
+        url = discussion.get("url")
+        if count is None or not isinstance(url, str) or not url.startswith(
+            "https://github.com/"
+        ):
+            diagnostics["invalid_discussions"] += 1
+            continue
+        seen.add(key)
+        counts[signal][agent] = count
+        urls[signal][agent] = url
+        diagnostics[f"{signal}_discussions"] += 1
+
+    signals = {}
+    for signal in AGENT_DISCUSSION_SIGNALS:
+        missing = sum(value is None for value in counts[signal].values())
+        signal_complete = complete and missing == 0
+        signals[signal] = {
+            "status": "available" if signal_complete else "partial",
+            "counts": counts[signal],
+            "urls": urls[signal],
+            "total": (
+                sum(counts[signal].values())
+                if signal_complete
+                else None
+            ),
+            "discussions": len(names) - missing,
+            "missing_discussions": missing,
+        }
     return {
-        "counts": counts,
-        "total": _sum_available(counts.values()),
+        "status": (
+            "available"
+            if complete
+            and all(
+                signals[signal]["status"] == "available"
+                for signal in AGENT_DISCUSSION_SIGNALS
+            )
+            and diagnostics["duplicate_discussions"] == 0
+            else "partial"
+        ),
+        "signals": signals,
         "diagnostics": diagnostics,
     }
 
 
-def fetch_agent_upvotes(token, agent_names):
-    """Fetch all public issue pages; marker/body is the vote authority."""
-    page_result = fetch_issue_pages(token)
+def fetch_discussion_pages(token, page_size=100, max_pages=100):
+    """Fetch every repository Discussion through cursor pagination."""
+    query = """
+query($owner: String!, $repo: String!, $cursor: String, $pageSize: Int!) {
+  repository(owner: $owner, name: $repo) {
+    discussions(
+      first: $pageSize
+      after: $cursor
+      orderBy: {field: CREATED_AT, direction: ASC}
+    ) {
+      pageInfo { hasNextPage endCursor }
+      nodes {
+        id
+        number
+        title
+        body
+        url
+        upvoteCount
+        viewerHasUpvoted
+        category { id name slug }
+      }
+    }
+  }
+}
+"""
+    if not token:
+        return {
+            "available": False,
+            "complete": False,
+            "pages": 0,
+            "discussions": [],
+            "error": "GitHub token required for Discussion metrics",
+        }
+    cursor = None
+    discussions = []
+    for page in range(1, max_pages + 1):
+        data, error = request_graphql(
+            query,
+            {
+                "owner": OWNER,
+                "repo": REPO,
+                "cursor": cursor,
+                "pageSize": page_size,
+            },
+            token,
+        )
+        if error:
+            return {
+                "available": bool(discussions),
+                "complete": False,
+                "pages": page - 1,
+                "discussions": discussions,
+                "error": error.get("message"),
+            }
+        repository = data.get("repository") if data else None
+        connection = (
+            repository.get("discussions")
+            if isinstance(repository, dict)
+            else None
+        )
+        if not isinstance(connection, dict):
+            return {
+                "available": bool(discussions),
+                "complete": False,
+                "pages": page - 1,
+                "discussions": discussions,
+                "error": "Repository Discussions are unavailable or disabled",
+            }
+        nodes = connection.get("nodes")
+        if not isinstance(nodes, list):
+            return {
+                "available": bool(discussions),
+                "complete": False,
+                "pages": page - 1,
+                "discussions": discussions,
+                "error": "Discussion page did not contain nodes",
+            }
+        discussions.extend(
+            row for row in nodes if isinstance(row, dict)
+        )
+        page_info = connection.get("pageInfo") or {}
+        if not page_info.get("hasNextPage"):
+            return {
+                "available": True,
+                "complete": True,
+                "pages": page,
+                "discussions": discussions,
+                "error": None,
+            }
+        cursor = page_info.get("endCursor")
+        if not cursor:
+            break
+    return {
+        "available": bool(discussions),
+        "complete": False,
+        "pages": min(max_pages, page if "page" in locals() else 0),
+        "discussions": discussions,
+        "error": "Discussion pagination did not reach the final page",
+    }
+
+
+def fetch_agent_discussion_signals(token, agent_names):
+    """Collect canonical rating and signed-in acquisition Discussion upvotes."""
+    page_result = fetch_discussion_pages(token)
+    unavailable_signals = {
+        signal: {
+            "status": "unavailable",
+            "counts": {name: None for name in agent_names},
+            "urls": {name: None for name in agent_names},
+            "total": None,
+            "discussions": 0,
+            "missing_discussions": len(agent_names),
+        }
+        for signal in AGENT_DISCUSSION_SIGNALS
+    }
     if not page_result["available"]:
         return {
             "status": "unavailable",
-            "pages": 0,
-            "issues_scanned": 0,
-            "counts": {name: None for name in agent_names},
-            "total": None,
+            "pages": page_result["pages"],
+            "discussions_scanned": 0,
+            "signals": unavailable_signals,
             "diagnostics": {},
+            "unavailable_reason": page_result.get("error"),
         }
     candidates = [
-        issue for issue in page_result["issues"]
-        if (issue.get("body") or "").startswith(AGENT_UPVOTE_MARKER)
+        discussion
+        for discussion in page_result["discussions"]
+        if (discussion.get("body") or "").startswith(AGENT_DISCUSSION_MARKER)
     ]
-    grouped = group_agent_upvotes(
+    grouped = group_agent_discussions(
         candidates,
         agent_names,
         complete=page_result["complete"],
     )
     return {
-        "status": "available" if page_result["complete"] else "partial",
+        "status": grouped["status"],
         "pages": page_result["pages"],
-        "issues_scanned": len(candidates),
+        "discussions_scanned": len(candidates),
+        "unavailable_reason": page_result.get("error"),
         **grouped,
     }
 
@@ -1912,7 +2226,7 @@ def group_agi_progress(issues, catalog, complete=True, as_of=None):
             "status": "available" if complete else "partial",
             "scope": (
                 "Public state=all GitHub issues whose body begins with the "
-                "AGI progress marker and passes the exact schema, canonical "
+                "achievement progress marker and passes the exact schema, canonical "
                 "workshop-primary-agent, ordered achievement subset, dependency, "
                 "source, and public-login checks. Open, closed, and edited "
                 "claims union by case-insensitive login/workshop/achievement."
@@ -1978,7 +2292,7 @@ def unavailable_agi_metrics(catalog):
         "coverage": {
             "status": "unavailable",
             "scope": (
-                "AGI claims were not read. Null means unavailable, not zero."
+                "Achievement claims were not read. Null means unavailable, not zero."
             ),
             "diagnostics": {},
         },
@@ -2496,8 +2810,12 @@ def top(rows, key, n=15, require=True):
 
 
 def slim(rec):
-    fields = ("name", "display_name", "publisher", "category", "tier", "downloads", "upvotes",
-              "lines", "size_kb", "added_at", "file", "description", "stack", "vertical")
+    fields = (
+        "name", "display_name", "publisher", "category", "tier", "downloads",
+        "upvotes", "acquisitions", "upvote_discussion_url",
+        "acquisition_discussion_url", "lines", "size_kb", "added_at", "file",
+        "description", "stack", "vertical",
+    )
     return {k: rec[k] for k in fields if k in rec}
 
 
@@ -2509,6 +2827,11 @@ def build_agent_metrics(agents):
             "display_name": rec["display_name"],
             "downloads": rec.get("downloads"),
             "upvotes": rec.get("upvotes"),
+            "acquisitions": rec.get("acquisitions"),
+            "upvote_discussion_url": rec.get("upvote_discussion_url"),
+            "acquisition_discussion_url": rec.get(
+                "acquisition_discussion_url"
+            ),
             "file": rec.get("file"),
             "category": rec.get("category"),
             "stack": rec.get("stack"),
@@ -2581,10 +2904,26 @@ def build_leaderboards(agents, registry):
             ),
         )[:15]
     ]
+    most_acquired = [
+        slim(row)
+        for row in sorted(
+            (
+                row for row in rows
+                if isinstance(row.get("acquisitions"), int)
+                and row["acquisitions"] > 0
+            ),
+            key=lambda row: (
+                -row["acquisitions"],
+                -(row["downloads"] or 0),
+                row["name"],
+            ),
+        )[:15]
+    ]
 
     return {
         "most_downloaded": [slim(r) for r in top(rows, "downloads")],
         "most_upvoted": most_upvoted,
+        "most_acquired": most_acquired,
         "largest": [slim(r) for r in top(rows, "lines", n=15)],
         "newest": [slim(r) for r in newest[:15]],
         "stacks": stack_rows[:20],
@@ -2605,6 +2944,7 @@ REMOTE_TOTAL_FIELDS = (
     "installer_downloads",
     "skill_downloads",
     "agent_upvotes",
+    "agent_acquisitions",
     "clones_excluding_ci_estimate",
     "ci_clone_estimate",
     "page_views",
@@ -2765,10 +3105,7 @@ def main():
     prior = load_json(out_path, {})
     generated_at = now_iso()
     token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
-    rar_token = (
-        os.environ.get("RAR_METRICS_TOKEN")
-        or os.environ.get("RAR_GITHUB_TOKEN")
-    )
+    discussion_token = os.environ.get("DISCUSSIONS_TOKEN") or token
     registry = load_json(REGISTRY, {})
     if not registry:
         log("✗ registry.json missing or unreadable — run build_registry.py first")
@@ -2783,7 +3120,6 @@ def main():
     stats = registry.get("stats", {})
 
     if args.offline:
-        rar_source = carry_forward_rar_source(prior)
         repo = carried_block(prior, "repo") or {
             "stars": None,
             "forks": None,
@@ -2800,8 +3136,20 @@ def main():
         repo["stars"] = repo.get("stars")
         repo.pop("upvotes", None)
         prior_upvotes = prior_agent_metric_map(prior, "upvotes")
+        prior_acquisitions = prior_agent_metric_map(prior, "acquisitions")
+        prior_upvote_urls = prior_agent_metric_map(
+            prior, "upvote_discussion_url"
+        )
+        prior_acquisition_urls = prior_agent_metric_map(
+            prior, "acquisition_discussion_url"
+        )
         for name, agent in agents.items():
             agent["upvotes"] = prior_upvotes.get(name)
+            agent["acquisitions"] = prior_acquisitions.get(name)
+            agent["upvote_discussion_url"] = prior_upvote_urls.get(name)
+            agent["acquisition_discussion_url"] = (
+                prior_acquisition_urls.get(name)
+            )
         file_metrics = carry_forward_file_metrics(file_scope, prior)
         apply_file_downloads_to_agents(agents, file_metrics)
         agent_upvote_coverage = carried_block(
@@ -2819,6 +3167,53 @@ def main():
             ),
             "carried_forward": any(
                 value is not None for value in prior_upvotes.values()
+            ),
+        }
+        agent_acquisition_coverage = carried_block(
+            prior, "agent_acquisition_coverage"
+        ) or {
+            "status": (
+                "carried_forward"
+                if any(
+                    value is not None
+                    for value in prior_acquisitions.values()
+                )
+                else "unavailable"
+            ),
+            "as_of": (
+                prior.get("generated_at")
+                if any(
+                    value is not None
+                    for value in prior_acquisitions.values()
+                )
+                else None
+            ),
+            "carried_forward": any(
+                value is not None for value in prior_acquisitions.values()
+            ),
+        }
+        agent_discussion_coverage = carried_block(
+            prior, "agent_discussion_coverage"
+        ) or {
+            "status": (
+                "carried_forward"
+                if (
+                    agent_upvote_coverage["status"] != "unavailable"
+                    or agent_acquisition_coverage["status"] != "unavailable"
+                )
+                else "unavailable"
+            ),
+            "as_of": (
+                prior.get("generated_at")
+                if (
+                    agent_upvote_coverage["status"] != "unavailable"
+                    or agent_acquisition_coverage["status"] != "unavailable"
+                )
+                else None
+            ),
+            "carried_forward": (
+                agent_upvote_coverage["status"] != "unavailable"
+                or agent_acquisition_coverage["status"] != "unavailable"
             ),
         }
         releases = carried_block(prior, "releases") or {
@@ -2887,6 +3282,10 @@ def main():
             remote_totals["agent_upvotes"] = _sum_available(
                 prior_upvotes.values()
             )
+        if remote_totals["agent_acquisitions"] is None:
+            remote_totals["agent_acquisitions"] = _sum_available(
+                prior_acquisitions.values()
+            )
         file_kind_totals = file_metrics["totals"]["by_kind"]
         remote_totals["agent_file_downloads"] = file_kind_totals["agent"]["downloads"]
         remote_totals["installer_downloads"] = file_kind_totals["installer"]["downloads"]
@@ -2895,10 +3294,6 @@ def main():
         cdn["installer_hits"] = remote_totals["installer_downloads"]
         cdn["files"] = file_download_summary(file_metrics)
     else:
-        log("· public RAR federation")
-        rar_source = fetch_rar_source(rar_token, generated_at)
-        if rar_source["status"] == "unavailable":
-            rar_source = carry_forward_rar_source(prior)
         repo = {}
         log("· github repo")
         repo = fetch_repo(token)
@@ -2919,8 +3314,13 @@ def main():
         apply_file_downloads_to_agents(agents, file_metrics)
         log("· workshop feedback")
         workshop_feedback = fetch_workshop_feedback(token, workshop_slugs)
-        log("· agent upvotes")
-        agent_upvotes = fetch_agent_upvotes(token, agent_names)
+        log("· agent Discussion signals")
+        agent_discussions = fetch_agent_discussion_signals(
+            discussion_token,
+            agent_names,
+        )
+        agent_upvotes = agent_discussions["signals"]["upvote"]
+        agent_acquisitions = agent_discussions["signals"]["acquisition"]
         log("· agi progress")
         agi = fetch_agi_progress(
             token,
@@ -2931,6 +3331,13 @@ def main():
             agi = carry_forward_agi(prior, workshop_catalog)
         for name, agent in agents.items():
             agent["upvotes"] = agent_upvotes["counts"].get(name)
+            agent["acquisitions"] = agent_acquisitions["counts"].get(name)
+            agent["upvote_discussion_url"] = (
+                agent_upvotes["urls"].get(name)
+            )
+            agent["acquisition_discussion_url"] = (
+                agent_acquisitions["urls"].get(name)
+            )
         agent_upvote_coverage = {
             "status": agent_upvotes["status"],
             "as_of": (
@@ -2938,15 +3345,76 @@ def main():
                 if agent_upvotes["status"] != "unavailable"
                 else None
             ),
-            "pages": agent_upvotes["pages"],
-            "issues_scanned": agent_upvotes["issues_scanned"],
-            "diagnostics": agent_upvotes["diagnostics"],
+            "pages": agent_discussions["pages"],
+            "discussions_scanned": agent_discussions[
+                "discussions_scanned"
+            ],
+            "discussions": agent_upvotes["discussions"],
+            "missing_discussions": agent_upvotes["missing_discussions"],
+            "diagnostics": agent_discussions["diagnostics"],
             "carried_forward": False,
             "scope": (
-                "Public state=all GitHub issues whose body begins with the "
-                "aibast-agent-upvote marker and exact schema. One GitHub account "
-                "counts once per canonical agent; open and closed issues count."
+                "One canonical mirrored GitHub Discussion per agent. Its native "
+                "upvoteCount is the preference signal, and GitHub permits one "
+                "active upvote per signed-in account on that Discussion."
             ),
+        }
+        agent_acquisition_coverage = {
+            "status": agent_acquisitions["status"],
+            "as_of": (
+                generated_at
+                if agent_acquisitions["status"] != "unavailable"
+                else None
+            ),
+            "pages": agent_discussions["pages"],
+            "discussions_scanned": agent_discussions[
+                "discussions_scanned"
+            ],
+            "discussions": agent_acquisitions["discussions"],
+            "missing_discussions": agent_acquisitions[
+                "missing_discussions"
+            ],
+            "diagnostics": agent_discussions["diagnostics"],
+            "carried_forward": False,
+            "scope": (
+                "One parallel acquisition Discussion per canonical agent. A "
+                "native upvote records one signed-in account's declared "
+                "download, copy, or install acquisition. This is separate from "
+                "observable CDN and release file-transfer counters."
+            ),
+        }
+        agent_discussion_coverage = {
+            "status": agent_discussions["status"],
+            "as_of": (
+                generated_at
+                if agent_discussions["status"] != "unavailable"
+                else None
+            ),
+            "pages": agent_discussions["pages"],
+            "discussions_scanned": agent_discussions[
+                "discussions_scanned"
+            ],
+            "diagnostics": agent_discussions["diagnostics"],
+            "unavailable_reason": agent_discussions.get(
+                "unavailable_reason"
+            ),
+            "carried_forward": False,
+            "signals": {
+                "upvote": {
+                    "status": agent_upvotes["status"],
+                    "discussions": agent_upvotes["discussions"],
+                    "missing_discussions": agent_upvotes[
+                        "missing_discussions"
+                    ],
+                },
+                "acquisition": {
+                    "status": agent_acquisitions["status"],
+                    "discussions": agent_acquisitions["discussions"],
+                    "missing_discussions": agent_acquisitions[
+                        "missing_discussions"
+                    ],
+                },
+            },
         }
 
         stars = repo.get("stars") if repo else None
@@ -3076,9 +3544,9 @@ def main():
                 "status": agent_upvote_coverage["status"],
                 "as_of": agent_upvote_coverage["as_of"],
                 "scope": (
-                    "Validated public agent-upvote issues mapped through each "
-                    "workshop's canonical primary agent. This preference signal "
-                    "is separate from usage_events."
+                    "Native upvotes on each primary agent's canonical rating "
+                    "Discussion. This preference signal is separate from "
+                    "usage_events and acquisition Discussions."
                 ),
             },
         }
@@ -3123,6 +3591,7 @@ def main():
             "installer_downloads": installer_hits,
             "skill_downloads": skill_hits,
             "agent_upvotes": agent_upvotes["total"],
+            "agent_acquisitions": agent_acquisitions["total"],
             "clones_excluding_ci_estimate": clones_excl_ci,
             "ci_clone_estimate": ci_estimate,
             "page_views": hist_totals["views_all_time"],
@@ -3152,10 +3621,9 @@ def main():
             "carried_forward": False,
         }
 
-    ecosystem = build_ecosystem_metrics(
+    ecosystem = build_aibast_ecosystem_metrics(
         agents,
         remote_totals.get("agent_file_downloads"),
-        rar_source,
         generated_at=generated_at,
     )
 
@@ -3170,9 +3638,6 @@ def main():
             "global_agent_distribution_fetch_events": ecosystem[
                 "totals"
             ]["combined_agent_distribution_fetch_events"],
-            "rar_agent_acquisitions": ecosystem["totals"][
-                "rar_agent_acquisitions"
-            ],
             "agents": stats.get("total_agents", len(agents)),
             "stacks": stats.get("total_stacks", 0),
             "verticals": stats.get("total_verticals", 0),
@@ -3187,7 +3652,9 @@ def main():
         "releases": releases,
         "leaderboards": build_leaderboards(agents, registry),
         "agent_metrics": build_agent_metrics(agents),
+        "agent_discussion_coverage": agent_discussion_coverage,
         "agent_upvote_coverage": agent_upvote_coverage,
+        "agent_acquisition_coverage": agent_acquisition_coverage,
         "file_metrics": file_metrics,
         "workshops": workshops,
         "agi": agi,
@@ -3196,9 +3663,9 @@ def main():
             {"name": "GitHub Traffic API", "metric": "clones, views, popular paths (clones include this repo's own CI checkouts)", "url": f"{GH_API}/repos/{OWNER}/{REPO}/traffic/clones"},
             {"name": "jsDelivr CDN", "metric": "per-file download observations across every tracked repository file, including agents, skills, workshops, installers, documentation, code, and assets", "url": f"{JSDELIVR}/stats/packages/gh/{OWNER}/{REPO}"},
             {"name": "GitHub Releases", "metric": "release asset downloads", "url": f"{GH_API}/repos/{OWNER}/{REPO}/releases"},
-            {"name": "GitHub Issues", "metric": "structured public agent upvotes, workshop feedback, and opt-in verified AGI progress syncs validated from issue bodies", "url": f"{GH_API}/repos/{OWNER}/{REPO}/issues?state=all"},
+            {"name": "GitHub Discussions", "metric": "canonical per-agent preference and signed-in acquisition ledgers using native upvote counts", "url": f"https://github.com/{OWNER}/{REPO}/discussions"},
+            {"name": "GitHub Issues", "metric": "structured public workshop feedback and opt-in verified achievement progress syncs validated from issue bodies", "url": f"{GH_API}/repos/{OWNER}/{REPO}/issues?state=all"},
             {"name": "registry.json", "metric": "agents, stacks, verticals, categories", "url": f"https://{OWNER}.github.io/{REPO}/registry.json"},
-            {"name": "Public RAR federation", "metric": "community agent CDN/release fetches, signed-in acquisitions, and separate usage reactions", "url": f"https://{RAR_OWNER}.github.io/{RAR_REPO}/stats.html"},
         ],
     }
 
@@ -3209,20 +3676,24 @@ def main():
     log(f"  downloads={t['downloads']} (clones {t['clones']} + cdn {t['cdn_hits']} + releases {t['release_downloads']})")
     if traffic.get("unavailable_reason"):
         log(f"  · traffic unavailable: {traffic['unavailable_reason']}")
-    log(f"  agents={t['agents']} stacks={t['stacks']} agent_files={t['agent_file_downloads']} "
-        f"installers={t['installer_downloads']} agent_upvotes={t['agent_upvotes']}")
+    log(
+        f"  agents={t['agents']} stacks={t['stacks']} "
+        f"agent_files={t['agent_file_downloads']} "
+        f"installers={t['installer_downloads']} "
+        f"agent_upvotes={t['agent_upvotes']} "
+        f"agent_acquisitions={t['agent_acquisitions']}"
+    )
     log(f"  workshops={workshops['totals']['workshops']} "
         f"workshop_usage_events={workshops['totals']['usage_events']}")
     log(
-        f"  agi_status={agi['status']} "
-        f"agi_participants={agi['totals']['participants']} "
-        f"agi_points={agi['totals']['points']}"
+        f"  achievement_status={agi['status']} "
+        f"achievement_participants={agi['totals']['participants']} "
+        f"achievement_points={agi['totals']['points']}"
     )
     log(
         f"  ecosystem_status={ecosystem['status']} "
-        f"global_agent_fetches="
-        f"{ecosystem['totals']['combined_agent_distribution_fetch_events']} "
-        f"rar_acquisitions={ecosystem['totals']['rar_agent_acquisitions']}"
+        f"aibast_agent_fetches="
+        f"{ecosystem['totals']['combined_agent_distribution_fetch_events']}"
     )
     return 0
 

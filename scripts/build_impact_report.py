@@ -189,120 +189,6 @@ METRICS = (
         "unit": "count",
     },
     {
-        "id": "global_agent_fetch_events",
-        "label": "Global observable agent fetch events",
-        "section": "Global agent ecosystem",
-        "path": (
-            "ecosystem",
-            "totals",
-            "combined_agent_distribution_fetch_events",
-        ),
-        "source": "ecosystem",
-        "kind": "cumulative",
-        "unit": "count",
-    },
-    {
-        "id": "aibast_direct_agent_fetches",
-        "label": "AIBAST direct agent fetches",
-        "section": "Global agent ecosystem",
-        "path": (
-            "ecosystem",
-            "totals",
-            "aibast_direct_agent_fetches",
-        ),
-        "source": "file_metrics",
-        "kind": "cumulative",
-        "unit": "count",
-    },
-    {
-        "id": "rar_agent_cdn_fetches",
-        "label": "RAR community agent CDN fetches",
-        "section": "Global agent ecosystem",
-        "path": ("ecosystem", "totals", "rar_agent_cdn_fetches"),
-        "source": "rar_cdn",
-        "kind": "cumulative",
-        "unit": "count",
-    },
-    {
-        "id": "rar_agent_release_fetches",
-        "label": "RAR community agent release fetches",
-        "section": "Global agent ecosystem",
-        "path": ("ecosystem", "totals", "rar_agent_release_fetches"),
-        "source": "rar_releases",
-        "kind": "cumulative",
-        "unit": "count",
-    },
-    {
-        "id": "rar_agent_acquisitions",
-        "label": "RAR signed-in agent acquisitions",
-        "section": "Global agent ecosystem",
-        "path": ("ecosystem", "totals", "rar_agent_acquisitions"),
-        "source": "rar_discussions",
-        "kind": "gauge",
-        "unit": "count",
-    },
-    {
-        "id": "rar_positive_reactions",
-        "label": "RAR positive agent reactions",
-        "section": "Global agent ecosystem",
-        "path": ("ecosystem", "totals", "rar_positive_reactions"),
-        "source": "rar_discussions",
-        "kind": "gauge",
-        "unit": "count",
-    },
-    *(
-        {
-            "id": f"rar_signal_{signal}",
-            "label": "RAR usage signal: " + signal.replace("_", " "),
-            "section": "Global agent ecosystem",
-            "path": (
-                "ecosystem",
-                "totals",
-                "rar_usage_signals",
-                signal,
-            ),
-            "source": "rar_discussions",
-            "kind": "gauge",
-            "unit": "count",
-        }
-        for signal in (
-            "worked",
-            "did_not_work",
-            "stuck",
-            "regular_use",
-            "shipped",
-            "want_to_try",
-            "saved_time",
-        )
-    ),
-    {
-        "id": "global_agent_distribution_entries",
-        "label": "Agent entries across both channels",
-        "section": "Global agent ecosystem",
-        "path": ("ecosystem", "totals", "distribution_entries"),
-        "source": "ecosystem",
-        "kind": "catalog",
-        "unit": "count",
-    },
-    {
-        "id": "global_logical_agents",
-        "label": "Deduplicated logical agents",
-        "section": "Global agent ecosystem",
-        "path": ("ecosystem", "totals", "logical_agents"),
-        "source": "ecosystem",
-        "kind": "catalog",
-        "unit": "count",
-    },
-    {
-        "id": "global_overlap_agents",
-        "label": "Agents distributed through AIBAST and RAR",
-        "section": "Global agent ecosystem",
-        "path": ("ecosystem", "totals", "overlap_agents"),
-        "source": "ecosystem",
-        "kind": "catalog",
-        "unit": "count",
-    },
-    {
         "id": "stars",
         "label": "GitHub stars",
         "section": "Community engagement",
@@ -344,6 +230,15 @@ METRICS = (
         "section": "Community engagement",
         "path": ("totals", "agent_upvotes"),
         "source": "agent_upvotes",
+        "kind": "gauge",
+        "unit": "count",
+    },
+    {
+        "id": "agent_acquisitions",
+        "label": "Signed-in agent acquisitions",
+        "section": "Community engagement",
+        "path": ("totals", "agent_acquisitions"),
+        "source": "agent_acquisitions",
         "kind": "gauge",
         "unit": "count",
     },
@@ -394,7 +289,7 @@ METRICS = (
     },
     {
         "id": "agi_participants",
-        "label": "Verified AGI participants",
+        "label": "Verified achievement participants",
         "section": "Learning impact",
         "path": ("agi", "totals", "participants"),
         "source": "agi",
@@ -403,7 +298,7 @@ METRICS = (
     },
     {
         "id": "agi_points",
-        "label": "Verified AGI Points",
+        "label": "Verified achievement points",
         "section": "Learning impact",
         "path": ("agi", "totals", "points"),
         "source": "agi",
@@ -412,7 +307,7 @@ METRICS = (
     },
     {
         "id": "agi_achievements",
-        "label": "Verified AGI achievements",
+        "label": "Verified achievements",
         "section": "Learning impact",
         "path": ("agi", "totals", "achievements"),
         "source": "agi",
@@ -586,6 +481,7 @@ def source_status(document: dict[str, Any], source: str) -> str:
     releases = document.get("releases") or {}
     file_metrics = document.get("file_metrics") or {}
     upvotes = document.get("agent_upvote_coverage") or {}
+    acquisitions = document.get("agent_acquisition_coverage") or {}
     workshops = document.get("workshops") or {}
     workshop_coverage = workshops.get("coverage") or {}
     agi = document.get("agi") or {}
@@ -622,6 +518,17 @@ def source_status(document: dict[str, Any], source: str) -> str:
             if status in {"available", "partial", "carried_forward"}
             else "unavailable"
         )
+    if source == "agent_acquisitions":
+        status = acquisitions.get("status")
+        if status == "available" and not acquisitions.get(
+            "carried_forward"
+        ):
+            return "available"
+        return (
+            "partial"
+            if status in {"available", "partial", "carried_forward"}
+            else "unavailable"
+        )
     if source == "workshops":
         return (
             "partial"
@@ -647,26 +554,6 @@ def source_status(document: dict[str, Any], source: str) -> str:
             "partial"
             if status in {"available", "partial", "carried_forward"}
             else "unavailable"
-        )
-    if source in {
-        "ecosystem",
-        "rar_cdn",
-        "rar_releases",
-        "rar_discussions",
-        "rar_traffic",
-    }:
-        ecosystem = document.get("ecosystem") or {}
-        rar = ((ecosystem.get("sources") or {}).get("rar") or {})
-        if source == "ecosystem":
-            return normalized_source_status(ecosystem.get("status"))
-        coverage_key = {
-            "rar_cdn": "cdn",
-            "rar_releases": "release_assets",
-            "rar_discussions": "discussions",
-            "rar_traffic": "traffic",
-        }[source]
-        return normalized_source_status(
-            (rar.get("coverage") or {}).get(coverage_key)
         )
     if source == "downloads":
         statuses = {
@@ -748,6 +635,7 @@ def compact_agents(document: dict[str, Any]) -> dict[str, dict[str, Any]]:
             "display_name": row.get("display_name") or row["name"],
             "downloads": numeric(row.get("downloads")),
             "upvotes": numeric(row.get("upvotes")),
+            "acquisitions": numeric(row.get("acquisitions")),
         }
         for row in document.get("agent_metrics", [])
         if isinstance(row, dict) and row.get("name")
@@ -1078,6 +966,11 @@ def build_period(
                 prior_agents,
                 "upvotes",
             ),
+            "agent_acquisitions": top_movers(
+                current.get("agents") or {},
+                prior_agents,
+                "acquisitions",
+            ),
         },
     }
 
@@ -1088,8 +981,7 @@ def coverage_summary(document: dict[str, Any]) -> dict[str, Any]:
     workshops = document.get("workshops") or {}
     agi = document.get("agi") or {}
     upvotes = document.get("agent_upvote_coverage") or {}
-    ecosystem = document.get("ecosystem") or {}
-    rar = ((ecosystem.get("sources") or {}).get("rar") or {})
+    acquisitions = document.get("agent_acquisition_coverage") or {}
     return {
         "traffic": {
             "status": "live" if traffic.get("live") else "unavailable"
@@ -1106,6 +998,10 @@ def coverage_summary(document: dict[str, Any]) -> dict[str, Any]:
             "status": upvotes.get("status") or "unavailable",
             "as_of": upvotes.get("as_of"),
         },
+        "agent_acquisitions": {
+            "status": acquisitions.get("status") or "unavailable",
+            "as_of": acquisitions.get("as_of"),
+        },
         "workshops": {
             "status": (workshops.get("coverage") or {}).get("status")
             or "unavailable",
@@ -1114,14 +1010,6 @@ def coverage_summary(document: dict[str, Any]) -> dict[str, Any]:
         "agi": {
             "status": agi.get("status") or "unavailable",
             "as_of": agi.get("as_of"),
-        },
-        "global_ecosystem": {
-            "status": ecosystem.get("status") or "unavailable",
-            "as_of": ecosystem.get("as_of"),
-        },
-        "public_rar": {
-            "status": rar.get("status") or "unavailable",
-            "as_of": rar.get("as_of"),
         },
     }
 
@@ -1138,52 +1026,6 @@ def report_links(document: dict[str, Any]) -> dict[str, str]:
     }
 
 
-def ecosystem_leaderboards(
-    document: dict[str, Any],
-    limit: int = 10,
-) -> dict[str, list[dict[str, Any]]]:
-    rows = [
-        row
-        for row in (document.get("ecosystem") or {}).get("agents", [])
-        if isinstance(row, dict) and row.get("logical_name")
-    ]
-
-    def ranked(field: str, signal: bool = False) -> list[dict[str, Any]]:
-        candidates = []
-        for row in rows:
-            value = numeric(
-                (row.get("rar_usage_signals") or {}).get(field)
-                if signal
-                else row.get(field)
-            )
-            if value is None or value <= 0:
-                continue
-            candidates.append({
-                "name": row["logical_name"],
-                "display_name": row.get("display_name") or row["logical_name"],
-                "channels": row.get("channels") or [],
-                "value": value,
-            })
-        candidates.sort(
-            key=lambda item: (
-                -item["value"],
-                item["display_name"].casefold(),
-                item["name"],
-            )
-        )
-        return candidates[:limit]
-
-    return {
-        "distribution_fetches": ranked(
-            "combined_distribution_fetch_events"
-        ),
-        "acquisitions": ranked("rar_acquisitions"),
-        "worked": ranked("worked", signal=True),
-        "regular_use": ranked("regular_use", signal=True),
-        "shipped": ranked("shipped", signal=True),
-    }
-
-
 def build_report(
     document: dict[str, Any],
     history: dict[str, Any],
@@ -1196,8 +1038,9 @@ def build_report(
     links = report_links(document)
     caveats = [
         (
-            "This report uses public GitHub, jsDelivr, release, and opt-in issue "
-            "signals. It contains no private analytics or tracking pixel."
+            "This report uses AIBAST-only public GitHub, Discussion, jsDelivr, "
+            "release, and opt-in issue signals. RAR is excluded from every count. "
+            "It contains no private analytics or tracking pixel."
         ),
         (
             "Raw GitHub, raw.githubusercontent.com, and direct GitHub Pages file "
@@ -1211,26 +1054,23 @@ def build_report(
         ),
         (
             "Workshop usage combines mixed-window public events and is not a user "
-            "count. Agent upvotes and AGI Points remain separate signals."
+            "count. Agent rating upvotes, signed-in acquisitions, and achievement "
+            "points remain separate signals."
         ),
         (
-            "Verified AGI confirms authenticated GitHub issue authorship and schema "
-            "only; the underlying self-reported achievement completion is not "
+            "Verified achievements confirm authenticated GitHub issue authorship "
+            "and schema only; the underlying self-reported completion is not "
             "independently proven."
         ),
         (
-            "Global agent fetch events add distinct observable AIBAST and public "
-            "RAR distribution channels. They are fetch events, not people, and "
-            "RAR's censored CDN file list makes the combined figure a floor."
-        ),
-        (
-            "RAR signed-in acquisitions and worked, regular-use, shipped, and "
-            "other reactions are separate opt-in signals. They are never added "
-            "to fetches or interpreted as unique users."
+            "A native upvote on an agent rating Discussion records preference. "
+            "A native upvote on its acquisition Discussion records one signed-in "
+            "account's declared download, copy, or install. Neither replaces "
+            "observable CDN or release file-transfer counts."
         ),
     ]
     subject = (
-        "AIBAST + RAR weekly and monthly impact report - "
+        "AIBAST weekly and monthly impact report - "
         f"{generated.strftime('%B')} {generated.day}, {generated.year}"
     )
     return {
@@ -1244,7 +1084,6 @@ def build_report(
             "metrics": rows,
             "workshops": current["workshops"],
             "agents": current["agents"],
-            "ecosystem_leaderboards": ecosystem_leaderboards(document),
         },
         "periods": {
             "week": build_period(
@@ -1326,16 +1165,10 @@ def grouped_metrics(report: dict[str, Any]) -> dict[str, list[dict[str, Any]]]:
 
 MOVER_GROUPS = (
     ("workshop_usage", "Workshop usage"),
-    ("workshop_agi_points", "Workshop AGI Points"),
+    ("workshop_agi_points", "Workshop achievement points"),
     ("agent_downloads", "Agent downloads"),
     ("agent_upvotes", "Agent upvotes"),
-)
-ECOSYSTEM_LEADERBOARDS = (
-    ("distribution_fetches", "Distribution fetch events"),
-    ("acquisitions", "RAR signed-in acquisitions"),
-    ("worked", "RAR worked signals"),
-    ("regular_use", "RAR regular-use signals"),
-    ("shipped", "RAR shipped signals"),
+    ("agent_acquisitions", "Signed-in agent acquisitions"),
 )
 
 
@@ -1356,24 +1189,13 @@ def format_mover(row: dict[str, Any]) -> str:
     )
 
 
-def ecosystem_leaderboard_groups(
-    report: dict[str, Any],
-) -> list[tuple[str, list[dict[str, Any]]]]:
-    leaderboards = report["current"].get("ecosystem_leaderboards") or {}
-    return [
-        (label, leaderboards.get(key) or [])
-        for key, label in ECOSYSTEM_LEADERBOARDS
-        if leaderboards.get(key)
-    ]
-
-
 def render_email_text(report: dict[str, Any]) -> str:
     week = report["periods"]["week"]
     month = report["periods"]["month"]
     lines = [
         f"Subject: {report['subject']}",
         "",
-        "AIBAST + PUBLIC RAR - WEEKLY & MONTHLY IMPACT",
+        "AIBAST - WEEKLY & MONTHLY IMPACT",
         f"Snapshot: {report['generated_at']}",
         f"Site: {report['links']['site']}",
         "",
@@ -1396,19 +1218,6 @@ def render_email_text(report: dict[str, Any]) -> str:
                 f"{weekly[:32]:>32} {monthly[:32]:>32}"
             )
         lines.append("")
-    lines.extend(["GLOBAL AGENT LEADERS", "--------------------"])
-    leaderboards = ecosystem_leaderboard_groups(report)
-    if not leaderboards:
-        lines.append("No positive public agent signals are available yet.")
-    else:
-        for label, rows in leaderboards:
-            lines.append(f"{label}:")
-            lines.extend(
-                f"- {row['display_name']} ({' + '.join(row['channels'])}): "
-                f"{format_number(row['value'])}"
-                for row in rows
-            )
-    lines.append("")
     for key, title in (("week", "TOP WEEKLY MOVERS"), ("month", "TOP MONTHLY MOVERS")):
         lines.extend([title, "-" * len(title)])
         groups = mover_groups(report["periods"][key])
@@ -1451,7 +1260,7 @@ def render_email_markdown(report: dict[str, Any]) -> str:
     lines = [
         f"**Subject:** {report['subject']}",
         "",
-        "# AIBAST + Public RAR - Weekly & Monthly Impact",
+        "# AIBAST - Weekly & Monthly Impact",
         "",
         f"**Snapshot:** `{report['generated_at']}`",
         f"**Site:** {report['links']['site']}",
@@ -1474,22 +1283,6 @@ def render_email_markdown(report: dict[str, Any]) -> str:
                 f"{format_period_metric(row, month['metrics'][row['id']])} |"
             )
         lines.append("")
-    lines.extend(["## Global agent leaders", ""])
-    leaderboards = ecosystem_leaderboard_groups(report)
-    if not leaderboards:
-        lines.extend(
-            ["No positive public agent signals are available yet.", ""]
-        )
-    else:
-        for label, rows in leaderboards:
-            lines.append(f"**{label}**")
-            lines.extend(
-                f"- {row['display_name']} "
-                f"({' + '.join(row['channels'])}): "
-                f"{format_number(row['value'])}"
-                for row in rows
-            )
-            lines.append("")
     for key, title in (("week", "Top weekly movers"), ("month", "Top monthly movers")):
         lines.extend([f"## {title}", ""])
         groups = mover_groups(report["periods"][key])
@@ -1577,24 +1370,6 @@ def render_html(report: dict[str, Any]) -> str:
             f'<article class="mover-card"><h2>{html.escape(title)}</h2>'
             f"{groups_markup}</article>"
         )
-    leaderboard_markup = ""
-    leaderboards = ecosystem_leaderboard_groups(report)
-    if leaderboards:
-        leaderboard_markup = "".join(
-            f"<h3>{html.escape(label)}</h3><ol>"
-            + "".join(
-                f"<li><strong>{html.escape(row['display_name'])}</strong> "
-                f"({html.escape(' + '.join(row['channels']))}): "
-                f"{html.escape(format_number(row['value']))}</li>"
-                for row in rows
-            )
-            + "</ol>"
-            for label, rows in leaderboards
-        )
-    else:
-        leaderboard_markup = (
-            "<p>No positive public agent signals are available yet.</p>"
-        )
     repo = report["repo"]
     return f"""<!doctype html>
 <html lang="en">
@@ -1642,7 +1417,7 @@ def render_html(report: dict[str, Any]) -> str:
 <body>
   <main class="page">
     <section class="hero">
-      <p class="eyebrow">AIBAST + public RAR impact reporting</p>
+      <p class="eyebrow">AIBAST impact reporting</p>
       <h1>Weekly &amp; monthly impact</h1>
       <p class="lede">A shareable, automation-ready view of every measurable AIBAST library signal. The report preserves unavailable and partial coverage rather than manufacturing zeros.</p>
       <div class="meta">
@@ -1660,7 +1435,6 @@ def render_html(report: dict[str, Any]) -> str:
       </div>
     </section>
     {"".join(section_markup)}
-    <section class="report-section"><h2>Global agent leaders</h2>{leaderboard_markup}</section>
     <section class="movers" aria-label="Top weekly and monthly movers">{"".join(mover_cards)}</section>
     <section class="notes">
       <div class="notes-grid">
@@ -1785,7 +1559,7 @@ def write_pdf(report: dict[str, Any], path: Path) -> None:
         subject="Weekly and monthly public impact",
     )
     story = [
-        Paragraph("AIBAST + Public RAR", styles["ImpactTitle"]),
+        Paragraph("AIBAST Agents Library", styles["ImpactTitle"]),
         Paragraph("Weekly &amp; Monthly Impact Report", styles["ImpactTitle"]),
         Paragraph(
             f"Snapshot {html.escape(report['generated_at'])}<br/>"
@@ -1854,30 +1628,6 @@ def write_pdf(report: dict[str, Any], path: Path) -> None:
             )
         )
         story.extend([table, Spacer(1, 4 * mm)])
-    story.append(Paragraph("Global agent leaders", styles["ImpactSection"]))
-    leaderboards = ecosystem_leaderboard_groups(report)
-    if not leaderboards:
-        story.append(
-            Paragraph(
-                "No positive public agent signals are available yet.",
-                styles["ImpactSmall"],
-            )
-        )
-    else:
-        for label, rows in leaderboards:
-            story.append(
-                Paragraph(f"<b>{html.escape(label)}</b>", styles["ImpactSmall"])
-            )
-            for row in rows:
-                story.append(
-                    Paragraph(
-                        f"- {html.escape(row['display_name'])} "
-                        f"({html.escape(' + '.join(row['channels']))}): "
-                        f"{html.escape(format_number(row['value']))}",
-                        styles["ImpactSmall"],
-                    )
-                )
-            story.append(Spacer(1, 2 * mm))
     for key, title in (("week", "Top weekly movers"), ("month", "Top monthly movers")):
         story.append(Paragraph(title, styles["ImpactSection"]))
         groups = mover_groups(report["periods"][key])
