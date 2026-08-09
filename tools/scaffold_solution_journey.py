@@ -28,6 +28,14 @@ THEME_SCRIPT = """(() => {
       document.documentElement.setAttribute("data-theme", theme);
     })();"""
 
+WORKSHOP_ENGINE_SCRIPT = """(() => {
+      const engine =
+        localStorage.getItem("aibast:workshop-engine") === "brainstem"
+          ? "brainstem"
+          : "copilot";
+      document.documentElement.setAttribute("data-workshop-engine", engine);
+    })();"""
+
 THEME_VARIABLES = """--cp-bg: #f7f4ef;
       --cp-bg-elevated: #fcfbf8;
       --cp-surface: #ffffff;
@@ -886,6 +894,7 @@ def collect_resources(ctx: JourneyContext) -> list[Resource]:
                     )
 
     generated = [
+        ("workshop-settings", "Global workshop settings", ctx.root / "solutions" / "_shared" / "workshop-settings.html", "Site-wide persisted Easy-mode harness preference"),
         ("quest", "Guided field quest", ctx.package / "quest.html", "Resumable Easy/Hard customer journey"),
         ("manual-tutorial", "Manual browser tutorial", ctx.package / "manual-tutorial.html", "One action per real manual evidence frame"),
         ("screenshots-readme", "Screenshot evidence README", ctx.package / "screenshots" / "README.md", "Evidence boundary and capture inventory"),
@@ -1438,6 +1447,11 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
   <title>Build {html.escape(ctx.title)} manually</title>
   <script>
     {THEME_SCRIPT}
+    (() => {{
+      if (new URLSearchParams(window.location.search).get("embedded") === "1") {{
+        document.documentElement.setAttribute("data-embedded", "true");
+      }}
+    }})();
   </script>
   <style>
 {COMMON_CSS}
@@ -1469,6 +1483,10 @@ def render_manual_tutorial(ctx: JourneyContext) -> str:
     .step footer {{ display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }}
     .troubleshooting details {{ padding: 14px 0; border-bottom: 1px solid var(--cp-border); }}
     summary {{ cursor: pointer; font-weight: 700; }}
+    html[data-embedded="true"] body {{ background: var(--cp-bg-elevated); }}
+    html[data-embedded="true"] .topbar {{ display: none; }}
+    html[data-embedded="true"] .layout {{ grid-template-columns: 230px minmax(0, 1fr); max-width: none; padding: 8px 0 32px; }}
+    html[data-embedded="true"] .hero {{ box-shadow: none; }}
     @media (max-width: 900px) {{ .layout {{ grid-template-columns: 1fr; }} .sidebar {{ position: static; max-height: none; }} }}
     @media (max-width: 620px) {{ .instruction-grid {{ grid-template-columns: 1fr; }} }}
   </style>
@@ -1563,6 +1581,20 @@ Describe what was inaccurate or missing.
         }});
       }});
       update();
+      if (document.documentElement.dataset.embedded === "true") {{
+        const notifyHeight = () => {{
+          window.parent.postMessage(
+            {{
+              type: "aibast-hard-mode-height",
+              height: document.documentElement.scrollHeight,
+            }},
+            window.location.origin,
+          );
+        }};
+        new ResizeObserver(notifyHeight).observe(document.documentElement);
+        window.addEventListener("load", notifyHeight);
+        notifyHeight();
+      }}
     }})();
   </script>
 </body>
@@ -1904,6 +1936,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
   <title>{html.escape(ctx.title)} deployment quest</title>
   <script>
     {THEME_SCRIPT}
+    {WORKSHOP_ENGINE_SCRIPT}
   </script>
   <style>
 {COMMON_CSS}
@@ -1915,10 +1948,12 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .checkpoint strong, .checkpoint span {{ display: block; }}
     .checkpoint span {{ color: var(--cp-text-muted); }}
     .path[hidden] {{ display: none; }}
-    .easy-lane-switch {{ display: inline-flex; gap: 6px; margin: 16px 0; padding: 5px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); }}
-    .easy-lane-button {{ border: 0; border-radius: 8px; padding: 10px 14px; background: transparent; color: var(--cp-text-muted); cursor: pointer; font-weight: 750; }}
-    .easy-lane-button.active {{ background: var(--cp-accent); color: var(--cp-accent-fg); }}
-    .easy-lane[hidden] {{ display: none; }}
+    .easy-lane {{ display: none; }}
+    html[data-workshop-engine="brainstem"] .easy-lane[data-easy-lane="brainstem"] {{ display: block; }}
+    html[data-workshop-engine="copilot"] .easy-lane[data-easy-lane="copilot"] {{ display: block; }}
+    .engine-label {{ display: none; color: var(--cp-accent); }}
+    html[data-workshop-engine="brainstem"] .engine-label.brainstem {{ display: inline; }}
+    html[data-workshop-engine="copilot"] .engine-label.copilot {{ display: inline; }}
     .engine-flow {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 18px 0; }}
     .engine-node {{ padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface); text-align: center; font-weight: 750; }}
     .comparison-note {{ margin: 14px 0; padding: 14px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft); color: var(--cp-text-muted); }}
@@ -1976,6 +2011,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .troubleshooting-table {{ width: 100%; border-collapse: collapse; }}
     .troubleshooting-table th, .troubleshooting-table td {{ padding: 12px; border: 1px solid var(--cp-border); text-align: left; vertical-align: top; }}
     .troubleshooting-table th {{ background: var(--cp-surface-soft); }}
+    .hard-tutorial-frame {{ display: block; width: 100%; min-height: 1600px; border: 0; border-radius: 16px; background: var(--cp-surface); }}
     .prompt-card {{ margin: 16px 0; padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }}
     .prompt-heading {{ display: flex; align-items: start; justify-content: space-between; gap: 16px; }}
     .prompt-heading h3 {{ margin: 0; }}
@@ -1984,20 +2020,20 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .resource-list {{ columns: 2; padding-left: 22px; }}
     .resource-list li {{ break-inside: avoid; margin-bottom: 10px; }}
     @media (max-width: 760px) {{ .engine-flow, .outcome-grid, .skill-onboarding, .module-summary, .preview-grid, .done-grid {{ grid-template-columns: 1fr; }} }}
-    @media (max-width: 620px) {{ .resource-list {{ columns: 1; }} .prompt-heading {{ display: block; }} .prompt-heading .button {{ margin-top: 12px; }} .easy-lane-switch {{ display: grid; }} }}
+    @media (max-width: 620px) {{ .resource-list {{ columns: 1; }} .prompt-heading {{ display: block; }} .prompt-heading .button {{ margin-top: 12px; }} }}
   </style>
 </head>
 <body>
   <header class="topbar">
     <div class="brand"><span class="brand-mark">C</span><span>Clawpilot deployment quest</span></div>
-    <a class="button primary" href="FIELD-GUIDE.md">Open field guide</a>
+    <div><a class="button" href="../_shared/workshop-settings.html?return=../{html.escape(ctx.slug)}/quest.html">Workshop settings</a> <a class="button primary" href="FIELD-GUIDE.md">Open field guide</a></div>
   </header>
   <main class="page">
     <section class="hero">
       <span class="beta-badge">Beta workshop</span>
       <p class="eyebrow">Evidence-grounded customer journey</p>
       <h1>{html.escape(ctx.title)}</h1>
-      <p class="lede">Default to the Brainstem + Copilot personless harness, compare it with Copilot alone, or reproduce every click in Hard mode.</p>
+      <p class="lede">Use your globally configured Easy-mode harness, or reproduce every action directly in Hard mode.</p>
       <div class="notice"><strong>Boundary:</strong> synthetic qualitative evidence only—not a customer KPI, measured production result, live connection, or publication approval.</div>
       <div class="beta-notice"><strong>Help improve this Beta:</strong> use the report buttons when a prompt, expected result, screenshot, or product state is inaccurate. The button opens a prefilled GitHub issue for review; it does not submit anything automatically.</div>
       <div class="mode-switch" role="tablist">
@@ -2011,7 +2047,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         <article>
           <h3>What you will learn</h3>
           <ul>
-            <li>Choose the Brainstem or Copilot-only harness intentionally.</li>
+            <li>Use your globally configured Easy-mode harness.</li>
             <li>Use the lane skill to build and prove the portable agent.</li>
             <li>Deploy the reviewed solution as an unpublished Draft.</li>
             <li>Confirm the behavior yourself in Copilot Studio Preview.</li>
@@ -2024,24 +2060,20 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
             <li>Use VS Code with GitHub Copilot Chat in Agent mode.</li>
             <li>Sign in to GitHub with Copilot access.</li>
             <li>Have access to a Copilot Studio environment.</li>
+            <li>Your workshop preference is saved globally; use <strong>Workshop settings</strong> to change it.</li>
             <li>Do not publish. This module ends with a validated Draft.</li>
           </ul>
         </article>
       </div>
 
-      <h2>Choose your Easy-mode lane</h2>
-      <p>The downloaded skill determines the harness. After attachment, both lanes use the same two messages and the same verification steps.</p>
-      <div class="easy-lane-switch" role="tablist" aria-label="Easy mode harness">
-        <button class="easy-lane-button active" type="button" data-easy-lane-button="brainstem">With Brainstem — default</button>
-        <button class="easy-lane-button" type="button" data-easy-lane-button="copilot">GitHub Copilot only</button>
-      </div>
+      <h2>Easy mode <span class="engine-label copilot">— GitHub Copilot only</span><span class="engine-label brainstem">— GitHub Copilot + Brainstem</span></h2>
 
       <div class="easy-lane" data-easy-lane="brainstem">
         <div class="notice"><strong>Brainstem lane:</strong> Brainstem is the learner’s personal, on-device training AI working alongside Copilot. It persists the workshop, loads the generic engine, and continues every handoff.</div>
         {render_lane_learning_steps(ctx, "brainstem", brainstem_skill_download)}
       </div>
 
-      <div class="easy-lane" data-easy-lane="copilot" hidden>
+      <div class="easy-lane" data-easy-lane="copilot">
         <div class="comparison-note"><strong>Skeptic comparison — Copilot-only lane:</strong> GitHub Copilot carries the same harness directly in the active session. The skill still discovers every asset and runs every gate; there is no persistent Brainstem engine between turns.</div>
         {render_lane_learning_steps(ctx, "copilot", copilot_skill_download)}
       </div>
@@ -2059,20 +2091,6 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
       </section>
 
       {render_completion_state(ctx)}
-
-      <section class="card">
-        <h3>Compare and contrast while you build</h3>
-        <p>Both approaches are valid starting points and use parallel reviewed skills, the same solution assets, locked cases, messages, and Draft gate. The downloaded skill determines what pulls the harness.</p>
-        <table class="comparison-table">
-          <thead><tr><th>Dimension</th><th>With Brainstem — default</th><th>GitHub Copilot only</th></tr></thead>
-          <tbody>
-            <tr><th>Best strength</th><td>A personal, on-device training AI with persistent state, hot-loaded instructors, reusable tools, and autonomous handoffs across turns.</td><td>Fastest entry from the familiar VS Code surface with no additional runtime to understand.</td></tr>
-            <tr><th>Tradeoff</th><td>Requires the governed local Brainstem runtime.</td><td>Orchestration and state live primarily in the active Copilot session.</td></tr>
-            <tr><th>What the person does</th><td>Sets the destination and reads the engine verdict.</td><td>Attaches the skill and relies on Copilot to retain and execute the harness.</td></tr>
-            <tr><th>What students learn</th><td>How an on-device training AI makes specialized learning persistent and reusable.</td><td>How far Copilot Agent mode can go with a strong portable skill.</td></tr>
-          </tbody>
-        </table>
-      </section>
 
       <section class="card">
         <h3>Troubleshooting</h3>
@@ -2105,24 +2123,17 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     </section>
 
     <section class="path" data-path="hard" hidden>
-      <section class="card">
-        <p class="eyebrow">Hard mode</p>
-        <h2>Build it manually, one captured step at a time.</h2>
-        <p class="lede">The manual tutorial is the complete Hard-mode experience: every browser action, reviewed file, expected result, screenshot, Preview case, and Draft gate in order.</p>
-        <p><a class="button primary" href="manual-tutorial.html">Open the manual tutorial</a></p>
-      </section>
+      <iframe class="hard-tutorial-frame" id="hard-mode-tutorial" src="manual-tutorial.html?embedded=1" title="Hard mode manual tutorial"></iframe>
     </section>
 
   </main>
   <script>
     (() => {{
       const modeKey = "aibast:{html.escape(ctx.slug)}:quest-mode";
-      const easyLaneKey = "aibast:{html.escape(ctx.slug)}:easy-lane";
+      const globalEngineKey = "aibast:workshop-engine";
       const progressKey = "aibast:{html.escape(ctx.slug)}:quest-progress";
       const buttons = Array.from(document.querySelectorAll("[data-mode]"));
       const paths = Array.from(document.querySelectorAll("[data-path]"));
-      const easyLaneButtons = Array.from(document.querySelectorAll("[data-easy-lane-button]"));
-      const easyLanes = Array.from(document.querySelectorAll("[data-easy-lane]"));
       const boxes = Array.from(document.querySelectorAll("[data-checkpoint]"));
       let saved = {{}};
       try {{ saved = JSON.parse(localStorage.getItem(progressKey) || "{{}}"); }} catch (_error) {{ saved = {{}}; }}
@@ -2139,12 +2150,6 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         localStorage.setItem(modeKey, mode);
       }}
       buttons.forEach((button) => button.addEventListener("click", () => selectMode(button.dataset.mode)));
-      function selectEasyLane(lane) {{
-        easyLaneButtons.forEach((button) => button.classList.toggle("active", button.dataset.easyLaneButton === lane));
-        easyLanes.forEach((panel) => {{ panel.hidden = panel.dataset.easyLane !== lane; }});
-        localStorage.setItem(easyLaneKey, lane);
-      }}
-      easyLaneButtons.forEach((button) => button.addEventListener("click", () => selectEasyLane(button.dataset.easyLaneButton)));
       document.querySelectorAll("[data-copy-target]").forEach((button) => {{
         button.addEventListener("click", () => {{
           const target = document.getElementById(button.dataset.copyTarget);
@@ -2173,7 +2178,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
 - Schema: \\`aibast-workshop-feedback/1.0\\`
 - Solution: \\`{ctx.deployment.get("name") or f"@aibast-agents-library/{ctx.slug}"}\\`
 - Page: ${{location.href}}
-- Mode: \\`${{localStorage.getItem(easyLaneKey) || "brainstem"}}\\`
+- Mode: \\`${{localStorage.getItem(globalEngineKey) === "brainstem" ? "brainstem" : "copilot"}}\\`
 - Location: ${{locationLabel}}
 - Evidence: \\`${{evidence}}\\`
 
@@ -2203,7 +2208,23 @@ Describe what was inaccurate or missing.
           window.open(url.toString(), "_blank", "noopener");
         }});
       }});
-      selectEasyLane(localStorage.getItem(easyLaneKey) || "brainstem");
+      const hardFrame = document.getElementById("hard-mode-tutorial");
+      const resizeHardFrame = () => {{
+        if (!hardFrame?.contentDocument) return;
+        hardFrame.style.height =
+          `${{hardFrame.contentDocument.documentElement.scrollHeight}}px`;
+      }};
+      hardFrame?.addEventListener("load", resizeHardFrame);
+      window.addEventListener("message", (event) => {{
+        if (
+          event.origin === window.location.origin &&
+          event.data?.type === "aibast-hard-mode-height" &&
+          Number.isFinite(event.data.height)
+        ) {{
+          hardFrame.style.height = `${{event.data.height}}px`;
+        }}
+      }});
+      window.addEventListener("resize", resizeHardFrame);
       selectMode(localStorage.getItem(modeKey) || "easy");
     }})();
   </script>

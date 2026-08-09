@@ -338,10 +338,13 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
         assert marker in copilot_skill
     assert len(cases) == 5
 
-    assert "With Brainstem — default" in quest
+    assert "GitHub Copilot + Brainstem" in quest
     assert "GitHub Copilot only" in quest
     assert "Personless harness" in quest
     assert "Skeptic comparison" in quest
+    assert "aibast:workshop-engine" in quest
+    assert "data-easy-lane-button" not in quest
+    assert "Workshop settings" in quest
     assert quest.count("data-copy-target=") == 9
     assert "Download Brainstem SKILL.md" in quest
     assert "Download Copilot-only SKILL.md" in quest
@@ -349,7 +352,7 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     assert "Give me Time Entry and Billing using Easy Mode and test it for me." in quest
     assert "using Easy Mode without Brainstem" not in quest
     assert "Deploy it into Copilot Studio for me." in quest
-    assert "Compare and contrast while you build" in quest
+    assert "Compare and contrast while you build" not in quest
     assert "What you will learn" in quest
     assert "Before you begin" in quest
     assert "Confirm the Draft in Copilot Studio Preview" in quest
@@ -370,6 +373,8 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
         for value in case["must_not_include"]:
             assert value in quest
     assert "Raw resources" not in quest
+    assert 'src="manual-tutorial.html?embedded=1"' in quest
+    assert ">Open the manual tutorial<" not in quest
     for marker in (
         "**Needs remediation.**",
         "| Pass | 4 |",

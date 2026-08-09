@@ -62,6 +62,10 @@ def build_fixture(root):
         "---\nname: aibast-easy-mode-copilot\ndescription: fixture\n---\n",
     )
     write(
+        root / "solutions" / "_shared" / "workshop-settings.html",
+        "<!doctype html><title>Workshop settings</title>\n",
+    )
+    write(
         package / "README.md",
         "# Demo Journey\n\nDomain narrative that the scaffolder must preserve.\n",
     )
@@ -277,11 +281,14 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
         assert DARK_THEME_VARIABLES in generated
         assert "Clawpilot" in generated
         assert "localStorage" in generated
-    assert "With Brainstem — default" in quest
+    assert "GitHub Copilot + Brainstem" in quest
     assert "GitHub Copilot only" in quest
     assert "Personless harness" in quest
     assert "View generic workshop agent" in quest
     assert "Skeptic comparison" in quest
+    assert "aibast:workshop-engine" in quest
+    assert 'data-easy-lane-button' not in quest
+    assert "Workshop settings" in quest
     assert quest.count("data-copy-target=") == 5
     assert "Download Brainstem SKILL.md" in quest
     assert "Download Copilot-only SKILL.md" in quest
@@ -307,13 +314,13 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "Troubleshooting" in quest
     assert "Reshoot required" not in quest
     assert "No approved visual checkpoint" not in quest
-    assert "Compare and contrast while you build" in quest
-    assert "Both approaches are valid starting points" in quest
-    assert "Build it manually, one captured step at a time." in quest
+    assert "Compare and contrast while you build" not in quest
+    assert 'id="hard-mode-tutorial"' in quest
+    assert 'src="manual-tutorial.html?embedded=1"' in quest
     assert "Draft · published false" in quest
     assert "manual-tutorial.html" in quest
     assert "copilot-assisted-walkthrough.gif" in quest
-    assert "Open the manual tutorial" in quest
+    assert ">Open the manual tutorial<" not in quest
     assert "Attach the Brainstem skill" in personless
     assert "drag `SKILL.md` into the" in personless
     assert "Give me Demo Journey using Easy Mode and test it for me." in personless

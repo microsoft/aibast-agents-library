@@ -11,6 +11,11 @@
         param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
       document.documentElement.setAttribute("data-theme", theme);
     })();
+    (() => {
+      if (new URLSearchParams(window.location.search).get("embedded") === "1") {
+        document.documentElement.setAttribute("data-embedded", "true");
+      }
+    })();
   </script>
   <style>
 
@@ -189,6 +194,10 @@
     .step footer { display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
     .troubleshooting details { padding: 14px 0; border-bottom: 1px solid var(--cp-border); }
     summary { cursor: pointer; font-weight: 700; }
+    html[data-embedded="true"] body { background: var(--cp-bg-elevated); }
+    html[data-embedded="true"] .topbar { display: none; }
+    html[data-embedded="true"] .layout { grid-template-columns: 230px minmax(0, 1fr); max-width: none; padding: 8px 0 32px; }
+    html[data-embedded="true"] .hero { box-shadow: none; }
     @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } .sidebar { position: static; max-height: none; } }
     @media (max-width: 620px) { .instruction-grid { grid-template-columns: 1fr; } }
   </style>
@@ -581,6 +590,20 @@ Describe what was inaccurate or missing.
         });
       });
       update();
+      if (document.documentElement.dataset.embedded === "true") {
+        const notifyHeight = () => {
+          window.parent.postMessage(
+            {
+              type: "aibast-hard-mode-height",
+              height: document.documentElement.scrollHeight,
+            },
+            window.location.origin,
+          );
+        };
+        new ResizeObserver(notifyHeight).observe(document.documentElement);
+        window.addEventListener("load", notifyHeight);
+        notifyHeight();
+      }
     })();
   </script>
 </body>

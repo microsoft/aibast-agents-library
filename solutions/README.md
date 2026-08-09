@@ -9,7 +9,8 @@ the portable Python agents under `agents/@aibast-agents-library/`.
 solutions/
 ├── catalog.json                         # Hand-authored business and architecture copy
 ├── _shared/
-│   └── m365-copilot-demo.html           # Shared M365 Copilot-style transcript player
+│   ├── m365-copilot-demo.html           # Shared M365 Copilot-style transcript player
+│   └── workshop-settings.html           # Global persisted Easy-mode harness setting
 └── <solution-slug>/
     ├── README.md                        # Package map and quality status
     ├── deployment.json                  # Machine-readable no-terminal deployment recipe
@@ -39,7 +40,10 @@ solutions/
   GitHub Copilot Agent mode to install without asking the user to open a
   terminal.
 - Easy mode uses Copilot to author, review, push, and validate the
-  source-controlled Copilot Studio project.
+  source-controlled Copilot Studio project. GitHub Copilot-only is the global
+  default; the optional Brainstem harness is selected once in
+  `solutions/_shared/workshop-settings.html` and persists across workshops on
+  that browser and device.
 - Hard mode recreates the same agent manually in the Copilot Studio browser:
   instructions, knowledge, every skill, model selection, and Preview.
 
