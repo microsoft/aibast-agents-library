@@ -24,8 +24,8 @@ __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/sales-qualification",
     "version": "1.0.0",
-    "display_name": "Sales Qualification",
-    "description": "ICP scoring, BANT analysis, personalized outreach, AE routing, and SLA tracking for inbound leads.",
+    "display_name": "Sales Qualification Agent",
+    "description": "Automate lead scoring and qualification to accelerate pipeline generation, improve conversion rates, and drive proactive sales.",
     "author": "AIBAST",
     "tags": ["b2b", "sales", "lead-qualification", "bant", "icp-scoring", "lead-routing"],
     "category": "b2b_sales",
@@ -266,7 +266,15 @@ class SalesQualificationAgent(BasicAgent):
         self.name = "SalesQualificationAgent"
         self.metadata = {
             "name": self.name,
-            "description": __manifest__["description"],
+            "description": (
+                f"{__manifest__['description']} Uses bundled synthetic leads and produces "
+                "read-only scoring, draft outreach, routing recommendations, and SLA plans. "
+                "It never sends outreach, assigns leads, creates alerts, or writes CRM data."
+            ),
+            "operations": [
+                "score_leads", "bant_analysis", "create_outreach",
+                "assign_leads", "setup_tracking", "qualification_report",
+            ],
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -281,10 +289,17 @@ class SalesQualificationAgent(BasicAgent):
                     },
                     "tier_filter": {
                         "type": "string",
+                        "enum": ["Hot", "Warm", "Nurture", "Disqualified"],
                         "description": "Optional tier filter: Hot, Warm, Nurture, Disqualified",
+                    },
+                    "data_source": {
+                        "type": "string",
+                        "enum": ["synthetic"],
+                        "description": "Deterministic source route. Only bundled synthetic evidence is supported.",
                     },
                 },
                 "required": ["operation"],
+                "additionalProperties": False,
             },
         }
         super().__init__(name=self.name, metadata=self.metadata)
@@ -306,6 +321,13 @@ class SalesQualificationAgent(BasicAgent):
 
     def perform(self, **kwargs) -> str:
         op = kwargs.get("operation", "score_leads")
+        source = kwargs.get("data_source", "synthetic")
+        if source != "synthetic":
+            return "**Error:** `data_source` must be `synthetic`."
+        tier_filter = kwargs.get("tier_filter")
+        valid_tiers = {"Hot", "Warm", "Nurture", "Disqualified"}
+        if tier_filter is not None and tier_filter not in valid_tiers:
+            return "**Error:** Unknown `tier_filter`. Valid: Hot, Warm, Nurture, Disqualified."
         dispatch = {
             "score_leads": self._score_leads,
             "bant_analysis": self._bant_analysis,
@@ -317,7 +339,14 @@ class SalesQualificationAgent(BasicAgent):
         handler = dispatch.get(op)
         if not handler:
             return json.dumps({"status": "error", "message": f"Unknown operation: {op}"})
-        return handler(kwargs.get("tier_filter"))
+        output = handler(tier_filter)
+        return (
+            output.replace("Source: [", "Synthetic source model: [")
+            + "\n\n**Evidence boundary:** Exact names, lead counts, company attributes, "
+            "scores, values, percentages, and timing are synthetic planning evidence. "
+            "Outreach and routing are drafts for human review. No lead was assigned, no "
+            "sequence or alert was activated, and no CRM or customer communication occurred."
+        )
 
     # ── score_leads ───────────────────────────────────────────
     def _score_leads(self, tier_filter):
@@ -410,7 +439,7 @@ class SalesQualificationAgent(BasicAgent):
             )
 
         sequence = (
-            "**Sequence Cadence (all leads):**\n"
+            "**Draft Sequence Cadence (not activated):**\n"
             "- Day 0: Personalized email (above)\n"
             "- Day 1: LinkedIn connection + note\n"
             "- Day 2: Phone attempt #1\n"
@@ -461,7 +490,7 @@ class SalesQualificationAgent(BasicAgent):
         )
 
         return (
-            f"**Lead Assignments — {len(actionable)} Leads Routed**\n\n"
+            f"**Recommended Lead Routing — {len(actionable)} Leads Evaluated**\n\n"
             f"{summary_table}{detail}{handoff}\n"
             "Source: [Territory Rules + Capacity Dashboard]\n"
             "Agents: LeadRoutingAgent"
@@ -481,11 +510,11 @@ class SalesQualificationAgent(BasicAgent):
             sla_table += f"| {tier_name} ({tiers[tier_name]} leads) | {hrs} | {rule['escalation']} | {rule['sequence']} |\n"
 
         monitoring = (
-            "\n**Monitoring Activated:**\n"
-            "- Real-time dashboard tracking all 45 leads\n"
-            "- Slack alerts when SLA at risk (50% time elapsed)\n"
-            "- Daily summary report at 9:00 AM\n"
-            "- Weekly conversion tracking by tier\n"
+            "\n**Proposed Monitoring (not activated):**\n"
+            "- Draft dashboard design for all 45 synthetic leads\n"
+            "- Draft SLA-risk alert rule (50% time elapsed)\n"
+            "- Draft daily summary schedule for 9:00 AM\n"
+            "- Draft weekly qualification tracking by tier\n"
         )
 
         escalation = (
@@ -493,11 +522,11 @@ class SalesQualificationAgent(BasicAgent):
             "- Hot lead no contact in 4h: Manager DM + email\n"
             "- Warm lead no contact in 24h: Team channel alert\n"
             "- Any lead no response after full sequence: Re-route to alternate AE\n"
-            "- Meeting booked: Auto-update opportunity stage in CRM\n"
+            "- Meeting booked: Recommend a CRM stage review by an authorized owner\n"
         )
 
         return (
-            f"**SLA Tracking Configuration — {len(scored)} Leads**\n\n"
+            f"**Draft SLA Tracking Plan — {len(scored)} Synthetic Leads**\n\n"
             f"{sla_table}{monitoring}{escalation}\n"
             "Source: [SLA Engine + Notification System]\n"
             "Agents: SLAMonitoringAgent"
@@ -537,19 +566,19 @@ class SalesQualificationAgent(BasicAgent):
             industry_table += f"| {ind} | {industry_counts[ind]} | {hot_ct} | {warm_ct} |\n"
 
         conversion = (
-            "\n**Conversion Targets:**\n"
-            f"- Hot to meeting: 40% ({int(len(tiers['Hot']) * 0.4)} meetings)\n"
-            f"- Meeting to opportunity: 60% ({int(len(tiers['Hot']) * 0.4 * 0.6)} opportunities)\n"
-            f"- Warm to meeting: 20% ({int(len(tiers['Warm']) * 0.2)} meetings)\n"
-            f"- Expected pipeline from hot leads: ${int(hot_value * 0.4 * 0.6):,}\n"
+            "\n**Synthetic Conversion Assumptions (not predictions):**\n"
+            f"- Hot-to-meeting assumption: 40% ({int(len(tiers['Hot']) * 0.4)} modeled meetings)\n"
+            f"- Meeting-to-opportunity assumption: 60% ({int(len(tiers['Hot']) * 0.4 * 0.6)} modeled opportunities)\n"
+            f"- Warm-to-meeting assumption: 20% ({int(len(tiers['Warm']) * 0.2)} modeled meetings)\n"
+            f"- Illustrative hot-lead scenario value: ${int(hot_value * 0.4 * 0.6):,}\n"
         )
 
         actions = (
-            "\n**Immediate Actions:**\n"
-            f"1. {len(tiers['Hot'])} hot leads — AE outreach within 4 hours\n"
-            f"2. {len(tiers['Warm'])} warm leads — SDR calls today/tomorrow\n"
-            f"3. {len(tiers['Nurture'])} nurture leads — Email sequence starts automatically\n"
-            f"4. {len(tiers['Disqualified'])} disqualified — Routed to marketing nurture\n"
+            "\n**Draft Review Queue:**\n"
+            f"1. {len(tiers['Hot'])} hot leads — Review for authorized AE follow-up\n"
+            f"2. {len(tiers['Warm'])} warm leads — Review for authorized SDR follow-up\n"
+            f"3. {len(tiers['Nurture'])} nurture leads — Review a draft email sequence\n"
+            f"4. {len(tiers['Disqualified'])} disqualified — Review for marketing nurture eligibility\n"
         )
 
         return (

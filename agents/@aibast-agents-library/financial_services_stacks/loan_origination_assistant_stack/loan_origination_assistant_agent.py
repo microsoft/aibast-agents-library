@@ -15,8 +15,8 @@ __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/loan-origination-assistant",
     "version": "1.0.0",
-    "display_name": "Loan Origination Assistant Agent",
-    "description": "Loan origination support with application review, credit analysis, document verification, and decision recommendations.",
+    "display_name": "Loan Origination Assistant",
+    "description": "Streamline mortgage origination with intelligent automation, enabling faster, more accurate loan decisions.",
     "author": "AIBAST",
     "tags": ["loan", "origination", "credit", "underwriting", "mortgage", "financial-services"],
     "category": "financial_services",
@@ -88,7 +88,7 @@ LOAN_APPLICATIONS = {
         "monthly_debt": 650,
         "employment_years": 12,
         "down_payment_pct": 0.0,
-        "status": "approved",
+        "status": "ready_for_human_decision",
         "loan_officer": "Mark Peterson",
     },
 }
@@ -117,6 +117,19 @@ RATE_SHEET = {
     "commercial_5yr": {"rate": 7.500, "apr": 7.750, "points": 1.0},
 }
 
+
+CONDITIONS = {
+    "LA-2025-4001": ["Final appraisal review", "Updated asset statement"],
+    "LA-2025-4002": ["Employment verification", "FHA case number", "Final appraisal"],
+    "LA-2025-4003": ["Environmental Phase I", "Current rent roll"],
+    "LA-2025-4004": ["Certificate of Eligibility validation", "Final insurance evidence"],
+}
+
+SYNTHETIC_NOTICE = (
+    "> **SYNTHETIC DEMO DATA — LENDER REVIEW REQUIRED.** Fictional applications, rates, and "
+    "eligibility rules only. This is not lending, legal, or financial advice and does not approve, deny, "
+    "price, lock, close, fund, or modify a loan.\n\n"
+)
 
 # ---------------------------------------------------------------------------
 # Helper functions
@@ -172,24 +185,51 @@ class LoanOriginationAssistantAgent(BasicAgent):
     """Loan origination assistant agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/loan-origination-assistant"
+        self.name = "LoanOriginationAssistantAgent"
         self.metadata = {
             "name": self.name,
             "display_name": "Loan Origination Assistant Agent",
-            "description": __manifest__["description"],
+            "description": (
+                "Always call this tool for loan-officer, processor, underwriter, or closing-coordinator "
+                "requests about the mortgage pipeline, which application remains in document review, a "
+                "named borrower's ratios, a VA document checklist, whether any loan was approved, or open "
+                "conditions on the commercial refinance. Do not answer those workflows from general "
+                "knowledge. Uses fictional records only and never approves, denies, prices, locks, closes, "
+                "funds, or modifies a loan. Fair-lending controls and authorized human underwriting review "
+                "are required."
+            ),
             "parameters": {
                 "type": "object",
                 "properties": {
                     "operation": {
                         "type": "string",
+                        "description": (
+                            "Choose application_review for the mortgage pipeline, intake volume, statuses, "
+                            "or which application is in document review. Choose credit_analysis for a named "
+                            "borrower's DTI, LTV, credit, DSCR, ratios, or eligibility exceptions. Choose "
+                            "document_verification for a named file's required documents, including VA or "
+                            "FHA checklists. Choose decision_recommendation for which files meet limited "
+                            "criteria or whether the assistant approved a loan. Choose condition_tracking "
+                            "for open conditions, the commercial refinance, timelines, or whether a closing "
+                            "date was promised."
+                        ),
                         "enum": [
                             "application_review",
                             "credit_analysis",
                             "document_verification",
                             "decision_recommendation",
+                            "condition_tracking",
                         ],
                     },
-                    "application_id": {"type": "string"},
+                    "application_id": {
+                        "type": "string",
+                        "description": (
+                            "Synthetic loan mapping: Thomas and Rebecca Harper or Harper is LA-2025-4001; "
+                            "Kevin Nguyen or Kevin is LA-2025-4002; Westfield Properties or the commercial "
+                            "refinance is LA-2025-4003; Sandra Blake, Sandra, or the VA file is LA-2025-4004. "
+                            "Omit for pipeline-wide and decision-wide reports."
+                        ),
+                    },
                 },
                 "required": ["operation"],
             },
@@ -197,17 +237,21 @@ class LoanOriginationAssistantAgent(BasicAgent):
         super().__init__(name=self.name, metadata=self.metadata)
 
     def perform(self, **kwargs) -> str:
+        record_id = kwargs.get("application_id")
+        if record_id and record_id not in LOAN_APPLICATIONS:
+            return SYNTHETIC_NOTICE + f"**Not found:** No synthetic record `{record_id}` exists; no substitute record was used."
         operation = kwargs.get("operation", "application_review")
         dispatch = {
             "application_review": self._application_review,
             "credit_analysis": self._credit_analysis,
             "document_verification": self._document_verification,
             "decision_recommendation": self._decision_recommendation,
+            "condition_tracking": self._condition_tracking,
         }
         handler = dispatch.get(operation)
         if not handler:
             return f"**Error:** Unknown operation `{operation}`."
-        return handler(**kwargs)
+        return SYNTHETIC_NOTICE + handler(**kwargs)
 
     def _application_review(self, **kwargs) -> str:
         lines = ["# Loan Application Pipeline\n"]
@@ -289,25 +333,40 @@ class LoanOriginationAssistantAgent(BasicAgent):
         return "\n".join(lines)
 
     def _decision_recommendation(self, **kwargs) -> str:
-        lines = ["# Loan Decision Recommendations\n"]
+        lines = ["# Loan Eligibility Findings for Underwriter Review\n"]
         for aid, app in LOAN_APPLICATIONS.items():
             dti = _calculate_dti(app)
             ltv = _calculate_ltv(app)
             issues = _eligibility_check(app)
             if not issues:
-                decision = "Approve"
-                rationale = "All underwriting criteria met"
+                decision = "Stated criteria met — human underwriting review"
+                rationale = "No exception found in the limited synthetic criteria"
             elif len(issues) == 1 and dti <= 50:
-                decision = "Conditional Approve"
+                decision = "Condition or exception review required"
                 rationale = f"Minor condition: {issues[0]}"
             else:
-                decision = "Refer to Senior UW"
+                decision = "Senior underwriter review required"
                 rationale = "; ".join(issues)
             lines.append(f"## {aid}: {app['applicant']}\n")
             lines.append(f"- **Loan:** ${app['loan_amount']:,.0f} ({app['loan_type'].replace('_', ' ').title()})")
             lines.append(f"- **Credit/DTI/LTV:** {app['credit_score'] or 'N/A'} / {dti}% / {ltv}%")
-            lines.append(f"- **Recommendation:** {decision}")
+            lines.append(f"- **Review Finding:** {decision}")
             lines.append(f"- **Rationale:** {rationale}\n")
+        lines.append(
+            "No lending decision has been made. Validate source documents, program rules, fair-lending "
+            "controls, disclosures, and delegated authority before any customer communication or action."
+        )
+        return "\n".join(lines)
+
+    def _condition_tracking(self, **kwargs) -> str:
+        lines = ["# Outstanding Conditions and Timeline Review\n"]
+        for app_id, conditions in CONDITIONS.items():
+            app = LOAN_APPLICATIONS[app_id]
+            lines.append(f"## {app_id}: {app['applicant']}\n")
+            for condition in conditions:
+                lines.append(f"- [ ] {condition}")
+            lines.append("- Owner and due date: assign in the approved loan-origination system\n")
+        lines.append("No condition was cleared and no closing date is promised.")
         return "\n".join(lines)
 
 

@@ -1,0 +1,42 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/portfolio-rebalancing",
+  "audited_source": "agents/@aibast-agents-library/financial_services_stacks/portfolio_rebalancing_stack/portfolio_rebalancing_agent.py",
+  "source_sha256": "76086d7010b614eee9b9600e10aef69923d0360968e983fab1355c41884e7a2a",
+  "case_file": "tests/demo_cases/portfolio-rebalancing.json",
+  "onepager": "Portfolio Rebalancing Agent one-pager.pptx",
+  "operations": {
+    "portfolio_analysis": [
+      "PRB-01"
+    ],
+    "rebalance_recommendation": [
+      "PRB-02"
+    ],
+    "tax_impact": [
+      "PRB-03"
+    ],
+    "tax_loss_harvest": [
+      "PRB-04"
+    ],
+    "retirement_scenario": [
+      "PRB-05"
+    ],
+    "execution_plan": [
+      "PRB-06"
+    ]
+  },
+  "defects_fixed": [
+    "Expanded tool routing descriptions so persona-language requests map to the intended operation.",
+    "Aligned implemented operations with approved one-pager promises and added missing decision-support workflows where needed.",
+    "Added synthetic-data labels, explicit human review, and no-advice/no-approval/no-transaction boundaries.",
+    "Rejected unknown record identifiers instead of silently substituting another fictional record.",
+    "Added exact persona-language routing phrases, operation selection guidance, and synthetic entity-to-identifier mappings for strict-isolation capture."
+  ],
+  "unresolved_defects": [],
+  "routing_result": {
+    "cases_passed": 6,
+    "cases_total": 6,
+    "strict_isolation": true,
+    "loaded_tool": "PortfolioRebalancingAgent"
+  }
+}

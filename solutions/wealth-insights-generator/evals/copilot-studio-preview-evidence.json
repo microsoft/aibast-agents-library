@@ -1,0 +1,86 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T21:56:05.576Z",
+  "solution": "@aibast-agents-library/wealth-insights-generator",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Wealth Insights Pilot",
+  "schema_name": "aibast_WealthInsightsGeneratorPilo",
+  "bot_id": "e9c2af34-316e-4744-98fe-2e49b3152e4d",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "WIG-01",
+      "must_include": [
+        "NASDAQ Composite",
+        "Fixed Synthetic"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "WIG-02",
+      "must_include": [
+        "WM-003",
+        "Held Away"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "WIG-03",
+      "must_include": [
+        "Harrison Family Trust",
+        "Dr. Anita Rao"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "WIG-04",
+      "must_include": [
+        "Tidewater Ventures",
+        "Underperformance"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "WIG-05",
+      "must_include": [
+        "George & Martha Kensington",
+        "preparation material"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/store-associate-copilot",
+  "approved_source": {"onepager": "24. Retail Store Associate Copilot one-pager.pptx", "sha256": "2d63f12e857eeb0e2cc65c0e84e92814621f60d15a15f760e0ba45ab5ed42c9b", "snapshot": "state/onepager_content.json", "hash_match": true},
+  "deterministic_source": {"path": "solutions.json", "slot": 21, "canonical_name": "Store Associate Agent", "matches": true},
+  "routing": {"status": "fixed", "finding": "Product, assistance, shift, and manager-review workflows each have direct cases."},
+  "interface_schema": {"status": "fixed", "finding": "Store Associate, Sales Manager, and Floor Specialist language is explicit."},
+  "behavior": {"status": "fixed", "finding": "Availability is caveated, scripts are drafts, and performance records are role cohorts rather than people."},
+  "safety": {"status": "fixed", "finding": "No promotion, reservation, return, refund, message, transaction, or purchase write path exists."}
+}

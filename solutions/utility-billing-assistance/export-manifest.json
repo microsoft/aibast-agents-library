@@ -1,0 +1,494 @@
+{
+  "schema": "aibast-solution-export/1.0",
+  "solution": "@aibast-agents-library/utility-billing-assistance",
+  "raw_base": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/",
+  "github_folder": "https://github.com/microsoft/aibast-agents-library/tree/main/solutions/utility-billing-assistance",
+  "evidence_boundary": "Synthetic solution evidence only. Qualitative workflow proof is not a customer KPI, measured production result, or publication approval.",
+  "bundle": {
+    "label": "Complete Utility Billing and Assistance Agent source bundle",
+    "path": "solutions/utility-billing-assistance/exports/utility-billing-assistance-source.zip",
+    "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/exports/utility-billing-assistance-source.zip"
+  },
+  "files": [
+    {
+      "id": "portable-agent",
+      "label": "Portable source agent",
+      "path": "agents/@aibast-agents-library/slg_government_stacks/utility_billing_assistance_stack/utility_billing_assistance_agent.py",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/slg_government_stacks/utility_billing_assistance_stack/utility_billing_assistance_agent.py",
+      "use": "Local Brainstem runtime and production-logic reference",
+      "status": "ready"
+    },
+    {
+      "id": "deployment-recipe",
+      "label": "Deployment recipe",
+      "path": "solutions/utility-billing-assistance/deployment.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/deployment.json",
+      "use": "Easy-mode deployment contract",
+      "status": "ready"
+    },
+    {
+      "id": "field-guide",
+      "label": "Customer field guide",
+      "path": "solutions/utility-billing-assistance/FIELD-GUIDE.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/FIELD-GUIDE.md",
+      "use": "Facilitation, evidence boundaries, gates, and recovery",
+      "status": "ready"
+    },
+    {
+      "id": "manual-instructions",
+      "label": "Manual global instructions",
+      "path": "solutions/utility-billing-assistance/manual/GLOBAL-INSTRUCTIONS.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/manual/GLOBAL-INSTRUCTIONS.md",
+      "use": "Reviewed instructions for literal browser construction",
+      "status": "ready"
+    },
+    {
+      "id": "settings",
+      "label": "Copilot Studio settings",
+      "path": "solutions/utility-billing-assistance/copilot-studio/settings.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/copilot-studio/settings.mcs.yml",
+      "use": "Easy-mode agent settings and instruction copy",
+      "status": "ready"
+    },
+    {
+      "id": "agent-sync",
+      "label": "Copilot Studio component manifest",
+      "path": "solutions/utility-billing-assistance/copilot-studio/agent.sync.yaml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/copilot-studio/agent.sync.yaml",
+      "use": "Easy-mode component synchronization",
+      "status": "ready"
+    },
+    {
+      "id": "knowledge-utility-billing-assistance-rules-and-controls",
+      "label": "Utility Billing Assistance Rules And Controls",
+      "path": "solutions/utility-billing-assistance/manual/knowledge/utility-billing-assistance-rules-and-controls.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/manual/knowledge/utility-billing-assistance-rules-and-controls.md",
+      "use": "Manual knowledge upload",
+      "status": "ready"
+    },
+    {
+      "id": "knowledge-utility-billing-assistance-synthetic-records",
+      "label": "Utility Billing Assistance Synthetic Records",
+      "path": "solutions/utility-billing-assistance/manual/knowledge/utility-billing-assistance-synthetic-records.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/manual/knowledge/utility-billing-assistance-synthetic-records.md",
+      "use": "Manual knowledge upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-assistance-programs",
+      "label": "Manual skill: aibast assistance programs",
+      "path": "solutions/utility-billing-assistance/manual/skills/aibast_assistance-programs/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/manual/skills/aibast_assistance-programs/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-billing-inquiry",
+      "label": "Manual skill: aibast billing inquiry",
+      "path": "solutions/utility-billing-assistance/manual/skills/aibast_billing-inquiry/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/manual/skills/aibast_billing-inquiry/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-payment-plan",
+      "label": "Manual skill: aibast payment plan",
+      "path": "solutions/utility-billing-assistance/manual/skills/aibast_payment-plan/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/manual/skills/aibast_payment-plan/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-usage-analysis",
+      "label": "Manual skill: aibast usage analysis",
+      "path": "solutions/utility-billing-assistance/manual/skills/aibast_usage-analysis/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/manual/skills/aibast_usage-analysis/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "easy-knowledge-utility-billing-assistance-rules-and-controls",
+      "label": "Utility Billing Assistance Rules And Controls",
+      "path": "solutions/utility-billing-assistance/copilot-studio/capabilities/knowledge/files/utility-billing-assistance-rules-and-controls.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/copilot-studio/capabilities/knowledge/files/utility-billing-assistance-rules-and-controls.md",
+      "use": "Copilot Studio knowledge source or synchronization metadata",
+      "status": "ready"
+    },
+    {
+      "id": "easy-knowledge-utility-billing-assistance-rules-and-controls-md-mcs",
+      "label": "Utility Billing Assistance Rules And Controls.Md.Mcs",
+      "path": "solutions/utility-billing-assistance/copilot-studio/capabilities/knowledge/files/utility-billing-assistance-rules-and-controls.md.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/copilot-studio/capabilities/knowledge/files/utility-billing-assistance-rules-and-controls.md.mcs.yml",
+      "use": "Copilot Studio knowledge source or synchronization metadata",
+      "status": "ready"
+    },
+    {
+      "id": "easy-knowledge-utility-billing-assistance-synthetic-records",
+      "label": "Utility Billing Assistance Synthetic Records",
+      "path": "solutions/utility-billing-assistance/copilot-studio/capabilities/knowledge/files/utility-billing-assistance-synthetic-records.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/copilot-studio/capabilities/knowledge/files/utility-billing-assistance-synthetic-records.md",
+      "use": "Copilot Studio knowledge source or synchronization metadata",
+      "status": "ready"
+    },
+    {
+      "id": "easy-knowledge-utility-billing-assistance-synthetic-records-md-mcs",
+      "label": "Utility Billing Assistance Synthetic Records.Md.Mcs",
+      "path": "solutions/utility-billing-assistance/copilot-studio/capabilities/knowledge/files/utility-billing-assistance-synthetic-records.md.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/copilot-studio/capabilities/knowledge/files/utility-billing-assistance-synthetic-records.md.mcs.yml",
+      "use": "Copilot Studio knowledge source or synchronization metadata",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-utility-billing-assistance-assistance-programs-mcs",
+      "label": "Aibast Utility Billing Assistance Assistance Programs.Mcs",
+      "path": "solutions/utility-billing-assistance/copilot-studio/behaviors/aibast_utility-billing-assistance-assistance-programs.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/copilot-studio/behaviors/aibast_utility-billing-assistance-assistance-programs.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-utility-billing-assistance-billing-inquiry-mcs",
+      "label": "Aibast Utility Billing Assistance Billing Inquiry.Mcs",
+      "path": "solutions/utility-billing-assistance/copilot-studio/behaviors/aibast_utility-billing-assistance-billing-inquiry.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/copilot-studio/behaviors/aibast_utility-billing-assistance-billing-inquiry.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-utility-billing-assistance-payment-plan-mcs",
+      "label": "Aibast Utility Billing Assistance Payment Plan.Mcs",
+      "path": "solutions/utility-billing-assistance/copilot-studio/behaviors/aibast_utility-billing-assistance-payment-plan.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/copilot-studio/behaviors/aibast_utility-billing-assistance-payment-plan.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-utility-billing-assistance-usage-analysis-mcs",
+      "label": "Aibast Utility Billing Assistance Usage Analysis.Mcs",
+      "path": "solutions/utility-billing-assistance/copilot-studio/behaviors/aibast_utility-billing-assistance-usage-analysis.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/copilot-studio/behaviors/aibast_utility-billing-assistance-usage-analysis.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-evidence-copilot-studio-preview-evidence",
+      "label": "Copilot Studio Preview Evidence",
+      "path": "solutions/utility-billing-assistance/evals/copilot-studio-preview-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/evals/copilot-studio-preview-evidence.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "manual-evidence",
+      "label": "Manual build evidence",
+      "path": "solutions/utility-billing-assistance/evals/manual-build-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/evals/manual-build-evidence.json",
+      "use": "Manual identity, inventory, Preview, and Draft-gate evidence",
+      "status": "ready"
+    },
+    {
+      "id": "onepager-map",
+      "label": "Onepager Map",
+      "path": "solutions/utility-billing-assistance/evals/onepager-map.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/evals/onepager-map.json",
+      "use": "Advertised-promise mapping evidence",
+      "status": "ready"
+    },
+    {
+      "id": "easy-evidence-source-audit",
+      "label": "Source Audit",
+      "path": "solutions/utility-billing-assistance/evals/source-audit.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/evals/source-audit.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "brainstem-transcripts",
+      "label": "Isolated Brainstem transcripts",
+      "path": "solutions/utility-billing-assistance/evals/transcripts.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/evals/transcripts.json",
+      "use": "Canonical source-agent acceptance evidence",
+      "status": "ready"
+    },
+    {
+      "id": "manual-browserfilm-manifest",
+      "label": "Manual browserfilm manifest",
+      "path": "solutions/utility-billing-assistance/screenshots/manual/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/manual/browserfilm.json",
+      "use": "Ordered literal-browser evidence frames",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-01",
+      "label": "Create a blank Copilot Studio agent",
+      "path": "solutions/utility-billing-assistance/screenshots/manual/01-create-blank-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/manual/01-create-blank-agent.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-02",
+      "label": "Name Utility Billing Manual",
+      "path": "solutions/utility-billing-assistance/screenshots/manual/02-name-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/manual/02-name-agent.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-03",
+      "label": "Enter the reviewed global instructions",
+      "path": "solutions/utility-billing-assistance/screenshots/manual/03-enter-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/manual/03-enter-instructions.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-04",
+      "label": "Save the instruction policy",
+      "path": "solutions/utility-billing-assistance/screenshots/manual/04-save-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/manual/04-save-instructions.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-05",
+      "label": "Remove default web search",
+      "path": "solutions/utility-billing-assistance/screenshots/manual/05-remove-web-search.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/manual/05-remove-web-search.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-06",
+      "label": "Add knowledge: utility-billing-assistance-rules-and-controls.md",
+      "path": "solutions/utility-billing-assistance/screenshots/manual/06-add-utility-billing-assistance-rules-and-controls.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/manual/06-add-utility-billing-assistance-rules-and-controls.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-07",
+      "label": "Add knowledge: utility-billing-assistance-synthetic-records.md",
+      "path": "solutions/utility-billing-assistance/screenshots/manual/07-add-utility-billing-assistance-synthetic-records.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/manual/07-add-utility-billing-assistance-synthetic-records.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-08",
+      "label": "Add skill: aibast_assistance-programs",
+      "path": "solutions/utility-billing-assistance/screenshots/manual/08-add-aibast-assistance-programs.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/manual/08-add-aibast-assistance-programs.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-09",
+      "label": "Add skill: aibast_billing-inquiry",
+      "path": "solutions/utility-billing-assistance/screenshots/manual/09-add-aibast-billing-inquiry.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/manual/09-add-aibast-billing-inquiry.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-10",
+      "label": "Add skill: aibast_payment-plan",
+      "path": "solutions/utility-billing-assistance/screenshots/manual/10-add-aibast-payment-plan.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/manual/10-add-aibast-payment-plan.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-11",
+      "label": "Add skill: aibast_usage-analysis",
+      "path": "solutions/utility-billing-assistance/screenshots/manual/11-add-aibast-usage-analysis.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/manual/11-add-aibast-usage-analysis.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-12",
+      "label": "Review model, skills, knowledge, and safety boundaries",
+      "path": "solutions/utility-billing-assistance/screenshots/manual/12-review-inventory.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/manual/12-review-inventory.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-13",
+      "label": "Open a fresh Preview conversation",
+      "path": "solutions/utility-billing-assistance/screenshots/manual/13-open-preview.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/manual/13-open-preview.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-14",
+      "label": "Pass UTILITY_BILLING_ASSISTANCE-01: Customer Service Representative",
+      "path": "solutions/utility-billing-assistance/screenshots/manual/14-utility_billing_assistance-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/manual/14-utility_billing_assistance-01.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-15",
+      "label": "Pass UTILITY_BILLING_ASSISTANCE-02: Billing Specialist",
+      "path": "solutions/utility-billing-assistance/screenshots/manual/15-utility_billing_assistance-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/manual/15-utility_billing_assistance-02.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-16",
+      "label": "Pass UTILITY_BILLING_ASSISTANCE-03: Revenue Services Supervisor",
+      "path": "solutions/utility-billing-assistance/screenshots/manual/16-utility_billing_assistance-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/manual/16-utility_billing_assistance-03.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-17",
+      "label": "Pass UTILITY_BILLING_ASSISTANCE-04: Assistance Coordinator",
+      "path": "solutions/utility-billing-assistance/screenshots/manual/17-utility_billing_assistance-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/manual/17-utility_billing_assistance-04.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-18",
+      "label": "Confirm Draft and stop before publish",
+      "path": "solutions/utility-billing-assistance/screenshots/manual/18-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/manual/18-confirm-draft.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-browserfilm",
+      "label": "Manual browserfilm",
+      "path": "solutions/utility-billing-assistance/screenshots/manual/manual-build-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/manual/manual-build-walkthrough.gif",
+      "use": "Animated manual walkthrough",
+      "status": "ready"
+    },
+    {
+      "id": "manual-contact-sheet",
+      "label": "Manual contact sheet",
+      "path": "solutions/utility-billing-assistance/screenshots/manual/manual-build-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/manual/manual-build-contact-sheet.jpg",
+      "use": "Static manual evidence overview",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-browserfilm-manifest",
+      "label": "Copilot-assisted browserfilm manifest",
+      "path": "solutions/utility-billing-assistance/screenshots/assisted/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/assisted/browserfilm.json",
+      "use": "Ordered Easy-mode evidence frames",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-browserfilm",
+      "label": "Copilot-assisted browserfilm",
+      "path": "solutions/utility-billing-assistance/screenshots/assisted/copilot-assisted-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/assisted/copilot-assisted-walkthrough.gif",
+      "use": "Animated Easy-mode walkthrough",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-contact-sheet",
+      "label": "Copilot-assisted contact sheet",
+      "path": "solutions/utility-billing-assistance/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
+      "use": "Static Easy-mode evidence overview",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-01",
+      "label": "Pass UTILITY_BILLING_ASSISTANCE-01: Customer Service Representative",
+      "path": "solutions/utility-billing-assistance/screenshots/assisted/01-utility_billing_assistance-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/assisted/01-utility_billing_assistance-01.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-02",
+      "label": "Pass UTILITY_BILLING_ASSISTANCE-02: Billing Specialist",
+      "path": "solutions/utility-billing-assistance/screenshots/assisted/02-utility_billing_assistance-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/assisted/02-utility_billing_assistance-02.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-03",
+      "label": "Pass UTILITY_BILLING_ASSISTANCE-03: Revenue Services Supervisor",
+      "path": "solutions/utility-billing-assistance/screenshots/assisted/03-utility_billing_assistance-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/assisted/03-utility_billing_assistance-03.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-04",
+      "label": "Pass UTILITY_BILLING_ASSISTANCE-04: Assistance Coordinator",
+      "path": "solutions/utility-billing-assistance/screenshots/assisted/04-utility_billing_assistance-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/assisted/04-utility_billing_assistance-04.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-05",
+      "label": "Confirm the validated agent remains Draft",
+      "path": "solutions/utility-billing-assistance/screenshots/assisted/05-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/assisted/05-confirm-draft.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "quest",
+      "label": "Guided field quest",
+      "path": "solutions/utility-billing-assistance/quest.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/quest.html",
+      "use": "Resumable Easy/Hard customer journey",
+      "status": "ready"
+    },
+    {
+      "id": "manual-tutorial",
+      "label": "Manual browser tutorial",
+      "path": "solutions/utility-billing-assistance/manual-tutorial.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/manual-tutorial.html",
+      "use": "One action per real manual evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "screenshots-readme",
+      "label": "Screenshot evidence README",
+      "path": "solutions/utility-billing-assistance/screenshots/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/README.md",
+      "use": "Evidence boundary and capture inventory",
+      "status": "ready"
+    },
+    {
+      "id": "manual-screenshots-readme",
+      "label": "Manual screenshot README",
+      "path": "solutions/utility-billing-assistance/screenshots/manual/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/manual/README.md",
+      "use": "Manual frame and film inventory",
+      "status": "ready"
+    },
+    {
+      "id": "exports-readme",
+      "label": "Export README",
+      "path": "solutions/utility-billing-assistance/exports/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/exports/README.md",
+      "use": "Bundle build instructions",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-screenshots-readme",
+      "label": "Assisted screenshot README",
+      "path": "solutions/utility-billing-assistance/screenshots/assisted/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/utility-billing-assistance/screenshots/assisted/README.md",
+      "use": "Copilot-assisted evidence inventory",
+      "status": "ready"
+    }
+  ]
+}

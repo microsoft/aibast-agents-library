@@ -15,8 +15,8 @@ __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/customer-sentiment-churn",
     "version": "1.0.0",
-    "display_name": "Customer Sentiment & Churn Agent",
-    "description": "Customer sentiment analysis, churn prediction, retention action planning, and segment analytics for financial services.",
+    "display_name": "Customer Sentiment and Churn Prediction Agent",
+    "description": "Deliver AI-powered sentiment intelligence that detects churn risk early and enables proactive retention strategies.",
     "author": "AIBAST",
     "tags": ["sentiment", "churn", "retention", "NPS", "analytics", "financial-services"],
     "category": "financial_services",
@@ -133,6 +133,12 @@ SEGMENT_BENCHMARKS = {
 }
 
 
+SYNTHETIC_NOTICE = (
+    "> **SYNTHETIC DEMO DATA — HUMAN REVIEW REQUIRED.** Fictional customer signals only. "
+    "Scores are prioritization heuristics, not facts about a real person; no outreach, offer, fee change, "
+    "or account action has occurred.\n\n"
+)
+
 # ---------------------------------------------------------------------------
 # Helper functions
 # ---------------------------------------------------------------------------
@@ -172,16 +178,33 @@ class CustomerSentimentChurnAgent(BasicAgent):
     """Customer sentiment and churn prediction agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/customer-sentiment-churn"
+        self.name = "CustomerSentimentChurnAgent"
         self.metadata = {
             "name": self.name,
             "display_name": "Customer Sentiment & Churn Agent",
-            "description": __manifest__["description"],
+            "description": (
+                "Always call this tool for relationship-manager, retention, or customer-success requests "
+                "about what customers are saying across channels, who needs review first, why a customer "
+                "was prioritized, options for a named customer such as Marcus before contact or a fee "
+                "change, or which segment is below benchmark. Do not answer those requests from general "
+                "knowledge. Uses fictional records only, does not infer protected traits, and never "
+                "contacts a customer, changes fees, makes an offer, or takes account action without "
+                "authorized human review."
+            ),
             "parameters": {
                 "type": "object",
                 "properties": {
                     "operation": {
                         "type": "string",
+                        "description": (
+                            "Choose sentiment_dashboard for cross-channel sentiment, customer feedback, "
+                            "NPS, negative interactions, or which relationship needs attention. Choose "
+                            "churn_prediction for who the team should review first, risk priority, or the "
+                            "evidence driving a churn-review score. Choose retention_actions when asked to "
+                            "prepare options for Marcus or another customer before outreach, offers, or fee "
+                            "changes. Choose segment_analysis for segment benchmarks or which segment is "
+                            "under its experience benchmark."
+                        ),
                         "enum": [
                             "sentiment_dashboard",
                             "churn_prediction",
@@ -189,7 +212,14 @@ class CustomerSentimentChurnAgent(BasicAgent):
                             "segment_analysis",
                         ],
                     },
-                    "customer_id": {"type": "string"},
+                    "customer_id": {
+                        "type": "string",
+                        "description": (
+                            "Synthetic customer mapping: Elizabeth Warren-Hayes is CUST-8001; Marcus "
+                            "Johnson or Marcus is CUST-8002; Priya Sharma is CUST-8003; Gerald Thompson is "
+                            "CUST-8004; Diana Castellano is CUST-8005. Omit for portfolio-wide reports."
+                        ),
+                    },
                 },
                 "required": ["operation"],
             },
@@ -197,6 +227,9 @@ class CustomerSentimentChurnAgent(BasicAgent):
         super().__init__(name=self.name, metadata=self.metadata)
 
     def perform(self, **kwargs) -> str:
+        record_id = kwargs.get("customer_id")
+        if record_id and record_id not in CUSTOMER_INTERACTIONS:
+            return SYNTHETIC_NOTICE + f"**Not found:** No synthetic record `{record_id}` exists; no substitute record was used."
         operation = kwargs.get("operation", "sentiment_dashboard")
         dispatch = {
             "sentiment_dashboard": self._sentiment_dashboard,
@@ -207,7 +240,7 @@ class CustomerSentimentChurnAgent(BasicAgent):
         handler = dispatch.get(operation)
         if not handler:
             return f"**Error:** Unknown operation `{operation}`."
-        return handler(**kwargs)
+        return SYNTHETIC_NOTICE + handler(**kwargs)
 
     def _sentiment_dashboard(self, **kwargs) -> str:
         sentiments, total = _sentiment_breakdown()
@@ -254,6 +287,7 @@ class CustomerSentimentChurnAgent(BasicAgent):
         lines.append("\n## Churn Indicators Reference\n")
         for ind_id, ind in CHURN_INDICATORS.items():
             lines.append(f"- **{ind_id.replace('_', ' ').title()}** (weight: {ind['weight']}): {ind['description']}")
+        lines.append("\nThese scores prioritize review; they do not predict an individual outcome.")
         return "\n".join(lines)
 
     def _retention_actions(self, **kwargs) -> str:
@@ -281,6 +315,10 @@ class CustomerSentimentChurnAgent(BasicAgent):
             else:
                 lines.append(f"3. **Loyalty Bonus** — {RETENTION_ACTIONS['loyalty_bonus']['description']}")
             lines.append("")
+        lines.append(
+            "\nEvery option requires relationship-manager review, policy validation, customer consent "
+            "where applicable, and approved execution. No customer was contacted and no offer was made."
+        )
         return "\n".join(lines)
 
     def _segment_analysis(self, **kwargs) -> str:

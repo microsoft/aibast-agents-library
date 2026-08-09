@@ -1,0 +1,55 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T21:46:33.038Z",
+  "solution": "@aibast-agents-library/utility-billing-assistance",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Utility Billing Pilot",
+  "schema_name": "aibast_UtilityBillingandAssistance",
+  "bot_id": "6fd6fafe-2410-4ac9-ba2d-93d4c3005d98",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "UTILITY_BILLING_ASSISTANCE-01",
+      "must_include": [
+        "ACCT-90003",
+        "$489.20",
+        "No balance"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "UTILITY_BILLING_ASSISTANCE-02",
+      "must_include": [
+        "REVIEW POSSIBLE LEAK",
+        "Draft policy estimate",
+        "not a leak diagnosis"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "UTILITY_BILLING_ASSISTANCE-03",
+      "must_include": [
+        "12 months",
+        "No payment arrangement was created"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "UTILITY_BILLING_ASSISTANCE-04",
+      "must_include": [
+        "POTENTIALLY ELIGIBLE",
+        "No eligibility determination",
+        "enrollment"
+      ],
+      "must_not_include": [],
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-08-08T11:17:20.770Z",
+  "solution": "@aibast-agents-library/patient-intake",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "Patient Intake Manual",
+    "bot_id": "ea14a160-2d46-4381-af47-8866e118be5d",
+    "created": true
+  },
+  "target_model": "Claude Sonnet 4.6",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 4,
+      "confirmed": 4
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "PI-01",
+      "prompt": "What is still missing from the synthetic intake packet for Patient Alpha?",
+      "must_include": [
+        "SYN-PT-001",
+        "emergency contact confirmation"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "expected_screenshot": "14-pi-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "PI-02",
+      "prompt": "What coverage evidence is recorded for Synthetic Patient Alpha, and what must staff still confirm?",
+      "must_include": [
+        "Synthetic Health Plan",
+        "source record received"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "expected_screenshot": "15-pi-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "PI-03",
+      "prompt": "Show the candidate source slots for Clinician A without booking anything.",
+      "must_include": [
+        "Clinician A",
+        "nothing has been reserved or booked"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "expected_screenshot": "16-pi-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "PI-04",
+      "prompt": "Prepare a pre-visit readiness summary for Synthetic Patient Alpha.",
+      "must_include": [
+        "SYN-PT-001",
+        "Required reviewer"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "expected_screenshot": "17-pi-04.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/patient-intake/screenshots/manual/browserfilm.json",
+    "gif": "solutions/patient-intake/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/patient-intake/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "18-confirm-draft.jpg"
+  }
+}

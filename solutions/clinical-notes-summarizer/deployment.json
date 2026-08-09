@@ -1,0 +1,99 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/clinical-notes-summarizer",
+  "display_name": "Clinical Notes Summarizer Agent",
+  "source_path": "agents/@aibast-agents-library/healthcare_stacks/clinical_notes_summarizer_stack/clinical_notes_summarizer_agent.py",
+  "target_filename": "clinical_notes_summarizer_agent.py",
+  "expected_tool": "ClinicalNotesSummarizerAgent",
+  "data_source": "synthetic",
+  "operations": [
+    "encounter_summary",
+    "medication_inventory",
+    "problem_list_extract",
+    "referral_context"
+  ],
+  "smoke_test": {
+    "prompt": "Summarize synthetic encounter SYN-ENC-001 using source facts only.",
+    "arguments": {
+      "operation": "encounter_summary"
+    },
+    "must_call": "ClinicalNotesSummarizerAgent",
+    "must_include": [
+      "SYN-ENC-001",
+      "Clinical interpretation: not performed"
+    ]
+  },
+  "manual_package": {
+    "global_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
+    "knowledge_files": [
+      "manual/knowledge/aibast_clinical-notes-summarizer-synthetic-records.md",
+      "manual/knowledge/aibast_clinical-notes-summarizer-review-rules.md"
+    ],
+    "skill_count": 4,
+    "skills": [
+      "manual/skills/encounter-summary/SKILL.md",
+      "manual/skills/medication-inventory/SKILL.md",
+      "manual/skills/problem-list-extract/SKILL.md",
+      "manual/skills/referral-context/SKILL.md"
+    ],
+    "locked_demo_cases": "../../tests/demo_cases/clinical-notes-summarizer.json",
+    "onepager_map": "evals/onepager-map.json",
+    "source_audit": "evals/source-audit.json"
+  },
+  "copilot_studio": {
+    "status": "package-ready-not-created",
+    "publish": false,
+    "publish_requires_confirmation": true,
+    "required_connections": [
+      "Dynamics 365 or approved read-only healthcare record interface"
+    ],
+    "external_actions": "not-configured",
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "authoring_mode": "cli-copilot",
+    "validated_manual": {
+      "display_name": "Clinical Notes Manual",
+      "bot_id": "6f8773e3-12df-4c3a-a605-3036494e2840",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "web_search_removed": true,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    },
+    "validated_pilot": {
+      "display_name": "Clinical Notes Pilot",
+      "schema_name": "aibast_ClinicalNotesSummarizerPilo",
+      "bot_id": "3b72fe02-2ed6-4117-877d-d930c32b829c",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "changes_pushed": 7,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    }
+  },
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/healthcare_stacks/clinical_notes_summarizer_stack/clinical_notes_summarizer_agent.py",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  }
+}

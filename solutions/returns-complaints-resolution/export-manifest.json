@@ -1,0 +1,494 @@
+{
+  "schema": "aibast-solution-export/1.0",
+  "solution": "@aibast-agents-library/returns-complaints-resolution",
+  "raw_base": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/",
+  "github_folder": "https://github.com/microsoft/aibast-agents-library/tree/main/solutions/returns-complaints-resolution",
+  "evidence_boundary": "Synthetic solution evidence only. Qualitative workflow proof is not a customer KPI, measured production result, or publication approval.",
+  "bundle": {
+    "label": "Complete Returns and Complaints Resolution Agent source bundle",
+    "path": "solutions/returns-complaints-resolution/exports/returns-complaints-resolution-source.zip",
+    "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/exports/returns-complaints-resolution-source.zip"
+  },
+  "files": [
+    {
+      "id": "portable-agent",
+      "label": "Portable source agent",
+      "path": "agents/@aibast-agents-library/retail_cpg_stacks/returns_complaints_resolution_stack/returns_complaints_resolution_agent.py",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/retail_cpg_stacks/returns_complaints_resolution_stack/returns_complaints_resolution_agent.py",
+      "use": "Local Brainstem runtime and production-logic reference",
+      "status": "ready"
+    },
+    {
+      "id": "deployment-recipe",
+      "label": "Deployment recipe",
+      "path": "solutions/returns-complaints-resolution/deployment.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/deployment.json",
+      "use": "Easy-mode deployment contract",
+      "status": "ready"
+    },
+    {
+      "id": "field-guide",
+      "label": "Customer field guide",
+      "path": "solutions/returns-complaints-resolution/FIELD-GUIDE.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/FIELD-GUIDE.md",
+      "use": "Facilitation, evidence boundaries, gates, and recovery",
+      "status": "ready"
+    },
+    {
+      "id": "manual-instructions",
+      "label": "Manual global instructions",
+      "path": "solutions/returns-complaints-resolution/manual/GLOBAL-INSTRUCTIONS.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/manual/GLOBAL-INSTRUCTIONS.md",
+      "use": "Reviewed instructions for literal browser construction",
+      "status": "ready"
+    },
+    {
+      "id": "settings",
+      "label": "Copilot Studio settings",
+      "path": "solutions/returns-complaints-resolution/copilot-studio/settings.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/copilot-studio/settings.mcs.yml",
+      "use": "Easy-mode agent settings and instruction copy",
+      "status": "ready"
+    },
+    {
+      "id": "agent-sync",
+      "label": "Copilot Studio component manifest",
+      "path": "solutions/returns-complaints-resolution/copilot-studio/agent.sync.yaml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/copilot-studio/agent.sync.yaml",
+      "use": "Easy-mode component synchronization",
+      "status": "ready"
+    },
+    {
+      "id": "knowledge-aibast-returns-complaints-rules-and-safety",
+      "label": "Aibast Returns Complaints Rules And Safety",
+      "path": "solutions/returns-complaints-resolution/manual/knowledge/aibast_returns-complaints-rules-and-safety.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/manual/knowledge/aibast_returns-complaints-rules-and-safety.md",
+      "use": "Manual knowledge upload",
+      "status": "ready"
+    },
+    {
+      "id": "knowledge-aibast-returns-complaints-synthetic-records",
+      "label": "Aibast Returns Complaints Synthetic Records",
+      "path": "solutions/returns-complaints-resolution/manual/knowledge/aibast_returns-complaints-synthetic-records.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/manual/knowledge/aibast_returns-complaints-synthetic-records.md",
+      "use": "Manual knowledge upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-complaint-classification",
+      "label": "Manual skill: complaint classification",
+      "path": "solutions/returns-complaints-resolution/manual/skills/complaint-classification/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/manual/skills/complaint-classification/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-resolution-recommendation",
+      "label": "Manual skill: resolution recommendation",
+      "path": "solutions/returns-complaints-resolution/manual/skills/resolution-recommendation/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/manual/skills/resolution-recommendation/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-return-processing",
+      "label": "Manual skill: return processing",
+      "path": "solutions/returns-complaints-resolution/manual/skills/return-processing/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/manual/skills/return-processing/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-trend-analysis",
+      "label": "Manual skill: trend analysis",
+      "path": "solutions/returns-complaints-resolution/manual/skills/trend-analysis/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/manual/skills/trend-analysis/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "easy-knowledge-aibast-returns-complaints-rules-and-safety",
+      "label": "Aibast Returns Complaints Rules And Safety",
+      "path": "solutions/returns-complaints-resolution/copilot-studio/capabilities/knowledge/files/aibast_returns-complaints-rules-and-safety.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/copilot-studio/capabilities/knowledge/files/aibast_returns-complaints-rules-and-safety.md",
+      "use": "Copilot Studio knowledge source or synchronization metadata",
+      "status": "ready"
+    },
+    {
+      "id": "easy-knowledge-aibast-returns-complaints-rules-and-safety-md-mcs",
+      "label": "Aibast Returns Complaints Rules And Safety.Md.Mcs",
+      "path": "solutions/returns-complaints-resolution/copilot-studio/capabilities/knowledge/files/aibast_returns-complaints-rules-and-safety.md.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/copilot-studio/capabilities/knowledge/files/aibast_returns-complaints-rules-and-safety.md.mcs.yml",
+      "use": "Copilot Studio knowledge source or synchronization metadata",
+      "status": "ready"
+    },
+    {
+      "id": "easy-knowledge-aibast-returns-complaints-synthetic-records",
+      "label": "Aibast Returns Complaints Synthetic Records",
+      "path": "solutions/returns-complaints-resolution/copilot-studio/capabilities/knowledge/files/aibast_returns-complaints-synthetic-records.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/copilot-studio/capabilities/knowledge/files/aibast_returns-complaints-synthetic-records.md",
+      "use": "Copilot Studio knowledge source or synchronization metadata",
+      "status": "ready"
+    },
+    {
+      "id": "easy-knowledge-aibast-returns-complaints-synthetic-records-md-mcs",
+      "label": "Aibast Returns Complaints Synthetic Records.Md.Mcs",
+      "path": "solutions/returns-complaints-resolution/copilot-studio/capabilities/knowledge/files/aibast_returns-complaints-synthetic-records.md.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/copilot-studio/capabilities/knowledge/files/aibast_returns-complaints-synthetic-records.md.mcs.yml",
+      "use": "Copilot Studio knowledge source or synchronization metadata",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-aggregate-returns-quality-trends-mcs",
+      "label": "Aibast Aggregate Returns Quality Trends.Mcs",
+      "path": "solutions/returns-complaints-resolution/copilot-studio/behaviors/aibast_aggregate-returns-quality-trends.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/copilot-studio/behaviors/aibast_aggregate-returns-quality-trends.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-anonymous-return-review-queue-mcs",
+      "label": "Aibast Anonymous Return Review Queue.Mcs",
+      "path": "solutions/returns-complaints-resolution/copilot-studio/behaviors/aibast_anonymous-return-review-queue.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/copilot-studio/behaviors/aibast_anonymous-return-review-queue.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-human-approved-resolution-options-mcs",
+      "label": "Aibast Human Approved Resolution Options.Mcs",
+      "path": "solutions/returns-complaints-resolution/copilot-studio/behaviors/aibast_human-approved-resolution-options.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/copilot-studio/behaviors/aibast_human-approved-resolution-options.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-privacy-safe-complaint-classification-mcs",
+      "label": "Aibast Privacy Safe Complaint Classification.Mcs",
+      "path": "solutions/returns-complaints-resolution/copilot-studio/behaviors/aibast_privacy-safe-complaint-classification.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/copilot-studio/behaviors/aibast_privacy-safe-complaint-classification.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-evidence-copilot-studio-preview-evidence",
+      "label": "Copilot Studio Preview Evidence",
+      "path": "solutions/returns-complaints-resolution/evals/copilot-studio-preview-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/evals/copilot-studio-preview-evidence.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "manual-evidence",
+      "label": "Manual build evidence",
+      "path": "solutions/returns-complaints-resolution/evals/manual-build-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/evals/manual-build-evidence.json",
+      "use": "Manual identity, inventory, Preview, and Draft-gate evidence",
+      "status": "ready"
+    },
+    {
+      "id": "onepager-map",
+      "label": "Onepager Map",
+      "path": "solutions/returns-complaints-resolution/evals/onepager-map.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/evals/onepager-map.json",
+      "use": "Advertised-promise mapping evidence",
+      "status": "ready"
+    },
+    {
+      "id": "easy-evidence-source-audit",
+      "label": "Source Audit",
+      "path": "solutions/returns-complaints-resolution/evals/source-audit.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/evals/source-audit.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "brainstem-transcripts",
+      "label": "Isolated Brainstem transcripts",
+      "path": "solutions/returns-complaints-resolution/evals/transcripts.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/evals/transcripts.json",
+      "use": "Canonical source-agent acceptance evidence",
+      "status": "ready"
+    },
+    {
+      "id": "manual-browserfilm-manifest",
+      "label": "Manual browserfilm manifest",
+      "path": "solutions/returns-complaints-resolution/screenshots/manual/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/manual/browserfilm.json",
+      "use": "Ordered literal-browser evidence frames",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-01",
+      "label": "Create a blank Copilot Studio agent",
+      "path": "solutions/returns-complaints-resolution/screenshots/manual/01-create-blank-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/manual/01-create-blank-agent.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-02",
+      "label": "Name Returns and Complaints Manual",
+      "path": "solutions/returns-complaints-resolution/screenshots/manual/02-name-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/manual/02-name-agent.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-03",
+      "label": "Enter the reviewed global instructions",
+      "path": "solutions/returns-complaints-resolution/screenshots/manual/03-enter-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/manual/03-enter-instructions.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-04",
+      "label": "Save the instruction policy",
+      "path": "solutions/returns-complaints-resolution/screenshots/manual/04-save-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/manual/04-save-instructions.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-05",
+      "label": "Remove default web search",
+      "path": "solutions/returns-complaints-resolution/screenshots/manual/05-remove-web-search.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/manual/05-remove-web-search.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-06",
+      "label": "Add knowledge: aibast_returns-complaints-rules-and-safety.md",
+      "path": "solutions/returns-complaints-resolution/screenshots/manual/06-add-aibast-returns-complaints-rules-and-safety.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/manual/06-add-aibast-returns-complaints-rules-and-safety.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-07",
+      "label": "Add knowledge: aibast_returns-complaints-synthetic-records.md",
+      "path": "solutions/returns-complaints-resolution/screenshots/manual/07-add-aibast-returns-complaints-synthetic-records.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/manual/07-add-aibast-returns-complaints-synthetic-records.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-08",
+      "label": "Add skill: complaint-classification",
+      "path": "solutions/returns-complaints-resolution/screenshots/manual/08-add-complaint-classification.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/manual/08-add-complaint-classification.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-09",
+      "label": "Add skill: resolution-recommendation",
+      "path": "solutions/returns-complaints-resolution/screenshots/manual/09-add-resolution-recommendation.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/manual/09-add-resolution-recommendation.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-10",
+      "label": "Add skill: return-processing",
+      "path": "solutions/returns-complaints-resolution/screenshots/manual/10-add-return-processing.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/manual/10-add-return-processing.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-11",
+      "label": "Add skill: trend-analysis",
+      "path": "solutions/returns-complaints-resolution/screenshots/manual/11-add-trend-analysis.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/manual/11-add-trend-analysis.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-12",
+      "label": "Review model, skills, knowledge, and safety boundaries",
+      "path": "solutions/returns-complaints-resolution/screenshots/manual/12-review-inventory.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/manual/12-review-inventory.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-13",
+      "label": "Open a fresh Preview conversation",
+      "path": "solutions/returns-complaints-resolution/screenshots/manual/13-open-preview.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/manual/13-open-preview.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-14",
+      "label": "Pass RCR-01: Customer Service Agent",
+      "path": "solutions/returns-complaints-resolution/screenshots/manual/14-rcr-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/manual/14-rcr-01.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-15",
+      "label": "Pass RCR-02: Customer Service Agent",
+      "path": "solutions/returns-complaints-resolution/screenshots/manual/15-rcr-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/manual/15-rcr-02.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-16",
+      "label": "Pass RCR-03: Customer Service Agent",
+      "path": "solutions/returns-complaints-resolution/screenshots/manual/16-rcr-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/manual/16-rcr-03.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-17",
+      "label": "Pass RCR-04: Quality Team",
+      "path": "solutions/returns-complaints-resolution/screenshots/manual/17-rcr-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/manual/17-rcr-04.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-18",
+      "label": "Confirm Draft and stop before publish",
+      "path": "solutions/returns-complaints-resolution/screenshots/manual/18-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/manual/18-confirm-draft.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-browserfilm",
+      "label": "Manual browserfilm",
+      "path": "solutions/returns-complaints-resolution/screenshots/manual/manual-build-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/manual/manual-build-walkthrough.gif",
+      "use": "Animated manual walkthrough",
+      "status": "ready"
+    },
+    {
+      "id": "manual-contact-sheet",
+      "label": "Manual contact sheet",
+      "path": "solutions/returns-complaints-resolution/screenshots/manual/manual-build-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/manual/manual-build-contact-sheet.jpg",
+      "use": "Static manual evidence overview",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-browserfilm-manifest",
+      "label": "Copilot-assisted browserfilm manifest",
+      "path": "solutions/returns-complaints-resolution/screenshots/assisted/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/assisted/browserfilm.json",
+      "use": "Ordered Easy-mode evidence frames",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-browserfilm",
+      "label": "Copilot-assisted browserfilm",
+      "path": "solutions/returns-complaints-resolution/screenshots/assisted/copilot-assisted-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/assisted/copilot-assisted-walkthrough.gif",
+      "use": "Animated Easy-mode walkthrough",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-contact-sheet",
+      "label": "Copilot-assisted contact sheet",
+      "path": "solutions/returns-complaints-resolution/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
+      "use": "Static Easy-mode evidence overview",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-01",
+      "label": "Pass RCR-01: Customer Service Agent",
+      "path": "solutions/returns-complaints-resolution/screenshots/assisted/01-rcr-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/assisted/01-rcr-01.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-02",
+      "label": "Pass RCR-02: Customer Service Agent",
+      "path": "solutions/returns-complaints-resolution/screenshots/assisted/02-rcr-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/assisted/02-rcr-02.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-03",
+      "label": "Pass RCR-03: Customer Service Agent",
+      "path": "solutions/returns-complaints-resolution/screenshots/assisted/03-rcr-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/assisted/03-rcr-03.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-04",
+      "label": "Pass RCR-04: Quality Team",
+      "path": "solutions/returns-complaints-resolution/screenshots/assisted/04-rcr-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/assisted/04-rcr-04.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-05",
+      "label": "Confirm the validated agent remains Draft",
+      "path": "solutions/returns-complaints-resolution/screenshots/assisted/05-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/assisted/05-confirm-draft.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "quest",
+      "label": "Guided field quest",
+      "path": "solutions/returns-complaints-resolution/quest.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/quest.html",
+      "use": "Resumable Easy/Hard customer journey",
+      "status": "ready"
+    },
+    {
+      "id": "manual-tutorial",
+      "label": "Manual browser tutorial",
+      "path": "solutions/returns-complaints-resolution/manual-tutorial.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/manual-tutorial.html",
+      "use": "One action per real manual evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "screenshots-readme",
+      "label": "Screenshot evidence README",
+      "path": "solutions/returns-complaints-resolution/screenshots/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/README.md",
+      "use": "Evidence boundary and capture inventory",
+      "status": "ready"
+    },
+    {
+      "id": "manual-screenshots-readme",
+      "label": "Manual screenshot README",
+      "path": "solutions/returns-complaints-resolution/screenshots/manual/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/manual/README.md",
+      "use": "Manual frame and film inventory",
+      "status": "ready"
+    },
+    {
+      "id": "exports-readme",
+      "label": "Export README",
+      "path": "solutions/returns-complaints-resolution/exports/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/exports/README.md",
+      "use": "Bundle build instructions",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-screenshots-readme",
+      "label": "Assisted screenshot README",
+      "path": "solutions/returns-complaints-resolution/screenshots/assisted/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/returns-complaints-resolution/screenshots/assisted/README.md",
+      "use": "Copilot-assisted evidence inventory",
+      "status": "ready"
+    }
+  ]
+}

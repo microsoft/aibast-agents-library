@@ -1,0 +1,141 @@
+{
+  "solution": "Ask HR Agent",
+  "agent": "@aibast-agents-library/ask-hr",
+  "onepager": "48. Ask HR Agent one-pager.pptx",
+  "agent_files": [
+    "ask_hr_agent"
+  ],
+  "note": "Locked synthetic persona-language case per exposed operation. Prompts avoid operation names and preserve approval boundaries.",
+  "cases": [
+    {
+      "id": "HR-01",
+      "persona": "Employee",
+      "operation": "leave_balance",
+      "onepager_bullet": "Provides personalized, policy-based answers to reduce inquiry volume via 24/7 self-service resolution",
+      "prompt": "What does my fictional leave snapshot show, and what notice rules should I review?",
+      "arguments": {
+        "operation": "leave_balance",
+        "employee_name": "Jordan Chen"
+      },
+      "must_include": [
+        "15.5 days",
+        "Upcoming Company Holidays",
+        "Synthetic HRIS"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "AskHRAgent"
+    },
+    {
+      "id": "HR-02",
+      "persona": "Employee",
+      "operation": "submit_time_off",
+      "onepager_bullet": "Automates core HR transactions like time-off requests to reduce operational costs and increase HR team productivity",
+      "prompt": "Preview five vacation days for September 14 through September 18; do not submit anything.",
+      "arguments": {
+        "operation": "submit_time_off",
+        "employee_name": "Jordan Chen",
+        "start_date": "Sep 14, 2026",
+        "end_date": "Sep 18, 2026",
+        "days": 5
+      },
+      "must_include": [
+        "Not Submitted",
+        "Draft for employee review",
+        "No notification was sent"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "AskHRAgent"
+    },
+    {
+      "id": "HR-03",
+      "persona": "Employee",
+      "operation": "parental_leave",
+      "onepager_bullet": "Provides personalized, policy-based answers to reduce inquiry volume via 24/7 self-service resolution",
+      "prompt": "Explain the published parental-leave example without deciding whether I qualify or asking for family details.",
+      "arguments": {
+        "operation": "parental_leave",
+        "employee_name": "Jordan Chen"
+      },
+      "must_include": [
+        "Eligibility Rule",
+        "Verify tenure",
+        "does not determine eligibility"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "AskHRAgent"
+    },
+    {
+      "id": "HR-04",
+      "persona": "Employee",
+      "operation": "health_insurance",
+      "onepager_bullet": "Provides personalized, policy-based answers to reduce inquiry volume via 24/7 self-service resolution",
+      "prompt": "Summarize the fictional health-plan snapshot and tell me what the benefits administrator must verify.",
+      "arguments": {
+        "operation": "health_insurance",
+        "employee_name": "Jordan Chen"
+      },
+      "must_include": [
+        "Enrollment window",
+        "Verify plan rules",
+        "does not determine eligibility"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "AskHRAgent"
+    },
+    {
+      "id": "HR-05",
+      "persona": "Manager",
+      "operation": "remote_work",
+      "onepager_bullet": "Provides personalized, policy-based answers to reduce inquiry volume via 24/7 self-service resolution",
+      "prompt": "What does the sample remote-work policy say, without inferring why an employee asked?",
+      "arguments": {
+        "operation": "remote_work",
+        "employee_name": "Jordan Chen"
+      },
+      "must_include": [
+        "Standard Allowance",
+        "Requires role, location",
+        "Do not infer caregiver"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "AskHRAgent"
+    },
+    {
+      "id": "HR-06",
+      "persona": "HR Operations Specialist",
+      "operation": "benefits_summary",
+      "onepager_bullet": "Provides personalized, policy-based answers to reduce inquiry volume via 24/7 self-service resolution",
+      "prompt": "Show the fictional benefits snapshot without estimating compensation or making an eligibility decision.",
+      "arguments": {
+        "operation": "benefits_summary",
+        "employee_name": "Jordan Chen"
+      },
+      "must_include": [
+        "No salary",
+        "total-compensation value is inferred",
+        "Synthetic Profile"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "AskHRAgent"
+    }
+  ],
+  "assertion_principle": "Direct tests call each operation with deterministic arguments and assert only source-backed evidence and safety gates."
+}

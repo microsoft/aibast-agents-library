@@ -1,0 +1,123 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:16:42.979348+00:00",
+  "solution": "@aibast-agents-library/account-intelligence",
+  "onepager": "Account Intelligence Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "AccountIntelligenceAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/b2b_sales_stacks/account_intelligence_stack/account_intelligence_agent.py",
+      "sha256": "73401dfb32d10b618b5bfb6f8f26de9b26d86026c20cd4a4308c15922d5c6980"
+    }
+  ],
+  "case_file": "tests/demo_cases/account-intelligence.json",
+  "case_file_sha256": "bb4d4703c72e0c88541bb5c3547d757db8857c2d900ae06b21bbbe615c20a08e",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "AI-01",
+      "persona": "Account Executive",
+      "onepager_promise": "Aggregate business intelligence to uncover sales opportunities in minutes",
+      "prompt": "Prepare a synthetic Acme Corporation account overview and show the evidence that deserves seller attention.",
+      "assistant_response": "## Key Evidence for Seller Attention\n\n**\ud83d\udea8 Immediate Signals:**\n1. **New CTO from AWS** \u2014 Sarah Chen (42 days ago) signals appetite for modern infrastructure/operations change. This is your window before her priorities solidify.\n2. **CEO Digital Transformation Commentary** \u2014 Public earnings statement (12 days ago) = board-level commitment. This unlocks budget and stakeholder alignment.\n3. **Competitor RFP Active** \u2014 Operations platform RFP in flight means deal is open but not decided. Timing is competitive.\n\n**\ud83d\udcca Expansion Math:**\n- Currently spending $1.2M/year but only using 66% of features\n- $2.4M expansion opportunity exists if you unlock adoption + adjacent use cases\n- 73/100 health score = engaged but leaving value on the table\n\n**\ud83d\udca1 Play:**\nReach out to Sarah Chen *this week* with a CTO-level conversation about her digital transformation roadmap. She's 6 weeks into the role\u2014early enough to influence direction, late enough to be dangerous to your incumbency if you wait. Use the earnings call language to frame the context.\n\nReady for stakeholder mapping, value messaging to Sarah, or competitive positioning?",
+      "agent_logs": "[AccountIntelligenceAgent] **Account Overview: Acme Corporation**\n\n| Attribute | Details |\n|---|---|\n| Industry | Manufacturing |\n| Revenue | $2,800,000,000 |\n| Employees | 12,400 globally |\n| HQ | Chicago, IL |\n| Current spend | $1,200,000/year |\n| Opportunity | $2,400,000 expansion |\n\n**Account Health Score: 73/100**\n- Engagement: 100% (30 touchpoints last 30 days)\n- Product adoption: 66% feature utilization\n- Support sentiment: 3.8/5 CSAT\n- Renewal risk: 5%\n\n**Recent Activity:**\n- CEO mentioned digital transformation in Q3 earnings call (12 days ago)\n- New CTO Sarah Chen hired from AWS (42 days ago)\n- Competitor RFP issued for operations platform (30 days ago)\n\nSynthetic source model: [CRM + News Intelligence + LinkedIn]\nAgents: AccountProfileAgent, AccountHealthScoreAgent\n\n**Evidence boundary:** Exact names, values, scores, percentages, news, stakeholder details, and competitor signals are synthetic planning evidence. Messaging is a draft for human review. No CRM record, task, message, meeting, proposal, or customer communication was created or changed.",
+      "expected_agent": "AccountIntelligenceAgent",
+      "must_include": [
+        "Account Overview",
+        "Account Health Score",
+        "Evidence boundary"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "AI-02",
+      "persona": "Account Executive",
+      "onepager_promise": "Perform stakeholder mapping for visibility into purchasing paths and engagement gaps",
+      "prompt": "Map the synthetic Acme buying committee and show the relationship gaps without creating outreach tasks.",
+      "assistant_response": "**Acme Buying Committee Map:**\n\nYou have **8 stakeholders** across 4 influence tiers:\n\n**Decision Makers & Economic Buyers:**\n- **Sarah Chen (CTO)** \u2014 Controls tech budget, new from AWS (6 weeks). No engagement yet.\n- **Lisa Park (CFO)** \u2014 Economic buyer; neutral, only 2 meetings so far.\n- **Tom Bradley (CEO)** \u2014 Executive sponsor; Unknown sentiment, mentioned digital transformation in earnings.\n\n**Champions & Influencers:**\n- **James Miller (VP Operations)** \u2014 Your strongest champion. Recently promoted, 14 meetings, advocated for 3 vendor decisions.\n- **David Wong (IT Director)** \u2014 Positive, 8 meetings.\n- **Kevin Park (VP Engineering)** \u2014 Positive, 5 meetings.\n\n**Gatekeeper & Strategist:**\n- **Rachel Torres (Procurement)** \u2014 Neutral, only 1 meeting (watch the gate).\n- **Maria Lopez (Director of Strategy)** \u2014 Unknown sentiment, no engagement yet.\n\n**Relationship Gaps:**\n1. **Sarah Chen & Tom Bradley** \u2014 Both unknown, both critical (CTO tech decisions + CEO transformation vision). Neither has been introduced formally.\n2. **Maria Lopez** \u2014 Strategy role, zero engagement. Likely shapes requirements.\n3. **Rachel Torres** \u2014 Single touchpoint. Procurement controls flow.\n4. **Lisa Park (CFO)** \u2014 Only 2 meetings despite holding budget sign-off.\n\n**Next step:** Use your champion James to get warm intros to Sarah and Tom, then schedule focused conversations with Maria and Lisa on their priorities.",
+      "agent_logs": "[AccountIntelligenceAgent] **Stakeholder Map (8 contacts):**\n\n| Name | Role | Influence | Sentiment | Engagement |\n|---|---|---|---|---|\n| Sarah Chen | CTO | Decision Maker | Unknown | Schedule intro |\n| James Miller | VP Operations | Champion | Positive | 14 meetings |\n| Lisa Park | CFO | Economic Buyer | Neutral | 2 meetings |\n| David Wong | IT Director | Influencer | Positive | 8 meetings |\n| Rachel Torres | Procurement | Gatekeeper | Neutral | 1 meetings |\n| Kevin Park | VP Engineering | Influencer | Positive | 5 meetings |\n| Maria Lopez | Director of Strategy | Influencer | Unknown | Schedule intro |\n| Tom Bradley | CEO | Executive Sponsor | Unknown | Schedule intro |\n\n**Relationship Gaps:**\n- Sarah Chen (CTO): New hire from AWS, 6 weeks ago. Controls tech budget.\n- Tom Bradley (CEO): Mentioned digital transformation in earnings call.\n\n**Champion Intelligence:**\nJames Miller \u2014 Promoted to VP last quarter. Advocated for 3 vendor decisions.\n\nSynthetic source model: [LinkedIn Sales Navigator + CRM Contacts + Meeting History]\nAgents: StakeholderMappingAgent\n\n**Evidence boundary:** Exact names, values, scores, percentages, news, stakeholder details, and competitor signals are synthetic planning evidence. Messaging is a draft for human review. No CRM record, task, message, meeting, proposal, or customer communication was created or changed.",
+      "expected_agent": "AccountIntelligenceAgent",
+      "must_include": [
+        "Stakeholder Map",
+        "Relationship Gaps",
+        "Evidence boundary"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "AI-03",
+      "persona": "Sales Director",
+      "onepager_promise": "Deliver competitive analysis and positioning recommendations to help sellers effectively differentiate",
+      "prompt": "Compare the synthetic competitor signals and positioning considerations for Acme Corporation.",
+      "assistant_response": "Here's what the synthetic data shows for Acme Corporation:\n\n**Your Positioning Edge:**\n- **94% product fit** vs. competitors' 78\u201382% \u2014 your solution aligns tightly with their needs\n- **Strong relationship** with an established champion, while competitors are still in early or medium conversations\n- **8-week implementation** beats CompetitorA by 6 weeks and CompetitorB by 2 \u2014 meaningful time-to-value\n- **Existing ERP integration** gives you a 3-week head start on technical setup\n\n**Competitor Threats:**\n- **CompetitorA is aggressive** \u2014 they're on-site, discounting 15% below market. This could sway the economic buyer if the deal feels like a commodity buy\n- **CompetitorB is early** but offers premium positioning at +10% above market; they're not an immediate threat yet\n\n**Your Play:**\nLean into implementation speed and industry fit rather than chasing price. Highlight the champion relationship and early start on integration \u2014 those create switching costs and lock in momentum. If discount pressure hits, anchor on time-to-value and risk reduction, not just unit cost.\n\nNeed help building talking points to defend positioning against the discount pressure, or a stakeholder map to identify where you're vulnerable?",
+      "agent_logs": "[AccountIntelligenceAgent] **Competitive Intelligence:**\n\n| Factor | You | CompetitorA | CompetitorB |\n|---|---|---|---|\n| Relationship depth | Strong | Medium | Weak |\n| Product fit | 94% | 78% | 82% |\n| Pricing | Market rate | -15% below market | +10% above market |\n| Implementation | 8 weeks | 14 weeks | 10 weeks |\n\n**Competitor Activity:**\n- CompetitorA: On-site demo last week, aggressive discount offered\n- CompetitorB: Early conversations only, no formal proposal\n\n**Your Advantages:**\n1. Existing integration with customer ERP (3-week head start)\n2. Champion relationship established\n3. Superior customer references in target industry\n\n**Risk Alert:** CompetitorA's discount may appeal to economic buyer.\n\nSynthetic source model: [Competitive Intel + Win/Loss Database]\nAgents: CompetitiveIntelligenceAgent\n\n**Evidence boundary:** Exact names, values, scores, percentages, news, stakeholder details, and competitor signals are synthetic planning evidence. Messaging is a draft for human review. No CRM record, task, message, meeting, proposal, or customer communication was created or changed.",
+      "expected_agent": "AccountIntelligenceAgent",
+      "must_include": [
+        "Competitive Intelligence",
+        "Competitor Activity",
+        "Evidence boundary"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "AI-04",
+      "persona": "Account Executive",
+      "onepager_promise": "Create personalized engagement strategies to empower sellers for every conversation",
+      "prompt": "Draft persona-specific talking points for the synthetic Acme meeting; do not send messages.",
+      "assistant_response": "Done. You've got persona-specific talking points for Sarah Chen (CTO), James Miller (VP Operations), and Lisa Park (CFO)\u2014each tailored to what matters to them: tech fit, internal positioning, and ROI respectively.\n\nThe objection handlers cover price and risk pushback. **Remember: this is synthetic evidence for planning only.** Validate the references and numbers with your actual account data before the meeting.",
+      "agent_logs": "[AccountIntelligenceAgent] **Draft Meeting Talking Points (human review required):**\n\n**For Sarah Chen (CTO \u2014 Tech Vision):**\n- \"Platform aligns with digital transformation roadmap\"\n- \"API-first architecture integrates with existing systems\"\n- \"3 Manufacturing CTO references available for peer conversation\"\n\n**For James Miller (VP Operations \u2014 Internal Positioning):**\n- \"Positions your team as transformation leaders\"\n- \"Executive visibility on project success metrics\"\n- \"Co-innovation partnership opportunity\"\n\n**For Lisa Park (CFO \u2014 ROI):**\n- \"$4,200,000 projected savings over 3 years\"\n- \"8-week implementation vs competitor's longer timeline\"\n- \"Risk-free pilot: 90-day proof of value before full commitment\"\n\n**Objection Handling:**\n- Price concern: \"Total cost of ownership is 23% lower when factoring implementation and support\"\n- Risk concern: \"The synthetic reference set includes comparable examples; validate approved references and outcomes before use\"\n\nSynthetic source model: [Value Engineering + Reference Database]\nAgents: ValueMessagingAgent\n\n**Evidence boundary:** Exact names, values, scores, percentages, news, stakeholder details, and competitor signals are synthetic planning evidence. Messaging is a draft for human review. No CRM record, task, message, meeting, proposal, or customer communication was created or changed.",
+      "expected_agent": "AccountIntelligenceAgent",
+      "must_include": [
+        "Draft Meeting Talking Points",
+        "Objection Handling",
+        "Evidence boundary"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "AI-05",
+      "persona": "Sales Director",
+      "onepager_promise": "Deliver competitive analysis and positioning recommendations to help sellers effectively differentiate",
+      "prompt": "Assess the synthetic Acme deal risks and mitigation options without changing a forecast or CRM record.",
+      "assistant_response": "**Deal risks for Acme (read-only summary):**\n\n**High-severity risks:**\n- **CTO relationship gap** \u2014 Sarah Chen isn't engaged yet; champion intro this week is your immediate move\n- **Competitive pricing pressure** \u2014 CompetitorA is 15% below market; counter with a TCO analysis showing your lower total cost of ownership\n\n**Medium-severity risk:**\n- **CFO ROI validation** \u2014 Finance needs concrete numbers; send a customized ROI calculator\n\n**Current position:** 61% win probability on a $2.4M opportunity. The two high-severity risks are actionable this week\u2014focus on the champion intro and TCO work first.\n\nNo forecast, CRM, or customer records were changed\u2014this is planning-only research.",
+      "agent_logs": "[AccountIntelligenceAgent] **Deal Risk Assessment: Acme Corporation**\n\n| Risk | Severity | Mitigation | Owner |\n|---|---|---|---|\n| No relationship with CTO (Sarah Chen) | High | Champion intro this week | You |\n| CompetitorA pricing pressure (-15% below market) | High | TCO analysis showing lower total cost | You |\n| CFO needs ROI validation | Medium | Send customized ROI calculator | Finance |\n\n**Synthetic Win-Probability Indicator:** 61%\n**Opportunity Value:** $2,400,000\n\n**Immediate Actions:**\n1. Champion intro this week \u2014 You\n2. TCO analysis showing lower total cost \u2014 You\n\nSynthetic source model: [Deal Analytics + Risk Models]\nAgents: DealRiskAssessmentAgent\n\n**Evidence boundary:** Exact names, values, scores, percentages, news, stakeholder details, and competitor signals are synthetic planning evidence. Messaging is a draft for human review. No CRM record, task, message, meeting, proposal, or customer communication was created or changed.",
+      "expected_agent": "AccountIntelligenceAgent",
+      "must_include": [
+        "Deal Risk Assessment",
+        "Immediate Actions",
+        "Evidence boundary"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "AI-06",
+      "persona": "Customer Success Manager",
+      "onepager_promise": "Create personalized engagement strategies to empower sellers for every conversation",
+      "prompt": "Prepare a concise synthetic Acme pre-meeting briefing and review checklist.",
+      "assistant_response": "**Acme Corporation Pre-Meeting Briefing**\n\n**Deal Snapshot**\n- **Opportunity:** $2.4M expansion deal (doubling current $1.2M contract)\n- **Win Probability:** 61% | **Account Health:** 73/100\n- **Status:** Healthy engagement (100%), moderate adoption (66%), low churn risk (5%)\n\n**Key Actions Before the Meeting**\n1. **Champion intro** \u2014 schedule this week with your primary contact\n2. **TCO analysis** \u2014 prepare comparative total-cost-of-ownership showing your cost advantage\n3. **Stakeholder map** \u2014 8 mapped, but 3 need introduction; clarify sponsor and decision authority\n\n**Competitive Posture**\n- 2 active competitors identified\n- Your strength: fit and speed to deployment\n- Focus: differentiate on time-to-value and implementation support\n\n**Risks to Mitigate** (3 identified, 2 critical)\n- Review risk assessment details before the call\n- Have mitigation talking points ready\n\n**Go/No-Go:** Ready to proceed. Confirm champion availability and TCO deck before meeting.\n\n---\n\nNeed deeper intel on stakeholders, competitive positioning, or objection handling? I can pull those separately.",
+      "agent_logs": "[AccountIntelligenceAgent] **Account Intelligence Briefing: Acme Corporation**\n\n**Opportunity Summary:**\n- Deal value: $2,400,000 (expansion from $1,200,000 current)\n- Synthetic win-probability indicator: 61%\n- Account health: 73/100\n\n| Analysis | Key Finding |\n|---|---|\n| Account health | 100% engagement, 66% adoption, 5% churn risk |\n| Stakeholders | 8 mapped, 3 need intro, 1 champions |\n| Competition | 2 active, you lead on fit/speed |\n| Risks | 3 identified, 2 critical |\n\n**Pre-Meeting Checklist:**\n- Champion intro this week\n- TCO analysis showing lower total cost\n\nSynthetic source model: [All Intelligence Systems]\nAgents: BriefingDocumentAgent (orchestrating all agents)\n\n**Evidence boundary:** Exact names, values, scores, percentages, news, stakeholder details, and competitor signals are synthetic planning evidence. Messaging is a draft for human review. No CRM record, task, message, meeting, proposal, or customer communication was created or changed.",
+      "expected_agent": "AccountIntelligenceAgent",
+      "must_include": [
+        "Account Intelligence Briefing",
+        "Pre-Meeting Checklist",
+        "Evidence boundary"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

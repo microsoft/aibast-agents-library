@@ -1,0 +1,92 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/wealth-insights-generator",
+  "display_name": "Wealth Insights Generator Agent",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/financial_services_stacks/wealth_insights_generator_stack/wealth_insights_generator_agent.py",
+  "target_filename": "wealth_insights_generator_agent.py",
+  "expected_tool": "WealthInsightsGeneratorAgent",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "smoke_test": {
+    "prompt": "Give me the fixed market snapshot for the morning huddle and label whether it is current data.",
+    "must_call": "WealthInsightsGeneratorAgent",
+    "must_include": [
+      "NASDAQ Composite",
+      "Fixed Synthetic"
+    ]
+  },
+  "copilot_studio": {
+    "authoring_mode": "manual-upload",
+    "required_connections": [
+      "Dynamics 365 wealth-management CRM",
+      "Approved portfolio aggregation and held-away asset data",
+      "Financial planning and performance systems",
+      "Outlook",
+      "Microsoft Teams specialist review"
+    ],
+    "operations": [
+      "market_brief",
+      "client_insights",
+      "opportunity_alerts",
+      "performance_attribution",
+      "meeting_brief"
+    ],
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_wealth-insights-generator-synthetic-records.md",
+      "manual/knowledge/aibast_wealth-insights-generator-controls-and-review.md"
+    ],
+    "manual_skill_count": 5,
+    "publish_requires_confirmation": true,
+    "safety_gate": "Validate synthetic labels, human review, and no-advice/no-approval/no-transaction behavior before publish.",
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "validated_manual": {
+      "display_name": "Wealth Insights Manual",
+      "bot_id": "a23bab91-3a33-477c-b3e2-35870f711499",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 5,
+      "knowledge_files": 2,
+      "web_search_removed": true,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 5,
+      "preview_cases_total": 5
+    },
+    "validated_pilot": {
+      "display_name": "Wealth Insights Pilot",
+      "schema_name": "aibast_WealthInsightsGeneratorPilo",
+      "bot_id": "e9c2af34-316e-4744-98fe-2e49b3152e4d",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 5,
+      "knowledge_files": 2,
+      "changes_pushed": 8,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 5,
+      "preview_cases_total": 5
+    }
+  },
+  "demo_scenarios": [
+    "wealth-insights-generator-market-brief",
+    "wealth-insights-generator-client-insights",
+    "wealth-insights-generator-opportunity-alerts",
+    "wealth-insights-generator-performance-attribution",
+    "wealth-insights-generator-meeting-brief"
+  ]
+}

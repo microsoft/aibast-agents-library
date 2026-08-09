@@ -12,7 +12,6 @@ import sys, os
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "templates"))
 
 from basic_agent import BasicAgent
-from datetime import datetime, timedelta
 
 # ═══════════════════════════════════════════════════════════════
 # RAPP AGENT MANIFEST
@@ -21,8 +20,8 @@ __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/ai-customer-assistant",
     "version": "1.0.0",
-    "display_name": "AI Customer Assistant",
-    "description": "AI-powered customer service assistant for inquiries, knowledge search, escalation routing, and satisfaction surveys.",
+    "display_name": "Customer Escalations Agent",
+    "description": "Automate back-office contact center escalation workflows to deliver better service outcomes and retention rates.",
     "author": "AIBAST",
     "tags": ["customer-service", "support", "knowledge-base", "escalation", "satisfaction"],
     "category": "general",
@@ -163,6 +162,11 @@ _SATISFACTION_DATA = {
     "trend": {"week_over_week": "+0.2", "month_over_month": "+0.1"},
 }
 
+_READ_ONLY_NOTICE = (
+    "Synthetic decision support only. No customer message is sent, no case is "
+    "changed, and every escalation or response requires an authorized reviewer."
+)
+
 
 # ═══════════════════════════════════════════════════════════════
 # HELPERS
@@ -224,7 +228,16 @@ class AICustomerAssistantAgent(BasicAgent):
         self.name = "AICustomerAssistantAgent"
         self.metadata = {
             "name": self.name,
-            "description": __manifest__["description"],
+            "description": (
+                f"{__manifest__['description']} Always use this tool for a "
+                "back-office customer escalation brief, inherited support case, "
+                "export-error case, knowledge guidance, escalation queue or SLA, "
+                "and service-quality or CSAT review. If the user asks for the "
+                "full brief before responding and gives no inquiry ID, use "
+                "handle_inquiry with the default synthetic INQ-4001. Analyze only "
+                "the synthetic snapshot; never send customer communications, "
+                "update a case, or execute an escalation."
+            ),
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -234,11 +247,22 @@ class AICustomerAssistantAgent(BasicAgent):
                             "handle_inquiry", "knowledge_search",
                             "escalation_routing", "satisfaction_survey",
                         ],
-                        "description": "The customer service operation to perform",
+                        "description": (
+                            "Choose handle_inquiry for a full case or escalation "
+                            "brief before responding; knowledge_search for approved "
+                            "guidance or resolution steps; escalation_routing for "
+                            "the recommended queue, team, or response target; and "
+                            "satisfaction_survey for CSAT, NPS, survey, or service-"
+                            "quality questions."
+                        ),
                     },
                     "inquiry_id": {
                         "type": "string",
-                        "description": "Inquiry ID (e.g. 'INQ-4001')",
+                        "description": (
+                            "Synthetic inquiry ID. Use INQ-4001 for the analytics "
+                            "export-error escalation and INQ-4003 for the urgent "
+                            "SSO migration case."
+                        ),
                     },
                 },
                 "required": ["operation"],
@@ -248,7 +272,8 @@ class AICustomerAssistantAgent(BasicAgent):
 
     def perform(self, **kwargs) -> str:
         op = kwargs.get("operation", "handle_inquiry")
-        inq_id = _resolve_inquiry(kwargs.get("inquiry_id", ""))
+        default_inquiry = "INQ-4003" if op == "escalation_routing" else "INQ-4001"
+        inq_id = _resolve_inquiry(kwargs.get("inquiry_id", default_inquiry))
         dispatch = {
             "handle_inquiry": self._handle_inquiry,
             "knowledge_search": self._knowledge_search,
@@ -282,8 +307,10 @@ class AICustomerAssistantAgent(BasicAgent):
             f"{kb_line}\n"
             f"- Assigned Team: {routing['team']}\n"
             f"- SLA Target: {routing['sla_hours']} hours\n"
-            f"- Auto-Escalate: {'Yes' if routing['auto_escalate'] else 'No'}\n\n"
-            f"Source: [CRM + Knowledge Base + Ticketing System]\nAgents: AICustomerAssistantAgent"
+            f"- Escalation Rule Triggered: {'Yes' if routing['auto_escalate'] else 'No'}\n\n"
+            f"**Review gate:** This recommendation does not execute the route. "
+            f"{_READ_ONLY_NOTICE}\n\n"
+            f"Source: [Synthetic CRM + Knowledge Base + Ticketing Snapshot]\nAgents: AICustomerAssistantAgent"
         )
 
     # ── knowledge_search ───────────────────────────────────────
@@ -307,7 +334,8 @@ class AICustomerAssistantAgent(BasicAgent):
             f"**Resolution Steps:**\n{steps}\n\n"
             f"Last Updated: {top['last_updated'] if top else 'N/A'} | "
             f"Helpful Votes: {top['helpful_votes']:,} / {top['views']:,} views\n\n"
-            f"Source: [Knowledge Base]\nAgents: AICustomerAssistantAgent"
+            f"**Review gate:** {_READ_ONLY_NOTICE}\n\n"
+            f"Source: [Synthetic Knowledge Base]\nAgents: AICustomerAssistantAgent"
         )
 
     # ── escalation_routing ─────────────────────────────────────
@@ -317,7 +345,10 @@ class AICustomerAssistantAgent(BasicAgent):
         all_routes = []
         for cat, priorities in _ROUTING_RULES.items():
             for pri, rule in priorities.items():
-                all_routes.append(f"| {cat} | {pri} | {rule['team']} | {rule['sla_hours']}h |")
+                all_routes.append(
+                    f"| {cat} | {pri} | {rule['team']} | "
+                    f"{rule['sla_hours']} hours |"
+                )
         route_rows = "\n".join(all_routes)
         return (
             f"**Escalation Routing: {inq['id']}**\n\n"
@@ -326,11 +357,13 @@ class AICustomerAssistantAgent(BasicAgent):
             f"| Priority | {inq['priority']} |\n"
             f"| Assigned Team | {routing['team']} |\n"
             f"| SLA Target | {routing['sla_hours']} hours |\n"
-            f"| Auto-Escalate | {'Yes' if routing['auto_escalate'] else 'No'} |\n\n"
+            f"| Escalation Rule Triggered | {'Yes' if routing['auto_escalate'] else 'No'} |\n\n"
             f"**Routing Matrix:**\n\n"
             f"| Category | Priority | Team | SLA |\n|---|---|---|---|\n"
             f"{route_rows}\n\n"
-            f"Source: [Routing Engine + SLA Configuration]\nAgents: AICustomerAssistantAgent"
+            f"**Review gate:** This recommendation does not execute the route. "
+            f"{_READ_ONLY_NOTICE}\n\n"
+            f"Source: [Synthetic Routing Rules + SLA Configuration]\nAgents: AICustomerAssistantAgent"
         )
 
     # ── satisfaction_survey ─────────────────────────────────────
@@ -356,7 +389,8 @@ class AICustomerAssistantAgent(BasicAgent):
             f"| Inquiry | Rating | Comment | Date |\n|---|---|---|---|\n"
             f"{survey_rows}\n"
             f"**Trends:** WoW {data['trend']['week_over_week']}, MoM {data['trend']['month_over_month']}\n\n"
-            f"Source: [Survey Platform + CRM Analytics]\nAgents: AICustomerAssistantAgent"
+            f"All comments are fictional pilot records. {_READ_ONLY_NOTICE}\n\n"
+            f"Source: [Synthetic Survey + CRM Analytics Snapshot]\nAgents: AICustomerAssistantAgent"
         )
 
 

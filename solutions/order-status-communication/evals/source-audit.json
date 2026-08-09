@@ -1,0 +1,35 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/order-status-communication",
+  "audited_source": "agents/@aibast-agents-library/manufacturing_stacks/order_status_communication_stack/order_status_communication_agent.py",
+  "case_file": "tests/demo_cases/order-status-communication.json",
+  "onepager": "44. Order Status Communications Agent one-pager.pptx",
+  "operations": {
+    "order_lookup": [
+      "OS-01"
+    ],
+    "shipment_tracking": [
+      "OS-02"
+    ],
+    "delay_notification": [
+      "OS-03"
+    ],
+    "customer_update": [
+      "OS-04"
+    ]
+  },
+  "defects_fixed": [
+    {
+      "area": "tool routing metadata",
+      "before": "Operations were listed outside the OpenAI parameter contract, leaving persona-language routing underspecified.",
+      "after": "Each operation now has a deterministic enum and persona-oriented description in the tool parameter schema."
+    },
+    {
+      "area": "recommendation-only safety",
+      "before": "Output language could imply execution, assignment, dispatch, movement, supplier action, or outbound communication.",
+      "after": "The agent drafts only; it never changes orders, schedules, shipments, recovery plans, or sends customer updates. Every output labels the fixed data and exact figures as synthetic."
+    }
+  ],
+  "claim_policy": "Public catalog and architecture copy is qualitative. Exact figures and identifiers appear only in clearly labeled synthetic evidence.",
+  "unresolved_defects": []
+}

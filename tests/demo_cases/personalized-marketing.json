@@ -1,0 +1,14 @@
+{
+  "solution": "Personalized Marketing Agent",
+  "agent": "@aibast-agents-library/personalized-marketing",
+  "onepager": "Personalized Marketing Agent one-pager.pptx",
+  "agent_files": ["personalized_marketing_agent"],
+  "note": "One persona-language case per deterministic operation. Prompts do not expose operation names.",
+  "cases": [
+    {"id": "PM-01", "persona": "Marketing Director", "operation": "customer_segmentation", "arguments": {}, "prompt": "As Marketing Director, summarize the aggregate customer groups without demographic traits and identify portfolio review priorities.", "must_include": ["Prepared for:** Marketing Director", "Total Addressable Customers", "no audience is profiled with sensitive attributes"]},
+    {"id": "PM-02", "persona": "Campaign Manager", "operation": "campaign_design", "arguments": {"campaign_id": "CAMP-WINBACK"}, "prompt": "As Campaign Manager, outline the review-only win-back sequence, assumptions, and approval gates.", "must_include": ["Prepared for:** Campaign Manager", "Draft Campaign Design Portfolio", "Win-Back Journey"]},
+    {"id": "PM-03", "persona": "Campaign Manager", "operation": "content_personalization", "arguments": {"segment_id": "SEG-NEW"}, "prompt": "As Campaign Manager, draft neutral content ideas for New Explorers and explain the non-sensitive signals used.", "must_include": ["Draft Content Personalization Matrix", "New Explorers", "Draft Hero Copy"]},
+    {"id": "PM-04", "persona": "Marketing Director", "operation": "performance_analysis", "arguments": {}, "prompt": "As Marketing Director, compare the synthetic tests and call out measurement limitations before any decision.", "must_include": ["Marketing Performance Analysis", "A/B Test Results", "Synthetic aggregate planning data"]}
+  ],
+  "assertion_principle": "Route from persona language, assert deterministic synthetic evidence, and preserve draft-only safety."
+}

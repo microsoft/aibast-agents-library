@@ -1,0 +1,85 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:19:27.259004+00:00",
+  "solution": "@aibast-agents-library/care-gap-closure",
+  "onepager": "32. Care Gap Closure Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "CareGapClosureAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/healthcare_stacks/care_gap_closure_stack/care_gap_closure_agent.py",
+      "sha256": "c47d4fd5aba16df769bc0157c9e10107077e54a4bbfcde9c137b1c991a1a9b00"
+    }
+  ],
+  "case_file": "tests/demo_cases/care-gap-closure.json",
+  "case_file_sha256": "1bdadb805383e84752aeef511969d709f10d2e794b512f58772a62c94919d75c",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "CG-01",
+      "persona": "Quality Manager",
+      "onepager_promise": "Analyze quality measures and surface high-priority gaps",
+      "prompt": "Which synthetic quality measure has the largest evidence-review queue?",
+      "assistant_response": "**SYN-COL** (Synthetic Colorectal Screening Measure) has the largest evidence-review queue with **182 records** requiring review.\n\nThis is followed by SYN-BCS (108 records) and SYN-CDC (53 records). The colorectal measure's gap is partly due to incomplete clinical exclusions and external claims data\u2014typical for screening measures that depend on multi-source verification.\n\nWould you like to organize a review cohort for SYN-COL or draft outreach for specific gaps?",
+      "agent_logs": "[CareGapClosureAgent] # Source-Evidence Gap Analysis\n\n> Synthetic aggregate data only. Measure eligibility, exclusions, clinical interpretation, and outreach approval remain with authorized quality and clinical reviewers. This agent does not diagnose, contact patients, schedule care, or change records.\n\n**Largest evidence-review queue:** SYN-COL \u2014 182 records.\n\n## Synthetic Breast Screening Measure (SYN-BCS)\n- Source population: 400\n- Source-recorded closed: 292\n- Records requiring evidence review: 108\n- Limitation: Eligibility and exclusions are unvalidated synthetic source fields.\n\n## Synthetic Colorectal Screening Measure (SYN-COL)\n- Source population: 520\n- Source-recorded closed: 338\n- Records requiring evidence review: 182\n- Limitation: Clinical exclusions and external claims may be incomplete.\n\n## Synthetic Diabetes Monitoring Measure (SYN-CDC)\n- Source population: 310\n- Source-recorded closed: 257\n- Records requiring evidence review: 53\n- Limitation: Recent labs and measure-year attribution require reviewer validation.\n",
+      "expected_agent": "CareGapClosureAgent",
+      "must_include": [
+        "SYN-BCS",
+        "Records requiring evidence review"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "CG-02",
+      "persona": "Care Coordinator",
+      "onepager_promise": "Stratify outreach based on risk, condition severity, and engagement",
+      "prompt": "Organize the synthetic evidence-review cohorts without clinical risk scoring.",
+      "assistant_response": "Done. I've organized your synthetic evidence-review cohorts into three operational groups:\n\n1. **Multiple Source Gaps (42)** \u2014 mixed evidence; needs staff review before outreach\n2. **Single Source Gap (117)** \u2014 recent evidence may be missing; ready for portal draft  \n3. **Contact Data Review (19)** \u2014 contact preferences unconfirmed; privacy review first\n\nNo clinical risk scoring applied \u2014 this is pure operational triage. Your clinical and quality teams handle eligibility, exclusions, and outreach approval next.",
+      "agent_logs": "[CareGapClosureAgent] # Aggregate Cohort Review\n\n> Synthetic aggregate data only. Measure eligibility, exclusions, clinical interpretation, and outreach approval remain with authorized quality and clinical reviewers. This agent does not diagnose, contact patients, schedule care, or change records.\n\nOrdering is operational triage only, not clinical risk scoring.\n\n## Multiple Source Gaps\n- Synthetic count: 42\n- Evidence barrier: mixed evidence completeness\n- Draft handling route: staff review queue\n\n## Single Source Gap\n- Synthetic count: 117\n- Evidence barrier: recent evidence may be missing\n- Draft handling route: portal draft\n\n## Contact Data Review\n- Synthetic count: 19\n- Evidence barrier: contact preference not confirmed\n- Draft handling route: privacy review queue\n",
+      "expected_agent": "CareGapClosureAgent",
+      "must_include": [
+        "Multiple Source Gaps",
+        "operational triage only"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "CG-03",
+      "persona": "Care Coordinator",
+      "onepager_promise": "Launch targeted multi-channel outreach campaigns with real-time progress tracking",
+      "prompt": "Draft outreach for the synthetic screening measure, but do not send it or state that anyone is eligible.",
+      "assistant_response": "Draft created. This is a template only\u2014no outreach has been sent, and no eligibility statements are included. Before any actual contact, a quality reviewer and clinician must validate records and approve the message content. The template keeps language neutral and invites engagement without claiming someone is due for care.",
+      "agent_logs": "[CareGapClosureAgent] # Outreach Draft\n\n> Synthetic aggregate data only. Measure eligibility, exclusions, clinical interpretation, and outreach approval remain with authorized quality and clinical reviewers. This agent does not diagnose, contact patients, schedule care, or change records.\n\nNo message is sent. Privacy, consent, accessibility, and clinical content require approval.\n\n## Synthetic Breast Screening Measure (SYN-BCS)\n- Draft: We are reviewing our records and invite you to contact the care team if you have questions.\n- Do not state that care is overdue or that the recipient is eligible until a reviewer validates the record.\n- Approval route: quality reviewer \u2192 clinician when needed \u2192 authorized outreach operator.\n",
+      "expected_agent": "CareGapClosureAgent",
+      "must_include": [
+        "No message is sent",
+        "Do not state"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "CG-04",
+      "persona": "Clinical Operations Lead",
+      "onepager_promise": "Analyze care gaps to surface priority measures",
+      "prompt": "Show the qualitative source-completeness dashboard and its limitations.",
+      "assistant_response": "## Dashboard Summary\n\nThe **qualitative source-completeness dashboard** shows how much of each measure's evidence is recorded in your source systems as \"closed\" (documented by the practice):\n\n- **SYN-BCS** (Breast Cancer Screening): 73% of eligible patients have source-recorded closure  \n- **SYN-COL** (Colorectal Cancer Screening): 65% \u2014 lowest completeness  \n- **SYN-CDC** (Chronic Disease Care): 82.9% \u2014 highest completeness  \n\nAll dates are current to July 31, 2026.\n\n---\n\n## Key Limitations\n\n1. **No clinical validation** \u2014 the dashboard reports *what's recorded*, not *what's clinically accurate*. A closed record may be outdated, misattributed, or exclude relevant external claims.\n\n2. **Synthetic data** \u2014 these signals are from your synthetic test environment. Real measure gaps may look different.\n\n3. **Eligibility unvalidated** \u2014 the percentages don't guarantee a patient actually qualifies for the measure. Human reviewers must confirm inclusion/exclusion rules.\n\n4. **No attribution logic** \u2014 especially for SYN-CDC, it doesn't confirm whether recent labs belong to the right patient or measure year.\n\n5. **Outreach-blind** \u2014 the dashboard shows source completeness only. It doesn't determine who needs outreach, which is always a clinical decision made by authorized reviewers.\n\n**Bottom line:** Use this to spot which measures have the weakest source documentation, then route those cohorts to clinical review before any patient contact.",
+      "agent_logs": "[CareGapClosureAgent] # Qualitative Quality Dashboard\n\n> Synthetic aggregate data only. Measure eligibility, exclusions, clinical interpretation, and outreach approval remain with authorized quality and clinical reviewers. This agent does not diagnose, contact patients, schedule care, or change records.\n\n| Measure | Source completeness signal | Evidence date | Reviewer note |\n|---|---:|---|---|\n| SYN-BCS | 73.0% source-recorded closed | 2026-07-31 | Eligibility and exclusions are unvalidated synthetic source fields. |\n| SYN-COL | 65.0% source-recorded closed | 2026-07-31 | Clinical exclusions and external claims may be incomplete. |\n| SYN-CDC | 82.9% source-recorded closed | 2026-07-31 | Recent labs and measure-year attribution require reviewer validation. |",
+      "expected_agent": "CareGapClosureAgent",
+      "must_include": [
+        "SYN-BCS",
+        "source-recorded closed"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

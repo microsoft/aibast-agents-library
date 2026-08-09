@@ -1,0 +1,88 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:46:24.606052+00:00",
+  "solution": "@aibast-agents-library/utility-billing-assistance",
+  "onepager": "27. Utility Billing and Assistance Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "UtilityBillingAssistanceAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/slg_government_stacks/utility_billing_assistance_stack/utility_billing_assistance_agent.py",
+      "sha256": "ff1bddd2b0d822e2237ee0a50909f7fa38d3ee0c60c40e8a4cbc623bfbfef02a"
+    }
+  ],
+  "case_file": "tests/demo_cases/utility-billing-assistance.json",
+  "case_file_sha256": "06362ed47c2cf30f4835499edb21cf9f218f1e939dc084fc6e02b7e856b8ccc7",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "UTILITY_BILLING_ASSISTANCE-01",
+      "persona": "Customer Service Representative",
+      "onepager_promise": null,
+      "prompt": "Explain ACCT-90003 balances without changing the account.",
+      "assistant_response": "**ACCT-90003 Summary:**\n\nThe Thompsons' account is **delinquent** with a total due of **$735.00**:\n- **Past Due:** $489.20 (overdue balance)\n- **Current Charges:** $245.80 (current billing cycle)\n\nThey last paid $135 on November 18, 2024, and auto-pay is not enabled. The delinquent status suggests unpaid invoices beyond the current month. The account covers water, sewer, stormwater, and trash services.\n\nThis is a read-only view \u2014 no changes were made to the account.",
+      "agent_logs": "[UtilityBillingAssistanceAgent] # Billing Inquiry: ACCT-90003\n\n- **Customer:** Robert & Linda Thompson\n- **Address:** 887 Willow Creek Dr\n- **Account Type:** Residential\n- **Services:** Water, Sewer, Stormwater, Trash\n- **Status:** Delinquent\n- **Current Charges:** $245.80\n- **Past Due:** $489.20\n- **Total Due:** $735.00\n- **Auto-Pay:** No\n- **Last Payment:** $135.00 on 2024-11-18\n\n> Read-only synthetic account view. No balance, payment, service, or account record was changed.",
+      "expected_agent": "UtilityBillingAssistanceAgent",
+      "must_include": [
+        "ACCT-90003",
+        "$489.20",
+        "No balance"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "UTILITY_BILLING_ASSISTANCE-02",
+      "persona": "Billing Specialist",
+      "onepager_promise": null,
+      "prompt": "Does ACCT-90003 show a possible leak and what draft adjustment evidence is needed?",
+      "assistant_response": "**Yes, ACCT-90003 shows a possible leak.** Usage jumped from a baseline of ~8,850 gallons to 11,500\u201314,800 gallons over the past six months, with the spike in Nov\u2013Dec.\n\n**Draft adjustment:** $18.55 (pending approval)\n\n**Evidence required to proceed:**\n1. **Documented repair invoice** \u2014 proof the leak was found and fixed\n2. **Utility inspection report** \u2014 or written confirmation from a licensed plumber\n3. **No prior leak adjustment** in the last 24 months on this account\n4. **Billing specialist approval** \u2014 a utility staff member must review and authorize\n\nThe customer would need to submit repair documentation to the billing office. Once verified, the adjustment is applied to that billing period only \u2014 it's not retroactive to earlier bills unless additional evidence justifies it.",
+      "agent_logs": "[UtilityBillingAssistanceAgent] # Usage Analysis: ACCT-90003\n\n**Customer:** Robert & Linda Thompson\n**Usage Trend:** Stable\n\n| Period | Water (gal) | Sewer (gal) | Amount |\n|---|---|---|---|\n| 2024-09 | 8,500 | 7,650 | $145.20 |\n| 2024-10 | 9,200 | 8,280 | $152.80 |\n| 2024-11 | 12,400 | 11,160 | $198.50 |\n| 2024-12 | 14,800 | 13,320 | $232.10 |\n| 2025-01 | 13,200 | 11,880 | $215.40 |\n| 2025-02 | 11,500 | 10,350 | $189.80 |\n\n**Avg Monthly Water Usage:** 11,600 gallons\n**Avg Monthly Bill:** $188.97\n\n## Leak-adjustment screening\n\n- **Anomaly indicator:** REVIEW POSSIBLE LEAK\n- **Baseline used:** 8,850 gallons\n- **Latest usage:** 11,500 gallons\n- **Draft policy estimate:** $18.55, pending repair evidence and billing-specialist approval\n- Required: Documented repair invoice or utility inspection\n- Required: No unresolved leak adjustment in the prior 24 months\n- Required: Billing specialist approval\n\n## Rate Structure\n\n### Water Residential\n\nBase Charge: $18.50\n\n- 0-3,000 gal: $4.25/1,000 gal\n- 3,001-6,000 gal: $6.50/1,000 gal\n- 6,001-10,000 gal: $9.75/1,000 gal\n- Over 10,000 gal: $14.00/1,000 gal\n\n### Water Commercial\n\nBase Charge: $45.00\n\n- 0-10,000 gal: $5.80/1,000 gal\n- 10,001-50,000 gal: $5.25/1,000 gal\n- Over 50,000 gal: $4.90/1,000 gal\n\n### Sewer\n\nBase: $12.75, Rate: $5.10/1,000 gal\n\n### Stormwater\n\n\n### Trash\n\n\n\n> Screening and estimate only. This is not a leak diagnosis, bill adjustment, repair order, or customer notice.",
+      "expected_agent": "UtilityBillingAssistanceAgent",
+      "must_include": [
+        "REVIEW POSSIBLE LEAK",
+        "Draft policy estimate",
+        "not a leak diagnosis"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "UTILITY_BILLING_ASSISTANCE-03",
+      "persona": "Revenue Services Supervisor",
+      "onepager_promise": null,
+      "prompt": "Show ACCT-90003 payment-plan options, but do not set one up.",
+      "assistant_response": "Here are the draft payment-plan options for ACCT-90003. Robert & Linda Thompson have a $489.20 past-due balance with four installment paths ranging from 3 to 12 months.\n\nRemember: these are non-binding previews only. To actually set up a plan, authorized billing staff and the customer must both sign off. Regular charges continue to accrue while payments are being made.",
+      "agent_logs": "[UtilityBillingAssistanceAgent] # Draft Payment Plan Options: ACCT-90003\n\n**Customer:** Robert & Linda Thompson\n**Past Due Balance:** $489.20\n\n## Installment Options\n\n| Installments | Monthly Payment | Total |\n|---|---|---|\n| 3 months | $163.07 | $489.20 |\n| 6 months | $81.53 | $489.20 |\n| 9 months | $54.36 | $489.20 |\n| 12 months | $40.77 | $489.20 |\n\n*Note: Current charges continue to accrue during payment plan.*\n\n## Payment Plan Requirements\n\n- Any customer with past-due balance over $100\n- Maximum installments: 12\n- Documents required: Signed payment agreement\n\n> Options only. No payment arrangement was created; authorized billing staff and the customer must approve it.",
+      "expected_agent": "UtilityBillingAssistanceAgent",
+      "must_include": [
+        "12 months",
+        "No payment arrangement was created"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "UTILITY_BILLING_ASSISTANCE-04",
+      "persona": "Assistance Coordinator",
+      "onepager_promise": null,
+      "prompt": "Screen a two-person household earning 25000 with a 70-year-old applicant.",
+      "assistant_response": "Good news \u2014 this household screens **potentially eligible** for both the **Low-Income Household Water Assistance Program** (up to $1,500) and the **Senior Citizen Rate Discount** (25% off).\n\nAt $25,000 annual income for a 2-person household, they're below both the 150% FPL threshold ($31,725) for LIHWAP and the 200% FPL threshold ($42,300) for the senior discount. The 70-year-old applicant also qualifies for age-based relief.\n\n**Next steps:** Authorized utility staff need to confirm eligibility with income and age verification docs, then enroll them. The Extended Payment Arrangement is also always available if there's a past-due balance over $100.",
+      "agent_logs": "[UtilityBillingAssistanceAgent] # Utility Assistance Programs \u2014 Preliminary Screening\n\n## Low-Income Household Water Assistance Program\n\n- **Eligibility:** Household income at or below 150% FPL\n- **Maximum Benefit:** $1,500\n- **Status:** Accepting Applications\n- **Documents Required:**\n  - Proof of income\n  - Utility bill\n  - ID\n  - Household size verification\n\n## Senior Citizen Rate Discount\n\n- **Eligibility:** Age 65+ and income at or below 200% FPL\n- **Discount:** 25%\n- **Status:** Accepting Applications\n- **Documents Required:**\n  - Proof of age\n  - Proof of income\n  - Utility account number\n\n## COVID-19 Arrearage Forgiveness Program\n\n- **Eligibility:** Past-due balance accrued during March 2020 - December 2023\n- **Maximum Benefit:** $3,000\n- **Status:** Limited Funds\n- **Documents Required:**\n  - Utility account statement\n  - Income verification\n\n## Extended Payment Arrangement\n\n- **Eligibility:** Any customer with past-due balance over $100\n- **Status:** Always Available\n- **Documents Required:**\n  - Signed payment agreement\n\n## Federal Poverty Level Reference (2025)\n\n| Household Size | 100% FPL | 150% FPL | 200% FPL |\n|---|---|---|---|\n| 1 | $15,650 | $23,475 | $31,300 |\n| 2 | $21,150 | $31,725 | $42,300 |\n| 3 | $26,650 | $39,975 | $53,300 |\n| 4 | $32,150 | $48,225 | $64,300 |\n| 5 | $37,650 | $56,475 | $75,300 |\n\n## Applicant screening\n\n- LIHWAP income screen: POTENTIALLY ELIGIBLE\n- Senior discount screen: POTENTIALLY ELIGIBLE\n\n> Screening only. No eligibility determination, application, enrollment, payment plan, or repair appointment has been completed.",
+      "expected_agent": "UtilityBillingAssistanceAgent",
+      "must_include": [
+        "POTENTIALLY ELIGIBLE",
+        "No eligibility determination",
+        "enrollment"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

@@ -15,9 +15,9 @@ from basic_agent import BasicAgent
 __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/client-health-score",
-    "version": "1.0.0",
+    "version": "1.1.1",
     "display_name": "Client Health Score Agent",
-    "description": "Computes client health scores from NPS, margins, utilization, and escalation data to identify at-risk accounts and drive retention strategies.",
+    "description": "Automate client portfolio health monitoring and planning to improve client relationships, protect revenue, and optimize financial performance.",
     "author": "AIBAST",
     "tags": ["client-health", "NPS", "retention", "professional-services", "churn"],
     "category": "professional_services",
@@ -138,6 +138,27 @@ CLIENTS = {
     },
 }
 
+STAKEHOLDERS = {
+    "CL-301": {
+        "executive_sponsor": "Morgan Lee, COO",
+        "account_owner": "Rachel Adams",
+        "delivery_lead": "Elena Vasquez",
+        "next_engagement": "Executive recovery review",
+    },
+    "CL-302": {
+        "executive_sponsor": "Jordan Patel, CFO",
+        "account_owner": "Marcus Reed",
+        "delivery_lead": "Michael Chen",
+        "next_engagement": "Value realization workshop",
+    },
+    "CL-303": {
+        "executive_sponsor": "Taylor Brooks, CIO",
+        "account_owner": "Nina Shah",
+        "delivery_lead": "Priya Sharma",
+        "next_engagement": "Escalation closure and roadmap review",
+    },
+}
+
 
 # ---------------------------------------------------------------------------
 # Helper functions
@@ -196,13 +217,53 @@ class ClientHealthScoreAgent(BasicAgent):
         self.name = "ClientHealthScoreAgent"
         self.metadata = {
             "name": self.name,
-            "description": __manifest__["description"],
+            "description": (
+                "The required tool for any professional-services client, account, relationship, "
+                "or portfolio-health question. Always invoke it instead of giving generic "
+                "guidance when a client-success leader, account manager, or client-experience "
+                "director asks which relationships are healthy, at risk, or critical; what "
+                "engagement signals are weakening, especially executive contact, escalations, "
+                "billing trend, or utilization; which satisfaction trends are moving the wrong "
+                "way; which accounts need intervention and recovery actions; or for a "
+                "stakeholder map and executive engagement plan for turnaround accounts. The "
+                "packaged synthetic portfolio is sufficient. Indicators are decision support, "
+                "not factual predictions, and the tool never contacts clients or changes CRM."
+            ),
             "operations": [
                 "health_dashboard",
                 "engagement_analysis",
                 "satisfaction_trend",
                 "at_risk_clients",
+                "retention_plan",
             ],
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "operation": {
+                        "type": "string",
+                        "enum": [
+                            "health_dashboard",
+                            "engagement_analysis",
+                            "satisfaction_trend",
+                            "at_risk_clients",
+                            "retention_plan",
+                        ],
+                        "description": (
+                            "Choose from the user's persona language, not operation words. "
+                            "health_dashboard: which relationships are healthy, at risk, or "
+                            "critical and where to focus first. engagement_analysis: what "
+                            "engagement signals are weakening across the portfolio, especially "
+                            "executive contact, escalations, declining billing trend, or "
+                            "utilization. satisfaction_trend: which client satisfaction trends "
+                            "are moving the wrong way and what evidence supports it. "
+                            "at_risk_clients: accounts needing intervention now, risk drivers, "
+                            "and first recovery actions. retention_plan: build stakeholder maps, "
+                            "turnaround playbooks, and executive engagement plans."
+                        ),
+                    }
+                },
+                "required": ["operation"],
+            },
         }
         super().__init__(name=self.name, metadata=self.metadata)
 
@@ -213,6 +274,7 @@ class ClientHealthScoreAgent(BasicAgent):
             "engagement_analysis": self._engagement_analysis,
             "satisfaction_trend": self._satisfaction_trend,
             "at_risk_clients": self._at_risk_clients,
+            "retention_plan": self._retention_plan,
         }
         handler = dispatch.get(operation)
         if handler is None:
@@ -228,12 +290,13 @@ class ClientHealthScoreAgent(BasicAgent):
         lines.append(f"**At-risk value:** ${arv:,.0f} ({round(arv/pv*100,1)}%)")
         lines.append(f"**Avg health score:** {_avg_health()}/100\n")
 
-        lines.append("| Client | Annual Value | Health | NPS | Margin | Util % | Risk |")
-        lines.append("|--------|-------------|--------|-----|--------|--------|------|")
+        lines.append("| Client | Annual Value | Health | Churn Indicator | NPS | Margin | Util % | Risk |")
+        lines.append("|--------|-------------|--------|-----------------|-----|--------|--------|------|")
         ranked = sorted(CLIENTS.values(), key=lambda c: c["health_score"])
         for c in ranked:
             lines.append(
                 f"| {c['name']} | ${c['annual_value']:,.0f} | {c['health_score']}/100 | "
+                f"{_churn_probability(c)*100:.0f}% | "
                 f"{c['nps']:+d} | {c['project_margin_pct']}% | {c['utilization_pct']}% | **{c['risk_label']}** |"
             )
 
@@ -241,6 +304,7 @@ class ClientHealthScoreAgent(BasicAgent):
         at_risk = sum(1 for c in CLIENTS.values() if c["risk_label"] == "AT_RISK")
         healthy = sum(1 for c in CLIENTS.values() if c["risk_label"] == "HEALTHY")
         lines.append(f"\n**Distribution:** {critical} critical, {at_risk} at-risk, {healthy} healthy")
+        lines.append("\n> Synthetic scenario indicators, not validated predictions or live CRM scores.")
         return "\n".join(lines)
 
     # ------------------------------------------------------------------
@@ -271,6 +335,7 @@ class ClientHealthScoreAgent(BasicAgent):
                 for f in flags:
                     lines.append(f"- {f}")
                 lines.append("")
+        lines.append("> No client record, task, meeting, or message was created.")
         return "\n".join(lines)
 
     # ------------------------------------------------------------------
@@ -291,6 +356,7 @@ class ClientHealthScoreAgent(BasicAgent):
             for c in declining:
                 drop = round(c["satisfaction_scores"][0] - c["satisfaction_scores"][-1], 1)
                 lines.append(f"- **{c['name']}**: dropped {drop} points over 4 quarters (NPS: {c['nps']:+d})")
+        lines.append("\n> Synthetic survey history; validate source quality before client action.")
         return "\n".join(lines)
 
     # ------------------------------------------------------------------
@@ -326,6 +392,31 @@ class ClientHealthScoreAgent(BasicAgent):
                 lines.append("- Conduct root-cause analysis on negative NPS drivers")
             lines.append(f"- Prepare value-delivered summary (ROI documentation)")
             lines.append("")
+        lines.append("> Recommendations require account-owner approval; churn indicators are not certainties.")
+        return "\n".join(lines)
+
+    # ------------------------------------------------------------------
+    def _retention_plan(self, **kwargs) -> str:
+        lines = ["## Account Retention Playbooks\n"]
+        for cid, stakeholder in STAKEHOLDERS.items():
+            client = CLIENTS[cid]
+            lines.append(f"### {client['name']} — {client['risk_label']}")
+            lines.append(f"- **Executive sponsor:** {stakeholder['executive_sponsor']}")
+            lines.append(f"- **Account owner:** {stakeholder['account_owner']}")
+            lines.append(f"- **Delivery lead:** {stakeholder['delivery_lead']}")
+            lines.append(f"- **Next engagement:** {stakeholder['next_engagement']}")
+            lines.append("- **Prepare:** open-issue summary, value-delivered evidence, and decision log.")
+            if client["exec_meetings_90d"] == 0:
+                lines.append("- **Priority:** propose an executive sponsor meeting within seven days.")
+            if client["escalations_90d"] >= 3:
+                lines.append("- **Recovery:** assign an approved escalation owner and review closure evidence weekly.")
+            if client["nps"] < 0:
+                lines.append("- **Trust:** validate negative feedback themes before proposing corrective commitments.")
+            lines.append("- **Approval gate:** account owner reviews the plan before any client outreach.\n")
+        lines.append(
+            "> Draft planning artifact only; no meeting, message, concession, renewal, "
+            "or CRM update has been created."
+        )
         return "\n".join(lines)
 
 

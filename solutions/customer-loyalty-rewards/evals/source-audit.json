@@ -1,0 +1,10 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/customer-loyalty-rewards",
+  "approved_source": {"onepager": "45. Customer Loyalty and Rewards Agent one-pager.pptx", "sha256": "2487138b852c55f0aeb77a7a4e0a9f186caba5a4d28bc54b1852542abfc25ad3", "snapshot": "state/onepager_content.json", "hash_match": true},
+  "deterministic_source": {"path": "solutions.json", "slot": 43, "canonical_name": "Customer Loyalty Rewards Agent", "matches": true},
+  "routing": {"status": "fixed", "finding": "Program, points, reward-option, and tier workflows each have a direct persona case."},
+  "interface_schema": {"status": "fixed", "finding": "Loyalty, CRM, and marketing personas are explicit and member identifiers are validated."},
+  "behavior": {"status": "fixed", "finding": "Named members and birthday fields were removed; balances and reward options are explicitly informational."},
+  "safety": {"status": "fixed", "finding": "No contact, enrollment, points, tier, offer, reward, redemption, refund, order, or purchase change occurs."}
+}

@@ -1,0 +1,93 @@
+{
+ "solution": "Building Permit Processing Agent",
+ "slot": 44,
+ "agent": "@aibast-agents-library/building-permit-processing",
+ "onepager": "46. Building Permit Processing Agent one-pager.pptx",
+ "agent_files": [
+  "building_permit_processing_agent"
+ ],
+ "note": "Locked demo cases. Each prompt is phrased the way the advertised persona would actually type it - no operation names, no permit ids, no jargon a Permit Technician would not use. Cases were written from the one-pager's own capability bullets and pain statements, then tuned until the agent answered them cold.",
+ "cases": [
+  {
+   "id": "BPP-01",
+   "persona": "Development Services Director",
+   "onepager_bullet": "pain: long processing times and high citizen complaints",
+   "prompt": "Which permit applications have been sitting too long, and which resident is going to complain first?",
+   "must_include": [
+    "BP-2025-0104",
+    "Metro School District",
+    "overdue"
+   ],
+   "must_not_include": [
+    "I don't have access",
+    "give me a permit ID",
+    "share the file"
+   ],
+   "min_words": 40,
+   "expects_agent": "BuildingPermitProcessingAgent"
+  },
+  {
+   "id": "BPP-02",
+   "persona": "Permit Technician",
+   "onepager_bullet": "Classify and validate permit applications at intake",
+   "prompt": "Anything at the front counter I should not be accepting today?",
+   "must_include": [
+    "BP-2025-0105",
+    "duplicate"
+   ],
+   "must_not_include": [
+    "I don't have access",
+    "which permit"
+   ],
+   "min_words": 25,
+   "expects_agent": "BuildingPermitProcessingAgent"
+  },
+  {
+   "id": "BPP-03",
+   "persona": "Permit Technician",
+   "onepager_bullet": "Route requests automatically to the correct review teams",
+   "prompt": "The restaurant fit-out on Harbor Way just came in. Who needs to review it and when is it due back?",
+   "must_include": [
+    "Zoning",
+    "Fire/Life Safety",
+    "21"
+   ],
+   "must_not_include": [
+    "I don't have access"
+   ],
+   "min_words": 20,
+   "expects_agent": "BuildingPermitProcessingAgent"
+  },
+  {
+   "id": "BPP-04",
+   "persona": "Customer Service Lead",
+   "onepager_bullet": "Centralize communication and provide instant updates to applicants",
+   "prompt": "My front desk is drowning in status calls. What can we send out today so people stop calling?",
+   "must_include": [
+    "BP-2025-0104",
+    "Greenfield"
+   ],
+   "must_not_include": [
+    "I don't have access",
+    "I cannot"
+   ],
+   "min_words": 40,
+   "expects_agent": "BuildingPermitProcessingAgent"
+  },
+  {
+   "id": "BPP-05",
+   "persona": "Chief Building Inspector",
+   "onepager_bullet": "Provide inspectors with mobile access and real-time assignments",
+   "prompt": "What inspections are on the board for the solar job, and who is covering them?",
+   "must_include": [
+    "Dave Martinez"
+   ],
+   "must_not_include": [
+    "I don't have access"
+   ],
+   "min_words": 15,
+   "expects_agent": "BuildingPermitProcessingAgent"
+  }
+ ],
+ "assertion_principle": "The tool description and parameters are the ONLY context the Brainstem has about this agent. So: expects_agent proves the description was sufficient to route; must_include is asserted against the agent's own output (deterministic, never the model's prose); must_not_include catches stalls that prove the agent was never called. A routing failure is a defect in the description, not flakiness."
+}

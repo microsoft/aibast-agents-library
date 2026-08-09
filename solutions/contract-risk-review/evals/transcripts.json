@@ -1,0 +1,89 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:02:00.563613+00:00",
+  "solution": "@aibast-agents-library/contract-risk-review",
+  "onepager": "Contract Risk Review Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "ContractRiskReviewAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/professional_services_stacks/contract_risk_review_stack/contract_risk_review_agent.py",
+      "sha256": "4562889c83a43d751961f91af441f79895c83658d47cee30f4c8b47c4e16c5ee"
+    }
+  ],
+  "case_file": "tests/demo_cases/contract-risk-review.json",
+  "case_file_sha256": "7aa95d92acb3ac5d18ffd38e0ebfa0b43c16b290fa57f40a5df8beb673adc0f1",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "CRR-01",
+      "persona": "Legal Operations Director",
+      "onepager_promise": "Perform comprehensive contract analysis to accelerate reviews and highlight critical risks",
+      "prompt": "Which agreements should I put in front of counsel first, and what is driving the priority?",
+      "assistant_response": "## Counsel Priority: Top to Bottom\n\n**1. CTR-5001 | NovaTech Systems (MSA, $25M, Risk 6.5/10) \u2014 URGENT**\n- Highest contract value + highest risk score = greatest exposure\n- 3 high-risk issues flagged\n- You have ~835 days until Year-2 review, but counsel should review now to identify renegotiation leverage before renewal in 2028\n\n**2. CTR-5003 | Atlas Financial Group (MSA, $12M, Risk 5.2/10) \u2014 HIGH**\n- Second-largest value, elevated risk\n- 1 critical issue that will matter at renewal (624 days out)\n- MSA language typically carries forward to future SOWs \u2014 fix it early\n\n**3. CTR-5004 | Orion Defense Systems (IDIQ, $8.5M, Risk 4.1/10) \u2014 MODERATE**\n- Longest term (60 months) spreads exposure over time\n- Lower risk score, no critical issues flagged currently\n- Review ahead of option-year decisions in 2028\n\n**4. CTR-5002 | Meridian Healthcare (SOW, $4.2M, Risk 3.8/10) \u2014 WATCH**\n- Smallest value, shortest term (18 months)\n- No high-risk issues, but renewal is closest (547 days)\n- Begin renewal talks Q1 2027\n\n---\n\n**What's driving priority:**\n- **Contract value** ($25M NovaTech exposure dominates)\n- **Risk score** (both likelihood and impact of the 3 flagged issues in NovaTech)\n- **Time to renewal** (less runway to fix issues = more urgency)\n- **Agreement type** (MSAs set terms for downstream work\u2014fix the foundation first)\n\nWould you like me to drill into what the 3 high-risk issues are in NovaTech, or get a clause-by-clause breakdown of any of these?",
+      "agent_logs": "[ContractRiskReviewAgent] ## Contract Risk Scan\n\n> Synthetic portfolio snapshot: 2026-03-17.\n**Active contracts:** 4\n**Total contract value:** $49,700,000\n**Value at elevated risk (score >= 5.0):** $37,000,000\n\n| Contract | Client | Type | Value | Term | Risk Score | HIGH Issues |\n|----------|--------|------|-------|------|------------|-------------|\n| CTR-5001 | NovaTech Systems | Master Services Agreement | $25,000,000 | 36mo | 6.5/10 | 3 |\n| CTR-5003 | Atlas Financial Group | Master Services Agreement | $12,000,000 | 24mo | 5.2/10 | 1 |\n| CTR-5004 | Orion Defense Systems | IDIQ Task Order | $8,500,000 | 60mo | 4.1/10 | 0 |\n| CTR-5002 | Meridian Healthcare | Statement of Work | $4,200,000 | 18mo | 3.8/10 | 0 |\n\n### Upcoming Renewals\n\n| Contract | Client | Renewal Date | Days Out | Action |\n|----------|--------|-------------|----------|--------|\n| CTR-5002 | Meridian Healthcare | 2027-09-15 | 547 | Begin renewal discussions Q1 2027 |\n| CTR-5003 | Atlas Financial Group | 2027-12-01 | 624 | Address risk clauses before renewal |\n| CTR-5001 | NovaTech Systems | 2028-06-30 | 835 | Renegotiate critical terms at Year-2 review |\n| CTR-5004 | Orion Defense Systems | 2030-03-31 | 1474 | Option-year review in 2028 |\n\n> Review support only; contract decisions require authorized legal counsel.",
+      "expected_agent": "ContractRiskReviewAgent",
+      "must_include": [
+        "NovaTech Systems",
+        "Atlas Financial Group",
+        "Review support only"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "CRR-02",
+      "persona": "Commercial Attorney",
+      "onepager_promise": "Evaluate liability exposure and IP provisions to identify gaps and ensure complete financial protections",
+      "prompt": "Walk me through the liability, IP ownership, and payment-term language that needs attention in the MSA.",
+      "assistant_response": "Here's what needs your attention on **liability, IP, and payment terms**:\n\n### **Liability Cap (CTR-5001 \u2014 NovaTech) \u2014 HIGH RISK**\nYour liability is capped at fees paid in the preceding 12 months (~$2\u20138M), but the annual contract value is $8.3M. This creates exposure: if a critical failure costs $10M to remediate, you're only covered to $8M max. **Move:** Tie the cap to annual contract value or add carve-outs for IP infringement and data breach (those typically sit outside caps).\n\n### **IP Ownership (CTR-5001 \u2014 NovaTech) \u2014 HIGH RISK**\nAll work product\u2014including improvements and derivative works\u2014assigns to the client. That means methodologies, frameworks, or tools you develop *specifically for this engagement* become theirs exclusively. **Move:** Carve out your pre-existing IP (any tool, code, or method you owned before the engagement), and negotiate a license-back for your own use in future work.\n\n### **Payment Terms (CTR-5001 \u2014 NovaTech) \u2014 MEDIUM RISK**\nNet 60 is your standard's opposite of Net 30. On a $25M contract, that's ~$1.4M in cash-flow drag each quarter. **Move:** Push for Net 30 or Net 45 with a 2\u20133% early-pay discount to incentivize faster payment.\n\n**For Atlas Financial (CTR-5003):** Same payment-term principle applies; also flag that indemnification is one-sided (you cover them, they don't cover you).\n\nWant to prep negotiation positions or escalation points for either one?",
+      "agent_logs": "[ContractRiskReviewAgent] ## Clause-Level Risk Analysis\n\n### CTR-5001 -- NovaTech Systems ($25,000,000)\n\n| Section | Clause | Risk | Issue | Recommendation |\n|---------|--------|------|-------|----------------|\n| 7.1 | Liability Cap | **HIGH** | Cap limited to fees paid in preceding 12 months ($2-8M range... | Increase to annual contract value ($8.3M minimum) ... |\n| 8.2 | IP Ownership | **HIGH** | All work product assigned to client including improvements a... | Carve out pre-existing IP; add license-back for cl... |\n| 9.4 | Payment Terms | **MEDIUM** | Net 60 days vs company standard Net 30; creates $1.4M cash-f... | Negotiate to Net 30 or Net 45 with early-pay disco... |\n| 12.1 | Termination | **HIGH** | Client may terminate immediately for any breach with no cure... | Add 30-day cure period for non-material breaches... |\n| 14.3 | SLA Penalties | **MEDIUM** | Penalties uncapped; could exceed monthly fees in extreme sce... | Cap penalties at 10% of monthly fees... |\n| 15.2 | Change Orders | **MEDIUM** | Verbal change approvals accepted; creates scope-creep exposu... | Require written change orders signed by authorized... |\n\n**Summary:** 3 HIGH, 3 MEDIUM risk clauses\n\n### CTR-5003 -- Atlas Financial Group ($12,000,000)\n\n| Section | Clause | Risk | Issue | Recommendation |\n|---------|--------|------|-------|----------------|\n| 5.1 | Indemnification | **HIGH** | One-sided indemnification; we indemnify client but no recipr... | Add mutual indemnification clause... |\n| 6.3 | Data Handling | **MEDIUM** | No data destruction timeline after engagement ends; liabilit... | Add 90-day data destruction clause with certificat... |\n| 11.2 | Non-Compete | **MEDIUM** | 12-month non-compete for similar engagements in financial se... | Narrow scope to specific sub-sector or reduce to 6... |\n\n**Summary:** 1 HIGH, 2 MEDIUM risk clauses\n\n> Synthetic clause excerpts; findings are not legal advice or a complete contract opinion.",
+      "expected_agent": "ContractRiskReviewAgent",
+      "must_include": [
+        "Liability Cap",
+        "IP Ownership",
+        "Payment Terms"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "CRR-03",
+      "persona": "Legal Operations Manager",
+      "onepager_promise": "Evaluate liability exposure and IP provisions to identify gaps and ensure complete financial protections",
+      "prompt": "Compare the available contract evidence with our internal policy and tell me where the file is incomplete.",
+      "assistant_response": "## Summary\n\n**Two contracts have incomplete files:**\n- **CTR-5002 (Meridian Healthcare)** \u2014 no clause evidence packaged\n- **CTR-5004 (Orion Defense Systems)** \u2014 no clause evidence packaged\n\n**Two contracts show gaps against policy:**\n\n1. **CTR-5001 (NovaTech Systems)** \u2014 6 gaps\n   - Liability cap, IP ownership, payment terms, termination cure period, SLA penalties, and change-order language all need work\n\n2. **CTR-5003 (Atlas Financial Group)** \u2014 3 gaps\n   - Missing mutual indemnification, data destruction clause, and non-compete scope is too broad\n\n**Next step:** Collect the missing clause sections for Meridian and Orion, then I can help you prioritize which gaps to tackle first or prepare negotiation briefs for any of them.",
+      "agent_logs": "[ContractRiskReviewAgent] ## Compliance Check Results\n\n### Internal Policy Requirements\n\n| Requirement | Policy Standard |\n|-------------|----------------|\n| Liability Cap Minimum | 5000000 |\n| Payment Terms Max Days | 45 |\n| Ip Preexisting Protection | True |\n| Mutual Indemnification | True |\n| Cure Period Days | 30 |\n| Data Destruction Clause | True |\n| Change Order Written | True |\n| Sla Penalty Cap Pct | 15 |\n\n### Contract Compliance Status\n\n#### CTR-5001 -- NovaTech Systems -- **GAPS FOUND (6)**\n\n| Clause | Section | Severity | Required Action |\n|--------|---------|----------|-----------------|\n| Liability Cap | 7.1 | HIGH | Increase to annual contract value ($8.3M minimum) with carve-outs |\n| IP Ownership | 8.2 | HIGH | Carve out pre-existing IP; add license-back for client-specific derivatives |\n| Payment Terms | 9.4 | MEDIUM | Negotiate to Net 30 or Net 45 with early-pay discount |\n| Termination | 12.1 | HIGH | Add 30-day cure period for non-material breaches |\n| SLA Penalties | 14.3 | MEDIUM | Cap penalties at 10% of monthly fees |\n| Change Orders | 15.2 | MEDIUM | Require written change orders signed by authorized representatives |\n\n#### CTR-5002 -- Meridian Healthcare -- **REVIEW REQUIRED**\n\nNo clause evidence is packaged for this contract; no compliance conclusion can be made.\n\n#### CTR-5003 -- Atlas Financial Group -- **GAPS FOUND (3)**\n\n| Clause | Section | Severity | Required Action |\n|--------|---------|----------|-----------------|\n| Indemnification | 5.1 | HIGH | Add mutual indemnification clause |\n| Data Handling | 6.3 | MEDIUM | Add 90-day data destruction clause with certification |\n| Non-Compete | 11.2 | MEDIUM | Narrow scope to specific sub-sector or reduce to 6 months |\n\n#### CTR-5004 -- Orion Defense Systems -- **REVIEW REQUIRED**\n\nNo clause evidence is packaged for this contract; no compliance conclusion can be made.\n\n> Internal-policy screening only; this is not a legal or regulatory compliance determination.",
+      "expected_agent": "ContractRiskReviewAgent",
+      "must_include": [
+        "Internal Policy Requirements",
+        "REVIEW REQUIRED",
+        "CTR-5002"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "CRR-04",
+      "persona": "General Counsel",
+      "onepager_promise": "Recommend amendments and negotiation strategies to strengthen contract positions and limit legal costs",
+      "prompt": "Prepare the negotiation positions, fallbacks, and escalation points for the highest-risk agreements.",
+      "assistant_response": "## Summary: Negotiation Positions for Highest-Risk Agreements\n\n**Two agreements account for $37M in elevated risk:**\n\n### **CTR-5001 \u2014 NovaTech Systems ($25M, Risk 6.5/10)**\n\n| Layer | Position |\n|-------|----------|\n| **Non-Negotiables** | \u2022 Liability cap \u2192 annual contract value ($8.3M minimum with carve-outs)<br>\u2022 IP ownership \u2192 exclude pre-existing IP; add license-back for derivatives<br>\u2022 Termination \u2192 add 30-day cure for non-material breaches |\n| **Fallback** | Concede on payment terms / SLA penalties if all 3 non-negotiables locked |\n| **Escalation** | General Counsel if liability cap stalls |\n\n### **CTR-5003 \u2014 Atlas Financial Group ($12M, Risk 5.2/10)**\n\n| Layer | Position |\n|-------|----------|\n| **Non-Negotiable** | Mutual indemnification clause |\n| **Preferred** | \u2022 Data destruction (90-day with certification)<br>\u2022 Non-compete narrowed (6 months or sub-sector limit) |\n| **Escalation** | General Counsel if indemnification blocked |\n\n**Next step:** Share these briefs with your legal team and use them as a baseline for client conversations. The renewal dates (2028 and 2027 respectively) give you lead time\u2014start discussions with NovaTech in Q3 2027 and Atlas by Q2 2027.",
+      "agent_logs": "[ContractRiskReviewAgent] ## Contract Risk Scan\n\n> Synthetic portfolio snapshot: 2026-03-17.\n**Active contracts:** 4\n**Total contract value:** $49,700,000\n**Value at elevated risk (score >= 5.0):** $37,000,000\n\n| Contract | Client | Type | Value | Term | Risk Score | HIGH Issues |\n|----------|--------|------|-------|------|------------|-------------|\n| CTR-5001 | NovaTech Systems | Master Services Agreement | $25,000,000 | 36mo | 6.5/10 | 3 |\n| CTR-5003 | Atlas Financial Group | Master Services Agreement | $12,000,000 | 24mo | 5.2/10 | 1 |\n| CTR-5004 | Orion Defense Systems | IDIQ Task Order | $8,500,000 | 60mo | 4.1/10 | 0 |\n| CTR-5002 | Meridian Healthcare | Statement of Work | $4,200,000 | 18mo | 3.8/10 | 0 |\n\n### Upcoming Renewals\n\n| Contract | Client | Renewal Date | Days Out | Action |\n|----------|--------|-------------|----------|--------|\n| CTR-5002 | Meridian Healthcare | 2027-09-15 | 547 | Begin renewal discussions Q1 2027 |\n| CTR-5003 | Atlas Financial Group | 2027-12-01 | 624 | Address risk clauses before renewal |\n| CTR-5001 | NovaTech Systems | 2028-06-30 | 835 | Renegotiate critical terms at Year-2 review |\n| CTR-5004 | Orion Defense Systems | 2030-03-31 | 1474 | Option-year review in 2028 |\n\n> Review support only; contract decisions require authorized legal counsel.\n[ContractRiskReviewAgent] ## Renegotiation Brief\n\n### CTR-5001 -- NovaTech Systems\n- **Value:** $25,000,000 over 36 months\n- **Risk score:** 6.5/10\n- **Governing law:** Delaware\n- **Renewal:** 2028-06-30\n\n**Non-Negotiable Amendments (must resolve):**\n1. **Liability Cap** (Section 7.1): Increase to annual contract value ($8.3M minimum) with carve-outs\n2. **IP Ownership** (Section 8.2): Carve out pre-existing IP; add license-back for client-specific derivatives\n3. **Termination** (Section 12.1): Add 30-day cure period for non-material breaches\n\n**Preferred Amendments:**\n1. **Payment Terms** (Section 9.4): Negotiate to Net 30 or Net 45 with early-pay discount\n2. **SLA Penalties** (Section 14.3): Cap penalties at 10% of monthly fees\n3. **Change Orders** (Section 15.2): Require written change orders signed by authorized representatives\n\n**Negotiation strategy:**\n- Lead with non-negotiable items; concede on lower-priority terms if needed\n- Fallback: accept current value on MEDIUM items if all HIGH items resolved\n- Escalation path: General Counsel review if impasse on liability cap\n\n### CTR-5003 -- Atlas Financial Group\n- **Value:** $12,000,000 over 24 months\n- **Risk score:** 5.2/10\n- **Governing law:** California\n- **Renewal:** 2027-12-01\n\n**Non-Negotiable Amendments (must resolve):**\n1. **Indemnification** (Section 5.1): Add mutual indemnification clause\n\n**Preferred Amendments:**\n1. **Data Handling** (Section 6.3): Add 90-day data destruction clause with certification\n2. **Non-Compete** (Section 11.2): Narrow scope to specific sub-sector or reduce to 6 months\n\n**Negotiation strategy:**\n- Lead with non-negotiable items; concede on lower-priority terms if needed\n- Fallback: accept current value on MEDIUM items if all HIGH items resolved\n- Escalation path: General Counsel review if impasse on liability cap\n\n**Total contract value requiring renegotiation:** $37,000,000\n\n> Draft positions for authorized counsel review; no amendment has been sent or accepted.",
+      "expected_agent": "ContractRiskReviewAgent",
+      "must_include": [
+        "Non-Negotiable Amendments",
+        "General Counsel",
+        "Draft positions"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

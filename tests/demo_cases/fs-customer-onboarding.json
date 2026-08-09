@@ -1,0 +1,96 @@
+{
+  "solution": "Customer Onboarding Agent",
+  "agent": "@aibast-agents-library/fs-customer-onboarding",
+  "onepager": "Customer Onboarding Agent one-pager.pptx",
+  "agent_files": [
+    "customer_onboarding_fs_agent"
+  ],
+  "note": "Persona-language locked cases, exactly one per implemented operation. Prompts avoid operation names and assertions pin deterministic synthetic evidence plus safety boundaries.",
+  "cases": [
+    {
+      "id": "FCO-01",
+      "persona": "Compliance Officer",
+      "operation": "kyc_verification",
+      "onepager_bullet": "Automate identity verification, document collection, and analysis",
+      "prompt": "What is holding up the enhanced due diligence case, and which checks need my review?",
+      "must_include": [
+        "APP-6003",
+        "PEP"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "FSCustomerOnboardingAgent",
+      "arguments": {
+        "application_id": "APP-6003"
+      }
+    },
+    {
+      "id": "FCO-02",
+      "persona": "Onboarding Specialist",
+      "operation": "account_setup",
+      "onepager_bullet": "Configure accounts, treasury services, and credit facilities",
+      "prompt": "Which approved-looking file is ready for account setup review, and what product is being prepared?",
+      "must_include": [
+        "APP-6004",
+        "Basic Savings"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "FSCustomerOnboardingAgent",
+      "arguments": {}
+    },
+    {
+      "id": "FCO-03",
+      "persona": "Relationship Manager",
+      "operation": "document_checklist",
+      "onepager_bullet": "Automate identity verification, document collection, and analysis",
+      "prompt": "Give me the business onboarding document list for Blackwood before I call them.",
+      "must_include": [
+        "APP-6002",
+        "Beneficial ownership"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "FSCustomerOnboardingAgent",
+      "arguments": {
+        "application_id": "APP-6002"
+      }
+    },
+    {
+      "id": "FCO-04",
+      "persona": "Head of Onboarding",
+      "operation": "onboarding_status",
+      "onepager_bullet": "Gain real-time updates on client profiles and KYC processes",
+      "prompt": "Where is the onboarding queue stuck, and who owns each application?",
+      "must_include": [
+        "APP-6001",
+        "APP-6003"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "FSCustomerOnboardingAgent",
+      "arguments": {}
+    }
+  ],
+  "assertion_principle": "Routing is proven by the expected tool; deterministic source output proves capability coverage. All records are synthetic and every consequential action remains behind human review."
+}

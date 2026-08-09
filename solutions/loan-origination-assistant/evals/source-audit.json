@@ -1,0 +1,39 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/loan-origination-assistant",
+  "audited_source": "agents/@aibast-agents-library/financial_services_stacks/loan_origination_assistant_stack/loan_origination_assistant_agent.py",
+  "source_sha256": "c85fb1844a55344306be2bef47eee104dfb66a589befadcd48214785df6a89a5",
+  "case_file": "tests/demo_cases/loan-origination-assistant.json",
+  "onepager": "40. Loan Origination Assistant one-pager.pptx",
+  "operations": {
+    "application_review": [
+      "LOA-01"
+    ],
+    "credit_analysis": [
+      "LOA-02"
+    ],
+    "document_verification": [
+      "LOA-03"
+    ],
+    "decision_recommendation": [
+      "LOA-04"
+    ],
+    "condition_tracking": [
+      "LOA-05"
+    ]
+  },
+  "defects_fixed": [
+    "Expanded tool routing descriptions so persona-language requests map to the intended operation.",
+    "Aligned implemented operations with approved one-pager promises and added missing decision-support workflows where needed.",
+    "Added synthetic-data labels, explicit human review, and no-advice/no-approval/no-transaction boundaries.",
+    "Rejected unknown record identifiers instead of silently substituting another fictional record.",
+    "Added exact persona-language routing phrases, operation selection guidance, and synthetic entity-to-identifier mappings for strict-isolation capture."
+  ],
+  "unresolved_defects": [],
+  "routing_result": {
+    "cases_passed": 5,
+    "cases_total": 5,
+    "strict_isolation": true,
+    "loaded_tool": "LoanOriginationAssistantAgent"
+  }
+}

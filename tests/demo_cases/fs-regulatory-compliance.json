@@ -1,0 +1,92 @@
+{
+ "solution": "Regulatory Compliance Agent",
+ "slot": 40,
+ "agent": "@aibast-agents-library/fs-regulatory-compliance",
+ "onepager": "43. Regulatory Compliance Agent one-pager.pptx",
+ "agent_files": [
+  "regulatory_compliance_fs_agent"
+ ],
+ "note": "Locked demo cases, one per advertised one-pager bullet plus the executive framing. Phrased the way a Chief Compliance Officer or Trading Desk Supervisor actually talks - nobody types an operation name.",
+ "cases": [
+  {
+   "id": "RC-01",
+   "persona": "Chief Compliance Officer",
+   "onepager_bullet": "pain: manual review created delays and increased audit risk",
+   "prompt": "Are we going to fail our next MiFID audit? What's actually broken on the desk right now?",
+   "must_include": [
+    "T-2041",
+    "T-2233"
+   ],
+   "must_not_include": [
+    "I don't have access",
+    "provide the trade",
+    "give me a trade",
+    "which trade would you"
+   ],
+   "min_words": 50,
+   "assertion_note": "Assert ONLY on identifiers the agent computed (trader ids). The LLM's prose varies run to run, so thematic words like 'reporting' or regime names like 'RTS 22' make a good answer flake red. Entities are stable because they come from the agent, not the model.",
+   "expects_agent": "FSRegulatoryCompliance"
+  },
+  {
+   "id": "RC-02",
+   "persona": "Trading Desk Supervisor",
+   "onepager_bullet": "Identify upcoming certification expirations and enroll traders",
+   "prompt": "Which of my traders can't legally trade today, and who do I have to call?",
+   "must_include": [
+    "T-2041",
+    "T-2233"
+   ],
+   "must_not_include": [
+    "I don't have access",
+    "provide the trader"
+   ],
+   "min_words": 30,
+   "expects_agent": "FSRegulatoryCompliance"
+  },
+  {
+   "id": "RC-03",
+   "persona": "Compliance Manager",
+   "onepager_bullet": "Scan all executed trades for reporting accuracy, required fields, and best-execution performance",
+   "prompt": "We executed a few hundred trades this week. Which ones will the regulator reject, and why exactly?",
+   "must_include": [
+    "TRD-88133",
+    "field"
+   ],
+   "must_not_include": [
+    "I don't have access",
+    "upload"
+   ],
+   "min_words": 40,
+   "expects_agent": "FSRegulatoryCompliance"
+  },
+  {
+   "id": "RC-04",
+   "persona": "Head of Quant Execution",
+   "onepager_bullet": "Flag missing or outdated documentation",
+   "prompt": "Is anything about to go live that shouldn't?",
+   "must_include": [
+    "ALGO-POV-NL"
+   ],
+   "must_not_include": [
+    "I don't have access"
+   ],
+   "min_words": 25,
+   "expects_agent": "FSRegulatoryCompliance"
+  },
+  {
+   "id": "RC-05",
+   "persona": "Chief Risk Officer",
+   "onepager_bullet": "Automate corrections and submissions to the regulatory portal",
+   "prompt": "My head of trading says the reporting is fine. Prove him wrong with specifics I can take to the board.",
+   "must_include": [
+    "TRD-88133"
+   ],
+   "must_not_include": [
+    "I don't have access"
+   ],
+   "min_words": 60,
+   "expects_agent": "FSRegulatoryCompliance"
+  }
+ ],
+ "assertion_principle": "The tool description and parameters are the ONLY context the Brainstem has about this agent. So: expects_agent proves the description was sufficient to route; must_include is asserted against the agent's own output (deterministic, never the model's prose); must_not_include catches stalls that prove the agent was never called. A routing failure is a defect in the description, not flakiness."
+}

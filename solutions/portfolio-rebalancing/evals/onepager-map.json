@@ -1,0 +1,56 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/portfolio-rebalancing",
+  "onepager": "Portfolio Rebalancing Agent one-pager.pptx",
+  "source_slide_sha256": "4d004e7168c5a133cd31fbd9edb08ec6830e6beece452f4c2ff01f37e2211e20",
+  "promises": [
+    {
+      "advertised_promise": "Detect portfolio drift and analyze risk to keep client portfolios aligned to investment goals",
+      "operations": [
+        "portfolio_analysis",
+        "rebalance_recommendation"
+      ],
+      "demo_cases": [
+        "PRB-01",
+        "PRB-02"
+      ],
+      "synthetic_evidence": [
+        "Portfolio drift analysis returns deterministic fictional identifiers and review context",
+        "Rebalancing candidates returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    },
+    {
+      "advertised_promise": "Find tax-loss harvesting opportunities to maximize returns and minimize tax exposure",
+      "operations": [
+        "tax_impact",
+        "tax_loss_harvest"
+      ],
+      "demo_cases": [
+        "PRB-03",
+        "PRB-04"
+      ],
+      "synthetic_evidence": [
+        "Illustrative tax impact returns deterministic fictional identifiers and review context",
+        "Tax-loss-harvesting candidates returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    },
+    {
+      "advertised_promise": "Generate rebalancing plans and model retirement success outcomes",
+      "operations": [
+        "retirement_scenario",
+        "execution_plan"
+      ],
+      "demo_cases": [
+        "PRB-05",
+        "PRB-06"
+      ],
+      "synthetic_evidence": [
+        "Retirement scenario inputs returns deterministic fictional identifiers and review context",
+        "Human-controlled implementation checklist returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    }
+  ]
+}

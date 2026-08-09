@@ -14,9 +14,9 @@ from basic_agent import BasicAgent
 __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/emission-tracking",
-    "version": "1.0.0",
-    "display_name": "Emission Tracking Agent",
-    "description": "Monitors GHG emissions by facility, tracks regulatory compliance, develops reduction plans, and analyzes carbon offset opportunities.",
+    "version": "1.1.0",
+    "display_name": "Emissions Tracking Agent",
+    "description": "Analyze a synthetic facility emissions inventory for scope dashboards, threshold screening, reduction scenarios, and carbon-offset due diligence. Use for sustainability and emissions-planning questions. The agent never verifies an emissions claim, declares legal compliance, purchases credits, or files disclosures; qualified reviewers must approve source-backed conclusions through future authenticated tools.",
     "author": "AIBAST",
     "tags": ["emissions", "carbon", "compliance", "ghg", "sustainability", "energy"],
     "category": "energy",
@@ -111,9 +111,20 @@ REGULATIONS = {
 # Helpers
 # ---------------------------------------------------------------------------
 
-def _emissions_dashboard():
+def _selected_facilities(facility_id=None):
+    if facility_id:
+        query = facility_id.casefold()
+        return {
+            fid: facility
+            for fid, facility in FACILITIES.items()
+            if query == fid.casefold() or query in facility["name"].casefold()
+        }
+    return FACILITIES
+
+
+def _emissions_dashboard(facility_id=None):
     dashboard = []
-    for fid, f in FACILITIES.items():
+    for fid, f in _selected_facilities(facility_id).items():
         s1 = f["emissions"]["scope_1"]["co2_tonnes"]
         s2 = f["emissions"]["scope_2"]["co2_tonnes"]
         s3 = f["emissions"]["scope_3"]["co2_tonnes"]
@@ -128,9 +139,9 @@ def _emissions_dashboard():
     return {"facilities": dashboard, "total_emissions": total_all}
 
 
-def _compliance_status():
+def _compliance_status(facility_id=None):
     statuses = []
-    for fid, f in FACILITIES.items():
+    for fid, f in _selected_facilities(facility_id).items():
         s1 = f["emissions"]["scope_1"]["co2_tonnes"]
         threshold = f["regulatory_threshold_co2"]
         compliant = s1 <= threshold
@@ -147,9 +158,9 @@ def _compliance_status():
     return {"statuses": statuses}
 
 
-def _reduction_plan():
+def _reduction_plan(facility_id=None):
     plans = []
-    for fid, f in FACILITIES.items():
+    for fid, f in _selected_facilities(facility_id).items():
         s1 = f["emissions"]["scope_1"]["co2_tonnes"]
         target = round(f["baseline_co2"] * (1 - f["reduction_target_pct"] / 100))
         remaining = max(0, s1 - target)
@@ -180,9 +191,9 @@ def _reduction_plan():
     return {"plans": plans}
 
 
-def _carbon_offset_analysis():
+def _carbon_offset_analysis(facility_id=None):
     total_gap = 0
-    for f in FACILITIES.values():
+    for f in _selected_facilities(facility_id).values():
         s1 = f["emissions"]["scope_1"]["co2_tonnes"]
         target = round(f["baseline_co2"] * (1 - f["reduction_target_pct"] / 100))
         total_gap += max(0, s1 - target)
@@ -208,7 +219,7 @@ class EmissionTrackingAgent(BasicAgent):
     """GHG emission monitoring and compliance tracking agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/emission-tracking"
+        self.name = "EmissionTrackingAgent"
         self.metadata = {
             "name": self.name,
             "description": __manifest__["description"],
@@ -223,11 +234,11 @@ class EmissionTrackingAgent(BasicAgent):
                             "reduction_plan",
                             "carbon_offset_analysis",
                         ],
-                        "description": "The emission tracking operation to perform.",
+                        "description": "Choose emissions_dashboard for scope totals, compliance_status for non-legal threshold screening, reduction_plan for draft scenarios, or carbon_offset_analysis for credit due diligence.",
                     },
                     "facility_id": {
                         "type": "string",
-                        "description": "Optional facility ID to filter results.",
+                        "description": "Optional synthetic facility ID or facility-name substring, such as FAC-E03 or Ridgeline. Unknown values return an empty result.",
                     },
                 },
                 "required": ["operation"],
@@ -237,18 +248,19 @@ class EmissionTrackingAgent(BasicAgent):
 
     def perform(self, **kwargs) -> str:
         op = kwargs.get("operation", "emissions_dashboard")
+        facility_id = kwargs.get("facility_id")
         if op == "emissions_dashboard":
-            return self._emissions_dashboard()
+            return self._emissions_dashboard(facility_id)
         elif op == "compliance_status":
-            return self._compliance_status()
+            return self._compliance_status(facility_id)
         elif op == "reduction_plan":
-            return self._reduction_plan()
+            return self._reduction_plan(facility_id)
         elif op == "carbon_offset_analysis":
-            return self._carbon_offset_analysis()
+            return self._carbon_offset_analysis(facility_id)
         return f"**Error:** Unknown operation `{op}`."
 
-    def _emissions_dashboard(self) -> str:
-        data = _emissions_dashboard()
+    def _emissions_dashboard(self, facility_id=None) -> str:
+        data = _emissions_dashboard(facility_id)
         lines = [
             "# Emissions Dashboard",
             "",
@@ -262,10 +274,12 @@ class EmissionTrackingAgent(BasicAgent):
                 f"| {f['name']} | {f['type']} | {f['scope_1']:,} | {f['scope_2']:,} "
                 f"| {f['scope_3']:,} | {f['total']:,} | {f['pct_of_threshold']}% |"
             )
+        lines.append("")
+        lines.append("> Synthetic inventory, not verified emissions evidence. Validate boundaries, factors, units, and source records before making a claim.")
         return "\n".join(lines)
 
-    def _compliance_status(self) -> str:
-        data = _compliance_status()
+    def _compliance_status(self, facility_id=None) -> str:
+        data = _compliance_status(facility_id)
         lines = [
             "# Compliance Status",
             "",
@@ -273,16 +287,18 @@ class EmissionTrackingAgent(BasicAgent):
             "|----------|-------------|-----------|-----------|-----|-----------------|--------|",
         ]
         for s in data["statuses"]:
-            comp = "YES" if s["compliant"] else "NO"
+            comp = "BELOW SCREENING THRESHOLD" if s["compliant"] else "ABOVE SCREENING THRESHOLD"
             track = "On Track" if s["on_track"] else "Behind"
             lines.append(
                 f"| {s['name']} | {s['scope_1_co2']:,} | {s['threshold']:,} "
                 f"| {comp} | {s['gap_tonnes']:,} | {s['target_reduction_pct']}% | {s['actual_reduction_pct']}% ({track}) |"
             )
+        lines.append("")
+        lines.append("> Screening result only; it is not a legal compliance determination or an emissions claim.")
         return "\n".join(lines)
 
-    def _reduction_plan(self) -> str:
-        data = _reduction_plan()
+    def _reduction_plan(self, facility_id=None) -> str:
+        data = _reduction_plan(facility_id)
         lines = ["# Emission Reduction Plans", ""]
         for p in data["plans"]:
             if not p["actions"]:
@@ -295,10 +311,11 @@ class EmissionTrackingAgent(BasicAgent):
             for a in p["actions"]:
                 lines.append(f"| {a['action']} | {a['reduction_tonnes']:,} | ${a['cost_mm']}M |")
             lines.append("")
+        lines.append("> Scenario estimates require engineering, finance, environmental, and executive review before action.")
         return "\n".join(lines)
 
-    def _carbon_offset_analysis(self) -> str:
-        data = _carbon_offset_analysis()
+    def _carbon_offset_analysis(self, facility_id=None) -> str:
+        data = _carbon_offset_analysis(facility_id)
         lines = [
             "# Carbon Offset Analysis",
             "",
@@ -314,6 +331,8 @@ class EmissionTrackingAgent(BasicAgent):
                 f"| {o['project']} | {o['type']} | {o['credits']:,} "
                 f"| ${o['price']:.2f} | ${o['total_cost']:,} | {o['verified_by']} |"
             )
+        lines.append("")
+        lines.append("> Due-diligence shortlist only. No credit purchase, retirement, disclosure, or offset claim has been made.")
         return "\n".join(lines)
 
 

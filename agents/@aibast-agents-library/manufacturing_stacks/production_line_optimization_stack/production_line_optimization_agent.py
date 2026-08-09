@@ -16,9 +16,9 @@ from basic_agent import BasicAgent
 __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/production-line-optimization",
-    "version": "1.0.0",
-    "display_name": "Production Line Optimization Agent",
-    "description": "Analyzes production line OEE, identifies bottleneck stations, and generates throughput optimization plans with shift-level scheduling.",
+    "version": "1.1.0",
+    "display_name": "Product Line Optimization Agent",
+    "description": "Provide intelligent production capacity analysis and optimization planning to boost throughput and efficiency while maintaining quality.",
     "author": "AIBAST",
     "tags": ["production", "OEE", "bottleneck", "throughput", "manufacturing"],
     "category": "manufacturing",
@@ -152,13 +152,48 @@ class ProductionLineOptimizationAgent(BasicAgent):
         self.name = "ProductionLineOptimizationAgent"
         self.metadata = {
             "name": self.name,
-            "description": __manifest__["description"],
+            "description": (
+                "The manufacturing production-line performance agent. Use this for questions "
+                "about which line needs attention, OEE, availability, performance, quality, "
+                "actual versus design output, lost throughput, station cycle time, takt time, "
+                "bottlenecks, defect patterns, improvement options, operator allocation, or "
+                "shift plans. It covers three synthetic lines: Electronics Assembly Line A, "
+                "Metal Fabrication Line B, and Polymer Molding Line C. Use line_efficiency for "
+                "the plant-wide operating view and questions like 'what needs attention today'; "
+                "bottleneck_analysis for the constraining station and supporting evidence; "
+                "throughput_optimization for process, equipment, and quality response options; "
+                "and shift_planning for day, swing, and night production planning."
+            ),
             "operations": [
                 "line_efficiency",
                 "bottleneck_analysis",
                 "throughput_optimization",
                 "shift_planning",
             ],
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "operation": {
+                        "type": "string",
+                        "enum": [
+                            "line_efficiency",
+                            "bottleneck_analysis",
+                            "throughput_optimization",
+                            "shift_planning",
+                        ],
+                        "description": (
+                            "line_efficiency: compare plant-wide OEE, output, availability, "
+                            "performance, and quality to identify which line needs attention. "
+                            "bottleneck_analysis: identify the constraining station on each line "
+                            "using cycle time, takt time, and defect evidence. "
+                            "throughput_optimization: compare practical process, equipment, and "
+                            "quality improvement options. shift_planning: create the day, swing, "
+                            "and night production and staffing view."
+                        ),
+                    },
+                },
+                "required": ["operation"],
+            },
         }
         super().__init__(name=self.name, metadata=self.metadata)
 

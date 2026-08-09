@@ -1,0 +1,89 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:25:23.679554+00:00",
+  "solution": "@aibast-agents-library/inventory-visibility",
+  "onepager": "34. Inventory Visibility Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "inventory-visibility-agent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/retail_cpg_stacks/inventory_visibility_stack/inventory_visibility_agent.py",
+      "sha256": "1a304f4a9ca127c6d4109f39ef3d16d4ad6d528b7a605e9f3a6bf7a73f13d673"
+    }
+  ],
+  "case_file": "tests/demo_cases/inventory-visibility.json",
+  "case_file_sha256": "ea396237ab99c0959da69d62e8916816b2deec76b43424b7385aebf378c71353",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "IV-01",
+      "persona": "Inventory Planner",
+      "onepager_promise": null,
+      "prompt": "As Inventory Planner, summarize the store snapshot and verification boundary.",
+      "assistant_response": "## Summary\n\n**Store Snapshot:**\nFour stores tracked with 8 SKUs each. Downtown Flagship leads with healthy 11\u201316 day supply across all items. Smaller stores (Northshore, Oakbrook, Michigan Ave) run leaner with 2\u20139 day supply, typical for secondary locations.\n\n**Verification Boundary:**\n- **Green flag**: All locations meeting or exceeding safety stock thresholds (HEALTHY status) *except*:\n  - **STR-003 (Oakbrook)**: SKU-1005 (Running Shoes) \u2014 7 units, 2.6 days supply, status **LOW**\n  - **STR-004 (Michigan Ave)**: SKU-1001 (Denim Jacket) and SKU-1004 (Fitness Tracker) both **LOW**\n\n- **Action trigger**: These three LOW flags signal stores approaching or below safety stock. Recommend replenishment transfer from Downtown Flagship (STR-001) before stock-outs in fast-moving apparel and electronics.\n\n- **Data caveat**: This is synthetic data \u2014 verify against your system of record before committing transfers or purchase orders.",
+      "agent_logs": "[inventory-visibility-agent] **Prepared for:** Inventory Planner\n**Role focus:** network balance, replenishment scenarios, and planning assumptions\n\n> Synthetic inventory snapshot. Read-only recommendations only; no stock is reserved, transferred, replenished, allocated, promised, or purchased. Verify all quantities in the system of record before action.\n\n# Inventory Visibility Snapshot\n\n## Downtown Flagship (`STR-001`)\n\n| SKU | Product | On-Hand | Safety Stock | Status | Days of Supply |\n|-----|---------|---------|--------------|--------|----------------|\n| SKU-1001 | Classic Denim Jacket | 74 | 30 | HEALTHY | 11.9 |\n| SKU-1002 | Wireless Earbuds Pro | 132 | 50 | HEALTHY | 13.5 |\n| SKU-1003 | Organic Cotton T-Shirt | 210 | 80 | HEALTHY | 14.5 |\n| SKU-1004 | Smart Fitness Tracker | 45 | 20 | HEALTHY | 14.5 |\n| SKU-1005 | Premium Running Shoes | 38 | 15 | HEALTHY | 14.1 |\n| SKU-1006 | Stainless Water Bottle | 195 | 70 | HEALTHY | 16.2 |\n| SKU-1007 | Leather Crossbody Bag | 61 | 25 | HEALTHY | 13.9 |\n| SKU-1008 | UV Protection Sunglasses | 88 | 35 | HEALTHY | 12.1 |\n\n## Northshore Mall (`STR-002`)\n\n| SKU | Product | On-Hand | Safety Stock | Status | Days of Supply |\n|-----|---------|---------|--------------|--------|----------------|\n| SKU-1001 | Classic Denim Jacket | 35 | 15 | HEALTHY | 5.6 |\n| SKU-1002 | Wireless Earbuds Pro | 67 | 30 | HEALTHY | 6.8 |\n| SKU-1003 | Organic Cotton T-Shirt | 98 | 45 | HEALTHY | 6.8 |\n| SKU-1004 | Smart Fitness Tracker | 22 | 10 | HEALTHY | 7.1 |\n| SKU-1005 | Premium Running Shoes | 14 | 8 | HEALTHY | 5.2 |\n| SKU-1006 | Stainless Water Bottle | 110 | 40 | HEALTHY | 9.2 |\n| SKU-1007 | Leather Crossbody Bag | 29 | 12 | HEALTHY | 6.6 |\n| SKU-1008 | UV Protection Sunglasses | 53 | 20 | HEALTHY | 7.3 |\n\n## Oakbrook Center (`STR-003`)\n\n| SKU | Product | On-Hand | Safety Stock | Status | Days of Supply |\n|-----|---------|---------|--------------|--------|----------------|\n| SKU-1001 | Classic Denim Jacket | 18 | 10 | HEALTHY | 2.9 |\n| SKU-1002 | Wireless Earbuds Pro | 41 | 20 | HEALTHY | 4.2 |\n| SKU-1003 | Organic Cotton T-Shirt | 65 | 30 | HEALTHY | 4.5 |\n| SKU-1004 | Smart Fitness Tracker | 9 | 5 | HEALTHY | 2.9 |\n| SKU-1005 | Premium Running Shoes | 7 | 5 | LOW | 2.6 |\n| SKU-1006 | Stainless Water Bottle | 72 | 25 | HEALTHY | 6.0 |\n| SKU-1007 | Leather Crossbody Bag | 15 | 8 | HEALTHY | 3.4 |\n| SKU-1008 | UV Protection Sunglasses | 30 | 12 | HEALTHY | 4.1 |\n\n## Michigan Ave Express (`STR-004`)\n\n| SKU | Product | On-Hand | Safety Stock | Status | Days of Supply |\n|-----|---------|---------|--------------|--------|----------------|\n| SKU-1001 | Classic Denim Jacket | 12 | 8 | LOW | 1.9 |\n| SKU-1002 | Wireless Earbuds Pro | 28 | 15 | HEALTHY | 2.9 |\n| SKU-1003 | Organic Cotton T-Shirt | 44 | 20 | HEALTHY | 3.0 |\n| SKU-1004 | Smart Fitness Tracker | 6 | 4 | LOW | 1.9 |\n| SKU-1005 | Premium Running Shoes | 5 | 3 | HEALTHY | 1.9 |\n| SKU-1006 | Stainless Water Bottle | 55 | 20 | HEALTHY | 4.6 |\n| SKU-1007 | Leather Crossbody Bag | 8 | 5 | HEALTHY | 1.8 |\n| SKU-1008 | UV Protection Sunglasses | 19 | 10 | HEALTHY | 2.6 |\n\n**Total Network Inventory:** 26,315 units across 6 locations",
+      "expected_agent": null,
+      "must_include": [
+        "Prepared for:** Inventory Planner",
+        "Inventory Visibility Snapshot",
+        "no stock is reserved"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "IV-02",
+      "persona": "Store Manager",
+      "onepager_promise": null,
+      "prompt": "As Store Manager, identify urgent review candidates without issuing transfer or replenishment commands.",
+      "assistant_response": "**Review priorities for you:**\n\n- **Michigan Ave Express** has two items trending toward critical (1.9 days each): Classic Denim Jacket and Smart Fitness Tracker. Check recent sales velocity and upcoming promotions.\n- **Oakbrook Center** Premium Running Shoes at 2.6 days \u2014 monitor closely over the next 48 hours.\n\nNo out-of-stock or critical items flagged yet, so you have a window to assess before they escalate. Let me know which of these you want to dig deeper on \u2014 I can pull the replenishment or transfer readiness for any of them without executing anything.",
+      "agent_logs": "[inventory-visibility-agent] **Prepared for:** Store Manager\n**Role focus:** store-level exceptions and practical review priorities\n\n> Synthetic inventory snapshot. Read-only recommendations only; no stock is reserved, transferred, replenished, allocated, promised, or purchased. Verify all quantities in the system of record before action.\n\n# Draft Stock Review\n\n## Critical & Out-of-Stock Candidates\n\n| Location | SKU | Product | On-Hand | Safety Stock | Status | Action Required |\n|----------|-----|---------|---------|--------------|--------|-----------------|\n\n**Total Alerts:** 0\n**Review guidance:** Use `Review replenishment candidate` for an out-of-stock item and `Review transfer candidate` for a critical item; neither phrase executes an inventory change.\n\n## Low-Stock Warnings\n\n- **Oakbrook Center** / Premium Running Shoes: 2.6 days remaining\n- **Michigan Ave Express** / Classic Denim Jacket: 1.9 days remaining\n- **Michigan Ave Express** / Smart Fitness Tracker: 1.9 days remaining\n\n**Low-Stock Warnings:** 3",
+      "expected_agent": null,
+      "must_include": [
+        "Prepared for:** Store Manager",
+        "Draft Stock Review",
+        "Review transfer candidate"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "IV-03",
+      "persona": "Inventory Planner",
+      "onepager_promise": null,
+      "prompt": "As Inventory Planner, show the fourteen-day replenishment scenario and its assumptions.",
+      "assistant_response": "## Key Assumptions\n\n1. **14-day target = 14x average daily sales per SKU/store** \u2014 builds buffer for demand variance and supplier lead time.\n\n2. **Current stock vs. target** \u2014 replenish quantity = target \u2212 current on hand. Negative gaps trigger immediate replenishment.\n\n3. **Single source (WH-CENTRAL)** \u2014 all pulls from warehouse; 1-day lead for STR-001 & STR-004 (closer), 2-day for STR-002 & STR-003 (farther).\n\n4. **Cost-per-unit fixed** \u2014 pricing reflects your current catalog; actual cost depends on supplier agreements.\n\n5. **No safety stock multiplier applied** \u2014 if you want additional buffer (e.g., 18-day coverage), target increases proportionally.\n\n**Next steps:**\n- Review gap size: STR-003 and STR-004 have the largest deficits (high-priority replenishment).\n- Approve or adjust targets before purchase orders go out.\n- Check lead times against demand forecast for accuracy.\n\nIs there a specific store or SKU you want to drill into?",
+      "agent_logs": "[inventory-visibility-agent] **Prepared for:** Inventory Planner\n**Role focus:** network balance, replenishment scenarios, and planning assumptions\n\n> Synthetic inventory snapshot. Read-only recommendations only; no stock is reserved, transferred, replenished, allocated, promised, or purchased. Verify all quantities in the system of record before action.\n\n# Draft Replenishment Plan\n\n**Target:** 14-day supply at each store\n\n## Downtown Flagship (`STR-001`)\n\n| SKU | Product | Current | Target | Replenish Qty | Source | Lead Time | Est. Cost |\n|-----|---------|---------|--------|---------------|--------|-----------|-----------|\n| SKU-1001 | Classic Denim Jacket | 74 | 86 | 12 | WH-CENTRAL | 1d | $414.00 |\n| SKU-1002 | Wireless Earbuds Pro | 132 | 137 | 5 | WH-CENTRAL | 1d | $93.75 |\n| SKU-1008 | UV Protection Sunglasses | 88 | 102 | 14 | WH-CENTRAL | 1d | $172.20 |\n\n## Northshore Mall (`STR-002`)\n\n| SKU | Product | Current | Target | Replenish Qty | Source | Lead Time | Est. Cost |\n|-----|---------|---------|--------|---------------|--------|-----------|-----------|\n| SKU-1001 | Classic Denim Jacket | 35 | 86 | 51 | WH-CENTRAL | 1d | $1,759.50 |\n| SKU-1002 | Wireless Earbuds Pro | 67 | 137 | 70 | WH-CENTRAL | 1d | $1,312.50 |\n| SKU-1003 | Organic Cotton T-Shirt | 98 | 203 | 105 | WH-CENTRAL | 1d | $861.00 |\n| SKU-1004 | Smart Fitness Tracker | 22 | 43 | 21 | WH-CENTRAL | 1d | $882.00 |\n| SKU-1005 | Premium Running Shoes | 14 | 37 | 23 | WH-CENTRAL | 1d | $1,265.00 |\n| SKU-1006 | Stainless Water Bottle | 110 | 168 | 58 | WH-CENTRAL | 1d | $394.40 |\n| SKU-1007 | Leather Crossbody Bag | 29 | 61 | 32 | WH-CENTRAL | 1d | $880.00 |\n| SKU-1008 | UV Protection Sunglasses | 53 | 102 | 49 | WH-CENTRAL | 1d | $602.70 |\n\n## Oakbrook Center (`STR-003`)\n\n| SKU | Product | Current | Target | Replenish Qty | Source | Lead Time | Est. Cost |\n|-----|---------|---------|--------|---------------|--------|-----------|-----------|\n| SKU-1001 | Classic Denim Jacket | 18 | 86 | 68 | WH-CENTRAL | 2d | $2,346.00 |\n| SKU-1002 | Wireless Earbuds Pro | 41 | 137 | 96 | WH-CENTRAL | 2d | $1,800.00 |\n| SKU-1003 | Organic Cotton T-Shirt | 65 | 203 | 138 | WH-CENTRAL | 2d | $1,131.60 |\n| SKU-1004 | Smart Fitness Tracker | 9 | 43 | 34 | WH-CENTRAL | 2d | $1,428.00 |\n| SKU-1005 | Premium Running Shoes | 7 | 37 | 30 | WH-CENTRAL | 2d | $1,650.00 |\n| SKU-1006 | Stainless Water Bottle | 72 | 168 | 96 | WH-CENTRAL | 2d | $652.80 |\n| SKU-1007 | Leather Crossbody Bag | 15 | 61 | 46 | WH-CENTRAL | 2d | $1,265.00 |\n| SKU-1008 | UV Protection Sunglasses | 30 | 102 | 72 | WH-CENTRAL | 2d | $885.60 |\n\n## Michigan Ave Express (`STR-004`)\n\n| SKU | Product | Current | Target | Replenish Qty | Source | Lead Time | Est. Cost |\n|-----|---------|---------|--------|---------------|--------|-----------|-----------|\n| SKU-1001 | Classic Denim Jacket | 12 | 86 | 74 | WH-CENTRAL | 1d | $2,553.00 |\n| SKU-1002 | Wireless Earbuds Pro | 28 | 137 | 109 | WH-CENTRAL | 1d | $2,043.75 |\n| SKU-1003 | Organic Cotton T-Shirt | 44 | 203 | 159 | WH-CENTRAL | 1d | $1,303.80 |\n| SKU-1004 | Smart Fitness Tracker | 6 | 43 | 37 | WH-CENTRAL | 1d | $1,554.00 |\n| SKU-1005 | Premium Running Shoes | 5 | 37 | 32 | WH-CENTRAL | 1d | $1,760.00 |\n| SKU-1006 | Stainless Water Bottle | 55 | 168 | 113 | WH-CENTRAL | 1d | $768.40 |\n| SKU-1007 | Leather Crossbody Bag | 8 | 61 | 53 | WH-CENTRAL | 1d | $1,457.50 |\n| SKU-1008 | UV Protection Sunglasses | 19 | 102 | 83 | WH-CENTRAL | 1d | $1,020.90 |\n\n**Estimated Total Replenishment Cost:** $32,257.40",
+      "expected_agent": null,
+      "must_include": [
+        "Draft Replenishment Plan",
+        "14-day supply",
+        "Estimated Total Replenishment Cost"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "IV-04",
+      "persona": "Category Manager",
+      "onepager_promise": null,
+      "prompt": "As Category Manager, compare the channel planning scenario without reserving any stock.",
+      "assistant_response": "**Key insight for your category:**  \nWithout reservations, all 2,409 units float freely across channels based on demand. The allocation above shows a *suggested* weight split\u2014but crucially, **no inventory is locked to any channel**. \n\nThis creates both opportunity and risk:\n- \u2705 **Flexibility**: In-store can pull from online if foot traffic spikes; marketplace can backfill if channels dip\n- \u26a0\ufe0f **Contention**: High-demand channels (in-store, online) can starve BOPIS or marketplace mid-week if you don't monitor daily\n\n**For SKU-1001 specifically:**  \nYou have ~3.3\u20133.4 days of coverage across all channels. At current demand velocity, you'll need replenishment within 3 weeks to avoid stockout. If in-store demand accelerates (seasonal, promotion, etc.), online fulfillment latency will increase.\n\nWould you like me to pull **replenishment timing** or **stock alerts** for this category to see what's at risk?",
+      "agent_logs": "[inventory-visibility-agent] **Prepared for:** Category Manager\n**Role focus:** category health, availability patterns, and tradeoffs\n\n> Synthetic inventory snapshot. Read-only recommendations only; no stock is reserved, transferred, replenished, allocated, promised, or purchased. Verify all quantities in the system of record before action.\n\n# Channel Allocation Scenario\n\n**SKU:** SKU-1001 \u2014 Classic Denim Jacket\n**Total Network Inventory:** 2,409 units\n\n| Channel | Weight | Allocated Units | Daily Demand Avg | Days Coverage |\n|---------|--------|-----------------|------------------|---------------|\n| In Store | 45% | 1,086 | 320 | 3.4 |\n| Online Ship | 30% | 722 | 215 | 3.4 |\n| Bopis | 15% | 361 | 108 | 3.3 |\n| Marketplace | 10% | 240 | 72 | 3.3 |\n\n## Allocation Recommendations\n\n- **In-Store Scenario:** Model a larger share for flagship and mall demand\n- **Online Buffer:** Model a three-day planning buffer for e-commerce\n- **BOPIS Buffer:** Model a pickup buffer; do not reserve units\n- **Marketplace Review:** Model a cap to reduce channel conflict",
+      "expected_agent": null,
+      "must_include": [
+        "Prepared for:** Category Manager",
+        "Channel Allocation Scenario",
+        "do not reserve units"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-08-08T11:27:25.346Z",
+  "solution": "@aibast-agents-library/personalized-marketing",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "Personalized Marketing Manual",
+    "bot_id": "22c712b6-7501-4034-9539-2fb52c718228",
+    "created": true
+  },
+  "target_model": "Claude Sonnet 4.6",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 4,
+      "confirmed": 4
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "PM-01",
+      "prompt": "As Marketing Director, summarize the aggregate customer groups without demographic traits and identify portfolio review priorities.",
+      "must_include": [
+        "Prepared for:** Marketing Director",
+        "Total Addressable Customers",
+        "no audience is profiled with sensitive attributes"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "14-pm-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "PM-02",
+      "prompt": "As Campaign Manager, outline the review-only win-back sequence, assumptions, and approval gates.",
+      "must_include": [
+        "Prepared for:** Campaign Manager",
+        "Draft Campaign Design Portfolio",
+        "Win-Back Journey"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "15-pm-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "PM-03",
+      "prompt": "As Campaign Manager, draft neutral content ideas for New Explorers and explain the non-sensitive signals used.",
+      "must_include": [
+        "Draft Content Personalization Matrix",
+        "New Explorers",
+        "Draft Hero Copy"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "16-pm-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "PM-04",
+      "prompt": "As Marketing Director, compare the synthetic tests and call out measurement limitations before any decision.",
+      "must_include": [
+        "Marketing Performance Analysis",
+        "A/B Test Results",
+        "Synthetic aggregate planning data"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "17-pm-04.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/personalized-marketing/screenshots/manual/browserfilm.json",
+    "gif": "solutions/personalized-marketing/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/personalized-marketing/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "18-confirm-draft.jpg"
+  }
+}

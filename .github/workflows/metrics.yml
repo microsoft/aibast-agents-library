@@ -1,0 +1,70 @@
+name: Metrics Snapshot
+
+on:
+  schedule:
+    - cron: '20 5 * * *'  # 5:20 AM UTC daily
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/build_metrics.py'
+      - 'metrics.html'
+      - '.github/workflows/metrics.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metrics-snapshot
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Collect public metrics
+        # GitHub's traffic endpoints (clones, views, popular paths) require a
+        # token with repository administration read access. The Actions
+        # GITHUB_TOKEN cannot be granted that — `administration` is not a valid
+        # workflow permission — so it returns 403 for traffic and only the CDN,
+        # release and catalog metrics refresh.
+        #
+        # To unlock live clone counts in CI, add a fine-grained PAT scoped to
+        # this repository with "Administration: read", stored as METRICS_TOKEN:
+        #     gh secret set METRICS_TOKEN
+        #
+        # Without it, build_metrics.py reuses the last successful traffic read
+        # recorded in state/metrics_history.json, so figures never zero out —
+        # they just stop advancing until an authorized run happens.
+        env:
+          GITHUB_TOKEN: ${{ secrets.METRICS_TOKEN || secrets.GITHUB_TOKEN }}
+        run: python scripts/build_metrics.py
+
+      - name: Report traffic source
+        run: |
+          python - <<'PY'
+          import json
+          t = json.load(open('state/metrics.json'))['traffic']
+          if t.get('live'):
+              print('traffic read live from the GitHub API')
+          else:
+              print(f"traffic unavailable (no METRICS_TOKEN) - reusing last read from {t.get('as_of')}")
+          PY
+
+      - name: Commit snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state/metrics.json state/metrics_history.json
+          if git diff --staged --quiet; then
+            echo "No metrics change"
+          else
+            git commit -m "chore: metrics snapshot $(date -u +%Y-%m-%d)"
+            git push
+          fi

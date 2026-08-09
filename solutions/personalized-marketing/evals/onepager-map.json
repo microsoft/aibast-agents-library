@@ -1,0 +1,32 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/personalized-marketing",
+  "onepager": "Personalized Marketing Agent one-pager.pptx",
+  "source_slide_sha256": "23919bc754c1151fb7d83ca300caeea6b6dadd4372733ceb8da30c859e222d50",
+  "source_audit": {
+    "approved_slide_hash_match": true,
+    "deterministic_source": "solutions.json",
+    "deterministic_slot": 14,
+    "content_snapshot": "state/onepager_content.json"
+  },
+  "promises": [
+    {
+      "advertised_promise": "Perform advanced customer segmentation to target high-value groups and maximize ROI",
+      "operations": ["customer_segmentation"],
+      "demo_cases": ["PM-01"],
+      "synthetic_evidence": ["Aggregate segment size, spend, order, category, channel, and engagement signals", "No age, gender, contact detail, or sensitive trait"]
+    },
+    {
+      "advertised_promise": "Generate multi-wave personalized campaigns to drive higher conversion rates and accelerate revenue growth",
+      "operations": ["campaign_design", "content_personalization"],
+      "demo_cases": ["PM-02", "PM-03"],
+      "synthetic_evidence": ["Four review-only campaign templates", "Draft copy and product ideas are explicitly not sent or activated"]
+    },
+    {
+      "advertised_promise": "Deliver A/B testing and scheduling workflow orchestration to streamline execution and marketing team efficiency",
+      "operations": ["performance_analysis"],
+      "demo_cases": ["PM-04"],
+      "synthetic_evidence": ["Three fixed synthetic A/B test summaries", "Illustrative revenue and ROAS scenarios are labeled as planning data"]
+    }
+  ]
+}

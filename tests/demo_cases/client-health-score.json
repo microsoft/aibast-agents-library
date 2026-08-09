@@ -1,0 +1,59 @@
+{
+  "solution": "Client Health Score Agent",
+  "agent": "@aibast-agents-library/client-health-score",
+  "onepager": "Client Health Score Agent one-pager.pptx",
+  "agent_files": ["client_health_score_agent"],
+  "note": "Persona-language locked cases for every implemented client-health workflow.",
+  "cases": [
+    {
+      "id": "CHS-01",
+      "persona": "Client Success Leader",
+      "onepager_bullet": "Perform predictive health scoring to identify risks early and enable proactive retention strategies",
+      "prompt": "Which relationships are healthy, at risk, or critical, and where should my team focus first?",
+      "operation": "health_dashboard",
+      "must_include": ["TechCorp Industries", "Churn Indicator", "CRITICAL"],
+      "must_not_include": ["churn will occur"],
+      "expects_agent": "ClientHealthScoreAgent"
+    },
+    {
+      "id": "CHS-02",
+      "persona": "Account Manager",
+      "onepager_bullet": "Detect at-risk accounts to prevent churn and protect high-value client relationships",
+      "prompt": "What engagement signals are weakening across the portfolio, especially executive contact and escalations?",
+      "operation": "engagement_analysis",
+      "must_include": ["No executive contact in 90 days", "Declining billing trend", "TechCorp Industries"],
+      "must_not_include": ["meeting was created"],
+      "expects_agent": "ClientHealthScoreAgent"
+    },
+    {
+      "id": "CHS-03",
+      "persona": "Client Experience Director",
+      "onepager_bullet": "Identify relationship opportunities and improve client satisfaction",
+      "prompt": "Which client satisfaction trends are moving the wrong way, and what evidence supports that view?",
+      "operation": "satisfaction_trend",
+      "must_include": ["Declining Accounts Requiring Attention", "TechCorp Industries", "Global Finance Corp"],
+      "must_not_include": ["live survey"],
+      "expects_agent": "ClientHealthScoreAgent"
+    },
+    {
+      "id": "CHS-04",
+      "persona": "Client Success Leader",
+      "onepager_bullet": "Detect at-risk accounts to prevent churn and protect high-value client relationships",
+      "prompt": "Give me the accounts that need intervention now, the risk drivers, and the first recovery actions.",
+      "operation": "at_risk_clients",
+      "must_include": ["TechCorp Industries", "Global Finance Corp", "Healthcare Solutions Inc"],
+      "must_not_include": ["churn is certain"],
+      "expects_agent": "ClientHealthScoreAgent"
+    },
+    {
+      "id": "CHS-05",
+      "persona": "Account Manager",
+      "onepager_bullet": "Automate retention planning to restore satisfaction and strengthen executive trust",
+      "prompt": "Build the stakeholder map and executive engagement plan for each account that needs a turnaround.",
+      "operation": "retention_plan",
+      "must_include": ["Morgan Lee", "Value realization workshop", "Approval gate"],
+      "must_not_include": ["message was sent", "CRM record updated successfully"],
+      "expects_agent": "ClientHealthScoreAgent"
+    }
+  ]
+}

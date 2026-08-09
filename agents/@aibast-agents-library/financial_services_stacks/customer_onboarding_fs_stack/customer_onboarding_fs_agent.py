@@ -15,8 +15,8 @@ __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/fs-customer-onboarding",
     "version": "1.0.0",
-    "display_name": "FS Customer Onboarding Agent",
-    "description": "Financial services customer onboarding with KYC verification, account setup, document checklists, and status tracking.",
+    "display_name": "Customer Onboarding Agent",
+    "description": "Orchestrate client onboarding journeys with unified workflows to accelerate revenue and mitigate compliance risk.",
     "author": "AIBAST",
     "tags": ["KYC", "onboarding", "account-setup", "compliance", "financial-services"],
     "category": "financial_services",
@@ -65,7 +65,7 @@ CUSTOMER_APPLICATIONS = {
         "application_type": "individual",
         "account_requested": "basic_savings",
         "submitted": "2025-03-05",
-        "status": "approved",
+        "status": "setup_review_ready",
         "risk_rating": "low",
         "relationship_manager": "Michael Torres",
         "estimated_assets": 15000,
@@ -135,6 +135,12 @@ ACCOUNT_TYPES = {
     "wealth_management": {"min_deposit": 250000, "monthly_fee": 0, "apy": 1.25, "features": ["Dedicated advisor", "Investment management", "Trust services", "Concierge banking"]},
 }
 
+SYNTHETIC_NOTICE = (
+    "> **SYNTHETIC DEMO DATA — HUMAN REVIEW REQUIRED.** Fictional records only. "
+    "This output is operational decision support, not legal, compliance, or financial advice. "
+    "It does not verify a real identity, approve an application, provision an account, or complete a transaction.\n\n"
+)
+
 
 # ---------------------------------------------------------------------------
 # Helper functions
@@ -167,16 +173,31 @@ class FSCustomerOnboardingAgent(BasicAgent):
     """Financial services customer onboarding agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/fs-customer-onboarding"
+        self.name = "FSCustomerOnboardingAgent"
         self.metadata = {
             "name": self.name,
             "display_name": "FS Customer Onboarding Agent",
-            "description": __manifest__["description"],
+            "description": (
+                "Always call this tool for onboarding-specialist, relationship-manager, or compliance "
+                "requests about enhanced due diligence, KYC or PEP checks, which file is ready for account "
+                "setup review, a business onboarding document list for Blackwood, beneficial ownership, "
+                "or where the onboarding queue is stuck. Do not answer those workflows from general "
+                "knowledge. Uses fictional records only; it never verifies identity, approves an applicant, "
+                "opens or provisions an account, or provides legal, compliance, or financial advice. "
+                "Every result requires authorized human review."
+            ),
             "parameters": {
                 "type": "object",
                 "properties": {
                     "operation": {
                         "type": "string",
+                        "description": (
+                            "Choose kyc_verification for screening and verification evidence; account_setup "
+                            "for a review-ready service configuration plan or which setup-ready file and "
+                            "product are being prepared; document_checklist for a named applicant's required "
+                            "documents, a business onboarding list, Blackwood, or beneficial ownership "
+                            "evidence; onboarding_status for queue status, bottlenecks, owners, and the whole pipeline."
+                        ),
                         "enum": [
                             "kyc_verification",
                             "account_setup",
@@ -184,7 +205,15 @@ class FSCustomerOnboardingAgent(BasicAgent):
                             "onboarding_status",
                         ],
                     },
-                    "application_id": {"type": "string"},
+                    "application_id": {
+                        "type": "string",
+                        "description": (
+                            "Synthetic application mapping: Sarah Chen is APP-6001; Blackwood Capital "
+                            "Partners, Blackwood, or the business onboarding file is APP-6002; Ahmed "
+                            "Al-Rashid or the enhanced-due-diligence case is APP-6003; Maria Fontaine or "
+                            "the setup-ready basic-savings file is APP-6004. Omit only for whole-pipeline reports."
+                        ),
+                    },
                 },
                 "required": ["operation"],
             },
@@ -192,6 +221,9 @@ class FSCustomerOnboardingAgent(BasicAgent):
         super().__init__(name=self.name, metadata=self.metadata)
 
     def perform(self, **kwargs) -> str:
+        record_id = kwargs.get("application_id")
+        if record_id and record_id not in CUSTOMER_APPLICATIONS:
+            return SYNTHETIC_NOTICE + f"**Not found:** No synthetic record `{record_id}` exists; no substitute record was used."
         operation = kwargs.get("operation", "onboarding_status")
         dispatch = {
             "kyc_verification": self._kyc_verification,
@@ -202,7 +234,7 @@ class FSCustomerOnboardingAgent(BasicAgent):
         handler = dispatch.get(operation)
         if not handler:
             return f"**Error:** Unknown operation `{operation}`."
-        return handler(**kwargs)
+        return SYNTHETIC_NOTICE + handler(**kwargs)
 
     def _kyc_verification(self, **kwargs) -> str:
         app_id = kwargs.get("application_id")
@@ -240,7 +272,7 @@ class FSCustomerOnboardingAgent(BasicAgent):
         return "\n".join(lines)
 
     def _account_setup(self, **kwargs) -> str:
-        lines = ["# Account Setup Reference\n"]
+        lines = ["# Account Setup Preparation Reference\n"]
         lines.append("| Account Type | Min Deposit | Monthly Fee | APY | Features |")
         lines.append("|---|---|---|---|---|")
         for acct_type, details in ACCOUNT_TYPES.items():
@@ -249,10 +281,10 @@ class FSCustomerOnboardingAgent(BasicAgent):
                 f"| {acct_type.replace('_', ' ').title()} | ${details['min_deposit']:,.0f} "
                 f"| ${details['monthly_fee']:,.0f} | {details['apy']}% | {features} |"
             )
-        lines.append("\n## Pending Account Setups\n")
-        approved = {k: v for k, v in CUSTOMER_APPLICATIONS.items() if v["status"] == "approved"}
-        if approved:
-            for aid, app in approved.items():
+        lines.append("\n## Applications Ready for Authorized Setup Review\n")
+        review_ready = {k: v for k, v in CUSTOMER_APPLICATIONS.items() if v["status"] == "setup_review_ready"}
+        if review_ready:
+            for aid, app in review_ready.items():
                 acct = ACCOUNT_TYPES.get(app["account_requested"], {})
                 lines.append(f"### {aid}: {app['applicant']}\n")
                 lines.append(f"- **Account:** {app['account_requested'].replace('_', ' ').title()}")
@@ -260,6 +292,10 @@ class FSCustomerOnboardingAgent(BasicAgent):
                 lines.append(f"- **Features:** {', '.join(acct.get('features', []))}\n")
         else:
             lines.append("No applications pending account setup.")
+        lines.append(
+            "\nNo account has been opened or provisioned. An authorized onboarding reviewer must "
+            "validate KYC evidence, product eligibility, disclosures, and customer consent before action."
+        )
         return "\n".join(lines)
 
     def _document_checklist(self, **kwargs) -> str:

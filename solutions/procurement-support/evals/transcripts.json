@@ -1,0 +1,89 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:37:43.526389+00:00",
+  "solution": "@aibast-agents-library/procurement-support",
+  "onepager": "29. Discount Finder Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "ProcurementSupportAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/general_stacks/procurement_support_stack/procurement_support_agent.py",
+      "sha256": "4ff370a8ec1c1c6fdf53493ba6208458d6a5bc26dee09b0d8454d4e5e06da815"
+    }
+  ],
+  "case_file": "tests/demo_cases/procurement-support.json",
+  "case_file_sha256": "d71cb9d2d76983a4bcd16e6bf6a00beb92e6e264ad0c61ae9841ddb12a5ccaed",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "DISC-01",
+      "persona": "Procurement Manager",
+      "onepager_promise": "Track discounts across vendors and promotions to reveal savings opportunities",
+      "prompt": "Scan the upcoming healthcare purchases and show me which savings signals are worth validating.",
+      "assistant_response": "Here are three savings signals worth validating:\n\n**DISC-101 \u2014 Clinical Consumables (MedSupply Cooperative)**  \nYou're $12,000 short of a 4% volume tier. Worth exploring: Can you consolidate facility demand or shift quarterly timing to hit the $150K threshold? This is the strongest candidate if achievable without disrupting operations.\n\n**DISC-102 \u2014 Imaging Service Renewals (Northstar Imaging)**  \nA 3% early-renewal credit if you review 60 days ahead. Check your renewal calendar \u2014 if it's coming up, this is a timing win with no extra work.\n\n**DISC-103 \u2014 Patient Monitoring Devices (CareTech Devices)**  \nA 5% price increase is pending. If you need these devices, locking in before the increase could save material dollars. Check the quote window closing date.\n\n**Next steps:** Before acting, validate demand forecasts, confirm supplier terms, check quality/compliance, and verify contract authority. I can help you sequence these reviews or analyze consolidation options if you want to dig deeper.",
+      "agent_logs": "[ProcurementSupportAgent] **Savings Opportunity Scan**\n\n| ID | Category | Supplier | Contract Evidence | Threshold | Gap |\n|---|---|---|---|---|---|\n| DISC-101 | Clinical consumables | MedSupply Cooperative | 4% volume tier above $150,000 aggregated quarterly spend | $150,000 | $12,000 |\n| DISC-102 | Imaging service renewals | Northstar Imaging | 3% early-renewal credit when reviewed 60 days before renewal | Dated condition | $0 |\n| DISC-103 | Patient monitoring devices | CareTech Devices | Price increase of 5% announced after current quote window | Dated condition | $0 |\n\nThese are review candidates, not realized savings. Validate demand, terms, quality, competition, and authority before action.\n\n**Approval gate:** Synthetic savings analysis only. No supplier is selected or contacted, no order or renewal is placed, and no commercial commitment is made.\n\nSource: [Synthetic Contracts + Purchase Forecast]\nAgents: ProcurementSupportAgent",
+      "expected_agent": "ProcurementSupportAgent",
+      "must_include": [
+        "DISC-101",
+        "DISC-102",
+        "not realized savings"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "DISC-02",
+      "persona": "Category Buyer",
+      "onepager_promise": "Flag time-sensitive deals and price increases to help teams capture savings",
+      "prompt": "Which pricing notices expire first, and what evidence should I verify before I act?",
+      "assistant_response": "**Expires first: Northstar Imaging renewal credit (2026-08-31)** \u2014 60 days before their actual renewal date.\n\n**Before you act, verify:**\n\n1. **Against the original contract** \u2014 Pull renewal notice RN-204 and confirm the 60-day window and 3% credit terms match your master agreement.\n2. **Current renewal status** \u2014 Check whether you've already triggered or waived this credit in prior years.\n3. **Spend trending** \u2014 Confirm your actual volume will hit the aggregated thresholds these discounts assume (especially MedSupply's $150k quarterly).\n4. **Consolidation gaps** \u2014 Before renewing, ask whether you're splitting demand across multiple sites/departments that could be unified to reach higher tiers.\n\n**Then sequence:** MedSupply (Sept 30) \u2192 Northstar (Aug 31) \u2192 CareTech price increase (Oct 15).\n\nThe scanner found only synthetic test data \u2014 run this against your actual vendor notices and contracts before committing. Want me to help you structure a consolidation review or set up a renewal timing plan?",
+      "agent_logs": "[ProcurementSupportAgent] **Time-Sensitive Pricing Review**\n\n| ID | Supplier | Review By | Signal | Evidence |\n|---|---|---|---|---|\n| DISC-101 | MedSupply Cooperative | 2026-09-30 | 4% volume tier above $150,000 aggregated quarterly spend | Synthetic master agreement section 7.2 |\n| DISC-102 | Northstar Imaging | 2026-08-31 | 3% early-renewal credit when reviewed 60 days before renewal | Synthetic renewal notice RN-204 |\n| DISC-103 | CareTech Devices | 2026-10-15 | Price increase of 5% announced after current quote window | Synthetic pricing bulletin PB-88 |\n\nDates are synthetic review deadlines. Confirm current terms directly through the approved procurement process before relying on them.\n\n**Approval gate:** Synthetic savings analysis only. No supplier is selected or contacted, no order or renewal is placed, and no commercial commitment is made.\n\nSource: [Synthetic Vendor Notices + Contracts]\nAgents: ProcurementSupportAgent",
+      "expected_agent": "ProcurementSupportAgent",
+      "must_include": [
+        "2026-08-31",
+        "2026-09-30",
+        "approved procurement process"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "DISC-03",
+      "persona": "Finance Director",
+      "onepager_promise": "Analyze purchase timing and vendor incentives to secure favorable pricing and contract terms",
+      "prompt": "Are our facilities buying the same categories separately enough to justify a sourcing review?",
+      "assistant_response": "**Yes \u2014 consolidation makes sense for at least two categories:**\n\n- **Clinical consumables** ($214k across 4 facilities, 3 suppliers) \u2014 strongest candidate. Aggregate your forecasts and request competitive bids; you have real leverage here.\n- **Office/breakroom supplies** ($92k across 5 facilities, 4 suppliers) \u2014 standardize what each facility actually needs first, then compare contract tiers. This one has more fragmentation to untangle.\n\n**Next step:** Decide which category to tackle first. Do you want to dig into one of these, or check for time-sensitive pricing changes that might affect your sourcing timing?",
+      "agent_logs": "[ProcurementSupportAgent] **Demand Consolidation Candidates**\n\n| Category | Facilities | Current Suppliers | Combined Spend | Review Candidate |\n|---|---|---|---|---|\n| Clinical consumables | 4 | 3 | $214,000 | Aggregate forecast before requesting approved bids |\n| Office and breakroom supplies | 5 | 4 | $92,000 | Standardize the basket before comparing contract tiers |\n\nConsolidation may introduce resilience, diversity, quality, or local-sourcing tradeoffs. The analysis does not recommend a supplier award.\n\n**Approval gate:** Synthetic savings analysis only. No supplier is selected or contacted, no order or renewal is placed, and no commercial commitment is made.\n\nSource: [Synthetic Facility Purchase History]\nAgents: ProcurementSupportAgent",
+      "expected_agent": "ProcurementSupportAgent",
+      "must_include": [
+        "Clinical consumables",
+        "4",
+        "does not recommend a supplier award"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "DISC-04",
+      "persona": "Category Buyer",
+      "onepager_promise": "Analyze purchase timing and vendor incentives to secure favorable pricing and contract terms",
+      "prompt": "Sequence the renewal, volume-tier, and price-change reviews without placing anything.",
+      "assistant_response": "Here's your sequenced review roadmap:\n\n1. **Northstar Imaging** (Renewal) \u2014 Due by Aug 31, 2026  \n   Review the renewal contract and supporting evidence before the deadline. Decide whether auto-renewal serves your facility or if renegotiation is warranted.\n\n2. **MedSupply Cooperative** (Volume Tier) \u2014 Due by Sep 30, 2026  \n   Validate your actual demand against the next volume tier threshold. If you can consolidate facility purchases to reach it, lock in the savings before the window closes.\n\n3. **CareTech Devices** (Price Change) \u2014 Review immediately  \n   They've announced a price change. Weigh it against your current demand, competitive alternatives, storage capacity, warranty terms, and cash flow to decide timing and quantity.\n\n**Next step:** Prepare a brief for your category manager with verified contract terms and at least one alternative supplier per line item. No orders or renewals placed\u2014this is analysis only.",
+      "agent_logs": "[ProcurementSupportAgent] **Purchase Timing Review**\n\n1. **Northstar Imaging:** review the renewal evidence before 2026-08-31; do not renew automatically.\n2. **MedSupply Cooperative:** validate whether approved demand could reach the synthetic volume tier before 2026-09-30.\n3. **CareTech Devices:** compare the announced price change with demand, competitive bids, storage, warranty, and cash-flow constraints.\n\nRecommended next step: prepare a sourcing-review brief with verified terms and alternatives for an authorized category manager.\n\n**Approval gate:** Synthetic savings analysis only. No supplier is selected or contacted, no order or renewal is placed, and no commercial commitment is made.\n\nSource: [Synthetic Forecast + Contract Calendar]\nAgents: ProcurementSupportAgent",
+      "expected_agent": "ProcurementSupportAgent",
+      "must_include": [
+        "Northstar Imaging",
+        "MedSupply Cooperative",
+        "No supplier is selected"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

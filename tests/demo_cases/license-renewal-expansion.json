@@ -1,0 +1,109 @@
+{
+  "solution": "License Renewal and Expansion Agent",
+  "slot": 33,
+  "agent": "@aibast-agents-library/license-renewal-expansion",
+  "onepager": "36. License Renewal and Expansion Agent one-pager.pptx",
+  "agent_files": [
+    "license_renewal_expansion_agent"
+  ],
+  "note": "Locked persona-language capture contract with one deterministic synthetic case per implemented operation.",
+  "cases": [
+    {
+      "id": "LRE-01",
+      "persona": "Sales Leadership",
+      "onepager_bullet": "Assess account health and usage signals for targeted, proactive renewal planning",
+      "prompt": "Review the bundled synthetic renewal pipeline, risk bands, and preparation checklist without changing CRM or forecast records.",
+      "operation": "renewal_pipeline",
+      "arguments": {
+        "operation": "renewal_pipeline",
+        "data_source": "synthetic"
+      },
+      "must_include": [
+        "Renewal Pipeline",
+        "Draft Renewal Preparation Checklist",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "LicenseRenewalExpansionAgent"
+    },
+    {
+      "id": "LRE-02",
+      "persona": "Account Executive",
+      "onepager_bullet": "Generate optimized renewal pricing and packaging so teams can close deals faster",
+      "prompt": "Identify synthetic demand signals and draft packaging options that still require authorized pricing review.",
+      "operation": "expansion_opportunities",
+      "arguments": {
+        "operation": "expansion_opportunities",
+        "data_source": "synthetic"
+      },
+      "must_include": [
+        "Expansion Opportunities",
+        "Draft Packaging Options",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "LicenseRenewalExpansionAgent"
+    },
+    {
+      "id": "LRE-03",
+      "persona": "Customer Success Manager",
+      "onepager_bullet": "Identify competitive threats and switching costs to support negotiation strategy",
+      "prompt": "Which synthetic accounts show churn or competitor risk, and what switching-cost assumptions require validation?",
+      "operation": "churn_risk",
+      "arguments": {
+        "operation": "churn_risk",
+        "data_source": "synthetic"
+      },
+      "must_include": [
+        "Churn Risk Assessment",
+        "Synthetic Switching-Cost Review",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "LicenseRenewalExpansionAgent"
+    },
+    {
+      "id": "LRE-04",
+      "persona": "Sales Leadership",
+      "onepager_bullet": "Streamlines subscription renewal management and expansion planning, turning risk into growth opportunities while increasing win probability.",
+      "prompt": "Compare the bundled synthetic renewal, expansion, and churn scenarios without making revenue commitments.",
+      "operation": "revenue_impact",
+      "arguments": {
+        "operation": "revenue_impact",
+        "data_source": "synthetic"
+      },
+      "must_include": [
+        "Synthetic Revenue Scenario",
+        "Illustrative midpoint assumption",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "LicenseRenewalExpansionAgent"
+    }
+  ],
+  "assertion_principle": "expects_agent proves routing; must_include checks deterministic tool output; must_not_include catches routing stalls or prohibited side-effect claims."
+}

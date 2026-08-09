@@ -1,0 +1,72 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T18:08:45.266Z",
+  "solution": "@aibast-agents-library/care-gap-closure",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Care Gap Closure Pilot",
+  "schema_name": "aibast_CareGapClosurePilot",
+  "bot_id": "08c4ed5e-8bc7-4a48-a25f-e9f62b534cea",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "CG-01",
+      "must_include": [
+        "SYN-BCS",
+        "Records requiring evidence review"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CG-02",
+      "must_include": [
+        "Multiple Source Gaps",
+        "operational triage only"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CG-03",
+      "must_include": [
+        "No message is sent",
+        "Do not state"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CG-04",
+      "must_include": [
+        "SYN-BCS",
+        "source-recorded closed"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "passed": true
+    }
+  ]
+}

@@ -21,9 +21,7 @@ __manifest__ = {
     "version": "1.0.0",
     "display_name": "Inventory Visibility Agent",
     "description": (
-        "Delivers real-time inventory dashboards, stock-out alerts, "
-        "replenishment planning, and channel allocation optimization "
-        "for omni-channel retail and CPG operations."
+        "Provide synthetic cross-channel inventory visibility and draft replenishment, transfer, and allocation recommendations for authorized review."
     ),
     "author": "AIBAST",
     "tags": [
@@ -134,6 +132,29 @@ DAILY_SELL_THROUGH = {
     "SKU-1005": 2.7, "SKU-1006": 12.0, "SKU-1007": 4.4, "SKU-1008": 7.3,
 }
 
+APPROVED_PERSONAS = {
+    "Inventory Planner": "network balance, replenishment scenarios, and planning assumptions",
+    "Store Manager": "store-level exceptions and practical review priorities",
+    "Category Manager": "category health, availability patterns, and tradeoffs",
+}
+
+SAFETY_NOTICE = (
+    "> Synthetic inventory snapshot. Read-only recommendations only; no stock is "
+    "reserved, transferred, replenished, allocated, promised, or purchased. "
+    "Verify all quantities in the system of record before action."
+)
+
+
+def _response_header(persona):
+    role = persona if persona in APPROVED_PERSONAS else "Inventory Planner"
+    return [
+        f"**Prepared for:** {role}",
+        f"**Role focus:** {APPROVED_PERSONAS[role]}",
+        "",
+        SAFETY_NOTICE,
+        "",
+    ]
+
 
 # ---------------------------------------------------------------------------
 # Helper Functions
@@ -209,8 +230,14 @@ class InventoryVisibilityAgent(BasicAgent):
                     },
                     "sku_id": {"type": "string"},
                     "location_id": {"type": "string"},
+                    "persona": {
+                        "type": "string",
+                        "enum": list(APPROVED_PERSONAS),
+                    },
+                    "data_source": {"type": "string", "enum": ["synthetic"]},
                 },
                 "required": ["operation"],
+                "additionalProperties": False,
             },
         }
         super().__init__(name=self.name, metadata=self.metadata)
@@ -220,7 +247,7 @@ class InventoryVisibilityAgent(BasicAgent):
     def _inventory_dashboard(self, **kwargs):
         location_id = kwargs.get("location_id")
         locations = [location_id] if location_id and location_id in INVENTORY else list(STORES.keys())
-        lines = ["# Inventory Dashboard", ""]
+        lines = _response_header(kwargs.get("persona")) + ["# Inventory Visibility Snapshot", ""]
         for loc_id in locations:
             loc_info = STORES.get(loc_id, WAREHOUSES.get(loc_id, {}))
             lines.append(f"## {loc_info.get('name', loc_id)} (`{loc_id}`)")
@@ -240,7 +267,7 @@ class InventoryVisibilityAgent(BasicAgent):
         return "\n".join(lines)
 
     def _stock_alerts(self, **kwargs):
-        lines = ["# Stock Alerts", "", "## Critical & Out-of-Stock Items", ""]
+        lines = _response_header(kwargs.get("persona")) + ["# Draft Stock Review", "", "## Critical & Out-of-Stock Candidates", ""]
         lines.append("| Location | SKU | Product | On-Hand | Safety Stock | Status | Action Required |")
         lines.append("|----------|-----|---------|---------|--------------|--------|-----------------|")
         alert_count = 0
@@ -251,7 +278,7 @@ class InventoryVisibilityAgent(BasicAgent):
                     sku = SKUS[sku_id]
                     on_hand = INVENTORY[loc_id].get(sku_id, 0)
                     safety = SAFETY_STOCK[loc_id].get(sku_id, 0)
-                    action = "Emergency replenish" if status == "OUT_OF_STOCK" else "Expedite transfer"
+                    action = "Review replenishment candidate" if status == "OUT_OF_STOCK" else "Review transfer candidate"
                     loc_name = STORES[loc_id]["name"]
                     lines.append(
                         f"| {loc_name} | {sku_id} | {sku['name']} | {on_hand} | {safety} | {status} | {action} |"
@@ -259,6 +286,11 @@ class InventoryVisibilityAgent(BasicAgent):
                     alert_count += 1
         lines.append("")
         lines.append(f"**Total Alerts:** {alert_count}")
+        lines.append(
+            "**Review guidance:** Use `Review replenishment candidate` for an "
+            "out-of-stock item and `Review transfer candidate` for a critical "
+            "item; neither phrase executes an inventory change."
+        )
         lines.append("")
         lines.append("## Low-Stock Warnings")
         lines.append("")
@@ -275,8 +307,8 @@ class InventoryVisibilityAgent(BasicAgent):
 
     def _replenishment_plan(self, **kwargs):
         target_days = 14
-        lines = [
-            "# Replenishment Plan",
+        lines = _response_header(kwargs.get("persona")) + [
+            "# Draft Replenishment Plan",
             "",
             f"**Target:** {target_days}-day supply at each store",
             "",
@@ -311,8 +343,8 @@ class InventoryVisibilityAgent(BasicAgent):
         sku = SKUS.get(sku_id, SKUS["SKU-1001"])
         total = _total_network_inventory(sku_id)
         allocations = _channel_allocation_units(sku_id, total)
-        lines = [
-            "# Channel Allocation",
+        lines = _response_header(kwargs.get("persona")) + [
+            "# Channel Allocation Scenario",
             "",
             f"**SKU:** {sku_id} — {sku['name']}",
             f"**Total Network Inventory:** {total:,} units",
@@ -330,15 +362,23 @@ class InventoryVisibilityAgent(BasicAgent):
         lines.append("")
         lines.append("## Allocation Recommendations")
         lines.append("")
-        lines.append("- **In-Store Priority:** Flagship and mall locations receive 60% of in-store allocation")
-        lines.append("- **Online Buffer:** Maintain 3-day safety stock for e-commerce fulfillment")
-        lines.append("- **BOPIS Reserve:** Hold 10% buffer for same-day pickup surges")
-        lines.append("- **Marketplace Cap:** Limit marketplace allocation to prevent channel conflict")
+        lines.append("- **In-Store Scenario:** Model a larger share for flagship and mall demand")
+        lines.append("- **Online Buffer:** Model a three-day planning buffer for e-commerce")
+        lines.append("- **BOPIS Buffer:** Model a pickup buffer; do not reserve units")
+        lines.append("- **Marketplace Review:** Model a cap to reduce channel conflict")
         return "\n".join(lines)
 
     # ---- dispatch ----------------------------------------------------------
 
     def perform(self, **kwargs):
+        if kwargs.get("data_source", "synthetic") != "synthetic":
+            return "data_source must be `synthetic` for this package."
+        sku_id = kwargs.get("sku_id")
+        location_id = kwargs.get("location_id")
+        if sku_id and sku_id not in SKUS:
+            return f"Unknown sku_id `{sku_id}`. Valid: {', '.join(SKUS)}"
+        if location_id and location_id not in INVENTORY:
+            return f"Unknown location_id `{location_id}`. Valid: {', '.join(INVENTORY)}"
         operation = kwargs.get("operation", "inventory_dashboard")
         dispatch = {
             "inventory_dashboard": self._inventory_dashboard,

@@ -1,0 +1,89 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:27:06.595347+00:00",
+  "solution": "@aibast-agents-library/omnichannel-engagement",
+  "onepager": "30. Omnichannel Engagement Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "OmnichannelEngagementAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/b2c_sales_stacks/omnichannel_engagement_stack/omnichannel_engagement_agent.py",
+      "sha256": "0073c05ce1e0e3b4320a4fda5a6f62e0fd62482c57b68fa89452c7b687841071"
+    }
+  ],
+  "case_file": "tests/demo_cases/omnichannel-engagement.json",
+  "case_file_sha256": "638369717c5278361d0a07a7cb6088d4f9bf1c492a39644be75803baf42afc19",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "OCE-01",
+      "persona": "Customer Experience Leader",
+      "onepager_promise": null,
+      "prompt": "As Customer Experience Leader, compare the aggregate channel picture and call out continuity risks.",
+      "assistant_response": "## **Key Continuity Risks**\n\n**1. In-Store Dominance = Offline Dependency** (44% of revenue)\nYour in-store channel is driving nearly half your revenue but operates in isolation. If digital doesn't feed into store pickup or vice versa, you're leaving margin and inventory efficiency on the table. Risk: seasonal demand shocks hit in-store hard with no online buffer.\n\n**2. Digital-to-Store Handoff Gaps**\nYour discovery happens on social/web (14 days, 5 touchpoints), but then you drop into in-store (30% conversion). There's no visible continuity mechanism\u2014no order status, loyalty sync, or personalization bridge between channels. Customers shouldn't re-identify themselves at checkout.\n\n**3. Repeat Purchase Velocity Mismatch**\nRepeat customers convert in 3 days (18.5% CVR) via email \u2192 mobile app \u2192 purchase. But your email list health and app engagement aren't isolated metrics\u2014they're continuity dependencies. One weak link (email deliverability, app bugs) breaks the entire loop.\n\n**4. Win-Back Takes 3 Weeks**\nWin-back sequences (21 days) run through SMS, but SMS only drives 2.5% of revenue. This channel feels undertapped or under-personalized. The risk: lapsed customers timeout before re-engagement lands.\n\n**5. No Visible Mobile-to-In-Store Connection**\nMobile app is your second-largest revenue driver (19.1%), but there's no stated integration with in-store (loyalty, inventory sync, click-and-collect). You're operating two parallel storefronts instead of one.\n\n## **Immediate Actions**\n- Audit your customer ID stitching across email, mobile, and store POS\u2014verify continuity exists.\n- Test in-store staff access to prior digital browsing (show recently viewed on POS).\n- Enable SMS winback with location-based offers (in-store pickup).\n\n**What's your biggest pain point right now\u2014handoff failures, data sync, or something else?**",
+      "agent_logs": "[OmnichannelEngagementAgent] **Prepared for:** Customer Experience Leader\n**Role focus:** cross-channel continuity, service quality, and governance\n\n> Synthetic aggregate analytics. Recommendations only; no identity stitching, sensitive profiling, outreach, message, offer, reward, or purchase action occurs.\n\n# Synthetic Channel Performance (30-Day)\n\n**Total Revenue:** $12,957,500\n**Total Conversions:** 65,020\n\n| Channel | Sessions | Conversions | CVR | Revenue | Cost | ROAS |\n|---|---|---|---|---|---|---|\n| Email | 145,000 | 4,350 | 3.0% | $870,000 | $12,500 | 69.6x |\n| Sms | 62,000 | 1,860 | 3.0% | $325,500 | $8,200 | 39.7x |\n| Social Media | 230,000 | 2,760 | 1.2% | $552,000 | $45,000 | 12.27x |\n| Web Organic | 480,000 | 9,600 | 2.0% | $1,920,000 | $18,000 | 106.67x |\n| Web Paid | 185,000 | 5,550 | 3.0% | $1,110,000 | $95,000 | 11.68x |\n| Mobile App | 310,000 | 12,400 | 4.0% | $2,480,000 | $22,000 | 112.73x |\n| In Store | 95,000 | 28,500 | 30.0% | $5,700,000 | $180,000 | 31.67x |\n\n## Revenue Share by Channel\n\n- Email: 6.7%\n- Sms: 2.5%\n- Social Media: 4.3%\n- Web Organic: 14.8%\n- Web Paid: 8.6%\n- Mobile App: 19.1%\n- In Store: 44.0%\n[OmnichannelEngagementAgent] **Prepared for:** Customer Experience Leader\n**Role focus:** cross-channel continuity, service quality, and governance\n\n> Synthetic aggregate analytics. Recommendations only; no identity stitching, sensitive profiling, outreach, message, offer, reward, or purchase action occurs.\n\n# Aggregate Customer Journey Analysis\n\n## Discovery to Purchase\n\n- **Avg Duration:** 14 days\n- **Avg Touchpoints:** 5\n- **Conversion Rate:** 3.2%\n\n**Touchpoint Sequence:**\n\n1. Social Media Ad -> \n2. Website Browse -> \n3. Email Signup -> \n4. Email Promo -> \n5. Website Purchase\n\n## Repeat Purchase\n\n- **Avg Duration:** 3 days\n- **Avg Touchpoints:** 3\n- **Conversion Rate:** 18.5%\n\n**Touchpoint Sequence:**\n\n1. Email Promo -> \n2. Mobile App Browse -> \n3. Mobile App Purchase\n\n## Win-Back\n\n- **Avg Duration:** 21 days\n- **Avg Touchpoints:** 4\n- **Conversion Rate:** 8.4%\n\n**Touchpoint Sequence:**\n\n1. Email Winback -> \n2. Sms Offer -> \n3. Website Browse -> \n4. Website Purchase\n\n## Impulse Purchase\n\n- **Avg Duration:** 0 days\n- **Avg Touchpoints:** 2\n- **Conversion Rate:** 1.8%\n\n**Touchpoint Sequence:**\n\n1. Social Media Ad -> \n2. Website Purchase\n\n## Journey Optimization Opportunities\n\n- **Discovery:** Shorten path by enabling social commerce checkout\n- **Repeat:** Leverage push notifications for faster re-engagement\n- **Win-Back:** Test a consented service reminder window in a controlled experiment\n- **Impulse:** Optimize social ad creative for direct conversion",
+      "expected_agent": null,
+      "must_include": [
+        "Prepared for:** Customer Experience Leader",
+        "Synthetic Channel Performance",
+        "no identity stitching"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "OCE-02",
+      "persona": "Contact Center Supervisor",
+      "onepager_promise": null,
+      "prompt": "As Contact Center Supervisor, identify handoff friction across the aggregate journey archetypes.",
+      "assistant_response": "## Key Handoff Friction Points (Contact Center Impact)\n\n**High-friction zones:**\n\n1. **Discovery \u2192 Email Signup** (Day 2\u20133)  \n   Customers drop between awareness and capture. Contact center often picks up *after* they've already abandoned. **Action:** Enable chat/callback during website browse to intercept before friction hardens.\n\n2. **Win-Back \u2192 SMS Offer** (Peak friction point)  \n   4-day gap with SMS-to-web handoff. Customers don't connect the context. **Action:** Ensure contact center has access to win-back context; brief supervisors to flag these interactions as churn-prevention priority.\n\n3. **Email Promo \u2192 Mobile App Browse** (Repeat Purchase)  \n   Fastest path but invisible to contact center unless customer contacts. **Action:** Monitor repeat-purchase dropoff in app; have a mobile-first escalation path.\n\n4. **Email Winback \u2192 SMS Offer** (Lost context)  \n   Multi-channel fatigue without unified view. Customers contact center unsure which offer applies. **Action:** Unify offer details across systems; give agents a single \"active campaign\" view.\n\n**Supervisor Priority:**\n\n- Shorten handoff latency: most friction occurs in first 3\u20137 days\n- Brief teams on journey archetype triggers (e.g., \"This customer is in Win-Back; expect churn concern\")\n- Create contact center escalation rules tied to touchpoint gaps, not just channel volume\n\nReady to dive into a specific archetype or channel performance?",
+      "agent_logs": "[OmnichannelEngagementAgent] **Prepared for:** Contact Center Supervisor\n**Role focus:** handoff friction, unresolved needs, and service consistency\n\n> Synthetic aggregate analytics. Recommendations only; no identity stitching, sensitive profiling, outreach, message, offer, reward, or purchase action occurs.\n\n# Aggregate Customer Journey Analysis\n\n## Discovery to Purchase\n\n- **Avg Duration:** 14 days\n- **Avg Touchpoints:** 5\n- **Conversion Rate:** 3.2%\n\n**Touchpoint Sequence:**\n\n1. Social Media Ad -> \n2. Website Browse -> \n3. Email Signup -> \n4. Email Promo -> \n5. Website Purchase\n\n## Repeat Purchase\n\n- **Avg Duration:** 3 days\n- **Avg Touchpoints:** 3\n- **Conversion Rate:** 18.5%\n\n**Touchpoint Sequence:**\n\n1. Email Promo -> \n2. Mobile App Browse -> \n3. Mobile App Purchase\n\n## Win-Back\n\n- **Avg Duration:** 21 days\n- **Avg Touchpoints:** 4\n- **Conversion Rate:** 8.4%\n\n**Touchpoint Sequence:**\n\n1. Email Winback -> \n2. Sms Offer -> \n3. Website Browse -> \n4. Website Purchase\n\n## Impulse Purchase\n\n- **Avg Duration:** 0 days\n- **Avg Touchpoints:** 2\n- **Conversion Rate:** 1.8%\n\n**Touchpoint Sequence:**\n\n1. Social Media Ad -> \n2. Website Purchase\n\n## Journey Optimization Opportunities\n\n- **Discovery:** Shorten path by enabling social commerce checkout\n- **Repeat:** Leverage push notifications for faster re-engagement\n- **Win-Back:** Test a consented service reminder window in a controlled experiment\n- **Impulse:** Optimize social ad creative for direct conversion",
+      "expected_agent": null,
+      "must_include": [
+        "Prepared for:** Contact Center Supervisor",
+        "Aggregate Customer Journey Analysis",
+        "Journey Optimization Opportunities"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "OCE-03",
+      "persona": "Digital Engagement Manager",
+      "onepager_promise": null,
+      "prompt": "As Digital Engagement Manager, propose consent-aware experiments with frequency caps and no outreach.",
+      "assistant_response": "## Your Consent-Aware Experiment Framework\n\n**Three low-risk proposals** (no outreach, no profiling, synthetic data only):\n\n1. **Frequency Cap Baseline Test**\n   - Split users into 2 cohorts by aggregate consent preference (not identity)\n   - Cohort A: Current email cadence (~2/week) | Cohort B: Capped at 1/week\n   - Measure: open rate, unsubscribe rate, revenue per recipient\n   - Duration: 4 weeks | No new messaging, just pacing\n\n2. **App Preference Optimization**\n   - Mobile app has 112x ROAS\u2014test whether optional in-app preference center increases retention\n   - Offer: \"See fewer notifications,\" \"Show only sales,\" \"Remind me Wednesdays\"\n   - Measure: push acceptance, session length, churn\n   - **Key:** User chooses\u2014no outreach needed to enroll\n\n3. **Web Paid Checkout Consent Flow**\n   - Current web-paid channel underperforms (11.68x ROAS)\n   - Test removing pre-checked consent boxes at checkout (explicit only)\n   - Measure: conversion rate, form abandonment, data quality of consents\n   - Risk: May see slight dip in initial captures; usually improves downstream engagement\n\n**Governance:** All experiments run on synthetic aggregate segments\u2014no individual targeting, no message sends to drive participation, consent tracked separately from engagement metrics.\n\nReady to scope timelines or measurement targets for any of these?",
+      "agent_logs": "[OmnichannelEngagementAgent] **Prepared for:** Digital Engagement Manager\n**Role focus:** channel strategy, consent, and measurement\n\n> Synthetic aggregate analytics. Recommendations only; no identity stitching, sensitive profiling, outreach, message, offer, reward, or purchase action occurs.\n\n# Draft Engagement Optimization Report\n\n## Channel Efficiency Ranking\n\n| Rank | Channel | ROAS | CVR | Bounce Rate | Recommendation |\n|---|---|---|---|---|---|\n| 1 | Mobile App | 112.73x | 4.0% | 12.0% | Scale investment |\n| 2 | Web Organic | 106.67x | 2.0% | 35.0% | Scale investment |\n| 3 | Email | 69.6x | 3.0% | 18.5% | Scale investment |\n| 4 | Sms | 39.7x | 3.0% | 5.2% | Optimize spend |\n| 5 | In Store | 31.67x | 30.0% | 0% | Optimize spend |\n| 6 | Social Media | 12.27x | 1.2% | 42.0% | Optimize spend |\n| 7 | Web Paid | 11.68x | 3.0% | 28.0% | Optimize spend |\n\n**Total Marketing Spend:** $380,700\n**Total Revenue:** $12,957,500\n**Blended ROAS:** 34.0x\n\n## Optimization Actions\n\n1. Model a budget shift from social media to consented app engagement\n2. Ask only for optional preferences needed to improve service\n3. Design an A/B test for the web-paid checkout journey\n4. Review contact frequency caps across consented aggregate cohorts",
+      "expected_agent": null,
+      "must_include": [
+        "Prepared for:** Digital Engagement Manager",
+        "Draft Engagement Optimization Report",
+        "frequency caps"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "OCE-04",
+      "persona": "Digital Engagement Manager",
+      "onepager_promise": null,
+      "prompt": "As Digital Engagement Manager, summarize the synthetic attribution view and avoid causal claims.",
+      "assistant_response": "## Summary\n\n**Revenue correlation by channel** (no causation claimed):\n\n- **App Push (Loyalty)** shows the highest click-to-conversion rate (30%) and lowest cost-per-outcome, associated with $765K revenue on $2K spend.\n- **SMS** has strong open rates (96%) and associates with $540K revenue; **Email** reaches 62.5K opens and aligns with $450K revenue.\n- **Paid Search** (Google Shopping) correlates with $540K revenue but at higher cost ($42K); **Social** associates with $340K revenue at $35K spend.\n\n**What this means for your strategy:**\n- Loyalty push campaigns show efficient engagement patterns \u2014 worth deepening audience segmentation and frequency testing.\n- Email and SMS continue to show consistent reach and conversion associations.\n- Paid channels (search, social) drive scale but merit tighter cost monitoring.\n\n**Privacy note:** This is aggregate synthetic data \u2014 no individual journeys, no causal inference, no targeting recommendations. Actual multi-touch attribution requires careful modeling; this view shows which channels *associate with* conversions in your portfolio.",
+      "agent_logs": "[OmnichannelEngagementAgent] **Prepared for:** Digital Engagement Manager\n**Role focus:** channel strategy, consent, and measurement\n\n> Synthetic aggregate analytics. Recommendations only; no identity stitching, sensitive profiling, outreach, message, offer, reward, or purchase action occurs.\n\n# Synthetic Campaign Attribution Report\n\n| Campaign | Channel | Conversions | Revenue | Cost | ROI |\n|---|---|---|---|---|---|\n| Spring Collection Launch (CAMP-301) | Email | 2,250 | $450,000 | $5,000 | 8900.0% |\n| Flash Sale \u2014 48 Hours (CAMP-302) | Sms | 3,600 | $540,000 | $6,000 | 8900.0% |\n| Influencer Partnership (CAMP-303) | Social Media | 1,700 | $340,000 | $35,000 | 871.4% |\n| Google Shopping Ads (CAMP-304) | Web Paid | 2,700 | $540,000 | $42,000 | 1185.7% |\n| App Push \u2014 Loyalty Members (CAMP-305) | Mobile App | 5,100 | $765,000 | $2,000 | 38150.0% |\n\n**Total Campaign Revenue:** $2,635,000\n**Total Campaign Cost:** $90,000\n**Overall Campaign ROI:** 2827.8%\n\n## Campaign Detail\n\n### Spring Collection Launch (CAMP-301)\n\n- Sent: 250,000 | Opens: 62,500 (25.0%) | Clicks: 18,750 (7.5%)\n- Conversions: 2,250 (12.0% click-to-conversion)\n- Revenue: $450,000 | Cost: $5,000\n\n### Flash Sale \u2014 48 Hours (CAMP-302)\n\n- Sent: 120,000 | Opens: 115,200 (96.0%) | Clicks: 24,000 (20.0%)\n- Conversions: 3,600 (15.0% click-to-conversion)\n- Revenue: $540,000 | Cost: $6,000\n\n### Influencer Partnership (CAMP-303)\n\n- Clicks: 85,000\n- Conversions: 1,700 (2.0% click-to-conversion)\n- Revenue: $340,000 | Cost: $35,000\n\n### Google Shopping Ads (CAMP-304)\n\n- Clicks: 45,000\n- Conversions: 2,700 (6.0% click-to-conversion)\n- Revenue: $540,000 | Cost: $42,000\n\n### App Push \u2014 Loyalty Members (CAMP-305)\n\n- Sent: 85,000 | Opens: 42,500 (50.0%) | Clicks: 17,000 (20.0%)\n- Conversions: 5,100 (30.0% click-to-conversion)\n- Revenue: $765,000 | Cost: $2,000\n",
+      "expected_agent": null,
+      "must_include": [
+        "Synthetic Campaign Attribution Report",
+        "Overall Campaign ROI",
+        "Recommendations only"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

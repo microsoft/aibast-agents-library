@@ -1,0 +1,32 @@
+mcs.metadata:
+  componentName: "supply-chain-disruption-alert-mitigation-plan"
+  description: "Use when a Operations Leader asks to compare approval-gated mitigation options."
+kind: InlineAgentSkill
+content: |
+  ---
+  name: supply-chain-disruption-alert-mitigation-plan
+  description: Use when a Operations Leader asks to compare approval-gated mitigation options.
+  ---
+  # Supply Chain Disruption Alert Agent: Mitigation Plan
+
+  ## Route
+
+  Use the `mitigation_plan` operation. The canonical persona prompt is:
+
+  > Draft a DISR-002 mitigation scenario without rerouting or moving inventory.
+
+  ## Procedure
+
+  1. Read the synthetic knowledge records and controls.
+  2. Call or reproduce only the `mitigation_plan` operation behavior.
+  3. Lead with source-backed identifiers and evidence.
+  4. State uncertainty and the required authorized review.
+  5. End with the operation's no-write boundary.
+
+  ## Required evidence
+
+  - DISR-002
+  - Draft Disruption Mitigation Scenario
+  - no purchase order
+
+  Never imply that a live system, filing, account, crew, supplier, shipment, emissions claim, or inventory position was changed.

@@ -1,0 +1,100 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/care-gap-closure",
+  "display_name": "Care Gap Closure Agent",
+  "source_path": "agents/@aibast-agents-library/healthcare_stacks/care_gap_closure_stack/care_gap_closure_agent.py",
+  "target_filename": "care_gap_closure_agent.py",
+  "expected_tool": "CareGapClosureAgent",
+  "data_source": "synthetic",
+  "operations": [
+    "gap_analysis",
+    "cohort_review",
+    "outreach_draft",
+    "quality_dashboard"
+  ],
+  "smoke_test": {
+    "prompt": "Which synthetic quality measure has the largest evidence-review queue?",
+    "arguments": {
+      "operation": "gap_analysis"
+    },
+    "must_call": "CareGapClosureAgent",
+    "must_include": [
+      "SYN-BCS",
+      "Records requiring evidence review"
+    ]
+  },
+  "manual_package": {
+    "global_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
+    "knowledge_files": [
+      "manual/knowledge/aibast_care-gap-closure-synthetic-records.md",
+      "manual/knowledge/aibast_care-gap-closure-review-rules.md"
+    ],
+    "skill_count": 4,
+    "skills": [
+      "manual/skills/gap-analysis/SKILL.md",
+      "manual/skills/cohort-review/SKILL.md",
+      "manual/skills/outreach-draft/SKILL.md",
+      "manual/skills/quality-dashboard/SKILL.md"
+    ],
+    "locked_demo_cases": "../../tests/demo_cases/care-gap-closure.json",
+    "onepager_map": "evals/onepager-map.json",
+    "source_audit": "evals/source-audit.json"
+  },
+  "copilot_studio": {
+    "status": "package-ready-not-created",
+    "publish": false,
+    "publish_requires_confirmation": true,
+    "required_connections": [
+      "Dynamics 365 care-coordination workflow",
+      "Microsoft Teams review and approval"
+    ],
+    "external_actions": "not-configured",
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "authoring_mode": "cli-copilot",
+    "validated_manual": {
+      "display_name": "Care Gap Closure Manual",
+      "bot_id": "5a3ce80b-47c2-4561-84bd-8307a819364f",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "web_search_removed": true,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    },
+    "validated_pilot": {
+      "display_name": "Care Gap Closure Pilot",
+      "schema_name": "aibast_CareGapClosurePilot",
+      "bot_id": "08c4ed5e-8bc7-4a48-a25f-e9f62b534cea",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "changes_pushed": 7,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    }
+  },
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/healthcare_stacks/care_gap_closure_stack/care_gap_closure_agent.py",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  }
+}

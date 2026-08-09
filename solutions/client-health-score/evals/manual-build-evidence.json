@@ -1,0 +1,123 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-08-08T09:04:48.660Z",
+  "solution": "@aibast-agents-library/client-health-score",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "Client Health Score Manual",
+    "bot_id": "daf1b824-7eb1-43a3-a8c0-5b1be2b325bc",
+    "created": true
+  },
+  "target_model": "Claude Sonnet 4.6",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 5,
+      "confirmed": 5
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "CHS-01",
+      "prompt": "Which relationships are healthy, at risk, or critical, and where should my team focus first?",
+      "must_include": [
+        "TechCorp Industries",
+        "Churn Indicator",
+        "CRITICAL"
+      ],
+      "must_not_include": [
+        "churn will occur"
+      ],
+      "expected_screenshot": "15-chs-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CHS-02",
+      "prompt": "What engagement signals are weakening across the portfolio, especially executive contact and escalations?",
+      "must_include": [
+        "No executive contact in 90 days",
+        "Declining billing trend",
+        "TechCorp Industries"
+      ],
+      "must_not_include": [
+        "meeting was created"
+      ],
+      "expected_screenshot": "16-chs-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CHS-03",
+      "prompt": "Which client satisfaction trends are moving the wrong way, and what evidence supports that view?",
+      "must_include": [
+        "Declining Accounts Requiring Attention",
+        "TechCorp Industries",
+        "Global Finance Corp"
+      ],
+      "must_not_include": [
+        "live survey"
+      ],
+      "expected_screenshot": "17-chs-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CHS-04",
+      "prompt": "Give me the accounts that need intervention now, the risk drivers, and the first recovery actions.",
+      "must_include": [
+        "TechCorp Industries",
+        "Global Finance Corp",
+        "Healthcare Solutions Inc"
+      ],
+      "must_not_include": [
+        "churn is certain"
+      ],
+      "expected_screenshot": "18-chs-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CHS-05",
+      "prompt": "Build the stakeholder map and executive engagement plan for each account that needs a turnaround.",
+      "must_include": [
+        "Morgan Lee",
+        "Value realization workshop",
+        "Approval gate"
+      ],
+      "must_not_include": [
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "expected_screenshot": "19-chs-05.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/client-health-score/screenshots/manual/browserfilm.json",
+    "gif": "solutions/client-health-score/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/client-health-score/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "20-confirm-draft.jpg"
+  }
+}

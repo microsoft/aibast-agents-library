@@ -1,0 +1,85 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:27:51.650507+00:00",
+  "solution": "@aibast-agents-library/patient-intake",
+  "onepager": "31. Patient Intake and Scheduling Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "PatientIntakeAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/healthcare_stacks/patient_intake_stack/patient_intake_agent.py",
+      "sha256": "4769d22a81cc1e40b5e9ffd4a43f2707a33834987e19fb00bf4b011c9cf97995"
+    }
+  ],
+  "case_file": "tests/demo_cases/patient-intake.json",
+  "case_file_sha256": "d1ebc313739c60a4bbdeea578ae9a69b42bb83efd9db1fb1984a58f26286560f",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "PI-01",
+      "persona": "Front Desk Staff",
+      "onepager_promise": "Deliver tailored digital packets with all required pre-visit forms",
+      "prompt": "What is still missing from the synthetic intake packet for Patient Alpha?",
+      "assistant_response": "**Patient Alpha is missing confirmation of emergency contact details.** \n\nThe intake packet has contact info, consent, and medications on file, but the emergency contact field still needs staff verification before the patient is ready for scheduling.",
+      "agent_logs": "[PatientIntakeAgent] # Intake Readiness Draft\n\n> Synthetic demonstration data only. Read-only draft for authorized patient-access staff. Confirm coverage and appointment details in approved source systems; do not use this output to determine eligibility, schedule care, or change a patient record. Human review is required.\n\n## Synthetic Patient Alpha (SYN-PT-001)\n- Preferred language recorded: English\n- Forms present: contact details, consent acknowledgement, medication list\n- Items for staff confirmation: emergency contact confirmation\n",
+      "expected_agent": "PatientIntakeAgent",
+      "must_include": [
+        "SYN-PT-001",
+        "emergency contact confirmation"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PI-02",
+      "persona": "Patient Access Representative",
+      "onepager_promise": "Verify insurance, referrals, and network status during patient intake",
+      "prompt": "What coverage evidence is recorded for Synthetic Patient Alpha, and what must staff still confirm?",
+      "assistant_response": "**Coverage Evidence for Synthetic Patient Alpha:**\n\n**Recorded:**\n- Payer: Synthetic Health Plan\n- Status: Source record received\n- Evidence dated: 2026-07-30\n\n**Staff must still confirm:**\n- **Active coverage status** \u2014 verify the plan is current\n- **Network status** \u2014 confirm the patient's in-network eligibility for the intended care\n\nThis is synthetic demonstration data only. Real verification requires human review in the actual payer portal before scheduling or determining eligibility.",
+      "agent_logs": "[PatientIntakeAgent] # Coverage Evidence Review\n\n> Synthetic demonstration data only. Read-only draft for authorized patient-access staff. Confirm coverage and appointment details in approved source systems; do not use this output to determine eligibility, schedule care, or change a patient record. Human review is required.\n\n## Synthetic Patient Alpha (SYN-PT-001)\n- Payer recorded in synthetic source: Synthetic Health Plan\n- Source-recorded state: source record received\n- Evidence date: 2026-07-30\n- Human follow-up: Confirm active coverage and network status in the payer portal.\n",
+      "expected_agent": "PatientIntakeAgent",
+      "must_include": [
+        "Synthetic Health Plan",
+        "source record received"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PI-03",
+      "persona": "Scheduling Coordinator",
+      "onepager_promise": "Ensure clinicians\u2019 availability and readiness through up-to-date scheduling data",
+      "prompt": "Show the candidate source slots for Clinician A without booking anything.",
+      "assistant_response": "Here are the candidate time slots for Clinician A:\n\n- **Aug 20, 2026 at 10:30 AM** \u2014 new patient consultation\n- **Aug 22, 2026 at 2:00 PM** \u2014 follow-up consultation\n\nThese are read-only for review only\u2014nothing has been booked. Human confirmation in your source system is required before scheduling.",
+      "agent_logs": "[PatientIntakeAgent] # Appointment Availability Review\n\n> Synthetic demonstration data only. Read-only draft for authorized patient-access staff. Confirm coverage and appointment details in approved source systems; do not use this output to determine eligibility, schedule care, or change a patient record. Human review is required.\n\nThese are candidate source slots for staff review; nothing has been reserved or booked.\n\n## Clinician A\n- 2026-08-20 10:30 \u2014 new patient consultation\n- 2026-08-22 14:00 \u2014 follow-up consultation\n",
+      "expected_agent": "PatientIntakeAgent",
+      "must_include": [
+        "Clinician A",
+        "nothing has been reserved or booked"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PI-04",
+      "persona": "Front Desk Staff",
+      "onepager_promise": "Automate intake checks and coordination to ensure patients are fully prepared",
+      "prompt": "Prepare a pre-visit readiness summary for Synthetic Patient Alpha.",
+      "assistant_response": "**Pre-Visit Readiness Summary: Synthetic Patient Alpha**\n\nPatient **SYN-PT-001** is scheduled for a new patient consultation with Clinician A on **August 15, 2026**.\n\n**What needs attention before the visit:**\n- **Intake:** Emergency contact confirmation required\n- **Coverage:** Verify active coverage and network status in the payer portal\n- **Reviewer:** Authorized patient-access staff must confirm both items\n\nThis is read-only evidence for intake planning \u2014 any changes to the patient record or appointment must go through your approved source systems. Would you like me to check coverage details or appointment availability for this patient?",
+      "agent_logs": "[PatientIntakeAgent] # Pre-Visit Readiness Summary\n\n> Synthetic demonstration data only. Read-only draft for authorized patient-access staff. Confirm coverage and appointment details in approved source systems; do not use this output to determine eligibility, schedule care, or change a patient record. Human review is required.\n\n## Synthetic Patient Alpha (SYN-PT-001)\n- Source-recorded visit: new patient consultation with Clinician A on 2026-08-15\n- Intake items requiring confirmation: emergency contact confirmation\n- Coverage follow-up: Confirm active coverage and network status in the payer portal.\n- Required reviewer: authorized patient-access staff\n",
+      "expected_agent": "PatientIntakeAgent",
+      "must_include": [
+        "SYN-PT-001",
+        "Required reviewer"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

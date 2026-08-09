@@ -24,8 +24,8 @@ __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/account-intelligence",
     "version": "1.0.0",
-    "display_name": "Account Intelligence",
-    "description": "360-degree account briefings with stakeholder mapping, competitive analysis, and deal risk assessment.",
+    "display_name": "Account Intelligence Agent",
+    "description": "Automate account research and strategy planning to help sellers prepare faster, win more, and elevate deal quality.",
     "author": "AIBAST",
     "tags": ["b2b", "sales", "account-intelligence", "stakeholder-mapping", "competitive-intel"],
     "category": "b2b_sales",
@@ -150,7 +150,7 @@ def _resolve_account(query):
     for key in _ACCOUNTS:
         if key in q or q in _ACCOUNTS[key]["name"].lower():
             return key
-    return "acme"
+    return None
 
 
 def _health_score(key):
@@ -256,7 +256,19 @@ class AccountIntelligenceAgent(BasicAgent):
         self.name = "AccountIntelligenceAgent"
         self.metadata = {
             "name": self.name,
-            "description": __manifest__["description"],
+            "description": (
+                f"{__manifest__['description']} Uses bundled synthetic account records and "
+                "returns read-only research, draft messaging, and planning options only. "
+                "Route requests for persona-specific talking points, meeting messaging, "
+                "conversation hooks, or objection handling to `value_messaging`; this operation "
+                "returns the required `Draft Meeting Talking Points` and `Objection Handling` "
+                "sections. Use `executive_briefing` only when the user asks for a compiled "
+                "account briefing or pre-meeting checklist."
+            ),
+            "operations": [
+                "account_overview", "stakeholder_map", "competitive_intel",
+                "value_messaging", "risk_assessment", "executive_briefing",
+            ],
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -267,21 +279,46 @@ class AccountIntelligenceAgent(BasicAgent):
                             "competitive_intel", "value_messaging",
                             "risk_assessment", "executive_briefing",
                         ],
-                        "description": "The analysis to perform",
+                        "description": (
+                            "Select exactly one operation from the user's requested deliverable. "
+                            "account_overview: firmographics, account health, and recent activity. "
+                            "stakeholder_map: buying committee, influence, champions, and relationship gaps. "
+                            "competitive_intel: competitor activity, comparison, and positioning. "
+                            "value_messaging: REQUIRED for persona-specific talking points, meeting messaging, "
+                            "conversation hooks, or objection handling; returns Draft Meeting Talking Points "
+                            "and Objection Handling. risk_assessment: deal risks and candidate mitigations. "
+                            "executive_briefing: compiled opportunity summary and pre-meeting checklist; "
+                            "do not use it as a substitute for value_messaging."
+                        ),
                     },
                     "account_name": {
                         "type": "string",
+                        "enum": ["Acme Corporation", "Contoso Ltd", "Fabrikam Industries", "Northwind Traders"],
                         "description": "Account name to analyze (e.g. 'Acme Corporation')",
+                    },
+                    "data_source": {
+                        "type": "string",
+                        "enum": ["synthetic"],
+                        "description": "Deterministic source route. Only bundled synthetic evidence is supported.",
                     },
                 },
                 "required": ["operation"],
+                "additionalProperties": False,
             },
         }
         super().__init__(name=self.name, metadata=self.metadata)
 
     def perform(self, **kwargs) -> str:
         op = kwargs.get("operation", "account_overview")
+        source = kwargs.get("data_source", "synthetic")
+        if source != "synthetic":
+            return "**Error:** `data_source` must be `synthetic`."
         key = _resolve_account(kwargs.get("account_name", ""))
+        if key is None:
+            return (
+                "**Error:** Unknown `account_name`. Valid synthetic accounts: Acme Corporation, "
+                "Contoso Ltd, Fabrikam Industries, Northwind Traders."
+            )
         dispatch = {
             "account_overview": self._account_overview,
             "stakeholder_map": self._stakeholder_map,
@@ -293,7 +330,14 @@ class AccountIntelligenceAgent(BasicAgent):
         handler = dispatch.get(op)
         if not handler:
             return json.dumps({"status": "error", "message": f"Unknown operation: {op}"})
-        return handler(key)
+        output = handler(key)
+        return (
+            output.replace("Source: [", "Synthetic source model: [")
+            + "\n\n**Evidence boundary:** Exact names, values, scores, percentages, news, "
+            "stakeholder details, and competitor signals are synthetic planning evidence. "
+            "Messaging is a draft for human review. No CRM record, task, message, meeting, "
+            "proposal, or customer communication was created or changed."
+        )
 
     # ── account_overview ──────────────────────────────────────
     def _account_overview(self, key):
@@ -382,7 +426,7 @@ class AccountIntelligenceAgent(BasicAgent):
         if not messaging:
             return "No decision-maker or champion contacts mapped yet."
 
-        output = "**Meeting Talking Points:**\n\n"
+        output = "**Draft Meeting Talking Points (human review required):**\n\n"
         for name, data in messaging.items():
             output += f"**For {name} ({data['role']} — {data['focus']}):**\n"
             for pt in data["points"]:
@@ -392,7 +436,7 @@ class AccountIntelligenceAgent(BasicAgent):
         output += (
             "**Objection Handling:**\n"
             '- Price concern: "Total cost of ownership is 23% lower when factoring implementation and support"\n'
-            '- Risk concern: "Deployed at 47 similar companies with 94% success rate"\n\n'
+            '- Risk concern: "The synthetic reference set includes comparable examples; validate approved references and outcomes before use"\n\n'
             "Source: [Value Engineering + Reference Database]\nAgents: ValueMessagingAgent"
         )
         return output
@@ -415,7 +459,7 @@ class AccountIntelligenceAgent(BasicAgent):
 
         return (
             f"**Deal Risk Assessment: {acct['name']}**\n\n{table}\n"
-            f"**Win Probability:** {win_prob}%\n"
+            f"**Synthetic Win-Probability Indicator:** {win_prob}%\n"
             f"**Opportunity Value:** ${acct['opportunity_value']:,}\n"
             f"{actions}\nSource: [Deal Analytics + Risk Models]\nAgents: DealRiskAssessmentAgent"
         )
@@ -434,7 +478,7 @@ class AccountIntelligenceAgent(BasicAgent):
             f"**Account Intelligence Briefing: {acct['name']}**\n\n"
             f"**Opportunity Summary:**\n"
             f"- Deal value: ${acct['opportunity_value']:,} (expansion from ${acct['current_spend']:,} current)\n"
-            f"- Win probability: {win_prob}%\n"
+            f"- Synthetic win-probability indicator: {win_prob}%\n"
             f"- Account health: {h['overall']}/100\n\n"
             f"| Analysis | Key Finding |\n|---|---|\n"
             f"| Account health | {h['engagement']}% engagement, {h['adoption']}% adoption, {h['renewal_risk_pct']}% churn risk |\n"

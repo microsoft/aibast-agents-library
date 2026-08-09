@@ -1,0 +1,85 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:29:37.770401+00:00",
+  "solution": "@aibast-agents-library/prior-authorization",
+  "onepager": "47. Prior Authorization Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "PriorAuthorizationAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/healthcare_stacks/prior_authorization_stack/prior_authorization_agent.py",
+      "sha256": "4136fa7302c291c434ac8a356acb1289e8427f37e3b0bea5667baca50bde7c1f"
+    }
+  ],
+  "case_file": "tests/demo_cases/prior-authorization.json",
+  "case_file_sha256": "ef4afecdf54fcd5d7c22f875eecaa426a9abee0bb104b5745f5add4e4a60a459",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "PA-01",
+      "persona": "Utilization Management Coordinator",
+      "onepager_promise": "Compile the full clinical evidence packet needed for medical review",
+      "prompt": "What evidence is present or missing for synthetic request SYN-AUTH-001?",
+      "assistant_response": "**SYN-AUTH-001 Evidence Summary**\n\n**Present:**\n- Encounter note\n- Prior imaging report\n\n**Missing:**\n- Conservative-care duration documentation\n\nThe workflow is currently flagged as **additional evidence requested** (as of July 30, 2026). The synthetic imaging policy (SYN-POL-IMG-01) requires evidence of conservative-care duration to support medical necessity. That's the gap blocking this synthetic request forward.\n\nThis is demonstration data only\u2014a real utilization reviewer would verify payer policy and all clinical evidence before any decision.",
+      "agent_logs": "[PriorAuthorizationAgent] # Prior-Authorization Evidence Inventory\n\n> Synthetic demonstration data only. This output is a read-only evidence draft, not an authorization, eligibility, medical-necessity, diagnosis, or treatment decision. A qualified utilization reviewer must verify payer policy and clinical evidence before any submission.\n\n## SYN-AUTH-001: synthetic knee imaging request\n- Payer in synthetic source: Synthetic Health Plan\n- Source-recorded workflow state: additional evidence requested (2026-07-30)\n- Referenced policy: SYN-POL-IMG-01\n\n- encounter note: present\n- prior imaging report: present\n- conservative-care duration: not found in synthetic source\n\n[PriorAuthorizationAgent] # Criteria-to-Evidence Crosswalk\n\n> Synthetic demonstration data only. This output is a read-only evidence draft, not an authorization, eligibility, medical-necessity, diagnosis, or treatment decision. A qualified utilization reviewer must verify payer policy and clinical evidence before any submission.\n\n## SYN-AUTH-001 \u2014 Synthetic Imaging Evidence Checklist\n- Synthetic policy effective date: 2026-07-01\n- Checklist only; presence does not establish medical necessity or authorization.\n- Reviewer check: relevant encounter note\n- Reviewer check: prior imaging evidence\n- Reviewer check: documented duration fields\n",
+      "expected_agent": "PriorAuthorizationAgent",
+      "must_include": [
+        "SYN-AUTH-001",
+        "additional evidence requested"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PA-02",
+      "persona": "Nurse Case Manager",
+      "onepager_promise": "Pull payer-specific requirements and match them with EHR data",
+      "prompt": "Show the synthetic criteria checklist for SYN-AUTH-001 without deciding medical necessity.",
+      "assistant_response": "Here's the synthetic criteria checklist for SYN-AUTH-001:\n\n**Imaging Evidence Checklist** (effective 2026-07-01)\n- Relevant encounter note present\n- Prior imaging evidence reviewed\n- Documented duration fields verified\n\nThis is a read-only evidence draft only \u2014 it maps payer criteria to clinical facts, but doesn't render a medical-necessity judgment. A qualified utilization reviewer must still apply payer policy and clinical expertise before any authorization decision.\n\nWant me to pull the full evidence packet or check the request details?",
+      "agent_logs": "[PriorAuthorizationAgent] # Criteria-to-Evidence Crosswalk\n\n> Synthetic demonstration data only. This output is a read-only evidence draft, not an authorization, eligibility, medical-necessity, diagnosis, or treatment decision. A qualified utilization reviewer must verify payer policy and clinical evidence before any submission.\n\n## SYN-AUTH-001 \u2014 Synthetic Imaging Evidence Checklist\n- Synthetic policy effective date: 2026-07-01\n- Checklist only; presence does not establish medical necessity or authorization.\n- Reviewer check: relevant encounter note\n- Reviewer check: prior imaging evidence\n- Reviewer check: documented duration fields\n",
+      "expected_agent": "PriorAuthorizationAgent",
+      "must_include": [
+        "Synthetic Imaging Evidence Checklist",
+        "Checklist only"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PA-03",
+      "persona": "Radiology Scheduler",
+      "onepager_promise": "Submit requests directly to payer portals and send real-time updates",
+      "prompt": "What workflow state is recorded for SYN-AUTH-001, and what does it not mean?",
+      "assistant_response": "**Workflow state:** `additional evidence requested` (recorded 2026-07-30)\n\n**What it does NOT mean:**\n- It is not a denial\n- It is not an approval or grant\n- It is not a medical-necessity determination\n- It is not a payer policy decision\n- It is not a submission or claim action\n\nThe state simply indicates that the utilization review process has paused pending additional clinical or payer evidence. A qualified human reviewer must still evaluate that evidence against actual payer policy and medical criteria before any authorization decision occurs.",
+      "agent_logs": "[PriorAuthorizationAgent] # Source-Recorded Status Summary\n\n> Synthetic demonstration data only. This output is a read-only evidence draft, not an authorization, eligibility, medical-necessity, diagnosis, or treatment decision. A qualified utilization reviewer must verify payer policy and clinical evidence before any submission.\n\n- SYN-AUTH-001: additional evidence requested as recorded on 2026-07-30\n  - This is a source transcription, not an agent determination.",
+      "expected_agent": "PriorAuthorizationAgent",
+      "must_include": [
+        "SYN-AUTH-001",
+        "not an agent determination"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PA-04",
+      "persona": "Utilization Management Coordinator",
+      "onepager_promise": "Prepare appeal materials proactively",
+      "prompt": "Prepare a minimum-necessary reconsideration evidence outline for SYN-AUTH-001.",
+      "assistant_response": "Here's your minimum-necessary reconsideration outline for **SYN-AUTH-001**:\n\n**Status:** Additional evidence requested  \n**Policy to verify:** SYN-POL-IMG-01  \n**Next step:** Human utilization reviewer must\u2014\n1. Confirm reconsideration/appeal is permitted under payer rules\n2. Validate which clinical or payer evidence actually closes the gap\n3. Assemble only that evidence (no padding)\n4. Own the rationale before submission\n\nThe agent shows this is synthetic data. A real case would map to actual medical records, prior denial reason, and policy language. What's the clinical scenario or denial reason you're working from?",
+      "agent_logs": "[PriorAuthorizationAgent] # Reconsideration Evidence Draft\n\n> Synthetic demonstration data only. This output is a read-only evidence draft, not an authorization, eligibility, medical-necessity, diagnosis, or treatment decision. A qualified utilization reviewer must verify payer policy and clinical evidence before any submission.\n\nA reviewer must confirm that reconsideration or appeal is appropriate and permitted.\n\n## SYN-AUTH-001\n- Source workflow state: additional evidence requested\n- Policy reference to verify: SYN-POL-IMG-01\n- Include only authorized, minimum-necessary evidence.\n- Human utilization reviewer owns rationale, completeness, and submission.\n",
+      "expected_agent": "PriorAuthorizationAgent",
+      "must_include": [
+        "minimum-necessary evidence",
+        "reviewer must confirm"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

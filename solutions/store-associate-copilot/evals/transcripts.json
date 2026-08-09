@@ -1,0 +1,89 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:32:45.531126+00:00",
+  "solution": "@aibast-agents-library/store-associate-copilot",
+  "onepager": "24. Retail Store Associate Copilot one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "store-associate-copilot-agent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/retail_cpg_stacks/store_associate_copilot_stack/store_associate_copilot_agent.py",
+      "sha256": "06cecca2ff5f8501f8324d3eb8d2d9dbcf75327452a2cf62bc1a19fe3f7a8477"
+    }
+  ],
+  "case_file": "tests/demo_cases/store-associate-copilot.json",
+  "case_file_sha256": "2a5ec805acdb6b8272c271e37ddcb31c05bb1b6f56c2ab0e46e944829efdfba0",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "SA-01",
+      "persona": "Store Associate",
+      "onepager_promise": null,
+      "prompt": "As Store Associate, give me the product facts, floor location, optional complements, and availability caveat for SKU-1005.",
+      "assistant_response": "## SKU-1005: Premium Running Shoes \u2014 Quick Facts\n\n**Product:** StrideMax Premium Running Shoes | $149.99  \n**Key Specs:** Engineered mesh, EVA foam midsole, responsive cushioning, reflective accents, carbon fiber plate\n\n**Floor Location:** Aisle F1, Wall display\n\n**Optional Complements:** Stainless Water Bottle, Performance Yoga Mat\n\n**Availability Caveat:** Synthetic snapshot shows 38 units on-hand \u2014 **verify current inventory before advising customers**. Sizes and colors available: Cloud White/Grey, Black/Volt, Navy/Orange (7\u201313 in half-steps).\n\n**Care tip for customers:** Spot clean with damp cloth, air dry only.",
+      "agent_logs": "[store-associate-copilot-agent] **Prepared for:** Store Associate\n**Role focus:** clear product facts and respectful customer-assistance drafts\n\n> Synthetic planning snapshot. Recommendations and scripts are drafts only; availability is not guaranteed, inventory is not reserved, and no message, offer, return, refund, transaction, or purchase is completed.\n\n# Product Lookup Snapshot\n\n## Premium Running Shoes (`SKU-1005`)\n\n- **Brand:** StrideMax\n- **Category:** Footwear\n- **Price:** $149.99\n- **Sizes:** 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 12, 13\n- **Colors:** Cloud White/Grey, Black/Volt, Navy/Orange\n- **Materials:** Engineered mesh upper, EVA foam midsole, rubber outsole\n- **Care:** Spot clean with damp cloth. Air dry only.\n- **Location:** Aisle F1, Wall display\n- **Synthetic On-Hand Snapshot:** 38 units (verify before advising)\n- **UPC:** 0-12345-67890-5\n\n**Key Features:**\n  - Responsive cushioning\n  - Breathable knit upper\n  - Reflective accents\n  - Carbon fiber plate\n\n**Optional Complementary Ideas:** Stainless Water Bottle, Performance Yoga Mat\n",
+      "expected_agent": null,
+      "must_include": [
+        "Prepared for:** Store Associate",
+        "Product Lookup Snapshot",
+        "verify before advising"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "SA-02",
+      "persona": "Store Associate",
+      "onepager_promise": null,
+      "prompt": "As Store Associate, draft respectful language for acknowledging a complaint while keeping the decision with an authorized reviewer.",
+      "assistant_response": "Perfect. Here's **respectful language for acknowledging a complaint while preserving the review authority**:\n\n---\n\n### **Your Draft**\n\n**\"I understand your frustration, and I appreciate you bringing this to our attention. Let me make sure I have this right: [restate the issue]. That's a valid concern. I'm going to document this for [Manager/Supervisor name], who has the authority to review this and explore the best options for you. I'll make sure they see this today so we can follow up with you promptly.\"**\n\n---\n\n### **Key Elements**\n\n\u2713 **Validates** the customer without committing to an outcome  \n\u2713 **Restates** the issue (shows you listened)  \n\u2713 **Names the authority** (removes ambiguity)  \n\u2713 **Sets a clear timeline** (builds trust)  \n\u2713 **Your role is clear**: documenter, not decision-maker  \n\n### **Avoid**\n- \"That's not our policy\" (defensive)\n- \"I can't help you\" (dismissive)\n- Making promises beyond your authority\n\nKeep it human, specific, and document what they said for the reviewer. That's your job\u2014and it's crucial.",
+      "agent_logs": "[store-associate-copilot-agent] Unknown scenario `customer complaint acknowledgment with escalation to authorized reviewer`. Valid: greeting, upsell, complaint_handling, size_help, return_at_counter\n[store-associate-copilot-agent] **Prepared for:** Store Associate\n**Role focus:** clear product facts and respectful customer-assistance drafts\n\n> Synthetic planning snapshot. Recommendations and scripts are drafts only; availability is not guaranteed, inventory is not reserved, and no message, offer, return, refund, transaction, or purchase is completed.\n\n# Draft Customer Assistance Guide\n\n## Complaint Handling\n\n**Scenario:** Customer has a complaint or issue\n\n**Suggested Draft Language:**\n> Draft: Acknowledge the concern, restate it, and explain that an authorized associate will review options.\n\n**Follow-Up:** Listen fully, repeat back the issue, offer a concrete solution within your authority.\n\n**Tips:**\n- Never argue\n- Acknowledge their frustration\n- Offer alternatives if first solution is declined\n",
+      "expected_agent": null,
+      "must_include": [
+        "Draft Customer Assistance Guide",
+        "Suggested Draft Language",
+        "authorized associate"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "SA-03",
+      "persona": "Floor Specialist",
+      "onepager_promise": null,
+      "prompt": "As Floor Specialist, turn the opening work into a prioritized planning checklist without claiming execution.",
+      "assistant_response": "Here's your **prioritized opening checklist** as a Floor Specialist:\n\n### **CRITICAL (Do First)**\n1. **Unlock & disarm** \u2014 Entrance doors + alarm system (2 min)\n2. **Power up POS** \u2014 Boot terminals, verify connection (5 min)\n\n### **HIGH (Follow immediately)**\n3. **Floor walk** \u2014 Scan overnight condition, note damage/theft (10 min)\n4. **Promo signage** \u2014 Review daily promotions, update tags/displays (15 min)\n5. **Pull & stock** \u2014 Work inventory alerts, restock high-velocity locations (20 min)\n\n### **MEDIUM (Complete before customer traffic)**\n6. **Fitting rooms** \u2014 Restock hangers, clear overnight holdouts (5 min)\n\n**Total planned time:** ~57 minutes. This is a **plan**, not a commitment \u2014 adjust based on overnight conditions and sales priority.",
+      "agent_logs": "[store-associate-copilot-agent] **Prepared for:** Floor Specialist\n**Role focus:** location, availability, and task-planning detail\n\n> Synthetic planning snapshot. Recommendations and scripts are drafts only; availability is not guaranteed, inventory is not reserved, and no message, offer, return, refund, transaction, or purchase is completed.\n\n# Daily Task Planning Checklist\n\n## Opening Shift\n**Estimated Time:** 57 min | **Completion:** 83.3%\n\n| # | Task | Priority | Est. Time |\n|---|------|----------|-----------|\n| 1 | Unlock entrance doors and disable alarm | CRITICAL | 2 min |\n| 2 | Power on POS terminals and verify connectivity | CRITICAL | 5 min |\n| 3 | Walk floor to check overnight display condition | HIGH | 10 min |\n| 4 | Restock fitting rooms with hangers | MEDIUM | 5 min |\n| 5 | Review daily promotions and update signage | HIGH | 15 min |\n| 6 | Check inventory alerts and pull items for floor replenishment | HIGH | 20 min |\n",
+      "expected_agent": null,
+      "must_include": [
+        "Prepared for:** Floor Specialist",
+        "Daily Task Planning Checklist",
+        "Opening Shift"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "SA-04",
+      "persona": "Sales Manager",
+      "onepager_promise": null,
+      "prompt": "As Sales Manager, summarize aggregate role-cohort coaching signals without ranking employees.",
+      "assistant_response": "## Summary\n\nYour sales floor shows **four operational patterns** worth coaching at the cohort level:\n\n**What's working:**\n- **Opening shifts** (both Senior and Lead roles) consistently drive higher basket sizes ($132\u2013$134) and upsell rates (35\u201340%)\n- **Service quality** is strong across all shifts (4.3\u20134.9 CSAT), with opening cohorts leading\n- **Task completion** peaks at 100% for opening lead associates; midday and closing dip to 80% and 78%\n\n**Coaching focus areas (by shift/role, not individual):**\n- **Closing cohort** \u2014 lowest basket ($109), upsell (18%), and task completion (78%) \u2014 review closing handoff practices, staffing, and end-of-day workflow\n- **Midday cohort** \u2014 mid-range performance \u2014 opportunity to adopt opening-shift upsell techniques\n- **Task completion gaps** \u2014 all non-opening roles underperform 100% baseline; audit task scheduling and clarity\n\n**Next step:** Inspect opening-shift practices (customer approach, product knowledge, task sequencing) as the operational model, then structure peer-learning sessions without singling out individuals.",
+      "agent_logs": "[store-associate-copilot-agent] **Prepared for:** Sales Manager\n**Role focus:** aggregate coaching signals and operational review\n\n> Synthetic planning snapshot. Recommendations and scripts are drafts only; availability is not guaranteed, inventory is not reserved, and no message, offer, return, refund, transaction, or purchase is completed.\n\n# Synthetic Role-Cohort Performance Dashboard\n\n**Store Total Revenue Today:** $6,539.00\n**Store Total Transactions:** 52\n**Store Avg Basket:** $125.75\n\n| Associate | Role | Shift | Revenue | Units | Txns | Basket | Upsell | CSAT | Tasks |\n|-----------|------|-------|---------|-------|------|--------|--------|------|-------|\n| Opening Senior Associate Cohort | Senior Associate | opening | $1,847.50 | 23 | 14 | $131.96 | 35% | 4.8/5.0 | 11/12 (92%) |\n| Midday Associate Cohort | Associate | midday | $1,295.80 | 17 | 11 | $117.80 | 22% | 4.5/5.0 | 8/10 (80%) |\n| Closing Associate Cohort | Associate | closing | $985.40 | 12 | 9 | $109.49 | 18% | 4.3/5.0 | 7/9 (78%) |\n| Opening Lead Associate Cohort | Lead Associate | opening | $2,410.30 | 29 | 18 | $133.91 | 40% | 4.9/5.0 | 12/12 (100%) |\n\n## Aggregate Coaching Signals\n\n- **Revenue reference cohort:** Opening Lead Associate Cohort \u2014 use for workflow review, not personnel decisions\n- **Service reference cohort:** Opening Lead Associate Cohort \u2014 inspect practices, not individuals\n- **Attach-rate reference cohort:** Opening Lead Associate Cohort \u2014 avoid pressure-based selling",
+      "expected_agent": null,
+      "must_include": [
+        "Prepared for:** Sales Manager",
+        "Synthetic Role-Cohort Performance Dashboard",
+        "Aggregate Coaching Signals"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

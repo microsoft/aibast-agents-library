@@ -1,0 +1,85 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:21:32.091076+00:00",
+  "solution": "@aibast-agents-library/clinical-notes-summarizer",
+  "onepager": "49. Clinical Notes Summarizer Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "ClinicalNotesSummarizerAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/healthcare_stacks/clinical_notes_summarizer_stack/clinical_notes_summarizer_agent.py",
+      "sha256": "cdc8c9be6ff879fa8c96d06da621d6f9b8ebc9f7162e719e68504fdcabad7484"
+    }
+  ],
+  "case_file": "tests/demo_cases/clinical-notes-summarizer.json",
+  "case_file_sha256": "b8665b6ed5889c18432d796c2eda22066a637bf023e783245ffe642dfebf204a",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "CN-01",
+      "persona": "Primary Care Physician",
+      "onepager_promise": "Automatically generate concise, clinically relevant patient summaries",
+      "prompt": "Summarize synthetic encounter SYN-ENC-001 using source facts only.",
+      "assistant_response": "**Encounter SYN-ENC-001 Summary** (source facts only):\n\n**Visit Type:** Follow-up (2026-07-28)  \n**Chief Concern:** Knee discomfort when using stairs; no trauma documented  \n**Vitals:** BP 148/92  \n**Labs:** HbA1c 8.2%\n\n**Important:** This is synthetic demonstration data for review purposes only. A qualified clinician must verify against the authorized record. No diagnosis, treatment recommendation, or clinical interpretation has been performed\u2014human review is required before any clinical action.",
+      "agent_logs": "[ClinicalNotesSummarizerAgent] # Source-Grounded Encounter Summary\n\n> Synthetic demonstration data only. This is a read-only draft that may omit or misstate source details. A qualified clinician must compare it with the authorized record. It is not diagnosis, treatment advice, medical clearance, scheduling, or a record update. Human review is required.\n\n## Synthetic Patient Alpha (SYN-ENC-001) \u2014 2026-07-28\n- Source text: Follow-up visit. Patient reports knee discomfort with stairs. No trauma recorded.\n- Source observations: blood pressure field: 148/92; laboratory field: HbA1c 8.2%\n- Clinical interpretation: not performed; clinician review required.\n",
+      "expected_agent": "ClinicalNotesSummarizerAgent",
+      "must_include": [
+        "SYN-ENC-001",
+        "Clinical interpretation: not performed"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "CN-02",
+      "persona": "Anesthesia Clinician",
+      "onepager_promise": "Surface key risks, comorbidities, and medication considerations",
+      "prompt": "List the source-recorded medications for SYN-ENC-001 for reconciliation.",
+      "assistant_response": "Here are the source-recorded medications for **SYN-ENC-001**:\n\n1. **Metformin** \u2014 1000 mg twice daily\n2. **Lisinopril** \u2014 20 mg daily\n\nThese are as documented in the source record. A clinician or pharmacist should verify against the patient's current medication use and check for interactions or recent changes.",
+      "agent_logs": "[ClinicalNotesSummarizerAgent] # Medication Source Inventory\n\n> Synthetic demonstration data only. This is a read-only draft that may omit or misstate source details. A qualified clinician must compare it with the authorized record. It is not diagnosis, treatment advice, medical clearance, scheduling, or a record update. Human review is required.\n\n## Synthetic Patient Alpha (SYN-ENC-001)\n- Source-recorded: Metformin 1000 mg twice daily\n- Source-recorded: Lisinopril 20 mg daily\n- Reconciliation, interactions, and changes require clinician/pharmacist review.\n",
+      "expected_agent": "ClinicalNotesSummarizerAgent",
+      "must_include": [
+        "Metformin 1000 mg twice daily",
+        "clinician/pharmacist review"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "CN-03",
+      "persona": "Surgeon",
+      "onepager_promise": "Standardize documentation to support smoother surgical and anesthesia workflows",
+      "prompt": "Extract the source-coded problems for SYN-ENC-001 without confirming a diagnosis.",
+      "assistant_response": "I've extracted the source-coded problems from SYN-ENC-001. The record lists:\n\n- Type 2 diabetes\n- Hypertension  \n- Knee discomfort\n\nThese are as they appear in the source\u2014no clinical confirmation or diagnosis has been added. A qualified clinician should review against the authorized record.",
+      "agent_logs": "[ClinicalNotesSummarizerAgent] # Problem-List Source Extract\n\n> Synthetic demonstration data only. This is a read-only draft that may omit or misstate source details. A qualified clinician must compare it with the authorized record. It is not diagnosis, treatment advice, medical clearance, scheduling, or a record update. Human review is required.\n\n## Synthetic Patient Alpha (SYN-ENC-001)\n- source-coded type 2 diabetes\n- source-coded hypertension\n- knee discomfort\n- No diagnosis was added, confirmed, or changed.\n",
+      "expected_agent": "ClinicalNotesSummarizerAgent",
+      "must_include": [
+        "source-coded type 2 diabetes",
+        "No diagnosis was added"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "CN-04",
+      "persona": "Primary Care Physician",
+      "onepager_promise": "Send summaries through EHR and secure messaging systems",
+      "prompt": "What referral context is recorded for SYN-ENC-001, and what action has not occurred?",
+      "assistant_response": "For **SYN-ENC-001**, the referral context shows:\n\n**Recorded Context:**  \nAn Orthopedics referral draft has been recorded, but its status is unconfirmed.\n\n**Action Not Taken:**  \n**No referral was actually placed, scheduled, or changed.** This is a draft only \u2014 it requires authorized clinician review and action to move forward.\n\nThis is synthetic demonstration data, so a clinician must verify against the authorized record before any referral action proceeds.",
+      "agent_logs": "[ClinicalNotesSummarizerAgent] # Referral Context Extract\n\n> Synthetic demonstration data only. This is a read-only draft that may omit or misstate source details. A qualified clinician must compare it with the authorized record. It is not diagnosis, treatment advice, medical clearance, scheduling, or a record update. Human review is required.\n\n## Synthetic Patient Alpha (SYN-ENC-001)\n- Source-recorded context: Orthopedics referral draft recorded; status not confirmed.\n- No referral was placed, scheduled, or changed.\n- Authorized clinician/staff review is required.\n",
+      "expected_agent": "ClinicalNotesSummarizerAgent",
+      "must_include": [
+        "Orthopedics referral draft",
+        "No referral was placed"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

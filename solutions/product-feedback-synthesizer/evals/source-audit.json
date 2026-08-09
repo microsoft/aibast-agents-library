@@ -1,0 +1,19 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/product-feedback-synthesizer",
+  "status": "audited-and-fixed",
+  "approved_slide": {
+    "file": "26. Product Feedback Synthesizer Agent one-pager.pptx",
+    "sha256": "79f06443a4359eb43a02bf3e9caef25d478100a35edf8c174d735014eecff712"
+  },
+  "source_path": "agents/@aibast-agents-library/software_dp_stacks/product_feedback_synthesizer_stack/product_feedback_synthesizer_agent.py",
+  "findings": [
+    "Synthetic feature statuses such as planned_q2, planned_q3, and in_progress read as roadmap commitments.",
+    "Roadmap output instructed acceleration and priority choices without a product-owner validation gate."
+  ],
+  "fixes": [
+    "Replaced commitment-like statuses with candidate_for_review and evidence_under_review.",
+    "Changed recommendations to review candidates and added no-roadmap, no-ticket, no-outreach, and no-account-action boundaries."
+  ],
+  "remaining_boundary": "Production connections and all external actions require customer approval, least-privilege controls, and an authorized human workflow."
+}

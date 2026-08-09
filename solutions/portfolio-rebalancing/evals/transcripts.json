@@ -1,0 +1,117 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:47:57.418254+00:00",
+  "solution": "@aibast-agents-library/portfolio-rebalancing",
+  "onepager": "Portfolio Rebalancing Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "PortfolioRebalancingAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/financial_services_stacks/portfolio_rebalancing_stack/portfolio_rebalancing_agent.py",
+      "sha256": "76086d7010b614eee9b9600e10aef69923d0360968e983fab1355c41884e7a2a"
+    }
+  ],
+  "case_file": "tests/demo_cases/portfolio-rebalancing.json",
+  "case_file_sha256": "432a4d4b715540a75d4502f7188f4fbd1333374cbd4962dc84daf20e0fda0e72",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "PRB-01",
+      "persona": "Portfolio Manager",
+      "onepager_promise": "Detect portfolio drift and analyze risk to keep client portfolios aligned to investment goals",
+      "prompt": "Which portfolio is outside its drift guardrails, and where is the largest gap?",
+      "assistant_response": "**Both portfolios need rebalancing:**\n\n**PORT-5001 (Growth Allocation Fund)** \u2014 Outside guardrails\n- **Largest gap:** VTI (US Large Cap) is **+5.0% over target** (35% actual vs. 30% target)  \n- Also out of bounds: VB (US Small Cap) at \u20133.0%, VEA (Intl Developed) at \u20133.0%\n- This portfolio has hit its 5.0% max drift threshold\n\n**PORT-5002 (Conservative Income Portfolio)** \u2014 At guardrail threshold\n- **Largest gap:** VYMI (Intl Dividend) at **\u20132.0%** (8% actual vs. 10% target)\n- Tighter 2.0% max drift; VYMI has just hit the limit\n- Three other positions are at +1.0% drift but within tolerance\n\n**Port-5001 needs immediate action.** The US Large Cap overweight of $535,000 is the primary rebalancing candidate, with US Small Cap and International Developed as secondary targets to reduce the underweights.\n\nWould you like me to show you the rebalancing candidates for either portfolio?",
+      "agent_logs": "[PortfolioRebalancingAgent] > **SYNTHETIC DEMO DATA \u2014 ADVISOR REVIEW REQUIRED.** Fictional portfolios and assumptions only. This is not investment, tax, legal, or financial advice; no trade or transaction has been placed.\n\n# Portfolio Analysis\n\n## PORT-5001: Growth Allocation Fund\n\n- **Manager:** Victoria Reeves, CFA\n- **Strategy:** Growth\n- **Total Value:** $12,450,000\n- **Benchmark:** 60/40 Growth Blend\n- **Max Drift:** 5.0%\n- **Drift Threshold:** 3.0%\n- **Rebalance Needed:** Yes\n\n| Asset | Ticker | Value | Current % | Target % | Drift |\n|---|---|---|---|---|---|\n| US Large Cap | VTI | $4,357,500 | 35.0% | 30.0% | +5.0% |\n| US Small Cap | VB | $872,500 | 7.0% | 10.0% | -3.0% |\n| Intl Developed | VEA | $1,493,750 | 12.0% | 15.0% | -3.0% |\n| Emerging Markets | VWO | $622,500 | 5.0% | 5.0% | 0.0% |\n| US Aggregate Bond | BND | $3,112,500 | 25.0% | 25.0% | 0.0% |\n| TIPS | VTIP | $622,500 | 5.0% | 5.0% | 0.0% |\n| REITs | VNQ | $622,500 | 5.0% | 5.0% | 0.0% |\n| Cash | VMFXX | $746,250 | 6.0% | 5.0% | +1.0% |\n\n## PORT-5002: Conservative Income Portfolio\n\n- **Manager:** Daniel Kim, CFP\n- **Strategy:** Income\n- **Total Value:** $8,200,000\n- **Benchmark:** 30/70 Income Blend\n- **Max Drift:** 2.0%\n- **Drift Threshold:** 2.0%\n- **Rebalance Needed:** Yes\n\n| Asset | Ticker | Value | Current % | Target % | Drift |\n|---|---|---|---|---|---|\n| US Large Cap Dividend | VYM | $1,312,000 | 16.0% | 15.0% | +1.0% |\n| Intl Dividend | VYMI | $656,000 | 8.0% | 10.0% | -2.0% |\n| US Investment Grade | VCIT | $2,132,000 | 26.0% | 25.0% | +1.0% |\n| US Treasury | VGIT | $1,640,000 | 20.0% | 20.0% | 0.0% |\n| Municipal Bonds | VTEB | $1,148,000 | 14.0% | 15.0% | -1.0% |\n| High Yield | VWEHX | $492,000 | 6.0% | 5.0% | +1.0% |\n| Preferred Stock | PFF | $410,000 | 5.0% | 5.0% | 0.0% |\n| Cash | VMFXX | $410,000 | 5.0% | 5.0% | 0.0% |\n",
+      "expected_agent": "PortfolioRebalancingAgent",
+      "must_include": [
+        "PORT-5001",
+        "VTI"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PRB-02",
+      "persona": "Financial Advisor",
+      "onepager_promise": "Detect portfolio drift and analyze risk to keep client portfolios aligned to investment goals",
+      "prompt": "Show me the allocation changes I should review with the client before anyone trades.",
+      "assistant_response": "Here are the allocation changes for the Growth Allocation Fund that you should review with your client:\n\n**Key Moves:**\n- **Reduce VTI (US Large Cap)** by $622,500 \u2014 it's drifted 5% above target\n- **Increase VB (US Small Cap)** by $372,500 \u2014 down 3% below target  \n- **Increase VEA (Intl Developed)** by $373,750 \u2014 down 3% below target\n\nThe portfolio is currently out of balance on large-cap overweight. These trades bring it back to your target allocation while staying within your 3% drift guardrails.\n\n**Before you proceed:** This is a synthetic review candidate. A licensed advisor or authorized reviewer must approve the trades and any client communication. Once approved, let me know and I can prepare a controlled execution checklist.",
+      "agent_logs": "[PortfolioRebalancingAgent] > **SYNTHETIC DEMO DATA \u2014 ADVISOR REVIEW REQUIRED.** Fictional portfolios and assumptions only. This is not investment, tax, legal, or financial advice; no trade or transaction has been placed.\n\n# Rebalancing Candidates for Advisor Review: Growth Allocation Fund\n\n**Portfolio Value:** $12,450,000\n**Drift Threshold:** 3.0%\n\n## Candidate Allocation Changes\n\n| Asset | Ticker | Action | Current % | Target % | Drift | Trade Amount |\n|---|---|---|---|---|---|---|\n| US Large Cap | VTI | Reduce candidate | 35.0% | 30.0% | +5.0% | $622,500 |\n| US Small Cap | VB | Increase candidate | 7.0% | 10.0% | -3.0% | $372,500 |\n| Intl Developed | VEA | Increase candidate | 12.0% | 15.0% | -3.0% | $373,750 |\n\n**Total Sells:** $622,500\n**Total Buys:** $746,250",
+      "expected_agent": "PortfolioRebalancingAgent",
+      "must_include": [
+        "VTI",
+        "candidate"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PRB-03",
+      "persona": "Paraplanner",
+      "onepager_promise": "Find tax-loss harvesting opportunities to maximize returns and minimize tax exposure",
+      "prompt": "What tax assumptions should the advisor validate for the rebalance candidate?",
+      "assistant_response": "Here are the **tax assumptions the advisor should validate** before the client agrees to rebalance:\n\n1. **Tax rate applied** \u2014 The model assumes 20% long-term capital gains for VTI. Confirm the client's actual federal + state + NIIT rate.\n2. **Holding period & cost basis** \u2014 Verify that VTI shares held >1 year qualify for long-term treatment (not short-term at 37%).\n3. **Offset strategy** \u2014 Check if there are tax-loss candidates in the portfolio that could offset the $18,955 estimated gain before trading.\n4. **Account type** \u2014 If any drift or rebalancing can happen inside a tax-deferred account (401k, IRA), prioritize that first.\n5. **Contribution room** \u2014 Can new client contributions be directed to underweight positions instead of selling appreciated shares?\n\nThe illustrative $18,955 tax estimate is **only valid if those assumptions hold**. A qualified tax professional (not the advisor alone) should confirm the client's specific situation\u2014especially state taxes and whether wash-sale rules apply to any loss harvesting.\n\nWould you like me to pull tax-loss candidates or frame a rebalancing sequence that minimizes tax drag?",
+      "agent_logs": "[PortfolioRebalancingAgent] > **SYNTHETIC DEMO DATA \u2014 ADVISOR REVIEW REQUIRED.** Fictional portfolios and assumptions only. This is not investment, tax, legal, or financial advice; no trade or transaction has been placed.\n\n# Tax Impact Analysis: Growth Allocation Fund\n\n## Tax Rate Reference\n\n- Short Term Capital Gains: 37.0%\n- Long Term Capital Gains: 20.0%\n- Qualified Dividends: 20.0%\n- Ordinary Income: 37.0%\n- Net Investment Income Tax: 3.8%\n\n## Estimated Tax on Reduction Candidates\n\n| Asset | Ticker | Reduction Amount | Cost Basis | Unrealized Gain | Est. Tax |\n|---|---|---|---|---|---|\n| US Large Cap | VTI | $622,500 | $3,800,000 | $79,643 | $18,955 |\n\n**Illustrative Tax Estimate:** $18,955\n\n## Questions for a Qualified Tax Professional\n\n- Direct new contributions to underweight asset classes\n- Use tax-loss positions to offset gains\n- Rebalance within tax-advantaged accounts first\n- Consider charitable donation of appreciated shares",
+      "expected_agent": "PortfolioRebalancingAgent",
+      "must_include": [
+        "Illustrative Tax Estimate",
+        "VTI"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PRB-04",
+      "persona": "Tax-Aware Portfolio Manager",
+      "onepager_promise": "Find tax-loss harvesting opportunities to maximize returns and minimize tax exposure",
+      "prompt": "Which positions are loss candidates, and what controls stop us from treating that as tax advice?",
+      "assistant_response": "**The controls that make this advisory, not advice:**\n\n1. **\"Candidate only\" language** \u2014 We flag positions by loss, but don't recommend selling them. That decision lives with the client and their tax professional.\n\n2. **Wash-sale boundary** \u2014 We identify positions but explicitly require checking wash-sale windows. We don't calculate or assume those details.\n\n3. **Tax-lot validation** \u2014 Actual tax impact depends on which shares were purchased when and at what cost. We don't know the client's tax history, so we can't claim the loss is real until a CPA confirms it.\n\n4. **Account type unknown** \u2014 Tax losses only matter in taxable accounts. If this portfolio is in an IRA or 401(k), harvesting doesn't apply. We note that without assuming.\n\n5. **Client suitability not assessed** \u2014 A loss is a loss, but selling a position that's down might trigger regret, conflict with strategy, or miss an upside. That's a judgment call, not a formula.\n\n6. **No order placed** \u2014 We stop at \"here's what *could* be harvested.\" The client and their CPA decide if, when, and how much.\n\n**What your team does next:**\n- Get the client's tax lots and wash-sale history.\n- Have them talk to their CPA before any sale.\n- Document the decision and reasoning in the file.\n- Only then execute\u2014through a licensed advisor or custodian.\n\nThis approach keeps you on the advisory side of the line: you're gathering information and framing options, not saying \"do this because the tax math says so.\"",
+      "agent_logs": "[PortfolioRebalancingAgent] > **SYNTHETIC DEMO DATA \u2014 ADVISOR REVIEW REQUIRED.** Fictional portfolios and assumptions only. This is not investment, tax, legal, or financial advice; no trade or transaction has been placed.\n\n# Tax-Loss-Harvesting Candidates: Growth Allocation Fund\n\n| Asset | Ticker | Illustrative Unrealized Loss | Review Status |\n|---|---|---|---|\n| Intl Developed | VEA | $106,250 | Candidate only \u2014 tax-lot and wash-sale review required |\n| Emerging Markets | VWO | $57,500 | Candidate only \u2014 tax-lot and wash-sale review required |\n| US Aggregate Bond | BND | $87,500 | Candidate only \u2014 tax-lot and wash-sale review required |\n\nA qualified tax professional must validate tax lots, holding periods, account type, wash-sale exposure, and client suitability. No sale has been recommended or placed.",
+      "expected_agent": "PortfolioRebalancingAgent",
+      "must_include": [
+        "VEA",
+        "wash-sale"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PRB-05",
+      "persona": "Retirement Planning Specialist",
+      "onepager_promise": "Generate rebalancing plans and model retirement success outcomes",
+      "prompt": "Frame the retirement scenarios we need to model without inventing a success probability.",
+      "assistant_response": "This frames the key variables without predicting the outcome:\n\n- **Portfolio:** $12.45M (Growth Allocation Fund)\n- **Horizon:** 25 years\n- **Withdrawal approach:** 4% rule as a starting point\n- **Scenarios:** Lower-return, base-case, higher-volatility paths\n\n**What you need to review with your client:**\n1. Is the withdrawal rate realistic for their spending?\n2. Should you model different inflation assumptions?\n3. Are there planned changes (major expenses, legacy goals)?\n4. What are your tax and fee assumptions?\n5. Does the 25-year horizon match their longevity planning?\n\nOnce you set those inputs, the three scenarios will show *outcomes under different market conditions*\u2014not a single success rate. That keeps the conversation grounded in realistic assumptions, not false precision.\n\nWhat inputs would you like to adjust or validate first?",
+      "agent_logs": "[PortfolioRebalancingAgent] > **SYNTHETIC DEMO DATA \u2014 ADVISOR REVIEW REQUIRED.** Fictional portfolios and assumptions only. This is not investment, tax, legal, or financial advice; no trade or transaction has been placed.\n\n# Retirement Planning Scenario Inputs: Growth Allocation Fund\n\n- **Starting portfolio:** $12,450,000\n- **Illustrative horizon:** 25 years\n- **Illustrative annual withdrawal:** 4.0% of starting value\n- **Scenarios to model:** lower-return, base, and higher-volatility\n\nNo success probability is asserted because contribution, withdrawal, inflation, tax, fee, longevity, and capital-market assumptions require advisor and client validation.",
+      "expected_agent": "PortfolioRebalancingAgent",
+      "must_include": [
+        "25 years",
+        "No success probability"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PRB-06",
+      "persona": "Trading Supervisor",
+      "onepager_promise": "Generate rebalancing plans and model retirement success outcomes",
+      "prompt": "Prepare the controlled implementation checklist and make clear whether any order was sent.",
+      "assistant_response": "**Clear statement: No order was sent.**\n\nThis is a **controlled implementation checklist only** \u2014 a roadmap for your review before anyone trades. The checklist shows:\n\n- **What to review** (3 candidate trades: reduce VTI, increase VB and VEA)\n- **How to verify** (cash, settlement, post-trade allocations, compliance)\n- **Who must approve** (licensed advisor + authorized trader, both required)\n\n**Next step:** Walk through this checklist with your team and the advisor. Once all steps are signed off, trading execution can begin \u2014 but the order itself happens only after that approval.",
+      "agent_logs": "[PortfolioRebalancingAgent] > **SYNTHETIC DEMO DATA \u2014 ADVISOR REVIEW REQUIRED.** Fictional portfolios and assumptions only. This is not investment, tax, legal, or financial advice; no trade or transaction has been placed.\n\n# Human-Controlled Implementation Checklist: Growth Allocation Fund\n\n**Rebalance Frequency:** Quarterly\n**Total Trades:** 3\n\n## Step 1: Review Reduction Candidates\n\n1. Review a $622,500 reduction candidate for VTI (US Large Cap)\n\n## Step 2: Validate Cash and Settlement Assumptions\n\n- Confirm available cash and settlement timing in the approved trading system\n\n## Step 3: Review Increase Candidates\n\n1. Review a $372,500 increase candidate for VB (US Small Cap)\n2. Review a $373,750 increase candidate for VEA (Intl Developed)\n\n## Step 4: Verification\n\n- Confirm post-trade allocations match targets\n- Update portfolio records\n- Generate client notification\n- Document compliance review\n- Obtain licensed-advisor and authorized-trading approval before any order\n\nNo order has been created, routed, or executed.",
+      "expected_agent": "PortfolioRebalancingAgent",
+      "must_include": [
+        "VTI",
+        "No order"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

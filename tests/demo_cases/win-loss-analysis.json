@@ -1,0 +1,163 @@
+{
+  "solution": "Win/Loss Analysis Agent",
+  "slot": 22,
+  "agent": "@aibast-agents-library/win-loss-analysis",
+  "onepager": "22. Win Loss Analysis Agent one-pager.pptx",
+  "agent_files": [
+    "win_loss_analysis_agent"
+  ],
+  "note": "Locked persona-language capture contract with one deterministic synthetic case per implemented operation.",
+  "cases": [
+    {
+      "id": "WL-01",
+      "persona": "Sales Operations Manager",
+      "onepager_bullet": "Perform pattern recognition and trend analysis to identify actionable insights and reverse declining performance",
+      "prompt": "Compare the bundled synthetic Q3 and Q2 win and loss patterns and show where the decline is concentrated.",
+      "operation": "win_loss_overview",
+      "arguments": {
+        "operation": "win_loss_overview",
+        "data_source": "synthetic",
+        "quarter": "Q3"
+      },
+      "must_include": [
+        "Q3 Win/Loss Overview",
+        "Loss Analysis by Competitor",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "WinLossAnalysisAgent"
+    },
+    {
+      "id": "WL-02",
+      "persona": "Enablement Manager",
+      "onepager_bullet": "Analyze buyer feedback and loss reasons to prioritize addressable gaps and strengthen competitive positioning",
+      "prompt": "Identify the evidence-backed synthetic loss drivers and buyer feedback themes that enablement should review.",
+      "operation": "root_cause_analysis",
+      "arguments": {
+        "operation": "root_cause_analysis",
+        "data_source": "synthetic",
+        "quarter": "Q3"
+      },
+      "must_include": [
+        "Root Cause Analysis",
+        "Deep Dive",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "WinLossAnalysisAgent"
+    },
+    {
+      "id": "WL-03",
+      "persona": "Enablement Manager",
+      "onepager_bullet": "Generate targeted strategies and enablement content to equip teams for faster recovery and sustained growth",
+      "prompt": "Draft counter-strategy and talk-track options from the synthetic loss evidence for enablement review.",
+      "operation": "counter_strategies",
+      "arguments": {
+        "operation": "counter_strategies",
+        "data_source": "synthetic",
+        "quarter": "Q3"
+      },
+      "must_include": [
+        "Counter-Strategies",
+        "Updated Talk Track",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "WinLossAnalysisAgent"
+    },
+    {
+      "id": "WL-04",
+      "persona": "Sales Leader",
+      "onepager_bullet": "Generate targeted strategies and enablement content to equip teams for faster recovery and sustained growth",
+      "prompt": "Model synthetic intervention scenarios without presenting them as realized or committed revenue.",
+      "operation": "revenue_impact",
+      "arguments": {
+        "operation": "revenue_impact",
+        "data_source": "synthetic",
+        "quarter": "Q3"
+      },
+      "must_include": [
+        "Synthetic Revenue Scenario Model",
+        "Illustrative scenario value",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "WinLossAnalysisAgent"
+    },
+    {
+      "id": "WL-05",
+      "persona": "Sales Leader",
+      "onepager_bullet": "Perform pattern recognition and trend analysis to identify actionable insights and reverse declining performance",
+      "prompt": "Draft a board-level synthetic win and loss narrative with all investment and performance values labeled as scenarios.",
+      "operation": "board_presentation",
+      "arguments": {
+        "operation": "board_presentation",
+        "data_source": "synthetic",
+        "quarter": "Q3"
+      },
+      "must_include": [
+        "Board Presentation",
+        "Decision for authorized leaders",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "WinLossAnalysisAgent"
+    },
+    {
+      "id": "WL-06",
+      "persona": "Sales Operations Manager",
+      "onepager_bullet": "Generate targeted strategies and enablement content to equip teams for faster recovery and sustained growth",
+      "prompt": "Summarize the synthetic findings and candidate next steps without activating programs or approvals.",
+      "operation": "action_summary",
+      "arguments": {
+        "operation": "action_summary",
+        "data_source": "synthetic",
+        "quarter": "Q3"
+      },
+      "must_include": [
+        "Complete Summary",
+        "Draft Next-Step Options",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "WinLossAnalysisAgent"
+    }
+  ],
+  "assertion_principle": "expects_agent proves routing; must_include checks deterministic tool output; must_not_include catches routing stalls or prohibited side-effect claims."
+}

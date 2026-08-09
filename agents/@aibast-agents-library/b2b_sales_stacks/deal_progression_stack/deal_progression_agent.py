@@ -24,8 +24,8 @@ __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/deal-progression",
     "version": "1.0.0",
-    "display_name": "Deal Progression",
-    "description": "Pipeline health analysis, stalled-deal detection, action plan generation, and pipeline acceleration.",
+    "display_name": "Deal Progression Agent",
+    "description": "Automate sales pipeline management to keep deals moving, increase forecast confidence, and improve team productivity.",
     "author": "AIBAST",
     "tags": ["b2b", "sales", "deal-progression", "pipeline", "forecasting"],
     "category": "b2b_sales",
@@ -139,7 +139,7 @@ _BLOCKER_PLAYBOOK = {
         "diagnosis": "Process bottleneck, not relationship issue",
         "week1": [
             "Today: Call champion — acknowledge legal delay",
-            "Tomorrow: Send pre-approved contract template (removes 80% of redlines)",
+            "Tomorrow: Prepare the synthetic contract template for authorized legal and seller review",
             "Day 3: Offer 30-day out clause to reduce perceived risk",
             "Day 5: Legal-to-legal call to resolve remaining items",
         ],
@@ -323,7 +323,18 @@ class DealProgressionAgent(BasicAgent):
         self.name = "DealProgressionAgent"
         self.metadata = {
             "name": self.name,
-            "description": __manifest__["description"],
+            "description": (
+                f"{__manifest__['description']} Uses only the bundled synthetic pipeline "
+                "dataset and returns read-only analysis or draft plans; it never writes CRM "
+                "records, assigns tasks, sends alerts, or changes a forecast. Route requests "
+                "to compare timing options, pull-forward opportunities, quick wins, or "
+                "acceleration scenarios to `acceleration`; that operation returns "
+                "`Pipeline Acceleration Strategy` and `Synthetic Scenario`."
+            ),
+            "operations": [
+                "pipeline_health", "stalled_deals", "action_plans", "acceleration",
+                "assign_tasks", "executive_summary",
+            ],
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -334,16 +345,33 @@ class DealProgressionAgent(BasicAgent):
                             "action_plans", "acceleration",
                             "assign_tasks", "executive_summary",
                         ],
-                        "description": "The analysis to perform",
+                        "description": (
+                            "Select the requested pipeline deliverable. pipeline_health: status, value, "
+                            "and root-cause overview. stalled_deals: deal-level stall diagnosis. "
+                            "action_plans: draft week-by-week interventions. acceleration: REQUIRED for "
+                            "timing options, pull-forward opportunities, quick wins, acceleration "
+                            "strategies, or scenario value without forecast commitment; returns Pipeline "
+                            "Acceleration Strategy and Synthetic Scenario. assign_tasks: candidate task "
+                            "mapping for manager review. executive_summary: compiled leadership summary."
+                        ),
+                    },
+                    "data_source": {
+                        "type": "string",
+                        "enum": ["synthetic"],
+                        "description": "Deterministic source route. Only bundled synthetic evidence is supported.",
                     },
                 },
                 "required": ["operation"],
+                "additionalProperties": False,
             },
         }
         super().__init__(name=self.name, metadata=self.metadata)
 
     def perform(self, **kwargs) -> str:
         op = kwargs.get("operation", "pipeline_health")
+        source = kwargs.get("data_source", "synthetic")
+        if source != "synthetic":
+            return "**Error:** `data_source` must be `synthetic`."
         dispatch = {
             "pipeline_health": self._pipeline_health,
             "stalled_deals": self._stalled_deals,
@@ -355,7 +383,14 @@ class DealProgressionAgent(BasicAgent):
         handler = dispatch.get(op)
         if not handler:
             return json.dumps({"status": "error", "message": f"Unknown operation: {op}"})
-        return handler()
+        output = handler()
+        return (
+            output.replace("Source: [", "Synthetic source model: [")
+            + "\n\n**Evidence boundary:** Exact names, dates, counts, values, scores, "
+            "percentages, and projections are synthetic planning evidence. This read-only "
+            "output did not write CRM data, assign tasks, send alerts, approve pricing, "
+            "change a forecast, or contact a customer."
+        )
 
     # ── pipeline_health ───────────────────────────────────────
     def _pipeline_health(self):
@@ -439,9 +474,9 @@ class DealProgressionAgent(BasicAgent):
                 f"**{d['name']} — ${d['value']:,} ({d['stage']})**\n\n"
                 f"**Week 1:**\n{week1}\n\n"
                 f"**Week 2:**\n{week2}\n\n"
-                f"**Assigned Resource:** {playbook['resource'].title()}\n"
+                f"**Suggested Resource:** {playbook['resource'].title()}\n"
                 f"**Owner:** {d['owner']}\n"
-                f"**Expected Outcome:** Deal back on track within 10 days\n"
+                f"**Planning Objective:** Evaluate whether the deal can return to active review within 10 days\n"
             )
 
         total_tasks = sum(
@@ -515,8 +550,8 @@ class DealProgressionAgent(BasicAgent):
             f"| Rep | Stalled Deals | Priority Action |\n"
             f"|-----|---------------|----------------|\n"
             f"{rep_rows}\n"
-            f"**Forecast Impact:** Accelerating these deals adds "
-            f"**$2.4M** to Q4 commit.\n\n"
+            f"**Synthetic Scenario:** The planning model illustrates "
+            f"**$2.4M** of possible Q4 timing movement; it is not a forecast commitment.\n\n"
             f"Source: [Pipeline Analytics + Historical Patterns]\n"
             f"Agents: PipelineAccelerationAgent"
         )
@@ -556,21 +591,21 @@ class DealProgressionAgent(BasicAgent):
         )
 
         return (
-            f"**Task Assignments Completed**\n\n"
-            f"**{total_tasks}** tasks assigned across **{len(assignments)}** reps.\n\n"
+            f"**Draft Task Assignment Plan**\n\n"
+            f"**{total_tasks}** candidate tasks mapped across **{len(assignments)}** reps for manager review.\n\n"
             f"| Rep | Tasks | Deadline | Deals |\n"
             f"|-----|-------|----------|-------|\n"
             f"{table}\n"
-            f"**Automated Monitoring:**\n"
-            f"- Daily Slack alerts for overdue tasks\n"
-            f"- Deal stage change notifications\n"
-            f"- Weekly pipeline velocity report\n"
-            f"- Stall warning at 7 days (vs current 21)\n\n"
-            f"**Accountability Cadence:**\n"
-            f"- Daily: Automated task reminders\n"
-            f"- Wednesday: Pipeline review meeting (30 min)\n"
-            f"- Friday: Deal progression scorecard\n\n"
-            f"**Success Metrics:**\n"
+            f"**Proposed Monitoring (not configured):**\n"
+            f"- Draft daily alert rule for overdue tasks\n"
+            f"- Draft deal-stage change notification rule\n"
+            f"- Draft weekly pipeline velocity report\n"
+            f"- Draft stall warning at 7 days (vs current 21)\n\n"
+            f"**Suggested Accountability Cadence:**\n"
+            f"- Daily: Review candidate task reminders\n"
+            f"- Wednesday: Consider a pipeline review meeting (30 min)\n"
+            f"- Friday: Review a draft deal progression scorecard\n\n"
+            f"**Synthetic Planning Measures:**\n"
             f"- Target: Reduce avg stall time from 21 to 10 days\n"
             f"- Goal: Move ${_total_value(stalled) / 1_000_000:.1f}M stalled back to active\n"
             f"- Forecast: Add $2.4M to Q4 commit\n\n"
@@ -603,8 +638,8 @@ class DealProgressionAgent(BasicAgent):
         if quick:
             immediate_lines += f"- ${quick_val / 1_000:,.0f}K in quick wins closing this week\n"
         for d in top_stalled:
-            immediate_lines += f"- {d['name']} (${d['value']:,}) action plan activated\n"
-        immediate_lines += f"- All {len(stalled)} stalled deals have intervention plans\n"
+            immediate_lines +=             f"- {d['name']} (${d['value']:,}) draft action plan prepared\n"
+        immediate_lines += f"- All {len(stalled)} stalled deals have candidate intervention plans\n"
 
         on_track_pct = round(len(on_track) / max(len(active), 1) * 100)
         target_pct = min(on_track_pct + 18, 95)
@@ -616,15 +651,15 @@ class DealProgressionAgent(BasicAgent):
             f"| Pipeline analyzed | ${total_val / 1_000_000:.1f}M across {len(active)} deals |\n"
             f"| Stalled identified | {len(stalled)} deals, ${stalled_val / 1_000_000:.1f}M at risk |\n"
             f"| Root causes | {blocker_labels} |\n"
-            f"| Actions created | {total_tasks} specific tasks assigned |\n"
+            f"| Actions drafted | {total_tasks} candidate tasks for review |\n"
             f"| Acceleration target | ${(_total_value(stalled) + _total_value(at_risk)) / 1_000_000:.1f}M can be pulled forward |\n\n"
             f"**Immediate Impact:**\n{immediate_lines}\n"
             f"**Process Improvements:**\n"
             f"- Early warning at 7 days (was 21)\n"
-            f"- Daily automated task tracking\n"
-            f"- Weekly velocity reviews scheduled\n"
-            f"- Rep accountability scorecard active\n\n"
-            f"**Expected Outcomes:**\n"
+            f"- Candidate daily task-tracking rule\n"
+            f"- Suggested weekly velocity review\n"
+            f"- Draft rep accountability scorecard\n\n"
+            f"**Synthetic Planning Targets:**\n"
             f"- Reduce stall time: 21 days to 10 days\n"
             f"- Q4 forecast improvement: +$2.4M commit\n"
             f"- Pipeline health: {target_pct}% on-track (from {on_track_pct}%)\n\n"

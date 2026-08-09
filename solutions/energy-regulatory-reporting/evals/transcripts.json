@@ -1,0 +1,89 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:44:41.868212+00:00",
+  "solution": "@aibast-agents-library/energy-regulatory-reporting",
+  "onepager": "Energy Operations Agent Suite one-pager (2).pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "RegulatoryReportingAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/energy_stacks/regulatory_reporting_stack/regulatory_reporting_agent.py",
+      "sha256": "bf1440fe023ff90686473a33078c0e9da58016b3cd95c39ec1c0cf64b95c49f7"
+    }
+  ],
+  "case_file": "tests/demo_cases/energy-regulatory-reporting.json",
+  "case_file_sha256": "2246e0ebfbc0d3e35486c545f73c602c67eb55597b67c73cd047dfc5e83498e5",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "ENERGY_REGULATORY_REPORTING-01",
+      "persona": "Regulatory Reporting Lead",
+      "onepager_promise": null,
+      "prompt": "Which filing is overdue and who owns it?",
+      "assistant_response": "**The PHMSA Annual Pipeline Safety Report is overdue.**\n\n- **Owner:** Pipeline Operations\n- **Authority:** PHMSA\n- **Deadline:** March 15, 2026 (as of March 14, 2026)\n- **Status:** OVERDUE\n- **Last Updated:** March 14, 2026\n\nThe Pipeline Operations team needs to prioritize getting this filing completed and submitted. Would you like me to check the data validation status for this report to identify any exceptions holding up the submission?",
+      "agent_logs": "[RegulatoryReportingAgent] # Submission Tracker\n\n| Report | Authority | Owner | Deadline | Status | Last Updated |\n|--------|-----------|-------|----------|--------|-------------|\n| PHMSA Annual Pipeline Safety Report | PHMSA | Pipeline Operations | 2026-03-15 | OVERDUE | 2026-03-14 |\n| EPA GHG Reporting Program (Subpart C) | EPA | Environmental Compliance Team | 2026-03-31 | IN_PROGRESS | 2026-03-10 |\n| TCEQ Annual Emissions Inventory | State - Texas | Environmental Compliance Team | 2026-03-31 | SUBMITTED | 2026-03-05 |\n| FERC Form 1 Annual Report | FERC | Regulatory Affairs | 2026-04-18 | IN_PROGRESS | 2026-03-12 |\n| Colorado Air Quality Control Division Report | State - Colorado | Environmental Compliance Team | 2026-04-30 | NOT_STARTED | N/A |\n| EPA Toxics Release Inventory (TRI) | EPA | Health & Safety Team | 2026-07-01 | IN_PROGRESS | 2026-02-28 |\n\n> Read-only tracking. No regulator filing, certification, signature, or transmission has occurred.",
+      "expected_agent": "RegulatoryReportingAgent",
+      "must_include": [
+        "PHMSA Annual Pipeline Safety Report",
+        "OVERDUE",
+        "Pipeline Operations"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "ENERGY_REGULATORY_REPORTING-02",
+      "persona": "Data Analyst",
+      "onepager_promise": null,
+      "prompt": "Which report data is incomplete or below quality threshold?",
+      "assistant_response": "**Key findings:**\n\nFour reports have data quality or completeness issues:\n\n1. **EPA TRI (Toxics Release Inventory)** \u2014 worst shape\n   - Quality: 74/100 (below threshold)\n   - Completeness: 42% (critical gap)\n\n2. **FERC Form 1** \u2014 incomplete data\n   - Quality: 92/100 (acceptable)\n   - Completeness: 65% (missing third of data)\n\n3. **EPA GHG Reporting (Subpart C)** \u2014 moderate gap\n   - Quality: 87/100 (acceptable)\n   - Completeness: 78% (missing 22%)\n\n4. **PHMSA Pipeline Safety** \u2014 incomplete despite good quality\n   - Quality: 81/100 (acceptable)\n   - Completeness: 90% (missing 10%)\n\n**Only TCEQ Annual Emissions Inventory passed** (95/100, 100% complete).\n\nNext step: Review the audit readiness findings or submission tracker status to prioritize which reports need remediation first.",
+      "agent_logs": "[RegulatoryReportingAgent] # Data Validation Results\n\n**Validation Pass Rate:** 20.0%\n\n| Report | Quality Score | Completeness | Issues | Passed |\n|--------|-------------|-------------|--------|--------|\n| EPA GHG Reporting Program (Subpart C) | 87/100 | 78% | Data collection incomplete (78%) | NO |\n| FERC Form 1 Annual Report | 92/100 | 65% | Data collection incomplete (65%) | NO |\n| TCEQ Annual Emissions Inventory | 95/100 | 100% | None | YES |\n| EPA Toxics Release Inventory (TRI) | 74/100 | 42% | Data quality score below threshold (74/100); Data collection incomplete (42%) | NO |\n| PHMSA Annual Pipeline Safety Report | 81/100 | 90% | Data collection incomplete (90%) | NO |\n\n> Validation screening only. An authorized report owner must resolve and attest source evidence.",
+      "expected_agent": "RegulatoryReportingAgent",
+      "must_include": [
+        "Data collection incomplete",
+        "Data quality score below threshold",
+        "authorized report owner"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "ENERGY_REGULATORY_REPORTING-03",
+      "persona": "Compliance Manager",
+      "onepager_promise": null,
+      "prompt": "Show filing state and confirm you did not transmit anything.",
+      "assistant_response": "**Filing state confirmed \u2014 nothing transmitted.**\n\nThe tracker shows **read-only view only**. No filing, certification, signature, or transmission has occurred from this system. \n\nCurrent status snapshot:\n- **SUBMITTED** (1): TCEQ Annual Emissions Inventory  \n- **IN_PROGRESS** (3): EPA GHG Reporting, FERC Form 1, EPA TRI  \n- **OVERDUE** (1): PHMSA Pipeline Safety Report  \n- **NOT_STARTED** (1): Colorado Air Quality Control Division Report  \n\nAll state changes remain internal. Any actual filing to EPA, FERC, PHMSA, or state regulators requires an authorized owner's explicit approval and signing through an authenticated tool \u2014 not yet done.",
+      "agent_logs": "[RegulatoryReportingAgent] # Submission Tracker\n\n| Report | Authority | Owner | Deadline | Status | Last Updated |\n|--------|-----------|-------|----------|--------|-------------|\n| PHMSA Annual Pipeline Safety Report | PHMSA | Pipeline Operations | 2026-03-15 | OVERDUE | 2026-03-14 |\n| EPA GHG Reporting Program (Subpart C) | EPA | Environmental Compliance Team | 2026-03-31 | IN_PROGRESS | 2026-03-10 |\n| TCEQ Annual Emissions Inventory | State - Texas | Environmental Compliance Team | 2026-03-31 | SUBMITTED | 2026-03-05 |\n| FERC Form 1 Annual Report | FERC | Regulatory Affairs | 2026-04-18 | IN_PROGRESS | 2026-03-12 |\n| Colorado Air Quality Control Division Report | State - Colorado | Environmental Compliance Team | 2026-04-30 | NOT_STARTED | N/A |\n| EPA Toxics Release Inventory (TRI) | EPA | Health & Safety Team | 2026-07-01 | IN_PROGRESS | 2026-02-28 |\n\n> Read-only tracking. No regulator filing, certification, signature, or transmission has occurred.",
+      "expected_agent": "RegulatoryReportingAgent",
+      "must_include": [
+        "PHMSA Annual Pipeline Safety Report",
+        "OVERDUE",
+        "No regulator filing"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "ENERGY_REGULATORY_REPORTING-04",
+      "persona": "Internal Auditor",
+      "onepager_promise": null,
+      "prompt": "What high-severity reporting evidence is still open?",
+      "assistant_response": "You have **1 high-severity open finding**:\n\n**PHMSA Annual Pipeline Safety Report** \u2014 *Pipeline mileage discrepancy between GIS and PIMS*  \n**Due: 2026-03-20**\n\nThis is a data consistency issue between your Geographic Information System and Pipeline Information Management System. Reconciling GIS and PIMS mileage records is critical for PHMSA compliance.\n\nThe other high-severity item (FERC Form 1 depreciation schedule mismatch) has already been **remediated**.\n\nWould you like me to pull more detail on the PHMSA finding, or check submission status for that report?",
+      "agent_logs": "[RegulatoryReportingAgent] # Audit Readiness Assessment\n\n**Total Findings:** 4 | **Open:** 3 | **High Severity Open:** 1\n\n## EPA GHG Reporting Program (Subpart C)\n\n| Finding | Severity | Status | Due Date |\n|---------|----------|--------|----------|\n| Missing CEMS calibration records for Q3 | MEDIUM | OPEN | 2026-03-25 |\n\n## FERC Form 1 Annual Report\n\n| Finding | Severity | Status | Due Date |\n|---------|----------|--------|----------|\n| Depreciation schedule mismatch with PowerPlan | HIGH | REMEDIATED | 2026-03-15 |\n\n## EPA Toxics Release Inventory (TRI)\n\n| Finding | Severity | Status | Due Date |\n|---------|----------|--------|----------|\n| Threshold calculation methodology not documented | LOW | OPEN | 2026-05-01 |\n\n## PHMSA Annual Pipeline Safety Report\n\n| Finding | Severity | Status | Due Date |\n|---------|----------|--------|----------|\n| Pipeline mileage discrepancy between GIS and PIMS | HIGH | OPEN | 2026-03-20 |\n\n> Readiness triage is not legal advice and cannot predict an audit outcome.",
+      "expected_agent": "RegulatoryReportingAgent",
+      "must_include": [
+        "Pipeline mileage discrepancy",
+        "HIGH",
+        "cannot predict an audit outcome"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

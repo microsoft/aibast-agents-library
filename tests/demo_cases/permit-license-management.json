@@ -1,0 +1,76 @@
+{
+  "schema": "aibast-persona-cases/1.0",
+  "solution": "Permit Management Agent",
+  "agent": "@aibast-agents-library/permit-license-management",
+  "onepager": "Energy Operations Agent Suite one-pager (2).pptx",
+  "cases": [
+    {
+      "id": "PERMIT_LICENSE_MANAGEMENT-01",
+      "operation": "permit_inventory",
+      "persona": "Facility Manager",
+      "prompt": "Which Riverside permit is expired right now?",
+      "kwargs": {
+        "operation": "permit_inventory",
+        "facility": "Riverside"
+      },
+      "must_include": [
+        "PRM-6002",
+        "EXPIRED",
+        "Verify status"
+      ],
+      "expects_agent": "PermitLicenseManagementAgent"
+    },
+    {
+      "id": "PERMIT_LICENSE_MANAGEMENT-02",
+      "operation": "renewal_calendar",
+      "persona": "Permit Coordinator",
+      "prompt": "What is the next Riverside renewal deadline I need to prepare for?",
+      "kwargs": {
+        "operation": "renewal_calendar",
+        "facility": "Riverside"
+      },
+      "must_include": [
+        "NPDES Stormwater Discharge Permit",
+        "2026-03-01",
+        "No renewal"
+      ],
+      "expects_agent": "PermitLicenseManagementAgent"
+    },
+    {
+      "id": "PERMIT_LICENSE_MANAGEMENT-03",
+      "operation": "compliance_gaps",
+      "persona": "Compliance Manager",
+      "prompt": "What permit evidence gap needs immediate authorized review at Riverside?",
+      "kwargs": {
+        "operation": "compliance_gaps",
+        "facility": "Riverside"
+      },
+      "must_include": [
+        "expired_permit",
+        "CRITICAL",
+        "not legal advice"
+      ],
+      "expects_agent": "PermitLicenseManagementAgent"
+    },
+    {
+      "id": "PERMIT_LICENSE_MANAGEMENT-04",
+      "operation": "application_status",
+      "persona": "Environmental Counsel",
+      "prompt": "Where does the Riverside gas turbine permit application stand, and did we submit anything today?",
+      "kwargs": {
+        "operation": "application_status",
+        "facility": "Riverside"
+      },
+      "must_include": [
+        "APP-7002",
+        "public_comment",
+        "cannot submit"
+      ],
+      "expects_agent": "PermitLicenseManagementAgent"
+    }
+  ],
+  "assertion_principle": "One persona case per operation; assertions use deterministic source evidence and explicit safety language.",
+  "agent_files": [
+    "permit_license_management_agent"
+  ]
+}

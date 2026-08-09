@@ -1,0 +1,48 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/utility-billing-assistance",
+  "source_path": "agents/@aibast-agents-library/slg_government_stacks/utility_billing_assistance_stack/utility_billing_assistance_agent.py",
+  "onepager": "27. Utility Billing and Assistance Agent one-pager.pptx",
+  "advertised_challenge": "Manual consumption review, inconsistent leak-adjustment policy, and slow assistance screening frustrate residents and create compliance risk.",
+  "advertised_action": "Analyze smart-meter anomalies, calculate draft adjustments, screen assistance, and configure draft payment-plan options",
+  "finding": "covered_by_synthetic_decision_support_with_production_seams",
+  "routing": {
+    "status": "fixed",
+    "evidence": "Tool and operation descriptions now name the supported persona questions and approval boundary."
+  },
+  "behavior": {
+    "status": "fixed",
+    "evidence": "Each advertised workflow returns deterministic synthetic evidence and an explicit limitation."
+  },
+  "safety": {
+    "status": "fixed",
+    "evidence": "Outputs do not claim a live write or final legal, regulatory, safety, eligibility, billing, emissions, dispatch, sourcing, or inventory decision."
+  },
+  "operations": [
+    {
+      "operation": "billing_inquiry",
+      "persona": "Customer Service Representative",
+      "purpose": "Provide a read-only account explanation."
+    },
+    {
+      "operation": "usage_analysis",
+      "persona": "Billing Specialist",
+      "purpose": "Screen smart-meter history and prepare a non-binding estimate."
+    },
+    {
+      "operation": "payment_plan",
+      "persona": "Revenue Services Supervisor",
+      "purpose": "Draft installment options without account changes."
+    },
+    {
+      "operation": "assistance_programs",
+      "persona": "Assistance Coordinator",
+      "purpose": "Perform preliminary, non-binding program screening."
+    }
+  ],
+  "interface_schema": {
+    "status": "fixed",
+    "evidence": "Operation-specific parameters are documented and filters no longer invent records for unknown identifiers."
+  },
+  "advertised_vs_local_limitation": "The local source performs synthetic screening and draft calculations only; account adjustment, eligibility, enrollment, payment-plan setup, and repair scheduling require approved systems."
+}

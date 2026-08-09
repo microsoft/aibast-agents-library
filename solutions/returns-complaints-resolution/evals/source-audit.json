@@ -1,0 +1,10 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/returns-complaints-resolution",
+  "approved_source": {"onepager": "51. Returns and Complaints Resolution Agent one-pager 2026 02 23.pptx", "sha256": "25a7b558af80dff03229fe225fec4b045ba2ce0093730094d9d98b6fba4d23c8", "snapshot": "state/onepager_content.json", "hash_match": true},
+  "deterministic_source": {"path": "solutions.json", "slot": 41, "canonical_name": "Returns and Complaints Resolution Agent", "matches": true},
+  "routing": {"status": "fixed", "finding": "Return review, classification, option drafting, and trend analysis each have a locked case."},
+  "interface_schema": {"status": "fixed", "finding": "Service, quality, and loss-prevention personas are explicit and identifiers are validated."},
+  "behavior": {"status": "fixed", "finding": "Named customers were replaced with anonymous cases and execution steps were rewritten as approval-gated review steps."},
+  "safety": {"status": "fixed", "finding": "No return, refund, credit, replacement, shipment, reservation, account change, or message is performed."}
+}

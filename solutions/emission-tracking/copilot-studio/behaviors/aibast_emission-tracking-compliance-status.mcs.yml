@@ -1,0 +1,31 @@
+mcs.metadata:
+  componentName: "emission-tracking-compliance-status"
+  description: "Use when a Environmental Compliance Manager asks to perform non-legal threshold screening."
+kind: InlineAgentSkill
+content: |
+  ---
+  name: emission-tracking-compliance-status
+  description: Use when a Environmental Compliance Manager asks to perform non-legal threshold screening.
+  ---
+  # Emissions Tracking Agent: Compliance Status
+
+  ## Route
+
+  Use the `compliance_status` operation. The canonical persona prompt is:
+
+  > Screen FAC-E03 against its threshold without making a legal compliance claim.
+
+  ## Procedure
+
+  1. Read the synthetic knowledge records and controls.
+  2. Call or reproduce only the `compliance_status` operation behavior.
+  3. Lead with source-backed identifiers and evidence.
+  4. State uncertainty and the required authorized review.
+  5. End with the operation's no-write boundary.
+
+  ## Required evidence
+
+  - BELOW SCREENING THRESHOLD
+  - not a legal compliance determination
+
+  Never imply that a live system, filing, account, crew, supplier, shipment, emissions claim, or inventory position was changed.

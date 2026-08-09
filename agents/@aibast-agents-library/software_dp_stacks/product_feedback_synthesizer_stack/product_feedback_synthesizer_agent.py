@@ -16,7 +16,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/product-feedback-synthesizer",
     "version": "1.0.0",
     "display_name": "Product Feedback Synthesizer Agent",
-    "description": "Aggregates customer feedback, feature requests, sentiment analysis, and roadmap impact assessments for product teams.",
+    "description": "Turn fragmented feedback into actionable insights that accelerate product improvements, prevent churn, and optimize engineering priorities.",
     "author": "AIBAST",
     "tags": ["feedback", "product", "feature-requests", "sentiment", "roadmap", "nps"],
     "category": "software_digital_products",
@@ -107,7 +107,7 @@ FEATURE_REQUESTS = {
         "title": "Real-Time Alerting Engine",
         "votes": 134,
         "arr_weight": 780000,
-        "status": "planned_q3",
+        "status": "candidate_for_review",
         "effort": "high",
         "category": "feature_gap",
         "linked_feedback": ["FB-5002"],
@@ -116,7 +116,7 @@ FEATURE_REQUESTS = {
         "title": "Mobile App Enhancements",
         "votes": 62,
         "arr_weight": 420000,
-        "status": "in_progress",
+        "status": "evidence_under_review",
         "effort": "medium",
         "category": "usability",
         "linked_feedback": ["FB-5003"],
@@ -125,7 +125,7 @@ FEATURE_REQUESTS = {
         "title": "Large Dataset Export Fix",
         "votes": 41,
         "arr_weight": 264000,
-        "status": "in_progress",
+        "status": "evidence_under_review",
         "effort": "low",
         "category": "bug_fix",
         "linked_feedback": ["FB-5004"],
@@ -134,7 +134,7 @@ FEATURE_REQUESTS = {
         "title": "Role-Based Access Controls (RBAC)",
         "votes": 156,
         "arr_weight": 960000,
-        "status": "planned_q2",
+        "status": "candidate_for_review",
         "effort": "high",
         "category": "security",
         "linked_feedback": ["FB-5005"],
@@ -143,7 +143,7 @@ FEATURE_REQUESTS = {
         "title": "Workflow Automation Builder",
         "votes": 203,
         "arr_weight": 1140000,
-        "status": "planned_q3",
+        "status": "candidate_for_review",
         "effort": "high",
         "category": "feature_gap",
         "linked_feedback": ["FB-5006"],
@@ -154,6 +154,11 @@ NPS_SCORES = {
     "2025-Q4": {"promoters": 142, "passives": 88, "detractors": 45, "score": 35},
     "2026-Q1": {"promoters": 158, "passives": 91, "detractors": 51, "score": 36},
 }
+
+_PRODUCT_GATE = (
+    "Synthetic insight only. No roadmap commitment, Jira ticket, customer "
+    "outreach, or account action is created; product owners must validate the evidence."
+)
 
 
 # ---------------------------------------------------------------------------
@@ -221,10 +226,14 @@ class ProductFeedbackSynthesizerAgent(BasicAgent):
     """Product feedback synthesis and roadmap impact agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/product-feedback-synthesizer"
+        self.name = "ProductFeedbackSynthesizerAgent"
         self.metadata = {
             "name": self.name,
-            "description": __manifest__["description"],
+            "description": (
+                f"{__manifest__['description']} Synthesize only fictional pilot "
+                "feedback and provide non-binding review candidates; never commit "
+                "a roadmap, create an engineering ticket, or contact a customer."
+            ),
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -286,6 +295,7 @@ class ProductFeedbackSynthesizerAgent(BasicAgent):
         lines.append("|---------|-------|")
         for ch, c in data["by_channel"].items():
             lines.append(f"| {ch.replace('_', ' ').title()} | {c} |")
+        lines.extend(["", f"**Review gate:** {_PRODUCT_GATE}"])
         return "\n".join(lines)
 
     def _feature_requests(self) -> str:
@@ -303,6 +313,7 @@ class ProductFeedbackSynthesizerAgent(BasicAgent):
                 f"| {i} | {fr['title']} | {fr['votes']} | ${fr['arr_weight']:,} "
                 f"| {fr['effort'].upper()} | {fr['status']} |"
             )
+        lines.extend(["", f"**Review gate:** {_PRODUCT_GATE}"])
         return "\n".join(lines)
 
     def _sentiment_analysis(self) -> str:
@@ -329,6 +340,7 @@ class ProductFeedbackSynthesizerAgent(BasicAgent):
                 f"| {e['customer']} | {e['sentiment'].upper()} | {e['score']} "
                 f"| {e['category']} | {e['excerpt']}... |"
             )
+        lines.extend(["", "All feedback excerpts and account names are fictional pilot data.", f"**Review gate:** {_PRODUCT_GATE}"])
         return "\n".join(lines)
 
     def _roadmap_impact(self) -> str:
@@ -345,10 +357,12 @@ class ProductFeedbackSynthesizerAgent(BasicAgent):
                 f"| ${item['arr_weight']:,} | {item['effort'].upper()} | {item['status']} |"
             )
         lines.append("")
-        lines.append("## Recommendations")
-        lines.append("- RBAC and Workflow Automation are highest priority by ARR-weighted scoring.")
-        lines.append("- Large Dataset Export fix is quick win with low effort and active churn risk.")
-        lines.append("- Real-Time Alerting should be accelerated given competitive pressure.")
+        lines.append("## Review Candidates")
+        lines.append("- Validate RBAC and Workflow Automation evidence with product, engineering, and security owners.")
+        lines.append("- Review the Large Dataset Export issue as a lower-effort candidate; do not infer churn from one signal.")
+        lines.append("- Compare Real-Time Alerting evidence with strategy and capacity before any sequencing decision.")
+        lines.append("")
+        lines.append(f"**Review gate:** {_PRODUCT_GATE}")
         return "\n".join(lines)
 
 

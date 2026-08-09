@@ -1,0 +1,494 @@
+{
+  "schema": "aibast-solution-export/1.0",
+  "solution": "@aibast-agents-library/field-service-dispatch",
+  "raw_base": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/",
+  "github_folder": "https://github.com/microsoft/aibast-agents-library/tree/main/solutions/field-service-dispatch",
+  "evidence_boundary": "Synthetic solution evidence only. Qualitative workflow proof is not a customer KPI, measured production result, or publication approval.",
+  "bundle": {
+    "label": "Complete Field Service Dispatch Agent source bundle",
+    "path": "solutions/field-service-dispatch/exports/field-service-dispatch-source.zip",
+    "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/exports/field-service-dispatch-source.zip"
+  },
+  "files": [
+    {
+      "id": "portable-agent",
+      "label": "Portable source agent",
+      "path": "agents/@aibast-agents-library/energy_stacks/field_service_dispatch_stack/field_service_dispatch_agent.py",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/energy_stacks/field_service_dispatch_stack/field_service_dispatch_agent.py",
+      "use": "Local Brainstem runtime and production-logic reference",
+      "status": "ready"
+    },
+    {
+      "id": "deployment-recipe",
+      "label": "Deployment recipe",
+      "path": "solutions/field-service-dispatch/deployment.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/deployment.json",
+      "use": "Easy-mode deployment contract",
+      "status": "ready"
+    },
+    {
+      "id": "field-guide",
+      "label": "Customer field guide",
+      "path": "solutions/field-service-dispatch/FIELD-GUIDE.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/FIELD-GUIDE.md",
+      "use": "Facilitation, evidence boundaries, gates, and recovery",
+      "status": "ready"
+    },
+    {
+      "id": "manual-instructions",
+      "label": "Manual global instructions",
+      "path": "solutions/field-service-dispatch/manual/GLOBAL-INSTRUCTIONS.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/manual/GLOBAL-INSTRUCTIONS.md",
+      "use": "Reviewed instructions for literal browser construction",
+      "status": "ready"
+    },
+    {
+      "id": "settings",
+      "label": "Copilot Studio settings",
+      "path": "solutions/field-service-dispatch/copilot-studio/settings.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/copilot-studio/settings.mcs.yml",
+      "use": "Easy-mode agent settings and instruction copy",
+      "status": "ready"
+    },
+    {
+      "id": "agent-sync",
+      "label": "Copilot Studio component manifest",
+      "path": "solutions/field-service-dispatch/copilot-studio/agent.sync.yaml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/copilot-studio/agent.sync.yaml",
+      "use": "Easy-mode component synchronization",
+      "status": "ready"
+    },
+    {
+      "id": "knowledge-field-service-dispatch-rules-and-controls",
+      "label": "Field Service Dispatch Rules And Controls",
+      "path": "solutions/field-service-dispatch/manual/knowledge/field-service-dispatch-rules-and-controls.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/manual/knowledge/field-service-dispatch-rules-and-controls.md",
+      "use": "Manual knowledge upload",
+      "status": "ready"
+    },
+    {
+      "id": "knowledge-field-service-dispatch-synthetic-records",
+      "label": "Field Service Dispatch Synthetic Records",
+      "path": "solutions/field-service-dispatch/manual/knowledge/field-service-dispatch-synthetic-records.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/manual/knowledge/field-service-dispatch-synthetic-records.md",
+      "use": "Manual knowledge upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-dispatch-dashboard",
+      "label": "Manual skill: aibast dispatch dashboard",
+      "path": "solutions/field-service-dispatch/manual/skills/aibast_dispatch-dashboard/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/manual/skills/aibast_dispatch-dashboard/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-emergency-response",
+      "label": "Manual skill: aibast emergency response",
+      "path": "solutions/field-service-dispatch/manual/skills/aibast_emergency-response/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/manual/skills/aibast_emergency-response/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-route-optimization",
+      "label": "Manual skill: aibast route optimization",
+      "path": "solutions/field-service-dispatch/manual/skills/aibast_route-optimization/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/manual/skills/aibast_route-optimization/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-technician-assignment",
+      "label": "Manual skill: aibast technician assignment",
+      "path": "solutions/field-service-dispatch/manual/skills/aibast_technician-assignment/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/manual/skills/aibast_technician-assignment/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "easy-knowledge-field-service-dispatch-rules-and-controls",
+      "label": "Field Service Dispatch Rules And Controls",
+      "path": "solutions/field-service-dispatch/copilot-studio/capabilities/knowledge/files/field-service-dispatch-rules-and-controls.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/copilot-studio/capabilities/knowledge/files/field-service-dispatch-rules-and-controls.md",
+      "use": "Copilot Studio knowledge source or synchronization metadata",
+      "status": "ready"
+    },
+    {
+      "id": "easy-knowledge-field-service-dispatch-rules-and-controls-md-mcs",
+      "label": "Field Service Dispatch Rules And Controls.Md.Mcs",
+      "path": "solutions/field-service-dispatch/copilot-studio/capabilities/knowledge/files/field-service-dispatch-rules-and-controls.md.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/copilot-studio/capabilities/knowledge/files/field-service-dispatch-rules-and-controls.md.mcs.yml",
+      "use": "Copilot Studio knowledge source or synchronization metadata",
+      "status": "ready"
+    },
+    {
+      "id": "easy-knowledge-field-service-dispatch-synthetic-records",
+      "label": "Field Service Dispatch Synthetic Records",
+      "path": "solutions/field-service-dispatch/copilot-studio/capabilities/knowledge/files/field-service-dispatch-synthetic-records.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/copilot-studio/capabilities/knowledge/files/field-service-dispatch-synthetic-records.md",
+      "use": "Copilot Studio knowledge source or synchronization metadata",
+      "status": "ready"
+    },
+    {
+      "id": "easy-knowledge-field-service-dispatch-synthetic-records-md-mcs",
+      "label": "Field Service Dispatch Synthetic Records.Md.Mcs",
+      "path": "solutions/field-service-dispatch/copilot-studio/capabilities/knowledge/files/field-service-dispatch-synthetic-records.md.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/copilot-studio/capabilities/knowledge/files/field-service-dispatch-synthetic-records.md.mcs.yml",
+      "use": "Copilot Studio knowledge source or synchronization metadata",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-field-service-dispatch-dispatch-dashboard-mcs",
+      "label": "Aibast Field Service Dispatch Dispatch Dashboard.Mcs",
+      "path": "solutions/field-service-dispatch/copilot-studio/behaviors/aibast_field-service-dispatch-dispatch-dashboard.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/copilot-studio/behaviors/aibast_field-service-dispatch-dispatch-dashboard.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-field-service-dispatch-emergency-response-mcs",
+      "label": "Aibast Field Service Dispatch Emergency Response.Mcs",
+      "path": "solutions/field-service-dispatch/copilot-studio/behaviors/aibast_field-service-dispatch-emergency-response.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/copilot-studio/behaviors/aibast_field-service-dispatch-emergency-response.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-field-service-dispatch-route-optimization-mcs",
+      "label": "Aibast Field Service Dispatch Route Optimization.Mcs",
+      "path": "solutions/field-service-dispatch/copilot-studio/behaviors/aibast_field-service-dispatch-route-optimization.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/copilot-studio/behaviors/aibast_field-service-dispatch-route-optimization.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-field-service-dispatch-technician-assignment-mcs",
+      "label": "Aibast Field Service Dispatch Technician Assignment.Mcs",
+      "path": "solutions/field-service-dispatch/copilot-studio/behaviors/aibast_field-service-dispatch-technician-assignment.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/copilot-studio/behaviors/aibast_field-service-dispatch-technician-assignment.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-evidence-copilot-studio-preview-evidence",
+      "label": "Copilot Studio Preview Evidence",
+      "path": "solutions/field-service-dispatch/evals/copilot-studio-preview-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/evals/copilot-studio-preview-evidence.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "manual-evidence",
+      "label": "Manual build evidence",
+      "path": "solutions/field-service-dispatch/evals/manual-build-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/evals/manual-build-evidence.json",
+      "use": "Manual identity, inventory, Preview, and Draft-gate evidence",
+      "status": "ready"
+    },
+    {
+      "id": "onepager-map",
+      "label": "Onepager Map",
+      "path": "solutions/field-service-dispatch/evals/onepager-map.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/evals/onepager-map.json",
+      "use": "Advertised-promise mapping evidence",
+      "status": "ready"
+    },
+    {
+      "id": "easy-evidence-source-audit",
+      "label": "Source Audit",
+      "path": "solutions/field-service-dispatch/evals/source-audit.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/evals/source-audit.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "brainstem-transcripts",
+      "label": "Isolated Brainstem transcripts",
+      "path": "solutions/field-service-dispatch/evals/transcripts.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/evals/transcripts.json",
+      "use": "Canonical source-agent acceptance evidence",
+      "status": "ready"
+    },
+    {
+      "id": "manual-browserfilm-manifest",
+      "label": "Manual browserfilm manifest",
+      "path": "solutions/field-service-dispatch/screenshots/manual/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/browserfilm.json",
+      "use": "Ordered literal-browser evidence frames",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-01",
+      "label": "Create a blank Copilot Studio agent",
+      "path": "solutions/field-service-dispatch/screenshots/manual/01-create-blank-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/01-create-blank-agent.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-02",
+      "label": "Name Field Service Dispatch Manual",
+      "path": "solutions/field-service-dispatch/screenshots/manual/02-name-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/02-name-agent.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-03",
+      "label": "Enter the reviewed global instructions",
+      "path": "solutions/field-service-dispatch/screenshots/manual/03-enter-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/03-enter-instructions.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-04",
+      "label": "Save the instruction policy",
+      "path": "solutions/field-service-dispatch/screenshots/manual/04-save-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/04-save-instructions.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-05",
+      "label": "Remove default web search",
+      "path": "solutions/field-service-dispatch/screenshots/manual/05-remove-web-search.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/05-remove-web-search.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-06",
+      "label": "Add knowledge: field-service-dispatch-rules-and-controls.md",
+      "path": "solutions/field-service-dispatch/screenshots/manual/06-add-field-service-dispatch-rules-and-controls.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/06-add-field-service-dispatch-rules-and-controls.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-07",
+      "label": "Add knowledge: field-service-dispatch-synthetic-records.md",
+      "path": "solutions/field-service-dispatch/screenshots/manual/07-add-field-service-dispatch-synthetic-records.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/07-add-field-service-dispatch-synthetic-records.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-08",
+      "label": "Add skill: aibast_dispatch-dashboard",
+      "path": "solutions/field-service-dispatch/screenshots/manual/08-add-aibast-dispatch-dashboard.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/08-add-aibast-dispatch-dashboard.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-09",
+      "label": "Add skill: aibast_emergency-response",
+      "path": "solutions/field-service-dispatch/screenshots/manual/09-add-aibast-emergency-response.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/09-add-aibast-emergency-response.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-10",
+      "label": "Add skill: aibast_route-optimization",
+      "path": "solutions/field-service-dispatch/screenshots/manual/10-add-aibast-route-optimization.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/10-add-aibast-route-optimization.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-11",
+      "label": "Add skill: aibast_technician-assignment",
+      "path": "solutions/field-service-dispatch/screenshots/manual/11-add-aibast-technician-assignment.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/11-add-aibast-technician-assignment.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-12",
+      "label": "Review model, skills, knowledge, and safety boundaries",
+      "path": "solutions/field-service-dispatch/screenshots/manual/12-review-inventory.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/12-review-inventory.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-13",
+      "label": "Open a fresh Preview conversation",
+      "path": "solutions/field-service-dispatch/screenshots/manual/13-open-preview.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/13-open-preview.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-14",
+      "label": "Pass FIELD_SERVICE_DISPATCH-01: Field Operations Manager",
+      "path": "solutions/field-service-dispatch/screenshots/manual/14-field_service_dispatch-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/14-field_service_dispatch-01.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-15",
+      "label": "Pass FIELD_SERVICE_DISPATCH-02: Service Director",
+      "path": "solutions/field-service-dispatch/screenshots/manual/15-field_service_dispatch-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/15-field_service_dispatch-02.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-16",
+      "label": "Pass FIELD_SERVICE_DISPATCH-03: Dispatch Coordinator",
+      "path": "solutions/field-service-dispatch/screenshots/manual/16-field_service_dispatch-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/16-field_service_dispatch-03.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-17",
+      "label": "Pass FIELD_SERVICE_DISPATCH-04: Emergency Duty Manager",
+      "path": "solutions/field-service-dispatch/screenshots/manual/17-field_service_dispatch-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/17-field_service_dispatch-04.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-18",
+      "label": "Confirm Draft and stop before publish",
+      "path": "solutions/field-service-dispatch/screenshots/manual/18-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/18-confirm-draft.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-browserfilm",
+      "label": "Manual browserfilm",
+      "path": "solutions/field-service-dispatch/screenshots/manual/manual-build-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/manual-build-walkthrough.gif",
+      "use": "Animated manual walkthrough",
+      "status": "ready"
+    },
+    {
+      "id": "manual-contact-sheet",
+      "label": "Manual contact sheet",
+      "path": "solutions/field-service-dispatch/screenshots/manual/manual-build-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/manual-build-contact-sheet.jpg",
+      "use": "Static manual evidence overview",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-browserfilm-manifest",
+      "label": "Copilot-assisted browserfilm manifest",
+      "path": "solutions/field-service-dispatch/screenshots/assisted/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/assisted/browserfilm.json",
+      "use": "Ordered Easy-mode evidence frames",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-browserfilm",
+      "label": "Copilot-assisted browserfilm",
+      "path": "solutions/field-service-dispatch/screenshots/assisted/copilot-assisted-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/assisted/copilot-assisted-walkthrough.gif",
+      "use": "Animated Easy-mode walkthrough",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-contact-sheet",
+      "label": "Copilot-assisted contact sheet",
+      "path": "solutions/field-service-dispatch/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
+      "use": "Static Easy-mode evidence overview",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-01",
+      "label": "Pass FIELD_SERVICE_DISPATCH-01: Field Operations Manager",
+      "path": "solutions/field-service-dispatch/screenshots/assisted/01-field_service_dispatch-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/assisted/01-field_service_dispatch-01.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-02",
+      "label": "Pass FIELD_SERVICE_DISPATCH-02: Service Director",
+      "path": "solutions/field-service-dispatch/screenshots/assisted/02-field_service_dispatch-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/assisted/02-field_service_dispatch-02.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-03",
+      "label": "Pass FIELD_SERVICE_DISPATCH-03: Dispatch Coordinator",
+      "path": "solutions/field-service-dispatch/screenshots/assisted/03-field_service_dispatch-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/assisted/03-field_service_dispatch-03.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-04",
+      "label": "Pass FIELD_SERVICE_DISPATCH-04: Emergency Duty Manager",
+      "path": "solutions/field-service-dispatch/screenshots/assisted/04-field_service_dispatch-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/assisted/04-field_service_dispatch-04.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-05",
+      "label": "Confirm the validated agent remains Draft",
+      "path": "solutions/field-service-dispatch/screenshots/assisted/05-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/assisted/05-confirm-draft.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "quest",
+      "label": "Guided field quest",
+      "path": "solutions/field-service-dispatch/quest.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/quest.html",
+      "use": "Resumable Easy/Hard customer journey",
+      "status": "ready"
+    },
+    {
+      "id": "manual-tutorial",
+      "label": "Manual browser tutorial",
+      "path": "solutions/field-service-dispatch/manual-tutorial.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/manual-tutorial.html",
+      "use": "One action per real manual evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "screenshots-readme",
+      "label": "Screenshot evidence README",
+      "path": "solutions/field-service-dispatch/screenshots/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/README.md",
+      "use": "Evidence boundary and capture inventory",
+      "status": "ready"
+    },
+    {
+      "id": "manual-screenshots-readme",
+      "label": "Manual screenshot README",
+      "path": "solutions/field-service-dispatch/screenshots/manual/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/README.md",
+      "use": "Manual frame and film inventory",
+      "status": "ready"
+    },
+    {
+      "id": "exports-readme",
+      "label": "Export README",
+      "path": "solutions/field-service-dispatch/exports/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/exports/README.md",
+      "use": "Bundle build instructions",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-screenshots-readme",
+      "label": "Assisted screenshot README",
+      "path": "solutions/field-service-dispatch/screenshots/assisted/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/assisted/README.md",
+      "use": "Copilot-assisted evidence inventory",
+      "status": "ready"
+    }
+  ]
+}

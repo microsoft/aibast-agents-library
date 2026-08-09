@@ -1,0 +1,66 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/product-feedback-synthesizer",
+  "onepager": "26. Product Feedback Synthesizer Agent one-pager.pptx",
+  "source_slide_sha256": "79f06443a4359eb43a02bf3e9caef25d478100a35edf8c174d735014eecff712",
+  "source_audit": {
+    "status": "audited",
+    "source_path": "agents/@aibast-agents-library/software_dp_stacks/product_feedback_synthesizer_stack/product_feedback_synthesizer_agent.py",
+    "implemented_operations": [
+      "feedback_summary",
+      "feature_requests",
+      "sentiment_analysis",
+      "roadmap_impact"
+    ],
+    "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts or recommendations."
+  },
+  "promises": [
+    {
+      "advertised_promise": "Aggregate and analyze feedback from multiple sources to provide a unified view of customer sentiment and priorities",
+      "operations": [
+        "feedback_summary"
+      ],
+      "demo_cases": [
+        "PFS-01"
+      ],
+      "synthetic_evidence": [
+        "6",
+        "Avg Satisfaction Score",
+        "No roadmap commitment"
+      ]
+    },
+    {
+      "advertised_promise": "Apply AI-driven sentiment and pattern recognition to identify critical pain points and feature requests",
+      "operations": [
+        "feature_requests",
+        "sentiment_analysis"
+      ],
+      "demo_cases": [
+        "PFS-02",
+        "PFS-03"
+      ],
+      "synthetic_evidence": [
+        "Workflow Automation Builder",
+        "candidate_for_review",
+        "No roadmap commitment",
+        "Positive",
+        "Negative",
+        "fictional pilot data"
+      ]
+    },
+    {
+      "advertised_promise": "Automate prioritization and workflow orchestration to convert insights into engineering actions and roadmap updates",
+      "operations": [
+        "roadmap_impact"
+      ],
+      "demo_cases": [
+        "PFS-04"
+      ],
+      "synthetic_evidence": [
+        "Review Candidates",
+        "RBAC",
+        "No roadmap commitment"
+      ]
+    }
+  ]
+}

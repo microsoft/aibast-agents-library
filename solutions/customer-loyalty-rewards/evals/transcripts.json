@@ -1,0 +1,89 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:39:04.943623+00:00",
+  "solution": "@aibast-agents-library/customer-loyalty-rewards",
+  "onepager": "45. Customer Loyalty and Rewards Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "CustomerLoyaltyRewardsAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/b2c_sales_stacks/customer_loyalty_rewards_stack/customer_loyalty_rewards_agent.py",
+      "sha256": "c01685387fb46434075468e90f408af0fab259cb4be2ab5a2fbcbb9fb3213461"
+    }
+  ],
+  "case_file": "tests/demo_cases/customer-loyalty-rewards.json",
+  "case_file_sha256": "bb7de2ef709246e8a7cf7d858dc1925e413ca2b66e101f87bb1cf25c2f99906a",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "CLR-01",
+      "persona": "Loyalty Program Director",
+      "onepager_promise": null,
+      "prompt": "As Loyalty Program Director, summarize the synthetic program health and governance boundary.",
+      "assistant_response": "## Program Health Summary\n\n**Healthy segmentation across all tiers** \u2014 you have balanced representation (1 member each), spanning from a 6-year veteran (Platinum, $6.2K spend) to a 6-month newcomer (Bronze, $450 spend). Engagement drops predictably by tier (Platinum 92% \u2192 Bronze 32%), which is normal.\n\n**Key Health Metrics:**\n- **Total liability:** $1,618 in outstanding points across 80,900 points \u2014 sustainable burn ratio\n- **YTD spend momentum:** $11,650 across 4 members shows qualified participation\n- **Retention signal:** Platinum member tenure (since 2018) indicates program stickiness\n\n## Governance Boundary\n\nYour **decision gates** as Program Director:\n\n1. **Liability cap** \u2014 $1,618 at current scale is low risk; define your comfort threshold (industry norm: 5\u20138% of annual revenue)\n2. **Tier velocity** \u2014 Bronze member reached 2,100 points in 6 months; ensure your promotion path is intentional, not accidental\n3. **Points-to-revenue ratio** \u2014 $11,650 spend generating 80,900 points \u2248 6.9 points per dollar; lock this policy to prevent surprise redemption spikes\n4. **Engagement floor** \u2014 Bronze at 32% engagement is borderline; establish a reactivation or sunset rule (e.g., auto-demote after 90 days of inactivity)\n\n**Recommendation:** Define and document your tier advancement rules, points expiration policy (if any), and redemption max payout now\u2014before scaling. These become liability if unclear.",
+      "agent_logs": "[CustomerLoyaltyRewardsAgent] **Prepared for:** Loyalty Program Director\n**Role focus:** program health, liability, governance, and structural options\n\n> Synthetic loyalty planning data. Informational options only; no member is contacted or enrolled, and no points, tier, offer, reward, redemption, refund, order, or purchase is issued or changed.\n\n# Synthetic Loyalty Program Dashboard\n\n**Total Members:** 4\n**Total Points Outstanding:** 80,900 ($1,618.00)\n**Total Member Spend YTD:** $11,650\n\n| Member | Tier | Points | Spend YTD | Engagement | Since |\n|---|---|---|---|---|---|\n| Synthetic Platinum Member (LM-10001) | Platinum | 48,250 | $6,200 | 92 | 2018-03-15 |\n| Synthetic Gold Member (LM-10002) | Gold | 22,100 | $3,400 | 75 | 2020-08-22 |\n| Synthetic Silver Member (LM-10003) | Silver | 8,450 | $1,600 | 58 | 2023-01-10 |\n| Synthetic Bronze Member (LM-10004) | Bronze | 2,100 | $450 | 32 | 2024-06-05 |\n\n## Tier Distribution\n\n- Platinum: 1\n- Gold: 1\n- Silver: 1\n- Bronze: 1",
+      "expected_agent": "CustomerLoyaltyRewardsAgent",
+      "must_include": [
+        "Prepared for:** Loyalty Program Director",
+        "Synthetic Loyalty Program Dashboard",
+        "no member is contacted"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "CLR-02",
+      "persona": "CRM Manager",
+      "onepager_promise": null,
+      "prompt": "As CRM Manager, explain the synthetic Gold member balance without changing the ledger.",
+      "assistant_response": "**Gold Member Balance Summary (LM-10002)**\n\nYour synthetic Gold member holds **22,100 points** ($442 cash value) with a **1.5x earning multiplier**\u2014above standard tier benefits. \n\n**YTD Activity:**\n- Earned 6,800 points\n- Redeemed 2,500 points\n- Net growth: 4,300 points this year\n\n**Key insight for CRM strategy:** This member shows solid engagement\u2014they're actively redeeming (~37% redemption rate) while accumulating. The referral bonus (500 points) and birthday multiplier are underutilized levers if you're planning retention campaigns.\n\nNo ledger changes made. Ready to dive into reward options or tier progression?",
+      "agent_logs": "[CustomerLoyaltyRewardsAgent] **Prepared for:** CRM Manager\n**Role focus:** aggregate engagement patterns and consented preference quality\n\n> Synthetic loyalty planning data. Informational options only; no member is contacted or enrolled, and no points, tier, offer, reward, redemption, refund, order, or purchase is issued or changed.\n\n# Synthetic Points Summary: Synthetic Gold Member\n\n- **Tier:** Gold\n- **Points Balance:** 22,100 ($442.00)\n- **Earned YTD:** 6,800\n- **Redeemed YTD:** 2,500\n- **Multiplier:** 1.5x\n\n## Earning Opportunities\n\n- **Purchase:** 2 per $1 spent\n- **Product Review:** 100 bonus\n- **Referral Signup:** 500 bonus\n- **Birthday:** Double points for birthday month\n- **Social Share:** 50 bonus\n- **App Download:** 250 one-time bonus",
+      "expected_agent": "CustomerLoyaltyRewardsAgent",
+      "must_include": [
+        "Prepared for:** CRM Manager",
+        "Synthetic Points Summary",
+        "Synthetic Gold Member"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "CLR-03",
+      "persona": "Marketing Leader",
+      "onepager_promise": null,
+      "prompt": "As Marketing Leader, show review-only reward options without creating offers or issuing benefits.",
+      "assistant_response": "Done. I've pulled synthetic reward options across all tiers\u2014travel, dining, merchandise, gift cards, discounts, and shipping perks. Each member segment has tailored options based on their current points balance.\n\n**Key insights for campaign planning:**\n- **Platinum** (48K+ points): premium travel & dining rewards drive high-value retention\n- **Gold** (22K+ points): merchandise & mid-tier gift cards appeal to engaged members\n- **Silver/Bronze**: discount + free-shipping offers keep entry-level members engaged\n\nNo offers created, no members contacted. Ready for your campaign strategy?",
+      "agent_logs": "[CustomerLoyaltyRewardsAgent] **Prepared for:** Marketing Leader\n**Role focus:** review-ready campaign concepts and qualitative value\n\n> Synthetic loyalty planning data. Informational options only; no member is contacted or enrolled, and no points, tier, offer, reward, redemption, refund, order, or purchase is issued or changed.\n\n# Draft Reward Option Recommendations\n\n## Synthetic Platinum Member (LM-10001) \u2014 48,250 points\n\n| Reward | Points Cost | Category | Value |\n|---|---|---|---|\n| $500 Travel Voucher | 25,000 | Travel | $500 |\n| $100 Dining Gift Card | 5,000 | Dining | $100 |\n\n## Synthetic Gold Member (LM-10002) \u2014 22,100 points\n\n| Reward | Points Cost | Category | Value |\n|---|---|---|---|\n| Premium Wireless Headphones | 15,000 | Merchandise | $249 |\n| $50 Store Gift Card | 2,500 | Gift Cards | $50 |\n\n## Synthetic Silver Member (LM-10003) \u2014 8,450 points\n\n| Reward | Points Cost | Category | Value |\n|---|---|---|---|\n| 20% Off Next Purchase | 3,000 | Discounts | Discount |\n\n## Synthetic Bronze Member (LM-10004) \u2014 2,100 points\n\n| Reward | Points Cost | Category | Value |\n|---|---|---|---|\n| Free Shipping for 3 Months | 1,500 | Free Shipping | $30 |\n\n## Full Redemption Catalog\n\n| Reward | Points | Category | Value |\n|---|---|---|---|\n| $500 Travel Voucher | 25,000 | Travel | $500 |\n| $100 Dining Gift Card | 5,000 | Dining | $100 |\n| Premium Wireless Headphones | 15,000 | Merchandise | $249 |\n| $50 Store Gift Card | 2,500 | Gift Cards | $50 |\n| 20% Off Next Purchase | 3,000 | Discounts | Discount |\n| Free Shipping for 3 Months | 1,500 | Free Shipping | $30 |",
+      "expected_agent": "CustomerLoyaltyRewardsAgent",
+      "must_include": [
+        "Prepared for:** Marketing Leader",
+        "Draft Reward Option Recommendations",
+        "no points, tier, offer, reward"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "CLR-04",
+      "persona": "Loyalty Program Director",
+      "onepager_promise": null,
+      "prompt": "As Loyalty Program Director, review the synthetic tier structure without changing member status.",
+      "assistant_response": "## Tier Structure Review\n\nYour synthetic program has a **clean, four-tier ladder** with increasing spend thresholds and reward multipliers:\n\n- **Platinum** ($6K+, 2.0x points) \u2014 strong anchor for high-value members\n- **Gold** ($3K+, 1.5x points) \u2014 solid middle tier with differentiated perks\n- **Silver** ($1K+, 1.25x points) \u2014 low activation threshold, good conversion funnel\n- **Bronze** (entry, 1.0x) \u2014 inclusive baseline\n\n### Program Health Observations\n\n1. **Engagement tier spread** \u2014 Platinum at 92, Gold at 75, Silver at 58, Bronze at 32 shows clear engagement correlation with tier, validating spend-based segmentation\n2. **Healthy distribution** \u2014 Members distributed across all tiers with visible progression paths; Gold member (LM-10002) is 56.7% toward Platinum\u2014a good near-term upgrade candidate\n3. **Multiplier curve** \u2014 1.0x \u2192 1.5x \u2192 2.0x is sound, though you may want to stress-test Silver's 1.25x for competitiveness if churn is a concern\n\n**No structural changes recommended** unless you're testing tier compression or perks rebalancing. Current design supports clear goals and has low governance friction.\n\nWould you like me to analyze reward-option alignment with these tiers or review spend velocity toward the next tier milestones?",
+      "agent_logs": "[CustomerLoyaltyRewardsAgent] **Prepared for:** Loyalty Program Director\n**Role focus:** program health, liability, governance, and structural options\n\n> Synthetic loyalty planning data. Informational options only; no member is contacted or enrolled, and no points, tier, offer, reward, redemption, refund, order, or purchase is issued or changed.\n\n# Synthetic Tier Analysis\n\n## Tier Structure\n\n| Tier | Min Spend | Multiplier | Key Perks |\n|---|---|---|---|\n| Bronze | $0 | 1.0x | Birthday bonus points; Member-only sales access |\n| Silver | $1,000 | 1.25x | Bronze perks; Free standard shipping |\n| Gold | $3,000 | 1.5x | Silver perks; Free express shipping |\n| Platinum | $6,000 | 2.0x | Gold perks; Personal shopping advisor |\n\n## Member Tier Progress\n\n### Synthetic Platinum Member (LM-10001) \u2014 Platinum\n\n- Spend YTD: $6,200\n- Engagement Score: 92\n- Status: Top Tier Achieved\n\n### Synthetic Gold Member (LM-10002) \u2014 Gold\n\n- Spend YTD: $3,400\n- Engagement Score: 75\n- Progress to Platinum: 56.7%\n- Spend Remaining: $2,600\n\n### Synthetic Silver Member (LM-10003) \u2014 Silver\n\n- Spend YTD: $1,600\n- Engagement Score: 58\n- Progress to Gold: 53.3%\n- Spend Remaining: $1,400\n\n### Synthetic Bronze Member (LM-10004) \u2014 Bronze\n\n- Spend YTD: $450\n- Engagement Score: 32\n- Progress to Silver: 45.0%\n- Spend Remaining: $550\n",
+      "expected_agent": "CustomerLoyaltyRewardsAgent",
+      "must_include": [
+        "Synthetic Tier Analysis",
+        "Tier Structure",
+        "no member is contacted"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

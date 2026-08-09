@@ -1,0 +1,101 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:45:03.320097+00:00",
+  "solution": "@aibast-agents-library/loan-origination-assistant",
+  "onepager": "40. Loan Origination Assistant one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "LoanOriginationAssistantAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/financial_services_stacks/loan_origination_assistant_stack/loan_origination_assistant_agent.py",
+      "sha256": "c85fb1844a55344306be2bef47eee104dfb66a589befadcd48214785df6a89a5"
+    }
+  ],
+  "case_file": "tests/demo_cases/loan-origination-assistant.json",
+  "case_file_sha256": "156c1e9e457ae4189b131a0820e674d2b92f6fec1a2099a97dda9c16687ff2a2",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "LOA-01",
+      "persona": "Loan Officer",
+      "onepager_promise": "Automate intake to standardize process and reduce manual processing",
+      "prompt": "What is in my mortgage pipeline, and which application is still in document review?",
+      "assistant_response": "**Kevin Nguyen's FHA application (LA-2025-4002)** is the one in document review.\n\nYour pipeline has four loans totaling $2.67M:\n- **Thomas & Rebecca Harper** (Conventional, $388K) \u2014 in underwriting\n- **Kevin Nguyen** (FHA, $265K) \u2014 **in document review** \u2713\n- **Westfield Properties** (Commercial, $1.68M) \u2014 in credit review\n- **Sandra Blake** (VA, $340K) \u2014 ready for human decision\n\nNeed details on any specific application?",
+      "agent_logs": "[LoanOriginationAssistantAgent] > **SYNTHETIC DEMO DATA \u2014 LENDER REVIEW REQUIRED.** Fictional applications, rates, and eligibility rules only. This is not lending, legal, or financial advice and does not approve, deny, price, lock, close, fund, or modify a loan.\n\n# Loan Application Pipeline\n\n| App ID | Applicant | Type | Amount | LTV | Status | LO |\n|---|---|---|---|---|---|---|\n| LA-2025-4001 | Thomas & Rebecca Harper | Conventional 30Yr | $388,000 | 80.0% | Underwriting | Diana Cruz |\n| LA-2025-4002 | Kevin Nguyen | Fha 30Yr | $265,375 | 96.5% | Document Review | Mark Peterson |\n| LA-2025-4003 | Westfield Properties LLC | Commercial 5Yr | $1,680,000 | 70.0% | Credit Review | Diana Cruz |\n| LA-2025-4004 | Sandra Blake | Va 30Yr | $340,000 | 100.0% | Ready For Human Decision | Mark Peterson |\n\n**Pipeline Volume:** $2,673,375\n**Applications:** 4\n\n## Rate Sheet\n\n| Product | Rate | APR | Points |\n|---|---|---|---|\n| Conventional 30Yr | 6.875% | 7.012% | 0.5 |\n| Fha 30Yr | 6.5% | 7.25% | 0.0 |\n| Va 30Yr | 6.25% | 6.485% | 0.0 |\n| Commercial 5Yr | 7.5% | 7.75% | 1.0 |",
+      "expected_agent": "LoanOriginationAssistantAgent",
+      "must_include": [
+        "LA-2025-4002",
+        "Document Review"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "LOA-02",
+      "persona": "Underwriter",
+      "onepager_promise": "Assess program eligibility to accelerate and support better borrowing decisions",
+      "prompt": "Pre-analyze Kevin Nguyen\u2019s ratios and show every stated eligibility exception.",
+      "assistant_response": "**Kevin Nguyen (LA-2025-4002) \u2014 Credit Summary**\n\nAll primary ratios **pass FHA 30-year standards:**\n\n- **DTI: 45.3%** (limit 50%) \u2014 tight but eligible\n- **LTV: 96.5%** (limit 96.5%) \u2014 at maximum\n- **Credit: 648** (minimum 580) \u2014 acceptable for FHA\n- **Employment: 3 years** \u2014 solid continuity\n\n**Stated Eligibility Exceptions:** None flagged at this stage.\n\nThe file is tight on LTV and DTI\u2014no margin for adverse changes\u2014but meets stated criteria. Underwriting review and documentation verification would follow per your workflow.",
+      "agent_logs": "[LoanOriginationAssistantAgent] > **SYNTHETIC DEMO DATA \u2014 LENDER REVIEW REQUIRED.** Fictional applications, rates, and eligibility rules only. This is not lending, legal, or financial advice and does not approve, deny, price, lock, close, fund, or modify a loan.\n\n# Credit Analysis: LA-2025-4002\n\n- **Applicant:** Kevin Nguyen\n- **Loan Type:** Fha 30Yr\n- **Credit Score:** 648\n- **Annual Income:** $68,000\n- **Monthly Debt:** $890\n- **DTI Ratio:** 45.3%\n- **LTV Ratio:** 96.5%\n- **Down Payment:** 3.5%\n- **Employment:** 3 years\n\n## Criteria Comparison\n\n| Metric | Actual | Required | Status |\n|---|---|---|---|\n| Credit Score | 648 | >= 580 | Pass |\n| DTI | 45.3% | <= 50% | Pass |\n| LTV | 96.5% | <= 96.5% | Pass |\n\n**All criteria met.**",
+      "expected_agent": "LoanOriginationAssistantAgent",
+      "must_include": [
+        "LA-2025-4002",
+        "DTI"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "LOA-03",
+      "persona": "Processor",
+      "onepager_promise": "Automate intake to standardize process and reduce manual processing",
+      "prompt": "Build the VA document checklist for Sandra so I can verify the file.",
+      "assistant_response": "Here's Sandra's VA document checklist. The key items specific to her VA loan are the **Certificate of Eligibility (COE)** and **DD-214 or active duty proof** \u2014 those must be in file before underwriting can proceed.\n\nUse this to walk through her file and check off what you have. Flag any missing items so you can request them from Sandra promptly.",
+      "agent_logs": "[LoanOriginationAssistantAgent] > **SYNTHETIC DEMO DATA \u2014 LENDER REVIEW REQUIRED.** Fictional applications, rates, and eligibility rules only. This is not lending, legal, or financial advice and does not approve, deny, price, lock, close, fund, or modify a loan.\n\n# Document Verification: LA-2025-4004\n\n**Applicant:** Sandra Blake\n**Loan Type:** Va 30Yr\n\n## Income\n\n- [ ] W-2 forms (last 2 years)\n- [ ] Pay stubs (last 30 days)\n- [ ] Tax returns (last 2 years)\n- [ ] Employment verification letter\n\n## Assets\n\n- [ ] Bank statements (last 2 months)\n- [ ] Investment account statements\n- [ ] Gift letter (if applicable)\n\n## Property\n\n- [ ] Purchase agreement\n- [ ] Appraisal report\n- [ ] Title search\n- [ ] Homeowners insurance quote\n\n## Identity\n\n- [ ] Government-issued photo ID\n- [ ] Social Security verification\n\n## Va Specific\n\n- [ ] Certificate of Eligibility (COE)\n- [ ] DD-214 or active duty proof\n",
+      "expected_agent": "LoanOriginationAssistantAgent",
+      "must_include": [
+        "LA-2025-4004",
+        "Certificate of Eligibility"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "LOA-04",
+      "persona": "Senior Underwriter",
+      "onepager_promise": "Assess program eligibility to accelerate and support better borrowing decisions",
+      "prompt": "Which files meet the limited criteria, and did the assistant approve any loan?",
+      "assistant_response": "**All four files meet the stated limited criteria**, but **no loan has been approved**. \n\nEach application (Harper, Nguyen, Westfield Properties, and Blake) passed the initial synthetic review thresholds and is flagged for **human underwriting review**\u2014the next stage where an authorized underwriter makes the actual lending decision.\n\nThis is the correct workflow: automated criteria screening routes viable files to underwriting; final approval authority stays with qualified human reviewers.",
+      "agent_logs": "[LoanOriginationAssistantAgent] > **SYNTHETIC DEMO DATA \u2014 LENDER REVIEW REQUIRED.** Fictional applications, rates, and eligibility rules only. This is not lending, legal, or financial advice and does not approve, deny, price, lock, close, fund, or modify a loan.\n\n# Loan Eligibility Findings for Underwriter Review\n\n## LA-2025-4001: Thomas & Rebecca Harper\n\n- **Loan:** $388,000 (Conventional 30Yr)\n- **Credit/DTI/LTV:** 762 / 37.2% / 80.0%\n- **Review Finding:** Stated criteria met \u2014 human underwriting review\n- **Rationale:** No exception found in the limited synthetic criteria\n\n## LA-2025-4002: Kevin Nguyen\n\n- **Loan:** $265,375 (Fha 30Yr)\n- **Credit/DTI/LTV:** 648 / 45.3% / 96.5%\n- **Review Finding:** Stated criteria met \u2014 human underwriting review\n- **Rationale:** No exception found in the limited synthetic criteria\n\n## LA-2025-4003: Westfield Properties LLC\n\n- **Loan:** $1,680,000 (Commercial 5Yr)\n- **Credit/DTI/LTV:** N/A / 115.2% / 70.0%\n- **Review Finding:** Stated criteria met \u2014 human underwriting review\n- **Rationale:** No exception found in the limited synthetic criteria\n\n## LA-2025-4004: Sandra Blake\n\n- **Loan:** $340,000 (Va 30Yr)\n- **Credit/DTI/LTV:** 710 / 34.7% / 100.0%\n- **Review Finding:** Stated criteria met \u2014 human underwriting review\n- **Rationale:** No exception found in the limited synthetic criteria\n\nNo lending decision has been made. Validate source documents, program rules, fair-lending controls, disclosures, and delegated authority before any customer communication or action.",
+      "expected_agent": "LoanOriginationAssistantAgent",
+      "must_include": [
+        "LA-2025-4001",
+        "No lending decision"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "LOA-05",
+      "persona": "Closing Coordinator",
+      "onepager_promise": "Track conditions and timelines to speed closing and minimize delays",
+      "prompt": "Which conditions are still open on the commercial refinance, and is a closing date promised?",
+      "assistant_response": "**Westfield Properties LLC (LA-2025-4003)** has two open conditions:\n\n1. **Environmental Phase I**\n2. **Current rent roll**\n\n**No closing date is promised yet.** Condition owners and due dates need to be assigned in your approved loan-origination system to move forward.",
+      "agent_logs": "[LoanOriginationAssistantAgent] > **SYNTHETIC DEMO DATA \u2014 LENDER REVIEW REQUIRED.** Fictional applications, rates, and eligibility rules only. This is not lending, legal, or financial advice and does not approve, deny, price, lock, close, fund, or modify a loan.\n\n# Outstanding Conditions and Timeline Review\n\n## LA-2025-4001: Thomas & Rebecca Harper\n\n- [ ] Final appraisal review\n- [ ] Updated asset statement\n- Owner and due date: assign in the approved loan-origination system\n\n## LA-2025-4002: Kevin Nguyen\n\n- [ ] Employment verification\n- [ ] FHA case number\n- [ ] Final appraisal\n- Owner and due date: assign in the approved loan-origination system\n\n## LA-2025-4003: Westfield Properties LLC\n\n- [ ] Environmental Phase I\n- [ ] Current rent roll\n- Owner and due date: assign in the approved loan-origination system\n\n## LA-2025-4004: Sandra Blake\n\n- [ ] Certificate of Eligibility validation\n- [ ] Final insurance evidence\n- Owner and due date: assign in the approved loan-origination system\n\nNo condition was cleared and no closing date is promised.",
+      "expected_agent": "LoanOriginationAssistantAgent",
+      "must_include": [
+        "LA-2025-4003",
+        "Environmental Phase I"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

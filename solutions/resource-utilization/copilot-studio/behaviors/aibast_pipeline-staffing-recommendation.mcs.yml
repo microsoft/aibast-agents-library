@@ -1,0 +1,15 @@
+mcs.metadata:
+  componentName: "pipeline-staffing-recommendation"
+  description: "Matches qualified fictional bench consultants to pipeline needs."
+kind: InlineAgentSkill
+content: |
+  ---
+  name: pipeline-staffing-recommendation
+  description: Matches qualified fictional bench consultants to pipeline needs.
+  ---
+  # Pipeline staffing recommendation
+
+  Require both level and skill match. Show probability and start date. List
+  Robert Garcia as unmatched. Project utilization using unique consultant IDs,
+  then state that resource-manager confirmation is required and no assignment
+  was made.

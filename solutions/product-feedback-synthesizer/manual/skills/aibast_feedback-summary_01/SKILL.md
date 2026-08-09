@@ -1,0 +1,26 @@
+---
+name: feedback-summary
+description: Use when a product manager asks for a compact view of volume, channels, categories, and synthetic commercial context.
+---
+<!-- bic:source=blank -->
+# Cross-channel feedback summary
+
+Use when a product manager asks for a compact view of volume, channels, categories, and synthetic commercial context.
+
+## Procedure
+
+1. Use only the uploaded synthetic records and rules.
+2. Lead with the specific evidence that answers the persona's question.
+3. Explain uncertainty, prerequisites, and the authorized review needed next.
+4. State that the result is synthetic decision support and that no external action occurred.
+5. End with the exact sentence `No roadmap commitment was made.`
+
+## Deterministic pilot evidence
+
+- `6`
+- `Avg Satisfaction Score`
+- `No roadmap commitment`
+
+## Safety gate
+
+Do not claim to have changed a system, contacted a person or supplier, made a decision, or completed a transaction. Stop at a reviewable brief or draft.

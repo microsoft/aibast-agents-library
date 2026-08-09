@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (() => {
+    const param = new URLSearchParams(window.location.search).get("scoutTheme");
+    const theme =
+      param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Line Optimization Deployment Quest</title>
+<style>
+:root {
+  color-scheme: light;
+  --cp-bg: #f7f4ef;
+  --cp-bg-elevated: #fcfbf8;
+  --cp-surface: #ffffff;
+  --cp-surface-soft: #f5f5f5;
+  --cp-border: #dedede;
+  --cp-border-strong: #919191;
+  --cp-text: #242424;
+  --cp-text-muted: #5c5c5c;
+  --cp-text-soft: #6f6f6f;
+  --cp-accent: #b11f4b;
+  --cp-accent-hover: #9a1a41;
+  --cp-accent-soft: rgba(177, 31, 75, 0.08);
+  --cp-accent-fg: #ffffff;
+  --cp-success: #16a34a;
+  --cp-danger: #dc2626;
+  --cp-warning: #f59e0b;
+  --cp-link: #0078d4;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+  --cp-overlay: rgba(255, 255, 255, 0.8);
+  --cp-panel: rgba(255, 255, 255, 0.86);
+  --cp-panel-strong: rgba(255, 255, 255, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.55);
+  --cp-highlight: rgba(177, 31, 75, 0.12);
+}
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --cp-bg: #3d3b3a;
+  --cp-bg-elevated: #343231;
+  --cp-surface: #292929;
+  --cp-surface-soft: #2e2e2e;
+  --cp-border: #474747;
+  --cp-border-strong: #5f5f5f;
+  --cp-text: #dedede;
+  --cp-text-muted: #919191;
+  --cp-text-soft: #b0b0b0;
+  --cp-accent: #fd8ea1;
+  --cp-accent-hover: #fb7b91;
+  --cp-accent-soft: rgba(253, 142, 161, 0.14);
+  --cp-accent-fg: #1a1a1a;
+  --cp-success: #4ade80;
+  --cp-danger: #f87171;
+  --cp-warning: #fbbf24;
+  --cp-link: #4da6ff;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+  --cp-overlay: rgba(41, 41, 41, 0.88);
+  --cp-panel: rgba(41, 41, 41, 0.72);
+  --cp-panel-strong: rgba(41, 41, 41, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.04);
+  --cp-highlight: rgba(253, 142, 161, 0.12);
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--cp-bg);
+  color: var(--cp-text);
+  font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+button, a { font: inherit; }
+a { color: var(--cp-link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: 1fr minmax(220px, 420px) 1fr;
+  gap: 16px;
+  align-items: center;
+  min-height: 58px;
+  padding: 8px 22px;
+  border-bottom: 1px solid var(--cp-border);
+  background: var(--cp-panel-strong);
+}
+.title { font-size: 0.86rem; font-weight: 750; }
+.title span { color: var(--cp-accent); }
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.track {
+  height: 8px;
+  flex: 1;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--cp-border);
+}
+.fill {
+  width: 0;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--cp-accent);
+  transition: width 300ms ease;
+}
+.progress-label { color: var(--cp-text-muted); font-size: 0.7rem; white-space: nowrap; }
+.top-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+.button {
+  border: 1px solid var(--cp-border);
+  border-radius: 8px;
+  background: var(--cp-surface);
+  color: var(--cp-text);
+  cursor: pointer;
+  padding: 7px 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.button.primary {
+  border-color: var(--cp-accent);
+  background: var(--cp-accent);
+  color: var(--cp-accent-fg);
+}
+
+.page {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 34px 0 70px;
+}
+.hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 22px;
+  align-items: end;
+  margin-bottom: 20px;
+}
+.eyebrow {
+  color: var(--cp-accent);
+  font-size: 0.7rem;
+  font-weight: 850;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+h1 {
+  margin: 7px 0 8px;
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+}
+.hero p {
+  max-width: 760px;
+  margin: 0;
+  color: var(--cp-text-muted);
+}
+.mode-switch {
+  display: flex;
+  gap: 5px;
+  padding: 5px;
+  border: 1px solid var(--cp-border);
+  border-radius: 999px;
+  background: var(--cp-surface);
+}
+.quest-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.mode {
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--cp-text-muted);
+  cursor: pointer;
+  padding: 8px 13px;
+  font-size: 0.74rem;
+  font-weight: 750;
+}
+.mode.active {
+  background: var(--cp-accent);
+  color: var(--cp-accent-fg);
+}
+
+.mission {
+  display: grid;
+  grid-template-columns: 1fr 330px;
+  gap: 16px;
+}
+.path {
+  display: grid;
+  gap: 10px;
+}
+.step {
+  display: grid;
+  grid-template-columns: 46px 1fr auto;
+  gap: 13px;
+  align-items: center;
+  border: 1px solid var(--cp-border);
+  border-radius: 14px;
+  background: var(--cp-surface);
+  cursor: pointer;
+  padding: 13px;
+  text-align: left;
+  box-shadow: 0 0 2px var(--cp-border);
+}
+.step:hover { border-color: var(--cp-accent); }
+.step.complete { border-color: var(--cp-success); }
+.step.active { border-color: var(--cp-accent); background: var(--cp-accent-soft); }
+.step-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 2px solid var(--cp-highlight);
+  border-radius: 999px;
+  font-size: 1.1rem;
+}
+.step.complete .step-icon {
+  border-color: var(--cp-success);
+  color: var(--cp-success);
+}
+.step strong { display: block; font-size: 0.86rem; }
+.step span {
+  display: block;
+  margin-top: 2px;
+  color: var(--cp-text-muted);
+  font-size: 0.7rem;
+}
+.step small { color: var(--cp-text-muted); font-size: 0.67rem; }
+
+.panel {
+  position: sticky;
+  top: 76px;
+  align-self: start;
+  min-height: 420px;
+  border: 1px solid var(--cp-border);
+  border-radius: 16px;
+  background: var(--cp-surface);
+  padding: 18px;
+  box-shadow: 0 0 2px var(--cp-border);
+}
+.panel-placeholder {
+  display: grid;
+  min-height: 380px;
+  place-items: center;
+  color: var(--cp-text-muted);
+  text-align: center;
+}
+.panel h2 { margin: 0 0 5px; font-size: 1.2rem; }
+.time { color: var(--cp-text-muted); font-size: 0.68rem; }
+.description {
+  margin: 14px 0;
+  color: var(--cp-text-muted);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+.copy-group { display: grid; gap: 9px; }
+.copy-label { color: var(--cp-text-muted); font-size: 0.67rem; font-weight: 750; }
+.copy-block {
+  position: relative;
+  overflow: auto;
+  max-height: 180px;
+  padding: 11px 42px 11px 12px;
+  border: 1px solid var(--cp-border);
+  border-radius: 9px;
+  background: var(--cp-surface-soft);
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: Consolas, "Courier New", Courier, monospace;
+  font-size: 0.67rem;
+}
+.copy {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  border: 1px solid var(--cp-border);
+  border-radius: 6px;
+  background: var(--cp-surface);
+  color: var(--cp-text);
+  cursor: pointer;
+  padding: 5px 7px;
+  font-size: 0.64rem;
+}
+.substeps {
+  margin: 13px 0;
+  padding-left: 20px;
+}
+.substeps li {
+  margin-bottom: 6px;
+  color: var(--cp-text-muted);
+  font-size: 0.72rem;
+}
+.done {
+  width: 100%;
+  border: 2px solid var(--cp-border);
+  border-radius: 9px;
+  background: transparent;
+  color: var(--cp-text);
+  cursor: pointer;
+  padding: 10px;
+  font-weight: 750;
+}
+.done.complete {
+  border-color: var(--cp-success);
+  color: var(--cp-success);
+}
+.screenshot {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+  border: 1px solid var(--cp-border);
+  border-radius: 9px;
+}
+.resources {
+  display: grid;
+  gap: 6px;
+  margin: 12px 0;
+}
+.resource-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border: 1px solid var(--cp-border);
+  border-radius: 8px;
+  background: var(--cp-surface-soft);
+  color: var(--cp-text);
+  padding: 8px 10px;
+  font-size: 0.7rem;
+}
+.hidden { display: none; }
+
+@media (max-width: 860px) {
+  .topbar { grid-template-columns: 1fr; text-align: center; }
+  .top-actions { justify-content: center; }
+  .hero, .mission { grid-template-columns: 1fr; }
+  .mode-switch { justify-self: start; }
+  .panel { position: static; }
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="title"><span>AI BAST</span> · Product Line Optimization Deployment Quest</div>
+  <div class="progress"><div class="track"><div class="fill" id="fill"></div></div><div class="progress-label" id="progress-label"></div></div>
+  <div class="top-actions"><a class="button" href="../../library.html#agent/%40aibast-agents-library%2Fproduction-line-optimization">Back to library</a><button class="button" id="reset">Reset</button></div>
+</header>
+
+<main class="page">
+  <section class="hero">
+    <div><div class="eyebrow">Customer field quest</div><h1>Deploy the line optimizer.</h1><p>Use Copilot-assisted Easy mode, or reproduce the agent through literal browser construction in Hard mode. Progress is saved in this browser.</p></div>
+    <div class="quest-actions"><div class="mode-switch"><button class="mode active" data-mode="easy">Easy mode</button><button class="mode" data-mode="hard">Hard mode</button></div><a class="button primary" id="bundle-link" href="exports/product-line-optimization-source.zip">Download source bundle</a></div>
+  </section>
+  <section class="mission">
+    <div class="path" id="path"></div>
+    <aside class="panel" id="panel"><div class="panel-placeholder">Choose a checkpoint to begin.</div></aside>
+  </section>
+</main>
+
+<script>
+const KEY = "aibast-product-line-optimization-quest-v1";
+let mode = "easy";
+let completed = JSON.parse(localStorage.getItem(KEY) || "{}");
+let registrySolution = null;
+
+const EASY = [
+  { id:"easy-copy", icon:"✦", title:"Copy the one-prompt installer", time:"1 min", description:"Give the keyboard to the customer. They paste one prompt into GitHub Copilot Agent mode; Copilot owns every setup command.", prompt:"local_install_prompt", steps:["Open GitHub Copilot Chat in Agent mode.","Paste the prompt exactly once.","Only intervene if GitHub or Copilot authentication opens a browser confirmation."] },
+  { id:"easy-watch", icon:"◎", title:"Watch Copilot build the runtime", time:"3–8 min", description:"Copilot checks the OS, installs Brainstem if needed, downloads and verifies the portable agent, starts the service, and runs the smoke prompt.", steps:["Do not open a terminal for the customer.","Watch for source verification.","Require /health and /chat evidence before continuing."] },
+  { id:"easy-demo", icon:"▶", title:"Play the four plant-floor stories", time:"4 min", description:"Open the M365 Copilot-style demo and let the customer choose line health, bottlenecks, options, or shift planning.", link:"../_shared/m365-copilot-demo.html?scenario=production-line-health", steps:["Let the customer click Play.","Switch scenarios using the suggested prompts.","State that every figure is synthetic planning evidence, not a customer KPI."] },
+  { id:"easy-studio", icon:"C", title:"Promote with one Copilot prompt", time:"8–15 min", description:"Use the Copilot Studio promotion prompt. Copilot initializes or synchronizes the project, reviews the source, pushes changes, and stops in Draft.", prompt:"copilot_studio_prompt", screenshot:"screenshots/assisted/copilot-assisted-walkthrough.gif", steps:["Use environment ee67a404-325c-e726-a18a-886fe708ca0b.","Use schema aibast_ProductLineOptimizationPilot.","Require an explicit approval before any future publish action."] },
+  { id:"easy-proof", icon:"✓", title:"Prove all four cases in Preview", time:"8 min", description:"Replay PLO-01 through PLO-04 in Copilot Studio Preview. The validated pilot remains Draft and is not published.", resources:["studio-preview-evidence"], steps:["PLO-01 must name Polymer Molding Line C and Electronics Assembly Line A.","PLO-02 must name Functional Test, Robotic Welding, and Injection Molding.","PLO-03 must preserve Option 1, Option 2, and Quality improvement.","PLO-04 must produce Day, Swing, and Night.","Capture evidence before claiming downstream parity."] }
+];
+
+const HARD = [
+  { id:"hard-download", icon:"1", title:"Download every reviewed source file", time:"3–5 min", description:"Start from the exact reviewed artifacts rather than retyping hidden content.", resources:["portable-agent","settings","knowledge-records","knowledge-rules","manual-tutorial"], page:"manual-tutorial.html", steps:["Download the bundle or each raw GitHub file.","Keep each of the four SKILL.md files in its named folder.","Confirm the synthetic-planning disclosure before building."] },
+  { id:"hard-create", icon:"2", title:"Construct the blank agent in the browser", time:"8–12 min", description:"Create a blank agent, name it, enter and save the instructions, then remove default web search.", resources:["global-instructions","settings"], page:"manual-tutorial.html", steps:["Do not use PAC CLI or YAML import in Hard mode.","Name the duplicate Product Line Manual Build.","Remove web search so the pilot stays grounded in packaged evidence."] },
+  { id:"hard-knowledge", icon:"3", title:"Upload both knowledge files", time:"8–15 min", description:"Add the synthetic production records and optimization rules one file at a time.", resources:["knowledge-records","knowledge-rules"], page:"manual-tutorial.html", steps:["Use the browser knowledge uploader.","Wait for each source to be accepted.","Confirm exactly two custom knowledge sources."] },
+  { id:"hard-skills", icon:"4", title:"Upload all four skills", time:"12–20 min", description:"Add line health, bottleneck identification, improvement options, and shift planning as separate SKILL.md uploads.", resources:["skill-line-health","skill-bottleneck","skill-throughput","skill-shift-plan"], page:"manual-tutorial.html", steps:["Use Add skill for every file.","Upload a file literally named SKILL.md.","Verify all four routing descriptions."] },
+  { id:"hard-model", icon:"5", title:"Match model and audit inventory", time:"5–8 min", description:"Select Claude Sonnet 4.6 and review four skills plus two knowledge files before Preview.", resources:["settings"], page:"manual-tutorial.html", steps:["Record any approved model substitution.","Do not test while knowledge is still processing.","Confirm no web-search tool remains."] },
+  { id:"hard-test", icon:"6", title:"Run all four canonical Preview cases", time:"10–15 min", description:"Start a fresh Preview conversation and run PLO-01 through PLO-04 exactly.", resources:["brainstem-transcripts","manual-evidence","manual-browserfilm"], page:"manual-tutorial.html", expectedArtifact:"screenshots/manual/manual-build-walkthrough.gif", steps:["Capture one deterministic screenshot per case.","Require the expected line, station, option, and shift identifiers.","Treat any missing identifier as a failed evidence gate."] },
+  { id:"hard-publish", icon:"7", title:"Stop at the Draft gate", time:"2 min", description:"The manual duplicate is an evidence build. Do not publish it without a separate approved purpose and governance review.", resources:["manual-evidence"], page:"manual-tutorial.html", steps:["Record the agent identity and Preview evidence.","Capture the Draft state.","Do not select Publish."] }
+];
+
+async function loadRegistry() {
+  const response = await fetch("../../registry.json", { cache:"no-store" });
+  const registry = await response.json();
+  const agent = registry.agents.find(item => item.name === "@aibast-agents-library/production-line-optimization");
+  registrySolution = agent ? agent._solution : null;
+}
+
+let exportsManifest = null;
+async function loadExports() {
+  const response = await fetch("export-manifest.json", { cache:"no-store" });
+  exportsManifest = await response.json();
+  document.getElementById("bundle-link").href = exportsManifest.bundle.raw_url;
+}
+
+function steps() { return mode === "easy" ? EASY : HARD; }
+
+function render() {
+  document.querySelectorAll(".mode").forEach(button => button.classList.toggle("active", button.dataset.mode === mode));
+  const list = steps();
+  document.getElementById("path").innerHTML = list.map((step,index) => {
+    const isDone = Boolean(completed[step.id]);
+    return `<button class="step ${isDone ? "complete" : ""}" data-step="${step.id}"><span class="step-icon">${isDone ? "✓" : step.icon}</span><span><strong>${index+1}. ${step.title}</strong><span>${step.description}</span></span><small>${step.time}</small></button>`;
+  }).join("");
+  const done = list.filter(step => completed[step.id]).length;
+  document.getElementById("fill").style.width = `${(done/list.length)*100}%`;
+  document.getElementById("progress-label").textContent = `${done} of ${list.length}`;
+  document.querySelectorAll("[data-step]").forEach(button => button.addEventListener("click", () => openStep(button.dataset.step)));
+}
+
+function copyBlock(label,text) {
+  if (!text) return "";
+  return `<div><div class="copy-label">${label}</div><div class="copy-block">${escapeHtml(text)}<button class="copy" data-copy="${encodeURIComponent(text)}">Copy</button></div></div>`;
+}
+
+function openStep(id) {
+  const step = steps().find(item => item.id === id);
+  if (!step) return;
+  document.querySelectorAll(".step").forEach(button => button.classList.toggle("active", button.dataset.step === id));
+  let prompt = step.prompt && registrySolution && registrySolution.architecture ? registrySolution.architecture[step.prompt] : "";
+  let commands = step.commands || [];
+  if (step.commandIndex != null && registrySolution && registrySolution.architecture) {
+    const item = registrySolution.architecture.manual_commands[step.commandIndex];
+    if (item) commands = [item];
+  }
+  const resourceIds = step.resources || [];
+  const resources = exportsManifest
+    ? exportsManifest.files.filter(file => resourceIds.includes(file.id))
+    : [];
+  document.getElementById("panel").innerHTML = `<h2>${step.title}</h2><div class="time">${step.time}</div><p class="description">${step.description}</p>
+    <div class="copy-group">${copyBlock("Copy into GitHub Copilot Agent mode",prompt)}${commands.map((command,index)=>copyBlock(`Command ${index+1}`,command)).join("")}</div>
+    ${resources.length ? `<div class="resources">${resources.map(file => `<a class="resource-link" href="${file.raw_url}" target="_blank" rel="noopener"><span>${file.label}<br><small>${file.use}</small></span><strong>Download ↗</strong></a>`).join("")}</div>` : ""}
+    ${step.steps ? `<ul class="substeps">${step.steps.map(item=>`<li>${item}</li>`).join("")}</ul>` : ""}
+    ${step.page ? `<a class="button primary" href="${step.page}">Open the step-by-step tutorial</a>` : ""}
+    ${step.expectedArtifact ? `<p class="description"><strong>Captured browserfilm:</strong><br><code>${step.expectedArtifact}</code></p>` : ""}
+    ${step.link ? `<a class="button primary" href="${step.link}" target="_blank" rel="noopener">Open the canned demo ↗</a>` : ""}
+    ${step.screenshot ? `<img class="screenshot" src="${step.screenshot}" alt="Copilot Studio hard-mode configuration screenshot" onerror="this.style.display='none'">` : ""}
+    <button class="done ${completed[id] ? "complete" : ""}" data-done="${id}">${completed[id] ? "Completed ✓" : "Mark checkpoint complete"}</button>`;
+  document.querySelectorAll("[data-copy]").forEach(button => button.addEventListener("click", () => {
+    navigator.clipboard.writeText(decodeURIComponent(button.dataset.copy));
+    button.textContent = "Copied";
+  }));
+  document.querySelector("[data-done]").addEventListener("click", event => {
+    completed[event.currentTarget.dataset.done] = !completed[event.currentTarget.dataset.done];
+    localStorage.setItem(KEY, JSON.stringify(completed));
+    render();
+    openStep(id);
+  });
+}
+
+function escapeHtml(value) {
+  return String(value || "").replace(/[&<>"']/g, char => ({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;" }[char]));
+}
+
+document.querySelectorAll(".mode").forEach(button => button.addEventListener("click", () => {
+  mode = button.dataset.mode;
+  document.getElementById("panel").innerHTML = `<div class="panel-placeholder">Choose a checkpoint to begin.</div>`;
+  render();
+}));
+document.getElementById("reset").addEventListener("click", () => {
+  completed = {};
+  localStorage.removeItem(KEY);
+  render();
+});
+
+Promise.all([loadRegistry(), loadExports()]).then(render).catch(render);
+</script>
+</body>
+</html>

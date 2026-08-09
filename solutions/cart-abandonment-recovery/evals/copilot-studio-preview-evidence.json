@@ -1,0 +1,56 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T18:11:45.330Z",
+  "solution": "@aibast-agents-library/cart-abandonment-recovery",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Cart Recovery Pilot",
+  "schema_name": "aibast_CartAbandonmentRecoveryPilo",
+  "bot_id": "9d5cdcca-5fc3-46fe-abf9-5a5b4470aff9",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "CAR-01",
+      "must_include": [
+        "Prepared for:** Marketing Manager",
+        "Synthetic Cart Abandonment Analysis",
+        "no shopper is contacted"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "CAR-02",
+      "must_include": [
+        "Prepared for:** Digital Marketing Lead",
+        "Draft Recovery Campaign Dashboard",
+        "not deployed"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "CAR-03",
+      "must_include": [
+        "Prepared for:** Growth Manager",
+        "Draft Incentive Scenario Comparison",
+        "Scenario for approval"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "CAR-04",
+      "must_include": [
+        "Synthetic Conversion Tracking",
+        "Recovery Rate",
+        "no cart or purchase is changed"
+      ],
+      "must_not_include": [],
+      "passed": true
+    }
+  ]
+}

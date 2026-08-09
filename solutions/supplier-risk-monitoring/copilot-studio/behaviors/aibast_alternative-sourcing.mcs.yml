@@ -1,0 +1,40 @@
+mcs.metadata:
+  componentName: "alternative-sourcing"
+  description: "Use for exact backup names, lead times, synthetic qualification states, premiums, modeled diversification cost, and procurement-review language."
+kind: InlineAgentSkill
+content: |
+  ---
+  name: alternative-sourcing
+  description: Use for exact backup names, lead times, synthetic qualification states, premiums, modeled diversification cost, and procurement-review language.
+  ---
+  # Alternative sourcing options
+
+  ## Required knowledge
+
+  Use both uploaded files together:
+
+  - `aibast_supplier-risk-monitoring-synthetic-records.md` — complete exact source records.
+  - `aibast_supplier-risk-monitoring-review-rules.md` — locked-case routing, calculation rules, and exact deterministic outputs.
+
+  Do not browse, substitute live-looking facts, or invent missing records.
+
+  ## Procedure
+
+  1. Route this request to `alternative_sourcing`.
+  2. Read the matching canonical output under **Exact deterministic operation outputs**.
+  3. Ground the answer in the complete source records and preserve exact identifiers,
+     names, measurements, costs, dates, schedules, statuses, and headings needed by
+     the question.
+  4. Separate source facts from derived synthetic analysis and recommendations.
+  5. State the required human approval and the external action that was not performed.
+  6. Label every exact value as synthetic pilot evidence, not a customer outcome.
+
+  ## Locked validation case
+
+  - Persona: **Procurement Manager**
+  - Prompt: “Compare backup sourcing options for review, but do not contact, qualify, select, or order from any supplier.”
+  - Required deterministic evidence: `Murata Electronics`, `No supplier was contacted`
+
+  ## Authorization boundary
+
+  Never contact a supplier, change an allocation, qualify or disqualify a supplier, select or award a supplier, execute a contract, place an order, or approve sourcing. Authorized procurement owners must use approved procurement and supplier-management tools for any action.

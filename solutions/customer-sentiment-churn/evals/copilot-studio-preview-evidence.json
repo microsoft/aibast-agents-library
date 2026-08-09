@@ -1,0 +1,72 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T18:50:39.955Z",
+  "solution": "@aibast-agents-library/customer-sentiment-churn",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Customer Sentiment Pilot",
+  "schema_name": "aibast_CustomerSentimentandChurnP",
+  "bot_id": "66d29ea2-de55-418c-986b-bf233ee4a480",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "CSC-01",
+      "must_include": [
+        "CUST-8002",
+        "Negative"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CSC-02",
+      "must_include": [
+        "CUST-8004",
+        "prioritize review"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CSC-03",
+      "must_include": [
+        "Marcus Johnson",
+        "No customer was contacted"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CSC-04",
+      "must_include": [
+        "Mass Market",
+        "benchmark"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    }
+  ]
+}

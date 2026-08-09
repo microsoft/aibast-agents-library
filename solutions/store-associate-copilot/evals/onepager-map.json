@@ -1,0 +1,13 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/store-associate-copilot",
+  "onepager": "24. Retail Store Associate Copilot one-pager.pptx",
+  "source_slide_sha256": "2d63f12e857eeb0e2cc65c0e84e92814621f60d15a15f760e0ba45ab5ed42c9b",
+  "source_audit": {"approved_slide_hash_match": true, "deterministic_source": "solutions.json", "deterministic_slot": 21, "content_snapshot": "state/onepager_content.json"},
+  "promises": [
+    {"advertised_promise": "Provide instant access to product details to accelerate customer interactions", "operations": ["product_lookup"], "demo_cases": ["SA-01"], "synthetic_evidence": ["Ten fixed products with specifications, location, and availability snapshots"]},
+    {"advertised_promise": "Display real-time inventory and availability to enhance customer trust", "operations": ["product_lookup", "task_checklist"], "demo_cases": ["SA-01", "SA-03"], "synthetic_evidence": ["Every quantity is labeled synthetic and requires system-of-record verification"]},
+    {"advertised_promise": "Recommend add-ons and upsell opportunities to increase transaction value", "operations": ["customer_assist"], "demo_cases": ["SA-02"], "synthetic_evidence": ["One optional relevant complement is presented without pressure or offer creation"]},
+    {"advertised_promise": "Automate transaction preparation to reduce friction and improve conversion", "operations": ["performance_dashboard"], "demo_cases": ["SA-04"], "synthetic_evidence": ["Aggregate role-cohort signals support coaching; no transaction or personnel decision is made"]}
+  ]
+}

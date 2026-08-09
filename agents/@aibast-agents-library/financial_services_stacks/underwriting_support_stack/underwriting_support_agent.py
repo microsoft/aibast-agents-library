@@ -16,7 +16,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/underwriting-support",
     "version": "1.0.0",
     "display_name": "Underwriting Support Agent",
-    "description": "Insurance underwriting support with risk evaluation, pricing recommendations, guideline compliance, and exception review.",
+    "description": "Automate commercial underwriting analysis to accelerate evaluations, improve pricing accuracy, and maintain full compliance.",
     "author": "AIBAST",
     "tags": ["underwriting", "insurance", "risk", "pricing", "guidelines", "financial-services"],
     "category": "financial_services",
@@ -59,7 +59,7 @@ APPLICATIONS = {
         "credit_score": 745,
         "loss_history": [],
         "risk_score": 22,
-        "status": "approved",
+        "status": "ready_for_underwriter_review",
         "underwriter": "James Chen",
     },
     "UW-2025-103": {
@@ -71,7 +71,7 @@ APPLICATIONS = {
         "practitioners": 6,
         "years_in_practice": 12,
         "claims_history": [
-            {"year": 2021, "allegation": "surgical_complication", "amount": 450000, "status": "settled"},
+            {"year": 2021, "allegation": "surgical_complication", "amount": 450000, "status": "closed_record"},
             {"year": 2023, "allegation": "misdiagnosis", "amount": 0, "status": "dismissed"},
         ],
         "risk_score": 75,
@@ -136,6 +136,12 @@ PRICING_MODELS = {
 }
 
 
+SYNTHETIC_NOTICE = (
+    "> **SYNTHETIC DEMO DATA — UNDERWRITER REVIEW REQUIRED.** Fictional submissions and rating "
+    "assumptions only. This is not legal, insurance, or financial advice and does not bind, quote, "
+    "approve, decline, or modify coverage.\n\n"
+)
+
 # ---------------------------------------------------------------------------
 # Helper functions
 # ---------------------------------------------------------------------------
@@ -148,7 +154,7 @@ def _risk_tier(score):
         return "Standard"
     elif score <= 75:
         return "Substandard"
-    return "Decline"
+    return "Outside Stated Appetite"
 
 
 def _guideline_check(app):
@@ -180,16 +186,42 @@ class UnderwritingSupportAgent(BasicAgent):
     """Insurance underwriting support agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/underwriting-support"
+        self.name = "UnderwritingSupportAgent"
         self.metadata = {
             "name": self.name,
             "display_name": "Underwriting Support Agent",
-            "description": __manifest__["description"],
+            "description": (
+                "Always call this tool for underwriter, pricing-analyst, risk-analyst, or senior-underwriter "
+                "requests about which submission needs the most experienced underwriter, rating factors "
+                "and loss evidence, guideline exceptions or missing evidence, or preparing an exception "
+                "file and checking whether a coverage decision occurred. Do not answer those workflows "
+                "from general knowledge. For 'Which submission needs the most experienced underwriter, and "
+                "why?', call risk_evaluation with no application_id; the synthetic queue returns "
+                "UW-2025-103 as Substandard. For 'Which applications are outside a stated guideline or "
+                "missing required evidence?', call guideline_check with no application_id; it returns "
+                "UW-2025-103 and High-Risk Specialty. For an exception file and whether a coverage decision "
+                "was made, call exception_review; it returns UW-2025-103 and the No approval boundary. Uses "
+                "fictional records only and never binds, quotes, approves, "
+                "declines, or changes coverage. All conclusions are nonbinding decision support for an "
+                "authorized underwriter and require explicit human review."
+            ),
             "parameters": {
                 "type": "object",
                 "properties": {
                     "operation": {
                         "type": "string",
+                        "description": (
+                            "Choose risk_evaluation for the submission queue, highest-risk case, which "
+                            "submission needs an experienced underwriter, risk scores, or tiers; omit "
+                            "application_id for that queue-wide request so UW-2025-103 and its Substandard "
+                            "tier are returned. Choose "
+                            "pricing_recommendation for rating factors, indicated premium, loss evidence, "
+                            "or Riverside without issuing a quote. Choose guideline_check for applications "
+                            "outside a stated guideline, required documents, inspections, or missing "
+                            "evidence; omit application_id so the queue includes UW-2025-103 and High-Risk "
+                            "Specialty. Choose exception_review for the exception file, senior review paths, "
+                            "or whether any coverage decision was made; the output states No approval."
+                        ),
                         "enum": [
                             "risk_evaluation",
                             "pricing_recommendation",
@@ -197,7 +229,15 @@ class UnderwritingSupportAgent(BasicAgent):
                             "exception_review",
                         ],
                     },
-                    "application_id": {"type": "string"},
+                    "application_id": {
+                        "type": "string",
+                        "description": (
+                            "Synthetic application mapping: Riverside Manufacturing is UW-2025-101; "
+                            "Sarah Mitchell is UW-2025-102; Downtown Medical Associates, the orthopedic "
+                            "submission, highest-risk submission, or exception file is UW-2025-103; Harbor "
+                            "View Restaurant Group is UW-2025-104. Omit for queue-wide and guideline-wide reports."
+                        ),
+                    },
                 },
                 "required": ["operation"],
             },
@@ -205,6 +245,9 @@ class UnderwritingSupportAgent(BasicAgent):
         super().__init__(name=self.name, metadata=self.metadata)
 
     def perform(self, **kwargs) -> str:
+        record_id = kwargs.get("application_id")
+        if record_id and record_id not in APPLICATIONS:
+            return SYNTHETIC_NOTICE + f"**Not found:** No synthetic record `{record_id}` exists; no substitute record was used."
         operation = kwargs.get("operation", "risk_evaluation")
         dispatch = {
             "risk_evaluation": self._risk_evaluation,
@@ -215,7 +258,7 @@ class UnderwritingSupportAgent(BasicAgent):
         handler = dispatch.get(operation)
         if not handler:
             return f"**Error:** Unknown operation `{operation}`."
-        return handler(**kwargs)
+        return SYNTHETIC_NOTICE + handler(**kwargs)
 
     def _risk_evaluation(self, **kwargs) -> str:
         lines = ["# Underwriting Risk Evaluation\n"]
@@ -231,14 +274,14 @@ class UnderwritingSupportAgent(BasicAgent):
         lines.append("- **Preferred** (0-30): Best rates, minimal restrictions")
         lines.append("- **Standard** (31-55): Standard rates and terms")
         lines.append("- **Substandard** (56-75): Rate surcharge or coverage restrictions")
-        lines.append("- **Decline** (76+): Outside risk appetite")
+        lines.append("- **Outside Stated Appetite** (76+): Requires authorized underwriting review")
         return "\n".join(lines)
 
     def _pricing_recommendation(self, **kwargs) -> str:
         app_id = kwargs.get("application_id", "UW-2025-101")
         app = APPLICATIONS.get(app_id, list(APPLICATIONS.values())[0])
         tier = _risk_tier(app["risk_score"])
-        lines = [f"# Pricing Recommendation: {app_id}\n"]
+        lines = [f"# Illustrative Pricing-Factor Review: {app_id}\n"]
         lines.append(f"- **Applicant:** {app['applicant']}")
         lines.append(f"- **LOB:** {app['line_of_business'].replace('_', ' ').title()}")
         lines.append(f"- **Coverage:** ${app['coverage_requested']:,.0f}")
@@ -271,7 +314,7 @@ class UnderwritingSupportAgent(BasicAgent):
             violations = _guideline_check(app)
             lob = app["line_of_business"]
             guidelines = UNDERWRITING_GUIDELINES.get(lob, {})
-            status = "Compliant" if not violations else "Exceptions Noted"
+            status = "No Stated Exception" if not violations else "Exceptions Noted"
             lines.append(f"## {aid}: {app['applicant']} — {status}\n")
             lines.append(f"- **LOB:** {lob.replace('_', ' ').title()}")
             lines.append(f"- **Max Coverage:** ${guidelines.get('max_coverage', 0):,.0f}")
@@ -305,11 +348,12 @@ class UnderwritingSupportAgent(BasicAgent):
                 lines.append("### Guideline Exceptions\n")
                 for v in violations:
                     lines.append(f"- {v}")
-            lines.append("\n### Exception Decision Options\n")
-            lines.append("1. **Approve with conditions** — Accept risk with additional terms")
-            lines.append("2. **Approve with surcharge** — Accept at higher premium")
-            lines.append("3. **Decline** — Risk outside appetite")
-            lines.append("4. **Request additional information** — Need more underwriting data\n")
+            lines.append("\n### Human Review Paths\n")
+            lines.append("1. Validate missing evidence and authority limits")
+            lines.append("2. Obtain actuarial or senior-underwriter review of rating assumptions")
+            lines.append("3. Document whether the risk falls within stated appetite")
+            lines.append("4. Request additional information before any coverage decision\n")
+            lines.append("No approval, decline, quote, or binder has been issued.")
         return "\n".join(lines)
 
 

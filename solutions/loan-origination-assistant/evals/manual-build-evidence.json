@@ -1,0 +1,132 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-08-08T11:02:23.475Z",
+  "solution": "@aibast-agents-library/loan-origination-assistant",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "Loan Origination Manual",
+    "bot_id": "26d9fba0-4ce7-4e5a-aa46-da3764a08587",
+    "created": true
+  },
+  "target_model": "Claude Sonnet 4.6",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 5,
+      "confirmed": 5
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "LOA-01",
+      "prompt": "What is in my mortgage pipeline, and which application is still in document review?",
+      "must_include": [
+        "LA-2025-4002",
+        "Document Review"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "15-loa-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "LOA-02",
+      "prompt": "Pre-analyze Kevin Nguyen’s ratios and show every stated eligibility exception.",
+      "must_include": [
+        "LA-2025-4002",
+        "DTI"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "16-loa-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "LOA-03",
+      "prompt": "Build the VA document checklist for Sandra so I can verify the file.",
+      "must_include": [
+        "LA-2025-4004",
+        "Certificate of Eligibility"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "17-loa-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "LOA-04",
+      "prompt": "Which files meet the limited criteria, and did the assistant approve any loan?",
+      "must_include": [
+        "LA-2025-4001",
+        "No lending decision"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "18-loa-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "LOA-05",
+      "prompt": "Which conditions are still open on the commercial refinance, and is a closing date promised?",
+      "must_include": [
+        "LA-2025-4003",
+        "Environmental Phase I"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "19-loa-05.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/loan-origination-assistant/screenshots/manual/browserfilm.json",
+    "gif": "solutions/loan-origination-assistant/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/loan-origination-assistant/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "20-confirm-draft.jpg"
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "schema": "aibast-locked-demo-cases/1.0",
+  "solution": "@aibast-agents-library/account-intelligence",
+  "source_mode": "synthetic",
+  "locked": true,
+  "canonical_capture_contract": "tests/demo_cases/account-intelligence.json",
+  "cases": [
+    {
+      "id": "AI-01",
+      "persona": "Account Executive",
+      "onepager_bullet": "Aggregate business intelligence to uncover sales opportunities in minutes",
+      "prompt": "Prepare a synthetic Acme Corporation account overview and show the evidence that deserves seller attention.",
+      "operation": "account_overview",
+      "arguments": {
+        "operation": "account_overview",
+        "data_source": "synthetic",
+        "account_name": "Acme Corporation"
+      },
+      "must_include": [
+        "Account Overview",
+        "Account Health Score",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "AccountIntelligenceAgent"
+    },
+    {
+      "id": "AI-02",
+      "persona": "Account Executive",
+      "onepager_bullet": "Perform stakeholder mapping for visibility into purchasing paths and engagement gaps",
+      "prompt": "Map the synthetic Acme buying committee and show the relationship gaps without creating outreach tasks.",
+      "operation": "stakeholder_map",
+      "arguments": {
+        "operation": "stakeholder_map",
+        "data_source": "synthetic",
+        "account_name": "Acme Corporation"
+      },
+      "must_include": [
+        "Stakeholder Map",
+        "Relationship Gaps",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "AccountIntelligenceAgent"
+    },
+    {
+      "id": "AI-03",
+      "persona": "Sales Director",
+      "onepager_bullet": "Deliver competitive analysis and positioning recommendations to help sellers effectively differentiate",
+      "prompt": "Compare the synthetic competitor signals and positioning considerations for Acme Corporation.",
+      "operation": "competitive_intel",
+      "arguments": {
+        "operation": "competitive_intel",
+        "data_source": "synthetic",
+        "account_name": "Acme Corporation"
+      },
+      "must_include": [
+        "Competitive Intelligence",
+        "Competitor Activity",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "AccountIntelligenceAgent"
+    },
+    {
+      "id": "AI-04",
+      "persona": "Account Executive",
+      "onepager_bullet": "Create personalized engagement strategies to empower sellers for every conversation",
+      "prompt": "Draft persona-specific talking points for the synthetic Acme meeting; do not send messages.",
+      "operation": "value_messaging",
+      "arguments": {
+        "operation": "value_messaging",
+        "data_source": "synthetic",
+        "account_name": "Acme Corporation"
+      },
+      "must_include": [
+        "Draft Meeting Talking Points",
+        "Objection Handling",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "AccountIntelligenceAgent"
+    },
+    {
+      "id": "AI-05",
+      "persona": "Sales Director",
+      "onepager_bullet": "Deliver competitive analysis and positioning recommendations to help sellers effectively differentiate",
+      "prompt": "Assess the synthetic Acme deal risks and mitigation options without changing a forecast or CRM record.",
+      "operation": "risk_assessment",
+      "arguments": {
+        "operation": "risk_assessment",
+        "data_source": "synthetic",
+        "account_name": "Acme Corporation"
+      },
+      "must_include": [
+        "Deal Risk Assessment",
+        "Immediate Actions",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "AccountIntelligenceAgent"
+    },
+    {
+      "id": "AI-06",
+      "persona": "Customer Success Manager",
+      "onepager_bullet": "Create personalized engagement strategies to empower sellers for every conversation",
+      "prompt": "Prepare a concise synthetic Acme pre-meeting briefing and review checklist.",
+      "operation": "executive_briefing",
+      "arguments": {
+        "operation": "executive_briefing",
+        "data_source": "synthetic",
+        "account_name": "Acme Corporation"
+      },
+      "must_include": [
+        "Account Intelligence Briefing",
+        "Pre-Meeting Checklist",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "AccountIntelligenceAgent"
+    }
+  ]
+}

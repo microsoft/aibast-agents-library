@@ -1,0 +1,106 @@
+{
+  "schema": "aibast-copilot-studio-transcripts/1.0",
+  "captured_at": "2026-08-08T00:52:19.560479+00:00",
+  "solution": "@aibast-agents-library/building-permit-processing",
+  "onepager": "46. Building Permit Processing Agent one-pager.pptx",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "agent_schema_name": "aibast_BuildingPermitPilot",
+  "strict_case_parity": true,
+  "transcripts": [
+    {
+      "case_id": "BPP-01",
+      "persona": "Development Services Director",
+      "onepager_promise": "pain: long processing times and high citizen complaints",
+      "prompt": "Which permit applications have been sitting too long, and which resident is going to complain first?",
+      "assistant_response": "## \ud83d\udea8 Permit Backlog & Complaint Risk \u2014 Snapshot 2026-08-07\n\n**Metro School District (BP-2025-0104) will call first \u2014 intervene today.**\n\n---\n\n### Priority Interventions\n\n**#1 \u2014 BP-2025-0104 \u00b7 Metro School District \u00b7 Risk: 100/100 (MAX)**\n- **2200 Education Way** | Institutional \u2014 18,000 sq ft gymnasium & cafeteria wing\n- **63 days old** against a 45-day target \u2192 **18 days overdue**\n- Correction cycle **3** | Status: `corrections_required` | Reviewer: **Tom Delgado**\n- Suggested next steps: Draft the cycle-3 correction list with a specific re-review date today and prepare a proactive applicant update. Do not let another cycle pass without a committed timeline.\n\n**#2 \u2014 BP-2025-0101 \u00b7 Greenfield Development LLC \u00b7 Risk: 66/100**\n- **4520 Oak Ridge Blvd** | New construction \u2014 3-story mixed-use, 12 units + retail\n- **48 days old** against a 30-day target \u2192 **18 days overdue**\n- Correction cycle **2** | Status: `plan_review` | Reviewer: **Karen Whitfield**\n- Suggested next step: Request a status update from Karen Whitfield and draft an applicant update with a projected decision date.\n\n**#3 \u2014 BP-2025-0103 \u00b7 Sunrise Solar Inc. \u00b7 Risk: 25/100**\n- **1100 Industrial Pkwy** | Rooftop solar \u2014 240-panel array\n- **26 days old** against a 21-day target \u2192 **5 days overdue**\n- Correction cycle **1** | Status: `inspection_scheduled` | Reviewer: **Karen Whitfield**\n- Next inspection: Electrical Rough-In with **Dave Martinez on 2026-08-17** \u2014 on schedule for resolution.\n\n---\n\n### Full Open Backlog\n\n| Permit | Applicant | Age | Target | Days Over | Cycle | Status | Risk |\n|---|---|---:|---:|---:|---:|---|---:|\n| BP-2025-0104 | Metro School District | 63 days | 45 days | **18** | 3 | corrections_required | **100/100** |\n| BP-2025-0101 | Greenfield Development LLC | 48 days | 30 days | **18** | 2 | plan_review | **66/100** |\n| BP-2025-0103 | Sunrise Solar Inc. | 26 days | 21 days | **5** | 1 | inspection_scheduled | **25/100** |\n| BP-2025-0105 | Greenfield Development LLC | 3 days | 30 days | \u2014 | 0 | intake | 0/100 |\n| BP-2025-0106 | Ridgeline Restaurants Inc. | 1 day | 21 days | \u2014 | 0 | intake | 0/100 |\n\nBP-2025-0102 (Johnson Family Trust) is approved and excluded.[1]\n\n---\n\n> Synthetic pilot data as of 2026-08-07; no live municipal system was accessed or changed.",
+      "conversation_id": "61c04ae5-eaa0-4d75-9357-d94bb692c5f1",
+      "expected_agent": "BuildingPermitProcessingAgent",
+      "must_include": [
+        "BP-2025-0104",
+        "Metro School District",
+        "overdue"
+      ],
+      "runtime_steps": [
+        "Loading skill...",
+        "Loading skill: permit-backlog-and-complaint-risk...",
+        "Calling KnowledgeSearch...",
+        "KnowledgeSearch completed",
+        "Running Bash..."
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "BPP-02",
+      "persona": "Permit Technician",
+      "onepager_promise": "Classify and validate permit applications at intake",
+      "prompt": "Anything at the front counter I should not be accepting today?",
+      "assistant_response": "**One application should not be accepted today \u2014 flag it before it enters the queue.**\n\n---\n\n### \ud83d\udeab Do Not Accept \u2014 BP-2025-0105 | Greenfield Development LLC\n\n**Recommended decision: Reject / redirect \u2014 duplicate application.**\n\n- **Parcel 045-221-009** and the applicant already have an active application in plan review: **BP-2025-0101**.\n- The submission is also **incomplete** \u2014 missing MEP drawings and a title report.\n- The review clock cannot start in either case.\n- **Suggested next step:** Direct the applicant to their existing file, BP-2025-0101. Do not close BP-2025-0101.\n\n---\n\n### \u2705 Accept \u2014 BP-2025-0106 | Ridgeline Restaurants Inc. *(Harbor Way restaurant fit-out)*\n\n- Commercial alteration in MU-2; declared valuation **$540,000**.\n- Submission is complete \u2014 ready to route.\n- **Review order:** Zoning \u2192 Building \u2192 Fire/Life Safety.\n- **Statutory 21-day target:** 2026-08-28.\n\n---\n\n> Synthetic pilot data as of 2026-08-07; no live municipal system was accessed or changed.",
+      "conversation_id": "6706e8a2-aab4-4ff0-a078-3cc317f868f6",
+      "expected_agent": "BuildingPermitProcessingAgent",
+      "must_include": [
+        "BP-2025-0105",
+        "duplicate"
+      ],
+      "runtime_steps": [
+        "Initializing...",
+        "Loading skill...",
+        "Loading skill: intake-triage-and-review-routing..."
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "BPP-03",
+      "persona": "Permit Technician",
+      "onepager_promise": "Route requests automatically to the correct review teams",
+      "prompt": "The restaurant fit-out on Harbor Way just came in. Who needs to review it and when is it due back?",
+      "assistant_response": "**BP-2025-0106 \u2014 Ridgeline Restaurants Inc. (Harbor Way commercial fit-out)**\n\n**Recommended decision: Accept as complete.** Route immediately through three desks in this order:\n\n| # | Review Desk | Notes |\n|---|-------------|-------|\n| 1 | **Zoning** | MU-2 zone; commercial alteration |\n| 2 | **Building** | $540,000 declared valuation |\n| 3 | **Fire/Life Safety** | Restaurant occupancy |\n\n**Statutory due-back date: 2026-08-28** (21-day statutory target from intake).\n\n> Synthetic pilot data as of 2026-08-07; no live municipal system was accessed or changed.",
+      "conversation_id": "95ac8747-41ff-4eee-85bd-a8f1ca6c18b6",
+      "expected_agent": "BuildingPermitProcessingAgent",
+      "must_include": [
+        "Zoning",
+        "Fire/Life Safety",
+        "21"
+      ],
+      "runtime_steps": [
+        "Loading skill...",
+        "Loading skill: intake-triage-and-review-routing..."
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "BPP-04",
+      "persona": "Customer Service Lead",
+      "onepager_promise": "Centralize communication and provide instant updates to applicants",
+      "prompt": "My front desk is drowning in status calls. What can we send out today so people stop calling?",
+      "assistant_response": "Here are five ready-to-send draft updates, prioritized by urgency. Send all five today to pre-empt the calls.\n\n---\n\n## \ud83d\udcec Today's Proactive Update Queue\n\n| Priority | Permit | Applicant | Trigger |\n|---|---|---|---|\n| 1 | BP-2025-0104 | Metro School District | 18 days over target, correction cycle 3 |\n| 2 | BP-2025-0101 | Greenfield Development LLC | 18 days over target, in review |\n| 3 | BP-2025-0103 | Sunrise Solar Inc. | Inspection scheduled; 5 days over target |\n| 4 | BP-2025-0105 | Greenfield Development LLC | Missing docs \u2014 clock not started |\n| 5 | BP-2025-0106 | Ridgeline Restaurants Inc. | Accepted; review starting soon |\n\n---\n\n### 1 \u2014 BP-2025-0104 \u00b7 Metro School District\n**Subject: Permit BP-2025-0104 \u2013 Correction Cycle Status Update**\n\n> Thank you for your continued patience. Your application (BP-2025-0104) is currently in **correction cycle 3**. Outstanding correction items remain under review by our plans examiner, **Tom Delgado**. We recognize this review has exceeded our 45-day target by 18 days and we apologize for the delay. Staff will confirm a specific re-review completion date and share it with you as soon as it is available. Please contact us only if your submitted corrections have changed.\n\n---\n\n### 2 \u2014 BP-2025-0101 \u00b7 Greenfield Development LLC\n**Subject: Permit BP-2025-0101 \u2013 Plan Review Status Update**\n\n> Your application (BP-2025-0101) is currently in active **plan review** with examiner **Karen Whitfield**. Review has exceeded our 30-day target by 18 days. Ms. Whitfield is working through her queue and we will notify you immediately upon completion or if any corrections are needed. No action is required from you at this time.\n\n---\n\n### 3 \u2014 BP-2025-0103 \u00b7 Sunrise Solar Inc.\n**Subject: Permit BP-2025-0103 \u2013 Inspection Scheduled**\n\n> Good news \u2014 your **Electrical Rough-In inspection** for permit BP-2025-0103 is scheduled for **2026-08-17** with inspector **Dave Martinez**. Please ensure the site is accessible and work is ready for inspection by that date. Note that overall permit review has exceeded our target by 5 days; we are actively managing your file and will keep you informed of any changes.\n\n---\n\n### 4 \u2014 BP-2025-0105 \u00b7 Greenfield Development LLC\n**Subject: Permit BP-2025-0105 \u2013 Action Required: Missing Documents**\n\n> Our office has reviewed your submitted application (BP-2025-0105) and identified **two outstanding items** required before review can begin:\n> - **MEP Drawings** (mechanical, electrical, plumbing)\n> - **Title Report**\n>\n> The review clock cannot start until these documents are received. Please submit the above items at your earliest convenience to avoid further delay. Contact our front counter if you have questions about document format or submission method.\n\n---\n\n### 5 \u2014 BP-2025-0106 \u00b7 Ridgeline Restaurants Inc.\n**Subject: Permit BP-2025-0106 \u2013 Intake Complete, Review Starting**\n\n> We are pleased to confirm that intake for your application (BP-2025-0106) is **complete** and all submitted materials have been accepted. Your application is queued to enter plan review with a target completion date of **2026-08-28**. You will be notified if any corrections are required or when review is complete. No action is needed from you at this time.\n\n---\n\n**Suggested next steps:**\n- Confirm a re-review date with **Tom Delgado** before sending draft #1 \u2014 that detail will be the most impactful for Metro School District.\n- For **BP-2025-0105**, consider a phone call in addition to the written notice given the hard stop on the review clock.\n\n> Synthetic pilot data as of 2026-08-07; no live municipal system was accessed or changed.",
+      "conversation_id": "03162583-3a93-4492-927f-f13bf3beb97a",
+      "expected_agent": "BuildingPermitProcessingAgent",
+      "must_include": [
+        "BP-2025-0104",
+        "Greenfield"
+      ],
+      "runtime_steps": [
+        "Loading skill...",
+        "Loading skill: proactive-applicant-updates..."
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "BPP-05",
+      "persona": "Chief Building Inspector",
+      "onepager_promise": "Provide inspectors with mobile access and real-time assignments",
+      "prompt": "What inspections are on the board for the solar job, and who is covering them?",
+      "assistant_response": "**BP-2025-0103 \u2014 1100 Industrial Pkwy (Solar Job)** has three inspections on the synthetic board:\n\n| # | Inspection | Inspector | Date | Status |\n|---|-----------|-----------|------|--------|\n| 1 | Electrical Rough-In | Dave Martinez | 2026-08-17 | Scheduled |\n| 2 | Structural Mounting | Lisa Park | 2026-08-19 | Scheduled |\n| 3 | Final Electrical | Dave Martinez | 2026-08-02 | Pending |\n\n**Coverage summary:**\n- **Dave Martinez** (Electrical, East Zone) covers both electrical inspections \u2014 Rough-In and Final.\n- **Lisa Park** (Structural, East Zone) covers the Structural Mounting inspection.\n\n> Synthetic pilot data as of 2026-08-07; no live municipal system was accessed or changed.",
+      "conversation_id": "c73e809e-d2bf-4db3-b296-6217b5e7702d",
+      "expected_agent": "BuildingPermitProcessingAgent",
+      "must_include": [
+        "Dave Martinez"
+      ],
+      "runtime_steps": [
+        "Loading skill...",
+        "Loading skill: inspector-board-and-coverage..."
+      ],
+      "passed": true
+    }
+  ]
+}

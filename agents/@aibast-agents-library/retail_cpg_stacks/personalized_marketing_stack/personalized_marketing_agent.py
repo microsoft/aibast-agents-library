@@ -20,9 +20,7 @@ __manifest__ = {
     "version": "1.0.0",
     "display_name": "Personalized Marketing Agent",
     "description": (
-        "Enables customer segmentation, personalized campaign design, "
-        "dynamic content personalization, and marketing performance "
-        "analysis for retail and CPG brands."
+        "Draft privacy-safe customer segment insights, campaign concepts, personalized content, and performance analysis for human review."
     ),
     "author": "AIBAST",
     "tags": [
@@ -46,8 +44,6 @@ CUSTOMER_SEGMENTS = {
     "SEG-LOYAL": {
         "name": "Loyal Advocates",
         "size": 42850,
-        "avg_age": 38,
-        "gender_split": {"female": 0.56, "male": 0.42, "other": 0.02},
         "avg_annual_spend": 1875.00,
         "avg_orders_per_year": 18.3,
         "avg_basket_size": 102.46,
@@ -60,8 +56,6 @@ CUSTOMER_SEGMENTS = {
     "SEG-ATRISK": {
         "name": "At-Risk Churners",
         "size": 18420,
-        "avg_age": 44,
-        "gender_split": {"female": 0.48, "male": 0.50, "other": 0.02},
         "avg_annual_spend": 620.00,
         "avg_orders_per_year": 5.1,
         "avg_basket_size": 121.57,
@@ -74,8 +68,6 @@ CUSTOMER_SEGMENTS = {
     "SEG-NEW": {
         "name": "New Explorers",
         "size": 27600,
-        "avg_age": 26,
-        "gender_split": {"female": 0.51, "male": 0.45, "other": 0.04},
         "avg_annual_spend": 340.00,
         "avg_orders_per_year": 3.8,
         "avg_basket_size": 89.47,
@@ -86,10 +78,8 @@ CUSTOMER_SEGMENTS = {
         "engagement_score": 58,
     },
     "SEG-HIGHVAL": {
-        "name": "High-Value VIPs",
+        "name": "High-Engagement Members",
         "size": 8750,
-        "avg_age": 47,
-        "gender_split": {"female": 0.60, "male": 0.38, "other": 0.02},
         "avg_annual_spend": 4200.00,
         "avg_orders_per_year": 24.6,
         "avg_basket_size": 170.73,
@@ -102,8 +92,6 @@ CUSTOMER_SEGMENTS = {
     "SEG-DORMANT": {
         "name": "Dormant Lapsed",
         "size": 34200,
-        "avg_age": 41,
-        "gender_split": {"female": 0.47, "male": 0.51, "other": 0.02},
         "avg_annual_spend": 85.00,
         "avg_orders_per_year": 0.8,
         "avg_basket_size": 106.25,
@@ -122,12 +110,12 @@ CAMPAIGN_TEMPLATES = {
         "target_segment": "SEG-DORMANT",
         "stages": 4,
         "duration_days": 28,
-        "discount_offer": "20% off next purchase",
+        "offer_concept": "Optional incentive concept, subject to policy and approval",
         "subject_lines": [
-            "We miss you — here is 20% off",
-            "Your favorites are waiting",
-            "Last chance: exclusive offer inside",
-            "Final reminder: your 20% expires tomorrow",
+            "Draft A: Reconnect with recent category interests",
+            "Draft B: Explore what is new",
+            "Draft C: Optional value reminder",
+            "Draft D: Close the sequence respectfully",
         ],
         "historical_open_rate": 0.18,
         "historical_click_rate": 0.04,
@@ -139,11 +127,11 @@ CAMPAIGN_TEMPLATES = {
         "target_segment": "SEG-LOYAL",
         "stages": 3,
         "duration_days": 14,
-        "discount_offer": "Early access + double points",
+        "offer_concept": "Early-access concept; no benefit is issued",
         "subject_lines": [
-            "You are almost Gold status!",
-            "Earn double points this weekend",
-            "Congratulations on your tier upgrade",
+            "Draft A: Review progress toward the next tier",
+            "Draft B: Explain an optional approved benefit",
+            "Draft C: Acknowledge a verified tier change",
         ],
         "historical_open_rate": 0.42,
         "historical_click_rate": 0.15,
@@ -155,13 +143,13 @@ CAMPAIGN_TEMPLATES = {
         "target_segment": "SEG-NEW",
         "stages": 5,
         "duration_days": 30,
-        "discount_offer": "15% off first order over $50",
+        "offer_concept": "Welcome-value concept, subject to policy and approval",
         "subject_lines": [
-            "Welcome! Here is 15% off your first order",
-            "Discover our best sellers",
-            "Complete your look — curated picks",
-            "Your style profile is ready",
-            "Join our rewards program today",
+            "Draft A: Welcome and explain available categories",
+            "Draft B: Introduce popular products",
+            "Draft C: Offer optional curated ideas",
+            "Draft D: Invite the shopper to set preferences",
+            "Draft E: Explain the rewards program without enrollment",
         ],
         "historical_open_rate": 0.35,
         "historical_click_rate": 0.11,
@@ -173,10 +161,10 @@ CAMPAIGN_TEMPLATES = {
         "target_segment": "SEG-HIGHVAL",
         "stages": 2,
         "duration_days": 7,
-        "discount_offer": "Private sale — 30% off new collection",
+        "offer_concept": "Private-preview concept; no access or discount is granted",
         "subject_lines": [
-            "VIP Only: private sale starts now",
-            "Your exclusive early access ends tonight",
+            "Draft A: Preview a collection for an eligible aggregate audience",
+            "Draft B: Close the preview sequence without urgency pressure",
         ],
         "historical_open_rate": 0.58,
         "historical_click_rate": 0.24,
@@ -227,6 +215,28 @@ CONTENT_BLOCKS = {
         "SEG-DORMANT": ["Best Sellers Bundle", "Gift Card"],
     },
 }
+
+APPROVED_PERSONAS = {
+    "Marketing Director": "portfolio priorities, governance, and qualitative business value",
+    "Campaign Manager": "review-ready campaign details, sequencing, and measurement",
+}
+
+SAFETY_NOTICE = (
+    "> Synthetic aggregate planning data. Drafts and recommendations only; "
+    "no audience is profiled with sensitive attributes, and no message, offer, "
+    "campaign, reward, or purchase is created or sent."
+)
+
+
+def _response_header(persona):
+    role = persona if persona in APPROVED_PERSONAS else "Marketing Director"
+    return [
+        f"**Prepared for:** {role}",
+        f"**Role focus:** {APPROVED_PERSONAS[role]}",
+        "",
+        SAFETY_NOTICE,
+        "",
+    ]
 
 
 # ---------------------------------------------------------------------------
@@ -283,14 +293,28 @@ class PersonalizedMarketingAgent(BasicAgent):
                     },
                     "segment_id": {"type": "string"},
                     "campaign_id": {"type": "string"},
+                    "persona": {
+                        "type": "string",
+                        "enum": list(APPROVED_PERSONAS),
+                    },
+                    "data_source": {"type": "string", "enum": ["synthetic"]},
                 },
                 "required": ["operation"],
+                "additionalProperties": False,
             },
         }
         super().__init__(name=self.name, metadata=self.metadata)
 
     def _customer_segmentation(self, **kwargs):
-        lines = [
+        segment_id = kwargs.get("segment_id")
+        if segment_id and segment_id not in CUSTOMER_SEGMENTS:
+            return f"Unknown segment_id `{segment_id}`. Valid: {', '.join(CUSTOMER_SEGMENTS)}"
+        segments = (
+            {segment_id: CUSTOMER_SEGMENTS[segment_id]}
+            if segment_id
+            else CUSTOMER_SEGMENTS
+        )
+        lines = _response_header(kwargs.get("persona")) + [
             "# Customer Segmentation Overview",
             "",
             f"**Total Addressable Customers:** {_total_addressable_customers():,}",
@@ -299,7 +323,7 @@ class PersonalizedMarketingAgent(BasicAgent):
             "| Segment | Size | Avg Spend | Orders/Yr | LTV | Churn Risk | Engagement |",
             "|---------|------|-----------|-----------|-----|------------|------------|",
         ]
-        for seg_id, seg in CUSTOMER_SEGMENTS.items():
+        for seg_id, seg in segments.items():
             lines.append(
                 f"| {seg['name']} | {seg['size']:,} | ${seg['avg_annual_spend']:,.2f} "
                 f"| {seg['avg_orders_per_year']} | ${seg['lifetime_value']:,.2f} "
@@ -308,18 +332,20 @@ class PersonalizedMarketingAgent(BasicAgent):
         lines.append("")
         lines.append("## Revenue Contribution by Segment")
         lines.append("")
-        for seg_id, seg in CUSTOMER_SEGMENTS.items():
+        for seg_id, seg in segments.items():
             rev = _segment_revenue_contribution(seg_id)
             lines.append(f"- **{seg['name']}:** ${rev:,.2f}")
         return "\n".join(lines)
 
     def _campaign_design(self, **kwargs):
         campaign_id = kwargs.get("campaign_id")
-        if campaign_id and campaign_id in CAMPAIGN_TEMPLATES:
+        if campaign_id and campaign_id not in CAMPAIGN_TEMPLATES:
+            return f"Unknown campaign_id `{campaign_id}`. Valid: {', '.join(CAMPAIGN_TEMPLATES)}"
+        if campaign_id:
             camps = {campaign_id: CAMPAIGN_TEMPLATES[campaign_id]}
         else:
             camps = CAMPAIGN_TEMPLATES
-        lines = ["# Campaign Design Portfolio", ""]
+        lines = _response_header(kwargs.get("persona")) + ["# Draft Campaign Design Portfolio", ""]
         for cid, camp in camps.items():
             seg = CUSTOMER_SEGMENTS.get(camp["target_segment"], {})
             proj_rev = _campaign_projected_revenue(cid)
@@ -329,10 +355,10 @@ class PersonalizedMarketingAgent(BasicAgent):
             lines.append(f"- **Target Segment:** {seg.get('name', 'Unknown')} ({camp['target_segment']})")
             lines.append(f"- **Audience Size:** {seg.get('size', 0):,}")
             lines.append(f"- **Duration:** {camp['duration_days']} days, {camp['stages']} stages")
-            lines.append(f"- **Offer:** {camp['discount_offer']}")
-            lines.append(f"- **Projected Revenue:** ${proj_rev:,.2f}")
+            lines.append(f"- **Offer Concept:** {camp['offer_concept']}")
+            lines.append(f"- **Illustrative Revenue Scenario:** ${proj_rev:,.2f}")
             lines.append("")
-            lines.append("**Email Sequence:**")
+            lines.append("**Draft Sequence (not sent):**")
             for i, subj in enumerate(camp["subject_lines"], 1):
                 lines.append(f"  {i}. {subj}")
             lines.append("")
@@ -344,21 +370,23 @@ class PersonalizedMarketingAgent(BasicAgent):
 
     def _content_personalization(self, **kwargs):
         segment_id = kwargs.get("segment_id")
-        if segment_id and segment_id in CUSTOMER_SEGMENTS:
+        if segment_id and segment_id not in CUSTOMER_SEGMENTS:
+            return f"Unknown segment_id `{segment_id}`. Valid: {', '.join(CUSTOMER_SEGMENTS)}"
+        if segment_id:
             segs = {segment_id: CUSTOMER_SEGMENTS[segment_id]}
         else:
             segs = CUSTOMER_SEGMENTS
-        lines = ["# Content Personalization Matrix", ""]
+        lines = _response_header(kwargs.get("persona")) + ["# Draft Content Personalization Matrix", ""]
         for seg_id, seg in segs.items():
             hero = CONTENT_BLOCKS["hero_banner"].get(seg_id, {})
             recs = CONTENT_BLOCKS["product_recs"].get(seg_id, [])
             lines.append(f"## {seg['name']} (`{seg_id}`)")
             lines.append("")
-            lines.append("**Hero Banner:**")
+            lines.append("**Draft Hero Copy:**")
             lines.append(f"- Headline: \"{hero.get('headline', '')}\"")
             lines.append(f"- CTA: \"{hero.get('cta', '')}\"")
             lines.append("")
-            lines.append("**Product Recommendations:**")
+            lines.append("**Draft Product Ideas:**")
             for prod in recs:
                 lines.append(f"- {prod}")
             lines.append("")
@@ -368,7 +396,7 @@ class PersonalizedMarketingAgent(BasicAgent):
         return "\n".join(lines)
 
     def _performance_analysis(self, **kwargs):
-        lines = [
+        lines = _response_header(kwargs.get("persona")) + [
             "# Marketing Performance Analysis",
             "",
             "## A/B Test Results",
@@ -405,6 +433,8 @@ class PersonalizedMarketingAgent(BasicAgent):
         return "\n".join(lines)
 
     def perform(self, **kwargs):
+        if kwargs.get("data_source", "synthetic") != "synthetic":
+            return "data_source must be `synthetic` for this package."
         operation = kwargs.get("operation", "customer_segmentation")
         dispatch = {
             "customer_segmentation": self._customer_segmentation,

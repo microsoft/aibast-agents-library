@@ -1,0 +1,64 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/clinical-notes-summarizer",
+  "onepager": "49. Clinical Notes Summarizer Agent one-pager.pptx",
+  "source_slide_sha256": "425cc28ec235b7e2d6856ad8ff2dc00e31b0f019df1d90630dc67759f9c13fdf",
+  "promises": [
+    {
+      "advertised_promise": "Automatically generate concise, clinically relevant patient summaries",
+      "operations": [
+        "encounter_summary"
+      ],
+      "demo_cases": [
+        "CN-01"
+      ],
+      "disposition": "bounded",
+      "synthetic_evidence": [
+        "Extracts synthetic encounter facts without clinical inference.",
+        "Generates source-grounded synthetic drafts with mandatory clinician comparison."
+      ]
+    },
+    {
+      "advertised_promise": "Surface key risks, comorbidities, and medication considerations",
+      "operations": [
+        "medication_inventory"
+      ],
+      "demo_cases": [
+        "CN-02"
+      ],
+      "disposition": "bounded",
+      "synthetic_evidence": [
+        "Lists source-recorded synthetic medications for clinician or pharmacist reconciliation.",
+        "Extracts source-coded problems, observations, and medication inventory without risk inference or advice."
+      ]
+    },
+    {
+      "advertised_promise": "Standardize documentation to support smoother surgical and anesthesia workflows",
+      "operations": [
+        "problem_list_extract"
+      ],
+      "demo_cases": [
+        "CN-03"
+      ],
+      "disposition": "supported",
+      "synthetic_evidence": [
+        "Extracts source-coded problems without confirming or changing a diagnosis.",
+        "Uses consistent draft sections while prohibiting clearance decisions."
+      ]
+    },
+    {
+      "advertised_promise": "Send summaries through EHR and secure messaging systems",
+      "operations": [
+        "referral_context"
+      ],
+      "demo_cases": [
+        "CN-04"
+      ],
+      "disposition": "excluded",
+      "synthetic_evidence": [
+        "Summarizes source-recorded referral context without placing or scheduling it.",
+        "No transmission, EHR write, notification, scheduling, or record mutation occurs."
+      ]
+    }
+  ]
+}

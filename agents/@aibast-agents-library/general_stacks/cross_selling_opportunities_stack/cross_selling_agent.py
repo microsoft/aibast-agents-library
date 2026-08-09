@@ -20,8 +20,8 @@ __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/cross-selling",
     "version": "1.0.0",
-    "display_name": "Cross-Selling Opportunities",
-    "description": "Identifies cross-selling opportunities via product affinity analysis, customer ownership mapping, and revenue impact projections.",
+    "display_name": "Cross Selling Opportunities Agent",
+    "description": "Identify and prioritize expansion opportunities to drive revenue growth and strengthen customer relationships.",
     "author": "AIBAST",
     "tags": ["cross-sell", "upsell", "revenue", "product-affinity", "recommendations"],
     "category": "general",
@@ -51,26 +51,41 @@ _CUSTOMER_OWNERSHIP = {
         "name": "Meridian Corp", "segment": "Enterprise", "arr": 84000,
         "products": ["PLAT-200", "ANLYT-100", "SUPRT-100"],
         "tenure_months": 24, "health_score": 92, "contact": "Sandra Lee",
+        "usage_signals": ["Analytics export volume rising", "Security admin workflow used weekly"],
+        "buying_signals": ["Requested advanced analytics comparison"],
+        "budget_window": "Annual planning review next quarter",
     },
     "CUST-002": {
         "name": "Atlas Digital", "segment": "Mid-Market", "arr": 42000,
         "products": ["PLAT-100", "INTGR-100"],
         "tenure_months": 18, "health_score": 78, "contact": "Marco Torres",
+        "usage_signals": ["Integration jobs approaching synthetic capacity threshold"],
+        "buying_signals": ["Asked about support coverage"],
+        "budget_window": "Department planning review this quarter",
     },
     "CUST-003": {
         "name": "Pinnacle Health", "segment": "Enterprise", "arr": 60000,
         "products": ["PLAT-200"],
         "tenure_months": 6, "health_score": 85, "contact": "Dr. Amy Patel",
+        "usage_signals": ["Core workflow adoption broadening across teams"],
+        "buying_signals": ["Feature request references analytics and security"],
+        "budget_window": "Post-implementation value review",
     },
     "CUST-004": {
         "name": "Greenleaf Retail", "segment": "Mid-Market", "arr": 24000,
         "products": ["PLAT-100"],
         "tenure_months": 12, "health_score": 65, "contact": "Kevin O'Neill",
+        "usage_signals": ["Reporting exports remain manual", "Support usage increasing"],
+        "buying_signals": ["Requested integration roadmap"],
+        "budget_window": "Retail planning cycle later this year",
     },
     "CUST-005": {
         "name": "Beacon Financial", "segment": "Enterprise", "arr": 113000,
         "products": ["PLAT-200", "ANLYT-200", "INTGR-100", "SECUR-100"],
         "tenure_months": 36, "health_score": 96, "contact": "Rachel Kim",
+        "usage_signals": ["Broad adoption across owned products"],
+        "buying_signals": ["Asked about premium support coverage"],
+        "budget_window": "Enterprise agreement review",
     },
 }
 
@@ -107,7 +122,7 @@ def _resolve_customer(query):
     for key, cust in _CUSTOMER_OWNERSHIP.items():
         if q_lower in cust["name"].lower():
             return key
-    return "CUST-001"
+    return None
 
 
 def _find_opportunities(customer_id):
@@ -155,7 +170,17 @@ class CrossSellingAgent(BasicAgent):
         self.name = "CrossSellingAgent"
         self.metadata = {
             "name": self.name,
-            "description": __manifest__["description"],
+            "description": (
+                f"{__manifest__['description']} Uses bundled synthetic ownership and affinity "
+                "records and returns read-only opportunity analysis or draft recommendations. "
+                "It never sends outreach, changes CRM data, or claims realized revenue. "
+                "Route requests to explain product-affinity rules, benchmark assumptions, "
+                "response assumptions, or cycle assumptions to `product_affinity`; that "
+                "operation returns `Product Affinity Matrix` and `Response Assumption`."
+            ),
+            "operations": [
+                "opportunity_scan", "product_affinity", "recommendation_engine", "revenue_impact",
+            ],
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -165,21 +190,41 @@ class CrossSellingAgent(BasicAgent):
                             "opportunity_scan", "product_affinity",
                             "recommendation_engine", "revenue_impact",
                         ],
-                        "description": "The cross-selling operation to perform",
+                        "description": (
+                            "Select the requested cross-selling deliverable. opportunity_scan: "
+                            "customer ownership gaps, usage signals, buying signals, and budget timing. "
+                            "product_affinity: REQUIRED for product-affinity rules, benchmark assumptions, "
+                            "response assumptions, conversion-assumption caveats, or cycle assumptions; "
+                            "returns Product Affinity Matrix and Response Assumption. "
+                            "recommendation_engine: prioritized product recommendations and a draft "
+                            "engagement plan. revenue_impact: portfolio-level synthetic value scenarios."
+                        ),
                     },
                     "customer_id": {
                         "type": "string",
+                        "enum": list(_CUSTOMER_OWNERSHIP),
                         "description": "Customer ID (e.g. 'CUST-001')",
+                    },
+                    "data_source": {
+                        "type": "string",
+                        "enum": ["synthetic"],
+                        "description": "Deterministic source route. Only bundled synthetic evidence is supported.",
                     },
                 },
                 "required": ["operation"],
+                "additionalProperties": False,
             },
         }
         super().__init__(name=self.name, metadata=self.metadata)
 
     def perform(self, **kwargs) -> str:
         op = kwargs.get("operation", "opportunity_scan")
+        source = kwargs.get("data_source", "synthetic")
+        if source != "synthetic":
+            return "**Error:** `data_source` must be `synthetic`."
         cust_id = _resolve_customer(kwargs.get("customer_id", ""))
+        if cust_id is None:
+            return f"**Error:** Unknown `customer_id`. Valid: {', '.join(_CUSTOMER_OWNERSHIP)}."
         dispatch = {
             "opportunity_scan": self._opportunity_scan,
             "product_affinity": self._product_affinity,
@@ -189,7 +234,14 @@ class CrossSellingAgent(BasicAgent):
         handler = dispatch.get(op)
         if not handler:
             return f"Unknown operation: {op}"
-        return handler(cust_id)
+        output = handler(cust_id)
+        return (
+            output.replace("Source: [", "Synthetic source model: [")
+            + "\n\n**Evidence boundary:** Exact customer names, prices, ARR, scores, "
+            "percentages, timing, and margin figures are synthetic planning evidence. "
+            "Affinity and weighted values are scenario assumptions, not conversion or revenue "
+            "claims. No outreach was sent and no CRM, pricing, approval, or customer record changed."
+        )
 
     # ── opportunity_scan ───────────────────────────────────────
     def _opportunity_scan(self, cust_id):
@@ -211,8 +263,13 @@ class CrossSellingAgent(BasicAgent):
             f"| Tenure | {cust['tenure_months']} months |\n"
             f"| Contact | {cust['contact']} |\n\n"
             f"**Current Products:**\n{owned_list}\n\n"
+            f"**Synthetic Usage Signals:**\n"
+            + "".join(f"- {signal}\n" for signal in cust["usage_signals"])
+            + f"\n**Synthetic Buying Signals:**\n"
+            + "".join(f"- {signal}\n" for signal in cust["buying_signals"])
+            + f"- Budget timing assumption: {cust['budget_window']}\n\n"
             f"**Opportunities Found ({len(opps)}):**\n\n"
-            f"| Product | Price | Affinity | Success Rate | Est. Close |\n|---|---|---|---|---|\n"
+            f"| Product | Price | Affinity | Synthetic Response Assumption | Synthetic Cycle |\n|---|---|---|---|---|\n"
             f"{opp_rows}\n\n"
             f"Source: [CRM + Product Database + Affinity Engine]\nAgents: CrossSellingAgent"
         )
@@ -229,10 +286,10 @@ class CrossSellingAgent(BasicAgent):
             seg_rows += f"| {seg} | {data['avg_success_rate']:.0%} | {data['avg_deal_cycle_days']}d | {data['avg_expansion_pct']}% |\n"
         return (
             f"**Product Affinity Matrix**\n\n"
-            f"| If Customer Owns | Recommend | Affinity | Success Rate | Avg Close |\n|---|---|---|---|---|\n"
+            f"| If Customer Owns | Recommend | Affinity | Synthetic Response Assumption | Synthetic Cycle |\n|---|---|---|---|---|\n"
             f"{rule_rows}\n"
             f"**Segment Benchmarks:**\n\n"
-            f"| Segment | Avg Success | Avg Cycle | Avg Expansion |\n|---|---|---|---|\n"
+            f"| Segment | Response Assumption | Cycle Assumption | Expansion Assumption |\n|---|---|---|---|\n"
             f"{seg_rows}\n\n"
             f"Source: [Affinity Engine + Historical Data]\nAgents: CrossSellingAgent"
         )
@@ -249,18 +306,22 @@ class CrossSellingAgent(BasicAgent):
             recs += (
                 f"**{i}. {o['product_name']}** (${o['annual_price']:,}/yr)\n"
                 f"   - Affinity Score: {o['affinity_score']:.0%}\n"
-                f"   - Projected Win Rate: {o['success_rate']:.0%}\n"
-                f"   - Weighted Value: ${weighted_value:,.0f}/yr\n"
-                f"   - Est. Close: {o['est_close_days']} days\n\n"
+                f"   - Synthetic response assumption: {o['success_rate']:.0%}\n"
+                f"   - Illustrative weighted value: ${weighted_value:,.0f}/yr\n"
+                f"   - Synthetic cycle assumption: {o['est_close_days']} days\n\n"
             )
         total_arr, weighted_arr, _ = _calculate_revenue_impact(opps)
         return (
             f"**Prioritized Recommendations: {cust['name']}**\n\n"
             f"Health Score: {cust['health_score']}/100 | Segment: {cust['segment']}\n\n"
             f"{recs}"
+            f"**Draft Engagement Plan (not sent):**\n"
+            f"- Use the signal `{cust['buying_signals'][0]}` as a reviewable conversation hypothesis.\n"
+            f"- Align any authorized outreach with: {cust['budget_window']}.\n"
+            f"- Validate need, product fit, timing, and contact consent before communication.\n\n"
             f"**Summary:**\n"
             f"- Total potential ARR: ${total_arr:,}\n"
-            f"- Weighted pipeline: ${weighted_arr:,.0f}\n"
+            f"- Illustrative weighted value: ${weighted_arr:,.0f}\n"
             f"- Recommendations: {len(opps)}\n\n"
             f"Source: [Recommendation Engine + CRM]\nAgents: CrossSellingAgent"
         )
@@ -278,7 +339,7 @@ class CrossSellingAgent(BasicAgent):
         grand_weighted = sum(o["annual_price"] * o["success_rate"] for o in all_opps)
         grand_margin = sum(o["annual_price"] * o["margin_pct"] / 100 for o in all_opps)
         return (
-            f"**Cross-Sell Revenue Impact Analysis**\n\n"
+            f"**Synthetic Cross-Sell Value Scenario**\n\n"
             f"| Customer | Segment | Current ARR | Opps | Potential ARR | Weighted |\n|---|---|---|---|---|---|\n"
             f"{portfolio_rows}\n"
             f"**Portfolio Totals:**\n\n"

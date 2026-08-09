@@ -1,0 +1,12 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/inventory-visibility",
+  "onepager": "34. Inventory Visibility Agent one-pager.pptx",
+  "source_slide_sha256": "7b1a45e0f07c66822200638cabe6e21fa7f150bf410a135d1835aa8db94182a6",
+  "source_audit": {"approved_slide_hash_match": true, "deterministic_source": "solutions.json", "deterministic_slot": 31, "content_snapshot": "state/onepager_content.json"},
+  "promises": [
+    {"advertised_promise": "Provide instant SKU-level availability across locations to eliminate manual inventory checks", "operations": ["inventory_dashboard", "stock_alerts"], "demo_cases": ["IV-01", "IV-02"], "synthetic_evidence": ["Eight SKUs across four stores and two warehouses", "Status and days-of-supply calculations use fixed records"]},
+    {"advertised_promise": "Recommend optimal store-to-store and warehouse transfers to ensure products are in the right place at the right time", "operations": ["stock_alerts", "channel_allocation"], "demo_cases": ["IV-02", "IV-04"], "synthetic_evidence": ["Transfer and allocation outputs are review-only scenarios and reserve no stock"]},
+    {"advertised_promise": "Deliver predictive replenishment plans with dynamic safety stock to minimize stockouts and maintain availability", "operations": ["replenishment_plan"], "demo_cases": ["IV-03"], "synthetic_evidence": ["Fourteen-day targets, safety stock, lead time, and cost are fixed synthetic planning inputs"]}
+  ]
+}

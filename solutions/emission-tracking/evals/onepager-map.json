@@ -1,0 +1,66 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/emission-tracking",
+  "onepager": "Energy Operations Agent Suite one-pager (2).pptx",
+  "source_slide_sha256": "27262902b33c359f0cb74f23e3f6660e6f17033542e676fa63167db16ad6fb4f",
+  "suite": "Energy Operations Agent Suite",
+  "preserves_distinct_module": true,
+  "promises": [
+    {
+      "advertised_promise": "Aggregates emissions data, analyzes compliance risk, and raises opportunities to improve sustainability posture",
+      "operations": [
+        "emissions_dashboard"
+      ],
+      "demo_cases": [
+        "EMISSION_TRACKING-01"
+      ],
+      "synthetic_evidence": [
+        "Ridgeline Coal Station",
+        "1,533,200"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Aggregates emissions data, analyzes compliance risk, and raises opportunities to improve sustainability posture",
+      "operations": [
+        "compliance_status"
+      ],
+      "demo_cases": [
+        "EMISSION_TRACKING-02"
+      ],
+      "synthetic_evidence": [
+        "BELOW SCREENING THRESHOLD",
+        "not a legal compliance determination"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Aggregates emissions data, analyzes compliance risk, and raises opportunities to improve sustainability posture",
+      "operations": [
+        "reduction_plan"
+      ],
+      "demo_cases": [
+        "EMISSION_TRACKING-03"
+      ],
+      "synthetic_evidence": [
+        "Fuel switching to natural gas",
+        "engineering, finance, environmental, and executive review"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Aggregates emissions data, analyzes compliance risk, and raises opportunities to improve sustainability posture",
+      "operations": [
+        "carbon_offset_analysis"
+      ],
+      "demo_cases": [
+        "EMISSION_TRACKING-04"
+      ],
+      "synthetic_evidence": [
+        "Appalachian Reforestation",
+        "No credit purchase"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    }
+  ]
+}

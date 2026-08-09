@@ -1,0 +1,85 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:27:29.420450+00:00",
+  "solution": "@aibast-agents-library/order-status-communication",
+  "onepager": "44. Order Status Communications Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "OrderStatusCommunicationAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/manufacturing_stacks/order_status_communication_stack/order_status_communication_agent.py",
+      "sha256": "aa71f08fbe00d41f18b71d92eca0eae237f413a86d0f1ee52e24e4568a394d64"
+    }
+  ],
+  "case_file": "tests/demo_cases/order-status-communication.json",
+  "case_file_sha256": "90dc9e955636abdc186449a898a540d1a9ae350db6f8101b1a542ce0d44ea60d",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "OS-01",
+      "persona": "Customer Service Representative",
+      "onepager_promise": null,
+      "prompt": "Which orders are on track or delayed, and where should customer service focus its review?",
+      "assistant_response": "## Quick Summary\n\n**On Track:**\n- **ORD-7810** (Ford, 6R140 Transmission): 74% complete, 3 days to promise \u2014 solid progress, monitor closely\n- **ORD-7811** (Caterpillar, Track Frame): 45% complete, 23 days buffer \u2014 normal pace\n\n**Delayed:**\n- **ORD-7813** (John Deere, Hydraulic Cylinder): 30% complete, **11 days at risk** \u2014 this is your hot spot\n- **ORD-7812** (Tesla, Rocker Panel): Already **2 days late**, shipped but delivery issue likely\n\n## Where Customer Service Should Focus\n\n1. **ORD-7812 (Tesla)** \u2014 **Urgent**: Shipment is in transit but overdue. Verify carrier status and ETA immediately.\n2. **ORD-7813 (John Deere)** \u2014 **High Priority**: Only 30% done with 11 days left. Identify production bottleneck and assess recovery timeline.\n3. **ORD-7810 (Ford)** \u2014 **Monitor**: At 74% with minimal buffer, any slowdown triggers a miss.\n\nWant me to draft delay notifications for your internal review or prepare customer messaging for the two at-risk orders?",
+      "agent_logs": "[OrderStatusCommunicationAgent] ## Order Status Dashboard\n\n> Fixed synthetic snapshot; no live ERP, MES, carrier, or CRM system was queried.\n\n| Order | Customer | Product | Qty | Value | Status | Complete | Promise Date | Days Left |\n|-------|----------|---------|-----|-------|--------|----------|--------------|-----------|\n| ORD-7810 | Ford Motor Company | 6R140 Transmission Housing | 2,500 | $420,000.00 | in_production | 74% | 2026-03-20 | 3 |\n| ORD-7811 | Caterpillar Inc. | D11 Track Frame Weldment | 40 | $498,000.00 | in_production | 45% | 2026-04-10 | 23 |\n| ORD-7812 | Tesla Inc. | Model Y Rocker Panel Stampin | 8,000 | $340,000.00 | shipped | 100% | 2026-03-15 | -2 |\n| ORD-7813 | John Deere | Hydraulic Cylinder Barrel | 600 | $231,000.00 | delayed **DELAYED** | 30% | 2026-03-28 | 11 |\n\n**Total order book value:** $1,489,000.00\n**At-risk order value:** $231,000.00",
+      "expected_agent": "OrderStatusCommunicationAgent",
+      "must_include": [
+        "ORD-7813",
+        "DELAYED"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "OS-02",
+      "persona": "Account Manager",
+      "onepager_promise": null,
+      "prompt": "What shipment evidence is recorded for the shipped order, and what still needs carrier validation?",
+      "assistant_response": "**What's recorded:**\n- Tracking number (XPO-884291047) and carrier (XPO Logistics) are in the system\n- Ship date: March 12, 2026\n- Route, weight (4,200 kg), and estimated delivery (March 15) are logged\n- Status shows **in_transit**\n\n**What still needs carrier validation:**\n- **Actual delivery confirmation** \u2014 no scan-to-delivery event yet\n- **In-transit milestones** \u2014 no intermediate hub/scan confirmations logged\n- **Proof of carrier receipt** \u2014 departure from origin facility\n- **Final signature or POD** (proof of delivery) at destination\n\nThis is a synthetic snapshot, so you'll want to confirm the real status directly in XPO Logistics' carrier portal using tracking number XPO-884291047. Once the carrier provides delivery scans or POD, that'll close the loop for the customer and your internal records.",
+      "agent_logs": "[OrderStatusCommunicationAgent] ## Shipment Tracking\n\n> Synthetic shipment record; confirm status in the approved carrier system.\n\n| Order | Carrier | Tracking | Ship Date | Est Delivery | Route | Weight | Status |\n|-------|---------|----------|-----------|-------------|-------|--------|--------|\n| ORD-7812 | XPO Logistics | XPO-884291047 | 2026-03-12 | 2026-03-15 | Detroit, MI -> Fremont, CA | 4,200 kg | in_transit |\n\n### Shipped Orders Detail\n\n- **ORD-7812** (Tesla Inc.): Model Y Rocker Panel Stamping -- 8,000 units, $340,000.00",
+      "expected_agent": "OrderStatusCommunicationAgent",
+      "must_include": [
+        "ORD-7812",
+        "XPO-884291047"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "OS-03",
+      "persona": "Operations Leader",
+      "onepager_promise": null,
+      "prompt": "Prepare the internal delay and recovery review for the at-risk customer order without changing any schedule.",
+      "assistant_response": "**Internal review complete.** The order ORD-7813 for John Deere is 11 days at risk due to raw material shortage. Three recovery paths are recorded:\n\n1. **Alternate supplier** \u2014 alloy steel arriving 2026-03-19 (9 days early)\n2. **Overtime shifts** \u2014 CNC capacity unlocked for acceleration\n3. **Partial shipment** \u2014 200 units by original due date to ease customer impact\n\n**No schedule, shipment, or customer records were changed.** The account manager (Robert Kim) has a 4-hour response window; email is the preferred channel. This draft is ready for your review and authorization before any customer communication.",
+      "agent_logs": "[OrderStatusCommunicationAgent] ## Internal Delay Review\n\n> Fixed synthetic draft for authorized review. No production schedule, shipment, or customer record was changed.\n\n### ORD-7813 -- John Deere\n- **Product:** Hydraulic Cylinder Barrel\n- **Quantity:** 600 units ($231,000.00)\n- **Delay:** 11 days (2026-03-28 -> 2026-04-08)\n- **Reason:** Raw material shortage -- alloy steel bar stock delayed from supplier\n- **Cost impact:** $14,200.00\n- **Account manager:** Robert Kim\n- **SLA response window:** 4 hours\n- **Preferred channel:** email\n\n**Recorded synthetic recovery options:**\n- Alternate supplier qualified; first shipment arriving 2026-03-19\n- Weekend overtime shifts approved for CNC cell\n- Partial shipment of 200 units by 2026-03-28\n",
+      "expected_agent": "OrderStatusCommunicationAgent",
+      "must_include": [
+        "ORD-7813",
+        "Recorded synthetic recovery options"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "OS-04",
+      "persona": "Account Manager",
+      "onepager_promise": null,
+      "prompt": "Draft the customer updates for approval, but do not send an email, portal update, EDI message, or Teams message.",
+      "assistant_response": "Done. I've drafted customer updates for all active orders tailored to each customer's tier and preferred channel:\n\n- **ORD-7810 & ORD-7813** \u2192 Email (Ford, John Deere)\n- **ORD-7811** \u2192 EDI format (Caterpillar)\n- **ORD-7812** \u2192 Portal (Tesla)\n\n**Note:** ORD-7813 has a delay notification (raw material shortage; revised delivery 2026-04-08). The draft includes recovery actions: alternate supplier arriving 2026-03-19, overtime shifts, and partial shipment by original date.\n\nNo messages were sent. Review these, adjust as needed, then confirm delivery method and authorized sender before dispatch.",
+      "agent_logs": "[OrderStatusCommunicationAgent] ## Customer Update Drafts\n\n> Fixed synthetic drafts; approval required. No email, EDI message, portal update, Teams message, or other customer communication was sent.\n\nThe following draft messages have been prepared for all active orders:\n\n---\n### ORD-7810 -- Ford Motor Company\n\n**Synthetic communication profile:** Strategic tier; preferred channel email; authorized owner Sarah Lin.\n\n**Subject:** Order ORD-7810 Status Update -- 6R140 Transmission Housing\n\nDear James Mitchell,\n\nYour order is progressing on schedule.\n\n- **Completion:** 74%\n- **Promised delivery:** 2026-03-20\n\nPlease do not hesitate to reach out with any questions.\n\nBest regards,\nSarah Lin\n\n---\n### ORD-7811 -- Caterpillar Inc.\n\n**Synthetic communication profile:** Strategic tier; preferred channel EDI; authorized owner Robert Kim.\n\n**Subject:** Order ORD-7811 Status Update -- D11 Track Frame Weldment\n\nDear Rita Vasquez,\n\nYour order is progressing on schedule.\n\n- **Completion:** 45%\n- **Promised delivery:** 2026-04-10\n\nPlease do not hesitate to reach out with any questions.\n\nBest regards,\nRobert Kim\n\n---\n### ORD-7812 -- Tesla Inc.\n\n**Synthetic communication profile:** Priority tier; preferred channel portal; authorized owner Sarah Lin.\n\n**Subject:** Order ORD-7812 Status Update -- Model Y Rocker Panel Stamping\n\nDear Derek Chung,\n\nYour order has shipped and is on its way.\n\n- **Carrier:** XPO Logistics\n- **Tracking:** XPO-884291047\n- **Est. delivery:** 2026-03-15\n\nPlease do not hesitate to reach out with any questions.\n\nBest regards,\nSarah Lin\n\n---\n### ORD-7813 -- John Deere\n\n**Synthetic communication profile:** Priority tier; preferred channel email; authorized owner Robert Kim.\n\n**Subject:** Order ORD-7813 Status Update -- Hydraulic Cylinder Barrel\n\nDear Angela Torres,\n\nWe are writing to inform you of a revised delivery date for your order.\n\n- **Original date:** 2026-03-28\n- **Revised date:** 2026-04-08\n- **Reason:** Raw material shortage -- alloy steel bar stock delayed from supplier\n\n**Recovery actions underway:**\n- Alternate supplier qualified; first shipment arriving 2026-03-19\n- Weekend overtime shifts approved for CNC cell\n- Partial shipment of 200 units by 2026-03-28\n\nPlease do not hesitate to reach out with any questions.\n\nBest regards,\nRobert Kim\n\n\nCustomer updates require an approved communication tool and an authorized sender.",
+      "expected_agent": "OrderStatusCommunicationAgent",
+      "must_include": [
+        "Customer Update Drafts",
+        "No email, EDI message"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

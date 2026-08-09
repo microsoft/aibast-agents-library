@@ -1,0 +1,122 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-08-08T14:26:23.683Z",
+  "solution": "@aibast-agents-library/resource-utilization",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "Resource Utilization Manual",
+    "bot_id": "92e50540-5dd8-49ff-898e-ab716c930b04",
+    "created": true
+  },
+  "target_model": "Claude Sonnet 4.6",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 5,
+      "confirmed": 5
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "RU-01",
+      "prompt": "Where are we under target today, and which parts of the workforce are sitting available?",
+      "must_include": [
+        "Firm utilization",
+        "Bench",
+        "Utilization by Level"
+      ],
+      "must_not_include": [
+        "pulled from the live PSA"
+      ],
+      "expected_screenshot": "15-ru-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "RU-02",
+      "prompt": "What capacity is coming free, and how does it line up with the opportunities expected over the next quarter?",
+      "must_include": [
+        "Upcoming Project Endings",
+        "Pipeline Demand",
+        "Total roles in pipeline"
+      ],
+      "must_not_include": [
+        "pipeline is guaranteed"
+      ],
+      "expected_screenshot": "16-ru-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "RU-03",
+      "prompt": "Show me who is on the bench, the skills we are carrying, and the cost exposure we need to address.",
+      "must_include": [
+        "David Okafor",
+        "Robert Garcia",
+        "Skill Inventory on Bench"
+      ],
+      "must_not_include": [
+        "revenue has been booked"
+      ],
+      "expected_screenshot": "17-ru-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "RU-04",
+      "prompt": "Which available consultants fit the strongest pipeline needs, and who still needs another path?",
+      "must_include": [
+        "Bench-to-Pipeline Matches",
+        "Unmatched Bench Resources",
+        "Robert Garcia"
+      ],
+      "must_not_include": [
+        "consultants have been assigned"
+      ],
+      "expected_screenshot": "18-ru-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "RU-05",
+      "prompt": "Give me an upskilling and internal-innovation plan for the people we cannot place directly, including the business case.",
+      "must_include": [
+        "D365 integration accelerator",
+        "Synthetic payback scenario",
+        "Innovation and Capability-Building Options"
+      ],
+      "must_not_include": [
+        "leadership approved"
+      ],
+      "expected_screenshot": "19-ru-05.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/resource-utilization/screenshots/manual/browserfilm.json",
+    "gif": "solutions/resource-utilization/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/resource-utilization/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "20-confirm-draft.jpg"
+  }
+}

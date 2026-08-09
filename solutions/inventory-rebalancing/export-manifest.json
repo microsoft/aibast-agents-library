@@ -1,0 +1,205 @@
+{
+  "schema": "aibast-solution-export/1.0",
+  "solution": "@aibast-agents-library/inventory-rebalancing",
+  "raw_base": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/",
+  "github_folder": "https://github.com/microsoft/aibast-agents-library/tree/main/solutions/inventory-rebalancing",
+  "bundle": {
+    "label": "Inventory Rebalancing current source bundle",
+    "path": "solutions/inventory-rebalancing/exports/inventory-rebalancing-source.zip",
+    "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/exports/inventory-rebalancing-source.zip"
+  },
+  "files": [
+    {
+      "id": "portable-agent",
+      "label": "Portable Brainstem agent.py",
+      "path": "agents/@aibast-agents-library/manufacturing_stacks/inventory_rebalancing_stack/inventory_rebalancing_agent.py",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/manufacturing_stacks/inventory_rebalancing_stack/inventory_rebalancing_agent.py",
+      "use": "Local Brainstem runtime and production logic reference",
+      "status": "ready"
+    },
+    {
+      "id": "deployment-recipe",
+      "label": "No-terminal deployment recipe",
+      "path": "solutions/inventory-rebalancing/deployment.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/deployment.json",
+      "use": "Easy installation contract and validated identities",
+      "status": "ready"
+    },
+    {
+      "id": "field-guide",
+      "label": "Customer field guide",
+      "path": "solutions/inventory-rebalancing/FIELD-GUIDE.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/FIELD-GUIDE.md",
+      "use": "Facilitation, production seams, recovery, and evidence gates",
+      "status": "ready"
+    },
+    {
+      "id": "settings",
+      "label": "Copilot Studio settings",
+      "path": "solutions/inventory-rebalancing/copilot-studio/settings.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/copilot-studio/settings.mcs.yml",
+      "use": "Reviewed model, instructions, identity, and safety boundaries",
+      "status": "ready"
+    },
+    {
+      "id": "global-instructions",
+      "label": "Manual global instructions",
+      "path": "solutions/inventory-rebalancing/manual/GLOBAL-INSTRUCTIONS.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/manual/GLOBAL-INSTRUCTIONS.md",
+      "use": "Paste into the blank Copilot Studio agent",
+      "status": "ready"
+    },
+    {
+      "id": "agent-sync",
+      "label": "Copilot Studio component manifest",
+      "path": "solutions/inventory-rebalancing/copilot-studio/agent.sync.yaml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/copilot-studio/agent.sync.yaml",
+      "use": "CLI project layout marker",
+      "status": "ready"
+    },
+    {
+      "id": "knowledge-records",
+      "label": "Synthetic inventory records",
+      "path": "solutions/inventory-rebalancing/manual/knowledge/aibast_inventory-rebalancing-synthetic-records.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/manual/knowledge/aibast_inventory-rebalancing-synthetic-records.md",
+      "use": "Upload the complete reviewed records file",
+      "status": "ready"
+    },
+    {
+      "id": "knowledge-rules",
+      "label": "Inventory cost and review rules",
+      "path": "solutions/inventory-rebalancing/manual/knowledge/aibast_inventory-rebalancing-review-rules.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/manual/knowledge/aibast_inventory-rebalancing-review-rules.md",
+      "use": "Upload the complete reviewed rules file",
+      "status": "ready"
+    },
+    {
+      "id": "skill-inventory-snapshot",
+      "label": "Inventory snapshot skill",
+      "path": "solutions/inventory-rebalancing/manual/skills/aibast_inventory_snapshot/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/manual/skills/aibast_inventory_snapshot/SKILL.md",
+      "use": "Upload through Copilot Studio Add skill",
+      "status": "ready"
+    },
+    {
+      "id": "skill-rebalance",
+      "label": "Rebalance recommendation skill",
+      "path": "solutions/inventory-rebalancing/manual/skills/aibast_rebalance_recommendation/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/manual/skills/aibast_rebalance_recommendation/SKILL.md",
+      "use": "Upload through Copilot Studio Add skill",
+      "status": "ready"
+    },
+    {
+      "id": "skill-transfer",
+      "label": "Transfer plan skill",
+      "path": "solutions/inventory-rebalancing/manual/skills/aibast_transfer_plan/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/manual/skills/aibast_transfer_plan/SKILL.md",
+      "use": "Upload through Copilot Studio Add skill",
+      "status": "ready"
+    },
+    {
+      "id": "skill-cost",
+      "label": "Cost analysis skill",
+      "path": "solutions/inventory-rebalancing/manual/skills/aibast_cost_analysis/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/manual/skills/aibast_cost_analysis/SKILL.md",
+      "use": "Upload through Copilot Studio Add skill",
+      "status": "ready"
+    },
+    {
+      "id": "onepager-map",
+      "label": "One-pager promise map",
+      "path": "solutions/inventory-rebalancing/evals/onepager-map.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/evals/onepager-map.json",
+      "use": "Advertised promise coverage evidence",
+      "status": "ready"
+    },
+    {
+      "id": "brainstem-transcripts",
+      "label": "Isolated Brainstem transcripts",
+      "path": "solutions/inventory-rebalancing/evals/transcripts.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/evals/transcripts.json",
+      "use": "Canonical portable-agent acceptance corpus",
+      "status": "ready"
+    },
+    {
+      "id": "studio-preview-evidence",
+      "label": "Copilot Studio Preview evidence",
+      "path": "solutions/inventory-rebalancing/evals/copilot-studio-preview-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/evals/copilot-studio-preview-evidence.json",
+      "use": "IR-01 through IR-04 Easy-agent Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-browserfilm-manifest",
+      "label": "Copilot-assisted browserfilm manifest",
+      "path": "solutions/inventory-rebalancing/screenshots/assisted/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/assisted/browserfilm.json",
+      "use": "Captured Easy-mode frame sequence",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-browserfilm",
+      "label": "Copilot-assisted walkthrough",
+      "path": "solutions/inventory-rebalancing/screenshots/assisted/copilot-assisted-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/assisted/copilot-assisted-walkthrough.gif",
+      "use": "Animated proof from real Easy screenshots",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-contact-sheet",
+      "label": "Copilot-assisted contact sheet",
+      "path": "solutions/inventory-rebalancing/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/assisted/copilot-assisted-contact-sheet.jpg",
+      "use": "Static Easy evidence overview",
+      "status": "ready"
+    },
+    {
+      "id": "manual-evidence",
+      "label": "Manual build evidence",
+      "path": "solutions/inventory-rebalancing/evals/manual-build-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/evals/manual-build-evidence.json",
+      "use": "Manual identity, parity fixes, Preview proof, and Draft gate",
+      "status": "ready"
+    },
+    {
+      "id": "quest",
+      "label": "Interactive deployment quest",
+      "path": "solutions/inventory-rebalancing/quest.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/quest.html",
+      "use": "Easy and literal-browser Hard mode journey",
+      "status": "ready"
+    },
+    {
+      "id": "manual-tutorial",
+      "label": "Manual browser-build tutorial",
+      "path": "solutions/inventory-rebalancing/manual-tutorial.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/manual-tutorial.html",
+      "use": "Clawpilot-themed 22-step manual tutorial",
+      "status": "ready"
+    },
+    {
+      "id": "manual-browserfilm-manifest",
+      "label": "Manual browserfilm frame manifest",
+      "path": "solutions/inventory-rebalancing/screenshots/manual/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/manual/browserfilm.json",
+      "use": "Deterministic captured frame sequence",
+      "status": "ready"
+    },
+    {
+      "id": "manual-browserfilm",
+      "label": "Manual build browserfilm",
+      "path": "solutions/inventory-rebalancing/screenshots/manual/manual-build-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/manual/manual-build-walkthrough.gif",
+      "use": "Animated proof from the real 22-step capture",
+      "status": "ready"
+    },
+    {
+      "id": "manual-contact-sheet",
+      "label": "Manual build contact sheet",
+      "path": "solutions/inventory-rebalancing/screenshots/manual/manual-build-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/manual/manual-build-contact-sheet.jpg",
+      "use": "Static overview of all 22 manual actions",
+      "status": "ready"
+    }
+  ]
+}

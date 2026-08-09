@@ -18,7 +18,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/inventory-rebalancing",
     "version": "1.0.0",
     "display_name": "Inventory Rebalancing Agent",
-    "description": "Optimizes multi-warehouse inventory distribution by analyzing stock levels against demand forecasts and generating cost-effective transfer plans.",
+    "description": "Analyze a fixed synthetic inventory snapshot and recommend review-ready rebalancing options. Never claim that inventory was moved, reordered, returned, or liquidated.",
     "author": "AIBAST",
     "tags": ["inventory", "warehouse", "supply-chain", "rebalancing", "manufacturing"],
     "category": "manufacturing",
@@ -90,6 +90,15 @@ DEMAND_FORECASTS = {
 REORDER_POINTS = {
     "SKU-4401": 1200, "SKU-4402": 500, "SKU-4403": 600,
     "SKU-4404": 350, "SKU-4405": 2000, "SKU-4406": 150,
+}
+
+PORTFOLIO_CLASSIFICATIONS = {
+    "SKU-4401": {"velocity": "MEDIUM", "strategic_value": "CORE", "lifecycle_risk": "LOW"},
+    "SKU-4402": {"velocity": "SLOW-MOVING", "strategic_value": "HIGH", "lifecycle_risk": "LOW"},
+    "SKU-4403": {"velocity": "SLOW-MOVING", "strategic_value": "STANDARD", "lifecycle_risk": "ELEVATED"},
+    "SKU-4404": {"velocity": "MEDIUM", "strategic_value": "HIGH", "lifecycle_risk": "LOW"},
+    "SKU-4405": {"velocity": "FAST", "strategic_value": "CORE", "lifecycle_risk": "LOW"},
+    "SKU-4406": {"velocity": "SLOW-MOVING", "strategic_value": "CRITICAL", "lifecycle_risk": "ELEVATED"},
 }
 
 TRANSFER_COSTS_PER_KG = {
@@ -180,6 +189,28 @@ class InventoryRebalancingAgent(BasicAgent):
                 "transfer_plan",
                 "cost_analysis",
             ],
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "operation": {
+                        "type": "string",
+                        "enum": [
+                            "inventory_snapshot",
+                            "rebalance_recommendation",
+                            "transfer_plan",
+                            "cost_analysis",
+                        ],
+                        "description": (
+                            "inventory_snapshot: summarize facility utilization and SKU levels. "
+                            "rebalance_recommendation: identify forecast-relative excess and shortage. "
+                            "transfer_plan: prepare proposed inter-warehouse moves for approval; never "
+                            "move inventory. cost_analysis: compare synthetic holding, shortage, and "
+                            "transfer-cost estimates."
+                        ),
+                    },
+                },
+                "required": ["operation"],
+            },
         }
         super().__init__(name=self.name, metadata=self.metadata)
 
@@ -203,7 +234,7 @@ class InventoryRebalancingAgent(BasicAgent):
     # Operations
     # ------------------------------------------------------------------
     def _inventory_snapshot(self, **kwargs) -> str:
-        lines = ["## Inventory Snapshot\n"]
+        lines = ["## Inventory Snapshot\n", "> Synthetic pilot snapshot; no live warehouse or ERP data was queried.\n"]
         lines.append("| Warehouse | Region | Utilization | Pallets Used/Cap | Inventory Value |")
         lines.append("|-----------|--------|-------------|------------------|-----------------|")
         for wh_id, wh in WAREHOUSES.items():
@@ -233,7 +264,7 @@ class InventoryRebalancingAgent(BasicAgent):
         return "\n".join(lines)
 
     def _rebalance_recommendation(self, **kwargs) -> str:
-        lines = ["## Rebalance Recommendations\n"]
+        lines = ["## Rebalance Recommendations\n", "> Fixed synthetic snapshot and recommendation only; no inventory movement, reorder, return, or liquidation has occurred.\n"]
         lines.append("Analysis of stock-vs-demand across all facilities:\n")
         lines.append("| SKU | Warehouse | On-Hand | Forecast | Delta | Status |")
         lines.append("|-----|-----------|---------|----------|-------|--------|")
@@ -256,12 +287,27 @@ class InventoryRebalancingAgent(BasicAgent):
                         f"{on_hand:,} | {forecast:,} | {delta:+,} | **{status}** |"
                     )
         lines.append(f"\n**Critical imbalances detected:** {critical_count}")
-        lines.append("**Recommendation:** Execute transfer plan to redistribute surplus stock to deficit locations.")
+        lines.append("\n### Portfolio Classification\n")
+        lines.append("| SKU | Velocity | Strategic Value | Lifecycle Risk | Review Option |")
+        lines.append("|-----|----------|-----------------|----------------|---------------|")
+        for sku, profile in PORTFOLIO_CLASSIFICATIONS.items():
+            if profile["velocity"] == "SLOW-MOVING" and profile["lifecycle_risk"] == "ELEVATED":
+                option = "Validate demand; review vendor-return or controlled disposition eligibility"
+            elif profile["velocity"] == "SLOW-MOVING":
+                option = "Review transfer, reorder pause, and safety-stock settings"
+            else:
+                option = "Monitor against forecast and fixed reorder policy"
+            lines.append(
+                f"| {sku} | {profile['velocity']} | {profile['strategic_value']} | "
+                f"{profile['lifecycle_risk']} | {option} |"
+            )
+        lines.append("**Recommendation:** Review the proposed transfer plan with inventory and warehouse owners before any movement.")
+        lines.append("No SKU is declared obsolete without an authorized lifecycle decision and source-system evidence.")
         return "\n".join(lines)
 
     def _transfer_plan(self, **kwargs) -> str:
         transfers = _build_imbalances()
-        lines = ["## Transfer Plan\n"]
+        lines = ["## Proposed Transfer Plan\n", "> Synthetic planning output only. No inventory has been reserved, picked, shipped, or moved.\n"]
         if not transfers:
             lines.append("No transfers required; inventory is balanced within tolerance.")
             return "\n".join(lines)
@@ -280,7 +326,7 @@ class InventoryRebalancingAgent(BasicAgent):
 
         lines.append(f"\n**Total units to transfer:** {total_units:,}")
         lines.append(f"**Total transfer cost:** ${total_cost:,.2f}")
-        lines.append(f"**Estimated transit time:** 2-5 business days (ground freight)")
+        lines.append(f"**Synthetic planning assumption:** 2-5 business days (ground freight)")
         lines.append(
             "\n### Expected Post-Transfer Utilization\n"
         )
@@ -299,7 +345,7 @@ class InventoryRebalancingAgent(BasicAgent):
         return "\n".join(lines)
 
     def _cost_analysis(self, **kwargs) -> str:
-        lines = ["## Inventory Holding & Transfer Cost Analysis\n"]
+        lines = ["## Inventory Holding & Transfer Cost Analysis\n", "> All figures are synthetic planning estimates, not customer outcomes.\n"]
 
         lines.append("### Annual Holding Costs\n")
         lines.append("| Warehouse | Pallets | Cost/Pallet/Yr | Annual Holding Cost |")
@@ -336,7 +382,8 @@ class InventoryRebalancingAgent(BasicAgent):
         lines.append(f"\n### Transfer vs. Holding Trade-off")
         lines.append(f"- One-time transfer cost: **${transfer_cost:,.2f}**")
         lines.append(f"- Avoided expedited-shipping premium (est.): **${transfer_cost * 3.2:,.2f}**")
-        lines.append(f"- Net annual benefit from rebalancing: **${total_risk * 0.6 - transfer_cost:,.2f}**")
+        lines.append(f"- Modeled planning benefit before approval: **${total_risk * 0.6 - transfer_cost:,.2f}**")
+        lines.append("\nNo reorder, transfer, vendor return, liquidation, or inventory-policy change is executed by this agent.")
         return "\n".join(lines)
 
 

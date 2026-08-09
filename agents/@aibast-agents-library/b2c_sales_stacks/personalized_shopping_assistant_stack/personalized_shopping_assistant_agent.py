@@ -15,8 +15,8 @@ __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/personalized-shopping-assistant",
     "version": "1.0.0",
-    "display_name": "Personalized Shopping Assistant Agent",
-    "description": "Personalized retail shopping with product recommendations, style profiling, inventory checks, and outfit building.",
+    "display_name": "Personalized Shopping Agent",
+    "description": "Draft opt-in product, style, availability, and outfit recommendations using synthetic non-sensitive preferences for human review.",
     "author": "AIBAST",
     "tags": ["shopping", "personalization", "recommendations", "style", "inventory", "b2c"],
     "category": "b2c_sales",
@@ -42,7 +42,7 @@ PRODUCT_CATALOG = {
 
 CUSTOMER_PREFERENCES = {
     "SHOP-001": {
-        "name": "Daniel Reeves",
+        "name": "Synthetic Shopper A",
         "size_top": "L",
         "size_bottom": "34",
         "size_shoe": "10",
@@ -53,7 +53,7 @@ CUSTOMER_PREFERENCES = {
         "purchase_history": ["SKU-1001", "SKU-1002", "SKU-1006"],
     },
     "SHOP-002": {
-        "name": "Olivia Chen",
+        "name": "Synthetic Shopper B",
         "size_top": "S",
         "size_bottom": "30",
         "size_shoe": "8",
@@ -71,6 +71,29 @@ OUTFIT_TEMPLATES = {
     "active_weekend": {"name": "Active Weekend", "pieces": ["outerwear:vests", "footwear:athletic"]},
     "evening_out": {"name": "Evening Out", "pieces": ["outerwear:blazers", "tops:shirts", "bottoms:pants", "footwear:boots"]},
 }
+
+APPROVED_PERSONAS = {
+    "Personal Shopper": "occasion-ready options and transparent tradeoffs",
+    "Clienteling Specialist": "opt-in preferences, continuity, and respectful follow-up drafts",
+    "Retail Manager": "consistency, availability caveats, and service quality",
+}
+
+SAFETY_NOTICE = (
+    "> Synthetic opt-in preferences and inventory snapshots. Recommendations only; "
+    "no sensitive traits are inferred, inventory is not reserved, benefits are not "
+    "applied, and no return, refund, order, or purchase is completed."
+)
+
+
+def _response_header(persona):
+    role = persona if persona in APPROVED_PERSONAS else "Personal Shopper"
+    return [
+        f"**Prepared for:** {role}",
+        f"**Role focus:** {APPROVED_PERSONAS[role]}",
+        "",
+        SAFETY_NOTICE,
+        "",
+    ]
 
 
 # ---------------------------------------------------------------------------
@@ -119,16 +142,32 @@ class PersonalizedShoppingAssistantAgent(BasicAgent):
     """Personalized shopping assistant agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/personalized-shopping-assistant"
+        self.name = "PersonalizedShoppingAssistantAgent"
         self.metadata = {
             "name": self.name,
             "display_name": "Personalized Shopping Assistant Agent",
-            "description": __manifest__["description"],
+            "description": (
+                f"{__manifest__['description']} Route product suggestions to "
+                "`product_recommendations`; stated preference summaries to "
+                "`style_profile`; size-level availability to `inventory_check`; "
+                "and coordinated looks, outfits, or outfit totals to `outfit_builder`. "
+                "Always call this tool for those requests. Never ask which synthetic "
+                "shopper to use: when a shopper is omitted, omit customer_id and the "
+                "operation will use Synthetic Shopper A (SHOP-001)."
+            ),
             "parameters": {
                 "type": "object",
                 "properties": {
                     "operation": {
                         "type": "string",
+                        "description": (
+                            "Required routing key. Use product_recommendations for "
+                            "transparent product options; style_profile for an opt-in "
+                            "preference summary; inventory_check for size-level "
+                            "availability; and outfit_builder whenever the request asks "
+                            "for coordinated outfits, looks, or outfit totals. Do not "
+                            "ask a follow-up or substitute another operation."
+                        ),
                         "enum": [
                             "product_recommendations",
                             "style_profile",
@@ -136,15 +175,44 @@ class PersonalizedShoppingAssistantAgent(BasicAgent):
                             "outfit_builder",
                         ],
                     },
-                    "customer_id": {"type": "string"},
-                    "sku": {"type": "string"},
+                    "customer_id": {
+                        "type": "string",
+                        "description": (
+                            "Synthetic shopper ID. Synthetic Shopper A is SHOP-001 "
+                            "and Synthetic Shopper B is SHOP-002. Omit this field when "
+                            "the prompt does not name a shopper; the agent defaults to "
+                            "SHOP-001 and must not ask for clarification."
+                        ),
+                    },
+                    "sku": {
+                        "type": "string",
+                        "description": "Synthetic SKU for inventory_check.",
+                    },
+                    "persona": {
+                        "type": "string",
+                        "enum": list(APPROVED_PERSONAS),
+                        "description": "Copy the role stated in the request.",
+                    },
+                    "data_source": {"type": "string", "enum": ["synthetic"]},
                 },
                 "required": ["operation"],
+                "additionalProperties": False,
             },
         }
         super().__init__(name=self.name, metadata=self.metadata)
 
     def perform(self, **kwargs) -> str:
+        if kwargs.get("data_source", "synthetic") != "synthetic":
+            return "data_source must be `synthetic` for this package."
+        customer_id = kwargs.get("customer_id")
+        sku = kwargs.get("sku")
+        if customer_id and customer_id not in CUSTOMER_PREFERENCES:
+            return (
+                f"Unknown customer_id `{customer_id}`. Valid synthetic IDs: "
+                f"{', '.join(CUSTOMER_PREFERENCES)}"
+            )
+        if sku and sku not in PRODUCT_CATALOG:
+            return f"Unknown sku `{sku}`. Valid: {', '.join(PRODUCT_CATALOG)}"
         operation = kwargs.get("operation", "product_recommendations")
         dispatch = {
             "product_recommendations": self._product_recommendations,
@@ -161,7 +229,7 @@ class PersonalizedShoppingAssistantAgent(BasicAgent):
         customer_id = kwargs.get("customer_id", "SHOP-001")
         prefs = CUSTOMER_PREFERENCES.get(customer_id, {})
         recs = _get_recommendations(customer_id)
-        lines = [f"# Product Recommendations: {prefs.get('name', 'Customer')}\n"]
+        lines = _response_header(kwargs.get("persona")) + [f"# Draft Product Recommendations: {prefs.get('name', 'Shopper')}\n"]
         lines.append(f"**Style:** {', '.join(prefs.get('style_preference', []))}")
         lines.append(f"**Budget:** ${prefs.get('budget_range', {}).get('min', 0)} - ${prefs.get('budget_range', {}).get('max', 0)}\n")
         if recs:
@@ -179,7 +247,7 @@ class PersonalizedShoppingAssistantAgent(BasicAgent):
     def _style_profile(self, **kwargs) -> str:
         customer_id = kwargs.get("customer_id", "SHOP-001")
         prefs = CUSTOMER_PREFERENCES.get(customer_id, {})
-        lines = [f"# Style Profile: {prefs.get('name', 'Unknown')}\n"]
+        lines = _response_header(kwargs.get("persona")) + [f"# Opt-In Style Profile: {prefs.get('name', 'Unknown')}\n"]
         lines.append(f"## Sizing\n")
         lines.append(f"- Top: {prefs.get('size_top', 'N/A')}")
         lines.append(f"- Bottom: {prefs.get('size_bottom', 'N/A')}")
@@ -206,7 +274,7 @@ class PersonalizedShoppingAssistantAgent(BasicAgent):
         sku = kwargs.get("sku")
         if sku and sku in PRODUCT_CATALOG:
             product = PRODUCT_CATALOG[sku]
-            lines = [f"# Inventory Check: {product['name']} ({sku})\n"]
+            lines = _response_header(kwargs.get("persona")) + [f"# Inventory Snapshot: {product['name']} ({sku})\n"]
             lines.append(f"- **Price:** ${product['price']:,.2f}")
             lines.append(f"- **Brand:** {product['brand']}")
             lines.append(f"- **Rating:** {product['rating']}\n")
@@ -220,7 +288,7 @@ class PersonalizedShoppingAssistantAgent(BasicAgent):
             lines.append(f"\n**Total Units:** {total}")
             return "\n".join(lines)
 
-        lines = ["# Inventory Overview\n"]
+        lines = _response_header(kwargs.get("persona")) + ["# Inventory Snapshot Overview\n"]
         lines.append("| SKU | Product | Price | Total Stock | Status |")
         lines.append("|---|---|---|---|---|")
         for sku, p in PRODUCT_CATALOG.items():
@@ -232,7 +300,7 @@ class PersonalizedShoppingAssistantAgent(BasicAgent):
     def _outfit_builder(self, **kwargs) -> str:
         customer_id = kwargs.get("customer_id", "SHOP-001")
         prefs = CUSTOMER_PREFERENCES.get(customer_id, {})
-        lines = [f"# Outfit Builder: {prefs.get('name', 'Customer')}\n"]
+        lines = _response_header(kwargs.get("persona")) + [f"# Draft Outfit Builder: {prefs.get('name', 'Shopper')}\n"]
         for template_id, template in OUTFIT_TEMPLATES.items():
             lines.append(f"## {template['name']}\n")
             total_price = 0

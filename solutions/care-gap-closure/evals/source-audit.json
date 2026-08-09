@@ -1,0 +1,69 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/care-gap-closure",
+  "audited_source": "agents/@aibast-agents-library/healthcare_stacks/care_gap_closure_stack/care_gap_closure_agent.py",
+  "case_file": "tests/demo_cases/care-gap-closure.json",
+  "onepager": "32. Care Gap Closure Agent one-pager.pptx",
+  "operations": {
+    "gap_analysis": [
+      "CG-01"
+    ],
+    "cohort_review": [
+      "CG-02"
+    ],
+    "outreach_draft": [
+      "CG-03"
+    ],
+    "quality_dashboard": [
+      "CG-04"
+    ]
+  },
+  "defects_fixed": [
+    {
+      "area": "routing and schema",
+      "before": "Operation filters were not consistently routed and the schema allowed behavior whose names implied side effects.",
+      "after": "A strict no-additional-properties schema exposes four read-only operations, routes optional synthetic identifiers, and preserves safe legacy aliases."
+    },
+    {
+      "area": "healthcare safety boundary",
+      "before": "The agent could imply eligibility, authorization, clinical interpretation, outreach, scheduling, or record mutation beyond evidence.",
+      "after": "Every route uses synthetic-only evidence, explicit uncertainty, no side effects, and a qualified human review gate."
+    },
+    {
+      "area": "quality-manager persona routing",
+      "before": "The live model could route the largest evidence-review queue question to the qualitative dashboard, omitting the locked evidence-review wording.",
+      "after": "Tool and operation descriptions now map the exact persona intent to gap_analysis, which identifies the largest queue and emits Records requiring evidence review for every measure."
+    }
+  ],
+  "claim_audit": [
+    {
+      "claim": "Analyze quality measures and surface high-priority gaps",
+      "disposition": "bounded",
+      "implementation": "Reports aggregate source-evidence queues; reviewers validate measure eligibility and exclusions."
+    },
+    {
+      "claim": "Stratify outreach based on risk, condition severity, and engagement",
+      "disposition": "bounded",
+      "implementation": "Uses operational evidence-review cohorts only, not clinical risk scoring."
+    },
+    {
+      "claim": "Identify common barriers that impacted care completion",
+      "disposition": "supported",
+      "implementation": "Summarizes synthetic aggregate evidence barriers with explicit limitations."
+    },
+    {
+      "claim": "Launch targeted multi-channel outreach campaigns with real-time progress tracking",
+      "disposition": "excluded",
+      "implementation": "No outreach is launched, no patient is contacted, and no record is changed."
+    }
+  ],
+  "routing_result": {
+    "cases_passed": 4,
+    "cases_total": 4,
+    "strict_isolation": true,
+    "loaded_tool": "CareGapClosureAgent",
+    "artifact": "solutions/care-gap-closure/evals/transcripts.json"
+  },
+  "claim_policy": "Catalog value claims are qualitative. Exact fields and identifiers are retained only as clearly labeled synthetic evidence.",
+  "unresolved_defects": []
+}

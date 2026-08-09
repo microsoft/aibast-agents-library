@@ -1,0 +1,72 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T20:22:50.451Z",
+  "solution": "@aibast-agents-library/prior-authorization",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Prior Authorization Pilot",
+  "schema_name": "aibast_PriorAuthorizationPilot",
+  "bot_id": "6e991351-27ea-4605-a15b-7f5b15d9dc36",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "PA-01",
+      "must_include": [
+        "SYN-AUTH-001",
+        "additional evidence requested"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PA-02",
+      "must_include": [
+        "Synthetic Imaging Evidence Checklist",
+        "Checklist only"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PA-03",
+      "must_include": [
+        "SYN-AUTH-001",
+        "not an agent determination"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PA-04",
+      "must_include": [
+        "minimum-necessary evidence",
+        "reviewer must confirm"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "passed": true
+    }
+  ]
+}

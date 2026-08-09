@@ -1,0 +1,110 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "solution": "@aibast-agents-library/fs-regulatory-compliance",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "expected_display_name": "Regulatory Manual Build",
+    "display_name": "Regulatory Manual Build",
+    "bot_id": "ad9993c3-ea7a-4ecf-a86b-40a9d39a4fa3",
+    "created": true
+  },
+  "target_model": "Claude Sonnet 4.6",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 5,
+      "confirmed": 5
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "RC-01",
+      "prompt": "Are we going to fail our next MiFID audit? What's actually broken on the desk right now?",
+      "must_include": [
+        "T-2041",
+        "T-2233"
+      ],
+      "must_not_include": [
+        "yes, you will fail",
+        "you will fail"
+      ],
+      "expected_screenshot": "21-preview-rc01-audit-readiness.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "RC-02",
+      "prompt": "Which of my traders can't legally trade today, and who do I have to call?",
+      "must_include": [
+        "T-2041",
+        "T-2233"
+      ],
+      "expected_screenshot": "22-preview-rc02-certifications.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "RC-03",
+      "prompt": "We executed a few hundred trades this week. Which ones will the regulator reject, and why exactly?",
+      "must_include": [
+        "TRD-88133",
+        "field"
+      ],
+      "expected_screenshot": "23-preview-rc03-trade-surveillance.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "RC-04",
+      "prompt": "Is anything about to go live that shouldn't?",
+      "must_include": [
+        "ALGO-POV-NL"
+      ],
+      "expected_screenshot": "24-preview-rc04-algorithm-go-live.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "RC-05",
+      "prompt": "My head of trading says the reporting is fine. Prove him wrong with specifics I can take to the board.",
+      "must_include": [
+        "TRD-88133"
+      ],
+      "expected_screenshot": "25-preview-rc05-board-evidence.jpg",
+      "passed": true
+    }
+  ],
+  "inventory_review": {
+    "expected_screenshot": "19-review-complete-inventory.jpg",
+    "confirmed": true
+  },
+  "browserfilm": {
+    "status": "captured",
+    "expected_frames": 26,
+    "manifest": "solutions/fs-regulatory-compliance/screenshots/manual/browserfilm.json",
+    "gif": "solutions/fs-regulatory-compliance/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/fs-regulatory-compliance/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "26-confirm-draft-no-publish.jpg",
+    "reason": "The manual build must remain unpublished until all five Preview cases and governance checks are independently approved."
+  }
+}

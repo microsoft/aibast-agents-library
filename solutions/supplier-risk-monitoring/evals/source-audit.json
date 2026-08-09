@@ -1,0 +1,35 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/supplier-risk-monitoring",
+  "audited_source": "agents/@aibast-agents-library/manufacturing_stacks/supplier_risk_monitoring_stack/supplier_risk_monitoring_agent.py",
+  "case_file": "tests/demo_cases/supplier-risk-monitoring.json",
+  "onepager": "Supply Risk Monitoring Agent one-pager.pptx",
+  "operations": {
+    "risk_dashboard": [
+      "SR-01"
+    ],
+    "supplier_scorecard": [
+      "SR-02"
+    ],
+    "disruption_alerts": [
+      "SR-03"
+    ],
+    "alternative_sourcing": [
+      "SR-04"
+    ]
+  },
+  "defects_fixed": [
+    {
+      "area": "tool routing metadata",
+      "before": "Operations were listed outside the OpenAI parameter contract, leaving persona-language routing underspecified.",
+      "after": "Each operation now has a deterministic enum and persona-oriented description in the tool parameter schema."
+    },
+    {
+      "area": "recommendation-only safety",
+      "before": "Output language could imply execution, assignment, dispatch, movement, supplier action, or outbound communication.",
+      "after": "The agent recommends review options only and never contacts, qualifies, selects, or orders from suppliers. Every output labels the fixed data and exact figures as synthetic."
+    }
+  ],
+  "claim_policy": "Public catalog and architecture copy is qualitative. Exact figures and identifiers appear only in clearly labeled synthetic evidence.",
+  "unresolved_defects": []
+}

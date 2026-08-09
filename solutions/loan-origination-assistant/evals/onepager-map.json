@@ -1,0 +1,66 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/loan-origination-assistant",
+  "onepager": "40. Loan Origination Assistant one-pager.pptx",
+  "source_slide_sha256": "7ec2825595e46d7d00474737f516183be168e96441ba6625cde3e9e9d5d10b14",
+  "promises": [
+    {
+      "advertised_promise": "Automate intake to standardize process and reduce manual processing",
+      "operations": [
+        "application_review",
+        "document_verification"
+      ],
+      "demo_cases": [
+        "LOA-01",
+        "LOA-03"
+      ],
+      "synthetic_evidence": [
+        "Application intake returns deterministic fictional identifiers and review context",
+        "Document readiness returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    },
+    {
+      "advertised_promise": "Assess program eligibility to accelerate and support better borrowing decisions",
+      "operations": [
+        "credit_analysis",
+        "decision_recommendation"
+      ],
+      "demo_cases": [
+        "LOA-02",
+        "LOA-04"
+      ],
+      "synthetic_evidence": [
+        "Eligibility and ratio analysis returns deterministic fictional identifiers and review context",
+        "Nonbinding underwriting findings returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    },
+    {
+      "advertised_promise": "Analyze credit and property data to find risks and improve underwriting accuracy",
+      "operations": [
+        "credit_analysis"
+      ],
+      "demo_cases": [
+        "LOA-02"
+      ],
+      "synthetic_evidence": [
+        "Eligibility and ratio analysis returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    },
+    {
+      "advertised_promise": "Track conditions and timelines to speed closing and minimize delays",
+      "operations": [
+        "condition_tracking"
+      ],
+      "demo_cases": [
+        "LOA-05"
+      ],
+      "synthetic_evidence": [
+        "Condition and timeline review returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    }
+  ]
+}

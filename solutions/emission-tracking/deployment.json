@@ -1,0 +1,98 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/emission-tracking",
+  "display_name": "Emissions Tracking Agent",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/energy_stacks/emission_tracking_stack/emission_tracking_agent.py",
+  "source_path": "agents/@aibast-agents-library/energy_stacks/emission_tracking_stack/emission_tracking_agent.py",
+  "target_filename": "emission_tracking_agent.py",
+  "expected_tool": "EmissionTrackingAgent",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "smoke_test": {
+    "prompt": "Consolidate the Ridgeline scope totals and state the evidence limitation.",
+    "must_call": "EmissionTrackingAgent",
+    "must_include": [
+      "Ridgeline Coal Station",
+      "1,533,200"
+    ]
+  },
+  "copilot_studio": {
+    "status": "not_created",
+    "manual_only": true,
+    "operations": [
+      "emissions_dashboard",
+      "compliance_status",
+      "reduction_plan",
+      "carbon_offset_analysis"
+    ],
+    "manual_global_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
+    "manual_knowledge_files": [
+      "manual/knowledge/emission-tracking-synthetic-records.md",
+      "manual/knowledge/emission-tracking-rules-and-controls.md"
+    ],
+    "manual_skill_count": 4,
+    "required_connections": [
+      "Verified emissions data platform",
+      "Environmental management system",
+      "Approved carbon registry connector"
+    ],
+    "publish_requires_confirmation": true,
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "authoring_mode": "cli-copilot",
+    "validated_manual": {
+      "display_name": "Emissions Tracking Manual",
+      "bot_id": "da67632d-5a52-48d6-a80b-3bb35c4d314a",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "web_search_removed": true,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    },
+    "validated_pilot": {
+      "display_name": "Emissions Tracking Pilot",
+      "schema_name": "aibast_EmissionsTrackingPilot",
+      "bot_id": "239d1aa0-9095-443b-8985-084ed1d39834",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "changes_pushed": 7,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    }
+  },
+  "demo_scenarios": [
+    "emission-tracking-emissions-dashboard",
+    "emission-tracking-compliance-status",
+    "emission-tracking-reduction-plan",
+    "emission-tracking-carbon-offset-analysis"
+  ],
+  "write_controls": {
+    "authenticated_tools_required": true,
+    "explicit_human_approval_required": true,
+    "authorization_check_required": true,
+    "audit_log_required": true,
+    "local_demo_performs_writes": false
+  }
+}

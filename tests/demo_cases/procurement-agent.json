@@ -1,0 +1,94 @@
+{
+  "solution": "Procurement Agent",
+  "agent": "@aibast-agents-library/procurement-agent",
+  "onepager": "Procurement Agent one-pager.pptx",
+  "agent_files": [
+    "procurement_agent"
+  ],
+  "note": "Locked synthetic persona-language case per exposed operation. Prompts avoid operation names and preserve approval boundaries.",
+  "cases": [
+    {
+      "id": "PROC-01",
+      "persona": "Procurement Manager",
+      "operation": "purchase_request",
+      "onepager_bullet": "Automate purchase order creation and approval workflows to reduce cycle times and manual workload",
+      "prompt": "Walk me through the cloud-upgrade request and tell me whose review it needs before anything moves.",
+      "arguments": {
+        "operation": "purchase_request",
+        "request_id": "PR-5001"
+      },
+      "must_include": [
+        "PR-5001",
+        "$125,000",
+        "CFO"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "ProcurementAgent"
+    },
+    {
+      "id": "PROC-02",
+      "persona": "Category Buyer",
+      "operation": "vendor_comparison",
+      "onepager_bullet": "Perform intelligent vendor analysis to optimize supplier selection, contract compliance, and performance tracking",
+      "prompt": "Give me a neutral comparison of the approved cloud vendors; do not pick a winner.",
+      "arguments": {
+        "operation": "vendor_comparison"
+      },
+      "must_include": [
+        "AWS",
+        "Azure",
+        "not a supplier award"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "ProcurementAgent"
+    },
+    {
+      "id": "PROC-03",
+      "persona": "Department Approver",
+      "operation": "approval_routing",
+      "onepager_bullet": "Automate purchase order creation and approval workflows to reduce cycle times and manual workload",
+      "prompt": "This infrastructure request landed in my queue. What is the recommended approval path?",
+      "arguments": {
+        "operation": "approval_routing",
+        "request_id": "PR-5001"
+      },
+      "must_include": [
+        "CFO",
+        "48 hours",
+        "does not record an approval"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "ProcurementAgent"
+    },
+    {
+      "id": "PROC-04",
+      "persona": "Finance Director",
+      "operation": "spend_analysis",
+      "onepager_bullet": "Deliver real-time spend analytics to identify savings opportunities and prevent duplicate spending",
+      "prompt": "Where is the purchasing budget under pressure, and what should we review before approving more spend?",
+      "arguments": {
+        "operation": "spend_analysis"
+      },
+      "must_include": [
+        "Software",
+        "$60,000",
+        "No purchase order is created"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "ProcurementAgent"
+    }
+  ],
+  "assertion_principle": "Direct tests call each operation with deterministic arguments and assert only source-backed evidence and safety gates."
+}

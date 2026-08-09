@@ -1,0 +1,129 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/customer-loyalty-rewards",
+  "display_name": "Customer Loyalty and Rewards Agent",
+  "source_path": "agents/@aibast-agents-library/b2c_sales_stacks/customer_loyalty_rewards_stack/customer_loyalty_rewards_agent.py",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/b2c_sales_stacks/customer_loyalty_rewards_stack/customer_loyalty_rewards_agent.py",
+  "target_filename": "customer_loyalty_rewards_agent.py",
+  "expected_tool": "CustomerLoyaltyRewardsAgent",
+  "operations": [
+    "loyalty_dashboard",
+    "points_summary",
+    "reward_recommendations",
+    "tier_analysis"
+  ],
+  "manual_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
+  "manual_authoring": {
+    "knowledge_files": 2,
+    "skills": 4,
+    "status": "source-assets-only",
+    "publish": false
+  },
+  "manual_knowledge_files": [
+    "manual/knowledge/aibast_loyalty-rewards-synthetic-records.md",
+    "manual/knowledge/aibast_loyalty-rewards-rules-and-safety.md"
+  ],
+  "manual_skill_count": 4,
+  "production_connectors": [
+    "Approved read-only loyalty ledger",
+    "Approved consented CRM preference feed",
+    "Authorized rewards workflow"
+  ],
+  "write_controls": {
+    "authenticated_tools_required": true,
+    "explicit_human_approval_required": true,
+    "authorization_check_required": true,
+    "audit_log_required": true,
+    "local_demo_performs_writes": false
+  },
+  "copilot_studio": {
+    "authoring_mode": "manual-upload",
+    "status": "not_initialized",
+    "operations": [
+      "loyalty_dashboard",
+      "points_summary",
+      "reward_recommendations",
+      "tier_analysis"
+    ],
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_loyalty-rewards-synthetic-records.md",
+      "manual/knowledge/aibast_loyalty-rewards-rules-and-safety.md"
+    ],
+    "manual_skill_count": 4,
+    "required_connections": [
+      "Approved read-only loyalty ledger",
+      "Approved consented CRM preference feed",
+      "Authorized rewards workflow"
+    ],
+    "publish_requires_confirmation": true,
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "validated_manual": {
+      "display_name": "Customer Loyalty Manual",
+      "bot_id": "a1acd1b2-dde5-418a-b206-b157020d45e5",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "web_search_removed": true,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    },
+    "validated_pilot": {
+      "display_name": "Customer Loyalty Pilot",
+      "schema_name": "aibast_CustomerLoyaltyandRewardsP",
+      "bot_id": "53da9862-dc66-4971-8cd4-23ca0090d2b1",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "changes_pushed": 7,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    }
+  },
+  "smoke_test": {
+    "prompt": "As Loyalty Program Director, summarize the synthetic program health and governance boundary.",
+    "must_call": "CustomerLoyaltyRewardsAgent",
+    "operation": "loyalty_dashboard",
+    "persona": "Loyalty Program Director",
+    "must_include": [
+      "Synthetic Loyalty Program Dashboard",
+      "no member is contacted"
+    ]
+  },
+  "safety_boundary": "The agent is informational only and never contacts or enrolls a member, changes points or tier, creates an offer, issues or redeems a reward, refunds funds, creates an order, or completes a purchase.",
+  "safety": {
+    "mode": "informational-only",
+    "prohibits": [
+      "contact",
+      "enrollment",
+      "points change",
+      "tier change",
+      "offer issuance",
+      "reward issuance",
+      "redemption",
+      "purchase"
+    ]
+  },
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  }
+}

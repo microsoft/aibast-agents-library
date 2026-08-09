@@ -1,0 +1,76 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T19:39:45.033Z",
+  "solution": "@aibast-agents-library/license-renewal-expansion",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "License Renewal Pilot",
+  "schema_name": "aibast_LicenseRenewalandExpansion",
+  "bot_id": "33007b45-ef67-4fcc-bcb1-0fab0c72f64c",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "LRE-01",
+      "must_include": [
+        "Renewal Pipeline",
+        "Draft Renewal Preparation Checklist",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "LRE-02",
+      "must_include": [
+        "Expansion Opportunities",
+        "Draft Packaging Options",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "LRE-03",
+      "must_include": [
+        "Churn Risk Assessment",
+        "Synthetic Switching-Cost Review",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "LRE-04",
+      "must_include": [
+        "Synthetic Revenue Scenario",
+        "Illustrative midpoint assumption",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    }
+  ]
+}

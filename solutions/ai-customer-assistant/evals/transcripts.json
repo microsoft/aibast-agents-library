@@ -1,0 +1,89 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:36:55.618012+00:00",
+  "solution": "@aibast-agents-library/ai-customer-assistant",
+  "onepager": "Customer Escalations Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "AICustomerAssistantAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/general_stacks/ai_customer_assistant_stack/ai_customer_assistant_agent.py",
+      "sha256": "1495e102d2ca0e2b5a231fc4b71e7d2bbb9d0fcac21efa4118d7448b6a47ac17"
+    }
+  ],
+  "case_file": "tests/demo_cases/ai-customer-assistant.json",
+  "case_file_sha256": "7f9d591fe24d4257777998aec0957240d2094fb7b35fcc2f25b96639a566cbbb",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "CES-01",
+      "persona": "Back-Office Agent",
+      "onepager_promise": "Perform real-time inquiry analysis from full customer context to speed up escalation handling",
+      "prompt": "I just inherited the export-error escalation. Give me the full brief before I respond.",
+      "assistant_response": "## The Situation\n\n**Acme Corp** (Enterprise customer, high value) \u2014 **Lisa Park** hit a wall trying to export analytics reports. Any date range **over 30 days** throws a **500 error**. She's frustrated and it's blocking her workflow.\n\n## What You've Got\n\n- **Root cause**: KB-104 flags this as a known timeout issue with large exports\n- **Match confidence**: 97% \u2014 this fits\n- **SLA**: 4 hours to respond\n- **Current assignment**: Tier 1 Technical Support\n\n## Your Move\n\nThe recommended path is to point her to KB-104 (the known issue article) and either:\n1. Offer a workaround (split the export into smaller chunks, or check if there's a config fix)\n2. Escalate to backend/product if she needs the full range and the workaround doesn't work\n\n**Before you respond**, what does KB-104 actually say? Do you have access to the knowledge base, or do you need me to search for approved resolution steps?",
+      "agent_logs": "[AICustomerAssistantAgent] **Customer Inquiry: INQ-4001**\n\n| Field | Detail |\n|---|---|\n| Customer | Acme Corp (Enterprise) |\n| Contact | Lisa Park |\n| Channel | Live Chat |\n| Category | Technical Issue |\n| Priority | High |\n| Sentiment | Frustrated |\n\n**Subject:** Unable to generate monthly usage report\n\n**Description:** The export button on the analytics dashboard returns a 500 error when selecting date ranges longer than 30 days.\n\n**Recommended Response:**\n- Suggested Article: [KB-104] Known Issue: Report Export Timeout for Large Date Ranges (relevance: 97%)\n- Assigned Team: Tier 1 Technical Support\n- SLA Target: 4 hours\n- Escalation Rule Triggered: No\n\n**Review gate:** This recommendation does not execute the route. Synthetic decision support only. No customer message is sent, no case is changed, and every escalation or response requires an authorized reviewer.\n\nSource: [Synthetic CRM + Knowledge Base + Ticketing Snapshot]\nAgents: AICustomerAssistantAgent",
+      "expected_agent": "AICustomerAssistantAgent",
+      "must_include": [
+        "INQ-4001",
+        "KB-104",
+        "No customer message is sent"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "CES-02",
+      "persona": "Back-Office Agent",
+      "onepager_promise": "Recommend resolutions aligned to policies, case studies, and playbooks to improve resolution success rates",
+      "prompt": "What approved guidance should I review for the customer who cannot export a long analytics range?",
+      "assistant_response": "**KB-104 is your primary reference** \u2014 it documents the exact issue: exports timeout with a 500 error for ranges over 60 days.\n\n**Approved guidance to share:**\n1. **Immediate workaround**: Split the export into 30-day segments\n2. **Timeline**: Engineering fix targeted for v3.8.2 (Dec 2025)\n3. **Escalation option**: If they need a one-time bulk export now, they can contact support for a manual pull\n\nThis keeps the customer moving while the permanent fix is in progress. Do you need the full case brief or the escalation routing?",
+      "agent_logs": "[AICustomerAssistantAgent] **Knowledge Base Search Results**\nQuery: \"Unable to generate monthly usage report\"\n\n| Article ID | Title | Relevance | Views |\n|---|---|---|---|\n| KB-104 | Known Issue: Report Export Timeout for Large Date Ranges | 97% | 456 |\n| KB-101 | How to Export Analytics Reports | 95% | 1,247 |\n\n**Top Match: Known Issue: Report Export Timeout for Large Date Ranges**\n\n**Summary:** Export fails with 500 error for date ranges exceeding 60 days. Workaround and fix timeline available.\n\n**Resolution Steps:**\n1. Split export into 30-day segments as a workaround\n2. Engineering fix scheduled for v3.8.2 (target: Dec 2025)\n3. Contact support if you need a one-time bulk export\n\nLast Updated: 2025-11-10 | Helpful Votes: 398 / 456 views\n\n**Review gate:** Synthetic decision support only. No customer message is sent, no case is changed, and every escalation or response requires an authorized reviewer.\n\nSource: [Synthetic Knowledge Base]\nAgents: AICustomerAssistantAgent",
+      "expected_agent": "AICustomerAssistantAgent",
+      "must_include": [
+        "KB-104",
+        "Resolution Steps",
+        "No customer message is sent"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "CES-03",
+      "persona": "Escalation Manager",
+      "onepager_promise": "Recommend resolutions aligned to policies, case studies, and playbooks to improve resolution success rates",
+      "prompt": "The SSO migration case is urgent. Which queue and response target does our rulebook recommend?",
+      "assistant_response": "**Queue: Tier 2 Engineering**  \n**SLA: 2 hours**\n\nThis is a critical technical issue. Route it to Tier 2 Engineering and escalate immediately \u2014 the rulebook flags it for expedited handling. A human reviewer must authorize the actual escalation before any customer communication goes out.",
+      "agent_logs": "[AICustomerAssistantAgent] **Escalation Routing: INQ-4003**\n\n| Field | Detail |\n|---|---|\n| Category | Technical Issue |\n| Priority | Critical |\n| Assigned Team | Tier 2 Engineering |\n| SLA Target | 2 hours |\n| Escalation Rule Triggered | Yes |\n\n**Routing Matrix:**\n\n| Category | Priority | Team | SLA |\n|---|---|---|---|\n| Technical Issue | Critical | Tier 2 Engineering | 2 hours |\n| Technical Issue | High | Tier 1 Technical Support | 4 hours |\n| Technical Issue | Medium | General Support | 8 hours |\n| Technical Issue | Low | General Support | 24 hours |\n| Billing & Pricing | Critical | Billing Escalations | 2 hours |\n| Billing & Pricing | High | Account Management | 4 hours |\n| Billing & Pricing | Medium | Account Management | 8 hours |\n| Billing & Pricing | Low | Self-Service Billing | 24 hours |\n| Feature Request | Critical | Product Management | 8 hours |\n| Feature Request | High | Product Management | 24 hours |\n| Feature Request | Medium | Product Backlog | 72 hours |\n| Feature Request | Low | Product Backlog | 168 hours |\n\n**Review gate:** This recommendation does not execute the route. Synthetic decision support only. No customer message is sent, no case is changed, and every escalation or response requires an authorized reviewer.\n\nSource: [Synthetic Routing Rules + SLA Configuration]\nAgents: AICustomerAssistantAgent",
+      "expected_agent": "AICustomerAssistantAgent",
+      "must_include": [
+        "Tier 2 Engineering",
+        "2 hours",
+        "does not execute"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "CES-04",
+      "persona": "Quality Analyst",
+      "onepager_promise": "Perform real-time inquiry analysis from full customer context to speed up escalation handling",
+      "prompt": "What does the latest service-quality snapshot say, and which signals need human review?",
+      "assistant_response": "**Key signals needing human review:**\n\n1. **INQ-3979 (2-star)** \u2014 \"Still waiting for follow-up on my SSO issue.\" This is an SLA breach risk and signals a stuck case. Recommend escalation team check for missing touch-point.\n\n2. **INQ-3985 (3-star)** \u2014 \"Had to explain problem multiple times.\" Suggests knowledge-gap or handoff failure between agents. Knowledge team should review the case notes.\n\n3. **Response time trend** \u2014 12 minutes average is solid, but the 4-star and 2-star feedback both cite connection/wait delays. Staffing or routing might have bottlenecks during peak hours.\n\n**Overall health:** CSAT 4.3 and NPS 42 are stable (WoW +0.2 is good), and FCR at 78% is healthy. The pattern is clear: your top performers (5-stars) mention speed and knowledge; your at-risk cases involve wait time and case continuity. Prioritize INQ-3979 for immediate follow-up.",
+      "agent_logs": "[AICustomerAssistantAgent] **Customer Satisfaction Dashboard**\n\n| Metric | Value |\n|---|---|\n| Overall CSAT | 4.3/5.0 |\n| NPS Score | 42 |\n| Avg Response Time | 12 minutes |\n| First Contact Resolution | 78% |\n\n**Score Distribution:**\n\n| Rating | Count |\n|---|---|\n| 5 Star | 2 (33%) |\n| 4 Star | 2 (33%) |\n| 3 Star | 1 (17%) |\n| 2 Star | 1 (17%) |\n| 1 Star | 0 (0%) |\n\n**Recent Surveys:**\n\n| Inquiry | Rating | Comment | Date |\n|---|---|---|---|\n| INQ-3990 | ***** (5/5) | Resolved quickly, great experience. | 2025-11-13 |\n| INQ-3988 | **** (4/5) | Helpful but took a while to connect. | 2025-11-13 |\n| INQ-3985 | *** (3/5) | Issue resolved but had to explain problem multiple | 2025-11-12 |\n| INQ-3982 | ***** (5/5) | Agent was knowledgeable and proactive. | 2025-11-12 |\n| INQ-3979 | ** (2/5) | Still waiting for follow-up on my SSO issue. | 2025-11-11 |\n| INQ-3975 | **** (4/5) | Good resolution, would prefer faster initial respo | 2025-11-11 |\n\n**Trends:** WoW +0.2, MoM +0.1\n\nAll comments are fictional pilot records. Synthetic decision support only. No customer message is sent, no case is changed, and every escalation or response requires an authorized reviewer.\n\nSource: [Synthetic Survey + CRM Analytics Snapshot]\nAgents: AICustomerAssistantAgent",
+      "expected_agent": "AICustomerAssistantAgent",
+      "must_include": [
+        "4.3/5.0",
+        "Recent Surveys",
+        "fictional pilot records"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

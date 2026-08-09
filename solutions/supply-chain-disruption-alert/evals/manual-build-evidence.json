@@ -1,0 +1,100 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-08-08T13:12:43.018Z",
+  "solution": "@aibast-agents-library/supply-chain-disruption-alert",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "Supply Chain Disruption Manual",
+    "bot_id": "31ce8e05-7235-4da2-a0f1-358ba5ac63e5",
+    "created": true
+  },
+  "target_model": "Claude Sonnet 4.6",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 4,
+      "confirmed": 4
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-01",
+      "prompt": "Which active disruption has the largest modeled impact and what is affected?",
+      "must_include": [
+        "DISR-002",
+        "$3,800,000.00",
+        "SKU-1010"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "14-supply_chain_disruption_alert-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-02",
+      "prompt": "Why is RT-APAC-01 high risk?",
+      "must_include": [
+        "Asia-Pacific Primary",
+        "HIGH",
+        "Weather"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "15-supply_chain_disruption_alert-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-03",
+      "prompt": "Draft a DISR-002 mitigation scenario without rerouting or moving inventory.",
+      "must_include": [
+        "DISR-002",
+        "Draft Disruption Mitigation Scenario",
+        "no purchase order"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "16-supply_chain_disruption_alert-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-04",
+      "prompt": "Show Electronics alternatives without activating a supplier.",
+      "must_include": [
+        "TechSource Taiwan",
+        "due diligence",
+        "human approval"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "17-supply_chain_disruption_alert-04.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/supply-chain-disruption-alert/screenshots/manual/browserfilm.json",
+    "gif": "solutions/supply-chain-disruption-alert/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/supply-chain-disruption-alert/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "18-confirm-draft.jpg"
+  }
+}

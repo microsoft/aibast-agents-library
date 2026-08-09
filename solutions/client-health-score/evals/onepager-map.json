@@ -1,0 +1,26 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/client-health-score",
+  "onepager": "Client Health Score Agent one-pager.pptx",
+  "source_slide_sha256": "b94f6f495406931c4a0d009734d2b8af5ced249b247ea826b63ba0f2709b39e9",
+  "promises": [
+    {
+      "advertised_promise": "Perform predictive health scoring to identify risks early and enable proactive retention strategies",
+      "operations": ["health_dashboard", "engagement_analysis", "satisfaction_trend"],
+      "demo_cases": ["CHS-01", "CHS-02", "CHS-03"],
+      "synthetic_evidence": ["Eight fictional clients expose health, NPS, margin, utilization, billing, escalation, executive-contact, and satisfaction signals", "Scenario churn indicators are derived deterministically from the packaged health score and explicitly labeled unvalidated"]
+    },
+    {
+      "advertised_promise": "Detect at-risk accounts to prevent churn and protect high-value client relationships",
+      "operations": ["at_risk_clients", "health_dashboard"],
+      "demo_cases": ["CHS-01", "CHS-04"],
+      "synthetic_evidence": ["TechCorp Industries is critical while Global Finance Corp and Healthcare Solutions Inc are at risk", "The report names risk drivers and keeps churn indicators probabilistic rather than certain"]
+    },
+    {
+      "advertised_promise": "Automate retention planning to restore satisfaction and strengthen executive trust",
+      "operations": ["retention_plan"],
+      "demo_cases": ["CHS-05"],
+      "synthetic_evidence": ["Each turnaround account receives a fictional executive sponsor, account owner, delivery lead, next engagement, preparation list, and approval gate", "No meeting, message, concession, renewal, or CRM update is executed"]
+    }
+  ]
+}

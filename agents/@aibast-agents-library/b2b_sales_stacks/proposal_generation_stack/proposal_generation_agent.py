@@ -21,8 +21,8 @@ __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/proposal-generation",
     "version": "1.0.0",
-    "display_name": "Proposal Generation",
-    "description": "AI-powered proposal generation with RFP analysis, personalized content, pricing optimization, and competitive positioning.",
+    "display_name": "Proposal Generation Agent",
+    "description": "Automate proposal creation to accelerate deal cycles, improve win rates, and deliver consistent, high-quality responses.",
     "author": "AIBAST",
     "tags": ["b2b", "sales", "proposal", "rfp", "pricing", "competitive-positioning"],
     "category": "b2b_sales",
@@ -194,7 +194,7 @@ def _resolve_rfp(query):
     for key in _RFPS:
         if key in q or q in _RFPS[key]["account"].lower():
             return key
-    return "meridian"
+    return None
 
 
 def _match_capabilities(rfp):
@@ -382,7 +382,18 @@ class ProposalGenerationAgent(BasicAgent):
         self.name = "ProposalGenerationAgent"
         self.metadata = {
             "name": self.name,
-            "description": __manifest__["description"],
+            "description": (
+                f"{__manifest__['description']} Uses bundled synthetic RFP evidence and "
+                "produces read-only draft content only; no proposal is delivered, no price "
+                "is approved, and no customer communication is sent. Route requests to outline, "
+                "assemble, structure, or checklist a proposal package to `compile_proposal`; "
+                "that operation returns `Proposal Package` and "
+                "`Required Human Review Before Delivery`."
+            ),
+            "operations": [
+                "analyze_rfp", "executive_summary", "solution_pricing",
+                "references_positioning", "compile_proposal", "delivery_summary",
+            ],
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -393,21 +404,45 @@ class ProposalGenerationAgent(BasicAgent):
                             "solution_pricing", "references_positioning",
                             "compile_proposal", "delivery_summary",
                         ],
-                        "description": "The proposal operation to perform",
+                        "description": (
+                            "Select the requested proposal deliverable. analyze_rfp: requirements and "
+                            "existing assets. executive_summary: buyer-aligned draft summary. "
+                            "solution_pricing: implementation and pricing assumptions. "
+                            "references_positioning: references, competitors, and win theme. "
+                            "compile_proposal: REQUIRED for outlining, assembling, structuring, or "
+                            "checklisting the proposal package and reviews before delivery; returns "
+                            "Proposal Package and Required Human Review Before Delivery. "
+                            "delivery_summary: concise readiness summary and next-step options."
+                        ),
                     },
                     "rfp_name": {
                         "type": "string",
+                        "enum": ["Meridian Healthcare", "Contoso Technologies", "Pinnacle Financial Group"],
                         "description": "RFP or account name (e.g. 'Meridian Healthcare')",
+                    },
+                    "data_source": {
+                        "type": "string",
+                        "enum": ["synthetic"],
+                        "description": "Deterministic source route. Only bundled synthetic evidence is supported.",
                     },
                 },
                 "required": ["operation"],
+                "additionalProperties": False,
             },
         }
         super().__init__(name=self.name, metadata=self.metadata)
 
     def perform(self, **kwargs) -> str:
         op = kwargs.get("operation", "analyze_rfp")
+        source = kwargs.get("data_source", "synthetic")
+        if source != "synthetic":
+            return "**Error:** `data_source` must be `synthetic`."
         key = _resolve_rfp(kwargs.get("rfp_name", ""))
+        if key is None:
+            return (
+                "**Error:** Unknown `rfp_name`. Valid synthetic accounts: "
+                "Meridian Healthcare, Contoso Technologies, Pinnacle Financial Group."
+            )
         dispatch = {
             "analyze_rfp": self._analyze_rfp,
             "executive_summary": self._executive_summary,
@@ -419,7 +454,14 @@ class ProposalGenerationAgent(BasicAgent):
         handler = dispatch.get(op)
         if not handler:
             return json.dumps({"status": "error", "message": f"Unknown operation: {op}"})
-        return handler(key)
+        output = handler(key)
+        return (
+            output.replace("Source: [", "Synthetic source model: [")
+            + "\n\n**Evidence boundary:** Exact names, dates, requirements, prices, "
+            "discounts, margins, fit scores, and projections are synthetic planning evidence. "
+            "This read-only output did not approve pricing, create a final document, submit "
+            "a response, contact a reference, or communicate with a customer."
+        )
 
     # ── analyze_rfp ────────────────────────────────────────────
     def _analyze_rfp(self, key):
@@ -607,17 +649,17 @@ class ProposalGenerationAgent(BasicAgent):
             f"**Supporting Materials:**\n{cert_attachments}\n"
             f"- {refs[0]['customer']} case study (2 pages)\n"
             f"- Implementation timeline visual (1 page)\n\n"
-            f"**Delivery Package:**\n"
-            f"- PDF proposal (branded template)\n"
-            f"- Executive presentation (12 slides)\n"
-            f"- Pricing spreadsheet (detailed breakdown)\n"
-            f"- Reference contact sheet ({num_refs} contacts)\n\n"
-            f"**Pre-Delivery Checklist:**\n"
-            f"- Legal review: Approved\n"
-            f"- Pricing approval: Confirmed (margin {pricing['overall_margin_pct']}% > 35% floor)\n"
-            f"- Branding: Compliant\n"
-            f"- Requirement coverage: {overall}% fit verified\n"
-            f"- Spell check: Complete\n\n"
+            f"**Planned Draft Package:**\n"
+            f"- Proposed PDF proposal structure (branded template)\n"
+            f"- Proposed executive presentation structure (12 slides)\n"
+            f"- Proposed pricing worksheet (detailed breakdown)\n"
+            f"- Proposed reference review sheet ({num_refs} synthetic examples)\n\n"
+            f"**Required Human Review Before Delivery:**\n"
+            f"- Legal review: Not performed\n"
+            f"- Pricing approval: Required from an authorized approver\n"
+            f"- Branding review: Required\n"
+            f"- Requirement coverage: Synthetic fit model reports {overall}%\n"
+            f"- Editorial review: Required\n\n"
             f"Source: [Document Assembly + Compliance Check]\n"
             f"Agents: ProposalAssemblyAgent"
         )
@@ -644,20 +686,20 @@ class ProposalGenerationAgent(BasicAgent):
             f"| Executive summary | Personalized to {rfp['key_stakeholder']} |\n"
             f"| Solution | {_OUR_CAPABILITIES['impl_weeks']}-week implementation plan |\n"
             f"| Pricing | ${pricing['total_proposed']:,} ({pricing['overall_discount_pct']}% discount, {pricing['overall_margin_pct']}% margin) |\n"
-            f"| References | {len(refs)} {rfp['industry']}-specific, contact-ready |\n"
+            f"| References | {len(refs)} synthetic {rfp['industry']}-specific examples requiring availability review |\n"
             f"| Compliance | {', '.join(_OUR_CAPABILITIES['certifications'][:3])} included |\n\n"
-            f"**Win Probability: {win_pct}%**\n\n{factor_table}\n"
+            f"**Synthetic Win-Probability Indicator: {win_pct}%**\n\n{factor_table}\n"
             f"**Session Accomplishments:**\n"
             f"- RFP requirements mapped to capabilities ({overall}% fit)\n"
             f"- Executive summary personalized to {rfp['key_stakeholder']}\n"
             f"- Competitive positioning vs {len(rfp['competitors_shortlisted'])} shortlisted vendors\n"
             f"- Pricing optimized (${pricing['total_savings']:,} discount, {pricing['overall_margin_pct']}% margin protected)\n"
-            f"- Full proposal package assembled\n\n"
-            f"**Delivery Recommendation:**\n"
-            f"- Submit within {rfp['decision_timeline_days']} day window\n"
-            f"- Request confirmation meeting within 48 hours\n"
-            f"- Offer reference calls proactively\n"
-            f"- CC executive sponsor for alignment\n\n"
+            f"- Draft proposal package outline prepared for review\n\n"
+            f"**Human-Governed Next-Step Options:**\n"
+            f"- Review the draft against the {rfp['decision_timeline_days']} day synthetic window\n"
+            f"- Decide whether an authorized seller should request a confirmation meeting\n"
+            f"- Validate reference availability before offering any calls\n"
+            f"- Decide whether executive sponsorship is appropriate\n\n"
             f"Source: [All Proposal Systems]\n"
             f"Agents: ProposalAssemblyAgent (orchestrating all agents)"
         )

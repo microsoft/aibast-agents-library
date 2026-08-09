@@ -14,7 +14,7 @@ class M365DemoUpdaterAgent:
     """Agent that updates demo files to M365 Copilot pattern"""
     
     def __init__(self):
-        self.name = "M365 Demo Updater"
+        self.name = "M365DemoUpdater"
         self.description = "Updates all demo HTML files to use the M365 Copilot style pattern"
         self.updated_files = []
         self.failed_files = []

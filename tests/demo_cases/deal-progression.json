@@ -1,0 +1,157 @@
+{
+  "solution": "Deal Progression Agent",
+  "slot": 12,
+  "agent": "@aibast-agents-library/deal-progression",
+  "onepager": "Deal Progression Agent one-pager.pptx",
+  "agent_files": [
+    "deal_progression_agent"
+  ],
+  "note": "Locked persona-language capture contract with one deterministic synthetic case per implemented operation.",
+  "cases": [
+    {
+      "id": "DP-01",
+      "persona": "Sales Director",
+      "onepager_bullet": "Perform proactive pipeline analysis to improve forecast confidence",
+      "prompt": "Which opportunities need attention in the synthetic pipeline, and what evidence should I review before changing the forecast?",
+      "operation": "pipeline_health",
+      "arguments": {
+        "operation": "pipeline_health",
+        "data_source": "synthetic"
+      },
+      "must_include": [
+        "Pipeline Health Summary",
+        "Evidence boundary",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "DealProgressionAgent"
+    },
+    {
+      "id": "DP-02",
+      "persona": "Account Executive",
+      "onepager_bullet": "Detect stalled deals to reduce slippage and protect revenue commitments",
+      "prompt": "Which synthetic deals have genuinely stalled, and what blocker evidence explains the loss of momentum?",
+      "operation": "stalled_deals",
+      "arguments": {
+        "operation": "stalled_deals",
+        "data_source": "synthetic"
+      },
+      "must_include": [
+        "Stalled Deal Deep-Dive",
+        "Diagnosis",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "DealProgressionAgent"
+    },
+    {
+      "id": "DP-03",
+      "persona": "Account Executive",
+      "onepager_bullet": "Generate action plans that accelerate deal progress and improve close rates",
+      "prompt": "Draft reviewable intervention plans for the stalled synthetic deals, but do not assign work or contact anyone.",
+      "operation": "action_plans",
+      "arguments": {
+        "operation": "action_plans",
+        "data_source": "synthetic"
+      },
+      "must_include": [
+        "Action Plans",
+        "Planning Objective",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "DealProgressionAgent"
+    },
+    {
+      "id": "DP-04",
+      "persona": "Sales Director",
+      "onepager_bullet": "Generate action plans that accelerate deal progress and improve close rates",
+      "prompt": "Which synthetic timing options could move pipeline review forward without turning scenario value into a forecast commitment?",
+      "operation": "acceleration",
+      "arguments": {
+        "operation": "acceleration",
+        "data_source": "synthetic"
+      },
+      "must_include": [
+        "Pipeline Acceleration Strategy",
+        "Synthetic Scenario",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "DealProgressionAgent"
+    },
+    {
+      "id": "DP-05",
+      "persona": "Sales Director",
+      "onepager_bullet": "Generate action plans that accelerate deal progress and improve close rates",
+      "prompt": "Map candidate follow-up work to the synthetic rep capacity for my review; do not create tasks or alerts.",
+      "operation": "assign_tasks",
+      "arguments": {
+        "operation": "assign_tasks",
+        "data_source": "synthetic"
+      },
+      "must_include": [
+        "Draft Task Assignment Plan",
+        "candidate tasks",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "DealProgressionAgent"
+    },
+    {
+      "id": "DP-06",
+      "persona": "Sales Director",
+      "onepager_bullet": "Perform proactive pipeline analysis to improve forecast confidence",
+      "prompt": "Give me a leadership-ready summary of the synthetic pipeline findings and the decisions that still require human review.",
+      "operation": "executive_summary",
+      "arguments": {
+        "operation": "executive_summary",
+        "data_source": "synthetic"
+      },
+      "must_include": [
+        "Executive Summary",
+        "Synthetic Planning Targets",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "min_words": 30,
+      "expects_agent": "DealProgressionAgent"
+    }
+  ],
+  "assertion_principle": "expects_agent proves routing; must_include checks deterministic tool output; must_not_include catches routing stalls or prohibited side-effect claims."
+}

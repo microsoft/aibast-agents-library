@@ -1,0 +1,56 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T20:05:38.442Z",
+  "solution": "@aibast-agents-library/personalized-marketing",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Personalized Marketing Pilot",
+  "schema_name": "aibast_PersonalizedMarketingPilot",
+  "bot_id": "c0a4b3a9-1422-4502-9939-28b87e1cb132",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "PM-01",
+      "must_include": [
+        "Prepared for:** Marketing Director",
+        "Total Addressable Customers",
+        "no audience is profiled with sensitive attributes"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "PM-02",
+      "must_include": [
+        "Prepared for:** Campaign Manager",
+        "Draft Campaign Design Portfolio",
+        "Win-Back Journey"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "PM-03",
+      "must_include": [
+        "Draft Content Personalization Matrix",
+        "New Explorers",
+        "Draft Hero Copy"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "PM-04",
+      "must_include": [
+        "Marketing Performance Analysis",
+        "A/B Test Results",
+        "Synthetic aggregate planning data"
+      ],
+      "must_not_include": [],
+      "passed": true
+    }
+  ]
+}

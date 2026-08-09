@@ -1,0 +1,101 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:49:53.542547+00:00",
+  "solution": "@aibast-agents-library/wealth-insights-generator",
+  "onepager": "42. Wealth Insights Generator Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "WealthInsightsGeneratorAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/financial_services_stacks/wealth_insights_generator_stack/wealth_insights_generator_agent.py",
+      "sha256": "aec5aca3409747d4df2364772c4e92a0a7ae4f94f650d4a0bd7dcd55a5ca2355"
+    }
+  ],
+  "case_file": "tests/demo_cases/wealth-insights-generator.json",
+  "case_file_sha256": "ce31826ebdde80eda94acceb934dae01be455101be80eced32abbb8d6fda954e",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "WIG-01",
+      "persona": "Advisory Director",
+      "onepager_promise": "Fixed market snapshot",
+      "prompt": "Give me the fixed market snapshot for the morning huddle and label whether it is current data.",
+      "assistant_response": "## Morning Huddle Summary\n\n**DATA LABEL: SYNTHETIC & FIXED \u2014 NOT CURRENT**\n\nThis is a fictional market snapshot used for demo and training only. It does not reflect real-time market data and should not be used for investment decisions.\n\nThe snapshot shows:\n- **Equities up across the board** \u2014 S&P 500 +4.8%, NASDAQ +6.2% YTD\n- **International markets strong** \u2014 EAFE +5.5% on dollar weakness\n- **Fixed income soft** \u2014 10-Year at 4.28%, aggregate bond +1.2%\n- **Gold rally steady** \u2014 +8.1% on geopolitical risk\n\nPractice AUM sits at $29.8M. Any client performance review or planning conversation this morning should reference these benchmarks\u2014but remember, this data is synthetic and requires licensed advisor review before any client outreach or action.",
+      "agent_logs": "[WealthInsightsGeneratorAgent] > **SYNTHETIC DEMO DATA \u2014 ADVISOR REVIEW REQUIRED.** Fictional clients, holdings, market snapshots, and planning signals only. This is not investment, tax, legal, estate-planning, or financial advice; no outreach or transaction has occurred.\n\n# Fixed Synthetic Market Snapshot\n\n## Index Performance\n\n| Index | Current | YTD Return | P/E | Yield |\n|---|---|---|---|---|\n| S&P 500 | 5,285.42 | +4.8% | 22.1 | 1.35% |\n| NASDAQ Composite | 16,742.15 | +6.2% | 28.5 | 0.72% |\n| Dow Jones Industrial | 39,180.50 | +3.1% | 19.8 | 1.82% |\n| MSCI EAFE | 2,385.70 | +5.5% | 15.2 | 2.95% |\n| Bloomberg US Agg Bond | 98.45 | +1.2% | N/A | 4.45% |\n| 10-Year Treasury | 4.28 | +0.0% | N/A | 4.28% |\n| Gold (per oz) | 2,185.30 | +8.1% | N/A | N/A |\n\n## Key Observations\n\n- Equity markets continue positive YTD momentum; NASDAQ leading at +6.2%\n- International developed markets (EAFE) outperforming on weaker dollar\n- Fixed income subdued with 10-Year Treasury at 4.28%\n- Gold rally continues (+8.1% YTD) on geopolitical uncertainty\n\n**Total Practice AUM:** $29,800,000",
+      "expected_agent": "WealthInsightsGeneratorAgent",
+      "must_include": [
+        "NASDAQ Composite",
+        "Fixed Synthetic"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "WIG-02",
+      "persona": "Wealth Advisor",
+      "onepager_promise": "Analyze client portfolios and surface held-away wealth to uncover expansion opportunities",
+      "prompt": "Which household has the largest held-away opportunity and what life event needs validation?",
+      "assistant_response": "**George & Martha Kensington (WM-003)** hold the largest held-away opportunity at **$1.85M**.\n\nTheir life event requiring validation is **estate plan revision** \u2014 currently due and likely tied to RMD optimization planning. This is a signal for an advisor review meeting to confirm beneficiary alignment, trust structure, and tax efficiency.\n\nWould you like a meeting brief for the Kensington household to prepare next steps?",
+      "agent_logs": "[WealthInsightsGeneratorAgent] > **SYNTHETIC DEMO DATA \u2014 ADVISOR REVIEW REQUIRED.** Fictional clients, holdings, market snapshots, and planning signals only. This is not investment, tax, legal, estate-planning, or financial advice; no outreach or transaction has occurred.\n\n# Client Insights Report\n\n**Total AUM:** $29,800,000\n**Average Alpha:** 0.7%\n\n| Client | Managed AUM | Held Away | Strategy | YTD | Alpha | Health | Next Review |\n|---|---|---|---|---|---|---|---|\n| Harrison Family Trust (WM-001) | $8,500,000 | $620,000 | Balanced Growth | +5.2% | +1.1% | Strong | 2025-04-15 |\n| Dr. Anita Rao (WM-002) | $3,200,000 | $1,100,000 | Aggressive Growth | +7.8% | +1.6% | Strong | 2025-06-01 |\n| George & Martha Kensington (WM-003) | $12,400,000 | $1,850,000 | Capital Preservation | +2.1% | +0.3% | Satisfactory | 2025-04-01 |\n| Tidewater Ventures LLC (WM-004) | $5,700,000 | $900,000 | Alternative Focused | +3.9% | -0.2% | Attention Needed | 2025-05-15 |\n\n## Life Events & Planning Needs\n\n### Harrison Family Trust (WM-001)\n\n- Daughter starting college Fall 2025\n\n### Dr. Anita Rao (WM-002)\n\n- Planning practice sale in 2-3 years\n\n### George & Martha Kensington (WM-003)\n\n- Estate plan revision needed\n- RMD optimization\n\n### Tidewater Ventures LLC (WM-004)\n\n- Considering real estate exit strategy\n",
+      "expected_agent": "WealthInsightsGeneratorAgent",
+      "must_include": [
+        "WM-003",
+        "Held Away"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "WIG-03",
+      "persona": "Relationship Manager",
+      "onepager_promise": "Detect planning gaps and risk exposures to support proactive client conversations",
+      "prompt": "Which clients have high-priority planning signals for advisor review?",
+      "assistant_response": "**High-priority alerts flagged for advisor review:**\n\n1. **Harrison Family Trust** \u2014 529 plan contribution deadline with daughter's college enrollment in Fall 2025\n2. **Dr. Anita Rao** \u2014 Practice sale anticipated in 2\u20133 years; pre-sale tax and asset protection planning needed\n\nBoth warrant near-term meetings to move action items forward. The Kensington household and Tidewater Ventures have medium-priority signals around estate planning updates, RMD optimization, and portfolio reallocation.\n\nRemember: this is synthetic demo data. Licensed advisor review and client confirmation are required before any outreach or planning recommendations.",
+      "agent_logs": "[WealthInsightsGeneratorAgent] > **SYNTHETIC DEMO DATA \u2014 ADVISOR REVIEW REQUIRED.** Fictional clients, holdings, market snapshots, and planning signals only. This is not investment, tax, legal, estate-planning, or financial advice; no outreach or transaction has occurred.\n\n# Opportunity Alerts\n\n## High Priority\n\n### Harrison Family Trust \u2014 Education Funding\n\n- **Description:** 529 plan contribution deadline approaching; daughter's college enrollment Fall 2025\n- **Recommended Action:** Schedule meeting to review education funding plan\n\n### Dr. Anita Rao \u2014 Liquidity Event\n\n- **Description:** Practice sale in 2-3 years; begin pre-sale tax and asset protection planning\n- **Recommended Action:** Engage tax advisor for sale structuring\n\n## Medium Priority\n\n### George & Martha Kensington \u2014 Estate Planning\n\n- **Description:** Estate plan last updated 2019; tax law changes require revision\n- **Recommended Action:** Coordinate with estate attorney for plan update\n\n### George & Martha Kensington \u2014 Rmd Optimization\n\n- **Description:** Client age 74; review Qualified Charitable Distribution strategy\n- **Recommended Action:** Model QCD scenarios vs standard RMD\n\n### Tidewater Ventures LLC \u2014 Reallocation\n\n- **Description:** Portfolio underperforming benchmark; alternative allocation review needed\n- **Recommended Action:** Prepare alternative manager review presentation\n\n**Total Alerts:** 5",
+      "expected_agent": "WealthInsightsGeneratorAgent",
+      "must_include": [
+        "Harrison Family Trust",
+        "Dr. Anita Rao"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "WIG-04",
+      "persona": "Portfolio Strategist",
+      "onepager_promise": "Detect planning gaps and risk exposures to support proactive client conversations",
+      "prompt": "Which synthetic client is below its benchmark, and what does the attribution label say?",
+      "assistant_response": "**Tidewater Ventures LLC** is the client below benchmark:\n\n- **YTD Performance:** +3.9%\n- **Benchmark:** +4.1%\n- **Alpha:** -0.2% (underperforming)\n- **Attribution Label:** **Underperformance**\n\nTidewater is on an Alternative Focused strategy (HFRI Fund Weighted benchmark) and has lagged its benchmark by 20 basis points year-to-date. The attribution label flags this directly as underperformance\u2014a signal that typically warrants advisor review for strategy evaluation or rebalancing.",
+      "agent_logs": "[WealthInsightsGeneratorAgent] > **SYNTHETIC DEMO DATA \u2014 ADVISOR REVIEW REQUIRED.** Fictional clients, holdings, market snapshots, and planning signals only. This is not investment, tax, legal, estate-planning, or financial advice; no outreach or transaction has occurred.\n\n# Performance Attribution\n\n## Strategy Benchmarks\n\n| Strategy | Benchmark | 1-Year | 3-Year | 5-Year |\n|---|---|---|---|---|\n| Balanced Growth | 60/40 Balanced | 12.5% | 8.2% | 9.1% |\n| Aggressive Growth | 80/20 Growth | 18.2% | 10.5% | 11.8% |\n| Capital Preservation | 20/80 Conservative | 5.8% | 3.9% | 4.5% |\n| Alternative Focused | HFRI Fund Weighted | 8.4% | 6.1% | 7.2% |\n\n## Client Performance vs Benchmark\n\n| Client | Strategy | YTD | Benchmark | Alpha | Attribution |\n|---|---|---|---|---|---|\n| Harrison Family Trust | Balanced Growth | +5.2% | +4.1% | +1.1% | Selection + Allocation |\n| Dr. Anita Rao | Aggressive Growth | +7.8% | +6.2% | +1.6% | Selection + Allocation |\n| George & Martha Kensington | Capital Preservation | +2.1% | +1.8% | +0.3% | Allocation |\n| Tidewater Ventures LLC | Alternative Focused | +3.9% | +4.1% | -0.2% | Underperformance |\n\n**AUM-Weighted Alpha:** +0.57%",
+      "expected_agent": "WealthInsightsGeneratorAgent",
+      "must_include": [
+        "Tidewater Ventures",
+        "Underperformance"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "WIG-05",
+      "persona": "Wealth Advisor",
+      "onepager_promise": "Produce personalized engagement materials instantly",
+      "prompt": "Prepare my review brief for the Kensington household without turning it into advice or outreach.",
+      "assistant_response": "Your Kensington brief is ready. The snapshot shows:\n\n- **Total wealth picture:** $12.4M managed + $1.85M held-away\n- **Key items to validate:** Estate plan (last updated 2019) and RMD strategy given their age (74)\n\nUse the discussion prompts to frame the conversation, but confirm all facts with the clients before any next steps. Licensed-advisor review is required before any outreach or recommendations.",
+      "agent_logs": "[WealthInsightsGeneratorAgent] > **SYNTHETIC DEMO DATA \u2014 ADVISOR REVIEW REQUIRED.** Fictional clients, holdings, market snapshots, and planning signals only. This is not investment, tax, legal, estate-planning, or financial advice; no outreach or transaction has occurred.\n\n# Draft Advisor Meeting Brief: George & Martha Kensington\n\n- **Managed AUM:** $12,400,000\n- **Held-away assets in synthetic snapshot:** $1,850,000\n- **Risk profile:** Conservative\n- **Next review:** 2025-04-01\n\n## Validate With the Client\n\n- Estate plan revision needed\n- RMD optimization\n\n## Discussion Prompts\n\n- Estate plan last updated 2019; tax law changes require revision\n- Client age 74; review Qualified Charitable Distribution strategy\n\nThis is preparation material, not a recommendation or customer communication. The advisor must validate facts, suitability, consent, and approved disclosures.",
+      "expected_agent": "WealthInsightsGeneratorAgent",
+      "must_include": [
+        "George & Martha Kensington",
+        "preparation material"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

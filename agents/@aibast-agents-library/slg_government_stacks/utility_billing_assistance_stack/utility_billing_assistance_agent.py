@@ -15,9 +15,9 @@ from basic_agent import BasicAgent
 __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/utility-billing-assistance",
-    "version": "1.0.0",
-    "display_name": "Utility Billing Assistance Agent",
-    "description": "Municipal utility billing support with account inquiries, usage analysis, payment plans, and assistance program eligibility.",
+    "version": "1.1.0",
+    "display_name": "Utility Billing and Assistance Agent",
+    "description": "Review synthetic municipal utility accounts for billing questions, smart-meter usage anomalies, draft payment-plan options, and preliminary assistance-program screening. The agent never adjusts a bill, enrolls a resident, starts a payment plan, schedules a repair, or changes an account; authorized utility staff must approve actions through future authenticated tools.",
     "author": "AIBAST",
     "tags": ["utility", "billing", "water", "payment", "assistance", "municipal"],
     "category": "slg_government",
@@ -156,6 +156,16 @@ ASSISTANCE_PROGRAMS = {
     },
 }
 
+LEAK_ADJUSTMENT_POLICY = {
+    "lookback_months": 2,
+    "credit_rate_pct": 50,
+    "requirements": [
+        "Documented repair invoice or utility inspection",
+        "No unresolved leak adjustment in the prior 24 months",
+        "Billing specialist approval",
+    ],
+}
+
 
 # ---------------------------------------------------------------------------
 # Helper functions
@@ -213,7 +223,7 @@ class UtilityBillingAssistanceAgent(BasicAgent):
     """Municipal utility billing assistance agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/utility-billing-assistance"
+        self.name = "UtilityBillingAssistanceAgent"
         self.metadata = {
             "name": self.name,
             "display_name": "Utility Billing Assistance Agent",
@@ -229,8 +239,24 @@ class UtilityBillingAssistanceAgent(BasicAgent):
                             "payment_plan",
                             "assistance_programs",
                         ],
+                        "description": "Choose billing_inquiry for balances, usage_analysis for leak/anomaly screening and a draft adjustment estimate, payment_plan for non-binding options, or assistance_programs for preliminary eligibility screening.",
                     },
-                    "account_id": {"type": "string"},
+                    "account_id": {
+                        "type": "string",
+                        "description": "Optional synthetic account ID such as ACCT-90003.",
+                    },
+                    "household_size": {
+                        "type": "integer",
+                        "description": "Optional household size for preliminary assistance screening.",
+                    },
+                    "annual_income": {
+                        "type": "number",
+                        "description": "Optional annual household income for preliminary assistance screening.",
+                    },
+                    "age": {
+                        "type": "integer",
+                        "description": "Optional applicant age for preliminary senior-discount screening.",
+                    },
                 },
                 "required": ["operation"],
             },
@@ -252,6 +278,8 @@ class UtilityBillingAssistanceAgent(BasicAgent):
 
     def _billing_inquiry(self, **kwargs) -> str:
         account_id = kwargs.get("account_id")
+        if account_id and account_id not in UTILITY_ACCOUNTS:
+            return f"# Billing Inquiry\n\nNo synthetic account found for `{account_id}`. No account record was changed."
         if account_id and account_id in UTILITY_ACCOUNTS:
             acct = UTILITY_ACCOUNTS[account_id]
             total_due = acct["balance_current"] + acct["balance_past_due"]
@@ -266,6 +294,7 @@ class UtilityBillingAssistanceAgent(BasicAgent):
             lines.append(f"- **Total Due:** ${total_due:,.2f}")
             lines.append(f"- **Auto-Pay:** {'Yes' if acct['autopay'] else 'No'}")
             lines.append(f"- **Last Payment:** ${acct['last_payment']['amount']:,.2f} on {acct['last_payment']['date']}")
+            lines.append("\n> Read-only synthetic account view. No balance, payment, service, or account record was changed.")
             return "\n".join(lines)
 
         lines = ["# Utility Accounts Summary\n"]
@@ -278,10 +307,13 @@ class UtilityBillingAssistanceAgent(BasicAgent):
             )
         total_ar = sum(a["balance_current"] + a["balance_past_due"] for a in UTILITY_ACCOUNTS.values())
         lines.append(f"\n**Total Accounts Receivable:** ${total_ar:,.2f}")
+        lines.append("\n> Synthetic portfolio summary. Authorized billing staff must verify all account records.")
         return "\n".join(lines)
 
     def _usage_analysis(self, **kwargs) -> str:
         account_id = kwargs.get("account_id", "ACCT-90001")
+        if account_id not in UTILITY_ACCOUNTS:
+            return f"# Usage Analysis\n\nNo synthetic account found for `{account_id}`. No leak diagnosis or billing action was performed."
         history = USAGE_HISTORY.get(account_id, [])
         acct = UTILITY_ACCOUNTS.get(account_id, {})
         trend = _usage_trend(account_id)
@@ -297,6 +329,20 @@ class UtilityBillingAssistanceAgent(BasicAgent):
             avg_bill = sum(h["amount"] for h in history) / len(history)
             lines.append(f"\n**Avg Monthly Water Usage:** {avg_water:,.0f} gallons")
             lines.append(f"**Avg Monthly Bill:** ${avg_bill:,.2f}")
+            baseline = sum(h["water_gallons"] for h in history[:2]) / 2
+            latest = history[-1]["water_gallons"]
+            excess = max(0, latest - baseline)
+            suspected = latest >= baseline * 1.20
+            lines.append("\n## Leak-adjustment screening\n")
+            lines.append(f"- **Anomaly indicator:** {'REVIEW POSSIBLE LEAK' if suspected else 'No sustained leak signal in this snapshot'}")
+            lines.append(f"- **Baseline used:** {baseline:,.0f} gallons")
+            lines.append(f"- **Latest usage:** {latest:,.0f} gallons")
+            if suspected:
+                rate = RATE_STRUCTURES["water_residential"]["tiers"][-1]["rate_per_1000"]
+                draft_credit = round((excess / 1000) * rate * LEAK_ADJUSTMENT_POLICY["credit_rate_pct"] / 100, 2)
+                lines.append(f"- **Draft policy estimate:** ${draft_credit:,.2f}, pending repair evidence and billing-specialist approval")
+            for requirement in LEAK_ADJUSTMENT_POLICY["requirements"]:
+                lines.append(f"- Required: {requirement}")
         lines.append("\n## Rate Structure\n")
         for rate_name, rate_info in RATE_STRUCTURES.items():
             lines.append(f"### {rate_name.replace('_', ' ').title()}\n")
@@ -307,13 +353,16 @@ class UtilityBillingAssistanceAgent(BasicAgent):
             elif isinstance(rate_info, dict) and "base_charge" in rate_info:
                 lines.append(f"Base: ${rate_info['base_charge']:,.2f}, Rate: ${rate_info.get('rate_per_1000', 0):,.2f}/1,000 gal")
             lines.append("")
+        lines.append("\n> Screening and estimate only. This is not a leak diagnosis, bill adjustment, repair order, or customer notice.")
         return "\n".join(lines)
 
     def _payment_plan(self, **kwargs) -> str:
         account_id = kwargs.get("account_id", "ACCT-90003")
-        acct = UTILITY_ACCOUNTS.get(account_id, list(UTILITY_ACCOUNTS.values())[2])
+        if account_id not in UTILITY_ACCOUNTS:
+            return f"# Draft Payment Plan Options\n\nNo synthetic account found for `{account_id}`. No payment arrangement was created."
+        acct = UTILITY_ACCOUNTS[account_id]
         past_due = acct["balance_past_due"]
-        lines = [f"# Payment Plan Options: {account_id}\n"]
+        lines = [f"# Draft Payment Plan Options: {account_id}\n"]
         lines.append(f"**Customer:** {acct['customer']}")
         lines.append(f"**Past Due Balance:** ${past_due:,.2f}\n")
         if past_due > 0:
@@ -329,10 +378,14 @@ class UtilityBillingAssistanceAgent(BasicAgent):
         lines.append(f"- {pp['eligibility']}")
         lines.append(f"- Maximum installments: {pp['max_installments']}")
         lines.append(f"- Documents required: {', '.join(pp['documents_required'])}")
+        lines.append("\n> Options only. No payment arrangement was created; authorized billing staff and the customer must approve it.")
         return "\n".join(lines)
 
     def _assistance_programs(self, **kwargs) -> str:
-        lines = ["# Utility Assistance Programs\n"]
+        household_size = kwargs.get("household_size")
+        annual_income = kwargs.get("annual_income")
+        age = kwargs.get("age")
+        lines = ["# Utility Assistance Programs — Preliminary Screening\n"]
         for prog_id, prog in ASSISTANCE_PROGRAMS.items():
             lines.append(f"## {prog['name']}\n")
             lines.append(f"- **Eligibility:** {prog['eligibility']}")
@@ -351,6 +404,19 @@ class UtilityBillingAssistanceAgent(BasicAgent):
         lines.append("|---|---|---|---|")
         for size, fpl in fpl_table.items():
             lines.append(f"| {size} | ${fpl:,} | ${int(fpl * 1.5):,} | ${fpl * 2:,} |")
+        if household_size and annual_income is not None:
+            reference = fpl_table.get(household_size)
+            lines.append("\n## Applicant screening\n")
+            if reference:
+                lihwap = annual_income <= reference * 1.5
+                senior = bool(age and age >= 65 and annual_income <= reference * 2)
+                lines.append(f"- LIHWAP income screen: {'POTENTIALLY ELIGIBLE' if lihwap else 'ABOVE SYNTHETIC LIMIT'}")
+                lines.append(f"- Senior discount screen: {'POTENTIALLY ELIGIBLE' if senior else 'NOT ESTABLISHED'}")
+            else:
+                lines.append("- Household size is outside the synthetic reference table; manual review required.")
+        else:
+            lines.append("\nProvide household size and annual income for a preliminary, non-binding screen.")
+        lines.append("\n> Screening only. No eligibility determination, application, enrollment, payment plan, or repair appointment has been completed.")
         return "\n".join(lines)
 
 

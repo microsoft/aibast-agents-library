@@ -1,0 +1,123 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:21:13.480292+00:00",
+  "solution": "@aibast-agents-library/ask-hr",
+  "onepager": "48. Ask HR Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "AskHRAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/human_resources_stacks/ask_hr_stack/ask_hr_agent.py",
+      "sha256": "df904e6e967bf39fc08270cf335499c9ceb62f82e4ce9e0380bb906a519f4d50"
+    }
+  ],
+  "case_file": "tests/demo_cases/ask-hr.json",
+  "case_file_sha256": "de2e411f56739efafa16fa9a37354e653ec752fc6c3f3957da19906ce209f0b5",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "HR-01",
+      "persona": "Employee",
+      "onepager_promise": "Provides personalized, policy-based answers to reduce inquiry volume via 24/7 self-service resolution",
+      "prompt": "What does my fictional leave snapshot show, and what notice rules should I review?",
+      "assistant_response": "Here's your snapshot:\n\n**Leave Available:**\n- **Vacation:** 15.5 days (accruing 1.25/month)\n- **Sick Leave:** 8.0 days\n- **Personal Days:** 3.0 days\n\n**Key Rules to Know:**\n1. **Notice requirement:** Requests for 5+ days need 2 weeks' notice\n2. **Year-end blackout:** Dec 15 \u2013 Jan 5 requires manager pre-approval (high-demand period)\n3. **Rollover cap:** Only 5 days of vacation carry over; the rest reset each year\n\nThe company holidays listed can help you plan long weekends around Memorial Day, July 4th, Labor Day, and the Thanksgiving/Year-End periods.\n\nWant to preview specific vacation dates, or do you have questions about any of these rules?",
+      "agent_logs": "[AskHRAgent] **Leave Balance: Jordan Chen**\n\n| Leave Type | Available |\n|---|---|\n| Vacation | 15.5 days |\n| Sick Leave | 8.0 days |\n| Personal Days | 3.0 days |\n| Accrual Rate | 1.25 days/month |\n\n**Upcoming Company Holidays:**\n- Memorial Day: May 26\n- Independence Day: Jul 4\n- Labor Day: Sep 1\n- Thanksgiving: Nov 27-28\n- Year-End: Dec 24-25, Dec 31-Jan 1\n\n**Time Off Guidelines:**\n- 5+ days: Requires 2 weeks notice\n- Dec 15 - Jan 5 requires manager pre-approval\n- Rollover policy: Max 5 days carry to next year\n\nSynthetic policy guidance only. This agent does not determine eligibility, infer sensitive employee circumstances, submit a transaction, notify a manager, or make an HR decision.\n\nSource: [Synthetic HRIS + Policy Snapshot]\nAgents: AskHRAgent",
+      "expected_agent": "AskHRAgent",
+      "must_include": [
+        "15.5 days",
+        "Upcoming Company Holidays",
+        "Synthetic HRIS"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "HR-02",
+      "persona": "Employee",
+      "onepager_promise": "Automates core HR transactions like time-off requests to reduce operational costs and increase HR team productivity",
+      "prompt": "Preview five vacation days for September 14 through September 18; do not submit anything.",
+      "assistant_response": "**Preview ready.** Your five-day vacation from September 14\u201318 shows a projected balance of 10.5 days remaining. This is a draft only \u2014 no notification has been sent and nothing is submitted. Review it with your manager or HR before you proceed.",
+      "agent_logs": "[AskHRAgent] **Time Off Request Preview \u2014 Not Submitted**\n\n| Detail | Information |\n|---|---|\n| Employee | Jordan Chen |\n| Dates | 2025-09-14 to 2025-09-18 (5 days) |\n| Status | Draft for employee review |\n| Manager | Sarah Johnson |\n| Projected Balance | 10.5 days remaining |\n\nReview the dates, balance, local policy, and coverage with an authorized HR or manager before submission. No notification was sent.\n\nSynthetic policy guidance only. This agent does not determine eligibility, infer sensitive employee circumstances, submit a transaction, notify a manager, or make an HR decision.\n\nSource: [Synthetic HRIS Snapshot]\nAgents: AskHRAgent",
+      "expected_agent": "AskHRAgent",
+      "must_include": [
+        "Not Submitted",
+        "Draft for employee review",
+        "No notification was sent"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "HR-03",
+      "persona": "Employee",
+      "onepager_promise": "Provides personalized, policy-based answers to reduce inquiry volume via 24/7 self-service resolution",
+      "prompt": "Explain the published parental-leave example without deciding whether I qualify or asking for family details.",
+      "assistant_response": "Here's the published example:\n\n**Parental Leave Framework (Synthetic Profile):**\n- **Paternity Leave:** 8 weeks fully paid\n- **Maternity Leave:** 16 weeks fully paid\n- **Family Care Stipend:** $2,000 one-time\n- **Backup Childcare:** 6 months included\n- **Return-to-work:** Flexible schedule available\n- **Support:** Access to lactation facilities, Parent Employee Resource Group\n\n**How it works:** Eligibility depends on tenure, location, leave type, and the qualifying event itself \u2014 not personal circumstances. To learn whether this applies to your situation, you'd talk to an authorized HR reviewer who can check those structural requirements against the official policy.\n\nThe agent keeps sensitive family details out of the loop entirely \u2014 it's just policy structure, not eligibility judgment.",
+      "agent_logs": "[AskHRAgent] **Parental Leave Policy Guidance: Jordan Chen (Synthetic Profile)**\n\n| Benefit | Details |\n|---|---|\n| Paternity Leave | 8 weeks fully paid |\n| Maternity Leave | 16 weeks fully paid |\n| Eligibility Rule | Verify tenure, location, leave type, and qualifying event with HR |\n| Family Care Stipend | $2,000 one-time |\n| Backup Childcare | 6 months included |\n\n**Additional Support:**\n- Flexible return-to-work schedule available\n- Parent Employee Resource Group\n- Lactation room access\n\n**Next Step:** Ask an authorized HR reviewer to confirm the applicable policy and submission timing. Do not disclose medical or family details here.\n\nSynthetic policy guidance only. This agent does not determine eligibility, infer sensitive employee circumstances, submit a transaction, notify a manager, or make an HR decision.\n\nSource: [Synthetic Benefits Policy Snapshot]\nAgents: AskHRAgent",
+      "expected_agent": "AskHRAgent",
+      "must_include": [
+        "Eligibility Rule",
+        "Verify tenure",
+        "does not determine eligibility"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "HR-04",
+      "persona": "Employee",
+      "onepager_promise": "Provides personalized, policy-based answers to reduce inquiry volume via 24/7 self-service resolution",
+      "prompt": "Summarize the fictional health-plan snapshot and tell me what the benefits administrator must verify.",
+      "assistant_response": "## Summary\n\n**Current Coverage:** Jordan Chen has a PPO Family Plan with a spouse dependent. Monthly contribution is $450, individual deductible is $500, and out-of-pocket max is $3,000.\n\n**New Dependent Process:** Adding a dependent (like a newborn) triggers a 30-day enrollment window from the qualifying event, increases the premium by $125/month, and becomes effective on the qualifying date.\n\n**Newborn Benefits:** Well-baby visits and immunizations are fully covered; pediatric visits have a $20 copay. A $10,000 dependent life insurance policy is automatic.\n\n---\n\n## What the Benefits Administrator Must Verify\n\n1. **Qualifying event documentation** \u2014 birth certificate, adoption papers, or marriage certificate\n2. **Enrollment window compliance** \u2014 confirm the 30-day window hasn't expired\n3. **Plan eligibility** \u2014 verify the employee is still actively employed and benefits-eligible\n4. **Premium calculation** \u2014 confirm the new $575/month total ($450 + $125) is correct\n5. **Dependent information** \u2014 ensure accurate name, SSN, and relationship coding in the payroll system\n6. **Effective date alignment** \u2014 match coverage start to the actual qualifying event date, not the enrollment submission date\n7. **Life insurance auto-enrollment** \u2014 verify the $10,000 dependent life benefit posted to the policy\n\nThe agent reminder stands: this is synthetic policy guidance only\u2014real decisions belong with your actual benefits team.",
+      "agent_logs": "[AskHRAgent] **Health Insurance: Jordan Chen**\n\n| Coverage | Detail |\n|---|---|\n| Plan | PPO Family Plan |\n| Monthly Premium | $450 (your contribution) |\n| Deductible (Individual) | $500 |\n| Out-of-Pocket Max | $3,000 |\n| Current Dependents | Spouse |\n\n**Adding a Dependent:**\n- Enrollment window: 30 days from qualifying event\n- Premium increase: +$125/month\n- Coverage effective: Date of qualifying event\n\n**New Baby Benefits (100% Covered):**\n- Well-baby care visits\n- All immunizations\n- Pediatric visits: $20 copay\n- Dependent life insurance: $10,000 automatic\n\nVerify plan rules and enrollment eligibility with the benefits administrator before making a selection.\n\nSynthetic policy guidance only. This agent does not determine eligibility, infer sensitive employee circumstances, submit a transaction, notify a manager, or make an HR decision.\n\nSource: [Synthetic Benefits Policy Snapshot]\nAgents: AskHRAgent",
+      "expected_agent": "AskHRAgent",
+      "must_include": [
+        "Enrollment window",
+        "Verify plan rules",
+        "does not determine eligibility"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "HR-05",
+      "persona": "Manager",
+      "onepager_promise": "Provides personalized, policy-based answers to reduce inquiry volume via 24/7 self-service resolution",
+      "prompt": "What does the sample remote-work policy say, without inferring why an employee asked?",
+      "assistant_response": "The sample remote-work policy covers:\n\n- **Work location:** 3 days per week remote (standard allowance)\n- **Core hours:** 10 AM\u20133 PM local time (overlap requirement)\n- **Home office support:** $1,000 equipment stipend, $50/month internet reimbursement, and ergonomic assessment access\n- **IT support:** Same-day response available\n\nEligibility requires role, location, and manager/HR review. The policy note emphasizes that exceptions are routed to authorized HR review and that no inferences are made about employee circumstances from requests.",
+      "agent_logs": "[AskHRAgent] **Remote Work Policy Guidance: Jordan Chen (Synthetic Profile)**\n\n| Benefit | Published Policy Example |\n|---|---|\n| Standard Allowance | 3 days/week remote |\n| Eligibility | Requires role, location, and manager/HR review |\n| Core Hours | 10 AM - 3 PM local |\n\n**Home Office Support:**\n- Equipment stipend: $1,000 one-time\n- Internet reimbursement: $50/month\n- Ergonomic assessment: Virtual consultation\n- Same-day IT support available\n\nDo not infer caregiver, disability, medical, or family status from a request. Route exceptions to authorized HR review.\n\nSynthetic policy guidance only. This agent does not determine eligibility, infer sensitive employee circumstances, submit a transaction, notify a manager, or make an HR decision.\n\nSource: [Synthetic HR Policy Snapshot]\nAgents: AskHRAgent",
+      "expected_agent": "AskHRAgent",
+      "must_include": [
+        "Standard Allowance",
+        "Requires role, location",
+        "Do not infer caregiver"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "HR-06",
+      "persona": "HR Operations Specialist",
+      "onepager_promise": "Provides personalized, policy-based answers to reduce inquiry volume via 24/7 self-service resolution",
+      "prompt": "Show the fictional benefits snapshot without estimating compensation or making an eligibility decision.",
+      "assistant_response": "Here's the fictional benefits snapshot for this synthetic profile. It shows time off, health coverage, remote policy, and equipment, along with next steps for parental leave and enrollment changes.\n\nThis is a **policy overview only** \u2014 no compensation estimates, no eligibility decisions, and no sensitive inferences. For actual questions about your benefits, your HR team can walk you through what applies to your role.",
+      "agent_logs": "[AskHRAgent] **Benefits Summary: Jordan Chen (Synthetic Profile)**\n**Senior Product Manager, Product** (3.5 years)\n\n**Your Benefits Package:**\n- Time Off: 15.5 vacation days + 8.0 sick days\n- Parental Leave: Policy details require HR eligibility review\n- Health Coverage: PPO Family Plan ($450/mo)\n- Remote Work: 3 days/week\n- Equipment Stipend: $1,000\n\nNo salary, medical, family-status, or total-compensation value is inferred.\n\n**Next Steps:**\n1. Review parental leave form (submit 30 days before due date)\n2. Benefits enrollment changes within 30 days of qualifying event\n3. Discuss remote schedule through the approved HR process\n\nSynthetic policy guidance only. This agent does not determine eligibility, infer sensitive employee circumstances, submit a transaction, notify a manager, or make an HR decision.\n\nSource: [Synthetic HR Policy Snapshot]\nAgents: AskHRAgent",
+      "expected_agent": "AskHRAgent",
+      "must_include": [
+        "No salary",
+        "total-compensation value is inferred",
+        "Synthetic Profile"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

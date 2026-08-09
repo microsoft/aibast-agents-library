@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>
+  (() => {
+    const param = new URLSearchParams(window.location.search).get("scoutTheme");
+    const theme =
+      param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regulatory Compliance Deployment Quest</title>
+<style>
+:root {
+  color-scheme: light;
+  --cp-bg: #f7f4ef;
+  --cp-bg-elevated: #fcfbf8;
+  --cp-surface: #ffffff;
+  --cp-surface-soft: #f5f5f5;
+  --cp-border: #dedede;
+  --cp-border-strong: #919191;
+  --cp-text: #242424;
+  --cp-text-muted: #5c5c5c;
+  --cp-text-soft: #6f6f6f;
+  --cp-accent: #b11f4b;
+  --cp-accent-hover: #9a1a41;
+  --cp-accent-soft: rgba(177, 31, 75, 0.08);
+  --cp-accent-fg: #ffffff;
+  --cp-success: #16a34a;
+  --cp-danger: #dc2626;
+  --cp-warning: #f59e0b;
+  --cp-link: #0078d4;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+  --cp-overlay: rgba(255, 255, 255, 0.8);
+  --cp-panel: rgba(255, 255, 255, 0.86);
+  --cp-panel-strong: rgba(255, 255, 255, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.55);
+  --cp-highlight: rgba(177, 31, 75, 0.12);
+}
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --cp-bg: #3d3b3a;
+  --cp-bg-elevated: #343231;
+  --cp-surface: #292929;
+  --cp-surface-soft: #2e2e2e;
+  --cp-border: #474747;
+  --cp-border-strong: #5f5f5f;
+  --cp-text: #dedede;
+  --cp-text-muted: #919191;
+  --cp-text-soft: #b0b0b0;
+  --cp-accent: #fd8ea1;
+  --cp-accent-hover: #fb7b91;
+  --cp-accent-soft: rgba(253, 142, 161, 0.14);
+  --cp-accent-fg: #1a1a1a;
+  --cp-success: #4ade80;
+  --cp-danger: #f87171;
+  --cp-warning: #fbbf24;
+  --cp-link: #4da6ff;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+  --cp-overlay: rgba(41, 41, 41, 0.88);
+  --cp-panel: rgba(41, 41, 41, 0.72);
+  --cp-panel-strong: rgba(41, 41, 41, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.04);
+  --cp-highlight: rgba(253, 142, 161, 0.12);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--cp-bg);
+  color: var(--cp-text);
+  font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+button, a { font: inherit; }
+a { color: var(--cp-link); }
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 1fr minmax(220px, 420px) 1fr;
+  gap: 16px;
+  align-items: center;
+  padding: 10px 24px;
+  border-bottom: 1px solid var(--cp-border);
+  background: var(--cp-panel-strong);
+}
+.brand { font-size: 14px; font-weight: 800; }
+.brand span { color: var(--cp-accent); }
+.progress { display: flex; align-items: center; gap: 10px; }
+.track { height: 8px; flex: 1; overflow: hidden; border-radius: 0.625rem; background: var(--cp-border); }
+.fill { width: 0; height: 100%; background: var(--cp-accent); transition: width 180ms ease; }
+.progress-label { color: var(--cp-text-muted); font-size: 12px; white-space: nowrap; }
+.top-actions { display: flex; justify-content: flex-end; gap: 8px; }
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border: 1px solid var(--cp-border-strong);
+  border-radius: 0.625rem;
+  background: var(--cp-surface);
+  color: var(--cp-text);
+  text-decoration: none;
+  cursor: pointer;
+}
+.button.primary { border-color: var(--cp-accent); background: var(--cp-accent); color: var(--cp-accent-fg); }
+.button.primary:hover { background: var(--cp-accent-hover); }
+.page { width: min(1160px, calc(100% - 32px)); margin: 0 auto; padding: 40px 0 72px; }
+.hero { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; margin-bottom: 22px; }
+.eyebrow { color: var(--cp-accent); font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
+h1 { margin: 8px 0; font-size: clamp(36px, 7vw, 68px); line-height: 0.98; letter-spacing: -0.055em; }
+.hero p { max-width: 760px; margin: 0; color: var(--cp-text-muted); line-height: 1.55; }
+.mode-switch { display: flex; gap: 4px; padding: 4px; border: 1px solid var(--cp-border); border-radius: 0.625rem; background: var(--cp-surface); }
+.mode { border: 0; border-radius: 0.625rem; background: transparent; color: var(--cp-text-muted); cursor: pointer; padding: 9px 14px; font-weight: 700; }
+.mode.active { background: var(--cp-accent); color: var(--cp-accent-fg); }
+.notice { margin: 0 0 18px; padding: 14px 16px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface); }
+.mission { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 18px; }
+.path { display: grid; gap: 10px; }
+.step {
+  display: grid;
+  grid-template-columns: 44px 1fr auto;
+  gap: 14px;
+  align-items: center;
+  width: 100%;
+  padding: 14px;
+  border: 1px solid var(--cp-border);
+  border-radius: 16px;
+  background: var(--cp-surface);
+  color: var(--cp-text);
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 0 2px var(--cp-border);
+}
+.step:hover, .step.active { border-color: var(--cp-accent); }
+.step.active { background: var(--cp-accent-soft); }
+.step.complete { border-color: var(--cp-success); }
+.step-icon { display: grid; width: 40px; height: 40px; place-items: center; border: 1px solid var(--cp-border-strong); border-radius: 0.625rem; font-weight: 800; }
+.step.complete .step-icon { border-color: var(--cp-success); color: var(--cp-success); }
+.step strong, .step span { display: block; }
+.step span span { margin-top: 4px; color: var(--cp-text-muted); font-size: 12px; line-height: 1.4; }
+.step small { color: var(--cp-text-muted); }
+.panel {
+  position: sticky;
+  top: 78px;
+  align-self: start;
+  min-height: 440px;
+  padding: 20px;
+  border: 1px solid var(--cp-border);
+  border-radius: 16px;
+  background: var(--cp-surface);
+  box-shadow: 0 0 2px var(--cp-border);
+}
+.placeholder { display: grid; min-height: 390px; place-items: center; color: var(--cp-text-muted); text-align: center; }
+.panel h2 { margin: 0 0 6px; }
+.time, .description { color: var(--cp-text-muted); }
+.description { line-height: 1.55; }
+.checklist { padding-left: 20px; }
+.checklist li { margin-bottom: 8px; color: var(--cp-text-muted); }
+.resources { display: grid; gap: 8px; margin: 16px 0; }
+.resource { padding: 10px; border: 1px solid var(--cp-border); border-radius: 0.625rem; background: var(--cp-surface-soft); color: var(--cp-text); text-decoration: none; }
+.resource strong, .resource span { display: block; }
+.resource span { margin-top: 3px; color: var(--cp-text-muted); font-size: 12px; }
+.done { width: 100%; padding: 10px; border: 1px solid var(--cp-border-strong); border-radius: 0.625rem; background: var(--cp-surface); color: var(--cp-text); cursor: pointer; font-weight: 700; }
+.done.complete { border-color: var(--cp-success); color: var(--cp-success); }
+@media (max-width: 860px) {
+  .topbar { grid-template-columns: 1fr; text-align: center; }
+  .top-actions { justify-content: center; }
+  .hero, .mission { grid-template-columns: 1fr; }
+  .panel { position: static; }
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span>AI BAST</span> · Regulatory Compliance Quest</div>
+  <div class="progress"><div class="track"><div class="fill" id="fill"></div></div><div class="progress-label" id="progress-label"></div></div>
+  <div class="top-actions"><a class="button" href="FIELD-GUIDE.md">Field guide</a><button class="button" id="reset">Reset</button></div>
+</header>
+
+<main class="page">
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Governed deployment quest</div>
+      <h1>Prove the control path.</h1>
+      <p>Use Easy mode for the portable Brainstem proof, or Hard mode to construct the agent one browser action at a time. Neither path authorizes a regulatory filing or publication.</p>
+    </div>
+    <div class="mode-switch"><button class="mode active" data-mode="easy">Easy mode</button><button class="mode" data-mode="hard">Manual Hard mode</button></div>
+  </section>
+  <div class="notice"><strong>Evidence state:</strong> Brainstem, Easy-mode Preview, manual screenshots, all five manual Preview cases, and the Draft confirmation are captured.</div>
+  <section class="mission">
+    <div class="path" id="path"></div>
+    <aside class="panel" id="panel"><div class="placeholder">Choose a checkpoint to begin.</div></aside>
+  </section>
+</main>
+
+<script>
+const KEY = "aibast-regulatory-compliance-quest-v1";
+let mode = "easy";
+let completed = JSON.parse(localStorage.getItem(KEY) || "{}");
+let manifest = null;
+
+const EASY = [
+  {id:"easy-recipe", icon:"1", title:"Open the deployment contract", time:"2 min", description:"Start with the reviewed recipe rather than a hand-written install command.", resources:["deployment-recipe","portable-agent"], steps:["Give the customer the keyboard.","Open GitHub Copilot Chat in Agent mode.","Ask Copilot to own the deployment recipe end to end."]},
+  {id:"easy-runtime", icon:"2", title:"Verify the isolated runtime", time:"3–8 min", description:"Require source verification, Brainstem health, the expected tool, and the smoke prompt.", resources:["deployment-recipe","brainstem-transcripts"], steps:["Do not ask the customer to open a terminal.","Require the registry SHA-256 check.","Confirm FSRegulatoryCompliance appears in /health."]},
+  {id:"easy-cases", icon:"3", title:"Replay all five cases", time:"8–12 min", description:"Use the locked persona prompts and compare stable entities with the canonical transcripts.", resources:["brainstem-transcripts","onepager-map"], steps:["Run RC-01 through RC-05 in fresh conversations.","Treat exact figures as synthetic evidence.","Reject any certain audit-outcome claim."]},
+  {id:"easy-boundary", icon:"4", title:"Inspect the approval boundaries", time:"4 min", description:"Confirm that remediation prepares payloads for authorized review and never transmits.", resources:["source-audit","field-guide","global-instructions"], steps:["Check the audit-readiness disclaimer.","Check the no-legal-advice boundary.","Check the remediation no-transmit boundary."]},
+  {id:"easy-handoff", icon:"5", title:"Validate the Copilot Studio Draft", time:"8–12 min", description:"Inspect the pushed Easy agent and its five passing Preview cases, then stop before publication.", resources:["studio-preview-evidence","assisted-browserfilm","field-guide","manual-tutorial","manual-evidence","manual-browserfilm"], steps:["Confirm schema aibast_RegulatoryCompliancePilot and the kodyv8 environment.","Confirm five skills, two knowledge files, Sonnet46, and zero external tools.","Record unresolved connectors and governance.","Stop before publication."]}
+];
+
+const HARD = [
+  {id:"hard-download", icon:"1", title:"Download the reviewed sources", time:"4 min", description:"Use the exact instructions, knowledge files, and skills from this package.", resources:["global-instructions","knowledge-records","knowledge-rules","skill-compliance-dashboard","skill-trade-surveillance","skill-documentation-review","skill-remediation-submission","skill-certification-tracker"], steps:["Keep each file unchanged.","Upload files individually.","Use the tutorial's deterministic screenshot names."]},
+  {id:"hard-blank", icon:"2", title:"Create the blank agent", time:"5 min", description:"Create Regulatory Manual Build and save the reviewed global instructions.", resources:["global-instructions","manual-tutorial"], steps:["Start from a blank agent.","Set the exact display name.","Paste and save the full instruction policy."]},
+  {id:"hard-grounding", icon:"3", title:"Remove web search and add knowledge", time:"8–15 min", description:"Disable default web search, then upload exactly two Markdown knowledge files.", resources:["knowledge-records","knowledge-rules"], steps:["Remove web search before testing.","Wait for both files to appear.","Do not add external websites."]},
+  {id:"hard-skills", icon:"4", title:"Upload five SKILL.md files", time:"12–20 min", description:"Add each operation as a separate uploadable skill.", resources:["skill-compliance-dashboard","skill-trade-surveillance","skill-documentation-review","skill-remediation-submission","skill-certification-tracker"], steps:["Use Add skill five times.","Upload a file literally named SKILL.md each time.","Review every routing description."]},
+  {id:"hard-model", icon:"5", title:"Select Sonnet46 and review inventory", time:"6 min", description:"Set Claude Sonnet 4.6 and verify the complete component inventory.", resources:["manual-tutorial","manual-evidence"], steps:["Confirm two knowledge files.","Confirm five skills and zero external tools.","Confirm web search is absent."]},
+  {id:"hard-preview", icon:"6", title:"Run the five-case Preview", time:"15–25 min", description:"Start a fresh Preview conversation for each locked case and inspect the captured result.", resources:["brainstem-transcripts","manual-evidence","manual-browserfilm"], steps:["Run RC-01 through RC-05 exactly.","Check stable identifiers and safety boundaries.","Confirm all five passed fields are recorded."]},
+  {id:"hard-stop", icon:"7", title:"Enforce the no-publish gate", time:"2 min", description:"Capture the Draft state and stop. Preview evidence is not publication approval.", resources:["manual-evidence","manual-browserfilm"], steps:["Do not choose Publish.","Record the agent identity and environment.","Hand evidence back to the parent owner."]}
+];
+
+function currentSteps() { return mode === "easy" ? EASY : HARD; }
+function resources(ids) {
+  if (!manifest) return [];
+  return manifest.files.filter(file => ids.includes(file.id));
+}
+function render() {
+  document.querySelectorAll(".mode").forEach(button => button.classList.toggle("active", button.dataset.mode === mode));
+  const list = currentSteps();
+  document.getElementById("path").innerHTML = list.map((step, index) => {
+    const done = Boolean(completed[step.id]);
+    return `<button class="step ${done ? "complete" : ""}" data-step="${step.id}"><span class="step-icon">${done ? "✓" : step.icon}</span><span><strong>${index + 1}. ${step.title}</strong><span>${step.description}</span></span><small>${step.time}</small></button>`;
+  }).join("");
+  const count = list.filter(step => completed[step.id]).length;
+  document.getElementById("fill").style.width = `${(count / list.length) * 100}%`;
+  document.getElementById("progress-label").textContent = `${count} of ${list.length}`;
+  document.querySelectorAll("[data-step]").forEach(button => button.addEventListener("click", () => openStep(button.dataset.step)));
+}
+function openStep(id) {
+  const step = currentSteps().find(item => item.id === id);
+  if (!step) return;
+  document.querySelectorAll(".step").forEach(button => button.classList.toggle("active", button.dataset.step === id));
+  const links = resources(step.resources);
+  document.getElementById("panel").innerHTML = `<h2>${step.title}</h2><div class="time">${step.time}</div><p class="description">${step.description}</p><div class="resources">${links.map(file => `<a class="resource" href="${file.raw_url}" target="_blank" rel="noopener"><strong>${file.label}</strong><span>${file.use}</span></a>`).join("")}</div><ul class="checklist">${step.steps.map(item => `<li>${item}</li>`).join("")}</ul>${id === "hard-preview" || id === "hard-blank" ? `<a class="button primary" href="manual-tutorial.html">Open the 26-action tutorial</a>` : ""}<button class="done ${completed[id] ? "complete" : ""}" data-done="${id}">${completed[id] ? "Completed ✓" : "Mark checkpoint complete"}</button>`;
+  document.querySelector("[data-done]").addEventListener("click", event => {
+    completed[event.currentTarget.dataset.done] = !completed[event.currentTarget.dataset.done];
+    localStorage.setItem(KEY, JSON.stringify(completed));
+    render();
+    openStep(id);
+  });
+}
+document.querySelectorAll(".mode").forEach(button => button.addEventListener("click", () => {
+  mode = button.dataset.mode;
+  document.getElementById("panel").innerHTML = `<div class="placeholder">Choose a checkpoint to begin.</div>`;
+  render();
+}));
+document.getElementById("reset").addEventListener("click", () => {
+  completed = {};
+  localStorage.removeItem(KEY);
+  render();
+});
+fetch("export-manifest.json", {cache:"no-store"}).then(response => response.json()).then(data => {
+  manifest = data;
+  render();
+}).catch(render);
+</script>
+</body>
+</html>

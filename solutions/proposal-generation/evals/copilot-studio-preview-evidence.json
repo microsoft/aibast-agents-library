@@ -1,0 +1,106 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T20:39:32.018Z",
+  "solution": "@aibast-agents-library/proposal-generation",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Proposal Generation Pilot",
+  "schema_name": "aibast_ProposalGenerationPilot",
+  "bot_id": "03e16c79-855d-489b-b769-20757d3cd852",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "PG-01",
+      "must_include": [
+        "RFP Analysis",
+        "Requirements Analysis",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PG-02",
+      "must_include": [
+        "Executive Summary",
+        "Personalization Applied",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PG-03",
+      "must_include": [
+        "Solution & Pricing",
+        "Budget Analysis",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PG-04",
+      "must_include": [
+        "References & Competitive Positioning",
+        "Win Theme",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PG-05",
+      "must_include": [
+        "Proposal Package",
+        "Required Human Review Before Delivery",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PG-06",
+      "must_include": [
+        "Delivery Summary",
+        "Human-Governed Next-Step Options",
+        "Evidence boundary"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the record",
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    }
+  ]
+}

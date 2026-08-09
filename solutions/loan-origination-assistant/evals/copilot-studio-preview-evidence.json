@@ -1,0 +1,86 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T19:42:41.820Z",
+  "solution": "@aibast-agents-library/loan-origination-assistant",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Loan Origination Pilot",
+  "schema_name": "aibast_LoanOriginationAssistantPil",
+  "bot_id": "52b88f6c-47ca-4da7-9548-417f84c6b6b6",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "LOA-01",
+      "must_include": [
+        "LA-2025-4002",
+        "Document Review"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "LOA-02",
+      "must_include": [
+        "LA-2025-4002",
+        "DTI"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "LOA-03",
+      "must_include": [
+        "LA-2025-4004",
+        "Certificate of Eligibility"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "LOA-04",
+      "must_include": [
+        "LA-2025-4001",
+        "No lending decision"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "LOA-05",
+      "must_include": [
+        "LA-2025-4003",
+        "Environmental Phase I"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    }
+  ]
+}

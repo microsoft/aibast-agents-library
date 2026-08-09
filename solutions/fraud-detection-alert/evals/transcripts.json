@@ -1,0 +1,85 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:42:35.719228+00:00",
+  "solution": "@aibast-agents-library/fraud-detection-alert",
+  "onepager": "38. Fraud Detection and Alert Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "FraudDetectionAlertAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/financial_services_stacks/fraud_detection_alert_stack/fraud_detection_alert_agent.py",
+      "sha256": "da09e0e8d345d0aa5fa21abcbf5e504aaf4accd85d45d4c33fa6e9a8163e2ee0"
+    }
+  ],
+  "case_file": "tests/demo_cases/fraud-detection-alert.json",
+  "case_file_sha256": "8fc8f75a38db4df2d462b3db68c835111758031378df42aa810ef36aa16fa4ce",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "FDA-01",
+      "persona": "Fraud Operations Manager",
+      "onepager_promise": "Monitor transactions in real time to flag suspicious activity across all channels",
+      "prompt": "What is the most urgent alert in the overnight queue, and what evidence makes it urgent?",
+      "assistant_response": "**Most Urgent Alert: TXN-90006 \u2014 Wire Transfer to Nigeria**\n\n**Account:** 5412-XXXX-6678  \n**Amount:** $3,200  \n**Risk Score:** 95 (Critical)  \n**Merchant:** WireTransfer-NG\n\n**What Makes It Urgent:**\n\n1. **RULE-004 triggered (Critical)** \u2014 Wire to a FATF grey/black list country (Nigeria). This is your highest-severity rule and typically indicates potential money laundering or sanctions risk.\n\n2. **Account takeover pattern (RULE-006)** \u2014 Password change followed immediately by high-value outbound wire. This is a classic compromise signature.\n\n3. **Highest numerical risk score (95)** \u2014 Exceeds even the Dubai card-cloning transactions (88, 92).\n\n**Recommended Next Step:**  \nThis wire should be escalated to SIU immediately for potential hold/block authorization before settlement. The combination of geographic risk + account takeover indicators + wire velocity is your most acute concern in the overnight queue.\n\nWould you like me to pull the detailed account activity or transaction sequence for this case?",
+      "agent_logs": "[FraudDetectionAlertAgent] > **SYNTHETIC DEMO DATA \u2014 INVESTIGATOR REVIEW REQUIRED.** Fictional alerts and accounts only. A score or pattern is not proof of fraud. No card, account, payment, wire, report, or filing has been blocked, changed, submitted, or completed.\n\n# Fraud Alert Triage\n\n**High-Risk Transactions:** 5\n**Flagged Amount:** $32,450.00\n**Open Cases:** 3\n\n## Flagged Transactions\n\n| TXN ID | Account | Amount | Merchant | Country | Risk | Level |\n|---|---|---|---|---|---|---|\n| TXN-90001 | 4532-XXXX-8891 | $4,850.00 | ElectroMax Dubai | AE | 88 | Critical |\n| TXN-90002 | 4532-XXXX-8891 | $2,100.00 | Gold Souq Trading | AE | 92 | Critical |\n| TXN-90003 | 4716-XXXX-3304 | $12,500.00 | CryptoSwap Exchange | US | 75 | High |\n| TXN-90004 | 4716-XXXX-3304 | $9,800.00 | CryptoSwap Exchange | US | 82 | Critical |\n| TXN-90006 | 5412-XXXX-6678 | $3,200.00 | WireTransfer-NG | NG | 95 | Critical |\n\n## Alert Rules Triggered\n\n- **RULE-001 (Velocity Check):** Multiple high-value transactions within 1 hour [HIGH]\n- **RULE-002 (Geographic Anomaly):** Transaction in country with no prior history [HIGH]\n- **RULE-003 (Crypto Purchase Spike):** Unusual crypto exchange activity [MEDIUM]\n- **RULE-004 (Wire to High-Risk Country):** Wire transfer to FATF grey/black list country [CRITICAL]\n- **RULE-005 (Card-Not-Present Velocity):** Rapid online purchases across merchants [MEDIUM]\n- **RULE-006 (Account Takeover Pattern):** Password change followed by high-value transaction [CRITICAL]",
+      "expected_agent": "FraudDetectionAlertAgent",
+      "must_include": [
+        "TXN-90006",
+        "Critical"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "FDA-02",
+      "persona": "Fraud Analyst",
+      "onepager_promise": "Monitor transactions in real time to flag suspicious activity across all channels",
+      "prompt": "Show me the account activity behind the Dubai alert so I can investigate the sequence.",
+      "assistant_response": "**Dubai Alert Account Activity (4532-XXXX-8891 / James Peterson):**\n\nTwo high-risk transactions in rapid sequence:\n\n1. **TXN-90001**: $4,850 at **ElectroMax Dubai** (electronics, card-present) \u2014 Risk: 88\n2. **TXN-90002**: $2,100 at **Gold Souq Trading** (jewelry, card-present) \u2014 Risk: 92\n\n**What jumps out:**\n- Both are card-present transactions in the same country (UAE)\n- High-value goods purchased at specialized merchants within a narrow window\n- Risk scores spike to 92 on the second transaction\n- Total: $6,950 in Dubai activity\n\n**Next step:** Check if this matches known card-cloning or in-person fraud rings. Should I pull pattern detection to see if this sequence connects to coordinated activity or known bad actors?",
+      "agent_logs": "[FraudDetectionAlertAgent] > **SYNTHETIC DEMO DATA \u2014 INVESTIGATOR REVIEW REQUIRED.** Fictional alerts and accounts only. A score or pattern is not proof of fraud. No card, account, payment, wire, report, or filing has been blocked, changed, submitted, or completed.\n\n# Transaction Analysis\n\n## All Monitored Transactions\n\n| TXN ID | Cardholder | Amount | Merchant | Category | Country | Channel | Risk |\n|---|---|---|---|---|---|---|---|\n| TXN-90001 | James Peterson | $4,850.00 | ElectroMax Dubai | electronics | AE | card_present | 88 |\n| TXN-90002 | James Peterson | $2,100.00 | Gold Souq Trading | jewelry | AE | card_present | 92 |\n| TXN-90003 | Lisa Wang | $12,500.00 | CryptoSwap Exchange | crypto | US | online | 75 |\n| TXN-90004 | Lisa Wang | $9,800.00 | CryptoSwap Exchange | crypto | US | online | 82 |\n| TXN-90005 | Robert Miles | $189.99 | Amazon.com | retail | US | online | 12 |\n| TXN-90006 | Robert Miles | $3,200.00 | WireTransfer-NG | wire_transfer | NG | online | 95 |\n| TXN-90007 | Elena Vasquez | $67.50 | Whole Foods Market | grocery | US | contactless | 5 |\n\n## Account-Level Summary\n\n| Account | Transactions | Total Amount | Max Risk |\n|---|---|---|---|\n| 4532-XXXX-8891 | 2 | $6,950.00 | 92 |\n| 4716-XXXX-3304 | 2 | $22,300.00 | 82 |\n| 5412-XXXX-6678 | 2 | $3,389.99 | 95 |\n| 4024-XXXX-1190 | 1 | $67.50 | 5 |",
+      "expected_agent": "FraudDetectionAlertAgent",
+      "must_include": [
+        "4532-XXXX-8891",
+        "TXN-90002"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "FDA-03",
+      "persona": "SIU Investigator",
+      "onepager_promise": "Detect fraud patterns and rings to limit combined exposure and losses",
+      "prompt": "Which active case resembles a coordinated fraud pattern, and what makes that only a hypothesis?",
+      "assistant_response": "**INV-2025-302** (the critical wire case) shows characteristics of **Account Takeover**, but it's only a hypothesis because:\n\n1. **Single-account scope** \u2014 Account takeover patterns typically involve login anomalies (new device/IP, credential changes, rapid transfers). The detection system flagged suspicious wire activity, but hasn't yet confirmed that a compromise of credentials or unauthorized login actually occurred\u2014the wire itself could have been initiated by the authorized holder under unusual circumstances.\n\n2. **No coordinated ring markers** \u2014 A true \"coordinated fraud ring\" involves multiple perpetrators, shared tools, or linked accounts. A single large wire doesn't prove organizational coordination\u2014it's a high-risk transaction that looks suspicious, not evidence of a crime ring.\n\n3. **Hypothesis vs. proof** \u2014 The alert is based on behavioral scoring and rule triggers, not on forensic proof (device logs, credential history, IP geolocation anomalies, or wire recipient verification). Investigation can flip that hypothesis either way: authorized transfer, compromised account, or something else entirely.\n\n**INV-2025-301** (card cloning) is closer to a true coordinated pattern because it typically involves physical card duplication equipment and use at multiple merchant locations\u2014but even there, the first flag is a pattern match, not proof that an organized ring is operating.\n\nBoth need human investigation and authorized review before any action.",
+      "agent_logs": "[FraudDetectionAlertAgent] > **SYNTHETIC DEMO DATA \u2014 INVESTIGATOR REVIEW REQUIRED.** Fictional alerts and accounts only. A score or pattern is not proof of fraud. No card, account, payment, wire, report, or filing has been blocked, changed, submitted, or completed.\n\n# Fraud Pattern Detection\n\n## Known Fraud Patterns\n\n### Card Cloning\n\n**Description:** Physical card duplicated; used at multiple locations simultaneously\n**Frequency:** Common\n\n**Indicators:**\n\n- Transactions in geographically distant locations within short timeframe\n- Card-present transactions after reported card-not-present use\n\n### Account Takeover\n\n**Description:** Unauthorized access to account via compromised credentials\n**Frequency:** Increasing\n\n**Indicators:**\n\n- Login from new device/IP\n- Immediate password and contact info change\n- Large transfer or purchase within hours\n\n### Bust Out\n\n**Description:** Deliberate credit line exhaustion before default\n**Frequency:** Moderate\n\n**Indicators:**\n\n- Rapid utilization increase to near-limit\n- Cash advance activity\n- Payments stop after utilization spike\n\n### Synthetic Identity\n\n**Description:** Fictitious identity created using mixed real and fake data\n**Frequency:** Increasing\n\n**Indicators:**\n\n- SSN with no credit history prior to 2 years ago\n- Authorized user on multiple unrelated accounts\n- Address inconsistencies\n\n## Pattern Matches in Active Cases\n\n- **INV-2025-301:** Card Cloning \u2014 Physical card duplicated; used at multiple locations simultaneously\n- **INV-2025-302:** Account Takeover \u2014 Unauthorized access to account via compromised credentials",
+      "expected_agent": "FraudDetectionAlertAgent",
+      "must_include": [
+        "INV-2025-301",
+        "Card Cloning"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "FDA-04",
+      "persona": "Risk Leader",
+      "onepager_promise": "Automate case creation and protective actions to accelerate investigations",
+      "prompt": "Prepare the critical wire case for SIU review and tell me what actions actually occurred.",
+      "assistant_response": "## Critical Wire Case Summary\n\n**Case INV-2025-302 is prepared for SIU review.** Here's what the record shows:\n\n### Key Facts\n- **Pattern:** Account takeover \u2014 password reset 90 minutes before a $3,200 wire to Nigeria\n- **Risk Score:** 95 (wire to high-risk country)\n- **Status:** Escalated but no actual protective actions taken yet\n\n### What Actually Occurred\n\u2713 Alert escalated to SIU queue  \n\u2713 Case documented with analyst notes  \n\u274c **No SAR filed**  \n\u274c **No funds blocked**  \n\u274c **No account frozen**  \n\u274c **No customer contacted**  \n\u274c **No account changes made**\n\nThe case is flagged and queued for **authorized human review only**. The pattern is compelling (password reset + wire to high-risk jurisdiction), but the flag itself is hypothesis, not proof. Human investigator decision determines next steps.\n\nReady for SIU to take ownership and authorize any protective actions.",
+      "agent_logs": "[FraudDetectionAlertAgent] > **SYNTHETIC DEMO DATA \u2014 INVESTIGATOR REVIEW REQUIRED.** Fictional alerts and accounts only. A score or pattern is not proof of fraud. No card, account, payment, wire, report, or filing has been blocked, changed, submitted, or completed.\n\n# Investigation: INV-2025-302\n\n- **Status:** Escalated\n- **Priority:** Critical\n- **Analyst:** David Chen\n- **Opened:** 2025-03-05\n- **Pattern:** Account Takeover\n- **Notes:** Synthetic wire followed a password reset by 90 minutes. Escalation and SAR review are proposed; no filing or account action occurred.\n\n## Associated Transactions\n\n- **TXN-90006:** $3,200.00 at WireTransfer-NG (NG) \u2014 Risk: 95\n\n## Rules Triggered\n\n- **RULE-004:** Wire to High-Risk Country [CRITICAL]\n\n## Proposed Routing\n\n- Queue: SIU\n- Status: Prepared for authorized investigator review; no external action taken",
+      "expected_agent": "FraudDetectionAlertAgent",
+      "must_include": [
+        "INV-2025-302",
+        "no external action"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

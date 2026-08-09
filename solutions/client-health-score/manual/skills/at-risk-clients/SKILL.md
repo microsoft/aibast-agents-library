@@ -1,0 +1,9 @@
+---
+name: at-risk-client-prioritization
+description: Explains risk drivers and recovery actions for fictional accounts.
+---
+# At-risk client prioritization
+
+Cover all critical and at-risk accounts. Show health, scenario churn indicator,
+NPS, trend, escalations, executive contact, and recommended actions. Describe
+indicators as uncertain and require account-owner approval.

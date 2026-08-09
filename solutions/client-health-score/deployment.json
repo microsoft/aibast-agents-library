@@ -1,0 +1,89 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/client-health-score",
+  "display_name": "Client Health Score Agent",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/professional_services_stacks/client_health_score_stack/client_health_score_agent.py",
+  "target_filename": "client_health_score_agent.py",
+  "expected_tool": "ClientHealthScoreAgent",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "smoke_test": {
+    "prompt": "Which relationships are healthy, at risk, or critical, and where should my team focus first?",
+    "must_call": "ClientHealthScoreAgent",
+    "must_include": [
+      "TechCorp Industries",
+      "CRITICAL"
+    ]
+  },
+  "copilot_studio": {
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "authoring_mode": "cli-copilot",
+    "required_connections": [
+      "Dynamics 365",
+      "Microsoft Teams",
+      "Outlook"
+    ],
+    "operations": [
+      "health_dashboard",
+      "engagement_analysis",
+      "satisfaction_trend",
+      "at_risk_clients",
+      "retention_plan"
+    ],
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_client-health-synthetic-portfolio.md",
+      "manual/knowledge/aibast_client-health-retention-playbook.md"
+    ],
+    "manual_skill_count": 5,
+    "publish_requires_confirmation": true,
+    "minimum_pac_version": "2.9.3",
+    "validated_manual": {
+      "display_name": "Client Health Score Manual",
+      "bot_id": "daf1b824-7eb1-43a3-a8c0-5b1be2b325bc",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 5,
+      "knowledge_files": 2,
+      "web_search_removed": true,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 5,
+      "preview_cases_total": 5
+    },
+    "validated_pilot": {
+      "display_name": "Client Health Score Pilot",
+      "schema_name": "aibast_ClientHealthScorePilot",
+      "bot_id": "7d8a0261-25dd-4794-9569-22eb92e58e5a",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 5,
+      "knowledge_files": 2,
+      "changes_pushed": 8,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 5,
+      "preview_cases_total": 5
+    }
+  },
+  "demo_scenarios": [
+    "client-portfolio",
+    "client-engagement",
+    "client-satisfaction",
+    "client-risk",
+    "client-retention"
+  ]
+}

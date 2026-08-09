@@ -1,0 +1,123 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:41:48.365516+00:00",
+  "solution": "@aibast-agents-library/proposal-generation",
+  "onepager": "Proposal Generation Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "ProposalGenerationAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/b2b_sales_stacks/proposal_generation_stack/proposal_generation_agent.py",
+      "sha256": "9483c83dce992a083e2f93eda580cf0860656a3cbf940ef9a4292fc4016552bf"
+    }
+  ],
+  "case_file": "tests/demo_cases/proposal-generation.json",
+  "case_file_sha256": "f823810603661ed285fccdb00443fc39e847409bd175f81873c9d01f747bc677",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "PG-01",
+      "persona": "Bid Manager",
+      "onepager_promise": "Perform rapid RFP analysis and requirement extraction to reduce risk and improve accuracy",
+      "prompt": "Analyze the synthetic Meridian Healthcare RFP and show the traceable requirement checklist.",
+      "assistant_response": "## Traceable Requirement Checklist\n\nHere's the actionable checklist mapped to Meridian Healthcare's RFP requirements:\n\n| Req ID | Requirement | Status | Owner | Evidence | Next Step |\n|--------|---|---|---|---|---|\n| **R1** | EHR integration (Epic & Cerner) | \u2705 Ready | Tech | Native connectors certified | Reference Memorial case study in proposal |\n| **R2** | HIPAA compliance certification | \u2705 Ready | Compliance | SOC 2 Type II + HIPAA certified | Attach compliance documentation |\n| **R3** | 24/7 support <15-min response SLA | \u2705 Ready | Support | SLA commitment in place | Quote in executive summary |\n| **R4** | Implementation under 16 weeks | \u26a0\ufe0f Conditional | Delivery | 12-week standard methodology | Confirm accelerators apply to scope |\n| **R5** | Staff training program | \u2705 Ready | Training | Role-based curriculum ready | Customize for Meridian's roles |\n| **R6** | Legacy data migration | \u26a0\ufe0f Partial | Technical | Toolkit + 50+ connectors | Audit Meridian's legacy stack first |\n\n**Overall fit: 94.5%** \u2014 Strong position. R4 and R6 need scope confirmation before proposal assembly.\n\nReady to move forward? I can help you:\n- **Compile the full proposal** with these requirements mapped to your solution sections\n- **Draft the executive summary** for CIO Amanda Foster\n- **Build the pricing & implementation plan** addressing the 16-week constraint\n\nWhat's next?",
+      "agent_logs": "[ProposalGenerationAgent] **RFP Analysis: Meridian Healthcare -- Digital Transformation Platform**\n\n| Detail | Information |\n|---|---|\n| RFP ID | RFP-2024-0147 |\n| Account | Meridian Healthcare |\n| Deal value | $1,200,000 |\n| Budget ceiling | $1,250,000 |\n| Decision timeline | 14 days |\n| Key stakeholder | CIO Amanda Foster |\n| Competitors shortlisted | CompetitorA, CompetitorB |\n\n**Requirements Analysis (Overall Fit: 94.5%):**\n\n| ID | Requirement | Category | Weight | Fit Score | Evidence |\n|---|---|---|---|---|---|\n| R1 | EHR integration capabilities | Technical | 25% | 95% | Native Epic & Cerner connectors, certified |\n| R2 | HIPAA compliance certification | Compliance | 20% | 100% | SOC 2 Type II + HIPAA certified |\n| R3 | 24/7 support SLA with <15-min response | Support | 15% | 98% | 24/7/365 with 15-min response SLA |\n| R4 | Implementation under 16 weeks | Delivery | 20% | 90% | 12-week methodology with accelerators |\n| R5 | Comprehensive staff training program | Training | 10% | 92% | Role-based curriculum with certification |\n| R6 | Data migration from legacy systems | Technical | 10% | 88% | Automated migration toolkit, 50+ connectors |\n\n**Existing Assets Found:**\n- Healthcare case study (Memorial Health System)\n- HIPAA compliance documentation\n- Implementation methodology deck\n- Training curriculum template\n\nSynthetic source model: [CRM + RFP Document + Content Library]\nAgents: RFPAnalysisAgent, ContentLibraryAgent\n\n**Evidence boundary:** Exact names, dates, requirements, prices, discounts, margins, fit scores, and projections are synthetic planning evidence. This read-only output did not approve pricing, create a final document, submit a response, contact a reference, or communicate with a customer.",
+      "expected_agent": "ProposalGenerationAgent",
+      "must_include": [
+        "RFP Analysis",
+        "Requirements Analysis",
+        "Evidence boundary"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PG-02",
+      "persona": "Account Executive",
+      "onepager_promise": "Assemble personalized proposal content and positioning to strengthen differentiation and win probability",
+      "prompt": "Draft an executive summary for the synthetic Meridian Healthcare opportunity that reflects the buyer priorities and remains subject to review.",
+      "assistant_response": "**Draft ready for your review.** This executive summary:\n\n- **Matches buyer priorities** \u2013 EHR integration, HIPAA compliance, support SLA, and timeline are front and center\n- **Shows capability fit** \u2013 94.5% requirement match with specific connector and certification callouts\n- **Positions references** \u2013 Memorial Health's proven results (34% efficiency, $2.4M savings) demonstrate credibility in healthcare\n- **Stays within budget** \u2013 $1.2M price point with $48K margin to ceiling\n\n**Next steps:**\n- **Review for accuracy** \u2013 Verify references, pricing assumptions, and messaging tone fit your position\n- **Refine specifics** \u2013 Adjust language, add your differentiators, or request a deeper analysis of their requirements\n- **Compile full proposal** \u2013 Once satisfied, I can assemble the full package (solution detail, pricing, references, and checklist) for final delivery review\n\nWhat would you like to adjust or explore next?",
+      "agent_logs": "[ProposalGenerationAgent] **Executive Summary: Transforming Meridian Healthcare's Future**\n\nMeridian Healthcare has an opportunity to digital transformation platform with a solution that matches 94.5% of stated requirements.\n\n**Why Us:**\n\n| Your Need | Our Solution | Fit |\n|---|---|---|\n| EHR integration capabilities | Native Epic & Cerner connectors, certified | 95% |\n| HIPAA compliance certification | SOC 2 Type II + HIPAA certified | 100% |\n| 24/7 support SLA with <15-min response | 24/7/365 with 15-min response SLA | 98% |\n| Implementation under 16 weeks | 12-week methodology with accelerators | 90% |\n\n**Capability Match:** 94.5% overall fit score\n**Pricing:** $1,201,599 total (within budget, $48,401 under ceiling)\n**Margin:** 33.4% gross margin maintained\n\n**Proven Healthcare Success:**\nMemorial Health System achieved 34% efficiency gain, $2.4M annual savings.\n\n**Personalization Applied:**\n- Tailored to CIO Amanda Foster's priorities\n- Healthcare-specific references and compliance language\n- Matched exact RFP terminology and requirement IDs\n\nSynthetic source model: [Content Library + Stakeholder Intel]\nAgents: ExecutiveSummaryAgent\n\n**Evidence boundary:** Exact names, dates, requirements, prices, discounts, margins, fit scores, and projections are synthetic planning evidence. This read-only output did not approve pricing, create a final document, submit a response, contact a reference, or communicate with a customer.",
+      "expected_agent": "ProposalGenerationAgent",
+      "must_include": [
+        "Executive Summary",
+        "Personalization Applied",
+        "Evidence boundary"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PG-03",
+      "persona": "Sales Leader",
+      "onepager_promise": "Generate branded, professional proposal materials for same-day delivery to shorten sales cycles",
+      "prompt": "Compare the synthetic solution and pricing assumptions for Meridian Healthcare without approving a price, discount, or concession.",
+      "assistant_response": "Here's what you're looking at for Meridian Healthcare:\n\n**Implementation** spans 12 weeks across foundation, rollout, and optimization phases\u2014standard healthcare deployment cadence.\n\n**Pricing snapshot:**\n- **Total:** $1,201,599 (11.6% average discount)\n- **Budget fit:** $48,401 under the $1.25M ceiling\n- **Margin:** 33.4% (just below the 35% floor)\n- **Biggest discounts:** Support at 30%, services and training at 10% each\n\n**What stands out:**\n- Support is discounted heavily (30%) but still has healthy margin (35.7%)\n- Platform and integration licenses are tighter at 8% discount with mid-30s margins\n- Implementation services (27.8% margin) are the thinnest\u2014standard for healthcare deployments\n\nThe math works. You're within budget and margins stay respectable, though support is doing some of the lifting. No prices, discounts, or concessions are locked here\u2014this is all planning evidence for your review.\n\nWant to dig into any specific line item, or move toward compiling the full proposal?",
+      "agent_logs": "[ProposalGenerationAgent] **Solution & Pricing: Meridian Healthcare**\n\n**Implementation Approach (12 weeks):**\n\n**Phase 1: Foundation (Weeks 1-4)**\n- Infrastructure assessment, Connector deployment, Security configuration, Core team training\n\n**Phase 2: Rollout (Weeks 5-10)**\n- Phased facility deployment, Workflow integration, Staff certification, Go-live support\n\n**Phase 3: Optimization (Weeks 11-12)**\n- Performance tuning, Advanced training, Success metrics validation, Handoff to support\n\n**Pricing Structure:**\n\n| Component | List Price | Discount | Proposed | Savings | Margin |\n|---|---|---|---|---|---|\n| Platform Core License | $420,000 | 8.0% | $386,400 | $33,600 | 32.6% |\n| Integration Suite | $180,000 | 8.0% | $165,600 | $14,400 | 34.8% |\n| Analytics & Reporting | $80,000 | 8.0% | $73,600 | $6,400 | 40.2% |\n| Implementation Services | $380,000 | 10.0% | $342,000 | $38,000 | 27.8% |\n| Training Program | $120,000 | 10.0% | $108,000 | $12,000 | 44.4% |\n| 3-Year Premium Support | $180,000 | 30.0% | $125,999 | $54,001 | 35.7% |\n| **Total** | **$1,360,000** | **11.6%** | **$1,201,599** | **$158,401** | **33.4%** |\n\n**Budget Analysis:**\n- Budget ceiling: $1,250,000\n- Proposed total: $1,201,599\n- Status: **WITHIN** (headroom: $48,401)\n- Overall discount: 11.6%\n- Gross margin: 33.4% (floor: 35%)\n\nSynthetic source model: [Pricing Engine + Competitive Data]\nAgents: SolutionArchitectAgent, PricingOptimizationAgent\n\n**Evidence boundary:** Exact names, dates, requirements, prices, discounts, margins, fit scores, and projections are synthetic planning evidence. This read-only output did not approve pricing, create a final document, submit a response, contact a reference, or communicate with a customer.",
+      "expected_agent": "ProposalGenerationAgent",
+      "must_include": [
+        "Solution & Pricing",
+        "Budget Analysis",
+        "Evidence boundary"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PG-04",
+      "persona": "Bid Manager",
+      "onepager_promise": "Assemble personalized proposal content and positioning to strengthen differentiation and win probability",
+      "prompt": "Prepare synthetic reference and competitive positioning options for Meridian Healthcare, with availability checks before use.",
+      "assistant_response": "Done. Here's what you have:\n\n**\u2713 Available for use:**\n- **4 healthcare references** \u2014 all contact-ready, spanning system sizes from 6\u201315 facilities\n- **Competitive matrix** \u2014 you vs. two competitors on speed, compliance, integration, support\n- **Win theme** \u2014 \"Speed + Compliance + Support\" with pre-built objection answers\n- **Differentiators** \u2014 12-week implementation, native EHR integration, 15-min SLA\n\n**Key strengths to lead with:**\n1. Fastest implementation in the set (12 weeks vs. 16\u201320)\n2. Native EHR (no middleware hassles or costs)\n3. Industry-leading support response time\n\n**\u26a0\ufe0f Before you use this:**\n- This is **read-only draft content** \u2014 no pricing approved, no proposal sent\n- References are **synthetic** (planning evidence only) \u2014 use them to shape messaging, not to contact directly\n- If you need to reference these wins in a real proposal, verify with your sales team first\n\n**Next step:** Ready to compile this into a full proposal package, or do you want to build out the solution/pricing section first?",
+      "agent_logs": "[ProposalGenerationAgent] **References & Competitive Positioning: Meridian Healthcare**\n\n**Customer References (Healthcare-weighted):**\n\n| Customer | Size | Results | Relevance | Contact Ready |\n|---|---|---|---|---|\n| Memorial Health System | 8 facilities | 34% efficiency gain, $2.4M annual savings | 100% | Yes |\n| Pacific Medical Group | 15 facilities | $2.4M savings/year, 99.9% uptime | 100% | Yes |\n| Summit Healthcare Network | 6 facilities | 12-week go-live, 28% cost reduction | 100% | Yes |\n| Atlas Cloud Services | 800 employees | Zero-downtime migration, 40% infra cost reduction | 40% | Yes |\n\n**Win Theme: Speed + Compliance + Support**\n\n**Competitive Differentiator Matrix:**\n\n| Factor | Us | CompetitorA | CompetitorB |\n|---|---|---|---|\n| Implementation | 12 weeks | 20 weeks | 16 weeks |\n| HIPAA certified | Yes | Yes | Pending |\n| EHR integration | Native | Third-party | Native |\n| Support SLA | 15 min | 240 min | 60 min |\n| Pricing | Market rate | Market rate | +5% above market |\n\n**Objection Pre-Handlers:**\n- \"Pre-built healthcare accelerators cut implementation by 40%\"\n- \"Native EHR integration eliminates middleware costs\"\n- \"15-minute support SLA is fastest in industry\"\n\nSynthetic source model: [Reference Database + Competitive Intel]\nAgents: CompetitiveDifferentiationAgent, ContentLibraryAgent\n\n**Evidence boundary:** Exact names, dates, requirements, prices, discounts, margins, fit scores, and projections are synthetic planning evidence. This read-only output did not approve pricing, create a final document, submit a response, contact a reference, or communicate with a customer.",
+      "expected_agent": "ProposalGenerationAgent",
+      "must_include": [
+        "References & Competitive Positioning",
+        "Win Theme",
+        "Evidence boundary"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PG-05",
+      "persona": "Bid Manager",
+      "onepager_promise": "Generate branded, professional proposal materials for same-day delivery to shorten sales cycles",
+      "prompt": "Outline the synthetic Meridian Healthcare proposal package and every human review required before delivery.",
+      "assistant_response": "## Meridian Healthcare Proposal Package Summary\n\n**Package Structure:**\n- **Main document** (42 pages): exec summary, company background, solution architecture, 12-week implementation plan, pricing, 4 case studies, team bios, legal terms\n- **Supporting materials**: HIPAA compliance docs, Memorial Health case study, timeline visual\n- **Drafts ready**: PDF structure, 12-slide exec presentation, pricing worksheet, reference sheet\n\n**Requirement Coverage:** 94.5% fit to synthetic RFP\n\n---\n\n## Required Human Review Before Delivery\n\n1. **Pricing Approval** \u2014 Only an authorized approver can confirm discounts and margins\n2. **Branding Review** \u2014 Ensure all templates, colors, logos meet your standards\n3. **Editorial Review** \u2014 Fact-check narrative, tone, and claim accuracy\n4. *(Note: Legal review is not yet performed; add if needed)*\n\n---\n\n**\u26a0\ufe0f Important:** This is a read-only draft. No pricing is approved, no customer has been contacted, and no proposal has been sent. All names, dates, and financial figures are synthetic planning evidence only.\n\nReady to walk through a specific section or start a review?",
+      "agent_logs": "[ProposalGenerationAgent] **Proposal Package: Meridian Healthcare -- Digital Transformation Platform**\n\n**Main Document (42 pages):**\n1. Executive Summary (personalized) (3 pages)\n2. Company Overview + Healthcare Expertise (4 pages)\n3. Solution Architecture + Roadmap (6 pages)\n4. Implementation Methodology (12-week plan) (5 pages)\n5. Pricing + Investment Summary (4 pages)\n6. Customer References + Case Studies (4) (8 pages)\n7. Team Bios (Industry specialists) (3 pages)\n8. Terms + Conditions (3 pages)\n\n**Supporting Materials:**\n- HIPAA documentation (attached)\n- Memorial Health System case study (2 pages)\n- Implementation timeline visual (1 page)\n\n**Planned Draft Package:**\n- Proposed PDF proposal structure (branded template)\n- Proposed executive presentation structure (12 slides)\n- Proposed pricing worksheet (detailed breakdown)\n- Proposed reference review sheet (4 synthetic examples)\n\n**Required Human Review Before Delivery:**\n- Legal review: Not performed\n- Pricing approval: Required from an authorized approver\n- Branding review: Required\n- Requirement coverage: Synthetic fit model reports 94.5%\n- Editorial review: Required\n\nSynthetic source model: [Document Assembly + Compliance Check]\nAgents: ProposalAssemblyAgent\n\n**Evidence boundary:** Exact names, dates, requirements, prices, discounts, margins, fit scores, and projections are synthetic planning evidence. This read-only output did not approve pricing, create a final document, submit a response, contact a reference, or communicate with a customer.",
+      "expected_agent": "ProposalGenerationAgent",
+      "must_include": [
+        "Proposal Package",
+        "Required Human Review Before Delivery",
+        "Evidence boundary"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PG-06",
+      "persona": "Sales Leader",
+      "onepager_promise": "Generate branded, professional proposal materials for same-day delivery to shorten sales cycles",
+      "prompt": "Summarize the synthetic Meridian Healthcare draft readiness and the decisions authorized reviewers must make next.",
+      "assistant_response": "## Meridian Healthcare \u2014 Readiness Summary\n\n**Draft Status: Ready for Authorized Review**\n\nYour synthetic proposal package is **89% win-probable** with strong capability fit (94.5%) and optimized pricing ($1.2M at 33.4% margin). The draft includes:\n- Executive summary personalized to CIO Amanda Foster\n- 12-week implementation aligned to 6 core requirements\n- Competitive positioning vs. 2 shortlisted vendors\n- 4 healthcare-specific references (synthetic, requiring availability validation)\n\n---\n\n## Authorized Reviewer Decisions\n\nBefore any customer communication, reviewers must decide on:\n\n1. **Reference Validation** \u2014 Are the 4 synthetic reference organizations available to participate in calls? (Reviewers own this commitment.)\n2. **Executive Sponsorship** \u2014 Does this deal warrant internal sponsor engagement or escalation?\n3. **Confirmation Meeting** \u2014 Should a seller request a call with Meridian's buying team to confirm positioning?\n4. **Pricing Sign-Off** \u2014 Approve the $158,401 discount, or adjust margin assumptions?\n\nAll decisions remain draft-level until a human authorizes delivery. No pricing, document, or outreach has been sent.",
+      "agent_logs": "[ProposalGenerationAgent] **Delivery Summary: Meridian Healthcare -- Digital Transformation Platform**\n\n| Element | Status |\n|---|---|\n| Capability match | 94.5% fit to 6 requirements |\n| Executive summary | Personalized to CIO Amanda Foster |\n| Solution | 12-week implementation plan |\n| Pricing | $1,201,599 (11.6% discount, 33.4% margin) |\n| References | 4 synthetic Healthcare-specific examples requiring availability review |\n| Compliance | SOC 2 Type II, HIPAA, ISO 27001 included |\n\n**Synthetic Win-Probability Indicator: 89%**\n\n| Factor | Score | Max |\n|---|---|---|\n| Capability fit | 28.3 | 30 |\n| Pricing strength | 25 | 25 |\n| Reference strength | 20 | 20 |\n| Competitive position | 16 | 25 |\n| **Total** | **89** | **100** |\n\n**Session Accomplishments:**\n- RFP requirements mapped to capabilities (94.5% fit)\n- Executive summary personalized to CIO Amanda Foster\n- Competitive positioning vs 2 shortlisted vendors\n- Pricing optimized ($158,401 discount, 33.4% margin protected)\n- Draft proposal package outline prepared for review\n\n**Human-Governed Next-Step Options:**\n- Review the draft against the 14 day synthetic window\n- Decide whether an authorized seller should request a confirmation meeting\n- Validate reference availability before offering any calls\n- Decide whether executive sponsorship is appropriate\n\nSynthetic source model: [All Proposal Systems]\nAgents: ProposalAssemblyAgent (orchestrating all agents)\n\n**Evidence boundary:** Exact names, dates, requirements, prices, discounts, margins, fit scores, and projections are synthetic planning evidence. This read-only output did not approve pricing, create a final document, submit a response, contact a reference, or communicate with a customer.",
+      "expected_agent": "ProposalGenerationAgent",
+      "must_include": [
+        "Delivery Summary",
+        "Human-Governed Next-Step Options",
+        "Evidence boundary"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

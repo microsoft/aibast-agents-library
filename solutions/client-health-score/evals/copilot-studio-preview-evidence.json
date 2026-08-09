@@ -1,0 +1,77 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T18:24:36.920Z",
+  "solution": "@aibast-agents-library/client-health-score",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Client Health Score Pilot",
+  "schema_name": "aibast_ClientHealthScorePilot",
+  "bot_id": "7d8a0261-25dd-4794-9569-22eb92e58e5a",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "CHS-01",
+      "must_include": [
+        "TechCorp Industries",
+        "Churn Indicator",
+        "CRITICAL"
+      ],
+      "must_not_include": [
+        "churn will occur"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CHS-02",
+      "must_include": [
+        "No executive contact in 90 days",
+        "Declining billing trend",
+        "TechCorp Industries"
+      ],
+      "must_not_include": [
+        "meeting was created"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CHS-03",
+      "must_include": [
+        "Declining Accounts Requiring Attention",
+        "TechCorp Industries",
+        "Global Finance Corp"
+      ],
+      "must_not_include": [
+        "live survey"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CHS-04",
+      "must_include": [
+        "TechCorp Industries",
+        "Global Finance Corp",
+        "Healthcare Solutions Inc"
+      ],
+      "must_not_include": [
+        "churn is certain"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CHS-05",
+      "must_include": [
+        "Morgan Lee",
+        "Value realization workshop",
+        "Approval gate"
+      ],
+      "must_not_include": [
+        "message was sent",
+        "CRM record updated successfully"
+      ],
+      "passed": true
+    }
+  ]
+}

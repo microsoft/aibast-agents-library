@@ -1,0 +1,35 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/inventory-rebalancing",
+  "audited_source": "agents/@aibast-agents-library/manufacturing_stacks/inventory_rebalancing_stack/inventory_rebalancing_agent.py",
+  "case_file": "tests/demo_cases/inventory-rebalancing.json",
+  "onepager": "Inventory Rebalancing Agent one-pager.pptx",
+  "operations": {
+    "inventory_snapshot": [
+      "IR-01"
+    ],
+    "rebalance_recommendation": [
+      "IR-02"
+    ],
+    "transfer_plan": [
+      "IR-03"
+    ],
+    "cost_analysis": [
+      "IR-04"
+    ]
+  },
+  "defects_fixed": [
+    {
+      "area": "tool routing metadata",
+      "before": "Operations were listed outside the OpenAI parameter contract, leaving persona-language routing underspecified.",
+      "after": "Each operation now has a deterministic enum and persona-oriented description in the tool parameter schema."
+    },
+    {
+      "area": "recommendation-only safety",
+      "before": "Output language could imply execution, assignment, dispatch, movement, supplier action, or outbound communication.",
+      "after": "The agent recommends options only; inventory movement and policy changes require approved tools and authorized owners. Every output labels the fixed data and exact figures as synthetic."
+    }
+  ],
+  "claim_policy": "Public catalog and architecture copy is qualitative. Exact figures and identifiers appear only in clearly labeled synthetic evidence.",
+  "unresolved_defects": []
+}

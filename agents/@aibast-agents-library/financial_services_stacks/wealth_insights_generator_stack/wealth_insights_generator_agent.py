@@ -16,7 +16,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/wealth-insights-generator",
     "version": "1.0.0",
     "display_name": "Wealth Insights Generator Agent",
-    "description": "Wealth management insights with market briefs, client analytics, opportunity alerts, and performance attribution.",
+    "description": "Deliver AI-powered portfolio intelligence to uncover hidden asset opportunities, strengthen client relationships, and drive advisory growth at scale.",
     "author": "AIBAST",
     "tags": ["wealth", "insights", "market", "performance", "analytics", "financial-services"],
     "category": "financial_services",
@@ -51,6 +51,7 @@ CLIENT_PORTFOLIOS = {
         "last_contact": "2025-02-20",
         "next_review": "2025-04-15",
         "life_events": ["Daughter starting college Fall 2025"],
+        "held_away_assets": 620000,
     },
     "WM-002": {
         "name": "Dr. Anita Rao",
@@ -63,6 +64,7 @@ CLIENT_PORTFOLIOS = {
         "last_contact": "2025-03-01",
         "next_review": "2025-06-01",
         "life_events": ["Planning practice sale in 2-3 years"],
+        "held_away_assets": 1100000,
     },
     "WM-003": {
         "name": "George & Martha Kensington",
@@ -75,6 +77,7 @@ CLIENT_PORTFOLIOS = {
         "last_contact": "2025-01-15",
         "next_review": "2025-04-01",
         "life_events": ["Estate plan revision needed", "RMD optimization"],
+        "held_away_assets": 1850000,
     },
     "WM-004": {
         "name": "Tidewater Ventures LLC",
@@ -87,6 +90,7 @@ CLIENT_PORTFOLIOS = {
         "last_contact": "2025-02-10",
         "next_review": "2025-05-15",
         "life_events": ["Considering real estate exit strategy"],
+        "held_away_assets": 900000,
     },
 }
 
@@ -105,6 +109,12 @@ OPPORTUNITY_SIGNALS = [
     {"client": "WM-004", "type": "reallocation", "description": "Portfolio underperforming benchmark; alternative allocation review needed", "priority": "medium", "action": "Prepare alternative manager review presentation"},
 ]
 
+
+SYNTHETIC_NOTICE = (
+    "> **SYNTHETIC DEMO DATA — ADVISOR REVIEW REQUIRED.** Fictional clients, holdings, market "
+    "snapshots, and planning signals only. This is not investment, tax, legal, estate-planning, or "
+    "financial advice; no outreach or transaction has occurred.\n\n"
+)
 
 # ---------------------------------------------------------------------------
 # Helper functions
@@ -138,24 +148,52 @@ class WealthInsightsGeneratorAgent(BasicAgent):
     """Wealth management insights generator agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/wealth-insights-generator"
+        self.name = "WealthInsightsGeneratorAgent"
         self.metadata = {
             "name": self.name,
             "display_name": "Wealth Insights Generator Agent",
-            "description": __manifest__["description"],
+            "description": (
+                "Always call this tool for wealth-advisor, relationship-manager, advisory-director, or "
+                "portfolio-strategist requests about the fixed market snapshot, which household has the "
+                "largest held-away opportunity, high-priority planning signals, a client below benchmark, "
+                "or a meeting brief for the Kensington household. Do not answer those workflows from "
+                "general knowledge. Uses fictional records and fixed synthetic snapshots only. Never "
+                "presents current market data or personal financial, tax, legal, "
+                "or estate-planning advice, sends outreach, or performs a transaction. Licensed-advisor "
+                "and customer review are required."
+            ),
             "parameters": {
                 "type": "object",
                 "properties": {
                     "operation": {
                         "type": "string",
+                        "description": (
+                            "Choose market_brief for the fixed market snapshot, morning huddle, index "
+                            "context, or whether data is current. Choose client_insights for unified managed "
+                            "and held-away wealth, the household with the largest held-away opportunity, life "
+                            "events, or next reviews. Choose opportunity_alerts for high-priority planning "
+                            "signals or advisor-review opportunities. Choose performance_attribution for a "
+                            "client below benchmark, alpha, strategy benchmarks, or an attribution label. "
+                            "Choose meeting_brief for the Kensington household or draft preparation material "
+                            "without advice or outreach."
+                        ),
                         "enum": [
                             "market_brief",
                             "client_insights",
                             "opportunity_alerts",
                             "performance_attribution",
+                            "meeting_brief",
                         ],
                     },
-                    "client_id": {"type": "string"},
+                    "client_id": {
+                        "type": "string",
+                        "description": (
+                            "Synthetic client mapping: Harrison Family Trust is WM-001; Dr. Anita Rao is "
+                            "WM-002; George and Martha Kensington, the Kensington household, or the largest "
+                            "held-away opportunity is WM-003; Tidewater Ventures is WM-004. Omit for "
+                            "market, opportunity, attribution, and book-wide reports."
+                        ),
+                    },
                 },
                 "required": ["operation"],
             },
@@ -163,20 +201,24 @@ class WealthInsightsGeneratorAgent(BasicAgent):
         super().__init__(name=self.name, metadata=self.metadata)
 
     def perform(self, **kwargs) -> str:
+        record_id = kwargs.get("client_id")
+        if record_id and record_id not in CLIENT_PORTFOLIOS:
+            return SYNTHETIC_NOTICE + f"**Not found:** No synthetic record `{record_id}` exists; no substitute record was used."
         operation = kwargs.get("operation", "market_brief")
         dispatch = {
             "market_brief": self._market_brief,
             "client_insights": self._client_insights,
             "opportunity_alerts": self._opportunity_alerts,
             "performance_attribution": self._performance_attribution,
+            "meeting_brief": self._meeting_brief,
         }
         handler = dispatch.get(operation)
         if not handler:
             return f"**Error:** Unknown operation `{operation}`."
-        return handler(**kwargs)
+        return SYNTHETIC_NOTICE + handler(**kwargs)
 
     def _market_brief(self, **kwargs) -> str:
-        lines = ["# Daily Market Brief\n"]
+        lines = ["# Fixed Synthetic Market Snapshot\n"]
         lines.append("## Index Performance\n")
         lines.append("| Index | Current | YTD Return | P/E | Yield |")
         lines.append("|---|---|---|---|---|")
@@ -196,12 +238,12 @@ class WealthInsightsGeneratorAgent(BasicAgent):
         lines = ["# Client Insights Report\n"]
         lines.append(f"**Total AUM:** ${_total_aum():,.0f}")
         lines.append(f"**Average Alpha:** {_avg_alpha()}%\n")
-        lines.append("| Client | AUM | Strategy | YTD | Alpha | Health | Next Review |")
-        lines.append("|---|---|---|---|---|---|---|")
+        lines.append("| Client | Managed AUM | Held Away | Strategy | YTD | Alpha | Health | Next Review |")
+        lines.append("|---|---|---|---|---|---|---|---|")
         for cid, c in CLIENT_PORTFOLIOS.items():
             health = _client_health(c)
             lines.append(
-                f"| {c['name']} ({cid}) | ${c['aum']:,.0f} | {c['strategy'].replace('_', ' ').title()} "
+                f"| {c['name']} ({cid}) | ${c['aum']:,.0f} | ${c['held_away_assets']:,.0f} | {c['strategy'].replace('_', ' ').title()} "
                 f"| {c['ytd_return']:+.1f}% | {c['alpha']:+.1f}% | {health} | {c['next_review']} |"
             )
         lines.append("\n## Life Events & Planning Needs\n")
@@ -261,6 +303,27 @@ class WealthInsightsGeneratorAgent(BasicAgent):
             )
         total_alpha_weighted = sum(c["alpha"] * c["aum"] for c in CLIENT_PORTFOLIOS.values()) / _total_aum()
         lines.append(f"\n**AUM-Weighted Alpha:** {total_alpha_weighted:+.2f}%")
+        return "\n".join(lines)
+
+    def _meeting_brief(self, **kwargs) -> str:
+        client_id = kwargs.get("client_id", "WM-003")
+        client = CLIENT_PORTFOLIOS.get(client_id, list(CLIENT_PORTFOLIOS.values())[0])
+        signals = [s for s in OPPORTUNITY_SIGNALS if s["client"] == client_id]
+        lines = [f"# Draft Advisor Meeting Brief: {client['name']}\n"]
+        lines.append(f"- **Managed AUM:** ${client['aum']:,.0f}")
+        lines.append(f"- **Held-away assets in synthetic snapshot:** ${client['held_away_assets']:,.0f}")
+        lines.append(f"- **Risk profile:** {client['risk_profile'].replace('_', ' ').title()}")
+        lines.append(f"- **Next review:** {client['next_review']}")
+        lines.append("\n## Validate With the Client\n")
+        for event in client["life_events"]:
+            lines.append(f"- {event}")
+        lines.append("\n## Discussion Prompts\n")
+        for signal in signals:
+            lines.append(f"- {signal['description']}")
+        lines.append(
+            "\nThis is preparation material, not a recommendation or customer communication. "
+            "The advisor must validate facts, suitability, consent, and approved disclosures."
+        )
         return "\n".join(lines)
 
 

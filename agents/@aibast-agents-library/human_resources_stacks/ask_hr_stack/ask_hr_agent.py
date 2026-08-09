@@ -12,7 +12,6 @@ import sys, os
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "templates"))
 
 from basic_agent import BasicAgent
-from datetime import datetime, timedelta
 
 # ═══════════════════════════════════════════════════════════════
 # RAPP AGENT MANIFEST
@@ -21,8 +20,8 @@ __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/ask-hr",
     "version": "1.0.0",
-    "display_name": "Ask HR",
-    "description": "AI-powered HR assistant for time-off requests, benefits inquiries, parental leave, and policy lookups.",
+    "display_name": "Ask HR Agent",
+    "description": "Provide self-service HR inquiry handling that transforms the process from a manual ticket-based system to intelligent, automated resolutions.",
     "author": "AIBAST",
     "tags": ["hr", "human-resources", "benefits", "time-off", "employee-self-service"],
     "category": "human_resources",
@@ -51,8 +50,6 @@ _EMPLOYEES = {
             "oop_max_individual": 3000, "oop_max_family": 6000,
             "dependents": ["Spouse"],
         },
-        "parental_eligible": True,
-        "remote_eligible": True,
     },
     "michael": {
         "id": "emp-1002", "name": "Michael Torres", "title": "Account Executive",
@@ -68,8 +65,6 @@ _EMPLOYEES = {
             "oop_max_individual": 4000, "oop_max_family": None,
             "dependents": [],
         },
-        "parental_eligible": False,
-        "remote_eligible": True,
     },
     "sarah": {
         "id": "emp-1003", "name": "Sarah Williams", "title": "Engineering Lead",
@@ -85,8 +80,6 @@ _EMPLOYEES = {
             "oop_max_individual": 3000, "oop_max_family": 6000,
             "dependents": ["Spouse", "Child (age 4)"],
         },
-        "parental_eligible": True,
-        "remote_eligible": True,
     },
 }
 
@@ -126,7 +119,11 @@ _POLICIES = {
     },
 }
 
-_PENDING_REQUESTS = []
+_HR_GATE = (
+    "Synthetic policy guidance only. This agent does not determine eligibility, "
+    "infer sensitive employee circumstances, submit a transaction, notify a "
+    "manager, or make an HR decision."
+)
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -143,31 +140,14 @@ def _resolve_employee(query):
     return "jordan"
 
 
-def _benefits_value(emp):
-    pol = _POLICIES
-    values = {}
-    if emp["parental_eligible"]:
-        weeks = pol["parental_leave"]["paternity_weeks"]
-        # Rough salary estimate from title
-        weekly_salary = 2500
-        values["parental_leave"] = weeks * weekly_salary
-        values["family_stipend"] = pol["parental_leave"]["stipend"]
-        values["childcare_benefit"] = 3000
-    values["equipment_stipend"] = pol["remote_work"]["equipment_stipend"]
-    total = sum(values.values())
-    return values, total
-
-
 def _submit_time_off(emp_key, start_date, end_date, days):
     emp = _EMPLOYEES[emp_key]
     remaining = emp["leave_balance"]["vacation"] - days
-    request = {
+    return {
         "employee": emp["name"], "dates": f"{start_date} to {end_date}",
-        "days": days, "status": "Pending Manager Approval",
+        "days": days, "status": "Draft for employee review",
         "manager": emp["manager"], "balance_after": remaining,
     }
-    _PENDING_REQUESTS.append(request)
-    return request
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -191,7 +171,17 @@ class AskHRAgent(BasicAgent):
         self.name = "AskHRAgent"
         self.metadata = {
             "name": self.name,
-            "description": __manifest__["description"],
+            "description": (
+                f"{__manifest__['description']} Always use this tool for fictional "
+                "leave balances, vacation or time-off previews, parental-leave "
+                "guidance, health-plan questions, remote-work policy, and benefits "
+                "summaries. A request to preview vacation dates or to avoid "
+                "submitting anything must use submit_time_off; that operation "
+                "returns a deterministic Not Submitted draft and sends no "
+                "notification. Use fictional profiles and published policy "
+                "examples only. Never infer a sensitive employee circumstance, "
+                "decide eligibility, submit a transaction, or make an HR decision."
+            ),
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -202,11 +192,30 @@ class AskHRAgent(BasicAgent):
                             "parental_leave", "health_insurance",
                             "remote_work", "benefits_summary",
                         ],
-                        "description": "The HR inquiry to handle",
+                        "description": (
+                            "Choose leave_balance only for available leave and "
+                            "notice rules; submit_time_off for any vacation/date "
+                            "preview or request, including 'do not submit' wording; "
+                            "parental_leave for parental policy; health_insurance "
+                            "for plan or enrollment guidance; remote_work for remote "
+                            "policy; and benefits_summary for an overall package."
+                        ),
                     },
                     "employee_name": {
                         "type": "string",
                         "description": "Employee name (e.g. 'Jordan Chen')",
+                    },
+                    "start_date": {
+                        "type": "string",
+                        "description": "Requested start date for a draft time-off preview",
+                    },
+                    "end_date": {
+                        "type": "string",
+                        "description": "Requested end date for a draft time-off preview",
+                    },
+                    "days": {
+                        "type": "number",
+                        "description": "Requested vacation days for a draft time-off preview",
                     },
                 },
                 "required": ["operation"],
@@ -228,6 +237,13 @@ class AskHRAgent(BasicAgent):
         handler = dispatch.get(op)
         if not handler:
             return f"Unknown operation: {op}"
+        if op == "submit_time_off":
+            return handler(
+                key,
+                kwargs.get("start_date", "Sep 14, 2026"),
+                kwargs.get("end_date", "Sep 18, 2026"),
+                kwargs.get("days", 5),
+            )
         return handler(key)
 
     # ── leave_balance ─────────────────────────────────────────
@@ -248,47 +264,52 @@ class AskHRAgent(BasicAgent):
             f"- 5+ days: Requires {pol['min_notice_5plus_days']} notice\n"
             f"- {pol['holiday_period']}\n"
             f"- Rollover policy: Max {pol['rollover_max']} days carry to next year\n\n"
-            f"Source: [Workday + HR Portal]\nAgents: AskHRAgent"
+            f"{_HR_GATE}\n\n"
+            f"Source: [Synthetic HRIS + Policy Snapshot]\nAgents: AskHRAgent"
         )
 
     # ── submit_time_off ───────────────────────────────────────
-    def _submit_time_off(self, key):
+    def _submit_time_off(self, key, start_date, end_date, days):
         emp = _EMPLOYEES[key]
-        start = (datetime.now() + timedelta(days=30)).strftime("%b %d")
-        end = (datetime.now() + timedelta(days=34)).strftime("%b %d")
-        req = _submit_time_off(key, start, end, 5)
+        try:
+            days = float(days)
+        except (TypeError, ValueError):
+            days = 5
+        req = _submit_time_off(key, start_date, end_date, days)
         return (
-            f"**Time Off Request Submitted**\n\n"
+            f"**Time Off Request Preview — Not Submitted**\n\n"
             f"| Detail | Information |\n|---|---|\n"
             f"| Employee | {emp['name']} |\n"
-            f"| Dates | {req['dates']} (5 days) |\n"
+            f"| Dates | {req['dates']} ({req['days']:g} days) |\n"
             f"| Status | {req['status']} |\n"
             f"| Manager | {req['manager']} |\n"
-            f"| Balance After | {req['balance_after']} days remaining |\n\n"
-            f"Your manager will be notified automatically.\n\n"
-            f"Source: [Workday]\nAgents: AskHRAgent"
+            f"| Projected Balance | {req['balance_after']:g} days remaining |\n\n"
+            f"Review the dates, balance, local policy, and coverage with an "
+            f"authorized HR or manager before submission. No notification was sent.\n\n"
+            f"{_HR_GATE}\n\n"
+            f"Source: [Synthetic HRIS Snapshot]\nAgents: AskHRAgent"
         )
 
     # ── parental_leave ────────────────────────────────────────
     def _parental_leave(self, key):
         emp = _EMPLOYEES[key]
         pol = _POLICIES["parental_leave"]
-        eligible = emp["parental_eligible"]
-        status = "Qualified" if eligible else "Not yet eligible (requires 1+ year tenure)"
         return (
-            f"**Parental Leave Benefits: {emp['name']}**\n\n"
+            f"**Parental Leave Policy Guidance: {emp['name']} (Synthetic Profile)**\n\n"
             f"| Benefit | Details |\n|---|---|\n"
             f"| Paternity Leave | {pol['paternity_weeks']} weeks fully paid |\n"
             f"| Maternity Leave | {pol['maternity_weeks']} weeks fully paid |\n"
-            f"| Your Eligibility | {status} |\n"
+            f"| Eligibility Rule | Verify tenure, location, leave type, and qualifying event with HR |\n"
             f"| Family Care Stipend | ${pol['stipend']:,} one-time |\n"
             f"| Backup Childcare | {pol['backup_childcare_months']} months included |\n\n"
             f"**Additional Support:**\n"
             f"- Flexible return-to-work schedule available\n"
             f"- Parent Employee Resource Group\n"
             f"- Lactation room access\n\n"
-            f"**Next Step:** Submit parental leave form 30 days before due date.\n\n"
-            f"Source: [Benefits Portal]\nAgents: AskHRAgent"
+            f"**Next Step:** Ask an authorized HR reviewer to confirm the applicable "
+            f"policy and submission timing. Do not disclose medical or family details here.\n\n"
+            f"{_HR_GATE}\n\n"
+            f"Source: [Synthetic Benefits Policy Snapshot]\nAgents: AskHRAgent"
         )
 
     # ── health_insurance ──────────────────────────────────────
@@ -314,37 +335,31 @@ class AskHRAgent(BasicAgent):
             f"- All immunizations\n"
             f"- Pediatric visits: ${pol['pediatric_copay']} copay\n"
             f"- Dependent life insurance: ${pol['dependent_life_insurance']:,} automatic\n\n"
-            f"Source: [Benefits Portal + Insurance Carrier]\nAgents: AskHRAgent"
+            f"Verify plan rules and enrollment eligibility with the benefits "
+            f"administrator before making a selection.\n\n"
+            f"{_HR_GATE}\n\n"
+            f"Source: [Synthetic Benefits Policy Snapshot]\nAgents: AskHRAgent"
         )
 
     # ── remote_work ───────────────────────────────────────────
     def _remote_work(self, key):
         emp = _EMPLOYEES[key]
         pol = _POLICIES["remote_work"]
-        eligible = emp["remote_eligible"]
-        total_days = pol["standard_days_per_week"]
-        parent_note = ""
-        if emp["parental_eligible"]:
-            total_days += pol["new_parent_bonus_days"]
-            parent_note = (
-                f"\n**New Parent Options:**\n"
-                f"- Additional {pol['new_parent_bonus_days']} remote days/week for {pol['new_parent_bonus_months']} months\n"
-                f"- Gradual return: Part-time for 4 weeks\n"
-                f"- Emergency childcare: 10 days/year included\n"
-            )
         return (
-            f"**Remote Work Policy: {emp['name']}**\n\n"
-            f"| Benefit | Your Eligibility |\n|---|---|\n"
+            f"**Remote Work Policy Guidance: {emp['name']} (Synthetic Profile)**\n\n"
+            f"| Benefit | Published Policy Example |\n|---|---|\n"
             f"| Standard Allowance | {pol['standard_days_per_week']} days/week remote |\n"
-            f"| Your Status | {'Eligible' if eligible else 'Not eligible'} |\n"
+            f"| Eligibility | Requires role, location, and manager/HR review |\n"
             f"| Core Hours | {pol['core_hours']} |\n\n"
             f"**Home Office Support:**\n"
             f"- Equipment stipend: ${pol['equipment_stipend']:,} one-time\n"
             f"- Internet reimbursement: ${pol['internet_reimbursement']}/month\n"
             f"- Ergonomic assessment: Virtual consultation\n"
-            f"- Same-day IT support available\n"
-            f"{parent_note}\n"
-            f"Source: [HR Policy Portal + Benefits]\nAgents: AskHRAgent"
+            f"- Same-day IT support available\n\n"
+            f"Do not infer caregiver, disability, medical, or family status from "
+            f"a request. Route exceptions to authorized HR review.\n\n"
+            f"{_HR_GATE}\n\n"
+            f"Source: [Synthetic HR Policy Snapshot]\nAgents: AskHRAgent"
         )
 
     # ── benefits_summary ──────────────────────────────────────
@@ -352,31 +367,27 @@ class AskHRAgent(BasicAgent):
         emp = _EMPLOYEES[key]
         lb = emp["leave_balance"]
         hp = emp["health_plan"]
-        values, total = _benefits_value(emp)
         pol = _POLICIES
 
         items = []
         items.append(f"- Time Off: {lb['vacation']} vacation days + {lb['sick']} sick days")
-        if emp["parental_eligible"]:
-            items.append(f"- Parental Leave: {pol['parental_leave']['paternity_weeks']} weeks paid + ${pol['parental_leave']['stipend']:,} stipend")
+        items.append("- Parental Leave: Policy details require HR eligibility review")
         items.append(f"- Health Coverage: {hp['plan']} (${hp['monthly_premium']}/mo)")
         items.append(f"- Remote Work: {pol['remote_work']['standard_days_per_week']} days/week")
         items.append(f"- Equipment Stipend: ${pol['remote_work']['equipment_stipend']:,}")
 
-        value_lines = "\n".join(f"- {k.replace('_', ' ').title()}: ${v:,}" for k, v in values.items())
-
         return (
-            f"**Benefits Summary: {emp['name']}**\n"
+            f"**Benefits Summary: {emp['name']} (Synthetic Profile)**\n"
             f"**{emp['title']}, {emp['department']}** ({emp['tenure_years']} years)\n\n"
             f"**Your Benefits Package:**\n"
             + "\n".join(items) + "\n\n"
-            f"**Financial Value:**\n{value_lines}\n"
-            f"**Total estimated value: ${total:,}**\n\n"
+            f"No salary, medical, family-status, or total-compensation value is inferred.\n\n"
             f"**Next Steps:**\n"
             f"1. Review parental leave form (submit 30 days before due date)\n"
             f"2. Benefits enrollment changes within 30 days of qualifying event\n"
-            f"3. Discuss remote schedule with {emp['manager']}\n\n"
-            f"Source: [All HR Systems]\nAgents: AskHRAgent"
+            f"3. Discuss remote schedule through the approved HR process\n\n"
+            f"{_HR_GATE}\n\n"
+            f"Source: [Synthetic HR Policy Snapshot]\nAgents: AskHRAgent"
         )
 
 

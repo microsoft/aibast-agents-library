@@ -1,0 +1,89 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/time-entry-billing",
+  "display_name": "Time Entry and Billing Agent",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/professional_services_stacks/time_entry_billing_stack/time_entry_billing_agent.py",
+  "target_filename": "time_entry_billing_agent.py",
+  "expected_tool": "TimeEntryBillingAgent",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "smoke_test": {
+    "prompt": "What billable work is still blocked from this close, and what has to happen before it can move?",
+    "must_call": "TimeEntryBillingAgent",
+    "must_include": [
+      "TE-9004",
+      "TE-9011"
+    ]
+  },
+  "copilot_studio": {
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "authoring_mode": "cli-copilot",
+    "required_connections": [
+      "Dynamics 365",
+      "SharePoint",
+      "Microsoft Teams"
+    ],
+    "operations": [
+      "unbilled_report",
+      "billing_summary",
+      "time_entry_audit",
+      "invoice_preparation",
+      "dispute_resolution"
+    ],
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_billing-synthetic-ledger.md",
+      "manual/knowledge/aibast_billing-rules-and-disputes.md"
+    ],
+    "manual_skill_count": 5,
+    "publish_requires_confirmation": true,
+    "minimum_pac_version": "2.9.3",
+    "validated_manual": {
+      "display_name": "Time Entry and Billing Manual",
+      "bot_id": "210afa27-174b-47a2-a82d-c3f58a04e58e",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 5,
+      "knowledge_files": 2,
+      "web_search_removed": true,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 5,
+      "preview_cases_total": 5
+    },
+    "validated_pilot": {
+      "display_name": "Time Entry and Billing Pilot",
+      "schema_name": "aibast_TimeEntryandBillingPilot",
+      "bot_id": "eef12393-69b8-47c9-b37b-ac3f194f102f",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 5,
+      "knowledge_files": 2,
+      "changes_pushed": 8,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 5,
+      "preview_cases_total": 5
+    }
+  },
+  "demo_scenarios": [
+    "billing-blockers",
+    "billing-rollup",
+    "billing-audit",
+    "invoice-support",
+    "billing-disputes"
+  ]
+}

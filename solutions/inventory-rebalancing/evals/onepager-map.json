@@ -1,0 +1,53 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/inventory-rebalancing",
+  "onepager": "Inventory Rebalancing Agent one-pager.pptx",
+  "source_slide_sha256": "3f6fbc3220755ec6d34aab7b28b6b2879ba5c9e5df06b556b6d8f69961f85dc0",
+  "promises": [
+    {
+      "advertised_promise": "Identify and classify slow-moving, obsolete, and excess inventory to quantify where working capital is tied up",
+      "operations": [
+        "inventory_snapshot",
+        "rebalance_recommendation"
+      ],
+      "demo_cases": [
+        "IR-01",
+        "IR-02"
+      ],
+      "synthetic_evidence": [
+        "The snapshot identifies facility pressure and SKU-level reorder exposure.",
+        "A fixed synthetic portfolio profile classifies velocity, strategic value, and lifecycle risk while reserving obsolescence decisions for authorized owners."
+      ]
+    },
+    {
+      "advertised_promise": "Design liquidation and return strategies to unlock cash and reduce waste for healthier financial performance",
+      "operations": [
+        "transfer_plan",
+        "cost_analysis"
+      ],
+      "demo_cases": [
+        "IR-03",
+        "IR-04"
+      ],
+      "synthetic_evidence": [
+        "The deterministic source prepares transfer and cost-review options.",
+        "Liquidation, vendor return, and movement remain production seams requiring approved tools and human authorization."
+      ]
+    },
+    {
+      "advertised_promise": "Apply AI-driven policies and dynamic reorder points to maintain optimal inventory levels and efficiency gains",
+      "operations": [
+        "inventory_snapshot",
+        "cost_analysis"
+      ],
+      "demo_cases": [
+        "IR-01",
+        "IR-04"
+      ],
+      "synthetic_evidence": [
+        "The pilot exposes fixed reorder points and modeled trade-offs.",
+        "No inventory policy or reorder point is changed by the local agent."
+      ]
+    }
+  ]
+}

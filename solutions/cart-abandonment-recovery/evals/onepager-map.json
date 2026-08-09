@@ -1,0 +1,13 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/cart-abandonment-recovery",
+  "onepager": "25. Cart Abandonment Recovery Agent one-pager.pptx",
+  "source_slide_sha256": "725f5bde43dc70a3642cd14fe182fc9bc852c1fde193ec06934bd21e163f9b75",
+  "source_audit": {"approved_slide_hash_match": true, "deterministic_source": "solutions.json", "deterministic_slot": 22, "content_snapshot": "state/onepager_content.json"},
+  "promises": [
+    {"advertised_promise": "Monitor and analyze abandoned carts in real time to recover lost sales", "operations": ["abandonment_analysis"], "demo_cases": ["CAR-01"], "synthetic_evidence": ["Four anonymous synthetic carts expose value, exit page, device, and review status"]},
+    {"advertised_promise": "Generate personalized offers to maximize conversion and maintain profitability", "operations": ["incentive_optimization"], "demo_cases": ["CAR-03"], "synthetic_evidence": ["Fixed margin-impact scenarios are approval-only and issue no offer"]},
+    {"advertised_promise": "Orchestrate recovery campaigns to improve engagement and recovery rates", "operations": ["recovery_campaign"], "demo_cases": ["CAR-02"], "synthetic_evidence": ["Five draft channel concepts include timing and benchmark assumptions but no deployment"]},
+    {"advertised_promise": "Forecast recovery and revenue impact to optimize strategy and campaign ROI", "operations": ["conversion_tracking"], "demo_cases": ["CAR-04"], "synthetic_evidence": ["Thirty-day aggregate conversion figures are fixed synthetic planning examples"]}
+  ]
+}

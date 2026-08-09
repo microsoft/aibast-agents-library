@@ -1,0 +1,35 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/maintenance-scheduling",
+  "audited_source": "agents/@aibast-agents-library/manufacturing_stacks/maintenance_scheduling_stack/maintenance_scheduling_agent.py",
+  "case_file": "tests/demo_cases/maintenance-scheduling.json",
+  "onepager": "Maintenance Scheduling Agent one-pager.pptx",
+  "operations": {
+    "schedule_overview": [
+      "MS-01"
+    ],
+    "predictive_alerts": [
+      "MS-02"
+    ],
+    "work_order_plan": [
+      "MS-03"
+    ],
+    "downtime_analysis": [
+      "MS-04"
+    ]
+  },
+  "defects_fixed": [
+    {
+      "area": "tool routing metadata",
+      "before": "Operations were listed outside the OpenAI parameter contract, leaving persona-language routing underspecified.",
+      "after": "Each operation now has a deterministic enum and persona-oriented description in the tool parameter schema."
+    },
+    {
+      "area": "recommendation-only safety",
+      "before": "Output language could imply execution, assignment, dispatch, movement, supplier action, or outbound communication.",
+      "after": "The agent never controls equipment or creates, assigns, schedules, or dispatches maintenance work. Every output labels the fixed data and exact figures as synthetic."
+    }
+  ],
+  "claim_policy": "Public catalog and architecture copy is qualitative. Exact figures and identifiers appear only in clearly labeled synthetic evidence.",
+  "unresolved_defects": []
+}

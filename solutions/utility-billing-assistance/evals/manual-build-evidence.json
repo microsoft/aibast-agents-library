@@ -1,0 +1,99 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-08-08T15:09:25.716Z",
+  "solution": "@aibast-agents-library/utility-billing-assistance",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "Utility Billing Manual",
+    "bot_id": "3b8d6bf9-4c6a-4417-8f1e-6d08347fa927",
+    "created": true
+  },
+  "target_model": "Claude Sonnet 4.6",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 4,
+      "confirmed": 4
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "UTILITY_BILLING_ASSISTANCE-01",
+      "prompt": "Explain ACCT-90003 balances without changing the account.",
+      "must_include": [
+        "ACCT-90003",
+        "$489.20",
+        "No balance"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "14-utility_billing_assistance-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "UTILITY_BILLING_ASSISTANCE-02",
+      "prompt": "Does ACCT-90003 show a possible leak and what draft adjustment evidence is needed?",
+      "must_include": [
+        "REVIEW POSSIBLE LEAK",
+        "Draft policy estimate",
+        "not a leak diagnosis"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "15-utility_billing_assistance-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "UTILITY_BILLING_ASSISTANCE-03",
+      "prompt": "Show ACCT-90003 payment-plan options, but do not set one up.",
+      "must_include": [
+        "12 months",
+        "No payment arrangement was created"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "16-utility_billing_assistance-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "UTILITY_BILLING_ASSISTANCE-04",
+      "prompt": "Screen a two-person household earning 25000 with a 70-year-old applicant.",
+      "must_include": [
+        "POTENTIALLY ELIGIBLE",
+        "No eligibility determination",
+        "enrollment"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "17-utility_billing_assistance-04.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/utility-billing-assistance/screenshots/manual/browserfilm.json",
+    "gif": "solutions/utility-billing-assistance/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/utility-billing-assistance/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "18-confirm-draft.jpg"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/maintenance-scheduling",
+  "onepager": "Maintenance Scheduling Agent one-pager.pptx",
+  "source_slide_sha256": "2e1656c9e17d2716c9205e2831a4a4ee953911b8961d5d4fa820ed3199b80bc9",
+  "promises": [
+    {
+      "advertised_promise": "Identify predictive maintenance windows to minimize production impact and extend equipment life",
+      "operations": [
+        "predictive_alerts",
+        "work_order_plan"
+      ],
+      "demo_cases": [
+        "MS-02",
+        "MS-03"
+      ],
+      "synthetic_evidence": [
+        "Condition and failure-risk signals rank assets for review.",
+        "The work plan proposes review windows and never dispatches maintenance."
+      ]
+    },
+    {
+      "advertised_promise": "Coordinate resources and parts staging to ensure timely execution and reduce emergency repair costs",
+      "operations": [
+        "schedule_overview",
+        "work_order_plan"
+      ],
+      "demo_cases": [
+        "MS-01",
+        "MS-03"
+      ],
+      "synthetic_evidence": [
+        "Technician capacity, parts readiness, and backup readiness are shown together.",
+        "Assignments, reservations, and dispatch remain approval-gated production seams."
+      ]
+    },
+    {
+      "advertised_promise": "Deliver real-time alerts and scheduling insights to prevent disruptions and maintain quality standards",
+      "operations": [
+        "predictive_alerts",
+        "downtime_analysis"
+      ],
+      "demo_cases": [
+        "MS-02",
+        "MS-04"
+      ],
+      "synthetic_evidence": [
+        "The pilot provides fixed-snapshot alerts and modeled exposure.",
+        "Real-time telemetry and operational outcomes require approved production integrations."
+      ]
+    }
+  ]
+}

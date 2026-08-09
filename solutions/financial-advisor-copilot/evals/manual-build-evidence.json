@@ -1,0 +1,148 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-08-08T10:33:11.414Z",
+  "solution": "@aibast-agents-library/financial-advisor-copilot",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "Financial Advisor Manual",
+    "bot_id": "206d3ce8-c5ec-4da0-8591-51ccac160103",
+    "created": true
+  },
+  "target_model": "Claude Sonnet 4.6",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 6,
+      "confirmed": 6
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "FAC-01",
+      "prompt": "Who is waiting, what do they need, and where should I route them after identity checks?",
+      "must_include": [
+        "CLI-3001",
+        "No identity"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "16-fac-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "FAC-02",
+      "prompt": "Summarize the advisor book and show which client is already retired.",
+      "must_include": [
+        "CLI-3003",
+        "Retired"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "17-fac-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "FAC-03",
+      "prompt": "Show the Whitfield allocation drift before our review meeting.",
+      "must_include": [
+        "Robert & Susan Whitfield",
+        "Cash & Equivalents"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "18-fac-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "FAC-04",
+      "prompt": "Prepare discussion candidates for Angela without giving advice or creating an order.",
+      "must_include": [
+        "Angela Martinez",
+        "not recommendations"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "19-fac-04.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "FAC-05",
+      "prompt": "Which client requires senior-investor controls, and what other checkpoints apply?",
+      "must_include": [
+        "CLI-3003",
+        "Senior investor"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "20-fac-05.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "FAC-06",
+      "prompt": "Draft the Whitfield handoff with request, identity status, risk context, and compliance flags.",
+      "must_include": [
+        "Robert & Susan Whitfield",
+        "no case transfer"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "expected_screenshot": "21-fac-06.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/financial-advisor-copilot/screenshots/manual/browserfilm.json",
+    "gif": "solutions/financial-advisor-copilot/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/financial-advisor-copilot/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "22-confirm-draft.jpg"
+  }
+}

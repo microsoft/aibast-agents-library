@@ -1,0 +1,48 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/supply-chain-disruption-alert",
+  "source_path": "agents/@aibast-agents-library/retail_cpg_stacks/supply_chain_disruption_alert_stack/supply_chain_disruption_alert_agent.py",
+  "onepager": "35. Supply Chain Disruption Alert Agent one-pager.pptx",
+  "advertised_challenge": "Supplier, logistics, order, and risk signals are scattered, so impacts surface late and mitigation becomes reactive.",
+  "advertised_action": "Detect disruptions, assess SKU and revenue impact, compare sourcing and routing alternatives, and recommend mitigation by cost and lead time",
+  "finding": "covered_by_synthetic_decision_support_with_production_seams",
+  "routing": {
+    "status": "fixed",
+    "evidence": "Tool and operation descriptions now name the supported persona questions and approval boundary."
+  },
+  "behavior": {
+    "status": "fixed",
+    "evidence": "Each advertised workflow returns deterministic synthetic evidence and an explicit limitation."
+  },
+  "safety": {
+    "status": "fixed",
+    "evidence": "Outputs do not claim a live write or final legal, regulatory, safety, eligibility, billing, emissions, dispatch, sourcing, or inventory decision."
+  },
+  "operations": [
+    {
+      "operation": "disruption_dashboard",
+      "persona": "Customer Fulfillment Lead",
+      "purpose": "Summarize active disruption evidence."
+    },
+    {
+      "operation": "risk_assessment",
+      "persona": "Supply Chain Planner",
+      "purpose": "Explain route risk factors."
+    },
+    {
+      "operation": "mitigation_plan",
+      "persona": "Operations Leader",
+      "purpose": "Compare approval-gated mitigation options."
+    },
+    {
+      "operation": "supplier_alternatives",
+      "persona": "Procurement Manager",
+      "purpose": "Prepare supplier candidates for due diligence."
+    }
+  ],
+  "interface_schema": {
+    "status": "fixed",
+    "evidence": "Operation-specific parameters are documented and filters no longer invent records for unknown identifiers."
+  },
+  "advertised_vs_local_limitation": "The local source uses fixed synthetic events; live signal ingestion, order impact, sourcing, routing, and inventory changes require approved systems."
+}

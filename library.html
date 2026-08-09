@@ -1,0 +1,2230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (() => {
+    const param = new URLSearchParams(window.location.search).get("scoutTheme");
+    const theme =
+      param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI BAST Agent Library</title>
+<meta name="description" content="Find AI BAST industry agents by outcome, industry, persona, and Microsoft AI product.">
+<meta property="og:title" content="AI BAST Agent Library">
+<meta property="og:description" content="Find, understand, and try industry agent solutions built to demonstrate Microsoft AI.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://microsoft.github.io/aibast-agents-library/library.html">
+<style>
+:root {
+  color-scheme: light;
+  --cp-bg: #f7f4ef;
+  --cp-bg-elevated: #fcfbf8;
+  --cp-surface: #ffffff;
+  --cp-surface-soft: #f5f5f5;
+  --cp-border: #dedede;
+  --cp-border-strong: #919191;
+  --cp-text: #242424;
+  --cp-text-muted: #5c5c5c;
+  --cp-text-soft: #6f6f6f;
+  --cp-accent: #b11f4b;
+  --cp-accent-hover: #9a1a41;
+  --cp-accent-soft: rgba(177, 31, 75, 0.08);
+  --cp-accent-fg: #ffffff;
+  --cp-success: #16a34a;
+  --cp-danger: #dc2626;
+  --cp-warning: #f59e0b;
+  --cp-link: #0078d4;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+  --cp-overlay: rgba(255, 255, 255, 0.8);
+  --cp-panel: rgba(255, 255, 255, 0.86);
+  --cp-panel-strong: rgba(255, 255, 255, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.55);
+  --cp-highlight: rgba(177, 31, 75, 0.12);
+}
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --cp-bg: #3d3b3a;
+  --cp-bg-elevated: #343231;
+  --cp-surface: #292929;
+  --cp-surface-soft: #2e2e2e;
+  --cp-border: #474747;
+  --cp-border-strong: #5f5f5f;
+  --cp-text: #dedede;
+  --cp-text-muted: #919191;
+  --cp-text-soft: #b0b0b0;
+  --cp-accent: #fd8ea1;
+  --cp-accent-hover: #fb7b91;
+  --cp-accent-soft: rgba(253, 142, 161, 0.14);
+  --cp-accent-fg: #1a1a1a;
+  --cp-success: #4ade80;
+  --cp-danger: #f87171;
+  --cp-warning: #fbbf24;
+  --cp-link: #4da6ff;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+  --cp-overlay: rgba(41, 41, 41, 0.88);
+  --cp-panel: rgba(41, 41, 41, 0.72);
+  --cp-panel-strong: rgba(41, 41, 41, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.04);
+  --cp-highlight: rgba(253, 142, 161, 0.12);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--cp-bg);
+  color: var(--cp-text);
+  font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.5;
+}
+body.modal-open { overflow: hidden; }
+button, input, select { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+a { color: var(--cp-link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+code, pre, .mono { font-family: Consolas, "Courier New", Courier, monospace; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 3px solid var(--cp-highlight);
+  outline-offset: 2px;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  min-height: 68px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px max(20px, calc((100vw - 1320px) / 2));
+  border-bottom: 1px solid var(--cp-border);
+  background: var(--cp-panel-strong);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: var(--cp-text);
+  font-weight: 780;
+  letter-spacing: -0.02em;
+}
+.brand:hover { text-decoration: none; }
+.brand-mark {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 3px solid var(--cp-highlight);
+  border-radius: 999px;
+  background: var(--cp-surface);
+  color: var(--cp-accent);
+  font-size: 0.72rem;
+  font-weight: 850;
+}
+.brand-copy small {
+  display: block;
+  color: var(--cp-danger);
+  font-size: 0.65rem;
+  font-weight: 750;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.nav a, .icon-button, .button {
+  border: 1px solid var(--cp-border);
+  border-radius: 10px;
+  background: var(--cp-surface);
+  color: var(--cp-text);
+  cursor: pointer;
+  font-weight: 650;
+}
+.nav a {
+  padding: 8px 12px;
+  font-size: 0.78rem;
+}
+.nav a:hover, .button:hover, .icon-button:hover {
+  border-color: var(--cp-border-strong);
+  text-decoration: none;
+}
+.icon-button {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+}
+.button {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 8px 12px;
+  font-size: 0.78rem;
+}
+.button.primary {
+  border-color: var(--cp-accent);
+  background: var(--cp-accent);
+  color: var(--cp-accent-fg);
+}
+.button.primary:hover {
+  border-color: var(--cp-accent-hover);
+  background: var(--cp-accent-hover);
+}
+.button.small {
+  min-height: 32px;
+  padding: 6px 9px;
+  font-size: 0.7rem;
+}
+.button.full { width: 100%; }
+
+.page {
+  width: min(1320px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 42px 0 80px;
+}
+.intro {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 32px;
+  padding-bottom: 24px;
+}
+.eyebrow {
+  display: inline-flex;
+  min-width: 245px;
+  min-height: 30px;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 6px 16px;
+  border-radius: 0 999px 999px 0;
+  background: var(--cp-danger);
+  color: var(--cp-accent-fg);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.intro h1 {
+  margin: 0 0 10px;
+  font-size: clamp(2.5rem, 5vw, 4.8rem);
+  line-height: 0.98;
+  letter-spacing: -0.06em;
+}
+.intro p {
+  max-width: 760px;
+  margin: 0;
+  color: var(--cp-text-muted);
+  font-size: 1rem;
+}
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 7px;
+  max-width: 460px;
+}
+.stat {
+  padding: 7px 10px;
+  border: 1px solid var(--cp-border);
+  border-radius: 999px;
+  background: var(--cp-surface);
+  color: var(--cp-text-muted);
+  font-size: 0.7rem;
+  white-space: nowrap;
+}
+.stat strong { color: var(--cp-text); }
+
+.library {
+  overflow: visible;
+  border: 1px solid var(--cp-border);
+  border-radius: 16px;
+  background: var(--cp-surface);
+  box-shadow: 0 0 2px var(--cp-border), 0 8px 18px var(--cp-accent-soft);
+}
+.industry-selector {
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--cp-border);
+}
+.industry-selector-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.industry-selector-head strong {
+  font-size: 0.9rem;
+}
+.industry-selector-head span {
+  color: var(--cp-text-muted);
+  font-size: 0.7rem;
+}
+.industry-menu {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 7px;
+}
+.industry-button {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 28px 1fr auto;
+  gap: 7px;
+  align-items: center;
+  border: 1px solid var(--cp-border);
+  border-radius: 10px;
+  background: var(--cp-surface);
+  color: var(--cp-text);
+  cursor: pointer;
+  padding: 8px;
+  text-align: left;
+}
+.industry-button:hover, .industry-button.active {
+  border-color: var(--cp-accent);
+  background: var(--cp-accent-soft);
+}
+.industry-button .industry-icon {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 2px solid var(--cp-highlight);
+  border-radius: 999px;
+  color: var(--cp-text-muted);
+}
+.industry-button span {
+  overflow: hidden;
+  font-size: 0.67rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.industry-button small {
+  color: var(--cp-danger);
+  font-size: 0.65rem;
+  font-weight: 800;
+}
+.industry-blueprint {
+  display: none;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--cp-border);
+  background: var(--cp-accent-soft);
+}
+.industry-blueprint.visible { display: grid; }
+.industry-blueprint .category {
+  margin-bottom: 4px;
+}
+.industry-blueprint h2 {
+  margin: 0 0 5px;
+  font-size: 1.35rem;
+  letter-spacing: -0.03em;
+}
+.industry-blueprint p {
+  max-width: 780px;
+  margin: 0;
+  color: var(--cp-text-muted);
+  font-size: 0.78rem;
+}
+.blueprint-deploy {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 5px;
+  max-width: 420px;
+}
+.blueprint-deploy span {
+  padding: 5px 8px;
+  border: 1px solid var(--cp-border);
+  border-radius: 999px;
+  background: var(--cp-surface);
+  color: var(--cp-text);
+  font-size: 0.64rem;
+  font-weight: 650;
+}
+.search-wrap {
+  position: relative;
+  padding: 18px;
+  border-bottom: 1px solid var(--cp-border);
+}
+.search-icon {
+  position: absolute;
+  top: 37px;
+  left: 36px;
+  color: var(--cp-text-muted);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+.search {
+  width: 100%;
+  min-height: 58px;
+  border: 2px solid var(--cp-border-strong);
+  border-radius: 16px;
+  background: var(--cp-bg-elevated);
+  color: var(--cp-text);
+  padding: 12px 48px 12px 50px;
+  outline: 0;
+  font-size: 1rem;
+}
+.search:focus { border-color: var(--cp-accent); }
+.search::placeholder { color: var(--cp-text-muted); }
+.clear-search {
+  position: absolute;
+  top: 29px;
+  right: 28px;
+  display: none;
+  border: 0;
+  background: transparent;
+  color: var(--cp-text-muted);
+  cursor: pointer;
+  padding: 8px;
+}
+.clear-search.visible { display: block; }
+.popular {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.popular-label {
+  align-self: center;
+  color: var(--cp-text-muted);
+  font-size: 0.67rem;
+  font-weight: 750;
+  text-transform: uppercase;
+}
+.query-chip, .tab, .active-chip {
+  border: 1px solid var(--cp-border);
+  border-radius: 999px;
+  background: var(--cp-surface);
+  color: var(--cp-text-muted);
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-weight: 650;
+}
+.query-chip { padding: 5px 9px; }
+.query-chip:hover, .tab:hover {
+  border-color: var(--cp-accent);
+  color: var(--cp-accent);
+}
+.suggestions {
+  position: absolute;
+  top: 82px;
+  right: 18px;
+  left: 18px;
+  z-index: 20;
+  display: none;
+  overflow: hidden;
+  border: 1px solid var(--cp-border);
+  border-radius: 12px;
+  background: var(--cp-panel-strong);
+  box-shadow: var(--cp-shadow);
+}
+.suggestions.visible { display: block; }
+.suggestion {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  border: 0;
+  border-bottom: 1px solid var(--cp-border);
+  background: transparent;
+  color: var(--cp-text);
+  cursor: pointer;
+  padding: 11px 13px;
+  text-align: left;
+}
+.suggestion:last-child { border-bottom: 0; }
+.suggestion:hover { background: var(--cp-accent-soft); }
+.suggestion strong {
+  display: block;
+  font-size: 0.8rem;
+}
+.suggestion span {
+  display: block;
+  overflow: hidden;
+  margin-top: 2px;
+  color: var(--cp-text-muted);
+  font-size: 0.68rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.suggestion em {
+  align-self: center;
+  color: var(--cp-danger);
+  font-size: 0.65rem;
+  font-style: normal;
+  font-weight: 750;
+}
+
+.controls {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--cp-border);
+  background: var(--cp-accent-soft);
+}
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.tab {
+  padding: 6px 11px;
+}
+.tab.active {
+  border-color: var(--cp-accent);
+  background: var(--cp-surface);
+  color: var(--cp-accent);
+}
+.filters {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(140px, 1fr));
+  gap: 8px;
+}
+.field {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid var(--cp-border);
+  border-radius: 10px;
+  background: var(--cp-surface);
+  color: var(--cp-text);
+  padding: 7px 9px;
+  font-size: 0.76rem;
+}
+.active-filters {
+  display: none;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px 18px 0;
+}
+.active-filters.visible { display: flex; }
+.active-chip {
+  padding: 5px 8px;
+  color: var(--cp-accent);
+}
+.results-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--cp-border);
+  color: var(--cp-text-muted);
+  font-size: 0.73rem;
+}
+.results-head strong { color: var(--cp-text); }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  padding: 18px;
+}
+.grid.journey-mode {
+  display: block;
+}
+.journey-group {
+  margin-bottom: 24px;
+}
+.journey-group:last-child { margin-bottom: 0; }
+.journey-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid var(--cp-border);
+}
+.journey-head h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+.journey-head span {
+  color: var(--cp-text-muted);
+  font-size: 0.68rem;
+}
+.journey-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.stage-badge {
+  border-color: var(--cp-danger);
+  color: var(--cp-danger);
+}
+.agent-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--cp-border);
+  border-radius: 16px;
+  background: var(--cp-surface);
+  box-shadow: 0 0 2px var(--cp-border);
+  cursor: pointer;
+  transition: border-color 150ms ease, transform 150ms ease;
+}
+.agent-card:hover {
+  border-color: var(--cp-accent);
+  transform: translateY(-2px);
+}
+.card-head {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 15px 16px 0;
+}
+.agent-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 3px solid var(--cp-highlight);
+  border-radius: 999px;
+  color: var(--cp-text-muted);
+  font-size: 1.25rem;
+}
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 4px;
+}
+.badge {
+  padding: 3px 6px;
+  border: 1px solid var(--cp-border);
+  border-radius: 999px;
+  color: var(--cp-text-muted);
+  font-size: 0.6rem;
+  font-weight: 750;
+}
+.badge.proven {
+  border-color: var(--cp-success);
+  color: var(--cp-success);
+}
+.badge.demo {
+  border-color: var(--cp-accent);
+  color: var(--cp-accent);
+}
+.card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 13px 16px 16px;
+}
+.category {
+  color: var(--cp-danger);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.agent-card h2 {
+  margin: 5px 0 7px;
+  font-size: 1.1rem;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+.sales-headline {
+  margin: -2px 0 7px;
+  color: var(--cp-accent);
+  font-size: 0.72rem;
+  font-weight: 750;
+}
+.what {
+  min-height: 58px;
+  margin: 0 0 12px;
+  color: var(--cp-text-muted);
+  font-size: 0.77rem;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+.why {
+  margin-bottom: 12px;
+  padding: 10px;
+  border-left: 4px solid var(--cp-danger);
+  border-radius: 0 8px 8px 0;
+  background: var(--cp-accent-soft);
+}
+.why strong, .microsoft-story strong {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--cp-text);
+  font-size: 0.66rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.why span {
+  display: block;
+  color: var(--cp-text);
+  font-size: 0.72rem;
+  line-height: 1.35;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+.microsoft-story {
+  margin-top: auto;
+}
+.tool-chips, .meta-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.tool-chip, .meta-chip {
+  padding: 3px 6px;
+  border-radius: 999px;
+  background: var(--cp-surface-soft);
+  color: var(--cp-text-muted);
+  font-size: 0.62rem;
+}
+.card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--cp-border);
+}
+.persona {
+  overflow: hidden;
+  color: var(--cp-text-muted);
+  font-size: 0.65rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.empty, .loading {
+  grid-column: 1 / -1;
+  padding: 70px 20px;
+  color: var(--cp-text-muted);
+  text-align: center;
+}
+.empty h3 {
+  margin: 0 0 7px;
+  color: var(--cp-text);
+}
+.empty p { margin: 0 0 14px; }
+.spinner {
+  width: 26px;
+  height: 26px;
+  margin: 0 auto 10px;
+  border: 3px solid var(--cp-border);
+  border-top-color: var(--cp-accent);
+  border-radius: 999px;
+  animation: spin 800ms linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.modal-root {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  overflow-y: auto;
+  padding: 24px;
+  background: var(--cp-overlay);
+}
+.modal-root.open { display: block; }
+.modal {
+  position: relative;
+  width: min(960px, 100%);
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid var(--cp-border);
+  border-radius: 16px;
+  background: var(--cp-bg-elevated);
+  box-shadow: var(--cp-shadow);
+}
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+}
+.detail-head {
+  display: grid;
+  grid-template-columns: 62px 1fr;
+  gap: 15px;
+  align-items: start;
+  padding: 28px 58px 22px 28px;
+  border-bottom: 1px solid var(--cp-border);
+  background: var(--cp-surface);
+}
+.detail-icon {
+  display: grid;
+  width: 60px;
+  height: 60px;
+  place-items: center;
+  border: 3px solid var(--cp-highlight);
+  border-radius: 999px;
+  color: var(--cp-text-muted);
+  font-size: 1.6rem;
+}
+.detail-head h2 {
+  margin: 5px 0 7px;
+  font-size: clamp(1.7rem, 4vw, 2.8rem);
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+}
+.detail-head p {
+  max-width: 750px;
+  margin: 0 0 10px;
+  color: var(--cp-text-muted);
+}
+.detail-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 8px 28px 0;
+  border-bottom: 1px solid var(--cp-border);
+  background: var(--cp-surface);
+}
+.detail-tab {
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  color: var(--cp-text-muted);
+  cursor: pointer;
+  padding: 9px 13px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.detail-tab.active {
+  border-bottom-color: var(--cp-accent);
+  color: var(--cp-text);
+}
+.detail-panel { display: none; }
+.detail-panel.active { display: block; }
+.detail-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(270px, 0.6fr);
+  gap: 24px;
+  padding: 24px 28px 30px;
+}
+.detail-section {
+  margin-bottom: 24px;
+}
+.detail-section:last-child { margin-bottom: 0; }
+.detail-section h3 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+.detail-section ul {
+  margin: 0;
+  padding-left: 19px;
+}
+.detail-section li {
+  margin-bottom: 7px;
+  color: var(--cp-text-muted);
+  font-size: 0.82rem;
+}
+.why-panel {
+  padding: 14px;
+  border-left: 5px solid var(--cp-danger);
+  border-radius: 0 10px 10px 0;
+  background: var(--cp-accent-soft);
+}
+.why-panel p {
+  margin: 0;
+  font-size: 0.86rem;
+}
+.prompt-row {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--cp-border);
+}
+.prompt-row:first-of-type { border-top: 1px solid var(--cp-border); }
+.prompt-row p {
+  margin: 0;
+  font-size: 0.78rem;
+}
+.detail-aside {
+  align-self: start;
+  padding: 16px;
+  border: 1px solid var(--cp-border);
+  border-radius: 14px;
+  background: var(--cp-surface);
+}
+.aside-block {
+  margin-bottom: 18px;
+}
+.aside-block:last-child { margin-bottom: 0; }
+.aside-block h3 {
+  margin: 0 0 8px;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.microsoft-panel {
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--cp-accent-soft);
+}
+.microsoft-panel p {
+  margin: 8px 0 0;
+  color: var(--cp-text);
+  font-size: 0.72rem;
+}
+.asset {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--cp-border);
+}
+.asset:last-child { border-bottom: 0; }
+.asset strong {
+  display: block;
+  font-size: 0.72rem;
+}
+.asset span {
+  display: block;
+  overflow: hidden;
+  margin-top: 2px;
+  color: var(--cp-text-muted);
+  font-size: 0.66rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.blueprint-row {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--cp-border);
+}
+.blueprint-row:last-child { border-bottom: 0; }
+.blueprint-row strong {
+  display: block;
+  font-size: 0.7rem;
+}
+.blueprint-row span {
+  display: block;
+  margin-top: 2px;
+  color: var(--cp-text-muted);
+  font-size: 0.67rem;
+}
+.architecture-body {
+  padding: 24px 28px 30px;
+}
+.architecture-body h3 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+.architecture-body > p {
+  max-width: 860px;
+  color: var(--cp-text-muted);
+  font-size: 0.8rem;
+}
+.arch-flow {
+  display: flex;
+  align-items: stretch;
+  gap: 7px;
+  overflow-x: auto;
+  margin: 14px 0 24px;
+  padding-bottom: 4px;
+}
+.arch-node {
+  display: grid;
+  min-width: 132px;
+  min-height: 72px;
+  place-items: center;
+  border: 1px solid var(--cp-border);
+  border-radius: 10px;
+  background: var(--cp-surface);
+  padding: 9px;
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+.arch-arrow {
+  display: grid;
+  place-items: center;
+  color: var(--cp-accent);
+  font-weight: 850;
+}
+.capability-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.capability-card {
+  padding: 13px;
+  border: 1px solid var(--cp-border);
+  border-radius: 10px;
+  background: var(--cp-surface);
+}
+.capability-card code {
+  color: var(--cp-accent);
+  font-size: 0.68rem;
+}
+.capability-card strong {
+  display: block;
+  margin: 5px 0 3px;
+  font-size: 0.8rem;
+}
+.capability-card p {
+  margin: 0;
+  color: var(--cp-text-muted);
+  font-size: 0.72rem;
+}
+.mode-switch {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.mode-button {
+  border: 1px solid var(--cp-border);
+  border-radius: 999px;
+  background: var(--cp-surface);
+  color: var(--cp-text-muted);
+  cursor: pointer;
+  padding: 6px 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.mode-button.active {
+  border-color: var(--cp-accent);
+  color: var(--cp-accent);
+}
+.deploy-panel {
+  display: none;
+  padding: 15px;
+  border: 1px solid var(--cp-border);
+  border-radius: 12px;
+  background: var(--cp-surface);
+}
+.deploy-panel.active { display: block; }
+.deploy-panel ol {
+  margin: 0;
+  padding-left: 20px;
+}
+.deploy-panel li {
+  margin-bottom: 8px;
+  color: var(--cp-text-muted);
+  font-size: 0.77rem;
+}
+.plugin-note {
+  margin-top: 12px;
+  padding: 10px;
+  border-left: 4px solid var(--cp-warning);
+  background: var(--cp-surface-soft);
+  color: var(--cp-text-muted);
+  font-size: 0.7rem;
+}
+.command-block {
+  position: relative;
+  overflow-x: auto;
+  margin: 8px 0 12px;
+  padding: 12px;
+  border: 1px solid var(--cp-border);
+  border-radius: 9px;
+  background: var(--cp-surface-soft);
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: Consolas, "Courier New", Courier, monospace;
+  font-size: 0.68rem;
+}
+.deploy-subhead {
+  margin: 12px 0 6px;
+  font-size: 0.76rem;
+}
+.acceptance-list {
+  margin: 10px 0 0;
+  padding-left: 20px;
+}
+.acceptance-list li {
+  margin-bottom: 6px;
+  color: var(--cp-text-muted);
+  font-size: 0.72rem;
+}
+.code {
+  display: block;
+  overflow-x: auto;
+  padding: 11px;
+  border: 1px solid var(--cp-border);
+  border-radius: 9px;
+  background: var(--cp-surface-soft);
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 0.68rem;
+}
+.detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 10px;
+}
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  z-index: 150;
+  padding: 9px 13px;
+  border: 1px solid var(--cp-border-strong);
+  border-radius: 10px;
+  background: var(--cp-panel-strong);
+  color: var(--cp-text);
+  box-shadow: var(--cp-shadow);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 10px);
+  transition: opacity 160ms ease, transform 160ms ease;
+  font-size: 0.76rem;
+}
+.toast.visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+footer {
+  margin-top: 42px;
+  padding-top: 20px;
+  border-top: 1px solid var(--cp-border);
+  color: var(--cp-text-muted);
+  text-align: center;
+  font-size: 0.74rem;
+}
+
+@media (max-width: 1080px) {
+  .intro {
+    align-items: start;
+    flex-direction: column;
+  }
+  .stats { justify-content: flex-start; }
+  .filters { grid-template-columns: repeat(3, 1fr); }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .industry-menu { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .journey-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .topbar { padding: 9px 12px; }
+  .brand-copy small, .nav a:not(.keep-mobile) { display: none; }
+  .page {
+    width: min(100% - 24px, 1320px);
+    padding-top: 26px;
+  }
+  .intro h1 { font-size: clamp(2.5rem, 13vw, 3.7rem); }
+  .filters, .grid, .detail-body, .journey-grid { grid-template-columns: 1fr; }
+  .industry-menu { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .industry-blueprint { grid-template-columns: 1fr; }
+  .blueprint-deploy { justify-content: flex-start; }
+  .search-wrap { padding: 12px; }
+  .search-icon { top: 31px; left: 28px; }
+  .clear-search { top: 23px; right: 20px; }
+  .suggestions { top: 76px; right: 12px; left: 12px; }
+  .controls, .results-head { padding-right: 12px; padding-left: 12px; }
+  .grid { padding: 12px; }
+  .detail-head { padding: 22px 48px 18px 18px; }
+  .detail-body { padding: 20px 18px 26px; }
+  .detail-tabs, .architecture-body { padding-right: 18px; padding-left: 18px; }
+  .capability-grid { grid-template-columns: 1fr; }
+  .modal-root { padding: 8px; }
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <span class="brand-mark" id="quest-trigger">AI</span>
+    <span class="brand-copy">AI BAST Agent Library<small>Industry Solutions</small></span>
+  </a>
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="keep-mobile" href="#library">Library</a>
+    <a href="docs/rapp-guide.html">Guide</a>
+    <a href="metrics.html">Metrics</a>
+    <a href="https://github.com/microsoft/aibast-agents-library" target="_blank" rel="noopener">GitHub</a>
+    <button class="icon-button" type="button" data-action="toggle-theme" aria-label="Toggle color theme">◐</button>
+  </nav>
+</header>
+
+<main class="page">
+  <section class="intro">
+    <div>
+      <div class="eyebrow">AI BAST Agent Library</div>
+      <h1>Choose an industry. Build the AI journey.</h1>
+      <p>Start from proven solution patterns, run them safely with synthetic domain data, then connect customer systems and publish through Copilot Studio—or any downstream surface that can host the portable agent.</p>
+    </div>
+    <div class="stats" id="stats"></div>
+  </section>
+
+  <section class="library" id="library">
+    <div class="industry-selector">
+      <div class="industry-selector-head">
+        <strong>Choose an industry</strong>
+        <span>See the proven solutions that can anchor its AI roadmap</span>
+      </div>
+      <div class="industry-menu" id="industry-menu"></div>
+    </div>
+    <div class="industry-blueprint" id="industry-blueprint"></div>
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input class="search" id="search" type="search" autocomplete="off" placeholder="Search: claims fraud, permit backlog, plant manager, Dynamics 365...">
+      <button class="clear-search" id="clear-search" type="button" data-action="clear-search" aria-label="Clear search">×</button>
+      <div class="suggestions" id="suggestions"></div>
+      <div class="popular">
+        <span class="popular-label">Browse by goal</span>
+        <button class="query-chip" type="button" data-action="query" data-query="grow revenue sales pipeline renewal">Grow revenue</button>
+        <button class="query-chip" type="button" data-action="query" data-query="improve customer service contact center">Improve customer service</button>
+        <button class="query-chip" type="button" data-action="query" data-query="reduce operational risk supply chain maintenance">Protect operations</button>
+        <button class="query-chip" type="button" data-action="query" data-query="strengthen compliance regulatory audit">Strengthen compliance</button>
+        <button class="query-chip" type="button" data-action="query" data-query="empower employees hr self service">Empower employees</button>
+        <button class="query-chip" type="button" data-action="query" data-query="modernize field operations permits dispatch">Modernize field work</button>
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="tabs" role="tablist" aria-label="Library type">
+        <button class="tab active" type="button" data-action="view" data-view="solutions">Industry solutions</button>
+        <button class="tab" type="button" data-action="view" data-view="stacks">Multi-agent stacks</button>
+        <button class="tab" type="button" data-action="view" data-view="templates">Building blocks</button>
+      </div>
+      <div class="filters">
+        <select class="field" id="industry" aria-label="Industry"><option value="">All industries</option></select>
+        <select class="field" id="persona" aria-label="Persona"><option value="">All personas</option></select>
+        <select class="field" id="system" aria-label="Microsoft product"><option value="">All Microsoft products</option></select>
+        <select class="field" id="readiness" aria-label="Available proof">
+          <option value="">Any proof</option>
+          <option value="proven">Demo proven</option>
+          <option value="demo">Recorded demo</option>
+          <option value="onepager">One-pager</option>
+        </select>
+        <select class="field" id="sort" aria-label="Sort">
+          <option value="relevance">Best match</option>
+          <option value="name">A-Z</option>
+          <option value="demo">Demo-ready first</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="active-filters" id="active-filters"></div>
+    <div class="results-head">
+      <span id="result-count">Loading agents...</span>
+      <span id="result-context"></span>
+    </div>
+    <div class="grid" id="grid"><div class="loading"><div class="spinner"></div>Loading agent library...</div></div>
+  </section>
+
+  <footer>
+    AI BAST Agent Library · <a href="registry.json">registry.json</a> ·
+    <a href="docs/rapp-guide.html">Production guide</a> ·
+    <a href="https://github.com/microsoft/aibast-agents-library" target="_blank" rel="noopener">Source</a>
+  </footer>
+</main>
+
+<div class="modal-root" id="modal-root"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const OWNER = "microsoft";
+const REPO = "aibast-agents-library";
+const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main`;
+const BLOB = `https://github.com/${OWNER}/${REPO}/blob/main`;
+const AGENT_DIR = "~/.brainstem/src/rapp_brainstem/agents";
+
+const state = {
+  agents: [],
+  stacks: [],
+  stats: {},
+  view: "solutions",
+  query: "",
+  industry: "",
+  persona: "",
+  system: "",
+  readiness: "",
+  sort: "relevance"
+};
+
+const $ = id => document.getElementById(id);
+const escapeMap = {
+  "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;",
+  "'": "&#39;", "`": "&#96;"
+};
+const esc = value => String(value == null ? "" : value).replace(/[&<>"'`]/g, char => escapeMap[char]);
+const enc = value => encodeURIComponent(String(value || ""));
+const dec = value => decodeURIComponent(String(value || ""));
+const compact = value => String(value || "").replace(/\s+/g, " ").trim();
+const pretty = value => String(value || "").replace(/_/g, " ");
+const uniq = values => [...new Set(values.filter(Boolean))];
+const first = (values, fallback = "") => values && values.length ? values[0] : fallback;
+
+const CATEGORY_NAMES = {
+  b2b_sales: "B2B Sales",
+  b2c_sales: "B2C Sales",
+  energy: "Energy",
+  financial_services: "Financial Services",
+  general: "Cross-Industry",
+  healthcare: "Healthcare",
+  human_resources: "Human Resources",
+  manufacturing: "Manufacturing",
+  professional_services: "Professional Services",
+  retail_cpg: "Retail & CPG",
+  slg_government: "SLG Government",
+  software_digital_products: "Software & Digital Products"
+};
+const CATEGORY_ICONS = {
+  b2b_sales: "↗", b2c_sales: "◎", energy: "⚡", financial_services: "◆",
+  general: "✦", healthcare: "✚", human_resources: "◇", manufacturing: "⚙",
+  professional_services: "§", retail_cpg: "▦", slg_government: "⌂",
+  software_digital_products: "⌘"
+};
+const INDUSTRY_BLUEPRINTS = {
+  b2b_sales: "Build a connected seller journey from account understanding and qualification through deal progression, proposals, forecasting, and renewal.",
+  b2c_sales: "Use AI to personalize commerce, recover revenue, strengthen loyalty, and coordinate engagement across the customer lifecycle.",
+  energy: "Lay an operational AI foundation for reliability, field work, permits, compliance, outage response, and sustainability.",
+  financial_services: "Modernize regulated customer and risk journeys across onboarding, underwriting, fraud, claims, lending, advice, and compliance.",
+  general: "Start with high-value enterprise workflows that cut across industries, including customer service, procurement, CRM, HR, and employee productivity.",
+  healthcare: "Reduce administrative friction and strengthen care operations across intake, authorization, clinical documentation, credentialing, and care gaps.",
+  human_resources: "Give employees faster guidance while automating routine HR requests, approvals, and policy-driven work.",
+  manufacturing: "Connect production, maintenance, inventory, suppliers, and order operations into a practical industrial AI roadmap.",
+  professional_services: "Protect margin and client outcomes across contracts, proposals, utilization, billing, delivery risk, and account health.",
+  retail_cpg: "Create a connected retail AI journey across inventory, store operations, personalization, returns, and supply-chain resilience.",
+  slg_government: "Improve constituent and permitting services while strengthening transparency, compliance, grants, records, and utility operations.",
+  software_digital_products: "Connect product feedback, onboarding, support, competitive insight, and renewal into a customer-led software growth journey."
+};
+const JOURNEY_STAGES = ["Discover", "Decide", "Act", "Optimize", "Govern"];
+const STOP_WORDS = new Set([
+  "a", "an", "and", "are", "for", "from", "help", "how", "i", "in", "is",
+  "me", "my", "of", "on", "the", "to", "we", "what", "with"
+]);
+const SYNONYMS = {
+  claim: ["claims", "insurance claim", "adjudication"],
+  fraud: ["fraud detection", "suspicious activity", "financial crime"],
+  permit: ["permit approval", "inspection"],
+  backlog: ["overdue", "queue", "pending"],
+  renewal: ["retention", "expansion", "churn"],
+  outage: ["grid", "power", "restoration"],
+  supplier: ["supply", "vendor", "procurement"],
+  employee: ["hr", "workforce", "staff"],
+  government: ["public sector", "slg", "citizen"],
+  customer: ["client", "account", "consumer"],
+  sales: ["deal", "pipeline", "revenue"],
+  compliance: ["regulatory", "audit", "risk"],
+  manufacturing: ["plant", "production", "factory"],
+  service: ["support", "case", "ticket"],
+  healthcare: ["patient", "clinical", "care"]
+};
+const STACK_COPY = {
+  "b2b_sales/account_intelligence": {
+    pitch: "Bring account research, stakeholder intelligence, competitive context, risk, messaging, and meeting preparation into one coordinated seller workflow.",
+    why_try: "Use this stack to show how Microsoft AI turns scattered account signals into a focused plan for the next customer conversation."
+  },
+  "b2b_sales/deal_progression": {
+    pitch: "Coordinate deal health, stakeholder engagement, competitive risk, pipeline velocity, forecasting, and next-best actions around the opportunities that need attention.",
+    why_try: "Use this stack to demonstrate how Microsoft AI helps sellers identify stalled momentum, prioritize intervention, and strengthen forecast confidence."
+  }
+};
+
+async function getJSON(paths) {
+  for (const path of paths) {
+    try {
+      const response = await fetch(path, { cache: "no-store" });
+      if (response.ok) return await response.json();
+    } catch (error) {
+      // Try the next source.
+    }
+  }
+  return null;
+}
+
+async function init() {
+  const stamp = `?t=${Date.now()}`;
+  const registry = await getJSON([`registry.json${stamp}`, `${RAW}/registry.json${stamp}`]);
+  if (!registry) {
+    $("grid").innerHTML = `<div class="empty"><h3>Library unavailable</h3><p>Could not load <code>registry.json</code>.</p></div>`;
+    return;
+  }
+  state.agents = registry.agents || [];
+  state.stacks = registry.stacks || [];
+  state.stats = registry.stats || {};
+  restoreState();
+  renderStats();
+  buildFilters();
+  renderIndustryMenu();
+  bindInputs();
+  render();
+
+  if (location.hash.startsWith("#agent/")) openAgent(dec(location.hash.slice(7)));
+  if (location.hash.startsWith("#stack/")) openStack(dec(location.hash.slice(7)));
+}
+
+function restoreState() {
+  const params = new URLSearchParams(location.search);
+  state.query = params.get("q") || "";
+  state.view = ["solutions", "stacks", "templates"].includes(params.get("view"))
+    ? params.get("view") : "solutions";
+  $("search").value = state.query;
+}
+
+function renderStats() {
+  $("stats").innerHTML = `
+    <span class="stat"><strong>${Number(state.stats.advertised_solutions || 0).toLocaleString()}</strong> solutions</span>
+    <span class="stat"><strong>${Number(state.stats.total_verticals || 0).toLocaleString()}</strong> industries</span>
+    <span class="stat"><strong>${Number(state.stats.source_verified_solutions || 0).toLocaleString()}</strong> slide-sourced</span>
+    <span class="stat"><strong>${Number(state.stats.solution_demo_videos || 0).toLocaleString()}</strong> demos</span>`;
+}
+
+function buildFilters() {
+  const solutions = solutionAgents();
+  fillSelect("industry", Object.entries(CATEGORY_NAMES)
+    .filter(([key]) => solutions.some(agent => agent.category === key))
+    .map(([value, label]) => ({ value, label })), "All industries");
+  fillSelect("persona", uniq(solutions.flatMap(agent => solutionOf(agent).personas || []))
+    .sort().map(value => ({ value, label: value })), "All personas");
+  fillSelect("system", uniq(solutions.flatMap(agent => microsoftTools(agent)))
+    .sort().map(value => ({ value, label: value })), "All Microsoft products");
+}
+
+function renderIndustryMenu() {
+  const counts = {};
+  solutionAgents().forEach(agent => {
+    counts[agent.category] = (counts[agent.category] || 0) + 1;
+  });
+  $("industry-menu").innerHTML = Object.keys(CATEGORY_NAMES)
+    .filter(category => counts[category])
+    .map(category => `
+      <button class="industry-button ${state.industry === category ? "active" : ""}" type="button"
+        data-action="industry-menu" data-industry="${esc(category)}">
+        <span class="industry-icon">${esc(CATEGORY_ICONS[category] || "✦")}</span>
+        <span>${esc(CATEGORY_NAMES[category])}</span>
+        <small>${counts[category]}</small>
+      </button>
+    `).join("");
+}
+
+function renderIndustryBlueprint() {
+  if (!state.industry || state.view !== "solutions") {
+    $("industry-blueprint").classList.remove("visible");
+    $("industry-blueprint").innerHTML = "";
+    return;
+  }
+  const name = CATEGORY_NAMES[state.industry] || pretty(state.industry);
+  $("industry-blueprint").innerHTML = `
+    <div>
+      <div class="category">Industry AI journey blueprint</div>
+      <h2>${esc(name)}</h2>
+      <p>${esc(INDUSTRY_BLUEPRINTS[state.industry] || "Start with a proven solution pattern, validate it safely, and extend it into the customer's production AI roadmap.")}</p>
+    </div>
+    <div class="blueprint-deploy">
+      <span>Portable agent.py</span>
+      <span>Synthetic domain data</span>
+      <span>Replaceable accessors</span>
+      <span>Copilot Studio default</span>
+      <span>Downstream portable</span>
+    </div>`;
+  $("industry-blueprint").classList.add("visible");
+}
+
+function fillSelect(id, values, placeholder) {
+  $(id).innerHTML = `<option value="">${esc(placeholder)}</option>` +
+    values.map(item => `<option value="${esc(item.value)}">${esc(item.label)}</option>`).join("");
+}
+
+function bindInputs() {
+  $("search").addEventListener("input", event => {
+    state.query = event.target.value;
+    $("clear-search").classList.toggle("visible", Boolean(state.query));
+    renderSuggestions();
+    render();
+  });
+  ["industry", "persona", "system", "readiness", "sort"].forEach(id => {
+    $(id).addEventListener("change", event => {
+      state[id] = event.target.value;
+      render();
+    });
+  });
+}
+
+function solutionOf(agent) {
+  return agent._solution || {};
+}
+
+function solutionAgents() {
+  return state.agents.filter(agent => agent._catalog_kind === "solution");
+}
+
+function shown(agent) {
+  return solutionOf(agent).advertised_name || agent.display_name;
+}
+
+function summary(agent) {
+  const solution = solutionOf(agent);
+  return solution.card_pitch
+    || solution.module_description
+    || solution.slide_summary
+    || solution.executive_summary
+    || agent.description;
+}
+
+function whyTry(agent) {
+  const solution = solutionOf(agent);
+  return solution.why_try
+    || first(solution.opportunity_statements,
+    first(solution.business_value,
+    first(solution.outcomes,
+    first(solution.capabilities,
+      first(solution.customer_scenario, summary(agent))))));
+}
+
+function journeyStage(agent) {
+  const solution = solutionOf(agent);
+  if (JOURNEY_STAGES.includes(solution.journey_stage)) return solution.journey_stage;
+  const text = normalize([
+    shown(agent),
+    summary(agent),
+    ...(solution.capabilities || []),
+    ...(solution.opportunity_statements || []),
+  ].join(" "));
+  if (/(compliance|regulatory|audit|permit|authorization|credential|policy)/.test(text)) return "Govern";
+  if (/(monitor|detect|intelligence|insight|research|summar|visibility|score)/.test(text)) return "Discover";
+  if (/(recommend|assess|review|qualif|forecast|advisor|priorit)/.test(text)) return "Decide";
+  if (/(optimi|rebalance|schedule|loyalty|renewal|expansion|improve)/.test(text)) return "Optimize";
+  return "Act";
+}
+
+function microsoftTools(agent) {
+  const solution = solutionOf(agent);
+  return uniq([
+    ...(solution.agent_requirements || []),
+    ...(solution.featured_tools || []),
+  ]);
+}
+
+function promptsFor(agent) {
+  const curated = solutionOf(agent).sample_prompts || [];
+  if (curated.length) return curated.map(item => item.prompt).slice(0, 3);
+  if (agent._demo && agent._demo.prompts && agent._demo.prompts.length) {
+    return agent._demo.prompts.slice(0, 3);
+  }
+  const solution = solutionOf(agent);
+  const persona = first(solution.personas, "business leader");
+  const capability = first(solution.capabilities, `identify what needs attention`);
+  const outcome = first(solution.outcomes, "a clear decision and prioritized next actions");
+  return [
+    `I am the ${persona}. What needs attention today, what should I do next, and why?`,
+    `Use ${shown(agent)} to ${capability.charAt(0).toLowerCase() + capability.slice(1)}. Show the evidence and recommended action.`,
+    `Create a concise briefing for the ${persona} that leads to ${outcome.charAt(0).toLowerCase() + outcome.slice(1)}.`
+  ];
+}
+
+function promptRecordsFor(agent) {
+  const curated = solutionOf(agent).sample_prompts || [];
+  if (curated.length) return curated.slice(0, 3);
+  return promptsFor(agent).map((prompt, index) => ({
+    label: `Example ${index + 1}`,
+    prompt,
+    demo_url: null,
+  }));
+}
+
+function normalize(value) {
+  return compact(value).toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, " ");
+}
+
+function queryTerms(query) {
+  const base = normalize(query).split(" ")
+    .filter(term => term.length > 1 && !STOP_WORDS.has(term));
+  const expanded = [...base];
+  Object.entries(SYNONYMS).forEach(([key, values]) => {
+    if (base.some(term => term === key || term.startsWith(key) || key.startsWith(term))) {
+      expanded.push(...values.flatMap(value => normalize(value).split(" ")));
+    }
+  });
+  return uniq(expanded);
+}
+
+function fieldsFor(agent) {
+  const solution = solutionOf(agent);
+  return [
+    { weight: 14, text: shown(agent) },
+    { weight: 12, text: (solution.aliases || []).join(" ") },
+    { weight: 10, text: summary(agent) },
+    { weight: 10, text: (solution.capabilities || []).join(" ") },
+    { weight: 10, text: (solution.outcomes || []).join(" ") },
+    { weight: 10, text: solution.sales_headline },
+    { weight: 10, text: solution.card_pitch },
+    { weight: 9, text: solution.why_try },
+    { weight: 9, text: solution.customer_challenge_copy },
+    { weight: 9, text: (solution.business_value || []).join(" ") },
+    { weight: 8, text: (solution.search_terms || []).join(" ") },
+    { weight: 8, text: (solution.customer_scenario || []).join(" ") },
+    { weight: 7, text: (solution.personas || []).join(" ") },
+    { weight: 7, text: (solution.featured_tools || []).join(" ") },
+    { weight: 7, text: (solution.agent_requirements || []).join(" ") },
+    { weight: 7, text: solution.microsoft_ai_story },
+    { weight: 7, text: solution.module_name },
+    { weight: 7, text: solution.module_description },
+    { weight: 6, text: `${CATEGORY_NAMES[agent.category] || pretty(agent.category)} ${(solution.industries || []).join(" ")}` },
+    { weight: 5, text: (agent.tags || []).join(" ") },
+    { weight: 5, text: promptsFor(agent).join(" ") },
+    { weight: 4, text: pretty(agent._stack || "") },
+    { weight: 3, text: agent.name }
+  ];
+}
+
+function scoreAgent(agent, query) {
+  if (!compact(query)) return 1;
+  const phrase = normalize(query);
+  const terms = queryTerms(query);
+  let score = 0;
+  fieldsFor(agent).forEach(field => {
+    const text = normalize(field.text);
+    if (!text) return;
+    if (phrase.length > 2 && text.includes(phrase)) score += field.weight * 4;
+    terms.forEach(term => {
+      if (text.includes(term)) score += field.weight;
+      if (text.split(" ").some(word => word.startsWith(term))) score += field.weight * 0.25;
+    });
+  });
+  if (agent._demo && agent._demo.case_count) score += 2;
+  return score;
+}
+
+function matchesReadiness(agent) {
+  const solution = solutionOf(agent);
+  if (!state.readiness) return true;
+  if (state.readiness === "proven") return Boolean(agent._demo && agent._demo.case_count);
+  if (state.readiness === "demo") return Boolean(solution.has_demo_video);
+  if (state.readiness === "onepager") return Boolean(solution.has_onepager);
+  return true;
+}
+
+function filteredAgents() {
+  const kind = state.view === "solutions" ? "solution" : "template";
+  let rows = state.agents.filter(agent => agent._catalog_kind === kind)
+    .map(agent => ({ agent, score: scoreAgent(agent, state.query) }));
+  if (state.query) {
+    const topScore = Math.max(0, ...rows.map(row => row.score));
+    const threshold = Math.max(8, topScore * 0.4);
+    rows = rows.filter(row => row.score >= threshold);
+  }
+  rows = rows
+    .filter(row => !state.industry || row.agent.category === state.industry)
+    .filter(row => !state.persona || (solutionOf(row.agent).personas || []).includes(state.persona))
+    .filter(row => !state.system || microsoftTools(row.agent).includes(state.system))
+    .filter(row => matchesReadiness(row.agent));
+
+  const sorters = {
+    relevance: (a, b) => b.score - a.score || shown(a.agent).localeCompare(shown(b.agent)),
+    name: (a, b) => shown(a.agent).localeCompare(shown(b.agent)),
+    demo: (a, b) => Number(Boolean(b.agent._demo)) - Number(Boolean(a.agent._demo))
+      || Number(Boolean(solutionOf(b.agent).has_demo_video)) - Number(Boolean(solutionOf(a.agent).has_demo_video))
+      || shown(a.agent).localeCompare(shown(b.agent)),
+  };
+  rows.sort(sorters[state.sort] || sorters.relevance);
+  return rows;
+}
+
+function filteredStacks() {
+  const query = normalize(state.query);
+  return state.stacks.filter(stack => stack.stack_type === "multi_agent")
+    .map(stack => {
+      const members = stack.agents.map(name => state.agents.find(agent => agent.name === name)).filter(Boolean);
+      const text = normalize(`${stack.display_name} ${CATEGORY_NAMES[stack.vertical] || pretty(stack.vertical)} ${members.map(agent => `${shown(agent)} ${summary(agent)}`).join(" ")}`);
+      const score = !query ? 1 : queryTerms(query).reduce((total, term) => total + (text.includes(term) ? 5 : 0), 0);
+      return { stack, members, score };
+    })
+    .filter(row => !query || row.score > 0)
+    .sort((a, b) => b.score - a.score || a.stack.display_name.localeCompare(b.stack.display_name));
+}
+
+function render() {
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.classList.toggle("active", tab.dataset.view === state.view);
+  });
+  $("clear-search").classList.toggle("visible", Boolean(state.query));
+  renderActiveFilters();
+  renderIndustryMenu();
+  renderIndustryBlueprint();
+  syncURL();
+
+  if (state.view === "stacks") {
+    const rows = filteredStacks();
+    $("result-count").innerHTML = `<strong>${rows.length}</strong> multi-agent stack${rows.length === 1 ? "" : "s"}`;
+    $("result-context").textContent = state.query ? `matching "${state.query}"` : "";
+    $("grid").classList.remove("journey-mode");
+    $("grid").innerHTML = rows.length ? rows.map(stackCard).join("") : emptyState();
+    return;
+  }
+
+  const rows = filteredAgents();
+  const label = state.view === "solutions" ? "industry solution" : "building block";
+  $("result-count").innerHTML = `<strong>${rows.length}</strong> ${label}${rows.length === 1 ? "" : "s"}`;
+  $("result-context").textContent = state.query ? `matching "${state.query}"` : "";
+  const journeyMode = state.view === "solutions" && Boolean(state.industry) && rows.length;
+  $("grid").classList.toggle("journey-mode", Boolean(journeyMode));
+  $("grid").innerHTML = rows.length
+    ? (journeyMode ? journeyGroups(rows) : rows.map(row => agentCard(row.agent)).join(""))
+    : emptyState();
+}
+
+function journeyGroups(rows) {
+  const grouped = {};
+  rows.forEach(row => {
+    const stage = journeyStage(row.agent);
+    grouped[stage] = grouped[stage] || [];
+    grouped[stage].push(row.agent);
+  });
+  return JOURNEY_STAGES
+    .filter(stage => grouped[stage] && grouped[stage].length)
+    .map(stage => `
+      <section class="journey-group">
+        <div class="journey-head">
+          <h2>${esc(stage)}</h2>
+          <span>${grouped[stage].length} blueprint${grouped[stage].length === 1 ? "" : "s"}</span>
+        </div>
+        <div class="journey-grid">${grouped[stage].map(agentCard).join("")}</div>
+      </section>
+    `).join("");
+}
+
+function agentCard(agent) {
+  const solution = solutionOf(agent);
+  const tools = microsoftTools(agent).slice(0, 3);
+  const persona = first(solution.personas, state.view === "templates" ? "Agent builder" : "Business user");
+  const badges = [];
+  badges.push(`<span class="badge stage-badge">${esc(journeyStage(agent))}</span>`);
+  if (agent._demo && agent._demo.case_count) badges.push(`<span class="badge proven">Demo proven</span>`);
+  else if (solution.has_demo_video) badges.push(`<span class="badge demo">Demo available</span>`);
+  if (solution.has_onepager) badges.push(`<span class="badge">One-pager</span>`);
+  if ((solution.sample_prompts || []).length) badges.push(`<span class="badge demo">${solution.sample_prompts.length} demos</span>`);
+  return `
+    <article class="agent-card" tabindex="0" data-action="open-agent" data-name="${enc(agent.name)}">
+      <div class="card-head">
+        <span class="agent-icon">${esc(CATEGORY_ICONS[agent.category] || "✦")}</span>
+        <div class="badges">${badges.join("")}</div>
+      </div>
+      <div class="card-body">
+        <div class="category">${esc(CATEGORY_NAMES[agent.category] || pretty(agent.category))}</div>
+        <h2>${esc(shown(agent))}</h2>
+        ${solution.sales_headline ? `<div class="sales-headline">${esc(solution.sales_headline)}</div>` : ""}
+        <p class="what">${esc(summary(agent))}</p>
+        <div class="why">
+          <strong>${state.industry && solution.blueprint_role ? "Role in the journey" : "Why try it"}</strong>
+          <span>${esc(state.industry && solution.blueprint_role ? solution.blueprint_role : whyTry(agent))}</span>
+        </div>
+        <div class="microsoft-story">
+          <strong>Microsoft AI story</strong>
+          <div class="tool-chips">
+            ${(tools.length ? tools : ["Local Brainstem"]).map(tool => `<span class="tool-chip">${esc(tool)}</span>`).join("")}
+          </div>
+        </div>
+        <div class="card-foot">
+          <span class="persona">For ${esc(persona)}</span>
+          <button class="button primary small" type="button" data-action="open-agent" data-name="${enc(agent.name)}">View agent</button>
+        </div>
+      </div>
+    </article>`;
+}
+
+function stackCard(row) {
+  const tools = uniq(row.members.flatMap(agent => solutionOf(agent).featured_tools || [])).slice(0, 3);
+  const key = `${row.stack.vertical}/${row.stack.stack}`;
+  const copy = STACK_COPY[key] || {
+    pitch: "A coordinated workflow of specialized agents packaged as one installable stack.",
+    why_try: "Use this stack to demonstrate how specialized agents coordinate a complete business process."
+  };
+  return `
+    <article class="agent-card" tabindex="0" data-action="open-stack" data-key="${enc(`${row.stack.vertical}/${row.stack.stack}`)}">
+      <div class="card-head">
+        <span class="agent-icon">${esc(CATEGORY_ICONS[row.stack.vertical] || "✦")}</span>
+        <div class="badges"><span class="badge proven">${row.members.length} agents</span></div>
+      </div>
+      <div class="card-body">
+        <div class="category">${esc(CATEGORY_NAMES[row.stack.vertical] || pretty(row.stack.vertical))}</div>
+        <h2>${esc(row.stack.display_name)}</h2>
+        <p class="what">${esc(copy.pitch)}</p>
+        <div class="why">
+          <strong>Why try it</strong>
+          <span>${esc(copy.why_try)}</span>
+        </div>
+        <div class="microsoft-story">
+          <strong>Microsoft AI story</strong>
+          <div class="tool-chips">${(tools.length ? tools : ["Multi-agent orchestration"]).map(tool => `<span class="tool-chip">${esc(tool)}</span>`).join("")}</div>
+        </div>
+        <div class="card-foot">
+          <span class="persona">${row.members.slice(0, 2).map(shown).join(" · ")}${row.members.length > 2 ? ` · +${row.members.length - 2}` : ""}</span>
+          <button class="button primary small" type="button" data-action="open-stack" data-key="${enc(`${row.stack.vertical}/${row.stack.stack}`)}">View stack</button>
+        </div>
+      </div>
+    </article>`;
+}
+
+function renderSuggestions() {
+  const query = compact(state.query);
+  if (query.length < 2) {
+    $("suggestions").classList.remove("visible");
+    return;
+  }
+  let rows = solutionAgents().map(agent => ({ agent, score: scoreAgent(agent, query) }))
+    .sort((a, b) => b.score - a.score);
+  const topScore = rows[0] ? rows[0].score : 0;
+  rows = rows
+    .filter(row => row.score >= Math.max(8, topScore * 0.5))
+    .slice(0, 5);
+  if (!rows.length) {
+    $("suggestions").classList.remove("visible");
+    return;
+  }
+  $("suggestions").innerHTML = rows.map(row => `
+    <button class="suggestion" type="button" data-action="open-agent" data-name="${enc(row.agent.name)}">
+      <div><strong>${esc(shown(row.agent))}</strong><span>${esc(summary(row.agent))}</span></div>
+      <em>${esc(CATEGORY_NAMES[row.agent.category] || pretty(row.agent.category))}</em>
+    </button>
+  `).join("");
+  $("suggestions").classList.add("visible");
+}
+
+function renderActiveFilters() {
+  const filters = [
+    ["industry", state.industry, CATEGORY_NAMES[state.industry] || state.industry],
+    ["persona", state.persona, state.persona],
+    ["system", state.system, state.system],
+    ["readiness", state.readiness, $("readiness").selectedOptions[0].text]
+  ].filter(row => row[1]);
+  $("active-filters").classList.toggle("visible", filters.length > 0);
+  $("active-filters").innerHTML = filters.map(([key, value, label]) => `
+    <button class="active-chip" type="button" data-action="clear-filter" data-filter="${key}">${esc(label)} ×</button>
+  `).join("");
+}
+
+function emptyState() {
+  return `
+    <div class="empty">
+      <h3>No agents found</h3>
+      <p>Try fewer words, a broader Microsoft product, or clear the active filters.</p>
+      <button class="button primary" type="button" data-action="clear-all">Clear search and filters</button>
+    </div>`;
+}
+
+function installCommand(agent) {
+  const file = agent._file || "";
+  const base = file.split("/").pop();
+  const target = base.endsWith("_agent.py") ? base : base.replace(/\.py$/, "_agent.py");
+  return `curl -fsSL ${RAW}/${encodeURI(file)} -o ${AGENT_DIR}/${target}`;
+}
+
+function architectureHTML(architecture) {
+  if (!architecture) return "";
+  const flow = architecture.business_flow || [];
+  const capabilities = architecture.capabilities || [];
+  const easy = architecture.easy_mode || [];
+  const hard = architecture.hard_mode || [];
+  const localPrompt = architecture.local_install_prompt || "";
+  const studioPrompt = architecture.copilot_studio_prompt || "";
+  const connections = architecture.required_connections || [];
+  const commands = architecture.manual_commands || [];
+  const checks = architecture.acceptance_checks || [];
+  return `
+    <div class="architecture-body">
+      <h3>Solution architecture</h3>
+      <p>This blueprint preserves the portable Python agent as the business-logic source while Copilot Studio provides the default conversational and deployment surface.</p>
+      <div class="arch-flow">
+        ${flow.map((node, index) => `${index ? `<span class="arch-arrow">→</span>` : ""}<div class="arch-node">${esc(node)}</div>`).join("")}
+      </div>
+      <h3>Capability mapping</h3>
+      <div class="capability-grid">
+        ${capabilities.map(item => `
+          <article class="capability-card">
+            <code>${esc(item.operation)}</code>
+            <strong>${esc(item.name)}</strong>
+            <p>${esc(item.purpose)}</p>
+          </article>
+        `).join("")}
+      </div>
+      <h3>Implementation modes</h3>
+      <div class="mode-switch">
+        <button class="mode-button active" type="button" data-action="deploy-mode" data-mode="easy">Easy mode — Copilot-assisted</button>
+        <button class="mode-button" type="button" data-action="deploy-mode" data-mode="hard">Hard mode — manual build</button>
+      </div>
+      <div class="deploy-panel active" data-deploy-panel="easy">
+        ${localPrompt ? `<h4 class="deploy-subhead">Try locally — one prompt, no terminal</h4>
+          <pre class="command-block">${esc(localPrompt)}</pre>
+          <button class="button primary small" type="button" data-action="copy" data-text="${enc(localPrompt)}">Copy Brainstem setup prompt</button>` : ""}
+        ${studioPrompt ? `<h4 class="deploy-subhead">Promote to Copilot Studio — one prompt</h4>
+          <pre class="command-block">${esc(studioPrompt)}</pre>
+          <button class="button primary small" type="button" data-action="copy" data-text="${enc(studioPrompt)}">Copy Copilot Studio prompt</button>` : ""}
+        ${connections.length ? `<h4 class="deploy-subhead">Required connections</h4><div class="tool-chips">${connections.map(item => `<span class="tool-chip">${esc(item)}</span>`).join("")}</div>` : ""}
+        <h4 class="deploy-subhead">Copilot-assisted sequence</h4>
+        <ol>${easy.map(step => `<li>${esc(step)}</li>`).join("")}</ol>
+        <div class="plugin-note">The Copilot Studio plugin is an experimental authoring accelerator. Review and validate every generated YAML component and connection reference before pushing to a customer environment.</div>
+      </div>
+      <div class="deploy-panel" data-deploy-panel="hard">
+        ${commands.length ? `<h4 class="deploy-subhead">PAC command sequence</h4><pre class="command-block">${esc(commands.join("\n"))}</pre><button class="button small" type="button" data-action="copy" data-text="${enc(commands.join("\n"))}">Copy commands</button>` : ""}
+        <h4 class="deploy-subhead">Manual implementation sequence</h4>
+        <ol>${hard.map(step => `<li>${esc(step)}</li>`).join("")}</ol>
+      </div>
+      ${checks.length ? `<h3 style="margin-top:22px">Acceptance gates</h3><ul class="acceptance-list">${checks.map(check => `<li>${esc(check)}</li>`).join("")}</ul>` : ""}
+    </div>`;
+}
+
+function openAgent(name) {
+  const agent = state.agents.find(item => item.name === name);
+  if (!agent) return;
+  const solution = solutionOf(agent);
+  const capabilities = solution.capabilities || [];
+  const outcomes = solution.outcomes || [];
+  const personas = solution.personas || [];
+  const industries = solution.industries || [CATEGORY_NAMES[agent.category] || pretty(agent.category)];
+  const tools = microsoftTools(agent);
+  const prompts = promptRecordsFor(agent);
+  const install = installCommand(agent);
+  const architecture = solution.architecture;
+  const stack = state.stacks.find(item =>
+    item.stack_type === "multi_agent"
+    && item.vertical === agent._stack_vertical
+    && item.stack === agent._stack
+  );
+  openModal(`
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="agent-title">
+      <button class="icon-button modal-close" type="button" data-action="close-modal" aria-label="Close">×</button>
+      <header class="detail-head">
+        <span class="detail-icon">${esc(CATEGORY_ICONS[agent.category] || "✦")}</span>
+        <div>
+          <div class="category">${esc(CATEGORY_NAMES[agent.category] || pretty(agent.category))}</div>
+          <h2 id="agent-title">${esc(shown(agent))}</h2>
+          <p>${esc(summary(agent))}</p>
+          <div class="badges">
+            ${agent._demo && agent._demo.case_count ? `<span class="badge proven">Demo proven</span>` : ""}
+            ${solution.has_demo_video ? `<span class="badge demo">Recorded demo</span>` : ""}
+            ${solution.has_onepager ? `<span class="badge">One-pager</span>` : ""}
+          </div>
+        </div>
+      </header>
+      ${architecture ? `<div class="detail-tabs">
+        <button class="detail-tab active" type="button" data-action="detail-tab" data-panel="business">Business</button>
+        <button class="detail-tab" type="button" data-action="detail-tab" data-panel="architecture">Architecture</button>
+      </div>` : ""}
+      <div class="detail-panel active" data-detail-panel="business">
+      <div class="detail-body">
+        <div>
+          <section class="detail-section">
+            <h3>Why try it</h3>
+            <div class="why-panel">
+              <p>${esc(whyTry(agent))}</p>
+              ${(solution.business_value || outcomes).length
+                ? `<ul>${(solution.business_value || outcomes).map(item => `<li>${esc(item)}</li>`).join("")}</ul>`
+                : ""}
+            </div>
+          </section>
+          ${solution.customer_challenge_copy || solution.challenge_intro ? `
+          <section class="detail-section">
+            <h3>Customer challenge</h3>
+            <p>${esc(solution.customer_challenge_copy || solution.challenge_intro)}</p>
+            ${solution.customer_scenario.length ? `<ul>${solution.customer_scenario.map(item => `<li>${esc(item)}</li>`).join("")}</ul>` : ""}
+          </section>` : ""}
+          <section class="detail-section">
+            <h3>How the agent changes the work</h3>
+            ${capabilities.length
+              ? `<ul>${capabilities.map(item => `<li>${esc(item)}</li>`).join("")}</ul>`
+              : `<p>${esc(summary(agent))}</p>`}
+          </section>
+          <section class="detail-section">
+            <h3>Example prompts</h3>
+            ${prompts.map(item => `
+              <div class="prompt-row">
+                <p><strong>${esc(item.label)}</strong><br>${esc(item.prompt)}</p>
+                <div class="detail-actions">
+                  <button class="button small" type="button" data-action="copy" data-text="${enc(item.prompt)}">Copy</button>
+                  ${item.demo_url ? `<a class="button primary small" href="${esc(item.demo_url)}" target="_blank" rel="noopener">Open demo ↗</a>` : ""}
+                </div>
+              </div>
+            `).join("")}
+          </section>
+          <section class="detail-section">
+            <h3>Install</h3>
+            <pre class="code">${esc(install)}</pre>
+            <div class="detail-actions">
+              <button class="button primary" type="button" data-action="copy" data-text="${enc(install)}">Copy install command</button>
+              <a class="button" href="${BLOB}/${encodeURI(agent._file)}" target="_blank" rel="noopener">View source ↗</a>
+            </div>
+          </section>
+        </div>
+        <aside class="detail-aside">
+          <section class="aside-block microsoft-panel">
+            <h3>Microsoft AI story</h3>
+            <div class="tool-chips">${(tools.length ? tools : ["Local Brainstem"]).map(tool => `<span class="tool-chip">${esc(tool)}</span>`).join("")}</div>
+            <p>${esc(solution.microsoft_ai_story || "Microsoft Copilot Studio orchestrates the experience while the featured Microsoft products provide the business context and workflow surfaces.")}</p>
+          </section>
+          <section class="aside-block">
+            <h3>Journey blueprint</h3>
+            <div class="asset"><strong>${esc(journeyStage(agent))}</strong><span>${esc(solution.blueprint_role || "Use this solution as a proven starting point in the industry's broader AI roadmap.")}</span></div>
+          </section>
+          <section class="aside-block">
+            <h3>Built for</h3>
+            <div class="meta-chips">${personas.map(value => `<span class="meta-chip">${esc(value)}</span>`).join("") || `<span class="meta-chip">Business users</span>`}</div>
+          </section>
+          <section class="aside-block">
+            <h3>Industries</h3>
+            <div class="meta-chips">${industries.map(value => `<span class="meta-chip">${esc(value)}</span>`).join("")}</div>
+          </section>
+          <section class="aside-block">
+            <h3>Field assets</h3>
+            <div class="asset"><strong>One-pager</strong><span title="${esc(solution.onepager || "")}">${esc(solution.onepager || "Not listed")}</span></div>
+            <div class="asset"><strong>Demo video</strong><span title="${esc(solution.demo_video || "")}">${esc(solution.demo_video || "Not listed")}</span></div>
+            ${solution.source_verified ? `<div class="asset"><strong>Content source</strong><span>Approved AI BAST PowerPoint</span></div>` : ""}
+            ${solution.package ? `<div class="detail-actions" style="margin-top:10px">
+              ${solution.package.quest_url ? `<a class="button primary small" href="${esc(solution.package.quest_url)}">Open deployment quest</a>` : ""}
+              ${solution.package.manual_tutorial_url ? `<a class="button small" href="${esc(solution.package.manual_tutorial_url)}">Open Hard tutorial</a>` : ""}
+            </div>` : ""}
+          </section>
+          ${stack ? `<section class="aside-block"><h3>Stack</h3><button class="button full" type="button" data-action="open-stack" data-key="${enc(`${stack.vertical}/${stack.stack}`)}">${esc(stack.display_name)} · ${stack.agent_count} agents</button></section>` : ""}
+          <section class="aside-block">
+            <h3>Data pattern</h3>
+            <p style="margin:0;color:var(--cp-text-muted);font-size:.7rem">Runs offline with synthetic, domain-shaped data. Replace the accessor with the customer system of record.</p>
+          </section>
+          <section class="aside-block">
+            <h3>Production blueprint</h3>
+            <div class="blueprint-row"><strong>Default surface</strong><span>Microsoft Copilot Studio</span></div>
+            <div class="blueprint-row"><strong>Portable artifact</strong><span>Single deployable agent.py</span></div>
+            <div class="blueprint-row"><strong>Safe starting point</strong><span>Synthetic domain data with no customer information</span></div>
+            <div class="blueprint-row"><strong>Production path</strong><span>Replace the data accessor, preserve the business logic, and surface it in the customer's chosen tooling</span></div>
+          </section>
+        </aside>
+      </div>
+      </div>
+      ${architecture ? `<div class="detail-panel" data-detail-panel="architecture">${architectureHTML(architecture)}</div>` : ""}
+    </div>
+  `);
+  location.hash = `agent/${enc(agent.name)}`;
+}
+
+function openStack(key) {
+  const stack = state.stacks.find(item => `${item.vertical}/${item.stack}` === key);
+  if (!stack) return;
+  const members = stack.agents.map(name => state.agents.find(agent => agent.name === name)).filter(Boolean);
+  const install = members.map(installCommand).join("\n");
+  const copy = STACK_COPY[key] || {
+    pitch: `${members.length} specialized agents packaged as one coordinated workflow.`,
+    why_try: "Use this stack to demonstrate how specialized agents coordinate a complete business process."
+  };
+  openModal(`
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="stack-title">
+      <button class="icon-button modal-close" type="button" data-action="close-modal" aria-label="Close">×</button>
+      <header class="detail-head">
+        <span class="detail-icon">${esc(CATEGORY_ICONS[stack.vertical] || "✦")}</span>
+        <div>
+          <div class="category">${esc(CATEGORY_NAMES[stack.vertical] || pretty(stack.vertical))}</div>
+          <h2 id="stack-title">${esc(stack.display_name)}</h2>
+          <p>${esc(copy.pitch)}</p>
+        </div>
+      </header>
+      <div class="detail-body">
+        <div>
+          <section class="detail-section">
+            <h3>Agents in this stack</h3>
+            ${members.map(agent => `
+              <div class="prompt-row">
+                <p><strong>${esc(shown(agent))}</strong><br><span style="color:var(--cp-text-muted)">${esc(summary(agent))}</span></p>
+                <button class="button small" type="button" data-action="open-agent" data-name="${enc(agent.name)}">View</button>
+              </div>
+            `).join("")}
+          </section>
+          <section class="detail-section">
+            <h3>Install the stack</h3>
+            <pre class="code">${esc(install)}</pre>
+            <button class="button primary" type="button" data-action="copy" data-text="${enc(install)}">Copy install bundle</button>
+          </section>
+        </div>
+        <aside class="detail-aside">
+          <section class="aside-block microsoft-panel">
+            <h3>Why try it</h3>
+            <p>${esc(copy.why_try)}</p>
+          </section>
+          <section class="aside-block">
+            <h3>Source</h3>
+            <a class="button full" href="${BLOB}/${encodeURI(stack.path)}" target="_blank" rel="noopener">Open stack folder ↗</a>
+          </section>
+        </aside>
+      </div>
+    </div>
+  `);
+  location.hash = `stack/${enc(key)}`;
+}
+
+function openModal(html) {
+  $("modal-root").innerHTML = html;
+  $("modal-root").classList.add("open");
+  document.body.classList.add("modal-open");
+  $("modal-root").scrollTop = 0;
+}
+
+function closeModal() {
+  $("modal-root").classList.remove("open");
+  $("modal-root").innerHTML = "";
+  document.body.classList.remove("modal-open");
+  if (location.hash.startsWith("#agent/") || location.hash.startsWith("#stack/")) {
+    history.replaceState(null, "", location.pathname + location.search);
+  }
+}
+
+function copyText(text) {
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(() => toast("Copied to clipboard")).catch(() => fallbackCopy(text));
+  } else {
+    fallbackCopy(text);
+  }
+}
+
+function fallbackCopy(text) {
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.style.position = "fixed";
+  textarea.style.opacity = "0";
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  textarea.remove();
+  toast("Copied to clipboard");
+}
+
+let toastTimer;
+function toast(message) {
+  clearTimeout(toastTimer);
+  $("toast").textContent = message;
+  $("toast").classList.add("visible");
+  toastTimer = setTimeout(() => $("toast").classList.remove("visible"), 1600);
+}
+
+function syncURL() {
+  const params = new URLSearchParams();
+  const theme = new URLSearchParams(location.search).get("scoutTheme");
+  if (theme) params.set("scoutTheme", theme);
+  if (state.query) params.set("q", state.query);
+  if (state.view !== "solutions") params.set("view", state.view);
+  history.replaceState(null, "", `${location.pathname}${params.toString() ? `?${params}` : ""}${location.hash}`);
+}
+
+function clearAll() {
+  state.query = "";
+  state.industry = "";
+  state.persona = "";
+  state.system = "";
+  state.readiness = "";
+  state.sort = "relevance";
+  $("search").value = "";
+  ["industry", "persona", "system", "readiness", "sort"].forEach(id => {
+    $(id).value = state[id];
+  });
+  $("suggestions").classList.remove("visible");
+  render();
+}
+
+document.addEventListener("click", event => {
+  const target = event.target.closest("[data-action]");
+  if (!target) {
+    if (!event.target.closest(".search-wrap")) $("suggestions").classList.remove("visible");
+    return;
+  }
+  const action = target.dataset.action;
+  if (action === "toggle-theme") {
+    const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+  } else if (action === "query") {
+    state.query = target.dataset.query;
+    $("search").value = state.query;
+    $("suggestions").classList.remove("visible");
+    render();
+  } else if (action === "clear-search") {
+    state.query = "";
+    $("search").value = "";
+    $("search").focus();
+    $("suggestions").classList.remove("visible");
+    render();
+  } else if (action === "view") {
+    state.view = target.dataset.view;
+    render();
+  } else if (action === "industry-menu") {
+    const industry = target.dataset.industry;
+    state.industry = state.industry === industry ? "" : industry;
+    $("industry").value = state.industry;
+    state.view = "solutions";
+    render();
+  } else if (action === "clear-filter") {
+    const key = target.dataset.filter;
+    state[key] = "";
+    $(key).value = "";
+    render();
+  } else if (action === "clear-all") {
+    clearAll();
+  } else if (action === "open-agent") {
+    $("suggestions").classList.remove("visible");
+    openAgent(dec(target.dataset.name));
+  } else if (action === "open-stack") {
+    openStack(dec(target.dataset.key));
+  } else if (action === "copy") {
+    copyText(dec(target.dataset.text));
+  } else if (action === "detail-tab") {
+    const panel = target.dataset.panel;
+    document.querySelectorAll(".detail-tab").forEach(button => {
+      button.classList.toggle("active", button.dataset.panel === panel);
+    });
+    document.querySelectorAll("[data-detail-panel]").forEach(section => {
+      section.classList.toggle("active", section.dataset.detailPanel === panel);
+    });
+  } else if (action === "deploy-mode") {
+    const mode = target.dataset.mode;
+    document.querySelectorAll(".mode-button").forEach(button => {
+      button.classList.toggle("active", button.dataset.mode === mode);
+    });
+    document.querySelectorAll("[data-deploy-panel]").forEach(panel => {
+      panel.classList.toggle("active", panel.dataset.deployPanel === mode);
+    });
+  } else if (action === "close-modal") {
+    closeModal();
+  }
+});
+
+$("modal-root").addEventListener("click", event => {
+  if (event.target === $("modal-root")) closeModal();
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") {
+    $("suggestions").classList.remove("visible");
+    closeModal();
+  }
+  if (event.key === "/" && !["INPUT", "SELECT"].includes(document.activeElement.tagName)) {
+    event.preventDefault();
+    $("search").focus();
+  }
+  if (event.altKey && event.key.toLowerCase() === "q") {
+    window.location.href = "solutions/building-permit-processing/quest.html";
+  }
+  if ((event.key === "Enter" || event.key === " ")
+      && document.activeElement.dataset.action
+      && !["BUTTON", "A"].includes(document.activeElement.tagName)) {
+    document.activeElement.click();
+  }
+});
+
+let questClicks = 0;
+let questClickTimer;
+$("quest-trigger").addEventListener("click", event => {
+  event.preventDefault();
+  questClicks += 1;
+  clearTimeout(questClickTimer);
+  questClickTimer = setTimeout(() => { questClicks = 0; }, 2200);
+  if (questClicks >= 5) {
+    questClicks = 0;
+    window.location.href = "solutions/building-permit-processing/quest.html";
+  }
+});
+
+init();
+</script>
+</body>
+</html>

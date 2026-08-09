@@ -1,0 +1,89 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:28:10.578540+00:00",
+  "solution": "@aibast-agents-library/permit-license-management",
+  "onepager": "Energy Operations Agent Suite one-pager (2).pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "PermitLicenseManagementAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/energy_stacks/permit_license_management_stack/permit_license_management_agent.py",
+      "sha256": "6d42f1ce868288628c1355841200790d26ff9756fc854c451bfb138d1b8aa66e"
+    }
+  ],
+  "case_file": "tests/demo_cases/permit-license-management.json",
+  "case_file_sha256": "3a085cd75bceace09f03371a77e0f267b351670b6853a7e07722ac3e6f015b8a",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "PERMIT_LICENSE_MANAGEMENT-01",
+      "persona": "Facility Manager",
+      "onepager_promise": null,
+      "prompt": "Which Riverside permit is expired right now?",
+      "assistant_response": "**Riverside Generating Station has 1 expired permit:**\n\n**NPDES Stormwater Discharge Permit (PRM-6002)** \u2014 expired on 2026-03-01, issued by CA State Water Board.\n\nThis one needs immediate attention for renewal. Do you want me to pull the renewal calendar or compliance gaps to see what's needed?",
+      "agent_logs": "[PermitLicenseManagementAgent] # Permit & License Inventory\n\n**Total Permits:** 2 | **Active:** 1 | **Expired:** 1\n\n| ID | Permit | Facility | Authority | Status | Expiration | Conditions |\n|----|--------|----------|-----------|--------|-----------|-----------|\n| PRM-6001 | Title V Air Operating Permit | Riverside Generating Station | CA Air Resources Board | ACTIVE | 2029-06-15 | 24 |\n| PRM-6002 | NPDES Stormwater Discharge Permit | Riverside Generating Station | CA State Water Board | EXPIRED | 2026-03-01 | 18 |\n\n> Synthetic register only. Verify status with the issuing authority before relying on it.",
+      "expected_agent": "PermitLicenseManagementAgent",
+      "must_include": [
+        "PRM-6002",
+        "EXPIRED",
+        "Verify status"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PERMIT_LICENSE_MANAGEMENT-02",
+      "persona": "Permit Coordinator",
+      "onepager_promise": null,
+      "prompt": "What is the next Riverside renewal deadline I need to prepare for?",
+      "assistant_response": "Your next active renewal deadline at **Riverside Generating Station** is:\n\n**Title V Air Operating Permit** \u2014 expires **June 15, 2029** (365 days lead time recommended)\n\nNote: The NPDES Stormwater Discharge Permit is already **expired** (March 1, 2026) \u2014 this should be prioritized for immediate attention if it hasn't been renewed.",
+      "agent_logs": "[PermitLicenseManagementAgent] # Permit Renewal Calendar\n\n| Permit | Facility | Expiration | Status | Lead Time |\n|--------|----------|-----------|--------|-----------|\n| NPDES Stormwater Discharge Permit | Riverside Generating Station | 2026-03-01 | EXPIRED | 180 days |\n| Title V Air Operating Permit | Riverside Generating Station | 2029-06-15 | ACTIVE | 365 days |\n\n> Planning reminders only. No renewal, notice, or authority submission has been initiated.",
+      "expected_agent": "PermitLicenseManagementAgent",
+      "must_include": [
+        "NPDES Stormwater Discharge Permit",
+        "2026-03-01",
+        "No renewal"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PERMIT_LICENSE_MANAGEMENT-03",
+      "persona": "Compliance Manager",
+      "onepager_promise": null,
+      "prompt": "What permit evidence gap needs immediate authorized review at Riverside?",
+      "assistant_response": "**Critical gap at Riverside:** The **NPDES Stormwater Discharge Permit (NPDES-CA-0052841) expired on March 1, 2026**. This has cascading risk to three compliance requirements:\n- Monthly effluent sampling\n- Annual DMR submission  \n- Stormwater pollution prevention plan\n\n**Authorized staff should review immediately:**\n1. Confirm expiration date and renewal status\n2. Validate whether a renewal application was submitted before expiration\n3. Determine if the facility is operating under continued permit authority\n\nThis needs authorized review and action\u2014I can't submit or represent approval. Do you want me to check the renewal calendar or application status for this permit?",
+      "agent_logs": "[PermitLicenseManagementAgent] # Compliance Gap Analysis\n\n**Total Gaps:** 4 | **Critical:** 1\n\n| Permit | Facility | Gap Type | Severity | Detail |\n|--------|----------|----------|----------|--------|\n| NPDES Stormwater Discharge Permit | Riverside Generating Station | expired_permit | CRITICAL | Permit NPDES-CA-0052841 expired on 2026-03-01 |\n| NPDES Stormwater Discharge Permit | Riverside Generating Station | requirement_at_risk | HIGH | Requirement 'Monthly effluent sampling' at risk due to expired permit |\n| NPDES Stormwater Discharge Permit | Riverside Generating Station | requirement_at_risk | HIGH | Requirement 'Annual DMR submission' at risk due to expired permit |\n| NPDES Stormwater Discharge Permit | Riverside Generating Station | requirement_at_risk | HIGH | Requirement 'Stormwater pollution prevention plan' at risk due to expired permit |\n\n> Triage evidence only, not legal advice. Authorized permit staff must validate obligations and approve remediation.",
+      "expected_agent": "PermitLicenseManagementAgent",
+      "must_include": [
+        "expired_permit",
+        "CRITICAL",
+        "not legal advice"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "PERMIT_LICENSE_MANAGEMENT-04",
+      "persona": "Environmental Counsel",
+      "onepager_promise": null,
+      "prompt": "Where does the Riverside gas turbine permit application stand, and did we submit anything today?",
+      "assistant_response": "Here's the status on Riverside's gas turbine work:\n\n**Gas Turbine NSR Application (APP-7002):**\n- **Submitted:** January 20, 2026 to CA Air Resources Board\n- **Status:** Public comment period (active)\n- **Decision expected:** June 30, 2026\n- **Comment:** 12 items noted (likely review comments or outstanding questions)\n\n**Related stormwater permit (APP-7001):**\n- Submitted September 1, 2025, currently under review with the State Water Board\n\n**Today's submissions:** No new applications appear in the log for today. The gas turbine NSR is in the public comment phase\u2014authorized staff would need to review any incoming comments and prepare responses before the June deadline.\n\nIs there a specific aspect of either application you need to address?",
+      "agent_logs": "[PermitLicenseManagementAgent] # Permit Application Status\n\n**Active Applications:** 2\n\n| ID | Application | Facility | Authority | Submitted | Status | Decision Date | Comments |\n|----|-------------|----------|-----------|-----------|--------|--------------|----------|\n| APP-7001 | NPDES Stormwater Discharge Permit Renewal | Riverside Generating Station | CA State Water Board | 2025-09-01 | under_review | 2026-04-15 | 3 |\n| APP-7002 | New Source Review - Gas Turbine Expansion | Riverside Generating Station | CA Air Resources Board | 2026-01-20 | public_comment | 2026-06-30 | 12 |\n\n> Read-only synthetic tracking. The agent cannot submit, amend, withdraw, or approve an application.",
+      "expected_agent": "PermitLicenseManagementAgent",
+      "must_include": [
+        "APP-7002",
+        "public_comment",
+        "cannot submit"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

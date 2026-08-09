@@ -1,0 +1,100 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-08-08T10:03:14.452Z",
+  "solution": "@aibast-agents-library/customer-loyalty-rewards",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "Customer Loyalty Manual",
+    "bot_id": "a1acd1b2-dde5-418a-b206-b157020d45e5",
+    "created": true
+  },
+  "target_model": "Claude Sonnet 4.6",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 4,
+      "confirmed": 4
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "CLR-01",
+      "prompt": "As Loyalty Program Director, summarize the synthetic program health and governance boundary.",
+      "must_include": [
+        "Prepared for:** Loyalty Program Director",
+        "Synthetic Loyalty Program Dashboard",
+        "no member is contacted"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "14-clr-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CLR-02",
+      "prompt": "As CRM Manager, explain the synthetic Gold member balance without changing the ledger.",
+      "must_include": [
+        "Prepared for:** CRM Manager",
+        "Synthetic Points Summary",
+        "Synthetic Gold Member"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "15-clr-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CLR-03",
+      "prompt": "As Marketing Leader, show review-only reward options without creating offers or issuing benefits.",
+      "must_include": [
+        "Prepared for:** Marketing Leader",
+        "Draft Reward Option Recommendations",
+        "no points, tier, offer, reward"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "16-clr-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "CLR-04",
+      "prompt": "As Loyalty Program Director, review the synthetic tier structure without changing member status.",
+      "must_include": [
+        "Synthetic Tier Analysis",
+        "Tier Structure",
+        "no member is contacted"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "17-clr-04.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/customer-loyalty-rewards/screenshots/manual/browserfilm.json",
+    "gif": "solutions/customer-loyalty-rewards/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/customer-loyalty-rewards/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "18-confirm-draft.jpg"
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "solution": "Care Gap Closure Agent",
+  "slot": 32,
+  "agent": "@aibast-agents-library/care-gap-closure",
+  "onepager": "32. Care Gap Closure Agent one-pager.pptx",
+  "agent_files": [
+    "care_gap_closure_agent"
+  ],
+  "note": "Locked synthetic, read-only persona cases; exactly one case per implemented operation.",
+  "cases": [
+    {
+      "id": "CG-01",
+      "persona": "Quality Manager",
+      "onepager_bullet": "Analyze quality measures and surface high-priority gaps",
+      "operation": "gap_analysis",
+      "prompt": "Which synthetic quality measure has the largest evidence-review queue?",
+      "must_include": [
+        "SYN-BCS",
+        "Records requiring evidence review"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "CareGapClosureAgent"
+    },
+    {
+      "id": "CG-02",
+      "persona": "Care Coordinator",
+      "onepager_bullet": "Stratify outreach based on risk, condition severity, and engagement",
+      "operation": "cohort_review",
+      "prompt": "Organize the synthetic evidence-review cohorts without clinical risk scoring.",
+      "must_include": [
+        "Multiple Source Gaps",
+        "operational triage only"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "CareGapClosureAgent"
+    },
+    {
+      "id": "CG-03",
+      "persona": "Care Coordinator",
+      "onepager_bullet": "Launch targeted multi-channel outreach campaigns with real-time progress tracking",
+      "operation": "outreach_draft",
+      "prompt": "Draft outreach for the synthetic screening measure, but do not send it or state that anyone is eligible.",
+      "must_include": [
+        "No message is sent",
+        "Do not state"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "CareGapClosureAgent"
+    },
+    {
+      "id": "CG-04",
+      "persona": "Clinical Operations Lead",
+      "onepager_bullet": "Analyze care gaps to surface priority measures",
+      "operation": "quality_dashboard",
+      "prompt": "Show the qualitative source-completeness dashboard and its limitations.",
+      "must_include": [
+        "SYN-BCS",
+        "source-recorded closed"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "live patient record updated",
+        "appointment booked",
+        "authorization granted"
+      ],
+      "min_words": 25,
+      "expects_agent": "CareGapClosureAgent"
+    }
+  ]
+}

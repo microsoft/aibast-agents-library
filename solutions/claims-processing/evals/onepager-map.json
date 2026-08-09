@@ -1,0 +1,60 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/claims-processing",
+  "onepager": "39. Claims Processing Agent one-pager.pptx",
+  "source_slide_sha256": "ee9b4286dee0a70fbf9bd71b955e4a8e5c8ef3765fc2c2daca150caf220560de",
+  "promises": [
+    {
+      "advertised_promise": "Triage claims instantly to accelerate routing and reduce adjuster workloads",
+      "operations": [
+        "claim_intake"
+      ],
+      "demo_cases": [
+        "CLP-01"
+      ],
+      "synthetic_evidence": [
+        "Claims intake triage returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    },
+    {
+      "advertised_promise": "Spot fraud indicators early to prevent exposure and protect claim payouts",
+      "operations": [
+        "fraud_flag"
+      ],
+      "demo_cases": [
+        "CLP-03"
+      ],
+      "synthetic_evidence": [
+        "SIU indicator review returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    },
+    {
+      "advertised_promise": "Auto-adjudicate simple claims to shorten cycle times and improve consistency",
+      "operations": [
+        "settlement_recommendation"
+      ],
+      "demo_cases": [
+        "CLP-04"
+      ],
+      "synthetic_evidence": [
+        "Policy-term settlement estimate returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    },
+    {
+      "advertised_promise": "Pre-prepare complex claim files to give adjusters ready-to-review summaries",
+      "operations": [
+        "adjudication_review"
+      ],
+      "demo_cases": [
+        "CLP-02"
+      ],
+      "synthetic_evidence": [
+        "Claim-file readiness returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    }
+  ]
+}

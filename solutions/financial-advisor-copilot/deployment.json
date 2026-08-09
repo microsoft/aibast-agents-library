@@ -1,0 +1,94 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/financial-advisor-copilot",
+  "display_name": "Financial Advisor Agent",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/financial_services_stacks/financial_advisor_copilot_stack/financial_advisor_copilot_agent.py",
+  "target_filename": "financial_advisor_copilot_agent.py",
+  "expected_tool": "FinancialAdvisorCopilotAgent",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "smoke_test": {
+    "prompt": "Who is waiting, what do they need, and where should I route them after identity checks?",
+    "must_call": "FinancialAdvisorCopilotAgent",
+    "must_include": [
+      "CLI-3001",
+      "No identity"
+    ]
+  },
+  "copilot_studio": {
+    "authoring_mode": "manual-upload",
+    "required_connections": [
+      "Dynamics 365 banking or CRM context",
+      "Approved customer-identification workflow",
+      "Approved portfolio and research services",
+      "Microsoft 365",
+      "Microsoft Teams handoffs"
+    ],
+    "operations": [
+      "service_intake",
+      "client_review",
+      "portfolio_summary",
+      "recommendation_engine",
+      "compliance_check",
+      "advisor_handoff"
+    ],
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_financial-advisor-copilot-synthetic-records.md",
+      "manual/knowledge/aibast_financial-advisor-copilot-controls-and-review.md"
+    ],
+    "manual_skill_count": 6,
+    "publish_requires_confirmation": true,
+    "safety_gate": "Validate synthetic labels, human review, and no-advice/no-approval/no-transaction behavior before publish.",
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "validated_manual": {
+      "display_name": "Financial Advisor Manual",
+      "bot_id": "206d3ce8-c5ec-4da0-8591-51ccac160103",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 6,
+      "knowledge_files": 2,
+      "web_search_removed": true,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 6,
+      "preview_cases_total": 6
+    },
+    "validated_pilot": {
+      "display_name": "Financial Advisor Pilot",
+      "schema_name": "aibast_FinancialAdvisorPilot",
+      "bot_id": "fb1eebff-36f7-4595-8cf0-172fa78234e5",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 6,
+      "knowledge_files": 2,
+      "changes_pushed": 9,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 6,
+      "preview_cases_total": 6
+    }
+  },
+  "demo_scenarios": [
+    "financial-advisor-copilot-service-intake",
+    "financial-advisor-copilot-client-review",
+    "financial-advisor-copilot-portfolio-summary",
+    "financial-advisor-copilot-recommendation-engine",
+    "financial-advisor-copilot-compliance-check",
+    "financial-advisor-copilot-advisor-handoff"
+  ]
+}

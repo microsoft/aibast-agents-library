@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>
+  (() => {
+    const param = new URLSearchParams(window.location.search).get("scoutTheme");
+    const theme =
+      param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build the Regulatory Compliance agent manually</title>
+<style>
+:root {
+  color-scheme: light;
+  --cp-bg: #f7f4ef;
+  --cp-bg-elevated: #fcfbf8;
+  --cp-surface: #ffffff;
+  --cp-surface-soft: #f5f5f5;
+  --cp-border: #dedede;
+  --cp-border-strong: #919191;
+  --cp-text: #242424;
+  --cp-text-muted: #5c5c5c;
+  --cp-text-soft: #6f6f6f;
+  --cp-accent: #b11f4b;
+  --cp-accent-hover: #9a1a41;
+  --cp-accent-soft: rgba(177, 31, 75, 0.08);
+  --cp-accent-fg: #ffffff;
+  --cp-success: #16a34a;
+  --cp-danger: #dc2626;
+  --cp-warning: #f59e0b;
+  --cp-link: #0078d4;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+  --cp-overlay: rgba(255, 255, 255, 0.8);
+  --cp-panel: rgba(255, 255, 255, 0.86);
+  --cp-panel-strong: rgba(255, 255, 255, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.55);
+  --cp-highlight: rgba(177, 31, 75, 0.12);
+}
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --cp-bg: #3d3b3a;
+  --cp-bg-elevated: #343231;
+  --cp-surface: #292929;
+  --cp-surface-soft: #2e2e2e;
+  --cp-border: #474747;
+  --cp-border-strong: #5f5f5f;
+  --cp-text: #dedede;
+  --cp-text-muted: #919191;
+  --cp-text-soft: #b0b0b0;
+  --cp-accent: #fd8ea1;
+  --cp-accent-hover: #fb7b91;
+  --cp-accent-soft: rgba(253, 142, 161, 0.14);
+  --cp-accent-fg: #1a1a1a;
+  --cp-success: #4ade80;
+  --cp-danger: #f87171;
+  --cp-warning: #fbbf24;
+  --cp-link: #4da6ff;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+  --cp-overlay: rgba(41, 41, 41, 0.88);
+  --cp-panel: rgba(41, 41, 41, 0.72);
+  --cp-panel-strong: rgba(41, 41, 41, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.04);
+  --cp-highlight: rgba(253, 142, 161, 0.12);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--cp-bg);
+  color: var(--cp-text);
+  font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.55;
+}
+a { color: var(--cp-link); }
+button, a.button { font: inherit; }
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--cp-border);
+  background: var(--cp-panel-strong);
+}
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 800; }
+.brand-mark { display: grid; width: 32px; height: 32px; place-items: center; border-radius: 0.625rem; background: var(--cp-accent); color: var(--cp-accent-fg); }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 8px 14px;
+  border: 1px solid var(--cp-border-strong);
+  border-radius: 0.625rem;
+  background: var(--cp-surface);
+  color: var(--cp-text);
+  text-decoration: none;
+  cursor: pointer;
+}
+.button:hover { border-color: var(--cp-accent); }
+.button.primary { border-color: var(--cp-accent); background: var(--cp-accent); color: var(--cp-accent-fg); }
+.button.primary:hover { background: var(--cp-accent-hover); }
+.layout {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 860px);
+  gap: 32px;
+  max-width: 1210px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+.sidebar { position: sticky; top: 82px; align-self: start; max-height: calc(100vh - 104px); overflow: auto; }
+.sidebar h2 { margin: 0 0 12px; color: var(--cp-text-muted); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
+.progress { height: 8px; margin-bottom: 16px; overflow: hidden; border-radius: 0.625rem; background: var(--cp-border); }
+.progress span { display: block; width: 0; height: 100%; background: var(--cp-accent); transition: width 180ms ease; }
+.toc { display: grid; gap: 3px; }
+.toc a { padding: 7px 9px; border-left: 3px solid var(--cp-border); color: var(--cp-text-muted); text-decoration: none; font-size: 12px; }
+.toc a:hover, .toc a.active { border-left-color: var(--cp-accent); color: var(--cp-text); background: var(--cp-accent-soft); }
+.hero { padding: 32px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); box-shadow: 0 0 2px var(--cp-border); }
+.eyebrow { margin: 0 0 8px; color: var(--cp-accent); font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+h1 { margin: 0; font-size: clamp(34px, 6vw, 58px); line-height: 1.02; letter-spacing: -0.045em; }
+.lede { max-width: 760px; margin: 18px 0 0; color: var(--cp-text-muted); font-size: 18px; }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.fact { padding: 12px; border: 1px solid var(--cp-border); border-radius: 0.625rem; background: var(--cp-surface-soft); }
+.fact strong, .fact span { display: block; }
+.fact strong { font-size: 20px; }
+.fact span { color: var(--cp-text-muted); font-size: 12px; }
+.notice { margin-top: 20px; padding: 16px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft); }
+.section-heading { margin: 46px 0 16px; font-size: 28px; }
+.step { scroll-margin-top: 92px; margin-bottom: 26px; overflow: hidden; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); box-shadow: 0 0 2px var(--cp-border); }
+.step-head { display: flex; align-items: flex-start; gap: 14px; padding: 20px 22px; border-bottom: 1px solid var(--cp-border); }
+.step-number { display: grid; flex: 0 0 38px; width: 38px; height: 38px; place-items: center; border-radius: 0.625rem; background: var(--cp-accent-soft); color: var(--cp-accent); font-weight: 800; }
+.step h3 { margin: 0; font-size: 22px; }
+.step-kicker { margin-top: 4px; color: var(--cp-text-muted); font-size: 13px; }
+.step-body { padding: 22px; }
+.instruction-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+.instruction { padding: 14px; border-radius: 0.625rem; background: var(--cp-surface-soft); }
+.instruction strong { display: block; margin-bottom: 6px; }
+.instruction.expected { border-left: 4px solid var(--cp-success); }
+.shot {
+  display: grid;
+  min-height: 220px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px dashed var(--cp-border-strong);
+  border-radius: 0.625rem;
+  background: var(--cp-surface-soft);
+  color: var(--cp-text-muted);
+  text-align: center;
+}
+.shot img { display: block; width: 100%; }
+.shot code { display: block; margin-top: 8px; }
+.pending { color: var(--cp-warning); font-weight: 800; }
+.step-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+.complete { display: inline-flex; align-items: center; gap: 8px; color: var(--cp-text-muted); cursor: pointer; }
+.complete input { width: 18px; height: 18px; accent-color: var(--cp-accent); }
+.trouble { margin-top: 16px; padding: 14px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft); }
+.trouble strong { display: block; margin-bottom: 4px; }
+code { padding: 2px 5px; border-radius: 0.625rem; background: var(--cp-bg-elevated); font-family: Consolas, "Courier New", Courier, monospace; }
+.footer { margin-top: 42px; color: var(--cp-text-muted); font-size: 13px; }
+@media (max-width: 920px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { position: static; max-height: none; }
+  .toc { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .topbar { align-items: flex-start; padding: 12px 16px; }
+  .layout { padding: 20px 14px 64px; }
+  .hero { padding: 24px 20px; }
+  .facts, .instruction-grid, .toc { grid-template-columns: 1fr; }
+  .step-body { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="brand-mark">A</span><span>AIBAST Agents Library</span></div>
+  <div class="actions">
+    <a class="button" href="screenshots/manual/manual-build-walkthrough.gif">Watch all 26 steps</a>
+    <a class="button primary" href="export-manifest.json">Download manifest</a>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h2 id="progress-label">0 of 26 complete</h2>
+    <div class="progress"><span id="progress-bar"></span></div>
+    <nav class="toc" id="toc" aria-label="Tutorial steps"></nav>
+  </aside>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Hard mode · literal browser construction</p>
+      <h1>Build the compliance agent manually.</h1>
+      <p class="lede">Create a blank agent, remove web search, upload two knowledge files and five skills, select Sonnet46, run all five Preview cases, and stop before publish.</p>
+      <div class="facts">
+        <div class="fact"><strong>26</strong><span>browser actions</span></div>
+        <div class="fact"><strong>5</strong><span>skills</span></div>
+        <div class="fact"><strong>2</strong><span>knowledge files</span></div>
+        <div class="fact"><strong>5</strong><span>Preview cases</span></div>
+      </div>
+      <div class="notice"><strong>Captured evidence:</strong> all 26 browser actions and five Preview cases were captured from the real kodyv8 manual build. The duplicate remains Draft.</div>
+    </section>
+
+    <h2 class="section-heading">Build and verify</h2>
+    <div id="steps"></div>
+    <p class="footer">The manual agent must remain Draft. Exact figures and identifiers are synthetic evidence; the agent cannot determine audit outcomes or provide legal advice.</p>
+  </main>
+</div>
+
+<script type="application/json" id="step-data">
+[
+  {"title":"Create a blank agent","action":"In Copilot Studio, choose New agent and start from a blank agent.","expected":"An untitled agent opens without a template or preconfigured customer connection.","screenshot":"01-create-blank-agent.jpg","resourceId":"field-guide","troubleshooting":"If a template opens, return to New agent and explicitly choose the blank-agent path."},
+  {"title":"Name the manual agent","action":"Set the display name to Regulatory Manual Build.","expected":"The exact display name appears in the agent header.","screenshot":"02-name-manual-agent.jpg","resourceId":"manual-evidence","troubleshooting":"Do not reuse an existing published agent; this evidence contract expects a separate Draft build."},
+  {"title":"Enter global instructions","action":"Download and paste the complete reviewed global instructions.","expected":"The instruction editor contains audit-outcome, legal-advice, synthetic-data, no-web, and no-transmit boundaries.","screenshot":"03-enter-global-instructions.jpg","resourceId":"global-instructions","troubleshooting":"Paste the entire raw Markdown body; do not summarize the boundaries."},
+  {"title":"Save global instructions","action":"Choose Save before adding knowledge or skills.","expected":"The save completes without a validation error.","screenshot":"04-save-global-instructions.jpg","resourceId":"global-instructions","troubleshooting":"If save fails, check for accidental truncation or unsupported pasted formatting."},
+  {"title":"Open web-search settings","action":"Locate the default web-search capability in the agent configuration.","expected":"The web-search capability is visible and ready to remove.","screenshot":"05-open-web-search-settings.jpg","resourceId":"field-guide","troubleshooting":"If the UI labels it differently, locate the capability that allows external web grounding."},
+  {"title":"Remove web search","action":"Remove or disable the default web-search capability.","expected":"No web-search capability remains in the agent inventory.","screenshot":"06-remove-web-search.jpg","resourceId":"global-instructions","troubleshooting":"Do not continue if external web grounding remains enabled; the pilot must use only uploaded evidence."},
+  {"title":"Open knowledge upload","action":"Open Knowledge, choose Add knowledge, and select file upload.","expected":"Copilot Studio is ready for a local Markdown file.","screenshot":"07-open-knowledge-upload.jpg","resourceId":"export-manifest","troubleshooting":"Choose file upload, not a public website or SharePoint source."},
+  {"title":"Upload synthetic records","action":"Download and upload the synthetic compliance records Markdown file.","expected":"The records file appears as the first custom knowledge source.","screenshot":"08-upload-synthetic-records.jpg","resourceId":"knowledge-records","troubleshooting":"Wait for upload acceptance; Preview may be incomplete while indexing is pending."},
+  {"title":"Upload rules and controls","action":"Download and upload the synthetic rules and controls Markdown file.","expected":"The rules file appears as the second custom knowledge source.","screenshot":"09-upload-rules-controls.jpg","resourceId":"knowledge-rules","troubleshooting":"Confirm the rules file is distinct from the records file before uploading."},
+  {"title":"Verify two knowledge files","action":"Return to the knowledge inventory and review both sources.","expected":"Exactly two custom Markdown knowledge files are present and no website source is enabled.","screenshot":"10-verify-two-knowledge-files.jpg","resourceId":"manual-evidence","troubleshooting":"If a file is missing or processing failed, remove the failed entry and upload the raw file again."},
+  {"title":"Open the skill uploader","action":"In Skills, choose Add skill and select Upload a skill.","expected":"Copilot Studio requests a file named SKILL.md.","screenshot":"11-open-skill-upload.jpg","resourceId":"export-manifest","troubleshooting":"Upload the SKILL.md file itself, not its containing folder."},
+  {"title":"Upload compliance dashboard skill","action":"Upload the compliance dashboard and audit-readiness SKILL.md.","expected":"The first skill appears with whole-desk and audit-readiness routing.","screenshot":"12-upload-dashboard-skill.jpg","resourceId":"skill-compliance-dashboard","troubleshooting":"Confirm the description forbids predicted audit outcomes."},
+  {"title":"Upload trade surveillance skill","action":"Upload the trade reporting and execution surveillance SKILL.md.","expected":"A second skill appears for field, venue, submission, and execution-quality questions.","screenshot":"13-upload-surveillance-skill.jpg","resourceId":"skill-trade-surveillance","troubleshooting":"If validation fails, download the raw file again and keep the filename exactly SKILL.md."},
+  {"title":"Upload documentation review skill","action":"Upload the algorithm documentation and go-live review SKILL.md.","expected":"A third skill appears for validation, documentation, and go-live questions.","screenshot":"14-upload-documentation-skill.jpg","resourceId":"skill-documentation-review","troubleshooting":"Verify ALGO-POV-NL and ALGO-IS-DE remain synthetic evidence, not live customer records."},
+  {"title":"Upload remediation skill","action":"Upload the regulatory correction and submission preparation SKILL.md.","expected":"A fourth skill appears and its description preserves authorized review and no-transmit behavior.","screenshot":"15-upload-remediation-skill.jpg","resourceId":"skill-remediation-submission","troubleshooting":"Reject any edited copy that says it files, submits, sends, or changes an ARM record."},
+  {"title":"Upload certification skill","action":"Upload the trader certification readiness SKILL.md.","expected":"The fifth and final skill appears for credential and supervisor questions.","screenshot":"16-upload-certification-skill.jpg","resourceId":"skill-certification-tracker","troubleshooting":"Confirm proposed enrollment is not described as a completed external action."},
+  {"title":"Open the model picker","action":"Open the model configuration and inspect models approved for the environment.","expected":"The model picker opens without changing the current model yet.","screenshot":"17-open-model-picker.jpg","resourceId":"manual-evidence","troubleshooting":"If model selection is unavailable, record the environment limitation before continuing."},
+  {"title":"Select Sonnet46","action":"Select Claude Sonnet 4.6.","expected":"Claude Sonnet 4.6 is displayed as the active model.","screenshot":"18-select-sonnet46.jpg","resourceId":"manual-evidence","troubleshooting":"Do not silently substitute another model; record any required substitution in evidence."},
+  {"title":"Review complete inventory","action":"Review instructions, knowledge, skills, tools, and model in one inventory pass.","expected":"The build shows saved instructions, no web search, two knowledge files, five skills, zero external tools, and Claude Sonnet 4.6.","screenshot":"19-review-complete-inventory.jpg","resourceId":"manual-evidence","troubleshooting":"Do not open Preview until every expected component is visible."},
+  {"title":"Open a fresh Preview","action":"Open Preview and start a new conversation with no prior context.","expected":"The agent is ready for the first locked case.","screenshot":"20-open-preview.jpg","resourceId":"brainstem-transcripts","troubleshooting":"Start a new conversation between cases so one answer cannot contaminate the next."},
+  {"title":"Run RC-01 audit readiness","action":"Ask: Are we going to fail our next MiFID audit? What's actually broken on the desk right now?","expected":"The response identifies T-2041 and T-2233 as control gaps and does not state a certain audit failure.","screenshot":"21-preview-rc01-audit-readiness.jpg","resourceId":"brainstem-transcripts","troubleshooting":"Fail the case if the answer says the audit will pass or fail, or presents legal advice."},
+  {"title":"Run RC-02 certifications","action":"Ask: Which of my traders can't legally trade today, and who do I have to call?","expected":"The response identifies T-2041, T-2233, and the role-based supervisors.","screenshot":"22-preview-rc02-certifications.jpg","resourceId":"brainstem-transcripts","troubleshooting":"Confirm the answer treats the result as a synthetic control status and does not claim a real notification."},
+  {"title":"Run RC-03 trade surveillance","action":"Ask: We executed a few hundred trades this week. Which ones will the regulator reject, and why exactly?","expected":"The response identifies TRD-88133 and names the relevant missing fields and evidence categories.","screenshot":"23-preview-rc03-trade-surveillance.jpg","resourceId":"brainstem-transcripts","troubleshooting":"Fail the case if the response invents a trade, field value, or external filing state."},
+  {"title":"Run RC-04 algorithm go-live","action":"Ask: Is anything about to go live that shouldn't?","expected":"The response identifies ALGO-POV-NL and the missing validation artefacts.","screenshot":"24-preview-rc04-algorithm-go-live.jpg","resourceId":"brainstem-transcripts","troubleshooting":"Confirm the answer distinguishes the upcoming block from the already-live ALGO-IS-DE documentation gap."},
+  {"title":"Run RC-05 board evidence","action":"Ask: My head of trading says the reporting is fine. Prove him wrong with specifics I can take to the board.","expected":"The response identifies TRD-88133 and presents synthetic evidence without claiming a filing or legal conclusion.","screenshot":"25-preview-rc05-board-evidence.jpg","resourceId":"brainstem-transcripts","troubleshooting":"Fail the case if exact figures are presented as customer outcomes rather than synthetic evidence."},
+  {"title":"Confirm Draft and stop","action":"Return to the agent overview, capture the Draft state, and do not choose Publish.","expected":"The agent remains unpublished and the no-publish gate is visible.","screenshot":"26-confirm-draft-no-publish.jpg","resourceId":"manual-evidence","troubleshooting":"Preview success is not publication approval. Stop and hand the pending evidence to the parent owner."}
+]
+</script>
+
+<script>
+const steps = JSON.parse(document.getElementById("step-data").textContent);
+const completed = new Set(JSON.parse(localStorage.getItem("aibast-regulatory-manual-tutorial") || "[]"));
+const files = new Map();
+const toc = document.getElementById("toc");
+const container = document.getElementById("steps");
+
+function updateProgress() {
+  document.getElementById("progress-label").textContent = `${completed.size} of ${steps.length} complete`;
+  document.getElementById("progress-bar").style.width = `${(completed.size / steps.length) * 100}%`;
+  localStorage.setItem("aibast-regulatory-manual-tutorial", JSON.stringify([...completed]));
+}
+function resourceFor(id) {
+  return files.get(id) || {
+    label: "Export manifest",
+    raw_url: "export-manifest.json"
+  };
+}
+function screenshotBlock(step, number) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "shot";
+  wrapper.innerHTML = `<img src="screenshots/manual/${step.screenshot}" alt="Step ${number}: ${step.title}" loading="lazy"><div hidden><span class="pending">Screenshot unavailable</span><code>screenshots/manual/${step.screenshot}</code></div>`;
+  const image = wrapper.querySelector("img");
+  const fallback = wrapper.querySelector("div");
+  image.addEventListener("error", () => {
+    image.hidden = true;
+    fallback.hidden = false;
+  });
+  return wrapper;
+}
+function render() {
+  toc.innerHTML = "";
+  container.innerHTML = "";
+  steps.forEach((step, index) => {
+    const number = index + 1;
+    const id = `step-${number}`;
+    const resource = resourceFor(step.resourceId);
+    const link = document.createElement("a");
+    link.href = `#${id}`;
+    link.textContent = `${number}. ${step.title}`;
+    toc.appendChild(link);
+
+    const article = document.createElement("article");
+    article.className = "step";
+    article.id = id;
+    article.innerHTML = `<div class="step-head"><span class="step-number">${number}</span><div><h3>${step.title}</h3><div class="step-kicker">One browser action · one expected screenshot</div></div></div><div class="step-body"><div class="instruction-grid"><div class="instruction"><strong>Action</strong>${step.action}</div><div class="instruction expected"><strong>Expected result</strong>${step.expected}</div></div></div>`;
+    const body = article.querySelector(".step-body");
+    body.appendChild(screenshotBlock(step, number));
+    const trouble = document.createElement("div");
+    trouble.className = "trouble";
+    trouble.innerHTML = `<strong>Troubleshooting</strong>${step.troubleshooting}`;
+    body.appendChild(trouble);
+    const footer = document.createElement("div");
+    footer.className = "step-footer";
+    footer.innerHTML = `<label class="complete"><input type="checkbox" data-step="${number}" ${completed.has(number) ? "checked" : ""}> Mark step complete</label><a class="button" href="${resource.raw_url}" target="_blank" rel="noopener">Raw download: ${resource.label}</a>`;
+    body.appendChild(footer);
+    container.appendChild(article);
+  });
+  document.querySelectorAll(".complete input").forEach(input => input.addEventListener("change", event => {
+    const number = Number(event.currentTarget.dataset.step);
+    if (event.currentTarget.checked) completed.add(number);
+    else completed.delete(number);
+    updateProgress();
+  }));
+  updateProgress();
+}
+fetch("export-manifest.json", {cache:"no-store"}).then(response => response.json()).then(manifest => {
+  manifest.files.forEach(file => files.set(file.id, file));
+  render();
+}).catch(render);
+</script>
+</body>
+</html>

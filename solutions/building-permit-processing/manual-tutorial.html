@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Build the Building Permit agent manually</title>
+  <script>
+    (() => {
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const theme =
+        param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  <style>
+    :root {
+      color-scheme: light;
+      --cp-bg: #f7f4ef;
+      --cp-bg-elevated: #fcfbf8;
+      --cp-surface: #ffffff;
+      --cp-surface-soft: #f5f5f5;
+      --cp-border: #dedede;
+      --cp-border-strong: #919191;
+      --cp-text: #242424;
+      --cp-text-muted: #5c5c5c;
+      --cp-text-soft: #6f6f6f;
+      --cp-accent: #b11f4b;
+      --cp-accent-hover: #9a1a41;
+      --cp-accent-soft: rgba(177, 31, 75, 0.08);
+      --cp-accent-fg: #ffffff;
+      --cp-success: #16a34a;
+      --cp-danger: #dc2626;
+      --cp-warning: #f59e0b;
+      --cp-link: #0078d4;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+      --cp-overlay: rgba(255, 255, 255, 0.8);
+      --cp-panel: rgba(255, 255, 255, 0.86);
+      --cp-panel-strong: rgba(255, 255, 255, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.55);
+      --cp-highlight: rgba(177, 31, 75, 0.12);
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --cp-bg: #3d3b3a;
+      --cp-bg-elevated: #343231;
+      --cp-surface: #292929;
+      --cp-surface-soft: #2e2e2e;
+      --cp-border: #474747;
+      --cp-border-strong: #5f5f5f;
+      --cp-text: #dedede;
+      --cp-text-muted: #919191;
+      --cp-text-soft: #b0b0b0;
+      --cp-accent: #fd8ea1;
+      --cp-accent-hover: #fb7b91;
+      --cp-accent-soft: rgba(253, 142, 161, 0.14);
+      --cp-accent-fg: #1a1a1a;
+      --cp-success: #4ade80;
+      --cp-danger: #f87171;
+      --cp-warning: #fbbf24;
+      --cp-link: #4da6ff;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+      --cp-overlay: rgba(41, 41, 41, 0.88);
+      --cp-panel: rgba(41, 41, 41, 0.72);
+      --cp-panel-strong: rgba(41, 41, 41, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.04);
+      --cp-highlight: rgba(253, 142, 161, 0.12);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--cp-bg);
+      color: var(--cp-text);
+      font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.55;
+    }
+    a { color: var(--cp-link); }
+    button, a.button { font: inherit; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 24px;
+      border-bottom: 1px solid var(--cp-border);
+      background: var(--cp-panel-strong);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+    .brand-mark {
+      display: grid;
+      width: 32px;
+      height: 32px;
+      place-items: center;
+      border-radius: 0.625rem;
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+    }
+    .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 8px 14px;
+      border: 1px solid var(--cp-border-strong);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+      color: var(--cp-text);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .button:hover { border-color: var(--cp-accent); }
+    .button.primary {
+      border-color: var(--cp-accent);
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+    }
+    .button.primary:hover { background: var(--cp-accent-hover); }
+    .layout {
+      display: grid;
+      grid-template-columns: 270px minmax(0, 840px);
+      gap: 32px;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 24px 80px;
+    }
+    .sidebar { position: sticky; top: 82px; align-self: start; max-height: calc(100vh - 104px); overflow: auto; }
+    .sidebar h2 { margin: 0 0 12px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--cp-text-muted); }
+    .progress {
+      height: 8px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      border-radius: 0.625rem;
+      background: var(--cp-border);
+    }
+    .progress > span { display: block; width: 0; height: 100%; background: var(--cp-accent); transition: width 180ms ease; }
+    .toc { display: grid; gap: 4px; }
+    .toc a {
+      padding: 8px 10px;
+      border-left: 3px solid var(--cp-border);
+      color: var(--cp-text-muted);
+      text-decoration: none;
+      font-size: 13px;
+    }
+    .toc a:hover, .toc a.active { border-left-color: var(--cp-accent); color: var(--cp-text); background: var(--cp-accent-soft); }
+    .hero {
+      padding: 32px;
+      border: 1px solid var(--cp-border);
+      border-radius: 16px;
+      background: var(--cp-surface);
+    }
+    .eyebrow { margin: 0 0 8px; color: var(--cp-accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; font-size: 12px; }
+    h1 { margin: 0; font-size: clamp(32px, 6vw, 54px); line-height: 1.04; letter-spacing: -0.035em; }
+    .lede { max-width: 720px; margin: 18px 0 0; color: var(--cp-text-muted); font-size: 18px; }
+    .facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+    .fact { padding: 12px; border: 1px solid var(--cp-border); border-radius: 0.625rem; background: var(--cp-surface-soft); }
+    .fact strong { display: block; font-size: 20px; }
+    .fact span { color: var(--cp-text-muted); font-size: 12px; }
+    .notice {
+      margin-top: 20px;
+      padding: 16px;
+      border-left: 4px solid var(--cp-warning);
+      background: var(--cp-surface-soft);
+    }
+    .section-heading { margin: 48px 0 16px; font-size: 28px; }
+    .step {
+      scroll-margin-top: 92px;
+      margin: 0 0 28px;
+      overflow: hidden;
+      border: 1px solid var(--cp-border);
+      border-radius: 16px;
+      background: var(--cp-surface);
+    }
+    .step-head { display: flex; align-items: flex-start; gap: 14px; padding: 20px 22px; border-bottom: 1px solid var(--cp-border); }
+    .step-number {
+      display: grid;
+      flex: 0 0 36px;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      border-radius: 0.625rem;
+      background: var(--cp-accent-soft);
+      color: var(--cp-accent);
+      font-weight: 800;
+    }
+    .step h3 { margin: 0; font-size: 22px; }
+    .step-kicker { margin-top: 4px; color: var(--cp-text-muted); font-size: 13px; }
+    .step-body { padding: 22px; }
+    .instruction-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+    .instruction { padding: 14px; border-radius: 0.625rem; background: var(--cp-surface-soft); }
+    .instruction strong { display: block; margin-bottom: 6px; }
+    .instruction.expected { border-left: 4px solid var(--cp-success); }
+    .instruction.caution { border-left: 4px solid var(--cp-warning); }
+    .shot {
+      display: block;
+      width: 100%;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-surface-soft);
+    }
+    .step-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+    .complete {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--cp-text-muted);
+      cursor: pointer;
+    }
+    .complete input { width: 18px; height: 18px; accent-color: var(--cp-accent); }
+    .troubleshooting {
+      padding: 24px;
+      border: 1px solid var(--cp-border);
+      border-radius: 16px;
+      background: var(--cp-surface);
+    }
+    details { padding: 14px 0; border-bottom: 1px solid var(--cp-border); }
+    details:last-child { border-bottom: 0; }
+    summary { cursor: pointer; font-weight: 700; }
+    code {
+      padding: 2px 5px;
+      border-radius: 0.625rem;
+      background: var(--cp-surface-soft);
+      font-family: Consolas, "Courier New", Courier, monospace;
+    }
+    .footer { margin-top: 42px; color: var(--cp-text-muted); font-size: 13px; }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; max-height: none; }
+      .toc { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 620px) {
+      .topbar { align-items: flex-start; padding: 12px 16px; }
+      .brand span:last-child { display: none; }
+      .layout { padding: 20px 14px 64px; }
+      .hero { padding: 24px 20px; }
+      .facts, .instruction-grid, .toc { grid-template-columns: 1fr; }
+      .step-body { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">A</span><span>AIBAST Agents Library</span></div>
+    <div class="actions">
+      <a class="button" href="screenshots/manual/manual-build-walkthrough.gif">Watch all 24 steps</a>
+      <a class="button primary" id="bundle-link" href="exports/building-permit-processing-source.zip">Download source bundle</a>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <h2 id="progress-label">0 of 24 complete</h2>
+      <div class="progress"><span id="progress-bar"></span></div>
+      <nav class="toc" id="toc" aria-label="Tutorial steps"></nav>
+    </aside>
+
+    <main>
+      <section class="hero">
+        <p class="eyebrow">Hard mode · AI skeptic edition</p>
+        <h1>Build the permit agent manually.</h1>
+        <p class="lede">No plugin magic and no hidden deployment step. Create the same seven-skill agent by hand, prove it against the canonical permit backlog prompt, and compare the effort with Easy mode.</p>
+        <div class="facts">
+          <div class="fact"><strong>24</strong><span>captured actions</span></div>
+          <div class="fact"><strong>7</strong><span>skills uploaded</span></div>
+          <div class="fact"><strong>2</strong><span>knowledge files</span></div>
+          <div class="fact"><strong>1</strong><span>parity test</span></div>
+        </div>
+        <div class="notice"><strong>Scope:</strong> this tutorial uses synthetic permit data. The manual duplicate remains Draft; the separately validated Easy-mode pilot is the published customer-facing agent.</div>
+      </section>
+
+      <h2 class="section-heading">Build and verify</h2>
+      <div id="steps"></div>
+
+      <h2 class="section-heading" id="troubleshooting">Troubleshooting</h2>
+      <section class="troubleshooting">
+        <details open>
+          <summary>Copilot Studio says the skill file has invalid frontmatter</summary>
+          <p>Download the raw file again and confirm the filename is exactly <code>SKILL.md</code>. Upload the file itself—not the containing folder or the <code>.mcs.yml</code> source component.</p>
+        </details>
+        <details>
+          <summary>A knowledge file appears but is still processing</summary>
+          <p>Wait for ingestion to finish before testing. Preview can return incomplete answers while a knowledge source is still being indexed.</p>
+        </details>
+        <details>
+          <summary>The model picker does not show Claude Sonnet 4.6</summary>
+          <p>Select an approved model available in your environment, then record the substitution. Easy and Hard mode should use the same model when you are comparing parity.</p>
+        </details>
+        <details>
+          <summary>The response names the wrong permit</summary>
+          <p>Confirm both knowledge files are enabled, all seven skills appear in the Build inventory, and the global instructions prohibit invented records. Then start a new Preview conversation and replay the exact prompt.</p>
+        </details>
+        <details>
+          <summary>Should I publish the manual duplicate?</summary>
+          <p>No. Keep it in Draft unless a separate publication is explicitly approved. The manual build exists to document complexity and prove behavioral parity.</p>
+        </details>
+      </section>
+
+      <p class="footer">Evidence captured in the kodyv8 environment. Raw source links resolve from the public repository after the changes reach <code>main</code>.</p>
+    </main>
+  </div>
+
+  <script>
+    const stepData = [
+      ["Create a blank agent", "In Copilot Studio, choose New agent and start with a blank agent.", "A new untitled agent opens on the Overview page.", "01-create-blank-agent.jpg", "deployment-recipe"],
+      ["Name the manual build", "Set the display name to Building Permit Manual Build.", "The new name appears in the page header.", "02-name-agent.jpg", "deployment-recipe"],
+      ["Enter global instructions", "Replace the starter text with the complete reviewed instruction policy.", "The editor contains routing, evidence, and non-invention rules.", "03-enter-instructions.jpg", "settings"],
+      ["Save the instructions", "Choose Save before adding any knowledge or skills.", "The save operation completes without a validation error.", "04-save-instructions.jpg", "settings"],
+      ["Open knowledge upload", "In Knowledge, choose Add knowledge and select the file upload path.", "The upload dialog is ready for a local file.", "05-open-knowledge-upload.jpg", "export-manifest"],
+      ["Upload synthetic permit records", "Download and upload the synthetic permit records Markdown file.", "The records source appears in the Knowledge list.", "06-select-records-file.jpg", "knowledge-records"],
+      ["Wait for record ingestion", "Do not continue until the records file is accepted and processing begins.", "Copilot Studio shows the records source without an upload error.", "07-records-file-added.jpg", "knowledge-records"],
+      ["Upload rules and schedules", "Download and upload the permit rules and schedules Markdown file.", "The second file is accepted by the knowledge uploader.", "08-select-rules-file.jpg", "knowledge-rules"],
+      ["Verify both knowledge sources", "Return to Overview and confirm both files are listed.", "Exactly two custom knowledge sources are visible.", "09-two-knowledge-files-added.jpg", "knowledge-rules"],
+      ["Open the skill uploader", "In Skills, choose Add skill and select Upload a skill.", "Copilot Studio requests a file named SKILL.md.", "10-open-skill-upload.jpg", "export-manifest"],
+      ["Add backlog analysis", "Upload the backlog and complaint-risk SKILL.md.", "The first skill appears with its routing description.", "11-add-backlog-skill.jpg", "skill-backlog"],
+      ["Add intake triage", "Upload the intake triage and routing SKILL.md.", "The intake skill appears beside backlog analysis.", "12-add-intake-skill.jpg", "skill-intake"],
+      ["Add applicant updates", "Upload the proactive applicant updates SKILL.md.", "The update skill is available for communication requests.", "13-add-applicant-updates-skill.jpg", "skill-updates"],
+      ["Add permit status", "Upload the permit status and zoning detail SKILL.md.", "Status questions have a dedicated routing target.", "14-add-permit-status-skill.jpg", "skill-status"],
+      ["Add the review checklist", "Upload the permit review checklist SKILL.md.", "Document and review-sequencing guidance appears in Skills.", "15-add-checklist-skill.jpg", "skill-checklist"],
+      ["Observe a real validation failure", "Upload the inspector skill and inspect the frontmatter validation message.", "The error is visible and no broken skill is silently accepted.", "16-inspector-skill-validation-error.jpg", "skill-inspector"],
+      ["Retry the inspector skill", "Refresh the raw file, keep the filename SKILL.md, and upload again.", "Inspector assignment and coverage is added successfully.", "17-retry-inspector-skill.jpg", "skill-inspector"],
+      ["Add fee estimation", "Upload the deterministic fee estimate SKILL.md.", "The seventh and final skill appears in the agent.", "18-add-fee-skill.jpg", "skill-fees"],
+      ["Open the model picker", "Open Settings and inspect the models approved for the environment.", "The model menu opens without changing the agent yet.", "19-open-model-picker.jpg", "settings"],
+      ["Match the Easy-mode model", "Select Claude Sonnet 4.6 so the comparison uses the same model.", "Claude Sonnet 4.6 is shown as the active model.", "20-select-sonnet-model.jpg", "settings"],
+      ["Audit all seven skills", "Expand the skill inventory and review every name and routing description.", "Seven focused skills and two knowledge files are present.", "21-review-all-skills.jpg", "manual-evidence"],
+      ["Open Preview", "Open the Preview panel and start a fresh conversation.", "The agent is ready for a new test prompt.", "22-open-preview.jpg", "brainstem-transcripts"],
+      ["Run the canonical prompt", "Ask: Which permit applications have been sitting too long, and which resident is going to complain first?", "The agent invokes the backlog-analysis behavior instead of improvising.", "23-run-canonical-prompt.jpg", "brainstem-transcripts"],
+      ["Verify parity", "Check the answer against the acceptance evidence.", "The response identifies BP-2025-0104, Metro School District, and the overdue escalation.", "24-verify-preview-result.jpg", "manual-evidence"]
+    ];
+
+    const fileById = new Map();
+    const completed = new Set(JSON.parse(localStorage.getItem("aibast-manual-tutorial") || "[]"));
+    const toc = document.getElementById("toc");
+    const steps = document.getElementById("steps");
+
+    function updateProgress() {
+      const count = completed.size;
+      document.getElementById("progress-label").textContent = `${count} of ${stepData.length} complete`;
+      document.getElementById("progress-bar").style.width = `${(count / stepData.length) * 100}%`;
+      localStorage.setItem("aibast-manual-tutorial", JSON.stringify([...completed]));
+    }
+
+    function downloadFor(resourceId) {
+      return fileById.get(resourceId) || fileById.get("source-bundle") || {
+        label: "Complete source bundle",
+        raw_url: "exports/building-permit-processing-source.zip"
+      };
+    }
+
+    function render() {
+      toc.innerHTML = "";
+      steps.innerHTML = "";
+      stepData.forEach((step, index) => {
+        const number = index + 1;
+        const id = `step-${number}`;
+        const resource = downloadFor(step[4]);
+        const tocLink = document.createElement("a");
+        tocLink.href = `#${id}`;
+        tocLink.textContent = `${number}. ${step[0]}`;
+        toc.appendChild(tocLink);
+
+        const article = document.createElement("article");
+        article.className = "step";
+        article.id = id;
+        article.innerHTML = `
+          <div class="step-head">
+            <span class="step-number">${number}</span>
+            <div><h3>${step[0]}</h3><div class="step-kicker">Captured from the real manual agent build</div></div>
+          </div>
+          <div class="step-body">
+            <div class="instruction-grid">
+              <div class="instruction"><strong>Action</strong>${step[1]}</div>
+              <div class="instruction expected"><strong>Expected result</strong>${step[2]}</div>
+            </div>
+            <img class="shot" src="screenshots/manual/${step[3]}" alt="Step ${number}: ${step[0]}" loading="lazy">
+            <div class="step-footer">
+              <label class="complete"><input type="checkbox" data-step="${number}" ${completed.has(number) ? "checked" : ""}> Mark step complete</label>
+              <a class="button raw-link" data-resource="${step[4]}" href="${resource.raw_url}">Download: ${resource.label}</a>
+            </div>
+          </div>`;
+        steps.appendChild(article);
+      });
+
+      document.querySelectorAll(".complete input").forEach(input => {
+        input.addEventListener("change", event => {
+          const number = Number(event.currentTarget.dataset.step);
+          if (event.currentTarget.checked) completed.add(number);
+          else completed.delete(number);
+          updateProgress();
+        });
+      });
+      updateProgress();
+    }
+
+    async function loadManifest() {
+      const response = await fetch("export-manifest.json", { cache: "no-store" });
+      const manifest = await response.json();
+      manifest.files.forEach(file => fileById.set(file.id, file));
+      fileById.set("source-bundle", {
+        label: "Complete source bundle",
+        raw_url: manifest.bundle.raw_url
+      });
+      document.getElementById("bundle-link").href = manifest.bundle.raw_url;
+      render();
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        document.querySelectorAll(".toc a").forEach(link => link.classList.remove("active"));
+        const active = document.querySelector(`.toc a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add("active");
+      });
+    }, { rootMargin: "-20% 0px -70% 0px" });
+
+    loadManifest().then(() => {
+      document.querySelectorAll(".step").forEach(step => observer.observe(step));
+    }).catch(() => render());
+  </script>
+</body>
+</html>

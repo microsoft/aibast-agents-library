@@ -16,7 +16,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/claims-processing",
     "version": "1.0.0",
     "display_name": "Claims Processing Agent",
-    "description": "Insurance claims processing with intake, adjudication review, fraud detection, and settlement recommendations.",
+    "description": "Automate claims processing workflows to deliver faster, consistent, and more compliant claim outcomes.",
     "author": "AIBAST",
     "tags": ["claims", "insurance", "adjudication", "fraud", "settlement", "financial-services"],
     "category": "financial_services",
@@ -54,7 +54,7 @@ CLAIMS = {
         "description": "Rear-end collision at intersection of 5th Ave and Main St, other driver cited",
         "claimed_amount": 14200,
         "adjuster": "Sandra Ortiz",
-        "status": "approved",
+        "status": "ready_for_adjuster_review",
         "fraud_score": 5,
         "supporting_docs": ["police_report", "photos", "body_shop_estimate", "medical_records"],
     },
@@ -114,21 +114,23 @@ ADJUSTER_NOTES = {
 }
 
 
+SYNTHETIC_NOTICE = (
+    "> **SYNTHETIC DEMO DATA — ADJUSTER REVIEW REQUIRED.** Fictional claims and policy terms only. "
+    "This output is not legal, insurance, or financial advice and does not approve, deny, settle, pay, "
+    "reserve, or change a claim.\n\n"
+)
+
 # ---------------------------------------------------------------------------
 # Helper functions
 # ---------------------------------------------------------------------------
 
 def _settlement_amount(claim):
-    """Calculate recommended settlement amount."""
+    """Calculate a policy-term review estimate without making a claim decision."""
     policy = POLICY_DETAILS.get(claim["policy_number"], {})
     deductible = policy.get("deductible", 0)
     coverage = policy.get("coverage_limit", 0)
     claimed = claim["claimed_amount"]
-    if claim["fraud_score"] >= 60:
-        return 0
     net = min(claimed, coverage) - deductible
-    if claim["fraud_score"] >= 30:
-        net = round(net * 0.75, 2)
     return max(0, round(net, 2))
 
 
@@ -150,16 +152,36 @@ class ClaimsProcessingAgent(BasicAgent):
     """Insurance claims processing agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/claims-processing"
+        self.name = "ClaimsProcessingAgent"
         self.metadata = {
             "name": self.name,
             "display_name": "Claims Processing Agent",
-            "description": __manifest__["description"],
+            "description": (
+                "Use for claims-adjuster, claims-manager, SIU, or claims-operations requests. Call this "
+                "tool when the user asks which incoming claim needs specialized handling, what is missing "
+                "from a named claimant's file before evaluation, which claim crosses an SIU threshold, "
+                "whether a fraud score proves fraud, or for policy-term estimates and approval/payment "
+                "status boundaries. Always call this tool for those claims-workflow requests rather than "
+                "answering from general knowledge, including when the user asks whether any claim was "
+                "approved or paid. Uses fictional records only; a fraud flag is not proof, and the tool "
+                "never approves, denies, reserves, settles, pays, or changes a claim. Authorized adjuster "
+                "review is required."
+            ),
             "parameters": {
                 "type": "object",
                 "properties": {
                     "operation": {
                         "type": "string",
+                        "description": (
+                            "Choose claim_intake for incoming-queue priority, specialized handling, routing, "
+                            "or workload questions. Choose adjudication_review for a named claim or claimant, "
+                            "missing documents, file completeness, policy evidence, adjuster notes, or what "
+                            "is needed before evaluation. Choose fraud_flag for SIU thresholds, fraud "
+                            "indicators, referrals, or whether a score proves fraud. Choose "
+                            "settlement_recommendation for nonbinding policy-term estimates or questions "
+                            "asking whether any claim was approved, denied, settled, or paid; this operation "
+                            "returns the source-backed boundary that no approval or payment occurred."
+                        ),
                         "enum": [
                             "claim_intake",
                             "adjudication_review",
@@ -167,7 +189,15 @@ class ClaimsProcessingAgent(BasicAgent):
                             "settlement_recommendation",
                         ],
                     },
-                    "claim_id": {"type": "string"},
+                    "claim_id": {
+                        "type": "string",
+                        "description": (
+                            "Use the synthetic claim identifier when the user names a file or claimant: "
+                            "Margaret Sullivan is CLM-2025-7001; David Park is CLM-2025-7002; "
+                            "Apex Commercial Properties is CLM-2025-7003; Jennifer Liu or the theft file "
+                            "is CLM-2025-7004. Omit only for whole-queue reports."
+                        ),
+                    },
                 },
                 "required": ["operation"],
             },
@@ -175,6 +205,9 @@ class ClaimsProcessingAgent(BasicAgent):
         super().__init__(name=self.name, metadata=self.metadata)
 
     def perform(self, **kwargs) -> str:
+        record_id = kwargs.get("claim_id")
+        if record_id and record_id not in CLAIMS:
+            return SYNTHETIC_NOTICE + f"**Not found:** No synthetic record `{record_id}` exists; no substitute record was used."
         operation = kwargs.get("operation", "claim_intake")
         dispatch = {
             "claim_intake": self._claim_intake,
@@ -185,7 +218,7 @@ class ClaimsProcessingAgent(BasicAgent):
         handler = dispatch.get(operation)
         if not handler:
             return f"**Error:** Unknown operation `{operation}`."
-        return handler(**kwargs)
+        return SYNTHETIC_NOTICE + handler(**kwargs)
 
     def _claim_intake(self, **kwargs) -> str:
         summary = _claims_summary()
@@ -260,8 +293,8 @@ class ClaimsProcessingAgent(BasicAgent):
         return "\n".join(lines)
 
     def _settlement_recommendation(self, **kwargs) -> str:
-        lines = ["# Settlement Recommendations\n"]
-        lines.append("| Claim ID | Claimant | Claimed | Deductible | Fraud Score | Recommended |")
+        lines = ["# Policy-Term Settlement Estimates for Adjuster Review\n"]
+        lines.append("| Claim ID | Claimant | Claimed | Deductible | Fraud Score | Review Estimate |")
         lines.append("|---|---|---|---|---|---|")
         for cid, c in CLAIMS.items():
             policy = POLICY_DETAILS.get(c["policy_number"], {})
@@ -273,9 +306,12 @@ class ClaimsProcessingAgent(BasicAgent):
         total_claimed = sum(c["claimed_amount"] for c in CLAIMS.values())
         total_recommended = sum(_settlement_amount(c) for c in CLAIMS.values())
         lines.append(f"\n**Total Claimed:** ${total_claimed:,.0f}")
-        lines.append(f"**Total Recommended Settlement:** ${total_recommended:,.0f}")
-        savings = total_claimed - total_recommended
-        lines.append(f"**Savings from Adjustments:** ${savings:,.0f}")
+        lines.append(f"**Aggregate Review Estimate:** ${total_recommended:,.0f}")
+        lines.append(
+            "\nFraud scores do not reduce or eliminate coverage. An authorized adjuster must validate "
+            "coverage, causation, documentation, exclusions, jurisdictional rules, and SIU findings. "
+            "No approval, denial, settlement, reserve, or payment has occurred."
+        )
         return "\n".join(lines)
 
 

@@ -1,0 +1,12 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/customer-loyalty-rewards",
+  "onepager": "45. Customer Loyalty and Rewards Agent one-pager.pptx",
+  "source_slide_sha256": "2487138b852c55f0aeb77a7a4e0a9f186caba5a4d28bc54b1852542abfc25ad3",
+  "source_audit": {"approved_slide_hash_match": true, "deterministic_source": "solutions.json", "deterministic_slot": 43, "content_snapshot": "state/onepager_content.json"},
+  "promises": [
+    {"advertised_promise": "Analyze loyalty program health and member behavior to identify churn risk and engagement drivers", "operations": ["loyalty_dashboard", "points_summary"], "demo_cases": ["CLR-01", "CLR-02"], "synthetic_evidence": ["Four anonymous synthetic member records expose tier, points, spend, and aggregate engagement examples"]},
+    {"advertised_promise": "Generate personalized offers and campaigns that improve response and engagement rates", "operations": ["reward_recommendations"], "demo_cases": ["CLR-03"], "synthetic_evidence": ["Preference-matched reward options are informational only and issue no benefit or outreach"]},
+    {"advertised_promise": "Optimize loyalty program structure and rewards to improve redemption performance and manage point liability", "operations": ["tier_analysis"], "demo_cases": ["CLR-04"], "synthetic_evidence": ["Four fixed tier definitions support structure and progress analysis without changing a member record"]}
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "schema": "aibast-manual-build-evidence/1.0",
+  "captured_at": "2026-08-08T15:33:38.833Z",
+  "solution": "@aibast-agents-library/returns-complaints-resolution",
+  "status": "passed",
+  "environment": {
+    "name": "kodyv8",
+    "id": "ee67a404-325c-e726-a18a-886fe708ca0b"
+  },
+  "manual_agent": {
+    "display_name": "Returns and Complaints Manual",
+    "bot_id": "686c4f9d-c955-405b-b1c3-f2ff2f5f65e5",
+    "created": true
+  },
+  "target_model": "Claude Sonnet 4.6",
+  "model_confirmed": true,
+  "manual_components": {
+    "global_instructions": {
+      "expected": true,
+      "confirmed": true
+    },
+    "web_search_removed": {
+      "expected": true,
+      "confirmed": true
+    },
+    "knowledge_files": {
+      "expected": 2,
+      "confirmed": 2
+    },
+    "skills": {
+      "expected": 4,
+      "confirmed": 4
+    },
+    "tools": {
+      "expected": 0,
+      "confirmed": 0
+    }
+  },
+  "canonical_preview": [
+    {
+      "case_id": "RCR-01",
+      "prompt": "As Customer Service Agent, summarize the anonymous return review evidence and approval boundary.",
+      "must_include": [
+        "Prepared for:** Customer Service Agent",
+        "Draft Return Review Queue",
+        "Synthetic size-mismatch case"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "14-rcr-01.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "RCR-02",
+      "prompt": "As Customer Service Agent, classify this product concern without echoing personal information or sending a response.",
+      "must_include": [
+        "Draft Complaint Classification",
+        "Product Quality",
+        "no return, refund"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "15-rcr-02.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "RCR-03",
+      "prompt": "As Customer Service Agent, draft a policy-grounded option and keep all actions behind authorization.",
+      "must_include": [
+        "Draft Resolution Options",
+        "Option for authorized review",
+        "no return"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "16-rcr-03.jpg",
+      "passed": true
+    },
+    {
+      "case_id": "RCR-04",
+      "prompt": "As Quality Team, summarize aggregate defect and return patterns without accusing any person.",
+      "must_include": [
+        "Prepared for:** Quality Team",
+        "Synthetic Returns & Complaints Trend Analysis",
+        "Key Insights"
+      ],
+      "must_not_include": [],
+      "expected_screenshot": "17-rcr-04.jpg",
+      "passed": true
+    }
+  ],
+  "browserfilm": {
+    "status": "captured",
+    "manifest": "solutions/returns-complaints-resolution/screenshots/manual/browserfilm.json",
+    "gif": "solutions/returns-complaints-resolution/screenshots/manual/manual-build-walkthrough.gif",
+    "contact_sheet": "solutions/returns-complaints-resolution/screenshots/manual/manual-build-contact-sheet.jpg"
+  },
+  "publication_gate": {
+    "required_state": "Draft",
+    "published": false,
+    "confirmation_screenshot": "18-confirm-draft.jpg"
+  }
+}

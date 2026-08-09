@@ -1,0 +1,59 @@
+{
+  "solution": "Time Entry and Billing Agent",
+  "agent": "@aibast-agents-library/time-entry-billing",
+  "onepager": "Time and Entry Billing Agent one-pager.pptx",
+  "agent_files": ["time_entry_billing_agent"],
+  "note": "Persona-language locked cases for every implemented month-end billing workflow.",
+  "cases": [
+    {
+      "id": "TEB-01",
+      "persona": "Billing Manager",
+      "onepager_bullet": "Process time entries intelligently to enforce billing rules and accelerate invoice generation",
+      "prompt": "What billable work is still blocked from this close, and what has to happen before it can move?",
+      "operation": "unbilled_report",
+      "must_include": ["TE-9004", "TE-9011", "Needs approval"],
+      "must_not_include": ["entries were approved automatically"],
+      "expects_agent": "TimeEntryBillingAgent"
+    },
+    {
+      "id": "TEB-02",
+      "persona": "Finance Vice President",
+      "onepager_bullet": "Generate CFO-ready revenue recognition reports and audit trails",
+      "prompt": "Give me the month-end billing rollup by project and consultant without treating it as posted revenue.",
+      "operation": "billing_summary",
+      "must_include": ["By Project", "By Consultant", "not posted revenue"],
+      "must_not_include": ["revenue recognized"],
+      "expects_agent": "TimeEntryBillingAgent"
+    },
+    {
+      "id": "TEB-03",
+      "persona": "Billing Compliance Lead",
+      "onepager_bullet": "Automate risk and compliance checks to reduce errors and maintain audit-ready documentation",
+      "prompt": "Which time cards would fail our billing review because of narrative, hours, rate, or budget concerns?",
+      "operation": "time_entry_audit",
+      "must_include": ["Missing description", "Exceeds 10-hour daily limit", "Budget Alert"],
+      "must_not_include": ["description completed automatically"],
+      "expects_agent": "TimeEntryBillingAgent"
+    },
+    {
+      "id": "TEB-04",
+      "persona": "Billing Manager",
+      "onepager_bullet": "Validate time entries and billing rules and generate invoices",
+      "prompt": "Prepare the invoice support that is actually ready, and keep anything without the right approval or milestone evidence out.",
+      "operation": "invoice_preparation",
+      "must_include": ["Invoices Ready to Generate", "Fixed-fee hold", "no invoice was generated"],
+      "must_not_include": ["Pinnacle Energy ERP | Pinnacle Energy"],
+      "expects_agent": "TimeEntryBillingAgent"
+    },
+    {
+      "id": "TEB-05",
+      "persona": "Client Finance Partner",
+      "onepager_bullet": "Provide dispute resolution intelligence to help protect revenue and preserve client relationships",
+      "prompt": "What evidence is missing on the disputed hours, and what is the safest resolution path before we go back to the clients?",
+      "operation": "dispute_resolution",
+      "must_include": ["DSP-301", "DSP-302", "authorized review"],
+      "must_not_include": ["contacted the client", "charge was waived"],
+      "expects_agent": "TimeEntryBillingAgent"
+    }
+  ]
+}

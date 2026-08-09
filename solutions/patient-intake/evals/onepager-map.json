@@ -1,0 +1,64 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/patient-intake",
+  "onepager": "31. Patient Intake and Scheduling Agent one-pager.pptx",
+  "source_slide_sha256": "e923efdbf6da6f987500bce0cc3ad4643342902f60f00e23c35a6f654bd14c18",
+  "promises": [
+    {
+      "advertised_promise": "Verify insurance, referrals, and network status during patient intake",
+      "operations": [
+        "intake_readiness"
+      ],
+      "demo_cases": [
+        "PI-01"
+      ],
+      "disposition": "bounded",
+      "synthetic_evidence": [
+        "Summarizes present and missing synthetic intake evidence for staff confirmation.",
+        "Coverage evidence is transcribed; live eligibility, referral, and network determinations remain in approved source systems."
+      ]
+    },
+    {
+      "advertised_promise": "Deliver tailored digital packets with all required pre-visit forms",
+      "operations": [
+        "coverage_evidence"
+      ],
+      "demo_cases": [
+        "PI-02"
+      ],
+      "disposition": "bounded",
+      "synthetic_evidence": [
+        "Transcribes source-recorded synthetic coverage evidence without determining eligibility.",
+        "The agent produces a missing-item inventory but does not deliver packets or write records."
+      ]
+    },
+    {
+      "advertised_promise": "Automate reminders across multiple scheduled touchpoints",
+      "operations": [
+        "appointment_availability"
+      ],
+      "demo_cases": [
+        "PI-03"
+      ],
+      "disposition": "excluded",
+      "synthetic_evidence": [
+        "Shows candidate synthetic source slots without holding, booking, or changing an appointment.",
+        "No outbound communication or scheduling mutation is configured."
+      ]
+    },
+    {
+      "advertised_promise": "Ensure clinicians\u2019 availability and readiness through up-to-date scheduling data",
+      "operations": [
+        "pre_visit_summary"
+      ],
+      "demo_cases": [
+        "PI-04"
+      ],
+      "disposition": "bounded",
+      "synthetic_evidence": [
+        "Drafts a minimum-necessary readiness handoff for authorized patient-access review.",
+        "Candidate synthetic source slots are displayed without booking or freshness claims."
+      ]
+    }
+  ]
+}

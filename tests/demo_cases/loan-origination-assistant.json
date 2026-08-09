@@ -1,0 +1,116 @@
+{
+  "solution": "Loan Origination Assistant",
+  "agent": "@aibast-agents-library/loan-origination-assistant",
+  "onepager": "40. Loan Origination Assistant one-pager.pptx",
+  "agent_files": [
+    "loan_origination_assistant_agent"
+  ],
+  "note": "Persona-language locked cases, exactly one per implemented operation. Prompts avoid operation names and assertions pin deterministic synthetic evidence plus safety boundaries.",
+  "cases": [
+    {
+      "id": "LOA-01",
+      "persona": "Loan Officer",
+      "operation": "application_review",
+      "onepager_bullet": "Automate intake to standardize process and reduce manual processing",
+      "prompt": "What is in my mortgage pipeline, and which application is still in document review?",
+      "must_include": [
+        "LA-2025-4002",
+        "Document Review"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "LoanOriginationAssistantAgent",
+      "arguments": {}
+    },
+    {
+      "id": "LOA-02",
+      "persona": "Underwriter",
+      "operation": "credit_analysis",
+      "onepager_bullet": "Assess program eligibility to accelerate and support better borrowing decisions",
+      "prompt": "Pre-analyze Kevin Nguyen\u2019s ratios and show every stated eligibility exception.",
+      "must_include": [
+        "LA-2025-4002",
+        "DTI"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "LoanOriginationAssistantAgent",
+      "arguments": {
+        "application_id": "LA-2025-4002"
+      }
+    },
+    {
+      "id": "LOA-03",
+      "persona": "Processor",
+      "operation": "document_verification",
+      "onepager_bullet": "Automate intake to standardize process and reduce manual processing",
+      "prompt": "Build the VA document checklist for Sandra so I can verify the file.",
+      "must_include": [
+        "LA-2025-4004",
+        "Certificate of Eligibility"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "LoanOriginationAssistantAgent",
+      "arguments": {
+        "application_id": "LA-2025-4004"
+      }
+    },
+    {
+      "id": "LOA-04",
+      "persona": "Senior Underwriter",
+      "operation": "decision_recommendation",
+      "onepager_bullet": "Assess program eligibility to accelerate and support better borrowing decisions",
+      "prompt": "Which files meet the limited criteria, and did the assistant approve any loan?",
+      "must_include": [
+        "LA-2025-4001",
+        "No lending decision"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "LoanOriginationAssistantAgent",
+      "arguments": {}
+    },
+    {
+      "id": "LOA-05",
+      "persona": "Closing Coordinator",
+      "operation": "condition_tracking",
+      "onepager_bullet": "Track conditions and timelines to speed closing and minimize delays",
+      "prompt": "Which conditions are still open on the commercial refinance, and is a closing date promised?",
+      "must_include": [
+        "LA-2025-4003",
+        "Environmental Phase I"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "min_words": 20,
+      "expects_agent": "LoanOriginationAssistantAgent",
+      "arguments": {}
+    }
+  ],
+  "assertion_principle": "Routing is proven by the expected tool; deterministic source output proves capability coverage. All records are synthetic and every consequential action remains behind human review."
+}

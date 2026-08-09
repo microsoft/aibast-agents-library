@@ -1,0 +1,12 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/personalized-shopping-assistant",
+  "onepager": "41. Personalized Shopping Agent one-pager.pptx",
+  "source_slide_sha256": "2e9d0648f0eddddc95ce8cf68c520f39f7c88990c50302d7f2b454c133bad7da",
+  "source_audit": {"approved_slide_hash_match": true, "deterministic_source": "solutions.json", "deterministic_slot": 38, "content_snapshot": "state/onepager_content.json"},
+  "promises": [
+    {"advertised_promise": "Build accurate customer style profiles from comprehensive data to power accurate, personalized recommendations", "operations": ["style_profile", "product_recommendations"], "demo_cases": ["PSA-01", "PSA-02"], "synthetic_evidence": ["Two synthetic shoppers use only stated size, style, brand, color, budget, and purchase-history examples", "No sensitive traits are inferred"]},
+    {"advertised_promise": "Generate occasion-ready, fully coordinated outfits delivered in minutes across channels", "operations": ["outfit_builder"], "demo_cases": ["PSA-04"], "synthetic_evidence": ["Four fixed outfit templates select from eight synthetic products"]},
+    {"advertised_promise": "Surface real-time availability and optimized pricing options to increase conversion and average order value", "operations": ["inventory_check"], "demo_cases": ["PSA-03"], "synthetic_evidence": ["Size-level quantities are synthetic snapshots and never reserve stock or apply pricing benefits"]}
+  ]
+}

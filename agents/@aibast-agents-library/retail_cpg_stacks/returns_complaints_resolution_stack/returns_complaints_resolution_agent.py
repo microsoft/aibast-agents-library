@@ -1,8 +1,8 @@
 """
 Returns & Complaints Resolution Agent — Retail & CPG Stack
 
-Handles return processing, complaint classification, resolution
-recommendation, and trend analysis for retail customer service operations.
+Provides synthetic return review, complaint classification, resolution-option
+recommendations, and trend analysis for retail customer service teams.
 """
 
 import sys
@@ -18,11 +18,9 @@ __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/returns-complaints-resolution",
     "version": "1.0.0",
-    "display_name": "Returns & Complaints Resolution Agent",
+    "display_name": "Returns and Complaints Resolution Agent",
     "description": (
-        "Automates return processing, classifies customer complaints, "
-        "recommends optimal resolutions, and identifies complaint trends "
-        "for retail and CPG customer service teams."
+        "Draft privacy-safe return reviews, complaint classifications, resolution options, and aggregate trend analysis for authorized human decision-makers."
     ),
     "author": "AIBAST",
     "tags": [
@@ -45,8 +43,7 @@ __manifest__ = {
 RETURN_REQUESTS = {
     "RET-4001": {
         "order_id": "ORD-88712",
-        "customer_id": "CUST-2041",
-        "customer_name": "Sarah Mitchell",
+        "case_label": "Synthetic size-mismatch case",
         "product": "Classic Denim Jacket",
         "sku": "SKU-1001",
         "purchase_price": 89.99,
@@ -60,8 +57,7 @@ RETURN_REQUESTS = {
     },
     "RET-4002": {
         "order_id": "ORD-89234",
-        "customer_id": "CUST-3178",
-        "customer_name": "James Kowalski",
+        "case_label": "Synthetic device-defect case",
         "product": "Smart Fitness Tracker",
         "sku": "SKU-1004",
         "purchase_price": 129.99,
@@ -70,13 +66,12 @@ RETURN_REQUESTS = {
         "reason": "defective",
         "condition": "non_functional",
         "channel": "in_store",
-        "status": "approved",
+        "status": "policy_match_candidate",
         "notes": "Heart rate sensor stopped working after 3 weeks. Under warranty.",
     },
     "RET-4003": {
         "order_id": "ORD-87455",
-        "customer_id": "CUST-1590",
-        "customer_name": "Maria Chen",
+        "case_label": "Synthetic description-mismatch case",
         "product": "Premium Running Shoes",
         "sku": "SKU-1005",
         "purchase_price": 149.99,
@@ -90,8 +85,7 @@ RETURN_REQUESTS = {
     },
     "RET-4004": {
         "order_id": "ORD-90100",
-        "customer_id": "CUST-4422",
-        "customer_name": "David Okafor",
+        "case_label": "Synthetic changed-mind case",
         "product": "Wireless Earbuds Pro",
         "sku": "SKU-1002",
         "purchase_price": 59.99,
@@ -105,8 +99,7 @@ RETURN_REQUESTS = {
     },
     "RET-4005": {
         "order_id": "ORD-86321",
-        "customer_id": "CUST-0887",
-        "customer_name": "Linda Park",
+        "case_label": "Synthetic warranty-escalation case",
         "product": "Leather Crossbody Bag",
         "sku": "SKU-1007",
         "purchase_price": 79.99,
@@ -120,8 +113,7 @@ RETURN_REQUESTS = {
     },
     "RET-4006": {
         "order_id": "ORD-91005",
-        "customer_id": "CUST-5610",
-        "customer_name": "Robert Fernandez",
+        "case_label": "Synthetic wrong-item case",
         "product": "UV Protection Sunglasses",
         "sku": "SKU-1008",
         "purchase_price": 44.99,
@@ -130,7 +122,7 @@ RETURN_REQUESTS = {
         "reason": "wrong_item",
         "condition": "unopened",
         "channel": "online",
-        "status": "approved",
+        "status": "policy_match_candidate",
         "notes": "Received aviator style instead of ordered wayfarer style.",
     },
 }
@@ -179,11 +171,11 @@ RESOLUTION_PLAYBOOKS = {
         "cost_impact": "high",
         "csat_impact": "high",
         "steps": [
-            "Verify purchase and return eligibility",
-            "Approve full refund to original payment method",
-            "Generate prepaid return shipping label",
-            "Send confirmation email with refund timeline",
-            "Process refund within 3-5 business days",
+            "Review the synthetic eligibility evidence",
+            "Draft a full-refund option for authorized approval",
+            "List any return-shipping requirements without generating a label",
+            "Draft neutral confirmation language without sending it",
+            "State that no refund or return is processed by this agent",
         ],
     },
     "exchange": {
@@ -194,11 +186,11 @@ RESOLUTION_PLAYBOOKS = {
         "cost_impact": "medium",
         "csat_impact": "very_high",
         "steps": [
-            "Confirm desired replacement item and availability",
-            "Generate prepaid return label for original item",
-            "Ship replacement item with expedited shipping",
-            "Send tracking information for both shipments",
-            "Follow up after delivery to confirm satisfaction",
+            "Review the requested replacement and verify availability separately",
+            "Draft exchange eligibility for authorized approval",
+            "List logistics considerations without creating shipments",
+            "Draft tracking-language requirements without sending a message",
+            "State that no exchange or reservation is performed",
         ],
     },
     "store_credit": {
@@ -209,10 +201,10 @@ RESOLUTION_PLAYBOOKS = {
         "cost_impact": "low",
         "csat_impact": "moderate",
         "steps": [
-            "Verify item condition meets return standards",
-            "Issue store credit for full purchase amount plus 10% bonus",
-            "Credit applied to customer loyalty account",
-            "Send email with credit balance and expiration date",
+            "Review whether the condition appears to meet the synthetic policy",
+            "Draft a store-credit option without issuing value or a bonus",
+            "Require authorized review before any loyalty-account change",
+            "Draft disclosure language without sending a message",
         ],
     },
     "warranty_replacement": {
@@ -223,11 +215,11 @@ RESOLUTION_PLAYBOOKS = {
         "cost_impact": "medium",
         "csat_impact": "high",
         "steps": [
-            "Verify product is within warranty period",
-            "Collect defect documentation and photos",
-            "Submit warranty claim to manufacturer",
-            "Ship replacement from warranty stock",
-            "Allow customer to keep defective unit or provide return label",
+            "Review whether the synthetic record is within the warranty period",
+            "List the documentation an authorized reviewer should inspect",
+            "Draft a manufacturer-claim summary without submitting it",
+            "List replacement considerations without reserving or shipping stock",
+            "State that no return label or replacement is created",
         ],
     },
     "partial_refund": {
@@ -238,10 +230,10 @@ RESOLUTION_PLAYBOOKS = {
         "cost_impact": "medium",
         "csat_impact": "moderate",
         "steps": [
-            "Assess item condition and determine refund percentage",
-            "Apply restocking fee if applicable (15% for opened items)",
-            "Process partial refund to original payment method",
-            "Notify customer of refund amount and timeline",
+            "Review item-condition evidence and model a policy range",
+            "Identify any disclosed fee rule for authorized review",
+            "Draft a partial-refund option without processing funds",
+            "Draft timeline language without notifying a customer",
         ],
     },
 }
@@ -261,6 +253,29 @@ TREND_DATA = {
     "csat_score": [4.1, 4.0, 3.6, 3.9, 4.2, 4.1],
     "refund_total_usd": [18720.00, 21450.00, 34200.00, 24800.00, 19650.00, 22100.00],
 }
+
+APPROVED_PERSONAS = {
+    "Customer Service Agent": "empathetic review summaries and clear human-approval next steps",
+    "Quality Team": "aggregate defect patterns and product-quality evidence",
+    "Loss Prevention Team": "policy exceptions and suspicious aggregate patterns without accusation",
+}
+
+SAFETY_NOTICE = (
+    "> Synthetic case data. Decision support and draft language only; no return, "
+    "refund, credit, replacement, shipment, reservation, account change, or "
+    "customer message is approved, created, or sent."
+)
+
+
+def _response_header(persona):
+    role = persona if persona in APPROVED_PERSONAS else "Customer Service Agent"
+    return [
+        f"**Prepared for:** {role}",
+        f"**Role focus:** {APPROVED_PERSONAS[role]}",
+        "",
+        SAFETY_NOTICE,
+        "",
+    ]
 
 
 # ---------------------------------------------------------------------------
@@ -326,12 +341,29 @@ class ReturnsComplaintsResolutionAgent(BasicAgent):
         self.name = "returns-complaints-resolution-agent"
         self.metadata = {
             "name": self.name,
-            "description": __manifest__["description"],
+            "description": (
+                f"{__manifest__['description']} Route return queue, case evidence, "
+                "or approval-boundary questions to `return_processing`; complaint "
+                "category questions to `complaint_classification`; policy-grounded "
+                "resolution options to `resolution_recommendation`; and aggregate "
+                "patterns to `trend_analysis`. Always call this tool for an anonymous "
+                "return review; when no return ID is named, omit return_id and return "
+                "the synthetic review queue instead of asking a follow-up question. "
+                "For a request to classify 'this product concern' without quoted text, "
+                "call `complaint_classification` and omit complaint_text; the operation "
+                "uses the packaged canonical synthetic product-quality concern."
+            ),
             "parameters": {
                 "type": "object",
                 "properties": {
                     "operation": {
                         "type": "string",
+                        "description": (
+                            "Required routing key. Use return_processing for an "
+                            "anonymous return review, case evidence, queue, or approval "
+                            "boundary; do not ask for a case ID and do not substitute "
+                            "resolution_recommendation."
+                        ),
                         "enum": [
                             "return_processing",
                             "complaint_classification",
@@ -339,10 +371,31 @@ class ReturnsComplaintsResolutionAgent(BasicAgent):
                             "trend_analysis",
                         ],
                     },
-                    "return_id": {"type": "string"},
-                    "complaint_text": {"type": "string"},
+                    "return_id": {
+                        "type": "string",
+                        "description": (
+                            "Synthetic return ID when a specific case is requested. "
+                            "The size-mismatch case is RET-4001."
+                        ),
+                    },
+                    "complaint_text": {
+                        "type": "string",
+                        "description": (
+                            "Synthetic concern text for classification only. Omit it "
+                            "when the prompt says 'this product concern'; the agent "
+                            "uses the packaged canonical product-quality concern and "
+                            "must not ask the user to repeat it."
+                        ),
+                    },
+                    "persona": {
+                        "type": "string",
+                        "enum": list(APPROVED_PERSONAS),
+                        "description": "Copy the role stated in the request.",
+                    },
+                    "data_source": {"type": "string", "enum": ["synthetic"]},
                 },
                 "required": ["operation"],
+                "additionalProperties": False,
             },
         }
         super().__init__(name=self.name, metadata=self.metadata)
@@ -353,13 +406,13 @@ class ReturnsComplaintsResolutionAgent(BasicAgent):
             returns = {return_id: RETURN_REQUESTS[return_id]}
         else:
             returns = RETURN_REQUESTS
-        lines = ["# Return Processing Queue", ""]
-        lines.append("| Return ID | Customer | Product | Reason | Condition | Days | Status |")
+        lines = _response_header(kwargs.get("persona")) + ["# Draft Return Review Queue", ""]
+        lines.append("| Return ID | Synthetic Case | Product | Reason | Condition | Days | Status |")
         lines.append("|-----------|----------|---------|--------|-----------|------|--------|")
         for rid, ret in returns.items():
             days = _days_since_purchase(ret)
             lines.append(
-                f"| {rid} | {ret['customer_name']} | {ret['product']} "
+                f"| {rid} | {ret['case_label']} | {ret['product']} "
                 f"| {ret['reason'].replace('_', ' ')} | {ret['condition'].replace('_', ' ')} "
                 f"| {days} | {ret['status'].replace('_', ' ')} |"
             )
@@ -368,7 +421,7 @@ class ReturnsComplaintsResolutionAgent(BasicAgent):
             lines.append(f"### {rid} — {ret['product']}")
             lines.append("")
             lines.append(f"- **Order:** {ret['order_id']}")
-            lines.append(f"- **Customer:** {ret['customer_name']} (`{ret['customer_id']}`)")
+            lines.append(f"- **Case:** {ret['case_label']}")
             lines.append(f"- **Purchase Date:** {ret['purchase_date']} | **Request Date:** {ret['request_date']}")
             lines.append(f"- **Channel:** {ret['channel']}")
             lines.append(f"- **Price:** ${ret['purchase_price']:.2f}")
@@ -380,12 +433,14 @@ class ReturnsComplaintsResolutionAgent(BasicAgent):
         return "\n".join(lines)
 
     def _complaint_classification(self, **kwargs):
-        complaint_text = kwargs.get("complaint_text", "")
-        lines = ["# Complaint Classification", ""]
+        complaint_text = (
+            kwargs.get("complaint_text")
+            or "The synthetic item stopped working after a week."
+        )
+        lines = _response_header(kwargs.get("persona")) + ["# Draft Complaint Classification", ""]
         if complaint_text:
             cat_id = _classify_complaint(complaint_text)
             cat = COMPLAINT_CATEGORIES[cat_id]
-            lines.append(f"**Input:** \"{complaint_text}\"")
             lines.append(f"**Classified As:** {cat['label']} (`{cat_id}`)")
             lines.append(f"**Severity Weight:** {cat['severity_weight']}")
             lines.append(f"**Avg Resolution Time:** {cat['avg_resolution_hours']}h")
@@ -413,18 +468,18 @@ class ReturnsComplaintsResolutionAgent(BasicAgent):
             returns = {return_id: RETURN_REQUESTS[return_id]}
         else:
             returns = {k: v for k, v in RETURN_REQUESTS.items() if v["status"] == "pending_review"}
-        lines = ["# Resolution Recommendations", ""]
+        lines = _response_header(kwargs.get("persona")) + ["# Draft Resolution Options", ""]
         for rid, ret in returns.items():
             rec_id = _recommend_resolution(ret)
             playbook = RESOLUTION_PLAYBOOKS[rec_id]
-            lines.append(f"## {rid} — {ret['customer_name']}")
+            lines.append(f"## {rid} — {ret['case_label']}")
             lines.append("")
             lines.append(f"- **Product:** {ret['product']} (${ret['purchase_price']:.2f})")
             lines.append(f"- **Reason:** {ret['reason'].replace('_', ' ')}")
-            lines.append(f"- **Recommended Resolution:** {playbook['label']}")
+            lines.append(f"- **Option for authorized review:** {playbook['label']}")
             lines.append(f"- **Cost Impact:** {playbook['cost_impact']} | **CSAT Impact:** {playbook['csat_impact']}")
             lines.append("")
-            lines.append("**Resolution Steps:**")
+            lines.append("**Review Steps:**")
             for i, step in enumerate(playbook["steps"], 1):
                 lines.append(f"  {i}. {step}")
             lines.append("")
@@ -437,8 +492,8 @@ class ReturnsComplaintsResolutionAgent(BasicAgent):
 
     def _trend_analysis(self, **kwargs):
         trend_dir = _return_rate_trend()
-        lines = [
-            "# Returns & Complaints Trend Analysis",
+        lines = _response_header(kwargs.get("persona")) + [
+            "# Synthetic Returns & Complaints Trend Analysis",
             "",
             f"**Overall Trend:** {trend_dir.upper()}",
             "",
@@ -475,6 +530,14 @@ class ReturnsComplaintsResolutionAgent(BasicAgent):
         return "\n".join(lines)
 
     def perform(self, **kwargs):
+        if kwargs.get("data_source", "synthetic") != "synthetic":
+            return "data_source must be `synthetic` for this package."
+        return_id = kwargs.get("return_id")
+        if return_id and return_id not in RETURN_REQUESTS:
+            return (
+                f"Unknown return_id `{return_id}`. Valid synthetic IDs: "
+                f"{', '.join(RETURN_REQUESTS)}"
+            )
         operation = kwargs.get("operation", "return_processing")
         dispatch = {
             "return_processing": self._return_processing,

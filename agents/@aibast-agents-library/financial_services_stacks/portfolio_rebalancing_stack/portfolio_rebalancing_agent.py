@@ -16,7 +16,7 @@ __manifest__ = {
     "name": "@aibast-agents-library/portfolio-rebalancing",
     "version": "1.0.0",
     "display_name": "Portfolio Rebalancing Agent",
-    "description": "Portfolio rebalancing with drift analysis, trade recommendations, tax impact assessment, and execution planning.",
+    "description": "Provide intelligent, automated portfolio rebalancing that streamlines manual reviews and improves wealth management outcomes.",
     "author": "AIBAST",
     "tags": ["portfolio", "rebalancing", "allocation", "tax", "trading", "financial-services"],
     "category": "financial_services",
@@ -79,6 +79,11 @@ TAX_RATES = {
 }
 
 
+SYNTHETIC_NOTICE = (
+    "> **SYNTHETIC DEMO DATA — ADVISOR REVIEW REQUIRED.** Fictional portfolios and assumptions only. "
+    "This is not investment, tax, legal, or financial advice; no trade or transaction has been placed.\n\n"
+)
+
 # ---------------------------------------------------------------------------
 # Helper functions
 # ---------------------------------------------------------------------------
@@ -97,7 +102,7 @@ def _calculate_drift(portfolio):
                 "current_pct": data["current_pct"],
                 "target_pct": data["target_pct"],
                 "drift": drift,
-                "action": "sell" if drift > 0 else "buy",
+                "action": "reduce" if drift > 0 else "increase",
                 "trade_value": abs(trade_value),
             })
     return trades
@@ -131,24 +136,57 @@ class PortfolioRebalancingAgent(BasicAgent):
     """Portfolio rebalancing agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/portfolio-rebalancing"
+        self.name = "PortfolioRebalancingAgent"
         self.metadata = {
             "name": self.name,
             "display_name": "Portfolio Rebalancing Agent",
-            "description": __manifest__["description"],
+            "description": (
+                "Always call this tool for portfolio-manager, financial-advisor, paraplanner, tax-review, "
+                "retirement-planning, or trading-supervisor requests about drift guardrails, the largest "
+                "allocation gap, rebalancing candidates before trading, tax assumptions, loss candidates, "
+                "retirement scenarios, or a controlled implementation checklist. Do not answer those "
+                "workflows from general knowledge. Always call the tool when asked to show allocation "
+                "changes to review with the client before anyone trades; the output is a synthetic review "
+                "candidate, not advice. Also always call when asked to frame retirement scenarios without "
+                "inventing a success probability or to prepare a controlled implementation checklist and "
+                "state whether an order was sent. Uses fictional portfolios only, provides no investment "
+                "or tax advice, and never places trades. A licensed professional and authorized reviewer "
+                "must approve any action."
+            ),
             "parameters": {
                 "type": "object",
                 "properties": {
                     "operation": {
                         "type": "string",
+                        "description": (
+                            "Choose portfolio_analysis for drift; rebalance_recommendation for candidate "
+                            "allocation changes before anyone trades, including 'show me the allocation "
+                            "changes I should review with the client'; tax_impact for tax assumptions or an "
+                            "illustrative tax estimate; tax_loss_harvest for loss positions, wash-sale "
+                            "controls, or tax-advice boundaries; retirement_scenario for retirement inputs "
+                            "or a success-probability boundary, including requests to frame scenarios without "
+                            "inventing a success probability; execution_plan for a controlled implementation "
+                            "checklist or requests to state clearly whether any order was sent."
+                        ),
                         "enum": [
                             "portfolio_analysis",
                             "rebalance_recommendation",
                             "tax_impact",
+                            "tax_loss_harvest",
+                            "retirement_scenario",
                             "execution_plan",
                         ],
                     },
-                    "portfolio_id": {"type": "string"},
+                    "portfolio_id": {
+                        "type": "string",
+                        "description": (
+                            "Synthetic portfolio mapping: Growth Allocation Fund, growth portfolio, drift "
+                            "guardrails, or the VTI largest-gap example is PORT-5001; Conservative Income "
+                            "Portfolio or income portfolio is PORT-5002. If the user asks for allocation "
+                            "changes, tax review, retirement scenarios, or an implementation checklist "
+                            "without naming a portfolio, omit this parameter and use the agent's PORT-5001 default."
+                        ),
+                    },
                 },
                 "required": ["operation"],
             },
@@ -156,17 +194,22 @@ class PortfolioRebalancingAgent(BasicAgent):
         super().__init__(name=self.name, metadata=self.metadata)
 
     def perform(self, **kwargs) -> str:
+        record_id = kwargs.get("portfolio_id")
+        if record_id and record_id not in PORTFOLIOS:
+            return SYNTHETIC_NOTICE + f"**Not found:** No synthetic record `{record_id}` exists; no substitute record was used."
         operation = kwargs.get("operation", "portfolio_analysis")
         dispatch = {
             "portfolio_analysis": self._portfolio_analysis,
             "rebalance_recommendation": self._rebalance_recommendation,
             "tax_impact": self._tax_impact,
+            "tax_loss_harvest": self._tax_loss_harvest,
+            "retirement_scenario": self._retirement_scenario,
             "execution_plan": self._execution_plan,
         }
         handler = dispatch.get(operation)
         if not handler:
             return f"**Error:** Unknown operation `{operation}`."
-        return handler(**kwargs)
+        return SYNTHETIC_NOTICE + handler(**kwargs)
 
     def _portfolio_analysis(self, **kwargs) -> str:
         lines = ["# Portfolio Analysis\n"]
@@ -197,13 +240,13 @@ class PortfolioRebalancingAgent(BasicAgent):
         portfolio_id = kwargs.get("portfolio_id", "PORT-5001")
         port = PORTFOLIOS.get(portfolio_id, list(PORTFOLIOS.values())[0])
         trades = _calculate_drift(port)
-        lines = [f"# Rebalance Recommendation: {port['name']}\n"]
+        lines = [f"# Rebalancing Candidates for Advisor Review: {port['name']}\n"]
         lines.append(f"**Portfolio Value:** ${port['total_value']:,.0f}")
         lines.append(f"**Drift Threshold:** {port['drift_threshold']}%\n")
         if not trades:
             lines.append("No rebalancing trades required — all holdings within drift threshold.")
             return "\n".join(lines)
-        lines.append("## Recommended Trades\n")
+        lines.append("## Candidate Allocation Changes\n")
         lines.append("| Asset | Ticker | Action | Current % | Target % | Drift | Trade Amount |")
         lines.append("|---|---|---|---|---|---|---|")
         total_sell = 0
@@ -211,10 +254,10 @@ class PortfolioRebalancingAgent(BasicAgent):
         for t in trades:
             sign = "+" if t["drift"] > 0 else ""
             lines.append(
-                f"| {t['asset']} | {t['ticker']} | {t['action'].upper()} "
+                f"| {t['asset']} | {t['ticker']} | {t['action'].title()} candidate "
                 f"| {t['current_pct']}% | {t['target_pct']}% | {sign}{t['drift']}% | ${t['trade_value']:,.0f} |"
             )
-            if t["action"] == "sell":
+            if t["action"] == "reduce":
                 total_sell += t["trade_value"]
             else:
                 total_buy += t["trade_value"]
@@ -226,16 +269,16 @@ class PortfolioRebalancingAgent(BasicAgent):
         portfolio_id = kwargs.get("portfolio_id", "PORT-5001")
         port = PORTFOLIOS.get(portfolio_id, list(PORTFOLIOS.values())[0])
         trades = _calculate_drift(port)
-        sell_trades = [t for t in trades if t["action"] == "sell"]
+        sell_trades = [t for t in trades if t["action"] == "reduce"]
         lines = [f"# Tax Impact Analysis: {port['name']}\n"]
         lines.append("## Tax Rate Reference\n")
         for rate_name, rate in TAX_RATES.items():
             lines.append(f"- {rate_name.replace('_', ' ').title()}: {rate * 100:.1f}%")
-        lines.append("\n## Estimated Tax on Sell Trades\n")
+        lines.append("\n## Estimated Tax on Reduction Candidates\n")
         if not sell_trades:
-            lines.append("No sell trades required.")
+            lines.append("No reduction candidates require tax review.")
             return "\n".join(lines)
-        lines.append("| Asset | Ticker | Sell Amount | Cost Basis | Unrealized Gain | Est. Tax |")
+        lines.append("| Asset | Ticker | Reduction Amount | Cost Basis | Unrealized Gain | Est. Tax |")
         lines.append("|---|---|---|---|---|---|")
         total_tax = 0
         for t in sell_trades:
@@ -248,38 +291,73 @@ class PortfolioRebalancingAgent(BasicAgent):
                 f"| {t['asset']} | {t['ticker']} | ${t['trade_value']:,.0f} "
                 f"| ${holding['cost_basis']:,.0f} | ${unrealized:,.0f} | ${tax:,.0f} |"
             )
-        lines.append(f"\n**Total Estimated Tax Liability:** ${total_tax:,.0f}")
-        lines.append("\n## Tax-Efficient Alternatives\n")
+        lines.append(f"\n**Illustrative Tax Estimate:** ${total_tax:,.0f}")
+        lines.append("\n## Questions for a Qualified Tax Professional\n")
         lines.append("- Direct new contributions to underweight asset classes")
         lines.append("- Use tax-loss positions to offset gains")
         lines.append("- Rebalance within tax-advantaged accounts first")
         lines.append("- Consider charitable donation of appreciated shares")
         return "\n".join(lines)
 
+    def _tax_loss_harvest(self, **kwargs) -> str:
+        portfolio_id = kwargs.get("portfolio_id", "PORT-5001")
+        port = PORTFOLIOS.get(portfolio_id, list(PORTFOLIOS.values())[0])
+        losses = []
+        for asset, holding in port["holdings"].items():
+            unrealized = holding["value"] - holding["cost_basis"]
+            if unrealized < 0:
+                losses.append((asset, holding["ticker"], unrealized))
+        lines = [f"# Tax-Loss-Harvesting Candidates: {port['name']}\n"]
+        lines.append("| Asset | Ticker | Illustrative Unrealized Loss | Review Status |")
+        lines.append("|---|---|---|---|")
+        for asset, ticker, loss in losses:
+            lines.append(
+                f"| {asset} | {ticker} | ${abs(loss):,.0f} | Candidate only — tax-lot and wash-sale review required |"
+            )
+        lines.append(
+            "\nA qualified tax professional must validate tax lots, holding periods, account type, "
+            "wash-sale exposure, and client suitability. No sale has been recommended or placed."
+        )
+        return "\n".join(lines)
+
+    def _retirement_scenario(self, **kwargs) -> str:
+        portfolio_id = kwargs.get("portfolio_id", "PORT-5001")
+        port = PORTFOLIOS.get(portfolio_id, list(PORTFOLIOS.values())[0])
+        lines = [f"# Retirement Planning Scenario Inputs: {port['name']}\n"]
+        lines.append(f"- **Starting portfolio:** ${port['total_value']:,.0f}")
+        lines.append("- **Illustrative horizon:** 25 years")
+        lines.append("- **Illustrative annual withdrawal:** 4.0% of starting value")
+        lines.append("- **Scenarios to model:** lower-return, base, and higher-volatility")
+        lines.append(
+            "\nNo success probability is asserted because contribution, withdrawal, inflation, tax, "
+            "fee, longevity, and capital-market assumptions require advisor and client validation."
+        )
+        return "\n".join(lines)
+
     def _execution_plan(self, **kwargs) -> str:
         portfolio_id = kwargs.get("portfolio_id", "PORT-5001")
         port = PORTFOLIOS.get(portfolio_id, list(PORTFOLIOS.values())[0])
         trades = _calculate_drift(port)
-        lines = [f"# Execution Plan: {port['name']}\n"]
+        lines = [f"# Human-Controlled Implementation Checklist: {port['name']}\n"]
         lines.append(f"**Rebalance Frequency:** {port['rebalance_frequency'].title()}")
         lines.append(f"**Total Trades:** {len(trades)}\n")
         if not trades:
             lines.append("No trades required at this time.")
             return "\n".join(lines)
-        sell_trades = [t for t in trades if t["action"] == "sell"]
-        buy_trades = [t for t in trades if t["action"] == "buy"]
-        lines.append("## Step 1: Execute Sells\n")
+        sell_trades = [t for t in trades if t["action"] == "reduce"]
+        buy_trades = [t for t in trades if t["action"] == "increase"]
+        lines.append("## Step 1: Review Reduction Candidates\n")
         if sell_trades:
             for i, t in enumerate(sell_trades, 1):
-                lines.append(f"{i}. SELL ${t['trade_value']:,.0f} of {t['ticker']} ({t['asset']})")
+                lines.append(f"{i}. Review a ${t['trade_value']:,.0f} reduction candidate for {t['ticker']} ({t['asset']})")
         else:
             lines.append("No sells required.")
-        lines.append("\n## Step 2: Settle Cash (T+1)\n")
-        lines.append("- Allow sell proceeds to settle before purchasing\n")
-        lines.append("## Step 3: Execute Buys\n")
+        lines.append("\n## Step 2: Validate Cash and Settlement Assumptions\n")
+        lines.append("- Confirm available cash and settlement timing in the approved trading system\n")
+        lines.append("## Step 3: Review Increase Candidates\n")
         if buy_trades:
             for i, t in enumerate(buy_trades, 1):
-                lines.append(f"{i}. BUY ${t['trade_value']:,.0f} of {t['ticker']} ({t['asset']})")
+                lines.append(f"{i}. Review a ${t['trade_value']:,.0f} increase candidate for {t['ticker']} ({t['asset']})")
         else:
             lines.append("No buys required.")
         lines.append("\n## Step 4: Verification\n")
@@ -287,6 +365,8 @@ class PortfolioRebalancingAgent(BasicAgent):
         lines.append("- Update portfolio records")
         lines.append("- Generate client notification")
         lines.append("- Document compliance review")
+        lines.append("- Obtain licensed-advisor and authorized-trading approval before any order")
+        lines.append("\nNo order has been created, routed, or executed.")
         return "\n".join(lines)
 
 

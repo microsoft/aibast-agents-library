@@ -1,0 +1,66 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/supply-chain-disruption-alert",
+  "onepager": "35. Supply Chain Disruption Alert Agent one-pager.pptx",
+  "source_slide_sha256": "faa36466178587fc329bfd1a4ebd63396a8de4fdfbd0603a673215fb55b88840",
+  "suite": null,
+  "preserves_distinct_module": false,
+  "promises": [
+    {
+      "advertised_promise": "Detect disruptions, assess SKU and revenue impact, compare sourcing and routing alternatives, and recommend mitigation by cost and lead time",
+      "operations": [
+        "disruption_dashboard"
+      ],
+      "demo_cases": [
+        "SUPPLY_CHAIN_DISRUPTION_ALERT-01"
+      ],
+      "synthetic_evidence": [
+        "DISR-002",
+        "$3,800,000.00"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Detect disruptions, assess SKU and revenue impact, compare sourcing and routing alternatives, and recommend mitigation by cost and lead time",
+      "operations": [
+        "risk_assessment"
+      ],
+      "demo_cases": [
+        "SUPPLY_CHAIN_DISRUPTION_ALERT-02"
+      ],
+      "synthetic_evidence": [
+        "Asia-Pacific Primary",
+        "HIGH"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Detect disruptions, assess SKU and revenue impact, compare sourcing and routing alternatives, and recommend mitigation by cost and lead time",
+      "operations": [
+        "mitigation_plan"
+      ],
+      "demo_cases": [
+        "SUPPLY_CHAIN_DISRUPTION_ALERT-03"
+      ],
+      "synthetic_evidence": [
+        "DISR-002",
+        "Draft Disruption Mitigation Scenario"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    },
+    {
+      "advertised_promise": "Detect disruptions, assess SKU and revenue impact, compare sourcing and routing alternatives, and recommend mitigation by cost and lead time",
+      "operations": [
+        "supplier_alternatives"
+      ],
+      "demo_cases": [
+        "SUPPLY_CHAIN_DISRUPTION_ALERT-04"
+      ],
+      "synthetic_evidence": [
+        "TechSource Taiwan",
+        "due diligence"
+      ],
+      "implementation_boundary": "Synthetic decision support only; production reads and writes require approved connections and explicit authorized human approval."
+    }
+  ]
+}

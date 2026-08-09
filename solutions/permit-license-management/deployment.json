@@ -1,0 +1,98 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/permit-license-management",
+  "display_name": "Permit Management Agent",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/energy_stacks/permit_license_management_stack/permit_license_management_agent.py",
+  "source_path": "agents/@aibast-agents-library/energy_stacks/permit_license_management_stack/permit_license_management_agent.py",
+  "target_filename": "permit_license_management_agent.py",
+  "expected_tool": "PermitLicenseManagementAgent",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "smoke_test": {
+    "prompt": "Which Riverside permit is expired right now?",
+    "must_call": "PermitLicenseManagementAgent",
+    "must_include": [
+      "PRM-6002",
+      "EXPIRED"
+    ]
+  },
+  "copilot_studio": {
+    "status": "not_created",
+    "manual_only": true,
+    "operations": [
+      "permit_inventory",
+      "renewal_calendar",
+      "compliance_gaps",
+      "application_status"
+    ],
+    "manual_global_instructions": "manual/GLOBAL-INSTRUCTIONS.md",
+    "manual_knowledge_files": [
+      "manual/knowledge/permit-license-management-synthetic-records.md",
+      "manual/knowledge/permit-license-management-rules-and-controls.md"
+    ],
+    "manual_skill_count": 4,
+    "required_connections": [
+      "Permit system of record",
+      "SharePoint controlled documents",
+      "Approved authority portal connector"
+    ],
+    "publish_requires_confirmation": true,
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "authoring_mode": "cli-copilot",
+    "validated_manual": {
+      "display_name": "Permit Management Manual",
+      "bot_id": "d13fd96b-7491-4556-baad-fbd549f8f8fb",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "web_search_removed": true,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    },
+    "validated_pilot": {
+      "display_name": "Permit Management Pilot",
+      "schema_name": "aibast_PermitManagementPilot",
+      "bot_id": "c104a2f2-e93b-4496-af84-642b8f580621",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "changes_pushed": 7,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    }
+  },
+  "demo_scenarios": [
+    "permit-license-management-permit-inventory",
+    "permit-license-management-renewal-calendar",
+    "permit-license-management-compliance-gaps",
+    "permit-license-management-application-status"
+  ],
+  "write_controls": {
+    "authenticated_tools_required": true,
+    "explicit_human_approval_required": true,
+    "authorization_check_required": true,
+    "audit_log_required": true,
+    "local_demo_performs_writes": false
+  }
+}

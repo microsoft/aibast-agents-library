@@ -1,0 +1,63 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/fs-customer-onboarding",
+  "onepager": "Customer Onboarding Agent one-pager.pptx",
+  "source_slide_sha256": "879eedd2183848c84f31bb56f9eec54301a8404f7ca3708c51cdf0e297ab5503",
+  "promises": [
+    {
+      "advertised_promise": "Automate identity verification, document collection, and analysis",
+      "operations": [
+        "kyc_verification",
+        "document_checklist"
+      ],
+      "demo_cases": [
+        "FCO-01",
+        "FCO-03"
+      ],
+      "synthetic_evidence": [
+        "KYC evidence review returns deterministic fictional identifiers and review context",
+        "Document readiness returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    },
+    {
+      "advertised_promise": "Perform sanctions screening and regulatory checks",
+      "operations": [
+        "kyc_verification"
+      ],
+      "demo_cases": [
+        "FCO-01"
+      ],
+      "synthetic_evidence": [
+        "KYC evidence review returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    },
+    {
+      "advertised_promise": "Configure accounts, treasury services, and credit facilities",
+      "operations": [
+        "account_setup"
+      ],
+      "demo_cases": [
+        "FCO-02"
+      ],
+      "synthetic_evidence": [
+        "Account setup preparation returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    },
+    {
+      "advertised_promise": "Gain real-time updates on client profiles and KYC processes",
+      "operations": [
+        "onboarding_status"
+      ],
+      "demo_cases": [
+        "FCO-04"
+      ],
+      "synthetic_evidence": [
+        "Onboarding pipeline returns deterministic fictional identifiers and review context",
+        "Every output labels the data synthetic and preserves explicit human review."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/inventory-visibility",
+  "approved_source": {"onepager": "34. Inventory Visibility Agent one-pager.pptx", "sha256": "7b1a45e0f07c66822200638cabe6e21fa7f150bf410a135d1835aa8db94182a6", "snapshot": "state/onepager_content.json", "hash_match": true},
+  "deterministic_source": {"path": "solutions.json", "slot": 31, "canonical_name": "Inventory Visibility Agent", "matches": true},
+  "routing": {"status": "fixed", "finding": "Visibility, alerts, replenishment, and channel planning are independently covered."},
+  "interface_schema": {"status": "fixed", "finding": "Planner, store, and category personas are explicit and identifiers are validated."},
+  "behavior": {"status": "fixed", "finding": "Action commands were narrowed to review candidates and allocation is labeled a scenario."},
+  "safety": {"status": "fixed", "finding": "All outputs are read-only; no stock is reserved, moved, replenished, allocated, promised, or purchased."}
+}

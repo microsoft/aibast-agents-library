@@ -1,0 +1,72 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T22:37:29.037Z",
+  "solution": "@aibast-agents-library/underwriting-support",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Underwriting Support Pilot",
+  "schema_name": "aibast_UnderwritingSupportPilot",
+  "bot_id": "7a806127-f4c5-458f-8d2d-c599ee06b000",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "UWS-01",
+      "must_include": [
+        "UW-2025-103",
+        "Substandard"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "UWS-02",
+      "must_include": [
+        "UW-2025-101",
+        "Indicated Premium"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "UWS-03",
+      "must_include": [
+        "UW-2025-103",
+        "High-Risk Specialty"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "UWS-04",
+      "must_include": [
+        "UW-2025-103",
+        "No approval"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I can approve",
+        "I executed",
+        "I submitted"
+      ],
+      "passed": true
+    }
+  ]
+}

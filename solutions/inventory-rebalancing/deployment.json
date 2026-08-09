@@ -1,0 +1,84 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/inventory-rebalancing",
+  "display_name": "Inventory Rebalancing Agent",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/manufacturing_stacks/inventory_rebalancing_stack/inventory_rebalancing_agent.py",
+  "target_filename": "inventory_rebalancing_agent.py",
+  "expected_tool": "InventoryRebalancingAgent",
+  "smoke_test": {
+    "prompt": "Which distribution centers are tight on space, and which SKU positions should my team review first?",
+    "must_call": "InventoryRebalancingAgent",
+    "must_include": [
+      "Dallas Fulfillment Center",
+      "SKU-4406"
+    ]
+  },
+  "copilot_studio": {
+    "authoring_mode": "manual-upload",
+    "status": "not_initialized",
+    "operations": [
+      "inventory_snapshot",
+      "rebalance_recommendation",
+      "transfer_plan",
+      "cost_analysis"
+    ],
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_inventory-rebalancing-synthetic-records.md",
+      "manual/knowledge/aibast_inventory-rebalancing-review-rules.md"
+    ],
+    "manual_skill_count": 4,
+    "required_connections": [
+      "Approved ERP and warehouse-management data",
+      "Transportation planning",
+      "Procurement and finance review",
+      "Microsoft Teams for approved collaboration"
+    ],
+    "publish_requires_confirmation": true,
+    "validated_pilot": {
+      "display_name": "Inventory Rebalancing Pilot",
+      "schema_name": "aibast_InventoryRebalancingPilot",
+      "bot_id": "236a0c04-ea66-46e8-b461-1e2b68291c92",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "changes_pushed": 7,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    },
+    "validated_manual": {
+      "display_name": "Inventory Manual Build",
+      "bot_id": "05b62fa7-0327-4626-b9db-8c9de02de91a",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "web_search_removed": true,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    },
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3"
+  },
+  "safety_boundary": "The agent recommends options only and never moves inventory or changes inventory policy; those actions require approved tools and authorized owners.",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  }
+}

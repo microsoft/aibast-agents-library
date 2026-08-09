@@ -1,0 +1,84 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/ai-customer-assistant",
+  "display_name": "Customer Escalations Agent",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/general_stacks/ai_customer_assistant_stack/ai_customer_assistant_agent.py",
+  "target_filename": "ai_customer_assistant_agent.py",
+  "expected_tool": "AICustomerAssistantAgent",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "smoke_test": {
+    "prompt": "I just inherited the export-error escalation. Give me the full brief before I respond.",
+    "arguments": {
+      "operation": "handle_inquiry",
+      "inquiry_id": "INQ-4001"
+    },
+    "must_call": "AICustomerAssistantAgent",
+    "must_include": [
+      "INQ-4001",
+      "KB-104"
+    ]
+  },
+  "copilot_studio": {
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "authoring_mode": "cli-copilot",
+    "status": "source-package-ready-not-deployed",
+    "operations": [
+      "handle_inquiry",
+      "knowledge_search",
+      "escalation_routing",
+      "satisfaction_survey"
+    ],
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_ai-customer-assistant-synthetic-records.md",
+      "manual/knowledge/aibast_ai-customer-assistant-rules-and-guardrails.md"
+    ],
+    "manual_skill_count": 4,
+    "required_connections": [
+      "Bind only customer-approved systems after security, privacy, and business-owner review"
+    ],
+    "publish_requires_confirmation": true,
+    "validated_manual": {
+      "display_name": "Customer Escalations Manual",
+      "bot_id": "8b248e8b-753b-4ba0-b65a-0fea02b649dd",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "web_search_removed": true,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    },
+    "validated_pilot": {
+      "display_name": "Customer Escalations Pilot",
+      "schema_name": "aibast_CustomerEscalationsPilot",
+      "bot_id": "65c39731-b451-4a26-95ac-2e27d0495cda",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "changes_pushed": 7,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    }
+  }
+}

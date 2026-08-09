@@ -1,0 +1,92 @@
+{
+  "solution": "Product Feedback Synthesizer Agent",
+  "agent": "@aibast-agents-library/product-feedback-synthesizer",
+  "onepager": "26. Product Feedback Synthesizer Agent one-pager.pptx",
+  "agent_files": [
+    "product_feedback_synthesizer_agent"
+  ],
+  "note": "Locked synthetic persona-language case per exposed operation. Prompts avoid operation names and preserve approval boundaries.",
+  "cases": [
+    {
+      "id": "PFS-01",
+      "persona": "Product Manager",
+      "operation": "feedback_summary",
+      "onepager_bullet": "Aggregate and analyze feedback from multiple sources to provide a unified view of customer sentiment and priorities",
+      "prompt": "Give me the cross-channel feedback picture before the weekly product review.",
+      "arguments": {
+        "operation": "feedback_summary"
+      },
+      "must_include": [
+        "Total Feedback Entries",
+        "6",
+        "No roadmap commitment"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "ProductFeedbackSynthesizerAgent"
+    },
+    {
+      "id": "PFS-02",
+      "persona": "Engineering Lead",
+      "operation": "feature_requests",
+      "onepager_bullet": "Apply AI-driven sentiment and pattern recognition to identify critical pain points and feature requests",
+      "prompt": "Rank the feature-request evidence for review, but do not turn it into a roadmap.",
+      "arguments": {
+        "operation": "feature_requests"
+      },
+      "must_include": [
+        "Workflow Automation Builder",
+        "candidate_for_review",
+        "No roadmap commitment"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "ProductFeedbackSynthesizerAgent"
+    },
+    {
+      "id": "PFS-03",
+      "persona": "Director of Product",
+      "operation": "sentiment_analysis",
+      "onepager_bullet": "Apply AI-driven sentiment and pattern recognition to identify critical pain points and feature requests",
+      "prompt": "What are the strongest sentiment signals in the fictional customer snapshot?",
+      "arguments": {
+        "operation": "sentiment_analysis"
+      },
+      "must_include": [
+        "Positive",
+        "Negative",
+        "fictional pilot data"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "ProductFeedbackSynthesizerAgent"
+    },
+    {
+      "id": "PFS-04",
+      "persona": "Product Manager",
+      "operation": "roadmap_impact",
+      "onepager_bullet": "Automate prioritization and workflow orchestration to convert insights into engineering actions and roadmap updates",
+      "prompt": "Frame the impact tradeoffs the product trio should validate before sequencing work.",
+      "arguments": {
+        "operation": "roadmap_impact"
+      },
+      "must_include": [
+        "Review Candidates",
+        "RBAC",
+        "No roadmap commitment"
+      ],
+      "must_not_include": [
+        "I do not have access",
+        "I cannot help"
+      ],
+      "expects_agent": "ProductFeedbackSynthesizerAgent"
+    }
+  ],
+  "assertion_principle": "Direct tests call each operation with deterministic arguments and assert only source-backed evidence and safety gates."
+}

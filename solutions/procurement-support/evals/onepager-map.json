@@ -1,0 +1,66 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/procurement-support",
+  "onepager": "29. Discount Finder Agent one-pager.pptx",
+  "source_slide_sha256": "6646234adc583111361a1196ca127b036155133cf0297cfb6891684dc1477a8e",
+  "source_audit": {
+    "status": "audited",
+    "source_path": "agents/@aibast-agents-library/general_stacks/procurement_support_stack/procurement_support_agent.py",
+    "implemented_operations": [
+      "savings_scan",
+      "time_sensitive_deals",
+      "consolidation_analysis",
+      "purchase_timing"
+    ],
+    "boundary": "Synthetic read-only decision support; advertised write actions are represented only as reviewable drafts or recommendations."
+  },
+  "promises": [
+    {
+      "advertised_promise": "Track discounts across vendors and promotions to reveal savings opportunities",
+      "operations": [
+        "savings_scan"
+      ],
+      "demo_cases": [
+        "DISC-01"
+      ],
+      "synthetic_evidence": [
+        "DISC-101",
+        "DISC-102",
+        "not realized savings"
+      ]
+    },
+    {
+      "advertised_promise": "Flag time-sensitive deals and price increases to help teams capture savings",
+      "operations": [
+        "time_sensitive_deals"
+      ],
+      "demo_cases": [
+        "DISC-02"
+      ],
+      "synthetic_evidence": [
+        "2026-08-31",
+        "2026-09-30",
+        "approved procurement process"
+      ]
+    },
+    {
+      "advertised_promise": "Analyze purchase timing and vendor incentives to secure favorable pricing and contract terms",
+      "operations": [
+        "consolidation_analysis",
+        "purchase_timing"
+      ],
+      "demo_cases": [
+        "DISC-03",
+        "DISC-04"
+      ],
+      "synthetic_evidence": [
+        "Clinical consumables",
+        "4",
+        "does not recommend a supplier award",
+        "Northstar Imaging",
+        "MedSupply Cooperative",
+        "CareTech Devices"
+      ]
+    }
+  ]
+}

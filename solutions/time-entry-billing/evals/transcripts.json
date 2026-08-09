@@ -1,0 +1,106 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:11:49.597434+00:00",
+  "solution": "@aibast-agents-library/time-entry-billing",
+  "onepager": "Time and Entry Billing Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "TimeEntryBillingAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/professional_services_stacks/time_entry_billing_stack/time_entry_billing_agent.py",
+      "sha256": "b4284e9053915d3b9281bf7f53256298c19cf636f621d875b44546fad06360a8"
+    }
+  ],
+  "case_file": "tests/demo_cases/time-entry-billing.json",
+  "case_file_sha256": "b35c6b9ce5314465bb7db8b427484fb1f4cf8b92137b0c5d3df694056a9c2fcf",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "TEB-01",
+      "persona": "Billing Manager",
+      "onepager_promise": "Process time entries intelligently to enforce billing rules and accelerate invoice generation",
+      "prompt": "What billable work is still blocked from this close, and what has to happen before it can move?",
+      "assistant_response": "**Two entries are blocking this close:**\n\n1. **TE-9004** (Michael Chen, $2,080) \u2014 missing description + needs approval\n2. **TE-9011** (Elena Vasquez, $4,532) \u2014 needs approval\n\n**What has to happen:**\n- Add a narrative/description to TE-9004 (that's the gating issue)\n- Get approvals on both entries\n- Once approved, both can move to invoicing\n\n**Also watch:** You have $284K in outstanding invoices\u2014three are 17+ days out, and one is 45 days overdue (Metro Transit Authority). Those should be handled separately from this close, but flagging them now.\n\nWant me to run a time-entry audit to see if there are any other risk flags before you chase those approvals?",
+      "agent_logs": "[TimeEntryBillingAgent] ## Unbilled Hours Report\n\n**Unbilled entries:** 2\n**Unbilled value:** $6,612.00\n\n| Entry ID | Consultant | Project | Date | Hours | Rate | Value | Issue |\n|----------|-----------|---------|------|-------|------|-------|-------|\n| TE-9004 | Michael Chen | Apex Analytics Platf | 2026-03-11 | 8.0 | $260 | $2,080.00 | Needs approval; missing description |\n| TE-9011 | Elena Vasquez | TechCorp Transformat | 2026-03-12 | 11.0 | $412 | $4,532.00 | Needs approval |\n\n### Outstanding Invoices\n\n| Invoice | Client | Amount | Date | Status | Days Out |\n|---------|--------|--------|------|--------|----------|\n| INV-2026-203 | Pinnacle Energy | $186,000.00 | 2026-02-28 | **OUTSTANDING** | 17 |\n| INV-2026-204 | Atlas Financial Group | $52,200.00 | 2026-02-28 | **OUTSTANDING** | 17 |\n| INV-2026-205 | Metro Transit Authority | $46,200.00 | 2026-02-28 | **OVERDUE** | 45 |\n\n**Total outstanding:** $284,400.00\n\n> Synthetic month-end evidence; no entry or invoice status was changed.",
+      "expected_agent": "TimeEntryBillingAgent",
+      "must_include": [
+        "TE-9004",
+        "TE-9011",
+        "Needs approval"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "TEB-02",
+      "persona": "Finance Vice President",
+      "onepager_promise": "Generate CFO-ready revenue recognition reports and audit trails",
+      "prompt": "Give me the month-end billing rollup by project and consultant without treating it as posted revenue.",
+      "assistant_response": "There's your month-end rollup: **$24.5K in billable value** across 84.5 hours, split into 5 projects and 5 consultants. \n\nKey observations:\n- **TechCorp** is your biggest project ($9.3K, 80% budget consumed)\n- **Atlas** is tightest on budget (84.6% used, $28.4K remaining)\n- **Elena Vasquez** leads on hours and value ($9.3K on 28.5 hours)\n- Non-billable time sits at 12 hours (12.4% of total logged)\n\nThis is unbilled activity pending approval and invoice prep. Nothing is revenue-recognized here.",
+      "agent_logs": "[TimeEntryBillingAgent] ## Billing Summary\n\n**Total hours logged:** 96.5\n**Billable hours:** 84.5 (87.6%)\n**Non-billable hours:** 12.0\n**Total billable value:** $24,479.50\n\n### By Project\n\n| Project | Client | Type | Hours | Value | Budget Used | Remaining |\n|---------|--------|------|-------|-------|-------------|-----------|\n| TechCorp Transformation | TechCorp Industrie | T&M | 28.5 | $9,344.50 | 80.3% | $167,600 |\n| Apex Analytics Platform | Apex Manufacturing | T&M | 15.5 | $4,030.00 | 76.5% | $122,000 |\n| Pinnacle Energy ERP | Pinnacle Energy | Fixed Fee | 18.0 | $5,580.00 | 62.0% | $456,000 |\n| Atlas Security Audit | Atlas Financial Gr | T&M | 14.5 | $4,205.00 | 84.6% | $28,400 |\n| Metro Transit Portal | Metro Transit Auth | T&M | 8.0 | $1,320.00 | 64.1% | $122,000 |\n\n### By Consultant\n\n| Consultant | Hours | Billable Value | Avg Rate |\n|-----------|-------|---------------|----------|\n| Elena Vasquez | 28.5 | $9,344.50 | $327.88 |\n| Priya Sharma | 18.0 | $5,580.00 | $310.0 |\n| Lisa Tanaka | 14.5 | $4,205.00 | $290.0 |\n| Michael Chen | 15.5 | $4,030.00 | $260.0 |\n| Amanda Foster | 8.0 | $1,320.00 | $165.0 |\n\n> Synthetic billing summary; amounts are not posted revenue.",
+      "expected_agent": "TimeEntryBillingAgent",
+      "must_include": [
+        "By Project",
+        "By Consultant",
+        "not posted revenue"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "TEB-03",
+      "persona": "Billing Compliance Lead",
+      "onepager_promise": "Automate risk and compliance checks to reduce errors and maintain audit-ready documentation",
+      "prompt": "Which time cards would fail our billing review because of narrative, hours, rate, or budget concerns?",
+      "assistant_response": "**Two entries will fail review:**\n\n1. **TE-9004** (Michael Chen, Mar 11) \u2014 Missing narrative description. Must be added before invoice.\n2. **TE-9011** (Elena Vasquez, Mar 12) \u2014 11 hours exceeds your 10-hour daily limit. Needs correction or exception approval.\n\n**Budget watch:** TechCorp Transformation and Atlas Security Audit are both above 80% burn. If more hours are added, these projects risk going over budget. Verify TechCorp especially \u2014 you're at 80.3% of cap with only $167,600 remaining.\n\nNeed to see which entries are ready to invoice, or dive deeper into any project's budget risk?",
+      "agent_logs": "[TimeEntryBillingAgent] ## Time Entry Audit Report\n\n**Total entries reviewed:** 12\n**Entries flagged:** 2\n\n| Entry ID | Consultant | Date | Hours | Rate | Issues |\n|----------|-----------|------|-------|------|--------|\n| TE-9004 | Michael Chen | 2026-03-11 | 8.0 | $260 | Missing description |\n| TE-9011 | Elena Vasquez | 2026-03-12 | 11.0 | $412 | Exceeds 10-hour daily limit |\n\n### Budget Alert\n\n| Project | Budget Used | Remaining | Status |\n|---------|------------|-----------|--------|\n| TechCorp Transformation | 80.3% | $167,600 | **WARNING** |\n| Apex Analytics Platform | 76.5% | $122,000 | **OK** |\n| Pinnacle Energy ERP | 62.0% | $456,000 | **OK** |\n| Atlas Security Audit | 84.6% | $28,400 | **WARNING** |\n| Metro Transit Portal | 64.1% | $122,000 | **OK** |\n\n> Flags require human correction and approval; the agent never rewrites a time entry.",
+      "expected_agent": "TimeEntryBillingAgent",
+      "must_include": [
+        "Missing description",
+        "Exceeds 10-hour daily limit",
+        "Budget Alert"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "TEB-04",
+      "persona": "Billing Manager",
+      "onepager_promise": "Validate time entries and billing rules and generate invoices",
+      "prompt": "Prepare the invoice support that is actually ready, and keep anything without the right approval or milestone evidence out.",
+      "assistant_response": "Done. **$12,287.50 is ready to invoice** across four T&M projects (TechCorp, Apex, Atlas, and Metro Transit). All entries are approved with full documentation.\n\n**On hold:**\n- **$6,612.00 pending approval** \u2014 these entries need sign-off before invoicing\n- **Pinnacle Energy ERP** (fixed-fee) \u2014 time is held as delivery evidence; invoicing waits for your milestone schedule\n\nNote: You have **$46.2K overdue** with Metro Transit and **$238.2K outstanding** overall. The ready batch should help with cash flow.",
+      "agent_logs": "[TimeEntryBillingAgent] ## Invoice Preparation\n\n### Invoices Ready to Generate\n\n| Project | Client | Entries | Hours | Invoice Amount | Contract Type |\n|---------|--------|---------|-------|---------------|---------------|\n| TechCorp Transformation | TechCorp Industrie | 2 | 17.5 | $4,812.50 | T&M |\n| Apex Analytics Platform | Apex Manufacturing | 1 | 7.5 | $1,950.00 | T&M |\n| Atlas Security Audit | Atlas Financial Gr | 2 | 14.5 | $4,205.00 | T&M |\n| Metro Transit Portal | Metro Transit Auth | 1 | 8.0 | $1,320.00 | T&M |\n\n**Grand total ready to invoice:** $12,287.50\n**Pending approval (not included):** $6,612.00\n**Fixed-fee hold:** Pinnacle Energy ERP time is retained as delivery evidence; invoice value requires the contractual milestone schedule.\n\n### Invoice History\n\n| Invoice | Client | Amount | Date | Status |\n|---------|--------|--------|------|--------|\n| INV-2026-201 | TechCorp Industries | $142,500.00 | 2026-02-28 | paid |\n| INV-2026-202 | Apex Manufacturing | $98,800.00 | 2026-02-28 | paid |\n| INV-2026-203 | Pinnacle Energy | $186,000.00 | 2026-02-28 | outstanding |\n| INV-2026-204 | Atlas Financial Group | $52,200.00 | 2026-02-28 | outstanding |\n| INV-2026-205 | Metro Transit Authority | $46,200.00 | 2026-02-28 | overdue |\n\n**Total billed (last cycle):** $525,700.00\n**Total collected:** $241,300.00\n**Collection rate:** 45.9%\n\n> Draft invoice support only; no invoice was generated, posted, or sent.",
+      "expected_agent": "TimeEntryBillingAgent",
+      "must_include": [
+        "Invoices Ready to Generate",
+        "Fixed-fee hold",
+        "no invoice was generated"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "TEB-05",
+      "persona": "Client Finance Partner",
+      "onepager_promise": "Provide dispute resolution intelligence to help protect revenue and preserve client relationships",
+      "prompt": "What evidence is missing on the disputed hours, and what is the safest resolution path before we go back to the clients?",
+      "assistant_response": "**Two gaps to close before client contact:**\n\n1. **DSP-301 (Michael Chen, Apex)** \u2014 Missing work description and manager approval. The hours exist, but the client won't accept them without knowing what was done. Path: Get Chen's narrative, route to PM for approval, then invoice.\n\n2. **DSP-302 (TechCorp, overtime rate)** \u2014 Cutover authorization is missing. The premium rate is configured, but billing needs proof the client signed off on it. Path: Attach the signed cutover auth, get billing manager approval, then invoice.\n\n**Safest move:** Collect narratives and approvals *internally first*, then present the completed package to clients. That way you're only going back once with a complete defense.",
+      "agent_logs": "[TimeEntryBillingAgent] ## Disputed Hours Resolution Brief\n\n| Dispute | Entry | Client | Status | Evidence Gap |\n|---------|-------|--------|--------|--------------|\n| DSP-301 | TE-9004 | Apex Manufacturing | evidence_required | Project assignment and time record exist; consultant narrative and manager approval are missing. |\n| DSP-302 | TE-9011 | TechCorp Industries | approval_required | The entry uses the configured overtime rate, but approval is not attached. |\n\n### Recommended Resolution Path\n\n**DSP-301 \u2014 Work description is missing, so the client cannot validate the charge.**\n- Recommended: Return to Michael Chen for a factual description, then route to the project manager for approval.\n**DSP-302 \u2014 Premium-rate migration work requires written cutover authorization.**\n- Recommended: Attach the approved cutover authorization and obtain billing-manager sign-off before invoicing.\n\n> Synthetic decision support only; do not invent narratives, alter hours, waive charges, or contact a client without authorized review.",
+      "expected_agent": "TimeEntryBillingAgent",
+      "must_include": [
+        "DSP-301",
+        "DSP-302",
+        "authorized review"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

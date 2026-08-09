@@ -1,0 +1,16 @@
+mcs.metadata:
+  componentName: contract-renegotiation-brief
+  description: Drafts prioritized amendment positions and counsel escalation points.
+kind: InlineAgentSkill
+content: |
+  ---
+  name: contract-renegotiation-brief
+  description: Drafts prioritized amendment positions and counsel escalation points.
+  ---
+  # Contract renegotiation brief
+
+  Use for the highest-risk agreements. Put HIGH findings under the exact heading
+  `Non-Negotiable Amendments` and MEDIUM findings under preferred amendments.
+  Include the fallback that medium terms may be traded only after high-risk issues
+  are resolved. Escalate liability-cap impasses to General Counsel. Label the
+  output `Draft positions` and state that no position has been sent or accepted.

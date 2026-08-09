@@ -1,0 +1,36 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/fs-customer-onboarding",
+  "audited_source": "agents/@aibast-agents-library/financial_services_stacks/customer_onboarding_fs_stack/customer_onboarding_fs_agent.py",
+  "source_sha256": "d2cd60c21ae267c2969f79396bfcc35eeb269419665152e426531107034d87c6",
+  "case_file": "tests/demo_cases/fs-customer-onboarding.json",
+  "onepager": "Customer Onboarding Agent one-pager.pptx",
+  "operations": {
+    "kyc_verification": [
+      "FCO-01"
+    ],
+    "account_setup": [
+      "FCO-02"
+    ],
+    "document_checklist": [
+      "FCO-03"
+    ],
+    "onboarding_status": [
+      "FCO-04"
+    ]
+  },
+  "defects_fixed": [
+    "Expanded tool routing descriptions so persona-language requests map to the intended operation.",
+    "Aligned implemented operations with approved one-pager promises and added missing decision-support workflows where needed.",
+    "Added synthetic-data labels, explicit human review, and no-advice/no-approval/no-transaction boundaries.",
+    "Rejected unknown record identifiers instead of silently substituting another fictional record.",
+    "Added exact persona-language routing phrases, operation selection guidance, and synthetic entity-to-identifier mappings for strict-isolation capture."
+  ],
+  "unresolved_defects": [],
+  "routing_result": {
+    "cases_passed": 4,
+    "cases_total": 4,
+    "strict_isolation": true,
+    "loaded_tool": "FSCustomerOnboardingAgent"
+  }
+}

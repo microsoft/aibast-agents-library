@@ -1,0 +1,36 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/fraud-detection-alert",
+  "audited_source": "agents/@aibast-agents-library/financial_services_stacks/fraud_detection_alert_stack/fraud_detection_alert_agent.py",
+  "source_sha256": "da09e0e8d345d0aa5fa21abcbf5e504aaf4accd85d45d4c33fa6e9a8163e2ee0",
+  "case_file": "tests/demo_cases/fraud-detection-alert.json",
+  "onepager": "38. Fraud Detection and Alert Agent one-pager.pptx",
+  "operations": {
+    "alert_triage": [
+      "FDA-01"
+    ],
+    "transaction_analysis": [
+      "FDA-02"
+    ],
+    "pattern_detection": [
+      "FDA-03"
+    ],
+    "investigation_summary": [
+      "FDA-04"
+    ]
+  },
+  "defects_fixed": [
+    "Expanded tool routing descriptions so persona-language requests map to the intended operation.",
+    "Aligned implemented operations with approved one-pager promises and added missing decision-support workflows where needed.",
+    "Added synthetic-data labels, explicit human review, and no-advice/no-approval/no-transaction boundaries.",
+    "Rejected unknown record identifiers instead of silently substituting another fictional record.",
+    "Added exact persona-language routing phrases, operation selection guidance, and synthetic entity-to-identifier mappings for strict-isolation capture."
+  ],
+  "unresolved_defects": [],
+  "routing_result": {
+    "cases_passed": 4,
+    "cases_total": 4,
+    "strict_isolation": true,
+    "loaded_tool": "FraudDetectionAlertAgent"
+  }
+}

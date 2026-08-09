@@ -6,7 +6,7 @@
 
 Industry agent templates, the RAPP production methodology, and a local-first AI agent server powered by GitHub Copilot. No provider API key or cloud setup is required for core chat beyond a GitHub account with Copilot access.
 
-[Production Guide](https://microsoft.github.io/aibast-agents-library/docs/rapp-guide.html) | [Browse Agent Templates](https://github.com/microsoft/aibast-agents-library/tree/main/agents/%40aibast-agents-library) | [Brainstem API and configuration](rapp_brainstem/README.md)
+[Production Guide](https://microsoft.github.io/aibast-agents-library/docs/rapp-guide.html) | [Agent Library](https://microsoft.github.io/aibast-agents-library/library.html) | [Library Metrics](https://microsoft.github.io/aibast-agents-library/metrics.html) | [Brainstem API and configuration](rapp_brainstem/README.md)
 
 ```
 curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash
@@ -90,7 +90,11 @@ class WeatherAgent(BasicAgent):
 
 ### Browse the AIBAST Agent Library
 
-Industry templates live under [`agents/@aibast-agents-library/`](agents/@aibast-agents-library/). Review a template, adapt it to your environment, then drag the trusted `*_agent.py` file into the Brainstem chat or place it in the configured agents directory. Agent files are Python code and execute locally, so review them before installation.
+The [**Agent Library**](https://microsoft.github.io/aibast-agents-library/library.html) is the browsable catalog: search across every industry template, filter by vertical, and copy the install command for one agent or a whole stack. It reads `registry.json`, which `build_registry.py` regenerates from the agent manifests on every push.
+
+The files themselves live under [`agents/@aibast-agents-library/`](agents/@aibast-agents-library/), grouped into `*_stacks/*_stack/` folders — a stack is the set of agents that solves one industry scenario end to end. Review a template, adapt it to your environment, then drag the trusted `*_agent.py` file into the Brainstem chat or place it in the configured agents directory. Agent files are Python code and execute locally, so review them before installation.
+
+[**Library metrics**](https://microsoft.github.io/aibast-agents-library/metrics.html) publishes the catalog's public numbers — downloads, installer fetches, and composition — every figure traceable to a public API. `scripts/build_metrics.py` builds the snapshot; the dashboard states plainly which paths it cannot count.
 
 ---
 

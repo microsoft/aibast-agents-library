@@ -1,0 +1,76 @@
+{
+  "solution": "Product Line Optimization Agent",
+  "slot": 1,
+  "agent": "@aibast-agents-library/production-line-optimization",
+  "onepager": "Product Line Optimization Agent one-pager.pptx",
+  "agent_files": [
+    "production_line_optimization_agent"
+  ],
+  "note": "Locked conversational cases for the four implemented production workflows. Prompts use plant-floor language rather than operation names.",
+  "cases": [
+    {
+      "id": "PLO-01",
+      "persona": "Plant Manager",
+      "onepager_bullet": "Analyze production line performance in real time to identify bottlenecks and operational inefficiencies",
+      "prompt": "Which production line needs attention today, and what is driving the loss?",
+      "must_include": [
+        "Polymer Molding Line C",
+        "Electronics Assembly Line A"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the line"
+      ],
+      "min_words": 35,
+      "expects_agent": "ProductionLineOptimizationAgent"
+    },
+    {
+      "id": "PLO-02",
+      "persona": "Production Engineer",
+      "onepager_bullet": "Analyze production line performance in real time to identify bottlenecks and operational inefficiencies",
+      "prompt": "Where is the bottleneck on each line, and which station should the plant team address first?",
+      "must_include": [
+        "Functional Test",
+        "Robotic Welding",
+        "Injection Molding"
+      ],
+      "must_not_include": [
+        "I don't have access"
+      ],
+      "min_words": 35,
+      "expects_agent": "ProductionLineOptimizationAgent"
+    },
+    {
+      "id": "PLO-03",
+      "persona": "Operations Director",
+      "onepager_bullet": "Recommend targeted equipment and process improvements to improve output quality and cycle times",
+      "prompt": "Give me the practical options to improve throughput without hiding the quality tradeoffs.",
+      "must_include": [
+        "Option 1",
+        "Option 2",
+        "Quality improvement"
+      ],
+      "must_not_include": [
+        "I don't have access"
+      ],
+      "min_words": 40,
+      "expects_agent": "ProductionLineOptimizationAgent"
+    },
+    {
+      "id": "PLO-04",
+      "persona": "Plant Manager",
+      "onepager_bullet": "Plan and coordinate implementation while minimizing disruption",
+      "prompt": "Translate the current line performance into a day, swing, and night shift plan.",
+      "must_include": [
+        "Day",
+        "Swing",
+        "Night"
+      ],
+      "must_not_include": [
+        "I don't have access"
+      ],
+      "min_words": 35,
+      "expects_agent": "ProductionLineOptimizationAgent"
+    }
+  ]
+}

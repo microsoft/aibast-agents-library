@@ -1,0 +1,89 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/customer-sentiment-churn",
+  "display_name": "Customer Sentiment and Churn Prediction Agent",
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/financial_services_stacks/customer_sentiment_churn_stack/customer_sentiment_churn_agent.py",
+  "target_filename": "customer_sentiment_churn_agent.py",
+  "expected_tool": "CustomerSentimentChurnAgent",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  },
+  "smoke_test": {
+    "prompt": "What are customers telling us across channels, and which relationship needs attention first?",
+    "must_call": "CustomerSentimentChurnAgent",
+    "must_include": [
+      "CUST-8002",
+      "Negative"
+    ]
+  },
+  "copilot_studio": {
+    "authoring_mode": "manual-upload",
+    "required_connections": [
+      "Dynamics 365 Customer Service or CRM",
+      "Approved voice, chat, survey, and complaint analytics",
+      "Power BI",
+      "Microsoft Teams outreach review"
+    ],
+    "operations": [
+      "sentiment_dashboard",
+      "churn_prediction",
+      "retention_actions",
+      "segment_analysis"
+    ],
+    "manual_knowledge_files": [
+      "manual/knowledge/aibast_customer-sentiment-churn-synthetic-records.md",
+      "manual/knowledge/aibast_customer-sentiment-churn-controls-and-review.md"
+    ],
+    "manual_skill_count": 4,
+    "publish_requires_confirmation": true,
+    "safety_gate": "Validate synthetic labels, human review, and no-advice/no-approval/no-transaction behavior before publish.",
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "validated_manual": {
+      "display_name": "Customer Sentiment Manual",
+      "bot_id": "c93c1ae6-304b-4656-ab29-8fdd9da5fbb6",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "web_search_removed": true,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    },
+    "validated_pilot": {
+      "display_name": "Customer Sentiment Pilot",
+      "schema_name": "aibast_CustomerSentimentandChurnP",
+      "bot_id": "66d29ea2-de55-418c-986b-bf233ee4a480",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "changes_pushed": 7,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    }
+  },
+  "demo_scenarios": [
+    "customer-sentiment-churn-sentiment-dashboard",
+    "customer-sentiment-churn-churn-prediction",
+    "customer-sentiment-churn-retention-actions",
+    "customer-sentiment-churn-segment-analysis"
+  ]
+}

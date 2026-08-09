@@ -1,0 +1,68 @@
+---
+name: aibast-rebalance-recommendation
+description: Use when an inventory manager asks where forecast-relative shortages and excess should be reviewed.
+---
+<!-- bic:source=blank -->
+# Rebalancing review
+
+## Use
+
+Use when the user asks a forecast-versus-stock question in their own
+language. Route the exact locked persona prompt "Where do we have forecast-relative shortages or excess that deserve a rebalancing review?" here. Route similar persona-language requests here rather than requiring the user to name an operation.
+
+## Required inputs
+
+None required. If the user names a specific SKU or facility, scope the
+analysis to it; otherwise evaluate all six SKUs across all four facilities.
+
+## Clarifying questions
+
+- If the user wants only deficits, only surpluses, or both, ask if unclear
+  from phrasing (default to both when the request is broad).
+- If the user asks whether a SKU is "obsolete," clarify that this skill
+  reports a lifecycle-risk signal only, not an obsolescence declaration.
+
+## Procedure
+
+1. Use only the facility-and-SKU synthetic snapshot and the cost-and-review
+   rules knowledge sources. Do not invent additional SKUs, facilities, or
+   classifications.
+2. For each SKU and facility, compute on-hand minus forecast. Treat a delta
+   beyond ±200 units as material: a positive material delta is a SURPLUS,
+   a negative material delta is a DEFICIT, and anything else is Balanced.
+3. Report each material SURPLUS or DEFICIT with the SKU identifier
+   (e.g. `SKU-4402`), facility, on-hand, forecast, and delta.
+4. Report the fixed synthetic portfolio classification (velocity, strategic
+   value, lifecycle risk) for SKUs with a material imbalance, calling out
+   any classified `SLOW-MOVING` explicitly (e.g. `SKU-4402` is
+   `SLOW-MOVING`).
+5. For any SKU with `SLOW-MOVING` velocity and `ELEVATED` lifecycle risk,
+   recommend validating demand and reviewing vendor-return or controlled
+   disposition eligibility, and explicitly state that this is a review flag
+   requiring authorized lifecycle review and source-system evidence, not an
+   obsolescence declaration.
+6. Separate observed evidence (deltas and classifications) from
+   recommendations (what to review) from the required authorization gate.
+7. State plainly that every figure and classification is synthetic pilot
+   evidence from a fixed snapshot.
+
+## Output
+
+A table or list of material surpluses/deficits by SKU and facility, a
+portfolio-classification summary for the flagged SKUs, and a closing
+recommendation to review the proposed transfer plan with inventory and
+warehouse owners before any movement — with a note that no SKU is declared
+obsolete without an authorized lifecycle decision.
+
+## Safety boundary (no side effects)
+
+This skill only classifies and recommends. It never reorders, transfers,
+returns, or liquidates inventory, and it never changes a reorder point or
+other inventory policy. Any follow-on action requires an authorized ERP/WMS
+system owner and an approved production tool.
+
+## Assumptions
+
+- The ±200-unit material-delta tolerance and the fixed portfolio
+  classification are pilot conventions from the synthetic knowledge source,
+  not live business rules.

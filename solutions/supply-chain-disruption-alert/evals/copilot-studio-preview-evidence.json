@@ -1,0 +1,56 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T21:18:39.304Z",
+  "solution": "@aibast-agents-library/supply-chain-disruption-alert",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Supply Chain Alert Pilot",
+  "schema_name": "aibast_SupplyChainDisruptionAlert",
+  "bot_id": "b59ca0d9-eff9-4467-a5ec-9a96d8b961bd",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-01",
+      "must_include": [
+        "DISR-002",
+        "$3,800,000.00",
+        "SKU-1010"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-02",
+      "must_include": [
+        "Asia-Pacific Primary",
+        "HIGH",
+        "Weather"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-03",
+      "must_include": [
+        "DISR-002",
+        "Draft Disruption Mitigation Scenario",
+        "no purchase order"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-04",
+      "must_include": [
+        "TechSource Taiwan",
+        "due diligence",
+        "human approval"
+      ],
+      "must_not_include": [],
+      "passed": true
+    }
+  ]
+}

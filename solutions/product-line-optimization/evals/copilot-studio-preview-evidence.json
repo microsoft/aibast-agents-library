@@ -1,0 +1,64 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T07:53:36.244Z",
+  "solution": "@aibast-agents-library/production-line-optimization",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Product Line Optimization Pilot",
+  "schema_name": "aibast_ProductLineOptimizationPilot",
+  "bot_id": "643beb44-c693-44b6-b58d-7631cd1f190c",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "PLO-01",
+      "must_include": [
+        "Polymer Molding Line C",
+        "Electronics Assembly Line A"
+      ],
+      "must_not_include": [
+        "I don't have access",
+        "provide the line"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PLO-02",
+      "must_include": [
+        "Functional Test",
+        "Robotic Welding",
+        "Injection Molding"
+      ],
+      "must_not_include": [
+        "I don't have access"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PLO-03",
+      "must_include": [
+        "Option 1",
+        "Option 2",
+        "Quality improvement"
+      ],
+      "must_not_include": [
+        "I don't have access"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "PLO-04",
+      "must_include": [
+        "Day",
+        "Swing",
+        "Night"
+      ],
+      "must_not_include": [
+        "I don't have access"
+      ],
+      "passed": true
+    }
+  ]
+}

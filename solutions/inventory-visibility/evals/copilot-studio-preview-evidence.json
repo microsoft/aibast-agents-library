@@ -1,0 +1,56 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T22:17:58.624Z",
+  "solution": "@aibast-agents-library/inventory-visibility",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Inventory Visibility Pilot",
+  "schema_name": "aibast_InventoryVisibilityPilot",
+  "bot_id": "f1274e31-683f-4aa5-99e9-bf05b6982875",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "IV-01",
+      "must_include": [
+        "Prepared for:** Inventory Planner",
+        "Inventory Visibility Snapshot",
+        "no stock is reserved"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "IV-02",
+      "must_include": [
+        "Prepared for:** Store Manager",
+        "Draft Stock Review",
+        "Review transfer candidate"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "IV-03",
+      "must_include": [
+        "Draft Replenishment Plan",
+        "14-day supply",
+        "Estimated Total Replenishment Cost"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "IV-04",
+      "must_include": [
+        "Prepared for:** Category Manager",
+        "Channel Allocation Scenario",
+        "do not reserve units"
+      ],
+      "must_not_include": [],
+      "passed": true
+    }
+  ]
+}

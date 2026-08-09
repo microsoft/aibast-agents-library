@@ -24,8 +24,8 @@ __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/win-loss-analysis",
     "version": "1.0.0",
-    "display_name": "Win/Loss Analysis",
-    "description": "AI-powered win/loss analysis with pattern recognition, competitive insights, revenue recovery modeling, and board-ready presentations.",
+    "display_name": "Win Loss Analysis Agent",
+    "description": "Automates competitive deal analysis to uncover root causes, improve win rates, and guide strategic sales enablement.",
     "author": "AIBAST",
     "tags": ["b2b", "sales", "win-loss", "competitive-intel", "revenue-recovery"],
     "category": "b2b_sales",
@@ -551,7 +551,18 @@ class WinLossAnalysisAgent(BasicAgent):
         self.name = "WinLossAnalysisAgent"
         self.metadata = {
             "name": self.name,
-            "description": __manifest__["description"],
+            "description": (
+                f"{__manifest__['description']} Uses bundled synthetic closed-deal evidence "
+                "and returns read-only analysis, draft enablement, and scenario models only. "
+                "It does not change forecasts, approve investments, or claim realized revenue. "
+                "Route requests to summarize all findings, session accomplishments, or candidate "
+                "next steps to `action_summary`; that operation returns `Complete Summary` and "
+                "`Draft Next-Step Options`."
+            ),
+            "operations": [
+                "win_loss_overview", "root_cause_analysis", "counter_strategies",
+                "revenue_impact", "board_presentation", "action_summary",
+            ],
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -562,20 +573,40 @@ class WinLossAnalysisAgent(BasicAgent):
                             "counter_strategies", "revenue_impact",
                             "board_presentation", "action_summary",
                         ],
-                        "description": "The analysis to perform",
+                        "description": (
+                            "Select the requested win/loss deliverable. win_loss_overview: quarter and "
+                            "competitor patterns. root_cause_analysis: loss drivers and buyer feedback. "
+                            "counter_strategies: draft enablement responses. revenue_impact: synthetic "
+                            "intervention value scenarios. board_presentation: board-level narrative. "
+                            "action_summary: REQUIRED for a complete findings summary, session "
+                            "accomplishments, candidate next steps, or non-activated action recap; "
+                            "returns Complete Summary and Draft Next-Step Options."
+                        ),
                     },
                     "quarter": {
                         "type": "string",
-                        "description": "Quarter to analyze (default: Q3 current)",
+                        "enum": ["Q3"],
+                        "description": "Synthetic quarter to analyze. Only Q3 is supported.",
+                    },
+                    "data_source": {
+                        "type": "string",
+                        "enum": ["synthetic"],
+                        "description": "Deterministic source route. Only bundled synthetic evidence is supported.",
                     },
                 },
                 "required": ["operation"],
+                "additionalProperties": False,
             },
         }
         super().__init__(name=self.name, metadata=self.metadata)
 
     def perform(self, **kwargs) -> str:
         op = kwargs.get("operation", "win_loss_overview")
+        source = kwargs.get("data_source", "synthetic")
+        if source != "synthetic":
+            return "**Error:** `data_source` must be `synthetic`."
+        if kwargs.get("quarter", "Q3") != "Q3":
+            return "**Error:** `quarter` must be `Q3` for the bundled synthetic evidence."
         dispatch = {
             "win_loss_overview": self._win_loss_overview,
             "root_cause_analysis": self._root_cause_analysis,
@@ -587,7 +618,14 @@ class WinLossAnalysisAgent(BasicAgent):
         handler = dispatch.get(op)
         if not handler:
             return json.dumps({"status": "error", "message": f"Unknown operation: {op}"})
-        return handler()
+        output = handler()
+        return (
+            output.replace("Source: [", "Synthetic source model: [")
+            + "\n\n**Evidence boundary:** Exact deal values, counts, interview statements, "
+            "rates, costs, ROI, and recovery figures are synthetic scenario evidence, not "
+            "measured business results or commitments. This read-only output did not change "
+            "a forecast, approve spend, publish enablement, or contact a buyer."
+        )
 
     # ── win_loss_overview ──────────────────────────────────────
     def _win_loss_overview(self):
@@ -774,12 +812,12 @@ class WinLossAnalysisAgent(BasicAgent):
         q2_wr = round(q1_wr + 4.0, 1)
 
         return (
-            f"**Revenue Impact Model:**\n\n"
+            f"**Synthetic Revenue Scenario Model:**\n\n"
             f"| Intervention | Deals Recoverable | Pipeline Value | Timeline |\n|---|---|---|---|\n{table}\n"
             f"**Q4 Forecast Impact:**\n"
             f"- Current trajectory: ${q4_current_trajectory:,} ({current_wr}% win rate)\n"
             f"- With interventions: ${q4_with_intervention:,} ({q4_wr}% win rate)\n"
-            f"- **Incremental revenue: ${intervention_lift:,}**\n\n"
+            f"- **Illustrative incremental scenario value: ${intervention_lift:,}**\n\n"
             f"**Win Rate Recovery Path:**\n\n"
             f"| Quarter | Projected Win Rate | Key Driver |\n|---|---|---|\n"
             f"| Q4 | {q4_wr}% | Positioning + pricing |\n"
@@ -787,8 +825,8 @@ class WinLossAnalysisAgent(BasicAgent):
             f"| Q2 | {q2_wr}% | Full program maturity |\n\n"
             f"**ROI Calculation:**\n"
             f"- Investment: ${total_cost:,} (certifications, content, incentives)\n"
-            f"- Return: ${total_recoverable:,} recovered pipeline\n"
-            f"- ROI: {overall_roi}:1\n\n"
+            f"- Illustrative scenario value: ${total_recoverable:,}\n"
+            f"- Modeled value-to-cost ratio: {overall_roi}:1\n\n"
             f"Source: [Revenue Analytics + Forecast Models]\n"
             f"Agents: RevenueImpactAgent"
         )
@@ -839,12 +877,13 @@ class WinLossAnalysisAgent(BasicAgent):
             f"- Immediate: Security messaging refresh, pricing flexibility\n"
             f"- 30 days: Enterprise reference program launch\n"
             f"- 6 months: FedRAMP + ISO 27001 certification\n\n"
-            f"**Slide 4: Expected Outcomes**\n"
+            f"**Slide 4: Synthetic Scenario Outputs**\n"
             f"- Q4 win rate target: {q4_wr}% ({q4_wr - current_wr:+.1f} pts)\n"
             f"- Pipeline recovery: ${total_recoverable:,}\n"
             f"- Investment required: ${total_cost:,}\n"
             f"- ROI: {overall_roi}:1\n\n"
-            f"**Ask:** Approve ${total_cost:,} for certification and reference program.\n\n"
+            f"**Decision for authorized leaders:** Evaluate the synthetic ${total_cost:,} "
+            f"investment scenario and require normal approvals before any action.\n\n"
             f"Source: [All Analysis Systems]\n"
             f"Agents: ExecutivePresentationAgent"
         )
@@ -893,19 +932,20 @@ class WinLossAnalysisAgent(BasicAgent):
             f"- Analyzed {q3['total']} Q3 opportunities\n"
             f"- Identified {num_root_causes} root causes for losses\n"
             f"- Developed counter-strategies for each driver\n"
-            f"- Modeled ${total_recoverable:,} revenue recovery\n"
+            f"- Modeled a ${total_recoverable:,} synthetic recovery scenario\n"
             f"- Created board presentation framework\n\n"
-            f"**Immediate Actions (This Week):**\n"
-            f"1. Update security positioning materials\n"
-            f"2. Launch pricing flexibility program\n"
-            f"3. Activate enterprise reference calls\n"
-            f"4. Train sales team on updated talk tracks\n\n"
-            f"**30-Day Milestones:**\n"
-            f"- Reference video testimonials live\n"
-            f"- FedRAMP readiness assessment initiated\n"
-            f"- Win rate tracking dashboard active\n\n"
-            f"**Expected Outcome:** Win rate recovery from {current_wr}% to {q4_wr}% within {recovery_quarters} quarters, "
-            f"${total_recoverable:,} pipeline recovery, {overall_roi}:1 ROI on ${total_cost:,} investment.\n\n"
+            f"**Draft Next-Step Options:**\n"
+            f"1. Review security positioning materials\n"
+            f"2. Evaluate a pricing-flexibility policy with authorized approvers\n"
+            f"3. Validate reference availability before any buyer contact\n"
+            f"4. Review draft talk tracks with enablement leaders\n\n"
+            f"**Candidate 30-Day Milestones:**\n"
+            f"- Draft reference-story plan reviewed\n"
+            f"- Decide whether to begin a FedRAMP readiness assessment\n"
+            f"- Draft win-rate tracking dashboard reviewed\n\n"
+            f"**Synthetic Scenario:** The model illustrates movement from {current_wr}% to {q4_wr}% "
+            f"within {recovery_quarters} quarters and ${total_recoverable:,} of scenario value; "
+            f"it is not a conversion, revenue, ROI, or forecast commitment.\n\n"
             f"Source: [All Win/Loss Systems]\n"
             f"Agents: ExecutivePresentationAgent (orchestrating all agents)"
         )

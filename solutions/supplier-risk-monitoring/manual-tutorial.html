@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Build Supply Risk Monitoring Agent manually</title>
+  <script>
+    (() => {
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const theme =
+        param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  <style>
+
+    :root {
+      color-scheme: light;
+      --cp-bg: #f7f4ef;
+      --cp-bg-elevated: #fcfbf8;
+      --cp-surface: #ffffff;
+      --cp-surface-soft: #f5f5f5;
+      --cp-border: #dedede;
+      --cp-border-strong: #919191;
+      --cp-text: #242424;
+      --cp-text-muted: #5c5c5c;
+      --cp-text-soft: #6f6f6f;
+      --cp-accent: #b11f4b;
+      --cp-accent-hover: #9a1a41;
+      --cp-accent-soft: rgba(177, 31, 75, 0.08);
+      --cp-accent-fg: #ffffff;
+      --cp-success: #16a34a;
+      --cp-danger: #dc2626;
+      --cp-warning: #f59e0b;
+      --cp-link: #0078d4;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+      --cp-overlay: rgba(255, 255, 255, 0.8);
+      --cp-panel: rgba(255, 255, 255, 0.86);
+      --cp-panel-strong: rgba(255, 255, 255, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.55);
+      --cp-highlight: rgba(177, 31, 75, 0.12);
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --cp-bg: #3d3b3a;
+      --cp-bg-elevated: #343231;
+      --cp-surface: #292929;
+      --cp-surface-soft: #2e2e2e;
+      --cp-border: #474747;
+      --cp-border-strong: #5f5f5f;
+      --cp-text: #dedede;
+      --cp-text-muted: #919191;
+      --cp-text-soft: #b0b0b0;
+      --cp-accent: #fd8ea1;
+      --cp-accent-hover: #fb7b91;
+      --cp-accent-soft: rgba(253, 142, 161, 0.14);
+      --cp-accent-fg: #1a1a1a;
+      --cp-success: #4ade80;
+      --cp-danger: #f87171;
+      --cp-warning: #fbbf24;
+      --cp-link: #4da6ff;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+      --cp-overlay: rgba(41, 41, 41, 0.88);
+      --cp-panel: rgba(41, 41, 41, 0.72);
+      --cp-panel-strong: rgba(41, 41, 41, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.04);
+      --cp-highlight: rgba(253, 142, 161, 0.12);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--cp-bg);
+      color: var(--cp-text);
+      font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.55;
+    }
+    a { color: var(--cp-link); }
+    button, .button { font: inherit; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 24px;
+      border-bottom: 1px solid var(--cp-border);
+      background: var(--cp-panel-strong);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 750; }
+    .brand-mark {
+      display: grid;
+      width: 32px;
+      height: 32px;
+      place-items: center;
+      border-radius: 10px;
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 8px 14px;
+      border: 1px solid var(--cp-border-strong);
+      border-radius: 10px;
+      background: var(--cp-surface);
+      color: var(--cp-text);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .button.primary {
+      border-color: var(--cp-accent);
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+    }
+    .page { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 40px 0 80px; }
+    .hero {
+      padding: 32px;
+      border: 1px solid var(--cp-border);
+      border-radius: 18px;
+      background: var(--cp-surface);
+      box-shadow: var(--cp-shadow);
+    }
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--cp-accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+    h1 { margin: 0; font-size: clamp(34px, 7vw, 64px); line-height: 1; letter-spacing: -.045em; }
+    h2 { margin-top: 42px; }
+    .lede { max-width: 760px; color: var(--cp-text-muted); font-size: 18px; }
+    .notice {
+      margin-top: 18px;
+      padding: 15px;
+      border-left: 4px solid var(--cp-warning);
+      background: var(--cp-surface-soft);
+    }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .card {
+      border: 1px solid var(--cp-border);
+      border-radius: 14px;
+      background: var(--cp-surface);
+      padding: 20px;
+    }
+    .card h3 { margin-top: 0; }
+    .muted { color: var(--cp-text-muted); }
+    .status { color: var(--cp-accent); font-weight: 750; }
+    .progress { height: 8px; overflow: hidden; border-radius: 999px; background: var(--cp-border); }
+    .progress span { display: block; width: 0; height: 100%; background: var(--cp-accent); }
+    @media (max-width: 760px) {
+      .grid { grid-template-columns: 1fr; }
+      .topbar { align-items: flex-start; padding: 12px 16px; }
+      .page { width: min(100% - 24px, 1120px); padding-top: 24px; }
+      .hero { padding: 24px 20px; }
+    }
+
+    .layout { display: grid; grid-template-columns: 270px minmax(0, 840px); gap: 32px; max-width: 1180px; margin: 0 auto; padding: 32px 24px 80px; }
+    .sidebar { position: sticky; top: 82px; align-self: start; max-height: calc(100vh - 104px); overflow: auto; }
+    .toc { display: grid; gap: 4px; margin-top: 14px; }
+    .toc a { padding: 7px 9px; border-left: 3px solid var(--cp-border); color: var(--cp-text-muted); text-decoration: none; font-size: 13px; }
+    .toc a:hover { border-left-color: var(--cp-accent); color: var(--cp-text); }
+    .step { scroll-margin-top: 90px; margin: 0 0 28px; overflow: hidden; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
+    .step header { display: flex; gap: 14px; padding: 20px 22px; border-bottom: 1px solid var(--cp-border); }
+    .step header > span { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 10px; background: var(--cp-accent-soft); color: var(--cp-accent); font-weight: 800; }
+    .step h3, .step header p { margin: 0; }
+    .step header p { color: var(--cp-text-muted); font-size: 13px; }
+    .step-body { padding: 22px; }
+    .instruction-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+    .instruction { padding: 14px; border-radius: 10px; background: var(--cp-surface-soft); }
+    .instruction strong { display: block; margin-bottom: 6px; }
+    .instruction.expected { border-left: 4px solid var(--cp-success); }
+    .shot { display: block; width: 100%; border: 1px solid var(--cp-border); border-radius: 10px; }
+    .missing { padding: 32px; border: 2px dashed var(--cp-warning); border-radius: 10px; color: var(--cp-text-muted); }
+    .step footer { display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+    .troubleshooting details { padding: 14px 0; border-bottom: 1px solid var(--cp-border); }
+    summary { cursor: pointer; font-weight: 700; }
+    @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } .sidebar { position: static; max-height: none; } }
+    @media (max-width: 620px) { .instruction-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">C</span><span>Clawpilot manual journey</span></div>
+    <div><a class="button" href="screenshots/manual/manual-build-walkthrough.gif">Watch the manual film</a> <a class="button primary" href="exports/supplier-risk-monitoring-source.zip">Download source bundle</a></div>
+  </header>
+  <div class="layout">
+    <aside class="sidebar">
+      <strong id="progress-label">0 of 18 complete</strong>
+      <div class="progress"><span id="progress-bar"></span></div>
+      <nav class="toc" aria-label="Tutorial actions"><a href="#step-1">1. Create a blank Copilot Studio agent</a>
+<a href="#step-2">2. Name Supply Risk Monitoring Manual</a>
+<a href="#step-3">3. Enter the reviewed global instructions</a>
+<a href="#step-4">4. Save the instruction policy</a>
+<a href="#step-5">5. Remove default web search</a>
+<a href="#step-6">6. Add knowledge: aibast_supplier-risk-monitoring-review-rules.md</a>
+<a href="#step-7">7. Add knowledge: aibast_supplier-risk-monitoring-synthetic-records.md</a>
+<a href="#step-8">8. Add skill: aibast_alternative_sourcing</a>
+<a href="#step-9">9. Add skill: aibast_disruption_alerts</a>
+<a href="#step-10">10. Add skill: aibast_risk_dashboard</a>
+<a href="#step-11">11. Add skill: aibast_supplier_scorecard</a>
+<a href="#step-12">12. Review model, skills, knowledge, and safety boundaries</a>
+<a href="#step-13">13. Open a fresh Preview conversation</a>
+<a href="#step-14">14. Pass SR-01: Supply Chain Director</a>
+<a href="#step-15">15. Pass SR-02: Procurement Manager</a>
+<a href="#step-16">16. Pass SR-03: Supply Chain Director</a>
+<a href="#step-17">17. Pass SR-04: Procurement Manager</a>
+<a href="#step-18">18. Confirm Draft and stop before publish</a></nav>
+    </aside>
+    <main>
+      <section class="hero">
+        <p class="eyebrow">Hard mode · literal browser construction</p>
+        <h1>Build Supply Risk Monitoring Agent manually.</h1>
+        <p class="lede">No PAC CLI, YAML import, or plugin architect. Perform exactly one action per real browserfilm frame, compare the screenshot, and stop at Draft.</p>
+        <div class="notice"><strong>Synthetic disclosure:</strong> this is qualitative workflow evidence using packaged synthetic inputs. It is not a customer KPI or a live-system result.</div>
+
+      </section>
+      <h2>Build and verify</h2>
+
+      <article class="step" id="step-1">
+        <header><span>1</span><div><h3>Create a blank Copilot Studio agent</h3><p>Frame 1 of 18</p></div></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><strong>Action</strong>Create a blank Copilot Studio agent</div>
+            <div class="instruction expected"><strong>Expected result</strong>A blank Copilot Studio agent is visible in the captured Draft workspace.</div>
+          </div>
+          <img class="shot" src="screenshots/manual/01-create-blank-agent.jpg" alt="Create a blank Copilot Studio agent evidence">
+          <footer>
+            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/supplier-risk-monitoring/deployment.json">Raw download: Deployment</a>
+            <label><input class="complete" type="checkbox" data-step="1"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+
+      <article class="step" id="step-2">
+        <header><span>2</span><div><h3>Name Supply Risk Monitoring Manual</h3><p>Frame 2 of 18</p></div></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><strong>Action</strong>Name Supply Risk Monitoring Manual</div>
+            <div class="instruction expected"><strong>Expected result</strong>The page header shows the recorded manual build name: Supply Risk Monitoring Manual.</div>
+          </div>
+          <img class="shot" src="screenshots/manual/02-name-agent.jpg" alt="Name Supply Risk Monitoring Manual evidence">
+          <footer>
+            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/supplier-risk-monitoring/deployment.json">Raw download: Deployment</a>
+            <label><input class="complete" type="checkbox" data-step="2"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+
+      <article class="step" id="step-3">
+        <header><span>3</span><div><h3>Enter the reviewed global instructions</h3><p>Frame 3 of 18</p></div></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><strong>Action</strong>Enter the reviewed global instructions</div>
+            <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
+          </div>
+          <img class="shot" src="screenshots/manual/03-enter-instructions.jpg" alt="Enter the reviewed global instructions evidence">
+          <footer>
+            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/supplier-risk-monitoring/manual/GLOBAL-INSTRUCTIONS.md">Raw download: Global Instructions</a>
+            <label><input class="complete" type="checkbox" data-step="3"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+
+      <article class="step" id="step-4">
+        <header><span>4</span><div><h3>Save the instruction policy</h3><p>Frame 4 of 18</p></div></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><strong>Action</strong>Save the instruction policy</div>
+            <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
+          </div>
+          <img class="shot" src="screenshots/manual/04-save-instructions.jpg" alt="Save the instruction policy evidence">
+          <footer>
+            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/supplier-risk-monitoring/manual/GLOBAL-INSTRUCTIONS.md">Raw download: Global Instructions</a>
+            <label><input class="complete" type="checkbox" data-step="4"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+
+      <article class="step" id="step-5">
+        <header><span>5</span><div><h3>Remove default web search</h3><p>Frame 5 of 18</p></div></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><strong>Action</strong>Remove default web search</div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured inventory no longer lists the default web-search capability.</div>
+          </div>
+          <img class="shot" src="screenshots/manual/05-remove-web-search.jpg" alt="Remove default web search evidence">
+          <footer>
+            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/supplier-risk-monitoring/export-manifest.json">Raw download: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="5"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+
+      <article class="step" id="step-6">
+        <header><span>6</span><div><h3>Add knowledge: aibast_supplier-risk-monitoring-review-rules.md</h3><p>Frame 6 of 18</p></div></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><strong>Action</strong>Add knowledge: aibast_supplier-risk-monitoring-review-rules.md</div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
+          </div>
+          <img class="shot" src="screenshots/manual/06-add-aibast-supplier-risk-monitoring-review-rules.jpg" alt="Add knowledge: aibast_supplier-risk-monitoring-review-rules.md evidence">
+          <footer>
+            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/supplier-risk-monitoring/manual/knowledge/aibast_supplier-risk-monitoring-review-rules.md">Raw download: Aibast Supplier Risk Monitoring Review Rules</a>
+            <label><input class="complete" type="checkbox" data-step="6"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+
+      <article class="step" id="step-7">
+        <header><span>7</span><div><h3>Add knowledge: aibast_supplier-risk-monitoring-synthetic-records.md</h3><p>Frame 7 of 18</p></div></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><strong>Action</strong>Add knowledge: aibast_supplier-risk-monitoring-synthetic-records.md</div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
+          </div>
+          <img class="shot" src="screenshots/manual/07-add-aibast-supplier-risk-monitoring-synthetic-records.jpg" alt="Add knowledge: aibast_supplier-risk-monitoring-synthetic-records.md evidence">
+          <footer>
+            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/supplier-risk-monitoring/manual/knowledge/aibast_supplier-risk-monitoring-synthetic-records.md">Raw download: Aibast Supplier Risk Monitoring Synthetic Records</a>
+            <label><input class="complete" type="checkbox" data-step="7"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+
+      <article class="step" id="step-8">
+        <header><span>8</span><div><h3>Add skill: aibast_alternative_sourcing</h3><p>Frame 8 of 18</p></div></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><strong>Action</strong>Add skill: aibast_alternative_sourcing</div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 4 skills.</div>
+          </div>
+          <img class="shot" src="screenshots/manual/08-add-aibast-alternative-sourcing.jpg" alt="Add skill: aibast_alternative_sourcing evidence">
+          <footer>
+            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/supplier-risk-monitoring/manual/skills/aibast_alternative_sourcing/SKILL.md">Raw download: Manual skill: aibast alternative sourcing</a>
+            <label><input class="complete" type="checkbox" data-step="8"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+
+      <article class="step" id="step-9">
+        <header><span>9</span><div><h3>Add skill: aibast_disruption_alerts</h3><p>Frame 9 of 18</p></div></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><strong>Action</strong>Add skill: aibast_disruption_alerts</div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 4 skills.</div>
+          </div>
+          <img class="shot" src="screenshots/manual/09-add-aibast-disruption-alerts.jpg" alt="Add skill: aibast_disruption_alerts evidence">
+          <footer>
+            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/supplier-risk-monitoring/manual/skills/aibast_disruption_alerts/SKILL.md">Raw download: Manual skill: aibast disruption alerts</a>
+            <label><input class="complete" type="checkbox" data-step="9"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+
+      <article class="step" id="step-10">
+        <header><span>10</span><div><h3>Add skill: aibast_risk_dashboard</h3><p>Frame 10 of 18</p></div></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><strong>Action</strong>Add skill: aibast_risk_dashboard</div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 4 skills.</div>
+          </div>
+          <img class="shot" src="screenshots/manual/10-add-aibast-risk-dashboard.jpg" alt="Add skill: aibast_risk_dashboard evidence">
+          <footer>
+            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/supplier-risk-monitoring/manual/skills/aibast_risk_dashboard/SKILL.md">Raw download: Manual skill: aibast risk dashboard</a>
+            <label><input class="complete" type="checkbox" data-step="10"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+
+      <article class="step" id="step-11">
+        <header><span>11</span><div><h3>Add skill: aibast_supplier_scorecard</h3><p>Frame 11 of 18</p></div></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><strong>Action</strong>Add skill: aibast_supplier_scorecard</div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 4 skills.</div>
+          </div>
+          <img class="shot" src="screenshots/manual/11-add-aibast-supplier-scorecard.jpg" alt="Add skill: aibast_supplier_scorecard evidence">
+          <footer>
+            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/supplier-risk-monitoring/manual/skills/aibast_supplier_scorecard/SKILL.md">Raw download: Manual skill: aibast supplier scorecard</a>
+            <label><input class="complete" type="checkbox" data-step="11"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+
+      <article class="step" id="step-12">
+        <header><span>12</span><div><h3>Review model, skills, knowledge, and safety boundaries</h3><p>Frame 12 of 18</p></div></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><strong>Action</strong>Review model, skills, knowledge, and safety boundaries</div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
+          </div>
+          <img class="shot" src="screenshots/manual/12-review-inventory.jpg" alt="Review model, skills, knowledge, and safety boundaries evidence">
+          <footer>
+            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/supplier-risk-monitoring/deployment.json">Raw download: Deployment</a>
+            <label><input class="complete" type="checkbox" data-step="12"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+
+      <article class="step" id="step-13">
+        <header><span>13</span><div><h3>Open a fresh Preview conversation</h3><p>Frame 13 of 18</p></div></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><strong>Action</strong>Open a fresh Preview conversation</div>
+            <div class="instruction expected"><strong>Expected result</strong>A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass.</div>
+          </div>
+          <img class="shot" src="screenshots/manual/13-open-preview.jpg" alt="Open a fresh Preview conversation evidence">
+          <footer>
+            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/supplier-risk-monitoring/export-manifest.json">Raw download: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="13"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+
+      <article class="step" id="step-14">
+        <header><span>14</span><div><h3>Pass SR-01: Supply Chain Director</h3><p>Frame 14 of 18</p></div></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><strong>Action</strong>Pass SR-01: Supply Chain Director</div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records SR-01 with the recorded identifiers TechnoCore Semiconductor, CRITICAL; do not infer results beyond it.</div>
+          </div>
+          <img class="shot" src="screenshots/manual/14-sr-01.jpg" alt="Pass SR-01: Supply Chain Director evidence">
+          <footer>
+            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/supplier-risk-monitoring/evals/manual-build-evidence.json">Raw download: Manual Build Evidence</a>
+            <label><input class="complete" type="checkbox" data-step="14"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+
+      <article class="step" id="step-15">
+        <header><span>15</span><div><h3>Pass SR-02: Procurement Manager</h3><p>Frame 15 of 18</p></div></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><strong>Action</strong>Pass SR-02: Procurement Manager</div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records SR-02 with the recorded identifiers SUP-101, Geopolitical; do not infer results beyond it.</div>
+          </div>
+          <img class="shot" src="screenshots/manual/15-sr-02.jpg" alt="Pass SR-02: Procurement Manager evidence">
+          <footer>
+            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/supplier-risk-monitoring/evals/manual-build-evidence.json">Raw download: Manual Build Evidence</a>
+            <label><input class="complete" type="checkbox" data-step="15"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+
+      <article class="step" id="step-16">
+        <header><span>16</span><div><h3>Pass SR-03: Supply Chain Director</h3><p>Frame 16 of 18</p></div></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><strong>Action</strong>Pass SR-03: Supply Chain Director</div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records SR-03 with the recorded identifiers SUP-104, force majeure; do not infer results beyond it.</div>
+          </div>
+          <img class="shot" src="screenshots/manual/16-sr-03.jpg" alt="Pass SR-03: Supply Chain Director evidence">
+          <footer>
+            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/supplier-risk-monitoring/evals/manual-build-evidence.json">Raw download: Manual Build Evidence</a>
+            <label><input class="complete" type="checkbox" data-step="16"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+
+      <article class="step" id="step-17">
+        <header><span>17</span><div><h3>Pass SR-04: Procurement Manager</h3><p>Frame 17 of 18</p></div></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><strong>Action</strong>Pass SR-04: Procurement Manager</div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records SR-04 with the recorded identifiers Murata Electronics, No supplier was contacted; do not infer results beyond it.</div>
+          </div>
+          <img class="shot" src="screenshots/manual/17-sr-04.jpg" alt="Pass SR-04: Procurement Manager evidence">
+          <footer>
+            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/supplier-risk-monitoring/evals/manual-build-evidence.json">Raw download: Manual Build Evidence</a>
+            <label><input class="complete" type="checkbox" data-step="17"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+
+      <article class="step" id="step-18">
+        <header><span>18</span><div><h3>Confirm Draft and stop before publish</h3><p>Frame 18 of 18</p></div></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><strong>Action</strong>Confirm Draft and stop before publish</div>
+            <div class="instruction expected"><strong>Expected result</strong>The agent remains Draft and no Publish action is taken.</div>
+          </div>
+          <img class="shot" src="screenshots/manual/18-confirm-draft.jpg" alt="Confirm Draft and stop before publish evidence">
+          <footer>
+            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/supplier-risk-monitoring/deployment.json">Raw download: Deployment</a>
+            <label><input class="complete" type="checkbox" data-step="18"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+      <h2 id="troubleshooting">Troubleshooting</h2>
+      <section class="card troubleshooting">
+        <details open><summary>A screenshot or browserfilm frame is missing</summary><p>Stop. Do not invent, recreate, or substitute an image. Capture the real frame, update the browserfilm manifest, and regenerate without <code>--allow-pending</code>.</p></details>
+        <details><summary>A knowledge file is still processing</summary><p>Wait for ingestion to finish before Preview. A partial answer is not evidence.</p></details>
+        <details><summary>A skill upload fails</summary><p>Use the linked raw <code>SKILL.md</code>. Fix the reviewed source deliberately; do not silently skip the action.</p></details>
+        <details><summary>The model differs from Easy mode</summary><p>Record the substitution and stop the parity claim until Easy and Hard use the same reviewed model.</p></details>
+        <details><summary>The Preview answer misses an identifier</summary><p>Mark the recorded case failed, inspect instructions and inventory, then replay the exact prompt in a fresh conversation.</p></details>
+        <details><summary>Should I publish?</summary><p>No. Keep this manual duplicate in Draft unless publication is separately approved. Do not choose Publish as part of this tutorial.</p></details>
+      </section>
+    </main>
+  </div>
+  <script>
+    (() => {
+      const key = "aibast:supplier-risk-monitoring:manual-progress";
+      const boxes = Array.from(document.querySelectorAll(".complete"));
+      const label = document.getElementById("progress-label");
+      const bar = document.getElementById("progress-bar");
+      let saved = [];
+      try { saved = JSON.parse(localStorage.getItem(key) || "[]"); } catch (_error) { saved = []; }
+      boxes.forEach((box) => {
+        box.checked = saved.includes(box.dataset.step);
+        box.addEventListener("change", update);
+      });
+      function update() {
+        const done = boxes.filter((box) => box.checked).map((box) => box.dataset.step);
+        localStorage.setItem(key, JSON.stringify(done));
+        label.textContent = `${done.length} of ${boxes.length} complete`;
+        bar.style.width = boxes.length ? `${(done.length / boxes.length) * 100}%` : "0%";
+      }
+      update();
+    })();
+  </script>
+</body>
+</html>

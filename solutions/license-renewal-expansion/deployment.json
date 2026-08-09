@@ -1,0 +1,97 @@
+{
+  "schema": "aibast-deployment-recipe/1.0",
+  "name": "@aibast-agents-library/license-renewal-expansion",
+  "display_name": "License Renewal and Expansion Agent",
+  "source_path": "agents/@aibast-agents-library/software_dp_stacks/license_renewal_expansion_stack/license_renewal_expansion_agent.py",
+  "target_filename": "license_renewal_expansion_agent.py",
+  "expected_tool": "LicenseRenewalExpansionAgent",
+  "data_source": "synthetic",
+  "operations": [
+    "renewal_pipeline",
+    "expansion_opportunities",
+    "churn_risk",
+    "revenue_impact"
+  ],
+  "smoke_test": {
+    "prompt": "Review the synthetic renewal pipeline and risk bands without changing CRM or forecast records.",
+    "arguments": {
+      "operation": "renewal_pipeline",
+      "data_source": "synthetic"
+    },
+    "must_call": "LicenseRenewalExpansionAgent",
+    "must_include": [
+      "Renewal Pipeline",
+      "Evidence boundary"
+    ]
+  },
+  "manual_package": {
+    "knowledge_files": [
+      "manual/knowledge/aibast_license-renewal-expansion-synthetic-records.md",
+      "manual/knowledge/aibast_license-renewal-expansion-operating-rules.md"
+    ],
+    "skill_count": 4,
+    "skills": [
+      "manual/skills/renewal-pipeline/SKILL.md",
+      "manual/skills/expansion-opportunities/SKILL.md",
+      "manual/skills/churn-risk/SKILL.md",
+      "manual/skills/revenue-impact/SKILL.md"
+    ],
+    "locked_demo_cases": "tests/demo_cases/license-renewal-expansion.json",
+    "onepager_map": "evals/onepager-map.json",
+    "package_case_mirror": "evals/demo-cases.json",
+    "strict_capture_evidence": "evals/transcripts.json"
+  },
+  "copilot_studio": {
+    "status": "package-ready-not-created",
+    "publish": false,
+    "publish_requires_confirmation": true,
+    "external_actions": "not-configured",
+    "plugin": "mcs-assistant@copilot-studio-plugin",
+    "minimum_pac_version": "2.9.3",
+    "authoring_mode": "cli-copilot",
+    "validated_manual": {
+      "display_name": "License Renewal Manual",
+      "bot_id": "93eed91a-111c-4a60-9079-2983d8f71547",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "web_search_removed": true,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    },
+    "validated_pilot": {
+      "display_name": "License Renewal Pilot",
+      "schema_name": "aibast_LicenseRenewalandExpansion",
+      "bot_id": "33007b45-ef67-4fcc-bcb1-0fab0c72f64c",
+      "environment_name": "kodyv8",
+      "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+      "model": "Sonnet46",
+      "skills": 4,
+      "knowledge_files": 2,
+      "changes_pushed": 7,
+      "status": "Draft",
+      "published": false,
+      "preview_cases_passed": 4,
+      "preview_cases_total": 4
+    }
+  },
+  "registry_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/registry.json",
+  "source_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/software_dp_stacks/license_renewal_expansion_stack/license_renewal_expansion_agent.py",
+  "brainstem": {
+    "health_url": "http://localhost:7071/health",
+    "chat_url": "http://localhost:7071/chat",
+    "ui_url": "http://localhost:7071",
+    "installers": {
+      "macos_linux": "https://microsoft.github.io/aibast-agents-library/install.sh",
+      "windows_powershell": "https://microsoft.github.io/aibast-agents-library/install.ps1",
+      "windows_cmd": "https://microsoft.github.io/aibast-agents-library/install.cmd"
+    },
+    "default_source_dir": "~/.brainstem/src/rapp_brainstem",
+    "default_agents_dir": "~/.brainstem/src/rapp_brainstem/agents",
+    "policy_clean_launcher_dir": "~/.copilot/bin"
+  }
+}

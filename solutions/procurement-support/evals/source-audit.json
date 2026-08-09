@@ -1,0 +1,22 @@
+{
+  "schema": "aibast-source-audit/1.0",
+  "solution": "@aibast-agents-library/procurement-support",
+  "status": "audited-and-fixed",
+  "approved_slide": {
+    "file": "29. Discount Finder Agent one-pager.pptx",
+    "sha256": "6646234adc583111361a1196ca127b036155133cf0297cfb6891684dc1477a8e"
+  },
+  "source_path": "agents/@aibast-agents-library/general_stacks/procurement_support_stack/procurement_support_agent.py",
+  "findings": [
+    "The manifest description matched the Discount Finder slide, but the display name and exposed operations implemented unrelated requisition, contract, scorecard, and budget dashboards.",
+    "The source had no deterministic discount, dated-deal, consolidation, or purchase-timing evidence.",
+    "Live strict isolation showed that the upcoming-healthcare-purchases savings prompt could be answered without invoking the Discount Finder tool."
+  ],
+  "fixes": [
+    "Aligned the display name and exposed operations to savings_scan, time_sensitive_deals, consolidation_analysis, and purchase_timing.",
+    "Added fictional contract-tier, pricing-notice, and fragmented-demand evidence with explicit no-order and no-commercial-commitment gates.",
+    "Identified ProcurementSupportAgent explicitly as the Discount Finder Agent and added exact savings-scan, dated-deal, consolidation, and timing routing language with deterministic DISC-101 and DISC-102 evidence."
+  ],
+  "remaining_boundary": "Production connections and all external actions require customer approval, least-privilege controls, and an authorized human workflow.",
+  "strict_capture": "passed"
+}

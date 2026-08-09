@@ -1,0 +1,77 @@
+{
+  "schema": "aibast-persona-cases/1.0",
+  "solution": "Utility Billing and Assistance Agent",
+  "agent": "@aibast-agents-library/utility-billing-assistance",
+  "onepager": "27. Utility Billing and Assistance Agent one-pager.pptx",
+  "cases": [
+    {
+      "id": "UTILITY_BILLING_ASSISTANCE-01",
+      "operation": "billing_inquiry",
+      "persona": "Customer Service Representative",
+      "prompt": "Explain ACCT-90003 balances without changing the account.",
+      "kwargs": {
+        "operation": "billing_inquiry",
+        "account_id": "ACCT-90003"
+      },
+      "must_include": [
+        "ACCT-90003",
+        "$489.20",
+        "No balance"
+      ],
+      "expects_agent": "UtilityBillingAssistanceAgent"
+    },
+    {
+      "id": "UTILITY_BILLING_ASSISTANCE-02",
+      "operation": "usage_analysis",
+      "persona": "Billing Specialist",
+      "prompt": "Does ACCT-90003 show a possible leak and what draft adjustment evidence is needed?",
+      "kwargs": {
+        "operation": "usage_analysis",
+        "account_id": "ACCT-90003"
+      },
+      "must_include": [
+        "REVIEW POSSIBLE LEAK",
+        "Draft policy estimate",
+        "not a leak diagnosis"
+      ],
+      "expects_agent": "UtilityBillingAssistanceAgent"
+    },
+    {
+      "id": "UTILITY_BILLING_ASSISTANCE-03",
+      "operation": "payment_plan",
+      "persona": "Revenue Services Supervisor",
+      "prompt": "Show ACCT-90003 payment-plan options, but do not set one up.",
+      "kwargs": {
+        "operation": "payment_plan",
+        "account_id": "ACCT-90003"
+      },
+      "must_include": [
+        "12 months",
+        "No payment arrangement was created"
+      ],
+      "expects_agent": "UtilityBillingAssistanceAgent"
+    },
+    {
+      "id": "UTILITY_BILLING_ASSISTANCE-04",
+      "operation": "assistance_programs",
+      "persona": "Assistance Coordinator",
+      "prompt": "Screen a two-person household earning 25000 with a 70-year-old applicant.",
+      "kwargs": {
+        "operation": "assistance_programs",
+        "household_size": 2,
+        "annual_income": 25000,
+        "age": 70
+      },
+      "must_include": [
+        "POTENTIALLY ELIGIBLE",
+        "No eligibility determination",
+        "enrollment"
+      ],
+      "expects_agent": "UtilityBillingAssistanceAgent"
+    }
+  ],
+  "assertion_principle": "One persona case per operation; assertions use deterministic source evidence and explicit safety language.",
+  "agent_files": [
+    "utility_billing_assistance_agent"
+  ]
+}

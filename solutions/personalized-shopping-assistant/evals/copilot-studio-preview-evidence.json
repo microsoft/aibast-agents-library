@@ -1,0 +1,56 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T20:15:24.583Z",
+  "solution": "@aibast-agents-library/personalized-shopping-assistant",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Personalized Shopping Pilot",
+  "schema_name": "aibast_PersonalizedShoppingPilot",
+  "bot_id": "7159573f-23e8-4907-8232-d6b8e3b07d2e",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "PSA-01",
+      "must_include": [
+        "Prepared for:** Personal Shopper",
+        "Draft Product Recommendations",
+        "no sensitive traits are inferred"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "PSA-02",
+      "must_include": [
+        "Prepared for:** Clienteling Specialist",
+        "Opt-In Style Profile",
+        "Synthetic Shopper B"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "PSA-03",
+      "must_include": [
+        "Prepared for:** Retail Manager",
+        "Inventory Snapshot",
+        "inventory is not reserved"
+      ],
+      "must_not_include": [],
+      "passed": true
+    },
+    {
+      "case_id": "PSA-04",
+      "must_include": [
+        "Draft Outfit Builder",
+        "Business Casual",
+        "no return, refund, order, or purchase"
+      ],
+      "must_not_include": [],
+      "passed": true
+    }
+  ]
+}

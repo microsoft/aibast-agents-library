@@ -15,9 +15,9 @@ from basic_agent import BasicAgent
 __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@aibast-agents-library/permit-license-management",
-    "version": "1.0.0",
-    "display_name": "Permit & License Management Agent",
-    "description": "Tracks permits and licenses across energy facilities, manages renewal calendars, identifies compliance gaps, and monitors applications.",
+    "version": "1.1.0",
+    "display_name": "Permit Management Agent",
+    "description": "Review a synthetic energy permit inventory, renewal calendar, compliance gaps, and application status. Use for permit and license tracking or audit-readiness questions. The agent never submits, renews, amends, or represents approval of a permit; authorized staff must review and use future authenticated filing tools.",
     "author": "AIBAST",
     "tags": ["permits", "licenses", "compliance", "regulatory", "energy", "renewals"],
     "category": "energy",
@@ -155,23 +155,31 @@ REGULATORY_REQUIREMENTS = {
 # Helpers
 # ---------------------------------------------------------------------------
 
-def _permit_inventory():
+def _selected_permits(facility=None):
+    if not facility:
+        return PERMITS
+    query = facility.casefold()
+    return {pid: permit for pid, permit in PERMITS.items() if query in permit["facility"].casefold()}
+
+
+def _permit_inventory(facility=None):
     inventory = []
-    for pid, p in PERMITS.items():
+    selected = _selected_permits(facility)
+    for pid, p in selected.items():
         inventory.append({
             "id": pid, "name": p["name"], "facility": p["facility"],
             "authority": p["issuing_authority"], "permit_number": p["permit_number"],
             "status": p["status"], "type": p["type"],
             "expiration": p["expiration_date"], "conditions": p["conditions"],
         })
-    active = sum(1 for p in PERMITS.values() if p["status"] == "active")
-    expired = sum(1 for p in PERMITS.values() if p["status"] == "expired")
+    active = sum(1 for p in selected.values() if p["status"] == "active")
+    expired = sum(1 for p in selected.values() if p["status"] == "expired")
     return {"permits": inventory, "total": len(inventory), "active": active, "expired": expired}
 
 
-def _renewal_calendar():
+def _renewal_calendar(facility=None):
     calendar = []
-    for pid, p in PERMITS.items():
+    for pid, p in _selected_permits(facility).items():
         calendar.append({
             "id": pid, "name": p["name"], "facility": p["facility"],
             "expiration": p["expiration_date"], "status": p["status"],
@@ -181,9 +189,9 @@ def _renewal_calendar():
     return {"calendar": calendar}
 
 
-def _compliance_gaps():
+def _compliance_gaps(facility=None):
     gaps = []
-    for pid, p in PERMITS.items():
+    for pid, p in _selected_permits(facility).items():
         if p["status"] == "expired":
             gaps.append({
                 "id": pid, "name": p["name"], "facility": p["facility"],
@@ -201,9 +209,12 @@ def _compliance_gaps():
     return {"gaps": gaps, "total": len(gaps), "critical": sum(1 for g in gaps if g["severity"] == "critical")}
 
 
-def _application_status():
+def _application_status(facility=None):
     statuses = []
+    query = facility.casefold() if facility else None
     for aid, a in APPLICATIONS.items():
+        if query and query not in a["facility"].casefold():
+            continue
         statuses.append({
             "id": aid, "name": a["permit_name"], "facility": a["facility"],
             "authority": a["authority"], "submitted": a["submitted_date"],
@@ -221,7 +232,7 @@ class PermitLicenseManagementAgent(BasicAgent):
     """Permit and license tracking and compliance management agent."""
 
     def __init__(self):
-        self.name = "@aibast-agents-library/permit-license-management"
+        self.name = "PermitLicenseManagementAgent"
         self.metadata = {
             "name": self.name,
             "description": __manifest__["description"],
@@ -236,11 +247,11 @@ class PermitLicenseManagementAgent(BasicAgent):
                             "compliance_gaps",
                             "application_status",
                         ],
-                        "description": "The permit management operation to perform.",
+                        "description": "Choose permit_inventory for the register, renewal_calendar for deadlines, compliance_gaps for evidence requiring review, or application_status for already-submitted application tracking.",
                     },
                     "facility": {
                         "type": "string",
-                        "description": "Optional facility name to filter results.",
+                        "description": "Optional facility name or substring used to filter the synthetic snapshot.",
                     },
                 },
                 "required": ["operation"],
@@ -250,18 +261,19 @@ class PermitLicenseManagementAgent(BasicAgent):
 
     def perform(self, **kwargs) -> str:
         op = kwargs.get("operation", "permit_inventory")
+        facility = kwargs.get("facility")
         if op == "permit_inventory":
-            return self._permit_inventory()
+            return self._permit_inventory(facility)
         elif op == "renewal_calendar":
-            return self._renewal_calendar()
+            return self._renewal_calendar(facility)
         elif op == "compliance_gaps":
-            return self._compliance_gaps()
+            return self._compliance_gaps(facility)
         elif op == "application_status":
-            return self._application_status()
+            return self._application_status(facility)
         return f"**Error:** Unknown operation `{op}`."
 
-    def _permit_inventory(self) -> str:
-        data = _permit_inventory()
+    def _permit_inventory(self, facility=None) -> str:
+        data = _permit_inventory(facility)
         lines = [
             "# Permit & License Inventory",
             "",
@@ -275,10 +287,12 @@ class PermitLicenseManagementAgent(BasicAgent):
                 f"| {p['id']} | {p['name']} | {p['facility']} "
                 f"| {p['authority']} | {p['status'].upper()} | {p['expiration']} | {p['conditions']} |"
             )
+        lines.append("")
+        lines.append("> Synthetic register only. Verify status with the issuing authority before relying on it.")
         return "\n".join(lines)
 
-    def _renewal_calendar(self) -> str:
-        data = _renewal_calendar()
+    def _renewal_calendar(self, facility=None) -> str:
+        data = _renewal_calendar(facility)
         lines = [
             "# Permit Renewal Calendar",
             "",
@@ -290,12 +304,14 @@ class PermitLicenseManagementAgent(BasicAgent):
                 f"| {c['name']} | {c['facility']} | {c['expiration']} "
                 f"| {c['status'].upper()} | {c['renewal_lead_days']} days |"
             )
+        lines.append("")
+        lines.append("> Planning reminders only. No renewal, notice, or authority submission has been initiated.")
         return "\n".join(lines)
 
-    def _compliance_gaps(self) -> str:
-        data = _compliance_gaps()
+    def _compliance_gaps(self, facility=None) -> str:
+        data = _compliance_gaps(facility)
         if data["total"] == 0:
-            return "# Compliance Gaps\n\nNo compliance gaps identified."
+            return "# Compliance Gaps\n\nNo gaps appear in the selected synthetic records; this is not a legal compliance determination."
         lines = [
             "# Compliance Gap Analysis",
             "",
@@ -309,10 +325,12 @@ class PermitLicenseManagementAgent(BasicAgent):
                 f"| {g['name']} | {g['facility']} | {g['gap_type']} "
                 f"| {g['severity'].upper()} | {g['detail']} |"
             )
+        lines.append("")
+        lines.append("> Triage evidence only, not legal advice. Authorized permit staff must validate obligations and approve remediation.")
         return "\n".join(lines)
 
-    def _application_status(self) -> str:
-        data = _application_status()
+    def _application_status(self, facility=None) -> str:
+        data = _application_status(facility)
         lines = [
             "# Permit Application Status",
             "",
@@ -327,6 +345,8 @@ class PermitLicenseManagementAgent(BasicAgent):
                 f"| {a['authority']} | {a['submitted']} | {a['status']} "
                 f"| {a['expected_decision']} | {a['comments']} |"
             )
+        lines.append("")
+        lines.append("> Read-only synthetic tracking. The agent cannot submit, amend, withdraw, or approve an application.")
         return "\n".join(lines)
 
 

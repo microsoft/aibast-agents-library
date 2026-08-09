@@ -1,0 +1,27 @@
+---
+name: field-service-dispatch-technician-assignment
+description: Use when a Dispatch Coordinator asks to recommend a skill-matched candidate for human review.
+---
+# Field Service Dispatch Agent: Technician Assignment
+
+## Route
+
+Use the `technician_assignment` operation. The canonical persona prompt is:
+
+> Who is the best certified candidate for SR-4005? Do not assign them.
+
+## Procedure
+
+1. Read the synthetic knowledge records and controls.
+2. Call or reproduce only the `technician_assignment` operation behavior.
+3. Lead with source-backed identifiers and evidence.
+4. State uncertainty and the required authorized review.
+5. End with the operation's no-write boundary.
+
+## Required evidence
+
+- Marcus Thompson
+- Candidate for dispatcher review
+- No technician has been assigned
+
+Never imply that a live system, filing, account, crew, supplier, shipment, emissions claim, or inventory position was changed.

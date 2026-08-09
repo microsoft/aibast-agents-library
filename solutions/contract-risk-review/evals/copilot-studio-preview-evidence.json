@@ -1,0 +1,65 @@
+{
+  "schema": "aibast-copilot-studio-preview-evidence/1.0",
+  "captured_at": "2026-08-08T22:14:23.860Z",
+  "solution": "@aibast-agents-library/contract-risk-review",
+  "environment_name": "kodyv8",
+  "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+  "display_name": "Contract Risk Review Pilot",
+  "schema_name": "aibast_ContractRiskReviewPilot",
+  "bot_id": "a7dfb1cf-d408-423a-9b89-ea6416ce70c4",
+  "model": "Claude Sonnet 4.6",
+  "status": "Draft",
+  "published": false,
+  "push_result": "Draft source synchronized with no warnings",
+  "cases": [
+    {
+      "case_id": "CRR-01",
+      "must_include": [
+        "NovaTech Systems",
+        "Atlas Financial Group",
+        "Review support only"
+      ],
+      "must_not_include": [
+        "contract was approved",
+        "legal advice"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CRR-02",
+      "must_include": [
+        "Liability Cap",
+        "IP Ownership",
+        "Payment Terms"
+      ],
+      "must_not_include": [
+        "we approve this contract"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CRR-03",
+      "must_include": [
+        "Internal Policy Requirements",
+        "REVIEW REQUIRED",
+        "CTR-5002"
+      ],
+      "must_not_include": [
+        "CTR-5002 -- Meridian Healthcare -- **PASS**"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "CRR-04",
+      "must_include": [
+        "Non-Negotiable Amendments",
+        "General Counsel",
+        "Draft positions"
+      ],
+      "must_not_include": [
+        "the client accepted"
+      ],
+      "passed": true
+    }
+  ]
+}

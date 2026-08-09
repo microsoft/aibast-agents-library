@@ -1,0 +1,66 @@
+{
+  "schema": "aibast-onepager-map/1.0",
+  "solution": "@aibast-agents-library/building-permit-processing",
+  "onepager": "46. Building Permit Processing Agent one-pager.pptx",
+  "source_slide_sha256": "00bc24a14f351a40e947a4307b450dab2bb653a043e32a34f5ec5289b70b58fb",
+  "promises": [
+    {
+      "advertised_promise": "Automate permit intake and classification to ensure completeness and reduce manual review time",
+      "operations": [
+        "intake_triage"
+      ],
+      "demo_cases": [
+        "BPP-02"
+      ],
+      "synthetic_evidence": [
+        "BP-2025-0105 duplicates an application already in review",
+        "BP-2025-0105 is missing MEP drawings and a title report",
+        "BP-2025-0106 is complete enough to accept"
+      ]
+    },
+    {
+      "advertised_promise": "Route applications intelligently across departments to prevent bottlenecks and achieve more timely reviews",
+      "operations": [
+        "intake_triage"
+      ],
+      "demo_cases": [
+        "BPP-03"
+      ],
+      "synthetic_evidence": [
+        "The Harbor Way restaurant fit-out routes to Zoning, Building, and Fire/Life Safety",
+        "The commercial-alteration review clock is represented in the output"
+      ]
+    },
+    {
+      "advertised_promise": "Provide real-time tracking and proactive updates to reduce inquiries and improve service quality",
+      "operations": [
+        "permit_backlog",
+        "applicant_updates",
+        "permit_status"
+      ],
+      "demo_cases": [
+        "BPP-01",
+        "BPP-04"
+      ],
+      "synthetic_evidence": [
+        "BP-2025-0104 is beyond its review clock and in a third correction cycle",
+        "The applicant update queue covers every open application",
+        "The backlog view names the applicant most likely to call first"
+      ]
+    },
+    {
+      "advertised_promise": "Provide inspectors with mobile access and real-time assignments",
+      "operations": [
+        "inspector_assignment"
+      ],
+      "demo_cases": [
+        "BPP-05"
+      ],
+      "synthetic_evidence": [
+        "The solar installation has electrical and structural inspections",
+        "Dave Martinez and Lisa Park are assigned by specialty",
+        "Inspector availability and service zones are represented"
+      ]
+    }
+  ]
+}

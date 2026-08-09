@@ -1,0 +1,123 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:43:36.334739+00:00",
+  "solution": "@aibast-agents-library/win-loss-analysis",
+  "onepager": "22. Win Loss Analysis Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "WinLossAnalysisAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/b2b_sales_stacks/win_loss_analysis_stack/win_loss_analysis_agent.py",
+      "sha256": "f81d4fc89602e9b4d32e11f0582af959059f182aad542c83d482f714154f91ed"
+    }
+  ],
+  "case_file": "tests/demo_cases/win-loss-analysis.json",
+  "case_file_sha256": "d83787babe4340020670dc96899216386293f83992c8943ef9a45a2ba5f65ad0",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "WL-01",
+      "persona": "Sales Operations Manager",
+      "onepager_promise": "Perform pattern recognition and trend analysis to identify actionable insights and reverse declining performance",
+      "prompt": "Compare the bundled synthetic Q3 and Q2 win and loss patterns and show where the decline is concentrated.",
+      "assistant_response": "**The decline is concentrated in Enterprise:**\n\n- **Enterprise win rate dropped 20 points** (40% \u2192 20%) \u2014 this is your biggest problem\n- **Mid-Market and SMB are stable** \u2014 no material change\n- **CompetitorX grew market share** by 14.1%, taking most of those enterprise losses (37% of all Q3 losses)\n- **Deal size fell 9%** overall, reflecting fewer big wins\n\nThe data shows this is an **enterprise-segment issue** against a specific competitor who's winning deals over $500K with security-focused buyers. Mid-Market and SMB motions are working fine.\n\nWant me to dig into the **root causes** (why you're losing to CompetitorX in enterprise) or the **counter-strategies** to recapture that segment?",
+      "agent_logs": "[WinLossAnalysisAgent] **Q3 Win/Loss Overview** (127 closed opportunities analyzed)\n\n| Metric | Q3 | Q2 | Change |\n|---|---|---|---|\n| Total opportunities | 127 | 118 | +8% |\n| Win rate | 38.6% | 44.9% | -6.3 pts |\n| Enterprise win rate | 20.0% | 40.0% | -20.0 pts |\n| Avg deal size (won) | $172,102 | $189,490 | -9% |\n\n**Win Rate by Segment:**\n\n| Segment | Q3 | Q2 | Change |\n|---|---|---|---|\n| Enterprise | 20.0% | 40.0% | -20.0 pts |\n| Mid-Market | 31.6% | 31.0% | +0.6 pts |\n| Smb | 76.7% | 76.7% | +0.0 pts |\n\n**Loss Analysis by Competitor:**\n\n| Competitor | Losses | % of Total | Trend |\n|---|---|---|---|\n| CompetitorX | 29 | 37.2% | Up 14.1% |\n| CompetitorY | 23 | 29.5% | Down 7% |\n| No Decision | 17 | 21.8% | Down 4% |\n| CompetitorZ | 9 | 11.5% | Down 2% |\n\n**Initial Pattern:** CompetitorX wins are concentrated in enterprise ($500K+) deals with security-conscious buyers.\n\nSynthetic source model: [CRM + Win/Loss Interviews + Competitive Intel]\nAgents: WinLossDataAgent, PatternRecognitionAgent\n\n**Evidence boundary:** Exact deal values, counts, interview statements, rates, costs, ROI, and recovery figures are synthetic scenario evidence, not measured business results or commitments. This read-only output did not change a forecast, approve spend, publish enablement, or contact a buyer.",
+      "expected_agent": "WinLossAnalysisAgent",
+      "must_include": [
+        "Q3 Win/Loss Overview",
+        "Loss Analysis by Competitor",
+        "Evidence boundary"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "WL-02",
+      "persona": "Enablement Manager",
+      "onepager_promise": "Analyze buyer feedback and loss reasons to prioritize addressable gaps and strengthen competitive positioning",
+      "prompt": "Identify the evidence-backed synthetic loss drivers and buyer feedback themes that enablement should review.",
+      "assistant_response": "## Key Findings for Enablement Review\n\n**Primary Loss Drivers (Addressable):**\n\n1. **Security Certifications (41.4% of losses, $7.45M at risk)**\n   - CompetitorX has FedRAMP; you don't. This is a procurement blocker for enterprise.\n   - *Enablement action:* Brief sales on security roadmap timeline; create a \"missing certifications\" offset strategy for procurement conversations.\n\n2. **Enterprise References (24.1% of losses, $3.2M at risk)**\n   - Buyers want peer validation from companies their size; you have 3 enterprise refs vs. CompetitorX's 12.\n   - *Enablement action:* Accelerate Fortune 500 case study collection; coach reps on how to reframe references during qualification.\n\n3. **Pricing/Packaging (17.2%, immediate fix)**\n   - This can move fast \u2014 review competitor positioning and packaging options with product/finance.\n\n4. **Feature Gaps (10.3%, roadmap item)**\n   - Not urgent; communicate transparency on what's coming.\n\n**Buyer Sentiment (Powerful for Enablement):**\nEight of ten lost buyers said they **preferred your UX** but couldn't justify the security/reference risk to procurement. This is *not* a product problem \u2014 it's a sales narrative and qualification problem.\n\n**Next steps:** Develop counter-strategies (competitive battle cards, procurement override scenarios) or run a revenue impact model to prioritize which losses are most recoverable. Want me to pull either?",
+      "agent_logs": "[WinLossAnalysisAgent] **Root Cause Analysis - Losses to CompetitorX:**\n\n| Reason | Frequency | Impact | Addressable? |\n|---|---|---|---|\n| Security certifications | 41.4% | High | Yes (6 months) |\n| Enterprise references | 24.1% | Medium | Yes (3 months) |\n| Pricing/packaging | 17.2% | Medium | Yes (immediate) |\n| Feature gaps | 10.3% | Medium | Roadmap item |\n| Relationship/trust | 6.9% | Low | Yes (engagement plan) |\n\n**Deep Dive - Security (12 deals, $7,450,000 pipeline):**\n- CompetitorX has FedRAMP certification (we do not)\n- They lead with SOC 2 Type II + ISO 27001 in every proposal\n- Enterprise buyers require these for procurement approval\n- Quote: \"We loved the product but couldn't get past security review\"\n\n**Deep Dive - References (7 deals, $3,205,000 pipeline):**\n- CompetitorX has 12 Fortune 500 logos available for reference\n- We have 3 enterprise references currently available\n- Buyers want peer validation at their scale before committing\n- Quote: \"We need peer validation from companies our size before we commit\"\n\n**Win/Loss Interview Insight:** 8 of 10 lost buyers said they preferred our UX but couldn't justify the security/reference risk.\n\nSynthetic source model: [Win/Loss Surveys + Gong Calls + Competitive Intel]\nAgents: RootCauseAnalysisAgent, PatternRecognitionAgent\n\n**Evidence boundary:** Exact deal values, counts, interview statements, rates, costs, ROI, and recovery figures are synthetic scenario evidence, not measured business results or commitments. This read-only output did not change a forecast, approve spend, publish enablement, or contact a buyer.",
+      "expected_agent": "WinLossAnalysisAgent",
+      "must_include": [
+        "Root Cause Analysis",
+        "Deep Dive",
+        "Evidence boundary"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "WL-03",
+      "persona": "Enablement Manager",
+      "onepager_promise": "Generate targeted strategies and enablement content to equip teams for faster recovery and sustained growth",
+      "prompt": "Draft counter-strategy and talk-track options from the synthetic loss evidence for enablement review.",
+      "assistant_response": "Here are your draft counter-strategies and enablement talk tracks:\n\n**Immediate (This Quarter):**\n- **Security-first positioning** \u2014 lead with SOC 2 Type II, not just roadmap promises\n- **Enterprise references** \u2014 activate 3 logos for calls + 2 video testimonials\n- **Flexible pricing** \u2014 bundle security into enterprise tier, offer 90-day pilots with success-based conversion\n\n**Suggested Talk Track:**\n> \"We're the secure choice for enterprises who want modern UX. Here's our SOC 2 Type II, and our FedRAMP is in progress. Let us connect you with 3 enterprise references in your industry.\"\n\n**Longer-term plays** (next 2 quarters):\n- FedRAMP Moderate authorization (~6 months, $85K)\n- ISO 27001 certification (~4 months, $25K)\n\nThe core insight: competitors are winning on compliance + customer proof. You have the product; you need the credentials and references to close enterprise deals.\n\n**Next step?** Review with sales leadership, pick 2\u20133 actions to pilot, or dive into the root-cause analysis to see *why* specific deals slipped.",
+      "agent_logs": "[WinLossAnalysisAgent] **Counter-Strategies for Win Rate Recovery:**\n\n**Immediate Actions (This Quarter):**\n\n**1. Security Positioning Refresh**\n- Lead with SOC 2 Type II (currently underutilized in sales materials)\n- Create Security Architecture one-pager for enterprise buyers\n- Offer security team direct access during evaluation period\n- Bridge messaging: FedRAMP in progress, SOC 2 + ISO active now\n\n**2. Enterprise Reference Program**\n- Activate 3 enterprise customers for reference calls\n- Produce 2 video testimonials from Fortune 1000 logos\n- Offer reference incentives (extended support, discounts)\n- Build enterprise customer advisory board\n\n**3. Pricing & Packaging Adjustment**\n- Enterprise tier: bundle security features at no extra cost\n- Offer 90-day pilot with success-based conversion\n- Match competitor payment terms flexibility\n- Introduce volume discount for multi-year commits\n\n**Longer-Term (Next 2 Quarters):**\n\n- FedRAMP Certification (6 months timeline, $85,000 investment)\n  - Engage FedRAMP 3PAO for readiness assessment\n  - Assign dedicated compliance engineering team\n  - Target FedRAMP Moderate authorization\n- ISO 27001 Certification (4 months timeline, $25,000 investment)\n  - Engage certification body for gap assessment\n  - Implement required ISMS controls\n  - Complete Stage 1 and Stage 2 audits\n\n**Updated Talk Track:**\n\"We're the secure choice for enterprises who want modern UX. Here's our SOC 2 Type II, and our FedRAMP is in progress. Let us connect you with 3 enterprise references in your industry.\"\n\nSynthetic source model: [Competitive Playbook + Product Roadmap]\nAgents: CompetitiveStrategyAgent\n\n**Evidence boundary:** Exact deal values, counts, interview statements, rates, costs, ROI, and recovery figures are synthetic scenario evidence, not measured business results or commitments. This read-only output did not change a forecast, approve spend, publish enablement, or contact a buyer.",
+      "expected_agent": "WinLossAnalysisAgent",
+      "must_include": [
+        "Counter-Strategies",
+        "Updated Talk Track",
+        "Evidence boundary"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "WL-04",
+      "persona": "Sales Leader",
+      "onepager_promise": "Generate targeted strategies and enablement content to equip teams for faster recovery and sustained growth",
+      "prompt": "Model synthetic intervention scenarios without presenting them as realized or committed revenue.",
+      "assistant_response": "**What this shows:**\n\nThese are **modeling scenarios only**\u2014directional illustrations of where enablement investments could point the needle, *if* the interventions land and buyers respond as the synthetic model assumes. The ranges (4-7 deals, 45.1% win rate) are hypothesis-driven, not forecasts or commitments.\n\n**Key takeaways:**\n- **FedRAMP & positioning** show the highest recovery potential (~$4M\u2013$2.6M range)\n- **References** unlock fast-follow wins (30-day rollout)\n- **ROI model** assumes $180K spend and illustrative $10M value\u2014not realized\n- **Win rate path** suggests Q4\u2013Q2 progression *if* all interventions execute and stick\n\n**Next step:** Use these scenarios to prioritize which interventions to pilot, measure results against the synthetic baseline, and iterate. The model updates as real deal data comes in.\n\nWant to drill into a specific intervention's root cause, or see the counter-strategies that support each scenario?",
+      "agent_logs": "[WinLossAnalysisAgent] **Synthetic Revenue Scenario Model:**\n\n| Intervention | Deals Recoverable | Pipeline Value | Timeline |\n|---|---|---|---|\n| FedRAMP Certification | 4-7 deals | $4,097,500 | 6 months |\n| Security Positioning Refresh | 2-4 deals | $2,607,500 | Immediate |\n| Enterprise Reference Program | 4-7 deals | $2,098,000 | 30 days |\n| Pricing & Packaging Adjustment | 4-6 deals | $1,388,400 | Immediate |\n| ISO 27001 Certification | 1-1 deals | $0 | 4 months |\n\n**Q4 Forecast Impact:**\n- Current trajectory: $8,433,000 (38.6% win rate)\n- With interventions: $14,751,668 (45.1% win rate)\n- **Illustrative incremental scenario value: $6,318,668**\n\n**Win Rate Recovery Path:**\n\n| Quarter | Projected Win Rate | Key Driver |\n|---|---|---|\n| Q4 | 45.1% | Positioning + pricing |\n| Q1 | 49.1% | References + certifications |\n| Q2 | 53.1% | Full program maturity |\n\n**ROI Calculation:**\n- Investment: $180,000 (certifications, content, incentives)\n- Illustrative scenario value: $10,191,400\n- Modeled value-to-cost ratio: 56.6:1\n\nSynthetic source model: [Revenue Analytics + Forecast Models]\nAgents: RevenueImpactAgent\n\n**Evidence boundary:** Exact deal values, counts, interview statements, rates, costs, ROI, and recovery figures are synthetic scenario evidence, not measured business results or commitments. This read-only output did not change a forecast, approve spend, publish enablement, or contact a buyer.",
+      "expected_agent": "WinLossAnalysisAgent",
+      "must_include": [
+        "Synthetic Revenue Scenario Model",
+        "Illustrative scenario value",
+        "Evidence boundary"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "WL-05",
+      "persona": "Sales Leader",
+      "onepager_promise": "Perform pattern recognition and trend analysis to identify actionable insights and reverse declining performance",
+      "prompt": "Draft a board-level synthetic win and loss narrative with all investment and performance values labeled as scenarios.",
+      "assistant_response": "I've drafted a board-level narrative with all performance and investment values clearly labeled as **synthetic scenarios**.\n\n**Key callouts for your board:**\n\n- **Win rate decline** (38.6% from 44.9%) tied to security positioning and enterprise references gaps\n- **Loss concentration**: CompetitorX + security certs + references explain 82.7% of losses\n- **Intervention scenario**: $180,000 investment hypothetically yields $10.2M pipeline recovery (56.6:1 ROI model) targeting Q4 win rate of 45.1%\n\n**Critical framing:** All numbers (deal values, investment figures, recovery projections) are read-only synthetic models. They show *what improvement could look like* if the three root causes (security messaging, references, pricing flexibility) were addressed\u2014not realized results or approved commitments. Your approval gate remains intact.\n\nNeed the root cause detail, counter-strategy drafts, or revenue impact scenarios to support this narrative?",
+      "agent_logs": "[WinLossAnalysisAgent] **Board Presentation: Q3 Win/Loss Analysis**\n\n**Slide 1: The Challenge**\n- Win rate declined to 38.6% (from 44.9%)\n- Enterprise segment hit hardest (-20.0 pts)\n- CompetitorX captured 37.2% of our losses\n- Root cause: Security positioning and references gap\n\n**Slide 2: Why We're Losing**\n\n| Factor | Impact | Evidence |\n|---|---|---|\n| Security certs | 41.4% of losses | Buyer feedback, lost deal analysis |\n| Enterprise refs | 24.1% of losses | Buyer feedback, lost deal analysis |\n| Pricing | 17.2% of losses | Buyer feedback, lost deal analysis |\n\n**Slide 3: The Plan**\n- Immediate: Security messaging refresh, pricing flexibility\n- 30 days: Enterprise reference program launch\n- 6 months: FedRAMP + ISO 27001 certification\n\n**Slide 4: Synthetic Scenario Outputs**\n- Q4 win rate target: 45.1% (+6.5 pts)\n- Pipeline recovery: $10,191,400\n- Investment required: $180,000\n- ROI: 56.6:1\n\n**Decision for authorized leaders:** Evaluate the synthetic $180,000 investment scenario and require normal approvals before any action.\n\nSynthetic source model: [All Analysis Systems]\nAgents: ExecutivePresentationAgent\n\n**Evidence boundary:** Exact deal values, counts, interview statements, rates, costs, ROI, and recovery figures are synthetic scenario evidence, not measured business results or commitments. This read-only output did not change a forecast, approve spend, publish enablement, or contact a buyer.",
+      "expected_agent": "WinLossAnalysisAgent",
+      "must_include": [
+        "Board Presentation",
+        "Decision for authorized leaders",
+        "Evidence boundary"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "WL-06",
+      "persona": "Sales Operations Manager",
+      "onepager_promise": "Generate targeted strategies and enablement content to equip teams for faster recovery and sustained growth",
+      "prompt": "Summarize the synthetic findings and candidate next steps without activating programs or approvals.",
+      "assistant_response": "## Summary\n\nYour Q3 synthetic analysis shows a **38.6% win rate** (down 6.3 points from Q2), with **CompetitorX** driving 37% of losses. The two biggest capability gaps are **security certifications (41.4%)** and **enterprise references (24.1%)**.\n\n**Recoverable pipeline identified:** $10.2M across 127 opportunities.\n\n### Draft Next Steps (No Approvals)\n\n1. **Security positioning** \u2014 Review your current materials; identify gaps vs. CompetitorX\n2. **Pricing flexibility** \u2014 Evaluate policy options; flag for approver review later\n3. **Reference strategy** \u2014 Audit who you can reference; validate before any buyer outreach\n4. **Sales talk tracks** \u2014 Draft counter-responses; review with enablement leads\n\n### 30-Day Milestones to Consider\n\n- Reference story plan drafted and reviewed\n- FedRAMP readiness assessment decision made\n- Win-rate tracking dashboard scoped\n\nAll figures are **synthetic scenario evidence** \u2014 not forecasts or commitments. Next steps are drafts for your review; no programs are activated.",
+      "agent_logs": "[WinLossAnalysisAgent] **Win/Loss Analysis - Complete Summary**\n\n| Insight | Finding |\n|---|---|\n| Q3 win rate | 38.6% (-6.3 pts from Q2) |\n| Primary competitor | CompetitorX (37.2% of losses) |\n| Biggest gap | Security certifications (41.4%) |\n| Second gap | Enterprise references (24.1%) |\n| Recoverable pipeline | $10,191,400 |\n\n**Session Accomplishments:**\n- Analyzed 127 Q3 opportunities\n- Identified 4 root causes for losses\n- Developed counter-strategies for each driver\n- Modeled a $10,191,400 synthetic recovery scenario\n- Created board presentation framework\n\n**Draft Next-Step Options:**\n1. Review security positioning materials\n2. Evaluate a pricing-flexibility policy with authorized approvers\n3. Validate reference availability before any buyer contact\n4. Review draft talk tracks with enablement leaders\n\n**Candidate 30-Day Milestones:**\n- Draft reference-story plan reviewed\n- Decide whether to begin a FedRAMP readiness assessment\n- Draft win-rate tracking dashboard reviewed\n\n**Synthetic Scenario:** The model illustrates movement from 38.6% to 45.1% within 2 quarters and $10,191,400 of scenario value; it is not a conversion, revenue, ROI, or forecast commitment.\n\nSynthetic source model: [All Win/Loss Systems]\nAgents: ExecutivePresentationAgent (orchestrating all agents)\n\n**Evidence boundary:** Exact deal values, counts, interview statements, rates, costs, ROI, and recovery figures are synthetic scenario evidence, not measured business results or commitments. This read-only output did not change a forecast, approve spend, publish enablement, or contact a buyer.",
+      "expected_agent": "WinLossAnalysisAgent",
+      "must_include": [
+        "Complete Summary",
+        "Draft Next-Step Options",
+        "Evidence boundary"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "schema": "aibast-canonical-transcripts/1.0",
+  "captured_at": "2026-08-08T04:33:14.079073+00:00",
+  "solution": "@aibast-agents-library/supplier-risk-monitoring",
+  "onepager": "Supply Risk Monitoring Agent one-pager.pptx",
+  "brainstem_version": "0.6.16",
+  "loaded_tools_after_capture": [
+    "SupplierRiskMonitoringAgent"
+  ],
+  "agent_sources": [
+    {
+      "path": "agents/@aibast-agents-library/manufacturing_stacks/supplier_risk_monitoring_stack/supplier_risk_monitoring_agent.py",
+      "sha256": "684f3b30b7315549716fea76e376e04e97d6140f057f5339e810bc456c8462be"
+    }
+  ],
+  "case_file": "tests/demo_cases/supplier-risk-monitoring.json",
+  "case_file_sha256": "1ec28bca1c062bb19b560cd28d0bd81cf9c871d8c3c473bb8922c1f00a8482b6",
+  "strict_isolation": true,
+  "transcripts": [
+    {
+      "case_id": "SR-01",
+      "persona": "Supply Chain Director",
+      "onepager_promise": null,
+      "prompt": "Where is supplier exposure concentrated, and which relationships should leadership review first?",
+      "assistant_response": "**Leadership Review Priority:**\n\n1. **TechnoCore Semiconductor (Taiwan)** \u2014 **CRITICAL, $4.8M at risk**\n   - Highest risk score (8.2) with $4.8M annual spend (25% of portfolio)\n   - Likely geopolitical exposure (Taiwan semiconductor), quality, or delivery issues\n   - Review this relationship *first* \u2014 escalate to procurement lead\n\n2. **Shenzhen Electronics Co. (China)** \u2014 **HIGH, $3.2M at risk**\n   - Second-highest concentration ($3.2M, 16% of spend)\n   - China-based passive components carry geopolitical risk\n   - Review immediately for diversification or backup sourcing\n\n**Combined exposure:** $8M of $19.5M spend (41%) is at elevated risk, with the top 2 suppliers accounting for $8M alone.\n\n**Next step:** I can pull a detailed scorecard on TechnoCore and Shenzhen to show you *why* they're rated critical/high (quality failures, late shipments, financial instability, geopolitical factors), or I can surface disruption alerts to show you recorded incidents. Which would help leadership most?",
+      "agent_logs": "[SupplierRiskMonitoringAgent] ## Supplier Risk Dashboard\n\n> Fixed synthetic snapshot; no live financial, logistics, ERP, or supplier feed was queried.\n\n**Total annual supplier spend:** $19,500,000\n**Spend at elevated risk (score >= 5.0):** $8,000,000 (41.0%)\n\n| Supplier | Category | Country | Spend | Risk Score | Risk Tier | Composite Health |\n|----------|----------|---------|-------|------------|-----------|------------------|\n| TechnoCore Semiconductor (Taiwan | Microcontrollers | Taiwan | $4,800,000 | 8.2 | **CRITICAL** | 68.5/100 |\n| Shenzhen Electronics Co. | Passive Components | China | $3,200,000 | 6.5 | **HIGH** | 66.2/100 |\n| Midwest Casting & Forge | Aluminum Castings | USA | $5,600,000 | 4.9 | **MODERATE** | 79.7/100 |\n| Malaysia Semicon Pte Ltd | Power ICs | Malaysia | $2,100,000 | 3.8 | **MODERATE** | 86.7/100 |\n| Rheinmetall Precision GmbH | CNC Machined Parts | Germany | $3,800,000 | 2.4 | **LOW** | 91.1/100 |\n\n**Active incidents:** 4\n**HIGH severity incidents:** 2",
+      "expected_agent": "SupplierRiskMonitoringAgent",
+      "must_include": [
+        "TechnoCore Semiconductor",
+        "CRITICAL"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "SR-02",
+      "persona": "Procurement Manager",
+      "onepager_promise": null,
+      "prompt": "Explain why TechnoCore is elevated and show me the evidence by risk dimension.",
+      "assistant_response": "## TechnoCore's Elevation \u2014 Risk by Dimension\n\n**Overall: 8.2/10 (CRITICAL)** \u2014 TechnoCore is the highest-risk supplier in your base because of *one dominant exposure* combined with emerging operational strain.\n\n### Why Each Dimension Matters:\n\n| Dimension | Score | The Evidence |\n|-----------|-------|--------------|\n| **Geopolitical** | 42/100 \u26a0\ufe0f | **This is the spike.** Taiwan location + cross-strait tensions = real disruption history. Just 5 days ago (2/28), military exercises closed ports for 5 days, delaying 3 active shipments. This risk isn't hypothetical \u2014 it's in your incidents log. Annual spend ($4.8M) is also your *largest* with this supplier. |\n| **Financial** | 68/100 | Watch, not critical yet. Indicates supplier financial stability isn't alarming but isn't bulletproof either. |\n| **Delivery** | 74/100 | Above average, but the geopolitical incident just proved it *can* slip fast. Recent 5-day port closure is evidence. |\n| **Quality** | 82/100 | Strong. Not the problem. |\n\n### Bottom Line\nTechnoCore is critical because you're over-concentrated ($4.8M annually) with a Tier-1 supplier in a geopolitically hot region with *documented recent disruption*. The quality is fine \u2014 it's the location and concentration that elevate the risk.\n\nWould you like me to show alternative sourcing options to de-risk this exposure?",
+      "agent_logs": "[SupplierRiskMonitoringAgent] ## Supplier Scorecards\n\n> Synthetic evidence for procurement review; scores are not customer or third-party ratings.\n\n### TechnoCore Semiconductor (Taiwan) (SUP-101)\n- **Category:** Microcontrollers\n- **Region:** Asia-Pacific (Taiwan)\n- **Annual spend:** $4,800,000\n- **Tier:** 1\n- **Overall risk:** 8.2/10 (CRITICAL)\n- **Composite health:** 68.5/100\n\n| Dimension | Score | Status |\n|-----------|-------|--------|\n| Quality | 82/100 | Good |\n| Delivery | 74/100 | Watch |\n| Financial | 68/100 | Watch |\n| Geopolitical | 42/100 | At Risk |\n\n**Recent incidents (1):**\n- [HIGH] 2026-02-28: Cross-strait military exercises caused 5-day port closure; delayed 3 shipments\n\n### Shenzhen Electronics Co. (SUP-102)\n- **Category:** Passive Components\n- **Region:** Asia-Pacific (China)\n- **Annual spend:** $3,200,000\n- **Tier:** 1\n- **Overall risk:** 6.5/10 (HIGH)\n- **Composite health:** 66.2/100\n\n| Dimension | Score | Status |\n|-----------|-------|--------|\n| Quality | 71/100 | Watch |\n| Delivery | 78/100 | Watch |\n| Financial | 55/100 | At Risk |\n| Geopolitical | 58/100 | At Risk |\n\n**Recent incidents (2):**\n- [MEDIUM] 2026-03-05: Quality excursion: capacitor lot C-4410 failed incoming inspection (2.3% defect rate vs 0.5% spec)\n- [LOW] 2026-03-12: New export control regulations announced; compliance review underway\n\n### Malaysia Semicon Pte Ltd (SUP-103)\n- **Category:** Power ICs\n- **Region:** Asia-Pacific (Malaysia)\n- **Annual spend:** $2,100,000\n- **Tier:** 1\n- **Overall risk:** 3.8/10 (MODERATE)\n- **Composite health:** 86.7/100\n\n| Dimension | Score | Status |\n|-----------|-------|--------|\n| Quality | 91/100 | Good |\n| Delivery | 88/100 | Good |\n| Financial | 84/100 | Good |\n| Geopolitical | 82/100 | Good |\n\n### Midwest Casting & Forge (SUP-104)\n- **Category:** Aluminum Castings\n- **Region:** North America (USA)\n- **Annual spend:** $5,600,000\n- **Tier:** 1\n- **Overall risk:** 4.9/10 (MODERATE)\n- **Composite health:** 79.7/100\n\n| Dimension | Score | Status |\n|-----------|-------|--------|\n| Quality | 88/100 | Good |\n| Delivery | 65/100 | Watch |\n| Financial | 72/100 | Watch |\n| Geopolitical | 95/100 | Good |\n\n**Recent incidents (1):**\n- [HIGH] 2026-03-10: Equipment failure at foundry; force majeure declared, 7-day production halt\n\n### Rheinmetall Precision GmbH (SUP-105)\n- **Category:** CNC Machined Parts\n- **Region:** Europe (Germany)\n- **Annual spend:** $3,800,000\n- **Tier:** 2\n- **Overall risk:** 2.4/10 (LOW)\n- **Composite health:** 91.1/100\n\n| Dimension | Score | Status |\n|-----------|-------|--------|\n| Quality | 95/100 | Good |\n| Delivery | 91/100 | Good |\n| Financial | 89/100 | Good |\n| Geopolitical | 88/100 | Good |\n",
+      "expected_agent": "SupplierRiskMonitoringAgent",
+      "must_include": [
+        "SUP-101",
+        "Geopolitical"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "SR-03",
+      "persona": "Supply Chain Director",
+      "onepager_promise": null,
+      "prompt": "Which recorded disruptions could threaten continuity, and what exposure should we validate?",
+      "assistant_response": "## Key Continuity Threats\n\n**High-Risk Incidents:**\n1. **TechnoCore (Taiwan)** \u2014 Geopolitical: Cross-strait military exercises caused a 5-day port closure affecting 3 shipments. $4.8M annual spend at risk; microcontroller supply could cascade.\n2. **Midwest Casting** \u2014 Operational: Force majeure declared; 7-day production halt on aluminum castings. $5.6M exposure.\n\n**Medium-Risk Quality Issue:**\n- **Shenzhen Electronics** \u2014 2.3% defect rate (4.6\u00d7 spec limit) on capacitor lot C-4410; incoming inspection caught it, but indicates process drift.\n\n**Emerging Regulatory Exposure:**\n- **Shenzhen Electronics** \u2014 New export control regulations under review; compliance status unclear.\n\n---\n\n## What to Validate\n\n1. **Geopolitical resilience**: Confirm current Taiwan port/logistics status and whether TechnoCore has alternate shipping routes or distributed inventory.\n2. **Midwest recovery timeline**: Verify actual restart date and whether backlog clears within your procurement cycle.\n3. **Shenzhen quality drift**: Request root-cause analysis for the capacitor defect spike and preventive actions.\n4. **Export compliance**: Clarify which product lines are affected by new regulations and whether tariffs/restrictions will impact pricing or lead time.\n\nWant me to pull alternative sourcing options for any of these categories so your procurement team has pre-reviewed backups ready?",
+      "agent_logs": "[SupplierRiskMonitoringAgent] ## Active Disruption Alerts\n\n> Recorded synthetic incidents only; validate against approved sources before action.\n\n| Severity | Date | Supplier | Description |\n|----------|------|----------|-------------|\n| **HIGH** | 2026-02-28 | TechnoCore Semiconductor (Ta (SUP-101) | Cross-strait military exercises caused 5-day port closure; delayed 3 shipments |\n| **HIGH** | 2026-03-10 | Midwest Casting & Forge (SUP-104) | Equipment failure at foundry; force majeure declared, 7-day production halt |\n| **MEDIUM** | 2026-03-05 | Shenzhen Electronics Co. (SUP-102) | Quality excursion: capacitor lot C-4410 failed incoming inspection (2.3% defect rate vs 0.5% spec) |\n| **LOW** | 2026-03-12 | Shenzhen Electronics Co. (SUP-102) | New export control regulations announced; compliance review underway |\n\n### Impact Assessment\n\n**TechnoCore Semiconductor (Taiwan)**\n- Annual spend exposed: $4,800,000\n- Category: Microcontrollers\n- Backup suppliers available: Yes\n\n**Midwest Casting & Forge**\n- Annual spend exposed: $5,600,000\n- Category: Aluminum Castings\n- Backup suppliers available: Yes\n",
+      "expected_agent": "SupplierRiskMonitoringAgent",
+      "must_include": [
+        "SUP-104",
+        "force majeure"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    },
+    {
+      "case_id": "SR-04",
+      "persona": "Procurement Manager",
+      "onepager_promise": null,
+      "prompt": "Compare backup sourcing options for review, but do not contact, qualify, select, or order from any supplier.",
+      "assistant_response": "**Review-ready summary:**\n\nThree supplier categories with synthetic backup options ready for your procurement team's consideration:\n\n1. **Semiconductors** (TechnoCore, Taiwan) \u2014 Samsung Foundry (Korea) shows shorter lead time; GlobalFoundries (USA) is qualified but slower\n2. **Passive Components** (Shenzhen) \u2014 Murata (Japan) and Vishay (USA) both already qualified; Vishay offers fastest delivery\n3. **Aluminum Castings** (Midwest) \u2014 Alcoa option identified for potential qualification\n\n**Next step:** Share these findings with your authorized procurement owners\u2014they decide whether to pursue qualification or diversification. No supplier contact, ordering, or allocation changes have been made.",
+      "agent_logs": "[SupplierRiskMonitoringAgent] ## Alternative Sourcing Options\n\n> Synthetic recommendation only. No supplier was contacted, qualified, selected, or awarded business.\n\n### Alternatives for TechnoCore Semiconductor (Taiwan) (Microcontrollers)\n- **Current spend:** $4,800,000\n- **Current risk:** 8.2/10\n\n| Alternative Supplier | Lead Time | Qual Status | Cost Premium |\n|---------------------|-----------|-------------|--------------|\n| Samsung Foundry (Korea) | 12 weeks | In Progress | +8% |\n| GlobalFoundries (USA) | 16 weeks | Not Started | +15% |\n\n**Review option:** Ask authorized procurement owners whether to assess Samsung Foundry (Korea) (12-week lead; synthetic status: In Progress)\n\n### Alternatives for Shenzhen Electronics Co. (Passive Components)\n- **Current spend:** $3,200,000\n- **Current risk:** 6.5/10\n\n| Alternative Supplier | Lead Time | Qual Status | Cost Premium |\n|---------------------|-----------|-------------|--------------|\n| Murata Electronics (Japan) | 6 weeks | Qualified | +5% |\n| Vishay Intertechnology (USA) | 4 weeks | Qualified | +12% |\n\n**Review option:** Ask authorized procurement owners to evaluate Murata Electronics (Japan) (synthetic status: qualified; +5% premium; 6-week lead)\n\n### Alternatives for Midwest Casting & Forge (Aluminum Castings)\n- **Current spend:** $5,600,000\n- **Current risk:** 4.9/10\n\n| Alternative Supplier | Lead Time | Qual Status | Cost Premium |\n|---------------------|-----------|-------------|--------------|\n| Alcoa Precision Castings (USA) | 8 weeks | In Progress | +6% |\n\n**Review option:** Ask authorized procurement owners whether to assess Alcoa Precision Castings (USA) (8-week lead; synthetic status: In Progress)\n\n**Estimated annual cost of full diversification:** $880,000\n**Spend represented by the modeled review scope:** $8,000,000\n\nThis agent does not contact suppliers, change allocations, place orders, or approve qualification.",
+      "expected_agent": "SupplierRiskMonitoringAgent",
+      "must_include": [
+        "Murata Electronics",
+        "No supplier was contacted"
+      ],
+      "model": "claude-haiku-4.5",
+      "requested_model": "claude-haiku-4.5",
+      "passed": true
+    }
+  ]
+}
