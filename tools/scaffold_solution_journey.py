@@ -926,6 +926,11 @@ def easy_case_records(ctx: JourneyContext) -> list[dict[str, Any]]:
                         possible.append(
                             {
                                 "case_id": case_id,
+                                "persona": str(
+                                    case.get("persona")
+                                    or transcript.get("persona")
+                                    or "Workshop learner"
+                                ),
                                 "prompt": str(
                                     case.get("prompt")
                                     or transcript.get("prompt")
@@ -948,6 +953,9 @@ def easy_case_records(ctx: JourneyContext) -> list[dict[str, Any]]:
         possible.append(
             {
                 "case_id": case_id,
+                "persona": str(
+                    transcript.get("persona") or "Workshop learner"
+                ),
                 "prompt": str(transcript.get("prompt", "recorded prompt")),
                 "must_include": list(transcript.get("must_include") or []),
                 "must_not_include": [],
@@ -1444,39 +1452,209 @@ def quest_resources(ctx: JourneyContext, resources: list[Resource]) -> str:
     return "\n".join(cards)
 
 
-def render_easy_prompt_cards(ctx: JourneyContext) -> str:
-    cards = []
-    for index, (title, prompt) in enumerate(
-        easy_copilot_chat_prompts(ctx),
-        start=1,
-    ):
-        target = f"easy-prompt-{index}"
-        cards.append(
-            f"""<article class="prompt-card">
-        <div class="prompt-heading">
-          <div><p class="prompt-kicker">Workshop message {index + 1} of 3</p><h3>{html.escape(title)}</h3></div>
-          <button class="button primary" type="button" data-copy-target="{target}">Copy prompt</button>
+def validated_pilot(ctx: JourneyContext) -> dict[str, Any]:
+    studio = ctx.deployment.get("copilot_studio", {})
+    if not isinstance(studio, dict):
+        return {}
+    pilot = studio.get("validated_pilot", {})
+    return pilot if isinstance(pilot, dict) else {}
+
+
+def copilot_studio_url(ctx: JourneyContext) -> str | None:
+    pilot = validated_pilot(ctx)
+    environment = pilot.get("environment_id")
+    bot_id = pilot.get("bot_id")
+    if not isinstance(environment, str) or not isinstance(bot_id, str):
+        return None
+    return (
+        "https://copilotstudio.preview.microsoft.com/environments/"
+        f"{environment}/agents/{bot_id}"
+    )
+
+
+def assisted_frame_for_case(
+    ctx: JourneyContext,
+    case_id: str,
+    index: int,
+) -> str | None:
+    frames = [
+        frame
+        for frame in (ctx.assisted_browserfilm or {}).get("frames", [])
+        if isinstance(frame, dict) and isinstance(frame.get("file"), str)
+    ]
+    expected = case_id.lower()
+    for frame in frames:
+        searchable = " ".join(
+            [str(frame.get("file", "")), str(frame.get("label", ""))]
+        ).lower()
+        if expected in searchable:
+            return str(frame["file"])
+    case_frames = [
+        frame
+        for frame in frames
+        if "confirm" not in str(frame.get("file", "")).lower()
+        and "draft" not in str(frame.get("label", "")).lower()
+    ]
+    if index < len(case_frames):
+        return str(case_frames[index]["file"])
+    return None
+
+
+def assisted_draft_frame(ctx: JourneyContext) -> str | None:
+    for frame in (ctx.assisted_browserfilm or {}).get("frames", []):
+        if not isinstance(frame, dict) or not isinstance(frame.get("file"), str):
+            continue
+        searchable = " ".join(
+            [str(frame.get("file", "")), str(frame.get("label", ""))]
+        ).lower()
+        if "draft" in searchable or "confirm" in searchable:
+            return str(frame["file"])
+    return None
+
+
+def marker_chips(values: Iterable[str], empty: str) -> str:
+    rendered = [
+        f'<span class="marker-chip">{html.escape(str(value))}</span>'
+        for value in values
+        if value
+    ]
+    return "".join(rendered) or f'<span class="marker-chip">{html.escape(empty)}</span>'
+
+
+def render_lane_learning_steps(
+    ctx: JourneyContext,
+    lane: str,
+    skill_download: str,
+) -> str:
+    is_brainstem = lane == "brainstem"
+    prefix = "brainstem" if is_brainstem else "copilot"
+    skill_title = (
+        "Download and attach the Brainstem skill"
+        if is_brainstem
+        else "Download and attach the Copilot-only skill"
+    )
+    skill_explanation = (
+        "This file fixes the workshop to Brainstem. Copilot remains the work "
+        "surface while the learner's on-device training AI persists state, "
+        "loads the generic workshop engine, and continues every handoff."
+        if is_brainstem
+        else "This file fixes the workshop to GitHub Copilot alone. The skill "
+        "carries the same discovery, testing, deployment, and validation "
+        "contract directly in the active Copilot session."
+    )
+    local_expected = (
+        "Brainstem reports the generic AIBAST Workshop Engine and "
+        f"{ctx.deployment.get('expected_tool', 'the business agent')} loaded, "
+        f"with {len(easy_case_records(ctx))}/{len(easy_case_records(ctx))} "
+        "locked local cases passed."
+        if is_brainstem
+        else "Copilot reports an isolated workspace, a verified source hash, "
+        f"and {len(easy_case_records(ctx))}/{len(easy_case_records(ctx))} "
+        "locked local cases passed."
+    )
+    build_prompt = personless_prompts(ctx)[0][1]
+    deploy_prompt = personless_prompts(ctx)[1][1]
+    pilot = validated_pilot(ctx)
+    display_name = str(
+        pilot.get("display_name")
+        or ctx.deployment.get("display_name")
+        or ctx.title
+    )
+    model = str(pilot.get("model") or model_name(ctx))
+    knowledge_count = pilot.get(
+        "knowledge_files",
+        len(ctx.deployment.get("copilot_studio", {}).get("manual_knowledge_files", [])),
+    )
+    skill_count = pilot.get(
+        "skills",
+        ctx.deployment.get("copilot_studio", {}).get("manual_skill_count", "reviewed"),
+    )
+    return f"""
+      <article class="learn-step" id="{prefix}-step-1">
+        <header class="learn-step-header"><span>1</span><div><p>Prepare your Copilot</p><h3>{html.escape(skill_title)}</h3></div></header>
+        <div class="learn-step-body">
+          <p>{html.escape(skill_explanation)}</p>
+          <div class="action-panel"><strong>Do this</strong><ol><li>Download the lane-specific <code>SKILL.md</code>.</li><li>Open GitHub Copilot Chat in VS Code.</li><li>Select <strong>Agent mode</strong>.</li><li>Drag the downloaded file into the chat.</li></ol>{skill_download}</div>
+          <div class="expected-panel"><strong>Expected result</strong><p>The attachment appears in Copilot Chat. From this point forward, the selected skill—not extra wording in your prompts—determines which harness runs.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="{prefix}-skill"><span>I attached the correct lane skill.</span></label>
         </div>
-        <pre class="prompt-block" id="{target}">{html.escape(prompt)}</pre>
+      </article>
+
+      <article class="learn-step" id="{prefix}-step-2">
+        <header class="learn-step-header"><span>2</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test {html.escape(easy_mode_solution_name(ctx))}</h3></div></header>
+        <div class="learn-step-body">
+          <p>This step proves the portable business logic before any Copilot Studio work begins. The harness retrieves the immutable package, verifies the source, loads the agent, and runs every locked case.</p>
+          <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="{prefix}-build-prompt">Copy message</button></div>
+          <pre class="prompt-block" id="{prefix}-build-prompt">{html.escape(build_prompt)}</pre>
+          <div class="expected-panel"><strong>Expected result</strong><p>{html.escape(local_expected)}</p><p>Copilot should end by suggesting the next message: <code>Deploy it into Copilot Studio for me.</code></p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="{prefix}-local"><span>I saw every locked local case pass.</span></label>
+        </div>
+      </article>
+
+      <article class="learn-step" id="{prefix}-step-3">
+        <header class="learn-step-header"><span>3</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div></header>
+        <div class="learn-step-body">
+          <p>The harness now reuses or creates the source-controlled Copilot Studio Draft, synchronizes the reviewed instructions and assets, and leaves publication off.</p>
+          <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="{prefix}-deploy-prompt">Copy message</button></div>
+          <pre class="prompt-block" id="{prefix}-deploy-prompt">{html.escape(deploy_prompt)}</pre>
+          <div class="expected-panel"><strong>Expected result</strong><ul><li>Draft: <code>{html.escape(display_name)}</code></li><li>Model: <code>{html.escape(model)}</code></li><li>Knowledge files: <code>{html.escape(str(knowledge_count))}</code></li><li>Skills: <code>{html.escape(str(skill_count))}</code></li><li>Status: <strong>Draft</strong>; published: <code>false</code></li></ul><p>The harness then validates the real Preview front door before returning its final verdict.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="{prefix}-draft"><span>I saw the Draft identity and unpublished state.</span></label>
+        </div>
       </article>"""
+
+
+def render_preview_case_cards(ctx: JourneyContext) -> str:
+    cards = []
+    for index, case in enumerate(easy_case_records(ctx)):
+        case_id = str(case["case_id"])
+        target = f"preview-prompt-{slugify(case_id)}"
+        screenshot = assisted_frame_for_case(ctx, case_id, index)
+        screenshot_html = (
+            f'<a class="preview-shot-link" href="screenshots/assisted/{html.escape(screenshot)}"><img class="preview-shot" src="screenshots/assisted/{html.escape(screenshot)}" alt="{html.escape(case_id)} passed in Copilot Studio Preview"></a>'
+            if screenshot
+            else '<div class="missing">No assisted Preview screenshot is packaged for this case.</div>'
+        )
+        cards.append(
+            f"""
+        <article class="preview-case">
+          <header><div><p class="prompt-kicker">{html.escape(case_id)} · {html.escape(str(case.get("persona", "Workshop learner")))}</p><h4>Confirm the expected evidence</h4></div><button class="button" type="button" data-copy-target="{target}">Copy Preview prompt</button></header>
+          <pre class="prompt-block" id="{target}">{html.escape(str(case["prompt"]))}</pre>
+          <div class="marker-group"><strong>Must include</strong><div>{marker_chips(case.get("must_include", []), "Reviewed evidence")}</div></div>
+          <div class="marker-group"><strong>Must not claim</strong><div>{marker_chips(case.get("must_not_include", []), "No unsupported side effect")}</div></div>
+          {screenshot_html}
+          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-{html.escape(slugify(case_id))}"><span>The Preview response matched this contract.</span></label>
+        </article>"""
         )
     return "\n".join(cards)
 
 
-def render_personless_prompt_cards(ctx: JourneyContext) -> str:
-    cards = []
-    for index, (title, prompt) in enumerate(personless_prompts(ctx), start=1):
-        target = f"personless-prompt-{index}"
-        cards.append(
-            f"""<article class="prompt-card">
-        <div class="prompt-heading">
-          <div><p class="prompt-kicker">Workshop message {index + 1} of 3</p><h3>{html.escape(title)}</h3></div>
-          <button class="button primary" type="button" data-copy-target="{target}">Copy message</button>
+def render_completion_state(ctx: JourneyContext) -> str:
+    pilot = validated_pilot(ctx)
+    case_total = len(easy_case_records(ctx))
+    draft_frame = assisted_draft_frame(ctx)
+    screenshot = (
+        f'<a class="preview-shot-link" href="screenshots/assisted/{html.escape(draft_frame)}"><img class="preview-shot" src="screenshots/assisted/{html.escape(draft_frame)}" alt="Validated agent remains Draft"></a>'
+        if draft_frame
+        else ""
+    )
+    return f"""
+      <section class="learn-step" id="easy-step-5">
+        <header class="learn-step-header"><span>5</span><div><p>Recognize completion</p><h3>Know what “done” looks like</h3></div></header>
+        <div class="learn-step-body">
+          <p>The workshop is complete only when both the portable agent and the Copilot Studio front door prove the same behavior.</p>
+          <div class="done-grid">
+            <article><strong>Local proof</strong><span>{case_total}/{case_total} locked cases passed</span></article>
+            <article><strong>Preview proof</strong><span>{case_total}/{case_total} locked cases passed</span></article>
+            <article><strong>Draft identity</strong><span>{html.escape(str(pilot.get("display_name") or ctx.title))}</span></article>
+            <article><strong>Model</strong><span>{html.escape(str(pilot.get("model") or model_name(ctx)))}</span></article>
+            <article><strong>Inventory</strong><span>{html.escape(str(pilot.get("knowledge_files", "reviewed")))} knowledge · {html.escape(str(pilot.get("skills", "reviewed")))} skills</span></article>
+            <article><strong>Publication gate</strong><span>Draft · published false</span></article>
+          </div>
+          {screenshot}
+          <div class="expected-panel"><strong>Final expected verdict</strong><p>The harness reports <code>status: complete</code>, exact case totals, the Draft identity, and <code>published: false</code>. The module ends here; it does not offer publication.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="easy-complete"><span>I confirmed the final Draft verdict.</span></label>
         </div>
-        <pre class="prompt-block" id="{target}">{html.escape(prompt)}</pre>
-      </article>"""
-        )
-    return "\n".join(cards)
+      </section>"""
 
 
 def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
@@ -1503,6 +1681,12 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         f'<a class="button primary" href="../../{html.escape(ctx.rel(copilot_skill))}" download="SKILL.md">Download Copilot-only SKILL.md</a>'
         if copilot_skill
         else '<span class="button" aria-disabled="true">Copilot-only SKILL.md pending</span>'
+    )
+    studio_url = copilot_studio_url(ctx)
+    studio_button = (
+        f'<a class="button primary" href="{html.escape(studio_url)}" target="_blank" rel="noopener">Open the Copilot Studio Draft ↗</a>'
+        if studio_url
+        else '<span class="button" aria-disabled="true">Copilot Studio link unavailable</span>'
     )
     return f"""<!doctype html>
 <html lang="en">
@@ -1544,6 +1728,40 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .comparison-table {{ width: 100%; margin-top: 14px; border-collapse: collapse; }}
     .comparison-table th, .comparison-table td {{ padding: 12px; border: 1px solid var(--cp-border); text-align: left; vertical-align: top; }}
     .comparison-table th {{ background: var(--cp-surface-soft); }}
+    .module-summary {{ display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }}
+    .module-summary article {{ padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }}
+    .module-summary h3 {{ margin-top: 0; }}
+    .module-summary ul {{ margin-bottom: 0; padding-left: 20px; }}
+    .learn-step {{ margin: 22px 0; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); overflow: hidden; }}
+    .learn-step-header {{ display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: center; padding: 18px 20px; border-bottom: 1px solid var(--cp-border); background: var(--cp-surface-soft); }}
+    .learn-step-header > span {{ display: grid; width: 40px; height: 40px; place-items: center; border-radius: 10px; background: var(--cp-accent); color: var(--cp-accent-fg); font-weight: 800; }}
+    .learn-step-header p {{ margin: 0; color: var(--cp-accent); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }}
+    .learn-step-header h3 {{ margin: 2px 0 0; }}
+    .learn-step-body {{ padding: 20px; }}
+    .action-panel, .expected-panel {{ margin: 16px 0; padding: 16px; border-radius: 10px; }}
+    .action-panel {{ border: 1px solid var(--cp-border); background: var(--cp-surface-soft); }}
+    .action-panel > strong, .expected-panel > strong {{ display: block; margin-bottom: 8px; }}
+    .action-panel ol, .expected-panel ul {{ margin: 8px 0 12px; padding-left: 22px; }}
+    .expected-panel {{ border-left: 4px solid var(--cp-success); background: var(--cp-surface-soft); }}
+    .step-complete {{ display: flex; gap: 10px; align-items: center; margin-top: 14px; padding: 12px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-bg-elevated); font-weight: 700; }}
+    .step-complete input {{ width: 20px; height: 20px; accent-color: var(--cp-accent); }}
+    .preview-intro {{ display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin-bottom: 16px; }}
+    .preview-grid {{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }}
+    .preview-case {{ padding: 16px; border: 1px solid var(--cp-border); border-radius: 14px; background: var(--cp-bg-elevated); }}
+    .preview-case header {{ display: flex; justify-content: space-between; gap: 12px; align-items: start; }}
+    .preview-case h4 {{ margin: 0; }}
+    .marker-group {{ margin: 12px 0; }}
+    .marker-group > strong {{ display: block; margin-bottom: 6px; }}
+    .marker-chip {{ display: inline-flex; margin: 0 6px 6px 0; padding: 5px 8px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface); color: var(--cp-text-muted); font-size: 12px; }}
+    .preview-shot-link {{ display: block; margin-top: 14px; }}
+    .preview-shot {{ display: block; width: 100%; border: 1px solid var(--cp-border); border-radius: 10px; }}
+    .done-grid {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }}
+    .done-grid article {{ padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); }}
+    .done-grid strong, .done-grid span {{ display: block; }}
+    .done-grid span {{ margin-top: 5px; color: var(--cp-text-muted); }}
+    .troubleshooting-table {{ width: 100%; border-collapse: collapse; }}
+    .troubleshooting-table th, .troubleshooting-table td {{ padding: 12px; border: 1px solid var(--cp-border); text-align: left; vertical-align: top; }}
+    .troubleshooting-table th {{ background: var(--cp-surface-soft); }}
     .prompt-card {{ margin: 16px 0; padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }}
     .prompt-heading {{ display: flex; align-items: start; justify-content: space-between; gap: 16px; }}
     .prompt-heading h3 {{ margin: 0; }}
@@ -1551,7 +1769,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .prompt-block {{ overflow-x: auto; margin: 14px 0 0; padding: 16px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text); white-space: pre-wrap; word-break: break-word; font-family: Consolas, "Courier New", Courier, monospace; font-size: 13px; line-height: 1.55; }}
     .resource-list {{ columns: 2; padding-left: 22px; }}
     .resource-list li {{ break-inside: avoid; margin-bottom: 10px; }}
-    @media (max-width: 760px) {{ .engine-flow, .outcome-grid, .skill-onboarding {{ grid-template-columns: 1fr; }} }}
+    @media (max-width: 760px) {{ .engine-flow, .outcome-grid, .skill-onboarding, .module-summary, .preview-grid, .done-grid {{ grid-template-columns: 1fr; }} }}
     @media (max-width: 620px) {{ .resource-list {{ columns: 1; }} .prompt-heading {{ display: block; }} .prompt-heading .button {{ margin-top: 12px; }} .easy-lane-switch {{ display: grid; }} }}
   </style>
 </head>
@@ -1573,55 +1791,58 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     </section>
 
     <section class="path" data-path="easy">
-      <h2>Easy mode</h2>
+      <div class="module-summary">
+        <article>
+          <h3>What you will learn</h3>
+          <ul>
+            <li>Choose the Brainstem or Copilot-only harness intentionally.</li>
+            <li>Use the lane skill to build and prove the portable agent.</li>
+            <li>Deploy the reviewed solution as an unpublished Draft.</li>
+            <li>Confirm the behavior yourself in Copilot Studio Preview.</li>
+            <li>Recognize the evidence that means the module is complete.</li>
+          </ul>
+        </article>
+        <article>
+          <h3>Before you begin</h3>
+          <ul>
+            <li>Use VS Code with GitHub Copilot Chat in Agent mode.</li>
+            <li>Sign in to GitHub with Copilot access.</li>
+            <li>Have access to a Copilot Studio environment.</li>
+            <li>Do not publish. This module ends with a validated Draft.</li>
+          </ul>
+        </article>
+      </div>
+
+      <h2>Choose your Easy-mode lane</h2>
+      <p>The downloaded skill determines the harness. After attachment, both lanes use the same two messages and the same verification steps.</p>
       <div class="easy-lane-switch" role="tablist" aria-label="Easy mode harness">
         <button class="easy-lane-button active" type="button" data-easy-lane-button="brainstem">With Brainstem — default</button>
         <button class="easy-lane-button" type="button" data-easy-lane-button="copilot">GitHub Copilot only</button>
       </div>
 
       <div class="easy-lane" data-easy-lane="brainstem">
-        <section class="skill-onboarding">
-          <div>
-            <p class="prompt-kicker">Workshop step 1 of 3 · Brainstem lane</p>
-            <h3>Download and attach the Brainstem skill</h3>
-            <p>This skill fixes the workshop mode to Brainstem. Open GitHub Copilot Chat in VS Code, select Agent mode, and drag the downloaded <code>SKILL.md</code> into the chat.</p>
-            <div class="drag-target">After this file is attached, the next two messages do not need to mention Brainstem.</div>
-          </div>
-          <div>{brainstem_skill_download}</div>
-        </section>
-        <div class="notice"><strong>Brainstem is the default:</strong> it is the learner’s personal, on-device training AI working alongside Copilot. After the skill is attached, the attendee sends two short messages; Brainstem remembers the workshop, hot-loads specialized instructors, and does the heavy lifting.</div>
-        {render_personless_prompt_cards(ctx)}
-        <div class="engine-flow" aria-label="Personless harness loop">
-          <div class="engine-node">1. Start + install Easy Mode</div>
-          <div class="engine-node">2. Build + test the named solution</div>
-          <div class="engine-node">3. Deploy the validated Draft</div>
-          <div class="engine-node">4. Return the evidence verdict</div>
-        </div>
-        <label class="checkpoint"><input type="checkbox" data-checkpoint="brainstem-hotload"><span><strong>Brainstem loaded the generic workshop engine</strong><span>One registry-driven agent resolved this solution package without a use-case-specific workshop cartridge.</span></span></label>
-        <label class="checkpoint"><input type="checkbox" data-checkpoint="brainstem-local"><span><strong>The engine proved the business agent locally</strong><span>Source integrity and every locked deterministic case passed without attendee action.</span></span></label>
-        <label class="checkpoint"><input type="checkbox" data-checkpoint="brainstem-studio"><span><strong>Copilot executed Brainstem’s front-door handoffs</strong><span>The Draft was prepared, Preview evidence returned to Brainstem, and the loop continued without a person pulling each step.</span></span></label>
-        <label class="checkpoint"><input type="checkbox" data-checkpoint="brainstem-verdict"><span><strong>Brainstem reported complete</strong><span>The final state proves Draft, published false, and every locked case passed.</span></span></label>
-        <p><a class="button" href="EASY-MODE-PERSONLESS.md">Open personless guide</a> {workshop_agent_link} <a class="button" href="https://kodyw.com/the-personless-harness/" target="_blank" rel="noopener">Why personless? ↗</a></p>
+        <div class="notice"><strong>Brainstem lane:</strong> Brainstem is the learner’s personal, on-device training AI working alongside Copilot. It persists the workshop, loads the generic engine, and continues every handoff.</div>
+        {render_lane_learning_steps(ctx, "brainstem", brainstem_skill_download)}
       </div>
 
       <div class="easy-lane" data-easy-lane="copilot" hidden>
-        <section class="skill-onboarding">
-          <div>
-            <p class="prompt-kicker">Workshop step 1 of 3 · Copilot-only lane</p>
-            <h3>Download and attach the Copilot-only skill</h3>
-            <p>This skill fixes the workshop mode to GitHub Copilot alone. Open GitHub Copilot Chat in VS Code, select Agent mode, and drag the downloaded <code>SKILL.md</code> into the chat.</p>
-            <div class="drag-target">After this file is attached, use the same two messages as the Brainstem lane.</div>
-          </div>
-          <div>{copilot_skill_download}</div>
-        </section>
-        <div class="comparison-note"><strong>Skeptic comparison:</strong> this lane-specific skill performs the harness directly in GitHub Copilot. The prompts stay identical; the selected skill changes what pulls the work.</div>
-        {render_easy_prompt_cards(ctx)}
-        <label class="checkpoint"><input type="checkbox" data-checkpoint="copilot-source"><span><strong>Copilot inspected the source package</strong><span>It reported the source, tool, model, knowledge, skills, locked cases, and safety boundary before editing.</span></span></label>
-        <label class="checkpoint"><input type="checkbox" data-checkpoint="copilot-build"><span><strong>Copilot completed local and Copilot Studio setup</strong><span>The attached Copilot-only skill supplied the complete harness while GitHub Copilot owned terminal and plugin actions.</span></span></label>
-        <label class="checkpoint"><input type="checkbox" data-checkpoint="copilot-cases"><span><strong>Copilot replayed every locked case</strong><span>It used exact prompts and identifiers and recorded pass/fail evidence without retrying until success.</span></span></label>
-        <label class="checkpoint"><input type="checkbox" data-checkpoint="copilot-draft"><span><strong>Stop at the Draft gate</strong><span>The agent must remain Draft and is not published. Publishing needs separate human approval.</span></span></label>
-        <p><a class="button" href="EASY-MODE-COPILOT-CHAT.md">Open Copilot-only prompts</a> {assisted_link}</p>
+        <div class="comparison-note"><strong>Skeptic comparison — Copilot-only lane:</strong> GitHub Copilot carries the same harness directly in the active session. The skill still discovers every asset and runs every gate; there is no persistent Brainstem engine between turns.</div>
+        {render_lane_learning_steps(ctx, "copilot", copilot_skill_download)}
       </div>
+
+      <section class="learn-step" id="easy-step-4">
+        <header class="learn-step-header"><span>4</span><div><p>Verify the real experience</p><h3>Confirm the Draft in Copilot Studio Preview</h3></div></header>
+        <div class="learn-step-body">
+          <p>The harness already runs these checks automatically. Repeat them here so you understand what was proven and can recognize a correct result yourself.</p>
+          <div class="preview-intro"><ol><li>Open the validated Draft.</li><li>Select <strong>Preview</strong>.</li><li>Choose <strong>New chat</strong> before each case.</li><li>Paste the exact prompt.</li><li>Compare the answer with the required and forbidden markers.</li></ol><div>{studio_button} {assisted_link}</div></div>
+          <div class="expected-panel"><strong>Expected result</strong><p>Every case passes in a fresh Preview conversation, and the agent still appears as <strong>Draft</strong>.</p></div>
+          <div class="preview-grid">
+            {render_preview_case_cards(ctx)}
+          </div>
+        </div>
+      </section>
+
+      {render_completion_state(ctx)}
 
       <section class="card">
         <h3>Compare and contrast while you build</h3>
@@ -1630,12 +1851,40 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
           <thead><tr><th>Dimension</th><th>With Brainstem — default</th><th>GitHub Copilot only</th></tr></thead>
           <tbody>
             <tr><th>Best strength</th><td>A personal, on-device training AI with persistent state, hot-loaded instructors, reusable tools, and autonomous handoffs across turns.</td><td>Fastest entry from the familiar VS Code surface with no additional runtime to understand.</td></tr>
-            <tr><th>Tradeoff</th><td>Requires the local Brainstem engine and its governed agent inventory.</td><td>Copilot carries orchestration in the active session, so persistence and unattended continuation are more limited.</td></tr>
-            <tr><th>What the person does</th><td>Sets the destination, sends short messages, and reads Brainstem’s verdict.</td><td>Attaches the skill, sends short messages, and relies on Copilot to retain and execute the harness.</td></tr>
-            <tr><th>What students learn</th><td>How an on-device training AI works alongside Copilot to make specialized learning persistent and reusable.</td><td>How far GitHub Copilot Agent mode can go by itself when given a strong portable skill.</td></tr>
+            <tr><th>Tradeoff</th><td>Requires the governed local Brainstem runtime.</td><td>Orchestration and state live primarily in the active Copilot session.</td></tr>
+            <tr><th>What the person does</th><td>Sets the destination and reads the engine verdict.</td><td>Attaches the skill and relies on Copilot to retain and execute the harness.</td></tr>
+            <tr><th>What students learn</th><td>How an on-device training AI makes specialized learning persistent and reusable.</td><td>How far Copilot Agent mode can go with a strong portable skill.</td></tr>
           </tbody>
         </table>
       </section>
+
+      <section class="card">
+        <h3>Troubleshooting</h3>
+        <table class="troubleshooting-table">
+          <thead><tr><th>What you see</th><th>What it means</th><th>What to do</th></tr></thead>
+          <tbody>
+            <tr><td>Copilot ignores the lane</td><td>The wrong skill is attached, or the chat began before attachment.</td><td>Start a new Agent-mode chat and attach the correct lane-specific <code>SKILL.md</code> first.</td></tr>
+            <tr><td>Local validation is not {len(easy_case_records(ctx))}/{len(easy_case_records(ctx))}</td><td>The portable source, package, or locked behavior does not match.</td><td>Stop. Do not deploy. Let the harness report the exact failed case and marker.</td></tr>
+            <tr><td>No active Copilot Studio environment</td><td>PAC has no selected environment.</td><td>Sign in or select the intended environment, then resend the deploy message.</td></tr>
+            <tr><td>The Draft already exists</td><td>The recorded schema is already in the environment.</td><td>The harness should clone and reconnect automatically. Treat an attendee choice prompt as a harness defect.</td></tr>
+            <tr><td>A Preview case misses a marker</td><td>The real front door does not match the reviewed contract.</td><td>Keep the case failed. Inspect instructions and assets; do not retry until it happens to pass.</td></tr>
+            <tr><td>The agent is Published</td><td>The workshop crossed its safety boundary.</td><td>Stop immediately. The module must end at Draft with <code>published: false</code>.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <details class="facilitator-details">
+        <summary>Facilitator evidence and portable download</summary>
+        <p>These links support audit, troubleshooting, and offline delivery. They are not learner steps.</p>
+        <div class="facilitator-actions">
+          <a class="button" href="FIELD-GUIDE.md">Field guide</a>
+          <a class="button" href="evals/transcripts.json">Locked evidence</a>
+          <a class="button" href="export-manifest.json">Audit manifest</a>
+          <a class="button" href="exports/{html.escape(ctx.slug)}-source.zip">Portable bundle</a>
+          {workshop_agent_link}
+          <a class="button" href="https://kodyw.com/the-personless-harness/" target="_blank" rel="noopener">Personless harness article ↗</a>
+        </div>
+      </details>
     </section>
 
     <section class="path" data-path="hard" hidden>
@@ -1647,24 +1896,6 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
       </section>
     </section>
 
-    <section class="card">
-      <h2>What the workshop returns</h2>
-      <div class="outcome-grid">
-        <article class="outcome-card"><strong>Local proof</strong><p>The exact business agent is hot-loaded, integrity checked, and tested against every locked case.</p></article>
-        <article class="outcome-card"><strong>Copilot Studio Draft</strong><p>The reviewed instructions, knowledge, skills, and model are assembled without publishing.</p></article>
-        <article class="outcome-card"><strong>Evidence verdict</strong><p>Brainstem reports case totals, agent identity, Draft state, and any blocker instead of asking the attendee to inspect files.</p></article>
-      </div>
-      <details class="facilitator-details">
-        <summary>Facilitator evidence and portable download</summary>
-        <p>These links support audit, troubleshooting, and offline delivery. They are not attendee steps.</p>
-        <div class="facilitator-actions">
-          <a class="button" href="FIELD-GUIDE.md">Field guide</a>
-          <a class="button" href="evals/transcripts.json">Locked evidence</a>
-          <a class="button" href="export-manifest.json">Audit manifest</a>
-          <a class="button" href="exports/{html.escape(ctx.slug)}-source.zip">Portable bundle</a>
-        </div>
-      </details>
-    </section>
   </main>
   <script>
     (() => {{
@@ -1839,6 +2070,10 @@ def update_readme(ctx: JourneyContext, resources: list[Resource]) -> None:
     path.write_text(updated, encoding="utf-8")
 
 
+def normalize_generated_text(content: str) -> str:
+    return "\n".join(line.rstrip() for line in content.strip().splitlines()) + "\n"
+
+
 def write_outputs(ctx: JourneyContext) -> list[Resource]:
     resources = collect_resources(ctx)
     outputs = {
@@ -1858,7 +2093,7 @@ def write_outputs(ctx: JourneyContext) -> list[Resource]:
         )
     for path, content in outputs.items():
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(content.rstrip() + "\n", encoding="utf-8")
+        path.write_text(normalize_generated_text(content), encoding="utf-8")
     update_readme(ctx, resources)
     return resources
 

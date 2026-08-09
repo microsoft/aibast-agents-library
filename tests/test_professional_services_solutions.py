@@ -339,18 +339,31 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     assert "GitHub Copilot only" in quest
     assert "Personless harness" in quest
     assert "Skeptic comparison" in quest
-    assert quest.count("data-copy-target=") == 4
+    assert quest.count("data-copy-target=") == 9
     assert "Download Brainstem SKILL.md" in quest
     assert "Download Copilot-only SKILL.md" in quest
     assert quest.count('download="SKILL.md"') == 2
     assert "Give me Time Entry and Billing using Easy Mode and test it for me." in quest
     assert "using Easy Mode without Brainstem" not in quest
     assert "Deploy it into Copilot Studio for me." in quest
-    assert "What the workshop returns" in quest
     assert "Compare and contrast while you build" in quest
+    assert "What you will learn" in quest
+    assert "Before you begin" in quest
+    assert "Confirm the Draft in Copilot Studio Preview" in quest
+    assert "Open the Copilot Studio Draft" in quest
+    assert "Know what “done” looks like" in quest
+    assert "5/5 locked cases passed" in quest
+    assert "Draft · published false" in quest
+    assert "Final expected verdict" in quest
+    assert "Troubleshooting" in quest
+    for case in cases:
+        assert case["id"] in quest
+        assert case["prompt"] in quest
+        for value in case["must_include"]:
+            assert value in quest
+        for value in case["must_not_include"]:
+            assert value in quest
     assert "Raw resources" not in quest
-    assert "EASY-MODE-PERSONLESS.md" in quest
-    assert "EASY-MODE-COPILOT-CHAT.md" in quest
 
 
 def test_contract_screen_never_passes_missing_evidence():

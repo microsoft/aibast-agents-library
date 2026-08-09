@@ -282,21 +282,31 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "Personless harness" in quest
     assert "View generic workshop agent" in quest
     assert "Skeptic comparison" in quest
-    assert quest.count("data-copy-target=") == 4
+    assert quest.count("data-copy-target=") == 5
     assert "Download Brainstem SKILL.md" in quest
     assert "Download Copilot-only SKILL.md" in quest
     assert quest.count('download="SKILL.md"') == 2
-    assert "drag the downloaded <code>SKILL.md</code> into the chat" in quest
+    assert "Drag the downloaded file into the chat." in quest
     assert "Give me Demo Journey using Easy Mode and test it for me." in quest
     assert "using Easy Mode without Brainstem" not in quest
     assert "Deploy it into Copilot Studio for me." in quest
-    assert "What the workshop returns" in quest
     assert "Facilitator evidence and portable download" in quest
     assert "Raw resources" not in quest
+    assert "What you will learn" in quest
+    assert "Before you begin" in quest
+    assert quest.count('class="learn-step"') == 8
+    assert "Prove the solution locally" in quest
+    assert "Create the reviewed Draft" in quest
+    assert "Confirm the Draft in Copilot Studio Preview" in quest
+    assert "Confirm the expected evidence" in quest
+    assert "Preview response matched this contract" in quest
+    assert "Know what “done” looks like" in quest
+    assert "Final expected verdict" in quest
+    assert "Troubleshooting" in quest
     assert "Compare and contrast while you build" in quest
     assert "Both approaches are valid starting points" in quest
     assert "Build it manually, one captured step at a time." in quest
-    assert "Draft and is not published" in quest
+    assert "Draft · published false" in quest
     assert "manual-tutorial.html" in quest
     assert "copilot-assisted-walkthrough.gif" in quest
     assert "Open the manual tutorial" in quest
