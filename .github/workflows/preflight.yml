@@ -120,6 +120,7 @@ jobs:
 
       - name: AIBAST agent and registry contracts
         run: |
+          python -m pip install -q "beautifulsoup4>=4.12.0"
           python -m pytest tests -q
           python - <<'PY'
           import json
