@@ -37,7 +37,7 @@ accounting system, contacts clients, or sends invoices.
 | Manual evidence | `solutions/time-entry-billing/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/time-entry-billing/screenshots/manual/browserfilm.json` |
 
-**Scaffold status:** 70 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 69 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

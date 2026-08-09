@@ -30,13 +30,13 @@ When the user says `Give me <solution> using Easy Mode and test it for me`:
 2. If Brainstem is not running, start it yourself:
    - prefer `~/.copilot/bin/brainstem start`
    - otherwise use the public Brainstem installer and start it
-3. Resolve `@aibast-agents-library/easy-mode` from the immutable registry.
+3. Resolve `@aibast-agents-library/workshop` from the immutable registry.
 4. Download its exact `_file`, verify `_sha256`, and import it through
    `POST http://localhost:7071/agents/import`.
 5. Send the user's request to `POST http://localhost:7071/chat`.
 6. Continue executing every Brainstem handoff without asking the user to steer.
-7. Brainstem must hot-load and verify the task workshop, hot-load the business
-   agent, and run every locked local case.
+7. Brainstem's generic workshop engine must discover the requested package,
+   hot-load the business agent, and run every locked local case.
 8. Return the verdict and:
    `Deploy it into Copilot Studio for me.`
 

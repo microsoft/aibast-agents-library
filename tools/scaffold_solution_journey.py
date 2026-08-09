@@ -724,27 +724,16 @@ def collect_resources(ctx: JourneyContext) -> list[Resource]:
             easy_skill,
             use,
         )
-    easy_agent = easy_mode_agent_path(ctx)
-    if easy_agent:
-        add_resource(
-            resources,
-            seen,
-            ctx,
-            "easy-mode-agent",
-            "Reusable AIBAST Easy Mode agent",
-            easy_agent,
-            "Registry-discoverable Brainstem router for the three-message workshop flow",
-        )
-    workshop_agent = personless_agent_path(ctx)
+    workshop_agent = workshop_agent_path(ctx)
     if workshop_agent:
         add_resource(
             resources,
             seen,
             ctx,
-            "easy-personless-agent",
-            "Personless workshop Brainstem agent",
+            "generic-workshop-agent",
+            "Generic AIBAST Workshop agent",
             workshop_agent,
-            "Hot-loaded workshop engine for asset retrieval, local proof, Draft setup, and verdict",
+            "Registry-driven Brainstem engine shared by every packaged solution",
         )
     add_resource(resources, seen, ctx, "manual-instructions", "Manual global instructions", ctx.package / "manual" / "GLOBAL-INSTRUCTIONS.md", "Reviewed instructions for literal browser construction")
 
@@ -1010,18 +999,13 @@ def easy_copilot_chat_prompts(ctx: JourneyContext) -> list[tuple[str, str]]:
     return personless_prompts(ctx)
 
 
-def personless_agent_path(ctx: JourneyContext) -> Path | None:
-    agents = sorted((ctx.package / "easy").glob("*_agent.py"))
-    return agents[0] if agents else None
-
-
-def easy_mode_agent_path(ctx: JourneyContext) -> Path | None:
+def workshop_agent_path(ctx: JourneyContext) -> Path | None:
     path = (
         ctx.root
         / "agents"
         / "@aibast-agents-library"
         / "templates"
-        / "easy_mode_agent.py"
+        / "workshop_agent.py"
     )
     return path if path.exists() else None
 
@@ -1067,18 +1051,14 @@ def personless_prompts(ctx: JourneyContext) -> list[tuple[str, str]]:
 
 def render_personless_easy_markdown(ctx: JourneyContext) -> str:
     skill = easy_mode_skill_path(ctx, "brainstem")
-    easy_agent = easy_mode_agent_path(ctx)
-    workshop_agent = personless_agent_path(ctx)
+    workshop_agent = workshop_agent_path(ctx)
     skill_link = (
         ctx.raw(ctx.rel(skill)) if skill else "AIBAST Easy Mode skill pending"
-    )
-    easy_agent_link = (
-        ctx.raw(ctx.rel(easy_agent)) if easy_agent else "Easy Mode agent pending"
     )
     workshop_agent_link = (
         ctx.raw(ctx.rel(workshop_agent))
         if workshop_agent
-        else "Task workshop agent pending"
+        else "Generic workshop agent pending"
     )
     prompts = "\n\n".join(
         f"## {title}\n\n```text\n{prompt}\n```"
@@ -1104,21 +1084,18 @@ Then send these two short messages:
 ## What pulls the harness
 
 1. The attached skill starts the installed Brainstem, finds
-   `@aibast-agents-library/easy-mode` in the AIBAST registry, and imports it
+   `@aibast-agents-library/workshop` in the AIBAST registry, and imports it
    through `/agents/import`.
-2. `AIBASTEasyModeAgent` resolves the named solution, integrity-checks and
-   hot-loads its task-specific workshop cartridge, then asks that cartridge to
-   hot-load and test the business agent.
-3. The same Easy Mode agent remembers the active solution, so “Deploy it” runs
+2. `AIBASTWorkshopAgent` resolves the named solution from `registry.json`,
+   retrieves its standard package, and hot-loads and tests the business agent.
+3. The same generic engine remembers the active solution, so “Deploy it” runs
    the validated Draft flow without the attendee repeating URLs or context.
 4. Copilot executes any real front-door handoff returned by Brainstem, sends
    the captured Preview evidence back, and continues until Brainstem returns
    `status: complete`.
 5. The final gate requires **Draft** and `published: false`.
 
-Reusable Easy Mode agent: {easy_agent_link}
-
-Task workshop cartridge: {workshop_agent_link}
+Generic workshop engine: {workshop_agent_link}
 
 This is the default Easy path. The person sets the destination and reads the
 verdict; Brainstem + Copilot pull the harness.
@@ -1196,11 +1173,12 @@ the workshop and hot-loads the specialized instructors.
 3. Open `EASY-MODE-PERSONLESS.md`.
 4. Send its two short messages in order: build and test the named solution,
    then deploy the validated Draft.
-5. The attached skill starts Brainstem and installs the reusable AIBAST Easy
-   Mode agent into the learner's personal, on-device training AI.
-6. Easy Mode resolves and hot-loads the task-specific workshop cartridge.
-7. Brainstem retrieves the reviewed GitHub assets, hot-loads the business
-   agent, proves it locally, drives Draft setup, and returns front-door actions.
+5. The attached skill starts Brainstem and installs the generic AIBAST Workshop
+   agent into the learner's personal, on-device training AI.
+6. The workshop engine resolves the requested solution from the registry and
+   retrieves its standard package.
+7. Brainstem hot-loads the business agent, proves it locally, drives Draft
+   setup, and returns front-door actions.
 8. Copilot executes each handoff and sends evidence back until Brainstem
    returns `status: complete`.
 9. Stop at **Draft**. Publishing remains a separate human approval gate.
@@ -1445,7 +1423,7 @@ def quest_resources(ctx: JourneyContext, resources: list[Resource]) -> str:
         "deployment-recipe",
         "field-guide",
         "easy-personless-guide",
-        "easy-personless-agent",
+        "generic-workshop-agent",
         "easy-copilot-chat-prompts",
         "manual-instructions",
         "brainstem-transcripts",
@@ -1518,9 +1496,9 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         if manual_gif.exists()
         else '<span class="button" aria-disabled="true">Manual film pending</span>'
     )
-    workshop_agent = personless_agent_path(ctx)
+    workshop_agent = workshop_agent_path(ctx)
     workshop_agent_link = (
-        f'<a class="button" href="{html.escape(workshop_agent.relative_to(ctx.package).as_posix())}">View workshop agent</a>'
+        f'<a class="button" href="../../{html.escape(ctx.rel(workshop_agent))}">View generic workshop agent</a>'
         if workshop_agent
         else '<span class="button" aria-disabled="true">Workshop agent pending</span>'
     )
@@ -1629,7 +1607,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
           <div class="engine-node">3. Deploy the validated Draft</div>
           <div class="engine-node">4. Return the evidence verdict</div>
         </div>
-        <label class="checkpoint"><input type="checkbox" data-checkpoint="brainstem-hotload"><span><strong>Brainstem hot-loaded the workshop cartridge</strong><span>The raw task-specific agent entered the live agents directory through the standard import boundary.</span></span></label>
+        <label class="checkpoint"><input type="checkbox" data-checkpoint="brainstem-hotload"><span><strong>Brainstem loaded the generic workshop engine</strong><span>One registry-driven agent resolved this solution package without a use-case-specific workshop cartridge.</span></span></label>
         <label class="checkpoint"><input type="checkbox" data-checkpoint="brainstem-local"><span><strong>The engine proved the business agent locally</strong><span>Source integrity and every locked deterministic case passed without attendee action.</span></span></label>
         <label class="checkpoint"><input type="checkbox" data-checkpoint="brainstem-studio"><span><strong>Copilot executed Brainstem’s front-door handoffs</strong><span>The Draft was prepared, Preview evidence returned to Brainstem, and the loop continued without a person pulling each step.</span></span></label>
         <label class="checkpoint"><input type="checkbox" data-checkpoint="brainstem-verdict"><span><strong>Brainstem reported complete</strong><span>The final state proves Draft, published false, and every locked case passed.</span></span></label>

@@ -301,8 +301,8 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
         "drag `SKILL.md` into the",
         "Give me Time Entry and Billing using Easy Mode and test it for me.",
         "Deploy it into Copilot Studio for me.",
-        "AIBASTEasyModeAgent",
-        "Task workshop cartridge",
+        "AIBASTWorkshopAgent",
+        "Generic workshop engine",
         "status: complete",
         "published: false",
     ):
@@ -318,7 +318,7 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     for marker in (
         "personal, on-device training AI",
         "http://localhost:7071/health",
-        "@aibast-agents-library/easy-mode",
+        "@aibast-agents-library/workshop",
         "Never ask the user",
         "Never publish",
     ):

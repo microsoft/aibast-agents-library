@@ -46,7 +46,7 @@ def test_brainstem_skill_owns_engine_startup_and_handoffs():
     for marker in (
         "http://localhost:7071/health",
         "~/.copilot/bin/brainstem start",
-        "@aibast-agents-library/easy-mode",
+        "@aibast-agents-library/workshop",
         "POST http://localhost:7071/agents/import",
         "POST http://localhost:7071/chat",
         "real Copilot Studio front door",

@@ -1,7 +1,7 @@
 {
   "schema": "rapp-registry/1.0",
   "version": "1.0.0",
-  "generated_at": "2026-08-08T23:57:00.239875+00:00",
+  "generated_at": "2026-08-09T00:37:17.462014+00:00",
   "stats": {
     "total_agents": 72,
     "publishers": 1,
@@ -16,8 +16,8 @@
     "curated_copy_solutions": 51,
     "solution_onepagers": 51,
     "solution_demo_videos": 47,
-    "total_lines": 30263,
-    "total_kb": 1488.2,
+    "total_lines": 30596,
+    "total_kb": 1499.7,
     "publisher_list": [
       "@aibast-agents-library"
     ],
@@ -13543,37 +13543,6 @@
     },
     {
       "schema": "rapp-agent/1.0",
-      "name": "@aibast-agents-library/easy-mode",
-      "version": "1.0.0",
-      "display_name": "AIBAST Easy Mode",
-      "description": "Turns a named AIBAST workshop into a personless Brainstem + Copilot run: fetch the task cartridge, test the solution, deploy its Draft, and return the evidence verdict.",
-      "author": "AIBAST",
-      "tags": [
-        "easy-mode",
-        "personless-harness",
-        "brainstem",
-        "workshops",
-        "copilot-studio"
-      ],
-      "category": "general",
-      "quality_tier": "pilot",
-      "requires_env": [],
-      "dependencies": [
-        "@rapp/basic-agent"
-      ],
-      "_file": "agents/@aibast-agents-library/templates/easy_mode_agent.py",
-      "_size_kb": 17.3,
-      "_lines": 480,
-      "_sha256": "09188d0038f19b62513a09b37e498dbe4b285afe92ce53af689a1fac5d85372a",
-      "_stack": null,
-      "_stack_vertical": null,
-      "_synthetic_data": false,
-      "_added_at": "2026-08-08T19:44:46-04:00",
-      "_catalog_kind": "template",
-      "_readiness": []
-    },
-    {
-      "schema": "rapp-agent/1.0",
       "name": "@aibast-agents-library/industry-agent-generator",
       "version": "1.0.0",
       "display_name": "Industry Agent Generator",
@@ -13604,6 +13573,36 @@
       "_readiness": [
         "Synthetic data"
       ]
+    },
+    {
+      "schema": "rapp-agent/1.0",
+      "name": "@aibast-agents-library/workshop",
+      "version": "1.0.0",
+      "display_name": "AIBAST Workshop Engine",
+      "description": "Discovers any packaged AIBAST solution, hot-loads and tests its business agent, prepares its Copilot Studio Draft, and validates the real Preview evidence.",
+      "author": "AIBAST",
+      "tags": [
+        "workshop",
+        "personless-harness",
+        "brainstem",
+        "copilot-studio",
+        "generic"
+      ],
+      "category": "general",
+      "quality_tier": "pilot",
+      "requires_env": [],
+      "dependencies": [
+        "@rapp/basic-agent"
+      ],
+      "_file": "agents/@aibast-agents-library/templates/workshop_agent.py",
+      "_size_kb": 28.8,
+      "_lines": 813,
+      "_sha256": "d3c2bacd64b3a0196688e6c81403a5b7bd2c0ecf80b7143cd5457e045a8f697b",
+      "_stack": null,
+      "_stack_vertical": null,
+      "_synthetic_data": false,
+      "_catalog_kind": "template",
+      "_readiness": []
     }
   ]
 }

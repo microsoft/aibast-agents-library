@@ -26,11 +26,12 @@ the workshop and hot-loads the specialized instructors.
 3. Open `EASY-MODE-PERSONLESS.md`.
 4. Send its two short messages in order: build and test the named solution,
    then deploy the validated Draft.
-5. The attached skill starts Brainstem and installs the reusable AIBAST Easy
-   Mode agent into the learner's personal, on-device training AI.
-6. Easy Mode resolves and hot-loads the task-specific workshop cartridge.
-7. Brainstem retrieves the reviewed GitHub assets, hot-loads the business
-   agent, proves it locally, drives Draft setup, and returns front-door actions.
+5. The attached skill starts Brainstem and installs the generic AIBAST Workshop
+   agent into the learner's personal, on-device training AI.
+6. The workshop engine resolves the requested solution from the registry and
+   retrieves its standard package.
+7. Brainstem hot-loads the business agent, proves it locally, drives Draft
+   setup, and returns front-door actions.
 8. Copilot executes each handoff and sends evidence back until Brainstem
    returns `status: complete`.
 9. Stop at **Draft**. Publishing remains a separate human approval gate.

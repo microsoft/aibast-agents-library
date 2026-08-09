@@ -50,8 +50,8 @@ def build_fixture(root):
         / "agents"
         / "@aibast-agents-library"
         / "templates"
-        / "easy_mode_agent.py",
-        "class AIBASTEasyModeAgent:\n    pass\n",
+        / "workshop_agent.py",
+        "class AIBASTWorkshopAgent:\n    pass\n",
     )
     write(
         root / "skills" / "aibast-easy-mode-brainstem" / "SKILL.md",
@@ -126,10 +126,6 @@ def build_fixture(root):
     write(
         package / "manual" / "GLOBAL-INSTRUCTIONS.md",
         "# Role\n\nUse only synthetic fixture records.\n",
-    )
-    write(
-        package / "easy" / "demo_workshop_agent.py",
-        "class DemoWorkshop:\n    pass\n",
     )
     write(package / "manual" / "knowledge" / "synthetic-records.md")
     write(package / "manual" / "knowledge" / "review-rules.md")
@@ -284,7 +280,7 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "With Brainstem — default" in quest
     assert "GitHub Copilot only" in quest
     assert "Personless harness" in quest
-    assert "View workshop agent" in quest
+    assert "View generic workshop agent" in quest
     assert "Skeptic comparison" in quest
     assert quest.count("data-copy-target=") == 4
     assert "Download Brainstem SKILL.md" in quest
@@ -308,7 +304,7 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "drag `SKILL.md` into the" in personless
     assert "Give me Demo Journey using Easy Mode and test it for me." in personless
     assert "Deploy it into Copilot Studio for me." in personless
-    assert "demo_workshop_agent.py" in personless
+    assert "AIBASTWorkshopAgent" in personless
     assert "Brainstem + Copilot pull the harness" in personless
     assert "Copilot-only Easy mode comparison" in easy_prompts
     assert "Attach the Copilot-only skill" in easy_prompts
@@ -335,8 +331,7 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
         "easy-personless-guide",
         "easy-mode-brainstem-skill",
         "easy-mode-copilot-skill",
-        "easy-mode-agent",
-        "easy-personless-agent",
+        "generic-workshop-agent",
         "easy-copilot-chat-prompts",
         "settings",
         "agent-sync",
@@ -449,8 +444,7 @@ def test_optional_export_uses_existing_builder_semantics(tmp_path):
     assert "solutions/demo-journey/EASY-MODE-PERSONLESS.md" in names
     assert "skills/aibast-easy-mode-brainstem/SKILL.md" in names
     assert "skills/aibast-easy-mode-copilot/SKILL.md" in names
-    assert "agents/@aibast-agents-library/templates/easy_mode_agent.py" in names
-    assert "solutions/demo-journey/easy/demo_workshop_agent.py" in names
+    assert "agents/@aibast-agents-library/templates/workshop_agent.py" in names
     assert "solutions/demo-journey/EASY-MODE-COPILOT-CHAT.md" in names
     assert "solutions/demo-journey/quest.html" in names
     assert "solutions/demo-journey/manual-tutorial.html" in names
