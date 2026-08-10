@@ -36,22 +36,7 @@
       font-size: 11px;
       letter-spacing: .08em;
     }
-    .status { display: flex; flex: 1; gap: 8px; min-width: 0; }
-    .pill {
-      max-width: 360px;
-      overflow: hidden;
-      border: 1px solid #30363d;
-      border-radius: 999px;
-      padding: 5px 10px;
-      color: #8c959f;
-      font-size: 12px;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .pill.ready { border-color: #238636; color: #3fb950; }
-    .pill.error { border-color: #da3633; color: #ff7b72; }
-    .pill.warning, .pill.signed-out { border-color: #9e6a03; color: #d29922; }
-    .actions { display: flex; gap: 8px; }
+    .actions { display: flex; gap: 8px; margin-left: auto; }
     button {
       border: 1px solid #30363d;
       border-radius: 6px;
@@ -167,7 +152,6 @@
     @media (max-width: 850px) {
       .intro-grid, .tool-grid { grid-template-columns: 1fr; }
       .intro-card.wide { grid-column: auto; }
-      .status { display: none; }
       .intro-body, .intro-hero { padding-left: 20px; padding-right: 20px; }
     }
   </style>
@@ -175,10 +159,6 @@
 <body>
   <header>
     <div class="title">RAPP Brainstem <span class="beta">BETA</span></div>
-    <div class="status">
-      <div id="brainstem-status" class="pill">Starting shared Brainstem...</div>
-      <div id="copilot-status" class="pill">Connecting bundled Copilot CLI...</div>
-    </div>
     <div class="actions">
       <button id="guide" type="button">What is this?</button>
       <button id="browser" type="button">Open in browser</button>

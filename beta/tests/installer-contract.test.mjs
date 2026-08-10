@@ -11,6 +11,7 @@ const installerPage = readFileSync(path.join(root, "index.html"), "utf8");
 const main = readFileSync(path.join(root, "electron", "main.mjs"), "utf8");
 const preload = readFileSync(path.join(root, "electron", "preload.cjs"), "utf8");
 const ui = readFileSync(path.join(root, "ui", "index.html"), "utf8");
+const renderer = readFileSync(path.join(root, "ui", "renderer.js"), "utf8");
 
 test("beta installers use AIBAST as the canonical source", () => {
   for (const installer of [unix, windows]) {
@@ -80,4 +81,9 @@ test("first-run guide explains the customer rapid-use-case loop", () => {
   assert.match(ui, /Scout/);
   assert.match(ui, /Copilot Studio \/ Foundry/);
   assert.match(ui, /Do not call the prototype production-ready/);
+});
+
+test("desktop chrome omits redundant runtime status pills", () => {
+  assert.doesNotMatch(ui, /brainstem-status|copilot-status/);
+  assert.doesNotMatch(renderer, /brainstemStatus|copilotStatus|setPill/);
 });

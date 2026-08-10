@@ -1,22 +1,12 @@
 const frame = document.getElementById("brainstem");
 const splash = document.getElementById("splash");
 const error = document.getElementById("error");
-const brainstemStatus = document.getElementById("brainstem-status");
-const copilotStatus = document.getElementById("copilot-status");
 const intro = document.getElementById("intro");
 const introStorageKey = "rapp-brainstem-beta-intro-v1";
 
 let loadedUrl = null;
 
-function setPill(element, status) {
-  element.className = `pill ${status.phase || ""}`;
-  element.textContent = status.message || status.phase || "Unknown";
-}
-
 function render(state) {
-  setPill(brainstemStatus, state.brainstem);
-  setPill(copilotStatus, state.copilot);
-
   if (state.brainstem.phase === "ready") {
     if (loadedUrl !== state.url) {
       loadedUrl = state.url;
