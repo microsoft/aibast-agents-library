@@ -19,6 +19,58 @@ YELLOW='\033[1;33m'
 CYAN='\033[0;36m'
 NC='\033[0m'
 
+run_with_heartbeat() {
+    local label="$1"
+    shift
+
+    if [ ! -t 1 ]; then
+        echo "  [..] $label..."
+        "$@"
+        return
+    fi
+
+    local log_file
+    log_file=$(mktemp "${TMPDIR:-/tmp}/brainstem-progress-XXXXXX")
+    "$@" >"$log_file" 2>&1 &
+    local pid=$!
+    local started=$SECONDS
+    local frame=0
+
+    while kill -0 "$pid" 2>/dev/null; do
+        local glyph
+        case "$frame" in
+            0) glyph='|' ;;
+            1) glyph='/' ;;
+            2) glyph='-' ;;
+            *) glyph='\' ;;
+        esac
+        printf "\r  [%s] %s (%ss)" "$glyph" "$label" "$((SECONDS - started))"
+        frame=$(( (frame + 1) % 4 ))
+        sleep 1
+    done
+
+    local status=0
+    wait "$pid" || status=$?
+    if [ "$status" -eq 0 ]; then
+        printf "\r  [✓] %s (%ss)\n" "$label" "$((SECONDS - started))"
+        rm -f "$log_file"
+        return 0
+    fi
+
+    printf "\r  [✗] %s failed after %ss\n" "$label" "$((SECONDS - started))"
+    cat "$log_file" >&2
+    rm -f "$log_file"
+    return "$status"
+}
+
+enable_brainstem_sparse_checkout() {
+    local repo_dir="$1"
+    git -C "$repo_dir" sparse-checkout init --cone >/dev/null 2>&1 || return 1
+    git -C "$repo_dir" sparse-checkout set rapp_brainstem >/dev/null 2>&1 || return 1
+    git -C "$repo_dir" config remote.origin.promisor true
+    git -C "$repo_dir" config remote.origin.partialclonefilter blob:none
+}
+
 read_input() {
     local prompt="$1" default="$2" result
     if [ -t 0 ]; then
@@ -79,6 +131,7 @@ find_python() {
 install_python() {
     local os_type=$(detect_os)
     echo -e "  ${YELLOW}Installing Python 3.11...${NC}"
+    echo "    This can take several minutes; package-manager progress will appear below."
     if [[ "$os_type" == "macos" ]]; then
         if ! command -v brew &> /dev/null; then
             echo -e "  ${YELLOW}Installing Homebrew first...${NC}"
@@ -285,6 +338,13 @@ install_brainstem() {
     local LOCAL_VERSION_FILE="$BRAINSTEM_HOME/src/rapp_brainstem/VERSION"
 
     if [ -d "$BRAINSTEM_HOME/src/.git" ]; then
+        echo "  Limiting the install source to the Brainstem runtime..."
+        if ! enable_brainstem_sparse_checkout "$BRAINSTEM_HOME/src"; then
+            echo -e "  ${RED}✗${NC} Git 2.25+ is required for the lightweight Brainstem checkout"
+            exit 1
+        fi
+        echo -e "  ${GREEN}✓${NC} Solution bundles excluded from installer updates"
+
         # ── SMART UPDATE: preserve local files, upgrade framework ──
         local LOCAL_VER="0.0.0"
         [ -f "$LOCAL_VERSION_FILE" ] && LOCAL_VER=$(cat "$LOCAL_VERSION_FILE" 2>/dev/null || echo "0.0.0")
@@ -322,7 +382,7 @@ install_brainstem() {
             # whole script under `set -e` — we fall back to whatever is already local.
             cd "$BRAINSTEM_HOME/src"
             git stash --quiet 2>/dev/null || true
-            git fetch origin --tags --quiet 2>/dev/null || true
+            git fetch --filter=blob:none origin --tags --quiet 2>/dev/null || true
             if [ -n "$PIN_VERSION" ]; then
                 # Resolve the pin against every tag form we ship: the documented
                 # v0.6.0 UX, a bare 0.6.0, and the actual release tag brainstem-v0.6.0.
@@ -398,11 +458,20 @@ install_brainstem() {
             [ -d "$DATA_DIR" ] && cp -R "$DATA_DIR" "$FRESH_BACKUP/.brainstem_data" 2>/dev/null || true
         fi
         rm -rf "$BRAINSTEM_HOME/src" 2>/dev/null || true
-        git clone --quiet "$REPO_URL" "$BRAINSTEM_HOME/src"
+        echo "  Downloading only the Brainstem runtime; solution ZIPs stay in the web library."
+        if ! git clone --progress --filter=blob:none --sparse --depth 1 --single-branch --no-tags --branch main "$REPO_URL" "$BRAINSTEM_HOME/src"; then
+            echo -e "  ${RED}✗${NC} Failed to download the Brainstem source"
+            echo "    Git 2.25+ is required for the lightweight checkout."
+            exit 1
+        fi
+        if ! enable_brainstem_sparse_checkout "$BRAINSTEM_HOME/src"; then
+            echo -e "  ${RED}✗${NC} Failed to limit the checkout to rapp_brainstem/"
+            exit 1
+        fi
         # If pinning, checkout the specific tag after clone (accepts every tag form).
         if [ -n "$PIN_VERSION" ]; then
             cd "$BRAINSTEM_HOME/src"
-            git fetch origin --tags --quiet 2>/dev/null || true
+            git fetch --filter=blob:none origin --tags --quiet 2>/dev/null || true
             TAG_REF=""
             for cand in "$PIN_VERSION" "v${PIN_VERSION#v}" "brainstem-${PIN_VERSION#v}" "brainstem-v${PIN_VERSION#v}"; do
                 if git rev-parse "$cand" >/dev/null 2>&1; then TAG_REF="$cand"; break; fi
@@ -453,18 +522,17 @@ setup_venv() {
         rm -rf "$VENV_DIR"
     fi
 
-    echo "  Creating virtual environment..."
-    "$PYTHON_CMD" -m venv "$VENV_DIR" 2>/dev/null || {
+    if ! run_with_heartbeat "Creating Python virtual environment" "$PYTHON_CMD" -m venv "$VENV_DIR"; then
         # Some systems need ensurepip first
         "$PYTHON_CMD" -m ensurepip 2>/dev/null || true
-        "$PYTHON_CMD" -m venv "$VENV_DIR" || {
+        if ! run_with_heartbeat "Retrying Python virtual environment" "$PYTHON_CMD" -m venv "$VENV_DIR"; then
             echo -e "  ${RED}✗${NC} Failed to create virtual environment"
             echo "    Try: $PYTHON_CMD -m pip install virtualenv"
             exit 1
-        }
-    }
+        fi
+    fi
     # Ensure pip is up to date inside the venv
-    "$VENV_DIR/bin/python" -m pip install --upgrade pip --quiet 2>/dev/null || true
+    run_with_heartbeat "Updating pip" "$VENV_DIR/bin/python" -m pip install --upgrade pip --disable-pip-version-check || true
     echo -e "  ${GREEN}✓${NC} Virtual environment ready"
 }
 
@@ -472,8 +540,10 @@ setup_deps() {
     echo ""
     echo "Installing dependencies..."
     local req_file="$BRAINSTEM_HOME/src/rapp_brainstem/requirements.txt"
-    "$VENV_DIR/bin/pip" install -r "$req_file" --quiet 2>/dev/null || \
-        "$VENV_DIR/bin/pip" install -r "$req_file"
+    if ! run_with_heartbeat "Installing Python dependencies" "$VENV_DIR/bin/python" -m pip install -r "$req_file" --disable-pip-version-check; then
+        echo -e "  ${YELLOW}⚠${NC} Retrying dependency install with full output..."
+        "$VENV_DIR/bin/python" -m pip install -r "$req_file" --progress-bar on
+    fi
 
     # Verify the critical imports actually work
     if ! "$VENV_DIR/bin/python" -c "import flask, flask_cors, requests, dotenv" 2>/dev/null; then
@@ -493,8 +563,9 @@ ensure_deps() {
 
     echo -e "  ${YELLOW}⚠${NC} Missing dependencies — installing..."
     local req_file="$BRAINSTEM_HOME/src/rapp_brainstem/requirements.txt"
-    "$VENV_DIR/bin/pip" install -r "$req_file" --quiet 2>/dev/null || \
-        "$VENV_DIR/bin/pip" install -r "$req_file"
+    if ! run_with_heartbeat "Installing missing Python dependencies" "$VENV_DIR/bin/python" -m pip install -r "$req_file" --disable-pip-version-check; then
+        "$VENV_DIR/bin/python" -m pip install -r "$req_file" --progress-bar on
+    fi
 
     if ! "$VENV_DIR/bin/python" -c "import flask, flask_cors, requests, dotenv" 2>/dev/null; then
         echo -e "  ${RED}✗${NC} Dependencies failed — try: $VENV_DIR/bin/pip install -r $req_file"

@@ -93,7 +93,9 @@ function Check-ForUpgrade {
 function Install-WithWinget {
     param([string]$PackageId, [string]$Name)
     Write-Host "  [..] Installing $Name via winget..." -ForegroundColor Yellow
-    winget install --id $PackageId --accept-source-agreements --accept-package-agreements --silent 2>&1 | Out-Null
+    Write-Host "       This can take several minutes; winget progress will appear below." -ForegroundColor Gray
+    winget install --id $PackageId --accept-source-agreements --accept-package-agreements --silent 2>&1 |
+        ForEach-Object { Write-Host "       $_" }
     # Refresh PATH for this session
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
 }
@@ -219,7 +221,7 @@ function Setup-Venv {
     }
 
     $sysPy = Resolve-PythonExe
-    Write-Host "  Creating virtual environment..."
+    Write-Host "  Creating Python virtual environment (this can take a minute)..."
     $prev = $ErrorActionPreference
     $ErrorActionPreference = 'Continue'
     & $sysPy -m venv $VENV_DIR 2>&1 | Out-Null
@@ -434,6 +436,25 @@ function Resolve-PinnedTag {
     return $null
 }
 
+function Enable-BrainstemSparseCheckout {
+    param([string]$RepoPath)
+    $prev = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    Push-Location $RepoPath
+    try {
+        git sparse-checkout init --cone 2>&1 | Out-Null
+        if ($LASTEXITCODE -ne 0) { return $false }
+        git sparse-checkout set rapp_brainstem 2>&1 | Out-Null
+        if ($LASTEXITCODE -ne 0) { return $false }
+        git config remote.origin.promisor true 2>&1 | Out-Null
+        git config remote.origin.partialclonefilter blob:none 2>&1 | Out-Null
+        return ($LASTEXITCODE -eq 0)
+    } finally {
+        Pop-Location
+        $ErrorActionPreference = $prev
+    }
+}
+
 function Install-Brainstem {
     Write-Host ""
     Write-Host "Installing RAPP Brainstem..."
@@ -443,6 +464,12 @@ function Install-Brainstem {
     }
 
     if (Test-Path "$BRAINSTEM_HOME\src\.git") {
+        Write-Host "  Limiting the install source to the Brainstem runtime..."
+        if (-not (Enable-BrainstemSparseCheckout "$BRAINSTEM_HOME\src")) {
+            throw "Git 2.25+ is required for the lightweight Brainstem checkout"
+        }
+        Write-Host "  [OK] Solution bundles excluded from installer updates" -ForegroundColor Green
+
         # Smart update — preserve soul, agents, config
         $LocalVer = "0.0.0"
         $VerFile = "$BRAINSTEM_HOME\src\rapp_brainstem\VERSION"
@@ -489,7 +516,7 @@ function Install-Brainstem {
                 # Pin/RC-test: fetch tags and check out the requested release tag
                 # (accepts v0.6.14 / 0.6.14 / brainstem-v0.6.14 forms like install.sh).
                 git stash 2>&1 | Out-Null
-                git fetch --tags --quiet origin 2>&1 | Out-Null
+                git fetch --filter=blob:none --tags --quiet origin 2>&1 | Out-Null
                 $TagRef = Resolve-PinnedTag $PIN_VERSION
                 $pullOk = $false
                 if ($TagRef) {
@@ -500,7 +527,7 @@ function Install-Brainstem {
                     git tag -l 'brainstem-v*' 'v*' 2>&1 | Sort-Object | ForEach-Object { Write-Host "    $_" }
                 }
             } else {
-                git fetch --quiet origin main 2>&1 | Out-Null
+                git fetch --filter=blob:none --quiet origin main 2>&1 | Out-Null
                 $pullOk = ($LASTEXITCODE -eq 0)
                 if ($pullOk) {
                     git reset --hard --quiet FETCH_HEAD 2>&1 | Out-Null
@@ -593,11 +620,19 @@ function Install-Brainstem {
         if (Test-Path "$BRAINSTEM_HOME\src") {
             Remove-Item -Recurse -Force "$BRAINSTEM_HOME\src" -ErrorAction SilentlyContinue
         }
-        Write-Host "  Cloning repository..."
-        git clone --quiet $REPO_URL "$BRAINSTEM_HOME\src" 2>&1
-        if ($LASTEXITCODE -ne 0) {
+        Write-Host "  Downloading only the Brainstem runtime; solution ZIPs stay in the web library."
+        $prevEAP = $ErrorActionPreference
+        $ErrorActionPreference = 'Continue'
+        git clone --progress --filter=blob:none --sparse --depth 1 --single-branch --no-tags --branch main $REPO_URL "$BRAINSTEM_HOME\src" 2>&1 |
+            ForEach-Object { Write-Host "$_" }
+        $cloneOk = ($LASTEXITCODE -eq 0)
+        $ErrorActionPreference = $prevEAP
+        if (-not $cloneOk) {
             Write-Host "  [X] Failed to clone repository" -ForegroundColor Red
-            throw "git clone failed"
+            throw "Git 2.25+ is required for the lightweight Brainstem checkout"
+        }
+        if (-not (Enable-BrainstemSparseCheckout "$BRAINSTEM_HOME\src")) {
+            throw "failed to limit the checkout to rapp_brainstem/"
         }
 
         if ($PIN_VERSION) {
@@ -606,7 +641,7 @@ function Install-Brainstem {
             Push-Location "$BRAINSTEM_HOME\src"
             $prevEAP = $ErrorActionPreference
             $ErrorActionPreference = 'Continue'
-            git fetch --tags --quiet origin 2>&1 | Out-Null
+            git fetch --filter=blob:none --tags --quiet origin 2>&1 | Out-Null
             $TagRef = Resolve-PinnedTag $PIN_VERSION
             if ($TagRef) {
                 git checkout --quiet $TagRef 2>&1 | Out-Null
@@ -661,11 +696,14 @@ function Run-PipInstall {
     $prev = $ErrorActionPreference
     $ErrorActionPreference = 'Continue'
     try {
-        & $py -m pip install -r $reqFile 2>&1 | ForEach-Object { "$_" }
+        Write-Host "  [..] Installing Python packages; pip progress will appear below." -ForegroundColor Yellow
+        & $py -m pip install --progress-bar on --disable-pip-version-check -r $reqFile 2>&1 |
+            ForEach-Object { Write-Host "$_" }
         # `--user` is only valid (and only needed) on the system-python fallback; it
         # errors inside a venv, so skip it when installing into the venv.
         if ($LASTEXITCODE -ne 0 -and $py -ne (Get-VenvPython)) {
-            & $py -m pip install -r $reqFile --user 2>&1 | ForEach-Object { "$_" }
+            & $py -m pip install --progress-bar on --disable-pip-version-check -r $reqFile --user 2>&1 |
+                ForEach-Object { Write-Host "$_" }
         }
     } finally {
         $ErrorActionPreference = $prev

@@ -58,6 +58,20 @@ else
     fail "install.sh should clone microsoft/aibast-agents-library"
 fi
 
+if grep -q -- 'git clone --progress --filter=blob:none --sparse --depth 1' "$REPO_ROOT/install.sh" \
+   && grep -q 'sparse-checkout set rapp_brainstem' "$REPO_ROOT/install.sh"; then
+    pass "install.sh downloads only the Brainstem subtree"
+else
+    fail "install.sh should use a shallow partial sparse clone"
+fi
+
+if grep -q 'run_with_heartbeat "Creating Python virtual environment"' "$REPO_ROOT/install.sh" \
+   && grep -q 'run_with_heartbeat "Installing Python dependencies"' "$REPO_ROOT/install.sh"; then
+    pass "install.sh reports progress for long Python setup steps"
+else
+    fail "install.sh should show Python setup progress"
+fi
+
 echo ""
 
 # ── install.ps1 tests ────────────────────────────────────────────────────────
@@ -74,6 +88,20 @@ if grep -q '\.brainstem' "$REPO_ROOT/install.ps1"; then
     pass "install.ps1 targets ~/.brainstem"
 else
     fail "install.ps1 should target ~/.brainstem"
+fi
+
+if grep -q -- 'git clone --progress --filter=blob:none --sparse --depth 1' "$REPO_ROOT/install.ps1" \
+   && grep -q 'sparse-checkout set rapp_brainstem' "$REPO_ROOT/install.ps1"; then
+    pass "install.ps1 downloads only the Brainstem subtree"
+else
+    fail "install.ps1 should use a shallow partial sparse clone"
+fi
+
+if grep -q 'winget progress will appear below' "$REPO_ROOT/install.ps1" \
+   && grep -q 'pip progress will appear below' "$REPO_ROOT/install.ps1"; then
+    pass "install.ps1 reports progress for long Python setup steps"
+else
+    fail "install.ps1 should show Python setup progress"
 fi
 
 BOOTSTRAP_BOMS=$("$PYTHON_BIN" - "$REPO_ROOT" <<'PY'
@@ -326,6 +354,14 @@ if [ -f "$REPO_ROOT/docs/install.sh" ] && grep -q "brainstem" "$REPO_ROOT/docs/i
     pass "docs/install.sh exists for GitHub Pages curl"
 else
     fail "docs/install.sh missing (needed for curl one-liner via GitHub Pages)"
+fi
+
+if cmp -s "$REPO_ROOT/install.sh" "$REPO_ROOT/docs/install.sh" \
+   && cmp -s "$REPO_ROOT/install.ps1" "$REPO_ROOT/docs/install.ps1" \
+   && cmp -s "$REPO_ROOT/install.cmd" "$REPO_ROOT/docs/install.cmd"; then
+    pass "installer mirrors are byte-identical"
+else
+    fail "docs installer mirrors must match root installers"
 fi
 
 if [ ! -f "$REPO_ROOT/docs/copilot-install.html" ]; then
