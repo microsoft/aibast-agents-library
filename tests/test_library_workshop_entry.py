@@ -54,3 +54,14 @@ def test_library_scripts_parse_after_workshop_entry_change(tmp_path):
             check=False,
         )
         assert result.returncode == 0, result.stderr
+
+
+def test_mobile_agent_modal_prevents_grid_min_content_overflow():
+    text = LIBRARY.read_text(encoding="utf-8")
+
+    assert ".detail-body { grid-template-columns: minmax(0, 1fr); }" in text
+    assert ".detail-body > * { min-width: 0; }" in text
+    assert (
+        ".filters, .grid, .detail-body, .journey-grid "
+        "{ grid-template-columns: 1fr; }"
+    ) not in text

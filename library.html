@@ -1100,7 +1100,9 @@ footer {
     padding-top: 26px;
   }
   .intro h1 { font-size: clamp(2.5rem, 13vw, 3.7rem); }
-  .filters, .grid, .detail-body, .journey-grid { grid-template-columns: 1fr; }
+  .filters, .grid, .journey-grid { grid-template-columns: 1fr; }
+  .detail-body { grid-template-columns: minmax(0, 1fr); }
+  .detail-body > * { min-width: 0; }
   .industry-menu { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .industry-blueprint { grid-template-columns: 1fr; }
   .blueprint-deploy { justify-content: flex-start; }
