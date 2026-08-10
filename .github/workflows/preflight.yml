@@ -344,9 +344,12 @@ jobs:
           }
           if (-not (Test-Path (Join-Path $runtime 'agents\repair_custom_agent.py'))) { throw 'custom agent lost' }
 
-          $launcher = Join-Path $HOME '.local\bin\brainstem.cmd'
-          $command = "`"$launcher`" > `"$env:RUNNER_TEMP\install.log`" 2>&1"
-          Start-Process cmd -ArgumentList '/c', $command
+          $python = Join-Path $HOME '.brainstem\venv\Scripts\python.exe'
+          Start-Process -FilePath $python `
+            -ArgumentList 'brainstem.py' `
+            -WorkingDirectory $runtime `
+            -RedirectStandardOutput "$env:RUNNER_TEMP\server.log" `
+            -RedirectStandardError "$env:RUNNER_TEMP\server-error.log"
 
       - name: Wait for Brainstem and assert
         shell: bash
@@ -359,6 +362,8 @@ jobs:
               break
             fi
             if [ "$attempt" = 120 ]; then
+              tail -60 "$RUNNER_TEMP/server.log" 2>/dev/null || true
+              tail -60 "$RUNNER_TEMP/server-error.log" 2>/dev/null || true
               tail -60 "$RUNNER_TEMP/install.log" 2>/dev/null || true
               exit 1
             fi
