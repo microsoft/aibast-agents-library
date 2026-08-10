@@ -44,3 +44,30 @@
 All line, station, output, cost, staffing, investment, and projection figures
 are synthetic planning estimates. They prove workflow behavior; they are not
 customer KPIs, measured operational results, or commitments.
+
+<!-- scaffold-solution-journey:start -->
+## Customer journey package map
+
+| Surface | Location |
+| --- | --- |
+| Customer field guide | `solutions/product-line-optimization/field-guide.html` |
+| Evidence report | `solutions/product-line-optimization/evidence-report.html` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/product-line-optimization/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/product-line-optimization/EASY-MODE-COPILOT-CHAT.md` |
+| Guided Easy/Hard quest | `solutions/product-line-optimization/quest.html` |
+| Literal browser tutorial | `solutions/product-line-optimization/manual-tutorial.html` |
+| Raw export manifest | `solutions/product-line-optimization/export-manifest.json` |
+| Source bundle | `solutions/product-line-optimization/exports/product-line-optimization-source.zip` |
+| Manual evidence | `solutions/product-line-optimization/evals/manual-build-evidence.json` |
+| Manual browserfilm | `solutions/product-line-optimization/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/product-line-optimization/exports/product-line-optimization-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/product-line-optimization/exports/product-line-optimization-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/product-line-optimization/exports/product-line-optimization-solution-export.json` |
+
+**Scaffold status:** 101 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+
+The journey uses synthetic inputs and qualitative proof. It is not a customer
+KPI, live-system result, production-readiness claim, or publication approval.
+<!-- scaffold-solution-journey:end -->

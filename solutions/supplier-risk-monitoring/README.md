@@ -31,15 +31,23 @@ Upload both Markdown files in `manual/knowledge/`, then upload one `SKILL.md` fi
 
 | Surface | Location |
 | --- | --- |
-| Customer field guide | `solutions/supplier-risk-monitoring/FIELD-GUIDE.md` |
+| Customer field guide | `solutions/supplier-risk-monitoring/field-guide.html` |
+| Evidence report | `solutions/supplier-risk-monitoring/evidence-report.html` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/supplier-risk-monitoring/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/supplier-risk-monitoring/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Hard quest | `solutions/supplier-risk-monitoring/quest.html` |
 | Literal browser tutorial | `solutions/supplier-risk-monitoring/manual-tutorial.html` |
 | Raw export manifest | `solutions/supplier-risk-monitoring/export-manifest.json` |
 | Source bundle | `solutions/supplier-risk-monitoring/exports/supplier-risk-monitoring-source.zip` |
 | Manual evidence | `solutions/supplier-risk-monitoring/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/supplier-risk-monitoring/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/supplier-risk-monitoring/exports/supplier-risk-monitoring-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/supplier-risk-monitoring/exports/supplier-risk-monitoring-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/supplier-risk-monitoring/exports/supplier-risk-monitoring-solution-export.json` |
 
-**Scaffold status:** 60 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 85 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

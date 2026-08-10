@@ -1,0 +1,656 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/license-renewal-expansion",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker, refusal, or visibly different locked case that defeats the checkpoint.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, a different locked case is visibly shown, or no positive deterministic anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 23,
+    "reusable": 22,
+    "reshoot_required": 1
+  },
+  "captures": [
+    {
+      "id": "easy-lre-01",
+      "mode": "easy",
+      "case_id": "LRE-01",
+      "source": "solutions/license-renewal-expansion/screenshots/assisted/01-lre-01.jpg",
+      "annotated": "solutions/license-renewal-expansion/screenshots/assisted/annotated/01-lre-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft Renewal Preparation Checklist",
+        "Evidence boundary"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Renewal Pipeline heading is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 140,
+          "width": 940,
+          "height": 240,
+          "label": "Renewal preparation checklist"
+        },
+        {
+          "x": 284,
+          "y": 404,
+          "width": 940,
+          "height": 174,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-lre-02",
+      "mode": "easy",
+      "case_id": "LRE-02",
+      "source": "solutions/license-renewal-expansion/screenshots/assisted/02-lre-02.jpg",
+      "annotated": "solutions/license-renewal-expansion/screenshots/assisted/annotated/02-lre-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Expansion Opportunities and Draft Packaging Options headings are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 438,
+          "width": 940,
+          "height": 138,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-lre-03",
+      "mode": "easy",
+      "case_id": "LRE-03",
+      "source": "solutions/license-renewal-expansion/screenshots/assisted/03-lre-03.jpg",
+      "annotated": "solutions/license-renewal-expansion/screenshots/assisted/annotated/03-lre-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Data Migration ($45,000)",
+        "$147,000 illustrative total",
+        "Evidence boundary"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Churn Risk Assessment and Synthetic Switching-Cost Review headings are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 130,
+          "width": 940,
+          "height": 168,
+          "label": "Switching-cost assumptions"
+        },
+        {
+          "x": 284,
+          "y": 326,
+          "width": 940,
+          "height": 58,
+          "label": "Illustrative total"
+        },
+        {
+          "x": 284,
+          "y": 405,
+          "width": 940,
+          "height": 170,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-lre-04",
+      "mode": "easy",
+      "case_id": "LRE-04",
+      "source": "solutions/license-renewal-expansion/screenshots/assisted/04-lre-04.jpg",
+      "annotated": "solutions/license-renewal-expansion/screenshots/assisted/annotated/04-lre-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Scenario target",
+        "midpoint ($916,200)",
+        "Evidence boundary"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Synthetic Revenue Scenario and exact Illustrative midpoint assumption headings are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 300,
+          "width": 940,
+          "height": 72,
+          "label": "Midpoint scenario target"
+        },
+        {
+          "x": 284,
+          "y": 438,
+          "width": 940,
+          "height": 140,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-draft",
+      "mode": "easy",
+      "source": "solutions/license-renewal-expansion/screenshots/assisted/05-confirm-draft.jpg",
+      "status": "reshoot_required",
+      "reason": "The target License Renewal Pilot row is not visible; the frame shows unrelated agents and cannot prove the validated pilot remains Draft.",
+      "draft": true
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "step": 1,
+      "source": "solutions/license-renewal-expansion/screenshots/manual/01-create-blank-agent.jpg",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent",
+        "Blank Build workspace"
+      ],
+      "boxes": [
+        {
+          "x": 160,
+          "y": 92,
+          "width": 820,
+          "height": 66,
+          "label": "Blank agent workspace"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "step": 2,
+      "source": "solutions/license-renewal-expansion/screenshots/manual/02-name-agent.jpg",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "License Renewal Manual in the name field"
+      ],
+      "full_step_not_visibly_proven": [
+        "The page header still reads Untitled Agent while the edited name field shows the target name."
+      ],
+      "boxes": [
+        {
+          "x": 164,
+          "y": 98,
+          "width": 816,
+          "height": 58,
+          "label": "Manual agent name entered"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "step": 3,
+      "source": "solutions/license-renewal-expansion/screenshots/manual/03-enter-instructions.jpg",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence-first response contract",
+        "Locked Preview evidence anchors"
+      ],
+      "boxes": [
+        {
+          "x": 72,
+          "y": 182,
+          "width": 902,
+          "height": 650,
+          "label": "Reviewed instruction policy"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "step": 4,
+      "source": "solutions/license-renewal-expansion/screenshots/manual/04-save-instructions.jpg",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "License Renewal and Expansion Agent — Global Instructions",
+        "Reviewed instruction policy remains visible"
+      ],
+      "full_step_not_visibly_proven": [
+        "The screenshot does not show an explicit save confirmation."
+      ],
+      "boxes": [
+        {
+          "x": 74,
+          "y": 216,
+          "width": 900,
+          "height": 620,
+          "label": "Reviewed instructions visible"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "step": 5,
+      "source": "solutions/license-renewal-expansion/screenshots/manual/05-remove-web-search.jpg",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Knowledge section shows only the add control",
+        "Search all websites is absent"
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 248,
+          "width": 382,
+          "height": 88,
+          "label": "Default web search removed"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "step": 6,
+      "source": "solutions/license-renewal-expansion/screenshots/manual/06-add-aibast-license-renewal-expansion-operating-rules.jpg",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/06-add-aibast-license-renewal-expansion-operating-rules.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_license-renewal-expansion-operating... knowledge item"
+      ],
+      "full_step_not_visibly_proven": [
+        "The end of the operating-rules filename is cropped by the Copilot Studio inventory."
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 306,
+          "width": 368,
+          "height": 52,
+          "label": "Operating-rules knowledge"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "step": 7,
+      "source": "solutions/license-renewal-expansion/screenshots/manual/07-add-aibast-license-renewal-expansion-synthetic-records.jpg",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/07-add-aibast-license-renewal-expansion-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_license-renewal-expansion-synthetic-... knowledge item",
+        "aibast_license-renewal-expansion-operating... knowledge item"
+      ],
+      "full_step_not_visibly_proven": [
+        "The ends of both knowledge filenames are cropped by the Copilot Studio inventory."
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 306,
+          "width": 368,
+          "height": 96,
+          "label": "Two reviewed knowledge files"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "step": 8,
+      "source": "solutions/license-renewal-expansion/screenshots/manual/08-add-churn-risk.jpg",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/08-add-churn-risk.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "license-renewal-expansion-churn-risk"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 182,
+          "width": 368,
+          "height": 58,
+          "label": "Churn-risk skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "step": 9,
+      "source": "solutions/license-renewal-expansion/screenshots/manual/09-add-expansion-opportunities.jpg",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/09-add-expansion-opportunities.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "license-renewal-expansion-expansion-oppor...",
+        "license-renewal-expansion-churn-risk"
+      ],
+      "full_step_not_visibly_proven": [
+        "The end of the expansion-opportunities skill name is cropped by the Copilot Studio inventory."
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 182,
+          "width": 368,
+          "height": 98,
+          "label": "Expansion skill added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "step": 10,
+      "source": "solutions/license-renewal-expansion/screenshots/manual/10-add-renewal-pipeline.jpg",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/10-add-renewal-pipeline.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "license-renewal-expansion-renewal-pipeline",
+        "Three configured skills"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 182,
+          "width": 368,
+          "height": 142,
+          "label": "Renewal-pipeline skill added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "step": 11,
+      "source": "solutions/license-renewal-expansion/screenshots/manual/11-add-revenue-impact.jpg",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/11-add-revenue-impact.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "license-renewal-expansion-revenue-impact",
+        "Four configured skills"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 182,
+          "width": 368,
+          "height": 182,
+          "label": "Revenue-impact skill added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "step": 12,
+      "source": "solutions/license-renewal-expansion/screenshots/manual/12-review-inventory.jpg",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/12-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "Four configured skills",
+        "Tools section contains no configured tool",
+        "Two reviewed knowledge files",
+        "Save tooltip states No unsaved changes"
+      ],
+      "boxes": [
+        {
+          "x": 1188,
+          "y": 84,
+          "width": 208,
+          "height": 44,
+          "label": "Claude Sonnet 4.6"
+        },
+        {
+          "x": 1028,
+          "y": 182,
+          "width": 368,
+          "height": 182,
+          "label": "Four configured skills"
+        },
+        {
+          "x": 1018,
+          "y": 366,
+          "width": 382,
+          "height": 56,
+          "label": "No configured tools"
+        },
+        {
+          "x": 1028,
+          "y": 466,
+          "width": 368,
+          "height": 96,
+          "label": "Two knowledge files"
+        },
+        {
+          "x": 1048,
+          "y": 48,
+          "width": 198,
+          "height": 48,
+          "label": "No unsaved changes"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "step": 13,
+      "source": "solutions/license-renewal-expansion/screenshots/manual/13-open-preview.jpg",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab selected",
+        "New chat control"
+      ],
+      "full_step_not_visibly_proven": [
+        "The frame shows a recorded qualitative result rather than a cleared conversation."
+      ],
+      "boxes": [
+        {
+          "x": 566,
+          "y": 14,
+          "width": 170,
+          "height": 42,
+          "label": "Preview selected"
+        },
+        {
+          "x": 834,
+          "y": 88,
+          "width": 108,
+          "height": 42,
+          "label": "New chat"
+        }
+      ]
+    },
+    {
+      "id": "hard-lre-01",
+      "mode": "hard",
+      "case_id": "LRE-01",
+      "step": 14,
+      "source": "solutions/license-renewal-expansion/screenshots/manual/14-lre-01.jpg",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/14-lre-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft Renewal Preparation Checklist",
+        "Evidence boundary"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Renewal Pipeline heading is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 178,
+          "width": 940,
+          "height": 210,
+          "label": "Renewal preparation checklist"
+        },
+        {
+          "x": 284,
+          "y": 410,
+          "width": 940,
+          "height": 166,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-lre-02",
+      "mode": "hard",
+      "case_id": "LRE-02",
+      "step": 15,
+      "source": "solutions/license-renewal-expansion/screenshots/manual/15-lre-02.jpg",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/15-lre-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Accounts with No Expansion Signals",
+        "Evidence boundary",
+        "Draft Packaging Options require validation and approval"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Expansion Opportunities and Draft Packaging Options headings are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 158,
+          "width": 696,
+          "height": 182,
+          "label": "Expansion signal inventory"
+        },
+        {
+          "x": 284,
+          "y": 440,
+          "width": 940,
+          "height": 142,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-lre-03",
+      "mode": "hard",
+      "case_id": "LRE-03",
+      "step": 16,
+      "source": "solutions/license-renewal-expansion/screenshots/manual/16-lre-03.jpg",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/16-lre-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Assumptions requiring validation",
+        "Data Migration ($45,000)",
+        "Approval Gate",
+        "Evidence boundary"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Churn Risk Assessment and Synthetic Switching-Cost Review headings are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 134,
+          "width": 940,
+          "height": 198,
+          "label": "Switching-cost assumptions"
+        },
+        {
+          "x": 284,
+          "y": 348,
+          "width": 940,
+          "height": 120,
+          "label": "Approval gate"
+        },
+        {
+          "x": 284,
+          "y": 492,
+          "width": 940,
+          "height": 90,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-lre-04",
+      "mode": "hard",
+      "case_id": "LRE-04",
+      "step": 17,
+      "source": "solutions/license-renewal-expansion/screenshots/manual/17-lre-04.jpg",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/17-lre-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Stress-test the midpoint assumption",
+        "Approval Gate",
+        "Evidence boundary"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Synthetic Revenue Scenario and exact Illustrative midpoint assumption headings are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 236,
+          "width": 940,
+          "height": 96,
+          "label": "Midpoint scenario stress test"
+        },
+        {
+          "x": 284,
+          "y": 348,
+          "width": 940,
+          "height": 88,
+          "label": "Approval gate"
+        },
+        {
+          "x": 284,
+          "y": 466,
+          "width": 940,
+          "height": 112,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-draft",
+      "mode": "hard",
+      "step": 18,
+      "source": "solutions/license-renewal-expansion/screenshots/manual/18-confirm-draft.jpg",
+      "annotated": "solutions/license-renewal-expansion/screenshots/manual/annotated/18-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "License Renewal Manual",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 106,
+          "y": 244,
+          "width": 680,
+          "height": 58,
+          "label": "Target agent remains Draft"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy Draft gate filtered to License Renewal Pilot with Draft visible."
+    ],
+    "new_learn_step_captures": []
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:license-renewal-expansion",
+    "reviewed_at": "2026-08-10T00:27:58.155186+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  }
+}

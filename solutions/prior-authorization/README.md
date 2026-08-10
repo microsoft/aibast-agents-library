@@ -37,15 +37,23 @@ This customer package is synthetic and read-only. It provides evidence or drafts
 
 | Surface | Location |
 | --- | --- |
-| Customer field guide | `solutions/prior-authorization/FIELD-GUIDE.md` |
+| Customer field guide | `solutions/prior-authorization/field-guide.html` |
+| Evidence report | `solutions/prior-authorization/evidence-report.html` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/prior-authorization/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/prior-authorization/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Hard quest | `solutions/prior-authorization/quest.html` |
 | Literal browser tutorial | `solutions/prior-authorization/manual-tutorial.html` |
 | Raw export manifest | `solutions/prior-authorization/export-manifest.json` |
 | Source bundle | `solutions/prior-authorization/exports/prior-authorization-source.zip` |
 | Manual evidence | `solutions/prior-authorization/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/prior-authorization/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/prior-authorization/exports/prior-authorization-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/prior-authorization/exports/prior-authorization-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/prior-authorization/exports/prior-authorization-solution-export.json` |
 
-**Scaffold status:** 60 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 94 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

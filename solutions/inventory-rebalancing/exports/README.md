@@ -1,6 +1,27 @@
 # Export bundle
 
-`inventory-rebalancing-source.zip` contains the reviewed source package, Easy
-Preview evidence, manual-build evidence, 22 manual screenshots, the compact
-assisted film, browserfilm manifests, GIFs, and contact sheets declared in
-`../export-manifest.json`.
+Build `inventory-rebalancing-source.zip` from the generated manifest:
+
+```text
+python3 tools/build_solution_export.py \
+  solutions/inventory-rebalancing/export-manifest.json
+```
+
+The existing builder includes the complete solution package plus every
+non-pending resource declared by the manifest. Items marked `pending_capture`
+are intentionally excluded until real evidence exists.
+
+
+## Import the Copilot Studio solution
+
+- Solution ZIP: [`inventory-rebalancing-copilot-studio-solution.zip`](inventory-rebalancing-copilot-studio-solution.zip)
+- Deployment settings: [`inventory-rebalancing-deployment-settings.json`](inventory-rebalancing-deployment-settings.json)
+- Export details: [`inventory-rebalancing-solution-export.json`](inventory-rebalancing-solution-export.json)
+
+The ZIP is an unmanaged solution for manual review. Importing it does not
+publish the agent. Review connection references and environment variables
+before enabling any integration.
+
+- Import as an unmanaged solution for manual review.
+- Map connection references and environment variables before enabling integrations.
+- The exported agent remains unpublished unless the target administrator explicitly publishes it.

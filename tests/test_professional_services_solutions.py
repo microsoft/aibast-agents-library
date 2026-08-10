@@ -274,6 +274,135 @@ def test_every_locked_case_has_factual_evidence_in_manual_knowledge():
                 assert fact.lower() in knowledge, (slug, case["id"], fact)
 
 
+def test_time_entry_easy_mode_is_literal_github_copilot_chat():
+    package = ROOT / "solutions" / "time-entry-billing"
+    personless = (package / "EASY-MODE-PERSONLESS.md").read_text(
+        encoding="utf-8"
+    )
+    prompts = (package / "EASY-MODE-COPILOT-CHAT.md").read_text(
+        encoding="utf-8"
+    )
+    brainstem_skill = (
+        ROOT / "skills/aibast-easy-mode-brainstem/SKILL.md"
+    ).read_text(
+        encoding="utf-8"
+    )
+    copilot_skill = (
+        ROOT / "skills/aibast-easy-mode-copilot/SKILL.md"
+    ).read_text(
+        encoding="utf-8"
+    )
+    quest = (package / "quest.html").read_text(encoding="utf-8")
+    visual_audit = (package / "VISUAL-EVIDENCE-AUDIT.md").read_text(
+        encoding="utf-8"
+    )
+    manual_tutorial = (package / "manual-tutorial.html").read_text(
+        encoding="utf-8"
+    )
+    cases = read_json(ROOT / "tests/demo_cases/time-entry-billing.json")[
+        "cases"
+    ]
+
+    for marker in (
+        "drag `SKILL.md` into the",
+        "Give me Time Entry and Billing using Easy Mode and test it for me.",
+        "Deploy it into Copilot Studio for me.",
+        "AIBASTWorkshopAgent",
+        "Generic workshop engine",
+        "status: complete",
+        "published: false",
+    ):
+        assert marker in personless
+    for marker in (
+        "Attach the Copilot-only skill",
+        "drag `SKILL.md` into the",
+        "Give me Time Entry and Billing using Easy Mode and test it for me.",
+        "Deploy it into Copilot Studio for me.",
+    ):
+        assert marker in prompts
+    for marker in (
+        "personal, on-device training AI",
+        "http://localhost:7071/health",
+        "@aibast-agents-library/workshop",
+        "Never ask the user",
+        "Never publish",
+    ):
+        assert marker in brainstem_skill
+    for marker in (
+        "AIBAST Easy Mode — GitHub Copilot",
+        "tests/demo_cases/<slug>.json",
+        "must_include",
+        "must_not_include",
+        "one immutable commit SHA",
+        "Never ask the user",
+        "Never publish",
+    ):
+        assert marker in copilot_skill
+    assert "brainstem" not in copilot_skill.lower()
+    assert len(cases) == 5
+
+    assert "GitHub Copilot + Brainstem" in quest
+    assert "GitHub Copilot only" in quest
+    assert "Personless harness" in quest
+    assert "Skeptic comparison" in quest
+    assert "aibast:workshop-engine" in quest
+    assert "data-easy-lane-button" not in quest
+    assert "Workshop settings" in quest
+    assert quest.count("data-copy-target=") == 16
+    assert "Download Brainstem SKILL.md" in quest
+    assert "Download Copilot-only SKILL.md" in quest
+    assert quest.count('download="SKILL.md"') == 2
+    assert "Give me Time Entry and Billing using Easy Mode and test it for me." in quest
+    assert "using Easy Mode without Brainstem" not in quest
+    assert "Deploy it into Copilot Studio for me." in quest
+    assert "Compare and contrast while you build" not in quest
+    assert "What you will learn" in quest
+    assert "Before you begin" in quest
+    assert "Confirm the Draft in Copilot Studio Preview" in quest
+    assert "Open the Copilot Studio Draft" in quest
+    assert "Know what “done” looks like" in quest
+    assert "5/5 locked cases passed" in quest
+    assert "Draft · published false" in quest
+    assert "Final expected verdict" in quest
+    assert "Troubleshooting" in quest
+    assert "Evidence report" in quest
+    assert "Reshoot required" not in quest
+    assert "No approved visual checkpoint" not in quest
+    for case in cases:
+        assert case["id"] in quest
+        assert case["prompt"] in quest
+        for value in case["must_include"]:
+            assert value in quest
+        for value in case["must_not_include"]:
+            assert value in quest
+    assert "Raw resources" not in quest
+    assert "<iframe" not in quest
+    assert 'class="path" data-path="hard"' in quest
+    assert "Open standalone Hard-mode guide" in quest
+    assert manual_tutorial.count(
+        'data-copy-target="hard-copy-'
+    ) == 7
+    assert "Copy agent name" in manual_tutorial
+    assert "Copy instructions" in manual_tutorial
+    assert manual_tutorial.count("Copy Preview prompt") == 5
+    assert "Time Entry and Billing Manual" in manual_tutorial
+    for case in cases:
+        assert case["prompt"] in manual_tutorial
+    for marker in (
+        "**Needs remediation.**",
+        "| Pass | 4 |",
+        "| Partial | 15 |",
+        "| Fail | 7 |",
+        "Nine Hard-mode screenshots are byte-for-byte identical",
+        "grounding files are not present",
+        "All 26 source screenshots are low-resolution legacy captures",
+        "2560×1440",
+        "use AI upscaling as a substitute",
+        "Do not present the current Hard-mode run as proven end to end",
+    ):
+        assert marker in visual_audit
+
+
 def test_contract_screen_never_passes_missing_evidence():
     agent = load_agent("contract-risk-review", CONFIG["contract-risk-review"])
     output = agent.perform(operation="compliance_check")

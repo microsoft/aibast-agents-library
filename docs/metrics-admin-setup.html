@@ -1,0 +1,1399 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>
+  (() => {
+    const param = new URLSearchParams(window.location.search).get("scoutTheme");
+    const theme =
+      param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="data:," rel="icon">
+<meta name="description" content="Administrator deployment checklist for AIBAST workshop achievements, per-agent Discussion upvotes, signed-in acquisitions, and download metrics.">
+<title>Metrics administrator setup — AIBAST Agents Library</title>
+<style>
+:root {
+  color-scheme: light;
+  --cp-bg: #f7f4ef;
+  --cp-bg-elevated: #fcfbf8;
+  --cp-surface: #ffffff;
+  --cp-surface-soft: #f5f5f5;
+  --cp-border: #dedede;
+  --cp-border-strong: #919191;
+  --cp-text: #242424;
+  --cp-text-muted: #5c5c5c;
+  --cp-text-soft: #6f6f6f;
+  --cp-accent: #b11f4b;
+  --cp-accent-hover: #9a1a41;
+  --cp-accent-soft: rgba(177, 31, 75, 0.08);
+  --cp-accent-fg: #ffffff;
+  --cp-success: #16a34a;
+  --cp-danger: #dc2626;
+  --cp-warning: #f59e0b;
+  --cp-link: #0078d4;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+  --cp-overlay: rgba(255, 255, 255, 0.8);
+  --cp-panel: rgba(255, 255, 255, 0.86);
+  --cp-panel-strong: rgba(255, 255, 255, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.55);
+  --cp-highlight: rgba(177, 31, 75, 0.12);
+}
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --cp-bg: #3d3b3a;
+  --cp-bg-elevated: #343231;
+  --cp-surface: #292929;
+  --cp-surface-soft: #2e2e2e;
+  --cp-border: #474747;
+  --cp-border-strong: #5f5f5f;
+  --cp-text: #dedede;
+  --cp-text-muted: #919191;
+  --cp-text-soft: #b0b0b0;
+  --cp-accent: #fd8ea1;
+  --cp-accent-hover: #fb7b91;
+  --cp-accent-soft: rgba(253, 142, 161, 0.14);
+  --cp-accent-fg: #1a1a1a;
+  --cp-success: #4ade80;
+  --cp-danger: #f87171;
+  --cp-warning: #fbbf24;
+  --cp-link: #4da6ff;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+  --cp-overlay: rgba(41, 41, 41, 0.88);
+  --cp-panel: rgba(41, 41, 41, 0.72);
+  --cp-panel-strong: rgba(41, 41, 41, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.04);
+  --cp-highlight: rgba(253, 142, 161, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--cp-bg);
+  color: var(--cp-text);
+  font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+a {
+  color: var(--cp-link);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  color: var(--cp-accent-hover);
+}
+
+code,
+pre,
+.mono {
+  font-family: Consolas, "Courier New", Courier, monospace;
+}
+
+:focus-visible {
+  outline: 3px solid var(--cp-accent);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 300;
+  padding: 8px 12px;
+  border: 1px solid var(--cp-border-strong);
+  border-radius: 0.625rem;
+  background: var(--cp-surface);
+  color: var(--cp-text);
+  transform: translateY(-180%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--cp-border);
+  background: var(--cp-panel-strong);
+  box-shadow: var(--cp-shadow);
+}
+
+.topbar-inner {
+  width: min(1240px, 100%);
+  min-height: 64px;
+  margin: 0 auto;
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--cp-text);
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.brand:hover {
+  color: var(--cp-text);
+}
+
+.brand-mark {
+  width: 36px;
+  height: 36px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 0.625rem;
+  background: var(--cp-accent);
+  color: var(--cp-accent-fg);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.brand-copy {
+  display: grid;
+  line-height: 1.2;
+}
+
+.brand-copy small {
+  color: var(--cp-text-muted);
+  font-size: 0.74rem;
+  font-weight: 600;
+}
+
+.topnav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.nav-link,
+.nav-button {
+  min-height: 40px;
+  padding: 8px 11px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--cp-border);
+  border-radius: 0.625rem;
+  background: var(--cp-surface);
+  color: var(--cp-text);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.nav-link:hover,
+.nav-button:hover {
+  border-color: var(--cp-accent);
+  background: var(--cp-accent-soft);
+  color: var(--cp-text);
+}
+
+.nav-link[aria-current="page"] {
+  border-color: var(--cp-accent);
+  color: var(--cp-accent);
+}
+
+.page-shell {
+  width: min(1240px, 100%);
+  margin: 0 auto;
+  padding: 32px 24px 72px;
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(28px, 5vw, 56px);
+  border: 1px solid var(--cp-border);
+  border-radius: 16px;
+  background: var(--cp-surface);
+  box-shadow: var(--cp-shadow);
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--cp-accent);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3 {
+  margin-top: 0;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+h1 {
+  max-width: 850px;
+  margin-bottom: 16px;
+  font-size: clamp(2rem, 5vw, 3.6rem);
+  letter-spacing: -0.035em;
+}
+
+h2 {
+  font-size: clamp(1.45rem, 3vw, 2rem);
+}
+
+h3 {
+  font-size: 1.12rem;
+}
+
+.lede {
+  max-width: 800px;
+  margin: 0;
+  color: var(--cp-text-muted);
+  font-size: clamp(1rem, 2vw, 1.18rem);
+}
+
+.hero-meta {
+  margin-top: 24px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pill {
+  padding: 5px 10px;
+  border: 1px solid var(--cp-border);
+  border-radius: 0.625rem;
+  background: var(--cp-surface-soft);
+  color: var(--cp-text-muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.summary-grid {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.6fr);
+  gap: 20px;
+}
+
+.panel {
+  padding: 24px;
+  border: 1px solid var(--cp-border);
+  border-radius: 16px;
+  background: var(--cp-surface);
+}
+
+.panel > :last-child {
+  margin-bottom: 0;
+}
+
+.plain-list {
+  margin: 0;
+  padding-left: 22px;
+}
+
+.plain-list li + li {
+  margin-top: 8px;
+}
+
+.safety {
+  border-left: 4px solid var(--cp-warning);
+  background: var(--cp-surface-soft);
+}
+
+.safety strong {
+  color: var(--cp-text);
+}
+
+.progress-panel {
+  margin: 24px 0 12px;
+  padding: 18px 20px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px 20px;
+  align-items: center;
+  border: 1px solid var(--cp-border);
+  border-radius: 16px;
+  background: var(--cp-bg-elevated);
+}
+
+.progress-copy {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.progress-copy strong {
+  font-size: 1.05rem;
+}
+
+.progress-copy span {
+  color: var(--cp-text-muted);
+  font-size: 0.9rem;
+}
+
+.progress-track {
+  height: 10px;
+  overflow: hidden;
+  border: 1px solid var(--cp-border);
+  border-radius: 0.625rem;
+  background: var(--cp-surface-soft);
+}
+
+.progress-fill {
+  width: 0;
+  height: 100%;
+  background: var(--cp-accent);
+  transition: width 180ms ease;
+}
+
+.reset-button {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 1px solid var(--cp-border);
+  border-radius: 0.625rem;
+  background: var(--cp-surface);
+  color: var(--cp-text);
+  cursor: pointer;
+  font-weight: 650;
+}
+
+.reset-button:hover {
+  border-color: var(--cp-accent);
+  background: var(--cp-accent-soft);
+}
+
+.content-layout {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.toc {
+  position: sticky;
+  top: 88px;
+  padding: 18px;
+  border: 1px solid var(--cp-border);
+  border-radius: 16px;
+  background: var(--cp-surface);
+}
+
+.toc strong {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.toc a {
+  display: block;
+  padding: 6px 8px;
+  border-radius: 0.625rem;
+  color: var(--cp-text-muted);
+  font-size: 0.86rem;
+  text-decoration: none;
+}
+
+.toc a:hover {
+  background: var(--cp-accent-soft);
+  color: var(--cp-accent);
+}
+
+.steps {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 18px;
+  list-style: none;
+  counter-reset: deployment-step;
+}
+
+.step-card {
+  counter-increment: deployment-step;
+  scroll-margin-top: 92px;
+  padding: 24px;
+  border: 1px solid var(--cp-border);
+  border-radius: 16px;
+  background: var(--cp-surface);
+}
+
+.step-heading {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+}
+
+.step-number {
+  width: 44px;
+  height: 44px;
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid var(--cp-accent);
+  border-radius: 0.625rem;
+  background: var(--cp-accent-soft);
+  color: var(--cp-accent);
+  font-weight: 850;
+}
+
+.step-number::before {
+  content: counter(deployment-step);
+}
+
+.step-check {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.step-check input,
+.go-live-item input {
+  width: 20px;
+  height: 20px;
+  margin: 2px 0 0;
+  flex: 0 0 auto;
+  accent-color: var(--cp-accent);
+}
+
+.step-check h2 {
+  margin-bottom: 6px;
+}
+
+.step-check p {
+  margin: 0;
+  color: var(--cp-text-muted);
+}
+
+.step-body {
+  margin: 18px 0 0 58px;
+}
+
+.step-body p {
+  margin: 0 0 12px;
+}
+
+.step-body ul {
+  margin: 0 0 16px;
+  padding-left: 22px;
+}
+
+.step-body li + li {
+  margin-top: 8px;
+}
+
+.outcome {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-left: 4px solid var(--cp-success);
+  border-radius: 0.625rem;
+  background: var(--cp-surface-soft);
+}
+
+.outcome strong {
+  color: var(--cp-success);
+}
+
+.code-wrap {
+  margin: 14px 0;
+  overflow: hidden;
+  border: 1px solid var(--cp-border);
+  border-radius: 0.625rem;
+  background: var(--cp-bg-elevated);
+}
+
+.code-head {
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--cp-border);
+  color: var(--cp-text-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.copy-button {
+  padding: 5px 9px;
+  border: 1px solid var(--cp-border);
+  border-radius: 0.625rem;
+  background: var(--cp-surface);
+  color: var(--cp-text);
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.copy-button:hover {
+  border-color: var(--cp-accent);
+  color: var(--cp-accent);
+}
+
+pre {
+  margin: 0;
+  padding: 14px;
+  overflow-x: auto;
+  color: var(--cp-text);
+  font-size: 0.86rem;
+  line-height: 1.55;
+  white-space: pre;
+}
+
+code {
+  padding: 0.12em 0.3em;
+  border-radius: 0.625rem;
+  background: var(--cp-surface-soft);
+  color: var(--cp-text);
+  font-size: 0.92em;
+}
+
+pre code {
+  padding: 0;
+  border-radius: 0;
+  background: var(--cp-bg-elevated);
+}
+
+.permissions {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 0.92rem;
+}
+
+.permissions th,
+.permissions td {
+  padding: 10px 12px;
+  border: 1px solid var(--cp-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.permissions th {
+  background: var(--cp-surface-soft);
+}
+
+.support-section {
+  margin-top: 36px;
+  scroll-margin-top: 92px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--cp-border);
+  border-radius: 16px;
+  background: var(--cp-surface);
+}
+
+.troubleshooting {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+}
+
+.troubleshooting th,
+.troubleshooting td {
+  padding: 14px;
+  border-bottom: 1px solid var(--cp-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.troubleshooting tr:last-child td {
+  border-bottom: 0;
+}
+
+.troubleshooting th {
+  background: var(--cp-surface-soft);
+}
+
+.go-live {
+  padding: 24px;
+  border: 1px solid var(--cp-border);
+  border-radius: 16px;
+  background: var(--cp-surface);
+}
+
+.go-live-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.go-live-item {
+  min-height: 64px;
+  padding: 12px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  border: 1px solid var(--cp-border);
+  border-radius: 0.625rem;
+  background: var(--cp-surface-soft);
+  cursor: pointer;
+}
+
+.go-live-item:hover {
+  border-color: var(--cp-accent);
+}
+
+.feedback-note {
+  margin-top: 24px;
+  padding: 18px;
+  border: 1px solid var(--cp-border);
+  border-radius: 16px;
+  background: var(--cp-bg-elevated);
+}
+
+.footer {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--cp-border);
+  color: var(--cp-text-muted);
+  font-size: 0.88rem;
+}
+
+.status {
+  min-height: 24px;
+  color: var(--cp-text-muted);
+  font-size: 0.86rem;
+}
+
+@media (max-width: 900px) {
+  .topbar-inner {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .topnav {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .summary-grid,
+  .content-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .toc {
+    position: static;
+  }
+
+  .toc nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .topbar {
+    position: static;
+  }
+
+  .topbar-inner,
+  .page-shell {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .topnav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .nav-link,
+  .nav-button {
+    width: 100%;
+  }
+
+  .hero,
+  .panel,
+  .step-card,
+  .go-live {
+    padding: 18px;
+  }
+
+  .progress-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .reset-button {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .step-heading {
+    grid-template-columns: 36px minmax(0, 1fr);
+  }
+
+  .step-number {
+    width: 36px;
+    height: 36px;
+  }
+
+  .step-body {
+    margin-left: 0;
+  }
+
+  .toc nav,
+  .go-live-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0s;
+    transition-duration: 0s;
+  }
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#mainContent">Skip to main content</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html" aria-label="AIBAST Agents Library home">
+      <span class="brand-mark" aria-hidden="true">AIB</span>
+      <span class="brand-copy">
+        <span>AIBAST</span>
+        <small>Metrics administration</small>
+      </span>
+    </a>
+    <nav class="topnav" aria-label="AIBAST resources">
+      <a class="nav-link" href="../library.html">Library</a>
+      <a class="nav-link" href="../metrics.html" aria-current="page">Metrics</a>
+      <a class="nav-link" href="rapp-guide.html">Production Guide</a>
+      <a class="nav-link" id="reportIssue" href="https://github.com/microsoft/aibast-agents-library/issues/new" target="_blank" rel="noopener">Report an issue</a>
+      <button class="nav-button" id="themeToggle" type="button" aria-label="Toggle color theme" aria-pressed="false">Use dark theme</button>
+    </nav>
+  </div>
+</header>
+
+<main class="page-shell" id="mainContent" tabindex="-1">
+  <section class="hero" aria-labelledby="pageTitle" data-feedback-section="overview">
+    <p class="eyebrow">Microsoft repository administrator runbook</p>
+    <h1 id="pageTitle">Deploy workshop achievements, Discussions, and download metrics safely</h1>
+    <p class="lede">A ten-step production checklist for granting the minimum repository access, publishing an authorized metrics snapshot, validating the public dashboard, and operating the credential without exposing it.</p>
+    <div class="hero-meta" aria-label="Runbook properties">
+      <span class="pill">Repository-scoped</span>
+      <span class="pill">Least privilege</span>
+      <span class="pill">No token values stored here</span>
+      <span class="pill">Main branch deployment</span>
+    </div>
+  </section>
+
+  <div class="summary-grid">
+    <section class="panel" aria-labelledby="prerequisitesTitle">
+      <h2 id="prerequisitesTitle">Prerequisites</h2>
+      <ul class="plain-list">
+        <li>You can administer <code>microsoft/aibast-agents-library</code>, organization SAML/SSO authorization, repository Actions secrets, and workflow permissions.</li>
+        <li>The dedicated account is a Microsoft organization member or approved service identity with write or admin access to this repository.</li>
+        <li>You can sign in to GitHub in a browser and use an authenticated <code>gh</code> CLI for non-secret workflow operations.</li>
+        <li>You have an approved credential owner, rotation contact, expiration date, and incident path recorded in the organization's secure system of record.</li>
+      </ul>
+    </section>
+    <aside class="panel safety" aria-labelledby="safetyTitle">
+      <h2 id="safetyTitle">Credential safety boundary</h2>
+      <p><strong>Never place a token value in this page, source control, an issue, chat, logs, screenshots, a command-line argument, a pipe, or shell history.</strong></p>
+      <p>The browser checklist stores only completion booleans. It never requests or stores account names, expiration dates, token values, or API responses.</p>
+    </aside>
+  </div>
+
+  <section class="panel" aria-labelledby="outcomesTitle">
+    <h2 id="outcomesTitle">Expected outcomes</h2>
+    <ul class="plain-list">
+      <li>The scheduled and manually dispatched metrics workflow can read authorized GitHub traffic and commit the refreshed snapshot with its own <code>GITHUB_TOKEN</code>.</li>
+      <li><code>state/metrics.json</code> reports live traffic, per-agent rating Discussion upvotes, signed-in acquisition Discussion aggregates, verified achievement points, download totals, and exactly 51 in-scope workshop rows.</li>
+      <li>The public <code>metrics.html</code> works in light, dark, desktop, and mobile layouts with clear source and coverage explanations.</li>
+      <li>Rotation, exposure response, unavailable-source behavior, and rollback are documented and repeatable.</li>
+    </ul>
+  </section>
+
+  <section class="progress-panel" aria-label="Checklist progress">
+    <div class="progress-copy">
+      <strong>Deployment progress</strong>
+      <span id="progressText">0 tasks complete</span>
+    </div>
+    <div class="progress-track" role="progressbar" aria-label="Checklist completion" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <button class="reset-button" id="resetChecklist" type="button">Reset completion</button>
+  </section>
+
+  <div class="content-layout">
+    <aside class="toc" aria-label="Deployment steps">
+      <strong>Ten deployment steps</strong>
+      <nav>
+        <a href="#step-1">1. Account owner</a>
+        <a href="#step-2">2. Fine-grained PAT</a>
+        <a href="#step-3">3. SAML/SSO</a>
+        <a href="#step-4">4. Actions secret</a>
+        <a href="#step-5">5. Workflow permissions</a>
+        <a href="#step-6">6. Manual run</a>
+        <a href="#step-7">7. Secure API check</a>
+        <a href="#step-8">8. Snapshot check</a>
+        <a href="#step-9">9. Public page check</a>
+        <a href="#step-10">10. Operate and recover</a>
+        <a href="#troubleshooting">Troubleshooting</a>
+        <a href="#go-live">Go-live gate</a>
+      </nav>
+    </aside>
+
+    <div>
+      <ol class="steps" aria-label="Administrator deployment checklist">
+        <li class="step-card" id="step-1" data-step="1" data-feedback-section="step-1-account">
+          <div class="step-heading">
+            <span class="step-number" aria-hidden="true"></span>
+            <label class="step-check">
+              <input class="check-item" type="checkbox" data-check-id="step-1">
+              <span>
+                <h2>Choose the dedicated account and credential owner</h2>
+                <p>Establish accountability before creating any credential.</p>
+              </span>
+            </label>
+          </div>
+          <div class="step-body">
+            <ul>
+              <li>Use a dedicated administrator or service account with <strong>write or admin access</strong> to <code>microsoft/aibast-agents-library</code>. GitHub traffic endpoints require repository push access for the account even though the PAT permission itself is read-only.</li>
+              <li>Define the token owner, backup owner, creation date, expiration date, rotation lead time, and incident contact in the approved secure system of record.</li>
+              <li>Prefer the shortest practical expiration that fits the operating cadence. Do not use a personal, unmanaged credential.</li>
+            </ul>
+            <div class="outcome"><strong>Expected:</strong> One named operational owner and one approved account have repository write/admin access and a documented expiration plan.</div>
+          </div>
+        </li>
+
+        <li class="step-card" id="step-2" data-step="2" data-feedback-section="step-2-pat">
+          <div class="step-heading">
+            <span class="step-number" aria-hidden="true"></span>
+            <label class="step-check">
+              <input class="check-item" type="checkbox" data-check-id="step-2">
+              <span>
+                <h2>Create a repository-scoped fine-grained PAT</h2>
+                <p>Grant only the read permissions required to collect metrics.</p>
+              </span>
+            </label>
+          </div>
+          <div class="step-body">
+            <p>Create a fine-grained personal access token with resource owner <strong>Microsoft</strong> and repository access limited to <strong>Only select repositories → aibast-agents-library</strong>.</p>
+            <table class="permissions" aria-label="Fine-grained PAT permissions">
+              <thead>
+                <tr><th scope="col">Repository permission</th><th scope="col">Access</th><th scope="col">Reason</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Repository Administration</td><td><strong>Read-only</strong></td><td>Reads repository traffic endpoints.</td></tr>
+                <tr><td>Metadata</td><td><strong>Read</strong> (automatic)</td><td>GitHub automatically includes repository metadata access.</td></tr>
+                <tr><td>Issues</td><td><strong>Read-only (required)</strong></td><td>Reads structured workshop-feedback and opt-in achievement progress issues without modifying them. Agent preference and acquisition use Discussions instead.</td></tr>
+                <tr><td>Contents</td><td><strong>No access required</strong></td><td>No Contents write is needed for the PAT itself; the workflow <code>GITHUB_TOKEN</code> handles snapshot commits.</td></tr>
+              </tbody>
+            </table>
+            <p>Do not add organization-wide repository access, Contents write, workflows write, or unrelated permissions.</p>
+            <div class="outcome"><strong>Expected:</strong> A fine-grained PAT exists for exactly one repository with Repository Administration: Read-only, automatic Metadata read, and required Issues: Read-only.</div>
+          </div>
+        </li>
+
+        <li class="step-card" id="step-3" data-step="3" data-feedback-section="step-3-sso">
+          <div class="step-heading">
+            <span class="step-number" aria-hidden="true"></span>
+            <label class="step-check">
+              <input class="check-item" type="checkbox" data-check-id="step-3">
+              <span>
+                <h2>Authorize the token for Microsoft SAML/SSO</h2>
+                <p>Complete organization authorization before testing the API.</p>
+              </span>
+            </label>
+          </div>
+          <div class="step-body">
+            <ul>
+              <li>Open the token's GitHub settings and choose <strong>Configure SSO</strong> or the organization authorization control shown for Microsoft.</li>
+              <li>Authorize the token for the Microsoft organization when SAML/SSO is required.</li>
+              <li>If authorization is unavailable, confirm the account is an organization member, the token's resource owner is correct, and the organization permits the credential policy.</li>
+            </ul>
+            <div class="outcome"><strong>Expected:</strong> GitHub shows the token as authorized for Microsoft, with no pending SAML/SSO approval.</div>
+          </div>
+        </li>
+
+        <li class="step-card" id="step-4" data-step="4" data-feedback-section="step-4-secret">
+          <div class="step-heading">
+            <span class="step-number" aria-hidden="true"></span>
+            <label class="step-check">
+              <input class="check-item" type="checkbox" data-check-id="step-4">
+              <span>
+                <h2>Add the repository Actions secret</h2>
+                <p>Store the PAT once as <code>METRICS_TOKEN</code>; never place its value in a command.</p>
+              </span>
+            </label>
+          </div>
+          <div class="step-body">
+            <p>In GitHub, open <strong>Settings → Secrets and variables → Actions → New repository secret</strong>. Name it <code>METRICS_TOKEN</code>, paste the value into GitHub's masked secret field, save, and close the source from which it was copied.</p>
+            <p>The safe CLI alternative below prompts securely for the value. Run it interactively. Do not append a value, use a body flag, echo or pipe a value, or paste a token into shell history.</p>
+            <div class="code-wrap">
+              <div class="code-head"><span>Secure prompt</span><button class="copy-button" type="button" data-copy-target="command-secret">Copy safe command</button></div>
+              <pre><code id="command-secret">gh secret set METRICS_TOKEN --repo microsoft/aibast-agents-library</code></pre>
+            </div>
+            <div class="outcome"><strong>Expected:</strong> Repository Actions secrets lists <code>METRICS_TOKEN</code> with a recent update time, while its value remains unreadable.</div>
+          </div>
+        </li>
+
+        <li class="step-card" id="step-5" data-step="5" data-feedback-section="step-5-permissions">
+          <div class="step-heading">
+            <span class="step-number" aria-hidden="true"></span>
+            <label class="step-check">
+              <input class="check-item" type="checkbox" data-check-id="step-5">
+              <span>
+                <h2>Authorize the autonomous compiler workflows</h2>
+                <p>The issue workflow manages feedback and achievement labels. The metrics workflow synchronizes the canonical agent Discussions, reads all aggregate signals, and writes the generated snapshot.</p>
+              </span>
+            </label>
+          </div>
+          <div class="step-body">
+            <ul>
+              <li>Open <strong>Settings → Actions → General → Workflow permissions</strong> and select <strong>Read and write permissions</strong> for <code>GITHUB_TOKEN</code>.</li>
+              <li>Confirm <code>.github/workflows/workshop-feedback.yml</code> exists on the repository default branch and receives issue events for opened, edited, closed, and reopened activity.</li>
+              <li>Keep its workflow-level permissions explicit: <code>issues: write</code> to reconcile managed signal labels and <code>actions: write</code> to dispatch <code>metrics.yml</code> on the repository default branch.</li>
+              <li>Confirm <code>.github/workflows/metrics.yml</code> retains <code>issues: read</code> for workshop-feedback and opt-in achievement progress claims, <code>discussions: write</code> for idempotent rating/acquisition mirror synchronization and aggregate reads, plus <code>contents: write</code> for the snapshot commit.</li>
+              <li>Confirm <code>scripts/sync_agent_discussions.py</code> runs before <code>scripts/build_metrics.py</code>. It must preserve existing rating Discussion numbers, create one parallel acquisition Discussion per current AIBAST agent, update renamed agents by stable file identity, and write <code>state/agent_discussions.json</code>.</li>
+              <li>Keep the population AIBAST-only. RAR is intentionally excluded from every dashboard, leaderboard, and report count in this release.</li>
+              <li>Confirm the metrics workflow installs <code>scripts/impact-report-requirements.txt</code>, runs <code>scripts/build_impact_report.py</code>, commits the stable <code>reports/impact-report.*</code> exports, and uploads the same PDF, HTML, email text, Markdown, and JSON as the <code>aibast-impact-report</code> workflow artifact.</li>
+              <li>Confirm branch protection permits the intended Actions identity and reviewed workflow to update the snapshot on <code>main</code>. Do not solve a push failure by adding Contents write to the PAT.</li>
+            </ul>
+            <div class="code-wrap">
+              <div class="code-head"><span>Required autonomous compiler permissions</span><button class="copy-button" type="button" data-copy-target="workflow-permissions">Copy YAML excerpts</button></div>
+              <pre><code id="workflow-permissions"># .github/workflows/workshop-feedback.yml
+permissions:
+  actions: write
+  issues: write
+
+# .github/workflows/metrics.yml
+permissions:
+  contents: write
+  discussions: write
+  issues: read</code></pre>
+            </div>
+            <div class="outcome"><strong>Expected:</strong> The default-branch issue workflow can manage feedback and achievement labels and dispatch the serialized metrics compiler; the metrics workflow can synchronize Discussions, read issue claims, and push the snapshot without expanding the collector PAT.</div>
+          </div>
+        </li>
+
+        <li class="step-card" id="step-6" data-step="6" data-feedback-section="step-6-run">
+          <div class="step-heading">
+            <span class="step-number" aria-hidden="true"></span>
+            <label class="step-check">
+              <input class="check-item" type="checkbox" data-check-id="step-6">
+              <span>
+                <h2>Run the metrics workflow manually on main</h2>
+                <p>Use the first authorized run as the deployment acceptance test.</p>
+              </span>
+            </label>
+          </div>
+          <div class="step-body">
+            <p>Open <a href="https://github.com/microsoft/aibast-agents-library/actions/workflows/metrics.yml" target="_blank" rel="noopener">Actions → metrics</a>, choose <strong>Run workflow</strong>, select branch <code>main</code>, and run <code>.github/workflows/metrics.yml</code>.</p>
+            <div class="code-wrap">
+              <div class="code-head"><span>Equivalent non-secret dispatch</span><button class="copy-button" type="button" data-copy-target="command-run">Copy command</button></div>
+              <pre><code id="command-run">gh workflow run metrics.yml --repo microsoft/aibast-agents-library --ref main</code></pre>
+            </div>
+            <p>Review the completed run and generated snapshot. Verify the traffic and workshop-scope signals:</p>
+            <ul>
+              <li>The run reports <strong>traffic read live</strong>.</li>
+              <li>The workshop scope is <strong>51</strong>.</li>
+              <li><strong>Grid Outage excluded</strong> from the workshop scope.</li>
+              <li>There is <strong>no unavailable_reason</strong> for the authorized traffic read.</li>
+              <li>The <strong>aibast-impact-report</strong> artifact contains the PDF plus email-ready text, and the committed report shows 7-day and 30-day values for every defined metric without converting unavailable coverage to zero.</li>
+              <li><code>totals.agent_file_downloads</code> contains only observable AIBAST agent-file transfers. RAR does not contribute to any count.</li>
+            </ul>
+            <p>Then verify Discussion synchronization and structured issue ingestion using existing production signals or repository test fixtures—never synthetic public signals that would pollute totals:</p>
+            <div class="outcome"><strong>Verification scope:</strong> GitHub verification confirms authenticated issue authorship and canonical claim format only; achievement completion remains self-reported and is not independently proven.</div>
+            <table class="permissions" aria-label="Discussion and structured issue metrics acceptance checks">
+              <thead>
+                <tr><th scope="col">Check</th><th scope="col">Required result</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Discussion mirror contract</td><td>Every current AIBAST agent has one rating and one acquisition Discussion beginning with <code>&lt;!-- aibast-agent-discussion:v1 --&gt;</code>, schema <code>aibast-agent-discussion/1.0</code>, one canonical <code>Signal</code>, <code>Agent</code>, and <code>File</code> field.</td></tr>
+                <tr><td>Rating signal</td><td>The rating Discussion uses <code>Signal: upvote</code>. Its native <code>upvoteCount</code> is community preference, with one active upvote per signed-in GitHub account.</td></tr>
+                <tr><td>Acquisition signal</td><td>The parallel Discussion uses <code>Signal: acquisition</code>. Its native <code>upvoteCount</code> is one signed-in account's declared download, copy, or install and remains separate from CDN/release file transfers.</td></tr>
+                <tr><td>Workshop-feedback signal</td><td>The workflow continues to recognize <code>&lt;!-- aibast-workshop-feedback:v1 --&gt;</code> and <code>aibast-workshop-feedback/1.0</code> as a separate feedback source.</td></tr>
+                <tr><td>Achievement progress signal</td><td>The workflow recognizes <code>&lt;!-- aibast-achievement-progress:v1 --&gt;</code> and schema <code>aibast-achievement-progress/1.0</code>, with exactly one <code>Workshop</code>, <code>Agent</code>, comma-separated <code>Achievements</code>, and present <code>Source</code> or <code>Source quest URL</code> field.</td></tr>
+                <tr><td>Achievement canonical validation</td><td>The workshop is one of the canonical 51 with Grid Outage excluded, and the agent equals that workshop's canonical primary agent. <code>Achievements</code> is a nonempty subset in canonical order: <code>started</code>, <code>local-proof</code>, <code>draft-builder</code>, <code>preview-proven</code>, <code>workshop-completed</code>, <code>hard-mode-completed</code>, with no unknown, conflicting, or duplicate IDs.</td></tr>
+                <tr><td>Achievement dependency validation</td><td>Every dependent achievement requires explicitly claimed <code>started</code>. <code>workshop-completed</code> also requires explicitly claimed <code>local-proof</code>, <code>draft-builder</code>, and <code>preview-proven</code>. <code>hard-mode-completed</code> remains a separate achievement and requires <code>started</code>. The collector never infers missing prerequisite IDs.</td></tr>
+                <tr><td>Achievement union and scoring</td><td>Across open, closed, and edited issues, claims union by case-insensitive GitHub login + workshop + achievement. Re-sync adds new badges without duplicating points. Server values are started 5, local-proof 15, draft-builder 20, preview-proven 25, workshop-completed 35, and hard-mode-completed 50: a maximum of 150 per workshop. Claims containing a <code>Points</code>, <code>Point</code>, or <code>Score</code> field are rejected.</td></tr>
+                <tr><td>Achievement public identity consent</td><td>Submitting the public issue explicitly opts the GitHub login into a public profile, leaderboard, badges/achievement IDs, and completed-workshop list. Invalid, quoted, duplicate-field, conflicting, pull-request, unknown-user, unknown-workshop, and wrong-agent claims are excluded.</td></tr>
+                <tr><td>Discussion deduplication</td><td>GitHub enforces one active native upvote per account per Discussion. The collector publishes only the aggregate <code>upvoteCount</code> and never combines duplicate mirror threads.</td></tr>
+                <tr><td>Discussion privacy</td><td>The rating and acquisition outputs store counts and canonical Discussion URLs only—never GitHub logins, account identifiers, or voter lists. Achievement profiles separately publish only the login that explicitly opted in.</td></tr>
+                <tr><td>Achievement labeling</td><td>The issue workflow applies only the <code>achievement-progress</code> label to an achievement marker claim; workshop-feedback labeling remains separate.</td></tr>
+                <tr><td>Weekly/monthly impact exports</td><td>The workflow records a compact dated impact snapshot, calculates exact daily clone/view/CDN activity where available, calculates snapshot changes for every other metric, and publishes <code>reports/impact-report.pdf</code>, <code>impact-report.html</code>, <code>impact-report-email.txt</code>, <code>impact-report-email.md</code>, and <code>impact-report.json</code>. A missing 7-day or 30-day baseline is labeled <em>Baseline pending</em>.</td></tr>
+                <tr><td>AIBAST-only population</td><td>The snapshot, dashboard, leaderboards, and reports include AIBAST agents only. The ecosystem compatibility block marks RAR <code>excluded</code> and no RAR value contributes to a total.</td></tr>
+                <tr><td>Refresh cadence</td><td>Issue changes dispatch <code>metrics.yml</code> on the repository default branch. GitHub does not emit an Actions event for native Discussion upvotes, so rating and acquisition changes appear on the next scheduled or manually dispatched metrics run.</td></tr>
+              </tbody>
+            </table>
+            <div class="outcome"><strong>Expected:</strong> The main-branch workflow succeeds, maintains two canonical Discussions per AIBAST agent, recognizes the feedback and achievement issue schemas, publishes aggregate Discussion counts and consented achievement profiles without voter lists or source issue body/free text/ID, produces the shareable weekly/monthly report artifact and committed exports, and exposes no secret or non-consenting identity values in logs.</div>
+          </div>
+        </li>
+
+        <li class="step-card" id="step-7" data-step="7" data-feedback-section="step-7-api">
+          <div class="step-heading">
+            <span class="step-number" aria-hidden="true"></span>
+            <label class="step-check">
+              <input class="check-item" type="checkbox" data-check-id="step-7">
+              <span>
+                <h2>Verify traffic API access without exposing the token</h2>
+                <p>Use a silent prompt, a temporary <code>GH_TOKEN</code>, and immediate cleanup.</p>
+              </span>
+            </label>
+          </div>
+          <div class="step-body">
+            <p>Run the block in a trusted interactive shell. <code>read -s</code> suppresses terminal echo; the token exists only in the temporary environment variable and is unset after the request.</p>
+            <div class="code-wrap">
+              <div class="code-head"><span>Secure traffic verification</span><button class="copy-button" type="button" data-copy-target="command-api">Copy safe commands</button></div>
+              <pre><code id="command-api">read -s -p "Fine-grained PAT: " GH_TOKEN
+printf "\n"
+export GH_TOKEN
+gh api repos/microsoft/aibast-agents-library/traffic/clones
+unset GH_TOKEN</code></pre>
+            </div>
+            <p>Confirm the response contains traffic data, not an authorization error. Close or clear any terminal capture used during incident diagnostics; do not copy the response into a public issue if it contains organization-sensitive context.</p>
+            <div class="outcome"><strong>Expected:</strong> <code>gh api repos/microsoft/aibast-agents-library/traffic/clones</code> succeeds, and <code>GH_TOKEN</code> is unset immediately afterward.</div>
+          </div>
+        </li>
+
+        <li class="step-card" id="step-8" data-step="8" data-feedback-section="step-8-snapshot">
+          <div class="step-heading">
+            <span class="step-number" aria-hidden="true"></span>
+            <label class="step-check">
+              <input class="check-item" type="checkbox" data-check-id="step-8">
+              <span>
+                <h2>Inspect and reconcile state/metrics.json</h2>
+                <p>Validate freshness, scope, arithmetic, and disclosure before relying on the dashboard.</p>
+              </span>
+            </label>
+          </div>
+          <div class="step-body">
+            <div class="code-wrap">
+              <div class="code-head"><span>Readable local inspection</span><button class="copy-button" type="button" data-copy-target="command-json">Copy command</button></div>
+              <pre><code id="command-json">python3 -m json.tool state/metrics.json</code></pre>
+            </div>
+            <ul>
+              <li><code>traffic.live</code> is <code>true</code>, <code>traffic.as_of</code> is current for the run, and <code>traffic.unavailable_reason</code> is empty or absent.</li>
+              <li><code>totals.agent_upvotes</code> equals the sum of available rating Discussion <code>upvotes</code> values in <code>agent_metrics</code>; <code>totals.agent_acquisitions</code> independently reconciles the acquisition Discussion values.</li>
+              <li>Every <code>agent_metrics</code> row exposes aggregate <code>upvotes</code>, <code>acquisitions</code>, <code>upvote_discussion_url</code>, and <code>acquisition_discussion_url</code>. <code>leaderboards.most_upvoted</code> and <code>leaderboards.most_acquired</code> rank those same aggregates.</li>
+              <li>The workshops summary reports its totals and contains exactly <strong>51 rows</strong>; Grid Outage is excluded from that set. Each workshop row exposes <code>agent_upvotes</code> separately from <code>usage_events</code>, and both columns reconcile independently.</li>
+              <li><code>achievements.status</code>, <code>achievements.as_of</code>, <code>achievements.coverage</code>, and <code>achievements.caveat</code> form the internal achievement block and explain freshness and availability. Offline runs carry forward that prior block; without one all achievement totals are unavailable/<code>null</code>, never fabricated zero.</li>
+              <li><code>achievements.totals</code> reconciles participants, points, achievement count, starts, workshop completions, hard completions, completion rate, hard-completion rate, and achievement-completion rate from <code>achievements.profiles</code>. Profiles sort by points, badges, completions, then login.</li>
+              <li>Each achievement profile contains only the opted-in public GitHub <code>login</code>, <code>points</code>, <code>achievement_count</code>, <code>starts</code>, <code>workshop_completions</code>, <code>hard_completions</code>, server-defined <code>badges</code>/<code>achievement_ids</code>, and <code>completed_workshops</code>. The snapshot persists no issue body, free text, source issue ID, or body-supplied points.</li>
+              <li>The 51 <code>achievements.workshops</code> rows match the canonical workshop slugs and primary agents. Their achievement counts, points, starts, workshop completions, hard completions, and rates reconcile independently from <code>usage_events</code>, agent upvotes, signed-in acquisitions, downloads, and repository stars.</li>
+              <li>The six canonical <code>achievements.achievements</code> rows use fixed server points and reconcile claims, participants, workshops, and attainment rates to the profile and workshop rollups. No profile can exceed 150 points per started workshop.</li>
+              <li>Download totals reconcile to their documented components, including clones, CDN hits, and release downloads. Workshop rollups reconcile to the 51 rows.</li>
+              <li><code>repo.stars</code>, if retained, is repository popularity only and is never counted as an agent upvote.</li>
+              <li><code>agent_discussion_coverage</code>, <code>agent_upvote_coverage</code>, and <code>agent_acquisition_coverage</code> explain Discussion completeness and freshness. Missing mirror threads remain partial/unavailable rather than becoming zero.</li>
+              <li><code>ecosystem.sources.rar.status</code> is <code>excluded</code>; RAR contributes to no count, row, leaderboard, or report.</li>
+              <li>Source and coverage caveats explain GitHub's traffic window, CI clone effects, CDN coverage, Discussion signals, workshop scope, and any unavailable source.</li>
+            </ul>
+            <p>Review the rendered repository file or a local checkout. Do not open or distribute a raw-document URL as an operational shortcut.</p>
+            <div class="outcome"><strong>Expected:</strong> The snapshot is fresh, internally consistent, scoped to AIBAST and 51 workshops, contains aggregate per-agent rating and acquisition Discussion signals plus only explicitly consented public achievement profiles, keeps every signal separate from usage events and file transfers, and is safe to publish.</div>
+          </div>
+        </li>
+
+        <li class="step-card" id="step-9" data-step="9" data-feedback-section="step-9-public">
+          <div class="step-heading">
+            <span class="step-number" aria-hidden="true"></span>
+            <label class="step-check">
+              <input class="check-item" type="checkbox" data-check-id="step-9">
+              <span>
+                <h2>Validate the public metrics experience</h2>
+                <p>Test the deployed page as a visitor, not only as a repository administrator.</p>
+              </span>
+            </label>
+          </div>
+          <div class="step-body">
+            <p>Open <a href="../metrics.html">metrics.html</a> from the published site or repository preview and complete these checks:</p>
+            <ul>
+              <li>Light and dark themes remain readable with visible keyboard focus and no clipped content.</li>
+              <li>Desktop and mobile layouts work at narrow widths without horizontal page overflow.</li>
+              <li><strong>Refresh</strong> updates live public sources and communicates status.</li>
+              <li><strong>Upvote</strong> opens the selected agent's canonical rating Discussion. <strong>Record acquisition</strong> opens its parallel acquisition Discussion; neither control asks the visitor to star the repository.</li>
+              <li>The agent leaderboards include <strong>Most upvoted</strong> and <strong>Most acquired</strong> using the native per-Discussion aggregates.</li>
+              <li>The <strong>Verified workshop achievements</strong> section shows verified points, badges, starts, workshop completions, hard completions, completion rates, the public leaderboard, per-workshop achievement completion, and the canonical achievement rollup from <code>achievements</code>.</li>
+              <li>The page distinguishes local self-paced achievements on <a href="../achievements.html">achievements.html</a> from verified public achievements and links this administrator checklist. Repository stars are never described as achievement points.</li>
+              <li>Downloads, signed-in acquisitions, the workshop leaderboard, and all 51 in-scope workshops render with totals that match the snapshot. Workshop <strong>Agent upvotes</strong> remain visibly separate from <strong>Usage events</strong>.</li>
+              <li>No RAR count, card, table, leaderboard, or report section appears.</li>
+              <li>Source explanations distinguish live, historical, estimated, excluded, and unavailable data.</li>
+            </ul>
+            <div class="outcome"><strong>Expected:</strong> Public controls, AIBAST downloads, per-agent rating and acquisition signals, workshop leaderboard, and source explanations work in light, dark, and mobile views without exposing voter identities.</div>
+          </div>
+        </li>
+
+        <li class="step-card" id="step-10" data-step="10" data-feedback-section="step-10-operations">
+          <div class="step-heading">
+            <span class="step-number" aria-hidden="true"></span>
+            <label class="step-check">
+              <input class="check-item" type="checkbox" data-check-id="step-10">
+              <span>
+                <h2>Set rotation, incident, and rollback procedures</h2>
+                <p>Keep the deployment trustworthy after go-live.</p>
+              </span>
+            </label>
+          </div>
+          <div class="step-body">
+            <ul>
+              <li><strong>Rotate before expiry:</strong> create the replacement with the same narrow scope, authorize SAML/SSO, update <code>METRICS_TOKEN</code>, rerun the workflow on <code>main</code>, verify live traffic, then revoke the old credential.</li>
+              <li><strong>Exposure:</strong> revoke the credential immediately, remove it from every exposed location, create a replacement, update the secret, rerun, and follow Microsoft/GitHub incident procedures.</li>
+              <li><strong>Source interruption:</strong> snapshots reuse the last authorized traffic read instead of zeroing traffic. The page must label unavailable data and preserve <code>as_of</code>; it must not present an authorization failure as a genuine zero.</li>
+              <li><strong>Rollback:</strong> if a generated snapshot or display is invalid, restore the last reviewed snapshot through a normal commit, correct the workflow or permission, rerun, and revalidate before declaring recovery.</li>
+              <li><strong>Permanent rule:</strong> never commit a token, secret-bearing command, captured credential, or unredacted diagnostic.</li>
+            </ul>
+            <div class="outcome"><strong>Expected:</strong> Owners can rotate, revoke, recover, and explain stale or unavailable metrics without data loss or credential exposure.</div>
+          </div>
+        </li>
+      </ol>
+
+      <section class="support-section" id="troubleshooting" aria-labelledby="troubleshootingTitle" data-feedback-section="troubleshooting">
+        <h2 id="troubleshootingTitle">Troubleshooting</h2>
+        <div class="table-wrap" role="region" aria-label="Metrics setup troubleshooting" tabindex="0">
+          <table class="troubleshooting">
+            <thead>
+              <tr>
+                <th scope="col">Symptom</th>
+                <th scope="col">Likely cause</th>
+                <th scope="col">Administrator action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>401 Unauthorized</code></td>
+                <td>The credential is expired, revoked, malformed, or was not supplied to the workflow.</td>
+                <td>Rotate the credential, re-authorize it, update <code>METRICS_TOKEN</code> through the masked secret field or secure prompt, and rerun. Never print the value while diagnosing.</td>
+              </tr>
+              <tr>
+                <td><strong>403, SAML/SSO, or push-access error</strong></td>
+                <td>The token is not authorized for Microsoft, the selected repository is wrong, or the account lacks repository write/push access required by the traffic API.</td>
+                <td>Authorize Microsoft SAML/SSO, confirm the single-repository selection, and grant the account write/admin access. Keep Repository Administration read-only on the PAT.</td>
+              </tr>
+              <tr>
+                <td>Workflow cannot push <code>state/metrics.json</code></td>
+                <td><code>GITHUB_TOKEN</code> is read-only, workflow <code>contents: write</code> is missing, or branch protection rejects the workflow identity.</td>
+                <td>Enable Actions <strong>Read and write permissions</strong>, retain <code>contents: write</code>, and review branch rules. Do not add Contents write to <code>METRICS_TOKEN</code>.</td>
+              </tr>
+              <tr>
+                <td>Issue feedback metrics are missing</td>
+                <td>The required collector permission or workflow permission is absent, structured markers or schemas are malformed, or recognized issues are missing the configured labels.</td>
+                <td>Set PAT Issues to required read-only, keep workflow <code>issues: read</code>, verify both structured markers and schemas, confirm labeling, then rerun and reconcile aggregates.</td>
+              </tr>
+              <tr>
+                <td>Discussion counts are inflated, missing, or voter identities appear</td>
+                <td>A duplicate mirror exists, a canonical marker is malformed, the Discussion token lacks access, or source identities were published instead of native aggregates.</td>
+                <td>Stop publication, restore the last reviewed snapshot, run the idempotent synchronizer, require one rating and one acquisition Discussion per agent, remove identity fields from public output, and rerun the aggregate-only checks.</td>
+              </tr>
+              <tr>
+                <td>Achievement points are inflated, mismatched, or expose issue content</td>
+                <td>The collector accepted a noncanonical achievement list, duplicated an achievement during re-sync, inferred a prerequisite, exceeded 150 points per workshop, trusted body-supplied points, or persisted source issue content.</td>
+                <td>Stop publication, restore the reviewed snapshot, enforce the exact progress marker/schema/workshop-primary-agent/ordered-achievements/source checks, recompute fixed server scoring, remove issue body/free text/ID, and rerun profile, workshop, and achievement reconciliation.</td>
+              </tr>
+              <tr>
+                <td>Zeros appear where data should be unavailable</td>
+                <td>An authorization or source failure was converted to zero instead of retaining the last known authorized value.</td>
+                <td>Check <code>traffic.live</code>, <code>traffic.as_of</code>, and <code>unavailable_reason</code>. A live authorized zero is valid; an unavailable read must be labeled and reuse the last authorized traffic snapshot.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="support-section go-live" id="go-live" aria-labelledby="goLiveTitle" data-feedback-section="go-live">
+        <h2 id="goLiveTitle">Final go-live checklist</h2>
+        <div class="go-live-grid">
+          <label class="go-live-item"><input class="check-item" type="checkbox" data-check-id="go-live-owner"><span>Dedicated account, owners, expiration, and rotation date are recorded securely.</span></label>
+          <label class="go-live-item"><input class="check-item" type="checkbox" data-check-id="go-live-scope"><span>PAT is limited to one repository with read-only Administration and required read-only Issues.</span></label>
+          <label class="go-live-item"><input class="check-item" type="checkbox" data-check-id="go-live-secret"><span>Microsoft SAML/SSO is authorized and <code>METRICS_TOKEN</code> exists only as a masked Actions secret.</span></label>
+          <label class="go-live-item"><input class="check-item" type="checkbox" data-check-id="go-live-run"><span>The default-branch <code>workshop-feedback.yml</code> receives issue events with <code>issues: write</code> and <code>actions: write</code>; <code>metrics.yml</code> has <code>issues: read</code>, <code>discussions: write</code>, and <code>contents: write</code>, synchronizes both Discussion schemas, recognizes feedback and achievement claims, passes live traffic and canonical 51-workshop checks, and publishes the <code>aibast-impact-report</code> PDF/email artifact plus stable report URLs.</span></label>
+          <label class="go-live-item"><input class="check-item" type="checkbox" data-check-id="go-live-reconcile"><span><code>totals.agent_upvotes</code>, <code>totals.agent_acquisitions</code>, direct AIBAST downloads, workshop usage, and the separate achievement profile/workshop/totals scoring aggregates all reconcile without cross-metric double counting; RAR is excluded.</span></label>
+          <label class="go-live-item"><input class="check-item" type="checkbox" data-check-id="go-live-public"><span>Public light, dark, mobile, refresh, rating Discussion, acquisition Discussion, AIBAST downloads, achievements, opt-in identity warning, local-versus-verified distinction, workshop rankings, source views, and PDF/email weekly-monthly impact downloads pass.</span></label>
+        </div>
+      </section>
+
+      <aside class="feedback-note" aria-labelledby="feedbackTitle">
+        <h2 id="feedbackTitle">Found a setup gap?</h2>
+        <p>Use <a href="https://github.com/microsoft/aibast-agents-library/issues/new" id="inlineReportIssue" target="_blank" rel="noopener">Report an issue</a>. It opens a contextual, prefilled GitHub issue for review and does not submit automatically. Never include credentials or sensitive diagnostics.</p>
+      </aside>
+
+      <p class="status" id="liveStatus" role="status" aria-live="polite" aria-atomic="true"></p>
+      <footer class="footer">
+        AIBAST Agents Library · Administrator checklist for <code>microsoft/aibast-agents-library</code>
+      </footer>
+    </div>
+  </div>
+</main>
+
+<!-- aibast-workshop-feedback:v1 -->
+<script>
+const STORAGE_KEY = "aibast:metrics-admin-checklist";
+const checklist = Array.from(document.querySelectorAll(".check-item"));
+const progressFill = document.getElementById("progressFill");
+const progressBar = progressFill.parentElement;
+const progressText = document.getElementById("progressText");
+const liveStatus = document.getElementById("liveStatus");
+
+function announce(message) {
+  liveStatus.textContent = message;
+}
+
+function updateProgress() {
+  const completed = checklist.filter((item) => item.checked).length;
+  const percent = checklist.length ? Math.round((completed / checklist.length) * 100) : 0;
+  progressFill.style.width = `${percent}%`;
+  progressBar.setAttribute("aria-valuenow", String(percent));
+  progressText.textContent = `${completed} of ${checklist.length} tasks complete`;
+}
+
+function persistChecklist() {
+  try {
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(checklist.map((item) => Boolean(item.checked)))
+    );
+  } catch {
+    announce("Completion changed, but this browser could not save it locally.");
+  }
+}
+
+function restoreChecklist() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+    if (Array.isArray(saved) && saved.every((value) => typeof value === "boolean")) {
+      checklist.forEach((item, index) => {
+        item.checked = saved[index] === true;
+      });
+    }
+  } catch {
+    announce("Saved completion could not be read; the checklist started clear.");
+  }
+  updateProgress();
+}
+
+checklist.forEach((item) => {
+  item.addEventListener("change", () => {
+    persistChecklist();
+    updateProgress();
+  });
+});
+
+document.getElementById("resetChecklist").addEventListener("click", () => {
+  checklist.forEach((item) => {
+    item.checked = false;
+  });
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    announce("The checklist was cleared for this page, but local storage was unavailable.");
+  }
+  updateProgress();
+  announce("Checklist completion reset.");
+});
+
+const themeToggle = document.getElementById("themeToggle");
+
+function syncThemeToggle() {
+  const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+  themeToggle.setAttribute("aria-pressed", String(isDark));
+  themeToggle.textContent = isDark ? "Use light theme" : "Use dark theme";
+}
+
+themeToggle.addEventListener("click", () => {
+  const current = document.documentElement.getAttribute("data-theme");
+  document.documentElement.setAttribute("data-theme", current === "dark" ? "light" : "dark");
+  syncThemeToggle();
+});
+
+async function copyCommand(button) {
+  const target = document.getElementById(button.dataset.copyTarget);
+  const text = target.textContent;
+  try {
+    await navigator.clipboard.writeText(text);
+    announce("Safe command copied.");
+  } catch {
+    const range = document.createRange();
+    range.selectNodeContents(target);
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+    announce("Command selected. Copy it with your keyboard.");
+  }
+}
+
+document.querySelectorAll("[data-copy-target]").forEach((button) => {
+  button.addEventListener("click", () => copyCommand(button));
+});
+
+const feedbackMarker = "<!-- aibast-workshop-feedback:v1 -->";
+const feedbackSchema = "aibast-workshop-feedback/1.0";
+
+function currentFeedbackSection() {
+  if (window.location.hash) {
+    const target = document.querySelector(window.location.hash);
+    if (target && target.dataset.feedbackSection) {
+      return target.dataset.feedbackSection;
+    }
+  }
+  return "overview";
+}
+
+function updateReportIssueLinks() {
+  const section = currentFeedbackSection();
+  const issueUrl = new URL("https://github.com/microsoft/aibast-agents-library/issues/new");
+  issueUrl.searchParams.set("title", "[Metrics admin setup] Feedback");
+  issueUrl.searchParams.set(
+    "body",
+    `${feedbackMarker}
+Feedback schema: ${feedbackSchema}
+Page: docs/metrics-admin-setup.html
+Section: ${section}
+
+What needs correction or clarification?
+
+Expected administrator outcome:
+
+No credentials or sensitive diagnostics, please.`
+  );
+  document.getElementById("reportIssue").href = issueUrl.toString();
+  document.getElementById("inlineReportIssue").href = issueUrl.toString();
+}
+
+window.addEventListener("hashchange", updateReportIssueLinks);
+restoreChecklist();
+syncThemeToggle();
+updateReportIssueLinks();
+</script>
+</body>
+</html>

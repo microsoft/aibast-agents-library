@@ -31,15 +31,23 @@ Upload both Markdown files in `manual/knowledge/`, then upload one `SKILL.md` fi
 
 | Surface | Location |
 | --- | --- |
-| Customer field guide | `solutions/order-status-communication/FIELD-GUIDE.md` |
+| Customer field guide | `solutions/order-status-communication/field-guide.html` |
+| Evidence report | `solutions/order-status-communication/evidence-report.html` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/order-status-communication/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/order-status-communication/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Hard quest | `solutions/order-status-communication/quest.html` |
 | Literal browser tutorial | `solutions/order-status-communication/manual-tutorial.html` |
 | Raw export manifest | `solutions/order-status-communication/export-manifest.json` |
 | Source bundle | `solutions/order-status-communication/exports/order-status-communication-source.zip` |
 | Manual evidence | `solutions/order-status-communication/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/order-status-communication/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/order-status-communication/exports/order-status-communication-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/order-status-communication/exports/order-status-communication-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/order-status-communication/exports/order-status-communication-solution-export.json` |
 
-**Scaffold status:** 60 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 93 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

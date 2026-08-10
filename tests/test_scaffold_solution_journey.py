@@ -1,5 +1,6 @@
 import json
 import re
+import shutil
 import subprocess
 import zipfile
 from html.parser import HTMLParser
@@ -9,6 +10,7 @@ import pytest
 
 from tools.scaffold_solution_journey import (
     DARK_THEME_VARIABLES,
+    THEME_PREFERENCE_SCRIPT,
     THEME_SCRIPT,
     THEME_VARIABLES,
     ScaffoldError,
@@ -45,6 +47,26 @@ def build_fixture(root):
     package = root / "solutions" / slug
     source = root / "agents" / "demo_agent.py"
     write(source, "class DemoAgent:\n    pass\n")
+    write(
+        root
+        / "agents"
+        / "@aibast-agents-library"
+        / "templates"
+        / "workshop_agent.py",
+        "class AIBASTWorkshopAgent:\n    pass\n",
+    )
+    write(
+        root / "skills" / "aibast-easy-mode-brainstem" / "SKILL.md",
+        "---\nname: aibast-easy-mode-brainstem\ndescription: fixture\n---\n",
+    )
+    write(
+        root / "skills" / "aibast-easy-mode-copilot" / "SKILL.md",
+        "---\nname: aibast-easy-mode-copilot\ndescription: fixture\n---\n",
+    )
+    write(
+        root / "solutions" / "_shared" / "workshop-settings.html",
+        "<!doctype html><title>Workshop settings</title>\n",
+    )
     write(
         package / "README.md",
         "# Demo Journey\n\nDomain narrative that the scaffolder must preserve.\n",
@@ -148,13 +170,23 @@ def build_fixture(root):
     write(package / "screenshots" / "manual" / "manual-build-contact-sheet.jpg", b"jpeg")
 
     assisted_frames = [
-        {"file": "01-assisted-draft.jpg", "label": "1 · Review Draft", "duration_ms": 1200}
+        {
+            "file": "01-assisted-draft.jpg",
+            "label": "1 · Review Draft",
+            "duration_ms": 1200,
+        },
+        {
+            "file": "05-preview-dj01.jpg",
+            "label": "5 · Run DJ-01",
+            "duration_ms": 1200,
+        },
     ]
     write(
         package / "screenshots" / "assisted" / "browserfilm.json",
         json.dumps({"frames": assisted_frames}),
     )
     write(package / "screenshots" / "assisted" / "01-assisted-draft.jpg", b"jpeg")
+    write(package / "screenshots" / "assisted" / "05-preview-dj01.jpg", b"jpeg")
     write(package / "screenshots" / "assisted" / "copilot-assisted-walkthrough.gif", b"GIF89a")
     write(package / "screenshots" / "assisted" / "copilot-assisted-contact-sheet.jpg", b"jpeg")
 
@@ -233,40 +265,138 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     scaffold("demo-journey", root=tmp_path)
 
     guide = (package / "FIELD-GUIDE.md").read_text(encoding="utf-8")
+    guide_html = (package / "field-guide.html").read_text(
+        encoding="utf-8"
+    )
+    evidence_html = (package / "evidence-report.html").read_text(
+        encoding="utf-8"
+    )
+    personless = (package / "EASY-MODE-PERSONLESS.md").read_text(
+        encoding="utf-8"
+    )
+    easy_prompts = (package / "EASY-MODE-COPILOT-CHAT.md").read_text(
+        encoding="utf-8"
+    )
     quest = (package / "quest.html").read_text(encoding="utf-8")
     tutorial = (package / "manual-tutorial.html").read_text(encoding="utf-8")
     manifest = json.loads((package / "export-manifest.json").read_text(encoding="utf-8"))
     readme = (package / "README.md").read_text(encoding="utf-8")
 
-    assert "Easy mode — Copilot-assisted" in guide
+    assert "Easy mode — GitHub Copilot (default)" in guide
+    assert "Easy mode — GitHub Copilot + Brainstem (optional)" in guide
+    assert guide.index("GitHub Copilot (default)") < guide.index(
+        "GitHub Copilot + Brainstem (optional)"
+    )
+    assert "two short messages" in guide
+    assert "personal, on-device training AI" in guide
     assert "Hard mode — literal browser construction" in guide
     assert "Production replacement seams" in guide
     assert "Failure recovery" in guide
     assert "Evidence gates" in guide
     assert "synthetic" in guide.lower()
     assert "customer KPI" in guide
+    assert "## Workshop mission" in guide
+    assert "non-technical sales professionals into AI superheroes" in guide
 
-    for generated in (quest, tutorial):
+    for generated in (guide_html, evidence_html, quest, tutorial):
         assert THEME_SCRIPT in generated
+        assert THEME_PREFERENCE_SCRIPT in generated
         assert THEME_VARIABLES in generated
         assert DARK_THEME_VARIABLES in generated
-        assert "Clawpilot" in generated
+        assert "AIBAST" in generated
+        assert "Clawpilot" not in generated
+    for generated in (guide_html, quest, tutorial):
         assert "localStorage" in generated
-    assert "Copilot-assisted Easy mode" in quest
-    assert "literal browser construction" in quest
-    assert "Draft and is not published" in quest
+    assert "GitHub Copilot + Brainstem" in quest
+    assert "GitHub Copilot only" in quest
+    assert "Personless harness" in quest
+    assert "Download generic workshop agent" in quest
+    assert "Skeptic comparison" in quest
+    assert "aibast:workshop-engine" in quest
+    assert 'data-easy-lane-button' not in quest
+    assert "Workshop settings" in quest
+    assert 'href="field-guide.html"' in quest
+    assert 'href="FIELD-GUIDE.md"' not in quest
+    assert 'href="evidence-report.html"' in quest
+    assert 'href="VISUAL-EVIDENCE-AUDIT.md"' not in quest
+    assert quest.count("data-copy-target=") == 7
+    assert "Download Brainstem SKILL.md" in quest
+    assert "Download Copilot-only SKILL.md" in quest
+    assert quest.count('download="SKILL.md"') == 2
+    assert "Drag the downloaded file into the chat." in quest
+    assert "Give me Demo Journey using Easy Mode and test it for me." in quest
+    assert "using Easy Mode without Brainstem" not in quest
+    assert "Deploy it into Copilot Studio for me." in quest
+    assert "Facilitator evidence and portable download" in quest
+    assert "Raw resources" not in quest
+    assert "What you will learn" in quest
+    assert "<strong>Workshop mission:</strong>" in quest
+    assert "non-technical sales professionals into AI superheroes" in quest
+    assert "Before you begin" in quest
+    assert quest.count('class="learn-step"') == 8
+    assert "Prove the solution locally" in quest
+    assert "Create the reviewed Draft" in quest
+    assert "Confirm the Draft in Copilot Studio Preview" in quest
+    assert "Shown at or below natural size" in quest
+    assert ".preview-shot { display: block; width: 100%; max-width: 100%" in quest
+    assert 'class="preview-case preview-case-wide"' in quest
+    assert "Confirm the expected evidence" in quest
+    assert "Preview response matched this contract" in quest
+    assert "Know what “done” looks like" in quest
+    assert "Final expected verdict" in quest
+    assert "Troubleshooting" in quest
+    assert "Reshoot required" not in quest
+    assert "No approved visual checkpoint" not in quest
+    assert "Compare and contrast while you build" not in quest
+    assert "<iframe" not in quest
+    assert 'class="path" data-path="hard"' in quest
+    assert 'data-workshop-slug="demo-journey"' in quest
+    assert 'role="tab" aria-controls="mode-panel-easy" aria-selected="true"' in quest
+    assert 'role="tab" aria-controls="mode-panel-hard" aria-selected="false"' in quest
+    assert 'role="tabpanel" aria-labelledby="mode-tab-easy"' in quest
+    assert 'role="tabpanel" aria-labelledby="mode-tab-hard"' in quest
+    assert 'button.setAttribute("aria-selected", String(selected));' in quest
+    assert quest.count('<article class="step"') == len(frames)
+    assert "manually on this page." in quest
+    assert "manual-progress" in quest
+    assert "Draft · published false" in quest
     assert "manual-tutorial.html" in quest
-    assert "copilot-assisted-walkthrough.gif" in quest
-    assert "manual-build-walkthrough.gif" in quest
+    assert "Watch assisted film" not in quest
+    assert "copilot-assisted-walkthrough.gif" not in quest
+    assert "Open standalone Hard-mode guide" in quest
+    assert "Attach the Brainstem skill" in personless
+    assert "drag `SKILL.md` into the" in personless
+    assert "Give me Demo Journey using Easy Mode and test it for me." in personless
+    assert "Deploy it into Copilot Studio for me." in personless
+    assert "AIBASTWorkshopAgent" in personless
+    assert "Brainstem + Copilot pull the harness" in personless
+    assert "GitHub Copilot Easy mode" in easy_prompts
+    assert "comparison" not in easy_prompts.lower()
+    assert "Attach the Copilot-only skill" in easy_prompts
+    assert "drag `SKILL.md` into the" in easy_prompts
+    assert "Give me Demo Journey using Easy Mode and test it for me." in easy_prompts
+    assert "using Easy Mode without Brainstem" not in easy_prompts
+    assert "Deploy it into Copilot Studio for me." in easy_prompts
+    assert "default Easy path" not in personless
 
     assert "0 of 6 complete" in tutorial
     assert tutorial.count("<strong>Action</strong>") == len(frames)
     assert tutorial.count("<strong>Expected result</strong>") == len(frames)
-    assert tutorial.count("Raw download:") == len(frames)
+    assert tutorial.count("Download source:") == len(frames)
+    assert tutorial.count('data-copy-target="hard-copy-') == 2
+    assert "Copy instructions" in tutorial
+    assert "Copy Preview prompt" in tutorial
+    assert "Use only synthetic fixture records." in tutorial
+    assert "Show the synthetic review." in tutorial
     assert "No PAC CLI, YAML import, or plugin architect" in tutorial
+    assert "postMessage" not in tutorial
+    assert "data-embedded" not in tutorial
     assert "Do not choose Publish" in tutorial
+    assert "Open Preview in a fresh conversation before running DJ-01" in tutorial
+    assert "Shown without browser upscaling" in tutorial
+    assert ".shot { display: block; width: auto; max-width: 100%" in tutorial
     for filename, label in frames:
-        assert tutorial.count(filename) == 1
+        assert tutorial.count(filename) >= 3
         assert label.split("·", 1)[1].strip() in tutorial
 
     resources = {item["id"]: item for item in manifest["files"]}
@@ -274,6 +404,13 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
         "portable-agent",
         "deployment-recipe",
         "field-guide",
+        "field-guide-source",
+        "evidence-report",
+        "easy-personless-guide",
+        "easy-mode-brainstem-skill",
+        "easy-mode-copilot-skill",
+        "generic-workshop-agent",
+        "easy-copilot-chat-prompts",
         "settings",
         "agent-sync",
         "manual-instructions",
@@ -301,12 +438,64 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "Customer journey package map" in readme
     assert "resources ready; 0 pending" in readme
     assert (package / "screenshots" / "README.md").exists()
+    assert (package / "field-guide.html").exists()
+    assert (package / "evidence-report.html").exists()
     assert (package / "screenshots" / "manual" / "README.md").exists()
     assert (package / "screenshots" / "assisted" / "README.md").exists()
     assert (package / "exports" / "README.md").exists()
 
     assert_html_and_javascript_valid(package / "quest.html", tmp_path)
     assert_html_and_javascript_valid(package / "manual-tutorial.html", tmp_path)
+    quest = (package / "quest.html").read_text(encoding="utf-8")
+    assert 'class="preview-case preview-case-wide"' in quest
+    assert ".preview-case-wide { grid-column: 1 / -1; }" in quest
+    assert (
+        ".preview-shot { display: block; width: 100%; max-width: 100%;"
+        in quest
+    )
+    assert ".shot { display: block; width: 100%; max-width: 100%;" in quest
+
+    ctx = __import__(
+        "tools.scaffold_solution_journey",
+        fromlist=["load_context", "choose_frame_resources", "expected_result"],
+    )
+    loaded = ctx.load_context(
+        tmp_path,
+        "demo-journey",
+        allow_pending=False,
+        raw_base="https://example.test/raw/",
+    )
+    resources = ctx.choose_frame_resources(loaded)
+    assert resources[3] == package / "manual" / "skills" / "review" / "SKILL.md"
+    assert ctx.expected_result(
+        loaded,
+        "Open a fresh Preview conversation",
+        "unmatched.jpg",
+    ).startswith("A fresh Preview surface")
+
+
+def test_scaffolder_uses_reviewed_copilot_studio_knowledge_as_legacy_fallback(
+    tmp_path,
+):
+    package, _frames = build_fixture(tmp_path)
+    shutil.rmtree(package / "manual" / "knowledge")
+
+    scaffold(
+        "demo-journey",
+        root=tmp_path,
+        raw_base="https://example.test/raw/",
+    )
+
+    manifest = json.loads(
+        (package / "export-manifest.json").read_text(encoding="utf-8")
+    )
+    paths = {item["path"] for item in manifest["files"]}
+    assert (
+        "solutions/demo-journey/copilot-studio/capabilities/knowledge/files/"
+        "synthetic-records.md"
+    ) in paths
+    tutorial = (package / "manual-tutorial.html").read_text(encoding="utf-8")
+    assert "copilot-studio/capabilities/knowledge/files/synthetic-records.md" in tutorial
 
 
 def test_refuses_missing_referenced_screenshot_without_allow_pending(tmp_path):
@@ -335,6 +524,203 @@ def test_allow_pending_labels_missing_evidence_without_fabricating_image(tmp_pat
     assert "Evidence pending. No screenshot is shown" in tutorial
     assert f'src="screenshots/manual/{missing.name}"' not in tutorial
     assert "--allow-pending" in tutorial
+
+
+def test_reshoot_images_are_withheld_while_reusable_annotations_remain_visible(
+    tmp_path,
+):
+    package, _frames = build_fixture(tmp_path)
+    captures = [
+        {
+            "id": "easy-dj-01",
+            "mode": "easy",
+            "case_id": "DJ-01",
+            "source": (
+                "solutions/demo-journey/screenshots/assisted/"
+                "05-preview-dj01.jpg"
+            ),
+            "annotated": (
+                "solutions/demo-journey/screenshots/assisted/annotated/"
+                "05-preview-dj01.png"
+            ),
+            "status": "reusable",
+            "visible_anchors": ["Synthetic Record A"],
+            "boxes": [{"x": 0, "y": 0, "width": 1, "height": 1}],
+        },
+        {
+            "id": "easy-confirm-draft",
+            "mode": "easy",
+            "source": (
+                "solutions/demo-journey/screenshots/assisted/"
+                "01-assisted-draft.jpg"
+            ),
+            "status": "reshoot_required",
+            "reason": "The Draft identity is cropped.",
+        },
+        {
+            "id": "hard-step-01",
+            "mode": "hard",
+            "step": 1,
+            "source": (
+                "solutions/demo-journey/screenshots/manual/"
+                "01-create-agent.jpg"
+            ),
+            "annotated": (
+                "solutions/demo-journey/screenshots/manual/annotated/"
+                "01-create-agent.png"
+            ),
+            "status": "reusable",
+            "visible_anchors": ["Blank agent"],
+            "boxes": [{"x": 0, "y": 0, "width": 1, "height": 1}],
+        },
+        {
+            "id": "hard-step-02",
+            "mode": "hard",
+            "step": 2,
+            "source": (
+                "solutions/demo-journey/screenshots/manual/"
+                "02-enter-instructions.jpg"
+            ),
+            "status": "reshoot_required",
+            "reason": "The reviewed instructions are not legible.",
+        },
+    ]
+    write(
+        package / "evals" / "visual-checkpoints.json",
+        json.dumps(
+            {
+                "schema": "aibast-visual-checkpoints/1.0",
+                "summary": {
+                    "total_existing_captures": 4,
+                    "reusable": 2,
+                    "reshoot_required": 2,
+                },
+                "captures": captures,
+            }
+        ),
+    )
+    write(
+        package
+        / "screenshots"
+        / "assisted"
+        / "annotated"
+        / "05-preview-dj01.png",
+        b"annotated",
+    )
+    write(
+        package
+        / "screenshots"
+        / "manual"
+        / "annotated"
+        / "01-create-agent.png",
+        b"annotated",
+    )
+
+    scaffold("demo-journey", root=tmp_path)
+
+    quest = (package / "quest.html").read_text(encoding="utf-8")
+    tutorial = (package / "manual-tutorial.html").read_text(encoding="utf-8")
+    evidence = (package / "evidence-report.html").read_text(encoding="utf-8")
+    learner_html = quest + tutorial
+
+    assert 'src="screenshots/assisted/annotated/05-preview-dj01.png"' in quest
+    assert 'download="05-preview-dj01.png"' in quest
+    assert 'class="preview-case preview-case-wide"' in quest
+    assert 'src="screenshots/manual/annotated/01-create-agent.png"' in tutorial
+    assert 'download="01-create-agent.png"' in tutorial
+    assert 'src="screenshots/assisted/01-assisted-draft.jpg"' not in learner_html
+    assert 'src="screenshots/manual/02-enter-instructions.jpg"' not in learner_html
+    assert 'href="screenshots/assisted/01-assisted-draft.jpg"' not in learner_html
+    assert 'href="screenshots/manual/02-enter-instructions.jpg"' not in learner_html
+    assert 'data-evidence-status="reference-only"' not in learner_html
+    assert "Withheld checkpoint" not in learner_html
+    assert "reshoot required" not in learner_html
+    assert "not approved for learner display" not in learner_html
+    assert "Verified completion record" in learner_html
+    assert "Live verification checkpoint" in learner_html
+    assert "Expected state:" in learner_html
+    assert "01-assisted-draft.jpg" in evidence
+    assert "02-enter-instructions.jpg" in evidence
+
+
+def test_reusable_original_downloads_use_checkpoint_sources(tmp_path):
+    package, _frames = build_fixture(tmp_path)
+    captures = [
+        {
+            "id": "easy-dj-01",
+            "mode": "easy",
+            "case_id": "DJ-01",
+            "source": (
+                "solutions/demo-journey/screenshots/assisted/"
+                "reviewed-case-original.png"
+            ),
+            "annotated": (
+                "solutions/demo-journey/screenshots/assisted/annotated/"
+                "reviewed-case.png"
+            ),
+            "status": "reusable",
+            "visible_anchors": ["Synthetic Record A"],
+            "boxes": [{"x": 0, "y": 0, "width": 1, "height": 1}],
+        },
+        {
+            "id": "easy-confirm-draft",
+            "mode": "easy",
+            "source": (
+                "solutions/demo-journey/screenshots/assisted/"
+                "01-assisted-draft.jpg"
+            ),
+            "annotated": (
+                "solutions/demo-journey/screenshots/assisted/annotated/"
+                "reviewed-draft.png"
+            ),
+            "status": "reusable",
+            "visible_anchors": ["Draft", "Published false"],
+            "boxes": [{"x": 0, "y": 0, "width": 1, "height": 1}],
+        },
+        {
+            "id": "hard-step-01",
+            "mode": "hard",
+            "step": 1,
+            "source": (
+                "solutions/demo-journey/screenshots/manual/"
+                "reviewed-hard-original.png"
+            ),
+            "annotated": (
+                "solutions/demo-journey/screenshots/manual/annotated/"
+                "reviewed-hard.png"
+            ),
+            "status": "reusable",
+            "visible_anchors": ["Blank agent"],
+            "boxes": [{"x": 0, "y": 0, "width": 1, "height": 1}],
+        },
+    ]
+    write(
+        package / "evals" / "visual-checkpoints.json",
+        json.dumps(
+            {
+                "schema": "aibast-visual-checkpoints/1.0",
+                "summary": {
+                    "total_existing_captures": 3,
+                    "reusable": 3,
+                    "reshoot_required": 0,
+                },
+                "captures": captures,
+            }
+        ),
+    )
+    for capture in captures:
+        write(tmp_path / capture["source"], b"source")
+        write(tmp_path / capture["annotated"], b"annotated")
+
+    scaffold("demo-journey", root=tmp_path)
+
+    quest = (package / "quest.html").read_text(encoding="utf-8")
+    tutorial = (package / "manual-tutorial.html").read_text(encoding="utf-8")
+    assert 'href="screenshots/assisted/reviewed-case-original.png"' in quest
+    assert 'href="screenshots/assisted/01-assisted-draft.jpg"' in quest
+    assert 'href="screenshots/manual/reviewed-hard-original.png"' in tutorial
+    assert 'href="screenshots/assisted/05-preview-dj01.jpg"' not in quest
+    assert 'href="screenshots/manual/01-create-agent.jpg"' not in tutorial
 
 
 def test_refuses_unpassed_manual_evidence_unless_allow_pending(tmp_path):
@@ -382,6 +768,80 @@ def test_optional_export_uses_existing_builder_semantics(tmp_path):
     with zipfile.ZipFile(bundle) as archive:
         names = set(archive.namelist())
     assert "solutions/demo-journey/FIELD-GUIDE.md" in names
+    assert "solutions/demo-journey/field-guide.html" in names
+    assert "solutions/demo-journey/evidence-report.html" in names
+    assert "solutions/demo-journey/EASY-MODE-PERSONLESS.md" in names
+    assert "skills/aibast-easy-mode-brainstem/SKILL.md" in names
+    assert "skills/aibast-easy-mode-copilot/SKILL.md" in names
+    assert "agents/@aibast-agents-library/templates/workshop_agent.py" in names
+    assert "solutions/demo-journey/EASY-MODE-COPILOT-CHAT.md" in names
     assert "solutions/demo-journey/quest.html" in names
     assert "solutions/demo-journey/manual-tutorial.html" in names
     assert "agents/demo_agent.py" in names
+
+
+def test_scaffold_exposes_complete_copilot_studio_solution_export(tmp_path):
+    package, _frames = build_fixture(tmp_path)
+    exports = package / "exports"
+    solution_zip = exports / "demo-journey-copilot-studio-solution.zip"
+    settings = exports / "demo-journey-deployment-settings.json"
+    metadata = exports / "demo-journey-solution-export.json"
+    write(solution_zip, b"PK\x03\x04fixture")
+    write(settings, json.dumps({"EnvironmentVariables": [], "ConnectionReferences": []}))
+    write(
+        metadata,
+        json.dumps(
+            {
+                "slug": "demo-journey",
+                "solution_unique_name": "aibast_DemoJourneyPilot",
+                "status": "exported",
+                "zip": "solutions/demo-journey/exports/demo-journey-copilot-studio-solution.zip",
+                "deployment_settings": "solutions/demo-journey/exports/demo-journey-deployment-settings.json",
+                "metadata": "solutions/demo-journey/exports/demo-journey-solution-export.json",
+                "published": False,
+                "managed": False,
+                "sha256": "fixture-sha256",
+                "bytes": 11,
+                "import_caveats": [
+                    "Import as an unmanaged solution for manual review.",
+                    "The imported agent remains unpublished.",
+                ],
+            }
+        ),
+    )
+
+    scaffold("demo-journey", root=tmp_path)
+
+    manifest = json.loads(
+        (package / "export-manifest.json").read_text(encoding="utf-8")
+    )
+    solution = manifest["copilot_studio_solution"]
+    assert solution["status"] == "exported"
+    assert solution["managed"] is False
+    assert solution["published"] is False
+    assert solution["zip"]["path"].endswith(
+        "demo-journey-copilot-studio-solution.zip"
+    )
+    resource_ids = {item["id"] for item in manifest["files"]}
+    assert {
+        "copilot-studio-solution",
+        "copilot-studio-deployment-settings",
+        "copilot-studio-export-metadata",
+    } <= resource_ids
+
+    for path in (
+        package / "field-guide.html",
+        package / "evidence-report.html",
+        package / "quest.html",
+    ):
+        text = path.read_text(encoding="utf-8")
+        assert "Download Copilot Studio solution" in text
+        assert "Deployment settings" in text
+        assert "Export details" in text
+
+    exports_readme = (exports / "README.md").read_text(encoding="utf-8")
+    assert "## Import the Copilot Studio solution" in exports_readme
+    assert "Importing it does not" in exports_readme
+    assert "publish the agent" in exports_readme
+    package_readme = (package / "README.md").read_text(encoding="utf-8")
+    assert "Copilot Studio solution ZIP" in package_readme

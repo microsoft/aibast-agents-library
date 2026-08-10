@@ -11,6 +11,7 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="data:," rel="icon">
 <title>AI BAST Agent Library</title>
 <meta name="description" content="Find AI BAST industry agents by outcome, industry, persona, and Microsoft AI product.">
 <meta property="og:title" content="AI BAST Agent Library">
@@ -523,6 +524,14 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   font-size: 0.73rem;
 }
 .results-head strong { color: var(--cp-text); }
+.upvote-explainer {
+  margin: 0;
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--cp-border);
+  color: var(--cp-text-muted);
+  font-size: 0.69rem;
+  line-height: 1.45;
+}
 .grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -708,6 +717,20 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.card-actions, .agent-upvote {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.card-actions { flex-shrink: 0; }
+.upvote-count {
+  min-width: 1.4em;
+  color: var(--cp-text-muted);
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+.detail-head .agent-upvote { margin-top: 12px; }
 .empty, .loading {
   grid-column: 1 / -1;
   padding: 70px 20px;
@@ -900,6 +923,28 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.workshop-launch {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid var(--cp-border);
+  border-left: 4px solid var(--cp-accent);
+  border-radius: 10px;
+  background: var(--cp-accent-soft);
+}
+.workshop-launch strong {
+  font-size: 0.76rem;
+}
+.workshop-launch span {
+  color: var(--cp-text-muted);
+  font-size: 0.69rem;
+  line-height: 1.45;
+}
+.workshop-launch .button {
+  justify-content: center;
+  width: 100%;
+}
 .blueprint-row {
   padding: 8px 0;
   border-bottom: 1px solid var(--cp-border);
@@ -980,67 +1025,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   color: var(--cp-text-muted);
   font-size: 0.72rem;
 }
-.mode-switch {
-  display: flex;
-  gap: 6px;
-  margin-bottom: 10px;
-}
-.mode-button {
-  border: 1px solid var(--cp-border);
-  border-radius: 999px;
-  background: var(--cp-surface);
-  color: var(--cp-text-muted);
-  cursor: pointer;
-  padding: 6px 10px;
-  font-size: 0.72rem;
-  font-weight: 700;
-}
-.mode-button.active {
-  border-color: var(--cp-accent);
-  color: var(--cp-accent);
-}
-.deploy-panel {
-  display: none;
-  padding: 15px;
-  border: 1px solid var(--cp-border);
-  border-radius: 12px;
-  background: var(--cp-surface);
-}
-.deploy-panel.active { display: block; }
-.deploy-panel ol {
-  margin: 0;
-  padding-left: 20px;
-}
-.deploy-panel li {
-  margin-bottom: 8px;
-  color: var(--cp-text-muted);
-  font-size: 0.77rem;
-}
-.plugin-note {
-  margin-top: 12px;
-  padding: 10px;
-  border-left: 4px solid var(--cp-warning);
-  background: var(--cp-surface-soft);
-  color: var(--cp-text-muted);
-  font-size: 0.7rem;
-}
-.command-block {
-  position: relative;
-  overflow-x: auto;
-  margin: 8px 0 12px;
-  padding: 12px;
-  border: 1px solid var(--cp-border);
-  border-radius: 9px;
-  background: var(--cp-surface-soft);
-  white-space: pre-wrap;
-  word-break: break-word;
-  font-family: Consolas, "Courier New", Courier, monospace;
-  font-size: 0.68rem;
-}
-.deploy-subhead {
-  margin: 12px 0 6px;
-  font-size: 0.76rem;
-}
 .acceptance-list {
   margin: 10px 0 0;
   padding-left: 20px;
@@ -1116,7 +1100,9 @@ footer {
     padding-top: 26px;
   }
   .intro h1 { font-size: clamp(2.5rem, 13vw, 3.7rem); }
-  .filters, .grid, .detail-body, .journey-grid { grid-template-columns: 1fr; }
+  .filters, .grid, .journey-grid { grid-template-columns: 1fr; }
+  .detail-body { grid-template-columns: minmax(0, 1fr); }
+  .detail-body > * { min-width: 0; }
   .industry-menu { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .industry-blueprint { grid-template-columns: 1fr; }
   .blueprint-deploy { justify-content: flex-start; }
@@ -1142,7 +1128,9 @@ footer {
   </a>
   <nav class="nav" aria-label="Primary navigation">
     <a class="keep-mobile" href="#library">Library</a>
+    <a href="solutions/_shared/workshop-settings.html?return=../../library.html">Workshop settings</a>
     <a href="docs/rapp-guide.html">Guide</a>
+    <a href="achievements.html">Achievements</a>
     <a href="metrics.html">Metrics</a>
     <a href="https://github.com/microsoft/aibast-agents-library" target="_blank" rel="noopener">GitHub</a>
     <button class="icon-button" type="button" data-action="toggle-theme" aria-label="Toggle color theme">◐</button>
@@ -1209,6 +1197,7 @@ footer {
     </div>
 
     <div class="active-filters" id="active-filters"></div>
+    <p class="upvote-explainer">Each AIBAST agent has two stable public GitHub Discussions: one for community preference and one for signed-in acquisition. GitHub's native upvote control counts one active signal per account. Acquisition signals remain separate from observable CDN and release file transfers, and neither signal is a repository star.</p>
     <div class="results-head">
       <span id="result-count">Loading agents...</span>
       <span id="result-context"></span>
@@ -1219,6 +1208,7 @@ footer {
   <footer>
     AI BAST Agent Library · <a href="registry.json">registry.json</a> ·
     <a href="docs/rapp-guide.html">Production guide</a> ·
+    <a href="achievements.html">Achievements</a> ·
     <a href="https://github.com/microsoft/aibast-agents-library" target="_blank" rel="noopener">Source</a>
   </footer>
 </main>
@@ -1230,6 +1220,7 @@ footer {
 const OWNER = "microsoft";
 const REPO = "aibast-agents-library";
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main`;
+const SITE = `https://${OWNER}.github.io/${REPO}/`;
 const BLOB = `https://github.com/${OWNER}/${REPO}/blob/main`;
 const AGENT_DIR = "~/.brainstem/src/rapp_brainstem/agents";
 
@@ -1237,6 +1228,9 @@ const state = {
   agents: [],
   stacks: [],
   stats: {},
+  agentSignals: new Map(),
+  advertisedSolutions: new Set(),
+  exportedSolutionSlugs: new Set(),
   view: "solutions",
   query: "",
   industry: "",
@@ -1340,14 +1334,29 @@ async function getJSON(paths) {
 
 async function init() {
   const stamp = `?t=${Date.now()}`;
-  const registry = await getJSON([`registry.json${stamp}`, `${RAW}/registry.json${stamp}`]);
-  if (!registry) {
-    $("grid").innerHTML = `<div class="empty"><h3>Library unavailable</h3><p>Could not load <code>registry.json</code>.</p></div>`;
+  const [registry, metrics, catalog, exportInventory] = await Promise.all([
+    getJSON([`registry.json${stamp}`, `${RAW}/registry.json${stamp}`]),
+    getJSON([`state/metrics.json${stamp}`, `${SITE}state/metrics.json${stamp}`]),
+    getJSON([`solutions/catalog.json${stamp}`, `${RAW}/solutions/catalog.json${stamp}`]),
+    getJSON([
+      `state/copilot_studio_solution_exports.json${stamp}`,
+      `${RAW}/state/copilot_studio_solution_exports.json${stamp}`
+    ])
+  ]);
+  if (!registry || !catalog) {
+    $("grid").innerHTML = `<div class="empty"><h3>Library unavailable</h3><p>Could not load the canonical registry and advertised-solution catalog.</p></div>`;
     return;
   }
   state.agents = registry.agents || [];
   state.stacks = registry.stacks || [];
   state.stats = registry.stats || {};
+  state.advertisedSolutions = new Set(Object.keys(catalog.solutions || {}));
+  state.exportedSolutionSlugs = new Set(
+    (exportInventory?.solutions || [])
+      .filter(row => row?.status === "exported" && row?.settings_error == null)
+      .map(row => row.slug)
+  );
+  state.agentSignals = buildAgentSignalMap(metrics, state.agents);
   restoreState();
   renderStats();
   buildFilters();
@@ -1451,7 +1460,10 @@ function solutionOf(agent) {
 }
 
 function solutionAgents() {
-  return state.agents.filter(agent => agent._catalog_kind === "solution");
+  return state.agents.filter(agent => (
+    agent._catalog_kind === "solution"
+    && state.advertisedSolutions.has(agent.name)
+  ));
 }
 
 function shown(agent) {
@@ -1526,6 +1538,23 @@ function promptRecordsFor(agent) {
     prompt,
     demo_url: null,
   }));
+}
+
+function workshopPackageFor(agent) {
+  const direct = solutionOf(agent).package || {};
+  if (direct.quest_url) return direct;
+  if (!agent._stack || !agent._stack_vertical) return {};
+  const packagedSibling = state.agents.find(candidate =>
+    candidate._stack === agent._stack
+    && candidate._stack_vertical === agent._stack_vertical
+    && (solutionOf(candidate).package || {}).quest_url
+  );
+  return packagedSibling ? solutionOf(packagedSibling).package || {} : {};
+}
+
+function interactiveDemoUrl(agent, prompt) {
+  if (prompt && prompt.demo_url) return prompt.demo_url;
+  return workshopPackageFor(agent).quest_url || "";
 }
 
 function normalize(value) {
@@ -1604,7 +1633,10 @@ function matchesReadiness(agent) {
 
 function filteredAgents() {
   const kind = state.view === "solutions" ? "solution" : "template";
-  let rows = state.agents.filter(agent => agent._catalog_kind === kind)
+  const candidates = kind === "solution"
+    ? solutionAgents()
+    : state.agents.filter(agent => agent._catalog_kind === kind);
+  let rows = candidates
     .map(agent => ({ agent, score: scoreAgent(agent, state.query) }));
   if (state.query) {
     const topScore = Math.max(0, ...rows.map(row => row.score));
@@ -1691,6 +1723,108 @@ function journeyGroups(rows) {
     `).join("");
 }
 
+function buildAgentSignalMap(metrics, agents) {
+  const supplied = new Map();
+  const rows = metrics && Array.isArray(metrics.agent_metrics)
+    ? metrics.agent_metrics
+    : [];
+  rows.forEach(row => {
+    if (!row || typeof row.name !== "string") return;
+    const upvotes = row.upvotes;
+    const acquisitions = row.acquisitions;
+    const upvoteUrl = canonicalDiscussionUrl(row.upvote_discussion_url);
+    const acquisitionUrl = canonicalDiscussionUrl(
+      row.acquisition_discussion_url
+    );
+    supplied.set(row.name, {
+      upvotes: upvoteUrl && Number.isSafeInteger(upvotes) && upvotes >= 0
+        ? upvotes : null,
+      acquisitions: acquisitionUrl
+        && Number.isSafeInteger(acquisitions)
+        && acquisitions >= 0
+        ? acquisitions : null,
+      upvoteUrl,
+      acquisitionUrl
+    });
+  });
+  return new Map(agents.map(agent => [
+    agent.name,
+    supplied.has(agent.name) ? supplied.get(agent.name) : {
+      upvotes: null,
+      acquisitions: null,
+      upvoteUrl: "",
+      acquisitionUrl: ""
+    }
+  ]));
+}
+
+function canonicalDiscussionUrl(value) {
+  const url = typeof value === "string" ? value : "";
+  const pattern = new RegExp(
+    `^https://github\\.com/${OWNER}/${REPO}/discussions/\\d+$`
+  );
+  return pattern.test(url) ? url : "";
+}
+
+function aggregateAgentSignal(agentName, signal) {
+  const record = state.agentSignals.get(agentName) || {};
+  const count = record[signal];
+  return Number.isSafeInteger(count) && count >= 0 ? count : null;
+}
+
+function agentUpvoteControl(agent) {
+  const count = aggregateAgentSignal(agent.name, "upvotes");
+  const record = state.agentSignals.get(agent.name) || {};
+  const url = canonicalDiscussionUrl(record.upvoteUrl);
+  const countText = count === null ? "—" : count.toLocaleString();
+  const countLabel = count === null
+    ? "Aggregate upvotes unavailable"
+    : `${count.toLocaleString()} aggregate upvote${count === 1 ? "" : "s"}`;
+  return `
+    <div class="agent-upvote">
+      <button class="button small" type="button" data-action="upvote-agent"
+        data-agent-name="${enc(agent.name)}"
+        ${url ? "" : 'disabled aria-disabled="true"'}
+        aria-label="${url ? "Open the canonical rating Discussion" : "Rating Discussion unavailable"} for ${esc(shown(agent))}">Upvote</button>
+      <span class="upvote-count" aria-label="${esc(countLabel)}" title="${esc(countLabel)}">${countText}</span>
+    </div>`;
+}
+
+function agentAcquisitionControl(agent) {
+  const count = aggregateAgentSignal(agent.name, "acquisitions");
+  const record = state.agentSignals.get(agent.name) || {};
+  const url = canonicalDiscussionUrl(record.acquisitionUrl);
+  const countText = count === null ? "—" : count.toLocaleString();
+  const countLabel = count === null
+    ? "Signed-in acquisitions unavailable"
+    : `${count.toLocaleString()} signed-in acquisition${count === 1 ? "" : "s"}`;
+  return `
+    <div class="agent-upvote">
+      <button class="button" type="button" data-action="record-agent-acquisition"
+        data-agent-name="${enc(agent.name)}"
+        ${url ? "" : 'disabled aria-disabled="true"'}
+        aria-label="${url ? "Open the canonical acquisition Discussion" : "Acquisition Discussion unavailable"} for ${esc(shown(agent))}">Record acquisition ↗</button>
+      <span class="upvote-count" aria-label="${esc(countLabel)}" title="${esc(countLabel)}">${countText}</span>
+    </div>`;
+}
+
+function openAgentSignal(agentName, signal) {
+  const agent = state.agents.find(item => item.name === agentName);
+  if (!agent) return;
+  const record = state.agentSignals.get(agentName) || {};
+  const url = canonicalDiscussionUrl(
+    signal === "acquisition"
+      ? record.acquisitionUrl
+      : record.upvoteUrl
+  );
+  if (!url) return;
+  window.open(url, '_blank', 'noopener');
+}
+
+function openAgentUpvote(agentName) {
+  openAgentSignal(agentName, "upvote");
+}
+
 function agentCard(agent) {
   const solution = solutionOf(agent);
   const tools = microsoftTools(agent).slice(0, 3);
@@ -1724,7 +1858,10 @@ function agentCard(agent) {
         </div>
         <div class="card-foot">
           <span class="persona">For ${esc(persona)}</span>
-          <button class="button primary small" type="button" data-action="open-agent" data-name="${enc(agent.name)}">View agent</button>
+          <div class="card-actions">
+            ${agentUpvoteControl(agent)}
+            <button class="button primary small" type="button" data-action="open-agent" data-name="${enc(agent.name)}">View agent</button>
+          </div>
         </div>
       </div>
     </article>`;
@@ -1817,17 +1954,39 @@ function installCommand(agent) {
   return `curl -fsSL ${RAW}/${encodeURI(file)} -o ${AGENT_DIR}/${target}`;
 }
 
-function architectureHTML(architecture) {
+function agentDownload(agent) {
+  const file = agent._file || "";
+  const base = file.split("/").pop();
+  const filename = base.endsWith("_agent.py")
+    ? base
+    : base.replace(/\.py$/, "_agent.py");
+  return {href: encodeURI(file), filename};
+}
+
+function copilotSolutionDownloads(agent) {
+  const slug = agent?._solution?.package?.slug || "";
+  if (!slug || !state.exportedSolutionSlugs.has(slug)) return null;
+  const base = `solutions/${slug}/exports/${slug}`;
+  return {
+    zip: `${base}-copilot-studio-solution.zip`,
+    settings: `${base}-deployment-settings.json`,
+  };
+}
+
+function architectureHTML(architecture, solution) {
   if (!architecture) return "";
   const flow = architecture.business_flow || [];
   const capabilities = architecture.capabilities || [];
-  const easy = architecture.easy_mode || [];
-  const hard = architecture.hard_mode || [];
-  const localPrompt = architecture.local_install_prompt || "";
-  const studioPrompt = architecture.copilot_studio_prompt || "";
   const connections = architecture.required_connections || [];
-  const commands = architecture.manual_commands || [];
   const checks = architecture.acceptance_checks || [];
+  const packageInfo = solution.package || {};
+  const questUrl = packageInfo.quest_url || "";
+  const fieldGuideUrl = packageInfo.slug
+    ? `solutions/${packageInfo.slug}/field-guide.html`
+    : "";
+  const configuredEngine = localStorage.getItem("aibast:workshop-engine") === "brainstem"
+    ? "GitHub Copilot + Brainstem"
+    : "GitHub Copilot";
   return `
     <div class="architecture-body">
       <h3>Solution architecture</h3>
@@ -1845,28 +2004,26 @@ function architectureHTML(architecture) {
           </article>
         `).join("")}
       </div>
-      <h3>Implementation modes</h3>
-      <div class="mode-switch">
-        <button class="mode-button active" type="button" data-action="deploy-mode" data-mode="easy">Easy mode — Copilot-assisted</button>
-        <button class="mode-button" type="button" data-action="deploy-mode" data-mode="hard">Hard mode — manual build</button>
+      <h3>Learn and build</h3>
+      <p>The workshop is the single entry point. It teaches the use case, runs the globally configured Easy harness, and keeps the complete manual Hard mode inline on the same page.</p>
+      <div class="capability-grid">
+        <article class="capability-card">
+          <code>Guided Easy mode</code>
+          <strong>${esc(configuredEngine)}</strong>
+          <p>Your global workshop setting is already applied. GitHub Copilot is the default; the optional Brainstem harness appears only when you select it in Workshop settings.</p>
+        </article>
+        <article class="capability-card">
+          <code>Build it yourself</code>
+          <strong>Hard mode — inline manual tutorial</strong>
+          <p>Use the Hard tab inside the same workshop to reproduce every reviewed Copilot Studio action and Preview gate. No separate prompt or PAC command block is required here.</p>
+        </article>
       </div>
-      <div class="deploy-panel active" data-deploy-panel="easy">
-        ${localPrompt ? `<h4 class="deploy-subhead">Try locally — one prompt, no terminal</h4>
-          <pre class="command-block">${esc(localPrompt)}</pre>
-          <button class="button primary small" type="button" data-action="copy" data-text="${enc(localPrompt)}">Copy Brainstem setup prompt</button>` : ""}
-        ${studioPrompt ? `<h4 class="deploy-subhead">Promote to Copilot Studio — one prompt</h4>
-          <pre class="command-block">${esc(studioPrompt)}</pre>
-          <button class="button primary small" type="button" data-action="copy" data-text="${enc(studioPrompt)}">Copy Copilot Studio prompt</button>` : ""}
-        ${connections.length ? `<h4 class="deploy-subhead">Required connections</h4><div class="tool-chips">${connections.map(item => `<span class="tool-chip">${esc(item)}</span>`).join("")}</div>` : ""}
-        <h4 class="deploy-subhead">Copilot-assisted sequence</h4>
-        <ol>${easy.map(step => `<li>${esc(step)}</li>`).join("")}</ol>
-        <div class="plugin-note">The Copilot Studio plugin is an experimental authoring accelerator. Review and validate every generated YAML component and connection reference before pushing to a customer environment.</div>
+      <div class="detail-actions">
+        ${questUrl ? `<a class="button primary" href="${esc(questUrl)}">Open workshop</a>` : `<span class="button" aria-disabled="true">Workshop pending</span>`}
+        <a class="button" href="solutions/_shared/workshop-settings.html?return=../../library.html">Workshop settings</a>
+        ${fieldGuideUrl ? `<a class="button" href="${esc(fieldGuideUrl)}">Open field guide</a>` : ""}
       </div>
-      <div class="deploy-panel" data-deploy-panel="hard">
-        ${commands.length ? `<h4 class="deploy-subhead">PAC command sequence</h4><pre class="command-block">${esc(commands.join("\n"))}</pre><button class="button small" type="button" data-action="copy" data-text="${enc(commands.join("\n"))}">Copy commands</button>` : ""}
-        <h4 class="deploy-subhead">Manual implementation sequence</h4>
-        <ol>${hard.map(step => `<li>${esc(step)}</li>`).join("")}</ol>
-      </div>
+      ${connections.length ? `<h3 style="margin-top:22px">Illustrative production connections</h3><div class="tool-chips">${connections.map(item => `<span class="tool-chip">${esc(item)}</span>`).join("")}</div><p>These are future integration seams. The workshop uses synthetic packaged evidence and does not connect to customer systems.</p>` : ""}
       ${checks.length ? `<h3 style="margin-top:22px">Acceptance gates</h3><ul class="acceptance-list">${checks.map(check => `<li>${esc(check)}</li>`).join("")}</ul>` : ""}
     </div>`;
 }
@@ -1874,14 +2031,24 @@ function architectureHTML(architecture) {
 function openAgent(name) {
   const agent = state.agents.find(item => item.name === name);
   if (!agent) return;
+  if (
+    agent._catalog_kind === "solution"
+    && !state.advertisedSolutions.has(agent.name)
+  ) {
+    return;
+  }
   const solution = solutionOf(agent);
   const capabilities = solution.capabilities || [];
   const outcomes = solution.outcomes || [];
   const personas = solution.personas || [];
   const industries = solution.industries || [CATEGORY_NAMES[agent.category] || pretty(agent.category)];
   const tools = microsoftTools(agent);
-  const prompts = promptRecordsFor(agent);
-  const install = installCommand(agent);
+  const prompts = promptRecordsFor(agent).map(item => ({
+    ...item,
+    interactive_demo_url: interactiveDemoUrl(agent, item),
+  }));
+  const download = agentDownload(agent);
+  const solutionDownloads = copilotSolutionDownloads(agent);
   const architecture = solution.architecture;
   const stack = state.stacks.find(item =>
     item.stack_type === "multi_agent"
@@ -1902,6 +2069,7 @@ function openAgent(name) {
             ${solution.has_demo_video ? `<span class="badge demo">Recorded demo</span>` : ""}
             ${solution.has_onepager ? `<span class="badge">One-pager</span>` : ""}
           </div>
+          ${agentUpvoteControl(agent)}
         </div>
       </header>
       ${architecture ? `<div class="detail-tabs">
@@ -1939,18 +2107,22 @@ function openAgent(name) {
                 <p><strong>${esc(item.label)}</strong><br>${esc(item.prompt)}</p>
                 <div class="detail-actions">
                   <button class="button small" type="button" data-action="copy" data-text="${enc(item.prompt)}">Copy</button>
-                  ${item.demo_url ? `<a class="button primary small" href="${esc(item.demo_url)}" target="_blank" rel="noopener">Open demo ↗</a>` : ""}
+                  ${item.interactive_demo_url ? `<a class="button primary small" href="${esc(item.interactive_demo_url)}" target="_blank" rel="noopener">Open interactive demo ↗</a>` : ""}
                 </div>
               </div>
             `).join("")}
           </section>
           <section class="detail-section">
-            <h3>Install</h3>
-            <pre class="code">${esc(install)}</pre>
+            <h3>Download agent.py</h3>
+            <p>Download the reviewed portable Python agent directly. Review the source before running it locally.</p>
             <div class="detail-actions">
-              <button class="button primary" type="button" data-action="copy" data-text="${enc(install)}">Copy install command</button>
+              <a class="button primary" href="${esc(download.href)}" download="${esc(download.filename)}">Download agent.py</a>
+              ${solutionDownloads ? `<a class="button" href="${esc(solutionDownloads.zip)}" download>Download Copilot Studio solution</a>` : ""}
+              ${solutionDownloads ? `<a class="button" href="${esc(solutionDownloads.settings)}" download>Deployment settings</a>` : ""}
+              ${agentAcquisitionControl(agent)}
               <a class="button" href="${BLOB}/${encodeURI(agent._file)}" target="_blank" rel="noopener">View source ↗</a>
             </div>
+            <p class="detail-note">Download the portable Python file or import the unmanaged Copilot Studio solution manually. Map the supplied deployment settings before enabling integrations; the imported agent remains unpublished until an administrator explicitly publishes it. Use the acquisition Discussion once per GitHub account to add a traceable signed-in acquisition signal.</p>
           </section>
         </div>
         <aside class="detail-aside">
@@ -1976,9 +2148,11 @@ function openAgent(name) {
             <div class="asset"><strong>One-pager</strong><span title="${esc(solution.onepager || "")}">${esc(solution.onepager || "Not listed")}</span></div>
             <div class="asset"><strong>Demo video</strong><span title="${esc(solution.demo_video || "")}">${esc(solution.demo_video || "Not listed")}</span></div>
             ${solution.source_verified ? `<div class="asset"><strong>Content source</strong><span>Approved AI BAST PowerPoint</span></div>` : ""}
-            ${solution.package ? `<div class="detail-actions" style="margin-top:10px">
-              ${solution.package.quest_url ? `<a class="button primary small" href="${esc(solution.package.quest_url)}">Open deployment quest</a>` : ""}
-              ${solution.package.manual_tutorial_url ? `<a class="button small" href="${esc(solution.package.manual_tutorial_url)}">Open Hard tutorial</a>` : ""}
+            ${solution.package ? `<div class="workshop-launch">
+              <strong>Hands-on workshop</strong>
+              <span>Use the guided Easy path or switch to the complete inline Hard mode from one focused learning page.</span>
+              ${solution.package.quest_url ? `<a class="button primary" href="${esc(solution.package.quest_url)}">Open workshop</a>` : ""}
+              ${solution.package.slug ? `<a class="button" href="solutions/${esc(solution.package.slug)}/field-guide.html">Open field guide</a>` : ""}
             </div>` : ""}
           </section>
           ${stack ? `<section class="aside-block"><h3>Stack</h3><button class="button full" type="button" data-action="open-stack" data-key="${enc(`${stack.vertical}/${stack.stack}`)}">${esc(stack.display_name)} · ${stack.agent_count} agents</button></section>` : ""}
@@ -1996,7 +2170,7 @@ function openAgent(name) {
         </aside>
       </div>
       </div>
-      ${architecture ? `<div class="detail-panel" data-detail-panel="architecture">${architectureHTML(architecture)}</div>` : ""}
+      ${architecture ? `<div class="detail-panel" data-detail-panel="architecture">${architectureHTML(architecture, solution)}</div>` : ""}
     </div>
   `);
   location.hash = `agent/${enc(agent.name)}`;
@@ -2160,6 +2334,14 @@ document.addEventListener("click", event => {
     render();
   } else if (action === "clear-all") {
     clearAll();
+  } else if (action === "upvote-agent") {
+    event.preventDefault();
+    event.stopPropagation();
+    openAgentUpvote(dec(target.dataset.agentName));
+  } else if (action === "record-agent-acquisition") {
+    event.preventDefault();
+    event.stopPropagation();
+    openAgentSignal(dec(target.dataset.agentName), "acquisition");
   } else if (action === "open-agent") {
     $("suggestions").classList.remove("visible");
     openAgent(dec(target.dataset.name));
@@ -2174,14 +2356,6 @@ document.addEventListener("click", event => {
     });
     document.querySelectorAll("[data-detail-panel]").forEach(section => {
       section.classList.toggle("active", section.dataset.detailPanel === panel);
-    });
-  } else if (action === "deploy-mode") {
-    const mode = target.dataset.mode;
-    document.querySelectorAll(".mode-button").forEach(button => {
-      button.classList.toggle("active", button.dataset.mode === mode);
-    });
-    document.querySelectorAll("[data-deploy-panel]").forEach(panel => {
-      panel.classList.toggle("active", panel.dataset.deployPanel === mode);
     });
   } else if (action === "close-modal") {
     closeModal();

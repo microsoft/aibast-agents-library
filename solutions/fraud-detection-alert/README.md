@@ -33,15 +33,23 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 
 | Surface | Location |
 | --- | --- |
-| Customer field guide | `solutions/fraud-detection-alert/FIELD-GUIDE.md` |
+| Customer field guide | `solutions/fraud-detection-alert/field-guide.html` |
+| Evidence report | `solutions/fraud-detection-alert/evidence-report.html` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/fraud-detection-alert/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/fraud-detection-alert/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Hard quest | `solutions/fraud-detection-alert/quest.html` |
 | Literal browser tutorial | `solutions/fraud-detection-alert/manual-tutorial.html` |
 | Raw export manifest | `solutions/fraud-detection-alert/export-manifest.json` |
 | Source bundle | `solutions/fraud-detection-alert/exports/fraud-detection-alert-source.zip` |
 | Manual evidence | `solutions/fraud-detection-alert/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/fraud-detection-alert/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/fraud-detection-alert/exports/fraud-detection-alert-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/fraud-detection-alert/exports/fraud-detection-alert-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/fraud-detection-alert/exports/fraud-detection-alert-solution-export.json` |
 
-**Scaffold status:** 60 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 91 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

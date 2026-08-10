@@ -1,3 +1,4 @@
+import html
 import json
 import re
 import zipfile
@@ -36,9 +37,82 @@ PACKAGES = {
     },
 }
 
+REQUIRED_COURSE_RESOURCE_IDS = {
+    "portable-agent",
+    "deployment-recipe",
+    "field-guide",
+    "field-guide-source",
+    "settings",
+    "agent-sync",
+    "manual-instructions",
+    "easy-mode-brainstem-skill",
+    "easy-mode-copilot-skill",
+    "generic-workshop-agent",
+    "brainstem-transcripts",
+    "manual-evidence",
+    "assisted-browserfilm-manifest",
+    "assisted-browserfilm",
+    "assisted-contact-sheet",
+    "manual-browserfilm-manifest",
+    "manual-browserfilm",
+    "manual-contact-sheet",
+    "easy-evidence-visual-checkpoints",
+    "workshop-settings",
+    "evidence-report",
+    "quest",
+    "manual-tutorial",
+}
+
 
 def read_json(path):
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def plain_text(value):
+    return " ".join(
+        html.unescape(re.sub(r"<[^>]+>", " ", value)).split()
+    )
+
+
+def tutorial_steps(tutorial):
+    matches = re.findall(
+        r'<article class="step" id="step-(\d+)">(.*?)</article>',
+        tutorial,
+        re.DOTALL,
+    )
+    steps = []
+    for number, block in matches:
+        heading = re.search(r"<h3>(.*?)</h3>", block, re.DOTALL)
+        assert heading
+        downloads = []
+        for attrs, label in re.findall(
+            r"<a\b([^>]*)>(.*?)</a>", block, re.DOTALL | re.IGNORECASE
+        ):
+            if plain_text(label).startswith("Download source:"):
+                href = re.search(r'href="([^"]+)"', attrs)
+                assert href
+                assert re.search(r"\bdownload(?:\s|=|$)", attrs)
+                downloads.append(href.group(1))
+        steps.append(
+            {
+                "number": int(number),
+                "title": plain_text(heading.group(1)),
+                "text": plain_text(block),
+                "images": re.findall(
+                    r'<img\b[^>]*\bsrc="([^"]+)"',
+                    block,
+                    re.IGNORECASE,
+                ),
+                "reports": len(
+                    re.findall(r"<[^>]+\bdata-report-location=", block)
+                ),
+                "downloads": downloads,
+                "report_evidence": re.findall(
+                    r'data-report-evidence="([^"]*)"', block
+                ),
+            }
+        )
+    return steps
 
 
 def test_solution_assets_are_packaged_under_solutions():
@@ -196,7 +270,8 @@ def test_rapp_browserfilm_assets_are_reproducible():
 
     manual = folder / "manual"
     manual_manifest = read_json(manual / "browserfilm.json")
-    assert len(manual_manifest["frames"]) == 24
+    assert manual_manifest["schema"] == "rapp-browserfilm/1.0"
+    assert manual_manifest["frames"]
     assert manual_manifest["raw_base_url"].endswith(
         "/solutions/building-permit-processing/screenshots/manual/"
     )
@@ -215,37 +290,123 @@ def test_rapp_browserfilm_assets_are_reproducible():
         / "building-permit-processing"
         / "quest.html"
     ).read_text(encoding="utf-8")
-    assert "screenshots/copilot-assisted-walkthrough.gif" in quest
-    assert "screenshots/manual/manual-build-walkthrough.gif" in quest
-    assert "Download every source file" in quest
-    assert "Upload the first four skills" in quest
-    assert "Install and authenticate every prerequisite" not in quest
+    cases = read_json(
+        ROOT / "tests" / "demo_cases" / "building-permit-processing.json"
+    )["cases"]
+    assert "AIBAST guided workshop" in quest
+    assert "Clawpilot" not in quest
+    assert "Report an issue" in quest
+    assert "Beta workshop" not in quest
+    assert "workshop-settings.html" in quest
+    assert "field-guide.html" in quest
+    assert "evidence-report.html" in quest
+    assert "<iframe" not in quest
+    assert 'class="path" data-path="hard"' in quest
+    assert "Open standalone Hard-mode guide" in quest
+    assert 'data-easy-lane="copilot"' in quest
+    assert 'data-easy-lane="brainstem"' in quest
+    assert 'localStorage.getItem("aibast:workshop-engine") === "brainstem"' in quest
+    assert re.search(r'\?\s*"brainstem"\s*:\s*"copilot"', quest)
+    assert "GitHub Copilot only" in quest
+    assert "GitHub Copilot + Brainstem" in quest
+    assert len(re.findall(r"<[^>]+\bdata-report-location=", quest)) == (
+        7 + len(cases) + len(manual_manifest["frames"])
+    )
+    assert "aibast-workshop-feedback/1.0" in quest
+    assert "Watch assisted film" not in quest
+    assert "screenshots/copilot-assisted-walkthrough.gif" not in quest
+    assert "data-workshop-engine-choice" not in quest
+    assert 'href="FIELD-GUIDE.md"' not in quest
+    assert "VISUAL-EVIDENCE-AUDIT.md" not in quest
+    assert "Draft" in quest
+    assert re.search(r"published.{0,80}false", quest, re.IGNORECASE | re.DOTALL)
 
 
 def test_manual_build_evidence_records_preview_parity():
+    package = ROOT / "solutions" / "building-permit-processing"
     evidence = read_json(
-        ROOT
-        / "solutions"
-        / "building-permit-processing"
-        / "evals"
-        / "manual-build-evidence.json"
+        package / "evals" / "manual-build-evidence.json"
     )
+    cases = read_json(
+        ROOT / "tests" / "demo_cases" / "building-permit-processing.json"
+    )["cases"]
     assert evidence["status"] == "draft"
     assert evidence["manual_components"]["knowledge_files"] == 2
     assert evidence["manual_components"]["skills"] == 7
+    assert evidence["canonical_preview"]["prompt"] == cases[0]["prompt"]
+    assert evidence["canonical_preview"]["must_include"] == cases[0]["must_include"]
     assert evidence["canonical_preview"]["passed"] is True
     assert evidence["publication"]["published"] is False
+    report = (package / "evidence-report.html").read_text(encoding="utf-8").lower()
+    for case in cases:
+        assert case["id"].lower() in report
+        for marker in case["must_include"]:
+            assert marker.lower() in report
 
 
-def test_manual_tutorial_covers_every_browserfilm_step():
+def test_manual_tutorial_matches_browserfilm_and_visual_contract():
     package = ROOT / "solutions" / "building-permit-processing"
     tutorial = (package / "manual-tutorial.html").read_text(encoding="utf-8")
-    manifest = read_json(package / "screenshots" / "manual" / "browserfilm.json")
-    assert "Hard mode · AI skeptic edition" in tutorial
-    assert "manual-build-walkthrough.gif" in tutorial
-    assert "export-manifest.json" in tutorial
-    for frame in manifest["frames"]:
-        assert frame["file"] in tutorial
+    steps = tutorial_steps(tutorial)
+    browserfilm = read_json(package / "screenshots" / "manual" / "browserfilm.json")
+    visual = read_json(package / "evals" / "visual-checkpoints.json")
+
+    assert "AIBAST" in tutorial
+    assert "Clawpilot" not in tutorial
+    assert "Report an issue" in tutorial
+    assert "Beta workshop" not in tutorial
+    assert "Watch assisted film" not in tutorial
+    assert "scoutTheme" in tutorial
+    assert 'document.documentElement.setAttribute("data-theme", theme);' in tutorial
+    for token in (
+        "--cp-bg:",
+        "--cp-surface:",
+        "--cp-border:",
+        "--cp-text:",
+        "--cp-accent:",
+        "--cp-success:",
+        "--cp-warning:",
+        "--cp-link:",
+        "--cp-shadow:",
+    ):
+        assert token in tutorial
+    for token in ("data-embedded", "aibast-hard-mode-height", "postMessage"):
+        assert token not in tutorial
+    assert "manual-progress" in tutorial
+    assert 'badgeIds.push("hard-mode-complete")' in tutorial
+
+    frames = browserfilm["frames"]
+    assert len(steps) == len(frames)
+    hard_visuals = {
+        capture["step"]: capture
+        for capture in visual["captures"]
+        if capture.get("mode") == "hard"
+    }
+    assert set(hard_visuals) == set(range(1, len(frames) + 1))
+
+    for index, (step, frame) in enumerate(zip(steps, frames), start=1):
+        action = re.sub(r"^\d+\s*·\s*", "", frame["label"])
+        assert step["number"] == index
+        assert step["title"] == action
+        assert step["reports"] == 1
+        assert len(step["downloads"]) == 1
+        assert (package / step["downloads"][0]).is_file()
+        assert len(step["report_evidence"]) == 1
+        assert step["report_evidence"][0].endswith(frame["file"])
+        assert frame["duration_ms"] > 0
+        assert (package / "screenshots" / "manual" / frame["file"]).is_file()
+
+        checkpoint = hard_visuals[index]
+        assert checkpoint["source"].endswith(frame["file"])
+        if checkpoint["status"] == "reshoot_required":
+            assert not step["images"]
+            assert "Live verification checkpoint" in step["text"]
+            assert "Withheld checkpoint" not in step["text"]
+            assert "not approved for learner display" not in step["text"]
+            assert checkpoint["reason"]
+        else:
+            assert checkpoint["status"] == "reusable"
+            assert step["images"]
 
 
 def test_export_manifest_and_bundle_are_complete():
@@ -256,14 +417,42 @@ def test_export_manifest_and_bundle_are_complete():
         / "export-manifest.json"
     )
     manifest = read_json(manifest_path)
+    resources = {item["id"]: item for item in manifest["files"]}
+    assert REQUIRED_COURSE_RESOURCE_IDS <= resources.keys()
+    assert any(resource_id.startswith("knowledge-") for resource_id in resources)
+    assert any(resource_id.startswith("skill-") for resource_id in resources)
     bundle = ROOT / manifest["bundle"]["path"]
     assert bundle.exists()
+    assert manifest["bundle"]["raw_url"].startswith(manifest["raw_base"])
     assert manifest["bundle"]["raw_url"].endswith(manifest["bundle"]["path"])
 
     for item in manifest["files"]:
         path = ROOT / item["path"]
-        assert path.exists(), item["path"]
+        assert item["status"] == "ready"
+        assert path.is_file(), item["path"]
+        assert item["raw_url"].startswith(manifest["raw_base"])
         assert item["raw_url"].endswith(item["path"])
+
+    package = ROOT / "solutions" / "building-permit-processing"
+    for filename, brand in (
+        ("field-guide.html", "AIBAST field guide"),
+        ("evidence-report.html", "AIBAST evidence report"),
+    ):
+        page = (package / filename).read_text(encoding="utf-8")
+        assert "<style>" in page
+        assert brand in page
+        assert "Clawpilot" not in page
+
+    visual = read_json(package / "evals" / "visual-checkpoints.json")
+    assert visual["schema"] == "aibast-visual-checkpoints/1.0"
+    assert visual["summary"]["total_existing_captures"] == len(visual["captures"])
+    assert visual["summary"]["reusable"] == sum(
+        capture["status"] == "reusable" for capture in visual["captures"]
+    )
+    assert visual["summary"]["reshoot_required"] == sum(
+        capture["status"] == "reshoot_required"
+        for capture in visual["captures"]
+    )
 
     with zipfile.ZipFile(bundle) as archive:
         names = set(archive.namelist())
@@ -274,3 +463,13 @@ def test_export_manifest_and_bundle_are_complete():
         "solutions/building-permit-processing/"
         "screenshots/manual/manual-build-walkthrough.gif"
     ) in names
+    assert {
+        "solutions/building-permit-processing/quest.html",
+        "solutions/building-permit-processing/manual-tutorial.html",
+        "solutions/building-permit-processing/field-guide.html",
+        "solutions/building-permit-processing/evidence-report.html",
+        "solutions/building-permit-processing/evals/visual-checkpoints.json",
+        "solutions/building-permit-processing/export-manifest.json",
+        "skills/aibast-easy-mode-brainstem/SKILL.md",
+        "skills/aibast-easy-mode-copilot/SKILL.md",
+    } <= names

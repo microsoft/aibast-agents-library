@@ -27,15 +27,23 @@ offer, launches a campaign, issues a reward, or completes a purchase.
 
 | Surface | Location |
 | --- | --- |
-| Customer field guide | `solutions/personalized-marketing/FIELD-GUIDE.md` |
+| Customer field guide | `solutions/personalized-marketing/field-guide.html` |
+| Evidence report | `solutions/personalized-marketing/evidence-report.html` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/personalized-marketing/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/personalized-marketing/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Hard quest | `solutions/personalized-marketing/quest.html` |
 | Literal browser tutorial | `solutions/personalized-marketing/manual-tutorial.html` |
 | Raw export manifest | `solutions/personalized-marketing/export-manifest.json` |
 | Source bundle | `solutions/personalized-marketing/exports/personalized-marketing-source.zip` |
 | Manual evidence | `solutions/personalized-marketing/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/personalized-marketing/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/personalized-marketing/exports/personalized-marketing-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/personalized-marketing/exports/personalized-marketing-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/personalized-marketing/exports/personalized-marketing-solution-export.json` |
 
-**Scaffold status:** 60 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 92 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

@@ -30,15 +30,23 @@ The local agent uses fictional records and produces decision support only. It do
 
 | Surface | Location |
 | --- | --- |
-| Customer field guide | `solutions/energy-regulatory-reporting/FIELD-GUIDE.md` |
+| Customer field guide | `solutions/energy-regulatory-reporting/field-guide.html` |
+| Evidence report | `solutions/energy-regulatory-reporting/evidence-report.html` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/energy-regulatory-reporting/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/energy-regulatory-reporting/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Hard quest | `solutions/energy-regulatory-reporting/quest.html` |
 | Literal browser tutorial | `solutions/energy-regulatory-reporting/manual-tutorial.html` |
 | Raw export manifest | `solutions/energy-regulatory-reporting/export-manifest.json` |
 | Source bundle | `solutions/energy-regulatory-reporting/exports/energy-regulatory-reporting-source.zip` |
 | Manual evidence | `solutions/energy-regulatory-reporting/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/energy-regulatory-reporting/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/energy-regulatory-reporting/exports/energy-regulatory-reporting-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/energy-regulatory-reporting/exports/energy-regulatory-reporting-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/energy-regulatory-reporting/exports/energy-regulatory-reporting-solution-export.json` |
 
-**Scaffold status:** 60 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 93 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

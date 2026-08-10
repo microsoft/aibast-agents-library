@@ -1,0 +1,705 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/proposal-generation",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker or refusal.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 29,
+    "reusable": 27,
+    "reshoot_required": 2
+  },
+  "captures": [
+    {
+      "id": "easy-pg-01",
+      "mode": "easy",
+      "case_id": "PG-01",
+      "source": "solutions/proposal-generation/screenshots/assisted/01-pg-01.jpg",
+      "annotated": "solutions/proposal-generation/screenshots/assisted/annotated/01-pg-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "RFP-2024-0147",
+        "Authorized human review is required before any external use"
+      ],
+      "full_case_not_visibly_proven": [
+        "RFP Analysis and Requirements Analysis are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 451,
+          "width": 940,
+          "height": 126,
+          "label": "Evidence boundary and review gate"
+        }
+      ]
+    },
+    {
+      "id": "easy-pg-02",
+      "mode": "easy",
+      "case_id": "PG-02",
+      "source": "solutions/proposal-generation/screenshots/assisted/02-pg-02.jpg",
+      "annotated": "solutions/proposal-generation/screenshots/assisted/annotated/02-pg-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "No pricing was approved",
+        "No proposal was submitted"
+      ],
+      "full_case_not_visibly_proven": [
+        "Executive Summary and Personalization Applied are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 461,
+          "width": 930,
+          "height": 116,
+          "label": "Evidence boundary and no side effects"
+        }
+      ]
+    },
+    {
+      "id": "easy-pg-03",
+      "mode": "easy",
+      "case_id": "PG-03",
+      "source": "solutions/proposal-generation/screenshots/assisted/03-pg-03.jpg",
+      "annotated": "solutions/proposal-generation/screenshots/assisted/annotated/03-pg-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "No price, discount, or concession has been approved",
+        "Authorized bid-owner review"
+      ],
+      "full_case_not_visibly_proven": [
+        "Solution & Pricing and Budget Analysis are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 431,
+          "width": 940,
+          "height": 149,
+          "label": "Pricing evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-pg-04",
+      "mode": "easy",
+      "case_id": "PG-04",
+      "source": "solutions/proposal-generation/screenshots/assisted/04-pg-04.jpg",
+      "annotated": "solutions/proposal-generation/screenshots/assisted/annotated/04-pg-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "No reference was contacted",
+        "Authorized human review before external use"
+      ],
+      "full_case_not_visibly_proven": [
+        "References & Competitive Positioning and Win Theme are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 459,
+          "width": 940,
+          "height": 119,
+          "label": "Reference evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-pg-05",
+      "mode": "easy",
+      "case_id": "PG-05",
+      "source": "solutions/proposal-generation/screenshots/assisted/05-pg-05.jpg",
+      "annotated": "solutions/proposal-generation/screenshots/assisted/annotated/05-pg-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "Draft outline for authorized human review",
+        "No proposal was created or delivered"
+      ],
+      "full_case_not_visibly_proven": [
+        "Proposal Package and Required Human Review Before Delivery are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 430,
+          "width": 940,
+          "height": 151,
+          "label": "Proposal-package evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-pg-06",
+      "mode": "easy",
+      "case_id": "PG-06",
+      "source": "solutions/proposal-generation/screenshots/assisted/06-pg-06.jpg",
+      "annotated": "solutions/proposal-generation/screenshots/assisted/annotated/06-pg-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence Boundary",
+        "Required reviews not yet completed",
+        "Explicit authorized human review and action"
+      ],
+      "full_case_not_visibly_proven": [
+        "Delivery Summary and Human-Governed Next-Step Options are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 430,
+          "width": 940,
+          "height": 151,
+          "label": "Delivery-readiness evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-draft",
+      "mode": "easy",
+      "source": "solutions/proposal-generation/screenshots/assisted/07-confirm-draft.jpg",
+      "status": "reshoot_required",
+      "reason": "The Proposal Generation Pilot row is not visible. Draft badges for unrelated agents cannot prove the target pilot remains Draft.",
+      "draft": true
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "step": 1,
+      "source": "solutions/proposal-generation/screenshots/manual/01-create-blank-agent.jpg",
+      "annotated": "solutions/proposal-generation/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent",
+        "Blank Build workspace"
+      ],
+      "boxes": [
+        {
+          "x": 165,
+          "y": 92,
+          "width": 815,
+          "height": 64,
+          "label": "Blank agent workspace"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "step": 2,
+      "source": "solutions/proposal-generation/screenshots/manual/02-name-agent.jpg",
+      "annotated": "solutions/proposal-generation/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Proposal Generation Manual in the name field"
+      ],
+      "boxes": [
+        {
+          "x": 165,
+          "y": 92,
+          "width": 815,
+          "height": 64,
+          "label": "Manual agent name"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "step": 3,
+      "source": "solutions/proposal-generation/screenshots/manual/03-enter-instructions.jpg",
+      "annotated": "solutions/proposal-generation/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence-first response contract",
+        "Locked Preview evidence anchors",
+        "PG-01 through PG-06 acceptance anchors"
+      ],
+      "boxes": [
+        {
+          "x": 75,
+          "y": 215,
+          "width": 910,
+          "height": 620,
+          "label": "Reviewed instructions and locked anchors"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "step": 4,
+      "source": "solutions/proposal-generation/screenshots/manual/04-save-instructions.jpg",
+      "status": "reshoot_required",
+      "reason": "The instruction policy is visible, but the screenshot has no saved-state indicator or No unsaved changes tooltip. Visible editor content alone does not prove the save checkpoint."
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "step": 5,
+      "source": "solutions/proposal-generation/screenshots/manual/05-remove-web-search.jpg",
+      "annotated": "solutions/proposal-generation/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Knowledge section shows no Search all websites entry"
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 254,
+          "width": 382,
+          "height": 108,
+          "label": "Web search no longer listed"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "step": 6,
+      "source": "solutions/proposal-generation/screenshots/manual/06-add-aibast-proposal-generation-operating-rules.jpg",
+      "annotated": "solutions/proposal-generation/screenshots/manual/annotated/06-add-aibast-proposal-generation-operating-rules.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_proposal-generation-operating-rules"
+      ],
+      "boxes": [
+        {
+          "x": 1022,
+          "y": 257,
+          "width": 378,
+          "height": 104,
+          "label": "Operating-rules knowledge added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "step": 7,
+      "source": "solutions/proposal-generation/screenshots/manual/07-add-aibast-proposal-generation-synthetic-records.jpg",
+      "annotated": "solutions/proposal-generation/screenshots/manual/annotated/07-add-aibast-proposal-generation-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_proposal-generation-synthetic-records",
+        "aibast_proposal-generation-operating-rules"
+      ],
+      "boxes": [
+        {
+          "x": 1022,
+          "y": 304,
+          "width": 378,
+          "height": 102,
+          "label": "Both knowledge files visible"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "step": 8,
+      "source": "solutions/proposal-generation/screenshots/manual/08-add-analyze-rfp.jpg",
+      "annotated": "solutions/proposal-generation/screenshots/manual/annotated/08-add-analyze-rfp.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "proposal-generation-analyze-rfp"
+      ],
+      "boxes": [
+        {
+          "x": 1022,
+          "y": 136,
+          "width": 378,
+          "height": 104,
+          "label": "Analyze-RFP skill added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "step": 9,
+      "source": "solutions/proposal-generation/screenshots/manual/09-add-compile-proposal.jpg",
+      "annotated": "solutions/proposal-generation/screenshots/manual/annotated/09-add-compile-proposal.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "proposal-generation-compile-proposal"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 184,
+          "width": 370,
+          "height": 43,
+          "label": "Compile-proposal skill added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "step": 10,
+      "source": "solutions/proposal-generation/screenshots/manual/10-add-delivery-summary.jpg",
+      "annotated": "solutions/proposal-generation/screenshots/manual/annotated/10-add-delivery-summary.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "proposal-generation-delivery-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 184,
+          "width": 370,
+          "height": 43,
+          "label": "Delivery-summary skill added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "step": 11,
+      "source": "solutions/proposal-generation/screenshots/manual/11-add-executive-summary.jpg",
+      "annotated": "solutions/proposal-generation/screenshots/manual/annotated/11-add-executive-summary.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "proposal-generation-executive-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 184,
+          "width": 370,
+          "height": 43,
+          "label": "Executive-summary skill added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "step": 12,
+      "source": "solutions/proposal-generation/screenshots/manual/12-add-references-positioning.jpg",
+      "annotated": "solutions/proposal-generation/screenshots/manual/annotated/12-add-references-positioning.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "proposal-generation-references-positioning"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 184,
+          "width": 370,
+          "height": 43,
+          "label": "References-positioning skill added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "step": 13,
+      "source": "solutions/proposal-generation/screenshots/manual/13-add-solution-pricing.jpg",
+      "annotated": "solutions/proposal-generation/screenshots/manual/annotated/13-add-solution-pricing.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "proposal-generation-solution-pricing"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 184,
+          "width": 370,
+          "height": 43,
+          "label": "Solution-pricing skill added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "step": 14,
+      "source": "solutions/proposal-generation/screenshots/manual/14-review-inventory.jpg",
+      "annotated": "solutions/proposal-generation/screenshots/manual/annotated/14-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "Six configured skills: five visible plus +1",
+        "Two proposal-generation knowledge files",
+        "Tools section contains no configured action",
+        "Reason: No unsaved changes"
+      ],
+      "boxes": [
+        {
+          "x": 1045,
+          "y": 43,
+          "width": 205,
+          "height": 50,
+          "label": "Saved: no unsaved changes"
+        },
+        {
+          "x": 1210,
+          "y": 84,
+          "width": 190,
+          "height": 48,
+          "label": "Reviewed model"
+        },
+        {
+          "x": 1018,
+          "y": 135,
+          "width": 382,
+          "height": 245,
+          "label": "Six configured skills"
+        },
+        {
+          "x": 1018,
+          "y": 398,
+          "width": 382,
+          "height": 68,
+          "label": "No configured tools"
+        },
+        {
+          "x": 1018,
+          "y": 460,
+          "width": 382,
+          "height": 128,
+          "label": "Two knowledge files"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "step": 15,
+      "source": "solutions/proposal-generation/screenshots/manual/15-open-preview.jpg",
+      "annotated": "solutions/proposal-generation/screenshots/manual/annotated/15-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab",
+        "New chat",
+        "Proposal Generation Manual greeting"
+      ],
+      "boxes": [
+        {
+          "x": 640,
+          "y": 8,
+          "width": 102,
+          "height": 47,
+          "label": "Preview selected"
+        },
+        {
+          "x": 830,
+          "y": 80,
+          "width": 120,
+          "height": 48,
+          "label": "Fresh chat control"
+        },
+        {
+          "x": 280,
+          "y": 140,
+          "width": 505,
+          "height": 83,
+          "label": "Manual agent ready"
+        }
+      ]
+    },
+    {
+      "id": "hard-pg-01",
+      "mode": "hard",
+      "step": 16,
+      "case_id": "PG-01",
+      "source": "solutions/proposal-generation/screenshots/manual/16-pg-01.jpg",
+      "annotated": "solutions/proposal-generation/screenshots/manual/annotated/16-pg-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence Boundary",
+        "RFP-2024-0147",
+        "Authorized human review is required before any external use"
+      ],
+      "full_case_not_visibly_proven": [
+        "RFP Analysis and Requirements Analysis are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 431,
+          "width": 940,
+          "height": 151,
+          "label": "PG-01 evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-pg-02",
+      "mode": "hard",
+      "step": 17,
+      "case_id": "PG-02",
+      "source": "solutions/proposal-generation/screenshots/manual/17-pg-02.jpg",
+      "annotated": "solutions/proposal-generation/screenshots/manual/annotated/17-pg-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "No pricing was approved",
+        "Authorized bid owner must coordinate all required reviews"
+      ],
+      "full_case_not_visibly_proven": [
+        "Executive Summary and Personalization Applied are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 461,
+          "width": 940,
+          "height": 123,
+          "label": "PG-02 evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-pg-03",
+      "mode": "hard",
+      "step": 18,
+      "case_id": "PG-03",
+      "source": "solutions/proposal-generation/screenshots/manual/18-pg-03.jpg",
+      "annotated": "solutions/proposal-generation/screenshots/manual/annotated/18-pg-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "No price was approved",
+        "No concession was granted"
+      ],
+      "full_case_not_visibly_proven": [
+        "Solution & Pricing and Budget Analysis are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 489,
+          "width": 940,
+          "height": 95,
+          "label": "PG-03 evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-pg-04",
+      "mode": "hard",
+      "step": 19,
+      "case_id": "PG-04",
+      "source": "solutions/proposal-generation/screenshots/manual/19-pg-04.jpg",
+      "annotated": "solutions/proposal-generation/screenshots/manual/annotated/19-pg-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "No reference availability was confirmed",
+        "No reference was contacted"
+      ],
+      "full_case_not_visibly_proven": [
+        "References & Competitive Positioning and Win Theme are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 461,
+          "width": 940,
+          "height": 123,
+          "label": "PG-04 evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-pg-05",
+      "mode": "hard",
+      "step": 20,
+      "case_id": "PG-05",
+      "source": "solutions/proposal-generation/screenshots/manual/20-pg-05.jpg",
+      "annotated": "solutions/proposal-generation/screenshots/manual/annotated/20-pg-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence Boundary",
+        "No review listed above has been completed",
+        "No final document was created"
+      ],
+      "full_case_not_visibly_proven": [
+        "Proposal Package and Required Human Review Before Delivery are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 430,
+          "width": 940,
+          "height": 151,
+          "label": "PG-05 evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-pg-06",
+      "mode": "hard",
+      "step": 21,
+      "case_id": "PG-06",
+      "source": "solutions/proposal-generation/screenshots/manual/21-pg-06.jpg",
+      "annotated": "solutions/proposal-generation/screenshots/manual/annotated/21-pg-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "Pending approvals",
+        "No proposal was delivered"
+      ],
+      "full_case_not_visibly_proven": [
+        "Delivery Summary and Human-Governed Next-Step Options are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 430,
+          "width": 940,
+          "height": 151,
+          "label": "PG-06 evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-draft",
+      "mode": "hard",
+      "step": 22,
+      "source": "solutions/proposal-generation/screenshots/manual/22-confirm-draft.jpg",
+      "annotated": "solutions/proposal-generation/screenshots/manual/annotated/22-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Proposal Generation Manual",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 145,
+          "y": 390,
+          "width": 620,
+          "height": 55,
+          "label": "Target manual agent remains Draft"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy Draft gate filtered to Proposal Generation Pilot with its Draft status visible.",
+      "Hard step 4 with the reviewed instruction policy and an explicit saved-state indicator such as Reason: No unsaved changes."
+    ]
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:proposal-generation",
+    "reviewed_at": "2026-08-10T00:27:58.170525+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  }
+}

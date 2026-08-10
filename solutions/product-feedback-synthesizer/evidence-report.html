@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Product Feedback Synthesizer Agent evidence report</title>
+  <script>
+    (() => {
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const theme =
+        param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+    (() => {
+      const key = "aibast:theme";
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const explicit = param === "dark" || param === "light" ? param : null;
+      let stored = null;
+      try {
+        const candidate = localStorage.getItem(key);
+        stored = candidate === "dark" || candidate === "light" ? candidate : null;
+      } catch (_error) {
+        stored = null;
+      }
+      const theme = explicit || stored || "light";
+      document.documentElement.setAttribute("data-theme", theme);
+      document.addEventListener("DOMContentLoaded", () => {
+        const button = document.querySelector("[data-theme-toggle]");
+        if (!button) return;
+        const render = () => {
+          const dark = document.documentElement.getAttribute("data-theme") === "dark";
+          button.textContent = dark ? "Use light mode" : "Use dark mode";
+          button.setAttribute("aria-pressed", String(dark));
+        };
+        button.addEventListener("click", () => {
+          const next =
+            document.documentElement.getAttribute("data-theme") === "dark"
+              ? "light"
+              : "dark";
+          document.documentElement.setAttribute("data-theme", next);
+          try {
+            localStorage.setItem(key, next);
+          } catch (_error) {
+            /* The visible theme still changes when storage is unavailable. */
+          }
+          render();
+        });
+        render();
+      });
+    })();
+  </script>
+  <style>
+
+    :root {
+      color-scheme: light;
+      --cp-bg: #f7f4ef;
+      --cp-bg-elevated: #fcfbf8;
+      --cp-surface: #ffffff;
+      --cp-surface-soft: #f5f5f5;
+      --cp-border: #dedede;
+      --cp-border-strong: #919191;
+      --cp-text: #242424;
+      --cp-text-muted: #5c5c5c;
+      --cp-text-soft: #6f6f6f;
+      --cp-accent: #b11f4b;
+      --cp-accent-hover: #9a1a41;
+      --cp-accent-soft: rgba(177, 31, 75, 0.08);
+      --cp-accent-fg: #ffffff;
+      --cp-success: #16a34a;
+      --cp-danger: #dc2626;
+      --cp-warning: #f59e0b;
+      --cp-link: #0078d4;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+      --cp-overlay: rgba(255, 255, 255, 0.8);
+      --cp-panel: rgba(255, 255, 255, 0.86);
+      --cp-panel-strong: rgba(255, 255, 255, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.55);
+      --cp-highlight: rgba(177, 31, 75, 0.12);
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --cp-bg: #3d3b3a;
+      --cp-bg-elevated: #343231;
+      --cp-surface: #292929;
+      --cp-surface-soft: #2e2e2e;
+      --cp-border: #474747;
+      --cp-border-strong: #5f5f5f;
+      --cp-text: #dedede;
+      --cp-text-muted: #919191;
+      --cp-text-soft: #b0b0b0;
+      --cp-accent: #fd8ea1;
+      --cp-accent-hover: #fb7b91;
+      --cp-accent-soft: rgba(253, 142, 161, 0.14);
+      --cp-accent-fg: #1a1a1a;
+      --cp-success: #4ade80;
+      --cp-danger: #f87171;
+      --cp-warning: #fbbf24;
+      --cp-link: #4da6ff;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+      --cp-overlay: rgba(41, 41, 41, 0.88);
+      --cp-panel: rgba(41, 41, 41, 0.72);
+      --cp-panel-strong: rgba(41, 41, 41, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.04);
+      --cp-highlight: rgba(253, 142, 161, 0.12);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--cp-bg);
+      color: var(--cp-text);
+      font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.55;
+    }
+    a { color: var(--cp-link); }
+    button, .button { font: inherit; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 24px;
+      border-bottom: 1px solid var(--cp-border);
+      background: var(--cp-panel-strong);
+    }
+    .topbar-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 750; }
+    .brand-mark {
+      display: grid;
+      width: 32px;
+      height: 32px;
+      place-items: center;
+      border-radius: 10px;
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 8px 14px;
+      border: 1px solid var(--cp-border-strong);
+      border-radius: 10px;
+      background: var(--cp-surface);
+      color: var(--cp-text);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .button.primary {
+      border-color: var(--cp-accent);
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+    }
+    .page { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 40px 0 80px; }
+    .hero {
+      padding: 32px;
+      border: 1px solid var(--cp-border);
+      border-radius: 18px;
+      background: var(--cp-surface);
+      box-shadow: var(--cp-shadow);
+    }
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--cp-accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+    h1 { margin: 0; font-size: clamp(34px, 7vw, 64px); line-height: 1; letter-spacing: -.045em; }
+    h2 { margin-top: 42px; }
+    .lede { max-width: 760px; color: var(--cp-text-muted); font-size: 18px; }
+    .notice {
+      margin-top: 18px;
+      padding: 15px;
+      border-left: 4px solid var(--cp-warning);
+      background: var(--cp-surface-soft);
+    }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .card {
+      border: 1px solid var(--cp-border);
+      border-radius: 14px;
+      background: var(--cp-surface);
+      padding: 20px;
+    }
+    .card h3 { margin-top: 0; }
+    .muted { color: var(--cp-text-muted); }
+    .status { color: var(--cp-accent); font-weight: 750; }
+    .progress { height: 8px; overflow: hidden; border-radius: 999px; background: var(--cp-border); }
+    .progress span { display: block; width: 0; height: 100%; background: var(--cp-accent); }
+    @media (max-width: 760px) {
+      .grid { grid-template-columns: 1fr; }
+      .topbar { align-items: flex-start; padding: 12px 16px; }
+      .topbar-actions { justify-content: flex-start; }
+      .page { width: min(100% - 24px, 1120px); padding-top: 24px; }
+      .hero { padding: 24px 20px; }
+    }
+
+    .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 20px 0; }
+    .summary-grid article { padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
+    .summary-grid strong, .summary-grid span { display: block; }
+    .summary-grid strong { font-size: 28px; color: var(--cp-accent); }
+    .summary-grid span { color: var(--cp-text-muted); }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 11px; border: 1px solid var(--cp-border); text-align: left; vertical-align: top; }
+    th { background: var(--cp-surface-soft); }
+    .marker-chip { display: inline-flex; margin: 0 6px 6px 0; padding: 5px 8px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface-soft); color: var(--cp-text-muted); font-size: 12px; }
+    .downloads { display: flex; flex-wrap: wrap; gap: 8px; }
+    @media (max-width: 760px) { .summary-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">A</span><span>AIBAST evidence report</span></div>
+    <div class="topbar-actions"><button class="button" type="button" data-theme-toggle aria-pressed="false">Use dark mode</button><a class="button primary" href="quest.html">Back to workshop</a></div>
+  </header>
+  <main class="page">
+    <section class="hero">
+      <p class="eyebrow">Workshop evidence</p>
+      <h1>Product Feedback Synthesizer Agent</h1>
+      <p class="lede">This report separates the deterministic machine gate from learner-facing visual checkpoints. A screenshot can support a positive observation; it never replaces the full locked-case validation.</p>
+    </section>
+
+    <div class="summary-grid">
+      <article><strong>17</strong><span>Reusable positive checkpoints</span></article>
+      <article><strong>6</strong><span>Reference-only captures excluded from learner proof</span></article>
+      <article><strong>0</strong><span>Optional future Learn-step captures</span></article>
+    </div>
+
+    <h2>Deterministic case contract</h2>
+    <section class="card" id="locked-cases">
+      <table>
+        <thead><tr><th>Case</th><th>Must include</th><th>Must not claim</th></tr></thead>
+        <tbody><tr>
+          <td><code>PFS-01</code></td>
+          <td><span class="marker-chip">Total Feedback Entries</span><span class="marker-chip">6</span><span class="marker-chip">No roadmap commitment</span></td>
+          <td><span class="marker-chip">I do not have access</span><span class="marker-chip">I cannot help</span></td>
+        </tr>
+<tr>
+          <td><code>PFS-02</code></td>
+          <td><span class="marker-chip">Workflow Automation Builder</span><span class="marker-chip">candidate_for_review</span><span class="marker-chip">No roadmap commitment</span></td>
+          <td><span class="marker-chip">I do not have access</span><span class="marker-chip">I cannot help</span></td>
+        </tr>
+<tr>
+          <td><code>PFS-03</code></td>
+          <td><span class="marker-chip">Positive</span><span class="marker-chip">Negative</span><span class="marker-chip">fictional pilot data</span></td>
+          <td><span class="marker-chip">I do not have access</span><span class="marker-chip">I cannot help</span></td>
+        </tr>
+<tr>
+          <td><code>PFS-04</code></td>
+          <td><span class="marker-chip">Review Candidates</span><span class="marker-chip">RBAC</span><span class="marker-chip">No roadmap commitment</span></td>
+          <td><span class="marker-chip">I do not have access</span><span class="marker-chip">I cannot help</span></td>
+        </tr></tbody>
+      </table>
+    </section>
+
+    <h2>Displayed visual checkpoints</h2>
+    <section class="card">
+      <p>Only approved positive checkpoints count as learner proof. Annotated paths are included for facilitator traceability.</p>
+      <table>
+        <thead><tr><th>Checkpoint</th><th>Mode</th><th>Visible evidence</th><th>Annotated asset</th></tr></thead>
+        <tbody><tr>
+          <td><code>easy-pfs-01</code></td>
+          <td>easy</td>
+          <td>Three of six entries cite missing capabilities; Synthetic product evidence only; No roadmap commitment was made</td>
+          <td>solutions/product-feedback-synthesizer/screenshots/assisted/annotated/01-pfs-01.png</td>
+        </tr>
+<tr>
+          <td><code>easy-pfs-02</code></td>
+          <td>easy</td>
+          <td>candidate_for_review; evidence_under_review; No roadmap commitment was made</td>
+          <td>solutions/product-feedback-synthesizer/screenshots/assisted/annotated/02-pfs-02.png</td>
+        </tr>
+<tr>
+          <td><code>easy-pfs-03</code></td>
+          <td>easy</td>
+          <td>Positive signals; Negative signals</td>
+          <td>solutions/product-feedback-synthesizer/screenshots/assisted/annotated/03-pfs-03.png</td>
+        </tr>
+<tr>
+          <td><code>easy-pfs-04</code></td>
+          <td>easy</td>
+          <td>RBAC compliance and regulatory validation question; No roadmap commitment was made</td>
+          <td>solutions/product-feedback-synthesizer/screenshots/assisted/annotated/04-pfs-04.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-01</code></td>
+          <td>hard</td>
+          <td>Untitled Agent; Blank Build workspace</td>
+          <td>solutions/product-feedback-synthesizer/screenshots/manual/annotated/01-create-blank-agent.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-02</code></td>
+          <td>hard</td>
+          <td>Product Feedback Manual in the name field</td>
+          <td>solutions/product-feedback-synthesizer/screenshots/manual/annotated/02-name-agent.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-03</code></td>
+          <td>hard</td>
+          <td>Reviewed instruction policy; Locked Preview evidence anchors; PFS-01 through PFS-04 marker contracts</td>
+          <td>solutions/product-feedback-synthesizer/screenshots/manual/annotated/03-enter-instructions.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-06</code></td>
+          <td>hard</td>
+          <td>aibast_product-feedback-synthesizer-rules-...; Knowledge inventory contains two uploaded files</td>
+          <td>solutions/product-feedback-synthesizer/screenshots/manual/annotated/06-add-aibast-product-feedback-synthesizer-rules-and-guardrails.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-08</code></td>
+          <td>hard</td>
+          <td>feature-requests</td>
+          <td>solutions/product-feedback-synthesizer/screenshots/manual/annotated/08-add-aibast-feature-requests-02.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-09</code></td>
+          <td>hard</td>
+          <td>feedback-summary</td>
+          <td>solutions/product-feedback-synthesizer/screenshots/manual/annotated/09-add-aibast-feedback-summary-01.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-10</code></td>
+          <td>hard</td>
+          <td>roadmap-impact</td>
+          <td>solutions/product-feedback-synthesizer/screenshots/manual/annotated/10-add-aibast-roadmap-impact-04.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-11</code></td>
+          <td>hard</td>
+          <td>sentiment-analysis</td>
+          <td>solutions/product-feedback-synthesizer/screenshots/manual/annotated/11-add-aibast-sentiment-analysis-03.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-12</code></td>
+          <td>hard</td>
+          <td>Reason: No unsaved changes; Claude Sonnet 4.6; Four configured skills; Two configured knowledge sources; Tools section contains no configured tool</td>
+          <td>solutions/product-feedback-synthesizer/screenshots/manual/annotated/12-review-inventory.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-13</code></td>
+          <td>hard</td>
+          <td>Preview tab; New chat; Product Feedback Manual greeting</td>
+          <td>solutions/product-feedback-synthesizer/screenshots/manual/annotated/13-open-preview.png</td>
+        </tr>
+<tr>
+          <td><code>hard-pfs-01</code></td>
+          <td>hard</td>
+          <td>candidate_for_review; Synthetic product evidence only; No roadmap commitment was made</td>
+          <td>solutions/product-feedback-synthesizer/screenshots/manual/annotated/14-pfs-01.png</td>
+        </tr>
+<tr>
+          <td><code>hard-pfs-02</code></td>
+          <td>hard</td>
+          <td>candidate_for_review; under_review; evidence_under_review; No roadmap commitment was made</td>
+          <td>solutions/product-feedback-synthesizer/screenshots/manual/annotated/15-pfs-02.png</td>
+        </tr>
+<tr>
+          <td><code>hard-pfs-04</code></td>
+          <td>hard</td>
+          <td>RBAC regulatory and compliance obligation; No roadmap commitment was made</td>
+          <td>solutions/product-feedback-synthesizer/screenshots/manual/annotated/17-pfs-04.png</td>
+        </tr></tbody>
+      </table>
+    </section>
+
+    <h2>Reference-only visual gaps</h2>
+    <section class="card">
+      <p>These real source captures are inventoried for facilitators but withheld from learner pages until their review or reshoot requirement is resolved.</p>
+      <table>
+        <thead><tr><th>Checkpoint</th><th>Mode</th><th>Source asset</th><th>Reason</th></tr></thead>
+        <tbody><tr>
+          <td><code>easy-draft</code></td>
+          <td>easy</td>
+          <td>solutions/product-feedback-synthesizer/screenshots/assisted/05-confirm-draft.jpg</td>
+          <td>The target Product Feedback Pilot row is not visible, so the screenshot cannot prove that the validated agent remains Draft.</td>
+        </tr>
+<tr>
+          <td><code>hard-step-04</code></td>
+          <td>hard</td>
+          <td>solutions/product-feedback-synthesizer/screenshots/manual/04-save-instructions.jpg</td>
+          <td>The source is pixel-identical to steps 5-7 and shows a later fully configured inventory. No save confirmation or No unsaved changes state is visible.</td>
+        </tr>
+<tr>
+          <td><code>hard-step-05</code></td>
+          <td>hard</td>
+          <td>solutions/product-feedback-synthesizer/screenshots/manual/05-remove-web-search.jpg</td>
+          <td>The source is pixel-identical to steps 4, 6, and 7 and shows the later completed inventory rather than the web-search removal action. No positive removal control or confirmation is visible.</td>
+        </tr>
+<tr>
+          <td><code>hard-step-07</code></td>
+          <td>hard</td>
+          <td>solutions/product-feedback-synthesizer/screenshots/manual/07-add-aibast-product-feedback-synthesizer-synthetic-records.jpg</td>
+          <td>Duplicate visual evidence; retained capture hard-step-06.</td>
+        </tr>
+<tr>
+          <td><code>hard-pfs-03</code></td>
+          <td>hard</td>
+          <td>solutions/product-feedback-synthesizer/screenshots/manual/16-pfs-03.jpg</td>
+          <td>The screenshot shows account excerpts and an NPS table, but none of the deterministic PFS-03 anchors Positive, Negative, or fictional pilot data is visible.</td>
+        </tr>
+<tr>
+          <td><code>hard-draft</code></td>
+          <td>hard</td>
+          <td>solutions/product-feedback-synthesizer/screenshots/manual/18-confirm-draft.jpg</td>
+          <td>The target Product Feedback Manual row is not visible in the Agents list, so its Draft state is not visually proven.</td>
+        </tr></tbody>
+      </table>
+    </section>
+
+    <h2>Downloads for audit</h2>
+    <section class="card downloads">
+      <a class="button" href="evals/transcripts.json" download>Download locked transcripts</a>
+      <a class="button" href="evals/visual-checkpoints.json" download>Download visual checkpoint contract</a>
+      <a class="button" href="export-manifest.json" download>Download export manifest</a>
+      <a class="button" href="exports/product-feedback-synthesizer-source.zip" download>Download portable bundle</a>
+      <a class="button primary" href="exports/product-feedback-synthesizer-copilot-studio-solution.zip" download>Download Copilot Studio solution</a><a class="button" href="exports/product-feedback-synthesizer-deployment-settings.json" download>Deployment settings</a><a class="button" href="exports/product-feedback-synthesizer-solution-export.json" download>Export details</a>
+
+    </section>
+  </main>
+</body>
+</html>

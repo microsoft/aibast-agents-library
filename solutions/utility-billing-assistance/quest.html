@@ -3,13 +3,57 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Utility Billing and Assistance Agent deployment quest</title>
+  <title>Utility Billing and Assistance Agent workshop</title>
   <script>
     (() => {
       const param = new URLSearchParams(window.location.search).get("scoutTheme");
       const theme =
         param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
       document.documentElement.setAttribute("data-theme", theme);
+    })();
+    (() => {
+      const key = "aibast:theme";
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const explicit = param === "dark" || param === "light" ? param : null;
+      let stored = null;
+      try {
+        const candidate = localStorage.getItem(key);
+        stored = candidate === "dark" || candidate === "light" ? candidate : null;
+      } catch (_error) {
+        stored = null;
+      }
+      const theme = explicit || stored || "light";
+      document.documentElement.setAttribute("data-theme", theme);
+      document.addEventListener("DOMContentLoaded", () => {
+        const button = document.querySelector("[data-theme-toggle]");
+        if (!button) return;
+        const render = () => {
+          const dark = document.documentElement.getAttribute("data-theme") === "dark";
+          button.textContent = dark ? "Use light mode" : "Use dark mode";
+          button.setAttribute("aria-pressed", String(dark));
+        };
+        button.addEventListener("click", () => {
+          const next =
+            document.documentElement.getAttribute("data-theme") === "dark"
+              ? "light"
+              : "dark";
+          document.documentElement.setAttribute("data-theme", next);
+          try {
+            localStorage.setItem(key, next);
+          } catch (_error) {
+            /* The visible theme still changes when storage is unavailable. */
+          }
+          render();
+        });
+        render();
+      });
+    })();
+    (() => {
+      const engine =
+        localStorage.getItem("aibast:workshop-engine") === "brainstem"
+          ? "brainstem"
+          : "copilot";
+      document.documentElement.setAttribute("data-workshop-engine", engine);
     })();
   </script>
   <style>
@@ -89,6 +133,7 @@
       border-bottom: 1px solid var(--cp-border);
       background: var(--cp-panel-strong);
     }
+    .topbar-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
     .brand { display: flex; align-items: center; gap: 10px; font-weight: 750; }
     .brand-mark {
       display: grid;
@@ -157,6 +202,7 @@
     @media (max-width: 760px) {
       .grid { grid-template-columns: 1fr; }
       .topbar { align-items: flex-start; padding: 12px 16px; }
+      .topbar-actions { justify-content: flex-start; }
       .page { width: min(100% - 24px, 1120px); padding-top: 24px; }
       .hero { padding: 24px 20px; }
     }
@@ -169,85 +215,1224 @@
     .checkpoint strong, .checkpoint span { display: block; }
     .checkpoint span { color: var(--cp-text-muted); }
     .path[hidden] { display: none; }
+    .easy-lane { display: none; }
+    html[data-workshop-engine="brainstem"] .easy-lane[data-easy-lane="brainstem"] { display: block; }
+    html[data-workshop-engine="copilot"] .easy-lane[data-easy-lane="copilot"] { display: block; }
+    .engine-label { display: none; color: var(--cp-accent); }
+    html[data-workshop-engine="brainstem"] .engine-label.brainstem { display: inline; }
+    html[data-workshop-engine="copilot"] .engine-label.copilot { display: inline; }
+    .engine-flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 18px 0; }
+    .engine-node { padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface); text-align: center; font-weight: 750; }
+    .comparison-note { margin: 14px 0; padding: 14px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft); color: var(--cp-text-muted); }
+    .skill-onboarding { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px; align-items: center; margin: 16px 0 8px; padding: 20px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
+    .skill-onboarding h3 { margin: 0 0 6px; }
+    .skill-onboarding p { margin: 0; color: var(--cp-text-muted); }
+    .drag-target { margin-top: 10px; padding: 12px; border: 1px dashed var(--cp-border-strong); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text); font-weight: 700; }
+    .outcome-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .outcome-card { padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
+    .outcome-card strong { display: block; margin-bottom: 6px; }
+    .outcome-card p { margin: 0; color: var(--cp-text-muted); }
+    .facilitator-details { margin-top: 18px; padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); }
+    .facilitator-details summary { cursor: pointer; font-weight: 750; }
+    .facilitator-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .comparison-table { width: 100%; margin-top: 14px; border-collapse: collapse; }
+    .comparison-table th, .comparison-table td { padding: 12px; border: 1px solid var(--cp-border); text-align: left; vertical-align: top; }
+    .comparison-table th { background: var(--cp-surface-soft); }
+    .module-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+    .module-summary article { padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
+    .module-summary h3 { margin-top: 0; }
+    .module-summary ul { margin-bottom: 0; padding-left: 20px; }
+    .learn-step { margin: 22px 0; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); overflow: hidden; }
+    .learn-step-header { display: grid; grid-template-columns: 44px 1fr auto; gap: 14px; align-items: center; padding: 18px 20px; border-bottom: 1px solid var(--cp-border); background: var(--cp-surface-soft); }
+    .learn-step-header > span { display: grid; width: 40px; height: 40px; place-items: center; border-radius: 10px; background: var(--cp-accent); color: var(--cp-accent-fg); font-weight: 800; }
+    .learn-step-header p { margin: 0; color: var(--cp-accent); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    .learn-step-header h3 { margin: 2px 0 0; }
+    .learn-step-body { padding: 20px; }
+    .action-panel, .expected-panel { margin: 16px 0; padding: 16px; border-radius: 10px; }
+    .action-panel { border: 1px solid var(--cp-border); background: var(--cp-surface-soft); }
+    .action-panel > strong, .expected-panel > strong { display: block; margin-bottom: 8px; }
+    .action-panel ol, .expected-panel ul { margin: 8px 0 12px; padding-left: 22px; }
+    .expected-panel { border-left: 4px solid var(--cp-success); background: var(--cp-surface-soft); }
+    .step-complete { display: flex; gap: 10px; align-items: center; margin-top: 14px; padding: 12px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-bg-elevated); font-weight: 700; }
+    .step-complete input { width: 20px; height: 20px; accent-color: var(--cp-accent); }
+    .preview-intro { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .preview-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .preview-case { padding: 16px; border: 1px solid var(--cp-border); border-radius: 14px; background: var(--cp-bg-elevated); }
+    .preview-case-wide { grid-column: 1 / -1; }
+    .preview-case header { display: flex; justify-content: space-between; gap: 12px; align-items: start; }
+    .preview-case h4 { margin: 0; }
+    .report-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+    .report-button { border-color: var(--cp-accent); color: var(--cp-accent); }
+    .feedback-notice { margin-top: 14px; padding: 14px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
+    .achievements-panel { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(260px, .8fr); gap: 18px; margin: 20px 0; padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
+    .achievements-panel h2, .achievements-panel h3, .achievements-panel p { margin-top: 0; }
+    .achievements-panel h2 { margin-bottom: 4px; font-size: 20px; }
+    .achievements-score-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 18px; }
+    .achievements-score { color: var(--cp-accent); font-size: 30px; font-weight: 800; }
+    .achievements-badges { display: flex; flex-wrap: wrap; gap: 7px; margin: 12px 0; padding: 0; list-style: none; }
+    .achievements-badge { padding: 5px 8px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface-soft); font-size: 12px; }
+    .achievements-claims { padding-left: 18px; border-left: 1px solid var(--cp-border); }
+    .achievements-claim-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+    .achievements-claim-actions [hidden] { display: none; }
+    .achievements-fine-print { margin: 10px 0 0; color: var(--cp-text-muted); font-size: 13px; }
+    .achievements-toast { position: fixed; right: 18px; bottom: 18px; z-index: 50; max-width: 360px; padding: 12px 14px; border: 1px solid var(--cp-accent); border-radius: 10px; background: var(--cp-panel-strong); box-shadow: var(--cp-shadow); }
+    .achievements-toast:empty { display: none; }
+    .marker-group { margin: 12px 0; }
+    .marker-group > strong { display: block; margin-bottom: 6px; }
+    .marker-chip { display: inline-flex; margin: 0 6px 6px 0; padding: 5px 8px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface); color: var(--cp-text-muted); font-size: 12px; }
+    .preview-shot-wrap { margin-top: 14px; text-align: center; }
+    .reference-shot-wrap { margin-top: 14px; }
+    .preview-shot { display: block; width: 100%; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }
+    .capture-meta { margin: 8px 0 0; color: var(--cp-text-muted); font-size: 12px; text-align: center; }
+    .quality-warning { margin: 16px 0; padding: 14px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft); color: var(--cp-text-muted); }
+    .quality-warning strong { color: var(--cp-text); }
+    .done-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+    .done-grid article { padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); }
+    .done-grid strong, .done-grid span { display: block; }
+    .done-grid span { margin-top: 5px; color: var(--cp-text-muted); }
+    .troubleshooting-table { width: 100%; border-collapse: collapse; }
+    .troubleshooting-table th, .troubleshooting-table td { padding: 12px; border: 1px solid var(--cp-border); text-align: left; vertical-align: top; }
+    .troubleshooting-table th { background: var(--cp-surface-soft); }
+    .hard-overview { margin-top: 20px; }
+    .hard-overview h2 { margin-top: 0; }
+    .hard-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .hard-progress-card { margin: 20px 0; padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
+    .hard-progress-heading { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 18px; align-items: baseline; margin-bottom: 10px; }
+    .hard-progress-heading p { margin: 0; color: var(--cp-text-muted); }
+    .hard-toc { display: flex; gap: 8px; margin-top: 14px; padding-bottom: 4px; overflow-x: auto; }
+    .hard-toc a { flex: 0 0 auto; padding: 7px 10px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text); text-decoration: none; font-size: 13px; }
+    .step { scroll-margin-top: 90px; margin: 0 0 28px; overflow: hidden; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
+    .step header { display: grid; grid-template-columns: 36px 1fr auto; gap: 14px; align-items: center; padding: 20px 22px; border-bottom: 1px solid var(--cp-border); }
+    .step header > span { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 10px; background: var(--cp-accent-soft); color: var(--cp-accent); font-weight: 800; }
+    .step h3, .step header p { margin: 0; }
+    .step header p { color: var(--cp-text-muted); font-size: 13px; }
+    .step-body { padding: 22px; }
+    .instruction-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+    .instruction { padding: 14px; border-radius: 10px; background: var(--cp-surface-soft); }
+    .instruction strong { display: block; margin-bottom: 6px; }
+    .instruction-heading { display: flex; align-items: start; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
+    .instruction-heading strong { margin: 0; }
+    .copy-button { min-height: 34px; padding: 6px 10px; font-size: 13px; }
+    .copy-source { display: none; }
+    .instruction.expected { border-left: 4px solid var(--cp-success); }
+    .shot-link { display: block; text-align: center; }
+    .shot { display: block; width: 100%; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }
+    .missing { padding: 32px; border: 2px dashed var(--cp-warning); border-radius: 10px; color: var(--cp-text-muted); }
+    .verification-evidence { margin-top: 14px; padding: 18px; border-left: 4px solid var(--cp-success); border-radius: 10px; background: var(--cp-surface-soft); }
+    .verification-evidence > strong { display: block; color: var(--cp-text); }
+    .verification-evidence p { margin: 8px 0 0; color: var(--cp-text-muted); }
+    .evidence-transcript { overflow-x: auto; margin: 12px 0 0; padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface); color: var(--cp-text); white-space: pre-wrap; word-break: break-word; font-family: Consolas, "Courier New", Courier, monospace; font-size: 13px; line-height: 1.5; }
+    .look-for { margin: 16px 0; padding: 20px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
+    .look-for strong { color: var(--cp-text); }
+    .look-for p { margin: 8px 0 0; }
+    .step footer { display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+    .complete { width: 20px; height: 20px; accent-color: var(--cp-accent); }
+    .hard-troubleshooting details { padding: 14px 0; border-bottom: 1px solid var(--cp-border); }
+    .prompt-card { margin: 16px 0; padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
+    .prompt-heading { display: flex; align-items: start; justify-content: space-between; gap: 16px; }
+    .prompt-heading h3 { margin: 0; }
+    .prompt-kicker { margin: 0 0 4px; color: var(--cp-accent); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    .prompt-block { overflow-x: auto; margin: 14px 0 0; padding: 16px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text); white-space: pre-wrap; word-break: break-word; font-family: Consolas, "Courier New", Courier, monospace; font-size: 13px; line-height: 1.55; }
     .resource-list { columns: 2; padding-left: 22px; }
     .resource-list li { break-inside: avoid; margin-bottom: 10px; }
-    @media (max-width: 620px) { .resource-list { columns: 1; } }
+    @media (max-width: 760px) { .engine-flow, .outcome-grid, .skill-onboarding, .module-summary, .preview-grid, .done-grid, .achievements-panel { grid-template-columns: 1fr; } .achievements-claims { padding: 16px 0 0; border-top: 1px solid var(--cp-border); border-left: 0; } }
+    @media (max-width: 620px) { .resource-list { columns: 1; } .prompt-heading { display: block; } .prompt-heading .button { margin-top: 12px; } .instruction-grid { grid-template-columns: 1fr; } .step header { grid-template-columns: 36px 1fr; } .step header .report-button { grid-column: 1 / -1; } }
   </style>
 </head>
-<body>
+<body data-workshop-slug="utility-billing-assistance">
   <header class="topbar">
-    <div class="brand"><span class="brand-mark">C</span><span>Clawpilot deployment quest</span></div>
-    <a class="button primary" href="FIELD-GUIDE.md">Open field guide</a>
+    <div class="brand"><span class="brand-mark">A</span><span>AIBAST guided workshop</span></div>
+    <div class="topbar-actions"><button class="button" type="button" data-theme-toggle aria-pressed="false">Use dark mode</button><a class="button" href="../_shared/workshop-settings.html?return=../utility-billing-assistance/quest.html">Workshop settings</a><a class="button primary" href="field-guide.html">Open field guide</a></div>
   </header>
   <main class="page">
     <section class="hero">
       <p class="eyebrow">Evidence-grounded customer journey</p>
       <h1>Utility Billing and Assistance Agent</h1>
-      <p class="lede">Choose Copilot-assisted Easy mode or literal browser construction in Hard mode. Progress resumes locally in this browser.</p>
+      <p class="lede">Use your globally configured Easy-mode harness, or reproduce every action directly in Hard mode.</p>
+      <div class="notice"><strong>Workshop mission:</strong> Turn motivated, open-minded, non-technical sales professionals into AI superheroes who can match the practical output and problem-solving pace of technical peers who are not using AI, while staying evidence-grounded, governed, and honest about what the tools proved.</div>
       <div class="notice"><strong>Boundary:</strong> synthetic qualitative evidence only—not a customer KPI, measured production result, live connection, or publication approval.</div>
+      <div class="feedback-notice"><strong>Found something inaccurate?</strong> Use <em>Report an issue</em> at that point. It opens a prefilled GitHub issue for review and does not submit anything automatically.</div>
       <div class="mode-switch" role="tablist">
-        <button class="mode active" data-mode="easy" role="tab">Easy</button>
-        <button class="mode" data-mode="hard" role="tab">Hard</button>
+        <button class="mode active" id="mode-tab-easy" data-mode="easy" role="tab" aria-controls="mode-panel-easy" aria-selected="true">Easy</button>
+        <button class="mode" id="mode-tab-hard" data-mode="hard" role="tab" aria-controls="mode-panel-hard" aria-selected="false">Hard</button>
       </div>
     </section>
 
-    <section class="path" data-path="easy">
-      <h2>Copilot-assisted Easy mode</h2>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="easy-source"><span><strong>Inspect source and evidence</strong><span>Review deployment, source, transcripts, and available Easy evidence before claiming a result.</span></span></label>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="easy-build"><span><strong>Build from reviewed Copilot Studio copy</strong><span>Use the packaged settings, behaviors, knowledge, and synchronization metadata without unrecorded edits.</span></span></label>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="easy-cases"><span><strong>Replay recorded cases</strong><span>Use exact prompts and identifiers. A qualitative match is evidence of workflow behavior, not a customer outcome.</span></span></label>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="easy-draft"><span><strong>Stop at the Draft gate</strong><span>The agent must remain Draft and is not published. Publishing needs separate human approval.</span></span></label>
-      <p><a class="button" href="screenshots/assisted/copilot-assisted-walkthrough.gif">Watch assisted film</a></p>
+    <section class="achievements-panel" aria-labelledby="achievements-panel-title">
+      <div>
+        <p class="eyebrow">Self-paced local achievements</p>
+        <h2 id="achievements-panel-title">Workshop achievements</h2>
+        <div class="achievements-score-line">
+          <span><strong class="achievements-score" id="achievements-total-score">0</strong> total points</span>
+          <span><strong id="achievements-workshop-score">0</strong> in this workshop</span>
+        </div>
+        <p id="achievement-progress-label">0 of 0 Easy checkpoints complete</p>
+        <div class="progress" aria-hidden="true"><span id="achievement-progress-bar"></span></div>
+        <ul class="achievements-badges" id="achievements-badge-list" aria-label="Badges earned in this workshop"><li class="achievements-badge">No badges yet</li></ul>
+        <a href="../../achievements.html">View achievements and local profile</a>
+      </div>
+      <div class="achievements-claims">
+        <h3>Optional public verification</h3>
+        <p class="achievements-fine-print">These points and badges are local, self-reported workshop progress—not externally verified proof or a capability claim.</p>
+        <div class="achievements-claim-actions">
+          <button class="button primary" type="button" data-achievements-sync hidden>Sync achievements to GitHub</button>
+        </div>
+        <p class="achievements-fine-print">This opens one prefilled progress issue containing every badge currently earned here. Nothing syncs until you submit it. Resubmitting later merges newly earned badge IDs without duplicate score, and one public issue submission opts your GitHub account into a public verified profile.</p>
+      </div>
+    </section>
+    <div class="achievements-toast" id="achievements-badge-toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+    <section class="path" data-path="easy" id="mode-panel-easy" role="tabpanel" aria-labelledby="mode-tab-easy">
+      <div class="module-summary">
+        <article>
+          <h3>What you will learn</h3>
+          <ul>
+            <li>Use your globally configured Easy-mode harness.</li>
+            <li>Use the lane skill to build and prove the portable agent.</li>
+            <li>Deploy the reviewed solution as an unpublished Draft.</li>
+            <li>Confirm the behavior yourself in Copilot Studio Preview.</li>
+            <li>Recognize the evidence that means the module is complete.</li>
+          </ul>
+        </article>
+        <article>
+          <h3>Before you begin</h3>
+          <ul>
+            <li>Use VS Code with GitHub Copilot Chat in Agent mode.</li>
+            <li>Sign in to GitHub with Copilot access.</li>
+            <li>Have access to a Copilot Studio environment.</li>
+            <li>Your workshop preference is saved globally; use <strong>Workshop settings</strong> to change it.</li>
+            <li>Do not publish. This module ends with a validated Draft.</li>
+          </ul>
+        </article>
+      </div>
+
+      <h2>Easy mode <span class="engine-label copilot">— GitHub Copilot only</span><span class="engine-label brainstem">— GitHub Copilot + Brainstem</span></h2>
+
+      <div class="easy-lane" data-easy-lane="brainstem">
+        <div class="notice"><strong>Brainstem lane:</strong> Brainstem is the learner’s personal, on-device training AI working alongside Copilot. It persists the workshop, loads the generic engine, and continues every handoff.</div>
+
+      <article class="learn-step" id="brainstem-step-1">
+        <header class="learn-step-header"><span>1</span><div><p>Prepare your Copilot</p><h3>Download and attach the Brainstem skill</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 1: attach skill" data-report-expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat." data-report-evidence="">Report an issue</button></header>
+        <div class="learn-step-body">
+          <p>This file fixes the workshop to Brainstem. Copilot remains the work surface while the learner&#x27;s on-device training AI persists state, loads the generic workshop engine, and continues every handoff.</p>
+          <div class="action-panel"><strong>Do this</strong><ol><li>Download the lane-specific <code>SKILL.md</code>.</li><li>Open GitHub Copilot Chat in VS Code.</li><li>Select <strong>Agent mode</strong>.</li><li>Drag the downloaded file into the chat.</li></ol><a class="button primary" href="../../skills/aibast-easy-mode-brainstem/SKILL.md" download="SKILL.md">Download Brainstem SKILL.md</a></div>
+          <div class="expected-panel"><strong>Expected result</strong><p>The attachment appears in Copilot Chat. From this point forward, the selected skill—not extra wording in your prompts—determines which harness runs.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="brainstem-skill" data-achievements-group="onboarding" data-achievements-path="brainstem"><span>I attached the correct lane skill.</span></label>
+        </div>
+      </article>
+
+      <article class="learn-step" id="brainstem-step-2">
+        <header class="learn-step-header"><span>2</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test Utility Billing and Assistance</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 2: local proof" data-report-expected="Brainstem reports the generic AIBAST Workshop Engine and UtilityBillingAssistanceAgent loaded, with 4/4 locked local cases passed." data-report-evidence="">Report an issue</button></header>
+        <div class="learn-step-body">
+          <p>This step proves the portable business logic before any Copilot Studio work begins. The harness retrieves the immutable package, verifies the source, loads the agent, and runs every locked case.</p>
+          <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="brainstem-build-prompt">Copy message</button></div>
+          <pre class="prompt-block" id="brainstem-build-prompt">Give me Utility Billing and Assistance using Easy Mode and test it for me.</pre>
+          <div class="expected-panel"><strong>Expected result</strong><p>Brainstem reports the generic AIBAST Workshop Engine and UtilityBillingAssistanceAgent loaded, with 4/4 locked local cases passed.</p><p>Copilot should end by suggesting the next message: <code>Deploy it into Copilot Studio for me.</code></p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="brainstem-local" data-achievements-group="local-proof" data-achievements-path="brainstem"><span>I saw every locked local case pass.</span></label>
+        </div>
+      </article>
+
+      <article class="learn-step" id="brainstem-step-3">
+        <header class="learn-step-header"><span>3</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 3: Draft deployment" data-report-expected="Draft Utility Billing Manual; model Claude Sonnet 4.6; 2 knowledge files; 4 skills; published false." data-report-evidence="">Report an issue</button></header>
+        <div class="learn-step-body">
+          <p>The harness now uses the verified Microsoft Copilot Studio plugin to reuse or create the source-controlled Draft, synchronize the reviewed instructions and assets, validate the PAC project, and leave publication off.</p>
+          <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="brainstem-deploy-prompt">Copy message</button></div>
+          <pre class="prompt-block" id="brainstem-deploy-prompt">Deploy it into Copilot Studio for me.</pre>
+          <div class="expected-panel"><strong>Expected result</strong><ul><li>Draft: <code>Utility Billing Manual</code></li><li>Model: <code>Claude Sonnet 4.6</code></li><li>Knowledge files: <code>2</code></li><li>Skills: <code>4</code></li><li>Status: <strong>Draft</strong>; published: <code>false</code></li></ul><p>The harness then validates the real Preview front door before returning its final verdict.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="brainstem-draft" data-achievements-group="draft-builder" data-achievements-path="brainstem"><span>I saw the Draft identity and unpublished state.</span></label>
+        </div>
+      </article>
+      </div>
+
+      <div class="easy-lane" data-easy-lane="copilot">
+        <div class="comparison-note"><strong>Skeptic comparison — Copilot-only lane:</strong> GitHub Copilot carries the same harness directly in the active session. The skill still discovers every asset and runs every gate; there is no persistent Brainstem engine between turns.</div>
+
+      <article class="learn-step" id="copilot-step-1">
+        <header class="learn-step-header"><span>1</span><div><p>Prepare your Copilot</p><h3>Download and attach the Copilot-only skill</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 1: attach skill" data-report-expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat." data-report-evidence="">Report an issue</button></header>
+        <div class="learn-step-body">
+          <p>This file fixes the workshop to GitHub Copilot alone. The skill carries the same discovery, testing, deployment, and validation contract directly in the active Copilot session and bootstraps the official Microsoft Copilot Studio plugin.</p>
+          <div class="action-panel"><strong>Do this</strong><ol><li>Download the lane-specific <code>SKILL.md</code>.</li><li>Open GitHub Copilot Chat in VS Code.</li><li>Select <strong>Agent mode</strong>.</li><li>Drag the downloaded file into the chat.</li></ol><a class="button primary" href="../../skills/aibast-easy-mode-copilot/SKILL.md" download="SKILL.md">Download Copilot-only SKILL.md</a></div>
+          <div class="expected-panel"><strong>Expected result</strong><p>The attachment appears in Copilot Chat. From this point forward, the selected skill—not extra wording in your prompts—determines which harness runs.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="copilot-skill" data-achievements-group="onboarding" data-achievements-path="copilot"><span>I attached the correct lane skill.</span></label>
+        </div>
+      </article>
+
+      <article class="learn-step" id="copilot-step-2">
+        <header class="learn-step-header"><span>2</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test Utility Billing and Assistance</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 2: local proof" data-report-expected="Copilot reports the verified mcs-assistant plugin and PAC CLI, an isolated workspace, a verified source hash, and 4/4 locked local cases passed." data-report-evidence="">Report an issue</button></header>
+        <div class="learn-step-body">
+          <p>This step proves the portable business logic before any Copilot Studio work begins. The harness retrieves the immutable package, verifies the source, loads the agent, and runs every locked case.</p>
+          <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="copilot-build-prompt">Copy message</button></div>
+          <pre class="prompt-block" id="copilot-build-prompt">Give me Utility Billing and Assistance using Easy Mode and test it for me.</pre>
+          <div class="expected-panel"><strong>Expected result</strong><p>Copilot reports the verified mcs-assistant plugin and PAC CLI, an isolated workspace, a verified source hash, and 4/4 locked local cases passed.</p><p>Copilot should end by suggesting the next message: <code>Deploy it into Copilot Studio for me.</code></p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="copilot-local" data-achievements-group="local-proof" data-achievements-path="copilot"><span>I saw every locked local case pass.</span></label>
+        </div>
+      </article>
+
+      <article class="learn-step" id="copilot-step-3">
+        <header class="learn-step-header"><span>3</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 3: Draft deployment" data-report-expected="Draft Utility Billing Manual; model Claude Sonnet 4.6; 2 knowledge files; 4 skills; published false." data-report-evidence="">Report an issue</button></header>
+        <div class="learn-step-body">
+          <p>The harness now uses the verified Microsoft Copilot Studio plugin to reuse or create the source-controlled Draft, synchronize the reviewed instructions and assets, validate the PAC project, and leave publication off.</p>
+          <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="copilot-deploy-prompt">Copy message</button></div>
+          <pre class="prompt-block" id="copilot-deploy-prompt">Deploy it into Copilot Studio for me.</pre>
+          <div class="expected-panel"><strong>Expected result</strong><ul><li>Draft: <code>Utility Billing Manual</code></li><li>Model: <code>Claude Sonnet 4.6</code></li><li>Knowledge files: <code>2</code></li><li>Skills: <code>4</code></li><li>Status: <strong>Draft</strong>; published: <code>false</code></li></ul><p>The harness then validates the real Preview front door before returning its final verdict.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="copilot-draft" data-achievements-group="draft-builder" data-achievements-path="copilot"><span>I saw the Draft identity and unpublished state.</span></label>
+        </div>
+      </article>
+      </div>
+
+      <section class="learn-step" id="easy-step-4">
+        <header class="learn-step-header"><span>4</span><div><p>Verify the real experience</p><h3>Confirm the Draft in Copilot Studio Preview</h3></div></header>
+        <div class="learn-step-body">
+          <p>The harness already runs these checks automatically. Repeat them here so you understand what was proven and can recognize a correct result yourself.</p>
+          <div class="preview-intro"><ol><li>Open the validated Draft.</li><li>Select <strong>Preview</strong>.</li><li>Choose <strong>New chat</strong> before each case.</li><li>Paste the exact prompt.</li><li>Compare the answer with the required and forbidden markers.</li></ol><div><a class="button primary" href="https://copilotstudio.preview.microsoft.com/environments/ee67a404-325c-e726-a18a-886fe708ca0b/agents/3b8d6bf9-4c6a-4417-8f1e-6d08347fa927" target="_blank" rel="noopener">Open the Copilot Studio Draft ↗</a></div></div>
+          <div class="expected-panel"><strong>Expected result</strong><p>Every case passes in a fresh Preview conversation, and the agent still appears as <strong>Draft</strong>.</p></div>
+          <div class="preview-grid">
+
+        <article class="preview-case preview-case-wide">
+          <header><div><p class="prompt-kicker">UTILITY_BILLING_ASSISTANCE-01 · Customer Service Representative</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-utility-billing-assistance-01">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — UTILITY_BILLING_ASSISTANCE-01" data-report-expected="Must include: ACCT-90003, $489.20, No balance; must not include: " data-report-evidence="solutions/utility-billing-assistance/screenshots/assisted/annotated/01-utility_billing_assistance-01.png">Report an issue</button></div></header>
+          <pre class="prompt-block" id="preview-prompt-utility-billing-assistance-01">Explain ACCT-90003 balances without changing the account.</pre>
+          <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">ACCT-90003</span><span class="marker-chip">$489.20</span><span class="marker-chip">No balance</span></div></div>
+          <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">No unsupported side effect</span></div></div>
+          <div class="preview-shot-wrap"><a href="screenshots/assisted/annotated/01-utility_billing_assistance-01.png" download="01-utility_billing_assistance-01.png"><img class="preview-shot" data-evidence-status="reusable" src="screenshots/assisted/annotated/01-utility_billing_assistance-01.png" alt="UTILITY_BILLING_ASSISTANCE-01 positive visual checkpoint" loading="lazy"></a><p class="capture-meta">Visible positive anchors: ACCT-90003; $489.20; No balance, payment, service, or account record was changed. The screenshot supports the learner checkpoint; the full case pass remains the deterministic machine gate. Source: 1424×863 JPEG. <a href="screenshots/assisted/01-utility_billing_assistance-01.jpg" download="01-utility_billing_assistance-01.jpg">Download original</a>.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-utility-billing-assistance-01" data-achievements-group="preview-proven" data-achievements-path="shared"><span>The Preview response matched this contract.</span></label>
+        </article>
+
+        <article class="preview-case preview-case-wide">
+          <header><div><p class="prompt-kicker">UTILITY_BILLING_ASSISTANCE-02 · Billing Specialist</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-utility-billing-assistance-02">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — UTILITY_BILLING_ASSISTANCE-02" data-report-expected="Must include: REVIEW POSSIBLE LEAK, Draft policy estimate, not a leak diagnosis; must not include: " data-report-evidence="solutions/utility-billing-assistance/screenshots/assisted/annotated/02-utility_billing_assistance-02.png">Report an issue</button></div></header>
+          <pre class="prompt-block" id="preview-prompt-utility-billing-assistance-02">Does ACCT-90003 show a possible leak and what draft adjustment evidence is needed?</pre>
+          <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">REVIEW POSSIBLE LEAK</span><span class="marker-chip">Draft policy estimate</span><span class="marker-chip">not a leak diagnosis</span></div></div>
+          <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">No unsupported side effect</span></div></div>
+          <div class="preview-shot-wrap"><a href="screenshots/assisted/annotated/02-utility_billing_assistance-02.png" download="02-utility_billing_assistance-02.png"><img class="preview-shot" data-evidence-status="reusable" src="screenshots/assisted/annotated/02-utility_billing_assistance-02.png" alt="UTILITY_BILLING_ASSISTANCE-02 positive visual checkpoint" loading="lazy"></a><p class="capture-meta">Visible positive anchors: Draft Policy Estimate: $18.55; Draft policy estimate only; not a leak diagnosis. The screenshot supports the learner checkpoint; the full case pass remains the deterministic machine gate. Source: 1424×863 JPEG. <a href="screenshots/assisted/02-utility_billing_assistance-02.jpg" download="02-utility_billing_assistance-02.jpg">Download original</a>.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-utility-billing-assistance-02" data-achievements-group="preview-proven" data-achievements-path="shared"><span>The Preview response matched this contract.</span></label>
+        </article>
+
+        <article class="preview-case preview-case-wide">
+          <header><div><p class="prompt-kicker">UTILITY_BILLING_ASSISTANCE-03 · Revenue Services Supervisor</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-utility-billing-assistance-03">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — UTILITY_BILLING_ASSISTANCE-03" data-report-expected="Must include: 12 months, No payment arrangement was created; must not include: " data-report-evidence="solutions/utility-billing-assistance/screenshots/assisted/annotated/03-utility_billing_assistance-03.png">Report an issue</button></div></header>
+          <pre class="prompt-block" id="preview-prompt-utility-billing-assistance-03">Show ACCT-90003 payment-plan options, but do not set one up.</pre>
+          <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">12 months</span><span class="marker-chip">No payment arrangement was created</span></div></div>
+          <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">No unsupported side effect</span></div></div>
+          <div class="preview-shot-wrap"><a href="screenshots/assisted/annotated/03-utility_billing_assistance-03.png" download="03-utility_billing_assistance-03.png"><img class="preview-shot" data-evidence-status="reusable" src="screenshots/assisted/annotated/03-utility_billing_assistance-03.png" alt="UTILITY_BILLING_ASSISTANCE-03 positive visual checkpoint" loading="lazy"></a><p class="capture-meta">Visible positive anchors: Maximum term: 12 months; No payment arrangement was created. The screenshot supports the learner checkpoint; the full case pass remains the deterministic machine gate. Source: 1424×863 JPEG. <a href="screenshots/assisted/03-utility_billing_assistance-03.jpg" download="03-utility_billing_assistance-03.jpg">Download original</a>.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-utility-billing-assistance-03" data-achievements-group="preview-proven" data-achievements-path="shared"><span>The Preview response matched this contract.</span></label>
+        </article>
+
+        <article class="preview-case preview-case-wide">
+          <header><div><p class="prompt-kicker">UTILITY_BILLING_ASSISTANCE-04 · Assistance Coordinator</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-utility-billing-assistance-04">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — UTILITY_BILLING_ASSISTANCE-04" data-report-expected="Must include: POTENTIALLY ELIGIBLE, No eligibility determination, enrollment; must not include: " data-report-evidence="solutions/utility-billing-assistance/screenshots/assisted/annotated/04-utility_billing_assistance-04.png">Report an issue</button></div></header>
+          <pre class="prompt-block" id="preview-prompt-utility-billing-assistance-04">Screen a two-person household earning 25000 with a 70-year-old applicant.</pre>
+          <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">POTENTIALLY ELIGIBLE</span><span class="marker-chip">No eligibility determination</span><span class="marker-chip">enrollment</span></div></div>
+          <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">No unsupported side effect</span></div></div>
+          <div class="preview-shot-wrap"><a href="screenshots/assisted/annotated/04-utility_billing_assistance-04.png" download="04-utility_billing_assistance-04.png"><img class="preview-shot" data-evidence-status="reusable" src="screenshots/assisted/annotated/04-utility_billing_assistance-04.png" alt="UTILITY_BILLING_ASSISTANCE-04 positive visual checkpoint" loading="lazy"></a><p class="capture-meta">Visible positive anchors: POTENTIALLY ELIGIBLE; No eligibility determination; enrollment. The screenshot supports the learner checkpoint; the full case pass remains the deterministic machine gate. Source: 1424×863 JPEG. <a href="screenshots/assisted/04-utility_billing_assistance-04.jpg" download="04-utility_billing_assistance-04.jpg">Download original</a>.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-utility-billing-assistance-04" data-achievements-group="preview-proven" data-achievements-path="shared"><span>The Preview response matched this contract.</span></label>
+        </article>
+          </div>
+        </div>
+      </section>
+
+
+      <section class="learn-step" id="easy-step-5">
+        <header class="learn-step-header"><span>5</span><div><p>Recognize completion</p><h3>Know what “done” looks like</h3></div><button class="button report-button" type="button" data-report-location="Easy mode — final completion verdict" data-report-expected="Local 4/4; Preview 4/4; Draft Utility Billing Manual; published false." data-report-evidence="solutions/utility-billing-assistance/evals/dataverse-draft-evidence.json">Report an issue</button></header>
+        <div class="learn-step-body">
+          <p>The workshop is complete only when both the portable agent and the Copilot Studio front door prove the same behavior.</p>
+          <div class="done-grid">
+            <article><strong>Local proof</strong><span>4/4 locked cases passed</span></article>
+            <article><strong>Preview proof</strong><span>4/4 locked cases passed</span></article>
+            <article><strong>Draft identity</strong><span>Utility Billing Manual</span></article>
+            <article><strong>Model</strong><span>Claude Sonnet 4.6</span></article>
+            <article><strong>Inventory</strong><span>2 knowledge · 4 skills</span></article>
+            <article><strong>Publication gate</strong><span>Draft · published false</span></article>
+          </div>
+          <div class="verification-evidence"><strong>Verified completion record</strong><p>The packaged environment evidence records the target agent as <strong>Draft</strong> with publication off. Confirm the same state in your environment before marking the workshop complete.</p><p class="capture-meta"><a href="evals/dataverse-draft-evidence.json" download>Download the machine-readable Draft evidence</a>.</p></div>
+          <div class="expected-panel"><strong>Final expected verdict</strong><p>The harness reports <code>status: complete</code>, exact case totals, the Draft identity, and <code>published: false</code>. The module ends here; it does not offer publication.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="easy-complete" data-achievements-group="final-verdict" data-achievements-path="shared"><span>I confirmed the final Draft verdict.</span></label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h3>Troubleshooting</h3>
+        <table class="troubleshooting-table">
+          <thead><tr><th>What you see</th><th>What it means</th><th>What to do</th></tr></thead>
+          <tbody>
+            <tr><td>Copilot ignores the lane</td><td>The wrong skill is attached, or the chat began before attachment.</td><td>Start a new Agent-mode chat and attach the correct lane-specific <code>SKILL.md</code> first.</td></tr>
+            <tr><td>Local validation is not 4/4</td><td>The portable source, package, or locked behavior does not match.</td><td>Stop. Do not deploy. Let the harness report the exact failed case and marker.</td></tr>
+            <tr><td>No active Copilot Studio environment</td><td>PAC has no selected environment.</td><td>Sign in or select the intended environment, then resend the deploy message.</td></tr>
+            <tr><td>The Draft already exists</td><td>The recorded schema is already in the environment.</td><td>The harness should clone and reconnect automatically. Treat an attendee choice prompt as a harness defect.</td></tr>
+            <tr><td>A Preview case misses a marker</td><td>The real front door does not match the reviewed contract.</td><td>Keep the case failed. Inspect instructions and assets; do not retry until it happens to pass.</td></tr>
+            <tr><td>The agent is Published</td><td>The workshop crossed its safety boundary.</td><td>Stop immediately. The module must end at Draft with <code>published: false</code>.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <details class="facilitator-details">
+        <summary>Facilitator evidence and portable download</summary>
+        <p>These links support audit, troubleshooting, and offline delivery. They are not learner steps.</p>
+        <div class="facilitator-actions">
+          <a class="button" href="field-guide.html">Field guide</a>
+          <a class="button" href="evidence-report.html#locked-cases">Locked evidence</a>
+          <a class="button" href="evidence-report.html">Evidence report</a>
+          <a class="button" href="export-manifest.json" download>Download audit manifest</a>
+          <a class="button" href="exports/utility-billing-assistance-source.zip" download>Download portable bundle</a>
+          <a class="button primary" href="exports/utility-billing-assistance-copilot-studio-solution.zip" download>Download Copilot Studio solution</a><a class="button" href="exports/utility-billing-assistance-deployment-settings.json" download>Deployment settings</a><a class="button" href="exports/utility-billing-assistance-solution-export.json" download>Export details</a>
+          <a class="button" href="../../agents/@aibast-agents-library/templates/workshop_agent.py" download>Download generic workshop agent</a>
+          <a class="button" href="https://kodyw.com/the-personless-harness/" target="_blank" rel="noopener">Personless harness article ↗</a>
+        </div>
+      </details>
     </section>
 
-    <section class="path" data-path="hard" hidden>
-      <h2>Hard mode — literal browser construction</h2>
-      <p>Do not use PAC CLI or YAML import in Hard mode. Do not use a plugin architect.</p>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="hard-tutorial"><span><strong>Open the manual tutorial</strong><span>Use <a href="manual-tutorial.html">manual-tutorial.html</a>; it maps one action to each real browserfilm frame.</span></span></label>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="hard-parity"><span><strong>Match reviewed components</strong><span>Use the exact manual instructions, knowledge, skills, and reviewed model.</span></span></label>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="hard-cases"><span><strong>Replay manual Preview evidence</strong><span>Compare only with recorded case identifiers and screenshots; do not invent missing proof.</span></span></label>
-      <label class="checkpoint"><input type="checkbox" data-checkpoint="hard-draft"><span><strong>Record the explicit Draft gate</strong><span>Do not choose Publish. The manual duplicate remains Draft and is not published.</span></span></label>
-      <p><a class="button" href="screenshots/manual/manual-build-walkthrough.gif">Watch manual film</a></p>
+    <section class="path" data-path="hard" id="mode-panel-hard" role="tabpanel" aria-labelledby="mode-tab-hard" hidden>
+      <section class="card hard-overview">
+        <p class="eyebrow">Hard mode · literal browser construction</p>
+        <h2>Build Utility Billing and Assistance Agent manually on this page.</h2>
+        <p class="lede">No PAC CLI, YAML import, plugin architect, or nested tutorial frame. Perform one action per real browserfilm frame, compare the screenshot, and stop at Draft.</p>
+        <div class="notice"><strong>Synthetic disclosure:</strong> this is qualitative workflow evidence using packaged synthetic inputs. It is not a customer KPI or a live-system result.</div>
+        <div class="feedback-notice"><strong>Found something inaccurate?</strong> Use <em>Report an issue</em> on that step. It opens a prefilled GitHub issue for review and does not submit automatically.</div>
+        <!-- No pending evidence. -->
+        <div class="hard-actions">
+          <a class="button" href="manual-tutorial.html" target="_blank" rel="noopener">Open standalone Hard-mode guide ↗</a>
+          <a class="button primary" href="exports/utility-billing-assistance-source.zip">Download source bundle</a>
+          <a class="button primary" href="exports/utility-billing-assistance-copilot-studio-solution.zip" download>Download Copilot Studio solution</a><a class="button" href="exports/utility-billing-assistance-deployment-settings.json" download>Deployment settings</a><a class="button" href="exports/utility-billing-assistance-solution-export.json" download>Export details</a>
+        </div>
+      </section>
+
+      <section class="hard-progress-card" aria-labelledby="hard-progress-label">
+        <div class="hard-progress-heading">
+          <strong id="hard-progress-label">0 of 18 complete</strong>
+          <p>Hard-mode progress is saved on this device and contributes to the same achievement profile.</p>
+        </div>
+        <div class="progress" aria-hidden="true"><span id="hard-progress-bar"></span></div>
+        <p class="muted" id="hard-progress-toast" role="status" aria-live="polite" aria-atomic="true"></p>
+        <nav class="hard-toc" aria-label="Hard-mode tutorial actions"><a href="#step-1">1. Create a blank Copilot Studio agent</a>
+<a href="#step-2">2. Name Utility Billing Manual</a>
+<a href="#step-3">3. Enter the reviewed global instructions</a>
+<a href="#step-4">4. Save the instruction policy</a>
+<a href="#step-5">5. Remove default web search</a>
+<a href="#step-6">6. Add knowledge: utility-billing-assistance-rules-and-controls.md</a>
+<a href="#step-7">7. Add knowledge: utility-billing-assistance-synthetic-records.md</a>
+<a href="#step-8">8. Add skill: aibast_assistance-programs</a>
+<a href="#step-9">9. Add skill: aibast_billing-inquiry</a>
+<a href="#step-10">10. Add skill: aibast_payment-plan</a>
+<a href="#step-11">11. Add skill: aibast_usage-analysis</a>
+<a href="#step-12">12. Review model, skills, knowledge, and safety boundaries</a>
+<a href="#step-13">13. Open a fresh Preview conversation</a>
+<a href="#step-14">14. Pass UTILITY_BILLING_ASSISTANCE-01: Customer Service Representative</a>
+<a href="#step-15">15. Pass UTILITY_BILLING_ASSISTANCE-02: Billing Specialist</a>
+<a href="#step-16">16. Pass UTILITY_BILLING_ASSISTANCE-03: Revenue Services Supervisor</a>
+<a href="#step-17">17. Pass UTILITY_BILLING_ASSISTANCE-04: Assistance Coordinator</a>
+<a href="#step-18">18. Confirm Draft and stop before publish</a></nav>
+      </section>
+
+      <h2>Build and verify</h2>
+      <article class="step" id="step-1">
+        <header><span>1</span><div><h3>Create a blank Copilot Studio agent</h3><p>Step 1 of 18</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 1: Create a blank Copilot Studio agent" data-report-expected="A blank Copilot Studio agent is visible in the captured Draft workspace." data-report-evidence="solutions/utility-billing-assistance/screenshots/manual/01-create-blank-agent.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Create a blank Copilot Studio agent</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>A blank Copilot Studio agent is visible in the captured Draft workspace.</div>
+          </div>
+
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> A blank Copilot Studio agent is visible in the captured Draft workspace.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <footer>
+            <a href="deployment.json" download>Download source: Deployment</a>
+            <label><input class="complete" type="checkbox" data-step="1"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-2">
+        <header><span>2</span><div><h3>Name Utility Billing Manual</h3><p>Step 2 of 18</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 2: Name Utility Billing Manual" data-report-expected="The page header shows the recorded manual build name: Utility Billing Manual." data-report-evidence="solutions/utility-billing-assistance/screenshots/manual/02-name-agent.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-2">Copy agent name</button><pre class="copy-source" id="hard-copy-2" hidden>Utility Billing Manual</pre></div><span>Name Utility Billing Manual</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The page header shows the recorded manual build name: Utility Billing Manual.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/02-name-agent.png" download="02-name-agent.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/02-name-agent.png" alt="Name Utility Billing Manual annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Utility Billing Manual in the agent name field. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/02-name-agent.jpg" download="02-name-agent.jpg">Download original</a>.</p>
+          <footer>
+            <a href="deployment.json" download>Download source: Deployment</a>
+            <label><input class="complete" type="checkbox" data-step="2"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-3">
+        <header><span>3</span><div><h3>Enter the reviewed global instructions</h3><p>Step 3 of 18</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 3: Enter the reviewed global instructions" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/utility-billing-assistance/screenshots/manual/03-enter-instructions.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-3">Copy instructions</button><pre class="copy-source" id="hard-copy-3" hidden># Utility Billing and Assistance Agent — Manual Global Instructions
+
+Use only the uploaded synthetic knowledge and operation skills. Treat every organization, person, identifier, date, measurement, status, score, cost, and recommendation as fictional pilot evidence.
+
+## Boundaries
+
+- Never adjust a bill, determine final eligibility, enroll a resident, start a payment plan, schedule a repair, or change an account. Authorized utility staff and the customer approve every action.
+- Do not browse for replacement facts or invent missing records.
+- Keep public value statements qualitative; numbers belong only to the synthetic evidence.
+- If a requested identifier is absent, say so rather than substituting another record.
+- A model response is never evidence that an external action occurred.
+
+## Routing
+
+- Use **billing inquiry** for Customer Service Representative questions like: “Explain ACCT-90003 balances without changing the account.”
+- Use **usage analysis** for Billing Specialist questions like: “Does ACCT-90003 show a possible leak and what draft adjustment evidence is needed?”
+- Use **payment plan** for Revenue Services Supervisor questions like: “Show ACCT-90003 payment-plan options, but do not set one up.”
+- Use **assistance programs** for Assistance Coordinator questions like: “Screen a two-person household earning 25000 with a 70-year-old applicant.”
+
+## Response contract
+
+1. Lead with the specific synthetic record and operation result.
+2. Explain the source evidence and material uncertainty.
+3. Separate analysis or drafting from any future write action.
+4. Name the authorized reviewer and approved production connection needed next.
+5. End with the no-write boundary relevant to the operation.
+
+&lt;!-- locked-preview-anchors:start --&gt;
+## Locked Preview evidence anchors
+
+Route from the user&#x27;s natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+
+Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+
+- `UTILITY_BILLING_ASSISTANCE-01` / `billing_inquiry`: `ACCT-90003`, `$489.20`, `No balance`
+- `UTILITY_BILLING_ASSISTANCE-02` / `usage_analysis`: `REVIEW POSSIBLE LEAK`, `Draft policy estimate`, `not a leak diagnosis`
+- `UTILITY_BILLING_ASSISTANCE-03` / `payment_plan`: `12 months`, `No payment arrangement was created`
+- `UTILITY_BILLING_ASSISTANCE-04` / `assistance_programs`: `POTENTIALLY ELIGIBLE`, `No eligibility determination`, `enrollment`
+
+These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+&lt;!-- locked-preview-anchors:end --&gt;
+</pre></div><span>Enter the reviewed global instructions</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/03-enter-instructions.png" download="03-enter-instructions.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/03-enter-instructions.png" alt="Enter the reviewed global instructions annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Locked Preview evidence anchors; All four Utility Billing acceptance-anchor rows. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/03-enter-instructions.jpg" download="03-enter-instructions.jpg">Download original</a>.</p>
+          <footer>
+            <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
+            <label><input class="complete" type="checkbox" data-step="3"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-4">
+        <header><span>4</span><div><h3>Save the instruction policy</h3><p>Step 4 of 18</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 4: Save the instruction policy" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/utility-billing-assistance/screenshots/manual/04-save-instructions.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Save the instruction policy</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
+          </div>
+
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <footer>
+            <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
+            <label><input class="complete" type="checkbox" data-step="4"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-5">
+        <header><span>5</span><div><h3>Remove default web search</h3><p>Step 5 of 18</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 5: Remove default web search" data-report-expected="The captured inventory no longer lists the default web-search capability." data-report-evidence="solutions/utility-billing-assistance/screenshots/manual/05-remove-web-search.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Remove default web search</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured inventory no longer lists the default web-search capability.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/05-remove-web-search.png" download="05-remove-web-search.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/05-remove-web-search.png" alt="Remove default web search annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Knowledge section is empty; Search all websites is absent from the complete Build inventory. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/05-remove-web-search.jpg" download="05-remove-web-search.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="5"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-6">
+        <header><span>6</span><div><h3>Add knowledge: utility-billing-assistance-rules-and-controls.md</h3><p>Step 6 of 18</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 6: Add knowledge: utility-billing-assistance-rules-and-controls.md" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/utility-billing-assistance/screenshots/manual/06-add-utility-billing-assistance-rules-and-controls.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add knowledge: utility-billing-assistance-rules-and-controls.md</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/06-add-utility-billing-assistance-rules-and-controls.png" download="06-add-utility-billing-assistance-rules-and-controls.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/06-add-utility-billing-assistance-rules-and-controls.png" alt="Add knowledge: utility-billing-assistance-rules-and-controls.md annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: utility-billing-assistance-rules-and-controls filename in Knowledge. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/06-add-utility-billing-assistance-rules-and-controls.jpg" download="06-add-utility-billing-assistance-rules-and-controls.jpg">Download original</a>.</p>
+          <footer>
+            <a href="manual/knowledge/utility-billing-assistance-rules-and-controls.md" download>Download source: Utility Billing Assistance Rules And Controls</a>
+            <label><input class="complete" type="checkbox" data-step="6"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-7">
+        <header><span>7</span><div><h3>Add knowledge: utility-billing-assistance-synthetic-records.md</h3><p>Step 7 of 18</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 7: Add knowledge: utility-billing-assistance-synthetic-records.md" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/utility-billing-assistance/screenshots/manual/07-add-utility-billing-assistance-synthetic-records.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add knowledge: utility-billing-assistance-synthetic-records.md</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/07-add-utility-billing-assistance-synthetic-records.png" download="07-add-utility-billing-assistance-synthetic-records.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/07-add-utility-billing-assistance-synthetic-records.png" alt="Add knowledge: utility-billing-assistance-synthetic-records.md annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: utility-billing-assistance-synthetic-records.md; utility-billing-assistance-rules-and-controls filename. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/07-add-utility-billing-assistance-synthetic-records.jpg" download="07-add-utility-billing-assistance-synthetic-records.jpg">Download original</a>.</p>
+          <footer>
+            <a href="manual/knowledge/utility-billing-assistance-synthetic-records.md" download>Download source: Utility Billing Assistance Synthetic Records</a>
+            <label><input class="complete" type="checkbox" data-step="7"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-8">
+        <header><span>8</span><div><h3>Add skill: aibast_assistance-programs</h3><p>Step 8 of 18</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 8: Add skill: aibast_assistance-programs" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 4 skills." data-report-evidence="solutions/utility-billing-assistance/screenshots/manual/08-add-aibast-assistance-programs.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: aibast_assistance-programs</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 4 skills.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/08-add-aibast-assistance-programs.png" download="08-add-aibast-assistance-programs.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/08-add-aibast-assistance-programs.png" alt="Add skill: aibast_assistance-programs annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: utility-billing-assistance-assistance-programs skill. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/08-add-aibast-assistance-programs.jpg" download="08-add-aibast-assistance-programs.jpg">Download original</a>.</p>
+          <footer>
+            <a href="manual/skills/aibast_assistance-programs/SKILL.md" download>Download source: Manual skill: aibast assistance programs</a>
+            <label><input class="complete" type="checkbox" data-step="8"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-9">
+        <header><span>9</span><div><h3>Add skill: aibast_billing-inquiry</h3><p>Step 9 of 18</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 9: Add skill: aibast_billing-inquiry" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 4 skills." data-report-evidence="solutions/utility-billing-assistance/screenshots/manual/09-add-aibast-billing-inquiry.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: aibast_billing-inquiry</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 4 skills.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/09-add-aibast-billing-inquiry.png" download="09-add-aibast-billing-inquiry.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/09-add-aibast-billing-inquiry.png" alt="Add skill: aibast_billing-inquiry annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: utility-billing-assistance-billing-inquiry skill; utility-billing-assistance-assistance-programs skill. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/09-add-aibast-billing-inquiry.jpg" download="09-add-aibast-billing-inquiry.jpg">Download original</a>.</p>
+          <footer>
+            <a href="manual/skills/aibast_billing-inquiry/SKILL.md" download>Download source: Manual skill: aibast billing inquiry</a>
+            <label><input class="complete" type="checkbox" data-step="9"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-10">
+        <header><span>10</span><div><h3>Add skill: aibast_payment-plan</h3><p>Step 10 of 18</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 10: Add skill: aibast_payment-plan" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 4 skills." data-report-evidence="solutions/utility-billing-assistance/screenshots/manual/10-add-aibast-payment-plan.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: aibast_payment-plan</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 4 skills.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/10-add-aibast-payment-plan.png" download="10-add-aibast-payment-plan.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/10-add-aibast-payment-plan.png" alt="Add skill: aibast_payment-plan annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: utility-billing-assistance-payment-plan skill; Three configured Utility Billing skills. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/10-add-aibast-payment-plan.jpg" download="10-add-aibast-payment-plan.jpg">Download original</a>.</p>
+          <footer>
+            <a href="manual/skills/aibast_payment-plan/SKILL.md" download>Download source: Manual skill: aibast payment plan</a>
+            <label><input class="complete" type="checkbox" data-step="10"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-11">
+        <header><span>11</span><div><h3>Add skill: aibast_usage-analysis</h3><p>Step 11 of 18</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 11: Add skill: aibast_usage-analysis" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 4 skills." data-report-evidence="solutions/utility-billing-assistance/screenshots/manual/11-add-aibast-usage-analysis.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: aibast_usage-analysis</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 4 skills.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/11-add-aibast-usage-analysis.png" download="11-add-aibast-usage-analysis.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/11-add-aibast-usage-analysis.png" alt="Add skill: aibast_usage-analysis annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: utility-billing-assistance-usage-analysis skill; All four Utility Billing skills. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/11-add-aibast-usage-analysis.jpg" download="11-add-aibast-usage-analysis.jpg">Download original</a>.</p>
+          <footer>
+            <a href="manual/skills/aibast_usage-analysis/SKILL.md" download>Download source: Manual skill: aibast usage analysis</a>
+            <label><input class="complete" type="checkbox" data-step="11"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-12">
+        <header><span>12</span><div><h3>Review model, skills, knowledge, and safety boundaries</h3><p>Step 12 of 18</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 12: Review model, skills, knowledge, and safety boundaries" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 4 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/utility-billing-assistance/screenshots/manual/12-review-inventory.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Review model, skills, knowledge, and safety boundaries</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Sonnet 4.6, 4 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/12-review-inventory.png" download="12-review-inventory.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/12-review-inventory.png" alt="Review model, skills, knowledge, and safety boundaries annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Claude Sonnet 4.6; Four configured Utility Billing skills; Two configured knowledge files; Tools section has no configured tool. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/12-review-inventory.jpg" download="12-review-inventory.jpg">Download original</a>.</p>
+          <footer>
+            <a href="deployment.json" download>Download source: Deployment</a>
+            <label><input class="complete" type="checkbox" data-step="12"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-13">
+        <header><span>13</span><div><h3>Open a fresh Preview conversation</h3><p>Step 13 of 18</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 13: Open a fresh Preview conversation" data-report-expected="A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass." data-report-evidence="solutions/utility-billing-assistance/screenshots/manual/13-open-preview.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Open a fresh Preview conversation</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/13-open-preview.png" download="13-open-preview.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/13-open-preview.png" alt="Open a fresh Preview conversation annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Preview tab selected; New chat; Utility Billing Manual. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/13-open-preview.jpg" download="13-open-preview.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="13"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-14">
+        <header><span>14</span><div><h3>Pass UTILITY_BILLING_ASSISTANCE-01: Customer Service Representative</h3><p>Step 14 of 18</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 14: Pass UTILITY_BILLING_ASSISTANCE-01: Customer Service Representative" data-report-expected="The captured Preview evidence records UTILITY_BILLING_ASSISTANCE-01 with the recorded identifiers ACCT-90003, $489.20, No balance; do not infer results beyond it." data-report-evidence="solutions/utility-billing-assistance/screenshots/manual/14-utility_billing_assistance-01.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-14">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-14" hidden>Explain ACCT-90003 balances without changing the account.</pre></div><span>Pass UTILITY_BILLING_ASSISTANCE-01: Customer Service Representative</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records UTILITY_BILLING_ASSISTANCE-01 with the recorded identifiers ACCT-90003, $489.20, No balance; do not infer results beyond it.</div>
+          </div>
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running UTILITY_BILLING_ASSISTANCE-01. A previous response must not influence the evidence.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/14-utility_billing_assistance-01.png" download="14-utility_billing_assistance-01.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/14-utility_billing_assistance-01.png" alt="Pass UTILITY_BILLING_ASSISTANCE-01: Customer Service Representative annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: $489.20; No balance, payment, service, or account record was changed. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/14-utility_billing_assistance-01.jpg" download="14-utility_billing_assistance-01.jpg">Download original</a>.</p>
+          <footer>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
+            <label><input class="complete" type="checkbox" data-step="14"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-15">
+        <header><span>15</span><div><h3>Pass UTILITY_BILLING_ASSISTANCE-02: Billing Specialist</h3><p>Step 15 of 18</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 15: Pass UTILITY_BILLING_ASSISTANCE-02: Billing Specialist" data-report-expected="The captured Preview evidence records UTILITY_BILLING_ASSISTANCE-02 with the recorded identifiers REVIEW POSSIBLE LEAK, Draft policy estimate, not a leak diagnosis; do not infer results beyond it." data-report-evidence="solutions/utility-billing-assistance/screenshots/manual/15-utility_billing_assistance-02.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-15">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-15" hidden>Does ACCT-90003 show a possible leak and what draft adjustment evidence is needed?</pre></div><span>Pass UTILITY_BILLING_ASSISTANCE-02: Billing Specialist</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records UTILITY_BILLING_ASSISTANCE-02 with the recorded identifiers REVIEW POSSIBLE LEAK, Draft policy estimate, not a leak diagnosis; do not infer results beyond it.</div>
+          </div>
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running UTILITY_BILLING_ASSISTANCE-02. A previous response must not influence the evidence.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/15-utility_billing_assistance-02.png" download="15-utility_billing_assistance-02.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/15-utility_billing_assistance-02.png" alt="Pass UTILITY_BILLING_ASSISTANCE-02: Billing Specialist annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Draft policy estimate: $18.55; not a leak diagnosis. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/15-utility_billing_assistance-02.jpg" download="15-utility_billing_assistance-02.jpg">Download original</a>.</p>
+          <footer>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
+            <label><input class="complete" type="checkbox" data-step="15"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-16">
+        <header><span>16</span><div><h3>Pass UTILITY_BILLING_ASSISTANCE-03: Revenue Services Supervisor</h3><p>Step 16 of 18</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 16: Pass UTILITY_BILLING_ASSISTANCE-03: Revenue Services Supervisor" data-report-expected="The captured Preview evidence records UTILITY_BILLING_ASSISTANCE-03 with the recorded identifiers 12 months, No payment arrangement was created; do not infer results beyond it." data-report-evidence="solutions/utility-billing-assistance/screenshots/manual/16-utility_billing_assistance-03.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-16">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-16" hidden>Show ACCT-90003 payment-plan options, but do not set one up.</pre></div><span>Pass UTILITY_BILLING_ASSISTANCE-03: Revenue Services Supervisor</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records UTILITY_BILLING_ASSISTANCE-03 with the recorded identifiers 12 months, No payment arrangement was created; do not infer results beyond it.</div>
+          </div>
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running UTILITY_BILLING_ASSISTANCE-03. A previous response must not influence the evidence.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/16-utility_billing_assistance-03.png" download="16-utility_billing_assistance-03.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/16-utility_billing_assistance-03.png" alt="Pass UTILITY_BILLING_ASSISTANCE-03: Revenue Services Supervisor annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: 12 months; No payment arrangement was created. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/16-utility_billing_assistance-03.jpg" download="16-utility_billing_assistance-03.jpg">Download original</a>.</p>
+          <footer>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
+            <label><input class="complete" type="checkbox" data-step="16"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-17">
+        <header><span>17</span><div><h3>Pass UTILITY_BILLING_ASSISTANCE-04: Assistance Coordinator</h3><p>Step 17 of 18</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 17: Pass UTILITY_BILLING_ASSISTANCE-04: Assistance Coordinator" data-report-expected="The captured Preview evidence records UTILITY_BILLING_ASSISTANCE-04 with the recorded identifiers POTENTIALLY ELIGIBLE, No eligibility determination, enrollment; do not infer results beyond it." data-report-evidence="solutions/utility-billing-assistance/screenshots/manual/17-utility_billing_assistance-04.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-17">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-17" hidden>Screen a two-person household earning 25000 with a 70-year-old applicant.</pre></div><span>Pass UTILITY_BILLING_ASSISTANCE-04: Assistance Coordinator</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records UTILITY_BILLING_ASSISTANCE-04 with the recorded identifiers POTENTIALLY ELIGIBLE, No eligibility determination, enrollment; do not infer results beyond it.</div>
+          </div>
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running UTILITY_BILLING_ASSISTANCE-04. A previous response must not influence the evidence.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/17-utility_billing_assistance-04.png" download="17-utility_billing_assistance-04.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/17-utility_billing_assistance-04.png" alt="Pass UTILITY_BILLING_ASSISTANCE-04: Assistance Coordinator annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: POTENTIALLY ELIGIBLE; No eligibility determination; enrollment. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/17-utility_billing_assistance-04.jpg" download="17-utility_billing_assistance-04.jpg">Download original</a>.</p>
+          <footer>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
+            <label><input class="complete" type="checkbox" data-step="17"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-18">
+        <header><span>18</span><div><h3>Confirm Draft and stop before publish</h3><p>Step 18 of 18</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 18: Confirm Draft and stop before publish" data-report-expected="The agent remains Draft and no Publish action is taken." data-report-evidence="solutions/utility-billing-assistance/screenshots/manual/18-confirm-draft.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Confirm Draft and stop before publish</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The agent remains Draft and no Publish action is taken.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/18-confirm-draft.png" download="18-confirm-draft.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/18-confirm-draft.png" alt="Confirm Draft and stop before publish annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Utility Billing Manual; Draft. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/18-confirm-draft.jpg" download="18-confirm-draft.jpg">Download original</a>.</p>
+          <footer>
+            <a href="deployment.json" download>Download source: Deployment</a>
+            <label><input class="complete" type="checkbox" data-step="18"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+
+      <h2 id="hard-troubleshooting">Hard-mode troubleshooting</h2>
+      <section class="card hard-troubleshooting">
+        <details open><summary>A screenshot or browserfilm frame is missing</summary><p>Stop. Do not invent, recreate, or substitute an image. Capture the real frame, update the browserfilm manifest, and regenerate without <code>--allow-pending</code>.</p></details>
+        <details><summary>A knowledge file is still processing</summary><p>Wait for ingestion to finish before Preview. A partial answer is not evidence.</p></details>
+        <details><summary>A skill upload fails</summary><p>Use the linked raw <code>SKILL.md</code>. Fix the reviewed source deliberately; do not silently skip the action.</p></details>
+        <details><summary>The model differs from Easy mode</summary><p>Record the substitution and stop the parity claim until Easy and Hard use the same reviewed model.</p></details>
+        <details><summary>The Preview answer misses an identifier</summary><p>Mark the recorded case failed, inspect instructions and inventory, then replay the exact prompt in a fresh conversation.</p></details>
+        <details><summary>Should I publish?</summary><p>No. Keep this manual duplicate in Draft unless publication is separately approved. Do not choose Publish as part of this tutorial.</p></details>
+      </section>
     </section>
 
-    <section class="card">
-      <h2>Raw resources</h2>
-      <ul class="resource-list">
-        <li><a href="deployment.json">Deployment recipe</a> <span class="status">Ready</span></li>
-<li><a href="FIELD-GUIDE.md">Customer field guide</a> <span class="status">Ready</span></li>
-<li><a href="manual/GLOBAL-INSTRUCTIONS.md">Manual global instructions</a> <span class="status">Ready</span></li>
-<li><a href="evals/manual-build-evidence.json">Manual build evidence</a> <span class="status">Ready</span></li>
-<li><a href="evals/transcripts.json">Isolated Brainstem transcripts</a> <span class="status">Ready</span></li>
-<li><a href="screenshots/manual/manual-build-walkthrough.gif">Manual browserfilm</a> <span class="status">Ready</span></li>
-<li><a href="screenshots/assisted/copilot-assisted-walkthrough.gif">Copilot-assisted browserfilm</a> <span class="status">Ready</span></li>
-<li><a href="manual-tutorial.html">Manual browser tutorial</a> <span class="status">Ready</span></li>
-      </ul>
-      <p><a href="export-manifest.json">Open the complete raw resource manifest</a> · <a href="exports/utility-billing-assistance-source.zip">Download the source bundle</a></p>
-    </section>
   </main>
   <script>
     (() => {
+
+      const ACHIEVEMENT_PROFILE_KEY = "aibast:achievement-profile:v1";
+      const ACHIEVEMENT_WORKSHOP_SLUG = "utility-billing-assistance";
+      const ACHIEVEMENT_BADGES = Object.freeze([{"id":"started","label":"Started","points":5},{"id":"local-proof","label":"Local proof","points":15},{"id":"draft-builder","label":"Draft builder","points":20},{"id":"preview-proven","label":"Preview proven","points":25},{"id":"workshop-complete","label":"Workshop complete","points":35},{"id":"hard-mode-complete","label":"Hard mode complete","points":50}]);
+      const ACHIEVEMENT_BADGE_IDS = new Set(ACHIEVEMENT_BADGES.map((badge) => badge.id));
+
+      function emptyAchievementProfile() {
+        return { score: 0, workshops: {}, updatedAt: null };
+      }
+
+      function validAchievementTimestamp(value) {
+        return typeof value === "string" && !Number.isNaN(Date.parse(value))
+          ? value
+          : null;
+      }
+
+      function achievementCount(value) {
+        return Number.isInteger(value) && value >= 0 ? value : 0;
+      }
+
+      function sanitizeAchievementProfile(value) {
+        const clean = emptyAchievementProfile();
+        const source =
+          value && typeof value === "object" && !Array.isArray(value) ? value : {};
+        const workshops =
+          source.workshops && typeof source.workshops === "object"
+            ? source.workshops
+            : {};
+        Object.entries(workshops).forEach(([key, rawWorkshop]) => {
+          if (!rawWorkshop || typeof rawWorkshop !== "object") return;
+          const candidate =
+            typeof rawWorkshop.slug === "string" ? rawWorkshop.slug : key;
+          if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(candidate)) return;
+          const rawProgress =
+            rawWorkshop.progress && typeof rawWorkshop.progress === "object"
+              ? rawWorkshop.progress
+              : {};
+          const progress = {
+            easyChecked: achievementCount(rawProgress.easyChecked),
+            easyTotal: achievementCount(rawProgress.easyTotal),
+            hardChecked: achievementCount(rawProgress.hardChecked),
+            hardTotal: achievementCount(rawProgress.hardTotal),
+            easyComplete: rawProgress.easyComplete === true,
+            hardComplete: rawProgress.hardComplete === true,
+            updatedAt: validAchievementTimestamp(rawProgress.updatedAt),
+          };
+          const achievements = {};
+          const rawAchievements =
+            rawWorkshop.achievements &&
+            typeof rawWorkshop.achievements === "object"
+              ? rawWorkshop.achievements
+              : {};
+          ACHIEVEMENT_BADGES.forEach((badge) => {
+            const raw = rawAchievements[badge.id];
+            const earned =
+              raw === true ||
+              (raw && typeof raw === "object" && raw.earned === true);
+            if (earned) {
+              achievements[badge.id] = {
+                earned: true,
+                earnedAt: validAchievementTimestamp(raw?.earnedAt),
+              };
+            }
+          });
+          clean.workshops[candidate] = {
+            slug: candidate,
+            mode: rawWorkshop.mode === "hard" ? "hard" : "easy",
+            progress,
+            achievements,
+          };
+        });
+        clean.score = Object.values(clean.workshops).reduce(
+          (total, workshop) =>
+            total +
+            ACHIEVEMENT_BADGES.reduce(
+              (subtotal, badge) =>
+                subtotal +
+                (workshop.achievements[badge.id]?.earned ? badge.points : 0),
+              0,
+            ),
+          0,
+        );
+        clean.updatedAt = validAchievementTimestamp(source.updatedAt);
+        return clean;
+      }
+
+      function readAchievementProfile() {
+        try {
+          return sanitizeAchievementProfile(
+            JSON.parse(localStorage.getItem(ACHIEVEMENT_PROFILE_KEY) || "{}"),
+          );
+        } catch (_error) {
+          return emptyAchievementProfile();
+        }
+      }
+
+      function writeAchievementProfile(profile) {
+        const clean = sanitizeAchievementProfile(profile);
+        clean.updatedAt = new Date().toISOString();
+        localStorage.setItem(ACHIEVEMENT_PROFILE_KEY, JSON.stringify(clean));
+        return clean;
+      }
+
+      function ensureAchievementWorkshop(profile, mode = "easy") {
+        if (!profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG]) {
+          profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG] = {
+            slug: ACHIEVEMENT_WORKSHOP_SLUG,
+            mode: mode === "hard" ? "hard" : "easy",
+            progress: {
+              easyChecked: 0,
+              easyTotal: 0,
+              hardChecked: 0,
+              hardTotal: 0,
+              easyComplete: false,
+              hardComplete: false,
+              updatedAt: null,
+            },
+            achievements: {},
+          };
+        }
+        const workshop = profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG];
+        workshop.mode = mode === "hard" ? "hard" : "easy";
+        return workshop;
+      }
+
+      function setAchievementWorkshopProgress(profile, mode, patch) {
+        const workshop = ensureAchievementWorkshop(profile, mode);
+        workshop.progress = {
+          ...workshop.progress,
+          ...patch,
+          updatedAt: new Date().toISOString(),
+        };
+        return writeAchievementProfile(profile);
+      }
+
+      function awardAchievement(profile, badgeId, mode = "easy") {
+        if (!ACHIEVEMENT_BADGE_IDS.has(badgeId)) {
+          return { profile: sanitizeAchievementProfile(profile), awarded: null };
+        }
+        const workshop = ensureAchievementWorkshop(profile, mode);
+        if (workshop.achievements[badgeId]?.earned) {
+          return { profile: sanitizeAchievementProfile(profile), awarded: null };
+        }
+        workshop.achievements[badgeId] = {
+          earned: true,
+          earnedAt: new Date().toISOString(),
+        };
+        return {
+          profile: writeAchievementProfile(profile),
+          awarded: ACHIEVEMENT_BADGES.find((badge) => badge.id === badgeId),
+        };
+      }
+
+      function aibastSignalIssueUrl() {
+        const pagesOwner = String(globalThis.location?.hostname || "")
+          .match(/^([a-z0-9-]+)\.github\.io$/i)?.[1];
+        const owner = pagesOwner || "microsoft";
+        return new URL(
+          `https://github.com/${owner}/aibast-agents-library/issues/new`,
+        );
+      }
+
+      const ACHIEVEMENT_CANONICAL_AGENT = "@aibast-agents-library/utility-billing-assistance";
+      const ACHIEVEMENT_SYNC_ORDER = Object.freeze([
+        { localId: "started", claimId: "started" },
+        { localId: "local-proof", claimId: "local-proof" },
+        { localId: "draft-builder", claimId: "draft-builder" },
+        { localId: "preview-proven", claimId: "preview-proven" },
+        { localId: "workshop-complete", claimId: "workshop-completed" },
+        { localId: "hard-mode-complete", claimId: "hard-mode-completed" },
+      ]);
       const modeKey = "aibast:utility-billing-assistance:quest-mode";
+      const globalEngineKey = "aibast:workshop-engine";
       const progressKey = "aibast:utility-billing-assistance:quest-progress";
+      const hardProgressKey = "aibast:utility-billing-assistance:manual-progress";
       const buttons = Array.from(document.querySelectorAll("[data-mode]"));
       const paths = Array.from(document.querySelectorAll("[data-path]"));
       const boxes = Array.from(document.querySelectorAll("[data-checkpoint]"));
+      const hardBoxes = Array.from(document.querySelectorAll(".complete[data-step]"));
+      const achievementTotalScore = document.getElementById("achievements-total-score");
+      const achievementWorkshopScore = document.getElementById("achievements-workshop-score");
+      const achievementProgressLabel = document.getElementById("achievement-progress-label");
+      const achievementProgressBar = document.getElementById("achievement-progress-bar");
+      const achievementBadgeList = document.getElementById("achievements-badge-list");
+      const achievementToast = document.getElementById("achievements-badge-toast");
+      const hardProgressLabel = document.getElementById("hard-progress-label");
+      const hardProgressBar = document.getElementById("hard-progress-bar");
+      const hardProgressToast = document.getElementById("hard-progress-toast");
       let saved = {};
-      try { saved = JSON.parse(localStorage.getItem(progressKey) || "{}"); } catch (_error) { saved = {}; }
+      try {
+        const parsed = JSON.parse(localStorage.getItem(progressKey) || "{}");
+        saved =
+          parsed && typeof parsed === "object" && !Array.isArray(parsed)
+            ? parsed
+            : {};
+      } catch (_error) {
+        saved = {};
+      }
       boxes.forEach((box) => {
-        box.checked = Boolean(saved[box.dataset.checkpoint]);
+        box.checked = saved[box.dataset.checkpoint] === true;
         box.addEventListener("change", () => {
           saved[box.dataset.checkpoint] = box.checked;
           localStorage.setItem(progressKey, JSON.stringify(saved));
+          evaluateAchievement(true);
         });
       });
+      let hardSaved = [];
+      try {
+        const parsed = JSON.parse(localStorage.getItem(hardProgressKey) || "[]");
+        hardSaved = Array.isArray(parsed)
+          ? parsed.filter((step) => typeof step === "string")
+          : [];
+      } catch (_error) {
+        hardSaved = [];
+      }
+      hardBoxes.forEach((box) => {
+        box.checked = hardSaved.includes(box.dataset.step);
+        box.addEventListener("change", () => updateHardProgress(true));
+      });
+
+      function currentEasyPath() {
+        return localStorage.getItem(globalEngineKey) === "brainstem"
+          ? "brainstem"
+          : "copilot";
+      }
+
+      function requiredEasyBoxes() {
+        const path = currentEasyPath();
+        return boxes.filter(
+          (box) => box.dataset.achievementPath === path || box.dataset.achievementPath === "shared",
+        );
+      }
+
+      function achievementGroupComplete(group) {
+        const path = currentEasyPath();
+        const members = boxes.filter(
+          (box) =>
+            box.dataset.achievementGroup === group &&
+            (box.dataset.achievementPath === path || box.dataset.achievementPath === "shared"),
+        );
+        return members.length > 0 && members.every((box) => box.checked);
+      }
+
+      function announceAchievementBadge(badge) {
+        if (!badge || !achievementToast) return;
+        achievementToast.textContent =
+          `${badge.label} earned: +${badge.points} local achievement points.`;
+        window.setTimeout(() => {
+          if (achievementToast.textContent.includes(badge.label)) achievementToast.textContent = "";
+        }, 5000);
+      }
+
+      function updateHardProgress(announce = false) {
+        const done = hardBoxes
+          .filter((box) => box.checked)
+          .map((box) => box.dataset.step);
+        const complete =
+          hardBoxes.length > 0 && done.length === hardBoxes.length;
+        localStorage.setItem(hardProgressKey, JSON.stringify(done));
+        if (hardProgressLabel) {
+          hardProgressLabel.textContent =
+            `${done.length} of ${hardBoxes.length} complete`;
+        }
+        if (hardProgressBar) {
+          hardProgressBar.style.width = hardBoxes.length
+            ? `${(done.length / hardBoxes.length) * 100}%`
+            : "0%";
+        }
+        const activeMode =
+          localStorage.getItem(modeKey) === "hard" ? "hard" : "easy";
+        let profile = readAchievementProfile();
+        if (done.length === 0 && !profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG]) {
+          renderAchievementPanel(profile, activeMode);
+          return;
+        }
+        profile = setAchievementWorkshopProgress(profile, activeMode, {
+          hardChecked: done.length,
+          hardTotal: hardBoxes.length,
+          hardComplete: complete,
+        });
+        if (done.length > 0) {
+          const result = awardAchievement(profile, "started", activeMode);
+          profile = result.profile;
+          if (announce) announceAchievementBadge(result.awarded);
+        }
+        if (complete) {
+          const result = awardAchievement(
+            profile,
+            "hard-mode-complete",
+            activeMode,
+          );
+          profile = result.profile;
+          if (announce) announceAchievementBadge(result.awarded);
+        }
+        if (hardProgressToast) {
+          hardProgressToast.textContent = complete
+            ? "Hard mode complete. The achievement is saved in this device's achievement profile."
+            : "";
+        }
+        renderAchievementPanel(profile, activeMode);
+      }
+
+      function earnedAchievementSyncIds(achievements) {
+        return ACHIEVEMENT_SYNC_ORDER.filter(
+          (entry) => achievements[entry.localId]?.earned,
+        ).map((entry) => entry.claimId);
+      }
+
+      function renderAchievementPanel(profile, mode) {
+        const workshop = profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG];
+        const achievements = workshop?.achievements || {};
+        const workshopPoints = ACHIEVEMENT_BADGES.reduce(
+          (total, badge) =>
+            total + (achievements[badge.id]?.earned ? badge.points : 0),
+          0,
+        );
+        achievementTotalScore.textContent = String(profile.score);
+        achievementWorkshopScore.textContent = String(workshopPoints);
+        const easyRequired = requiredEasyBoxes();
+        const easyChecked = easyRequired.filter((box) => box.checked).length;
+        const hardChecked = workshop?.progress?.hardChecked || 0;
+        const hardTotal = workshop?.progress?.hardTotal || 0;
+        const checked = mode === "hard" ? hardChecked : easyChecked;
+        const total = mode === "hard" ? hardTotal : easyRequired.length;
+        achievementProgressLabel.textContent =
+          `${checked} of ${total} ${mode === "hard" ? "Hard steps" : "Easy checkpoints"} complete`;
+        achievementProgressBar.style.width = total ? `${(checked / total) * 100}%` : "0%";
+        achievementBadgeList.replaceChildren();
+        const earned = ACHIEVEMENT_BADGES.filter(
+          (badge) => achievements[badge.id]?.earned,
+        );
+        if (!earned.length) {
+          const item = document.createElement("li");
+          item.className = "achievements-badge";
+          item.textContent = "No badges yet";
+          achievementBadgeList.append(item);
+        } else {
+          earned.forEach((badge) => {
+            const item = document.createElement("li");
+            item.className = "achievements-badge";
+            item.textContent = `${badge.label} · +${badge.points}`;
+            achievementBadgeList.append(item);
+          });
+        }
+        document.querySelector("[data-achievements-sync]").hidden =
+          earnedAchievementSyncIds(achievements).length === 0;
+      }
+
+      function evaluateAchievement(announce = false) {
+        const mode = localStorage.getItem(modeKey) === "hard" ? "hard" : "easy";
+        const easyRequired = requiredEasyBoxes();
+        const easyChecked = easyRequired.filter((box) => box.checked).length;
+        const hasCheckpoint = boxes.some((box) => box.checked);
+        let profile = readAchievementProfile();
+        const existing = profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG];
+        if (hasCheckpoint || existing) {
+          profile = setAchievementWorkshopProgress(profile, mode, {
+            easyChecked,
+            easyTotal: easyRequired.length,
+            easyComplete:
+              easyRequired.length > 0 && easyChecked === easyRequired.length,
+          });
+          const earnedByCondition = [
+            ["started", hasCheckpoint],
+            ["local-proof", achievementGroupComplete("local-proof")],
+            ["draft-builder", achievementGroupComplete("draft-builder")],
+            ["preview-proven", achievementGroupComplete("preview-proven")],
+            [
+              "workshop-complete",
+              easyRequired.length > 0 && easyChecked === easyRequired.length,
+            ],
+          ];
+          earnedByCondition.forEach(([badgeId, condition]) => {
+            if (!condition) return;
+            const result = awardAchievement(profile, badgeId, mode);
+            profile = result.profile;
+            if (announce) announceAchievementBadge(result.awarded);
+          });
+        }
+        renderAchievementPanel(profile, mode);
+      }
+
       function selectMode(mode) {
-        buttons.forEach((button) => button.classList.toggle("active", button.dataset.mode === mode));
+        buttons.forEach((button) => {
+          const selected = button.dataset.mode === mode;
+          button.classList.toggle("active", selected);
+          button.setAttribute("aria-selected", String(selected));
+        });
         paths.forEach((path) => { path.hidden = path.dataset.path !== mode; });
         localStorage.setItem(modeKey, mode);
+        evaluateAchievement(false);
       }
       buttons.forEach((button) => button.addEventListener("click", () => selectMode(button.dataset.mode)));
-      selectMode(localStorage.getItem(modeKey) || "easy");
+      document.querySelectorAll("[data-copy-target]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const target = document.getElementById(button.dataset.copyTarget);
+          if (!target) {
+            button.textContent = "Prompt missing";
+            return;
+          }
+          const original = button.textContent;
+          navigator.clipboard.writeText(target.textContent).then(() => {
+            button.textContent = "Copied";
+            window.setTimeout(() => { button.textContent = original; }, 1400);
+          }).catch(() => {
+            button.textContent = "Copy failed";
+          });
+        });
+      });
+      document.querySelectorAll("[data-report-location]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const locationLabel = button.dataset.reportLocation || "Workshop";
+          const expected = button.dataset.reportExpected || "Describe the expected result.";
+          const evidence = button.dataset.reportEvidence || "No evidence path supplied.";
+          const reportMode = button.closest('[data-path="hard"]')
+            ? "hard"
+            : localStorage.getItem(globalEngineKey) === "brainstem"
+              ? "brainstem"
+              : "copilot";
+          const title = `[Workshop feedback] Utility Billing and Assistance Agent: ${locationLabel}`;
+          const body = `<!-- aibast-workshop-feedback:v1 -->
+## Workshop signal
+
+- Schema: \`aibast-workshop-feedback/1.0\`
+- Solution: \`@aibast-agents-library/utility-billing-assistance\`
+- Page: ${location.href}
+- Mode: \`${reportMode}\`
+- Location: ${locationLabel}
+- Evidence: \`${evidence}\`
+
+## Workshop context
+
+This issue was opened from a contextual workshop <em>Report an issue</em> button.
+
+## Expected
+
+${expected}
+
+## What happened instead
+
+Describe what was inaccurate or missing.
+
+## Reproduction
+
+1. Open the workshop page.
+2. Select the mode shown above.
+3. Follow the step or Preview case.
+4. Record the visible result and any Copilot response.
+
+> Workshop feedback report. Do not include credentials, tokens, customer data, or other sensitive information.`;
+          const url = aibastSignalIssueUrl();
+          url.searchParams.set("title", title);
+          url.searchParams.set("body", body);
+          window.open(url.toString(), "_blank", "noopener");
+        });
+      });
+      function openAchievementSync() {
+        const profile = readAchievementProfile();
+        const achievements =
+          profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG]?.achievements || {};
+        const earnedIds = earnedAchievementSyncIds(achievements);
+        if (!earnedIds.length) return;
+        const source = new URL(window.location.href);
+        source.search = "";
+        source.hash = "";
+        const body = `<!-- aibast-achievement-progress:v1 -->
+## Workshop achievement progress
+
+- Schema: \`aibast-achievement-progress/1.0\`
+- Workshop: \`${ACHIEVEMENT_WORKSHOP_SLUG}\`
+- Agent: \`${ACHIEVEMENT_CANONICAL_AGENT}\`
+- Achievements: ${earnedIds.join(", ")}
+- Source: ${source.toString()}
+
+Opening this form does not sync anything. Submit the issue to sync these earned IDs. Resubmitting later merges newly earned IDs without duplicate score; the server computes the verified score. One public GitHub issue submission opts this account into a public verified profile.
+
+> Do not add credentials, tokens, customer data, or other sensitive information.`;
+        const url = aibastSignalIssueUrl();
+        url.searchParams.set("title", `[Achievement progress] Utility Billing and Assistance Agent`);
+        url.searchParams.set("body", body);
+        window.open(url.toString(), "_blank", "noopener");
+      }
+      document.querySelector("[data-achievements-sync]").addEventListener("click", () => {
+        openAchievementSync();
+      });
+      selectMode(localStorage.getItem(modeKey) === "hard" ? "hard" : "easy");
+      updateHardProgress(false);
     })();
   </script>
 </body>

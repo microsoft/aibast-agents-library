@@ -1,0 +1,581 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/order-status-communication",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker or refusal.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 23,
+    "reusable": 20,
+    "reshoot_required": 3
+  },
+  "captures": [
+    {
+      "id": "easy-os-01",
+      "mode": "easy",
+      "case_id": "OS-01",
+      "source": "solutions/order-status-communication/screenshots/assisted/01-os-01.jpg",
+      "annotated": "solutions/order-status-communication/screenshots/assisted/annotated/01-os-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "ORD-7813 delay notification requires review and approval",
+        "No email, EDI, portal, or Teams message was sent",
+        "Production and carrier facts require live-system validation"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact DELAYED status marker is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 455,
+          "width": 940,
+          "height": 116,
+          "label": "ORD-7813 review and no-send gate"
+        }
+      ]
+    },
+    {
+      "id": "easy-os-02",
+      "mode": "easy",
+      "case_id": "OS-02",
+      "source": "solutions/order-status-communication/screenshots/assisted/02-os-02.jpg",
+      "annotated": "solutions/order-status-communication/screenshots/assisted/annotated/02-os-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "OS-02 relates to shipment_tracking for ORD-7812 with tracking number XPO-884291047",
+        "Loading skill: shipment-tracking",
+        "Searched knowledge",
+        "Now I have all the information needed"
+      ],
+      "full_case_not_visibly_proven": [
+        "The final user-facing shipment summary and carrier-validation details are outside the captured viewport; this checkpoint proves only visible case routing and recorded identifier retrieval."
+      ],
+      "boxes": [
+        {
+          "x": 315,
+          "y": 408,
+          "width": 920,
+          "height": 182,
+          "label": "OS-02 route and recorded identifiers"
+        }
+      ]
+    },
+    {
+      "id": "easy-os-03",
+      "mode": "easy",
+      "case_id": "OS-03",
+      "source": "solutions/order-status-communication/screenshots/assisted/03-os-03.jpg",
+      "status": "reshoot_required",
+      "reason": "The frame shows only the prompt and internal reasoning/tool-routing text. No final answer is visible, so ORD-7813 and Recorded synthetic recovery options in the reasoning cannot count as visual pass evidence."
+    },
+    {
+      "id": "easy-os-04",
+      "mode": "easy",
+      "case_id": "OS-04",
+      "source": "solutions/order-status-communication/screenshots/assisted/04-os-04.jpg",
+      "annotated": "solutions/order-status-communication/screenshots/assisted/annotated/04-os-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Human approval of all four drafts is required before any send",
+        "Approved communication tool per channel is required",
+        "No order, schedule, shipment, sourcing decision, or recovery plan was changed"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Customer Update Drafts heading and exact No email, EDI message marker are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 225,
+          "width": 720,
+          "height": 265,
+          "label": "Draft approval requirements"
+        },
+        {
+          "x": 285,
+          "y": 512,
+          "width": 955,
+          "height": 64,
+          "label": "No operational side effect"
+        }
+      ]
+    },
+    {
+      "id": "easy-draft",
+      "mode": "easy",
+      "source": "solutions/order-status-communication/screenshots/assisted/05-confirm-draft.jpg",
+      "status": "reshoot_required",
+      "reason": "The target Order Status Pilot row is not visible, so this agent-list frame cannot prove that the validated pilot remains Draft.",
+      "draft": true
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "step": 1,
+      "source": "solutions/order-status-communication/screenshots/manual/01-create-blank-agent.jpg",
+      "annotated": "solutions/order-status-communication/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent",
+        "Blank Build workspace"
+      ],
+      "boxes": [
+        {
+          "x": 160,
+          "y": 88,
+          "width": 820,
+          "height": 65,
+          "label": "Blank agent workspace"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "step": 2,
+      "source": "solutions/order-status-communication/screenshots/manual/02-name-agent.jpg",
+      "annotated": "solutions/order-status-communication/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Order Status Manual in the name field"
+      ],
+      "boxes": [
+        {
+          "x": 160,
+          "y": 88,
+          "width": 820,
+          "height": 65,
+          "label": "Manual agent name entered"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "step": 3,
+      "source": "solutions/order-status-communication/screenshots/manual/03-enter-instructions.jpg",
+      "annotated": "solutions/order-status-communication/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Reviewed instruction boundaries",
+        "Locked Preview evidence anchors",
+        "OS-01 through OS-04 deterministic markers"
+      ],
+      "boxes": [
+        {
+          "x": 75,
+          "y": 210,
+          "width": 900,
+          "height": 615,
+          "label": "Reviewed instructions and locked anchors"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "step": 4,
+      "source": "solutions/order-status-communication/screenshots/manual/04-save-instructions.jpg",
+      "status": "reshoot_required",
+      "reason": "The reviewed instruction text is visible, but the frame shows no save confirmation or No unsaved changes state. It therefore does not visually prove that the Save action completed."
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "step": 5,
+      "source": "solutions/order-status-communication/screenshots/manual/05-remove-web-search.jpg",
+      "annotated": "solutions/order-status-communication/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Tools inventory is empty",
+        "Knowledge inventory contains no Search all websites chip"
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 190,
+          "width": 390,
+          "height": 125,
+          "label": "Web search absent from inventory"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "step": 6,
+      "source": "solutions/order-status-communication/screenshots/manual/06-add-aibast-order-status-communication-review-rules.jpg",
+      "annotated": "solutions/order-status-communication/screenshots/manual/annotated/06-add-aibast-order-status-communication-review-rules.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Knowledge chip visibly begins aibast_order-status-communication-review-r"
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 305,
+          "width": 375,
+          "height": 60,
+          "label": "Review-rules knowledge attached"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "step": 7,
+      "source": "solutions/order-status-communication/screenshots/manual/07-add-aibast-order-status-communication-synthetic-records.jpg",
+      "annotated": "solutions/order-status-communication/screenshots/manual/annotated/07-add-aibast-order-status-communication-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Synthetic-records knowledge chip is visible",
+        "Review-rules knowledge chip remains visible",
+        "Two knowledge sources are attached"
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 307,
+          "width": 375,
+          "height": 100,
+          "label": "Two reviewed knowledge sources"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "step": 8,
+      "source": "solutions/order-status-communication/screenshots/manual/08-add-aibast-customer-update.jpg",
+      "annotated": "solutions/order-status-communication/screenshots/manual/annotated/08-add-aibast-customer-update.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "customer-update skill"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 184,
+          "width": 185,
+          "height": 43,
+          "label": "Customer-update skill attached"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "step": 9,
+      "source": "solutions/order-status-communication/screenshots/manual/09-add-aibast-delay-notification.jpg",
+      "annotated": "solutions/order-status-communication/screenshots/manual/annotated/09-add-aibast-delay-notification.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "delay-notification skill",
+        "customer-update skill"
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 184,
+          "width": 355,
+          "height": 43,
+          "label": "Delay-notification skill attached"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "step": 10,
+      "source": "solutions/order-status-communication/screenshots/manual/10-add-aibast-order-lookup.jpg",
+      "annotated": "solutions/order-status-communication/screenshots/manual/annotated/10-add-aibast-order-lookup.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "order-lookup skill",
+        "delay-notification skill",
+        "customer-update skill"
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 184,
+          "width": 350,
+          "height": 84,
+          "label": "Order-lookup skill attached"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "step": 11,
+      "source": "solutions/order-status-communication/screenshots/manual/11-add-aibast-shipment-tracking.jpg",
+      "annotated": "solutions/order-status-communication/screenshots/manual/annotated/11-add-aibast-shipment-tracking.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "shipment-tracking skill",
+        "order-lookup skill",
+        "delay-notification skill",
+        "customer-update skill"
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 184,
+          "width": 375,
+          "height": 84,
+          "label": "Four reviewed skills attached"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "step": 12,
+      "source": "solutions/order-status-communication/screenshots/manual/12-review-inventory.jpg",
+      "annotated": "solutions/order-status-communication/screenshots/manual/annotated/12-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "Four configured skills",
+        "Tools section contains no configured tool",
+        "Two knowledge sources"
+      ],
+      "boxes": [
+        {
+          "x": 1200,
+          "y": 86,
+          "width": 195,
+          "height": 42,
+          "label": "Reviewed model"
+        },
+        {
+          "x": 1025,
+          "y": 181,
+          "width": 375,
+          "height": 84,
+          "label": "Four configured skills"
+        },
+        {
+          "x": 1025,
+          "y": 282,
+          "width": 375,
+          "height": 58,
+          "label": "No configured tools"
+        },
+        {
+          "x": 1025,
+          "y": 388,
+          "width": 375,
+          "height": 90,
+          "label": "Two knowledge sources"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "step": 13,
+      "source": "solutions/order-status-communication/screenshots/manual/13-open-preview.jpg",
+      "annotated": "solutions/order-status-communication/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab",
+        "New chat"
+      ],
+      "boxes": [
+        {
+          "x": 635,
+          "y": 8,
+          "width": 105,
+          "height": 45,
+          "label": "Preview selected"
+        },
+        {
+          "x": 835,
+          "y": 88,
+          "width": 105,
+          "height": 42,
+          "label": "Fresh chat control"
+        }
+      ]
+    },
+    {
+      "id": "hard-os-01",
+      "mode": "hard",
+      "case_id": "OS-01",
+      "step": 14,
+      "source": "solutions/order-status-communication/screenshots/manual/14-os-01.jpg",
+      "annotated": "solutions/order-status-communication/screenshots/manual/annotated/14-os-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "ORD-7810 is marked Watch",
+        "ORD-7811 is marked On Track",
+        "ORD-7812 is marked Shipped",
+        "XPO-884291047",
+        "No order, production schedule, recovery plan, or customer communication was changed or sent"
+      ],
+      "full_case_not_visibly_proven": [
+        "ORD-7813 and the exact DELAYED marker are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 174,
+          "width": 940,
+          "height": 272,
+          "label": "Recorded order-status evidence"
+        },
+        {
+          "x": 286,
+          "y": 452,
+          "width": 940,
+          "height": 126,
+          "label": "No-change authorization gate"
+        }
+      ]
+    },
+    {
+      "id": "hard-os-02",
+      "mode": "hard",
+      "case_id": "OS-02",
+      "step": 15,
+      "source": "solutions/order-status-communication/screenshots/manual/15-os-02.jpg",
+      "annotated": "solutions/order-status-communication/screenshots/manual/annotated/15-os-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "OS-02 / shipment_tracking / ORD-7812 / XPO-884291047",
+        "Loading skill: shipment-tracking",
+        "Called 2 tools"
+      ],
+      "full_case_not_visibly_proven": [
+        "The final user-facing shipment summary and carrier-validation details are outside the captured viewport; this checkpoint proves only visible case routing and recorded identifier retrieval."
+      ],
+      "boxes": [
+        {
+          "x": 315,
+          "y": 408,
+          "width": 920,
+          "height": 130,
+          "label": "OS-02 route and recorded identifiers"
+        }
+      ]
+    },
+    {
+      "id": "hard-os-03",
+      "mode": "hard",
+      "case_id": "OS-03",
+      "step": 16,
+      "source": "solutions/order-status-communication/screenshots/manual/16-os-03.jpg",
+      "annotated": "solutions/order-status-communication/screenshots/manual/annotated/16-os-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Internal Delay Review",
+        "ORD-7813 — John Deere",
+        "No production schedule, shipment, or customer record was changed",
+        "Revised Date 2026-04-08"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact Recorded synthetic recovery options marker is below the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 150,
+          "width": 940,
+          "height": 120,
+          "label": "Internal review and no-change boundary"
+        },
+        {
+          "x": 286,
+          "y": 295,
+          "width": 405,
+          "height": 355,
+          "label": "ORD-7813 delay evidence"
+        }
+      ]
+    },
+    {
+      "id": "hard-os-04",
+      "mode": "hard",
+      "case_id": "OS-04",
+      "step": 17,
+      "source": "solutions/order-status-communication/screenshots/manual/17-os-04.jpg",
+      "annotated": "solutions/order-status-communication/screenshots/manual/annotated/17-os-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Human approval is required before any message is sent",
+        "Approved communication tool is required for email, EDI, portal, or Teams",
+        "External side effect: None — no communication was sent"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Customer Update Drafts heading and exact No email, EDI message marker are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 274,
+          "width": 730,
+          "height": 215,
+          "label": "Approval and no-send gate"
+        },
+        {
+          "x": 286,
+          "y": 516,
+          "width": 955,
+          "height": 64,
+          "label": "Validation before release"
+        }
+      ]
+    },
+    {
+      "id": "hard-draft",
+      "mode": "hard",
+      "step": 18,
+      "source": "solutions/order-status-communication/screenshots/manual/18-confirm-draft.jpg",
+      "annotated": "solutions/order-status-communication/screenshots/manual/annotated/18-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Order Status Manual",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 108,
+          "y": 245,
+          "width": 690,
+          "height": 65,
+          "label": "Target agent remains Draft"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy OS-03 with the final answer visibly showing ORD-7813 and Recorded synthetic recovery options.",
+      "Easy Draft gate filtered to Order Status Pilot with Draft visible.",
+      "Hard step 4 with the Save tooltip visibly stating No unsaved changes."
+    ],
+    "new_learn_step_captures": [
+      "Brainstem skill attached in VS Code Copilot Chat.",
+      "Copilot-only skill attached in VS Code Copilot Chat.",
+      "Brainstem local 4/4 verdict.",
+      "Copilot-only local 4/4 verdict.",
+      "Brainstem deploy response with Draft inventory.",
+      "Copilot-only deploy response with Draft inventory.",
+      "Brainstem final complete verdict.",
+      "Copilot-only final complete verdict."
+    ]
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:order-status-communication",
+    "reviewed_at": "2026-08-09T20:27:38.665-04:00",
+    "method": "Opened the real assisted and manual OS-02 source JPEGs, verified the visible case route, shipment-tracking skill activity, ORD-7812, and XPO-884291047, then regenerated deterministic annotations and ran the fail-closed workshop audits.",
+    "notes": "The OS-02 frames are approved only as partial visual checkpoints for visible routing and recorded identifier retrieval. They do not claim that the final user-facing shipment summary or carrier-validation details are visible; the deterministic machine gate remains authoritative for the full case."
+  }
+}

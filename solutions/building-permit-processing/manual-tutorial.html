@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Build the Building Permit agent manually</title>
+  <title>Build Building Permit Processing Agent manually</title>
   <script>
     (() => {
       const param = new URLSearchParams(window.location.search).get("scoutTheme");
@@ -11,8 +11,46 @@
         param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
       document.documentElement.setAttribute("data-theme", theme);
     })();
+    (() => {
+      const key = "aibast:theme";
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const explicit = param === "dark" || param === "light" ? param : null;
+      let stored = null;
+      try {
+        const candidate = localStorage.getItem(key);
+        stored = candidate === "dark" || candidate === "light" ? candidate : null;
+      } catch (_error) {
+        stored = null;
+      }
+      const theme = explicit || stored || "light";
+      document.documentElement.setAttribute("data-theme", theme);
+      document.addEventListener("DOMContentLoaded", () => {
+        const button = document.querySelector("[data-theme-toggle]");
+        if (!button) return;
+        const render = () => {
+          const dark = document.documentElement.getAttribute("data-theme") === "dark";
+          button.textContent = dark ? "Use light mode" : "Use dark mode";
+          button.setAttribute("aria-pressed", String(dark));
+        };
+        button.addEventListener("click", () => {
+          const next =
+            document.documentElement.getAttribute("data-theme") === "dark"
+              ? "light"
+              : "dark";
+          document.documentElement.setAttribute("data-theme", next);
+          try {
+            localStorage.setItem(key, next);
+          } catch (_error) {
+            /* The visible theme still changes when storage is unavailable. */
+          }
+          render();
+        });
+        render();
+      });
+    })();
   </script>
   <style>
+
     :root {
       color-scheme: light;
       --cp-bg: #f7f4ef;
@@ -75,11 +113,11 @@
       line-height: 1.55;
     }
     a { color: var(--cp-link); }
-    button, a.button { font: inherit; }
+    button, .button { font: inherit; }
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 20;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -88,17 +126,17 @@
       border-bottom: 1px solid var(--cp-border);
       background: var(--cp-panel-strong);
     }
-    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+    .topbar-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 750; }
     .brand-mark {
       display: grid;
       width: 32px;
       height: 32px;
       place-items: center;
-      border-radius: 0.625rem;
+      border-radius: 10px;
       background: var(--cp-accent);
       color: var(--cp-accent-fg);
     }
-    .actions { display: flex; gap: 8px; flex-wrap: wrap; }
     .button {
       display: inline-flex;
       align-items: center;
@@ -106,319 +144,882 @@
       min-height: 38px;
       padding: 8px 14px;
       border: 1px solid var(--cp-border-strong);
-      border-radius: 0.625rem;
+      border-radius: 10px;
       background: var(--cp-surface);
       color: var(--cp-text);
       text-decoration: none;
       cursor: pointer;
     }
-    .button:hover { border-color: var(--cp-accent); }
     .button.primary {
       border-color: var(--cp-accent);
       background: var(--cp-accent);
       color: var(--cp-accent-fg);
     }
-    .button.primary:hover { background: var(--cp-accent-hover); }
-    .layout {
-      display: grid;
-      grid-template-columns: 270px minmax(0, 840px);
-      gap: 32px;
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 32px 24px 80px;
-    }
-    .sidebar { position: sticky; top: 82px; align-self: start; max-height: calc(100vh - 104px); overflow: auto; }
-    .sidebar h2 { margin: 0 0 12px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--cp-text-muted); }
-    .progress {
-      height: 8px;
-      margin-bottom: 16px;
-      overflow: hidden;
-      border-radius: 0.625rem;
-      background: var(--cp-border);
-    }
-    .progress > span { display: block; width: 0; height: 100%; background: var(--cp-accent); transition: width 180ms ease; }
-    .toc { display: grid; gap: 4px; }
-    .toc a {
-      padding: 8px 10px;
-      border-left: 3px solid var(--cp-border);
-      color: var(--cp-text-muted);
-      text-decoration: none;
-      font-size: 13px;
-    }
-    .toc a:hover, .toc a.active { border-left-color: var(--cp-accent); color: var(--cp-text); background: var(--cp-accent-soft); }
+    .page { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 40px 0 80px; }
     .hero {
       padding: 32px;
       border: 1px solid var(--cp-border);
-      border-radius: 16px;
+      border-radius: 18px;
       background: var(--cp-surface);
+      box-shadow: var(--cp-shadow);
     }
-    .eyebrow { margin: 0 0 8px; color: var(--cp-accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; font-size: 12px; }
-    h1 { margin: 0; font-size: clamp(32px, 6vw, 54px); line-height: 1.04; letter-spacing: -0.035em; }
-    .lede { max-width: 720px; margin: 18px 0 0; color: var(--cp-text-muted); font-size: 18px; }
-    .facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
-    .fact { padding: 12px; border: 1px solid var(--cp-border); border-radius: 0.625rem; background: var(--cp-surface-soft); }
-    .fact strong { display: block; font-size: 20px; }
-    .fact span { color: var(--cp-text-muted); font-size: 12px; }
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--cp-accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+    h1 { margin: 0; font-size: clamp(34px, 7vw, 64px); line-height: 1; letter-spacing: -.045em; }
+    h2 { margin-top: 42px; }
+    .lede { max-width: 760px; color: var(--cp-text-muted); font-size: 18px; }
     .notice {
-      margin-top: 20px;
-      padding: 16px;
+      margin-top: 18px;
+      padding: 15px;
       border-left: 4px solid var(--cp-warning);
       background: var(--cp-surface-soft);
     }
-    .section-heading { margin: 48px 0 16px; font-size: 28px; }
-    .step {
-      scroll-margin-top: 92px;
-      margin: 0 0 28px;
-      overflow: hidden;
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .card {
       border: 1px solid var(--cp-border);
-      border-radius: 16px;
+      border-radius: 14px;
       background: var(--cp-surface);
+      padding: 20px;
     }
-    .step-head { display: flex; align-items: flex-start; gap: 14px; padding: 20px 22px; border-bottom: 1px solid var(--cp-border); }
-    .step-number {
-      display: grid;
-      flex: 0 0 36px;
-      width: 36px;
-      height: 36px;
-      place-items: center;
-      border-radius: 0.625rem;
-      background: var(--cp-accent-soft);
-      color: var(--cp-accent);
-      font-weight: 800;
+    .card h3 { margin-top: 0; }
+    .muted { color: var(--cp-text-muted); }
+    .status { color: var(--cp-accent); font-weight: 750; }
+    .progress { height: 8px; overflow: hidden; border-radius: 999px; background: var(--cp-border); }
+    .progress span { display: block; width: 0; height: 100%; background: var(--cp-accent); }
+    @media (max-width: 760px) {
+      .grid { grid-template-columns: 1fr; }
+      .topbar { align-items: flex-start; padding: 12px 16px; }
+      .topbar-actions { justify-content: flex-start; }
+      .page { width: min(100% - 24px, 1120px); padding-top: 24px; }
+      .hero { padding: 24px 20px; }
     }
-    .step h3 { margin: 0; font-size: 22px; }
-    .step-kicker { margin-top: 4px; color: var(--cp-text-muted); font-size: 13px; }
+
+    .layout { display: grid; grid-template-columns: 270px minmax(0, 840px); gap: 32px; max-width: 1180px; margin: 0 auto; padding: 32px 24px 80px; }
+    .sidebar { position: sticky; top: 82px; align-self: start; max-height: calc(100vh - 104px); overflow: auto; }
+    .toc { display: grid; gap: 4px; margin-top: 14px; }
+    .toc a { padding: 7px 9px; border-left: 3px solid var(--cp-border); color: var(--cp-text-muted); text-decoration: none; font-size: 13px; }
+    .toc a:hover { border-left-color: var(--cp-accent); color: var(--cp-text); }
+    .step { scroll-margin-top: 90px; margin: 0 0 28px; overflow: hidden; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
+    .step header { display: grid; grid-template-columns: 36px 1fr auto; gap: 14px; align-items: center; padding: 20px 22px; border-bottom: 1px solid var(--cp-border); }
+    .step header > span { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 10px; background: var(--cp-accent-soft); color: var(--cp-accent); font-weight: 800; }
+    .step h3, .step header p { margin: 0; }
+    .step header p { color: var(--cp-text-muted); font-size: 13px; }
     .step-body { padding: 22px; }
     .instruction-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
-    .instruction { padding: 14px; border-radius: 0.625rem; background: var(--cp-surface-soft); }
+    .instruction { padding: 14px; border-radius: 10px; background: var(--cp-surface-soft); }
     .instruction strong { display: block; margin-bottom: 6px; }
+    .instruction-heading { display: flex; align-items: start; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
+    .instruction-heading strong { margin: 0; }
+    .copy-button { min-height: 34px; padding: 6px 10px; font-size: 13px; }
+    .copy-source { display: none; }
     .instruction.expected { border-left: 4px solid var(--cp-success); }
-    .instruction.caution { border-left: 4px solid var(--cp-warning); }
-    .shot {
-      display: block;
-      width: 100%;
-      border: 1px solid var(--cp-border);
-      border-radius: 0.625rem;
-      background: var(--cp-surface-soft);
-    }
-    .step-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
-    .complete {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--cp-text-muted);
-      cursor: pointer;
-    }
-    .complete input { width: 18px; height: 18px; accent-color: var(--cp-accent); }
-    .troubleshooting {
-      padding: 24px;
-      border: 1px solid var(--cp-border);
-      border-radius: 16px;
-      background: var(--cp-surface);
-    }
-    details { padding: 14px 0; border-bottom: 1px solid var(--cp-border); }
-    details:last-child { border-bottom: 0; }
+    .shot-link { display: block; text-align: center; }
+    .shot { display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }
+    .capture-meta { margin: 8px 0 0; color: var(--cp-text-muted); font-size: 12px; text-align: center; }
+    .reference-shot-wrap { margin: 16px 0; }
+    .quality-warning { margin: 10px 0 0; padding: 14px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft); color: var(--cp-text-muted); text-align: left; }
+    .quality-warning strong { color: var(--cp-text); }
+    .missing { padding: 32px; border: 2px dashed var(--cp-warning); border-radius: 10px; color: var(--cp-text-muted); }
+    .look-for { padding: 20px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
+    .look-for strong { color: var(--cp-text); }
+    .look-for p { margin: 8px 0 0; }
+    .report-button { border-color: var(--cp-accent); color: var(--cp-accent); }
+    .feedback-notice { margin-top: 14px; padding: 14px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
+    .step footer { display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+    .achievements-manual-note { margin-top: 10px; color: var(--cp-text-muted); font-size: 13px; }
+    .troubleshooting details { padding: 14px 0; border-bottom: 1px solid var(--cp-border); }
     summary { cursor: pointer; font-weight: 700; }
-    code {
-      padding: 2px 5px;
-      border-radius: 0.625rem;
-      background: var(--cp-surface-soft);
-      font-family: Consolas, "Courier New", Courier, monospace;
-    }
-    .footer { margin-top: 42px; color: var(--cp-text-muted); font-size: 13px; }
-    @media (max-width: 900px) {
-      .layout { grid-template-columns: 1fr; }
-      .sidebar { position: static; max-height: none; }
-      .toc { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    @media (max-width: 620px) {
-      .topbar { align-items: flex-start; padding: 12px 16px; }
-      .brand span:last-child { display: none; }
-      .layout { padding: 20px 14px 64px; }
-      .hero { padding: 24px 20px; }
-      .facts, .instruction-grid, .toc { grid-template-columns: 1fr; }
-      .step-body { padding: 16px; }
-    }
+    @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } .sidebar { position: static; max-height: none; } }
+    @media (max-width: 620px) { .instruction-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
   <header class="topbar">
-    <div class="brand"><span class="brand-mark">A</span><span>AIBAST Agents Library</span></div>
-    <div class="actions">
-      <a class="button" href="screenshots/manual/manual-build-walkthrough.gif">Watch all 24 steps</a>
-      <a class="button primary" id="bundle-link" href="exports/building-permit-processing-source.zip">Download source bundle</a>
-    </div>
+    <div class="brand"><span class="brand-mark">A</span><span>AIBAST manual workshop</span></div>
+    <div class="topbar-actions"><button class="button" type="button" data-theme-toggle aria-pressed="false">Use dark mode</button><a class="button" href="screenshots/manual/manual-build-walkthrough.gif">Watch the manual film</a> <a class="button primary" href="exports/building-permit-processing-source.zip">Download source bundle</a></div>
   </header>
-
   <div class="layout">
     <aside class="sidebar">
-      <h2 id="progress-label">0 of 24 complete</h2>
+      <strong id="progress-label">0 of 24 complete</strong>
       <div class="progress"><span id="progress-bar"></span></div>
-      <nav class="toc" id="toc" aria-label="Tutorial steps"></nav>
+      <p class="achievements-manual-note">Hard-mode progress earns self-paced local achievement points on this device.</p>
+      <p class="achievements-manual-note" id="achievements-manual-toast" role="status" aria-live="polite" aria-atomic="true"></p>
+      <nav class="toc" aria-label="Tutorial actions"><a href="#step-1">1. Create a blank Copilot Studio agent</a>
+<a href="#step-2">2. Name the manual agent</a>
+<a href="#step-3">3. Enter the full global instruction policy</a>
+<a href="#step-4">4. Save the instruction changes</a>
+<a href="#step-5">5. Open the knowledge-source picker</a>
+<a href="#step-6">6. Upload the synthetic permit records</a>
+<a href="#step-7">7. Wait for Dataverse ingestion</a>
+<a href="#step-8">8. Upload the rules and schedules</a>
+<a href="#step-9">9. Verify both knowledge sources</a>
+<a href="#step-10">10. Open the SKILL.md uploader</a>
+<a href="#step-11">11. Add backlog and complaint-risk logic</a>
+<a href="#step-12">12. Add intake triage and routing</a>
+<a href="#step-13">13. Add proactive applicant updates</a>
+<a href="#step-14">14. Add permit status and zoning detail</a>
+<a href="#step-15">15. Add the review checklist</a>
+<a href="#step-16">16. Diagnose a SKILL.md validation failure</a>
+<a href="#step-17">17. Correct and add inspector coverage</a>
+<a href="#step-18">18. Add deterministic fee estimates</a>
+<a href="#step-19">19. Review the available model choices</a>
+<a href="#step-20">20. Match the Easy-mode model</a>
+<a href="#step-21">21. Audit every skill description</a>
+<a href="#step-22">22. Open Preview</a>
+<a href="#step-23">23. Run the canonical backlog prompt</a>
+<a href="#step-24">24. Verify the same permit and decision</a></nav>
     </aside>
-
     <main>
       <section class="hero">
-        <p class="eyebrow">Hard mode · AI skeptic edition</p>
-        <h1>Build the permit agent manually.</h1>
-        <p class="lede">No plugin magic and no hidden deployment step. Create the same seven-skill agent by hand, prove it against the canonical permit backlog prompt, and compare the effort with Easy mode.</p>
-        <div class="facts">
-          <div class="fact"><strong>24</strong><span>captured actions</span></div>
-          <div class="fact"><strong>7</strong><span>skills uploaded</span></div>
-          <div class="fact"><strong>2</strong><span>knowledge files</span></div>
-          <div class="fact"><strong>1</strong><span>parity test</span></div>
+        <p class="eyebrow">Hard mode · literal browser construction</p>
+        <h1>Build Building Permit Processing Agent manually.</h1>
+        <p class="lede">No PAC CLI, YAML import, or plugin architect. Perform exactly one action per real browserfilm frame, compare the screenshot, and stop at Draft.</p>
+        <div class="notice"><strong>Synthetic disclosure:</strong> this is qualitative workflow evidence using packaged synthetic inputs. It is not a customer KPI or a live-system result.</div>
+        <div class="feedback-notice"><strong>Found something inaccurate?</strong> Use <em>Report an issue</em> on that step. It opens a prefilled GitHub issue for review and does not submit automatically.</div>
+        <!-- No pending evidence. -->
+      </section>
+      <h2>Build and verify</h2>
+      <article class="step" id="step-1">
+        <header><span>1</span><div><h3>Create a blank Copilot Studio agent</h3><p>Step 1 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 1: Create a blank Copilot Studio agent" data-report-expected="A blank Copilot Studio agent is visible in the captured Draft workspace." data-report-evidence="solutions/building-permit-processing/screenshots/manual/01-create-blank-agent.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Create a blank Copilot Studio agent</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>A blank Copilot Studio agent is visible in the captured Draft workspace.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/annotated/hard-step-01.png" download="hard-step-01.png"><img class="shot" data-evidence-status="reusable" src="screenshots/annotated/hard-step-01.png" alt="Create a blank Copilot Studio agent annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Untitled Agent is visible in the editable name field.; The instruction area shows the blank-agent starter guidance.. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/01-create-blank-agent.jpg" download="01-create-blank-agent.jpg">Download original</a>.</p>
+          <footer>
+            <a href="deployment.json" download>Download source: Deployment</a>
+            <label><input class="complete" type="checkbox" data-step="1"> Mark complete</label>
+          </footer>
         </div>
-        <div class="notice"><strong>Scope:</strong> this tutorial uses synthetic permit data. The manual duplicate remains Draft; the separately validated Easy-mode pilot is the published customer-facing agent.</div>
+      </article>
+<article class="step" id="step-2">
+        <header><span>2</span><div><h3>Name the manual agent</h3><p>Step 2 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 2: Name the manual agent" data-report-expected="The page header shows the recorded manual build name: Building Permit Manual Build." data-report-evidence="solutions/building-permit-processing/screenshots/manual/02-name-agent.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-2">Copy agent name</button><pre class="copy-source" id="hard-copy-2" hidden>Building Permit Manual Build</pre></div><span>Name the manual agent</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The page header shows the recorded manual build name: Building Permit Manual Build.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/annotated/hard-step-02.png" download="hard-step-02.png"><img class="shot" data-evidence-status="reusable" src="screenshots/annotated/hard-step-02.png" alt="Name the manual agent annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Building Permit Manual Build is visible in the editable name field.. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/02-name-agent.jpg" download="02-name-agent.jpg">Download original</a>.</p>
+          <footer>
+            <a href="deployment.json" download>Download source: Deployment</a>
+            <label><input class="complete" type="checkbox" data-step="2"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-3">
+        <header><span>3</span><div><h3>Enter the full global instruction policy</h3><p>Step 3 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 3: Enter the full global instruction policy" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/building-permit-processing/screenshots/manual/03-enter-instructions.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-3">Copy instructions</button><pre class="copy-source" id="hard-copy-3" hidden># Building Permit Manual Build - Global Instructions
+
+## Role
+
+You are Building Permit Manual Build, an operational decision-support agent for a
+fictional local-government development services office. Help permit
+technicians, reviewers, customer-service staff, managers, and inspectors
+understand permit intake, review clocks, applicant updates, permit status,
+review checklists, inspection coverage, and estimated fees.
+
+## Pilot data boundary
+
+- Use only the synthetic records, schedules, standards, and procedures
+  packaged with this project.
+- Treat 2026-08-07 as the fixed snapshot date. Do not recalculate ages,
+  overdue days, complaint-risk rankings, inspection dates, or intake due dates
+  from the current date.
+- Every applicant, address, parcel, permit, reviewer, inspector, fee, zoning
+  standard, and date is fictional.
+- Never claim access to Dynamics 365, SharePoint, Teams, an MCP server, or any
+  other live municipal or customer system.
+- End every substantive answer with:
+  `&gt; Synthetic pilot data as of 2026-08-07; no live municipal system was accessed or changed.`
+
+## Natural-language routing
+
+Decide the workflow from the user&#x27;s intent. Never require an operation name or
+a permit ID when a street, applicant, project type, job nickname, or work
+context identifies the record.
+
+- Use permit backlog analysis for applications sitting too long, statutory
+  clocks, complaint risk, or &quot;who will call first.&quot;
+- Use intake triage for new arrivals, documents, duplicates, routing desks, or
+  target dates. &quot;The restaurant fit-out on Harbor Way&quot; is BP-2025-0106.
+- Use applicant updates for proactive status drafts. Never claim an update was
+  sent.
+- Use permit status for a permit, applicant, address, parcel, project, or full
+  dashboard request.
+- Use review checklist for review scope or required review items.
+- Use inspector assignment for the inspection board, specialties, capacity,
+  zones, or job coverage. &quot;The solar job&quot; is BP-2025-0103.
+- Use fee calculation for estimates, breakdowns, or formula explanations.
+
+Preserve all seven portable-source workflows: `permit_backlog`,
+`intake_triage`, `applicant_updates`, `permit_status`, `review_checklist`,
+`inspector_assignment`, and `fee_calculation`.
+
+Continue the agentic loop when a request needs more than one workflow. Ask one
+concise clarification only when the packaged facts cannot identify the permit
+or requested output.
+
+## Decision and safety rules
+
+1. Lead with the operational decision or most important finding, then the
+   supporting facts.
+2. Name the relevant permit ID and applicant, reviewer, or inspector.
+3. Report facts and recommendations only. Never approve, deny, issue, reopen,
+   or modify a permit; accept or reject a submission in a system; assign a
+   reviewer or inspector; book, reschedule, or cancel an inspection; send a
+   message; or invoice, collect, waive, reduce, or refund a fee.
+4. Distinguish recommendations from completed actions with phrases such as
+   &quot;Recommended decision,&quot; &quot;Draft update,&quot; and &quot;Suggested next step.&quot;
+5. Do not invent permits, applicants, parcels, documents, routing desks,
+   standards, reviewers, inspectors, dates, statuses, or calculations.
+6. Quote zoning standards as synthetic references, not compliance findings.
+   Never provide legal advice or certify code compliance.
+7. For unknown IDs or ambiguous projects, state what is missing and list the
+   known matching records rather than substituting another permit.
+8. Fees are estimates from declared valuation using the packaged synthetic
+   schedule, never invoices or payment records.
+
+## Response style
+
+Use concise Markdown. Prefer a short decision statement followed by bullets or
+a compact table. Use dates as YYYY-MM-DD and currency with separators. Avoid
+generic preambles, filler, and unsupported policy language.
+
+## Customer-safe demo language
+
+When a seller asks for copy-ready demo wording, return these statements without
+adding a live-deployment, customer-validation, or production-results claim:
+
+- **Opening:** This is a Draft workshop agent using fictional permit records.
+  It is not connected to your systems and cannot send messages or change
+  permits.
+- **During the demo:** The agent is recommending a next step from synthetic
+  data. A person must review every recommendation before any real action.
+- **Close:** This demonstrates the workflow shape only. Production use requires
+  approved read-only connections, security and governance review, telemetry,
+  and separate human approval before any write.
+
+## Production seams
+
+A production implementation can replace the packaged permit records with
+Dynamics 365 Customer Service, plan and policy documents with SharePoint, and
+notifications or field coordination with Microsoft Teams-backed tools. These
+are future integration seams only; no live connector is configured. Start any
+approved production connection in read-only mode. Keep external writes disabled
+until they pass separate governance review and require explicit human approval.
+</pre></div><span>Enter the full global instruction policy</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/annotated/hard-step-03.png" download="hard-step-03.png"><img class="shot" data-evidence-status="reusable" src="screenshots/annotated/hard-step-03.png" alt="Enter the full global instruction policy annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: The natural-language routing policy is visible in the instruction editor.; Decision and safety rules are visible in the instruction editor.. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/03-enter-instructions.jpg" download="03-enter-instructions.jpg">Download original</a>.</p>
+          <footer>
+            <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
+            <label><input class="complete" type="checkbox" data-step="3"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-4">
+        <header><span>4</span><div><h3>Save the instruction changes</h3><p>Step 4 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 4: Save the instruction changes" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/building-permit-processing/screenshots/manual/04-save-instructions.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Save the instruction changes</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/annotated/hard-step-04.png" download="hard-step-04.png"><img class="shot" data-evidence-status="reusable" src="screenshots/annotated/hard-step-04.png" alt="Save the instruction changes annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: The populated instruction policy remains visible.; A Saving indicator is visible beside the save control.. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/04-save-instructions.jpg" download="04-save-instructions.jpg">Download original</a>.</p>
+          <footer>
+            <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
+            <label><input class="complete" type="checkbox" data-step="4"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-5">
+        <header><span>5</span><div><h3>Open the knowledge-source picker</h3><p>Step 5 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 5: Open the knowledge-source picker" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/building-permit-processing/screenshots/manual/05-open-knowledge-upload.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Open the knowledge-source picker</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/annotated/hard-step-05.png" download="hard-step-05.png"><img class="shot" data-evidence-status="reusable" src="screenshots/annotated/hard-step-05.png" alt="Open the knowledge-source picker annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: The Knowledge section and its add control are visibly selected.. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/05-open-knowledge-upload.jpg" download="05-open-knowledge-upload.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="5"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-6">
+        <header><span>6</span><div><h3>Upload the synthetic permit records</h3><p>Step 6 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 6: Upload the synthetic permit records" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/building-permit-processing/screenshots/manual/06-select-records-file.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Upload the synthetic permit records</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/annotated/hard-step-06.png" download="hard-step-06.png"><img class="shot" data-evidence-status="reusable" src="screenshots/annotated/hard-step-06.png" alt="Upload the synthetic permit records annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: aibast_building-permit-synthetic-records.md is visibly selected in the upload dialog.. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/06-select-records-file.jpg" download="06-select-records-file.jpg">Download original</a>.</p>
+          <footer>
+            <a href="copilot-studio/capabilities/knowledge/files/aibast_building-permit-synthetic-records.md" download>Download source: Aibast Building Permit Synthetic Records</a>
+            <label><input class="complete" type="checkbox" data-step="6"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-7">
+        <header><span>7</span><div><h3>Wait for Dataverse ingestion</h3><p>Step 7 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 7: Wait for Dataverse ingestion" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/07-records-file-added.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Wait for Dataverse ingestion</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/annotated/hard-step-07.png" download="hard-step-07.png"><img class="shot" data-evidence-status="reusable" src="screenshots/annotated/hard-step-07.png" alt="Wait for Dataverse ingestion annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: aibast_building-permit-synthetic-records.md is visible in the Knowledge inventory.. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/07-records-file-added.jpg" download="07-records-file-added.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="7"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-8">
+        <header><span>8</span><div><h3>Upload the rules and schedules</h3><p>Step 8 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 8: Upload the rules and schedules" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/building-permit-processing/screenshots/manual/08-select-rules-file.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Upload the rules and schedules</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/annotated/hard-step-08.png" download="hard-step-08.png"><img class="shot" data-evidence-status="reusable" src="screenshots/annotated/hard-step-08.png" alt="Upload the rules and schedules annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: aibast_permit-rules-and-schedules.md is visibly selected in the upload dialog.. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/08-select-rules-file.jpg" download="08-select-rules-file.jpg">Download original</a>.</p>
+          <footer>
+            <a href="copilot-studio/capabilities/knowledge/files/aibast_permit-rules-and-schedules.md" download>Download source: Aibast Permit Rules And Schedules</a>
+            <label><input class="complete" type="checkbox" data-step="8"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-9">
+        <header><span>9</span><div><h3>Verify both knowledge sources</h3><p>Step 9 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 9: Verify both knowledge sources" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/building-permit-processing/screenshots/manual/09-two-knowledge-files-added.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Verify both knowledge sources</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/annotated/hard-step-09.png" download="hard-step-09.png"><img class="shot" data-evidence-status="reusable" src="screenshots/annotated/hard-step-09.png" alt="Verify both knowledge sources annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Both reviewed knowledge filenames are visible in the Knowledge inventory.. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/09-two-knowledge-files-added.jpg" download="09-two-knowledge-files-added.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="9"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-10">
+        <header><span>10</span><div><h3>Open the SKILL.md uploader</h3><p>Step 10 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 10: Open the SKILL.md uploader" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 7 skills." data-report-evidence="solutions/building-permit-processing/screenshots/manual/10-open-skill-upload.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Open the SKILL.md uploader</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 7 skills.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/annotated/hard-step-10.png" download="hard-step-10.png"><img class="shot" data-evidence-status="reusable" src="screenshots/annotated/hard-step-10.png" alt="Open the SKILL.md uploader annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: The Add skill dialog is open on the Upload a skill tab.; The SKILL.md file requirements are visible.. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/10-open-skill-upload.jpg" download="10-open-skill-upload.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="10"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-11">
+        <header><span>11</span><div><h3>Add backlog and complaint-risk logic</h3><p>Step 11 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 11: Add backlog and complaint-risk logic" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/11-add-backlog-skill.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add backlog and complaint-risk logic</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/annotated/hard-step-11.png" download="hard-step-11.png"><img class="shot" data-evidence-status="reusable" src="screenshots/annotated/hard-step-11.png" alt="Add backlog and complaint-risk logic annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: permit-backlog-and-complaint-risk is visible in the Skills inventory.. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/11-add-backlog-skill.jpg" download="11-add-backlog-skill.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="11"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-12">
+        <header><span>12</span><div><h3>Add intake triage and routing</h3><p>Step 12 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 12: Add intake triage and routing" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/12-add-intake-skill.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add intake triage and routing</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/annotated/hard-step-12.png" download="hard-step-12.png"><img class="shot" data-evidence-status="reusable" src="screenshots/annotated/hard-step-12.png" alt="Add intake triage and routing annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: intake-triage-and-review-routing is visible in the Skills inventory.. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/12-add-intake-skill.jpg" download="12-add-intake-skill.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="12"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-13">
+        <header><span>13</span><div><h3>Add proactive applicant updates</h3><p>Step 13 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 13: Add proactive applicant updates" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/13-add-applicant-updates-skill.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add proactive applicant updates</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/annotated/hard-step-13.png" download="hard-step-13.png"><img class="shot" data-evidence-status="reusable" src="screenshots/annotated/hard-step-13.png" alt="Add proactive applicant updates annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: proactive-applicant-updates is visible in the Skills inventory.. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/13-add-applicant-updates-skill.jpg" download="13-add-applicant-updates-skill.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="13"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-14">
+        <header><span>14</span><div><h3>Add permit status and zoning detail</h3><p>Step 14 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 14: Add permit status and zoning detail" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/14-add-permit-status-skill.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add permit status and zoning detail</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/annotated/hard-step-14.png" download="hard-step-14.png"><img class="shot" data-evidence-status="reusable" src="screenshots/annotated/hard-step-14.png" alt="Add permit status and zoning detail annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: permit-status-and-zoning-detail is visible in the Skills inventory.. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/14-add-permit-status-skill.jpg" download="14-add-permit-status-skill.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="14"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-15">
+        <header><span>15</span><div><h3>Add the review checklist</h3><p>Step 15 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 15: Add the review checklist" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 7 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/building-permit-processing/screenshots/manual/15-add-checklist-skill.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add the review checklist</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Sonnet 4.6, 7 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/annotated/hard-step-15.png" download="hard-step-15.png"><img class="shot" data-evidence-status="reusable" src="screenshots/annotated/hard-step-15.png" alt="Add the review checklist annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: permit-review-checklist is visible in the Skills inventory.. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/15-add-checklist-skill.jpg" download="15-add-checklist-skill.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="15"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-16">
+        <header><span>16</span><div><h3>Diagnose a SKILL.md validation failure</h3><p>Step 16 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 16: Diagnose a SKILL.md validation failure" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 7 skills." data-report-evidence="solutions/building-permit-processing/screenshots/manual/16-inspector-skill-validation-error.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Diagnose a SKILL.md validation failure</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 7 skills.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/annotated/hard-step-16.png" download="hard-step-16.png"><img class="shot" data-evidence-status="reusable" src="screenshots/annotated/hard-step-16.png" alt="Diagnose a SKILL.md validation failure annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: The Frontmatter incomplete validation message is visible.; The message identifies the missing name and description fields.. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/16-inspector-skill-validation-error.jpg" download="16-inspector-skill-validation-error.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="16"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-17">
+        <header><span>17</span><div><h3>Correct and add inspector coverage</h3><p>Step 17 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 17: Correct and add inspector coverage" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/17-retry-inspector-skill.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Correct and add inspector coverage</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/annotated/hard-step-17.png" download="hard-step-17.png"><img class="shot" data-evidence-status="reusable" src="screenshots/annotated/hard-step-17.png" alt="Correct and add inspector coverage annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: inspector-board-and-coverage is visible in the Skills inventory after the retry.. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/17-retry-inspector-skill.jpg" download="17-retry-inspector-skill.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="17"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-18">
+        <header><span>18</span><div><h3>Add deterministic fee estimates</h3><p>Step 18 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 18: Add deterministic fee estimates" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/18-add-fee-skill.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add deterministic fee estimates</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/annotated/hard-step-18.png" download="hard-step-18.png"><img class="shot" data-evidence-status="reusable" src="screenshots/annotated/hard-step-18.png" alt="Add deterministic fee estimates annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: synthetic-permit-fee-estimate is visible in the Skills inventory.. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/18-add-fee-skill.jpg" download="18-add-fee-skill.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="18"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-19">
+        <header><span>19</span><div><h3>Review the available model choices</h3><p>Step 19 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 19: Review the available model choices" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 7 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/building-permit-processing/screenshots/manual/19-open-model-picker.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Review the available model choices</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Sonnet 4.6, 7 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/annotated/hard-step-19.png" download="hard-step-19.png"><img class="shot" data-evidence-status="reusable" src="screenshots/annotated/hard-step-19.png" alt="Review the available model choices annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: The model picker is open.; Claude Sonnet 4.6 is visibly available.. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/19-open-model-picker.jpg" download="19-open-model-picker.jpg">Download original</a>.</p>
+          <footer>
+            <a href="deployment.json" download>Download source: Deployment</a>
+            <label><input class="complete" type="checkbox" data-step="19"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-20">
+        <header><span>20</span><div><h3>Match the Easy-mode model</h3><p>Step 20 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 20: Match the Easy-mode model" data-report-expected="The model picker or inventory shows Claude Sonnet 4.6, matching the recorded evidence." data-report-evidence="solutions/building-permit-processing/screenshots/manual/20-select-sonnet-model.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Match the Easy-mode model</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The model picker or inventory shows Claude Sonnet 4.6, matching the recorded evidence.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/annotated/hard-step-20.png" download="hard-step-20.png"><img class="shot" data-evidence-status="reusable" src="screenshots/annotated/hard-step-20.png" alt="Match the Easy-mode model annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Claude Sonnet 4.6 is visibly selected as the model.. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/20-select-sonnet-model.jpg" download="20-select-sonnet-model.jpg">Download original</a>.</p>
+          <footer>
+            <a href="deployment.json" download>Download source: Deployment</a>
+            <label><input class="complete" type="checkbox" data-step="20"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-21">
+        <header><span>21</span><div><h3>Audit every skill description</h3><p>Step 21 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 21: Audit every skill description" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 7 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/building-permit-processing/screenshots/manual/21-review-all-skills.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Audit every skill description</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Sonnet 4.6, 7 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/annotated/hard-step-21.png" download="hard-step-21.png"><img class="shot" data-evidence-status="reusable" src="screenshots/annotated/hard-step-21.png" alt="Audit every skill description annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: The expanded Skills panel visibly lists reviewed skill names and descriptions.. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/21-review-all-skills.jpg" download="21-review-all-skills.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="21"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-22">
+        <header><span>22</span><div><h3>Open Preview</h3><p>Step 22 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 22: Open Preview" data-report-expected="A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass." data-report-evidence="solutions/building-permit-processing/screenshots/manual/22-open-preview.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Open Preview</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/annotated/hard-step-22.png" download="hard-step-22.png"><img class="shot" data-evidence-status="reusable" src="screenshots/annotated/hard-step-22.png" alt="Open Preview annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: The Preview tab is active.; Building Permit Manual Build displays its Preview greeting.. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/22-open-preview.jpg" download="22-open-preview.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="22"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-23">
+        <header><span>23</span><div><h3>Run the canonical backlog prompt</h3><p>Step 23 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 23: Run the canonical backlog prompt" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/23-run-canonical-prompt.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Run the canonical backlog prompt</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/annotated/hard-step-23.png" download="hard-step-23.png"><img class="shot" data-evidence-status="reusable" src="screenshots/annotated/hard-step-23.png" alt="Run the canonical backlog prompt annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: The canonical backlog prompt is visibly submitted.; permit-backlog-and-complaint-risk is visibly loading.. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/23-run-canonical-prompt.jpg" download="23-run-canonical-prompt.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="23"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-24">
+        <header><span>24</span><div><h3>Verify the same permit and decision</h3><p>Step 24 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 24: Verify the same permit and decision" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/24-verify-preview-result.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Verify the same permit and decision</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/annotated/hard-step-24.png" download="hard-step-24.png"><img class="shot" data-evidence-status="reusable" src="screenshots/annotated/hard-step-24.png" alt="Verify the same permit and decision annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: The result visibly says three permits are overdue.; Metro School District and BP-2025-0104 are visibly identified as first.. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/24-verify-preview-result.jpg" download="24-verify-preview-result.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="24"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+      <h2 id="troubleshooting">Troubleshooting</h2>
+      <section class="card troubleshooting">
+        <details open><summary>A screenshot or browserfilm frame is missing</summary><p>Stop. Do not invent, recreate, or substitute an image. Capture the real frame, update the browserfilm manifest, and regenerate without <code>--allow-pending</code>.</p></details>
+        <details><summary>A knowledge file is still processing</summary><p>Wait for ingestion to finish before Preview. A partial answer is not evidence.</p></details>
+        <details><summary>A skill upload fails</summary><p>Use the linked raw <code>SKILL.md</code>. Fix the reviewed source deliberately; do not silently skip the action.</p></details>
+        <details><summary>The model differs from Easy mode</summary><p>Record the substitution and stop the parity claim until Easy and Hard use the same reviewed model.</p></details>
+        <details><summary>The Preview answer misses an identifier</summary><p>Mark the recorded case failed, inspect instructions and inventory, then replay the exact prompt in a fresh conversation.</p></details>
+        <details><summary>Should I publish?</summary><p>No. Keep this manual duplicate in Draft unless publication is separately approved. Do not choose Publish as part of this tutorial.</p></details>
       </section>
-
-      <h2 class="section-heading">Build and verify</h2>
-      <div id="steps"></div>
-
-      <h2 class="section-heading" id="troubleshooting">Troubleshooting</h2>
-      <section class="troubleshooting">
-        <details open>
-          <summary>Copilot Studio says the skill file has invalid frontmatter</summary>
-          <p>Download the raw file again and confirm the filename is exactly <code>SKILL.md</code>. Upload the file itself—not the containing folder or the <code>.mcs.yml</code> source component.</p>
-        </details>
-        <details>
-          <summary>A knowledge file appears but is still processing</summary>
-          <p>Wait for ingestion to finish before testing. Preview can return incomplete answers while a knowledge source is still being indexed.</p>
-        </details>
-        <details>
-          <summary>The model picker does not show Claude Sonnet 4.6</summary>
-          <p>Select an approved model available in your environment, then record the substitution. Easy and Hard mode should use the same model when you are comparing parity.</p>
-        </details>
-        <details>
-          <summary>The response names the wrong permit</summary>
-          <p>Confirm both knowledge files are enabled, all seven skills appear in the Build inventory, and the global instructions prohibit invented records. Then start a new Preview conversation and replay the exact prompt.</p>
-        </details>
-        <details>
-          <summary>Should I publish the manual duplicate?</summary>
-          <p>No. Keep it in Draft unless a separate publication is explicitly approved. The manual build exists to document complexity and prove behavioral parity.</p>
-        </details>
-      </section>
-
-      <p class="footer">Evidence captured in the kodyv8 environment. Raw source links resolve from the public repository after the changes reach <code>main</code>.</p>
     </main>
   </div>
-
   <script>
-    const stepData = [
-      ["Create a blank agent", "In Copilot Studio, choose New agent and start with a blank agent.", "A new untitled agent opens on the Overview page.", "01-create-blank-agent.jpg", "deployment-recipe"],
-      ["Name the manual build", "Set the display name to Building Permit Manual Build.", "The new name appears in the page header.", "02-name-agent.jpg", "deployment-recipe"],
-      ["Enter global instructions", "Replace the starter text with the complete reviewed instruction policy.", "The editor contains routing, evidence, and non-invention rules.", "03-enter-instructions.jpg", "settings"],
-      ["Save the instructions", "Choose Save before adding any knowledge or skills.", "The save operation completes without a validation error.", "04-save-instructions.jpg", "settings"],
-      ["Open knowledge upload", "In Knowledge, choose Add knowledge and select the file upload path.", "The upload dialog is ready for a local file.", "05-open-knowledge-upload.jpg", "export-manifest"],
-      ["Upload synthetic permit records", "Download and upload the synthetic permit records Markdown file.", "The records source appears in the Knowledge list.", "06-select-records-file.jpg", "knowledge-records"],
-      ["Wait for record ingestion", "Do not continue until the records file is accepted and processing begins.", "Copilot Studio shows the records source without an upload error.", "07-records-file-added.jpg", "knowledge-records"],
-      ["Upload rules and schedules", "Download and upload the permit rules and schedules Markdown file.", "The second file is accepted by the knowledge uploader.", "08-select-rules-file.jpg", "knowledge-rules"],
-      ["Verify both knowledge sources", "Return to Overview and confirm both files are listed.", "Exactly two custom knowledge sources are visible.", "09-two-knowledge-files-added.jpg", "knowledge-rules"],
-      ["Open the skill uploader", "In Skills, choose Add skill and select Upload a skill.", "Copilot Studio requests a file named SKILL.md.", "10-open-skill-upload.jpg", "export-manifest"],
-      ["Add backlog analysis", "Upload the backlog and complaint-risk SKILL.md.", "The first skill appears with its routing description.", "11-add-backlog-skill.jpg", "skill-backlog"],
-      ["Add intake triage", "Upload the intake triage and routing SKILL.md.", "The intake skill appears beside backlog analysis.", "12-add-intake-skill.jpg", "skill-intake"],
-      ["Add applicant updates", "Upload the proactive applicant updates SKILL.md.", "The update skill is available for communication requests.", "13-add-applicant-updates-skill.jpg", "skill-updates"],
-      ["Add permit status", "Upload the permit status and zoning detail SKILL.md.", "Status questions have a dedicated routing target.", "14-add-permit-status-skill.jpg", "skill-status"],
-      ["Add the review checklist", "Upload the permit review checklist SKILL.md.", "Document and review-sequencing guidance appears in Skills.", "15-add-checklist-skill.jpg", "skill-checklist"],
-      ["Observe a real validation failure", "Upload the inspector skill and inspect the frontmatter validation message.", "The error is visible and no broken skill is silently accepted.", "16-inspector-skill-validation-error.jpg", "skill-inspector"],
-      ["Retry the inspector skill", "Refresh the raw file, keep the filename SKILL.md, and upload again.", "Inspector assignment and coverage is added successfully.", "17-retry-inspector-skill.jpg", "skill-inspector"],
-      ["Add fee estimation", "Upload the deterministic fee estimate SKILL.md.", "The seventh and final skill appears in the agent.", "18-add-fee-skill.jpg", "skill-fees"],
-      ["Open the model picker", "Open Settings and inspect the models approved for the environment.", "The model menu opens without changing the agent yet.", "19-open-model-picker.jpg", "settings"],
-      ["Match the Easy-mode model", "Select Claude Sonnet 4.6 so the comparison uses the same model.", "Claude Sonnet 4.6 is shown as the active model.", "20-select-sonnet-model.jpg", "settings"],
-      ["Audit all seven skills", "Expand the skill inventory and review every name and routing description.", "Seven focused skills and two knowledge files are present.", "21-review-all-skills.jpg", "manual-evidence"],
-      ["Open Preview", "Open the Preview panel and start a fresh conversation.", "The agent is ready for a new test prompt.", "22-open-preview.jpg", "brainstem-transcripts"],
-      ["Run the canonical prompt", "Ask: Which permit applications have been sitting too long, and which resident is going to complain first?", "The agent invokes the backlog-analysis behavior instead of improvising.", "23-run-canonical-prompt.jpg", "brainstem-transcripts"],
-      ["Verify parity", "Check the answer against the acceptance evidence.", "The response identifies BP-2025-0104, Metro School District, and the overdue escalation.", "24-verify-preview-result.jpg", "manual-evidence"]
-    ];
+    (() => {
 
-    const fileById = new Map();
-    const completed = new Set(JSON.parse(localStorage.getItem("aibast-manual-tutorial") || "[]"));
-    const toc = document.getElementById("toc");
-    const steps = document.getElementById("steps");
+      const ACHIEVEMENT_PROFILE_KEY = "aibast:achievement-profile:v1";
+      const ACHIEVEMENT_WORKSHOP_SLUG = "building-permit-processing";
+      const ACHIEVEMENT_BADGES = Object.freeze([{"id":"started","label":"Started","points":5},{"id":"local-proof","label":"Local proof","points":15},{"id":"draft-builder","label":"Draft builder","points":20},{"id":"preview-proven","label":"Preview proven","points":25},{"id":"workshop-complete","label":"Workshop complete","points":35},{"id":"hard-mode-complete","label":"Hard mode complete","points":50}]);
+      const ACHIEVEMENT_BADGE_IDS = new Set(ACHIEVEMENT_BADGES.map((badge) => badge.id));
 
-    function updateProgress() {
-      const count = completed.size;
-      document.getElementById("progress-label").textContent = `${count} of ${stepData.length} complete`;
-      document.getElementById("progress-bar").style.width = `${(count / stepData.length) * 100}%`;
-      localStorage.setItem("aibast-manual-tutorial", JSON.stringify([...completed]));
-    }
+      function emptyAchievementProfile() {
+        return { score: 0, workshops: {}, updatedAt: null };
+      }
 
-    function downloadFor(resourceId) {
-      return fileById.get(resourceId) || fileById.get("source-bundle") || {
-        label: "Complete source bundle",
-        raw_url: "exports/building-permit-processing-source.zip"
-      };
-    }
+      function validAchievementTimestamp(value) {
+        return typeof value === "string" && !Number.isNaN(Date.parse(value))
+          ? value
+          : null;
+      }
 
-    function render() {
-      toc.innerHTML = "";
-      steps.innerHTML = "";
-      stepData.forEach((step, index) => {
-        const number = index + 1;
-        const id = `step-${number}`;
-        const resource = downloadFor(step[4]);
-        const tocLink = document.createElement("a");
-        tocLink.href = `#${id}`;
-        tocLink.textContent = `${number}. ${step[0]}`;
-        toc.appendChild(tocLink);
+      function achievementCount(value) {
+        return Number.isInteger(value) && value >= 0 ? value : 0;
+      }
 
-        const article = document.createElement("article");
-        article.className = "step";
-        article.id = id;
-        article.innerHTML = `
-          <div class="step-head">
-            <span class="step-number">${number}</span>
-            <div><h3>${step[0]}</h3><div class="step-kicker">Captured from the real manual agent build</div></div>
-          </div>
-          <div class="step-body">
-            <div class="instruction-grid">
-              <div class="instruction"><strong>Action</strong>${step[1]}</div>
-              <div class="instruction expected"><strong>Expected result</strong>${step[2]}</div>
-            </div>
-            <img class="shot" src="screenshots/manual/${step[3]}" alt="Step ${number}: ${step[0]}" loading="lazy">
-            <div class="step-footer">
-              <label class="complete"><input type="checkbox" data-step="${number}" ${completed.has(number) ? "checked" : ""}> Mark step complete</label>
-              <a class="button raw-link" data-resource="${step[4]}" href="${resource.raw_url}">Download: ${resource.label}</a>
-            </div>
-          </div>`;
-        steps.appendChild(article);
+      function sanitizeAchievementProfile(value) {
+        const clean = emptyAchievementProfile();
+        const source =
+          value && typeof value === "object" && !Array.isArray(value) ? value : {};
+        const workshops =
+          source.workshops && typeof source.workshops === "object"
+            ? source.workshops
+            : {};
+        Object.entries(workshops).forEach(([key, rawWorkshop]) => {
+          if (!rawWorkshop || typeof rawWorkshop !== "object") return;
+          const candidate =
+            typeof rawWorkshop.slug === "string" ? rawWorkshop.slug : key;
+          if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(candidate)) return;
+          const rawProgress =
+            rawWorkshop.progress && typeof rawWorkshop.progress === "object"
+              ? rawWorkshop.progress
+              : {};
+          const progress = {
+            easyChecked: achievementCount(rawProgress.easyChecked),
+            easyTotal: achievementCount(rawProgress.easyTotal),
+            hardChecked: achievementCount(rawProgress.hardChecked),
+            hardTotal: achievementCount(rawProgress.hardTotal),
+            easyComplete: rawProgress.easyComplete === true,
+            hardComplete: rawProgress.hardComplete === true,
+            updatedAt: validAchievementTimestamp(rawProgress.updatedAt),
+          };
+          const achievements = {};
+          const rawAchievements =
+            rawWorkshop.achievements &&
+            typeof rawWorkshop.achievements === "object"
+              ? rawWorkshop.achievements
+              : {};
+          ACHIEVEMENT_BADGES.forEach((badge) => {
+            const raw = rawAchievements[badge.id];
+            const earned =
+              raw === true ||
+              (raw && typeof raw === "object" && raw.earned === true);
+            if (earned) {
+              achievements[badge.id] = {
+                earned: true,
+                earnedAt: validAchievementTimestamp(raw?.earnedAt),
+              };
+            }
+          });
+          clean.workshops[candidate] = {
+            slug: candidate,
+            mode: rawWorkshop.mode === "hard" ? "hard" : "easy",
+            progress,
+            achievements,
+          };
+        });
+        clean.score = Object.values(clean.workshops).reduce(
+          (total, workshop) =>
+            total +
+            ACHIEVEMENT_BADGES.reduce(
+              (subtotal, badge) =>
+                subtotal +
+                (workshop.achievements[badge.id]?.earned ? badge.points : 0),
+              0,
+            ),
+          0,
+        );
+        clean.updatedAt = validAchievementTimestamp(source.updatedAt);
+        return clean;
+      }
+
+      function readAchievementProfile() {
+        try {
+          return sanitizeAchievementProfile(
+            JSON.parse(localStorage.getItem(ACHIEVEMENT_PROFILE_KEY) || "{}"),
+          );
+        } catch (_error) {
+          return emptyAchievementProfile();
+        }
+      }
+
+      function writeAchievementProfile(profile) {
+        const clean = sanitizeAchievementProfile(profile);
+        clean.updatedAt = new Date().toISOString();
+        localStorage.setItem(ACHIEVEMENT_PROFILE_KEY, JSON.stringify(clean));
+        return clean;
+      }
+
+      function ensureAchievementWorkshop(profile, mode = "easy") {
+        if (!profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG]) {
+          profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG] = {
+            slug: ACHIEVEMENT_WORKSHOP_SLUG,
+            mode: mode === "hard" ? "hard" : "easy",
+            progress: {
+              easyChecked: 0,
+              easyTotal: 0,
+              hardChecked: 0,
+              hardTotal: 0,
+              easyComplete: false,
+              hardComplete: false,
+              updatedAt: null,
+            },
+            achievements: {},
+          };
+        }
+        const workshop = profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG];
+        workshop.mode = mode === "hard" ? "hard" : "easy";
+        return workshop;
+      }
+
+      function setAchievementWorkshopProgress(profile, mode, patch) {
+        const workshop = ensureAchievementWorkshop(profile, mode);
+        workshop.progress = {
+          ...workshop.progress,
+          ...patch,
+          updatedAt: new Date().toISOString(),
+        };
+        return writeAchievementProfile(profile);
+      }
+
+      function awardAchievement(profile, badgeId, mode = "easy") {
+        if (!ACHIEVEMENT_BADGE_IDS.has(badgeId)) {
+          return { profile: sanitizeAchievementProfile(profile), awarded: null };
+        }
+        const workshop = ensureAchievementWorkshop(profile, mode);
+        if (workshop.achievements[badgeId]?.earned) {
+          return { profile: sanitizeAchievementProfile(profile), awarded: null };
+        }
+        workshop.achievements[badgeId] = {
+          earned: true,
+          earnedAt: new Date().toISOString(),
+        };
+        return {
+          profile: writeAchievementProfile(profile),
+          awarded: ACHIEVEMENT_BADGES.find((badge) => badge.id === badgeId),
+        };
+      }
+
+      function aibastSignalIssueUrl() {
+        const pagesOwner = String(globalThis.location?.hostname || "")
+          .match(/^([a-z0-9-]+)\.github\.io$/i)?.[1];
+        const owner = pagesOwner || "microsoft";
+        return new URL(
+          `https://github.com/${owner}/aibast-agents-library/issues/new`,
+        );
+      }
+
+      const key = "aibast:building-permit-processing:manual-progress";
+      const boxes = Array.from(document.querySelectorAll(".complete"));
+      const label = document.getElementById("progress-label");
+      const bar = document.getElementById("progress-bar");
+      const achievementToast = document.getElementById("achievements-manual-toast");
+      let saved = [];
+      try {
+        const parsed = JSON.parse(localStorage.getItem(key) || "[]");
+        saved = Array.isArray(parsed)
+          ? parsed.filter((step) => typeof step === "string")
+          : [];
+      } catch (_error) {
+        saved = [];
+      }
+      boxes.forEach((box) => {
+        box.checked = saved.includes(box.dataset.step);
+        box.addEventListener("change", update);
       });
-
-      document.querySelectorAll(".complete input").forEach(input => {
-        input.addEventListener("change", event => {
-          const number = Number(event.currentTarget.dataset.step);
-          if (event.currentTarget.checked) completed.add(number);
-          else completed.delete(number);
-          updateProgress();
+      function update() {
+        const done = boxes.filter((box) => box.checked).map((box) => box.dataset.step);
+        const complete = boxes.length > 0 && done.length === boxes.length;
+        localStorage.setItem(key, JSON.stringify(done));
+        label.textContent = `${done.length} of ${boxes.length} complete`;
+        bar.style.width = boxes.length ? `${(done.length / boxes.length) * 100}%` : "0%";
+        let profile = readAchievementProfile();
+        if (done.length > 0 || profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG]) {
+          profile = setAchievementWorkshopProgress(profile, "hard", {
+            hardChecked: done.length,
+            hardTotal: boxes.length,
+            hardComplete: complete,
+          });
+          const badgeIds = [];
+          if (done.length > 0) badgeIds.push("started");
+          if (complete) badgeIds.push("hard-mode-complete");
+          badgeIds.forEach((badgeId) => {
+            const result = awardAchievement(profile, badgeId, "hard");
+            profile = result.profile;
+            if (result.awarded && achievementToast) {
+              achievementToast.textContent =
+                `${result.awarded.label} earned: +${result.awarded.points} local achievement points.`;
+            }
+          });
+        }
+      }
+      document.querySelectorAll("[data-copy-target]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const target = document.getElementById(button.dataset.copyTarget);
+          if (!target) {
+            button.textContent = "Text unavailable";
+            return;
+          }
+          const original = button.textContent;
+          navigator.clipboard.writeText(target.textContent).then(() => {
+            button.textContent = "Copied";
+            window.setTimeout(() => {
+              button.textContent = original;
+            }, 1400);
+          }).catch(() => {
+            button.textContent = "Copy failed";
+          });
         });
       });
-      updateProgress();
-    }
+      document.querySelectorAll("[data-report-location]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const locationLabel = button.dataset.reportLocation || "Hard-mode step";
+          const expected = button.dataset.reportExpected || "Describe the expected result.";
+          const evidence = button.dataset.reportEvidence || "No evidence path supplied.";
+          const title = `[Workshop feedback] Building Permit Processing Agent: ${locationLabel}`;
+          const body = `<!-- aibast-workshop-feedback:v1 -->
+## Workshop signal
 
-    async function loadManifest() {
-      const response = await fetch("export-manifest.json", { cache: "no-store" });
-      const manifest = await response.json();
-      manifest.files.forEach(file => fileById.set(file.id, file));
-      fileById.set("source-bundle", {
-        label: "Complete source bundle",
-        raw_url: manifest.bundle.raw_url
+- Schema: \`aibast-workshop-feedback/1.0\`
+- Solution: \`@aibast-agents-library/building-permit-processing\`
+- Page: ${location.href}
+- Mode: \`hard\`
+- Location: ${locationLabel}
+- Evidence: \`${evidence}\`
+
+## Expected
+
+${expected}
+
+## What happened instead
+
+Describe what was inaccurate or missing.
+
+## Reproduction
+
+1. Open the Hard-mode tutorial.
+2. Follow the step shown above.
+3. Record the visible Copilot Studio state.
+
+> Workshop feedback report. Do not include credentials, tokens, customer data, or other sensitive information.`;
+          const url = aibastSignalIssueUrl();
+          url.searchParams.set("title", title);
+          url.searchParams.set("body", body);
+          window.open(url.toString(), "_blank", "noopener");
+        });
       });
-      document.getElementById("bundle-link").href = manifest.bundle.raw_url;
-      render();
-    }
-
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        document.querySelectorAll(".toc a").forEach(link => link.classList.remove("active"));
-        const active = document.querySelector(`.toc a[href="#${entry.target.id}"]`);
-        if (active) active.classList.add("active");
-      });
-    }, { rootMargin: "-20% 0px -70% 0px" });
-
-    loadManifest().then(() => {
-      document.querySelectorAll(".step").forEach(step => observer.observe(step));
-    }).catch(() => render());
+      update();
+    })();
   </script>
 </body>
 </html>

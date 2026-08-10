@@ -3,34 +3,115 @@
   "solution": "@aibast-agents-library/production-line-optimization",
   "raw_base": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/",
   "github_folder": "https://github.com/microsoft/aibast-agents-library/tree/main/solutions/product-line-optimization",
+  "evidence_boundary": "Synthetic solution evidence only. Qualitative workflow proof is not a customer KPI, measured production result, or publication approval.",
   "bundle": {
-    "label": "Product Line Optimization current source bundle",
+    "label": "Complete Product Line Optimization Agent source bundle",
     "path": "solutions/product-line-optimization/exports/product-line-optimization-source.zip",
     "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/exports/product-line-optimization-source.zip"
   },
   "files": [
     {
       "id": "portable-agent",
-      "label": "Portable Brainstem agent.py",
+      "label": "Portable source agent",
       "path": "agents/@aibast-agents-library/manufacturing_stacks/production_line_optimization_stack/production_line_optimization_agent.py",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/manufacturing_stacks/production_line_optimization_stack/production_line_optimization_agent.py",
-      "use": "Local Brainstem runtime and production logic reference",
+      "use": "Local Brainstem runtime and production-logic reference",
       "status": "ready"
     },
     {
       "id": "deployment-recipe",
-      "label": "No-terminal deployment recipe",
+      "label": "Deployment recipe",
       "path": "solutions/product-line-optimization/deployment.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/deployment.json",
-      "use": "GitHub Copilot Easy-mode installation contract",
+      "use": "Easy-mode deployment contract",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-solution",
+      "label": "Importable Copilot Studio solution",
+      "path": "solutions/product-line-optimization/exports/product-line-optimization-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/exports/product-line-optimization-copilot-studio-solution.zip",
+      "use": "Unmanaged solution ZIP for manual import; the agent remains unpublished",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-deployment-settings",
+      "label": "Copilot Studio deployment settings",
+      "path": "solutions/product-line-optimization/exports/product-line-optimization-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/exports/product-line-optimization-deployment-settings.json",
+      "use": "Connection-reference, environment-variable, and agent import settings",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-export-metadata",
+      "label": "Copilot Studio solution export metadata",
+      "path": "solutions/product-line-optimization/exports/product-line-optimization-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/exports/product-line-optimization-solution-export.json",
+      "use": "Export identity, integrity hash, source environment, and import caveats",
       "status": "ready"
     },
     {
       "id": "field-guide",
       "label": "Customer field guide",
+      "path": "solutions/product-line-optimization/field-guide.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/field-guide.html",
+      "use": "Styled facilitation, evidence boundaries, gates, and recovery",
+      "status": "ready"
+    },
+    {
+      "id": "field-guide-source",
+      "label": "Field guide source",
       "path": "solutions/product-line-optimization/FIELD-GUIDE.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/FIELD-GUIDE.md",
-      "use": "Facilitation, production seams, recovery, and evidence gates",
+      "use": "Markdown source retained for audit and export",
+      "status": "ready"
+    },
+    {
+      "id": "easy-personless-guide",
+      "label": "Personless Easy-mode guide",
+      "path": "solutions/product-line-optimization/EASY-MODE-PERSONLESS.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/EASY-MODE-PERSONLESS.md",
+      "use": "Brainstem lane skill attachment, two-message workshop, and engine loop",
+      "status": "ready"
+    },
+    {
+      "id": "easy-copilot-chat-prompts",
+      "label": "Copilot-only Easy-mode comparison",
+      "path": "solutions/product-line-optimization/EASY-MODE-COPILOT-CHAT.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/EASY-MODE-COPILOT-CHAT.md",
+      "use": "Copilot-only lane skill attachment and the same two workshop messages",
+      "status": "ready"
+    },
+    {
+      "id": "easy-mode-brainstem-skill",
+      "label": "Brainstem Easy Mode skill",
+      "path": "skills/aibast-easy-mode-brainstem/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-brainstem/SKILL.md",
+      "use": "Download-and-drag harness that defaults workshop execution to Brainstem",
+      "status": "ready"
+    },
+    {
+      "id": "easy-mode-copilot-skill",
+      "label": "Copilot-only Easy Mode skill",
+      "path": "skills/aibast-easy-mode-copilot/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-copilot/SKILL.md",
+      "use": "Download-and-drag harness that runs the workshop directly in GitHub Copilot",
+      "status": "ready"
+    },
+    {
+      "id": "generic-workshop-agent",
+      "label": "Generic AIBAST Workshop agent",
+      "path": "agents/@aibast-agents-library/templates/workshop_agent.py",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/workshop_agent.py",
+      "use": "Registry-driven Brainstem engine shared by every packaged solution",
+      "status": "ready"
+    },
+    {
+      "id": "manual-instructions",
+      "label": "Manual global instructions",
+      "path": "solutions/product-line-optimization/manual/GLOBAL-INSTRUCTIONS.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/manual/GLOBAL-INSTRUCTIONS.md",
+      "use": "Reviewed instructions for literal browser construction",
       "status": "ready"
     },
     {
@@ -38,15 +119,7 @@
       "label": "Copilot Studio settings",
       "path": "solutions/product-line-optimization/copilot-studio/settings.mcs.yml",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/copilot-studio/settings.mcs.yml",
-      "use": "Reviewed instructions, model, identity, and safety boundaries",
-      "status": "ready"
-    },
-    {
-      "id": "global-instructions",
-      "label": "Manual global instructions",
-      "path": "solutions/product-line-optimization/manual/GLOBAL-INSTRUCTIONS.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/manual/GLOBAL-INSTRUCTIONS.md",
-      "use": "Paste directly into the blank Copilot Studio agent",
+      "use": "Easy-mode agent settings and instruction copy",
       "status": "ready"
     },
     {
@@ -54,63 +127,135 @@
       "label": "Copilot Studio component manifest",
       "path": "solutions/product-line-optimization/copilot-studio/agent.sync.yaml",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/copilot-studio/agent.sync.yaml",
-      "use": "CLI project component synchronization",
+      "use": "Easy-mode component synchronization",
       "status": "ready"
     },
     {
-      "id": "knowledge-records",
-      "label": "Synthetic production-line records",
+      "id": "knowledge-aibast-production-line-synthetic-records",
+      "label": "Aibast Production Line Synthetic Records",
       "path": "solutions/product-line-optimization/copilot-studio/capabilities/knowledge/files/aibast_production-line-synthetic-records.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/copilot-studio/capabilities/knowledge/files/aibast_production-line-synthetic-records.md",
-      "use": "Upload directly as Copilot Studio knowledge",
+      "use": "Manual knowledge upload",
       "status": "ready"
     },
     {
-      "id": "knowledge-rules",
-      "label": "Production optimization rules",
+      "id": "knowledge-aibast-production-optimization-rules",
+      "label": "Aibast Production Optimization Rules",
       "path": "solutions/product-line-optimization/copilot-studio/capabilities/knowledge/files/aibast_production-optimization-rules.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/copilot-studio/capabilities/knowledge/files/aibast_production-optimization-rules.md",
-      "use": "Upload directly as Copilot Studio knowledge",
+      "use": "Manual knowledge upload",
       "status": "ready"
     },
     {
-      "id": "skill-line-health",
-      "label": "Plant-wide operating health skill",
-      "path": "solutions/product-line-optimization/manual/skills/aibast_line-health_plo01/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/manual/skills/aibast_line-health_plo01/SKILL.md",
-      "use": "Upload directly through Copilot Studio Add skill",
-      "status": "ready"
-    },
-    {
-      "id": "skill-bottleneck",
-      "label": "Constraining-station skill",
+      "id": "skill-aibast-bottleneck-plo02",
+      "label": "Manual skill: aibast bottleneck plo02",
       "path": "solutions/product-line-optimization/manual/skills/aibast_bottleneck_plo02/SKILL.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/manual/skills/aibast_bottleneck_plo02/SKILL.md",
-      "use": "Upload directly through Copilot Studio Add skill",
+      "use": "Manual skill upload",
       "status": "ready"
     },
     {
-      "id": "skill-throughput",
-      "label": "Improvement-option comparison skill",
-      "path": "solutions/product-line-optimization/manual/skills/aibast_throughput-options_plo03/SKILL.md",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/manual/skills/aibast_throughput-options_plo03/SKILL.md",
-      "use": "Upload directly through Copilot Studio Add skill",
+      "id": "skill-aibast-line-health-plo01",
+      "label": "Manual skill: aibast line health plo01",
+      "path": "solutions/product-line-optimization/manual/skills/aibast_line-health_plo01/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/manual/skills/aibast_line-health_plo01/SKILL.md",
+      "use": "Manual skill upload",
       "status": "ready"
     },
     {
-      "id": "skill-shift-plan",
-      "label": "Day-swing-night planning skill",
+      "id": "skill-aibast-shift-plan-plo04",
+      "label": "Manual skill: aibast shift plan plo04",
       "path": "solutions/product-line-optimization/manual/skills/aibast_shift-plan_plo04/SKILL.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/manual/skills/aibast_shift-plan_plo04/SKILL.md",
-      "use": "Upload directly through Copilot Studio Add skill",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "skill-aibast-throughput-options-plo03",
+      "label": "Manual skill: aibast throughput options plo03",
+      "path": "solutions/product-line-optimization/manual/skills/aibast_throughput-options_plo03/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/manual/skills/aibast_throughput-options_plo03/SKILL.md",
+      "use": "Manual skill upload",
+      "status": "ready"
+    },
+    {
+      "id": "easy-knowledge-aibast-production-line-synthetic-records-md-mcs",
+      "label": "Aibast Production Line Synthetic Records.Md.Mcs",
+      "path": "solutions/product-line-optimization/copilot-studio/capabilities/knowledge/files/aibast_production-line-synthetic-records.md.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/copilot-studio/capabilities/knowledge/files/aibast_production-line-synthetic-records.md.mcs.yml",
+      "use": "Copilot Studio knowledge source or synchronization metadata",
+      "status": "ready"
+    },
+    {
+      "id": "easy-knowledge-aibast-production-optimization-rules-md-mcs",
+      "label": "Aibast Production Optimization Rules.Md.Mcs",
+      "path": "solutions/product-line-optimization/copilot-studio/capabilities/knowledge/files/aibast_production-optimization-rules.md.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/copilot-studio/capabilities/knowledge/files/aibast_production-optimization-rules.md.mcs.yml",
+      "use": "Copilot Studio knowledge source or synchronization metadata",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-bottleneck-plo02-mcs",
+      "label": "Aibast Bottleneck Plo02.Mcs",
+      "path": "solutions/product-line-optimization/copilot-studio/behaviors/aibast_bottleneck_plo02.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/copilot-studio/behaviors/aibast_bottleneck_plo02.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-line-health-plo01-mcs",
+      "label": "Aibast Line Health Plo01.Mcs",
+      "path": "solutions/product-line-optimization/copilot-studio/behaviors/aibast_line-health_plo01.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/copilot-studio/behaviors/aibast_line-health_plo01.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-shift-plan-plo04-mcs",
+      "label": "Aibast Shift Plan Plo04.Mcs",
+      "path": "solutions/product-line-optimization/copilot-studio/behaviors/aibast_shift-plan_plo04.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/copilot-studio/behaviors/aibast_shift-plan_plo04.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-skill-aibast-throughput-options-plo03-mcs",
+      "label": "Aibast Throughput Options Plo03.Mcs",
+      "path": "solutions/product-line-optimization/copilot-studio/behaviors/aibast_throughput-options_plo03.mcs.yml",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/copilot-studio/behaviors/aibast_throughput-options_plo03.mcs.yml",
+      "use": "Copilot Studio behavior source",
+      "status": "ready"
+    },
+    {
+      "id": "easy-evidence-copilot-studio-preview-evidence",
+      "label": "Copilot Studio Preview Evidence",
+      "path": "solutions/product-line-optimization/evals/copilot-studio-preview-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/evals/copilot-studio-preview-evidence.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "easy-evidence-dataverse-draft-evidence",
+      "label": "Dataverse Draft Evidence",
+      "path": "solutions/product-line-optimization/evals/dataverse-draft-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/evals/dataverse-draft-evidence.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "manual-evidence",
+      "label": "Manual build evidence",
+      "path": "solutions/product-line-optimization/evals/manual-build-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/evals/manual-build-evidence.json",
+      "use": "Manual identity, inventory, Preview, and Draft-gate evidence",
       "status": "ready"
     },
     {
       "id": "onepager-map",
-      "label": "One-pager promise map",
+      "label": "Onepager Map",
       "path": "solutions/product-line-optimization/evals/onepager-map.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/evals/onepager-map.json",
-      "use": "Advertised promise coverage evidence",
+      "use": "Advertised-promise mapping evidence",
       "status": "ready"
     },
     {
@@ -118,15 +263,423 @@
       "label": "Isolated Brainstem transcripts",
       "path": "solutions/product-line-optimization/evals/transcripts.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/evals/transcripts.json",
-      "use": "Canonical portable-agent acceptance corpus",
+      "use": "Canonical source-agent acceptance evidence",
       "status": "ready"
     },
     {
-      "id": "studio-preview-evidence",
-      "label": "Copilot Studio Preview evidence",
-      "path": "solutions/product-line-optimization/evals/copilot-studio-preview-evidence.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/evals/copilot-studio-preview-evidence.json",
-      "use": "PLO-01 through PLO-04 Easy-agent Preview evidence and identity",
+      "id": "easy-evidence-visual-checkpoints",
+      "label": "Visual Checkpoints",
+      "path": "solutions/product-line-optimization/evals/visual-checkpoints.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/evals/visual-checkpoints.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-plo-01",
+      "label": "Annotated visual checkpoint: easy-plo-01",
+      "path": "solutions/product-line-optimization/screenshots/assisted/annotated/02-plo-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/assisted/annotated/02-plo-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-plo-02",
+      "label": "Annotated visual checkpoint: easy-plo-02",
+      "path": "solutions/product-line-optimization/screenshots/assisted/annotated/03-plo-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/assisted/annotated/03-plo-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-04-plo-03",
+      "label": "Annotated visual checkpoint: easy-plo-03",
+      "path": "solutions/product-line-optimization/screenshots/assisted/annotated/04-plo-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/assisted/annotated/04-plo-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-create-blank-agent",
+      "label": "Annotated visual checkpoint: hard-step-01",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/01-create-blank-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/01-create-blank-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-name-agent",
+      "label": "Annotated visual checkpoint: hard-step-02",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/02-name-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/02-name-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-enter-instructions",
+      "label": "Annotated visual checkpoint: hard-step-03",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/03-enter-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/03-enter-instructions.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-04-save-instructions",
+      "label": "Annotated visual checkpoint: hard-step-04",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/04-save-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/04-save-instructions.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-06-open-knowledge-upload",
+      "label": "Annotated visual checkpoint: hard-step-06",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/06-open-knowledge-upload.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/06-open-knowledge-upload.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-07-upload-production-records",
+      "label": "Annotated visual checkpoint: hard-step-07",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/07-upload-production-records.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/07-upload-production-records.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-08-upload-optimization-rules",
+      "label": "Annotated visual checkpoint: hard-step-08",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/08-upload-optimization-rules.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/08-upload-optimization-rules.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-09-verify-two-knowledge-files",
+      "label": "Annotated visual checkpoint: hard-step-09",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/09-verify-two-knowledge-files.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/09-verify-two-knowledge-files.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-10-open-skill-upload",
+      "label": "Annotated visual checkpoint: hard-step-10",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/10-open-skill-upload.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/10-open-skill-upload.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-11-add-line-health-skill",
+      "label": "Annotated visual checkpoint: hard-step-11",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/11-add-line-health-skill.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/11-add-line-health-skill.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-12-add-bottleneck-skill",
+      "label": "Annotated visual checkpoint: hard-step-12",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/12-add-bottleneck-skill.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/12-add-bottleneck-skill.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-13-add-throughput-options-skill",
+      "label": "Annotated visual checkpoint: hard-step-13",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/13-add-throughput-options-skill.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/13-add-throughput-options-skill.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-14-add-shift-plan-skill",
+      "label": "Annotated visual checkpoint: hard-step-14",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/14-add-shift-plan-skill.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/14-add-shift-plan-skill.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-15-open-model-picker",
+      "label": "Annotated visual checkpoint: hard-step-15",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/15-open-model-picker.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/15-open-model-picker.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-16-select-sonnet46",
+      "label": "Annotated visual checkpoint: hard-step-16",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/16-select-sonnet46.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/16-select-sonnet46.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-17-review-inventory",
+      "label": "Annotated visual checkpoint: hard-step-17",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/17-review-inventory.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/17-review-inventory.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-18-open-preview",
+      "label": "Annotated visual checkpoint: hard-step-18",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/18-open-preview.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/18-open-preview.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-19-preview-plo01-line-health",
+      "label": "Annotated visual checkpoint: hard-plo-01",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/19-preview-plo01-line-health.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/19-preview-plo01-line-health.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-20-preview-plo02-bottlenecks",
+      "label": "Annotated visual checkpoint: hard-plo-02",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/20-preview-plo02-bottlenecks.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/20-preview-plo02-bottlenecks.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-21-preview-plo03-options",
+      "label": "Annotated visual checkpoint: hard-plo-03",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/21-preview-plo03-options.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/21-preview-plo03-options.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-22-preview-plo04-shift-plan",
+      "label": "Annotated visual checkpoint: hard-plo-04",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/22-preview-plo04-shift-plan.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/22-preview-plo04-shift-plan.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-23-verify-draft-no-publish",
+      "label": "Annotated visual checkpoint: hard-draft",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/23-verify-draft-no-publish.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/23-verify-draft-no-publish.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "manual-browserfilm-manifest",
+      "label": "Manual browserfilm manifest",
+      "path": "solutions/product-line-optimization/screenshots/manual/browserfilm.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/browserfilm.json",
+      "use": "Ordered literal-browser evidence frames",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-01",
+      "label": "Create a blank Copilot Studio agent",
+      "path": "solutions/product-line-optimization/screenshots/manual/01-create-blank-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/01-create-blank-agent.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-02",
+      "label": "Name Product Line Manual Build",
+      "path": "solutions/product-line-optimization/screenshots/manual/02-name-agent.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/02-name-agent.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-03",
+      "label": "Enter the reviewed global instructions",
+      "path": "solutions/product-line-optimization/screenshots/manual/03-enter-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/03-enter-instructions.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-04",
+      "label": "Save the instruction changes",
+      "path": "solutions/product-line-optimization/screenshots/manual/04-save-instructions.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/04-save-instructions.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-05",
+      "label": "Remove default web search",
+      "path": "solutions/product-line-optimization/screenshots/manual/05-remove-web-search.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/05-remove-web-search.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-06",
+      "label": "Open the knowledge uploader",
+      "path": "solutions/product-line-optimization/screenshots/manual/06-open-knowledge-upload.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/06-open-knowledge-upload.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-07",
+      "label": "Upload synthetic production records",
+      "path": "solutions/product-line-optimization/screenshots/manual/07-upload-production-records.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/07-upload-production-records.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-08",
+      "label": "Upload production optimization rules",
+      "path": "solutions/product-line-optimization/screenshots/manual/08-upload-optimization-rules.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/08-upload-optimization-rules.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-09",
+      "label": "Verify both knowledge sources",
+      "path": "solutions/product-line-optimization/screenshots/manual/09-verify-two-knowledge-files.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/09-verify-two-knowledge-files.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-10",
+      "label": "Open the SKILL.md uploader",
+      "path": "solutions/product-line-optimization/screenshots/manual/10-open-skill-upload.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/10-open-skill-upload.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-11",
+      "label": "Add plant-wide operating health",
+      "path": "solutions/product-line-optimization/screenshots/manual/11-add-line-health-skill.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/11-add-line-health-skill.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-12",
+      "label": "Add constraining-station identification",
+      "path": "solutions/product-line-optimization/screenshots/manual/12-add-bottleneck-skill.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/12-add-bottleneck-skill.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-13",
+      "label": "Add improvement-option comparison",
+      "path": "solutions/product-line-optimization/screenshots/manual/13-add-throughput-options-skill.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/13-add-throughput-options-skill.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-14",
+      "label": "Add day-swing-night planning",
+      "path": "solutions/product-line-optimization/screenshots/manual/14-add-shift-plan-skill.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/14-add-shift-plan-skill.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-15",
+      "label": "Open the model picker",
+      "path": "solutions/product-line-optimization/screenshots/manual/15-open-model-picker.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/15-open-model-picker.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-16",
+      "label": "Select Claude Sonnet 4.6",
+      "path": "solutions/product-line-optimization/screenshots/manual/16-select-sonnet46.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/16-select-sonnet46.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-17",
+      "label": "Audit four skills, two knowledge files, and no web search",
+      "path": "solutions/product-line-optimization/screenshots/manual/17-review-inventory.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/17-review-inventory.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-18",
+      "label": "Open a fresh Preview conversation",
+      "path": "solutions/product-line-optimization/screenshots/manual/18-open-preview.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/18-open-preview.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-19",
+      "label": "Pass PLO-01 line health",
+      "path": "solutions/product-line-optimization/screenshots/manual/19-preview-plo01-line-health.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/19-preview-plo01-line-health.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-20",
+      "label": "Pass PLO-02 bottlenecks",
+      "path": "solutions/product-line-optimization/screenshots/manual/20-preview-plo02-bottlenecks.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/20-preview-plo02-bottlenecks.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-21",
+      "label": "Pass PLO-03 improvement options",
+      "path": "solutions/product-line-optimization/screenshots/manual/21-preview-plo03-options.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/21-preview-plo03-options.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-22",
+      "label": "Pass PLO-04 shift planning",
+      "path": "solutions/product-line-optimization/screenshots/manual/22-preview-plo04-shift-plan.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/22-preview-plo04-shift-plan.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-frame-23",
+      "label": "Verify Draft and do not publish",
+      "path": "solutions/product-line-optimization/screenshots/manual/23-verify-draft-no-publish.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/23-verify-draft-no-publish.jpg",
+      "use": "Real manual browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "manual-browserfilm",
+      "label": "Manual browserfilm",
+      "path": "solutions/product-line-optimization/screenshots/manual/manual-build-walkthrough.gif",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/manual-build-walkthrough.gif",
+      "use": "Animated manual walkthrough",
+      "status": "ready"
+    },
+    {
+      "id": "manual-contact-sheet",
+      "label": "Manual contact sheet",
+      "path": "solutions/product-line-optimization/screenshots/manual/manual-build-contact-sheet.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/manual-build-contact-sheet.jpg",
+      "use": "Static manual evidence overview",
       "status": "ready"
     },
     {
@@ -134,15 +687,15 @@
       "label": "Copilot-assisted browserfilm manifest",
       "path": "solutions/product-line-optimization/screenshots/assisted/browserfilm.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/assisted/browserfilm.json",
-      "use": "Captured Easy-mode frame sequence",
+      "use": "Ordered Easy-mode evidence frames",
       "status": "ready"
     },
     {
       "id": "assisted-browserfilm",
-      "label": "Copilot-assisted walkthrough",
+      "label": "Copilot-assisted browserfilm",
       "path": "solutions/product-line-optimization/screenshots/assisted/copilot-assisted-walkthrough.gif",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/assisted/copilot-assisted-walkthrough.gif",
-      "use": "Animated proof of the pushed Easy agent",
+      "use": "Animated Easy-mode walkthrough",
       "status": "ready"
     },
     {
@@ -154,52 +707,142 @@
       "status": "ready"
     },
     {
-      "id": "manual-evidence",
-      "label": "Manual build evidence",
-      "path": "solutions/product-line-optimization/evals/manual-build-evidence.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/evals/manual-build-evidence.json",
-      "use": "Manual identity, inventory, Preview parity, and Draft gate",
+      "id": "assisted-frame-01",
+      "label": "Review the Copilot-assisted Draft configuration",
+      "path": "solutions/product-line-optimization/screenshots/assisted/01-review-build.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/assisted/01-review-build.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-02",
+      "label": "Pass PLO-01: Plant Manager",
+      "path": "solutions/product-line-optimization/screenshots/assisted/02-plo-01.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/assisted/02-plo-01.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-03",
+      "label": "Pass PLO-02: Production Engineer",
+      "path": "solutions/product-line-optimization/screenshots/assisted/03-plo-02.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/assisted/03-plo-02.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-04",
+      "label": "Pass PLO-03: Operations Director",
+      "path": "solutions/product-line-optimization/screenshots/assisted/04-plo-03.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/assisted/04-plo-03.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-05",
+      "label": "Pass PLO-04: Plant Manager",
+      "path": "solutions/product-line-optimization/screenshots/assisted/05-plo-04.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/assisted/05-plo-04.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-frame-06",
+      "label": "Confirm the validated agent remains Draft",
+      "path": "solutions/product-line-optimization/screenshots/assisted/06-confirm-draft.jpg",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/assisted/06-confirm-draft.jpg",
+      "use": "Real Copilot-assisted browser evidence frame",
+      "status": "ready"
+    },
+    {
+      "id": "workshop-settings",
+      "label": "Global workshop settings",
+      "path": "solutions/_shared/workshop-settings.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/_shared/workshop-settings.html",
+      "use": "Site-wide persisted Easy-mode harness preference",
+      "status": "ready"
+    },
+    {
+      "id": "evidence-report",
+      "label": "Styled evidence report",
+      "path": "solutions/product-line-optimization/evidence-report.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/evidence-report.html",
+      "use": "Learner-safe HTML summary of deterministic and visual evidence",
       "status": "ready"
     },
     {
       "id": "quest",
-      "label": "Interactive deployment quest",
+      "label": "Guided field quest",
       "path": "solutions/product-line-optimization/quest.html",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/quest.html",
-      "use": "Easy and literal-browser Hard mode journey",
+      "use": "Resumable Easy/Hard customer journey",
       "status": "ready"
     },
     {
       "id": "manual-tutorial",
-      "label": "Manual browser-build tutorial",
+      "label": "Manual browser tutorial",
       "path": "solutions/product-line-optimization/manual-tutorial.html",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/manual-tutorial.html",
-      "use": "Microsoft Learn-style 23-step manual tutorial",
+      "use": "One action per real manual evidence frame",
       "status": "ready"
     },
     {
-      "id": "manual-browserfilm-manifest",
-      "label": "Manual browserfilm frame manifest",
-      "path": "solutions/product-line-optimization/screenshots/manual/browserfilm.json",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/browserfilm.json",
-      "use": "Deterministic captured frame sequence",
+      "id": "screenshots-readme",
+      "label": "Screenshot evidence README",
+      "path": "solutions/product-line-optimization/screenshots/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/README.md",
+      "use": "Evidence boundary and capture inventory",
       "status": "ready"
     },
     {
-      "id": "manual-browserfilm",
-      "label": "Manual build browserfilm",
-      "path": "solutions/product-line-optimization/screenshots/manual/manual-build-walkthrough.gif",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/manual-build-walkthrough.gif",
-      "use": "Animated proof assembled from the real 23-step capture",
+      "id": "manual-screenshots-readme",
+      "label": "Manual screenshot README",
+      "path": "solutions/product-line-optimization/screenshots/manual/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/README.md",
+      "use": "Manual frame and film inventory",
       "status": "ready"
     },
     {
-      "id": "manual-contact-sheet",
-      "label": "Manual build contact sheet",
-      "path": "solutions/product-line-optimization/screenshots/manual/manual-build-contact-sheet.jpg",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/manual-build-contact-sheet.jpg",
-      "use": "Static overview of all 23 manual actions",
+      "id": "exports-readme",
+      "label": "Export README",
+      "path": "solutions/product-line-optimization/exports/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/exports/README.md",
+      "use": "Bundle build instructions",
+      "status": "ready"
+    },
+    {
+      "id": "assisted-screenshots-readme",
+      "label": "Assisted screenshot README",
+      "path": "solutions/product-line-optimization/screenshots/assisted/README.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/assisted/README.md",
+      "use": "Copilot-assisted evidence inventory",
       "status": "ready"
     }
-  ]
+  ],
+  "copilot_studio_solution": {
+    "label": "Importable Product Line Optimization Agent Copilot Studio solution",
+    "status": "exported",
+    "solution_unique_name": "aibast_ProductLineOptimizationPilot",
+    "zip": {
+      "path": "solutions/product-line-optimization/exports/product-line-optimization-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/exports/product-line-optimization-copilot-studio-solution.zip",
+      "sha256": "15a1957e0c937fa1cf44da378f5293e38f41fb83912fa38c99cb82ac7e5831e1",
+      "bytes": 4555
+    },
+    "deployment_settings": {
+      "path": "solutions/product-line-optimization/exports/product-line-optimization-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/exports/product-line-optimization-deployment-settings.json"
+    },
+    "metadata": {
+      "path": "solutions/product-line-optimization/exports/product-line-optimization-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/exports/product-line-optimization-solution-export.json"
+    },
+    "managed": false,
+    "published": false,
+    "import_caveats": [
+      "Import as an unmanaged solution for manual review.",
+      "Map connection references and environment variables before enabling integrations.",
+      "The exported agent remains unpublished unless the target administrator explicitly publishes it."
+    ]
+  }
 }

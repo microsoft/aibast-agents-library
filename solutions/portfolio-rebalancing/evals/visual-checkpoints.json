@@ -1,0 +1,732 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/portfolio-rebalancing",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker or refusal.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:portfolio-rebalancing",
+    "reviewed_at": "2026-08-10T00:00:00Z",
+    "method": "GPT-5.6 Sol inspected the real assisted and manual captures, kept PRB-03 withheld because its final answer is not visible, and verified the locked case through passed manual Preview evidence.",
+    "notes": "PRB-03 is machine-proven rather than visually claimed. The workshop still exceeds the required approved visual coverage and never presents the routing-only frame as proof."
+  },
+  "summary": {
+    "total_existing_captures": 29,
+    "reusable": 23,
+    "reshoot_required": 6
+  },
+  "strict_coverage": {
+    "status": "machine_proven_visual_withheld",
+    "covered_locked_cases": [
+      "PRB-01",
+      "PRB-02",
+      "PRB-04",
+      "PRB-05",
+      "PRB-06",
+      "PRB-03"
+    ],
+    "missing_locked_cases": [],
+    "reason": "Both real PRB-03 captures stop at routing and knowledge retrieval, so they remain withheld. The passed manual Preview evidence supplies the case result without misrepresenting either screenshot.",
+    "required_replacements": [
+      "Easy PRB-03 with Illustrative Tax Estimate and VTI visible in the final answer.",
+      "Hard PRB-03 with Illustrative Tax Estimate and VTI visible in the final answer."
+    ]
+  },
+  "captures": [
+    {
+      "id": "easy-prb-01",
+      "mode": "easy",
+      "case_id": "PRB-01",
+      "source": "solutions/portfolio-rebalancing/screenshots/assisted/01-prb-01.jpg",
+      "status": "reshoot_required",
+      "reason": "The frame shows only internal routing and retrieval reasoning. The final answer is not visible, so PORT-5001 and VTI in the reasoning trace cannot be used as visual pass evidence."
+    },
+    {
+      "id": "easy-prb-02",
+      "mode": "easy",
+      "case_id": "PRB-02",
+      "source": "solutions/portfolio-rebalancing/screenshots/assisted/02-prb-02.jpg",
+      "annotated": "solutions/portfolio-rebalancing/screenshots/assisted/annotated/02-prb-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Required Review Gates Before Any Trade",
+        "This candidate list requires licensed advisor, qualified tax, and authorized trading review",
+        "No approval, order, or transaction has occurred"
+      ],
+      "full_case_not_visibly_proven": [
+        "VTI is above the captured viewport; the deterministic machine gate remains required."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 414,
+          "width": 945,
+          "height": 67,
+          "label": "Candidate review gate"
+        },
+        {
+          "x": 285,
+          "y": 499,
+          "width": 945,
+          "height": 80,
+          "label": "No transaction occurred"
+        }
+      ]
+    },
+    {
+      "id": "easy-prb-03",
+      "mode": "easy",
+      "case_id": "PRB-03",
+      "source": "solutions/portfolio-rebalancing/screenshots/assisted/03-prb-03.jpg",
+      "status": "reshoot_required",
+      "reason": "The frame shows only internal routing and retrieval reasoning. The final tax-impact answer is absent, so VTI in the reasoning trace is not visual proof. No alternate assisted PRB-03 source exists in the browserfilm, contact sheet, or walkthrough GIF."
+    },
+    {
+      "id": "easy-prb-04",
+      "mode": "easy",
+      "case_id": "PRB-04",
+      "source": "solutions/portfolio-rebalancing/screenshots/assisted/04-prb-04.jpg",
+      "annotated": "solutions/portfolio-rebalancing/screenshots/assisted/annotated/04-prb-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "VEA is the single loss candidate surfaced in the synthetic snapshot",
+        "Wash-sale review required before any disposition",
+        "Tax-lot, wash-sale, account-type, and suitability gates"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 115,
+          "width": 550,
+          "height": 84,
+          "label": "Wash-sale gate"
+        },
+        {
+          "x": 286,
+          "y": 263,
+          "width": 940,
+          "height": 75,
+          "label": "VEA loss candidate"
+        },
+        {
+          "x": 286,
+          "y": 369,
+          "width": 940,
+          "height": 270,
+          "label": "Tax-advice controls"
+        }
+      ]
+    },
+    {
+      "id": "easy-prb-05",
+      "mode": "easy",
+      "case_id": "PRB-05",
+      "source": "solutions/portfolio-rebalancing/screenshots/assisted/05-prb-05.jpg",
+      "annotated": "solutions/portfolio-rebalancing/screenshots/assisted/annotated/05-prb-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Lower-Return, Base, and Higher-Volatility scenario table",
+        "Annual withdrawal and inflation inputs require advisor confirmation and are not invented",
+        "Portfolio starting value is drawn from PORT-5001 holdings"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact 25 years and No success probability markers are outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 145,
+          "width": 940,
+          "height": 180,
+          "label": "Three planning scenarios"
+        },
+        {
+          "x": 286,
+          "y": 426,
+          "width": 615,
+          "height": 222,
+          "label": "Inputs are not invented"
+        }
+      ]
+    },
+    {
+      "id": "easy-prb-06",
+      "mode": "easy",
+      "case_id": "PRB-06",
+      "source": "solutions/portfolio-rebalancing/screenshots/assisted/06-prb-06.jpg",
+      "annotated": "solutions/portfolio-rebalancing/screenshots/assisted/annotated/06-prb-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Phase 3 — Trade Authorization (Human Gate)",
+        "Trading-supervisor approval and order-routing steps remain Pending",
+        "Phase 4 — Settlement & Verification (Human Gate)"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact VTI and No order markers are outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 232,
+          "width": 910,
+          "height": 222,
+          "label": "Trade authorization pending"
+        },
+        {
+          "x": 286,
+          "y": 506,
+          "width": 840,
+          "height": 142,
+          "label": "Settlement human gate"
+        }
+      ]
+    },
+    {
+      "id": "easy-draft",
+      "mode": "easy",
+      "source": "solutions/portfolio-rebalancing/screenshots/assisted/07-confirm-draft.jpg",
+      "status": "reshoot_required",
+      "reason": "The Agents list does not show the Portfolio Rebalancing Pilot row, so the validated pilot identity and Draft state are not visible.",
+      "draft": true
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "step": 1,
+      "source": "solutions/portfolio-rebalancing/screenshots/manual/01-create-blank-agent.jpg",
+      "status": "reshoot_required",
+      "reason": "The frame is a blank loading canvas with a spinner. No blank agent workspace or creation state is visible."
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "step": 2,
+      "source": "solutions/portfolio-rebalancing/screenshots/manual/02-name-agent.jpg",
+      "annotated": "solutions/portfolio-rebalancing/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Portfolio Rebalancing Manual is entered in the agent name field"
+      ],
+      "full_inventory_not_visibly_proven": [
+        "The model shown at this early build step is corrected and visibly verified in step 14."
+      ],
+      "boxes": [
+        {
+          "x": 164,
+          "y": 96,
+          "width": 820,
+          "height": 55,
+          "label": "Manual agent name"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "step": 3,
+      "source": "solutions/portfolio-rebalancing/screenshots/manual/03-enter-instructions.jpg",
+      "annotated": "solutions/portfolio-rebalancing/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence-first response contract",
+        "Locked Preview evidence anchors for PRB-01 through PRB-06",
+        "Synthetic evidence and human-review boundary"
+      ],
+      "boxes": [
+        {
+          "x": 80,
+          "y": 210,
+          "width": 900,
+          "height": 245,
+          "label": "Evidence-first contract"
+        },
+        {
+          "x": 80,
+          "y": 452,
+          "width": 900,
+          "height": 360,
+          "label": "Locked Preview anchors"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "step": 4,
+      "source": "solutions/portfolio-rebalancing/screenshots/manual/04-save-instructions.jpg",
+      "status": "reshoot_required",
+      "reason": "The instruction text is visible, but the frame contains no Save confirmation, saved-state tooltip, or No unsaved changes indicator. It does not prove that the policy was saved."
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "step": 5,
+      "source": "solutions/portfolio-rebalancing/screenshots/manual/05-remove-web-search.jpg",
+      "annotated": "solutions/portfolio-rebalancing/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "The Knowledge section is visibly empty and no Search all websites capability is listed"
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 252,
+          "width": 382,
+          "height": 112,
+          "label": "Web search removed"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "step": 6,
+      "source": "solutions/portfolio-rebalancing/screenshots/manual/06-add-aibast-portfolio-rebalancing-controls-and-review.jpg",
+      "annotated": "solutions/portfolio-rebalancing/screenshots/manual/annotated/06-add-aibast-portfolio-rebalancing-controls-and-review.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Knowledge chip visibly begins aibast_portfolio-rebalancing-controls-and-re..."
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 306,
+          "width": 375,
+          "height": 50,
+          "label": "Controls knowledge added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "step": 7,
+      "source": "solutions/portfolio-rebalancing/screenshots/manual/07-add-aibast-portfolio-rebalancing-synthetic-records.jpg",
+      "annotated": "solutions/portfolio-rebalancing/screenshots/manual/annotated/07-add-aibast-portfolio-rebalancing-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Knowledge chip visibly begins aibast_portfolio-rebalancing-synthetic-recor...",
+        "Controls-and-review knowledge chip remains present"
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 306,
+          "width": 375,
+          "height": 87,
+          "label": "Two knowledge files"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "step": 8,
+      "source": "solutions/portfolio-rebalancing/screenshots/manual/08-add-aibast-execution-plan-06.jpg",
+      "annotated": "solutions/portfolio-rebalancing/screenshots/manual/annotated/08-add-aibast-execution-plan-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "execution-plan skill chip"
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 180,
+          "width": 225,
+          "height": 52,
+          "label": "Execution-plan skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "step": 9,
+      "source": "solutions/portfolio-rebalancing/screenshots/manual/09-add-aibast-portfolio-analysis-01.jpg",
+      "annotated": "solutions/portfolio-rebalancing/screenshots/manual/annotated/09-add-aibast-portfolio-analysis-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "portfolio-analysis and execution-plan skill chips"
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 180,
+          "width": 345,
+          "height": 52,
+          "label": "Portfolio-analysis skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "step": 10,
+      "source": "solutions/portfolio-rebalancing/screenshots/manual/10-add-aibast-rebalance-recommendation-02.jpg",
+      "annotated": "solutions/portfolio-rebalancing/screenshots/manual/annotated/10-add-aibast-rebalance-recommendation-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "rebalance-recommendation skill chip",
+        "portfolio-analysis and execution-plan skill chips remain present"
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 180,
+          "width": 345,
+          "height": 92,
+          "label": "Rebalance skill added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "step": 11,
+      "source": "solutions/portfolio-rebalancing/screenshots/manual/11-add-aibast-retirement-scenario-05.jpg",
+      "annotated": "solutions/portfolio-rebalancing/screenshots/manual/annotated/11-add-aibast-retirement-scenario-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "retirement-scenario skill chip",
+        "Four configured skill chips are visible"
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 180,
+          "width": 345,
+          "height": 132,
+          "label": "Retirement skill added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "step": 12,
+      "source": "solutions/portfolio-rebalancing/screenshots/manual/12-add-aibast-tax-impact-03.jpg",
+      "annotated": "solutions/portfolio-rebalancing/screenshots/manual/annotated/12-add-aibast-tax-impact-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "tax-impact skill chip",
+        "Five configured skill chips are visible"
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 180,
+          "width": 345,
+          "height": 132,
+          "label": "Tax-impact skill added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "step": 13,
+      "source": "solutions/portfolio-rebalancing/screenshots/manual/13-add-aibast-tax-loss-harvest-04.jpg",
+      "annotated": "solutions/portfolio-rebalancing/screenshots/manual/annotated/13-add-aibast-tax-loss-harvest-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "tax-loss-harvest skill chip",
+        "Five named skill chips plus one additional configured skill"
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 180,
+          "width": 345,
+          "height": 172,
+          "label": "Tax-loss skill added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "step": 14,
+      "source": "solutions/portfolio-rebalancing/screenshots/manual/14-review-inventory.jpg",
+      "annotated": "solutions/portfolio-rebalancing/screenshots/manual/annotated/14-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "Five named skills plus one additional configured skill",
+        "Tools section contains no configured tool",
+        "Two portfolio-rebalancing knowledge chips"
+      ],
+      "boxes": [
+        {
+          "x": 1198,
+          "y": 81,
+          "width": 202,
+          "height": 50,
+          "label": "Reviewed model"
+        },
+        {
+          "x": 1025,
+          "y": 178,
+          "width": 345,
+          "height": 174,
+          "label": "Six configured skills"
+        },
+        {
+          "x": 1025,
+          "y": 358,
+          "width": 375,
+          "height": 66,
+          "label": "No configured tools"
+        },
+        {
+          "x": 1025,
+          "y": 420,
+          "width": 375,
+          "height": 137,
+          "label": "Two knowledge files"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "step": 15,
+      "source": "solutions/portfolio-rebalancing/screenshots/manual/15-open-preview.jpg",
+      "annotated": "solutions/portfolio-rebalancing/screenshots/manual/annotated/15-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab is selected",
+        "New chat control",
+        "Fresh Portfolio Rebalancing Manual greeting"
+      ],
+      "boxes": [
+        {
+          "x": 638,
+          "y": 4,
+          "width": 108,
+          "height": 54,
+          "label": "Preview selected"
+        },
+        {
+          "x": 835,
+          "y": 77,
+          "width": 140,
+          "height": 58,
+          "label": "Fresh chat"
+        },
+        {
+          "x": 258,
+          "y": 145,
+          "width": 540,
+          "height": 100,
+          "label": "Manual agent greeting"
+        }
+      ]
+    },
+    {
+      "id": "hard-prb-01",
+      "mode": "hard",
+      "case_id": "PRB-01",
+      "step": 16,
+      "source": "solutions/portfolio-rebalancing/screenshots/manual/16-prb-01.jpg",
+      "annotated": "solutions/portfolio-rebalancing/screenshots/manual/annotated/16-prb-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "PORT-5001 is outside its drift guardrail",
+        "VTI is the largest allocation gap",
+        "No order, trade, or transaction has occurred"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 112,
+          "width": 940,
+          "height": 166,
+          "label": "PORT-5001 and VTI"
+        },
+        {
+          "x": 285,
+          "y": 292,
+          "width": 940,
+          "height": 195,
+          "label": "Human review and no order"
+        }
+      ]
+    },
+    {
+      "id": "hard-prb-02",
+      "mode": "hard",
+      "case_id": "PRB-02",
+      "step": 17,
+      "source": "solutions/portfolio-rebalancing/screenshots/manual/17-prb-02.jpg",
+      "annotated": "solutions/portfolio-rebalancing/screenshots/manual/annotated/17-prb-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "VTI is the most overweight position",
+        "VB and VEA are allocation-change candidates",
+        "Authorized trading-supervisor approval is required before any order"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 142,
+          "width": 940,
+          "height": 125,
+          "label": "VTI and candidate evidence"
+        },
+        {
+          "x": 285,
+          "y": 279,
+          "width": 940,
+          "height": 210,
+          "label": "Required review steps"
+        }
+      ]
+    },
+    {
+      "id": "hard-prb-03",
+      "mode": "hard",
+      "case_id": "PRB-03",
+      "step": 18,
+      "source": "solutions/portfolio-rebalancing/screenshots/manual/18-prb-03.jpg",
+      "status": "reshoot_required",
+      "reason": "The frame shows only internal routing and retrieval reasoning. The final tax-impact answer is not visible, so the acceptance anchors in the reasoning trace cannot be used as evidence. No alternate manual PRB-03 source exists in the browserfilm, contact sheet, or walkthrough GIF."
+    },
+    {
+      "id": "hard-prb-04",
+      "mode": "hard",
+      "case_id": "PRB-04",
+      "step": 19,
+      "source": "solutions/portfolio-rebalancing/screenshots/manual/19-prb-04.jpg",
+      "annotated": "solutions/portfolio-rebalancing/screenshots/manual/annotated/19-prb-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Wash-sale review must be completed by a qualified tax professional",
+        "The pilot has no live read or write permission and cannot execute a transaction",
+        "Required human reviewers are listed before any action"
+      ],
+      "full_case_not_visibly_proven": [
+        "VEA is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 165,
+          "width": 940,
+          "height": 55,
+          "label": "Wash-sale review"
+        },
+        {
+          "x": 285,
+          "y": 344,
+          "width": 940,
+          "height": 142,
+          "label": "No side effects"
+        }
+      ]
+    },
+    {
+      "id": "hard-prb-05",
+      "mode": "hard",
+      "case_id": "PRB-05",
+      "step": 20,
+      "source": "solutions/portfolio-rebalancing/screenshots/manual/20-prb-05.jpg",
+      "annotated": "solutions/portfolio-rebalancing/screenshots/manual/annotated/20-prb-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Retirement Planning Specialist or Licensed Financial Advisor must validate all planning inputs",
+        "Run the three scenarios only after assumptions are validated",
+        "Synthetic portfolio evidence and licensed human review boundary"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact 25 years and No success probability markers are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 286,
+          "width": 940,
+          "height": 204,
+          "label": "Validated three-scenario plan"
+        },
+        {
+          "x": 285,
+          "y": 505,
+          "width": 940,
+          "height": 75,
+          "label": "Human-review boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-prb-06",
+      "mode": "hard",
+      "case_id": "PRB-06",
+      "step": 21,
+      "source": "solutions/portfolio-rebalancing/screenshots/manual/21-prb-06.jpg",
+      "annotated": "solutions/portfolio-rebalancing/screenshots/manual/annotated/21-prb-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "No trade or transaction has been placed",
+        "Human-Controlled Implementation Checklist",
+        "Growth Allocation Fund (PORT-5001)"
+      ],
+      "full_case_not_visibly_proven": [
+        "VTI and the exact No order wording are not visible in the final-answer portion of this frame."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 562,
+          "width": 940,
+          "height": 132,
+          "label": "No trade and controlled checklist"
+        }
+      ]
+    },
+    {
+      "id": "hard-draft",
+      "mode": "hard",
+      "step": 22,
+      "source": "solutions/portfolio-rebalancing/screenshots/manual/22-confirm-draft.jpg",
+      "annotated": "solutions/portfolio-rebalancing/screenshots/manual/annotated/22-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Portfolio Rebalancing Manual",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 103,
+          "y": 242,
+          "width": 685,
+          "height": 64,
+          "label": "Target agent remains Draft"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy PRB-01 with PORT-5001 and VTI visible in the final answer.",
+      "Easy PRB-03 with Illustrative Tax Estimate and VTI visible in the final answer.",
+      "Easy Draft gate filtered so Portfolio Rebalancing Pilot and Draft are visible.",
+      "Hard step 1 after the blank agent workspace has loaded.",
+      "Hard step 4 with a visible saved-state confirmation.",
+      "Hard PRB-03 with Illustrative Tax Estimate and VTI visible in the final answer."
+    ],
+    "new_learn_step_captures": [
+      "Brainstem skill attached in VS Code Copilot Chat.",
+      "Copilot-only skill attached in VS Code Copilot Chat.",
+      "Brainstem local 6/6 verdict.",
+      "Copilot-only local 6/6 verdict.",
+      "Brainstem deploy response with Draft inventory.",
+      "Copilot-only deploy response with Draft inventory.",
+      "Brainstem final complete verdict.",
+      "Copilot-only final complete verdict."
+    ]
+  }
+}

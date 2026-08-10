@@ -11,6 +11,43 @@
         param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
       document.documentElement.setAttribute("data-theme", theme);
     })();
+    (() => {
+      const key = "aibast:theme";
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const explicit = param === "dark" || param === "light" ? param : null;
+      let stored = null;
+      try {
+        const candidate = localStorage.getItem(key);
+        stored = candidate === "dark" || candidate === "light" ? candidate : null;
+      } catch (_error) {
+        stored = null;
+      }
+      const theme = explicit || stored || "light";
+      document.documentElement.setAttribute("data-theme", theme);
+      document.addEventListener("DOMContentLoaded", () => {
+        const button = document.querySelector("[data-theme-toggle]");
+        if (!button) return;
+        const render = () => {
+          const dark = document.documentElement.getAttribute("data-theme") === "dark";
+          button.textContent = dark ? "Use light mode" : "Use dark mode";
+          button.setAttribute("aria-pressed", String(dark));
+        };
+        button.addEventListener("click", () => {
+          const next =
+            document.documentElement.getAttribute("data-theme") === "dark"
+              ? "light"
+              : "dark";
+          document.documentElement.setAttribute("data-theme", next);
+          try {
+            localStorage.setItem(key, next);
+          } catch (_error) {
+            /* The visible theme still changes when storage is unavailable. */
+          }
+          render();
+        });
+        render();
+      });
+    })();
   </script>
   <style>
 
@@ -89,6 +126,7 @@
       border-bottom: 1px solid var(--cp-border);
       background: var(--cp-panel-strong);
     }
+    .topbar-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
     .brand { display: flex; align-items: center; gap: 10px; font-weight: 750; }
     .brand-mark {
       display: grid;
@@ -157,6 +195,7 @@
     @media (max-width: 760px) {
       .grid { grid-template-columns: 1fr; }
       .topbar { align-items: flex-start; padding: 12px 16px; }
+      .topbar-actions { justify-content: flex-start; }
       .page { width: min(100% - 24px, 1120px); padding-top: 24px; }
       .hero { padding: 24px 20px; }
     }
@@ -167,7 +206,7 @@
     .toc a { padding: 7px 9px; border-left: 3px solid var(--cp-border); color: var(--cp-text-muted); text-decoration: none; font-size: 13px; }
     .toc a:hover { border-left-color: var(--cp-accent); color: var(--cp-text); }
     .step { scroll-margin-top: 90px; margin: 0 0 28px; overflow: hidden; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
-    .step header { display: flex; gap: 14px; padding: 20px 22px; border-bottom: 1px solid var(--cp-border); }
+    .step header { display: grid; grid-template-columns: 36px 1fr auto; gap: 14px; align-items: center; padding: 20px 22px; border-bottom: 1px solid var(--cp-border); }
     .step header > span { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 10px; background: var(--cp-accent-soft); color: var(--cp-accent); font-weight: 800; }
     .step h3, .step header p { margin: 0; }
     .step header p { color: var(--cp-text-muted); font-size: 13px; }
@@ -175,10 +214,25 @@
     .instruction-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
     .instruction { padding: 14px; border-radius: 10px; background: var(--cp-surface-soft); }
     .instruction strong { display: block; margin-bottom: 6px; }
+    .instruction-heading { display: flex; align-items: start; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
+    .instruction-heading strong { margin: 0; }
+    .copy-button { min-height: 34px; padding: 6px 10px; font-size: 13px; }
+    .copy-source { display: none; }
     .instruction.expected { border-left: 4px solid var(--cp-success); }
-    .shot { display: block; width: 100%; border: 1px solid var(--cp-border); border-radius: 10px; }
+    .shot-link { display: block; text-align: center; }
+    .shot { display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }
+    .capture-meta { margin: 8px 0 0; color: var(--cp-text-muted); font-size: 12px; text-align: center; }
+    .reference-shot-wrap { margin: 16px 0; }
+    .quality-warning { margin: 10px 0 0; padding: 14px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft); color: var(--cp-text-muted); text-align: left; }
+    .quality-warning strong { color: var(--cp-text); }
     .missing { padding: 32px; border: 2px dashed var(--cp-warning); border-radius: 10px; color: var(--cp-text-muted); }
+    .look-for { padding: 20px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
+    .look-for strong { color: var(--cp-text); }
+    .look-for p { margin: 8px 0 0; }
+    .report-button { border-color: var(--cp-accent); color: var(--cp-accent); }
+    .feedback-notice { margin-top: 14px; padding: 14px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
     .step footer { display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+    .achievements-manual-note { margin-top: 10px; color: var(--cp-text-muted); font-size: 13px; }
     .troubleshooting details { padding: 14px 0; border-bottom: 1px solid var(--cp-border); }
     summary { cursor: pointer; font-weight: 700; }
     @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } .sidebar { position: static; max-height: none; } }
@@ -187,13 +241,15 @@
 </head>
 <body>
   <header class="topbar">
-    <div class="brand"><span class="brand-mark">C</span><span>Clawpilot manual journey</span></div>
-    <div><a class="button" href="screenshots/manual/manual-build-walkthrough.gif">Watch the manual film</a> <a class="button primary" href="exports/win-loss-analysis-source.zip">Download source bundle</a></div>
+    <div class="brand"><span class="brand-mark">A</span><span>AIBAST manual workshop</span></div>
+    <div class="topbar-actions"><button class="button" type="button" data-theme-toggle aria-pressed="false">Use dark mode</button> <a class="button primary" href="exports/win-loss-analysis-source.zip">Download source bundle</a></div>
   </header>
   <div class="layout">
     <aside class="sidebar">
       <strong id="progress-label">0 of 22 complete</strong>
       <div class="progress"><span id="progress-bar"></span></div>
+      <p class="achievements-manual-note">Hard-mode progress earns self-paced local achievement points on this device.</p>
+      <p class="achievements-manual-note" id="achievements-manual-toast" role="status" aria-live="polite" aria-atomic="true"></p>
       <nav class="toc" aria-label="Tutorial actions"><a href="#step-1">1. Create a blank Copilot Studio agent</a>
 <a href="#step-2">2. Name Win/Loss Analysis Manual</a>
 <a href="#step-3">3. Enter the reviewed global instructions</a>
@@ -223,335 +279,395 @@
         <h1>Build Win/Loss Analysis Agent manually.</h1>
         <p class="lede">No PAC CLI, YAML import, or plugin architect. Perform exactly one action per real browserfilm frame, compare the screenshot, and stop at Draft.</p>
         <div class="notice"><strong>Synthetic disclosure:</strong> this is qualitative workflow evidence using packaged synthetic inputs. It is not a customer KPI or a live-system result.</div>
-
+        <div class="feedback-notice"><strong>Found something inaccurate?</strong> Use <em>Report an issue</em> on that step. It opens a prefilled GitHub issue for review and does not submit automatically.</div>
+        <!-- No pending evidence. -->
       </section>
       <h2>Build and verify</h2>
-
       <article class="step" id="step-1">
-        <header><span>1</span><div><h3>Create a blank Copilot Studio agent</h3><p>Frame 1 of 22</p></div></header>
+        <header><span>1</span><div><h3>Create a blank Copilot Studio agent</h3><p>Step 1 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 1: Create a blank Copilot Studio agent" data-report-expected="A blank Copilot Studio agent is visible in the captured Draft workspace." data-report-evidence="solutions/win-loss-analysis/screenshots/manual/01-create-blank-agent.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Create a blank Copilot Studio agent</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Create a blank Copilot Studio agent</span></div>
             <div class="instruction expected"><strong>Expected result</strong>A blank Copilot Studio agent is visible in the captured Draft workspace.</div>
           </div>
-          <img class="shot" src="screenshots/manual/01-create-blank-agent.jpg" alt="Create a blank Copilot Studio agent evidence">
+
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> A blank Copilot Studio agent is visible in the captured Draft workspace.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/win-loss-analysis/deployment.json">Raw download: Deployment</a>
+            <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="1"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-2">
-        <header><span>2</span><div><h3>Name Win/Loss Analysis Manual</h3><p>Frame 2 of 22</p></div></header>
+<article class="step" id="step-2">
+        <header><span>2</span><div><h3>Name Win/Loss Analysis Manual</h3><p>Step 2 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 2: Name Win/Loss Analysis Manual" data-report-expected="The page header shows the recorded manual build name: Win/Loss Analysis Manual." data-report-evidence="solutions/win-loss-analysis/screenshots/manual/02-name-agent.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Name Win/Loss Analysis Manual</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-2">Copy agent name</button><pre class="copy-source" id="hard-copy-2" hidden>Win/Loss Analysis Manual</pre></div><span>Name Win/Loss Analysis Manual</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The page header shows the recorded manual build name: Win/Loss Analysis Manual.</div>
           </div>
-          <img class="shot" src="screenshots/manual/02-name-agent.jpg" alt="Name Win/Loss Analysis Manual evidence">
+
+          <a class="shot-link" href="screenshots/manual/annotated/02-name-agent.png" download="02-name-agent.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/02-name-agent.png" alt="Name Win/Loss Analysis Manual annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Win/Loss Analysis Manual is entered in the name field. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/02-name-agent.jpg" download="02-name-agent.jpg">Download original</a>.</p>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/win-loss-analysis/deployment.json">Raw download: Deployment</a>
+            <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="2"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-3">
-        <header><span>3</span><div><h3>Enter the reviewed global instructions</h3><p>Frame 3 of 22</p></div></header>
+<article class="step" id="step-3">
+        <header><span>3</span><div><h3>Enter the reviewed global instructions</h3><p>Step 3 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 3: Enter the reviewed global instructions" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/win-loss-analysis/screenshots/manual/03-enter-instructions.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Enter the reviewed global instructions</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-3">Copy instructions</button><pre class="copy-source" id="hard-copy-3" hidden># Win/Loss Analysis Agent — Global Instructions
+
+## Role
+
+Turn the fixed synthetic closed-deal snapshot into a governed strategy review for sales operations, enablement, and leadership. Compare patterns, explain loss drivers, draft counter-strategies, and evaluate clearly labeled scenarios.
+
+## Allowed operations
+
+- `win_loss_overview` — quarter and competitor patterns.
+- `root_cause_analysis` — loss drivers and synthetic buyer-feedback themes.
+- `counter_strategies` — draft enablement responses.
+- `revenue_impact` — synthetic intervention-value scenarios.
+- `board_presentation` — draft leadership narrative.
+- `action_summary` — complete findings and candidate next steps.
+
+Use `action_summary` for a complete recap, session accomplishments, or candidate next steps. Use `revenue_impact` only for clearly labeled scenarios, never outcome claims.
+
+## Fixed evidence policy
+
+- Use only the bundled synthetic opportunities, outcomes, segments, competitors, loss reasons, feedback statements, interventions, and cost assumptions.
+- Do not browse, research competitors, retrieve calls, search buyer comments, or query CRM, conversation intelligence, market, finance, or forecast systems.
+- Never invent or substitute a deal, buyer statement, competitor fact, loss reason, cost, intervention, probability, rate, recovery value, or ROI.
+- If the snapshot cannot support a conclusion, state the limitation.
+- Treat every amount, rate, quote, cost, ROI, recovery figure, and future period as a synthetic scenario.
+
+## Prohibited actions
+
+Never change a forecast, approve spend, commit revenue, publish enablement, alter a roadmap, launch a program, contact a buyer or reference, update CRM, or present synthetic recovery as realized business performance.
+
+## Human approval gates
+
+Sales leadership must review strategic conclusions and scenarios. Finance must validate financial assumptions; enablement must approve content; product, security, legal, and executive reviewers must approve actions within their authority before implementation or publication.
+
+## Evidence-first response contract
+
+Keep the response concise and use this order:
+
+1. **Synthetic snapshot** — identify the period and requested operation.
+2. **Evidence** — cite exact synthetic deals, patterns, and feedback fields.
+3. **Analysis** — separate observed snapshot patterns from modeled scenarios.
+4. **Draft strategy options** — list bounded countermeasures or leadership decisions.
+5. **Approval gate** — name required reviewers and state that no forecast, spend, CRM, program, publication, buyer contact, or revenue outcome changed.
+
+&lt;!-- locked-preview-anchors:start --&gt;
+## Locked Preview evidence anchors
+
+Route from the user&#x27;s natural-language intent. For the matching operation, preserve the exact synthetic evidence anchors below; do not dump anchors from unrelated cases.
+
+Do not narrate internal retrieval, tool selection, restrictions, or implementation mechanics. Present only the user-facing result.
+
+- `WL-01` / `win_loss_overview`: `Q3 Win/Loss Overview`, `Loss Analysis by Competitor`, `Evidence boundary`
+- `WL-02` / `root_cause_analysis`: `Root Cause Analysis`, `Deep Dive`, `Evidence boundary`
+- `WL-03` / `counter_strategies`: `Counter-Strategies`, `Updated Talk Track`, `Evidence boundary`
+- `WL-04` / `revenue_impact`: `Synthetic Revenue Scenario Model`, `Illustrative scenario value`, `Evidence boundary`
+- `WL-05` / `board_presentation`: `Board Presentation`, `Decision for authorized leaders`, `Evidence boundary`
+- `WL-06` / `action_summary`: `Complete Summary`, `Draft Next-Step Options`, `Evidence boundary`
+
+These phrases are acceptance evidence for the fixed synthetic cases. Preserve their wording when that case applies, while keeping the surrounding answer natural and evidence-first.
+&lt;!-- locked-preview-anchors:end --&gt;
+</pre></div><span>Enter the reviewed global instructions</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
           </div>
-          <img class="shot" src="screenshots/manual/03-enter-instructions.jpg" alt="Enter the reviewed global instructions evidence">
+
+          <a class="shot-link" href="screenshots/manual/annotated/03-enter-instructions.png" download="03-enter-instructions.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/03-enter-instructions.png" alt="Enter the reviewed global instructions annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Evidence-first response contract; Locked Preview evidence anchors; All six WL case anchors are visible. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/03-enter-instructions.jpg" download="03-enter-instructions.jpg">Download original</a>.</p>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/win-loss-analysis/manual/GLOBAL-INSTRUCTIONS.md">Raw download: Global Instructions</a>
+            <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
             <label><input class="complete" type="checkbox" data-step="3"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-4">
-        <header><span>4</span><div><h3>Save the instruction policy</h3><p>Frame 4 of 22</p></div></header>
+<article class="step" id="step-4">
+        <header><span>4</span><div><h3>Save the instruction policy</h3><p>Step 4 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 4: Save the instruction policy" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/win-loss-analysis/screenshots/manual/04-save-instructions.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Save the instruction policy</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Save the instruction policy</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
           </div>
-          <img class="shot" src="screenshots/manual/04-save-instructions.jpg" alt="Save the instruction policy evidence">
+
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/win-loss-analysis/manual/GLOBAL-INSTRUCTIONS.md">Raw download: Global Instructions</a>
+            <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
             <label><input class="complete" type="checkbox" data-step="4"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-5">
-        <header><span>5</span><div><h3>Remove default web search</h3><p>Frame 5 of 22</p></div></header>
+<article class="step" id="step-5">
+        <header><span>5</span><div><h3>Remove default web search</h3><p>Step 5 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 5: Remove default web search" data-report-expected="The captured inventory no longer lists the default web-search capability." data-report-evidence="solutions/win-loss-analysis/screenshots/manual/05-remove-web-search.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Remove default web search</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Remove default web search</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured inventory no longer lists the default web-search capability.</div>
           </div>
-          <img class="shot" src="screenshots/manual/05-remove-web-search.jpg" alt="Remove default web search evidence">
+
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured inventory no longer lists the default web-search capability.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/win-loss-analysis/export-manifest.json">Raw download: Export manifest</a>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="5"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-6">
-        <header><span>6</span><div><h3>Add knowledge: aibast_win-loss-analysis-operating-rules.md</h3><p>Frame 6 of 22</p></div></header>
+<article class="step" id="step-6">
+        <header><span>6</span><div><h3>Add knowledge: aibast_win-loss-analysis-operating-rules.md</h3><p>Step 6 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 6: Add knowledge: aibast_win-loss-analysis-operating-rules.md" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/win-loss-analysis/screenshots/manual/06-add-aibast-win-loss-analysis-operating-rules.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Add knowledge: aibast_win-loss-analysis-operating-rules.md</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add knowledge: aibast_win-loss-analysis-operating-rules.md</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
           </div>
-          <img class="shot" src="screenshots/manual/06-add-aibast-win-loss-analysis-operating-rules.jpg" alt="Add knowledge: aibast_win-loss-analysis-operating-rules.md evidence">
+
+          <a class="shot-link" href="screenshots/manual/annotated/06-add-aibast-win-loss-analysis-operating-rules.png" download="06-add-aibast-win-loss-analysis-operating-rules.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/06-add-aibast-win-loss-analysis-operating-rules.png" alt="Add knowledge: aibast_win-loss-analysis-operating-rules.md annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: aibast_win-loss-analysis-operating-rules.md is visible in Knowledge. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/06-add-aibast-win-loss-analysis-operating-rules.jpg" download="06-add-aibast-win-loss-analysis-operating-rules.jpg">Download original</a>.</p>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/win-loss-analysis/manual/knowledge/aibast_win-loss-analysis-operating-rules.md">Raw download: Aibast Win Loss Analysis Operating Rules</a>
+            <a href="manual/knowledge/aibast_win-loss-analysis-operating-rules.md" download>Download source: Aibast Win Loss Analysis Operating Rules</a>
             <label><input class="complete" type="checkbox" data-step="6"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-7">
-        <header><span>7</span><div><h3>Add knowledge: aibast_win-loss-analysis-synthetic-records.md</h3><p>Frame 7 of 22</p></div></header>
+<article class="step" id="step-7">
+        <header><span>7</span><div><h3>Add knowledge: aibast_win-loss-analysis-synthetic-records.md</h3><p>Step 7 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 7: Add knowledge: aibast_win-loss-analysis-synthetic-records.md" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/win-loss-analysis/screenshots/manual/07-add-aibast-win-loss-analysis-synthetic-records.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Add knowledge: aibast_win-loss-analysis-synthetic-records.md</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add knowledge: aibast_win-loss-analysis-synthetic-records.md</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
           </div>
-          <img class="shot" src="screenshots/manual/07-add-aibast-win-loss-analysis-synthetic-records.jpg" alt="Add knowledge: aibast_win-loss-analysis-synthetic-records.md evidence">
+
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/win-loss-analysis/manual/knowledge/aibast_win-loss-analysis-synthetic-records.md">Raw download: Aibast Win Loss Analysis Synthetic Records</a>
+            <a href="manual/knowledge/aibast_win-loss-analysis-synthetic-records.md" download>Download source: Aibast Win Loss Analysis Synthetic Records</a>
             <label><input class="complete" type="checkbox" data-step="7"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-8">
-        <header><span>8</span><div><h3>Add skill: action-summary</h3><p>Frame 8 of 22</p></div></header>
+<article class="step" id="step-8">
+        <header><span>8</span><div><h3>Add skill: action-summary</h3><p>Step 8 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 8: Add skill: action-summary" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills." data-report-evidence="solutions/win-loss-analysis/screenshots/manual/08-add-action-summary.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Add skill: action-summary</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: action-summary</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills.</div>
           </div>
-          <img class="shot" src="screenshots/manual/08-add-action-summary.jpg" alt="Add skill: action-summary evidence">
+
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/win-loss-analysis/manual/skills/action-summary/SKILL.md">Raw download: Manual skill: action summary</a>
+            <a href="manual/skills/action-summary/SKILL.md" download>Download source: Manual skill: action summary</a>
             <label><input class="complete" type="checkbox" data-step="8"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-9">
-        <header><span>9</span><div><h3>Add skill: board-presentation</h3><p>Frame 9 of 22</p></div></header>
+<article class="step" id="step-9">
+        <header><span>9</span><div><h3>Add skill: board-presentation</h3><p>Step 9 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 9: Add skill: board-presentation" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills." data-report-evidence="solutions/win-loss-analysis/screenshots/manual/09-add-board-presentation.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Add skill: board-presentation</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: board-presentation</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills.</div>
           </div>
-          <img class="shot" src="screenshots/manual/09-add-board-presentation.jpg" alt="Add skill: board-presentation evidence">
+
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/win-loss-analysis/manual/skills/board-presentation/SKILL.md">Raw download: Manual skill: board presentation</a>
+            <a href="manual/skills/board-presentation/SKILL.md" download>Download source: Manual skill: board presentation</a>
             <label><input class="complete" type="checkbox" data-step="9"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-10">
-        <header><span>10</span><div><h3>Add skill: counter-strategies</h3><p>Frame 10 of 22</p></div></header>
+<article class="step" id="step-10">
+        <header><span>10</span><div><h3>Add skill: counter-strategies</h3><p>Step 10 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 10: Add skill: counter-strategies" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills." data-report-evidence="solutions/win-loss-analysis/screenshots/manual/10-add-counter-strategies.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Add skill: counter-strategies</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: counter-strategies</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills.</div>
           </div>
-          <img class="shot" src="screenshots/manual/10-add-counter-strategies.jpg" alt="Add skill: counter-strategies evidence">
+
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/win-loss-analysis/manual/skills/counter-strategies/SKILL.md">Raw download: Manual skill: counter strategies</a>
+            <a href="manual/skills/counter-strategies/SKILL.md" download>Download source: Manual skill: counter strategies</a>
             <label><input class="complete" type="checkbox" data-step="10"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-11">
-        <header><span>11</span><div><h3>Add skill: revenue-impact</h3><p>Frame 11 of 22</p></div></header>
+<article class="step" id="step-11">
+        <header><span>11</span><div><h3>Add skill: revenue-impact</h3><p>Step 11 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 11: Add skill: revenue-impact" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills." data-report-evidence="solutions/win-loss-analysis/screenshots/manual/11-add-revenue-impact.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Add skill: revenue-impact</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: revenue-impact</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills.</div>
           </div>
-          <img class="shot" src="screenshots/manual/11-add-revenue-impact.jpg" alt="Add skill: revenue-impact evidence">
+
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/win-loss-analysis/manual/skills/revenue-impact/SKILL.md">Raw download: Manual skill: revenue impact</a>
+            <a href="manual/skills/revenue-impact/SKILL.md" download>Download source: Manual skill: revenue impact</a>
             <label><input class="complete" type="checkbox" data-step="11"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-12">
-        <header><span>12</span><div><h3>Add skill: root-cause-analysis</h3><p>Frame 12 of 22</p></div></header>
+<article class="step" id="step-12">
+        <header><span>12</span><div><h3>Add skill: root-cause-analysis</h3><p>Step 12 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 12: Add skill: root-cause-analysis" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills." data-report-evidence="solutions/win-loss-analysis/screenshots/manual/12-add-root-cause-analysis.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Add skill: root-cause-analysis</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: root-cause-analysis</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills.</div>
           </div>
-          <img class="shot" src="screenshots/manual/12-add-root-cause-analysis.jpg" alt="Add skill: root-cause-analysis evidence">
+
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/win-loss-analysis/manual/skills/root-cause-analysis/SKILL.md">Raw download: Manual skill: root cause analysis</a>
+            <a href="manual/skills/root-cause-analysis/SKILL.md" download>Download source: Manual skill: root cause analysis</a>
             <label><input class="complete" type="checkbox" data-step="12"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-13">
-        <header><span>13</span><div><h3>Add skill: win-loss-overview</h3><p>Frame 13 of 22</p></div></header>
+<article class="step" id="step-13">
+        <header><span>13</span><div><h3>Add skill: win-loss-overview</h3><p>Step 13 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 13: Add skill: win-loss-overview" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills." data-report-evidence="solutions/win-loss-analysis/screenshots/manual/13-add-win-loss-overview.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Add skill: win-loss-overview</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: win-loss-overview</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills.</div>
           </div>
-          <img class="shot" src="screenshots/manual/13-add-win-loss-overview.jpg" alt="Add skill: win-loss-overview evidence">
+
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured skill inventory reflects the reviewed uploads; the evidence records 6 skills.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/win-loss-analysis/manual/skills/win-loss-overview/SKILL.md">Raw download: Manual skill: win loss overview</a>
+            <a href="manual/skills/win-loss-overview/SKILL.md" download>Download source: Manual skill: win loss overview</a>
             <label><input class="complete" type="checkbox" data-step="13"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-14">
-        <header><span>14</span><div><h3>Review model, skills, knowledge, and safety boundaries</h3><p>Frame 14 of 22</p></div></header>
+<article class="step" id="step-14">
+        <header><span>14</span><div><h3>Review model, skills, knowledge, and safety boundaries</h3><p>Step 14 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 14: Review model, skills, knowledge, and safety boundaries" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 6 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/win-loss-analysis/screenshots/manual/14-review-inventory.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Review model, skills, knowledge, and safety boundaries</div>
-            <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Review model, skills, knowledge, and safety boundaries</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Sonnet 4.6, 6 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
           </div>
-          <img class="shot" src="screenshots/manual/14-review-inventory.jpg" alt="Review model, skills, knowledge, and safety boundaries evidence">
+
+          <a class="shot-link" href="screenshots/manual/annotated/14-review-inventory.png" download="14-review-inventory.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/14-review-inventory.png" alt="Review model, skills, knowledge, and safety boundaries annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Claude Sonnet 4.6; Five named skills plus one additional skill; Tools has no configured item; Two exact knowledge filenames; Save tooltip says No unsaved changes. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/14-review-inventory.jpg" download="14-review-inventory.jpg">Download original</a>.</p>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/win-loss-analysis/deployment.json">Raw download: Deployment</a>
+            <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="14"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-15">
-        <header><span>15</span><div><h3>Open a fresh Preview conversation</h3><p>Frame 15 of 22</p></div></header>
+<article class="step" id="step-15">
+        <header><span>15</span><div><h3>Open a fresh Preview conversation</h3><p>Step 15 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 15: Open a fresh Preview conversation" data-report-expected="A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass." data-report-evidence="solutions/win-loss-analysis/screenshots/manual/15-open-preview.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Open a fresh Preview conversation</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Open a fresh Preview conversation</span></div>
             <div class="instruction expected"><strong>Expected result</strong>A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass.</div>
           </div>
-          <img class="shot" src="screenshots/manual/15-open-preview.jpg" alt="Open a fresh Preview conversation evidence">
+
+          <a class="shot-link" href="screenshots/manual/annotated/15-open-preview.png" download="15-open-preview.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/15-open-preview.png" alt="Open a fresh Preview conversation annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Preview tab is selected; New chat is visible; Win/Loss Analysis Manual greeting is visible. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/15-open-preview.jpg" download="15-open-preview.jpg">Download original</a>.</p>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/win-loss-analysis/export-manifest.json">Raw download: Export manifest</a>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="15"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-16">
-        <header><span>16</span><div><h3>Pass WL-01: Sales Operations Manager</h3><p>Frame 16 of 22</p></div></header>
+<article class="step" id="step-16">
+        <header><span>16</span><div><h3>Pass WL-01: Sales Operations Manager</h3><p>Step 16 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 16: Pass WL-01: Sales Operations Manager" data-report-expected="The captured Preview evidence records WL-01 with the recorded identifiers Q3 Win/Loss Overview, Loss Analysis by Competitor, Evidence boundary; do not infer results beyond it." data-report-evidence="solutions/win-loss-analysis/screenshots/manual/16-wl-01.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Pass WL-01: Sales Operations Manager</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-16">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-16" hidden>Compare the bundled synthetic Q3 and Q2 win and loss patterns and show where the decline is concentrated.</pre></div><span>Pass WL-01: Sales Operations Manager</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records WL-01 with the recorded identifiers Q3 Win/Loss Overview, Loss Analysis by Competitor, Evidence boundary; do not infer results beyond it.</div>
           </div>
-          <img class="shot" src="screenshots/manual/16-wl-01.jpg" alt="Pass WL-01: Sales Operations Manager evidence">
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running WL-01. A previous response must not influence the evidence.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/16-wl-01.png" download="16-wl-01.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/16-wl-01.png" alt="Pass WL-01: Sales Operations Manager annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Decline Summary; CompetitorX accounts for a 14.1% share-of-loss increase; Evidence boundary. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/16-wl-01.jpg" download="16-wl-01.jpg">Download original</a>.</p>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/win-loss-analysis/evals/manual-build-evidence.json">Raw download: Manual Build Evidence</a>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="16"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-17">
-        <header><span>17</span><div><h3>Pass WL-02: Enablement Manager</h3><p>Frame 17 of 22</p></div></header>
+<article class="step" id="step-17">
+        <header><span>17</span><div><h3>Pass WL-02: Enablement Manager</h3><p>Step 17 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 17: Pass WL-02: Enablement Manager" data-report-expected="The captured Preview evidence records WL-02 with the recorded identifiers Root Cause Analysis, Deep Dive, Evidence boundary; do not infer results beyond it." data-report-evidence="solutions/win-loss-analysis/screenshots/manual/17-wl-02.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Pass WL-02: Enablement Manager</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-17">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-17" hidden>Identify the evidence-backed synthetic loss drivers and buyer feedback themes that enablement should review.</pre></div><span>Pass WL-02: Enablement Manager</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records WL-02 with the recorded identifiers Root Cause Analysis, Deep Dive, Evidence boundary; do not infer results beyond it.</div>
           </div>
-          <img class="shot" src="screenshots/manual/17-wl-02.jpg" alt="Pass WL-02: Enablement Manager evidence">
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running WL-02. A previous response must not influence the evidence.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/17-wl-02.png" download="17-wl-02.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/17-wl-02.png" alt="Pass WL-02: Enablement Manager annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Deep Dive — Security Certifications; Deep Dive — Enterprise References; Synthetic buyer quote and enablement implication. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/17-wl-02.jpg" download="17-wl-02.jpg">Download original</a>.</p>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/win-loss-analysis/evals/manual-build-evidence.json">Raw download: Manual Build Evidence</a>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="17"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-18">
-        <header><span>18</span><div><h3>Pass WL-03: Enablement Manager</h3><p>Frame 18 of 22</p></div></header>
+<article class="step" id="step-18">
+        <header><span>18</span><div><h3>Pass WL-03: Enablement Manager</h3><p>Step 18 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 18: Pass WL-03: Enablement Manager" data-report-expected="The captured Preview evidence records WL-03 with the recorded identifiers Counter-Strategies, Updated Talk Track, Evidence boundary; do not infer results beyond it." data-report-evidence="solutions/win-loss-analysis/screenshots/manual/18-wl-03.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Pass WL-03: Enablement Manager</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-18">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-18" hidden>Draft counter-strategy and talk-track options from the synthetic loss evidence for enablement review.</pre></div><span>Pass WL-03: Enablement Manager</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records WL-03 with the recorded identifiers Counter-Strategies, Updated Talk Track, Evidence boundary; do not infer results beyond it.</div>
           </div>
-          <img class="shot" src="screenshots/manual/18-wl-03.jpg" alt="Pass WL-03: Enablement Manager evidence">
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running WL-03. A previous response must not influence the evidence.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/18-wl-03.png" download="18-wl-03.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/18-wl-03.png" alt="Pass WL-03: Enablement Manager annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Talk-track deployment and content publication require enablement leadership; Named finance, security, sales, and legal review gates; Evidence boundary. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/18-wl-03.jpg" download="18-wl-03.jpg">Download original</a>.</p>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/win-loss-analysis/evals/manual-build-evidence.json">Raw download: Manual Build Evidence</a>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="18"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-19">
-        <header><span>19</span><div><h3>Pass WL-04: Sales Leader</h3><p>Frame 19 of 22</p></div></header>
+<article class="step" id="step-19">
+        <header><span>19</span><div><h3>Pass WL-04: Sales Leader</h3><p>Step 19 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 19: Pass WL-04: Sales Leader" data-report-expected="The captured Preview evidence records WL-04 with the recorded identifiers Synthetic Revenue Scenario Model, Illustrative scenario value, Evidence boundary; do not infer results beyond it." data-report-evidence="solutions/win-loss-analysis/screenshots/manual/19-wl-04.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Pass WL-04: Sales Leader</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-19">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-19" hidden>Model synthetic intervention scenarios without presenting them as realized or committed revenue.</pre></div><span>Pass WL-04: Sales Leader</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records WL-04 with the recorded identifiers Synthetic Revenue Scenario Model, Illustrative scenario value, Evidence boundary; do not infer results beyond it.</div>
           </div>
-          <img class="shot" src="screenshots/manual/19-wl-04.jpg" alt="Pass WL-04: Sales Leader evidence">
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running WL-04. A previous response must not influence the evidence.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/19-wl-04.png" download="19-wl-04.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/19-wl-04.png" alt="Pass WL-04: Sales Leader annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Modeled scenarios are explicitly not revenue commitments; Approval Gate; Evidence boundary. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/19-wl-04.jpg" download="19-wl-04.jpg">Download original</a>.</p>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/win-loss-analysis/evals/manual-build-evidence.json">Raw download: Manual Build Evidence</a>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="19"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-20">
-        <header><span>20</span><div><h3>Pass WL-05: Sales Leader</h3><p>Frame 20 of 22</p></div></header>
+<article class="step" id="step-20">
+        <header><span>20</span><div><h3>Pass WL-05: Sales Leader</h3><p>Step 20 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 20: Pass WL-05: Sales Leader" data-report-expected="The captured Preview evidence records WL-05 with the recorded identifiers Board Presentation, Decision for authorized leaders, Evidence boundary; do not infer results beyond it." data-report-evidence="solutions/win-loss-analysis/screenshots/manual/20-wl-05.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Pass WL-05: Sales Leader</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-20">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-20" hidden>Draft a board-level synthetic win and loss narrative with all investment and performance values labeled as scenarios.</pre></div><span>Pass WL-05: Sales Leader</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records WL-05 with the recorded identifiers Board Presentation, Decision for authorized leaders, Evidence boundary; do not infer results beyond it.</div>
           </div>
-          <img class="shot" src="screenshots/manual/20-wl-05.jpg" alt="Pass WL-05: Sales Leader evidence">
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running WL-05. A previous response must not influence the evidence.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/20-wl-05.png" download="20-wl-05.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/20-wl-05.png" alt="Pass WL-05: Sales Leader annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Three decisions are required from authorized leadership; No forecast, spend, CRM, buyer-contact, or program-launch side effect; Evidence Boundary. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/20-wl-05.jpg" download="20-wl-05.jpg">Download original</a>.</p>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/win-loss-analysis/evals/manual-build-evidence.json">Raw download: Manual Build Evidence</a>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="20"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-21">
-        <header><span>21</span><div><h3>Pass WL-06: Sales Operations Manager</h3><p>Frame 21 of 22</p></div></header>
+<article class="step" id="step-21">
+        <header><span>21</span><div><h3>Pass WL-06: Sales Operations Manager</h3><p>Step 21 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 21: Pass WL-06: Sales Operations Manager" data-report-expected="The captured Preview evidence records WL-06 with the recorded identifiers Complete Summary, Draft Next-Step Options, Evidence boundary; do not infer results beyond it." data-report-evidence="solutions/win-loss-analysis/screenshots/manual/21-wl-06.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Pass WL-06: Sales Operations Manager</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-21">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-21" hidden>Summarize the synthetic findings and candidate next steps without activating programs or approvals.</pre></div><span>Pass WL-06: Sales Operations Manager</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records WL-06 with the recorded identifiers Complete Summary, Draft Next-Step Options, Evidence boundary; do not infer results beyond it.</div>
           </div>
-          <img class="shot" src="screenshots/manual/21-wl-06.jpg" alt="Pass WL-06: Sales Operations Manager evidence">
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running WL-06. A previous response must not influence the evidence.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/21-wl-06.png" download="21-wl-06.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/21-wl-06.png" alt="Pass WL-06: Sales Operations Manager annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Strategic conclusions, financial assumptions, talk tracks, certification scope, pricing, and reference activation have named reviewers; Evidence boundary. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/21-wl-06.jpg" download="21-wl-06.jpg">Download original</a>.</p>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/win-loss-analysis/evals/manual-build-evidence.json">Raw download: Manual Build Evidence</a>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="21"> Mark complete</label>
           </footer>
         </div>
       </article>
-
-      <article class="step" id="step-22">
-        <header><span>22</span><div><h3>Confirm Draft and stop before publish</h3><p>Frame 22 of 22</p></div></header>
+<article class="step" id="step-22">
+        <header><span>22</span><div><h3>Confirm Draft and stop before publish</h3><p>Step 22 of 22</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 22: Confirm Draft and stop before publish" data-report-expected="The agent remains Draft and no Publish action is taken." data-report-evidence="solutions/win-loss-analysis/screenshots/manual/22-confirm-draft.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
-            <div class="instruction"><strong>Action</strong>Confirm Draft and stop before publish</div>
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Confirm Draft and stop before publish</span></div>
             <div class="instruction expected"><strong>Expected result</strong>The agent remains Draft and no Publish action is taken.</div>
           </div>
-          <img class="shot" src="screenshots/manual/22-confirm-draft.jpg" alt="Confirm Draft and stop before publish evidence">
+
+          <a class="shot-link" href="screenshots/manual/annotated/22-confirm-draft.png" download="22-confirm-draft.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/22-confirm-draft.png" alt="Confirm Draft and stop before publish annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Win/Loss Analysis Manual; Draft. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/22-confirm-draft.jpg" download="22-confirm-draft.jpg">Download original</a>.</p>
           <footer>
-            <a href="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/win-loss-analysis/deployment.json">Raw download: Deployment</a>
+            <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="22"> Mark complete</label>
           </footer>
         </div>
@@ -569,22 +685,267 @@
   </div>
   <script>
     (() => {
+
+      const ACHIEVEMENT_PROFILE_KEY = "aibast:achievement-profile:v1";
+      const ACHIEVEMENT_WORKSHOP_SLUG = "win-loss-analysis";
+      const ACHIEVEMENT_BADGES = Object.freeze([{"id":"started","label":"Started","points":5},{"id":"local-proof","label":"Local proof","points":15},{"id":"draft-builder","label":"Draft builder","points":20},{"id":"preview-proven","label":"Preview proven","points":25},{"id":"workshop-complete","label":"Workshop complete","points":35},{"id":"hard-mode-complete","label":"Hard mode complete","points":50}]);
+      const ACHIEVEMENT_BADGE_IDS = new Set(ACHIEVEMENT_BADGES.map((badge) => badge.id));
+
+      function emptyAchievementProfile() {
+        return { score: 0, workshops: {}, updatedAt: null };
+      }
+
+      function validAchievementTimestamp(value) {
+        return typeof value === "string" && !Number.isNaN(Date.parse(value))
+          ? value
+          : null;
+      }
+
+      function achievementCount(value) {
+        return Number.isInteger(value) && value >= 0 ? value : 0;
+      }
+
+      function sanitizeAchievementProfile(value) {
+        const clean = emptyAchievementProfile();
+        const source =
+          value && typeof value === "object" && !Array.isArray(value) ? value : {};
+        const workshops =
+          source.workshops && typeof source.workshops === "object"
+            ? source.workshops
+            : {};
+        Object.entries(workshops).forEach(([key, rawWorkshop]) => {
+          if (!rawWorkshop || typeof rawWorkshop !== "object") return;
+          const candidate =
+            typeof rawWorkshop.slug === "string" ? rawWorkshop.slug : key;
+          if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(candidate)) return;
+          const rawProgress =
+            rawWorkshop.progress && typeof rawWorkshop.progress === "object"
+              ? rawWorkshop.progress
+              : {};
+          const progress = {
+            easyChecked: achievementCount(rawProgress.easyChecked),
+            easyTotal: achievementCount(rawProgress.easyTotal),
+            hardChecked: achievementCount(rawProgress.hardChecked),
+            hardTotal: achievementCount(rawProgress.hardTotal),
+            easyComplete: rawProgress.easyComplete === true,
+            hardComplete: rawProgress.hardComplete === true,
+            updatedAt: validAchievementTimestamp(rawProgress.updatedAt),
+          };
+          const achievements = {};
+          const rawAchievements =
+            rawWorkshop.achievements &&
+            typeof rawWorkshop.achievements === "object"
+              ? rawWorkshop.achievements
+              : {};
+          ACHIEVEMENT_BADGES.forEach((badge) => {
+            const raw = rawAchievements[badge.id];
+            const earned =
+              raw === true ||
+              (raw && typeof raw === "object" && raw.earned === true);
+            if (earned) {
+              achievements[badge.id] = {
+                earned: true,
+                earnedAt: validAchievementTimestamp(raw?.earnedAt),
+              };
+            }
+          });
+          clean.workshops[candidate] = {
+            slug: candidate,
+            mode: rawWorkshop.mode === "hard" ? "hard" : "easy",
+            progress,
+            achievements,
+          };
+        });
+        clean.score = Object.values(clean.workshops).reduce(
+          (total, workshop) =>
+            total +
+            ACHIEVEMENT_BADGES.reduce(
+              (subtotal, badge) =>
+                subtotal +
+                (workshop.achievements[badge.id]?.earned ? badge.points : 0),
+              0,
+            ),
+          0,
+        );
+        clean.updatedAt = validAchievementTimestamp(source.updatedAt);
+        return clean;
+      }
+
+      function readAchievementProfile() {
+        try {
+          return sanitizeAchievementProfile(
+            JSON.parse(localStorage.getItem(ACHIEVEMENT_PROFILE_KEY) || "{}"),
+          );
+        } catch (_error) {
+          return emptyAchievementProfile();
+        }
+      }
+
+      function writeAchievementProfile(profile) {
+        const clean = sanitizeAchievementProfile(profile);
+        clean.updatedAt = new Date().toISOString();
+        localStorage.setItem(ACHIEVEMENT_PROFILE_KEY, JSON.stringify(clean));
+        return clean;
+      }
+
+      function ensureAchievementWorkshop(profile, mode = "easy") {
+        if (!profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG]) {
+          profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG] = {
+            slug: ACHIEVEMENT_WORKSHOP_SLUG,
+            mode: mode === "hard" ? "hard" : "easy",
+            progress: {
+              easyChecked: 0,
+              easyTotal: 0,
+              hardChecked: 0,
+              hardTotal: 0,
+              easyComplete: false,
+              hardComplete: false,
+              updatedAt: null,
+            },
+            achievements: {},
+          };
+        }
+        const workshop = profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG];
+        workshop.mode = mode === "hard" ? "hard" : "easy";
+        return workshop;
+      }
+
+      function setAchievementWorkshopProgress(profile, mode, patch) {
+        const workshop = ensureAchievementWorkshop(profile, mode);
+        workshop.progress = {
+          ...workshop.progress,
+          ...patch,
+          updatedAt: new Date().toISOString(),
+        };
+        return writeAchievementProfile(profile);
+      }
+
+      function awardAchievement(profile, badgeId, mode = "easy") {
+        if (!ACHIEVEMENT_BADGE_IDS.has(badgeId)) {
+          return { profile: sanitizeAchievementProfile(profile), awarded: null };
+        }
+        const workshop = ensureAchievementWorkshop(profile, mode);
+        if (workshop.achievements[badgeId]?.earned) {
+          return { profile: sanitizeAchievementProfile(profile), awarded: null };
+        }
+        workshop.achievements[badgeId] = {
+          earned: true,
+          earnedAt: new Date().toISOString(),
+        };
+        return {
+          profile: writeAchievementProfile(profile),
+          awarded: ACHIEVEMENT_BADGES.find((badge) => badge.id === badgeId),
+        };
+      }
+
+      function aibastSignalIssueUrl() {
+        const pagesOwner = String(globalThis.location?.hostname || "")
+          .match(/^([a-z0-9-]+)\.github\.io$/i)?.[1];
+        const owner = pagesOwner || "microsoft";
+        return new URL(
+          `https://github.com/${owner}/aibast-agents-library/issues/new`,
+        );
+      }
+
       const key = "aibast:win-loss-analysis:manual-progress";
       const boxes = Array.from(document.querySelectorAll(".complete"));
       const label = document.getElementById("progress-label");
       const bar = document.getElementById("progress-bar");
+      const achievementToast = document.getElementById("achievements-manual-toast");
       let saved = [];
-      try { saved = JSON.parse(localStorage.getItem(key) || "[]"); } catch (_error) { saved = []; }
+      try {
+        const parsed = JSON.parse(localStorage.getItem(key) || "[]");
+        saved = Array.isArray(parsed)
+          ? parsed.filter((step) => typeof step === "string")
+          : [];
+      } catch (_error) {
+        saved = [];
+      }
       boxes.forEach((box) => {
         box.checked = saved.includes(box.dataset.step);
         box.addEventListener("change", update);
       });
       function update() {
         const done = boxes.filter((box) => box.checked).map((box) => box.dataset.step);
+        const complete = boxes.length > 0 && done.length === boxes.length;
         localStorage.setItem(key, JSON.stringify(done));
         label.textContent = `${done.length} of ${boxes.length} complete`;
         bar.style.width = boxes.length ? `${(done.length / boxes.length) * 100}%` : "0%";
+        let profile = readAchievementProfile();
+        if (done.length > 0 || profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG]) {
+          profile = setAchievementWorkshopProgress(profile, "hard", {
+            hardChecked: done.length,
+            hardTotal: boxes.length,
+            hardComplete: complete,
+          });
+          const badgeIds = [];
+          if (done.length > 0) badgeIds.push("started");
+          if (complete) badgeIds.push("hard-mode-complete");
+          badgeIds.forEach((badgeId) => {
+            const result = awardAchievement(profile, badgeId, "hard");
+            profile = result.profile;
+            if (result.awarded && achievementToast) {
+              achievementToast.textContent =
+                `${result.awarded.label} earned: +${result.awarded.points} local achievement points.`;
+            }
+          });
+        }
       }
+      document.querySelectorAll("[data-copy-target]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const target = document.getElementById(button.dataset.copyTarget);
+          if (!target) {
+            button.textContent = "Text unavailable";
+            return;
+          }
+          const original = button.textContent;
+          navigator.clipboard.writeText(target.textContent).then(() => {
+            button.textContent = "Copied";
+            window.setTimeout(() => {
+              button.textContent = original;
+            }, 1400);
+          }).catch(() => {
+            button.textContent = "Copy failed";
+          });
+        });
+      });
+      document.querySelectorAll("[data-report-location]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const locationLabel = button.dataset.reportLocation || "Hard-mode step";
+          const expected = button.dataset.reportExpected || "Describe the expected result.";
+          const evidence = button.dataset.reportEvidence || "No evidence path supplied.";
+          const title = `[Workshop feedback] Win/Loss Analysis Agent: ${locationLabel}`;
+          const body = `<!-- aibast-workshop-feedback:v1 -->
+## Workshop signal
+
+- Schema: \`aibast-workshop-feedback/1.0\`
+- Solution: \`@aibast-agents-library/win-loss-analysis\`
+- Page: ${location.href}
+- Mode: \`hard\`
+- Location: ${locationLabel}
+- Evidence: \`${evidence}\`
+
+## Expected
+
+${expected}
+
+## What happened instead
+
+Describe what was inaccurate or missing.
+
+## Reproduction
+
+1. Open the Hard-mode tutorial.
+2. Follow the step shown above.
+3. Record the visible Copilot Studio state.
+
+> Workshop feedback report. Do not include credentials, tokens, customer data, or other sensitive information.`;
+          const url = aibastSignalIssueUrl();
+          url.searchParams.set("title", title);
+          url.searchParams.set("body", body);
+          window.open(url.toString(), "_blank", "noopener");
+        });
+      });
       update();
     })();
   </script>

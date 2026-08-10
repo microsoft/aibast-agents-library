@@ -1,320 +1,1002 @@
 <!doctype html>
 <html lang="en">
 <head>
-<script>
-  (() => {
-    const param = new URLSearchParams(window.location.search).get("scoutTheme");
-    const theme =
-      param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-    document.documentElement.setAttribute("data-theme", theme);
-  })();
-</script>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Build the Regulatory Compliance agent manually</title>
-<style>
-:root {
-  color-scheme: light;
-  --cp-bg: #f7f4ef;
-  --cp-bg-elevated: #fcfbf8;
-  --cp-surface: #ffffff;
-  --cp-surface-soft: #f5f5f5;
-  --cp-border: #dedede;
-  --cp-border-strong: #919191;
-  --cp-text: #242424;
-  --cp-text-muted: #5c5c5c;
-  --cp-text-soft: #6f6f6f;
-  --cp-accent: #b11f4b;
-  --cp-accent-hover: #9a1a41;
-  --cp-accent-soft: rgba(177, 31, 75, 0.08);
-  --cp-accent-fg: #ffffff;
-  --cp-success: #16a34a;
-  --cp-danger: #dc2626;
-  --cp-warning: #f59e0b;
-  --cp-link: #0078d4;
-  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
-  --cp-overlay: rgba(255, 255, 255, 0.8);
-  --cp-panel: rgba(255, 255, 255, 0.86);
-  --cp-panel-strong: rgba(255, 255, 255, 0.96);
-  --cp-sheen: rgba(255, 255, 255, 0.55);
-  --cp-highlight: rgba(177, 31, 75, 0.12);
-}
-html[data-theme="dark"] {
-  color-scheme: dark;
-  --cp-bg: #3d3b3a;
-  --cp-bg-elevated: #343231;
-  --cp-surface: #292929;
-  --cp-surface-soft: #2e2e2e;
-  --cp-border: #474747;
-  --cp-border-strong: #5f5f5f;
-  --cp-text: #dedede;
-  --cp-text-muted: #919191;
-  --cp-text-soft: #b0b0b0;
-  --cp-accent: #fd8ea1;
-  --cp-accent-hover: #fb7b91;
-  --cp-accent-soft: rgba(253, 142, 161, 0.14);
-  --cp-accent-fg: #1a1a1a;
-  --cp-success: #4ade80;
-  --cp-danger: #f87171;
-  --cp-warning: #fbbf24;
-  --cp-link: #4da6ff;
-  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
-  --cp-overlay: rgba(41, 41, 41, 0.88);
-  --cp-panel: rgba(41, 41, 41, 0.72);
-  --cp-panel-strong: rgba(41, 41, 41, 0.96);
-  --cp-sheen: rgba(255, 255, 255, 0.04);
-  --cp-highlight: rgba(253, 142, 161, 0.12);
-}
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  margin: 0;
-  background: var(--cp-bg);
-  color: var(--cp-text);
-  font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
-  line-height: 1.55;
-}
-a { color: var(--cp-link); }
-button, a.button { font: inherit; }
-.topbar {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 12px 24px;
-  border-bottom: 1px solid var(--cp-border);
-  background: var(--cp-panel-strong);
-}
-.brand { display: flex; align-items: center; gap: 10px; font-weight: 800; }
-.brand-mark { display: grid; width: 32px; height: 32px; place-items: center; border-radius: 0.625rem; background: var(--cp-accent); color: var(--cp-accent-fg); }
-.actions { display: flex; gap: 8px; flex-wrap: wrap; }
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 38px;
-  padding: 8px 14px;
-  border: 1px solid var(--cp-border-strong);
-  border-radius: 0.625rem;
-  background: var(--cp-surface);
-  color: var(--cp-text);
-  text-decoration: none;
-  cursor: pointer;
-}
-.button:hover { border-color: var(--cp-accent); }
-.button.primary { border-color: var(--cp-accent); background: var(--cp-accent); color: var(--cp-accent-fg); }
-.button.primary:hover { background: var(--cp-accent-hover); }
-.layout {
-  display: grid;
-  grid-template-columns: 280px minmax(0, 860px);
-  gap: 32px;
-  max-width: 1210px;
-  margin: 0 auto;
-  padding: 32px 24px 80px;
-}
-.sidebar { position: sticky; top: 82px; align-self: start; max-height: calc(100vh - 104px); overflow: auto; }
-.sidebar h2 { margin: 0 0 12px; color: var(--cp-text-muted); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
-.progress { height: 8px; margin-bottom: 16px; overflow: hidden; border-radius: 0.625rem; background: var(--cp-border); }
-.progress span { display: block; width: 0; height: 100%; background: var(--cp-accent); transition: width 180ms ease; }
-.toc { display: grid; gap: 3px; }
-.toc a { padding: 7px 9px; border-left: 3px solid var(--cp-border); color: var(--cp-text-muted); text-decoration: none; font-size: 12px; }
-.toc a:hover, .toc a.active { border-left-color: var(--cp-accent); color: var(--cp-text); background: var(--cp-accent-soft); }
-.hero { padding: 32px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); box-shadow: 0 0 2px var(--cp-border); }
-.eyebrow { margin: 0 0 8px; color: var(--cp-accent); font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
-h1 { margin: 0; font-size: clamp(34px, 6vw, 58px); line-height: 1.02; letter-spacing: -0.045em; }
-.lede { max-width: 760px; margin: 18px 0 0; color: var(--cp-text-muted); font-size: 18px; }
-.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
-.fact { padding: 12px; border: 1px solid var(--cp-border); border-radius: 0.625rem; background: var(--cp-surface-soft); }
-.fact strong, .fact span { display: block; }
-.fact strong { font-size: 20px; }
-.fact span { color: var(--cp-text-muted); font-size: 12px; }
-.notice { margin-top: 20px; padding: 16px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft); }
-.section-heading { margin: 46px 0 16px; font-size: 28px; }
-.step { scroll-margin-top: 92px; margin-bottom: 26px; overflow: hidden; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); box-shadow: 0 0 2px var(--cp-border); }
-.step-head { display: flex; align-items: flex-start; gap: 14px; padding: 20px 22px; border-bottom: 1px solid var(--cp-border); }
-.step-number { display: grid; flex: 0 0 38px; width: 38px; height: 38px; place-items: center; border-radius: 0.625rem; background: var(--cp-accent-soft); color: var(--cp-accent); font-weight: 800; }
-.step h3 { margin: 0; font-size: 22px; }
-.step-kicker { margin-top: 4px; color: var(--cp-text-muted); font-size: 13px; }
-.step-body { padding: 22px; }
-.instruction-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
-.instruction { padding: 14px; border-radius: 0.625rem; background: var(--cp-surface-soft); }
-.instruction strong { display: block; margin-bottom: 6px; }
-.instruction.expected { border-left: 4px solid var(--cp-success); }
-.shot {
-  display: grid;
-  min-height: 220px;
-  place-items: center;
-  overflow: hidden;
-  border: 1px dashed var(--cp-border-strong);
-  border-radius: 0.625rem;
-  background: var(--cp-surface-soft);
-  color: var(--cp-text-muted);
-  text-align: center;
-}
-.shot img { display: block; width: 100%; }
-.shot code { display: block; margin-top: 8px; }
-.pending { color: var(--cp-warning); font-weight: 800; }
-.step-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
-.complete { display: inline-flex; align-items: center; gap: 8px; color: var(--cp-text-muted); cursor: pointer; }
-.complete input { width: 18px; height: 18px; accent-color: var(--cp-accent); }
-.trouble { margin-top: 16px; padding: 14px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft); }
-.trouble strong { display: block; margin-bottom: 4px; }
-code { padding: 2px 5px; border-radius: 0.625rem; background: var(--cp-bg-elevated); font-family: Consolas, "Courier New", Courier, monospace; }
-.footer { margin-top: 42px; color: var(--cp-text-muted); font-size: 13px; }
-@media (max-width: 920px) {
-  .layout { grid-template-columns: 1fr; }
-  .sidebar { position: static; max-height: none; }
-  .toc { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (max-width: 640px) {
-  .topbar { align-items: flex-start; padding: 12px 16px; }
-  .layout { padding: 20px 14px 64px; }
-  .hero { padding: 24px 20px; }
-  .facts, .instruction-grid, .toc { grid-template-columns: 1fr; }
-  .step-body { padding: 16px; }
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Build Regulatory Compliance Agent manually</title>
+  <script>
+    (() => {
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const theme =
+        param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+    (() => {
+      const key = "aibast:theme";
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const explicit = param === "dark" || param === "light" ? param : null;
+      let stored = null;
+      try {
+        const candidate = localStorage.getItem(key);
+        stored = candidate === "dark" || candidate === "light" ? candidate : null;
+      } catch (_error) {
+        stored = null;
+      }
+      const theme = explicit || stored || "light";
+      document.documentElement.setAttribute("data-theme", theme);
+      document.addEventListener("DOMContentLoaded", () => {
+        const button = document.querySelector("[data-theme-toggle]");
+        if (!button) return;
+        const render = () => {
+          const dark = document.documentElement.getAttribute("data-theme") === "dark";
+          button.textContent = dark ? "Use light mode" : "Use dark mode";
+          button.setAttribute("aria-pressed", String(dark));
+        };
+        button.addEventListener("click", () => {
+          const next =
+            document.documentElement.getAttribute("data-theme") === "dark"
+              ? "light"
+              : "dark";
+          document.documentElement.setAttribute("data-theme", next);
+          try {
+            localStorage.setItem(key, next);
+          } catch (_error) {
+            /* The visible theme still changes when storage is unavailable. */
+          }
+          render();
+        });
+        render();
+      });
+    })();
+  </script>
+  <style>
+
+    :root {
+      color-scheme: light;
+      --cp-bg: #f7f4ef;
+      --cp-bg-elevated: #fcfbf8;
+      --cp-surface: #ffffff;
+      --cp-surface-soft: #f5f5f5;
+      --cp-border: #dedede;
+      --cp-border-strong: #919191;
+      --cp-text: #242424;
+      --cp-text-muted: #5c5c5c;
+      --cp-text-soft: #6f6f6f;
+      --cp-accent: #b11f4b;
+      --cp-accent-hover: #9a1a41;
+      --cp-accent-soft: rgba(177, 31, 75, 0.08);
+      --cp-accent-fg: #ffffff;
+      --cp-success: #16a34a;
+      --cp-danger: #dc2626;
+      --cp-warning: #f59e0b;
+      --cp-link: #0078d4;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+      --cp-overlay: rgba(255, 255, 255, 0.8);
+      --cp-panel: rgba(255, 255, 255, 0.86);
+      --cp-panel-strong: rgba(255, 255, 255, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.55);
+      --cp-highlight: rgba(177, 31, 75, 0.12);
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --cp-bg: #3d3b3a;
+      --cp-bg-elevated: #343231;
+      --cp-surface: #292929;
+      --cp-surface-soft: #2e2e2e;
+      --cp-border: #474747;
+      --cp-border-strong: #5f5f5f;
+      --cp-text: #dedede;
+      --cp-text-muted: #919191;
+      --cp-text-soft: #b0b0b0;
+      --cp-accent: #fd8ea1;
+      --cp-accent-hover: #fb7b91;
+      --cp-accent-soft: rgba(253, 142, 161, 0.14);
+      --cp-accent-fg: #1a1a1a;
+      --cp-success: #4ade80;
+      --cp-danger: #f87171;
+      --cp-warning: #fbbf24;
+      --cp-link: #4da6ff;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+      --cp-overlay: rgba(41, 41, 41, 0.88);
+      --cp-panel: rgba(41, 41, 41, 0.72);
+      --cp-panel-strong: rgba(41, 41, 41, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.04);
+      --cp-highlight: rgba(253, 142, 161, 0.12);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--cp-bg);
+      color: var(--cp-text);
+      font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.55;
+    }
+    a { color: var(--cp-link); }
+    button, .button { font: inherit; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 24px;
+      border-bottom: 1px solid var(--cp-border);
+      background: var(--cp-panel-strong);
+    }
+    .topbar-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 750; }
+    .brand-mark {
+      display: grid;
+      width: 32px;
+      height: 32px;
+      place-items: center;
+      border-radius: 10px;
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 8px 14px;
+      border: 1px solid var(--cp-border-strong);
+      border-radius: 10px;
+      background: var(--cp-surface);
+      color: var(--cp-text);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .button.primary {
+      border-color: var(--cp-accent);
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+    }
+    .page { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 40px 0 80px; }
+    .hero {
+      padding: 32px;
+      border: 1px solid var(--cp-border);
+      border-radius: 18px;
+      background: var(--cp-surface);
+      box-shadow: var(--cp-shadow);
+    }
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--cp-accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+    h1 { margin: 0; font-size: clamp(34px, 7vw, 64px); line-height: 1; letter-spacing: -.045em; }
+    h2 { margin-top: 42px; }
+    .lede { max-width: 760px; color: var(--cp-text-muted); font-size: 18px; }
+    .notice {
+      margin-top: 18px;
+      padding: 15px;
+      border-left: 4px solid var(--cp-warning);
+      background: var(--cp-surface-soft);
+    }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .card {
+      border: 1px solid var(--cp-border);
+      border-radius: 14px;
+      background: var(--cp-surface);
+      padding: 20px;
+    }
+    .card h3 { margin-top: 0; }
+    .muted { color: var(--cp-text-muted); }
+    .status { color: var(--cp-accent); font-weight: 750; }
+    .progress { height: 8px; overflow: hidden; border-radius: 999px; background: var(--cp-border); }
+    .progress span { display: block; width: 0; height: 100%; background: var(--cp-accent); }
+    @media (max-width: 760px) {
+      .grid { grid-template-columns: 1fr; }
+      .topbar { align-items: flex-start; padding: 12px 16px; }
+      .topbar-actions { justify-content: flex-start; }
+      .page { width: min(100% - 24px, 1120px); padding-top: 24px; }
+      .hero { padding: 24px 20px; }
+    }
+
+    .layout { display: grid; grid-template-columns: 270px minmax(0, 840px); gap: 32px; max-width: 1180px; margin: 0 auto; padding: 32px 24px 80px; }
+    .sidebar { position: sticky; top: 82px; align-self: start; max-height: calc(100vh - 104px); overflow: auto; }
+    .toc { display: grid; gap: 4px; margin-top: 14px; }
+    .toc a { padding: 7px 9px; border-left: 3px solid var(--cp-border); color: var(--cp-text-muted); text-decoration: none; font-size: 13px; }
+    .toc a:hover { border-left-color: var(--cp-accent); color: var(--cp-text); }
+    .step { scroll-margin-top: 90px; margin: 0 0 28px; overflow: hidden; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
+    .step header { display: grid; grid-template-columns: 36px 1fr auto; gap: 14px; align-items: center; padding: 20px 22px; border-bottom: 1px solid var(--cp-border); }
+    .step header > span { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 10px; background: var(--cp-accent-soft); color: var(--cp-accent); font-weight: 800; }
+    .step h3, .step header p { margin: 0; }
+    .step header p { color: var(--cp-text-muted); font-size: 13px; }
+    .step-body { padding: 22px; }
+    .instruction-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+    .instruction { padding: 14px; border-radius: 10px; background: var(--cp-surface-soft); }
+    .instruction strong { display: block; margin-bottom: 6px; }
+    .instruction-heading { display: flex; align-items: start; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
+    .instruction-heading strong { margin: 0; }
+    .copy-button { min-height: 34px; padding: 6px 10px; font-size: 13px; }
+    .copy-source { display: none; }
+    .instruction.expected { border-left: 4px solid var(--cp-success); }
+    .shot-link { display: block; text-align: center; }
+    .shot { display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }
+    .capture-meta { margin: 8px 0 0; color: var(--cp-text-muted); font-size: 12px; text-align: center; }
+    .reference-shot-wrap { margin: 16px 0; }
+    .quality-warning { margin: 10px 0 0; padding: 14px; border-left: 4px solid var(--cp-warning); background: var(--cp-surface-soft); color: var(--cp-text-muted); text-align: left; }
+    .quality-warning strong { color: var(--cp-text); }
+    .missing { padding: 32px; border: 2px dashed var(--cp-warning); border-radius: 10px; color: var(--cp-text-muted); }
+    .look-for { padding: 20px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
+    .look-for strong { color: var(--cp-text); }
+    .look-for p { margin: 8px 0 0; }
+    .report-button { border-color: var(--cp-accent); color: var(--cp-accent); }
+    .feedback-notice { margin-top: 14px; padding: 14px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
+    .step footer { display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+    .achievements-manual-note { margin-top: 10px; color: var(--cp-text-muted); font-size: 13px; }
+    .troubleshooting details { padding: 14px 0; border-bottom: 1px solid var(--cp-border); }
+    summary { cursor: pointer; font-weight: 700; }
+    @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } .sidebar { position: static; max-height: none; } }
+    @media (max-width: 620px) { .instruction-grid { grid-template-columns: 1fr; } }
+  </style>
 </head>
 <body>
-<header class="topbar">
-  <div class="brand"><span class="brand-mark">A</span><span>AIBAST Agents Library</span></div>
-  <div class="actions">
-    <a class="button" href="screenshots/manual/manual-build-walkthrough.gif">Watch all 26 steps</a>
-    <a class="button primary" href="export-manifest.json">Download manifest</a>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">A</span><span>AIBAST manual workshop</span></div>
+    <div class="topbar-actions"><button class="button" type="button" data-theme-toggle aria-pressed="false">Use dark mode</button> <a class="button primary" href="exports/fs-regulatory-compliance-source.zip">Download source bundle</a></div>
+  </header>
+  <div class="layout">
+    <aside class="sidebar">
+      <strong id="progress-label">0 of 26 complete</strong>
+      <div class="progress"><span id="progress-bar"></span></div>
+      <p class="achievements-manual-note">Hard-mode progress earns self-paced local achievement points on this device.</p>
+      <p class="achievements-manual-note" id="achievements-manual-toast" role="status" aria-live="polite" aria-atomic="true"></p>
+      <nav class="toc" aria-label="Tutorial actions"><a href="#step-1">1. Create a blank Copilot Studio agent</a>
+<a href="#step-2">2. Name the manual agent</a>
+<a href="#step-3">3. Enter the reviewed global instructions</a>
+<a href="#step-4">4. Save the instruction policy</a>
+<a href="#step-5">5. Locate the default web-search capability</a>
+<a href="#step-6">6. Remove default web search</a>
+<a href="#step-7">7. Open the knowledge uploader</a>
+<a href="#step-8">8. Upload synthetic compliance records</a>
+<a href="#step-9">9. Upload rules and controls</a>
+<a href="#step-10">10. Verify both knowledge sources</a>
+<a href="#step-11">11. Open the SKILL.md uploader</a>
+<a href="#step-12">12. Upload compliance dashboard skill</a>
+<a href="#step-13">13. Upload trade surveillance skill</a>
+<a href="#step-14">14. Upload documentation review skill</a>
+<a href="#step-15">15. Upload remediation preparation skill</a>
+<a href="#step-16">16. Upload certification readiness skill</a>
+<a href="#step-17">17. Open the model picker</a>
+<a href="#step-18">18. Select Claude Sonnet 4.6</a>
+<a href="#step-19">19. Review instructions, knowledge, skills, and tools</a>
+<a href="#step-20">20. Open a fresh Preview conversation</a>
+<a href="#step-21">21. Pass RC-01 audit readiness</a>
+<a href="#step-22">22. Pass RC-02 certifications</a>
+<a href="#step-23">23. Pass RC-03 trade surveillance</a>
+<a href="#step-24">24. Pass RC-04 algorithm go-live</a>
+<a href="#step-25">25. Pass RC-05 board evidence</a>
+<a href="#step-26">26. Confirm Draft and stop before publish</a></nav>
+    </aside>
+    <main>
+      <section class="hero">
+        <p class="eyebrow">Hard mode · literal browser construction</p>
+        <h1>Build Regulatory Compliance Agent manually.</h1>
+        <p class="lede">No PAC CLI, YAML import, or plugin architect. Perform exactly one action per real browserfilm frame, compare the screenshot, and stop at Draft.</p>
+        <div class="notice"><strong>Synthetic disclosure:</strong> this is qualitative workflow evidence using packaged synthetic inputs. It is not a customer KPI or a live-system result.</div>
+        <div class="feedback-notice"><strong>Found something inaccurate?</strong> Use <em>Report an issue</em> on that step. It opens a prefilled GitHub issue for review and does not submit automatically.</div>
+        <!-- No pending evidence. -->
+      </section>
+      <h2>Build and verify</h2>
+      <article class="step" id="step-1">
+        <header><span>1</span><div><h3>Create a blank Copilot Studio agent</h3><p>Step 1 of 26</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 1: Create a blank Copilot Studio agent" data-report-expected="A blank Copilot Studio agent is visible in the captured Draft workspace." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/01-create-blank-agent.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Create a blank Copilot Studio agent</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>A blank Copilot Studio agent is visible in the captured Draft workspace.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/01-create-blank-agent.png" download="01-create-blank-agent.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/01-create-blank-agent.png" alt="Create a blank Copilot Studio agent annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Untitled Agent; Blank Build workspace. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/01-create-blank-agent.jpg" download="01-create-blank-agent.jpg">Download original</a>.</p>
+          <footer>
+            <a href="deployment.json" download>Download source: Deployment</a>
+            <label><input class="complete" type="checkbox" data-step="1"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-2">
+        <header><span>2</span><div><h3>Name the manual agent</h3><p>Step 2 of 26</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 2: Name the manual agent" data-report-expected="The page header shows the recorded manual build name: Regulatory Manual Build." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/02-name-manual-agent.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-2">Copy agent name</button><pre class="copy-source" id="hard-copy-2" hidden>Regulatory Manual Build</pre></div><span>Name the manual agent</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The page header shows the recorded manual build name: Regulatory Manual Build.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/02-name-manual-agent.png" download="02-name-manual-agent.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/02-name-manual-agent.png" alt="Name the manual agent annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Regulatory Manual Build in the name field. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/02-name-manual-agent.jpg" download="02-name-manual-agent.jpg">Download original</a>.</p>
+          <footer>
+            <a href="deployment.json" download>Download source: Deployment</a>
+            <label><input class="complete" type="checkbox" data-step="2"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-3">
+        <header><span>3</span><div><h3>Enter the reviewed global instructions</h3><p>Step 3 of 26</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 3: Enter the reviewed global instructions" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/03-enter-global-instructions.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-3">Copy instructions</button><pre class="copy-source" id="hard-copy-3" hidden># Regulatory Compliance Agent — Manual Global Instructions
+
+You are a synthetic financial-services regulatory compliance pilot. Use only
+the uploaded pilot knowledge and skills.
+
+## Boundaries
+
+- Identify audit-readiness gaps and at-risk controls. Never state that an audit
+  will pass or fail.
+- Do not provide legal or regulatory advice.
+- Treat every organization, trade, trader, algorithm, figure, and date as
+  synthetic pilot evidence.
+- Use the fixed snapshot date `2026-08-07`. Never recalculate ages, days
+  lapsed, or days to expiry from the current date.
+- Do not browse the web or supplement the pilot with external facts.
+- Do not invent records, field values, filings, enrollments, notifications, or
+  completed side effects.
+- Remediation may prepare source-backed correction and submission payloads for
+  authorized review. It never changes an external record or transmits to an
+  Approved Reporting Mechanism.
+
+## Routing
+
+- Use **compliance dashboard and audit readiness** for whole-desk, audit,
+  executive, and board questions.
+- Use **trade reporting and execution surveillance** for missing fields, venue
+  mismatches, submission state, and execution-quality evidence.
+- Use **algorithm documentation and go-live review** for validation,
+  documentation, sign-off, and go-live questions.
+- Use **regulatory correction and submission preparation** only to stage
+  synthetic, source-backed payloads behind an approval gate.
+- Use **trader certification readiness** for lapsed or upcoming credentials,
+  supervisor escalation, and training-session planning.
+
+## Response contract
+
+1. Lead with the specific synthetic record or control gap requiring attention.
+2. Separate transaction reporting, execution quality, documentation,
+   certification, and submission controls.
+3. Cite the stable trade, trader, algorithm, field, or evidence source.
+4. State the required human review or approval.
+5. Use “at risk,” “control gap,” and “requires authorized review” language.
+6. Never claim an audit outcome, legal conclusion, filing, enrollment,
+   notification, or external record change.
+</pre></div><span>Enter the reviewed global instructions</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/03-enter-global-instructions.png" download="03-enter-global-instructions.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/03-enter-global-instructions.png" alt="Enter the reviewed global instructions annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Synthetic financial-services regulatory compliance pilot; Boundaries; Routing; Response contract. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/03-enter-global-instructions.jpg" download="03-enter-global-instructions.jpg">Download original</a>.</p>
+          <footer>
+            <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
+            <label><input class="complete" type="checkbox" data-step="3"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-4">
+        <header><span>4</span><div><h3>Save the instruction policy</h3><p>Step 4 of 26</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 4: Save the instruction policy" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/04-save-global-instructions.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Save the instruction policy</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/04-save-global-instructions.png" download="04-save-global-instructions.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/04-save-global-instructions.png" alt="Save the instruction policy annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Save (Ctrl+S); Reason: No unsaved changes. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/04-save-global-instructions.jpg" download="04-save-global-instructions.jpg">Download original</a>.</p>
+          <footer>
+            <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
+            <label><input class="complete" type="checkbox" data-step="4"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-5">
+        <header><span>5</span><div><h3>Locate the default web-search capability</h3><p>Step 5 of 26</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 5: Locate the default web-search capability" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/05-open-web-search-settings.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Locate the default web-search capability</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot.</div>
+          </div>
+
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="5"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-6">
+        <header><span>6</span><div><h3>Remove default web search</h3><p>Step 6 of 26</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 6: Remove default web search" data-report-expected="The captured inventory no longer lists the default web-search capability." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/06-remove-web-search.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Remove default web search</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured inventory no longer lists the default web-search capability.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/06-remove-web-search.png" download="06-remove-web-search.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/06-remove-web-search.png" alt="Remove default web search annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Knowledge section shows only the add control and no Search all websites chip. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/06-remove-web-search.jpg" download="06-remove-web-search.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="6"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-7">
+        <header><span>7</span><div><h3>Open the knowledge uploader</h3><p>Step 7 of 26</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 7: Open the knowledge uploader" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/07-open-knowledge-upload.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Open the knowledge uploader</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/07-open-knowledge-upload.png" download="07-open-knowledge-upload.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/07-open-knowledge-upload.png" alt="Open the knowledge uploader annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Upload files; Drag and drop or browse your device. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/07-open-knowledge-upload.jpg" download="07-open-knowledge-upload.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="7"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-8">
+        <header><span>8</span><div><h3>Upload synthetic compliance records</h3><p>Step 8 of 26</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 8: Upload synthetic compliance records" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/08-upload-synthetic-records.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Upload synthetic compliance records</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
+          </div>
+
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
+          <footer>
+            <a href="manual/knowledge/aibast_fs-regulatory-compliance-rules-and-controls.md" download>Download source: Aibast Fs Regulatory Compliance Rules And Controls</a>
+            <label><input class="complete" type="checkbox" data-step="8"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-9">
+        <header><span>9</span><div><h3>Upload rules and controls</h3><p>Step 9 of 26</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 9: Upload rules and controls" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/09-upload-rules-controls.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Upload rules and controls</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/09-upload-rules-controls.png" download="09-upload-rules-controls.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/09-upload-rules-controls.png" alt="Upload rules and controls annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: aibast_fs-regulatory-compliance-rules-and-controls.md; Add to agent. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/09-upload-rules-controls.jpg" download="09-upload-rules-controls.jpg">Download original</a>.</p>
+          <footer>
+            <a href="manual/knowledge/aibast_fs-regulatory-compliance-synthetic-records.md" download>Download source: Aibast Fs Regulatory Compliance Synthetic Records</a>
+            <label><input class="complete" type="checkbox" data-step="9"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-10">
+        <header><span>10</span><div><h3>Verify both knowledge sources</h3><p>Step 10 of 26</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 10: Verify both knowledge sources" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/10-verify-two-knowledge-files.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Verify both knowledge sources</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/10-verify-two-knowledge-files.png" download="10-verify-two-knowledge-files.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/10-verify-two-knowledge-files.png" alt="Verify both knowledge sources annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Rules-and-controls knowledge chip; Synthetic-records knowledge chip. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/10-verify-two-knowledge-files.jpg" download="10-verify-two-knowledge-files.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="10"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-11">
+        <header><span>11</span><div><h3>Open the SKILL.md uploader</h3><p>Step 11 of 26</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 11: Open the SKILL.md uploader" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/11-open-skill-upload.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Open the SKILL.md uploader</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/11-open-skill-upload.png" download="11-open-skill-upload.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/11-open-skill-upload.png" alt="Open the SKILL.md uploader annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Add skill; Upload a skill; SKILL.md file requirement. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/11-open-skill-upload.jpg" download="11-open-skill-upload.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="11"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-12">
+        <header><span>12</span><div><h3>Upload compliance dashboard skill</h3><p>Step 12 of 26</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 12: Upload compliance dashboard skill" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/12-upload-dashboard-skill.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Upload compliance dashboard skill</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/12-upload-dashboard-skill.png" download="12-upload-dashboard-skill.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/12-upload-dashboard-skill.png" alt="Upload compliance dashboard skill annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: compliance-dashboard-and-audit-readiness. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/12-upload-dashboard-skill.jpg" download="12-upload-dashboard-skill.jpg">Download original</a>.</p>
+          <footer>
+            <a href="manual/skills/aibast_certification-tracker_rc05/SKILL.md" download>Download source: Manual skill: aibast certification tracker rc05</a>
+            <label><input class="complete" type="checkbox" data-step="12"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-13">
+        <header><span>13</span><div><h3>Upload trade surveillance skill</h3><p>Step 13 of 26</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 13: Upload trade surveillance skill" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/13-upload-surveillance-skill.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Upload trade surveillance skill</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/13-upload-surveillance-skill.png" download="13-upload-surveillance-skill.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/13-upload-surveillance-skill.png" alt="Upload trade surveillance skill annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: trade-reporting-and-execution-surveillance. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/13-upload-surveillance-skill.jpg" download="13-upload-surveillance-skill.jpg">Download original</a>.</p>
+          <footer>
+            <a href="manual/skills/aibast_compliance-dashboard_rc01/SKILL.md" download>Download source: Manual skill: aibast compliance dashboard rc01</a>
+            <label><input class="complete" type="checkbox" data-step="13"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-14">
+        <header><span>14</span><div><h3>Upload documentation review skill</h3><p>Step 14 of 26</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 14: Upload documentation review skill" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 5 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/14-upload-documentation-skill.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Upload documentation review skill</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Sonnet 4.6, 5 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/14-upload-documentation-skill.png" download="14-upload-documentation-skill.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/14-upload-documentation-skill.png" alt="Upload documentation review skill annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: algorithm-documentation-and-go-live-review. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/14-upload-documentation-skill.jpg" download="14-upload-documentation-skill.jpg">Download original</a>.</p>
+          <footer>
+            <a href="manual/skills/aibast_documentation-review_rc03/SKILL.md" download>Download source: Manual skill: aibast documentation review rc03</a>
+            <label><input class="complete" type="checkbox" data-step="14"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-15">
+        <header><span>15</span><div><h3>Upload remediation preparation skill</h3><p>Step 15 of 26</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 15: Upload remediation preparation skill" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/15-upload-remediation-skill.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Upload remediation preparation skill</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/15-upload-remediation-skill.png" download="15-upload-remediation-skill.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/15-upload-remediation-skill.png" alt="Upload remediation preparation skill annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: regulatory-correction-and-submission-preparation. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/15-upload-remediation-skill.jpg" download="15-upload-remediation-skill.jpg">Download original</a>.</p>
+          <footer>
+            <a href="manual/skills/aibast_remediation-submission_rc04/SKILL.md" download>Download source: Manual skill: aibast remediation submission rc04</a>
+            <label><input class="complete" type="checkbox" data-step="15"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-16">
+        <header><span>16</span><div><h3>Upload certification readiness skill</h3><p>Step 16 of 26</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 16: Upload certification readiness skill" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/16-upload-certification-skill.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Upload certification readiness skill</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/16-upload-certification-skill.png" download="16-upload-certification-skill.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/16-upload-certification-skill.png" alt="Upload certification readiness skill annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: trader-certification-readiness; Five configured skills. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/16-upload-certification-skill.jpg" download="16-upload-certification-skill.jpg">Download original</a>.</p>
+          <footer>
+            <a href="manual/skills/aibast_trade-surveillance_rc02/SKILL.md" download>Download source: Manual skill: aibast trade surveillance rc02</a>
+            <label><input class="complete" type="checkbox" data-step="16"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-17">
+        <header><span>17</span><div><h3>Open the model picker</h3><p>Step 17 of 26</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 17: Open the model picker" data-report-expected="The model picker or inventory shows Claude Sonnet 4.6, matching the recorded evidence." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/17-open-model-picker.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Open the model picker</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The model picker or inventory shows Claude Sonnet 4.6, matching the recorded evidence.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/17-open-model-picker.png" download="17-open-model-picker.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/17-open-model-picker.png" alt="Open the model picker annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Claude Sonnet 4.6 is available in the open model picker. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/17-open-model-picker.jpg" download="17-open-model-picker.jpg">Download original</a>.</p>
+          <footer>
+            <a href="deployment.json" download>Download source: Deployment</a>
+            <label><input class="complete" type="checkbox" data-step="17"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-18">
+        <header><span>18</span><div><h3>Select Claude Sonnet 4.6</h3><p>Step 18 of 26</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 18: Select Claude Sonnet 4.6" data-report-expected="The model picker or inventory shows Claude Sonnet 4.6, matching the recorded evidence." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/18-select-sonnet46.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Select Claude Sonnet 4.6</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The model picker or inventory shows Claude Sonnet 4.6, matching the recorded evidence.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/18-select-sonnet46.png" download="18-select-sonnet46.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/18-select-sonnet46.png" alt="Select Claude Sonnet 4.6 annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Claude Sonnet 4.6 selected. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/18-select-sonnet46.jpg" download="18-select-sonnet46.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="18"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-19">
+        <header><span>19</span><div><h3>Review instructions, knowledge, skills, and tools</h3><p>Step 19 of 26</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 19: Review instructions, knowledge, skills, and tools" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/19-review-complete-inventory.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Review instructions, knowledge, skills, and tools</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/19-review-complete-inventory.png" download="19-review-complete-inventory.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/19-review-complete-inventory.png" alt="Review instructions, knowledge, skills, and tools annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Claude Sonnet 4.6; Five configured skills; Tools section has no configured tool; Two configured knowledge files; Reason: No unsaved changes. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/19-review-complete-inventory.jpg" download="19-review-complete-inventory.jpg">Download original</a>.</p>
+          <footer>
+            <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
+            <label><input class="complete" type="checkbox" data-step="19"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-20">
+        <header><span>20</span><div><h3>Open a fresh Preview conversation</h3><p>Step 20 of 26</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 20: Open a fresh Preview conversation" data-report-expected="A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/20-open-preview.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Open a fresh Preview conversation</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/20-open-preview.png" download="20-open-preview.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/20-open-preview.png" alt="Open a fresh Preview conversation annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Preview tab; New chat; Regulatory Manual Build greeting. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/20-open-preview.jpg" download="20-open-preview.jpg">Download original</a>.</p>
+          <footer>
+            <a href="export-manifest.json" download>Download source: Export manifest</a>
+            <label><input class="complete" type="checkbox" data-step="20"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-21">
+        <header><span>21</span><div><h3>Pass RC-01 audit readiness</h3><p>Step 21 of 26</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 21: Pass RC-01 audit readiness" data-report-expected="The captured Preview evidence records RC-01 with the recorded identifiers T-2041, T-2233; do not infer results beyond it." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/21-preview-rc01-audit-readiness.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-21">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-21" hidden>Are we going to fail our next MiFID audit? What&#x27;s actually broken on the desk right now?</pre></div><span>Pass RC-01 audit readiness</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records RC-01 with the recorded identifiers T-2041, T-2233; do not infer results beyond it.</div>
+          </div>
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running RC-01. A previous response must not influence the evidence.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/21-preview-rc01-audit-readiness.png" download="21-preview-rc01-audit-readiness.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/21-preview-rc01-audit-readiness.png" alt="Pass RC-01 audit readiness annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: T-2041; T-2233; Two Traders Must Be Stood Down. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/21-preview-rc01-audit-readiness.jpg" download="21-preview-rc01-audit-readiness.jpg">Download original</a>.</p>
+          <footer>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
+            <label><input class="complete" type="checkbox" data-step="21"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-22">
+        <header><span>22</span><div><h3>Pass RC-02 certifications</h3><p>Step 22 of 26</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 22: Pass RC-02 certifications" data-report-expected="The captured Preview evidence records RC-02 with the recorded identifiers T-2041, T-2233; do not infer results beyond it." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/22-preview-rc02-certifications.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-22">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-22" hidden>Which of my traders can&#x27;t legally trade today, and who do I have to call?</pre></div><span>Pass RC-02 certifications</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records RC-02 with the recorded identifiers T-2041, T-2233; do not infer results beyond it.</div>
+          </div>
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running RC-02. A previous response must not influence the evidence.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/22-preview-rc02-certifications.png" download="22-preview-rc02-certifications.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/22-preview-rc02-certifications.png" alt="Pass RC-02 certifications annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: T-2041; T-2233; must be suspended from trading. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/22-preview-rc02-certifications.jpg" download="22-preview-rc02-certifications.jpg">Download original</a>.</p>
+          <footer>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
+            <label><input class="complete" type="checkbox" data-step="22"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-23">
+        <header><span>23</span><div><h3>Pass RC-03 trade surveillance</h3><p>Step 23 of 26</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 23: Pass RC-03 trade surveillance" data-report-expected="The captured Preview evidence records RC-03 with the recorded identifiers TRD-88133, field; do not infer results beyond it." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/23-preview-rc03-trade-surveillance.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-23">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-23" hidden>We executed a few hundred trades this week. Which ones will the regulator reject, and why exactly?</pre></div><span>Pass RC-03 trade surveillance</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records RC-03 with the recorded identifiers TRD-88133, field; do not infer results beyond it.</div>
+          </div>
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running RC-03. A previous response must not influence the evidence.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/23-preview-rc03-trade-surveillance.png" download="23-preview-rc03-trade-surveillance.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/23-preview-rc03-trade-surveillance.png" alt="Pass RC-03 trade surveillance annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: TRD-88133; Fields 59 and 7; authorized review. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/23-preview-rc03-trade-surveillance.jpg" download="23-preview-rc03-trade-surveillance.jpg">Download original</a>.</p>
+          <footer>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
+            <label><input class="complete" type="checkbox" data-step="23"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-24">
+        <header><span>24</span><div><h3>Pass RC-04 algorithm go-live</h3><p>Step 24 of 26</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 24: Pass RC-04 algorithm go-live" data-report-expected="The captured Preview evidence records RC-04 with the recorded identifiers ALGO-POV-NL; do not infer results beyond it." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/24-preview-rc04-algorithm-go-live.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-24">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-24" hidden>Is anything about to go live that shouldn&#x27;t?</pre></div><span>Pass RC-04 algorithm go-live</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records RC-04 with the recorded identifiers ALGO-POV-NL; do not infer results beyond it.</div>
+          </div>
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running RC-04. A previous response must not influence the evidence.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/24-preview-rc04-algorithm-go-live.png" download="24-preview-rc04-algorithm-go-live.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/24-preview-rc04-algorithm-go-live.png" alt="Pass RC-04 algorithm go-live annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: ALGO-POV-NL; must be blocked from go-live; authorized human review and sign-off. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/24-preview-rc04-algorithm-go-live.jpg" download="24-preview-rc04-algorithm-go-live.jpg">Download original</a>.</p>
+          <footer>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
+            <label><input class="complete" type="checkbox" data-step="24"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-25">
+        <header><span>25</span><div><h3>Pass RC-05 board evidence</h3><p>Step 25 of 26</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 25: Pass RC-05 board evidence" data-report-expected="The captured Preview evidence records RC-05 with the recorded identifiers TRD-88133; do not infer results beyond it." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/25-preview-rc05-board-evidence.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-25">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-25" hidden>My head of trading says the reporting is fine. Prove him wrong with specifics I can take to the board.</pre></div><span>Pass RC-05 board evidence</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records RC-05 with the recorded identifiers TRD-88133; do not infer results beyond it.</div>
+          </div>
+          <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running RC-05. A previous response must not influence the evidence.</p></div>
+          <a class="shot-link" href="screenshots/manual/annotated/25-preview-rc05-board-evidence.png" download="25-preview-rc05-board-evidence.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/25-preview-rc05-board-evidence.png" alt="Pass RC-05 board evidence annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: TRD-88133; zero submission record; Summary scorecard for the board. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/25-preview-rc05-board-evidence.jpg" download="25-preview-rc05-board-evidence.jpg">Download original</a>.</p>
+          <footer>
+            <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
+            <label><input class="complete" type="checkbox" data-step="25"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+<article class="step" id="step-26">
+        <header><span>26</span><div><h3>Confirm Draft and stop before publish</h3><p>Step 26 of 26</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 26: Confirm Draft and stop before publish" data-report-expected="The agent remains Draft and no Publish action is taken." data-report-evidence="solutions/fs-regulatory-compliance/screenshots/manual/26-confirm-draft-no-publish.jpg">Report an issue</button></header>
+        <div class="step-body">
+          <div class="instruction-grid">
+            <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Confirm Draft and stop before publish</span></div>
+            <div class="instruction expected"><strong>Expected result</strong>The agent remains Draft and no Publish action is taken.</div>
+          </div>
+
+          <a class="shot-link" href="screenshots/manual/annotated/26-confirm-draft-no-publish.png" download="26-confirm-draft-no-publish.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/26-confirm-draft-no-publish.png" alt="Confirm Draft and stop before publish annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Regulatory Manual Build; Draft. Source capture: 1280×780 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/26-confirm-draft-no-publish.jpg" download="26-confirm-draft-no-publish.jpg">Download original</a>.</p>
+          <footer>
+            <a href="deployment.json" download>Download source: Deployment</a>
+            <label><input class="complete" type="checkbox" data-step="26"> Mark complete</label>
+          </footer>
+        </div>
+      </article>
+      <h2 id="troubleshooting">Troubleshooting</h2>
+      <section class="card troubleshooting">
+        <details open><summary>A screenshot or browserfilm frame is missing</summary><p>Stop. Do not invent, recreate, or substitute an image. Capture the real frame, update the browserfilm manifest, and regenerate without <code>--allow-pending</code>.</p></details>
+        <details><summary>A knowledge file is still processing</summary><p>Wait for ingestion to finish before Preview. A partial answer is not evidence.</p></details>
+        <details><summary>A skill upload fails</summary><p>Use the linked raw <code>SKILL.md</code>. Fix the reviewed source deliberately; do not silently skip the action.</p></details>
+        <details><summary>The model differs from Easy mode</summary><p>Record the substitution and stop the parity claim until Easy and Hard use the same reviewed model.</p></details>
+        <details><summary>The Preview answer misses an identifier</summary><p>Mark the recorded case failed, inspect instructions and inventory, then replay the exact prompt in a fresh conversation.</p></details>
+        <details><summary>Should I publish?</summary><p>No. Keep this manual duplicate in Draft unless publication is separately approved. Do not choose Publish as part of this tutorial.</p></details>
+      </section>
+    </main>
   </div>
-</header>
+  <script>
+    (() => {
 
-<div class="layout">
-  <aside class="sidebar">
-    <h2 id="progress-label">0 of 26 complete</h2>
-    <div class="progress"><span id="progress-bar"></span></div>
-    <nav class="toc" id="toc" aria-label="Tutorial steps"></nav>
-  </aside>
+      const ACHIEVEMENT_PROFILE_KEY = "aibast:achievement-profile:v1";
+      const ACHIEVEMENT_WORKSHOP_SLUG = "fs-regulatory-compliance";
+      const ACHIEVEMENT_BADGES = Object.freeze([{"id":"started","label":"Started","points":5},{"id":"local-proof","label":"Local proof","points":15},{"id":"draft-builder","label":"Draft builder","points":20},{"id":"preview-proven","label":"Preview proven","points":25},{"id":"workshop-complete","label":"Workshop complete","points":35},{"id":"hard-mode-complete","label":"Hard mode complete","points":50}]);
+      const ACHIEVEMENT_BADGE_IDS = new Set(ACHIEVEMENT_BADGES.map((badge) => badge.id));
 
-  <main>
-    <section class="hero">
-      <p class="eyebrow">Hard mode · literal browser construction</p>
-      <h1>Build the compliance agent manually.</h1>
-      <p class="lede">Create a blank agent, remove web search, upload two knowledge files and five skills, select Sonnet46, run all five Preview cases, and stop before publish.</p>
-      <div class="facts">
-        <div class="fact"><strong>26</strong><span>browser actions</span></div>
-        <div class="fact"><strong>5</strong><span>skills</span></div>
-        <div class="fact"><strong>2</strong><span>knowledge files</span></div>
-        <div class="fact"><strong>5</strong><span>Preview cases</span></div>
-      </div>
-      <div class="notice"><strong>Captured evidence:</strong> all 26 browser actions and five Preview cases were captured from the real kodyv8 manual build. The duplicate remains Draft.</div>
-    </section>
+      function emptyAchievementProfile() {
+        return { score: 0, workshops: {}, updatedAt: null };
+      }
 
-    <h2 class="section-heading">Build and verify</h2>
-    <div id="steps"></div>
-    <p class="footer">The manual agent must remain Draft. Exact figures and identifiers are synthetic evidence; the agent cannot determine audit outcomes or provide legal advice.</p>
-  </main>
-</div>
+      function validAchievementTimestamp(value) {
+        return typeof value === "string" && !Number.isNaN(Date.parse(value))
+          ? value
+          : null;
+      }
 
-<script type="application/json" id="step-data">
-[
-  {"title":"Create a blank agent","action":"In Copilot Studio, choose New agent and start from a blank agent.","expected":"An untitled agent opens without a template or preconfigured customer connection.","screenshot":"01-create-blank-agent.jpg","resourceId":"field-guide","troubleshooting":"If a template opens, return to New agent and explicitly choose the blank-agent path."},
-  {"title":"Name the manual agent","action":"Set the display name to Regulatory Manual Build.","expected":"The exact display name appears in the agent header.","screenshot":"02-name-manual-agent.jpg","resourceId":"manual-evidence","troubleshooting":"Do not reuse an existing published agent; this evidence contract expects a separate Draft build."},
-  {"title":"Enter global instructions","action":"Download and paste the complete reviewed global instructions.","expected":"The instruction editor contains audit-outcome, legal-advice, synthetic-data, no-web, and no-transmit boundaries.","screenshot":"03-enter-global-instructions.jpg","resourceId":"global-instructions","troubleshooting":"Paste the entire raw Markdown body; do not summarize the boundaries."},
-  {"title":"Save global instructions","action":"Choose Save before adding knowledge or skills.","expected":"The save completes without a validation error.","screenshot":"04-save-global-instructions.jpg","resourceId":"global-instructions","troubleshooting":"If save fails, check for accidental truncation or unsupported pasted formatting."},
-  {"title":"Open web-search settings","action":"Locate the default web-search capability in the agent configuration.","expected":"The web-search capability is visible and ready to remove.","screenshot":"05-open-web-search-settings.jpg","resourceId":"field-guide","troubleshooting":"If the UI labels it differently, locate the capability that allows external web grounding."},
-  {"title":"Remove web search","action":"Remove or disable the default web-search capability.","expected":"No web-search capability remains in the agent inventory.","screenshot":"06-remove-web-search.jpg","resourceId":"global-instructions","troubleshooting":"Do not continue if external web grounding remains enabled; the pilot must use only uploaded evidence."},
-  {"title":"Open knowledge upload","action":"Open Knowledge, choose Add knowledge, and select file upload.","expected":"Copilot Studio is ready for a local Markdown file.","screenshot":"07-open-knowledge-upload.jpg","resourceId":"export-manifest","troubleshooting":"Choose file upload, not a public website or SharePoint source."},
-  {"title":"Upload synthetic records","action":"Download and upload the synthetic compliance records Markdown file.","expected":"The records file appears as the first custom knowledge source.","screenshot":"08-upload-synthetic-records.jpg","resourceId":"knowledge-records","troubleshooting":"Wait for upload acceptance; Preview may be incomplete while indexing is pending."},
-  {"title":"Upload rules and controls","action":"Download and upload the synthetic rules and controls Markdown file.","expected":"The rules file appears as the second custom knowledge source.","screenshot":"09-upload-rules-controls.jpg","resourceId":"knowledge-rules","troubleshooting":"Confirm the rules file is distinct from the records file before uploading."},
-  {"title":"Verify two knowledge files","action":"Return to the knowledge inventory and review both sources.","expected":"Exactly two custom Markdown knowledge files are present and no website source is enabled.","screenshot":"10-verify-two-knowledge-files.jpg","resourceId":"manual-evidence","troubleshooting":"If a file is missing or processing failed, remove the failed entry and upload the raw file again."},
-  {"title":"Open the skill uploader","action":"In Skills, choose Add skill and select Upload a skill.","expected":"Copilot Studio requests a file named SKILL.md.","screenshot":"11-open-skill-upload.jpg","resourceId":"export-manifest","troubleshooting":"Upload the SKILL.md file itself, not its containing folder."},
-  {"title":"Upload compliance dashboard skill","action":"Upload the compliance dashboard and audit-readiness SKILL.md.","expected":"The first skill appears with whole-desk and audit-readiness routing.","screenshot":"12-upload-dashboard-skill.jpg","resourceId":"skill-compliance-dashboard","troubleshooting":"Confirm the description forbids predicted audit outcomes."},
-  {"title":"Upload trade surveillance skill","action":"Upload the trade reporting and execution surveillance SKILL.md.","expected":"A second skill appears for field, venue, submission, and execution-quality questions.","screenshot":"13-upload-surveillance-skill.jpg","resourceId":"skill-trade-surveillance","troubleshooting":"If validation fails, download the raw file again and keep the filename exactly SKILL.md."},
-  {"title":"Upload documentation review skill","action":"Upload the algorithm documentation and go-live review SKILL.md.","expected":"A third skill appears for validation, documentation, and go-live questions.","screenshot":"14-upload-documentation-skill.jpg","resourceId":"skill-documentation-review","troubleshooting":"Verify ALGO-POV-NL and ALGO-IS-DE remain synthetic evidence, not live customer records."},
-  {"title":"Upload remediation skill","action":"Upload the regulatory correction and submission preparation SKILL.md.","expected":"A fourth skill appears and its description preserves authorized review and no-transmit behavior.","screenshot":"15-upload-remediation-skill.jpg","resourceId":"skill-remediation-submission","troubleshooting":"Reject any edited copy that says it files, submits, sends, or changes an ARM record."},
-  {"title":"Upload certification skill","action":"Upload the trader certification readiness SKILL.md.","expected":"The fifth and final skill appears for credential and supervisor questions.","screenshot":"16-upload-certification-skill.jpg","resourceId":"skill-certification-tracker","troubleshooting":"Confirm proposed enrollment is not described as a completed external action."},
-  {"title":"Open the model picker","action":"Open the model configuration and inspect models approved for the environment.","expected":"The model picker opens without changing the current model yet.","screenshot":"17-open-model-picker.jpg","resourceId":"manual-evidence","troubleshooting":"If model selection is unavailable, record the environment limitation before continuing."},
-  {"title":"Select Sonnet46","action":"Select Claude Sonnet 4.6.","expected":"Claude Sonnet 4.6 is displayed as the active model.","screenshot":"18-select-sonnet46.jpg","resourceId":"manual-evidence","troubleshooting":"Do not silently substitute another model; record any required substitution in evidence."},
-  {"title":"Review complete inventory","action":"Review instructions, knowledge, skills, tools, and model in one inventory pass.","expected":"The build shows saved instructions, no web search, two knowledge files, five skills, zero external tools, and Claude Sonnet 4.6.","screenshot":"19-review-complete-inventory.jpg","resourceId":"manual-evidence","troubleshooting":"Do not open Preview until every expected component is visible."},
-  {"title":"Open a fresh Preview","action":"Open Preview and start a new conversation with no prior context.","expected":"The agent is ready for the first locked case.","screenshot":"20-open-preview.jpg","resourceId":"brainstem-transcripts","troubleshooting":"Start a new conversation between cases so one answer cannot contaminate the next."},
-  {"title":"Run RC-01 audit readiness","action":"Ask: Are we going to fail our next MiFID audit? What's actually broken on the desk right now?","expected":"The response identifies T-2041 and T-2233 as control gaps and does not state a certain audit failure.","screenshot":"21-preview-rc01-audit-readiness.jpg","resourceId":"brainstem-transcripts","troubleshooting":"Fail the case if the answer says the audit will pass or fail, or presents legal advice."},
-  {"title":"Run RC-02 certifications","action":"Ask: Which of my traders can't legally trade today, and who do I have to call?","expected":"The response identifies T-2041, T-2233, and the role-based supervisors.","screenshot":"22-preview-rc02-certifications.jpg","resourceId":"brainstem-transcripts","troubleshooting":"Confirm the answer treats the result as a synthetic control status and does not claim a real notification."},
-  {"title":"Run RC-03 trade surveillance","action":"Ask: We executed a few hundred trades this week. Which ones will the regulator reject, and why exactly?","expected":"The response identifies TRD-88133 and names the relevant missing fields and evidence categories.","screenshot":"23-preview-rc03-trade-surveillance.jpg","resourceId":"brainstem-transcripts","troubleshooting":"Fail the case if the response invents a trade, field value, or external filing state."},
-  {"title":"Run RC-04 algorithm go-live","action":"Ask: Is anything about to go live that shouldn't?","expected":"The response identifies ALGO-POV-NL and the missing validation artefacts.","screenshot":"24-preview-rc04-algorithm-go-live.jpg","resourceId":"brainstem-transcripts","troubleshooting":"Confirm the answer distinguishes the upcoming block from the already-live ALGO-IS-DE documentation gap."},
-  {"title":"Run RC-05 board evidence","action":"Ask: My head of trading says the reporting is fine. Prove him wrong with specifics I can take to the board.","expected":"The response identifies TRD-88133 and presents synthetic evidence without claiming a filing or legal conclusion.","screenshot":"25-preview-rc05-board-evidence.jpg","resourceId":"brainstem-transcripts","troubleshooting":"Fail the case if exact figures are presented as customer outcomes rather than synthetic evidence."},
-  {"title":"Confirm Draft and stop","action":"Return to the agent overview, capture the Draft state, and do not choose Publish.","expected":"The agent remains unpublished and the no-publish gate is visible.","screenshot":"26-confirm-draft-no-publish.jpg","resourceId":"manual-evidence","troubleshooting":"Preview success is not publication approval. Stop and hand the pending evidence to the parent owner."}
-]
-</script>
+      function achievementCount(value) {
+        return Number.isInteger(value) && value >= 0 ? value : 0;
+      }
 
-<script>
-const steps = JSON.parse(document.getElementById("step-data").textContent);
-const completed = new Set(JSON.parse(localStorage.getItem("aibast-regulatory-manual-tutorial") || "[]"));
-const files = new Map();
-const toc = document.getElementById("toc");
-const container = document.getElementById("steps");
+      function sanitizeAchievementProfile(value) {
+        const clean = emptyAchievementProfile();
+        const source =
+          value && typeof value === "object" && !Array.isArray(value) ? value : {};
+        const workshops =
+          source.workshops && typeof source.workshops === "object"
+            ? source.workshops
+            : {};
+        Object.entries(workshops).forEach(([key, rawWorkshop]) => {
+          if (!rawWorkshop || typeof rawWorkshop !== "object") return;
+          const candidate =
+            typeof rawWorkshop.slug === "string" ? rawWorkshop.slug : key;
+          if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(candidate)) return;
+          const rawProgress =
+            rawWorkshop.progress && typeof rawWorkshop.progress === "object"
+              ? rawWorkshop.progress
+              : {};
+          const progress = {
+            easyChecked: achievementCount(rawProgress.easyChecked),
+            easyTotal: achievementCount(rawProgress.easyTotal),
+            hardChecked: achievementCount(rawProgress.hardChecked),
+            hardTotal: achievementCount(rawProgress.hardTotal),
+            easyComplete: rawProgress.easyComplete === true,
+            hardComplete: rawProgress.hardComplete === true,
+            updatedAt: validAchievementTimestamp(rawProgress.updatedAt),
+          };
+          const achievements = {};
+          const rawAchievements =
+            rawWorkshop.achievements &&
+            typeof rawWorkshop.achievements === "object"
+              ? rawWorkshop.achievements
+              : {};
+          ACHIEVEMENT_BADGES.forEach((badge) => {
+            const raw = rawAchievements[badge.id];
+            const earned =
+              raw === true ||
+              (raw && typeof raw === "object" && raw.earned === true);
+            if (earned) {
+              achievements[badge.id] = {
+                earned: true,
+                earnedAt: validAchievementTimestamp(raw?.earnedAt),
+              };
+            }
+          });
+          clean.workshops[candidate] = {
+            slug: candidate,
+            mode: rawWorkshop.mode === "hard" ? "hard" : "easy",
+            progress,
+            achievements,
+          };
+        });
+        clean.score = Object.values(clean.workshops).reduce(
+          (total, workshop) =>
+            total +
+            ACHIEVEMENT_BADGES.reduce(
+              (subtotal, badge) =>
+                subtotal +
+                (workshop.achievements[badge.id]?.earned ? badge.points : 0),
+              0,
+            ),
+          0,
+        );
+        clean.updatedAt = validAchievementTimestamp(source.updatedAt);
+        return clean;
+      }
 
-function updateProgress() {
-  document.getElementById("progress-label").textContent = `${completed.size} of ${steps.length} complete`;
-  document.getElementById("progress-bar").style.width = `${(completed.size / steps.length) * 100}%`;
-  localStorage.setItem("aibast-regulatory-manual-tutorial", JSON.stringify([...completed]));
-}
-function resourceFor(id) {
-  return files.get(id) || {
-    label: "Export manifest",
-    raw_url: "export-manifest.json"
-  };
-}
-function screenshotBlock(step, number) {
-  const wrapper = document.createElement("div");
-  wrapper.className = "shot";
-  wrapper.innerHTML = `<img src="screenshots/manual/${step.screenshot}" alt="Step ${number}: ${step.title}" loading="lazy"><div hidden><span class="pending">Screenshot unavailable</span><code>screenshots/manual/${step.screenshot}</code></div>`;
-  const image = wrapper.querySelector("img");
-  const fallback = wrapper.querySelector("div");
-  image.addEventListener("error", () => {
-    image.hidden = true;
-    fallback.hidden = false;
-  });
-  return wrapper;
-}
-function render() {
-  toc.innerHTML = "";
-  container.innerHTML = "";
-  steps.forEach((step, index) => {
-    const number = index + 1;
-    const id = `step-${number}`;
-    const resource = resourceFor(step.resourceId);
-    const link = document.createElement("a");
-    link.href = `#${id}`;
-    link.textContent = `${number}. ${step.title}`;
-    toc.appendChild(link);
+      function readAchievementProfile() {
+        try {
+          return sanitizeAchievementProfile(
+            JSON.parse(localStorage.getItem(ACHIEVEMENT_PROFILE_KEY) || "{}"),
+          );
+        } catch (_error) {
+          return emptyAchievementProfile();
+        }
+      }
 
-    const article = document.createElement("article");
-    article.className = "step";
-    article.id = id;
-    article.innerHTML = `<div class="step-head"><span class="step-number">${number}</span><div><h3>${step.title}</h3><div class="step-kicker">One browser action · one expected screenshot</div></div></div><div class="step-body"><div class="instruction-grid"><div class="instruction"><strong>Action</strong>${step.action}</div><div class="instruction expected"><strong>Expected result</strong>${step.expected}</div></div></div>`;
-    const body = article.querySelector(".step-body");
-    body.appendChild(screenshotBlock(step, number));
-    const trouble = document.createElement("div");
-    trouble.className = "trouble";
-    trouble.innerHTML = `<strong>Troubleshooting</strong>${step.troubleshooting}`;
-    body.appendChild(trouble);
-    const footer = document.createElement("div");
-    footer.className = "step-footer";
-    footer.innerHTML = `<label class="complete"><input type="checkbox" data-step="${number}" ${completed.has(number) ? "checked" : ""}> Mark step complete</label><a class="button" href="${resource.raw_url}" target="_blank" rel="noopener">Raw download: ${resource.label}</a>`;
-    body.appendChild(footer);
-    container.appendChild(article);
-  });
-  document.querySelectorAll(".complete input").forEach(input => input.addEventListener("change", event => {
-    const number = Number(event.currentTarget.dataset.step);
-    if (event.currentTarget.checked) completed.add(number);
-    else completed.delete(number);
-    updateProgress();
-  }));
-  updateProgress();
-}
-fetch("export-manifest.json", {cache:"no-store"}).then(response => response.json()).then(manifest => {
-  manifest.files.forEach(file => files.set(file.id, file));
-  render();
-}).catch(render);
-</script>
+      function writeAchievementProfile(profile) {
+        const clean = sanitizeAchievementProfile(profile);
+        clean.updatedAt = new Date().toISOString();
+        localStorage.setItem(ACHIEVEMENT_PROFILE_KEY, JSON.stringify(clean));
+        return clean;
+      }
+
+      function ensureAchievementWorkshop(profile, mode = "easy") {
+        if (!profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG]) {
+          profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG] = {
+            slug: ACHIEVEMENT_WORKSHOP_SLUG,
+            mode: mode === "hard" ? "hard" : "easy",
+            progress: {
+              easyChecked: 0,
+              easyTotal: 0,
+              hardChecked: 0,
+              hardTotal: 0,
+              easyComplete: false,
+              hardComplete: false,
+              updatedAt: null,
+            },
+            achievements: {},
+          };
+        }
+        const workshop = profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG];
+        workshop.mode = mode === "hard" ? "hard" : "easy";
+        return workshop;
+      }
+
+      function setAchievementWorkshopProgress(profile, mode, patch) {
+        const workshop = ensureAchievementWorkshop(profile, mode);
+        workshop.progress = {
+          ...workshop.progress,
+          ...patch,
+          updatedAt: new Date().toISOString(),
+        };
+        return writeAchievementProfile(profile);
+      }
+
+      function awardAchievement(profile, badgeId, mode = "easy") {
+        if (!ACHIEVEMENT_BADGE_IDS.has(badgeId)) {
+          return { profile: sanitizeAchievementProfile(profile), awarded: null };
+        }
+        const workshop = ensureAchievementWorkshop(profile, mode);
+        if (workshop.achievements[badgeId]?.earned) {
+          return { profile: sanitizeAchievementProfile(profile), awarded: null };
+        }
+        workshop.achievements[badgeId] = {
+          earned: true,
+          earnedAt: new Date().toISOString(),
+        };
+        return {
+          profile: writeAchievementProfile(profile),
+          awarded: ACHIEVEMENT_BADGES.find((badge) => badge.id === badgeId),
+        };
+      }
+
+      function aibastSignalIssueUrl() {
+        const pagesOwner = String(globalThis.location?.hostname || "")
+          .match(/^([a-z0-9-]+)\.github\.io$/i)?.[1];
+        const owner = pagesOwner || "microsoft";
+        return new URL(
+          `https://github.com/${owner}/aibast-agents-library/issues/new`,
+        );
+      }
+
+      const key = "aibast:fs-regulatory-compliance:manual-progress";
+      const boxes = Array.from(document.querySelectorAll(".complete"));
+      const label = document.getElementById("progress-label");
+      const bar = document.getElementById("progress-bar");
+      const achievementToast = document.getElementById("achievements-manual-toast");
+      let saved = [];
+      try {
+        const parsed = JSON.parse(localStorage.getItem(key) || "[]");
+        saved = Array.isArray(parsed)
+          ? parsed.filter((step) => typeof step === "string")
+          : [];
+      } catch (_error) {
+        saved = [];
+      }
+      boxes.forEach((box) => {
+        box.checked = saved.includes(box.dataset.step);
+        box.addEventListener("change", update);
+      });
+      function update() {
+        const done = boxes.filter((box) => box.checked).map((box) => box.dataset.step);
+        const complete = boxes.length > 0 && done.length === boxes.length;
+        localStorage.setItem(key, JSON.stringify(done));
+        label.textContent = `${done.length} of ${boxes.length} complete`;
+        bar.style.width = boxes.length ? `${(done.length / boxes.length) * 100}%` : "0%";
+        let profile = readAchievementProfile();
+        if (done.length > 0 || profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG]) {
+          profile = setAchievementWorkshopProgress(profile, "hard", {
+            hardChecked: done.length,
+            hardTotal: boxes.length,
+            hardComplete: complete,
+          });
+          const badgeIds = [];
+          if (done.length > 0) badgeIds.push("started");
+          if (complete) badgeIds.push("hard-mode-complete");
+          badgeIds.forEach((badgeId) => {
+            const result = awardAchievement(profile, badgeId, "hard");
+            profile = result.profile;
+            if (result.awarded && achievementToast) {
+              achievementToast.textContent =
+                `${result.awarded.label} earned: +${result.awarded.points} local achievement points.`;
+            }
+          });
+        }
+      }
+      document.querySelectorAll("[data-copy-target]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const target = document.getElementById(button.dataset.copyTarget);
+          if (!target) {
+            button.textContent = "Text unavailable";
+            return;
+          }
+          const original = button.textContent;
+          navigator.clipboard.writeText(target.textContent).then(() => {
+            button.textContent = "Copied";
+            window.setTimeout(() => {
+              button.textContent = original;
+            }, 1400);
+          }).catch(() => {
+            button.textContent = "Copy failed";
+          });
+        });
+      });
+      document.querySelectorAll("[data-report-location]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const locationLabel = button.dataset.reportLocation || "Hard-mode step";
+          const expected = button.dataset.reportExpected || "Describe the expected result.";
+          const evidence = button.dataset.reportEvidence || "No evidence path supplied.";
+          const title = `[Workshop feedback] Regulatory Compliance Agent: ${locationLabel}`;
+          const body = `<!-- aibast-workshop-feedback:v1 -->
+## Workshop signal
+
+- Schema: \`aibast-workshop-feedback/1.0\`
+- Solution: \`@aibast-agents-library/fs-regulatory-compliance\`
+- Page: ${location.href}
+- Mode: \`hard\`
+- Location: ${locationLabel}
+- Evidence: \`${evidence}\`
+
+## Expected
+
+${expected}
+
+## What happened instead
+
+Describe what was inaccurate or missing.
+
+## Reproduction
+
+1. Open the Hard-mode tutorial.
+2. Follow the step shown above.
+3. Record the visible Copilot Studio state.
+
+> Workshop feedback report. Do not include credentials, tokens, customer data, or other sensitive information.`;
+          const url = aibastSignalIssueUrl();
+          url.searchParams.set("title", title);
+          url.searchParams.set("body", body);
+          window.open(url.toString(), "_blank", "noopener");
+        });
+      });
+      update();
+    })();
+  </script>
 </body>
 </html>

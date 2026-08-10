@@ -1,0 +1,587 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/prior-authorization",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker or refusal.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 23,
+    "reusable": 21,
+    "reshoot_required": 2
+  },
+  "captures": [
+    {
+      "id": "easy-pa-01",
+      "mode": "easy",
+      "case_id": "PA-01",
+      "source": "solutions/prior-authorization/screenshots/assisted/01-pa-01.jpg",
+      "annotated": "solutions/prior-authorization/screenshots/assisted/annotated/01-pa-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Checklist only; presence does not establish medical necessity or authorization",
+        "The missing conservative-care duration maps directly to reviewer check #3",
+        "Human review required"
+      ],
+      "full_case_not_visibly_proven": [
+        "SYN-AUTH-001 and the exact additional evidence requested marker are outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 143,
+          "width": 934,
+          "height": 45,
+          "label": "Checklist boundary"
+        },
+        {
+          "x": 288,
+          "y": 414,
+          "width": 936,
+          "height": 62,
+          "label": "Missing evidence gap"
+        }
+      ]
+    },
+    {
+      "id": "easy-pa-02",
+      "mode": "easy",
+      "case_id": "PA-02",
+      "source": "solutions/prior-authorization/screenshots/assisted/02-pa-02.jpg",
+      "annotated": "solutions/prior-authorization/screenshots/assisted/annotated/02-pa-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence Status in SYN-AUTH-001",
+        "Relevant encounter note and prior imaging evidence are Present",
+        "Documented duration fields are Not found in synthetic source"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact Synthetic Imaging Evidence Checklist and Checklist only markers are outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 289,
+          "y": 175,
+          "width": 834,
+          "height": 173,
+          "label": "Criteria-to-evidence status"
+        }
+      ]
+    },
+    {
+      "id": "easy-pa-03",
+      "mode": "easy",
+      "case_id": "PA-03",
+      "source": "solutions/prior-authorization/screenshots/assisted/03-pa-03.jpg",
+      "annotated": "solutions/prior-authorization/screenshots/assisted/annotated/03-pa-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "This is a source transcription, not an agent determination",
+        "additional evidence requested",
+        "The recorded state is not an authorization approval, denial, or outcome"
+      ],
+      "full_case_not_visibly_proven": [
+        "SYN-AUTH-001 is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 189,
+          "width": 935,
+          "height": 280,
+          "label": "Source-state boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-pa-04",
+      "mode": "easy",
+      "case_id": "PA-04",
+      "source": "solutions/prior-authorization/screenshots/assisted/04-pa-04.jpg",
+      "annotated": "solutions/prior-authorization/screenshots/assisted/annotated/04-pa-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "SYN-POL-IMG-01 Reviewer Checks",
+        "Human utilization reviewer owns rationale, completeness, and submission",
+        "Reviewer must confirm reconsideration is appropriate"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact minimum-necessary evidence marker is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 130,
+          "width": 936,
+          "height": 170,
+          "label": "Policy reviewer checks"
+        },
+        {
+          "x": 288,
+          "y": 315,
+          "width": 936,
+          "height": 155,
+          "label": "Human review ownership"
+        }
+      ]
+    },
+    {
+      "id": "easy-draft",
+      "mode": "easy",
+      "source": "solutions/prior-authorization/screenshots/assisted/05-confirm-draft.jpg",
+      "status": "reshoot_required",
+      "reason": "The Agents list does not show Prior Authorization Pilot. Unrelated agent rows and their Draft badges cannot prove the target Draft identity.",
+      "draft": true
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "step": 1,
+      "source": "solutions/prior-authorization/screenshots/manual/01-create-blank-agent.jpg",
+      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent",
+        "Blank Build workspace"
+      ],
+      "boxes": [
+        {
+          "x": 165,
+          "y": 101,
+          "width": 815,
+          "height": 48,
+          "label": "Blank agent workspace"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "step": 2,
+      "source": "solutions/prior-authorization/screenshots/manual/02-name-agent.jpg",
+      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Prior Authorization Manual in the name field"
+      ],
+      "boxes": [
+        {
+          "x": 165,
+          "y": 101,
+          "width": 815,
+          "height": 48,
+          "label": "Manual agent name entered"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "step": 3,
+      "source": "solutions/prior-authorization/screenshots/manual/03-enter-instructions.jpg",
+      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Reviewed instruction policy",
+        "Locked Preview evidence anchors for PA-01 through PA-04"
+      ],
+      "boxes": [
+        {
+          "x": 86,
+          "y": 213,
+          "width": 890,
+          "height": 620,
+          "label": "Reviewed instruction policy"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "step": 4,
+      "source": "solutions/prior-authorization/screenshots/manual/04-save-instructions.jpg",
+      "status": "reshoot_required",
+      "reason": "The instructions are visible, but the screenshot does not show a saved-state indicator such as No unsaved changes. The action label alone is not visual proof that save completed."
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "step": 5,
+      "source": "solutions/prior-authorization/screenshots/manual/05-remove-web-search.jpg",
+      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "The visible Knowledge inventory contains no Search all websites source"
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 257,
+          "width": 380,
+          "height": 75,
+          "label": "No default web source"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "step": 6,
+      "source": "solutions/prior-authorization/screenshots/manual/06-add-aibast-prior-authorization-review-rules.jpg",
+      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/06-add-aibast-prior-authorization-review-rules.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_prior-authorization-review-rules.md is visible in Knowledge"
+      ],
+      "boxes": [
+        {
+          "x": 1022,
+          "y": 305,
+          "width": 372,
+          "height": 48,
+          "label": "Review-rules knowledge"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "step": 7,
+      "source": "solutions/prior-authorization/screenshots/manual/07-add-aibast-prior-authorization-synthetic-records.jpg",
+      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/07-add-aibast-prior-authorization-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_prior-authorization-synthetic-records is visible in Knowledge",
+        "aibast_prior-authorization-review-rules.md remains visible"
+      ],
+      "boxes": [
+        {
+          "x": 1020,
+          "y": 305,
+          "width": 378,
+          "height": 85,
+          "label": "Two knowledge sources"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "step": 8,
+      "source": "solutions/prior-authorization/screenshots/manual/08-add-appeal-evidence-packet.jpg",
+      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/08-add-appeal-evidence-packet.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "prior-authorization-appeal-evidence-packet is visible in Skills"
+      ],
+      "boxes": [
+        {
+          "x": 1020,
+          "y": 185,
+          "width": 380,
+          "height": 58,
+          "label": "Appeal evidence skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "step": 9,
+      "source": "solutions/prior-authorization/screenshots/manual/09-add-criteria-evidence.jpg",
+      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/09-add-criteria-evidence.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "prior-authorization-criteria-evidence is visible in Skills",
+        "prior-authorization-appeal-evidence-packet remains visible"
+      ],
+      "boxes": [
+        {
+          "x": 1020,
+          "y": 184,
+          "width": 380,
+          "height": 85,
+          "label": "Criteria evidence skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "step": 10,
+      "source": "solutions/prior-authorization/screenshots/manual/10-add-request-evidence.jpg",
+      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/10-add-request-evidence.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "prior-authorization-request-evidence is visible in Skills",
+        "Three configured skills are visible"
+      ],
+      "boxes": [
+        {
+          "x": 1020,
+          "y": 184,
+          "width": 380,
+          "height": 127,
+          "label": "Request evidence skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "step": 11,
+      "source": "solutions/prior-authorization/screenshots/manual/11-add-status-summary.jpg",
+      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/11-add-status-summary.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "prior-authorization-status-summary is visible in Skills",
+        "Four configured skills are visible"
+      ],
+      "boxes": [
+        {
+          "x": 1020,
+          "y": 184,
+          "width": 380,
+          "height": 170,
+          "label": "Four configured skills"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "step": 12,
+      "source": "solutions/prior-authorization/screenshots/manual/12-review-inventory.jpg",
+      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/12-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "Four configured skills",
+        "Two configured knowledge sources",
+        "Tools section contains no configured tool",
+        "Save tooltip states No unsaved changes"
+      ],
+      "boxes": [
+        {
+          "x": 1205,
+          "y": 84,
+          "width": 190,
+          "height": 45,
+          "label": "Reviewed model"
+        },
+        {
+          "x": 1020,
+          "y": 185,
+          "width": 380,
+          "height": 166,
+          "label": "Four configured skills"
+        },
+        {
+          "x": 1020,
+          "y": 360,
+          "width": 380,
+          "height": 60,
+          "label": "No configured tools"
+        },
+        {
+          "x": 1020,
+          "y": 455,
+          "width": 380,
+          "height": 95,
+          "label": "Two knowledge sources"
+        },
+        {
+          "x": 1048,
+          "y": 48,
+          "width": 198,
+          "height": 50,
+          "label": "Saved state"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "step": 13,
+      "source": "solutions/prior-authorization/screenshots/manual/13-open-preview.jpg",
+      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab",
+        "New chat",
+        "Prior Authorization Manual greeting"
+      ],
+      "boxes": [
+        {
+          "x": 568,
+          "y": 2,
+          "width": 355,
+          "height": 56,
+          "label": "Preview selected"
+        },
+        {
+          "x": 835,
+          "y": 83,
+          "width": 105,
+          "height": 50,
+          "label": "Fresh chat control"
+        }
+      ]
+    },
+    {
+      "id": "hard-pa-01",
+      "mode": "hard",
+      "case_id": "PA-01",
+      "step": 14,
+      "source": "solutions/prior-authorization/screenshots/manual/14-pa-01.jpg",
+      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/14-pa-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Documented conservative-care duration fields are Not found in synthetic source",
+        "additional evidence requested",
+        "Human review required"
+      ],
+      "full_case_not_visibly_proven": [
+        "SYN-AUTH-001 is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 289,
+          "y": 173,
+          "width": 730,
+          "height": 177,
+          "label": "Evidence inventory"
+        },
+        {
+          "x": 287,
+          "y": 411,
+          "width": 936,
+          "height": 82,
+          "label": "Additional evidence gap"
+        }
+      ]
+    },
+    {
+      "id": "hard-pa-02",
+      "mode": "hard",
+      "case_id": "PA-02",
+      "step": 15,
+      "source": "solutions/prior-authorization/screenshots/manual/15-pa-02.jpg",
+      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/15-pa-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Relevant encounter note and prior imaging evidence are Present",
+        "Documented duration fields are Not found in synthetic source",
+        "The crosswalk does not decide policy criteria satisfaction"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact Synthetic Imaging Evidence Checklist and Checklist only markers are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 289,
+          "y": 124,
+          "width": 842,
+          "height": 142,
+          "label": "Criteria evidence rows"
+        },
+        {
+          "x": 289,
+          "y": 327,
+          "width": 935,
+          "height": 152,
+          "label": "Source limitation"
+        }
+      ]
+    },
+    {
+      "id": "hard-pa-03",
+      "mode": "hard",
+      "case_id": "PA-03",
+      "step": 16,
+      "source": "solutions/prior-authorization/screenshots/manual/16-pa-03.jpg",
+      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/16-pa-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "This is a source transcription, not an agent determination",
+        "additional evidence requested",
+        "The state does not mean an authorization decision has been made"
+      ],
+      "full_case_not_visibly_proven": [
+        "SYN-AUTH-001 is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 225,
+          "width": 935,
+          "height": 270,
+          "label": "Recorded-state boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-pa-04",
+      "mode": "hard",
+      "case_id": "PA-04",
+      "step": 17,
+      "source": "solutions/prior-authorization/screenshots/manual/17-pa-04.jpg",
+      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/17-pa-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "SYN-POL-IMG-01 Reviewer Checks",
+        "Human utilization reviewer owns rationale, completeness, and submission",
+        "This outline does not constitute an appeal recommendation, filing, payer contact, or record change"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact minimum-necessary evidence and reviewer must confirm markers are outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 197,
+          "width": 937,
+          "height": 170,
+          "label": "Policy reviewer checks"
+        },
+        {
+          "x": 288,
+          "y": 383,
+          "width": 935,
+          "height": 88,
+          "label": "Human ownership boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-draft",
+      "mode": "hard",
+      "step": 18,
+      "source": "solutions/prior-authorization/screenshots/manual/18-confirm-draft.jpg",
+      "annotated": "solutions/prior-authorization/screenshots/manual/annotated/18-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Prior Authorization Manual",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 104,
+          "y": 245,
+          "width": 1281,
+          "height": 55,
+          "label": "Target agent remains Draft"
+        }
+      ]
+    }
+  ],
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:prior-authorization",
+    "reviewed_at": "2026-08-10T00:27:58.162458+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  }
+}

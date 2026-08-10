@@ -4,6 +4,10 @@ Use this guide with the customer at the keyboard. The goal is to inspect the
 portable source, reproduce the synthetic workflow, review the deployment
 blueprint, and decide what production integration would require.
 
+## Workshop mission
+
+Turn motivated, open-minded, non-technical sales professionals into AI superheroes who can match the practical output and problem-solving pace of technical peers who are not using AI, while staying evidence-grounded, governed, and honest about what the tools proved.
+
 ## Evidence boundary
 
 - All packaged records and outcomes are synthetic.
@@ -14,24 +18,42 @@ blueprint, and decide what production integration would require.
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
 
-## Easy mode — Copilot-assisted
+## Easy mode — GitHub Copilot (default)
 
-1. Review `deployment.json`, `evals/transcripts.json`, and the available
-   Easy-mode evidence before making a claim.
-2. Use the reviewed Copilot Studio source under `copilot-studio/`.
-3. Run the recorded cases without changing their acceptance identifiers.
-4. Compare the observed result with the evidence rather than promising an
-   operational outcome.
-5. Stop at **Draft**. Publishing is a separate human approval gate.
+1. Open GitHub Copilot Chat in VS Code and select **Agent mode**.
+2. Download `skills/aibast-easy-mode-copilot/SKILL.md` and drag it into the
+   chat.
+3. Open `EASY-MODE-COPILOT-CHAT.md`.
+4. Send its two short messages in order: build and test the named solution,
+   then deploy the validated Draft.
+5. The skill installs and verifies the official Microsoft Copilot Studio
+   plugin and supported PAC CLI, then performs discovery, testing, deployment,
+   and Preview validation directly through GitHub Copilot.
+6. Stop at **Draft**. Publishing remains a separate human approval gate.
 
-Recorded case prompts:
+## Easy mode — GitHub Copilot + Brainstem (optional)
 
-- `SQ-01` — recorded prompt
-- `SQ-02` — recorded prompt
-- `SQ-03` — recorded prompt
-- `SQ-04` — recorded prompt
-- `SQ-05` — recorded prompt
-- `SQ-06` — recorded prompt
+Brainstem is the learner's personal, on-device training AI working alongside
+GitHub Copilot. Copilot stays the familiar work surface; Brainstem remembers
+the workshop and hot-loads the specialized instructors.
+
+Download `skills/aibast-easy-mode-brainstem/SKILL.md`, drag it into Copilot
+Chat, open `EASY-MODE-PERSONLESS.md`, and send the same two short messages.
+The skill starts Brainstem, installs the generic AIBAST Workshop agent, and
+continues its front-door handoffs until functional validation returns
+`status: complete`.
+
+Both lanes use the same immutable assets, locked cases, real Preview gate, and
+`published: false` boundary.
+
+Both Easy lanes preserve every recorded case prompt:
+
+- `SQ-01` — Which bundled synthetic leads should my team review first, and why did they score that way?
+- `SQ-02` — Show the BANT evidence and missing qualification details for the strongest synthetic leads.
+- `SQ-03` — Draft outreach ideas for the synthetic hot leads, but do not send or schedule any communication.
+- `SQ-04` — Recommend synthetic lead routing for manager review without assigning CRM owners.
+- `SQ-05` — Draft an SLA and escalation plan for the synthetic leads without activating alerts or automations.
+- `SQ-06` — Summarize the synthetic qualified pipeline and clearly label every conversion and value assumption.
 
 ## Hard mode — literal browser construction
 

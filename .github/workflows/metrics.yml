@@ -8,11 +8,18 @@ on:
     branches: [main]
     paths:
       - 'scripts/build_metrics.py'
+      - 'scripts/sync_agent_discussions.py'
+      - 'scripts/build_impact_report.py'
+      - 'scripts/impact-report-requirements.txt'
       - 'metrics.html'
+      - 'registry.json'
+      - 'solutions/catalog.json'
       - '.github/workflows/metrics.yml'
 
 permissions:
   contents: write
+  discussions: write
+  issues: read
 
 concurrency:
   group: metrics-snapshot
@@ -23,10 +30,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
+      - name: Synchronize AIBAST agent Discussions
+        env:
+          DISCUSSIONS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          METRICS_OWNER: ${{ github.repository_owner }}
+          METRICS_REPO: ${{ github.event.repository.name }}
+        run: python scripts/sync_agent_discussions.py
 
       - name: Collect public metrics
         # GitHub's traffic endpoints (clones, views, popular paths) require a
@@ -35,8 +51,12 @@ jobs:
         # workflow permission — so it returns 403 for traffic and only the CDN,
         # release and catalog metrics refresh.
         #
-        # To unlock live clone counts in CI, add a fine-grained PAT scoped to
-        # this repository with "Administration: read", stored as METRICS_TOKEN:
+        # To unlock live clone, view, and popular-path counts in CI, add a
+        # fine-grained PAT scoped to this repository with
+        # "Administration: read" and "Issues: read" so structured feedback
+        # and opt-in achievement progress syncs can be collected. Native Discussion
+        # upvotes use the workflow GITHUB_TOKEN instead. Store the PAT
+        # as METRICS_TOKEN:
         #     gh secret set METRICS_TOKEN
         #
         # Without it, build_metrics.py reuses the last successful traffic read
@@ -44,24 +64,386 @@ jobs:
         # they just stop advancing until an authorized run happens.
         env:
           GITHUB_TOKEN: ${{ secrets.METRICS_TOKEN || secrets.GITHUB_TOKEN }}
+          DISCUSSIONS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          METRICS_OWNER: ${{ github.repository_owner }}
+          METRICS_REPO: ${{ github.event.repository.name }}
         run: python scripts/build_metrics.py
+
+      - name: Build weekly and monthly impact report
+        run: |
+          python -m pip install -q -r scripts/impact-report-requirements.txt
+          python scripts/build_impact_report.py
+
+      - name: Validate impact report exports
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(Path('reports/impact-report.json').read_text())
+          assert report['schema'] == 'aibast-impact-report/1.0'
+          assert set(report['periods']) == {'week', 'month'}
+          assert report['periods']['week']['days'] == 7
+          assert report['periods']['month']['days'] == 30
+          metric_ids = {
+              row['id'] for row in report['current']['metrics']
+          }
+          required = {
+              'total_downloads', 'page_views', 'agent_upvotes',
+              'agent_acquisitions',
+              'workshop_usage_events', 'achievement_points', 'achievement_completions',
+              'agent_file_downloads', 'tracked_files', 'skills',
+          }
+          assert required <= metric_ids
+          assert Path('reports/impact-report.pdf').read_bytes().startswith(b'%PDF-')
+          assert 'Subject:' in Path(
+              'reports/impact-report-email.txt'
+          ).read_text()
+          assert '<table>' in Path('reports/impact-report.html').read_text()
+          PY
 
       - name: Report traffic source
         run: |
           python - <<'PY'
-          import json
-          t = json.load(open('state/metrics.json'))['traffic']
+          import json, sys
+          snapshot = json.load(open('state/metrics.json'))
+          t = snapshot['traffic']
           if t.get('live'):
               print('traffic read live from the GitHub API')
           else:
               print(f"traffic unavailable (no METRICS_TOKEN) - reusing last read from {t.get('as_of')}")
+          workshops = snapshot.get('workshops', {})
+          rows = workshops.get('rows', [])
+          workshop_slugs = {row.get('slug') for row in rows}
+          achievements = snapshot.get('achievements', {})
+          achievement_totals = achievements.get('totals', {})
+          achievement_profiles = achievements.get('profiles', [])
+          achievement_workshop_rows = achievements.get('workshops', [])
+          file_rows = snapshot.get('file_metrics', {}).get('rows', [])
+          agent_rows = snapshot.get('agent_metrics', [])
+          print(
+              f"workshop metrics: {len(rows)} rows; "
+              f"{workshops.get('totals', {}).get('usage_events')} observed events; "
+              f"agent upvotes={snapshot.get('totals', {}).get('agent_upvotes')}; "
+              f"achievement status={achievements.get('status')}; "
+              f"achievement participants={achievement_totals.get('participants')}; "
+              f"achievement points={achievement_totals.get('points')}"
+          )
+          print(f"file metrics: {len(file_rows)} tracked files; agent metrics: {len(agent_rows)} rows")
+          if len(rows) != 51:
+              print('expected exactly 51 catalog-advertised workshop rows', file=sys.stderr)
+              raise SystemExit(1)
+          if 'grid-outage-response' in workshop_slugs:
+              print('Grid Outage must remain excluded from advertised workshop metrics', file=sys.stderr)
+              raise SystemExit(1)
+          if not file_rows or not any(row.get('kind') == 'skill' for row in file_rows):
+              print('tracked-file metrics must include SKILL.md rows', file=sys.stderr)
+              raise SystemExit(1)
+          if len(agent_rows) != snapshot.get('totals', {}).get('agents'):
+              print('agent_metrics rows must match the registry agent count', file=sys.stderr)
+              raise SystemExit(1)
+          ecosystem = snapshot.get('ecosystem', {})
+          ecosystem_totals = ecosystem.get('totals', {})
+          ecosystem_agents = ecosystem.get('agents', [])
+          if ecosystem.get('schema') != 'aibast-ecosystem-metrics/1.0':
+              print('AIBAST ecosystem schema is missing or unsupported', file=sys.stderr)
+              raise SystemExit(1)
+          if ecosystem.get('sources', {}).get('rar', {}).get('status') != 'excluded':
+              print('RAR must remain excluded from AIBAST counts', file=sys.stderr)
+              raise SystemExit(1)
+          expected_fetches = ecosystem_totals.get(
+              'aibast_direct_agent_fetches'
+          )
+          if (
+              ecosystem_totals.get('combined_agent_distribution_fetch_events')
+              != expected_fetches
+              or snapshot.get('totals', {}).get(
+                  'global_agent_distribution_fetch_events'
+              ) != expected_fetches
+          ):
+              print('AIBAST agent fetch totals do not reconcile', file=sys.stderr)
+              raise SystemExit(1)
+          if len(ecosystem_agents) != ecosystem_totals.get('logical_agents'):
+              print('AIBAST logical-agent rows do not reconcile', file=sys.stderr)
+              raise SystemExit(1)
+          if achievements.get('status') in {'available', 'partial'}:
+              achievement_order = [
+                  'started', 'local-proof', 'draft-builder', 'preview-proven',
+                  'workshop-completed', 'hard-mode-completed'
+              ]
+              achievement_points = {
+                  'started': 5,
+                  'local-proof': 15,
+                  'draft-builder': 20,
+                  'preview-proven': 25,
+                  'workshop-completed': 35,
+                  'hard-mode-completed': 50,
+              }
+              allowed_profile_keys = {
+                  'login', 'points', 'achievement_count', 'starts',
+                  'workshop_completions', 'hard_completions', 'badges',
+                  'achievement_ids', 'completed_workshops'
+              }
+              if achievements.get('schema') != 'aibast-achievements/2.0':
+                  print('Achievement snapshot schema is missing or unsupported', file=sys.stderr)
+                  raise SystemExit(1)
+              if len(achievement_workshop_rows) != 51 or {
+                  row.get('slug') for row in achievement_workshop_rows
+              } != workshop_slugs:
+                  print('Achievement workshop rows must match the canonical 51-workshop scope', file=sys.stderr)
+                  raise SystemExit(1)
+              if any(set(profile) != allowed_profile_keys for profile in achievement_profiles):
+                  print('Achievement profiles contain unexpected or privacy-unsafe fields', file=sys.stderr)
+                  raise SystemExit(1)
+              expected_profiles = sorted(
+                  achievement_profiles,
+                  key=lambda row: (
+                      -row['points'],
+                      -row['achievement_count'],
+                      -row['workshop_completions'],
+                      -row['hard_completions'],
+                      row['login'].casefold(),
+                      row['login'],
+                  ),
+              )
+              if achievement_profiles != expected_profiles:
+                  print('Achievement profiles are not sorted by points/badges/completions/login', file=sys.stderr)
+                  raise SystemExit(1)
+              for profile in achievement_profiles:
+                  badges = profile['badges']
+                  if any(
+                      set(badge) != {'workshop', 'achievement', 'points'}
+                      or badge['achievement'] not in achievement_points
+                      or badge['points'] != achievement_points[badge['achievement']]
+                      for badge in badges
+                  ):
+                      print('Achievement badges contain invalid IDs, points, or fields', file=sys.stderr)
+                      raise SystemExit(1)
+                  badge_ids = [
+                      f"{badge['workshop']}:{badge['achievement']}"
+                      for badge in badges
+                  ]
+                  if profile['achievement_ids'] != badge_ids or len(badge_ids) != len(set(badge_ids)):
+                      print('Achievement profile IDs do not reconcile or dedupe', file=sys.stderr)
+                      raise SystemExit(1)
+                  expected_badges = sorted(
+                      badges,
+                      key=lambda badge: (
+                          badge['workshop'],
+                          achievement_order.index(badge['achievement']),
+                      ),
+                  )
+                  if badges != expected_badges:
+                      print('Achievement profile badges are not in canonical order', file=sys.stderr)
+                      raise SystemExit(1)
+                  by_workshop = {}
+                  for badge in badges:
+                      by_workshop.setdefault(badge['workshop'], set()).add(
+                          badge['achievement']
+                      )
+                  if any(
+                      ('started' not in claimed and len(claimed) > 0)
+                      or (
+                          'workshop-completed' in claimed
+                          and not {
+                              'started', 'local-proof', 'draft-builder',
+                              'preview-proven'
+                          }.issubset(claimed)
+                      )
+                      or (
+                          'hard-mode-completed' in claimed
+                          and 'started' not in claimed
+                      )
+                      for claimed in by_workshop.values()
+                  ):
+                      print('Achievement profile contains logically impossible progress', file=sys.stderr)
+                      raise SystemExit(1)
+                  expected_completed = sorted(
+                      slug for slug, claimed in by_workshop.items()
+                      if 'workshop-completed' in claimed
+                  )
+                  if profile['completed_workshops'] != expected_completed:
+                      print('Achievement completed workshop slugs do not reconcile', file=sys.stderr)
+                      raise SystemExit(1)
+                  expected = {
+                      'points': sum(badge['points'] for badge in badges),
+                      'achievement_count': len(badges),
+                      'starts': sum(
+                          'started' in claimed
+                          for claimed in by_workshop.values()
+                      ),
+                      'workshop_completions': sum(
+                          'workshop-completed' in claimed
+                          for claimed in by_workshop.values()
+                      ),
+                      'hard_completions': sum(
+                          'hard-mode-completed' in claimed
+                          for claimed in by_workshop.values()
+                      ),
+                  }
+                  if any(profile[key] != value for key, value in expected.items()):
+                      print('Achievement profile rollups do not reconcile', file=sys.stderr)
+                      raise SystemExit(1)
+                  if profile['points'] > profile['starts'] * 150:
+                      print('Achievement profile exceeds 150 points per started workshop', file=sys.stderr)
+                      raise SystemExit(1)
+              if achievement_totals.get('participants') != len(achievement_profiles):
+                  print('Achievement participant total does not reconcile', file=sys.stderr)
+                  raise SystemExit(1)
+              if achievement_totals.get('points') != sum(
+                  profile['points'] for profile in achievement_profiles
+              ):
+                  print('Achievement point total does not reconcile', file=sys.stderr)
+                  raise SystemExit(1)
+              if achievement_totals.get('achievements') != sum(
+                  profile['achievement_count'] for profile in achievement_profiles
+              ):
+                  print('Achievement total does not reconcile', file=sys.stderr)
+                  raise SystemExit(1)
+              if achievement_totals.get('starts') != sum(
+                  profile['starts'] for profile in achievement_profiles
+              ):
+                  print('Achievement start total does not reconcile', file=sys.stderr)
+                  raise SystemExit(1)
+              if achievement_totals.get('workshop_completions') != sum(
+                  profile['workshop_completions'] for profile in achievement_profiles
+              ):
+                  print('Achievement workshop completion total does not reconcile', file=sys.stderr)
+                  raise SystemExit(1)
+              if achievement_totals.get('hard_completions') != sum(
+                  profile['hard_completions'] for profile in achievement_profiles
+              ):
+                  print('Achievement hard completion total does not reconcile', file=sys.stderr)
+                  raise SystemExit(1)
+              if achievement_totals.get('starts') != sum(
+                  row['starts'] for row in achievement_workshop_rows
+              ):
+                  print('Achievement workshop starts do not reconcile', file=sys.stderr)
+                  raise SystemExit(1)
+              if achievement_totals.get('workshop_completions') != sum(
+                  row['workshop_completions'] for row in achievement_workshop_rows
+              ):
+                  print('Achievement workshop completions do not reconcile', file=sys.stderr)
+                  raise SystemExit(1)
+              if achievement_totals.get('hard_completions') != sum(
+                  row['hard_completions'] for row in achievement_workshop_rows
+              ):
+                  print('Achievement workshop hard completions do not reconcile', file=sys.stderr)
+                  raise SystemExit(1)
+              if achievement_totals.get('points') != sum(
+                  row['points'] for row in achievement_workshop_rows
+              ):
+                  print('Achievement workshop points do not reconcile', file=sys.stderr)
+                  raise SystemExit(1)
+              if achievement_totals.get('achievements') != sum(
+                  row['achievements'] for row in achievement_workshop_rows
+              ):
+                  print('Achievement workshop counts do not reconcile', file=sys.stderr)
+                  raise SystemExit(1)
+              catalog_agents = {
+                  row['slug']: row.get('catalog_key') or row.get('agent_name')
+                  for row in rows
+              }
+              def rate(numerator, denominator):
+                  return round((numerator / denominator) * 100, 1) if denominator else 0.0
+              for row in achievement_workshop_rows:
+                  counts = row.get('achievement_counts', {})
+                  if (
+                      row.get('agent_name') != catalog_agents.get(row.get('slug'))
+                      or list(counts) != achievement_order
+                      or sum(counts.values()) != row['achievements']
+                      or row['completion_rate'] != rate(
+                          row['workshop_completions'], row['starts']
+                      )
+                      or row['hard_completion_rate'] != rate(
+                          row['hard_completions'], row['starts']
+                      )
+                      or row['achievement_completion_rate'] != rate(
+                          row['achievements'],
+                          row['starts'] * len(achievement_order),
+                      )
+                  ):
+                      print('Achievement workshop identity, counts, or rates do not reconcile', file=sys.stderr)
+                      raise SystemExit(1)
+              if (
+                  achievement_totals.get('completion_rate') != rate(
+                      achievement_totals['workshop_completions'], achievement_totals['starts']
+                  )
+                  or achievement_totals.get('hard_completion_rate') != rate(
+                      achievement_totals['hard_completions'], achievement_totals['starts']
+                  )
+                  or achievement_totals.get('achievement_completion_rate') != rate(
+                      achievement_totals['achievements'],
+                      achievement_totals['starts'] * len(achievement_order),
+                  )
+              ):
+                  print('Achievement completion rates do not reconcile', file=sys.stderr)
+                  raise SystemExit(1)
+              achievement_type_rows = achievements.get('achievements', [])
+              if (
+                  [row.get('id') for row in achievement_type_rows] != achievement_order
+                  or any(
+                      row.get('points') != achievement_points[row['id']]
+                      for row in achievement_type_rows
+                  )
+                  or sum(row['claims'] for row in achievement_type_rows)
+                      != achievement_totals.get('achievements')
+                  or any(
+                      (
+                          lambda claims: (
+                              row['claims'] != len(claims)
+                              or row['claims'] != sum(
+                                  workshop['achievement_counts'][row['id']]
+                                  for workshop in achievement_workshop_rows
+                              )
+                              or row['participants'] != len({
+                                  login for login, _slug in claims
+                              })
+                              or row['workshops'] != len({
+                                  slug for _login, slug in claims
+                              })
+                              or row['attainment_rate'] != rate(
+                                  len(claims), achievement_totals['starts']
+                              )
+                          )
+                      )({
+                          (profile['login'].casefold(), badge['workshop'])
+                          for profile in achievement_profiles
+                          for badge in profile['badges']
+                          if badge['achievement'] == row['id']
+                      })
+                      for row in achievement_type_rows
+                  )
+              ):
+                  print('Achievement rollups do not reconcile', file=sys.stderr)
+                  raise SystemExit(1)
           PY
+
+      - name: Upload shareable impact report
+        uses: actions/upload-artifact@v4
+        with:
+          name: aibast-impact-report
+          path: |
+            reports/impact-report.pdf
+            reports/impact-report.html
+            reports/impact-report-email.txt
+            reports/impact-report-email.md
+            reports/impact-report.json
 
       - name: Commit snapshot
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add state/metrics.json state/metrics_history.json
+          git add \
+            state/agent_discussions.json \
+            state/metrics.json \
+            state/metrics_history.json \
+            state/impact_history.json \
+            reports/impact-report.pdf \
+            reports/impact-report.html \
+            reports/impact-report-email.txt \
+            reports/impact-report-email.md \
+            reports/impact-report.json
           if git diff --staged --quiet; then
             echo "No metrics change"
           else

@@ -34,15 +34,23 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 
 | Surface | Location |
 | --- | --- |
-| Customer field guide | `solutions/loan-origination-assistant/FIELD-GUIDE.md` |
+| Customer field guide | `solutions/loan-origination-assistant/field-guide.html` |
+| Evidence report | `solutions/loan-origination-assistant/evidence-report.html` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/loan-origination-assistant/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/loan-origination-assistant/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Hard quest | `solutions/loan-origination-assistant/quest.html` |
 | Literal browser tutorial | `solutions/loan-origination-assistant/manual-tutorial.html` |
 | Raw export manifest | `solutions/loan-origination-assistant/export-manifest.json` |
 | Source bundle | `solutions/loan-origination-assistant/exports/loan-origination-assistant-source.zip` |
 | Manual evidence | `solutions/loan-origination-assistant/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/loan-origination-assistant/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/loan-origination-assistant/exports/loan-origination-assistant-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/loan-origination-assistant/exports/loan-origination-assistant-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/loan-origination-assistant/exports/loan-origination-assistant-solution-export.json` |
 
-**Scaffold status:** 65 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 97 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

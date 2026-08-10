@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script>
+    (() => {
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const theme =
+        param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+    (() => {
+      const key = "aibast:theme";
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const explicit = param === "dark" || param === "light" ? param : null;
+      let stored = null;
+      try {
+        const candidate = localStorage.getItem(key);
+        stored = candidate === "dark" || candidate === "light" ? candidate : null;
+      } catch (_error) {
+        stored = null;
+      }
+      const theme = explicit || stored || "light";
+      document.documentElement.setAttribute("data-theme", theme);
+      document.addEventListener("DOMContentLoaded", () => {
+        const button = document.querySelector("[data-theme-toggle]");
+        if (!button) return;
+        const render = () => {
+          const dark = document.documentElement.getAttribute("data-theme") === "dark";
+          button.textContent = dark ? "Use light mode" : "Use dark mode";
+          button.setAttribute("aria-pressed", String(dark));
+        };
+        button.addEventListener("click", () => {
+          const next =
+            document.documentElement.getAttribute("data-theme") === "dark"
+              ? "light"
+              : "dark";
+          document.documentElement.setAttribute("data-theme", next);
+          try {
+            localStorage.setItem(key, next);
+          } catch (_error) {
+            /* The visible theme still changes when storage is unavailable. */
+          }
+          render();
+        });
+        render();
+      });
+    })();
+  </script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AIBAST workshop settings</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --cp-bg: #f7f4ef;
+      --cp-bg-elevated: #fcfbf8;
+      --cp-surface: #ffffff;
+      --cp-surface-soft: #f5f5f5;
+      --cp-border: #dedede;
+      --cp-border-strong: #919191;
+      --cp-text: #242424;
+      --cp-text-muted: #5c5c5c;
+      --cp-text-soft: #6f6f6f;
+      --cp-accent: #b11f4b;
+      --cp-accent-hover: #9a1a41;
+      --cp-accent-soft: rgba(177, 31, 75, 0.08);
+      --cp-accent-fg: #ffffff;
+      --cp-success: #16a34a;
+      --cp-danger: #dc2626;
+      --cp-warning: #f59e0b;
+      --cp-link: #0078d4;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+      --cp-overlay: rgba(255, 255, 255, 0.8);
+      --cp-panel: rgba(255, 255, 255, 0.86);
+      --cp-panel-strong: rgba(255, 255, 255, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.55);
+      --cp-highlight: rgba(177, 31, 75, 0.12);
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --cp-bg: #3d3b3a;
+      --cp-bg-elevated: #343231;
+      --cp-surface: #292929;
+      --cp-surface-soft: #2e2e2e;
+      --cp-border: #474747;
+      --cp-border-strong: #5f5f5f;
+      --cp-text: #dedede;
+      --cp-text-muted: #919191;
+      --cp-text-soft: #b0b0b0;
+      --cp-accent: #fd8ea1;
+      --cp-accent-hover: #fb7b91;
+      --cp-accent-soft: rgba(253, 142, 161, 0.14);
+      --cp-accent-fg: #1a1a1a;
+      --cp-success: #4ade80;
+      --cp-danger: #f87171;
+      --cp-warning: #fbbf24;
+      --cp-link: #4da6ff;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+      --cp-overlay: rgba(41, 41, 41, 0.88);
+      --cp-panel: rgba(41, 41, 41, 0.72);
+      --cp-panel-strong: rgba(41, 41, 41, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.04);
+      --cp-highlight: rgba(253, 142, 161, 0.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--cp-bg);
+      color: var(--cp-text);
+      font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.5;
+    }
+    button, input { font: inherit; }
+    .page {
+      width: min(860px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 56px 0 80px;
+    }
+    .card {
+      padding: 28px;
+      border: 1px solid var(--cp-border);
+      border-radius: 16px;
+      background: var(--cp-surface);
+      box-shadow: var(--cp-shadow);
+    }
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--cp-accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    h1 { margin: 0; font-size: clamp(34px, 7vw, 56px); line-height: 1; }
+    .lede { color: var(--cp-text-muted); font-size: 18px; }
+    .options { display: grid; gap: 14px; margin: 28px 0; }
+    .option {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      padding: 18px;
+      border: 1px solid var(--cp-border);
+      border-radius: 10px;
+      background: var(--cp-bg-elevated);
+      cursor: pointer;
+    }
+    .option:has(input:checked) {
+      border-color: var(--cp-accent);
+      background: var(--cp-accent-soft);
+    }
+    .option input {
+      width: 20px;
+      height: 20px;
+      margin-top: 3px;
+      accent-color: var(--cp-accent);
+    }
+    .option strong, .option span { display: block; }
+    .option span { margin-top: 4px; color: var(--cp-text-muted); }
+    .recommended {
+      display: inline-flex;
+      width: max-content;
+      margin-bottom: 5px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 9px 16px;
+      border: 1px solid var(--cp-border-strong);
+      border-radius: 10px;
+      background: var(--cp-surface);
+      color: var(--cp-text);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .button.primary {
+      border-color: var(--cp-accent);
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+    }
+    .note {
+      margin-top: 22px;
+      padding: 14px;
+      border-left: 4px solid var(--cp-accent);
+      background: var(--cp-surface-soft);
+      color: var(--cp-text-muted);
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <form class="card" id="settings-form">
+      <p class="eyebrow">Global workshop preference</p>
+      <h1>Choose your Easy-mode harness.</h1>
+      <p class="lede">This setting applies to every AIBAST workshop on this site. Workshop pages show only the selected harness, so learners do not need to choose again.</p>
+      <div class="options">
+        <label class="option">
+          <input type="radio" name="engine" value="copilot">
+          <span>
+            <span class="recommended">Default</span>
+            <strong>GitHub Copilot only</strong>
+            <span>Use the familiar VS Code Copilot surface with the lane-specific skill carrying discovery, testing, deployment, and validation.</span>
+          </span>
+        </label>
+        <label class="option">
+          <input type="radio" name="engine" value="brainstem">
+          <span>
+            <strong>GitHub Copilot + Brainstem</strong>
+            <span>Add the optional personal, on-device training AI for persistent workshop state, hot-loaded agents, and autonomous handoffs.</span>
+          </span>
+        </label>
+      </div>
+      <div class="actions">
+        <button class="button primary" type="submit">Save workshop setting</button>
+        <a class="button" id="back-link" href="../../library.html">Cancel</a>
+        <button class="button" type="button" data-theme-toggle aria-pressed="false">Use dark mode</button>
+      </div>
+      <div class="note"><strong>Change it later:</strong> use the generic <em>Workshop settings</em> link. Your preference stays on this device and browser until you change or clear it.</div>
+    </form>
+  </main>
+  <script>
+    (() => {
+      const key = "aibast:workshop-engine";
+      const params = new URLSearchParams(window.location.search);
+      const requestedReturn = params.get("return");
+      const fallbackReturn = new URL("../../library.html", window.location.href);
+      const resolveReturn = (value) => {
+        if (!value || /^\s*\/\//.test(value)) return fallbackReturn.href;
+        try {
+          const candidate = new URL(value, window.location.href);
+          if (
+            (candidate.protocol === "http:" || candidate.protocol === "https:") &&
+            candidate.origin === window.location.origin
+          ) {
+            return candidate.href;
+          }
+        } catch (_error) {
+          // Fall through to the library.
+        }
+        return fallbackReturn.href;
+      };
+      const safeReturn = resolveReturn(requestedReturn);
+      const current = localStorage.getItem(key) === "brainstem"
+        ? "brainstem"
+        : "copilot";
+      const form = document.getElementById("settings-form");
+      const back = document.getElementById("back-link");
+      form.elements.engine.value = current;
+      back.href = safeReturn;
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        localStorage.setItem(key, form.elements.engine.value);
+        window.location.assign(safeReturn);
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,506 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/underwriting-support",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker or refusal.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 23,
+    "reusable": 17,
+    "reshoot_required": 6
+  },
+  "captures": [
+    {
+      "id": "easy-uws-01",
+      "mode": "easy",
+      "case_id": "UWS-01",
+      "source": "solutions/underwriting-support/screenshots/assisted/01-uws-01.jpg",
+      "annotated": "solutions/underwriting-support/screenshots/assisted/annotated/01-uws-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "UW-2025-103",
+        "Substandard"
+      ],
+      "full_case_not_visibly_proven": [
+        "The captured viewport shows the deterministic anchors in the visible Copilot Studio activity trace, not a complete final answer."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 558,
+          "width": 950,
+          "height": 130,
+          "label": "UWS-01 evidence"
+        }
+      ]
+    },
+    {
+      "id": "easy-uws-02",
+      "mode": "easy",
+      "case_id": "UWS-02",
+      "source": "solutions/underwriting-support/screenshots/assisted/02-uws-02.jpg",
+      "annotated": "solutions/underwriting-support/screenshots/assisted/annotated/02-uws-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "UW-2025-101",
+        "Indicated Premium"
+      ],
+      "full_case_not_visibly_proven": [
+        "The captured viewport shows the deterministic anchors in the visible Copilot Studio activity trace, not a complete final answer."
+      ],
+      "boxes": [
+        {
+          "x": 310,
+          "y": 486,
+          "width": 930,
+          "height": 49,
+          "label": "UWS-02 deterministic anchors"
+        }
+      ]
+    },
+    {
+      "id": "easy-uws-03",
+      "mode": "easy",
+      "case_id": "UWS-03",
+      "source": "solutions/underwriting-support/screenshots/assisted/03-uws-03.jpg",
+      "annotated": "solutions/underwriting-support/screenshots/assisted/annotated/03-uws-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "UW-2025-103",
+        "High-Risk Specialty"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 350,
+          "width": 930,
+          "height": 58,
+          "label": "Exception submission"
+        },
+        {
+          "x": 286,
+          "y": 548,
+          "width": 990,
+          "height": 102,
+          "label": "High-Risk Specialty"
+        }
+      ]
+    },
+    {
+      "id": "easy-uws-04",
+      "mode": "easy",
+      "case_id": "UWS-04",
+      "source": "solutions/underwriting-support/screenshots/assisted/04-uws-04.jpg",
+      "annotated": "solutions/underwriting-support/screenshots/assisted/annotated/04-uws-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "No approval, decline, quote, or binder has been issued",
+        "Authorized human review required"
+      ],
+      "full_case_not_visibly_proven": [
+        "UW-2025-103 is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 404,
+          "width": 950,
+          "height": 88,
+          "label": "No approval or coverage action"
+        },
+        {
+          "x": 286,
+          "y": 515,
+          "width": 930,
+          "height": 63,
+          "label": "Human review boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-draft",
+      "mode": "easy",
+      "source": "solutions/underwriting-support/screenshots/assisted/05-confirm-draft.jpg",
+      "status": "reshoot_required",
+      "reason": "The target Underwriting Support Pilot row is not visible, so the screenshot cannot prove that the validated pilot remains Draft.",
+      "draft": true
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "step": 1,
+      "source": "solutions/underwriting-support/screenshots/manual/01-create-blank-agent.jpg",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent",
+        "Blank Build workspace"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 88,
+          "width": 900,
+          "height": 72,
+          "label": "Blank agent workspace"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "step": 2,
+      "source": "solutions/underwriting-support/screenshots/manual/02-name-agent.jpg",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Underwriting Support Manual in the name field"
+      ],
+      "boxes": [
+        {
+          "x": 165,
+          "y": 96,
+          "width": 820,
+          "height": 64,
+          "label": "Manual agent name"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "step": 3,
+      "source": "solutions/underwriting-support/screenshots/manual/03-enter-instructions.jpg",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence-first response contract",
+        "Locked Preview evidence anchors",
+        "UWS-01 through UWS-04 acceptance anchors"
+      ],
+      "boxes": [
+        {
+          "x": 80,
+          "y": 190,
+          "width": 900,
+          "height": 620,
+          "label": "Reviewed instruction policy"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "step": 4,
+      "source": "solutions/underwriting-support/screenshots/manual/04-save-instructions.jpg",
+      "status": "reshoot_required",
+      "reason": "The instruction content is visible, but the screenshot has no saved-state indicator such as No unsaved changes. The frame does not independently prove the save checkpoint."
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "step": 5,
+      "source": "solutions/underwriting-support/screenshots/manual/05-remove-web-search.jpg",
+      "status": "reshoot_required",
+      "reason": "The screenshot shows a completed Build page with no web-search chip, but it contains no positive visible confirmation that Search all websites was removed. Absence alone is not sufficient proof for this action."
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "step": 6,
+      "source": "solutions/underwriting-support/screenshots/manual/06-add-aibast-underwriting-support-controls-and-review.jpg",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/06-add-aibast-underwriting-support-controls-and-review.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Knowledge chip beginning aibast_underwriting-support-controls-and-re"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 306,
+          "width": 370,
+          "height": 50,
+          "label": "Controls knowledge added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "step": 7,
+      "source": "solutions/underwriting-support/screenshots/manual/07-add-aibast-underwriting-support-synthetic-records.jpg",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/07-add-aibast-underwriting-support-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Knowledge chip beginning aibast_underwriting-support-synthetic-recor",
+        "Knowledge chip beginning aibast_underwriting-support-controls-and-re"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 306,
+          "width": 370,
+          "height": 92,
+          "label": "Two knowledge files added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "step": 8,
+      "source": "solutions/underwriting-support/screenshots/manual/08-add-aibast-exception-review-04.jpg",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/08-add-aibast-exception-review-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "exception-review skill"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 182,
+          "width": 230,
+          "height": 52,
+          "label": "Exception review skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "step": 9,
+      "source": "solutions/underwriting-support/screenshots/manual/09-add-aibast-guideline-check-03.jpg",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/09-add-aibast-guideline-check-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "guideline-check skill",
+        "exception-review skill"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 182,
+          "width": 360,
+          "height": 88,
+          "label": "Two skills added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "step": 10,
+      "source": "solutions/underwriting-support/screenshots/manual/10-add-aibast-pricing-recommendation-02.jpg",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/10-add-aibast-pricing-recommendation-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "pricing-recommendation skill",
+        "guideline-check skill",
+        "exception-review skill"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 182,
+          "width": 360,
+          "height": 94,
+          "label": "Three skills added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "step": 11,
+      "source": "solutions/underwriting-support/screenshots/manual/11-add-aibast-risk-evaluation-01.jpg",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/11-add-aibast-risk-evaluation-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "risk-evaluation skill",
+        "pricing-recommendation skill",
+        "guideline-check skill",
+        "exception-review skill"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 182,
+          "width": 365,
+          "height": 132,
+          "label": "Four skills added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "step": 12,
+      "source": "solutions/underwriting-support/screenshots/manual/12-review-inventory.jpg",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/12-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "Four configured skills",
+        "Two package knowledge files",
+        "Save tooltip states Reason: No unsaved changes"
+      ],
+      "boxes": [
+        {
+          "x": 1048,
+          "y": 48,
+          "width": 198,
+          "height": 50,
+          "label": "No unsaved changes"
+        },
+        {
+          "x": 1204,
+          "y": 86,
+          "width": 192,
+          "height": 42,
+          "label": "Reviewed model"
+        },
+        {
+          "x": 1025,
+          "y": 180,
+          "width": 368,
+          "height": 132,
+          "label": "Four configured skills"
+        },
+        {
+          "x": 1025,
+          "y": 430,
+          "width": 370,
+          "height": 92,
+          "label": "Two knowledge files"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "step": 13,
+      "source": "solutions/underwriting-support/screenshots/manual/13-open-preview.jpg",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab",
+        "New chat",
+        "Underwriting Support Manual"
+      ],
+      "boxes": [
+        {
+          "x": 635,
+          "y": 4,
+          "width": 108,
+          "height": 56,
+          "label": "Preview selected"
+        },
+        {
+          "x": 835,
+          "y": 84,
+          "width": 105,
+          "height": 54,
+          "label": "Fresh chat control"
+        }
+      ]
+    },
+    {
+      "id": "hard-uws-01",
+      "mode": "hard",
+      "case_id": "UWS-01",
+      "step": 14,
+      "source": "solutions/underwriting-support/screenshots/manual/14-uws-01.jpg",
+      "status": "reshoot_required",
+      "reason": "The visible final-answer viewport does not contain either required deterministic marker UW-2025-103 or Substandard. The safety boundary alone does not prove UWS-01."
+    },
+    {
+      "id": "hard-uws-02",
+      "mode": "hard",
+      "case_id": "UWS-02",
+      "step": 15,
+      "source": "solutions/underwriting-support/screenshots/manual/15-uws-02.jpg",
+      "status": "reshoot_required",
+      "reason": "The visible final-answer viewport contains loss and review details but neither required deterministic marker UW-2025-101 nor Indicated Premium."
+    },
+    {
+      "id": "hard-uws-03",
+      "mode": "hard",
+      "case_id": "UWS-03",
+      "step": 16,
+      "source": "solutions/underwriting-support/screenshots/manual/16-uws-03.jpg",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/16-uws-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "UW-2025-103",
+        "High-Risk Specialty",
+        "Senior-underwriter authority review required"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 278,
+          "width": 912,
+          "height": 58,
+          "label": "Guideline exception row"
+        },
+        {
+          "x": 286,
+          "y": 405,
+          "width": 930,
+          "height": 82,
+          "label": "Authorized review required"
+        }
+      ]
+    },
+    {
+      "id": "hard-uws-04",
+      "mode": "hard",
+      "case_id": "UWS-04",
+      "step": 17,
+      "source": "solutions/underwriting-support/screenshots/manual/17-uws-04.jpg",
+      "status": "reshoot_required",
+      "reason": "UW-2025-103 and No approval appear only in the model reasoning trace; no final answer is visible. Reasoning text is not learner-facing pass evidence."
+    },
+    {
+      "id": "hard-draft",
+      "mode": "hard",
+      "step": 18,
+      "source": "solutions/underwriting-support/screenshots/manual/18-confirm-draft.jpg",
+      "annotated": "solutions/underwriting-support/screenshots/manual/annotated/18-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Underwriting Support Manual",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 110,
+          "y": 242,
+          "width": 1250,
+          "height": 58,
+          "label": "Target agent remains Draft"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy Draft gate filtered to Underwriting Support Pilot with Draft visible.",
+      "Hard step 4 with an explicit saved-state indicator.",
+      "Hard step 5 with a positive visible web-search removal confirmation.",
+      "Hard UWS-01 with UW-2025-103 and Substandard visible in the final answer.",
+      "Hard UWS-02 with UW-2025-101 and Indicated Premium visible in the final answer.",
+      "Hard UWS-04 with UW-2025-103 and No approval visible in the final answer."
+    ]
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:underwriting-support",
+    "reviewed_at": "2026-08-09T20:57:29-04:00",
+    "method": "Inspected the source and regenerated annotation at native resolution, then verified the UWS-01 evidence box encloses the complete key-findings block without crossing its text.",
+    "notes": "The UWS-01 annotation now keeps UW-2025-103 and Substandard legible. Remaining reshoot-required frames stay withheld from reusable evidence."
+  }
+}

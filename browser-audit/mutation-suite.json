@@ -1,0 +1,447 @@
+{
+  "schema": "aibast-browser-audit-mutations/1.10",
+  "total": 42,
+  "passed": 42,
+  "failed": 0,
+  "baseline_restored": true,
+  "mutation_names": [
+    "catalog-scope-count",
+    "catalog-display-identity",
+    "registry-quest-identity",
+    "served-input-provenance",
+    "audited-input-toctou",
+    "gate-companion-toctou",
+    "screenshot-capture-toctou",
+    "workshop-body-identity",
+    "live-dom-evidence-swap",
+    "aria-tab-linkage",
+    "inactive-mode-visible-descendant",
+    "dynamic-image-inventory",
+    "dynamic-resource-outside-snapshot",
+    "external-script-request",
+    "external-stylesheet-request",
+    "external-fetch-request",
+    "external-srcset-request",
+    "external-websocket-request",
+    "service-worker-synthetic-resource",
+    "transparent-image-content",
+    "blank-image-content",
+    "mostly-transparent-image-content",
+    "mostly-blank-image-content",
+    "segmented-mostly-blank-boundary",
+    "five-tile-sparse-noise",
+    "eight-tile-isolated-noise",
+    "eight-tile-connected-diagonal-noise",
+    "inherited-opacity",
+    "css-filter",
+    "css-mask",
+    "stylesheet-individual-transform",
+    "object-position-rendered-blank",
+    "mix-blend-rendering",
+    "cross-mode-content-alias",
+    "cross-mode-decoded-visual-alias",
+    "offscreen-owner-pseudo-overlay",
+    "center-sample-pseudo-overlay",
+    "off-sample-band-pseudo-overlay",
+    "offscreen-visible-pseudo-band",
+    "pseudo-box-shadow-overlay",
+    "ancestor-clipping",
+    "undersized-evidence"
+  ],
+  "release_eligible": true,
+  "mutation_contract_sha256": "39a3df3b7b567822b8707b8c450eba5bda481c8015291e303afb90dcfeed2fc7",
+  "baseline_audited_inputs_sha256": "2baf4594cef10e26126970b20918ae900d7758751d789619d8ee2c918d6dc0df",
+  "execution_environment": {
+    "node": "v25.2.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "chromium": "151.0.7922.34"
+  },
+  "bindings": {
+    "audit_script_sha256": "d5dceb6b8451869eb1389e5d48604d82a600adf5402c662614951019b044636c",
+    "mutation_script_sha256": "adbe5cec1e7fd7b3d3df278ebf3942c19b4b34381f403940e0bb0614bd23bd8e",
+    "attestation_script_sha256": "506bc70007330d76fd5320f1fbbda4e0d03bf468987498baddf8ef3a8e3741e7",
+    "baseline_report_sha256": "f9b5a05a1c61f06c819f897e75089a9353ac27481dc5267366f333d6bc8f3dcc",
+    "baseline_manifest_sha256": "8e692a8bc0547f7737a9189d0df6947d8519b37ef96a99d471c7260e92ef9a01"
+  },
+  "results": [
+    {
+      "name": "catalog-scope-count",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": null,
+      "stdout": "",
+      "stderr": "file://$REPO/browser-audit/audit.mjs:105\n    throw new Error(`Registry-only solution lacks exclusion proof: ${slug}`);\n          ^\n\nError: Registry-only solution lacks exclusion proof: building-permit-processing\n    at file://$REPO/browser-audit/audit.mjs:105:11\n\nNode.js v25.2.0"
+    },
+    {
+      "name": "catalog-display-identity",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "registry-quest-identity",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": null,
+      "stdout": "",
+      "stderr": "file://$REPO/browser-audit/audit.mjs:79\n    throw new Error(`Registry quest URL mismatch for ${pkg.slug}`);\n          ^\n\nError: Registry quest URL mismatch for account-intelligence\n    at file://$REPO/browser-audit/audit.mjs:79:11\n    at Array.map (<anonymous>)\n    at file://$REPO/browser-audit/audit.mjs:69:41\n\nNode.js v25.2.0"
+    },
+    {
+      "name": "served-input-provenance",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "audited-input-toctou",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "gate-companion-toctou",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "screenshot-capture-toctou",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "workshop-body-identity",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "live-dom-evidence-swap",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "aria-tab-linkage",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "inactive-mode-visible-descendant",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "dynamic-image-inventory",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "dynamic-resource-outside-snapshot",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "external-script-request",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "external-stylesheet-request",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "external-fetch-request",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "external-srcset-request",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "external-websocket-request",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "service-worker-synthetic-resource",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "transparent-image-content",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "blank-image-content",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "mostly-transparent-image-content",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "mostly-blank-image-content",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "segmented-mostly-blank-boundary",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "five-tile-sparse-noise",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "eight-tile-isolated-noise",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "eight-tile-connected-diagonal-noise",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "inherited-opacity",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "css-filter",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "css-mask",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "stylesheet-individual-transform",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "object-position-rendered-blank",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "mix-blend-rendering",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "cross-mode-content-alias",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "cross-mode-decoded-visual-alias",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "offscreen-owner-pseudo-overlay",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "center-sample-pseudo-overlay",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "off-sample-band-pseudo-overlay",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "offscreen-visible-pseudo-band",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "pseudo-box-shadow-overlay",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "ancestor-clipping",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    },
+    {
+      "name": "undersized-evidence",
+      "passed": true,
+      "exit_status": 1,
+      "signal": null,
+      "audit_failed": true,
+      "stdout": "{\"total\":1,\"passed\":0,\"failed\":1,\"failures\":[\"account-intelligence\"]}",
+      "stderr": ""
+    }
+  ]
+}

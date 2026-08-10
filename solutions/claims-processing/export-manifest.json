@@ -27,11 +27,83 @@
       "status": "ready"
     },
     {
+      "id": "copilot-studio-solution",
+      "label": "Importable Copilot Studio solution",
+      "path": "solutions/claims-processing/exports/claims-processing-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/exports/claims-processing-copilot-studio-solution.zip",
+      "use": "Unmanaged solution ZIP for manual import; the agent remains unpublished",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-deployment-settings",
+      "label": "Copilot Studio deployment settings",
+      "path": "solutions/claims-processing/exports/claims-processing-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/exports/claims-processing-deployment-settings.json",
+      "use": "Connection-reference, environment-variable, and agent import settings",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-export-metadata",
+      "label": "Copilot Studio solution export metadata",
+      "path": "solutions/claims-processing/exports/claims-processing-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/exports/claims-processing-solution-export.json",
+      "use": "Export identity, integrity hash, source environment, and import caveats",
+      "status": "ready"
+    },
+    {
       "id": "field-guide",
       "label": "Customer field guide",
+      "path": "solutions/claims-processing/field-guide.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/field-guide.html",
+      "use": "Styled facilitation, evidence boundaries, gates, and recovery",
+      "status": "ready"
+    },
+    {
+      "id": "field-guide-source",
+      "label": "Field guide source",
       "path": "solutions/claims-processing/FIELD-GUIDE.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/FIELD-GUIDE.md",
-      "use": "Facilitation, evidence boundaries, gates, and recovery",
+      "use": "Markdown source retained for audit and export",
+      "status": "ready"
+    },
+    {
+      "id": "easy-personless-guide",
+      "label": "Personless Easy-mode guide",
+      "path": "solutions/claims-processing/EASY-MODE-PERSONLESS.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/EASY-MODE-PERSONLESS.md",
+      "use": "Brainstem lane skill attachment, two-message workshop, and engine loop",
+      "status": "ready"
+    },
+    {
+      "id": "easy-copilot-chat-prompts",
+      "label": "Copilot-only Easy-mode comparison",
+      "path": "solutions/claims-processing/EASY-MODE-COPILOT-CHAT.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/EASY-MODE-COPILOT-CHAT.md",
+      "use": "Copilot-only lane skill attachment and the same two workshop messages",
+      "status": "ready"
+    },
+    {
+      "id": "easy-mode-brainstem-skill",
+      "label": "Brainstem Easy Mode skill",
+      "path": "skills/aibast-easy-mode-brainstem/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-brainstem/SKILL.md",
+      "use": "Download-and-drag harness that defaults workshop execution to Brainstem",
+      "status": "ready"
+    },
+    {
+      "id": "easy-mode-copilot-skill",
+      "label": "Copilot-only Easy Mode skill",
+      "path": "skills/aibast-easy-mode-copilot/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-copilot/SKILL.md",
+      "use": "Download-and-drag harness that runs the workshop directly in GitHub Copilot",
+      "status": "ready"
+    },
+    {
+      "id": "generic-workshop-agent",
+      "label": "Generic AIBAST Workshop agent",
+      "path": "agents/@aibast-agents-library/templates/workshop_agent.py",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/workshop_agent.py",
+      "use": "Registry-driven Brainstem engine shared by every packaged solution",
       "status": "ready"
     },
     {
@@ -179,6 +251,14 @@
       "status": "ready"
     },
     {
+      "id": "easy-evidence-dataverse-draft-evidence",
+      "label": "Dataverse Draft Evidence",
+      "path": "solutions/claims-processing/evals/dataverse-draft-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/evals/dataverse-draft-evidence.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
       "id": "manual-evidence",
       "label": "Manual build evidence",
       "path": "solutions/claims-processing/evals/manual-build-evidence.json",
@@ -208,6 +288,166 @@
       "path": "solutions/claims-processing/evals/transcripts.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/evals/transcripts.json",
       "use": "Canonical source-agent acceptance evidence",
+      "status": "ready"
+    },
+    {
+      "id": "easy-evidence-visual-checkpoints",
+      "label": "Visual Checkpoints",
+      "path": "solutions/claims-processing/evals/visual-checkpoints.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/evals/visual-checkpoints.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-clp-01",
+      "label": "Annotated visual checkpoint: easy-clp-01",
+      "path": "solutions/claims-processing/screenshots/assisted/annotated/02-clp-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/screenshots/assisted/annotated/02-clp-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-clp-02",
+      "label": "Annotated visual checkpoint: easy-clp-02",
+      "path": "solutions/claims-processing/screenshots/assisted/annotated/03-clp-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/screenshots/assisted/annotated/03-clp-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-create-blank-agent",
+      "label": "Annotated visual checkpoint: hard-step-01",
+      "path": "solutions/claims-processing/screenshots/manual/annotated/01-create-blank-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/screenshots/manual/annotated/01-create-blank-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-name-agent",
+      "label": "Annotated visual checkpoint: hard-step-02",
+      "path": "solutions/claims-processing/screenshots/manual/annotated/02-name-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/screenshots/manual/annotated/02-name-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-enter-instructions",
+      "label": "Annotated visual checkpoint: hard-step-03",
+      "path": "solutions/claims-processing/screenshots/manual/annotated/03-enter-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/screenshots/manual/annotated/03-enter-instructions.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-05-remove-web-search",
+      "label": "Annotated visual checkpoint: hard-step-05",
+      "path": "solutions/claims-processing/screenshots/manual/annotated/05-remove-web-search.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/screenshots/manual/annotated/05-remove-web-search.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-06-add-aibast-claims-processing-controls-and-review",
+      "label": "Annotated visual checkpoint: hard-step-06",
+      "path": "solutions/claims-processing/screenshots/manual/annotated/06-add-aibast-claims-processing-controls-and-review.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/screenshots/manual/annotated/06-add-aibast-claims-processing-controls-and-review.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-07-add-aibast-claims-processing-synthetic-records",
+      "label": "Annotated visual checkpoint: hard-step-07",
+      "path": "solutions/claims-processing/screenshots/manual/annotated/07-add-aibast-claims-processing-synthetic-records.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/screenshots/manual/annotated/07-add-aibast-claims-processing-synthetic-records.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-08-add-aibast-adjudication-review-02",
+      "label": "Annotated visual checkpoint: hard-step-08",
+      "path": "solutions/claims-processing/screenshots/manual/annotated/08-add-aibast-adjudication-review-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/screenshots/manual/annotated/08-add-aibast-adjudication-review-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-09-add-aibast-claim-intake-01",
+      "label": "Annotated visual checkpoint: hard-step-09",
+      "path": "solutions/claims-processing/screenshots/manual/annotated/09-add-aibast-claim-intake-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/screenshots/manual/annotated/09-add-aibast-claim-intake-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-10-add-aibast-fraud-flag-03",
+      "label": "Annotated visual checkpoint: hard-step-10",
+      "path": "solutions/claims-processing/screenshots/manual/annotated/10-add-aibast-fraud-flag-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/screenshots/manual/annotated/10-add-aibast-fraud-flag-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-11-add-aibast-settlement-recommendation-04",
+      "label": "Annotated visual checkpoint: hard-step-11",
+      "path": "solutions/claims-processing/screenshots/manual/annotated/11-add-aibast-settlement-recommendation-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/screenshots/manual/annotated/11-add-aibast-settlement-recommendation-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-12-review-inventory",
+      "label": "Annotated visual checkpoint: hard-step-12",
+      "path": "solutions/claims-processing/screenshots/manual/annotated/12-review-inventory.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/screenshots/manual/annotated/12-review-inventory.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-13-open-preview",
+      "label": "Annotated visual checkpoint: hard-step-13",
+      "path": "solutions/claims-processing/screenshots/manual/annotated/13-open-preview.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/screenshots/manual/annotated/13-open-preview.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-14-clp-01",
+      "label": "Annotated visual checkpoint: hard-clp-01",
+      "path": "solutions/claims-processing/screenshots/manual/annotated/14-clp-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/screenshots/manual/annotated/14-clp-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-15-clp-02",
+      "label": "Annotated visual checkpoint: hard-clp-02",
+      "path": "solutions/claims-processing/screenshots/manual/annotated/15-clp-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/screenshots/manual/annotated/15-clp-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-16-clp-03",
+      "label": "Annotated visual checkpoint: hard-clp-03",
+      "path": "solutions/claims-processing/screenshots/manual/annotated/16-clp-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/screenshots/manual/annotated/16-clp-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-17-clp-04",
+      "label": "Annotated visual checkpoint: hard-clp-04",
+      "path": "solutions/claims-processing/screenshots/manual/annotated/17-clp-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/screenshots/manual/annotated/17-clp-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-18-confirm-draft",
+      "label": "Annotated visual checkpoint: hard-draft",
+      "path": "solutions/claims-processing/screenshots/manual/annotated/18-confirm-draft.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/screenshots/manual/annotated/18-confirm-draft.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
@@ -443,6 +683,22 @@
       "status": "ready"
     },
     {
+      "id": "workshop-settings",
+      "label": "Global workshop settings",
+      "path": "solutions/_shared/workshop-settings.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/_shared/workshop-settings.html",
+      "use": "Site-wide persisted Easy-mode harness preference",
+      "status": "ready"
+    },
+    {
+      "id": "evidence-report",
+      "label": "Styled evidence report",
+      "path": "solutions/claims-processing/evidence-report.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/evidence-report.html",
+      "use": "Learner-safe HTML summary of deterministic and visual evidence",
+      "status": "ready"
+    },
+    {
       "id": "quest",
       "label": "Guided field quest",
       "path": "solutions/claims-processing/quest.html",
@@ -490,5 +746,31 @@
       "use": "Copilot-assisted evidence inventory",
       "status": "ready"
     }
-  ]
+  ],
+  "copilot_studio_solution": {
+    "label": "Importable Claims Processing Agent Copilot Studio solution",
+    "status": "exported",
+    "solution_unique_name": "aibast_ClaimsProcessingPilot",
+    "zip": {
+      "path": "solutions/claims-processing/exports/claims-processing-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/exports/claims-processing-copilot-studio-solution.zip",
+      "sha256": "65019848f8acab848f53469bdc1beaf6c685340c690ac8b1e9275a6780055663",
+      "bytes": 3897
+    },
+    "deployment_settings": {
+      "path": "solutions/claims-processing/exports/claims-processing-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/exports/claims-processing-deployment-settings.json"
+    },
+    "metadata": {
+      "path": "solutions/claims-processing/exports/claims-processing-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/claims-processing/exports/claims-processing-solution-export.json"
+    },
+    "managed": false,
+    "published": false,
+    "import_caveats": [
+      "Import as an unmanaged solution for manual review.",
+      "Map connection references and environment variables before enabling integrations.",
+      "The exported agent remains unpublished unless the target administrator explicitly publishes it."
+    ]
+  }
 }

@@ -23,15 +23,23 @@ inventory, apply promotions, send messages, process returns, or transact.
 
 | Surface | Location |
 | --- | --- |
-| Customer field guide | `solutions/store-associate-copilot/FIELD-GUIDE.md` |
+| Customer field guide | `solutions/store-associate-copilot/field-guide.html` |
+| Evidence report | `solutions/store-associate-copilot/evidence-report.html` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/store-associate-copilot/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/store-associate-copilot/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Hard quest | `solutions/store-associate-copilot/quest.html` |
 | Literal browser tutorial | `solutions/store-associate-copilot/manual-tutorial.html` |
 | Raw export manifest | `solutions/store-associate-copilot/export-manifest.json` |
 | Source bundle | `solutions/store-associate-copilot/exports/store-associate-copilot-source.zip` |
 | Manual evidence | `solutions/store-associate-copilot/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/store-associate-copilot/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/store-associate-copilot/exports/store-associate-copilot-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/store-associate-copilot/exports/store-associate-copilot-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/store-associate-copilot/exports/store-associate-copilot-solution-export.json` |
 
-**Scaffold status:** 60 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 94 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

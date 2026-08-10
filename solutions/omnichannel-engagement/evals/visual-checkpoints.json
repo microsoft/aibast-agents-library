@@ -1,0 +1,573 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/omnichannel-engagement",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker or refusal.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 23,
+    "reusable": 18,
+    "reshoot_required": 5
+  },
+  "captures": [
+    {
+      "id": "easy-oce-01",
+      "mode": "easy",
+      "case_id": "OCE-01",
+      "source": "solutions/omnichannel-engagement/screenshots/assisted/01-oce-01.jpg",
+      "status": "reshoot_required",
+      "reason": "The browser frame clips the Continuity Note column, with multiple rows ending mid-sentence; no complete alternate frame exists in the assisted browserfilm, so this capture is withheld rather than repaired with invented content."
+    },
+    {
+      "id": "easy-oce-02",
+      "mode": "easy",
+      "case_id": "OCE-02",
+      "source": "solutions/omnichannel-engagement/screenshots/assisted/02-oce-02.jpg",
+      "annotated": "solutions/omnichannel-engagement/screenshots/assisted/annotated/02-oce-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Journey Optimization Opportunities",
+        "Service-review next step with no outreach scheduled, no record altered, and no offer created"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact Prepared for and Aggregate Customer Journey Analysis markers are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 143,
+          "width": 934,
+          "height": 264,
+          "label": "Journey optimization"
+        },
+        {
+          "x": 287,
+          "y": 468,
+          "width": 934,
+          "height": 109,
+          "label": "Human-review boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-oce-03",
+      "mode": "easy",
+      "case_id": "OCE-03",
+      "source": "solutions/omnichannel-engagement/screenshots/assisted/03-oce-03.jpg",
+      "annotated": "solutions/omnichannel-engagement/screenshots/assisted/annotated/03-oce-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Budget reallocation experiment uses consented aggregate cohorts with no new targeting or identity inference",
+        "Email Frequency Cap Audit visibly limits contact frequency"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact Prepared for and Draft Engagement Optimization Report markers are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 120,
+          "width": 955,
+          "height": 172,
+          "label": "Consented budget experiment"
+        },
+        {
+          "x": 286,
+          "y": 311,
+          "width": 955,
+          "height": 211,
+          "label": "Frequency-cap audit"
+        }
+      ]
+    },
+    {
+      "id": "easy-oce-04",
+      "mode": "easy",
+      "case_id": "OCE-04",
+      "source": "solutions/omnichannel-engagement/screenshots/assisted/04-oce-04.jpg",
+      "annotated": "solutions/omnichannel-engagement/screenshots/assisted/annotated/04-oce-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Attribution is explicitly distinguished from causation",
+        "Recommendations are for human review only and no outreach, offer, or purchase occurred"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Synthetic Campaign Attribution Report and Overall Campaign ROI markers are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 294,
+          "width": 941,
+          "height": 129,
+          "label": "Attribution is not causation"
+        },
+        {
+          "x": 286,
+          "y": 434,
+          "width": 941,
+          "height": 132,
+          "label": "Recommendations only"
+        }
+      ]
+    },
+    {
+      "id": "easy-draft",
+      "mode": "easy",
+      "source": "solutions/omnichannel-engagement/screenshots/assisted/05-confirm-draft.jpg",
+      "status": "reshoot_required",
+      "reason": "The Agents list does not visibly contain Omnichannel Engagement Pilot, so the target Draft identity cannot be verified.",
+      "draft": true
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "step": 1,
+      "source": "solutions/omnichannel-engagement/screenshots/manual/01-create-blank-agent.jpg",
+      "status": "reshoot_required",
+      "reason": "The frame is a blank loading screen with only a spinner; no blank-agent workspace or other positive target-state anchor is visible."
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "step": 2,
+      "source": "solutions/omnichannel-engagement/screenshots/manual/02-name-agent.jpg",
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Omnichannel Engagement Manual is visible in the agent name field"
+      ],
+      "boxes": [
+        {
+          "x": 166,
+          "y": 102,
+          "width": 814,
+          "height": 47,
+          "label": "Manual agent name"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "step": 3,
+      "source": "solutions/omnichannel-engagement/screenshots/manual/03-enter-instructions.jpg",
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Aggregate-only, consent-aware instruction policy with prohibited side effects",
+        "Locked Preview evidence anchors for OCE-01 through OCE-04"
+      ],
+      "boxes": [
+        {
+          "x": 82,
+          "y": 204,
+          "width": 895,
+          "height": 190,
+          "label": "Reviewed instruction policy"
+        },
+        {
+          "x": 82,
+          "y": 414,
+          "width": 895,
+          "height": 418,
+          "label": "Locked Preview anchors"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "step": 4,
+      "source": "solutions/omnichannel-engagement/screenshots/manual/04-save-instructions.jpg",
+      "status": "reshoot_required",
+      "reason": "The instruction text is visible, but the frame contains no saved-state confirmation such as the No unsaved changes tooltip; it does not positively prove the save action."
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "step": 5,
+      "source": "solutions/omnichannel-engagement/screenshots/manual/05-remove-web-search.jpg",
+      "status": "reshoot_required",
+      "reason": "The default web-search chip is absent, but the frame shows no positive removal confirmation; absence alone is not visual proof of the completed action."
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "step": 6,
+      "source": "solutions/omnichannel-engagement/screenshots/manual/06-add-aibast-omnichannel-rules-and-safety.jpg",
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/06-add-aibast-omnichannel-rules-and-safety.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_omnichannel-rules-and-safety.md is visible in Knowledge"
+      ],
+      "boxes": [
+        {
+          "x": 1024,
+          "y": 298,
+          "width": 350,
+          "height": 58,
+          "label": "Rules knowledge file"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "step": 7,
+      "source": "solutions/omnichannel-engagement/screenshots/manual/07-add-aibast-omnichannel-synthetic-records.jpg",
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/07-add-aibast-omnichannel-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_omnichannel-synthetic-records.md and aibast_omnichannel-rules-and-safety.md are both visible in Knowledge"
+      ],
+      "boxes": [
+        {
+          "x": 1024,
+          "y": 298,
+          "width": 356,
+          "height": 109,
+          "label": "Two knowledge files"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "step": 8,
+      "source": "solutions/omnichannel-engagement/screenshots/manual/08-add-campaign-attribution.jpg",
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/08-add-campaign-attribution.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "synthetic-campaign-attribution-review is visible in Skills"
+      ],
+      "boxes": [
+        {
+          "x": 1026,
+          "y": 183,
+          "width": 326,
+          "height": 48,
+          "label": "Attribution skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "step": 9,
+      "source": "solutions/omnichannel-engagement/screenshots/manual/09-add-channel-performance.jpg",
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/09-add-channel-performance.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aggregate-channel-performance-review is visible alongside synthetic-campaign-attribution-review"
+      ],
+      "boxes": [
+        {
+          "x": 1026,
+          "y": 183,
+          "width": 332,
+          "height": 86,
+          "label": "Two configured skills"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "step": 10,
+      "source": "solutions/omnichannel-engagement/screenshots/manual/10-add-engagement-optimization.jpg",
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/10-add-engagement-optimization.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "consent-aware-engagement-options is visible with the two previously configured skills"
+      ],
+      "boxes": [
+        {
+          "x": 1026,
+          "y": 183,
+          "width": 334,
+          "height": 133,
+          "label": "Three configured skills"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "step": 11,
+      "source": "solutions/omnichannel-engagement/screenshots/manual/11-add-journey-analysis.jpg",
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/11-add-journey-analysis.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "privacy-safe-journey-friction-analysis is visible with all four configured skills"
+      ],
+      "boxes": [
+        {
+          "x": 1024,
+          "y": 183,
+          "width": 340,
+          "height": 175,
+          "label": "Four configured skills"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "step": 12,
+      "source": "solutions/omnichannel-engagement/screenshots/manual/12-review-inventory.jpg",
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/12-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Save tooltip states No unsaved changes",
+        "Claude Sonnet 4.6",
+        "Four configured skills",
+        "Two exact knowledge filenames"
+      ],
+      "boxes": [
+        {
+          "x": 1048,
+          "y": 48,
+          "width": 198,
+          "height": 50,
+          "label": "Saved state"
+        },
+        {
+          "x": 1238,
+          "y": 86,
+          "width": 158,
+          "height": 42,
+          "label": "Model"
+        },
+        {
+          "x": 1024,
+          "y": 184,
+          "width": 342,
+          "height": 166,
+          "label": "Four skills"
+        },
+        {
+          "x": 1024,
+          "y": 474,
+          "width": 342,
+          "height": 83,
+          "label": "Two knowledge files"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "step": 13,
+      "source": "solutions/omnichannel-engagement/screenshots/manual/13-open-preview.jpg",
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview is selected",
+        "New chat is visible",
+        "Omnichannel Engagement Manual greeting is visible"
+      ],
+      "boxes": [
+        {
+          "x": 638,
+          "y": 10,
+          "width": 101,
+          "height": 44,
+          "label": "Preview selected"
+        },
+        {
+          "x": 836,
+          "y": 91,
+          "width": 101,
+          "height": 34,
+          "label": "New chat"
+        },
+        {
+          "x": 260,
+          "y": 145,
+          "width": 472,
+          "height": 83,
+          "label": "Manual agent greeting"
+        }
+      ]
+    },
+    {
+      "id": "hard-oce-01",
+      "mode": "hard",
+      "case_id": "OCE-01",
+      "step": 14,
+      "source": "solutions/omnichannel-engagement/screenshots/manual/14-oce-01.jpg",
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/14-oce-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Fixed channel table includes Mobile App 112.7x ROAS, Web Organic 106.7x ROAS, and the $12,957,500 total",
+        "Channel Highlights identifies the top performers by ROAS"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact Prepared for, Synthetic Channel Performance, and no identity stitching markers are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 126,
+          "width": 934,
+          "height": 341,
+          "label": "Synthetic channel table"
+        },
+        {
+          "x": 288,
+          "y": 523,
+          "width": 936,
+          "height": 142,
+          "label": "Channel highlights"
+        }
+      ]
+    },
+    {
+      "id": "hard-oce-02",
+      "mode": "hard",
+      "case_id": "OCE-02",
+      "step": 15,
+      "source": "solutions/omnichannel-engagement/screenshots/manual/15-oce-02.jpg",
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/15-oce-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Journey Optimization Opportunities — Service-Review Next Steps",
+        "Synthetic aggregate boundary, no individual journey reconstruction, and human-review requirement"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact Prepared for and Aggregate Customer Journey Analysis markers are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 228,
+          "width": 936,
+          "height": 258,
+          "label": "Journey next steps"
+        },
+        {
+          "x": 287,
+          "y": 500,
+          "width": 936,
+          "height": 151,
+          "label": "Privacy and review boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-oce-03",
+      "mode": "hard",
+      "case_id": "OCE-03",
+      "step": 16,
+      "source": "solutions/omnichannel-engagement/screenshots/manual/16-oce-03.jpg",
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/16-oce-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Proposed Consent-Aware Experiments",
+        "Frequency caps and explicit consent gates are visible for both experiments"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact Prepared for and Draft Engagement Optimization Report markers are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 184,
+          "width": 939,
+          "height": 260,
+          "label": "Consented app experiment"
+        },
+        {
+          "x": 287,
+          "y": 464,
+          "width": 939,
+          "height": 213,
+          "label": "Checkout frequency cap"
+        }
+      ]
+    },
+    {
+      "id": "hard-oce-04",
+      "mode": "hard",
+      "case_id": "OCE-04",
+      "step": 17,
+      "source": "solutions/omnichannel-engagement/screenshots/manual/17-oce-04.jpg",
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/17-oce-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Key Observations explicitly says Attribution, Not Causation",
+        "Attribution Limitations visibly states No causality established and No identity stitching"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Synthetic Campaign Attribution Report, Overall Campaign ROI, and Recommendations only markers are outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 238,
+          "width": 940,
+          "height": 303,
+          "label": "Attribution observations"
+        },
+        {
+          "x": 286,
+          "y": 555,
+          "width": 940,
+          "height": 126,
+          "label": "Attribution limitations"
+        }
+      ]
+    },
+    {
+      "id": "hard-draft",
+      "mode": "hard",
+      "step": 18,
+      "source": "solutions/omnichannel-engagement/screenshots/manual/18-confirm-draft.jpg",
+      "annotated": "solutions/omnichannel-engagement/screenshots/manual/annotated/18-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Omnichannel Engagement Manual",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 104,
+          "y": 247,
+          "width": 660,
+          "height": 55,
+          "label": "Target agent remains Draft"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy OCE-01 with the complete Continuity Note column visible and every row ending at a natural sentence boundary.",
+      "Easy Draft gate filtered to Omnichannel Engagement Pilot with the target row and Draft state visible.",
+      "Hard step 1 after the blank agent workspace finishes loading.",
+      "Hard step 4 with the Save tooltip visibly stating No unsaved changes.",
+      "Hard step 5 with a positive product confirmation that default web search was removed."
+    ],
+    "new_learn_step_captures": [
+      "Brainstem skill attached in VS Code Copilot Chat.",
+      "Copilot-only skill attached in VS Code Copilot Chat.",
+      "Brainstem local 4/4 verdict.",
+      "Copilot-only local 4/4 verdict.",
+      "Brainstem deploy response with Draft inventory.",
+      "Copilot-only deploy response with Draft inventory.",
+      "Brainstem final complete verdict.",
+      "Copilot-only final complete verdict."
+    ]
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:omnichannel-engagement",
+    "reviewed_at": "2026-08-10T01:05:01Z",
+    "method": "GPT-5.6 Sol inspected the real assisted source frame, its browserfilm contact sheet, and the generated learner pages, then ran the fail-closed base and strict visual evidence checks.",
+    "notes": "The clipped easy OCE-01 browser frame is demoted and withheld without invented repairs. The remaining 18 reusable captures stay case-bound and annotated; OCE-01 remains covered by the complete hard-mode capture and deterministic machine evidence."
+  }
+}

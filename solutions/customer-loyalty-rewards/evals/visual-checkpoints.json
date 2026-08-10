@@ -1,0 +1,416 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/customer-loyalty-rewards",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker or refusal.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 23,
+    "reusable": 14,
+    "reshoot_required": 9
+  },
+  "captures": [
+    {
+      "id": "easy-clr-01",
+      "mode": "easy",
+      "source": "solutions/customer-loyalty-rewards/screenshots/assisted/01-clr-01.jpg",
+      "status": "reusable",
+      "case_id": "CLR-01",
+      "visible_anchors": [
+        "Governance Boundary",
+        "outside the scope of this agent",
+        "synthetic examples for directorial review"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 235,
+          "width": 950,
+          "height": 345,
+          "label": "Complete governance boundary"
+        }
+      ],
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/01-clr-01.png"
+    },
+    {
+      "id": "easy-clr-02",
+      "mode": "easy",
+      "source": "solutions/customer-loyalty-rewards/screenshots/assisted/02-clr-02.jpg",
+      "status": "reusable",
+      "case_id": "CLR-02",
+      "visible_anchors": [
+        "Balance Breakdown",
+        "Gold Tier Perks (Informational)",
+        "No ledger entry was created, modified, or deleted"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 130,
+          "width": 950,
+          "height": 470,
+          "label": "Complete balance and safeguards"
+        }
+      ],
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/02-clr-02.png"
+    },
+    {
+      "id": "easy-clr-03",
+      "mode": "easy",
+      "source": "solutions/customer-loyalty-rewards/screenshots/assisted/03-clr-03.jpg",
+      "status": "reusable",
+      "case_id": "CLR-03",
+      "visible_anchors": [
+        "Policy questions for human review before any action",
+        "No points, tier, offer, reward, redemption, or purchase has been issued or changed"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 310,
+          "width": 950,
+          "height": 275,
+          "label": "Complete review-only boundary"
+        }
+      ],
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/03-clr-03.png"
+    },
+    {
+      "id": "easy-clr-04",
+      "mode": "easy",
+      "source": "solutions/customer-loyalty-rewards/screenshots/assisted/04-clr-04.jpg",
+      "status": "reusable",
+      "case_id": "CLR-04",
+      "visible_anchors": [
+        "Structural Observations & Tradeoffs",
+        "Multiplier Progression",
+        "Spend Thresholds & Gap Widths",
+        "Perk Stacking"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 300,
+          "width": 950,
+          "height": 390,
+          "label": "Complete tier tradeoff analysis"
+        }
+      ],
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/04-clr-04.png"
+    },
+    {
+      "id": "easy-draft",
+      "mode": "easy",
+      "source": "solutions/customer-loyalty-rewards/screenshots/assisted/05-confirm-draft.jpg",
+      "status": "reshoot_required",
+      "reason": "The target Customer Loyalty Pilot is not visible in the captured agent list, so the frame cannot honestly prove its Draft state.",
+      "draft": true
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "step": 1,
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/01-create-blank-agent.jpg",
+      "status": "reshoot_required",
+      "reason": "The frame is a mostly blank loading state and does not show a completed blank-agent workspace."
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "step": 2,
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/02-name-agent.jpg",
+      "status": "reusable",
+      "visible_anchors": [
+        "Customer Loyalty Manual",
+        "Untitled Agent"
+      ],
+      "boxes": [
+        {
+          "x": 165,
+          "y": 100,
+          "width": 820,
+          "height": 55,
+          "label": "Complete agent name entry"
+        }
+      ],
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/02-name-agent.png"
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "step": 3,
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/03-enter-instructions.jpg",
+      "status": "reusable",
+      "visible_anchors": [
+        "Use only the uploaded anonymous synthetic loyalty records",
+        "Locked Preview evidence anchors"
+      ],
+      "boxes": [
+        {
+          "x": 80,
+          "y": 270,
+          "width": 900,
+          "height": 550,
+          "label": "Reviewed instructions and evidence anchors"
+        }
+      ],
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/03-enter-instructions.png"
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "step": 4,
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/04-save-instructions.jpg",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "loyalty-tier-structure-analysis",
+        "aibast_loyalty-rewards-synthetic-records.md",
+        "aibast_loyalty-rewards-rules-and-safety.md"
+      ],
+      "boxes": [
+        {
+          "x": 1015,
+          "y": 70,
+          "width": 395,
+          "height": 635,
+          "label": "Saved model, skills, and knowledge"
+        }
+      ],
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/04-save-instructions.png"
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "step": 5,
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/05-remove-web-search.jpg",
+      "status": "reshoot_required",
+      "reason": "Duplicate visual evidence; retained capture hard-step-04."
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "step": 6,
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/06-add-aibast-loyalty-rewards-rules-and-safety.jpg",
+      "status": "reshoot_required",
+      "reason": "Duplicate visual evidence; retained capture hard-step-04."
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "step": 7,
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/07-add-aibast-loyalty-rewards-synthetic-records.jpg",
+      "status": "reshoot_required",
+      "reason": "Duplicate visual evidence; retained capture hard-step-04."
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "step": 8,
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/08-add-loyalty-dashboard.jpg",
+      "status": "reshoot_required",
+      "reason": "Duplicate visual evidence; retained capture hard-step-04."
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "step": 9,
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/09-add-points-summary.jpg",
+      "status": "reshoot_required",
+      "reason": "Duplicate visual evidence; retained capture hard-step-04."
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "step": 10,
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/10-add-reward-recommendations.jpg",
+      "status": "reshoot_required",
+      "reason": "Duplicate visual evidence; retained capture hard-step-04."
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "step": 11,
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/11-add-tier-analysis.jpg",
+      "status": "reshoot_required",
+      "reason": "Duplicate visual evidence; retained capture hard-step-04."
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "step": 12,
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/12-review-inventory.jpg",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "loyalty-tier-structure-analysis",
+        "informational-points-summary",
+        "review-only-reward-options",
+        "synthetic-loyalty-program-health"
+      ],
+      "boxes": [
+        {
+          "x": 1015,
+          "y": 70,
+          "width": 395,
+          "height": 635,
+          "label": "Complete reviewed component inventory"
+        }
+      ],
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/12-review-inventory.png"
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "step": 13,
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/13-open-preview.jpg",
+      "status": "reusable",
+      "visible_anchors": [
+        "Customer Loyalty Manual",
+        "How can I help you today?",
+        "New chat"
+      ],
+      "boxes": [
+        {
+          "x": 255,
+          "y": 140,
+          "width": 980,
+          "height": 115,
+          "label": "Fresh Preview conversation"
+        }
+      ],
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/13-open-preview.png"
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "step": 14,
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/14-clr-01.jpg",
+      "status": "reusable",
+      "case_id": "CLR-01",
+      "visible_anchors": [
+        "Governance Boundary",
+        "Prohibited Action",
+        "Authorized Workflow Required",
+        "synthetic reference data only"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 145,
+          "width": 950,
+          "height": 420,
+          "label": "Complete governance boundary"
+        }
+      ],
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/14-clr-01.png"
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "step": 15,
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/15-clr-02.jpg",
+      "status": "reusable",
+      "case_id": "CLR-02",
+      "visible_anchors": [
+        "Path to Platinum",
+        "$2,600 more",
+        "No action was taken"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 375,
+          "width": 950,
+          "height": 210,
+          "label": "Complete tier path and no-action boundary"
+        }
+      ],
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/15-clr-02.png"
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "step": 16,
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/16-clr-03.jpg",
+      "status": "reusable",
+      "case_id": "CLR-03",
+      "visible_anchors": [
+        "Policy questions to consider before any campaign proceeds",
+        "authorized human review and approval"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 360,
+          "width": 950,
+          "height": 230,
+          "label": "Complete campaign review boundary"
+        }
+      ],
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/16-clr-03.png"
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "step": 17,
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/17-clr-04.jpg",
+      "status": "reusable",
+      "case_id": "CLR-04",
+      "visible_anchors": [
+        "Structural Observations",
+        "Dimension",
+        "Finding",
+        "Governance boundary confirmed"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 150,
+          "width": 950,
+          "height": 95,
+          "label": "Complete tier distribution finding"
+        },
+        {
+          "x": 285,
+          "y": 475,
+          "width": 950,
+          "height": 105,
+          "label": "Complete governance boundary"
+        }
+      ],
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/17-clr-04.png"
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "step": 18,
+      "source": "solutions/customer-loyalty-rewards/screenshots/manual/18-confirm-draft.jpg",
+      "status": "reusable",
+      "visible_anchors": [
+        "Customer Loyalty Manual",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 105,
+          "y": 245,
+          "width": 635,
+          "height": 55,
+          "label": "Customer Loyalty Manual remains Draft"
+        }
+      ],
+      "annotated": "solutions/customer-loyalty-rewards/screenshots/annotated/18-confirm-draft.png"
+    }
+  ],
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:customer-loyalty-rewards",
+    "reviewed_at": "2026-08-09T20:57:29.318-04:00",
+    "method": "Reviewed every learner-displayed assisted and manual frame at full size, replacing fragment-level boxes with complete contextual sections and demoting captures that cannot honestly prove their claimed state.",
+    "notes": "All four CLR cases retain context-rich reusable evidence. The blank hard-step-01 loading frame and the easy Draft frame that omits Customer Loyalty Pilot require reshoot; hard-step-18 remains the honest Draft proof."
+  }
+}

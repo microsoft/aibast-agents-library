@@ -27,11 +27,83 @@
       "status": "ready"
     },
     {
+      "id": "copilot-studio-solution",
+      "label": "Importable Copilot Studio solution",
+      "path": "solutions/product-feedback-synthesizer/exports/product-feedback-synthesizer-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/exports/product-feedback-synthesizer-copilot-studio-solution.zip",
+      "use": "Unmanaged solution ZIP for manual import; the agent remains unpublished",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-deployment-settings",
+      "label": "Copilot Studio deployment settings",
+      "path": "solutions/product-feedback-synthesizer/exports/product-feedback-synthesizer-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/exports/product-feedback-synthesizer-deployment-settings.json",
+      "use": "Connection-reference, environment-variable, and agent import settings",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-export-metadata",
+      "label": "Copilot Studio solution export metadata",
+      "path": "solutions/product-feedback-synthesizer/exports/product-feedback-synthesizer-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/exports/product-feedback-synthesizer-solution-export.json",
+      "use": "Export identity, integrity hash, source environment, and import caveats",
+      "status": "ready"
+    },
+    {
       "id": "field-guide",
       "label": "Customer field guide",
+      "path": "solutions/product-feedback-synthesizer/field-guide.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/field-guide.html",
+      "use": "Styled facilitation, evidence boundaries, gates, and recovery",
+      "status": "ready"
+    },
+    {
+      "id": "field-guide-source",
+      "label": "Field guide source",
       "path": "solutions/product-feedback-synthesizer/FIELD-GUIDE.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/FIELD-GUIDE.md",
-      "use": "Facilitation, evidence boundaries, gates, and recovery",
+      "use": "Markdown source retained for audit and export",
+      "status": "ready"
+    },
+    {
+      "id": "easy-personless-guide",
+      "label": "Personless Easy-mode guide",
+      "path": "solutions/product-feedback-synthesizer/EASY-MODE-PERSONLESS.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/EASY-MODE-PERSONLESS.md",
+      "use": "Brainstem lane skill attachment, two-message workshop, and engine loop",
+      "status": "ready"
+    },
+    {
+      "id": "easy-copilot-chat-prompts",
+      "label": "Copilot-only Easy-mode comparison",
+      "path": "solutions/product-feedback-synthesizer/EASY-MODE-COPILOT-CHAT.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/EASY-MODE-COPILOT-CHAT.md",
+      "use": "Copilot-only lane skill attachment and the same two workshop messages",
+      "status": "ready"
+    },
+    {
+      "id": "easy-mode-brainstem-skill",
+      "label": "Brainstem Easy Mode skill",
+      "path": "skills/aibast-easy-mode-brainstem/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-brainstem/SKILL.md",
+      "use": "Download-and-drag harness that defaults workshop execution to Brainstem",
+      "status": "ready"
+    },
+    {
+      "id": "easy-mode-copilot-skill",
+      "label": "Copilot-only Easy Mode skill",
+      "path": "skills/aibast-easy-mode-copilot/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-copilot/SKILL.md",
+      "use": "Download-and-drag harness that runs the workshop directly in GitHub Copilot",
+      "status": "ready"
+    },
+    {
+      "id": "generic-workshop-agent",
+      "label": "Generic AIBAST Workshop agent",
+      "path": "agents/@aibast-agents-library/templates/workshop_agent.py",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/workshop_agent.py",
+      "use": "Registry-driven Brainstem engine shared by every packaged solution",
       "status": "ready"
     },
     {
@@ -179,6 +251,14 @@
       "status": "ready"
     },
     {
+      "id": "easy-evidence-dataverse-draft-evidence",
+      "label": "Dataverse Draft Evidence",
+      "path": "solutions/product-feedback-synthesizer/evals/dataverse-draft-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/evals/dataverse-draft-evidence.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
       "id": "manual-evidence",
       "label": "Manual build evidence",
       "path": "solutions/product-feedback-synthesizer/evals/manual-build-evidence.json",
@@ -208,6 +288,150 @@
       "path": "solutions/product-feedback-synthesizer/evals/transcripts.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/evals/transcripts.json",
       "use": "Canonical source-agent acceptance evidence",
+      "status": "ready"
+    },
+    {
+      "id": "easy-evidence-visual-checkpoints",
+      "label": "Visual Checkpoints",
+      "path": "solutions/product-feedback-synthesizer/evals/visual-checkpoints.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/evals/visual-checkpoints.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-pfs-01",
+      "label": "Annotated visual checkpoint: easy-pfs-01",
+      "path": "solutions/product-feedback-synthesizer/screenshots/assisted/annotated/01-pfs-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/screenshots/assisted/annotated/01-pfs-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-pfs-02",
+      "label": "Annotated visual checkpoint: easy-pfs-02",
+      "path": "solutions/product-feedback-synthesizer/screenshots/assisted/annotated/02-pfs-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/screenshots/assisted/annotated/02-pfs-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-pfs-03",
+      "label": "Annotated visual checkpoint: easy-pfs-03",
+      "path": "solutions/product-feedback-synthesizer/screenshots/assisted/annotated/03-pfs-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/screenshots/assisted/annotated/03-pfs-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-04-pfs-04",
+      "label": "Annotated visual checkpoint: easy-pfs-04",
+      "path": "solutions/product-feedback-synthesizer/screenshots/assisted/annotated/04-pfs-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/screenshots/assisted/annotated/04-pfs-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-create-blank-agent",
+      "label": "Annotated visual checkpoint: hard-step-01",
+      "path": "solutions/product-feedback-synthesizer/screenshots/manual/annotated/01-create-blank-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/screenshots/manual/annotated/01-create-blank-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-name-agent",
+      "label": "Annotated visual checkpoint: hard-step-02",
+      "path": "solutions/product-feedback-synthesizer/screenshots/manual/annotated/02-name-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/screenshots/manual/annotated/02-name-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-enter-instructions",
+      "label": "Annotated visual checkpoint: hard-step-03",
+      "path": "solutions/product-feedback-synthesizer/screenshots/manual/annotated/03-enter-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/screenshots/manual/annotated/03-enter-instructions.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-06-add-aibast-product-feedback-synthesizer-rules-and-guardrails",
+      "label": "Annotated visual checkpoint: hard-step-06",
+      "path": "solutions/product-feedback-synthesizer/screenshots/manual/annotated/06-add-aibast-product-feedback-synthesizer-rules-and-guardrails.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/screenshots/manual/annotated/06-add-aibast-product-feedback-synthesizer-rules-and-guardrails.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-08-add-aibast-feature-requests-02",
+      "label": "Annotated visual checkpoint: hard-step-08",
+      "path": "solutions/product-feedback-synthesizer/screenshots/manual/annotated/08-add-aibast-feature-requests-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/screenshots/manual/annotated/08-add-aibast-feature-requests-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-09-add-aibast-feedback-summary-01",
+      "label": "Annotated visual checkpoint: hard-step-09",
+      "path": "solutions/product-feedback-synthesizer/screenshots/manual/annotated/09-add-aibast-feedback-summary-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/screenshots/manual/annotated/09-add-aibast-feedback-summary-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-10-add-aibast-roadmap-impact-04",
+      "label": "Annotated visual checkpoint: hard-step-10",
+      "path": "solutions/product-feedback-synthesizer/screenshots/manual/annotated/10-add-aibast-roadmap-impact-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/screenshots/manual/annotated/10-add-aibast-roadmap-impact-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-11-add-aibast-sentiment-analysis-03",
+      "label": "Annotated visual checkpoint: hard-step-11",
+      "path": "solutions/product-feedback-synthesizer/screenshots/manual/annotated/11-add-aibast-sentiment-analysis-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/screenshots/manual/annotated/11-add-aibast-sentiment-analysis-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-12-review-inventory",
+      "label": "Annotated visual checkpoint: hard-step-12",
+      "path": "solutions/product-feedback-synthesizer/screenshots/manual/annotated/12-review-inventory.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/screenshots/manual/annotated/12-review-inventory.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-13-open-preview",
+      "label": "Annotated visual checkpoint: hard-step-13",
+      "path": "solutions/product-feedback-synthesizer/screenshots/manual/annotated/13-open-preview.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/screenshots/manual/annotated/13-open-preview.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-14-pfs-01",
+      "label": "Annotated visual checkpoint: hard-pfs-01",
+      "path": "solutions/product-feedback-synthesizer/screenshots/manual/annotated/14-pfs-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/screenshots/manual/annotated/14-pfs-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-15-pfs-02",
+      "label": "Annotated visual checkpoint: hard-pfs-02",
+      "path": "solutions/product-feedback-synthesizer/screenshots/manual/annotated/15-pfs-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/screenshots/manual/annotated/15-pfs-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-17-pfs-04",
+      "label": "Annotated visual checkpoint: hard-pfs-04",
+      "path": "solutions/product-feedback-synthesizer/screenshots/manual/annotated/17-pfs-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/screenshots/manual/annotated/17-pfs-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
@@ -443,6 +667,22 @@
       "status": "ready"
     },
     {
+      "id": "workshop-settings",
+      "label": "Global workshop settings",
+      "path": "solutions/_shared/workshop-settings.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/_shared/workshop-settings.html",
+      "use": "Site-wide persisted Easy-mode harness preference",
+      "status": "ready"
+    },
+    {
+      "id": "evidence-report",
+      "label": "Styled evidence report",
+      "path": "solutions/product-feedback-synthesizer/evidence-report.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/evidence-report.html",
+      "use": "Learner-safe HTML summary of deterministic and visual evidence",
+      "status": "ready"
+    },
+    {
       "id": "quest",
       "label": "Guided field quest",
       "path": "solutions/product-feedback-synthesizer/quest.html",
@@ -490,5 +730,31 @@
       "use": "Copilot-assisted evidence inventory",
       "status": "ready"
     }
-  ]
+  ],
+  "copilot_studio_solution": {
+    "label": "Importable Product Feedback Synthesizer Agent Copilot Studio solution",
+    "status": "exported",
+    "solution_unique_name": "aibast_ProductFeedbackSynthesizerP",
+    "zip": {
+      "path": "solutions/product-feedback-synthesizer/exports/product-feedback-synthesizer-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/exports/product-feedback-synthesizer-copilot-studio-solution.zip",
+      "sha256": "745a8244b7eadf27ccc27250c7fc739f7b55238808b661e423916ce21d683cd2",
+      "bytes": 4193
+    },
+    "deployment_settings": {
+      "path": "solutions/product-feedback-synthesizer/exports/product-feedback-synthesizer-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/exports/product-feedback-synthesizer-deployment-settings.json"
+    },
+    "metadata": {
+      "path": "solutions/product-feedback-synthesizer/exports/product-feedback-synthesizer-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-feedback-synthesizer/exports/product-feedback-synthesizer-solution-export.json"
+    },
+    "managed": false,
+    "published": false,
+    "import_caveats": [
+      "Import as an unmanaged solution for manual review.",
+      "Map connection references and environment variables before enabling integrations.",
+      "The exported agent remains unpublished unless the target administrator explicitly publishes it."
+    ]
+  }
 }

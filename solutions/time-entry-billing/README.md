@@ -25,15 +25,24 @@ accounting system, contacts clients, or sends invoices.
 
 | Surface | Location |
 | --- | --- |
-| Customer field guide | `solutions/time-entry-billing/FIELD-GUIDE.md` |
+| Customer field guide | `solutions/time-entry-billing/field-guide.html` |
+| Visual evidence audit | `solutions/time-entry-billing/VISUAL-EVIDENCE-AUDIT.md` |
+| Evidence report | `solutions/time-entry-billing/evidence-report.html` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/time-entry-billing/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/time-entry-billing/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Hard quest | `solutions/time-entry-billing/quest.html` |
 | Literal browser tutorial | `solutions/time-entry-billing/manual-tutorial.html` |
 | Raw export manifest | `solutions/time-entry-billing/export-manifest.json` |
 | Source bundle | `solutions/time-entry-billing/exports/time-entry-billing-source.zip` |
 | Manual evidence | `solutions/time-entry-billing/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/time-entry-billing/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/time-entry-billing/exports/time-entry-billing-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/time-entry-billing/exports/time-entry-billing-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/time-entry-billing/exports/time-entry-billing-solution-export.json` |
 
-**Scaffold status:** 64 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 91 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

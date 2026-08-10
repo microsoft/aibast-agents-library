@@ -30,15 +30,23 @@ The local agent uses fictional records and produces decision support only. It do
 
 | Surface | Location |
 | --- | --- |
-| Customer field guide | `solutions/asset-maintenance-forecast/FIELD-GUIDE.md` |
+| Customer field guide | `solutions/asset-maintenance-forecast/field-guide.html` |
+| Evidence report | `solutions/asset-maintenance-forecast/evidence-report.html` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/asset-maintenance-forecast/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/asset-maintenance-forecast/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Hard quest | `solutions/asset-maintenance-forecast/quest.html` |
 | Literal browser tutorial | `solutions/asset-maintenance-forecast/manual-tutorial.html` |
 | Raw export manifest | `solutions/asset-maintenance-forecast/export-manifest.json` |
 | Source bundle | `solutions/asset-maintenance-forecast/exports/asset-maintenance-forecast-source.zip` |
 | Manual evidence | `solutions/asset-maintenance-forecast/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/asset-maintenance-forecast/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/asset-maintenance-forecast/exports/asset-maintenance-forecast-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/asset-maintenance-forecast/exports/asset-maintenance-forecast-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/asset-maintenance-forecast/exports/asset-maintenance-forecast-solution-export.json` |
 
-**Scaffold status:** 61 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 93 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

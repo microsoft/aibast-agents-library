@@ -1,198 +1,1210 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+(() => {
+    const param = new URLSearchParams(window.location.search).get("scoutTheme");
+    const theme =
+      param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="data:," rel="icon">
 <title>Library Metrics — AIBAST Agents Library</title>
-<meta name="description" content="Public download and catalog metrics for the AIBAST Agents Library. Every number sourced from a public API.">
+<meta name="description" content="AIBAST agent downloads, Discussion upvotes, signed-in acquisitions, workshop adoption, and verified achievements.">
 <meta property="og:title" content="AIBAST Library Metrics">
-<meta property="og:description" content="Downloads, installer fetches, catalog composition. All public data.">
+<meta property="og:description" content="AIBAST agent distribution, Discussion signals, workshop adoption, and verified achievements.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://microsoft.github.io/aibast-agents-library/metrics.html">
 <style>
 :root {
-  --bg: #0d1117;
-  --surface: #161b22;
-  --surface2: #21262d;
-  --border: #30363d;
-  --border-hover: #484f58;
-  --text: #e6edf3;
-  --text-dim: #8b949e;
-  --text-muted: #656d76;
-  --accent: #58a6ff;
-  --purple: #bc8cff;
-  --green: #3fb950;
-  --orange: #d29922;
-  --red: #f85149;
-  --radius: 10px;
+  --cp-bg: #f7f4ef;
+  --cp-bg-elevated: #fcfbf8;
+  --cp-surface: #ffffff;
+  --cp-surface-soft: #f5f5f5;
+  --cp-border: #dedede;
+  --cp-border-strong: #919191;
+  --cp-text: #242424;
+  --cp-text-muted: #5c5c5c;
+  --cp-text-soft: #6f6f6f;
+  --cp-accent: #b11f4b;
+  --cp-accent-hover: #9a1a41;
+  --cp-accent-soft: rgba(177, 31, 75, 0.08);
+  --cp-accent-fg: #ffffff;
+  --cp-success: #16a34a;
+  --cp-danger: #dc2626;
+  --cp-warning: #f59e0b;
+  --cp-link: #0078d4;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+  --cp-overlay: rgba(255, 255, 255, 0.8);
+  --cp-panel: rgba(255, 255, 255, 0.86);
+  --cp-panel-strong: rgba(255, 255, 255, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.55);
+  --cp-highlight: rgba(177, 31, 75, 0.12);
 }
-* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html[data-theme="dark"] {
+  --cp-bg: #3d3b3a;
+  --cp-bg-elevated: #343231;
+  --cp-surface: #292929;
+  --cp-surface-soft: #2e2e2e;
+  --cp-border: #474747;
+  --cp-border-strong: #5f5f5f;
+  --cp-text: #dedede;
+  --cp-text-muted: #919191;
+  --cp-text-soft: #b0b0b0;
+  --cp-accent: #fd8ea1;
+  --cp-accent-hover: #fb7b91;
+  --cp-accent-soft: rgba(253, 142, 161, 0.14);
+  --cp-accent-fg: #1a1a1a;
+  --cp-success: #4ade80;
+  --cp-danger: #f87171;
+  --cp-warning: #fbbf24;
+  --cp-link: #4da6ff;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+  --cp-overlay: rgba(41, 41, 41, 0.88);
+  --cp-panel: rgba(41, 41, 41, 0.72);
+  --cp-panel-strong: rgba(41, 41, 41, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.04);
+  --cp-highlight: rgba(253, 142, 161, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-  background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.5;
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: var(--cp-bg);
+  color: var(--cp-text);
+  font-family: "Segoe UI", Aptos, sans-serif;
+  line-height: 1.5;
 }
-a { color: var(--accent); text-decoration: none; }
-a:hover { text-decoration: underline; }
-code, .mono { font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace; }
 
-header {
-  background: var(--surface); border-bottom: 1px solid var(--border);
-  padding: 14px 32px; display: flex; align-items: center; justify-content: space-between;
-  position: sticky; top: 0; z-index: 50; gap: 16px; flex-wrap: wrap;
+button,
+input,
+select,
+textarea {
+  font: inherit;
 }
-.logo { display: flex; align-items: center; gap: 10px; font-size: 1.15rem; font-weight: 700; }
-.logo-mark {
-  background: linear-gradient(135deg, var(--accent), var(--purple));
-  color: #fff; width: 32px; height: 32px; border-radius: 8px;
-  display: flex; align-items: center; justify-content: center; font-size: .72rem; font-weight: 800;
+
+a {
+  color: var(--cp-link);
+  text-decoration-thickness: .08em;
+  text-underline-offset: .18em;
 }
-.header-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.nav-link {
-  background: var(--surface2); border: 1px solid var(--border); color: var(--text-dim);
-  padding: 6px 14px; border-radius: 6px; font-size: .78rem; font-weight: 600;
-  cursor: pointer; transition: all .15s;
+
+a:hover {
+  color: var(--cp-accent-hover);
 }
-.nav-link:hover { border-color: var(--border-hover); color: var(--text); text-decoration: none; }
-.nav-link.primary { background: linear-gradient(135deg, var(--accent), var(--purple)); color: #fff; border: none; }
 
-.container { max-width: 1180px; margin: 0 auto; padding: 32px 24px 80px; }
+code,
+.mono {
+  font-family: Consolas, monospace;
+}
 
-.page-head { margin-bottom: 28px; }
-.page-head h1 { font-size: 1.9rem; font-weight: 800; letter-spacing: -.02em; }
-.page-head p { color: var(--text-dim); margin-top: 6px; font-size: .95rem; max-width: 760px; }
-.stamp { margin-top: 12px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; font-size: .75rem; color: var(--text-muted); }
-.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); display: inline-block; }
-.spin { width: 10px; height: 10px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; display: inline-block; animation: spin .8s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
+:focus-visible {
+  outline: 3px solid var(--cp-accent);
+  outline-offset: 3px;
+}
 
-.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(178px, 1fr)); gap: 12px; margin-bottom: 14px; }
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 200;
+  padding: 9px 13px;
+  border: 1px solid var(--cp-border-strong);
+  border-radius: 6px;
+  background: var(--cp-surface);
+  color: var(--cp-text);
+  transform: translateY(-180%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--cp-border);
+  background: var(--cp-panel-strong);
+  box-shadow: var(--cp-shadow);
+  backdrop-filter: blur(18px);
+}
+
+.topbar-inner {
+  width: min(1280px, 100%);
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+  color: var(--cp-text);
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.brand:hover {
+  color: var(--cp-text);
+  text-decoration: none;
+}
+
+.brand-mark {
+  width: 34px;
+  height: 34px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--cp-accent);
+  color: var(--cp-accent-fg);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+}
+
+.topnav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.nav-link,
+.nav-button {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 11px;
+  border: 1px solid var(--cp-border);
+  border-radius: 6px;
+  background: var(--cp-surface);
+  color: var(--cp-text-muted);
+  font-size: .78rem;
+  font-weight: 650;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nav-link:hover,
+.nav-button:hover {
+  border-color: var(--cp-border-strong);
+  color: var(--cp-text);
+  text-decoration: none;
+}
+
+.nav-link[aria-current="page"] {
+  border-color: var(--cp-accent);
+  background: var(--cp-accent-soft);
+  color: var(--cp-accent);
+}
+
+.nav-primary {
+  border-color: var(--cp-accent);
+  background: var(--cp-accent);
+  color: var(--cp-accent-fg);
+}
+
+.nav-primary:hover {
+  border-color: var(--cp-accent-hover);
+  background: var(--cp-accent-hover);
+  color: var(--cp-accent-fg);
+}
+
+.nav-button:disabled {
+  cursor: wait;
+  opacity: .65;
+}
+
+.container {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  padding: 38px 24px 76px;
+}
+
+.page-head {
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  margin: 0 0 7px;
+  color: var(--cp-accent);
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.page-head h1 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 800;
+  letter-spacing: -.035em;
+  line-height: 1.08;
+}
+
+.page-head > p {
+  max-width: 820px;
+  margin: 12px 0 0;
+  color: var(--cp-text-muted);
+  font-size: 1rem;
+}
+
+.upvote-note {
+  max-width: 900px;
+  margin-top: 18px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border: 1px solid var(--cp-accent);
+  border-radius: 10px;
+  background: var(--cp-accent-soft);
+}
+
+.upvote-note p {
+  margin: 0;
+  color: var(--cp-text);
+  font-size: .88rem;
+}
+
+.upvote-action {
+  flex: 0 0 auto;
+  padding: 8px 13px;
+  border: 1px solid var(--cp-accent);
+  border-radius: 6px;
+  background: var(--cp-accent);
+  color: var(--cp-accent-fg);
+  font-size: .82rem;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.upvote-action:hover {
+  border-color: var(--cp-accent-hover);
+  background: var(--cp-accent-hover);
+  color: var(--cp-accent-fg);
+  text-decoration: none;
+}
+
+.impact-report-note {
+  max-width: 900px;
+  margin-top: 12px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border: 1px solid var(--cp-border);
+  border-radius: 10px;
+  background: var(--cp-surface);
+}
+
+.impact-report-note p {
+  margin: 0;
+  color: var(--cp-text-muted);
+  font-size: .88rem;
+}
+
+.impact-report-actions {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.impact-report-action {
+  padding: 7px 11px;
+  border: 1px solid var(--cp-border-strong);
+  border-radius: 6px;
+  background: var(--cp-surface-soft);
+  color: var(--cp-text);
+  font-size: .78rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.impact-report-action:hover {
+  border-color: var(--cp-accent);
+  color: var(--cp-accent);
+  text-decoration: none;
+}
+
+.stamp {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-wrap: wrap;
+  color: var(--cp-text-soft);
+  font-size: .76rem;
+}
+
+.stamp-dot {
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  border-radius: 50%;
+  background: var(--cp-success);
+}
+
+.spin {
+  width: 11px;
+  height: 11px;
+  display: inline-block;
+  border: 2px solid var(--cp-border);
+  border-top-color: var(--cp-accent);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
 .kpi {
-  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 16px 18px; position: relative; overflow: hidden;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  padding: 17px 18px;
+  border: 1px solid var(--cp-border);
+  border-radius: 10px;
+  background: var(--cp-surface);
+  box-shadow: var(--cp-shadow);
 }
-.kpi.hero { grid-column: span 2; background: linear-gradient(135deg, rgba(88,166,255,.10), rgba(188,140,255,.07)); border-color: #2c4a6e; }
-.kpi .label { font-size: .68rem; text-transform: uppercase; letter-spacing: .09em; color: var(--text-muted); font-weight: 700; }
-.kpi .value { font-size: 2rem; font-weight: 800; letter-spacing: -.03em; margin-top: 4px; line-height: 1.1; }
-.kpi.hero .value { font-size: 2.9rem; background: linear-gradient(135deg, var(--accent), var(--purple)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.kpi .sub { font-size: .74rem; color: var(--text-dim); margin-top: 4px; }
 
-.section { margin-top: 34px; }
-.section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
-.section-head h2 { font-size: 1.1rem; font-weight: 700; }
-.section-head .hint { font-size: .76rem; color: var(--text-muted); }
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-@media (max-width: 860px) { .grid2, .grid3 { grid-template-columns: 1fr; } .kpi.hero { grid-column: span 1; } }
+.kpi.primary {
+  grid-column: span 2;
+  border-color: var(--cp-accent);
+  background: var(--cp-accent-soft);
+}
 
-.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; }
-.chart { width: 100%; height: 190px; display: block; }
-.legend { display: flex; gap: 16px; margin-top: 10px; font-size: .74rem; color: var(--text-dim); flex-wrap: wrap; }
-.legend i { width: 9px; height: 9px; border-radius: 2px; display: inline-block; margin-right: 5px; }
+.kpi .label {
+  color: var(--cp-text-soft);
+  font-size: .69rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
 
-.tabs { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+.kpi .value {
+  margin-top: 4px;
+  color: var(--cp-text);
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -.03em;
+  line-height: 1.1;
+}
+
+.kpi.primary .value {
+  color: var(--cp-accent);
+  font-size: 3rem;
+}
+
+.kpi .sub {
+  margin-top: 6px;
+  color: var(--cp-text-muted);
+  font-size: .75rem;
+}
+
+.error-card {
+  grid-column: 1 / -1;
+  border-color: var(--cp-danger);
+  color: var(--cp-text);
+}
+
+.workshop-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.workshop-stat {
+  min-width: 0;
+  padding: 13px 14px;
+  border: 1px solid var(--cp-border);
+  border-radius: 8px;
+  background: var(--cp-surface);
+}
+
+.workshop-stat b {
+  display: block;
+  color: var(--cp-text);
+  font-size: 1.35rem;
+  line-height: 1.15;
+}
+
+.workshop-stat span {
+  color: var(--cp-text-soft);
+  font-size: .7rem;
+  font-weight: 750;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.coverage-note {
+  margin: 10px 0 0;
+  color: var(--cp-text-muted);
+  font-size: .8rem;
+  line-height: 1.6;
+}
+
+.coverage-status {
+  margin: 12px 0;
+  padding: 10px 12px;
+  border-left: 4px solid var(--cp-warning);
+  background: var(--cp-surface-soft);
+  color: var(--cp-text-muted);
+  font-size: .8rem;
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+}
+
+.achievements-card {
+  min-width: 0;
+}
+
+.achievements-card h3 {
+  margin: 0 0 5px;
+  font-size: 1rem;
+}
+
+.achievements-card .hint {
+  margin-bottom: 12px;
+}
+
+.achievements-card.wide {
+  grid-column: 1 / -1;
+}
+
+.achievements-login {
+  font-weight: 750;
+}
+
+.achievements-badges {
+  color: var(--cp-text-soft);
+  font-size: .72rem;
+}
+
+.workshop-controls {
+  margin-top: 18px;
+}
+
+.workshop-controls-label {
+  margin: 0 0 8px;
+  color: var(--cp-text-soft);
+  font-size: .76rem;
+  font-weight: 700;
+}
+
+.file-ledger-controls {
+  display: grid;
+  grid-template-columns: minmax(220px, 2fr) minmax(150px, 1fr) minmax(160px, 1fr);
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.file-ledger-controls label {
+  display: grid;
+  gap: 5px;
+  color: var(--cp-text-soft);
+  font-size: .74rem;
+  font-weight: 700;
+}
+
+.file-ledger-controls input,
+.file-ledger-controls select {
+  width: 100%;
+  min-height: 38px;
+  padding: 7px 9px;
+  border: 1px solid var(--cp-border);
+  border-radius: 6px;
+  background: var(--cp-surface);
+  color: var(--cp-text);
+}
+
+.file-ledger-status {
+  margin: 0 0 10px;
+  color: var(--cp-text-muted);
+  font-size: .8rem;
+}
+
+.pagination {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pagination-status {
+  color: var(--cp-text-soft);
+  font-size: .78rem;
+}
+
+.section {
+  margin-top: 36px;
+}
+
+.section-head {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.section-head h2 {
+  margin: 0;
+  color: var(--cp-text);
+  font-size: 1.12rem;
+  font-weight: 750;
+}
+
+.hint {
+  color: var(--cp-text-soft);
+  font-size: .77rem;
+}
+
+.grid2,
+.grid3 {
+  display: grid;
+  gap: 20px;
+}
+
+.grid2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid2 > *,
+.grid3 > * {
+  min-width: 0;
+}
+
+.card {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  padding: 19px 20px;
+  border: 1px solid var(--cp-border);
+  border-radius: 10px;
+  background: var(--cp-surface);
+  box-shadow: var(--cp-shadow);
+}
+
+.chart {
+  width: 100%;
+  height: 210px;
+  display: block;
+  font-family: "Segoe UI", Aptos, sans-serif;
+}
+
+.legend {
+  margin-top: 12px;
+  display: flex;
+  gap: 17px;
+  flex-wrap: wrap;
+  color: var(--cp-text-muted);
+  font-size: .75rem;
+}
+
+.legend-swatch {
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
+  display: inline-block;
+  border-radius: 2px;
+}
+
+.legend-clones {
+  background: var(--cp-accent);
+}
+
+.legend-views {
+  background: var(--cp-link);
+}
+
+.legend-cdn {
+  background: var(--cp-success);
+}
+
+.tabs {
+  margin-bottom: 12px;
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
 .tab {
-  background: var(--surface); border: 1px solid var(--border); color: var(--text-dim);
-  padding: 5px 12px; border-radius: 20px; font-size: .76rem; font-weight: 600; cursor: pointer;
+  padding: 6px 12px;
+  border: 1px solid var(--cp-border);
+  border-radius: 18px;
+  background: var(--cp-surface);
+  color: var(--cp-text-muted);
+  font-size: .77rem;
+  font-weight: 650;
+  cursor: pointer;
 }
-.tab:hover { border-color: var(--border-hover); color: var(--text); }
-.tab.active { background: rgba(88,166,255,.14); border-color: var(--accent); color: var(--accent); }
 
-.rank-row { display: grid; grid-template-columns: 30px 1fr auto; gap: 12px; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--surface2); }
-.rank-row:last-child { border-bottom: none; }
-.rank-n { color: var(--text-muted); font-size: .8rem; font-weight: 700; text-align: center; }
-.rank-name { font-weight: 650; font-size: .88rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-.rank-meta { font-size: .73rem; color: var(--text-muted); margin-top: 1px; }
-.rank-val { font-weight: 800; font-size: 1rem; text-align: right; }
-.rank-val small { display: block; font-size: .66rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
-.pill { font-size: .64rem; text-transform: uppercase; letter-spacing: .05em; font-weight: 700; border-radius: 4px; padding: 1px 6px; border: 1px solid rgba(63,185,80,.3); background: rgba(63,185,80,.1); color: var(--green); }
+.tab:hover {
+  border-color: var(--cp-border-strong);
+  color: var(--cp-text);
+}
 
-.bar-row { display: grid; grid-template-columns: minmax(120px, 1fr) 2fr 54px; gap: 10px; align-items: center; padding: 5px 0; font-size: .8rem; }
-.bar-label { color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.bar-track { background: var(--surface2); border-radius: 4px; height: 8px; overflow: hidden; }
-.bar-fill { background: linear-gradient(90deg, var(--accent), var(--purple)); height: 100%; border-radius: 4px; }
-.bar-num { text-align: right; font-weight: 700; font-size: .8rem; }
+.tab.active {
+  border-color: var(--cp-accent);
+  background: var(--cp-accent-soft);
+  color: var(--cp-accent);
+}
 
-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
-th { text-align: left; color: var(--text-muted); font-size: .68rem; text-transform: uppercase; letter-spacing: .07em; padding: 6px 10px 6px 0; border-bottom: 1px solid var(--border); }
-td { padding: 7px 10px 7px 0; border-bottom: 1px solid var(--surface2); color: var(--text-dim); }
-th.num, td.num { text-align: right; padding-right: 0; }
+.rank-row {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--cp-border);
+}
 
-.src-item { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--surface2); font-size: .82rem; flex-wrap: wrap; }
-.src-item:last-child { border-bottom: none; }
-.src-item b { min-width: 190px; font-weight: 650; }
-.src-item span { color: var(--text-muted); }
-.empty { color: var(--text-muted); font-size: .82rem; padding: 18px 0; text-align: center; }
+.rank-row:last-child {
+  border-bottom: 0;
+}
+
+.rank-n {
+  color: var(--cp-text-soft);
+  font-size: .8rem;
+  font-weight: 750;
+  text-align: center;
+}
+
+.rank-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: .89rem;
+  font-weight: 700;
+}
+
+.rank-meta {
+  margin-top: 2px;
+  color: var(--cp-text-soft);
+  font-size: .73rem;
+}
+
+.rank-val {
+  color: var(--cp-text);
+  font-size: 1rem;
+  font-weight: 800;
+  text-align: right;
+}
+
+.rank-val small {
+  display: block;
+  color: var(--cp-text-soft);
+  font-size: .66rem;
+  font-weight: 650;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.pill {
+  padding: 1px 6px;
+  border: 1px solid var(--cp-success);
+  border-radius: 4px;
+  background: var(--cp-surface-soft);
+  color: var(--cp-success);
+  font-size: .64rem;
+  font-weight: 750;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.bar-row {
+  padding: 6px 0;
+  display: grid;
+  grid-template-columns: minmax(120px, 1fr) minmax(90px, 2fr) 58px;
+  gap: 10px;
+  align-items: center;
+  font-size: .81rem;
+}
+
+.bar-label {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--cp-text-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bar-extra {
+  color: var(--cp-text-soft);
+}
+
+.bar-track {
+  height: 9px;
+  overflow: hidden;
+  border-radius: 5px;
+  background: var(--cp-surface-soft);
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 5px;
+  background: var(--cp-accent);
+}
+
+.bar-num {
+  color: var(--cp-text);
+  font-size: .8rem;
+  font-weight: 750;
+  text-align: right;
+}
+
+.table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  min-width: 650px;
+  border-collapse: collapse;
+  font-size: .82rem;
+}
+
+caption {
+  padding: 0 0 10px;
+  color: var(--cp-text-soft);
+  font-size: .76rem;
+  text-align: left;
+}
+
+th {
+  padding: 7px 10px 7px 0;
+  border-bottom: 1px solid var(--cp-border-strong);
+  color: var(--cp-text-soft);
+  font-size: .68rem;
+  font-weight: 750;
+  letter-spacing: .07em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+td {
+  padding: 8px 10px 8px 0;
+  border-bottom: 1px solid var(--cp-border);
+  color: var(--cp-text-muted);
+}
+
+th.num,
+td.num {
+  padding-right: 0;
+  text-align: right;
+}
+
+.src-item {
+  padding: 8px 0;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--cp-border);
+  font-size: .82rem;
+}
+
+.src-item:last-child {
+  border-bottom: 0;
+}
+
+.src-item b {
+  min-width: 190px;
+  color: var(--cp-text);
+  font-weight: 700;
+}
+
+.src-item span {
+  color: var(--cp-text-soft);
+}
+
+.empty {
+  padding: 20px 0;
+  color: var(--cp-text-soft);
+  font-size: .83rem;
+  text-align: center;
+}
+
 .callout {
-  margin-top: 14px; background: rgba(210,153,34,.08); border: 1px solid rgba(210,153,34,.35);
-  border-radius: 8px; padding: 11px 14px; font-size: .8rem; color: var(--text-dim); line-height: 1.6; max-width: 860px;
+  max-width: 900px;
+  margin-top: 14px;
+  padding: 12px 14px;
+  border: 1px solid var(--cp-warning);
+  border-radius: 8px;
+  background: var(--cp-surface);
+  color: var(--cp-text-muted);
+  font-size: .81rem;
+  line-height: 1.6;
 }
-.callout b { color: var(--orange); font-weight: 700; }
-.note { font-size: .78rem; color: var(--text-muted); line-height: 1.65; }
-footer { margin-top: 50px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: .78rem; text-align: center; }
+
+.callout b {
+  color: var(--cp-warning);
+}
+
+.note {
+  color: var(--cp-text-soft);
+  font-size: .79rem;
+  line-height: 1.65;
+}
+
+.note-first {
+  margin-top: 14px;
+}
+
+.note-follow {
+  margin-top: 10px;
+}
+
+.note-summary {
+  margin-top: 12px;
+}
+
+footer {
+  margin-top: 52px;
+  padding-top: 21px;
+  border-top: 1px solid var(--cp-border);
+  color: var(--cp-text-soft);
+  font-size: .79rem;
+  text-align: center;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 960px) {
+  .topbar-inner {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .topnav {
+    justify-content: flex-start;
+  }
+
+  .grid2,
+  .grid3,
+  .achievements-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .file-ledger-controls {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .topbar {
+    position: static;
+  }
+
+  .topbar-inner,
+  .container {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .nav-link,
+  .nav-button {
+    flex: 1 1 auto;
+  }
+
+  .upvote-note,
+  .impact-report-note {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .impact-report-actions {
+    width: 100%;
+  }
+
+  .kpi.primary {
+    grid-column: span 1;
+  }
+
+  .rank-row {
+    grid-template-columns: 26px minmax(0, 1fr);
+  }
+
+  .rank-val {
+    grid-column: 2;
+    text-align: left;
+  }
+
+  .bar-row {
+    grid-template-columns: minmax(110px, 1fr) 52px;
+  }
+
+  .bar-track {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+    transition-duration: 0s;
+  }
+}
 </style>
 </head>
 <body>
+<a class="skip-link" href="#mainContent">Skip to main content</a>
 
-<header>
-  <div class="logo"><div class="logo-mark">AIB</div> Library Metrics</div>
-  <div class="header-right">
-    <a class="nav-link" href="index.html">Home</a>
-    <a class="nav-link" href="library.html">Agent Library</a>
-    <a class="nav-link" href="docs/rapp-guide.html">Production Guide</a>
-    <button class="nav-link" id="refresh">&#8635; Refresh live</button>
-    <a class="nav-link primary" href="https://github.com/microsoft/aibast-agents-library" target="_blank" rel="noopener">GitHub</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html" aria-label="AIBAST Agents Library home">
+      <span class="brand-mark" aria-hidden="true">AIB</span>
+      <span>Library Metrics</span>
+    </a>
+    <nav class="topnav" aria-label="AIBAST resources">
+      <a class="nav-link" href="library.html">Library</a>
+      <a class="nav-link" href="docs/rapp-guide.html">Production Guide</a>
+      <a class="nav-link" href="solutions/_shared/workshop-settings.html">Workshop settings</a>
+      <a class="nav-link" href="metrics.html" aria-current="page">Metrics</a>
+      <a class="nav-link" href="https://github.com/microsoft/aibast-agents-library" target="_blank" rel="noopener">Repository</a>
+      <a class="nav-link" id="reportIssue" href="https://github.com/microsoft/aibast-agents-library/issues/new" target="_blank" rel="noopener">Report an issue</a>
+      <button class="nav-button" id="themeToggle" type="button" aria-label="Toggle color theme" aria-pressed="false" data-theme-toggle>Use dark theme</button>
+      <button class="nav-button" id="refresh" type="button" aria-label="Refresh live metrics" aria-controls="kpis stamp-mode">&#8635; Refresh live</button>
+    </nav>
   </div>
 </header>
 
-<div class="container">
-
-  <div class="page-head">
-    <h1>Public library metrics</h1>
-    <p>Every number below comes from a public, verifiable API — the GitHub traffic and releases endpoints, the jsDelivr CDN, and the catalog's own <code>registry.json</code>. No private analytics, no tracking pixel, nothing about who you are.</p>
-    <div class="stamp">
-      <span><span class="dot"></span> <span id="stamp-time">loading&hellip;</span></span>
-      <span>&middot;</span><span id="stamp-window"></span>
-      <span>&middot;</span><span id="stamp-src"></span>
-      <span>&middot;</span><span id="stamp-mode"></span>
+<main class="container" id="mainContent" tabindex="-1">
+  <section class="page-head" aria-labelledby="page-title">
+    <p class="eyebrow">AIBAST distribution, engagement, and learning impact</p>
+    <h1 id="page-title">Public library metrics</h1>
+    <p>Every number below belongs to the AIBAST library and comes from a public, verifiable API — GitHub traffic, releases, Discussions and opt-in issues, the jsDelivr CDN, and the AIBAST catalog. RAR is intentionally excluded from these counts. There is no private analytics or tracking pixel. Identity appears only in verified achievement profiles whose GitHub users explicitly opted into public display by submitting a claim.</p>
+    <div class="upvote-note">
+      <p><b>Agent Discussions provide two traceable counters.</b> A native upvote on the rating Discussion records community preference; a native upvote on the parallel acquisition Discussion records one signed-in account's declared download, copy, or install. GitHub permits one active upvote per account on each Discussion. Acquisition signals are not substituted for observable CDN or release file transfers.</p>
+      <a class="upvote-action" href="library.html">Browse agents</a>
+    </div>
+    <div class="impact-report-note">
+      <p><b>Share impact automatically.</b> Every metrics run publishes a weekly/monthly report covering each measurable download, reach, engagement, workshop, achievement, and catalog metric. Missing traffic stays marked unavailable.</p>
+      <div class="impact-report-actions">
+        <a class="impact-report-action" href="reports/impact-report.html">Open report</a>
+        <a class="impact-report-action" href="reports/impact-report.pdf">Download PDF</a>
+        <a class="impact-report-action" href="reports/impact-report-email.txt" download>Email text</a>
+      </div>
+    </div>
+    <div class="stamp" aria-label="Metrics snapshot status">
+      <span><span class="stamp-dot" aria-hidden="true"></span> <span id="stamp-time">loading&hellip;</span></span>
+      <span aria-hidden="true">&middot;</span><span id="stamp-window"></span>
+      <span aria-hidden="true">&middot;</span><span id="stamp-src"></span>
+      <span aria-hidden="true">&middot;</span>
+      <span id="stamp-mode" role="status" aria-live="polite" aria-atomic="true">Loading metrics snapshot</span>
     </div>
     <div id="traffic-gap"></div>
-  </div>
+  </section>
 
-  <div class="kpis" id="kpis"></div>
+  <section aria-label="Key library metrics">
+    <div class="kpis" id="kpis" aria-live="polite" aria-busy="true">
+      <div class="kpi">Loading metrics&hellip;</div>
+    </div>
+  </section>
 
-  <div class="section">
+  <section class="section" id="achievements-points" aria-labelledby="achievements-heading">
+    <div class="section-head">
+      <h2 id="achievements-heading">Verified workshop achievements</h2>
+      <div class="hint">verified public progress synced through opt-in GitHub issues</div>
+    </div>
+    <div class="workshop-summary" id="achievements-summary" aria-live="polite"></div>
+    <p class="coverage-status" id="achievements-coverage" role="status" aria-live="polite" aria-atomic="true">Verified achievement coverage is loading.</p>
+    <div class="card">
+      <p class="coverage-note"><b>Verification scope.</b> GitHub verification confirms authenticated issue authorship and canonical claim format only; achievement completion remains self-reported and is not independently proven.</p>
+      <p class="coverage-note"><b>Verified public achievements</b> are server-scored from submitted public GitHub progress issues. Fixed achievement values are: started 5, local proof 15, draft builder 20, preview proven 25, workshop completed 35, and hard mode completed 50, for at most 150 points per workshop. Re-syncing unions explicitly claimed achievement IDs and never duplicates points. Missing prerequisite badges are not inferred.</p>
+      <p class="coverage-note"><b>Local self-paced achievements are different.</b> Progress on <a href="achievements.html">achievements.html</a> stays local until a person deliberately submits a verification issue. Submission explicitly opts that GitHub login into the public verified profile and leaderboard. Verified achievement points are never repository stars, agent upvotes, downloads, or workshop usage events, and they are not added to those metrics. Administrators can review the <a href="docs/metrics-admin-setup.html">achievement metrics setup and privacy checklist</a>.</p>
+      <div class="achievements-grid">
+        <section class="achievements-card" aria-labelledby="achievements-leaderboard-heading">
+          <h3 id="achievements-leaderboard-heading">Public achievement leaderboard</h3>
+          <div class="hint" id="achievements-profile-hint">Profiles are public only after opt-in submission</div>
+          <div class="table-scroll">
+            <table id="achievements-leaderboard" aria-label="Verified public achievement profile leaderboard">
+              <caption>Verified public achievement profiles ranked by points</caption>
+              <thead><tr><th scope="col">GitHub login</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Hard completions</th></tr></thead>
+              <tbody><tr><td colspan="6">Loading verified achievement profiles&hellip;</td></tr></tbody>
+            </table>
+          </div>
+        </section>
+        <section class="achievements-card" aria-labelledby="achievements-workshop-heading">
+          <h3 id="achievements-workshop-heading">Workshop achievement completion</h3>
+          <div class="hint" id="achievements-workshop-hint">Canonical 51-workshop verified scope</div>
+          <div class="table-scroll">
+            <table id="achievements-workshop-table" aria-label="Verified per-workshop achievement completion">
+              <caption>Canonical workshops ranked by verified achievement points</caption>
+              <thead><tr><th scope="col">Workshop</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Hard completions</th><th class="num" scope="col">Achievement completion</th></tr></thead>
+              <tbody><tr><td colspan="7">Loading verified workshop achievements&hellip;</td></tr></tbody>
+            </table>
+          </div>
+        </section>
+        <section class="achievements-card wide" aria-labelledby="achievements-rollup-heading">
+          <h3 id="achievements-rollup-heading">Achievement rollup</h3>
+          <div class="hint" id="achievements-rollup-hint">Fixed server values and verified attainment</div>
+          <div class="table-scroll">
+            <table id="achievements-rollup-table" aria-label="Verified achievement rollup">
+              <caption>Verified claims by canonical achievement</caption>
+              <thead><tr><th scope="col">Achievement</th><th class="num" scope="col">Points each</th><th class="num" scope="col">Claims</th><th class="num" scope="col">Participants</th><th class="num" scope="col">Workshops</th><th class="num" scope="col">Attainment</th></tr></thead>
+              <tbody><tr><td colspan="6">Loading verified achievement rollups&hellip;</td></tr></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="workshop-heading">
+    <div class="section-head">
+      <h2 id="workshop-heading">Workshop adoption</h2>
+      <div class="hint" id="workshop-hint">51 catalog-advertised workshop quests</div>
+    </div>
+    <div class="workshop-summary" id="workshop-summary" aria-live="polite"></div>
+    <p class="coverage-status" id="workshop-coverage" role="status" aria-live="polite" aria-atomic="true">Workshop signal coverage is loading.</p>
+    <div class="card">
+      <p class="coverage-note"><b>Workshop usage events</b> = counted GitHub popular-path page views + jsDelivr workshop file downloads + jsDelivr source-bundle downloads + public workshop feedback reports. This is a floor and an event sum, not people, users, or unique usage. These sources use mixed measurement windows, and one person or action can create multiple events. Agent rating upvotes and signed-in acquisitions are Discussion signals shown separately and are never added to usage events.</p>
+      <p class="coverage-note">Views cover only observed GitHub top popular-path rows in the 14-day API window, not complete GitHub Pages analytics; an absent workshop is censored, not a verified zero, and path-level uniques can repeat across paths. Workshop downloads are limited to validated jsDelivr-visible files under <code>/solutions/&lt;slug&gt;/</code> and bundles at <code>/exports/&lt;slug&gt;-source.zip</code>. The repository-wide Total downloads KPI can include release-visible assets, but those are not assigned to workshops without a public workshop path. Raw GitHub and direct GitHub Pages fetches are uncounted.</p>
+      <div class="workshop-controls">
+        <p class="workshop-controls-label">Sort workshop rows by</p>
+        <div class="tabs" id="workshop-tabs" role="group" aria-label="Sort workshop adoption table"></div>
+      </div>
+      <div class="table-scroll">
+        <table id="workshop-table" aria-label="Workshop adoption metrics">
+          <caption>Catalog-advertised workshop adoption signals</caption>
+          <thead>
+            <tr>
+              <th scope="col">Workshop</th>
+              <th class="num" scope="col">Usage events</th>
+              <th class="num" scope="col">Agent upvotes</th>
+              <th class="num" scope="col">Views (14d)</th>
+              <th class="num" scope="col">Path uniques (14d)</th>
+              <th class="num" scope="col">File downloads</th>
+              <th class="num" scope="col">Bundle downloads</th>
+              <th class="num" scope="col">Feedback</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="8">Loading workshop metrics&hellip;</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
     <div class="section-head">
       <h2>Traffic over time</h2>
       <div class="hint">daily clones, page views and CDN hits — accumulated past GitHub's 14-day window</div>
     </div>
     <div class="card">
-      <svg class="chart" id="chart" preserveAspectRatio="none"></svg>
-      <div class="legend">
-        <span><i style="background:var(--accent)"></i>Clones (repo downloads)</span>
-        <span><i style="background:var(--purple)"></i>Page views</span>
-        <span><i style="background:var(--green)"></i>CDN hits</span>
+      <svg class="chart" id="chart" preserveAspectRatio="none" role="img" aria-labelledby="chart-title chart-desc">
+        <title id="chart-title">Traffic over time</title>
+        <desc id="chart-desc">Daily repository clones, page views, and CDN hits for the latest available 60 days.</desc>
+      </svg>
+      <div class="legend" aria-label="Chart legend">
+        <span><i class="legend-swatch legend-clones" aria-hidden="true"></i>Clones (repo downloads)</span>
+        <span><i class="legend-swatch legend-views" aria-hidden="true"></i>Page views</span>
+        <span><i class="legend-swatch legend-cdn" aria-hidden="true"></i>CDN hits</span>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="section">
+  <section class="section">
     <div class="section-head">
       <h2>Agent leaderboards</h2>
       <div class="hint" id="board-hint">ranked across all catalog agents</div>
     </div>
-    <div class="tabs" id="tabs"></div>
-    <div class="card"><div id="board"></div></div>
-  </div>
+    <div class="tabs" id="tabs" role="tablist" aria-label="Agent leaderboard views"></div>
+    <div class="card" id="board" role="tabpanel" tabindex="0"></div>
+  </section>
 
-  <div class="section">
+  <section class="section">
     <div class="section-head">
       <h2>Stacks</h2>
       <div class="hint" id="stack-hint">the unit a customer actually deploys</div>
     </div>
-    <div class="card" style="overflow-x:auto"><table id="stack-table"></table></div>
-  </div>
+    <div class="card table-scroll">
+      <table id="stack-table" aria-label="Stack metrics">
+        <caption>Deployable stack adoption and catalog size</caption>
+        <thead>
+          <tr>
+            <th scope="col">Stack</th>
+            <th scope="col">Vertical</th>
+            <th class="num" scope="col">Agents</th>
+            <th class="num" scope="col">Lines</th>
+            <th class="num" scope="col">Downloads</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="5">Loading stack metrics&hellip;</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
-  <div class="section grid3">
+  <section class="section grid3">
     <div>
       <div class="section-head"><h2>Verticals</h2></div>
       <div class="card" id="vert-bars"></div>
@@ -205,9 +1217,9 @@ footer { margin-top: 50px; padding-top: 20px; border-top: 1px solid var(--border
       <div class="section-head"><h2>Quality tiers</h2></div>
       <div class="card" id="tier-bars"></div>
     </div>
-  </div>
+  </section>
 
-  <div class="section grid2">
+  <section class="section grid2">
     <div>
       <div class="section-head"><h2>Most downloaded files</h2><div class="hint">jsDelivr CDN</div></div>
       <div class="card" id="cdn-files"></div>
@@ -216,9 +1228,60 @@ footer { margin-top: 50px; padding-top: 20px; border-top: 1px solid var(--border
       <div class="section-head"><h2>Most visited pages</h2><div class="hint">GitHub, 14-day window</div></div>
       <div class="card" id="paths"></div>
     </div>
-  </div>
+  </section>
 
-  <div class="section grid2">
+  <section class="section" id="file-download-ledger" aria-labelledby="file-ledger-heading">
+    <div class="section-head">
+      <h2 id="file-ledger-heading">File downloads</h2>
+      <div class="hint">authoritative tracked-file ledger; the summary above is only the top slice</div>
+    </div>
+    <div class="card">
+      <p class="coverage-note">Every tracked repository file is represented, including every <code>SKILL.md</code>. Downloads are public jsDelivr per-file observations only. <code>raw.githubusercontent.com</code>, GitHub Pages, and direct GitHub downloads expose no public per-file counter and remain unobservable.</p>
+      <p class="coverage-note">Complete coverage can report zero. Censored coverage keeps downloads unavailable/null rather than fabricating zero. Workshop file and source-bundle totals reconcile from this ledger.</p>
+      <div class="file-ledger-controls">
+        <label for="file-ledger-search">Search path, agent, or workshop
+          <input id="file-ledger-search" type="search" aria-controls="file-ledger-table" autocomplete="off" placeholder="Search tracked files">
+        </label>
+        <label for="file-ledger-kind">Kind
+          <select id="file-ledger-kind" aria-controls="file-ledger-table">
+            <option value="all">All kinds</option>
+          </select>
+        </label>
+        <label for="file-ledger-sort">Sort
+          <select id="file-ledger-sort" aria-controls="file-ledger-table">
+            <option value="downloads">Downloads, highest first</option>
+            <option value="path">Path, A–Z</option>
+          </select>
+        </label>
+      </div>
+      <p class="file-ledger-status" id="file-ledger-summary" role="status" aria-live="polite" aria-atomic="true">Loading tracked-file metrics&hellip;</p>
+      <div class="table-scroll">
+        <table id="file-ledger-table" aria-label="Tracked file download metrics">
+          <caption>All tracked repository files and observable downloads</caption>
+          <thead>
+            <tr>
+              <th scope="col">Path</th>
+              <th scope="col">Kind</th>
+              <th scope="col">Mapped agent</th>
+              <th scope="col">Mapped workshop</th>
+              <th class="num" scope="col">Downloads</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="6">Loading file ledger&hellip;</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <nav class="pagination" aria-label="File download ledger pages">
+        <button class="nav-button" id="file-ledger-prev" type="button" aria-controls="file-ledger-table">Previous</button>
+        <span class="pagination-status" id="file-ledger-page" role="status" aria-live="polite" aria-atomic="true">Page 1</span>
+        <button class="nav-button" id="file-ledger-next" type="button" aria-controls="file-ledger-table">Next</button>
+      </nav>
+    </div>
+  </section>
+
+  <section class="section grid2">
     <div>
       <div class="section-head"><h2>Traffic sources</h2></div>
       <div class="card" id="referrers"></div>
@@ -227,61 +1290,80 @@ footer { margin-top: 50px; padding-top: 20px; border-top: 1px solid var(--border
       <div class="section-head"><h2>Releases</h2></div>
       <div class="card" id="releases"></div>
     </div>
-  </div>
+  </section>
 
-  <div class="section">
+  <section class="section">
     <div class="section-head"><h2>Where these numbers come from</h2></div>
     <div class="card">
       <div id="sources"></div>
-      <p class="note" style="margin-top:14px">
+      <p class="note note-first"><a href="docs/metrics-admin-setup.html">Admin setup checklist</a> — an administrator must configure <code>METRICS_TOKEN</code> with repository <b>Administration: read</b> permission and authorize the token for organization SSO.</p>
+      <p class="note note-first">
         <b>Downloads</b> = git clones + jsDelivr CDN file hits + GitHub release asset downloads. A clone pulls the whole
         library; a CDN hit is a single file fetched by an installer, an agent, or a browser. GitHub only exposes a
         rolling 14-day traffic window, so <code>scripts/build_metrics.py</code> snapshots it into
         <code>state/metrics_history.json</code>, deduplicated by date — the all-time total grows from the first day of
         tracking and never double-counts.
       </p>
-      <p class="note" style="margin-top:10px">
+      <p class="note note-follow">
         <b>What is not counted.</b> The install one-liners fetch over <code>raw.githubusercontent.com</code>, which
         publishes no counter of any kind. Installs that take that path are invisible here, so treat every figure on
         this page as a floor, never a total. <b>Installer fetches</b> counts only the copies served through the CDN.
       </p>
-      <p class="note" style="margin-top:10px">
+      <p class="note note-follow">
         <b>On clones.</b> GitHub counts every <code>actions/checkout</code> as a clone, and this repository runs
         registry-build and preflight workflows on push. The estimated CI baseline is published as
         <code>ci_clone_estimate</code> alongside <code>clones_excluding_ci_estimate</code> in the snapshot.
         <b>Agent file fetches</b> is the narrowest and most trustworthy number on this page.
       </p>
-      <p class="note" style="margin-top:10px">
+      <p class="note note-follow">
         <b>On unique counts.</b> GitHub reports uniques per 14-day window, not per day, so daily unique figures cannot
         be summed into a true all-time unique. The headline <b>unique cloners</b> figure is GitHub's own 14-day number;
         the daily-unique sum beside it is an upper bound, since one machine cloning on three days counts three times.
         Clone counts and CDN hits have no such caveat — they are plain event counts and do accumulate exactly.
       </p>
-      <p class="note" style="margin-top:10px">
+      <p class="note note-follow">
         <b>On traffic gaps.</b> The GitHub traffic endpoints need a token with repository administration read access,
         which the Actions <code>GITHUB_TOKEN</code> cannot be granted. Without a <code>METRICS_TOKEN</code> secret the
         snapshot reuses the last authorized read rather than zeroing the figures, and the stamp above says so.
       </p>
+      <p class="note note-follow">
+        <b>On verified achievement points.</b> Public profiles exist only after an opt-in GitHub issue submission passes the
+        strict achievement schema and canonical workshop/agent checks. The collector deduplicates by login, workshop,
+        and event, computes points itself, and publishes no issue body, free text, or issue identifier.
+      </p>
     </div>
-  </div>
+  </section>
 
   <footer>
     Generated by <code>scripts/build_metrics.py</code> &middot; data in
     <a href="state/metrics.json">state/metrics.json</a> &middot;
+    <a href="reports/impact-report.html">weekly/monthly impact report</a> &middot;
+    <a href="achievements.html">achievements</a> &middot;
     <a href="library.html">browse the agents</a> &middot;
+    <a href="docs/metrics-admin-setup.html">Admin setup checklist</a> &middot;
     <a href="https://github.com/microsoft/aibast-agents-library" target="_blank" rel="noopener">microsoft/aibast-agents-library</a>
   </footer>
-</div>
+</main>
 
+<!-- aibast-workshop-feedback:v1 -->
 <script>
 const SITE = 'https://microsoft.github.io/aibast-agents-library/';
-const OWNER = 'microsoft', REPO = 'aibast-agents-library';
+const DEFAULT_OWNER = 'microsoft', DEFAULT_REPO = 'aibast-agents-library';
+let OWNER = DEFAULT_OWNER, REPO = DEFAULT_REPO;
+const SVG_NS = 'http://www.w3.org/2000/svg';
 const $ = id => document.getElementById(id);
 const num = n => (n === null || n === undefined || isNaN(n)) ? '—' : Number(n).toLocaleString();
+const percent = n => (n === null || n === undefined || isNaN(n)) ? '—' : `${Number(n).toLocaleString(undefined, { maximumFractionDigits: 1 })}%`;
 const esc = s => String(s == null ? '' : s).replace(/[&<>"'`]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','`':'&#96;'}[c]));
 const bytes = b => !b ? '—' : b > 1e9 ? (b/1e9).toFixed(1)+' GB' : b > 1e6 ? (b/1e6).toFixed(1)+' MB' : (b/1e3).toFixed(0)+' KB';
 const short = s => String(s || '').replace(/^@[^/]+\//, '');
 const pretty = s => String(s || '').replace(/_/g, ' ');
+const boundedPercent = (value, max) => {
+  const amount = Number(value);
+  const ceiling = Number(max);
+  if (!Number.isFinite(amount) || !Number.isFinite(ceiling) || ceiling <= 0) return 0;
+  return Math.max(0, Math.min(100, (amount / ceiling) * 100)).toFixed(2);
+};
 
 let M = null;
 
@@ -289,32 +1371,67 @@ let M = null;
 async function getJSON(paths) {
   for (const p of paths) {
     try {
-      const r = await fetch(p, { cache: 'no-store' });
-      if (r.ok) return await r.json();
-    } catch (e) { /* try next */ }
+      const response = await fetch(p, { cache: 'no-store' });
+      if (response.ok) return await response.json();
+    } catch (error) {
+      /* Try the next public source, including the hosted fallback for file://. */
+    }
   }
   return null;
 }
 
-async function load() {
-  M = await getJSON(['state/metrics.json', SITE + 'state/metrics.json']);
-  if (!M) {
-    $('kpis').innerHTML = '<div class="card" style="grid-column:1/-1">Could not load <code>state/metrics.json</code>. Run <code>python scripts/build_metrics.py</code>.</div>';
-    return;
-  }
-  render();
-  liveTopUp();
+function setRefreshBusy(busy) {
+  const button = $('refresh');
+  button.disabled = busy;
+  button.setAttribute('aria-busy', String(busy));
+  $('kpis').setAttribute('aria-busy', String(busy));
 }
 
-/* Client-side top-up: keeps stars and CDN hits current between snapshots.
-   Unauthenticated public endpoints only, so it also works from file://. */
+function setSnapshotRepository(repo) {
+  const validPart = value => /^[A-Za-z0-9_.-]+$/.test(String(value || ''));
+  OWNER = validPart((repo || {}).owner) ? repo.owner : DEFAULT_OWNER;
+  REPO = validPart((repo || {}).name) ? repo.name : DEFAULT_REPO;
+}
+
+function appendAdminSetupNotice(parent) {
+  parent.appendChild(document.createTextNode(' An administrator must configure METRICS_TOKEN with repository Administration: read permission and authorize the token for organization SSO. '));
+  const link = document.createElement('a');
+  link.href = 'docs/metrics-admin-setup.html';
+  link.textContent = 'Admin setup checklist';
+  parent.appendChild(link);
+}
+
+async function load() {
+  setRefreshBusy(true);
+  $('stamp-mode').textContent = 'Loading metrics snapshot…';
+  try {
+    M = await getJSON(['state/metrics.json', SITE + 'state/metrics.json']);
+    if (!M) {
+      $('kpis').innerHTML = '<div class="kpi error-card"><b>Metrics are unavailable.</b><div class="sub">Could not load <code>state/metrics.json</code>. Run <code>python scripts/build_metrics.py</code> locally or retry when the hosted snapshot is reachable.</div></div>';
+      $('stamp-mode').textContent = 'Metrics snapshot unavailable';
+      return;
+    }
+    setSnapshotRepository(M.repo);
+    render();
+    await liveTopUp();
+  } catch (error) {
+    $('kpis').innerHTML = '<div class="kpi error-card"><b>Metrics could not be rendered.</b><div class="sub">The snapshot was reached, but this dashboard could not process it. Refresh the page or report the issue.</div></div>';
+    $('stamp-mode').textContent = 'Metrics rendering failed';
+  } finally {
+    setRefreshBusy(false);
+  }
+}
+
+/* Client-side top-up keeps repository stars and package-wide CDN hits current
+   between snapshots. Discussion signals remain snapshot-only aggregates. */
 async function liveTopUp() {
-  $('stamp-mode').innerHTML = '<span class="spin"></span> checking live sources&hellip;';
+  $('stamp-mode').innerHTML = '<span class="spin" aria-hidden="true"></span> Checking live sources…';
   const [repo, cdn] = await Promise.all([
     getJSON([`https://api.github.com/repos/${OWNER}/${REPO}`]),
     getJSON([`https://data.jsdelivr.com/v1/stats/packages/gh/${OWNER}/${REPO}?period=year`])
   ]);
-  let live = [];
+  const live = [];
+  M.repo = M.repo || {};
   if (repo) {
     M.repo.stars = repo.stargazers_count;
     M.repo.forks = repo.forks_count;
@@ -323,7 +1440,7 @@ async function liveTopUp() {
   }
   if (cdn && cdn.hits) {
     const hits = cdn.hits.total || 0;
-    if (hits > M.totals.cdn_hits) {
+    if (Number.isFinite(M.totals.downloads) && Number.isFinite(M.totals.cdn_hits) && hits > M.totals.cdn_hits) {
       M.totals.downloads += (hits - M.totals.cdn_hits);
       M.totals.cdn_hits = hits;
     }
@@ -338,7 +1455,10 @@ async function liveTopUp() {
 /* ----------------------------------------------------------------- render */
 function render() {
   const t = M.totals;
-  $('stamp-time').textContent = 'snapshot ' + new Date(M.generated_at).toLocaleString();
+  const generated = M.generated_at ? new Date(M.generated_at) : null;
+  $('stamp-time').textContent = generated && !isNaN(generated)
+    ? 'snapshot ' + generated.toLocaleString()
+    : 'snapshot time unavailable';
   const tr = M.traffic || {};
   $('stamp-src').textContent = tr.live === false
     ? (tr.as_of ? `traffic figures as of ${String(tr.as_of).slice(0, 10)} (last authorized read)` : 'traffic never read — see below')
@@ -346,12 +1466,28 @@ function render() {
   $('stamp-window').textContent = t.tracking_since
     ? `tracking since ${t.tracking_since} (${t.days_tracked} days)`
     : 'traffic tracking not started';
-  // A zero with no explanation reads as "nobody cloned it". Say which door is
-  // shut instead, in the words the API itself used.
-  $('traffic-gap').innerHTML = tr.unavailable_reason
-    ? `<div class="callout"><b>Clone and page-view figures are unavailable, not zero.</b> ${esc(tr.unavailable_reason)}</div>`
-    : '';
+  const trafficGap = $('traffic-gap');
+  trafficGap.replaceChildren();
+  const trafficUnavailable = tr.live !== true;
+  const trafficReason = tr.unavailable_reason;
+  if (trafficUnavailable) {
+    const callout = document.createElement('div');
+    callout.className = 'callout';
+    callout.setAttribute('role', 'note');
+    const heading = document.createElement('b');
+    heading.textContent = 'Live clone and page-view coverage is unavailable.';
+    callout.appendChild(heading);
+    callout.appendChild(document.createTextNode(
+      trafficReason
+        ? ` ${String(trafficReason)}`
+        : ' The snapshot may reuse the last authorized traffic read rather than reporting live coverage.'
+    ));
+    appendAdminSetupNotice(callout);
+    trafficGap.appendChild(callout);
+  }
   renderKPIs();
+  renderAchievementPoints();
+  renderWorkshops();
   $('board-hint').textContent = `ranked across ${num(t.agents)} single-file agents`;
   renderChart();
   renderBoards();
@@ -361,6 +1497,7 @@ function render() {
   renderBars('cat-bars', (lb.categories || []).slice(0, 14).map(c => ({ label: pretty(c.name), value: c.agents, extra: `${num(c.lines)} lines` })));
   renderBars('tier-bars', Object.entries(lb.tiers || {}).map(([k, v]) => ({ label: k, value: v })));
   renderCDNFiles();
+  renderFileLedger();
   renderPaths();
   renderReferrers();
   renderReleases();
@@ -369,57 +1506,302 @@ function render() {
 
 function renderKPIs() {
   const t = M.totals, r = M.repo || {};
+  const workshopTotals = (M.workshops || {}).totals || {};
+  const achievementTotals = (M.achievements || {}).totals || {};
   const cards = [
-    { hero: true, label: 'Total downloads', value: num(t.downloads), sub: `${num(t.clones)} repository clones (includes this repo's own CI) · ${num(t.cdn_hits)} CDN hits · ${num(t.release_downloads)} release assets` },
-    { label: 'Agent file fetches', value: num(t.agent_file_downloads), sub: 'individual agent templates pulled from the CDN — the cleanest signal here' },
+    { primary: true, label: 'AIBAST direct agent fetches', value: num(t.agent_file_downloads), sub: 'observable jsDelivr agent-file transfers · raw GitHub transfers are uncounted' },
+    { primary: true, label: 'AIBAST repository downloads', value: num(t.downloads), sub: `${num(t.clones)} repository clones (includes this repo's own CI) · ${num(t.cdn_hits)} CDN hits · ${num(t.release_downloads)} release assets` },
+    { primary: true, label: 'Verified achievement points', value: num(achievementTotals.points), sub: `${num(achievementTotals.participants)} opt-in public participants · ${num(achievementTotals.achievements)} badges · ${num(achievementTotals.starts)} starts · ${num(achievementTotals.workshop_completions)} workshop completions · ${num(achievementTotals.hard_completions)} hard completions` },
+    { label: 'Agent upvotes', value: num(t.agent_upvotes), sub: 'native rating-Discussion upvotes · one active signal per GitHub account and agent' },
+    { label: 'Signed-in acquisitions', value: num(t.agent_acquisitions), sub: 'native acquisition-Discussion upvotes · declared downloads/copies/installs, separate from file transfers' },
+    { label: 'Workshop usage events', value: num(workshopTotals.usage_events), sub: `${num(workshopTotals.workshops)} advertised workshops · public event-count floor, not users` },
+    { label: 'Repository stars', value: num(r.stars), sub: `${num(r.forks)} forks · ${num(r.open_issues)} open issues · separate from agent upvotes` },
+    { label: 'Skill downloads', value: num(t.skill_downloads), sub: 'tracked SKILL.md files observed through jsDelivr per-file statistics' },
     { label: 'Installer fetches', value: num(t.installer_downloads), sub: 'install.sh / .ps1 / .cmd served over the CDN — raw.githubusercontent installs are uncounted' },
     { label: 'Agents', value: num(t.agents), sub: `${num(t.stacks)} stacks · ${num(t.verticals)} verticals` },
     { label: 'Catalog size', value: num(t.total_lines), sub: `lines of Python · ${num(t.total_kb)} KB across ${num(t.agents)} files` },
     { label: 'Unique cloners', value: num(t.clone_uniques_14d), sub: `last 14 days · ${num(t.clone_uniques_daily_sum)} daily-unique sum since ${t.tracking_since || '—'}` },
-    { label: 'Page views', value: num(t.page_views), sub: `${num(t.view_uniques_14d)} unique visitors (14d)` },
-    { label: 'Stars', value: num(r.stars), sub: `${num(r.forks)} forks · ${num(r.open_issues)} open issues` }
+    { label: 'Page views', value: num(t.page_views), sub: `${num(t.view_uniques_14d)} unique visitors (14d)` }
   ];
-  $('kpis').innerHTML = cards.map(c =>
-    `<div class="kpi${c.hero ? ' hero' : ''}">
-       <div class="label">${esc(c.label)}</div>
-       <div class="value">${c.value}</div>
-       <div class="sub">${esc(c.sub)}</div>
-     </div>`).join('');
+  $('kpis').innerHTML = cards.map(card =>
+    `<article class="kpi${card.primary ? ' primary' : ''}">
+       <div class="label">${esc(card.label)}</div>
+       <div class="value">${card.value}</div>
+       <div class="sub">${esc(card.sub)}</div>
+     </article>`).join('');
+}
+
+function renderAchievementPoints() {
+  const achievementMetrics = M.achievements || {};
+  const totals = achievementMetrics.totals || {};
+  const profiles = Array.isArray(achievementMetrics.profiles) ? achievementMetrics.profiles.slice() : [];
+  const workshops = Array.isArray(achievementMetrics.workshops) ? achievementMetrics.workshops.slice() : [];
+  const achievementRows = Array.isArray(achievementMetrics.achievements) ? achievementMetrics.achievements.slice() : [];
+  const summary = [
+    { label: 'Verified participants', value: totals.participants },
+    { label: 'Achievement points', value: totals.points },
+    { label: 'Verified badges', value: totals.achievements },
+    { label: 'Verified starts', value: totals.starts },
+    { label: 'Workshop completions', value: totals.workshop_completions },
+    { label: 'Hard completions', value: totals.hard_completions },
+    { label: 'Completion rate', value: percent(totals.completion_rate), formatted: true },
+    { label: 'Achievement completion', value: percent(totals.achievement_completion_rate), formatted: true }
+  ];
+  $('achievements-summary').innerHTML = summary.map(item =>
+    `<div class="workshop-stat"><b>${item.formatted ? item.value : num(item.value)}</b><span>${esc(item.label)}</span></div>`).join('');
+
+  const coverage = achievementMetrics.coverage || {};
+  const status = achievementMetrics.status || coverage.status || 'unavailable';
+  const achievementCoverage = $('achievements-coverage');
+  const coverageText = status === 'unavailable'
+    ? 'Verified public achievement claims are unavailable in this snapshot. Null values are not verified zeros.'
+    : `${status === 'partial' ? 'Partial' : 'Available'} verified achievement coverage · ${num((coverage.diagnostics || {}).accepted_achievements)} unique achievements from ${num(coverage.issues_scanned)} marker-matched public issues.`;
+  achievementCoverage.textContent = achievementMetrics.carried_forward
+    ? `Carried forward from ${achievementMetrics.as_of || 'the prior snapshot'} · ${coverageText}`
+    : coverageText;
+  if (status === 'unavailable') appendAdminSetupNotice(achievementCoverage);
+
+  profiles.sort((left, right) =>
+    (Number(right.points) || 0) - (Number(left.points) || 0)
+    || (Number(right.achievement_count) || 0) - (Number(left.achievement_count) || 0)
+    || (Number(right.workshop_completions) || 0) - (Number(left.workshop_completions) || 0)
+    || (Number(right.hard_completions) || 0) - (Number(left.hard_completions) || 0)
+    || String(left.login).localeCompare(String(right.login), undefined, { sensitivity: 'base' })
+  );
+  $('achievements-profile-hint').textContent = profiles.length
+    ? `${num(profiles.length)} opt-in public profile${profiles.length === 1 ? '' : 's'}`
+    : 'Profiles are public only after opt-in submission';
+  const profileTable = $('achievements-leaderboard');
+  profileTable.innerHTML = `<caption>Verified public achievement profiles ranked by points</caption>
+    <thead><tr><th scope="col">GitHub login</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Hard completions</th></tr></thead>
+    <tbody>${profiles.length ? profiles.map(profile => {
+      const login = String(profile.login || '');
+      const profileUrl = /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?$/.test(login)
+        ? `https://github.com/${encodeURIComponent(login)}`
+        : `https://github.com/${OWNER}/${REPO}`;
+      const achievementIds = Array.isArray(profile.achievement_ids)
+        ? profile.achievement_ids
+        : [];
+      return `<tr>
+        <td class="achievements-login"><a href="${profileUrl}" target="_blank" rel="noopener">${esc(login)}</a></td>
+        <td class="num">${num(profile.points)}</td>
+        <td class="num achievements-badges" title="${esc(achievementIds.join(', '))}">${num(profile.achievement_count)}</td>
+        <td class="num">${num(profile.starts)}</td>
+        <td class="num">${num(profile.workshop_completions)}</td>
+        <td class="num">${num(profile.hard_completions)}</td>
+      </tr>`;
+    }).join('') : '<tr><td class="empty" colspan="6">No opt-in verified achievement profiles are available in this snapshot.</td></tr>'}</tbody>`;
+
+  workshops.sort((left, right) =>
+    (Number(right.points) || 0) - (Number(left.points) || 0)
+    || (Number(right.achievements) || 0) - (Number(left.achievements) || 0)
+    || (Number(right.workshop_completions) || 0) - (Number(left.workshop_completions) || 0)
+    || (Number(right.hard_completions) || 0) - (Number(left.hard_completions) || 0)
+    || (Number(right.starts) || 0) - (Number(left.starts) || 0)
+    || String(left.display_name || left.slug).localeCompare(String(right.display_name || right.slug))
+  );
+  $('achievements-workshop-hint').textContent = workshops.length
+    ? `${num(workshops.length)} canonical workshops; Grid Outage excluded`
+    : 'Canonical workshop achievement rows are unavailable';
+  const workshopTable = $('achievements-workshop-table');
+  workshopTable.innerHTML = `<caption>Canonical workshops ranked by verified achievement points</caption>
+    <thead><tr><th scope="col">Workshop</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Hard completions</th><th class="num" scope="col">Achievement completion</th></tr></thead>
+    <tbody>${workshops.length ? workshops.map(row => {
+      const slug = String(row.slug || '');
+      const quest = /^[a-z0-9-]+$/.test(slug)
+        ? `solutions/${encodeURIComponent(slug)}/quest.html`
+        : 'library.html';
+      return `<tr>
+        <td><a href="${quest}">${esc(row.display_name || pretty(row.slug))}</a><div class="rank-meta mono">${esc(row.agent_name || '')}</div></td>
+        <td class="num">${num(row.points)}</td>
+        <td class="num">${num(row.achievements)}</td>
+        <td class="num">${num(row.starts)}</td>
+        <td class="num">${num(row.workshop_completions)}</td>
+        <td class="num">${num(row.hard_completions)}</td>
+        <td class="num">${percent(row.achievement_completion_rate)}</td>
+      </tr>`;
+    }).join('') : '<tr><td class="empty" colspan="7">No canonical achievement workshop rows are available. Regenerate the metrics snapshot.</td></tr>'}</tbody>`;
+
+  $('achievements-rollup-hint').textContent = achievementRows.length
+    ? `${num(achievementRows.length)} canonical achievement IDs`
+    : 'Canonical achievement rollup is unavailable';
+  const achievementTable = $('achievements-rollup-table');
+  achievementTable.innerHTML = `<caption>Verified claims by canonical achievement</caption>
+    <thead><tr><th scope="col">Achievement</th><th class="num" scope="col">Points each</th><th class="num" scope="col">Claims</th><th class="num" scope="col">Participants</th><th class="num" scope="col">Workshops</th><th class="num" scope="col">Attainment</th></tr></thead>
+    <tbody>${achievementRows.length ? achievementRows.map(row => `<tr>
+      <td><span class="achievements-login">${esc(row.label || pretty(row.id))}</span><div class="rank-meta mono">${esc(row.id || '')}</div></td>
+      <td class="num">${num(row.points)}</td>
+      <td class="num">${num(row.claims)}</td>
+      <td class="num">${num(row.participants)}</td>
+      <td class="num">${num(row.workshops)}</td>
+      <td class="num">${percent(row.attainment_rate)}</td>
+    </tr>`).join('') : '<tr><td class="empty" colspan="6">No achievement rollup is available.</td></tr>'}</tbody>`;
+}
+
+const WORKSHOP_SORTS = [
+  { id: 'usage_events', label: 'Usage' },
+  { id: 'views_14d', label: 'Views' },
+  { id: 'file_downloads', label: 'File downloads' },
+  { id: 'bundle_downloads', label: 'Bundle downloads' },
+  { id: 'feedback_reports', label: 'Feedback' }
+];
+const WORKSHOP_UPVOTE_SORT = { id: 'agent_upvotes', label: 'Agent upvotes' };
+const ALL_WORKSHOP_SORTS = [
+  WORKSHOP_SORTS[0],
+  WORKSHOP_UPVOTE_SORT,
+  ...WORKSHOP_SORTS.slice(1)
+];
+let activeWorkshopSort = 'usage_events';
+
+function renderWorkshopControls() {
+  $('workshop-tabs').innerHTML = ALL_WORKSHOP_SORTS.map(option =>
+    `<button type="button" class="tab${option.id === activeWorkshopSort ? ' active' : ''}" aria-pressed="${option.id === activeWorkshopSort}" aria-controls="workshop-table" data-workshop-sort="${option.id}">${option.label}</button>`).join('');
+}
+
+function renderWorkshops() {
+  const workshops = M.workshops || {};
+  const totals = workshops.totals || {};
+  const rows = Array.isArray(workshops.rows) ? workshops.rows.slice() : [];
+  const summary = [
+    { label: 'Workshops', value: totals.workshops },
+    { label: 'Usage events', value: totals.usage_events },
+    { label: 'Agent upvotes', value: totals.agent_upvotes },
+    { label: 'Views (14d)', value: totals.views_14d },
+    { label: 'File downloads', value: totals.file_downloads },
+    { label: 'Bundle downloads', value: totals.bundle_downloads },
+    { label: 'Feedback reports', value: totals.feedback_reports }
+  ];
+  $('workshop-summary').innerHTML = summary.map(item =>
+    `<div class="workshop-stat"><b>${num(item.value)}</b><span>${esc(item.label)}</span></div>`).join('');
+  $('workshop-hint').textContent = totals.workshops === undefined
+    ? 'workshop metrics are not present in this snapshot'
+    : `${num(totals.workshops)} catalog-advertised workshop quests`;
+
+  const coverage = workshops.coverage || {};
+  const workshopCoverage = $('workshop-coverage');
+  const workshopViewStatus = (coverage.views || {}).status;
+  const workshopViewsUnavailable = !workshopViewStatus || workshopViewStatus === 'unavailable';
+  const coverageText = coverage.status === 'unavailable'
+    ? 'Workshop public signals are unavailable in this snapshot. The advertised workshop rows remain present with unavailable values rather than fabricated zeros.'
+    : coverage.status === 'partial'
+      ? `Partial public coverage · views: ${(coverage.views || {}).status || 'unavailable'} · downloads: ${(coverage.downloads || {}).status || 'unavailable'} · feedback: ${(coverage.feedback || {}).status || 'unavailable'} · agent upvotes: ${(coverage.agent_upvotes || {}).status || 'unavailable'}.`
+      : 'Workshop coverage metadata is not present in this snapshot.';
+  workshopCoverage.textContent = workshops.carried_forward
+    ? `Carried forward from ${workshops.as_of || 'the prior snapshot'} · ${coverageText}`
+    : coverageText;
+  if (coverage.status === 'unavailable' || workshopViewsUnavailable) {
+    appendAdminSetupNotice(workshopCoverage);
+  }
+  renderWorkshopControls();
+
+  const sort = ALL_WORKSHOP_SORTS.some(option => option.id === activeWorkshopSort)
+    ? activeWorkshopSort
+    : 'usage_events';
+  rows.sort((left, right) =>
+    (Number(right[sort]) || 0) - (Number(left[sort]) || 0)
+    || (Number(right.usage_events) || 0) - (Number(left.usage_events) || 0)
+    || String(left.display_name || left.slug).localeCompare(String(right.display_name || right.slug))
+  );
+  const table = $('workshop-table');
+  const selected = ALL_WORKSHOP_SORTS.find(option => option.id === sort);
+  if (!rows.length) {
+    table.innerHTML = `<caption>Catalog-advertised workshop adoption signals</caption>
+      <thead><tr><th scope="col">Workshop</th><th class="num" scope="col">Usage events</th><th class="num" scope="col">Agent upvotes</th><th class="num" scope="col">Views (14d)</th><th class="num" scope="col">Path uniques (14d)</th><th class="num" scope="col">File downloads</th><th class="num" scope="col">Bundle downloads</th><th class="num" scope="col">Feedback</th></tr></thead>
+      <tbody><tr><td class="empty" colspan="8">No workshop rows are available. Regenerate the metrics snapshot from the current registry.</td></tr></tbody>`;
+    return;
+  }
+  table.innerHTML = `<caption>Catalog-advertised workshops sorted by ${esc(selected.label)}</caption>
+    <thead><tr><th scope="col">Workshop</th><th class="num" scope="col">Usage events</th><th class="num" scope="col">Agent upvotes</th><th class="num" scope="col">Views (14d)</th><th class="num" scope="col">Path uniques (14d)</th><th class="num" scope="col">File downloads</th><th class="num" scope="col">Bundle downloads</th><th class="num" scope="col">Feedback</th></tr></thead>
+    <tbody>${rows.map(row => {
+      const fallbackQuest = `solutions/${encodeURIComponent(row.slug)}/quest.html`;
+      const quest = /^solutions\/[a-z0-9-]+\/quest\.html$/.test(row.quest_url || '')
+        ? row.quest_url
+        : fallbackQuest;
+      return `<tr>
+        <td><a href="${esc(quest)}">${esc(row.display_name || pretty(row.slug))}</a><div class="rank-meta mono">${esc(row.slug)}</div></td>
+        <td class="num">${num(row.usage_events)}</td>
+        <td class="num">${num(row.agent_upvotes)}<div class="rank-meta mono">${esc(row.agent_name || '')}</div></td>
+        <td class="num">${num(row.views_14d)}</td>
+        <td class="num">${num(row.view_uniques_14d)}</td>
+        <td class="num">${num(row.file_downloads)}</td>
+        <td class="num">${num(row.bundle_downloads)}</td>
+        <td class="num">${num(row.feedback_reports)}<div class="rank-meta">${num(row.feedback_open)} open · ${num(row.feedback_closed)} closed</div></td>
+      </tr>`;
+    }).join('')}</tbody>`;
+}
+
+function chartToken(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
+function appendSvg(parent, tag, attributes, text) {
+  const node = document.createElementNS(SVG_NS, tag);
+  Object.entries(attributes || {}).forEach(([name, value]) => node.setAttribute(name, String(value)));
+  if (text !== undefined) node.textContent = text;
+  parent.appendChild(node);
+  return node;
 }
 
 function renderChart() {
   const data = (M.daily || []).slice(-60);
   const svg = $('chart');
+  const colors = {
+    clones: chartToken('--cp-accent'),
+    views: chartToken('--cp-link'),
+    cdn: chartToken('--cp-success'),
+    grid: chartToken('--cp-border'),
+    text: chartToken('--cp-text-soft')
+  };
+  svg.replaceChildren();
+  appendSvg(svg, 'title', { id: 'chart-title' }, 'Traffic over time');
+  appendSvg(svg, 'desc', { id: 'chart-desc' }, 'Daily repository clones, page views, and CDN hits for the latest available 60 days.');
+  const W = 1000, H = 210, PAD = 28;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
   if (!data.length) {
-    svg.setAttribute('viewBox', '0 0 1000 190');
-    svg.innerHTML = '<text x="10" y="100" fill="#656d76" font-size="13">No traffic history yet — the first authorized snapshot starts the series.</text>';
+    appendSvg(svg, 'text', { x: 12, y: 108, fill: colors.text, 'font-size': 13 }, 'No traffic history yet — the first authorized snapshot starts the series.');
     return;
   }
-  const W = 1000, H = 190, PAD = 26;
-  const max = Math.max(1, ...data.map(d => Math.max(d.clones, d.views, d.cdn)));
-  const bw = (W - PAD * 2) / data.length;
-  const y = v => H - PAD - (v / max) * (H - PAD * 2);
-  let out = '';
-  for (let i = 0; i <= 3; i++) {
-    const gy = PAD + i * (H - PAD * 2) / 3;
-    const val = Math.round(max - i * max / 3);
-    out += `<line x1="${PAD}" y1="${gy}" x2="${W - PAD}" y2="${gy}" stroke="#21262d" stroke-width="1"/>`;
-    out += `<text x="4" y="${gy + 3}" fill="#656d76" font-size="9">${val}</text>`;
+  const max = Math.max(1, ...data.map(d => Math.max(Number(d.clones) || 0, Number(d.views) || 0, Number(d.cdn) || 0)));
+  const barWidth = (W - PAD * 2) / data.length;
+  const y = value => H - PAD - ((Number(value) || 0) / max) * (H - PAD * 2);
+  for (let i = 0; i <= 3; i += 1) {
+    const gridY = PAD + i * (H - PAD * 2) / 3;
+    const value = Math.round(max - i * max / 3);
+    appendSvg(svg, 'line', { x1: PAD, y1: gridY, x2: W - PAD, y2: gridY, stroke: colors.grid, 'stroke-width': 1 });
+    appendSvg(svg, 'text', { x: 4, y: gridY + 3, fill: colors.text, 'font-size': 9 }, String(value));
   }
-  data.forEach((d, i) => {
-    const x = PAD + i * bw;
-    const w = Math.max(1.5, bw * 0.26);
-    if (d.clones) out += `<rect x="${x}" y="${y(d.clones)}" width="${w}" height="${H - PAD - y(d.clones)}" fill="#58a6ff" rx="1"><title>${d.date}: ${d.clones} clones</title></rect>`;
-    if (d.views) out += `<rect x="${x + w + 1}" y="${y(d.views)}" width="${w}" height="${H - PAD - y(d.views)}" fill="#bc8cff" rx="1"><title>${d.date}: ${d.views} views</title></rect>`;
-    if (d.cdn) out += `<rect x="${x + (w + 1) * 2}" y="${y(d.cdn)}" width="${w}" height="${H - PAD - y(d.cdn)}" fill="#3fb950" rx="1"><title>${d.date}: ${d.cdn} CDN hits</title></rect>`;
+  data.forEach((d, index) => {
+    const x = PAD + index * barWidth;
+    const width = Math.max(1.5, barWidth * .26);
+    const series = [
+      { value: d.clones, color: colors.clones, offset: 0, label: 'clones' },
+      { value: d.views, color: colors.views, offset: width + 1, label: 'views' },
+      { value: d.cdn, color: colors.cdn, offset: (width + 1) * 2, label: 'CDN hits' }
+    ];
+    series.forEach(item => {
+      const amount = Number(item.value) || 0;
+      if (!amount) return;
+      const rect = appendSvg(svg, 'rect', {
+        x: x + item.offset,
+        y: y(amount),
+        width,
+        height: H - PAD - y(amount),
+        fill: item.color,
+        rx: 1
+      });
+      appendSvg(rect, 'title', {}, `${d.date}: ${amount} ${item.label}`);
+    });
   });
   const step = Math.ceil(data.length / 8);
-  data.forEach((d, i) => {
-    if (i % step) return;
-    out += `<text x="${PAD + i * bw}" y="${H - 6}" fill="#656d76" font-size="9">${d.date.slice(5)}</text>`;
+  data.forEach((d, index) => {
+    if (index % step) return;
+    appendSvg(svg, 'text', {
+      x: PAD + index * barWidth,
+      y: H - 6,
+      fill: colors.text,
+      'font-size': 9
+    }, String(d.date || '').slice(5));
   });
-  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
-  svg.innerHTML = out;
 }
 
 const BOARDS = [
@@ -427,48 +1809,113 @@ const BOARDS = [
   { id: 'newest', label: 'Newest', metric: 'added_at', unit: 'added' },
   { id: 'largest', label: 'Most code', metric: 'lines', unit: 'lines' }
 ];
+const AGENT_UPVOTE_BOARD = {
+  id: 'most_upvoted',
+  label: 'Most upvoted',
+  metric: 'upvotes',
+  unit: 'agent upvotes'
+};
+const AGENT_ACQUISITION_BOARD = {
+  id: 'most_acquired',
+  label: 'Most acquired',
+  metric: 'acquisitions',
+  unit: 'signed-in acquisitions'
+};
+const ALL_BOARDS = [
+  BOARDS[0],
+  AGENT_UPVOTE_BOARD,
+  AGENT_ACQUISITION_BOARD,
+  ...BOARDS.slice(1)
+];
 let activeBoard = 'most_downloaded';
 
 function renderBoards() {
-  $('tabs').innerHTML = BOARDS.map(b =>
-    `<button class="tab${b.id === activeBoard ? ' active' : ''}" data-board="${b.id}">${b.label}</button>`).join('');
-  $('tabs').querySelectorAll('.tab').forEach(el => el.onclick = () => { activeBoard = el.dataset.board; renderBoards(); });
-  const cfg = BOARDS.find(b => b.id === activeBoard);
-  const rows = (M.leaderboards || {})[activeBoard] || [];
+  const tabs = $('tabs');
+  tabs.innerHTML = ALL_BOARDS.map(board =>
+    `<button type="button" class="tab${board.id === activeBoard ? ' active' : ''}" id="tab-${board.id}" role="tab" aria-selected="${board.id === activeBoard}" aria-controls="board" tabindex="${board.id === activeBoard ? '0' : '-1'}" data-board="${board.id}">${board.label}</button>`).join('');
+  const panel = $('board');
+  panel.setAttribute('aria-labelledby', `tab-${activeBoard}`);
+  const cfg = ALL_BOARDS.find(board => board.id === activeBoard);
+  const signalBoard = activeBoard === 'most_upvoted'
+    || activeBoard === 'most_acquired';
+  const advertisedWorkshopAgents = new Set(
+    ((M.workshops || {}).rows || [])
+      .map(row => row.agent_name)
+      .filter(Boolean)
+  );
+  const eligibleAgent = row => (
+    row.catalog_kind !== 'solution'
+    || advertisedWorkshopAgents.has(row.name)
+  );
+  const rows = (signalBoard
+    ? (Array.isArray(M.agent_metrics) ? M.agent_metrics : [])
+        .filter(eligibleAgent)
+        .filter(row => Number(row[cfg.metric]) > 0)
+        .sort((left, right) =>
+          (Number(right[cfg.metric]) || 0) - (Number(left[cfg.metric]) || 0)
+          || (Number(right.downloads) || 0) - (Number(left.downloads) || 0)
+          || String(left.name).localeCompare(String(right.name)))
+        .slice(0, 15)
+    : ((M.leaderboards || {})[activeBoard] || [])
+        .filter(eligibleAgent));
   if (!rows.length) {
-    $('board').innerHTML = activeBoard === 'most_downloaded'
+    panel.innerHTML = activeBoard === 'most_downloaded'
       ? '<div class="empty">No per-file CDN fetches recorded yet. Agent files pulled over <code>raw.githubusercontent.com</code> are not counted by any public API — only jsDelivr publishes per-file numbers.</div>'
-      : '<div class="empty">No data recorded yet for this metric.</div>';
+      : signalBoard
+        ? '<div class="empty">No canonical Discussion signals are available in this snapshot yet.</div>'
+        : '<div class="empty">No data recorded yet for this leaderboard.</div>';
     return;
   }
-  $('board').innerHTML = rows.map((r, i) => {
-    let val = r[cfg.metric];
-    if (cfg.metric === 'added_at') val = String(val).slice(0, 10);
-    else val = num(val);
+  panel.innerHTML = rows.map((r, index) => {
+    let value = r[cfg.metric];
+    if (cfg.metric === 'added_at') value = String(value).slice(0, 10);
+    else value = num(value);
     const tier = r.tier ? `<span class="pill">${esc(r.tier)}</span>` : '';
     const url = r.file ? `https://github.com/${OWNER}/${REPO}/blob/main/${encodeURI(r.file)}` : `https://github.com/${OWNER}/${REPO}`;
+    const signalUrl = cfg.metric === 'upvotes'
+      ? r.upvote_discussion_url
+      : cfg.metric === 'acquisitions'
+        ? r.acquisition_discussion_url
+        : '';
+    const signalLink = /^https:\/\/github\.com\/[^/]+\/[^/]+\/discussions\/\d+$/.test(signalUrl || '')
+      ? ` · <a href="${esc(signalUrl)}" target="_blank" rel="noopener">Discussion ↗</a>`
+      : '';
     return `<div class="rank-row">
-      <div class="rank-n">${i + 1}</div>
+      <div class="rank-n">${index + 1}</div>
       <div>
         <div class="rank-name"><a href="library.html#agent/${encodeURIComponent(r.name)}">${esc(r.display_name || short(r.name))}</a>${tier}</div>
-        <div class="rank-meta"><span class="mono">${esc(r.name)}</span> · ${esc(pretty(r.category))}${r.stack ? ` · ${esc(pretty(r.stack))} stack` : ''} · <a href="${url}" target="_blank" rel="noopener">source &#8599;</a></div>
+        <div class="rank-meta"><span class="mono">${esc(r.name)}</span> · ${esc(pretty(r.category))}${r.stack ? ` · ${esc(pretty(r.stack))} stack` : ''} · <a href="${url}" target="_blank" rel="noopener">source ↗</a>${signalLink}</div>
       </div>
-      <div class="rank-val">${val}<small>${esc(cfg.unit)}</small></div>
+      <div class="rank-val">${value}<small>${esc(cfg.unit)}</small></div>
     </div>`;
   }).join('');
 }
 
+function activateBoard(boardId, focusTab) {
+  if (!ALL_BOARDS.some(board => board.id === boardId)) return;
+  activeBoard = boardId;
+  renderBoards();
+  if (focusTab) {
+    const selected = $('tabs').querySelector('[aria-selected="true"]');
+    if (selected) selected.focus();
+  }
+}
+
 function renderStacks() {
   const rows = (M.leaderboards || {}).stacks || [];
-  if (!rows.length) { $('stack-table').innerHTML = '<tbody><tr><td class="empty">No stacks in the catalog</td></tr></tbody>'; return; }
-  // The snapshot publishes the top slice, not all of them — say so rather than
-  // letting a truncated table read as the whole catalog.
+  const table = $('stack-table');
+  if (!rows.length) {
+    table.innerHTML = '<caption>Deployable stack adoption and catalog size</caption><thead><tr><th scope="col">Stack</th><th scope="col">Vertical</th><th class="num" scope="col">Agents</th><th class="num" scope="col">Lines</th><th class="num" scope="col">Downloads</th></tr></thead><tbody><tr><td class="empty" colspan="5">No stacks are available in the catalog snapshot.</td></tr></tbody>';
+    $('stack-hint').textContent = 'No deployable stacks in this snapshot';
+    return;
+  }
   const total = M.totals.stacks || rows.length;
   $('stack-hint').innerHTML = rows.length < total
     ? `the unit a customer actually deploys — top ${rows.length} of ${num(total)}, <a href="library.html">all ${num(total)} in the library</a>`
     : 'the unit a customer actually deploys';
-  $('stack-table').innerHTML =
-    `<thead><tr><th>Stack</th><th>Vertical</th><th class="num">Agents</th><th class="num">Lines</th><th class="num">Downloads</th></tr></thead>
+  table.innerHTML =
+    `<caption>Deployable stack adoption and catalog size</caption>
+     <thead><tr><th scope="col">Stack</th><th scope="col">Vertical</th><th class="num" scope="col">Agents</th><th class="num" scope="col">Lines</th><th class="num" scope="col">Downloads</th></tr></thead>
      <tbody>${rows.map(s => `<tr>
        <td><a href="https://github.com/${OWNER}/${REPO}/tree/main/${encodeURI(s.path)}" target="_blank" rel="noopener">${esc(s.display_name)}</a></td>
        <td>${esc(pretty(s.vertical))}</td>
@@ -478,56 +1925,148 @@ function renderStacks() {
 }
 
 function renderBars(target, rows) {
-  const el = $(target);
-  if (!rows.length) { el.innerHTML = '<div class="empty">No data</div>'; return; }
-  const max = Math.max(...rows.map(r => r.value), 1);
-  el.innerHTML = rows.map(r => `<div class="bar-row">
-      <div class="bar-label" title="${esc(r.label)}">${esc(r.label)}${r.extra ? ` <span style="color:var(--text-muted)">· ${esc(r.extra)}</span>` : ''}</div>
-      <div class="bar-track"><div class="bar-fill" style="width:${(r.value / max) * 100}%"></div></div>
+  const element = $(target);
+  if (!rows.length) {
+    element.innerHTML = '<div class="empty">No data is available for this breakdown.</div>';
+    return;
+  }
+  const max = Math.max(...rows.map(r => Number(r.value) || 0), 1);
+  element.innerHTML = rows.map(r => `<div class="bar-row">
+      <div class="bar-label" title="${esc(r.label)}">${esc(r.label)}${r.extra ? ` <span class="bar-extra">· ${esc(r.extra)}</span>` : ''}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${boundedPercent(r.value, max)}%"></div></div>
       <div class="bar-num">${num(r.value)}</div>
     </div>`).join('');
 }
 
 function renderCDNFiles() {
   const files = ((M.cdn || {}).files || []).slice(0, 12);
-  if (!files.length) { $('cdn-files').innerHTML = '<div class="empty">No CDN hits recorded yet</div>'; return; }
-  const max = Math.max(...files.map(f => f.hits), 1);
+  if (!files.length) {
+    $('cdn-files').innerHTML = '<div class="empty">No observed CDN file hits are available in this snapshot. <a href="#file-download-ledger">Open the full tracked-file ledger</a>.</div>';
+    return;
+  }
+  const max = Math.max(...files.map(f => Number(f.hits) || 0), 1);
   $('cdn-files').innerHTML = files.map(f => `<div class="bar-row">
       <div class="bar-label" title="${esc(f.file)}">${esc(f.agent ? short(f.agent) : f.file.split('/').pop())}
-        <span style="color:var(--text-muted)">· ${esc(f.kind)}</span></div>
-      <div class="bar-track"><div class="bar-fill" style="width:${(f.hits / max) * 100}%"></div></div>
+        <span class="bar-extra">· ${esc(f.kind)}</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:${boundedPercent(f.hits, max)}%"></div></div>
       <div class="bar-num">${num(f.hits)}</div>
     </div>`).join('') +
-    `<p class="note" style="margin-top:12px">Total CDN traffic: ${num(M.cdn.total_hits)} hits · ${bytes(M.cdn.bandwidth)} served${M.cdn.rank ? ` · jsDelivr rank #${num(M.cdn.rank)}` : ''}</p>`;
+    `<p class="note note-summary">Total CDN traffic: ${num(M.cdn.total_hits)} hits · ${bytes(M.cdn.bandwidth)} served${M.cdn.rank ? ` · jsDelivr rank #${num(M.cdn.rank)}` : ''} · <a href="#file-download-ledger">open the full tracked-file ledger</a></p>`;
+}
+
+const FILE_LEDGER_PAGE_SIZE = 50;
+let fileLedgerPage = 1;
+
+function fileKindLabel(kind) {
+  return kind === 'skill' ? 'Skill (SKILL.md)' : pretty(kind);
+}
+
+function renderFileLedgerControls(rows) {
+  const select = $('file-ledger-kind');
+  const selected = select.value || 'all';
+  const kinds = Array.from(new Set(rows.map(row => row.kind).filter(Boolean))).sort();
+  select.innerHTML = '<option value="all">All kinds</option>' + kinds.map(kind =>
+    `<option value="${esc(kind)}">${esc(fileKindLabel(kind))}</option>`).join('');
+  select.value = kinds.includes(selected) ? selected : 'all';
+}
+
+function renderFileLedger(resetPage = false) {
+  const metrics = M.file_metrics || {};
+  const rows = Array.isArray(metrics.rows) ? metrics.rows.slice() : [];
+  renderFileLedgerControls(rows);
+  if (resetPage) fileLedgerPage = 1;
+  const query = $('file-ledger-search').value.trim().toLocaleLowerCase();
+  const kind = $('file-ledger-kind').value;
+  const sort = $('file-ledger-sort').value;
+  const filtered = rows.filter(row => {
+    if (kind !== 'all' && row.kind !== kind) return false;
+    if (!query) return true;
+    return [
+      row.path,
+      row.kind,
+      row.agent_name,
+      row.workshop_slug
+    ].some(value => String(value || '').toLocaleLowerCase().includes(query));
+  });
+  filtered.sort((left, right) => {
+    if (sort === 'path') return String(left.path).localeCompare(String(right.path));
+    const leftKnown = Number.isFinite(left.downloads);
+    const rightKnown = Number.isFinite(right.downloads);
+    if (leftKnown !== rightKnown) return leftKnown ? -1 : 1;
+    return (Number(right.downloads) || 0) - (Number(left.downloads) || 0)
+      || String(left.path).localeCompare(String(right.path));
+  });
+  const pageCount = Math.max(1, Math.ceil(filtered.length / FILE_LEDGER_PAGE_SIZE));
+  fileLedgerPage = Math.min(Math.max(1, fileLedgerPage), pageCount);
+  const start = (fileLedgerPage - 1) * FILE_LEDGER_PAGE_SIZE;
+  const visible = filtered.slice(start, start + FILE_LEDGER_PAGE_SIZE);
+  const table = $('file-ledger-table');
+  if (!rows.length) {
+    table.innerHTML = '<caption>All tracked repository files and observable downloads</caption><thead><tr><th scope="col">Path</th><th scope="col">Kind</th><th scope="col">Mapped agent</th><th scope="col">Mapped workshop</th><th class="num" scope="col">Downloads</th><th scope="col">Status</th></tr></thead><tbody><tr><td class="empty" colspan="6">This snapshot predates the tracked-file ledger. Regenerate metrics to publish every repository file.</td></tr></tbody>';
+  } else if (!visible.length) {
+    table.innerHTML = '<caption>All tracked repository files and observable downloads</caption><thead><tr><th scope="col">Path</th><th scope="col">Kind</th><th scope="col">Mapped agent</th><th scope="col">Mapped workshop</th><th class="num" scope="col">Downloads</th><th scope="col">Status</th></tr></thead><tbody><tr><td class="empty" colspan="6">No tracked files match the current search and kind filter.</td></tr></tbody>';
+  } else {
+    table.innerHTML = `<caption>Tracked files ${start + 1}–${start + visible.length} of ${filtered.length} matching rows</caption>
+      <thead><tr><th scope="col">Path</th><th scope="col">Kind</th><th scope="col">Mapped agent</th><th scope="col">Mapped workshop</th><th class="num" scope="col">Downloads</th><th scope="col">Status</th></tr></thead>
+      <tbody>${visible.map(row => `<tr>
+        <td><a href="https://github.com/${OWNER}/${REPO}/blob/main/${encodeURI(row.path)}" target="_blank" rel="noopener" class="mono">${esc(row.path)}</a></td>
+        <td>${esc(fileKindLabel(row.kind))}</td>
+        <td class="mono">${esc(row.agent_name || '—')}</td>
+        <td>${esc(row.workshop_slug || '—')}</td>
+        <td class="num">${num(row.downloads)}</td>
+        <td>${esc(pretty(row.status || 'unknown'))}</td>
+      </tr>`).join('')}</tbody>`;
+  }
+  const totalFiles = (metrics.totals || {}).files;
+  const kindSummary = Object.entries((metrics.totals || {}).by_kind || {})
+    .filter(([_kind, values]) => values.files)
+    .map(([kindName, values]) =>
+      `${fileKindLabel(kindName)}: ${num(values.downloads)} downloads across ${num(values.files)} files`)
+    .join(' · ');
+  $('file-ledger-summary').textContent = rows.length
+    ? `${num(filtered.length)} matching of ${num(totalFiles ?? rows.length)} tracked files · source coverage: ${metrics.source_status || 'unknown'}${kindSummary ? ` · ${kindSummary}` : ''}`
+    : 'Tracked-file metrics are unavailable in this snapshot.';
+  $('file-ledger-page').textContent = `Page ${fileLedgerPage} of ${pageCount}`;
+  $('file-ledger-prev').disabled = fileLedgerPage <= 1;
+  $('file-ledger-next').disabled = fileLedgerPage >= pageCount;
 }
 
 function renderPaths() {
   const rows = (M.traffic || {}).paths || [];
-  if (!rows.length) { $('paths').innerHTML = '<div class="empty">Path data needs a token-authenticated snapshot</div>'; return; }
-  const max = Math.max(...rows.map(r => r.count), 1);
+  if (!rows.length) {
+    $('paths').innerHTML = '<div class="empty">Path data needs a token-authenticated snapshot.</div>';
+    return;
+  }
+  const max = Math.max(...rows.map(p => Number(p.count) || 0), 1);
   $('paths').innerHTML = rows.slice(0, 12).map(p => `<div class="bar-row">
       <div class="bar-label" title="${esc(p.path)}"><a href="https://github.com${esc(p.path)}" target="_blank" rel="noopener">${esc(p.path.replace(`/${OWNER}/${REPO}`, '') || '/')}</a></div>
-      <div class="bar-track"><div class="bar-fill" style="width:${(p.count / max) * 100}%"></div></div>
+      <div class="bar-track"><div class="bar-fill" style="width:${boundedPercent(p.count, max)}%"></div></div>
       <div class="bar-num">${num(p.count)}</div>
     </div>`).join('');
 }
 
 function renderReferrers() {
   const rows = (M.traffic || {}).referrers || [];
-  if (!rows.length) { $('referrers').innerHTML = '<div class="empty">No referrer data in this snapshot</div>'; return; }
-  const max = Math.max(...rows.map(r => r.count), 1);
+  if (!rows.length) {
+    $('referrers').innerHTML = '<div class="empty">No referrer data is available in this snapshot.</div>';
+    return;
+  }
+  const max = Math.max(...rows.map(r => Number(r.count) || 0), 1);
   $('referrers').innerHTML = rows.map(r => `<div class="bar-row">
       <div class="bar-label">${esc(r.referrer)}</div>
-      <div class="bar-track"><div class="bar-fill" style="width:${(r.count / max) * 100}%"></div></div>
+      <div class="bar-track"><div class="bar-fill" style="width:${boundedPercent(r.count, max)}%"></div></div>
       <div class="bar-num">${num(r.count)}</div>
     </div>`).join('');
 }
 
 function renderReleases() {
   const rel = M.releases || { releases: [] };
-  if (!(rel.releases || []).length) { $('releases').innerHTML = '<div class="empty">No releases published</div>'; return; }
+  if (!(rel.releases || []).length) {
+    $('releases').innerHTML = '<div class="empty">No releases have been published.</div>';
+    return;
+  }
   $('releases').innerHTML = rel.releases.map(r => `<div class="rank-row">
-      <div class="rank-n">&#9656;</div>
+      <div class="rank-n">▸</div>
       <div><div class="rank-name"><a href="https://github.com/${OWNER}/${REPO}/releases/tag/${encodeURIComponent(r.tag)}" target="_blank" rel="noopener">${esc(r.tag)}</a></div>
         <div class="rank-meta">${esc(r.name || '')} · ${String(r.published_at || '').slice(0, 10)} · ${(r.assets || []).length} assets</div></div>
       <div class="rank-val">${num(r.downloads)}<small>downloads</small></div>
@@ -535,11 +2074,95 @@ function renderReleases() {
 }
 
 function renderSources() {
-  $('sources').innerHTML = (M.sources || []).map(s =>
-    `<div class="src-item"><b>${esc(s.name)}</b><span>${esc(s.metric)} — <a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.url.replace('https://', ''))}</a></span></div>`).join('');
+  const rows = M.sources || [];
+  $('sources').innerHTML = rows.length
+    ? rows.map(s => `<div class="src-item"><b>${esc(s.name)}</b><span>${esc(s.metric)} — <a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.url.replace('https://', ''))}</a></span></div>`).join('')
+    : '<div class="empty">No source metadata is available in this snapshot.</div>';
 }
 
-$('refresh').onclick = () => load();
+function syncThemeButton() {
+  const button = $('themeToggle');
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  button.setAttribute('aria-pressed', String(isDark));
+  button.textContent = isDark ? 'Use light theme' : 'Use dark theme';
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  syncThemeButton();
+  if (M) renderChart();
+}
+
+const feedbackSchema = 'aibast-workshop-feedback/1.0';
+function resolveFeedbackOwner(hostname) {
+  const pagesHost = hostname.match(
+    /^([a-z0-9](?:[a-z0-9-]{0,37}[a-z0-9])?)\.github\.io$/i
+  );
+  return pagesHost ? pagesHost[1] : 'microsoft';
+}
+
+function wireFeedback() {
+  const issueOwner = resolveFeedbackOwner(location.hostname);
+  const issueUrl = new URL(`https://github.com/${issueOwner}/aibast-agents-library/issues/new`);
+  issueUrl.searchParams.set('title', '[Metrics] Dashboard feedback');
+  issueUrl.searchParams.set('body', `<!-- aibast-workshop-feedback:v1 -->
+Feedback schema: ${feedbackSchema}
+
+Page: Library Metrics
+Page URL: ${location.href.split('#')[0]}
+Section or metric:
+What happened:
+What did you expect:
+
+Snapshot time shown on page:
+Browser and theme:`);
+  $('reportIssue').href = issueUrl.toString();
+}
+
+$('tabs').addEventListener('click', event => {
+  const tab = event.target.closest('button[role="tab"]');
+  if (tab) activateBoard(tab.dataset.board, false);
+});
+
+$('tabs').addEventListener('keydown', event => {
+  if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+  const tabs = Array.from($('tabs').querySelectorAll('button[role="tab"]'));
+  const current = tabs.indexOf(event.target);
+  if (current < 0) return;
+  event.preventDefault();
+  let next = current;
+  if (event.key === 'ArrowLeft') next = (current - 1 + tabs.length) % tabs.length;
+  if (event.key === 'ArrowRight') next = (current + 1) % tabs.length;
+  if (event.key === 'Home') next = 0;
+  if (event.key === 'End') next = tabs.length - 1;
+  activateBoard(tabs[next].dataset.board, true);
+});
+
+$('workshop-tabs').addEventListener('click', event => {
+  const control = event.target.closest('button[data-workshop-sort]');
+  if (!control) return;
+  activeWorkshopSort = control.dataset.workshopSort;
+  renderWorkshops();
+});
+
+$('file-ledger-search').addEventListener('input', () => renderFileLedger(true));
+$('file-ledger-kind').addEventListener('change', () => renderFileLedger(true));
+$('file-ledger-sort').addEventListener('change', () => renderFileLedger(true));
+$('file-ledger-prev').addEventListener('click', () => {
+  fileLedgerPage -= 1;
+  renderFileLedger();
+});
+$('file-ledger-next').addEventListener('click', () => {
+  fileLedgerPage += 1;
+  renderFileLedger();
+});
+
+$('refresh').addEventListener("click", load);
+$('themeToggle').addEventListener("click", toggleTheme);
+wireFeedback();
+syncThemeButton();
 load();
 </script>
 </body>

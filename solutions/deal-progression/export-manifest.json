@@ -27,11 +27,83 @@
       "status": "ready"
     },
     {
+      "id": "copilot-studio-solution",
+      "label": "Importable Copilot Studio solution",
+      "path": "solutions/deal-progression/exports/deal-progression-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/exports/deal-progression-copilot-studio-solution.zip",
+      "use": "Unmanaged solution ZIP for manual import; the agent remains unpublished",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-deployment-settings",
+      "label": "Copilot Studio deployment settings",
+      "path": "solutions/deal-progression/exports/deal-progression-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/exports/deal-progression-deployment-settings.json",
+      "use": "Connection-reference, environment-variable, and agent import settings",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-export-metadata",
+      "label": "Copilot Studio solution export metadata",
+      "path": "solutions/deal-progression/exports/deal-progression-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/exports/deal-progression-solution-export.json",
+      "use": "Export identity, integrity hash, source environment, and import caveats",
+      "status": "ready"
+    },
+    {
       "id": "field-guide",
       "label": "Customer field guide",
+      "path": "solutions/deal-progression/field-guide.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/field-guide.html",
+      "use": "Styled facilitation, evidence boundaries, gates, and recovery",
+      "status": "ready"
+    },
+    {
+      "id": "field-guide-source",
+      "label": "Field guide source",
       "path": "solutions/deal-progression/FIELD-GUIDE.md",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/FIELD-GUIDE.md",
-      "use": "Facilitation, evidence boundaries, gates, and recovery",
+      "use": "Markdown source retained for audit and export",
+      "status": "ready"
+    },
+    {
+      "id": "easy-personless-guide",
+      "label": "Personless Easy-mode guide",
+      "path": "solutions/deal-progression/EASY-MODE-PERSONLESS.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/EASY-MODE-PERSONLESS.md",
+      "use": "Brainstem lane skill attachment, two-message workshop, and engine loop",
+      "status": "ready"
+    },
+    {
+      "id": "easy-copilot-chat-prompts",
+      "label": "Copilot-only Easy-mode comparison",
+      "path": "solutions/deal-progression/EASY-MODE-COPILOT-CHAT.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/EASY-MODE-COPILOT-CHAT.md",
+      "use": "Copilot-only lane skill attachment and the same two workshop messages",
+      "status": "ready"
+    },
+    {
+      "id": "easy-mode-brainstem-skill",
+      "label": "Brainstem Easy Mode skill",
+      "path": "skills/aibast-easy-mode-brainstem/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-brainstem/SKILL.md",
+      "use": "Download-and-drag harness that defaults workshop execution to Brainstem",
+      "status": "ready"
+    },
+    {
+      "id": "easy-mode-copilot-skill",
+      "label": "Copilot-only Easy Mode skill",
+      "path": "skills/aibast-easy-mode-copilot/SKILL.md",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/skills/aibast-easy-mode-copilot/SKILL.md",
+      "use": "Download-and-drag harness that runs the workshop directly in GitHub Copilot",
+      "status": "ready"
+    },
+    {
+      "id": "generic-workshop-agent",
+      "label": "Generic AIBAST Workshop agent",
+      "path": "agents/@aibast-agents-library/templates/workshop_agent.py",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/agents/@aibast-agents-library/templates/workshop_agent.py",
+      "use": "Registry-driven Brainstem engine shared by every packaged solution",
       "status": "ready"
     },
     {
@@ -211,6 +283,14 @@
       "status": "ready"
     },
     {
+      "id": "easy-evidence-dataverse-draft-evidence",
+      "label": "Dataverse Draft Evidence",
+      "path": "solutions/deal-progression/evals/dataverse-draft-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/evals/dataverse-draft-evidence.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
       "id": "easy-evidence-demo-cases",
       "label": "Demo Cases",
       "path": "solutions/deal-progression/evals/demo-cases.json",
@@ -240,6 +320,222 @@
       "path": "solutions/deal-progression/evals/transcripts.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/evals/transcripts.json",
       "use": "Canonical source-agent acceptance evidence",
+      "status": "ready"
+    },
+    {
+      "id": "easy-evidence-visual-checkpoints",
+      "label": "Visual Checkpoints",
+      "path": "solutions/deal-progression/evals/visual-checkpoints.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/evals/visual-checkpoints.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-dp-01",
+      "label": "Annotated visual checkpoint: easy-dp-01",
+      "path": "solutions/deal-progression/screenshots/assisted/annotated/01-dp-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/screenshots/assisted/annotated/01-dp-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-dp-02",
+      "label": "Annotated visual checkpoint: easy-dp-02",
+      "path": "solutions/deal-progression/screenshots/assisted/annotated/02-dp-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/screenshots/assisted/annotated/02-dp-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-dp-03",
+      "label": "Annotated visual checkpoint: easy-dp-03",
+      "path": "solutions/deal-progression/screenshots/assisted/annotated/03-dp-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/screenshots/assisted/annotated/03-dp-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-04-dp-04",
+      "label": "Annotated visual checkpoint: easy-dp-04",
+      "path": "solutions/deal-progression/screenshots/assisted/annotated/04-dp-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/screenshots/assisted/annotated/04-dp-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-05-dp-05",
+      "label": "Annotated visual checkpoint: easy-dp-05",
+      "path": "solutions/deal-progression/screenshots/assisted/annotated/05-dp-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/screenshots/assisted/annotated/05-dp-05.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-06-dp-06",
+      "label": "Annotated visual checkpoint: easy-dp-06",
+      "path": "solutions/deal-progression/screenshots/assisted/annotated/06-dp-06.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/screenshots/assisted/annotated/06-dp-06.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-create-blank-agent",
+      "label": "Annotated visual checkpoint: hard-step-01",
+      "path": "solutions/deal-progression/screenshots/manual/annotated/01-create-blank-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/screenshots/manual/annotated/01-create-blank-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-name-agent",
+      "label": "Annotated visual checkpoint: hard-step-02",
+      "path": "solutions/deal-progression/screenshots/manual/annotated/02-name-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/screenshots/manual/annotated/02-name-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-enter-instructions",
+      "label": "Annotated visual checkpoint: hard-step-03",
+      "path": "solutions/deal-progression/screenshots/manual/annotated/03-enter-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/screenshots/manual/annotated/03-enter-instructions.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-06-add-aibast-deal-progression-operating-rules",
+      "label": "Annotated visual checkpoint: hard-step-06",
+      "path": "solutions/deal-progression/screenshots/manual/annotated/06-add-aibast-deal-progression-operating-rules.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/screenshots/manual/annotated/06-add-aibast-deal-progression-operating-rules.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-07-add-aibast-deal-progression-synthetic-records",
+      "label": "Annotated visual checkpoint: hard-step-07",
+      "path": "solutions/deal-progression/screenshots/manual/annotated/07-add-aibast-deal-progression-synthetic-records.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/screenshots/manual/annotated/07-add-aibast-deal-progression-synthetic-records.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-08-add-acceleration",
+      "label": "Annotated visual checkpoint: hard-step-08",
+      "path": "solutions/deal-progression/screenshots/manual/annotated/08-add-acceleration.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/screenshots/manual/annotated/08-add-acceleration.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-09-add-action-plans",
+      "label": "Annotated visual checkpoint: hard-step-09",
+      "path": "solutions/deal-progression/screenshots/manual/annotated/09-add-action-plans.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/screenshots/manual/annotated/09-add-action-plans.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-10-add-assign-tasks",
+      "label": "Annotated visual checkpoint: hard-step-10",
+      "path": "solutions/deal-progression/screenshots/manual/annotated/10-add-assign-tasks.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/screenshots/manual/annotated/10-add-assign-tasks.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-11-add-executive-summary",
+      "label": "Annotated visual checkpoint: hard-step-11",
+      "path": "solutions/deal-progression/screenshots/manual/annotated/11-add-executive-summary.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/screenshots/manual/annotated/11-add-executive-summary.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-12-add-pipeline-health",
+      "label": "Annotated visual checkpoint: hard-step-12",
+      "path": "solutions/deal-progression/screenshots/manual/annotated/12-add-pipeline-health.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/screenshots/manual/annotated/12-add-pipeline-health.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-13-add-stalled-deals",
+      "label": "Annotated visual checkpoint: hard-step-13",
+      "path": "solutions/deal-progression/screenshots/manual/annotated/13-add-stalled-deals.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/screenshots/manual/annotated/13-add-stalled-deals.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-14-review-inventory",
+      "label": "Annotated visual checkpoint: hard-step-14",
+      "path": "solutions/deal-progression/screenshots/manual/annotated/14-review-inventory.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/screenshots/manual/annotated/14-review-inventory.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-15-open-preview",
+      "label": "Annotated visual checkpoint: hard-step-15",
+      "path": "solutions/deal-progression/screenshots/manual/annotated/15-open-preview.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/screenshots/manual/annotated/15-open-preview.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-16-dp-01",
+      "label": "Annotated visual checkpoint: hard-step-16",
+      "path": "solutions/deal-progression/screenshots/manual/annotated/16-dp-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/screenshots/manual/annotated/16-dp-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-17-dp-02",
+      "label": "Annotated visual checkpoint: hard-step-17",
+      "path": "solutions/deal-progression/screenshots/manual/annotated/17-dp-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/screenshots/manual/annotated/17-dp-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-18-dp-03",
+      "label": "Annotated visual checkpoint: hard-step-18",
+      "path": "solutions/deal-progression/screenshots/manual/annotated/18-dp-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/screenshots/manual/annotated/18-dp-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-19-dp-04",
+      "label": "Annotated visual checkpoint: hard-step-19",
+      "path": "solutions/deal-progression/screenshots/manual/annotated/19-dp-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/screenshots/manual/annotated/19-dp-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-20-dp-05",
+      "label": "Annotated visual checkpoint: hard-step-20",
+      "path": "solutions/deal-progression/screenshots/manual/annotated/20-dp-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/screenshots/manual/annotated/20-dp-05.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-21-dp-06",
+      "label": "Annotated visual checkpoint: hard-step-21",
+      "path": "solutions/deal-progression/screenshots/manual/annotated/21-dp-06.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/screenshots/manual/annotated/21-dp-06.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-22-confirm-draft",
+      "label": "Annotated visual checkpoint: hard-step-22",
+      "path": "solutions/deal-progression/screenshots/manual/annotated/22-confirm-draft.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/screenshots/manual/annotated/22-confirm-draft.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
@@ -523,6 +819,22 @@
       "status": "ready"
     },
     {
+      "id": "workshop-settings",
+      "label": "Global workshop settings",
+      "path": "solutions/_shared/workshop-settings.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/_shared/workshop-settings.html",
+      "use": "Site-wide persisted Easy-mode harness preference",
+      "status": "ready"
+    },
+    {
+      "id": "evidence-report",
+      "label": "Styled evidence report",
+      "path": "solutions/deal-progression/evidence-report.html",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/evidence-report.html",
+      "use": "Learner-safe HTML summary of deterministic and visual evidence",
+      "status": "ready"
+    },
+    {
       "id": "quest",
       "label": "Guided field quest",
       "path": "solutions/deal-progression/quest.html",
@@ -570,5 +882,31 @@
       "use": "Copilot-assisted evidence inventory",
       "status": "ready"
     }
-  ]
+  ],
+  "copilot_studio_solution": {
+    "label": "Importable Deal Progression Agent Copilot Studio solution",
+    "status": "exported",
+    "solution_unique_name": "aibast_DealProgressionPilot",
+    "zip": {
+      "path": "solutions/deal-progression/exports/deal-progression-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/exports/deal-progression-copilot-studio-solution.zip",
+      "sha256": "4d795bf95f0528345bf376fce3ce56530170d53924ef235b98b67d7bbcaba0ce",
+      "bytes": 4155
+    },
+    "deployment_settings": {
+      "path": "solutions/deal-progression/exports/deal-progression-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/exports/deal-progression-deployment-settings.json"
+    },
+    "metadata": {
+      "path": "solutions/deal-progression/exports/deal-progression-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/deal-progression/exports/deal-progression-solution-export.json"
+    },
+    "managed": false,
+    "published": false,
+    "import_caveats": [
+      "Import as an unmanaged solution for manual review.",
+      "Map connection references and environment variables before enabling integrations.",
+      "The exported agent remains unpublished unless the target administrator explicitly publishes it."
+    ]
+  }
 }

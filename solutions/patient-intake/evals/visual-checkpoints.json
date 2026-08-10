@@ -1,0 +1,542 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/patient-intake",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker or refusal.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 23,
+    "reusable": 20,
+    "reshoot_required": 3
+  },
+  "captures": [
+    {
+      "id": "easy-pi-01",
+      "mode": "easy",
+      "case_id": "PI-01",
+      "source": "solutions/patient-intake/screenshots/assisted/01-pi-01.jpg",
+      "annotated": "solutions/patient-intake/screenshots/assisted/annotated/01-pi-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "SYN-PT-001",
+        "Emergency contact confirmation"
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 151,
+          "width": 690,
+          "height": 68,
+          "label": "Synthetic patient identifier"
+        },
+        {
+          "x": 284,
+          "y": 362,
+          "width": 690,
+          "height": 50,
+          "label": "Missing intake confirmation"
+        }
+      ]
+    },
+    {
+      "id": "easy-pi-02",
+      "mode": "easy",
+      "case_id": "PI-02",
+      "source": "solutions/patient-intake/screenshots/assisted/02-pi-02.jpg",
+      "annotated": "solutions/patient-intake/screenshots/assisted/annotated/02-pi-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Synthetic Health Plan",
+        "source record received"
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 132,
+          "width": 494,
+          "height": 138,
+          "label": "Recorded coverage evidence"
+        }
+      ]
+    },
+    {
+      "id": "easy-pi-03",
+      "mode": "easy",
+      "case_id": "PI-03",
+      "source": "solutions/patient-intake/screenshots/assisted/03-pi-03.jpg",
+      "annotated": "solutions/patient-intake/screenshots/assisted/annotated/03-pi-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Clinician A",
+        "nothing has been reserved or booked"
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 116,
+          "width": 680,
+          "height": 39,
+          "label": "No reservation or booking"
+        },
+        {
+          "x": 284,
+          "y": 153,
+          "width": 448,
+          "height": 177,
+          "label": "Clinician A candidate slots"
+        }
+      ]
+    },
+    {
+      "id": "easy-pi-04",
+      "mode": "easy",
+      "case_id": "PI-04",
+      "source": "solutions/patient-intake/screenshots/assisted/04-pi-04.jpg",
+      "annotated": "solutions/patient-intake/screenshots/assisted/annotated/04-pi-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Required Reviewer",
+        "Authorized patient-access staff must verify intake, coverage, and visit details"
+      ],
+      "full_case_not_visibly_proven": [
+        "SYN-PT-001 is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 354,
+          "width": 942,
+          "height": 101,
+          "label": "Required human reviewer"
+        }
+      ]
+    },
+    {
+      "id": "easy-draft",
+      "mode": "easy",
+      "source": "solutions/patient-intake/screenshots/assisted/05-confirm-draft.jpg",
+      "status": "reshoot_required",
+      "reason": "The target Patient Intake Pilot row is not visible, so the screenshot cannot prove its Draft state.",
+      "draft": true
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "step": 1,
+      "source": "solutions/patient-intake/screenshots/manual/01-create-blank-agent.jpg",
+      "status": "reshoot_required",
+      "reason": "The frame is still a blank loading canvas and does not visibly show an Untitled Agent or blank Build workspace."
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "step": 2,
+      "source": "solutions/patient-intake/screenshots/manual/02-name-agent.jpg",
+      "annotated": "solutions/patient-intake/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Patient Intake Manual in the name field"
+      ],
+      "boxes": [
+        {
+          "x": 160,
+          "y": 91,
+          "width": 825,
+          "height": 68,
+          "label": "Manual agent name entered"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "step": 3,
+      "source": "solutions/patient-intake/screenshots/manual/03-enter-instructions.jpg",
+      "annotated": "solutions/patient-intake/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Reviewed healthcare instruction policy",
+        "Locked Preview evidence anchors"
+      ],
+      "boxes": [
+        {
+          "x": 80,
+          "y": 226,
+          "width": 895,
+          "height": 240,
+          "label": "Reviewed instruction policy"
+        },
+        {
+          "x": 80,
+          "y": 490,
+          "width": 895,
+          "height": 327,
+          "label": "Locked Preview anchors"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "step": 4,
+      "source": "solutions/patient-intake/screenshots/manual/04-save-instructions.jpg",
+      "status": "reshoot_required",
+      "reason": "The instructions are visible, but no saved-state confirmation such as the Save tooltip stating No unsaved changes is visible."
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "step": 5,
+      "source": "solutions/patient-intake/screenshots/manual/05-remove-web-search.jpg",
+      "annotated": "solutions/patient-intake/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Knowledge section is empty after default web search removal"
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 253,
+          "width": 382,
+          "height": 72,
+          "label": "No default web search"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "step": 6,
+      "source": "solutions/patient-intake/screenshots/manual/06-add-aibast-patient-intake-review-rules.jpg",
+      "annotated": "solutions/patient-intake/screenshots/manual/annotated/06-add-aibast-patient-intake-review-rules.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_patient-intake-review-rules.md"
+      ],
+      "boxes": [
+        {
+          "x": 1024,
+          "y": 304,
+          "width": 357,
+          "height": 49,
+          "label": "Review rules knowledge file"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "step": 7,
+      "source": "solutions/patient-intake/screenshots/manual/07-add-aibast-patient-intake-synthetic-records.jpg",
+      "annotated": "solutions/patient-intake/screenshots/manual/annotated/07-add-aibast-patient-intake-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_patient-intake-synthetic-records.md"
+      ],
+      "boxes": [
+        {
+          "x": 1024,
+          "y": 304,
+          "width": 360,
+          "height": 49,
+          "label": "Synthetic records knowledge file"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "step": 8,
+      "source": "solutions/patient-intake/screenshots/manual/08-add-appointment-availability.jpg",
+      "annotated": "solutions/patient-intake/screenshots/manual/annotated/08-add-appointment-availability.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "patient-intake-appointment-availability"
+      ],
+      "boxes": [
+        {
+          "x": 1024,
+          "y": 184,
+          "width": 362,
+          "height": 49,
+          "label": "Appointment availability skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "step": 9,
+      "source": "solutions/patient-intake/screenshots/manual/09-add-coverage-evidence.jpg",
+      "annotated": "solutions/patient-intake/screenshots/manual/annotated/09-add-coverage-evidence.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "patient-intake-coverage-evidence"
+      ],
+      "boxes": [
+        {
+          "x": 1024,
+          "y": 184,
+          "width": 340,
+          "height": 49,
+          "label": "Coverage evidence skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "step": 10,
+      "source": "solutions/patient-intake/screenshots/manual/10-add-intake-readiness.jpg",
+      "annotated": "solutions/patient-intake/screenshots/manual/annotated/10-add-intake-readiness.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "patient-intake-intake-readiness"
+      ],
+      "boxes": [
+        {
+          "x": 1024,
+          "y": 184,
+          "width": 340,
+          "height": 49,
+          "label": "Intake readiness skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "step": 11,
+      "source": "solutions/patient-intake/screenshots/manual/11-add-pre-visit-summary.jpg",
+      "annotated": "solutions/patient-intake/screenshots/manual/annotated/11-add-pre-visit-summary.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "patient-intake-pre-visit-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1024,
+          "y": 184,
+          "width": 340,
+          "height": 49,
+          "label": "Pre-visit summary skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "step": 12,
+      "source": "solutions/patient-intake/screenshots/manual/12-review-inventory.jpg",
+      "annotated": "solutions/patient-intake/screenshots/manual/annotated/12-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "Four configured skills",
+        "Two configured knowledge files",
+        "Tools section contains no configured tool"
+      ],
+      "boxes": [
+        {
+          "x": 1204,
+          "y": 84,
+          "width": 192,
+          "height": 43,
+          "label": "Reviewed model"
+        },
+        {
+          "x": 1024,
+          "y": 181,
+          "width": 344,
+          "height": 169,
+          "label": "Four configured skills"
+        },
+        {
+          "x": 1017,
+          "y": 353,
+          "width": 381,
+          "height": 72,
+          "label": "No configured tools"
+        },
+        {
+          "x": 1024,
+          "y": 468,
+          "width": 368,
+          "height": 93,
+          "label": "Two knowledge files"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "step": 13,
+      "source": "solutions/patient-intake/screenshots/manual/13-open-preview.jpg",
+      "annotated": "solutions/patient-intake/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab",
+        "New chat"
+      ],
+      "boxes": [
+        {
+          "x": 565,
+          "y": 7,
+          "width": 181,
+          "height": 50,
+          "label": "Preview selected"
+        },
+        {
+          "x": 835,
+          "y": 88,
+          "width": 125,
+          "height": 43,
+          "label": "Fresh chat control"
+        }
+      ]
+    },
+    {
+      "id": "hard-pi-01",
+      "mode": "hard",
+      "case_id": "PI-01",
+      "step": 14,
+      "source": "solutions/patient-intake/screenshots/manual/14-pi-01.jpg",
+      "annotated": "solutions/patient-intake/screenshots/manual/annotated/14-pi-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "SYN-PT-001",
+        "Emergency contact confirmation"
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 151,
+          "width": 690,
+          "height": 68,
+          "label": "Synthetic patient identifier"
+        },
+        {
+          "x": 284,
+          "y": 362,
+          "width": 690,
+          "height": 50,
+          "label": "Missing intake confirmation"
+        }
+      ]
+    },
+    {
+      "id": "hard-pi-02",
+      "mode": "hard",
+      "case_id": "PI-02",
+      "step": 15,
+      "source": "solutions/patient-intake/screenshots/manual/15-pi-02.jpg",
+      "annotated": "solutions/patient-intake/screenshots/manual/annotated/15-pi-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Synthetic Health Plan",
+        "source record received"
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 130,
+          "width": 770,
+          "height": 222,
+          "label": "Recorded coverage evidence"
+        }
+      ]
+    },
+    {
+      "id": "hard-pi-03",
+      "mode": "hard",
+      "case_id": "PI-03",
+      "step": 16,
+      "source": "solutions/patient-intake/screenshots/manual/16-pi-03.jpg",
+      "annotated": "solutions/patient-intake/screenshots/manual/annotated/16-pi-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Clinician A",
+        "nothing has been reserved or booked"
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 115,
+          "width": 680,
+          "height": 88,
+          "label": "No booking and clinician"
+        },
+        {
+          "x": 284,
+          "y": 214,
+          "width": 448,
+          "height": 137,
+          "label": "Candidate source slots"
+        }
+      ]
+    },
+    {
+      "id": "hard-pi-04",
+      "mode": "hard",
+      "case_id": "PI-04",
+      "step": 17,
+      "source": "solutions/patient-intake/screenshots/manual/17-pi-04.jpg",
+      "annotated": "solutions/patient-intake/screenshots/manual/annotated/17-pi-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Required Reviewer",
+        "Authorized patient-access staff must verify intake, coverage, and appointment details"
+      ],
+      "full_case_not_visibly_proven": [
+        "SYN-PT-001 is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 347,
+          "width": 942,
+          "height": 105,
+          "label": "Required human reviewer"
+        }
+      ]
+    },
+    {
+      "id": "hard-draft",
+      "mode": "hard",
+      "step": 18,
+      "source": "solutions/patient-intake/screenshots/manual/18-confirm-draft.jpg",
+      "annotated": "solutions/patient-intake/screenshots/manual/annotated/18-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Patient Intake Manual",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 108,
+          "y": 239,
+          "width": 653,
+          "height": 65,
+          "label": "Target agent remains Draft"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy Draft gate filtered to Patient Intake Pilot with Draft visible.",
+      "Hard step 1 after the blank agent workspace finishes loading and Untitled Agent is visible.",
+      "Hard step 4 with the Save tooltip visibly stating No unsaved changes."
+    ]
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:patient-intake",
+    "reviewed_at": "2026-08-10T00:27:58.158339+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  }
+}

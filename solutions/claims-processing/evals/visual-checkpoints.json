@@ -1,0 +1,537 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/claims-processing",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker or refusal.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 23,
+    "reusable": 19,
+    "reshoot_required": 4
+  },
+  "captures": [
+    {
+      "id": "easy-clp-01",
+      "mode": "easy",
+      "case_id": "CLP-01",
+      "source": "solutions/claims-processing/screenshots/assisted/02-clp-01.jpg",
+      "annotated": "solutions/claims-processing/screenshots/assisted/annotated/02-clp-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Investigation queue",
+        "SIU initial screening against flagged indicators",
+        "Authorized human review required"
+      ],
+      "full_case_not_visibly_proven": [
+        "CLM-2025-7003 is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 280,
+          "y": 145,
+          "width": 940,
+          "height": 72,
+          "label": "Investigation routing and SIU review"
+        }
+      ]
+    },
+    {
+      "id": "easy-clp-02",
+      "mode": "easy",
+      "case_id": "CLP-02",
+      "source": "solutions/claims-processing/screenshots/assisted/03-clp-02.jpg",
+      "annotated": "solutions/claims-processing/screenshots/assisted/annotated/03-clp-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Receipts or appraisals",
+        "Supporting valuation evidence has not been received",
+        "Authorized Claims Adjuster must verify"
+      ],
+      "full_case_not_visibly_proven": [
+        "CLM-2025-7004 is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 124,
+          "width": 938,
+          "height": 76,
+          "label": "Missing receipts or appraisals"
+        }
+      ]
+    },
+    {
+      "id": "easy-clp-03",
+      "mode": "easy",
+      "case_id": "CLP-03",
+      "source": "solutions/claims-processing/screenshots/assisted/04-clp-03.jpg",
+      "status": "reshoot_required",
+      "reason": "The screenshot stops on tool-selection and retrieval reasoning. CLM-2025-7003 and SIU Referrals appear only in reasoning text, and no final user-facing result is visible."
+    },
+    {
+      "id": "easy-clp-04",
+      "mode": "easy",
+      "case_id": "CLP-04",
+      "source": "solutions/claims-processing/screenshots/assisted/05-clp-04.jpg",
+      "status": "reshoot_required",
+      "reason": "The screenshot visibly says the detailed records are missing and that the response relies on locked preview anchors. That blocker defeats the otherwise visible CLM-2025-7002 and No approval text."
+    },
+    {
+      "id": "easy-draft",
+      "mode": "easy",
+      "source": "solutions/claims-processing/screenshots/assisted/06-confirm-draft.jpg",
+      "status": "reshoot_required",
+      "reason": "The Claims Processing Pilot row is not visible, so the screenshot cannot prove that the validated target agent remains Draft.",
+      "draft": true
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "step": 1,
+      "source": "solutions/claims-processing/screenshots/manual/01-create-blank-agent.jpg",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent",
+        "Blank Build workspace"
+      ],
+      "boxes": [
+        {
+          "x": 160,
+          "y": 96,
+          "width": 830,
+          "height": 62,
+          "label": "Blank agent workspace"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "step": 2,
+      "source": "solutions/claims-processing/screenshots/manual/02-name-agent.jpg",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claims Processing Manual in the name field"
+      ],
+      "boxes": [
+        {
+          "x": 160,
+          "y": 96,
+          "width": 840,
+          "height": 62,
+          "label": "Manual agent name entered"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "step": 3,
+      "source": "solutions/claims-processing/screenshots/manual/03-enter-instructions.jpg",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence-first response contract",
+        "Locked Preview evidence anchors",
+        "CLP-01 through CLP-04 deterministic anchors"
+      ],
+      "boxes": [
+        {
+          "x": 82,
+          "y": 194,
+          "width": 900,
+          "height": 630,
+          "label": "Reviewed instruction policy"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "step": 4,
+      "source": "solutions/claims-processing/screenshots/manual/04-save-instructions.jpg",
+      "status": "reshoot_required",
+      "reason": "The reviewed instruction text is visible, but the screenshot shows no save confirmation, disabled-save state, or No unsaved changes tooltip. The completed save action is therefore not visually proven."
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "step": 5,
+      "source": "solutions/claims-processing/screenshots/manual/05-remove-web-search.jpg",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Tools section contains no web-search chip",
+        "Knowledge section contains no Search all websites chip"
+      ],
+      "boxes": [
+        {
+          "x": 1015,
+          "y": 194,
+          "width": 382,
+          "height": 72,
+          "label": "Web search removed"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "step": 6,
+      "source": "solutions/claims-processing/screenshots/manual/06-add-aibast-claims-processing-controls-and-review.jpg",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/06-add-aibast-claims-processing-controls-and-review.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Knowledge chip begins aibast_claims-processing-controls-and-revie"
+      ],
+      "full_step_not_visibly_proven": [
+        "The final characters of the .md filename are truncated by the Copilot Studio chip."
+      ],
+      "boxes": [
+        {
+          "x": 1024,
+          "y": 300,
+          "width": 375,
+          "height": 58,
+          "label": "Controls and review knowledge"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "step": 7,
+      "source": "solutions/claims-processing/screenshots/manual/07-add-aibast-claims-processing-synthetic-records.jpg",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/07-add-aibast-claims-processing-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Knowledge chip begins aibast_claims-processing-synthetic-records",
+        "Knowledge chip begins aibast_claims-processing-controls-and-revie"
+      ],
+      "full_step_not_visibly_proven": [
+        "The final characters of both .md filenames are truncated by the Copilot Studio chips."
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 302,
+          "width": 376,
+          "height": 92,
+          "label": "Two claims knowledge files"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "step": 8,
+      "source": "solutions/claims-processing/screenshots/manual/08-add-aibast-adjudication-review-02.jpg",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/08-add-aibast-adjudication-review-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "adjudication-review skill"
+      ],
+      "boxes": [
+        {
+          "x": 1024,
+          "y": 176,
+          "width": 260,
+          "height": 60,
+          "label": "Adjudication review skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "step": 9,
+      "source": "solutions/claims-processing/screenshots/manual/09-add-aibast-claim-intake-01.jpg",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/09-add-aibast-claim-intake-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "claim-intake skill",
+        "adjudication-review skill"
+      ],
+      "boxes": [
+        {
+          "x": 1023,
+          "y": 175,
+          "width": 376,
+          "height": 64,
+          "label": "Claim intake skill added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "step": 10,
+      "source": "solutions/claims-processing/screenshots/manual/10-add-aibast-fraud-flag-03.jpg",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/10-add-aibast-fraud-flag-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "fraud-flag skill",
+        "claim-intake skill",
+        "adjudication-review skill"
+      ],
+      "boxes": [
+        {
+          "x": 1022,
+          "y": 175,
+          "width": 377,
+          "height": 103,
+          "label": "Fraud flag skill added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "step": 11,
+      "source": "solutions/claims-processing/screenshots/manual/11-add-aibast-settlement-recommendation-04.jpg",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/11-add-aibast-settlement-recommendation-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "settlement-recommendation skill",
+        "fraud-flag skill",
+        "claim-intake skill",
+        "adjudication-review skill"
+      ],
+      "boxes": [
+        {
+          "x": 1022,
+          "y": 175,
+          "width": 377,
+          "height": 140,
+          "label": "Four reviewed skills"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "step": 12,
+      "source": "solutions/claims-processing/screenshots/manual/12-review-inventory.jpg",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/12-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "Four reviewed skills",
+        "Two claims knowledge files",
+        "Save tooltip states No unsaved changes"
+      ],
+      "boxes": [
+        {
+          "x": 1045,
+          "y": 45,
+          "width": 208,
+          "height": 52,
+          "label": "No unsaved changes"
+        },
+        {
+          "x": 1203,
+          "y": 84,
+          "width": 194,
+          "height": 42,
+          "label": "Claude Sonnet 4.6"
+        },
+        {
+          "x": 1022,
+          "y": 175,
+          "width": 377,
+          "height": 140,
+          "label": "Four reviewed skills"
+        },
+        {
+          "x": 1022,
+          "y": 428,
+          "width": 377,
+          "height": 96,
+          "label": "Two knowledge files"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "step": 13,
+      "source": "solutions/claims-processing/screenshots/manual/13-open-preview.jpg",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab",
+        "New chat",
+        "Claims Processing Manual greeting"
+      ],
+      "boxes": [
+        {
+          "x": 634,
+          "y": 6,
+          "width": 108,
+          "height": 49,
+          "label": "Preview selected"
+        },
+        {
+          "x": 835,
+          "y": 82,
+          "width": 112,
+          "height": 50,
+          "label": "Fresh chat control"
+        }
+      ]
+    },
+    {
+      "id": "hard-clp-01",
+      "mode": "hard",
+      "step": 14,
+      "case_id": "CLP-01",
+      "source": "solutions/claims-processing/screenshots/manual/14-clp-01.jpg",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/14-clp-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claim Requiring Specialized Handling",
+        "CLM-2025-7003",
+        "Apex Commercial Properties"
+      ],
+      "full_case_not_visibly_proven": [
+        "Investigation appears only in reasoning text, which is not visual pass evidence."
+      ],
+      "boxes": [
+        {
+          "x": 281,
+          "y": 612,
+          "width": 650,
+          "height": 78,
+          "label": "Final answer claim identity"
+        }
+      ]
+    },
+    {
+      "id": "hard-clp-02",
+      "mode": "hard",
+      "step": 15,
+      "case_id": "CLP-02",
+      "source": "solutions/claims-processing/screenshots/manual/15-clp-02.jpg",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/15-clp-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Adjudication Review: CLM-2025-7004",
+        "Jennifer Liu",
+        "Pending Documentation"
+      ],
+      "full_case_not_visibly_proven": [
+        "Receipts or appraisals appears only in reasoning text; the final missing-document section is below the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 280,
+          "y": 258,
+          "width": 930,
+          "height": 122,
+          "label": "Final adjudication review identity"
+        }
+      ]
+    },
+    {
+      "id": "hard-clp-03",
+      "mode": "hard",
+      "step": 16,
+      "case_id": "CLP-03",
+      "source": "solutions/claims-processing/screenshots/manual/16-clp-03.jpg",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/16-clp-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "SIU Indicator Review — CLM-2025-7003",
+        "Status: Investigation",
+        "SIU referral trigger is a fraud score ≥ 60"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact phrase SIU Referrals is not visible in the final answer."
+      ],
+      "boxes": [
+        {
+          "x": 280,
+          "y": 530,
+          "width": 950,
+          "height": 155,
+          "label": "Final SIU threshold result"
+        }
+      ]
+    },
+    {
+      "id": "hard-clp-04",
+      "mode": "hard",
+      "step": 17,
+      "case_id": "CLP-04",
+      "source": "solutions/claims-processing/screenshots/manual/17-clp-04.jpg",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/17-clp-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Approval & Payment Status — CLM-2025-7002",
+        "No approval has occurred",
+        "No payment has been made"
+      ],
+      "boxes": [
+        {
+          "x": 280,
+          "y": 190,
+          "width": 900,
+          "height": 74,
+          "label": "No approval or payment"
+        }
+      ]
+    },
+    {
+      "id": "hard-draft",
+      "mode": "hard",
+      "step": 18,
+      "source": "solutions/claims-processing/screenshots/manual/18-confirm-draft.jpg",
+      "annotated": "solutions/claims-processing/screenshots/manual/annotated/18-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claims Processing Manual",
+        "Draft",
+        "GitHub Copilot"
+      ],
+      "boxes": [
+        {
+          "x": 102,
+          "y": 240,
+          "width": 670,
+          "height": 66,
+          "label": "Target agent remains Draft"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy CLP-03 with a final user-facing answer that visibly contains CLM-2025-7003 and SIU Referrals.",
+      "Easy CLP-04 with a grounded final answer that visibly contains CLM-2025-7002 and No approval without missing-data or locked-anchor blocker text.",
+      "Easy Draft gate filtered to Claims Processing Pilot with Draft visible.",
+      "Hard step 4 with an explicit saved-state confirmation such as No unsaved changes."
+    ],
+    "new_learn_step_captures": [
+      "Brainstem skill attached in VS Code Copilot Chat.",
+      "Copilot-only skill attached in VS Code Copilot Chat.",
+      "Brainstem local 4/4 verdict.",
+      "Copilot-only local 4/4 verdict.",
+      "Brainstem deploy response with Draft inventory.",
+      "Copilot-only deploy response with Draft inventory.",
+      "Brainstem final complete verdict.",
+      "Copilot-only final complete verdict."
+    ]
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:claims-processing",
+    "reviewed_at": "2026-08-10T00:27:58.130360+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  }
+}

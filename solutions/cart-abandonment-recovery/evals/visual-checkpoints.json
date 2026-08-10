@@ -1,0 +1,585 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/cart-abandonment-recovery",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker or refusal.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 23,
+    "reusable": 21,
+    "reshoot_required": 2
+  },
+  "captures": [
+    {
+      "id": "easy-car-01",
+      "mode": "easy",
+      "case_id": "CAR-01",
+      "source": "solutions/cart-abandonment-recovery/screenshots/assisted/02-car-01.jpg",
+      "annotated": "solutions/cart-abandonment-recovery/screenshots/assisted/annotated/02-car-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Account Creation Wall (CART-20002 — Desktop)",
+        "Payment Page (CART-20003 — Desktop)",
+        "Cart Page Exit (CART-20004 — Mobile, Guest)",
+        "unrecoverable"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Prepared for Marketing Manager and Synthetic Cart Abandonment Analysis headings are above the captured viewport.",
+        "The exact no shopper is contacted boundary is outside the capture."
+      ],
+      "boxes": [
+        {
+          "x": 280,
+          "y": 140,
+          "width": 960,
+          "height": 330,
+          "label": "Synthetic cart breakdown anchors"
+        }
+      ]
+    },
+    {
+      "id": "easy-car-02",
+      "mode": "easy",
+      "case_id": "CAR-02",
+      "source": "solutions/cart-abandonment-recovery/screenshots/assisted/03-car-02.jpg",
+      "annotated": "solutions/cart-abandonment-recovery/screenshots/assisted/annotated/03-car-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "No step in this sequence may be deployed without passing all applicable consent gates",
+        "Carts Pending Recovery",
+        "No consented contact path in synthetic record"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Prepared for Digital Marketing Lead and Draft Recovery Campaign Dashboard headings are above the captured viewport.",
+        "The exact phrase not deployed is outside the capture."
+      ],
+      "boxes": [
+        {
+          "x": 280,
+          "y": 235,
+          "width": 955,
+          "height": 370,
+          "label": "Consent gates and pending recovery"
+        }
+      ]
+    },
+    {
+      "id": "easy-car-03",
+      "mode": "easy",
+      "case_id": "CAR-03",
+      "source": "solutions/cart-abandonment-recovery/screenshots/assisted/04-car-03.jpg",
+      "annotated": "solutions/cart-abandonment-recovery/screenshots/assisted/annotated/04-car-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Margin Cost",
+        "Net Recovery Value",
+        "Every concept above is a scenario for approval",
+        "no offer, coupon, or benefit has been created, issued, or applied"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Prepared for Growth Manager and Draft Incentive Scenario Comparison headings are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 120,
+          "width": 670,
+          "height": 225,
+          "label": "Margin-aware scenario comparison"
+        },
+        {
+          "x": 285,
+          "y": 390,
+          "width": 955,
+          "height": 190,
+          "label": "Approval-only boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-car-04",
+      "mode": "easy",
+      "case_id": "CAR-04",
+      "source": "solutions/cart-abandonment-recovery/screenshots/assisted/05-car-04.jpg",
+      "annotated": "solutions/cart-abandonment-recovery/screenshots/assisted/annotated/05-car-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Benchmarks",
+        "Planning Estimates",
+        "No cart or purchase is changed"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Synthetic Conversion Tracking heading and Recovery Rate are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 280,
+          "y": 240,
+          "width": 960,
+          "height": 345,
+          "label": "Benchmark and planning separation"
+        }
+      ]
+    },
+    {
+      "id": "easy-draft",
+      "mode": "easy",
+      "source": "solutions/cart-abandonment-recovery/screenshots/assisted/06-confirm-draft.jpg",
+      "status": "reshoot_required",
+      "reason": "The target Cart Recovery Pilot row is not visible, so this capture cannot prove the validated pilot remains Draft.",
+      "draft": true
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "step": 1,
+      "source": "solutions/cart-abandonment-recovery/screenshots/manual/01-create-blank-agent.jpg",
+      "annotated": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent",
+        "Blank Build workspace"
+      ],
+      "boxes": [
+        {
+          "x": 160,
+          "y": 90,
+          "width": 825,
+          "height": 82,
+          "label": "Blank agent workspace"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "step": 2,
+      "source": "solutions/cart-abandonment-recovery/screenshots/manual/02-name-agent.jpg",
+      "annotated": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Cart Abandonment Manual in the name field"
+      ],
+      "boxes": [
+        {
+          "x": 160,
+          "y": 90,
+          "width": 825,
+          "height": 82,
+          "label": "Manual agent name entered"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "step": 3,
+      "source": "solutions/cart-abandonment-recovery/screenshots/manual/03-enter-instructions.jpg",
+      "annotated": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Reviewed cart-recovery instruction policy",
+        "Locked Preview evidence anchors",
+        "CAR-01 through CAR-04 acceptance anchors"
+      ],
+      "boxes": [
+        {
+          "x": 75,
+          "y": 185,
+          "width": 905,
+          "height": 640,
+          "label": "Reviewed instruction policy"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "step": 4,
+      "source": "solutions/cart-abandonment-recovery/screenshots/manual/04-save-instructions.jpg",
+      "status": "reshoot_required",
+      "reason": "The instruction text is visible, but the screenshot does not show a saved-state confirmation such as No unsaved changes; the save checkpoint is therefore not visually proven."
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "step": 5,
+      "source": "solutions/cart-abandonment-recovery/screenshots/manual/05-remove-web-search.jpg",
+      "annotated": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Tools section contains no web-search chip"
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 185,
+          "width": 375,
+          "height": 58,
+          "label": "Tools empty; web search absent"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "step": 6,
+      "source": "solutions/cart-abandonment-recovery/screenshots/manual/06-add-aibast-cart-recovery-rules-and-safety.jpg",
+      "annotated": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/06-add-aibast-cart-recovery-rules-and-safety.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_cart-recovery-rules-and-safety.md"
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 307,
+          "width": 355,
+          "height": 43,
+          "label": "Rules and safety knowledge"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "step": 7,
+      "source": "solutions/cart-abandonment-recovery/screenshots/manual/07-add-aibast-cart-recovery-synthetic-records.jpg",
+      "annotated": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/07-add-aibast-cart-recovery-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_cart-recovery-synthetic-records.md",
+        "aibast_cart-recovery-rules-and-safety.md"
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 307,
+          "width": 360,
+          "height": 88,
+          "label": "Two reviewed knowledge files"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "step": 8,
+      "source": "solutions/cart-abandonment-recovery/screenshots/manual/08-add-abandonment-analysis.jpg",
+      "annotated": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/08-add-abandonment-analysis.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "anonymous-cart-abandonment-analysis"
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 183,
+          "width": 350,
+          "height": 43,
+          "label": "Abandonment analysis skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "step": 9,
+      "source": "solutions/cart-abandonment-recovery/screenshots/manual/09-add-conversion-tracking.jpg",
+      "annotated": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/09-add-conversion-tracking.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "synthetic-recovery-conversion-tracking"
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 183,
+          "width": 350,
+          "height": 43,
+          "label": "Conversion tracking skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "step": 10,
+      "source": "solutions/cart-abandonment-recovery/screenshots/manual/10-add-incentive-optimization.jpg",
+      "annotated": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/10-add-incentive-optimization.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "margin-aware-incentive-scenarios"
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 183,
+          "width": 350,
+          "height": 43,
+          "label": "Margin-aware incentive skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "step": 11,
+      "source": "solutions/cart-abandonment-recovery/screenshots/manual/11-add-recovery-campaign.jpg",
+      "annotated": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/11-add-recovery-campaign.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "consent-aware-recovery-campaign-draft"
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 183,
+          "width": 365,
+          "height": 43,
+          "label": "Consent-aware campaign skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "step": 12,
+      "source": "solutions/cart-abandonment-recovery/screenshots/manual/12-review-inventory.jpg",
+      "annotated": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/12-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "Four reviewed skills",
+        "Two reviewed knowledge files",
+        "No unsaved changes"
+      ],
+      "boxes": [
+        {
+          "x": 1045,
+          "y": 48,
+          "width": 205,
+          "height": 52,
+          "label": "Saved state"
+        },
+        {
+          "x": 1200,
+          "y": 84,
+          "width": 195,
+          "height": 44,
+          "label": "Sonnet 4.6"
+        },
+        {
+          "x": 1025,
+          "y": 135,
+          "width": 375,
+          "height": 220,
+          "label": "Four skills"
+        },
+        {
+          "x": 1025,
+          "y": 468,
+          "width": 375,
+          "height": 88,
+          "label": "Two knowledge files"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "step": 13,
+      "source": "solutions/cart-abandonment-recovery/screenshots/manual/13-open-preview.jpg",
+      "annotated": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab",
+        "New chat",
+        "Cart Abandonment Manual"
+      ],
+      "boxes": [
+        {
+          "x": 565,
+          "y": 8,
+          "width": 180,
+          "height": 48,
+          "label": "Preview selected"
+        },
+        {
+          "x": 835,
+          "y": 84,
+          "width": 120,
+          "height": 48,
+          "label": "Fresh chat control"
+        }
+      ]
+    },
+    {
+      "id": "hard-car-01",
+      "mode": "hard",
+      "step": 14,
+      "case_id": "CAR-01",
+      "source": "solutions/cart-abandonment-recovery/screenshots/manual/14-car-01.jpg",
+      "annotated": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/14-car-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "What Needs Review",
+        "CART-20002 and CART-20003",
+        "No shopper is contacted",
+        "authorized human review"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Prepared for Marketing Manager and Synthetic Cart Abandonment Analysis headings are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 240,
+          "width": 940,
+          "height": 270,
+          "label": "Synthetic breakdown and review actions"
+        },
+        {
+          "x": 285,
+          "y": 515,
+          "width": 940,
+          "height": 65,
+          "label": "No-contact safety boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-car-02",
+      "mode": "hard",
+      "step": 15,
+      "case_id": "CAR-02",
+      "source": "solutions/cart-abandonment-recovery/screenshots/manual/15-car-02.jpg",
+      "annotated": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/15-car-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Carts Pending Recovery",
+        "No consented contact path in synthetic record",
+        "Consent & Approval Gates",
+        "Opt-in verification"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Prepared for Digital Marketing Lead and Draft Recovery Campaign Dashboard headings are above the captured viewport.",
+        "The exact phrase not deployed is outside the capture."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 118,
+          "width": 945,
+          "height": 235,
+          "label": "Pending recovery inventory"
+        },
+        {
+          "x": 285,
+          "y": 365,
+          "width": 945,
+          "height": 325,
+          "label": "Consent and approval gates"
+        }
+      ]
+    },
+    {
+      "id": "hard-car-03",
+      "mode": "hard",
+      "step": 16,
+      "case_id": "CAR-03",
+      "source": "solutions/cart-abandonment-recovery/screenshots/manual/16-car-03.jpg",
+      "annotated": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/16-car-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Scenario Rationale",
+        "margin",
+        "Every scenario above is a concept for authorized human review",
+        "No incentive, offer, coupon, or shipping benefit has been created, issued, applied, or scheduled"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Prepared for Growth Manager and Draft Incentive Scenario Comparison headings are above the captured viewport.",
+        "The exact phrase Scenario for approval is outside the capture."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 235,
+          "width": 945,
+          "height": 235,
+          "label": "Margin-aware scenario rationale"
+        },
+        {
+          "x": 285,
+          "y": 500,
+          "width": 945,
+          "height": 85,
+          "label": "Authorized-review boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-car-04",
+      "mode": "hard",
+      "step": 17,
+      "case_id": "CAR-04",
+      "source": "solutions/cart-abandonment-recovery/screenshots/manual/17-car-04.jpg",
+      "annotated": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/17-car-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Benchmark",
+        "Planning Estimate",
+        "No cart or purchase is changed"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Synthetic Conversion Tracking heading and Recovery Rate are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 235,
+          "width": 945,
+          "height": 345,
+          "label": "Benchmark and planning separation"
+        }
+      ]
+    },
+    {
+      "id": "hard-draft",
+      "mode": "hard",
+      "step": 18,
+      "source": "solutions/cart-abandonment-recovery/screenshots/manual/18-confirm-draft.jpg",
+      "annotated": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/18-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Cart Abandonment Manual",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 105,
+          "y": 235,
+          "width": 1280,
+          "height": 65,
+          "label": "Target manual agent remains Draft"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy Draft gate filtered so Cart Recovery Pilot and Draft are visible in the same frame.",
+      "Hard step 4 with an explicit saved-state confirmation such as No unsaved changes."
+    ]
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:cart-abandonment-recovery",
+    "reviewed_at": "2026-08-10T00:27:58.129293+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  }
+}

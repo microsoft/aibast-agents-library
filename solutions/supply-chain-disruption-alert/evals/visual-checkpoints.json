@@ -1,0 +1,530 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/supply-chain-disruption-alert",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker or refusal.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 23,
+    "reusable": 19,
+    "reshoot_required": 4
+  },
+  "captures": [
+    {
+      "id": "easy-supply_chain_disruption_alert-01",
+      "mode": "easy",
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-01",
+      "source": "solutions/supply-chain-disruption-alert/screenshots/assisted/01-supply_chain_disruption_alert-01.jpg",
+      "annotated": "solutions/supply-chain-disruption-alert/screenshots/assisted/annotated/01-supply_chain_disruption_alert-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$3,800,000.00 modeled impact"
+      ],
+      "full_case_not_visibly_proven": [
+        "DISR-002 and SKU-1010 are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 204,
+          "width": 920,
+          "height": 50,
+          "label": "$3.8M modeled impact"
+        }
+      ]
+    },
+    {
+      "id": "easy-supply_chain_disruption_alert-02",
+      "mode": "easy",
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-02",
+      "source": "solutions/supply-chain-disruption-alert/screenshots/assisted/02-supply_chain_disruption_alert-02.jpg",
+      "annotated": "solutions/supply-chain-disruption-alert/screenshots/assisted/annotated/02-supply_chain_disruption_alert-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Weather Event"
+      ],
+      "full_case_not_visibly_proven": [
+        "Asia-Pacific Primary and HIGH are outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 706,
+          "y": 174,
+          "width": 170,
+          "height": 46,
+          "label": "Weather factor"
+        }
+      ]
+    },
+    {
+      "id": "easy-supply_chain_disruption_alert-03",
+      "mode": "easy",
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-03",
+      "source": "solutions/supply-chain-disruption-alert/screenshots/assisted/03-supply_chain_disruption_alert-03.jpg",
+      "annotated": "solutions/supply-chain-disruption-alert/screenshots/assisted/annotated/03-supply_chain_disruption_alert-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "no purchase order"
+      ],
+      "full_case_not_visibly_proven": [
+        "DISR-002 and the Draft Disruption Mitigation Scenario heading are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 451,
+          "width": 934,
+          "height": 123,
+          "label": "No purchase order approval gate"
+        }
+      ]
+    },
+    {
+      "id": "easy-supply_chain_disruption_alert-04",
+      "mode": "easy",
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-04",
+      "source": "solutions/supply-chain-disruption-alert/screenshots/assisted/04-supply_chain_disruption_alert-04.jpg",
+      "annotated": "solutions/supply-chain-disruption-alert/screenshots/assisted/annotated/04-supply_chain_disruption_alert-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "TechSource Taiwan",
+        "due diligence",
+        "human approval"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 214,
+          "width": 936,
+          "height": 57,
+          "label": "TechSource Taiwan candidate"
+        },
+        {
+          "x": 287,
+          "y": 382,
+          "width": 936,
+          "height": 112,
+          "label": "Due diligence and human approval"
+        }
+      ]
+    },
+    {
+      "id": "easy-draft",
+      "mode": "easy",
+      "source": "solutions/supply-chain-disruption-alert/screenshots/assisted/05-confirm-draft.jpg",
+      "status": "reshoot_required",
+      "reason": "The target Supply Chain Alert Pilot row is not visible, so the screenshot cannot prove that this specific agent remains Draft.",
+      "draft": true
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "step": 1,
+      "source": "solutions/supply-chain-disruption-alert/screenshots/manual/01-create-blank-agent.jpg",
+      "status": "reshoot_required",
+      "reason": "The screenshot contains only a loading spinner and blank canvas; no blank agent workspace or Untitled Agent anchor is visible."
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "step": 2,
+      "source": "solutions/supply-chain-disruption-alert/screenshots/manual/02-name-agent.jpg",
+      "annotated": "solutions/supply-chain-disruption-alert/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Supply Chain Disruption Manual in the name field"
+      ],
+      "boxes": [
+        {
+          "x": 165,
+          "y": 98,
+          "width": 816,
+          "height": 52,
+          "label": "Manual agent name entered"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "step": 3,
+      "source": "solutions/supply-chain-disruption-alert/screenshots/manual/03-enter-instructions.jpg",
+      "annotated": "solutions/supply-chain-disruption-alert/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Supply Chain Disruption Alert Agent — Manual Global Instructions",
+        "Locked Preview evidence anchors"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 224,
+          "width": 890,
+          "height": 346,
+          "label": "Reviewed global instructions"
+        },
+        {
+          "x": 84,
+          "y": 625,
+          "width": 890,
+          "height": 177,
+          "label": "Locked Preview anchors"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "step": 4,
+      "source": "solutions/supply-chain-disruption-alert/screenshots/manual/04-save-instructions.jpg",
+      "status": "reshoot_required",
+      "reason": "The instruction text is visible, but no saved-state confirmation or No unsaved changes indicator is shown for the save checkpoint."
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "step": 5,
+      "source": "solutions/supply-chain-disruption-alert/screenshots/manual/05-remove-web-search.jpg",
+      "annotated": "solutions/supply-chain-disruption-alert/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Knowledge section contains no Search all websites capability"
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 246,
+          "width": 384,
+          "height": 72,
+          "label": "Web search removed"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "step": 6,
+      "source": "solutions/supply-chain-disruption-alert/screenshots/manual/06-add-supply-chain-disruption-alert-rules-and-controls.jpg",
+      "annotated": "solutions/supply-chain-disruption-alert/screenshots/manual/annotated/06-add-supply-chain-disruption-alert-rules-and-controls.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "supply-chain-disruption-alert-rules-and-cont..."
+      ],
+      "full_filename_not_visibly_proven": [
+        "The Copilot Studio chip truncates the end of the filename."
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 305,
+          "width": 371,
+          "height": 48,
+          "label": "Rules and controls knowledge"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "step": 7,
+      "source": "solutions/supply-chain-disruption-alert/screenshots/manual/07-add-supply-chain-disruption-alert-synthetic-records.jpg",
+      "annotated": "solutions/supply-chain-disruption-alert/screenshots/manual/annotated/07-add-supply-chain-disruption-alert-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "supply-chain-disruption-alert-synthetic-reco..."
+      ],
+      "full_filename_not_visibly_proven": [
+        "The Copilot Studio chip truncates the end of the filename."
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 304,
+          "width": 371,
+          "height": 47,
+          "label": "Synthetic records knowledge"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "step": 8,
+      "source": "solutions/supply-chain-disruption-alert/screenshots/manual/08-add-aibast-disruption-dashboard.jpg",
+      "annotated": "solutions/supply-chain-disruption-alert/screenshots/manual/annotated/08-add-aibast-disruption-dashboard.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "supply-chain-disruption-alert-disruption-das..."
+      ],
+      "full_skill_name_not_visibly_proven": [
+        "The Copilot Studio chip truncates the end of the skill name."
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 184,
+          "width": 371,
+          "height": 46,
+          "label": "Disruption dashboard skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "step": 9,
+      "source": "solutions/supply-chain-disruption-alert/screenshots/manual/09-add-aibast-mitigation-plan.jpg",
+      "annotated": "solutions/supply-chain-disruption-alert/screenshots/manual/annotated/09-add-aibast-mitigation-plan.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "supply-chain-disruption-alert-mitigation-plan"
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 184,
+          "width": 371,
+          "height": 46,
+          "label": "Mitigation plan skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "step": 10,
+      "source": "solutions/supply-chain-disruption-alert/screenshots/manual/10-add-aibast-risk-assessment.jpg",
+      "annotated": "solutions/supply-chain-disruption-alert/screenshots/manual/annotated/10-add-aibast-risk-assessment.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "supply-chain-disruption-alert-risk-assessment"
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 184,
+          "width": 371,
+          "height": 46,
+          "label": "Risk assessment skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "step": 11,
+      "source": "solutions/supply-chain-disruption-alert/screenshots/manual/11-add-aibast-supplier-alternatives.jpg",
+      "annotated": "solutions/supply-chain-disruption-alert/screenshots/manual/annotated/11-add-aibast-supplier-alternatives.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "supply-chain-disruption-alert-supplier-altern..."
+      ],
+      "full_skill_name_not_visibly_proven": [
+        "The Copilot Studio chip truncates the end of the skill name."
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 184,
+          "width": 371,
+          "height": 46,
+          "label": "Supplier alternatives skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "step": 12,
+      "source": "solutions/supply-chain-disruption-alert/screenshots/manual/12-review-inventory.jpg",
+      "annotated": "solutions/supply-chain-disruption-alert/screenshots/manual/annotated/12-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "Four configured supply-chain skills",
+        "Two configured knowledge files",
+        "Tools section contains no configured tool"
+      ],
+      "boxes": [
+        {
+          "x": 1204,
+          "y": 86,
+          "width": 192,
+          "height": 39,
+          "label": "Reviewed model"
+        },
+        {
+          "x": 1027,
+          "y": 181,
+          "width": 372,
+          "height": 166,
+          "label": "Four configured skills"
+        },
+        {
+          "x": 1018,
+          "y": 365,
+          "width": 382,
+          "height": 62,
+          "label": "No configured tools"
+        },
+        {
+          "x": 1027,
+          "y": 468,
+          "width": 372,
+          "height": 87,
+          "label": "Two knowledge files"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "step": 13,
+      "source": "solutions/supply-chain-disruption-alert/screenshots/manual/13-open-preview.jpg",
+      "annotated": "solutions/supply-chain-disruption-alert/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "New chat",
+        "Supply Chain Disruption Manual greeting"
+      ],
+      "boxes": [
+        {
+          "x": 834,
+          "y": 83,
+          "width": 128,
+          "height": 53,
+          "label": "New chat"
+        },
+        {
+          "x": 259,
+          "y": 145,
+          "width": 548,
+          "height": 81,
+          "label": "Manual agent ready"
+        }
+      ]
+    },
+    {
+      "id": "hard-supply_chain_disruption_alert-01",
+      "mode": "hard",
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-01",
+      "step": 14,
+      "source": "solutions/supply-chain-disruption-alert/screenshots/manual/14-supply_chain_disruption_alert-01.jpg",
+      "annotated": "solutions/supply-chain-disruption-alert/screenshots/manual/annotated/14-supply_chain_disruption_alert-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$3,800,000.00 modeled estimate"
+      ],
+      "full_case_not_visibly_proven": [
+        "DISR-002 and SKU-1010 are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 285,
+          "width": 936,
+          "height": 99,
+          "label": "$3.8M modeled estimate"
+        }
+      ]
+    },
+    {
+      "id": "hard-supply_chain_disruption_alert-02",
+      "mode": "hard",
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-02",
+      "step": 15,
+      "source": "solutions/supply-chain-disruption-alert/screenshots/manual/15-supply_chain_disruption_alert-02.jpg",
+      "status": "reshoot_required",
+      "reason": "The captured viewport shows route context and a geopolitical factor, but none of the locked positive anchors Asia-Pacific Primary, HIGH, or Weather is visible."
+    },
+    {
+      "id": "hard-supply_chain_disruption_alert-03",
+      "mode": "hard",
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-03",
+      "step": 16,
+      "source": "solutions/supply-chain-disruption-alert/screenshots/manual/16-supply_chain_disruption_alert-03.jpg",
+      "annotated": "solutions/supply-chain-disruption-alert/screenshots/manual/annotated/16-supply_chain_disruption_alert-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "No purchase order"
+      ],
+      "full_case_not_visibly_proven": [
+        "DISR-002 and the exact Draft Disruption Mitigation Scenario heading are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 505,
+          "width": 936,
+          "height": 72,
+          "label": "No purchase order boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-supply_chain_disruption_alert-04",
+      "mode": "hard",
+      "case_id": "SUPPLY_CHAIN_DISRUPTION_ALERT-04",
+      "step": 17,
+      "source": "solutions/supply-chain-disruption-alert/screenshots/manual/17-supply_chain_disruption_alert-04.jpg",
+      "annotated": "solutions/supply-chain-disruption-alert/screenshots/manual/annotated/17-supply_chain_disruption_alert-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "due diligence",
+        "human approval"
+      ],
+      "full_case_not_visibly_proven": [
+        "TechSource Taiwan is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 240,
+          "width": 936,
+          "height": 84,
+          "label": "Due diligence and human approval"
+        }
+      ]
+    },
+    {
+      "id": "hard-draft",
+      "mode": "hard",
+      "step": 18,
+      "source": "solutions/supply-chain-disruption-alert/screenshots/manual/18-confirm-draft.jpg",
+      "annotated": "solutions/supply-chain-disruption-alert/screenshots/manual/annotated/18-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Supply Chain Disruption Manual",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 103,
+          "y": 246,
+          "width": 1282,
+          "height": 52,
+          "label": "Target manual agent remains Draft"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy Draft gate filtered to Supply Chain Alert Pilot with Draft visible.",
+      "Hard step 1 after the blank Untitled Agent workspace has fully loaded.",
+      "Hard step 4 with the saved-state tooltip or No unsaved changes indicator visible.",
+      "Hard SUPPLY_CHAIN_DISRUPTION_ALERT-02 with Asia-Pacific Primary, HIGH, or Weather visible in the final answer."
+    ],
+    "new_learn_step_captures": []
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:supply-chain-disruption-alert",
+    "reviewed_at": "2026-08-10T00:27:58.192003+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  }
+}

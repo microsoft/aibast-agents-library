@@ -1,0 +1,689 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/deal-progression",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker or refusal.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 29,
+    "reusable": 26,
+    "reshoot_required": 3
+  },
+  "captures": [
+    {
+      "id": "easy-dp-01",
+      "mode": "easy",
+      "case_id": "DP-01",
+      "source": "solutions/deal-progression/screenshots/assisted/01-dp-01.jpg",
+      "annotated": "solutions/deal-progression/screenshots/assisted/annotated/01-dp-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "No CRM record was written",
+        "Sales leadership must review all findings"
+      ],
+      "full_case_not_visibly_proven": [
+        "Pipeline Health Summary is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 448,
+          "width": 945,
+          "height": 128,
+          "label": "Evidence boundary and read-only gate"
+        }
+      ]
+    },
+    {
+      "id": "easy-dp-02",
+      "mode": "easy",
+      "case_id": "DP-02",
+      "source": "solutions/deal-progression/screenshots/assisted/02-dp-02.jpg",
+      "annotated": "solutions/deal-progression/screenshots/assisted/annotated/02-dp-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "read-only output did not write CRM data",
+        "authorized opportunity owner must review"
+      ],
+      "full_case_not_visibly_proven": [
+        "Stalled Deal Deep-Dive and Diagnosis are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 468,
+          "width": 945,
+          "height": 108,
+          "label": "Evidence boundary and review gate"
+        }
+      ]
+    },
+    {
+      "id": "easy-dp-03",
+      "mode": "easy",
+      "case_id": "DP-03",
+      "source": "solutions/deal-progression/screenshots/assisted/03-dp-03.jpg",
+      "annotated": "solutions/deal-progression/screenshots/assisted/annotated/03-dp-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Approval Gate",
+        "Evidence boundary",
+        "No CRM record, task, alert, forecast entry, pricing approval, proposal, meeting, or customer communication was created or modified"
+      ],
+      "full_case_not_visibly_proven": [
+        "Action Plans and Planning Objective are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 401,
+          "width": 945,
+          "height": 176,
+          "label": "Approval and evidence boundaries"
+        }
+      ]
+    },
+    {
+      "id": "easy-dp-04",
+      "mode": "easy",
+      "case_id": "DP-04",
+      "source": "solutions/deal-progression/screenshots/assisted/04-dp-04.jpg",
+      "annotated": "solutions/deal-progression/screenshots/assisted/annotated/04-dp-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Synthetic Scenario",
+        "$2.4M of possible Q4 timing movement",
+        "not a forecast commitment",
+        "Evidence boundary"
+      ],
+      "full_case_not_visibly_proven": [
+        "Pipeline Acceleration Strategy is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 300,
+          "width": 945,
+          "height": 104,
+          "label": "Synthetic scenario boundary"
+        },
+        {
+          "x": 285,
+          "y": 443,
+          "width": 945,
+          "height": 130,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-dp-05",
+      "mode": "easy",
+      "case_id": "DP-05",
+      "source": "solutions/deal-progression/screenshots/assisted/05-dp-05.jpg",
+      "annotated": "solutions/deal-progression/screenshots/assisted/annotated/05-dp-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "No CRM record was written",
+        "no owner was assigned",
+        "Sales leadership must review and authorize every task mapping"
+      ],
+      "full_case_not_visibly_proven": [
+        "Draft Task Assignment Plan and candidate tasks are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 443,
+          "width": 945,
+          "height": 131,
+          "label": "Evidence boundary and no-assignment gate"
+        }
+      ]
+    },
+    {
+      "id": "easy-dp-06",
+      "mode": "easy",
+      "case_id": "DP-06",
+      "source": "solutions/deal-progression/screenshots/assisted/06-dp-06.jpg",
+      "annotated": "solutions/deal-progression/screenshots/assisted/annotated/06-dp-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "read-only decision support only",
+        "authorized human review"
+      ],
+      "full_case_not_visibly_proven": [
+        "Executive Summary and Synthetic Planning Targets are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 469,
+          "width": 945,
+          "height": 101,
+          "label": "Evidence boundary and human-review gate"
+        }
+      ]
+    },
+    {
+      "id": "easy-draft",
+      "mode": "easy",
+      "source": "solutions/deal-progression/screenshots/assisted/07-confirm-draft.jpg",
+      "status": "reshoot_required",
+      "reason": "The capture is blank; neither Deal Progression Pilot nor a Draft status is visible.",
+      "draft": true
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "step": 1,
+      "source": "solutions/deal-progression/screenshots/manual/01-create-blank-agent.jpg",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent",
+        "blank Build workspace"
+      ],
+      "boxes": [
+        {
+          "x": 164,
+          "y": 99,
+          "width": 818,
+          "height": 50,
+          "label": "Blank agent name field"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "step": 2,
+      "source": "solutions/deal-progression/screenshots/manual/02-name-agent.jpg",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Deal Progression Manual in the name field"
+      ],
+      "boxes": [
+        {
+          "x": 164,
+          "y": 99,
+          "width": 818,
+          "height": 50,
+          "label": "Manual agent name"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "step": 3,
+      "source": "solutions/deal-progression/screenshots/manual/03-enter-instructions.jpg",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence-first response contract",
+        "Locked Preview evidence anchors",
+        "DP-01 through DP-06 acceptance anchors"
+      ],
+      "boxes": [
+        {
+          "x": 82,
+          "y": 245,
+          "width": 894,
+          "height": 582,
+          "label": "Reviewed instruction and locked anchors"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "step": 4,
+      "source": "solutions/deal-progression/screenshots/manual/04-save-instructions.jpg",
+      "status": "reshoot_required",
+      "reason": "The frame shows instruction content but no saved-state confirmation such as No unsaved changes, so it does not visually prove the save action."
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "step": 5,
+      "source": "solutions/deal-progression/screenshots/manual/05-remove-web-search.jpg",
+      "status": "reshoot_required",
+      "reason": "The Search all websites chip is absent, but the frame has no positive removal confirmation; absence alone is not a reliable visual anchor for this checkpoint."
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "step": 6,
+      "source": "solutions/deal-progression/screenshots/manual/06-add-aibast-deal-progression-operating-rules.jpg",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/06-add-aibast-deal-progression-operating-rules.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_deal-progression-operating-rules.md"
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 307,
+          "width": 372,
+          "height": 42,
+          "label": "Operating-rules knowledge file"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "step": 7,
+      "source": "solutions/deal-progression/screenshots/manual/07-add-aibast-deal-progression-synthetic-records.jpg",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/07-add-aibast-deal-progression-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_deal-progression-synthetic-records.md",
+        "aibast_deal-progression-operating-rules.md"
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 307,
+          "width": 372,
+          "height": 80,
+          "label": "Two reviewed knowledge files"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "step": 8,
+      "source": "solutions/deal-progression/screenshots/manual/08-add-acceleration.jpg",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/08-add-acceleration.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "deal-progression-acceleration"
+      ],
+      "boxes": [
+        {
+          "x": 1026,
+          "y": 187,
+          "width": 278,
+          "height": 42,
+          "label": "Acceleration skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "step": 9,
+      "source": "solutions/deal-progression/screenshots/manual/09-add-action-plans.jpg",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/09-add-action-plans.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "deal-progression-action-plans"
+      ],
+      "boxes": [
+        {
+          "x": 1026,
+          "y": 187,
+          "width": 278,
+          "height": 42,
+          "label": "Action-plans skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "step": 10,
+      "source": "solutions/deal-progression/screenshots/manual/10-add-assign-tasks.jpg",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/10-add-assign-tasks.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "deal-progression-assign-tasks"
+      ],
+      "boxes": [
+        {
+          "x": 1026,
+          "y": 187,
+          "width": 278,
+          "height": 42,
+          "label": "Assign-tasks skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "step": 11,
+      "source": "solutions/deal-progression/screenshots/manual/11-add-executive-summary.jpg",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/11-add-executive-summary.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "deal-progression-executive-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1026,
+          "y": 187,
+          "width": 318,
+          "height": 42,
+          "label": "Executive-summary skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "step": 12,
+      "source": "solutions/deal-progression/screenshots/manual/12-add-pipeline-health.jpg",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/12-add-pipeline-health.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "deal-progression-pipeline-health"
+      ],
+      "boxes": [
+        {
+          "x": 1026,
+          "y": 187,
+          "width": 306,
+          "height": 42,
+          "label": "Pipeline-health skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "step": 13,
+      "source": "solutions/deal-progression/screenshots/manual/13-add-stalled-deals.jpg",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/13-add-stalled-deals.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "deal-progression-stalled-deals"
+      ],
+      "boxes": [
+        {
+          "x": 1026,
+          "y": 186,
+          "width": 286,
+          "height": 42,
+          "label": "Stalled-deals skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "step": 14,
+      "source": "solutions/deal-progression/screenshots/manual/14-review-inventory.jpg",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/14-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "six configured skills shown as five names plus +1",
+        "aibast_deal-progression-synthetic-records.md",
+        "aibast_deal-progression-operating-rules.md"
+      ],
+      "boxes": [
+        {
+          "x": 1203,
+          "y": 86,
+          "width": 193,
+          "height": 38,
+          "label": "Reviewed model"
+        },
+        {
+          "x": 1026,
+          "y": 186,
+          "width": 322,
+          "height": 198,
+          "label": "Six configured skills"
+        },
+        {
+          "x": 1026,
+          "y": 510,
+          "width": 372,
+          "height": 82,
+          "label": "Two knowledge files"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "step": 15,
+      "source": "solutions/deal-progression/screenshots/manual/15-open-preview.jpg",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/15-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab selected",
+        "New chat",
+        "Deal Progression Manual greeting"
+      ],
+      "boxes": [
+        {
+          "x": 638,
+          "y": 8,
+          "width": 101,
+          "height": 43,
+          "label": "Preview selected"
+        },
+        {
+          "x": 833,
+          "y": 91,
+          "width": 114,
+          "height": 37,
+          "label": "Fresh chat control"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "step": 16,
+      "case_id": "DP-01",
+      "source": "solutions/deal-progression/screenshots/manual/16-dp-01.jpg",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/16-dp-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "read-only output did not write CRM data",
+        "Sales leadership must review all forecast changes"
+      ],
+      "full_case_not_visibly_proven": [
+        "Pipeline Health Summary is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 448,
+          "width": 945,
+          "height": 128,
+          "label": "Evidence boundary and read-only gate"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "step": 17,
+      "case_id": "DP-02",
+      "source": "solutions/deal-progression/screenshots/manual/17-dp-02.jpg",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/17-dp-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Approval gate",
+        "Evidence boundary",
+        "No CRM record, task, alert, outreach, forecast change, or customer communication was created or sent"
+      ],
+      "full_case_not_visibly_proven": [
+        "Stalled Deal Deep-Dive and Diagnosis are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 430,
+          "width": 945,
+          "height": 147,
+          "label": "Approval and evidence boundaries"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "step": 18,
+      "case_id": "DP-03",
+      "source": "solutions/deal-progression/screenshots/manual/18-dp-03.jpg",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/18-dp-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "read-only decision support",
+        "Every plan requires authorized review"
+      ],
+      "full_case_not_visibly_proven": [
+        "Action Plans and Planning Objective are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 443,
+          "width": 945,
+          "height": 130,
+          "label": "Evidence boundary and review gate"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-19",
+      "mode": "hard",
+      "step": 19,
+      "case_id": "DP-04",
+      "source": "solutions/deal-progression/screenshots/manual/19-dp-04.jpg",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/19-dp-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Synthetic Scenario",
+        "$2.4M of possible Q4 timing movement",
+        "not a forecast commitment",
+        "Evidence boundary"
+      ],
+      "full_case_not_visibly_proven": [
+        "Pipeline Acceleration Strategy is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 285,
+          "width": 945,
+          "height": 84,
+          "label": "Synthetic scenario boundary"
+        },
+        {
+          "x": 285,
+          "y": 496,
+          "width": 945,
+          "height": 75,
+          "label": "Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-20",
+      "mode": "hard",
+      "step": 20,
+      "case_id": "DP-05",
+      "source": "solutions/deal-progression/screenshots/manual/20-dp-05.jpg",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/20-dp-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "No tasks were created",
+        "authorized opportunity owner must review and approve all assignments"
+      ],
+      "full_case_not_visibly_proven": [
+        "Draft Task Assignment Plan and candidate tasks are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 443,
+          "width": 945,
+          "height": 130,
+          "label": "Evidence boundary and no-task gate"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-21",
+      "mode": "hard",
+      "step": 21,
+      "case_id": "DP-06",
+      "source": "solutions/deal-progression/screenshots/manual/21-dp-06.jpg",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/21-dp-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "read-only decision support",
+        "Authorized human review is required"
+      ],
+      "full_case_not_visibly_proven": [
+        "Executive Summary and Synthetic Planning Targets are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 469,
+          "width": 945,
+          "height": 101,
+          "label": "Evidence boundary and human-review gate"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-22",
+      "mode": "hard",
+      "step": 22,
+      "source": "solutions/deal-progression/screenshots/manual/22-confirm-draft.jpg",
+      "annotated": "solutions/deal-progression/screenshots/manual/annotated/22-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Deal Progression Manual",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 105,
+          "y": 239,
+          "width": 638,
+          "height": 60,
+          "label": "Target manual agent remains Draft"
+        }
+      ]
+    }
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy Draft gate with Deal Progression Pilot and Draft visible.",
+      "Hard step 4 with a visible saved-state confirmation.",
+      "Hard step 5 with a positive web-search removal confirmation."
+    ]
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:deal-progression",
+    "reviewed_at": "2026-08-10T00:27:58.140058+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  }
+}

@@ -1,0 +1,611 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/building-permit-processing",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker or refusal.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
+  },
+  "summary": {
+    "total_existing_captures": 31,
+    "reusable": 24,
+    "reshoot_required": 7
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:building-permit-processing",
+    "reviewed_at": "2026-08-09T21:13:57Z",
+    "method": "Opened all 31 original assisted and manual JPEG captures in an image viewer, compared each visible product state with the locked cases and browserfilm step, restored visually verified frames to their correct filenames, then inspected generated annotated PNG evidence.",
+    "notes": "Approved all 24 hard-mode steps, including the intentional frontmatter-diagnostic checkpoint. The historical published pilot configuration, five pilot case frames, and blank assisted frame remain excluded; locked-case behavior is machine-proven by the export-agent Preview artifact and hashed transcripts, while unpublished release status is proven by Dataverse."
+  },
+  "captures": [
+    {
+      "id": "easy-draft",
+      "mode": "easy",
+      "source": "solutions/building-permit-processing/screenshots/assisted/01-review-build.jpg",
+      "status": "reshoot_required",
+      "reason": "This frame shows the historical Building Permit Pilot, which was published during runtime validation. It is not evidence for the unpublished Building Permit Manual Build release agent.",
+      "draft": true
+    },
+    {
+      "id": "easy-bpp-01",
+      "mode": "easy",
+      "source": "solutions/building-permit-processing/screenshots/assisted/02-bpp-01.jpg",
+      "status": "reshoot_required",
+      "reason": "Historical Building Permit Pilot runtime frame; withhold until the unpublished Building Permit Manual Build case is recaptured.",
+      "case_id": "BPP-01"
+    },
+    {
+      "id": "easy-bpp-02",
+      "mode": "easy",
+      "source": "solutions/building-permit-processing/screenshots/assisted/03-bpp-02.jpg",
+      "status": "reshoot_required",
+      "reason": "Historical Building Permit Pilot runtime frame; withhold until the unpublished Building Permit Manual Build case is recaptured.",
+      "case_id": "BPP-02"
+    },
+    {
+      "id": "easy-bpp-03",
+      "mode": "easy",
+      "source": "solutions/building-permit-processing/screenshots/assisted/04-bpp-03.jpg",
+      "status": "reshoot_required",
+      "reason": "Historical Building Permit Pilot runtime frame; withhold until the unpublished Building Permit Manual Build case is recaptured.",
+      "case_id": "BPP-03"
+    },
+    {
+      "id": "easy-bpp-04",
+      "mode": "easy",
+      "source": "solutions/building-permit-processing/screenshots/assisted/05-bpp-04.jpg",
+      "status": "reshoot_required",
+      "reason": "Historical Building Permit Pilot runtime frame; withhold until the unpublished Building Permit Manual Build case is recaptured.",
+      "case_id": "BPP-04"
+    },
+    {
+      "id": "easy-bpp-05",
+      "mode": "easy",
+      "source": "solutions/building-permit-processing/screenshots/assisted/06-bpp-05.jpg",
+      "status": "reshoot_required",
+      "reason": "Historical Building Permit Pilot runtime frame; withhold until the unpublished Building Permit Manual Build case is recaptured.",
+      "case_id": "BPP-05"
+    },
+    {
+      "id": "easy-blank-frame-07",
+      "mode": "easy",
+      "source": "solutions/building-permit-processing/screenshots/assisted/07-confirm-draft.jpg",
+      "status": "reshoot_required",
+      "case_id": "FRAME-07",
+      "reason": "The JPEG is an entirely blank white frame with no Copilot Studio UI, Draft state, response, or deterministic anchor."
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "step": 1,
+      "source": "solutions/building-permit-processing/screenshots/manual/01-create-blank-agent.jpg",
+      "status": "reusable",
+      "annotated": "solutions/building-permit-processing/screenshots/annotated/hard-step-01.png",
+      "visible_anchors": [
+        "Untitled Agent is visible in the editable name field.",
+        "The instruction area shows the blank-agent starter guidance."
+      ],
+      "boxes": [
+        {
+          "x": 165,
+          "y": 94,
+          "width": 820,
+          "height": 56,
+          "label": "Untitled blank agent"
+        },
+        {
+          "x": 80,
+          "y": 184,
+          "width": 900,
+          "height": 278,
+          "label": "Blank instruction starter"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "step": 2,
+      "source": "solutions/building-permit-processing/screenshots/manual/02-name-agent.jpg",
+      "status": "reusable",
+      "annotated": "solutions/building-permit-processing/screenshots/annotated/hard-step-02.png",
+      "visible_anchors": [
+        "Building Permit Manual Build is visible in the editable name field."
+      ],
+      "boxes": [
+        {
+          "x": 165,
+          "y": 94,
+          "width": 820,
+          "height": 56,
+          "label": "Manual agent name"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "step": 3,
+      "source": "solutions/building-permit-processing/screenshots/manual/03-enter-instructions.jpg",
+      "status": "reusable",
+      "annotated": "solutions/building-permit-processing/screenshots/annotated/hard-step-03.png",
+      "visible_anchors": [
+        "The natural-language routing policy is visible in the instruction editor.",
+        "Decision and safety rules are visible in the instruction editor."
+      ],
+      "boxes": [
+        {
+          "x": 80,
+          "y": 245,
+          "width": 900,
+          "height": 205,
+          "label": "Routing policy entered"
+        },
+        {
+          "x": 80,
+          "y": 492,
+          "width": 900,
+          "height": 142,
+          "label": "Safety rules entered"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "step": 4,
+      "source": "solutions/building-permit-processing/screenshots/manual/04-save-instructions.jpg",
+      "status": "reusable",
+      "annotated": "solutions/building-permit-processing/screenshots/annotated/hard-step-04.png",
+      "visible_anchors": [
+        "The populated instruction policy remains visible.",
+        "A Saving indicator is visible beside the save control."
+      ],
+      "boxes": [
+        {
+          "x": 80,
+          "y": 245,
+          "width": 900,
+          "height": 390,
+          "label": "Instruction policy"
+        },
+        {
+          "x": 1095,
+          "y": 5,
+          "width": 125,
+          "height": 70,
+          "label": "Saving"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "step": 5,
+      "source": "solutions/building-permit-processing/screenshots/manual/05-open-knowledge-upload.jpg",
+      "status": "reusable",
+      "annotated": "solutions/building-permit-processing/screenshots/annotated/hard-step-05.png",
+      "visible_anchors": [
+        "The Knowledge section and its add control are visibly selected."
+      ],
+      "boxes": [
+        {
+          "x": 1015,
+          "y": 250,
+          "width": 385,
+          "height": 62,
+          "label": "Knowledge add control"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "step": 6,
+      "source": "solutions/building-permit-processing/screenshots/manual/06-select-records-file.jpg",
+      "status": "reusable",
+      "annotated": "solutions/building-permit-processing/screenshots/annotated/hard-step-06.png",
+      "visible_anchors": [
+        "aibast_building-permit-synthetic-records.md is visibly selected in the upload dialog."
+      ],
+      "boxes": [
+        {
+          "x": 335,
+          "y": 462,
+          "width": 770,
+          "height": 66,
+          "label": "Synthetic records selected"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "step": 7,
+      "source": "solutions/building-permit-processing/screenshots/manual/07-records-file-added.jpg",
+      "status": "reusable",
+      "annotated": "solutions/building-permit-processing/screenshots/annotated/hard-step-07.png",
+      "visible_anchors": [
+        "aibast_building-permit-synthetic-records.md is visible in the Knowledge inventory."
+      ],
+      "boxes": [
+        {
+          "x": 1020,
+          "y": 304,
+          "width": 375,
+          "height": 58,
+          "label": "Records knowledge added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "step": 8,
+      "source": "solutions/building-permit-processing/screenshots/manual/08-select-rules-file.jpg",
+      "status": "reusable",
+      "annotated": "solutions/building-permit-processing/screenshots/annotated/hard-step-08.png",
+      "visible_anchors": [
+        "aibast_permit-rules-and-schedules.md is visibly selected in the upload dialog."
+      ],
+      "boxes": [
+        {
+          "x": 335,
+          "y": 462,
+          "width": 770,
+          "height": 66,
+          "label": "Rules file selected"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "step": 9,
+      "source": "solutions/building-permit-processing/screenshots/manual/09-two-knowledge-files-added.jpg",
+      "status": "reusable",
+      "annotated": "solutions/building-permit-processing/screenshots/annotated/hard-step-09.png",
+      "visible_anchors": [
+        "Both reviewed knowledge filenames are visible in the Knowledge inventory."
+      ],
+      "boxes": [
+        {
+          "x": 1020,
+          "y": 304,
+          "width": 380,
+          "height": 96,
+          "label": "Two knowledge files"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "step": 10,
+      "source": "solutions/building-permit-processing/screenshots/manual/10-open-skill-upload.jpg",
+      "status": "reusable",
+      "annotated": "solutions/building-permit-processing/screenshots/annotated/hard-step-10.png",
+      "visible_anchors": [
+        "The Add skill dialog is open on the Upload a skill tab.",
+        "The SKILL.md file requirements are visible."
+      ],
+      "boxes": [
+        {
+          "x": 275,
+          "y": 68,
+          "width": 875,
+          "height": 160,
+          "label": "SKILL.md uploader"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "step": 11,
+      "source": "solutions/building-permit-processing/screenshots/manual/11-add-backlog-skill.jpg",
+      "status": "reusable",
+      "annotated": "solutions/building-permit-processing/screenshots/annotated/hard-step-11.png",
+      "visible_anchors": [
+        "permit-backlog-and-complaint-risk is visible in the Skills inventory."
+      ],
+      "boxes": [
+        {
+          "x": 1020,
+          "y": 184,
+          "width": 340,
+          "height": 52,
+          "label": "Backlog skill added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "step": 12,
+      "source": "solutions/building-permit-processing/screenshots/manual/12-add-intake-skill.jpg",
+      "status": "reusable",
+      "annotated": "solutions/building-permit-processing/screenshots/annotated/hard-step-12.png",
+      "visible_anchors": [
+        "intake-triage-and-review-routing is visible in the Skills inventory."
+      ],
+      "boxes": [
+        {
+          "x": 1020,
+          "y": 184,
+          "width": 340,
+          "height": 52,
+          "label": "Intake skill added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "step": 13,
+      "source": "solutions/building-permit-processing/screenshots/manual/13-add-applicant-updates-skill.jpg",
+      "status": "reusable",
+      "annotated": "solutions/building-permit-processing/screenshots/annotated/hard-step-13.png",
+      "visible_anchors": [
+        "proactive-applicant-updates is visible in the Skills inventory."
+      ],
+      "boxes": [
+        {
+          "x": 1020,
+          "y": 184,
+          "width": 340,
+          "height": 52,
+          "label": "Update skill added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "step": 14,
+      "source": "solutions/building-permit-processing/screenshots/manual/14-add-permit-status-skill.jpg",
+      "status": "reusable",
+      "annotated": "solutions/building-permit-processing/screenshots/annotated/hard-step-14.png",
+      "visible_anchors": [
+        "permit-status-and-zoning-detail is visible in the Skills inventory."
+      ],
+      "boxes": [
+        {
+          "x": 1020,
+          "y": 184,
+          "width": 340,
+          "height": 52,
+          "label": "Status skill added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "step": 15,
+      "source": "solutions/building-permit-processing/screenshots/manual/15-add-checklist-skill.jpg",
+      "status": "reusable",
+      "annotated": "solutions/building-permit-processing/screenshots/annotated/hard-step-15.png",
+      "visible_anchors": [
+        "permit-review-checklist is visible in the Skills inventory."
+      ],
+      "boxes": [
+        {
+          "x": 1020,
+          "y": 184,
+          "width": 340,
+          "height": 52,
+          "label": "Checklist skill added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "step": 16,
+      "source": "solutions/building-permit-processing/screenshots/manual/16-inspector-skill-validation-error.jpg",
+      "status": "reusable",
+      "annotated": "solutions/building-permit-processing/screenshots/annotated/hard-step-16.png",
+      "visible_anchors": [
+        "The Frontmatter incomplete validation message is visible.",
+        "The message identifies the missing name and description fields."
+      ],
+      "boxes": [
+        {
+          "x": 300,
+          "y": 195,
+          "width": 820,
+          "height": 82,
+          "label": "Expected validation error"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "step": 17,
+      "source": "solutions/building-permit-processing/screenshots/manual/17-retry-inspector-skill.jpg",
+      "status": "reusable",
+      "annotated": "solutions/building-permit-processing/screenshots/annotated/hard-step-17.png",
+      "visible_anchors": [
+        "inspector-board-and-coverage is visible in the Skills inventory after the retry."
+      ],
+      "boxes": [
+        {
+          "x": 1020,
+          "y": 184,
+          "width": 340,
+          "height": 52,
+          "label": "Inspector skill added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "step": 18,
+      "source": "solutions/building-permit-processing/screenshots/manual/18-add-fee-skill.jpg",
+      "status": "reusable",
+      "annotated": "solutions/building-permit-processing/screenshots/annotated/hard-step-18.png",
+      "visible_anchors": [
+        "synthetic-permit-fee-estimate is visible in the Skills inventory."
+      ],
+      "boxes": [
+        {
+          "x": 1020,
+          "y": 184,
+          "width": 340,
+          "height": 52,
+          "label": "Fee skill added"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-19",
+      "mode": "hard",
+      "step": 19,
+      "source": "solutions/building-permit-processing/screenshots/manual/19-open-model-picker.jpg",
+      "status": "reusable",
+      "annotated": "solutions/building-permit-processing/screenshots/annotated/hard-step-19.png",
+      "visible_anchors": [
+        "The model picker is open.",
+        "Claude Sonnet 4.6 is visibly available."
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 380,
+          "width": 350,
+          "height": 62,
+          "label": "Claude Sonnet 4.6"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-20",
+      "mode": "hard",
+      "step": 20,
+      "source": "solutions/building-permit-processing/screenshots/manual/20-select-sonnet-model.jpg",
+      "status": "reusable",
+      "annotated": "solutions/building-permit-processing/screenshots/annotated/hard-step-20.png",
+      "visible_anchors": [
+        "Claude Sonnet 4.6 is visibly selected as the model."
+      ],
+      "boxes": [
+        {
+          "x": 1190,
+          "y": 82,
+          "width": 210,
+          "height": 48,
+          "label": "Sonnet 4.6 selected"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-21",
+      "mode": "hard",
+      "step": 21,
+      "source": "solutions/building-permit-processing/screenshots/manual/21-review-all-skills.jpg",
+      "status": "reusable",
+      "annotated": "solutions/building-permit-processing/screenshots/annotated/hard-step-21.png",
+      "visible_anchors": [
+        "The expanded Skills panel visibly lists reviewed skill names and descriptions."
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 120,
+          "width": 390,
+          "height": 630,
+          "label": "Skill descriptions"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-22",
+      "mode": "hard",
+      "step": 22,
+      "source": "solutions/building-permit-processing/screenshots/manual/22-open-preview.jpg",
+      "status": "reusable",
+      "annotated": "solutions/building-permit-processing/screenshots/annotated/hard-step-22.png",
+      "visible_anchors": [
+        "The Preview tab is active.",
+        "Building Permit Manual Build displays its Preview greeting."
+      ],
+      "boxes": [
+        {
+          "x": 635,
+          "y": 8,
+          "width": 105,
+          "height": 45,
+          "label": "Preview active"
+        },
+        {
+          "x": 275,
+          "y": 142,
+          "width": 545,
+          "height": 108,
+          "label": "Preview greeting"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-23",
+      "mode": "hard",
+      "step": 23,
+      "source": "solutions/building-permit-processing/screenshots/manual/23-run-canonical-prompt.jpg",
+      "status": "reusable",
+      "annotated": "solutions/building-permit-processing/screenshots/annotated/hard-step-23.png",
+      "visible_anchors": [
+        "The canonical backlog prompt is visibly submitted.",
+        "permit-backlog-and-complaint-risk is visibly loading."
+      ],
+      "boxes": [
+        {
+          "x": 545,
+          "y": 252,
+          "width": 685,
+          "height": 88,
+          "label": "Canonical prompt"
+        },
+        {
+          "x": 310,
+          "y": 402,
+          "width": 800,
+          "height": 118,
+          "label": "Backlog skill loading"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-24",
+      "mode": "hard",
+      "step": 24,
+      "source": "solutions/building-permit-processing/screenshots/manual/24-verify-preview-result.jpg",
+      "status": "reusable",
+      "annotated": "solutions/building-permit-processing/screenshots/annotated/hard-step-24.png",
+      "visible_anchors": [
+        "The result visibly says three permits are overdue.",
+        "Metro School District and BP-2025-0104 are visibly identified as first."
+      ],
+      "boxes": [
+        {
+          "x": 280,
+          "y": 486,
+          "width": 930,
+          "height": 78,
+          "label": "Overdue result"
+        },
+        {
+          "x": 285,
+          "y": 626,
+          "width": 930,
+          "height": 92,
+          "label": "BP-2025-0104 first"
+        }
+      ]
+    }
+  ]
+}

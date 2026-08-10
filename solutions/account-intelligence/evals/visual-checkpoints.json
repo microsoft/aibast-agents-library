@@ -1,0 +1,514 @@
+{
+  "schema": "aibast-visual-checkpoints/1.0",
+  "solution": "@aibast-agents-library/account-intelligence",
+  "policy": {
+    "machine_gate": "The full locked case passes only when the deterministic validator confirms every must_include and must_not_include marker against the final response.",
+    "visual_gate": "A reusable screenshot must show at least one positive deterministic anchor from the expected state and must not show a blocker, refusal, wrong identity, or misleading production claim.",
+    "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate.",
+    "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, the identity is wrong, or no positive deterministic anchor is visible."
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:account-intelligence",
+    "reviewed_at": "2026-08-09T21:08:34Z",
+    "method": "Opened every assisted and manual JPEG and GIF with image viewing, cross-checked each real frame against its browserfilm label and locked case, and inspected the annotated evidence boxes.",
+    "notes": "Approved six assisted locked-case frames, one assisted build review, the visible Account Intelligence Manual Draft row, and seven distinct hard-mode states. Fifteen frames remain reshoot-only for screenshot-specific cropped anchors, duplicate setup images, a hidden skill name, an incorrect step state, or an unresolved loading screen; the Pilot Draft JSON is not treated as visual proof."
+  },
+  "summary": {
+    "total_existing_captures": 30,
+    "reusable": 15,
+    "reshoot_required": 15
+  },
+  "captures": [
+    {
+      "id": "easy-build-review",
+      "mode": "easy",
+      "case_id": "BUILD-01",
+      "source": "solutions/account-intelligence/screenshots/assisted/01-review-build.jpg",
+      "annotated": "solutions/account-intelligence/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Account Intelligence Pilot",
+        "Six reviewed skills",
+        "Two synthetic knowledge files"
+      ],
+      "boxes": [
+        {
+          "x": 176,
+          "y": 105,
+          "width": 410,
+          "height": 52,
+          "label": "Account Intelligence Pilot"
+        },
+        {
+          "x": 1028,
+          "y": 138,
+          "width": 370,
+          "height": 250,
+          "label": "Six reviewed skills"
+        },
+        {
+          "x": 1028,
+          "y": 480,
+          "width": 370,
+          "height": 122,
+          "label": "Two knowledge files"
+        }
+      ]
+    },
+    {
+      "id": "easy-ai-01",
+      "mode": "easy",
+      "source": "solutions/account-intelligence/screenshots/assisted/02-ai-01.jpg",
+      "annotated": "solutions/account-intelligence/screenshots/assisted/annotated/02-ai-01.png",
+      "status": "reusable",
+      "case_id": "AI-01",
+      "visible_anchors": [
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 504,
+          "width": 936,
+          "height": 70,
+          "label": "AI-01 · Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-ai-02",
+      "mode": "easy",
+      "source": "solutions/account-intelligence/screenshots/assisted/03-ai-02.jpg",
+      "annotated": "solutions/account-intelligence/screenshots/assisted/annotated/03-ai-02.png",
+      "status": "reusable",
+      "case_id": "AI-02",
+      "visible_anchors": [
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 434,
+          "width": 936,
+          "height": 145,
+          "label": "AI-02 · Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-ai-03",
+      "mode": "easy",
+      "source": "solutions/account-intelligence/screenshots/assisted/04-ai-03.jpg",
+      "annotated": "solutions/account-intelligence/screenshots/assisted/annotated/04-ai-03.png",
+      "status": "reusable",
+      "case_id": "AI-03",
+      "visible_anchors": [
+        "Evidence Boundary"
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 478,
+          "width": 936,
+          "height": 98,
+          "label": "AI-03 · Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-ai-04",
+      "mode": "easy",
+      "source": "solutions/account-intelligence/screenshots/assisted/05-ai-04.jpg",
+      "annotated": "solutions/account-intelligence/screenshots/assisted/annotated/05-ai-04.png",
+      "status": "reusable",
+      "case_id": "AI-04",
+      "visible_anchors": [
+        "Objection Handling",
+        "Evidence Boundary"
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 133,
+          "width": 245,
+          "height": 31,
+          "label": "Objection Handling"
+        },
+        {
+          "x": 288,
+          "y": 365,
+          "width": 936,
+          "height": 207,
+          "label": "Synthetic evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-ai-05",
+      "mode": "easy",
+      "source": "solutions/account-intelligence/screenshots/assisted/06-ai-05.jpg",
+      "annotated": "solutions/account-intelligence/screenshots/assisted/annotated/06-ai-05.png",
+      "status": "reusable",
+      "case_id": "AI-05",
+      "visible_anchors": [
+        "Immediate Actions",
+        "Evidence Boundary"
+      ],
+      "boxes": [
+        {
+          "x": 289,
+          "y": 166,
+          "width": 930,
+          "height": 244,
+          "label": "Immediate Actions"
+        },
+        {
+          "x": 289,
+          "y": 437,
+          "width": 930,
+          "height": 140,
+          "label": "Synthetic evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-ai-06",
+      "mode": "easy",
+      "source": "solutions/account-intelligence/screenshots/assisted/07-ai-06.jpg",
+      "annotated": "solutions/account-intelligence/screenshots/assisted/annotated/07-ai-06.png",
+      "status": "reusable",
+      "case_id": "AI-06",
+      "visible_anchors": [
+        "Evidence boundary"
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 409,
+          "width": 935,
+          "height": 167,
+          "label": "AI-06 · Evidence boundary"
+        }
+      ]
+    },
+    {
+      "id": "easy-confirm-manual-draft",
+      "mode": "easy",
+      "source": "solutions/account-intelligence/screenshots/assisted/08-confirm-draft.jpg",
+      "annotated": "solutions/account-intelligence/screenshots/assisted/annotated/08-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Account Intelligence Manual",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 151,
+          "y": 251,
+          "width": 330,
+          "height": 43,
+          "label": "Account Intelligence Manual"
+        },
+        {
+          "x": 674,
+          "y": 260,
+          "width": 64,
+          "height": 28,
+          "label": "Draft"
+        }
+      ],
+      "draft": true
+    },
+    {
+      "id": "hard-step-01",
+      "mode": "hard",
+      "step": 1,
+      "source": "solutions/account-intelligence/screenshots/manual/01-create-blank-agent.jpg",
+      "status": "reshoot_required",
+      "reason": "The frame already contains Account Intelligence Manual in the name field, so it does not show the claimed blank-agent creation state."
+    },
+    {
+      "id": "hard-step-02",
+      "mode": "hard",
+      "step": 2,
+      "source": "solutions/account-intelligence/screenshots/manual/02-name-agent.jpg",
+      "status": "reshoot_required",
+      "reason": "The agent is already fully configured with instructions, locked anchors, skills, and knowledge; it does not isolate the claimed naming action."
+    },
+    {
+      "id": "hard-step-03",
+      "mode": "hard",
+      "step": 3,
+      "source": "solutions/account-intelligence/screenshots/manual/03-enter-instructions.jpg",
+      "status": "reshoot_required",
+      "reason": "The screenshot shows an Untitled Agent with placeholder instructions, not the reviewed global instructions being entered."
+    },
+    {
+      "id": "hard-step-04",
+      "mode": "hard",
+      "step": 4,
+      "source": "solutions/account-intelligence/screenshots/manual/04-save-instructions.jpg",
+      "status": "reshoot_required",
+      "reason": "The final configuration is visible, but there is no save confirmation or unique saved-state indicator for this step; the image is also byte-identical to steps 5 through 7."
+    },
+    {
+      "id": "hard-step-05",
+      "mode": "hard",
+      "step": 5,
+      "source": "solutions/account-intelligence/screenshots/manual/05-remove-web-search.jpg",
+      "status": "reshoot_required",
+      "reason": "The final configuration does not visibly show the web-search source being removed, and this file is byte-identical to steps 4, 6, and 7."
+    },
+    {
+      "id": "hard-step-06",
+      "mode": "hard",
+      "step": 6,
+      "source": "solutions/account-intelligence/screenshots/manual/06-add-aibast-account-intelligence-operating-rules.jpg",
+      "status": "reshoot_required",
+      "reason": "Both knowledge files are already present, so the operating-rules upload action is not isolated; this file is byte-identical to steps 4, 5, and 7."
+    },
+    {
+      "id": "hard-step-07",
+      "mode": "hard",
+      "step": 7,
+      "source": "solutions/account-intelligence/screenshots/manual/07-add-aibast-account-intelligence-synthetic-records.jpg",
+      "status": "reshoot_required",
+      "reason": "Both knowledge files are already present, so the synthetic-records upload action is not isolated; this file is byte-identical to steps 4 through 6."
+    },
+    {
+      "id": "hard-step-08",
+      "mode": "hard",
+      "step": 8,
+      "source": "solutions/account-intelligence/screenshots/manual/08-add-account-overview.jpg",
+      "annotated": "solutions/account-intelligence/screenshots/manual/annotated/08-add-account-overview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "account-intelligence-account-overview"
+      ],
+      "boxes": [
+        {
+          "x": 1032,
+          "y": 184,
+          "width": 306,
+          "height": 42,
+          "label": "account-overview skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-09",
+      "mode": "hard",
+      "step": 9,
+      "source": "solutions/account-intelligence/screenshots/manual/09-add-competitive-intel.jpg",
+      "annotated": "solutions/account-intelligence/screenshots/manual/annotated/09-add-competitive-intel.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "account-intelligence-competitive-intel"
+      ],
+      "boxes": [
+        {
+          "x": 1031,
+          "y": 226,
+          "width": 308,
+          "height": 41,
+          "label": "competitive-intel skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-10",
+      "mode": "hard",
+      "step": 10,
+      "source": "solutions/account-intelligence/screenshots/manual/10-add-executive-briefing.jpg",
+      "annotated": "solutions/account-intelligence/screenshots/manual/annotated/10-add-executive-briefing.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "account-intelligence-executive-briefing"
+      ],
+      "boxes": [
+        {
+          "x": 1031,
+          "y": 266,
+          "width": 315,
+          "height": 41,
+          "label": "executive-briefing skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-11",
+      "mode": "hard",
+      "step": 11,
+      "source": "solutions/account-intelligence/screenshots/manual/11-add-risk-assessment.jpg",
+      "annotated": "solutions/account-intelligence/screenshots/manual/annotated/11-add-risk-assessment.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "account-intelligence-risk-assessment"
+      ],
+      "boxes": [
+        {
+          "x": 1030,
+          "y": 307,
+          "width": 310,
+          "height": 42,
+          "label": "risk-assessment skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-12",
+      "mode": "hard",
+      "step": 12,
+      "source": "solutions/account-intelligence/screenshots/manual/12-add-stakeholder-map.jpg",
+      "annotated": "solutions/account-intelligence/screenshots/manual/annotated/12-add-stakeholder-map.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "account-intelligence-stakeholder-map"
+      ],
+      "boxes": [
+        {
+          "x": 1031,
+          "y": 346,
+          "width": 309,
+          "height": 42,
+          "label": "stakeholder-map skill"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-13",
+      "mode": "hard",
+      "step": 13,
+      "source": "solutions/account-intelligence/screenshots/manual/13-add-value-messaging.jpg",
+      "status": "reshoot_required",
+      "reason": "The sixth skill is collapsed behind a +1 badge, so the claimed value-messaging skill name is not visible."
+    },
+    {
+      "id": "hard-step-14",
+      "mode": "hard",
+      "step": 14,
+      "source": "solutions/account-intelligence/screenshots/manual/14-review-inventory.jpg",
+      "annotated": "solutions/account-intelligence/screenshots/manual/annotated/14-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "Six skills",
+        "Two knowledge files"
+      ],
+      "boxes": [
+        {
+          "x": 1205,
+          "y": 86,
+          "width": 190,
+          "height": 37,
+          "label": "Claude Sonnet 4.6"
+        },
+        {
+          "x": 1028,
+          "y": 137,
+          "width": 369,
+          "height": 251,
+          "label": "Six skills"
+        },
+        {
+          "x": 1029,
+          "y": 508,
+          "width": 367,
+          "height": 82,
+          "label": "Two knowledge files"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-15",
+      "mode": "hard",
+      "step": 15,
+      "source": "solutions/account-intelligence/screenshots/manual/15-open-preview.jpg",
+      "annotated": "solutions/account-intelligence/screenshots/manual/annotated/15-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview",
+        "Account Intelligence Manual"
+      ],
+      "boxes": [
+        {
+          "x": 642,
+          "y": 12,
+          "width": 92,
+          "height": 36,
+          "label": "Preview"
+        },
+        {
+          "x": 261,
+          "y": 145,
+          "width": 610,
+          "height": 93,
+          "label": "Fresh Manual preview"
+        }
+      ]
+    },
+    {
+      "id": "hard-step-16",
+      "mode": "hard",
+      "step": 16,
+      "source": "solutions/account-intelligence/screenshots/manual/16-ai-01.jpg",
+      "status": "reshoot_required",
+      "reason": "The frame is scrolled to Draft Preparation Notes and Evidence boundary; the AI-01 Account Overview and Account Health Score headings are cropped out.",
+      "case_id": "AI-01"
+    },
+    {
+      "id": "hard-step-17",
+      "mode": "hard",
+      "step": 17,
+      "source": "solutions/account-intelligence/screenshots/manual/17-ai-02.jpg",
+      "status": "reshoot_required",
+      "reason": "Only a priority/action table and Evidence Boundary are visible; the AI-02 Stakeholder Map and Relationship Gaps headings are cropped out.",
+      "case_id": "AI-02"
+    },
+    {
+      "id": "hard-step-18",
+      "mode": "hard",
+      "step": 18,
+      "source": "solutions/account-intelligence/screenshots/manual/18-ai-03.jpg",
+      "status": "reshoot_required",
+      "reason": "The frame shows positioning priorities and an evidence callout, but the AI-03 Competitive Intelligence and Competitor Activity headings are not visible.",
+      "case_id": "AI-03"
+    },
+    {
+      "id": "hard-step-19",
+      "mode": "hard",
+      "step": 19,
+      "source": "solutions/account-intelligence/screenshots/manual/19-ai-04.jpg",
+      "status": "reshoot_required",
+      "reason": "The screenshot starts mid-table and shows Evidence Boundary, but the AI-04 Draft Meeting Talking Points and Objection Handling headings are cropped out.",
+      "case_id": "AI-04"
+    },
+    {
+      "id": "hard-step-20",
+      "mode": "hard",
+      "step": 20,
+      "source": "solutions/account-intelligence/screenshots/manual/20-ai-05.jpg",
+      "status": "reshoot_required",
+      "reason": "The screenshot shows later action rows and Evidence Boundary, but the AI-05 Deal Risk Assessment and Immediate Actions headings are cropped out.",
+      "case_id": "AI-05"
+    },
+    {
+      "id": "hard-step-21",
+      "mode": "hard",
+      "step": 21,
+      "source": "solutions/account-intelligence/screenshots/manual/21-ai-06.jpg",
+      "status": "reshoot_required",
+      "reason": "The frame shows a competitor table and Top Risk Signals; none of the AI-06 Account Intelligence Briefing, Pre-Meeting Checklist, or Evidence boundary anchors are visible.",
+      "case_id": "AI-06"
+    },
+    {
+      "id": "hard-step-22",
+      "mode": "hard",
+      "step": 22,
+      "source": "solutions/account-intelligence/screenshots/manual/22-confirm-draft.jpg",
+      "status": "reshoot_required",
+      "reason": "The Agents page is still a 0-item loading skeleton, so neither Account Intelligence Manual nor a Draft status is visible."
+    }
+  ]
+}

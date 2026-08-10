@@ -30,15 +30,23 @@ The local agent uses fictional records and produces decision support only. It do
 
 | Surface | Location |
 | --- | --- |
-| Customer field guide | `solutions/field-service-dispatch/FIELD-GUIDE.md` |
+| Customer field guide | `solutions/field-service-dispatch/field-guide.html` |
+| Evidence report | `solutions/field-service-dispatch/evidence-report.html` |
+| Brainstem Easy Mode skill | `skills/aibast-easy-mode-brainstem/SKILL.md` |
+| Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
+| Personless Easy-mode guide | `solutions/field-service-dispatch/EASY-MODE-PERSONLESS.md` |
+| Copilot-only Easy-mode comparison | `solutions/field-service-dispatch/EASY-MODE-COPILOT-CHAT.md` |
 | Guided Easy/Hard quest | `solutions/field-service-dispatch/quest.html` |
 | Literal browser tutorial | `solutions/field-service-dispatch/manual-tutorial.html` |
 | Raw export manifest | `solutions/field-service-dispatch/export-manifest.json` |
 | Source bundle | `solutions/field-service-dispatch/exports/field-service-dispatch-source.zip` |
 | Manual evidence | `solutions/field-service-dispatch/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/field-service-dispatch/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/field-service-dispatch/exports/field-service-dispatch-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/field-service-dispatch/exports/field-service-dispatch-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/field-service-dispatch/exports/field-service-dispatch-solution-export.json` |
 
-**Scaffold status:** 60 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 88 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.
