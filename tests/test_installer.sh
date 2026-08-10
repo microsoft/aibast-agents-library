@@ -185,9 +185,10 @@ else
     fail "beta installer source or syntax is invalid"
 fi
 
-if grep -q -- '--filter=blob:none --sparse --depth 1' "$REPO_ROOT/beta/install.sh" \
+if grep -q -- 'fetch --progress --filter=blob:none --depth 1 origin "$REPO_REF"' "$REPO_ROOT/beta/install.sh" \
    && grep -q 'sparse-checkout set beta' "$REPO_ROOT/beta/install.sh" \
-   && grep -q 'Mainline and beta share' "$REPO_ROOT/beta/install.sh"; then
+   && grep -q 'Mainline and beta share' "$REPO_ROOT/beta/install.sh" \
+   && grep -q 'BRAINSTEM_BETA_COMMIT' "$REPO_ROOT/beta/install.sh"; then
     pass "beta installer is sparse and shares the global Brainstem"
 else
     fail "beta installer should stay small and reuse the global Brainstem"

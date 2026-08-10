@@ -46,6 +46,10 @@ the **What is this?** button.
 
 ## Install
 
+The dedicated GitHub Pages installer is published at `/beta/`. It resolves the
+latest `brainstem-beta-v*` release from the fork serving the page, so staging
+and production remain separate.
+
 ### Windows 11
 
 Download [`install.cmd`](install.cmd), then double-click it. The bootstrap runs
@@ -57,6 +61,23 @@ require the user to open PowerShell to launch chat afterward.
 ```bash
 curl -fsSL https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/install.sh | bash
 ```
+
+Published releases use the Skill Recorder commit-pinned source pattern. Replace
+the placeholders with the repository and full 40-character commit from the
+release notes:
+
+```bash
+repo="microsoft/aibast-agents-library"
+commit="<40-character-release-commit>"
+curl -fsSL "https://raw.githubusercontent.com/$repo/$commit/beta/install.sh" \
+  | BRAINSTEM_BETA_REPO_URL="https://github.com/$repo.git" \
+    BRAINSTEM_BETA_COMMIT="$commit" bash
+```
+
+The commit appears twice deliberately: it pins both the installer being run and
+the launcher plus shared Brainstem source that the installer checks out.
+`BRAINSTEM_BETA_REF` remains available for mutable fork-branch testing; release
+instructions use `BRAINSTEM_BETA_COMMIT`.
 
 After the first install, launch **RAPP Brainstem Beta** from Applications,
 Launchpad, the Linux app menu, the Windows Desktop/Start Menu, or run:
@@ -79,6 +100,9 @@ https://github.com/microsoft/aibast-agents-library.git
 
 The `BRAINSTEM_BETA_REPO_URL` and `BRAINSTEM_BETA_REF` environment variables
 exist only for fork staging and release-candidate verification.
+
+Release procedure and source-only publication rules are documented in
+[`RELEASING.md`](RELEASING.md).
 
 ## Beta limitations
 

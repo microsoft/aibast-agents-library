@@ -7,12 +7,14 @@ set "BETA_HOME=%BRAINSTEM_HOME%\beta-launcher"
 set "BETA_SOURCE=%BETA_HOME%\src"
 set "REPO_URL=https://github.com/microsoft/aibast-agents-library.git"
 set "REPO_REF=main"
+set "REPO_COMMIT="
 set "NODE_VERSION=24.19.0"
 set "BOOTSTRAP_URL=https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/install.ps1"
 
 if defined BRAINSTEM_BETA_HOME set "BETA_HOME=%BRAINSTEM_BETA_HOME%"
 if defined BRAINSTEM_BETA_REPO_URL set "REPO_URL=%BRAINSTEM_BETA_REPO_URL%"
 if defined BRAINSTEM_BETA_REF set "REPO_REF=%BRAINSTEM_BETA_REF%"
+if defined BRAINSTEM_BETA_COMMIT set "REPO_COMMIT=%BRAINSTEM_BETA_COMMIT%"
 if defined BRAINSTEM_BETA_NODE_VERSION set "NODE_VERSION=%BRAINSTEM_BETA_NODE_VERSION%"
 if defined BRAINSTEM_BETA_BOOTSTRAP_URL set "BOOTSTRAP_URL=%BRAINSTEM_BETA_BOOTSTRAP_URL%"
 set "BETA_SOURCE=%BETA_HOME%\src"
@@ -21,6 +23,15 @@ echo.
 echo RAPP Brainstem Beta Launcher
 echo Skill Recorder-style desktop launch over the shared global Brainstem
 echo.
+
+if defined REPO_COMMIT (
+  powershell.exe -NoProfile -Command "if ($env:BRAINSTEM_BETA_COMMIT -notmatch '^[0-9a-fA-F]{40}$') { exit 1 }"
+  if errorlevel 1 (
+    echo [X] BRAINSTEM_BETA_COMMIT must be a full 40-character commit SHA.
+    exit /b 1
+  )
+  set "REPO_REF=%REPO_COMMIT%"
+)
 
 where curl.exe >nul 2>&1 || (
   echo [X] Windows curl.exe is required.
@@ -32,7 +43,16 @@ set "BOOTSTRAP=%TEMP%\rapp-brainstem-bootstrap-%RANDOM%.ps1"
 echo [..] Preparing the shared global Brainstem...
 curl.exe -fL --progress-bar "%BOOTSTRAP_URL%" -o "%BOOTSTRAP%"
 if errorlevel 1 goto :fail
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%BOOTSTRAP%" --no-launch
+if /i not "%REPO_URL%"=="https://github.com/microsoft/aibast-agents-library.git" (
+  set "GIT_CONFIG_COUNT=1"
+  set "GIT_CONFIG_KEY_0=url.%REPO_URL%.insteadOf"
+  set "GIT_CONFIG_VALUE_0=https://github.com/microsoft/aibast-agents-library.git"
+)
+if defined REPO_COMMIT (
+  powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%BOOTSTRAP%" --no-launch --version "%REPO_COMMIT%"
+) else (
+  powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%BOOTSTRAP%" --no-launch
+)
 set "BOOTSTRAP_EXIT=%ERRORLEVEL%"
 del /q "%BOOTSTRAP%" >nul 2>&1
 if not "%BOOTSTRAP_EXIT%"=="0" goto :fail
@@ -62,12 +82,28 @@ if exist "%BETA_SOURCE%\.git" (
   if errorlevel 1 goto :fail
 ) else (
   if exist "%BETA_SOURCE%" move "%BETA_SOURCE%" "%BETA_SOURCE%.incomplete.%RANDOM%" >nul
-  "%GIT_EXE%" clone --progress --filter=blob:none --sparse --depth 1 --single-branch --no-tags --branch "%REPO_REF%" "%REPO_URL%" "%BETA_SOURCE%"
+  "%GIT_EXE%" init "%BETA_SOURCE%"
+  if errorlevel 1 goto :fail
+  "%GIT_EXE%" -C "%BETA_SOURCE%" remote add origin "%REPO_URL%"
+  if errorlevel 1 goto :fail
+  "%GIT_EXE%" -C "%BETA_SOURCE%" sparse-checkout init --cone
   if errorlevel 1 goto :fail
   "%GIT_EXE%" -C "%BETA_SOURCE%" sparse-checkout set beta
   if errorlevel 1 goto :fail
   "%GIT_EXE%" -C "%BETA_SOURCE%" config remote.origin.promisor true
   "%GIT_EXE%" -C "%BETA_SOURCE%" config remote.origin.partialclonefilter blob:none
+  "%GIT_EXE%" -C "%BETA_SOURCE%" fetch --progress --filter=blob:none --depth 1 origin "%REPO_REF%"
+  if errorlevel 1 goto :fail
+  "%GIT_EXE%" -C "%BETA_SOURCE%" reset --hard FETCH_HEAD
+  if errorlevel 1 goto :fail
+)
+if defined REPO_COMMIT (
+  set "ACTUAL_COMMIT="
+  for /f "delims=" %%H in ('"%GIT_EXE%" -C "%BETA_SOURCE%" rev-parse HEAD') do set "ACTUAL_COMMIT=%%H"
+  if /i not "!ACTUAL_COMMIT!"=="%REPO_COMMIT%" (
+    echo [X] Beta checkout resolved to !ACTUAL_COMMIT! instead of %REPO_COMMIT%.
+    goto :fail
+  )
 )
 if not exist "%BETA_SOURCE%\beta\package.json" (
   echo [X] beta\package.json is missing from %REPO_REF%.

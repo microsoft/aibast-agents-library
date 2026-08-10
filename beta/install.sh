@@ -10,6 +10,7 @@ BETA_HOME="${BRAINSTEM_BETA_HOME:-$BRAINSTEM_HOME/beta-launcher}"
 BETA_SOURCE="$BETA_HOME/src"
 REPO_URL="${BRAINSTEM_BETA_REPO_URL:-https://github.com/microsoft/aibast-agents-library.git}"
 REPO_REF="${BRAINSTEM_BETA_REF:-main}"
+REPO_COMMIT="${BRAINSTEM_BETA_COMMIT:-}"
 NODE_VERSION="${BRAINSTEM_BETA_NODE_VERSION:-24.19.0}"
 NO_LAUNCH="${BRAINSTEM_BETA_NO_LAUNCH:-0}"
 PORTABLE_NODE_DIR=""
@@ -71,6 +72,17 @@ require_command() {
     command -v "$1" >/dev/null 2>&1 || fail "$1 is required"
 }
 
+validate_source_ref() {
+    [ -z "$REPO_COMMIT" ] && return
+    case "$REPO_COMMIT" in
+        *[!0-9a-fA-F]*) fail "BRAINSTEM_BETA_COMMIT must be a full 40-character commit SHA" ;;
+    esac
+    [ "${#REPO_COMMIT}" -eq 40 ] \
+        || fail "BRAINSTEM_BETA_COMMIT must be a full 40-character commit SHA"
+    REPO_COMMIT=$(printf '%s' "$REPO_COMMIT" | tr 'A-F' 'a-f')
+    REPO_REF="$REPO_COMMIT"
+}
+
 git_supports_sparse_checkout() {
     local version
     version=$(git --version | awk '{print $3}')
@@ -96,11 +108,22 @@ sync_beta_source() {
         if [ -e "$BETA_SOURCE" ]; then
             mv "$BETA_SOURCE" "$BETA_SOURCE.incomplete.$(date +%s)"
         fi
-        git clone --progress --filter=blob:none --sparse --depth 1 --single-branch \
-            --no-tags --branch "$REPO_REF" "$REPO_URL" "$BETA_SOURCE"
+        mkdir -p "$BETA_SOURCE"
+        git -C "$BETA_SOURCE" init --quiet
+        git -C "$BETA_SOURCE" remote add origin "$REPO_URL"
+        git -C "$BETA_SOURCE" sparse-checkout init --cone >/dev/null
         git -C "$BETA_SOURCE" sparse-checkout set beta >/dev/null
         git -C "$BETA_SOURCE" config remote.origin.promisor true
         git -C "$BETA_SOURCE" config remote.origin.partialclonefilter blob:none
+        git -C "$BETA_SOURCE" fetch --progress --filter=blob:none --depth 1 origin "$REPO_REF"
+        git -C "$BETA_SOURCE" reset --hard FETCH_HEAD >/dev/null
+    fi
+
+    if [ -n "$REPO_COMMIT" ]; then
+        local actual_commit
+        actual_commit=$(git -C "$BETA_SOURCE" rev-parse HEAD | tr 'A-F' 'a-f')
+        [ "$actual_commit" = "$REPO_COMMIT" ] \
+            || fail "beta checkout resolved to $actual_commit instead of $REPO_COMMIT"
     fi
 
     [ -f "$BETA_SOURCE/beta/package.json" ] || fail "beta/package.json is missing from $REPO_REF"
@@ -111,7 +134,26 @@ sync_beta_source() {
 setup_global_brainstem() {
     echo ""
     echo "Preparing the shared global Brainstem..."
-    BRAINSTEM_HOME="$BRAINSTEM_HOME" bash "$BETA_SOURCE/install.sh" --no-launch
+    local install_args=(--no-launch)
+    if [ -n "$REPO_COMMIT" ]; then
+        install_args+=(--version "$REPO_COMMIT")
+    fi
+
+    local canonical_repo="https://github.com/microsoft/aibast-agents-library.git"
+    if [ "$REPO_URL" = "$canonical_repo" ]; then
+        BRAINSTEM_HOME="$BRAINSTEM_HOME" \
+            bash "$BETA_SOURCE/install.sh" "${install_args[@]}"
+    else
+        local config_count="${GIT_CONFIG_COUNT:-0}"
+        local config_key="GIT_CONFIG_KEY_${config_count}=url.${REPO_URL}.insteadOf"
+        local config_value="GIT_CONFIG_VALUE_${config_count}=${canonical_repo}"
+        env \
+            "GIT_CONFIG_COUNT=$((config_count + 1))" \
+            "$config_key" \
+            "$config_value" \
+            BRAINSTEM_HOME="$BRAINSTEM_HOME" \
+            bash "$BETA_SOURCE/install.sh" "${install_args[@]}"
+    fi
     [ -f "$BRAINSTEM_HOME/src/rapp_brainstem/brainstem.py" ] \
         || fail "the global Brainstem runtime was not installed"
     [ ! -e "$BRAINSTEM_HOME/src/solutions" ] \
@@ -263,6 +305,7 @@ main() {
     require_command curl
     require_command git
     require_command tar
+    validate_source_ref
     git_supports_sparse_checkout || fail "Git 2.25+ is required"
 
     sync_beta_source
