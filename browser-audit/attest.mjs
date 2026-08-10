@@ -26,6 +26,10 @@ const certificationOutputPaths = new Set([
   "browser-audit/hard-contact-sheet.jpg",
   "browser-audit/mutation-suite.json",
 ]);
+const isCertificationOutputPath = (candidate) => (
+  certificationOutputPaths.has(candidate)
+  || candidate.startsWith("browser-audit/screenshots/")
+);
 const certificationInputGitStatus = (rawStatus) => rawStatus
   .split("\n")
   .filter(Boolean)
@@ -34,13 +38,26 @@ const certificationInputGitStatus = (rawStatus) => rawStatus
     const candidates = rawPath
       .split(" -> ")
       .map((candidate) => candidate.replace(/^"|"$/g, ""));
-    return !candidates.every((candidate) => (
-      certificationOutputPaths.has(candidate)
-      || candidate.startsWith("browser-audit/screenshots/")
-    ));
+    return !candidates.every(isCertificationOutputPath);
   })
   .map((line) => `${line}\n`)
   .join("");
+const parseDiffStatusEntries = (rawStatus) => {
+  const tokens = rawStatus.split("\0");
+  if (tokens.at(-1) === "") tokens.pop();
+  const entries = [];
+  for (let index = 0; index < tokens.length;) {
+    const status = tokens[index++];
+    const pathCount = /^[RC]/.test(status) ? 2 : 1;
+    const paths = tokens.slice(index, index + pathCount);
+    if (paths.length !== pathCount) {
+      throw new Error(`Malformed git diff status entry: ${status}`);
+    }
+    entries.push({ status, paths });
+    index += pathCount;
+  }
+  return entries;
+};
 const read = async (name) => fs.readFile(path.join(directory, name));
 const readJson = async (name) => JSON.parse((await read(name)).toString("utf8"));
 
@@ -156,6 +173,43 @@ const currentGitStatus = certificationInputGitStatus(execFileSync(
   { encoding: "utf8" },
 ));
 const currentGitStatusSha256 = hash(currentGitStatus);
+const currentHeadIsAuditedCommit = currentGitSha === auditReport.git_sha;
+let currentHeadIsEvidenceDescendant = false;
+let certificationCommitEntries = [];
+if (!currentHeadIsAuditedCommit) {
+  try {
+    execFileSync(
+      "git",
+      ["-C", root, "merge-base", "--is-ancestor", auditReport.git_sha, currentGitSha],
+      { stdio: "ignore" },
+    );
+    certificationCommitEntries = parseDiffStatusEntries(execFileSync(
+      "git",
+      [
+        "-C",
+        root,
+        "diff",
+        "--name-status",
+        "-z",
+        "--find-renames",
+        auditReport.git_sha,
+        currentGitSha,
+      ],
+      { encoding: "utf8" },
+    ));
+    currentHeadIsEvidenceDescendant = certificationCommitEntries.length > 0
+      && certificationCommitEntries.every(({ paths }) => (
+        paths.every(isCertificationOutputPath)
+      ));
+  } catch {
+    currentHeadIsEvidenceDescendant = false;
+  }
+}
+const repositoryHeadMode = currentHeadIsAuditedCommit
+  ? "audited-input-commit"
+  : currentHeadIsEvidenceDescendant
+    ? "certification-evidence-descendant"
+    : "unbound";
 
 const assertions = {
   audit_schema: auditReport.schema === "aibast-browser-visual-audit/4.8",
@@ -175,7 +229,9 @@ const assertions = {
     && currentManifestAggregateSha256 === manifest.aggregate_sha256
     && currentManifestSources.size === manifest.files
     && currentManifestBytes === manifest.bytes,
-  repository_current: currentGitSha === auditReport.git_sha
+  repository_current: (
+    currentHeadIsAuditedCommit || currentHeadIsEvidenceDescendant
+  )
     && currentGitStatusSha256 === auditReport.git_status_sha256,
   mutation_schema: mutationReport.schema === "aibast-browser-audit-mutations/1.10",
   mutations_complete: mutationReport.release_eligible === true
@@ -209,7 +265,7 @@ if (failedAssertions.length) {
 }
 
 const payload = {
-  schema: "aibast-browser-certification-attestation/1.8",
+  schema: "aibast-browser-certification-attestation/1.9",
   repository: "microsoft/aibast-agents-library",
   git_sha: auditReport.git_sha,
   git_dirty: auditReport.git_dirty,
@@ -250,6 +306,12 @@ const payload = {
     current_manifest_aggregate_sha256: currentManifestAggregateSha256,
     current_git_sha: currentGitSha,
     current_git_status_sha256: currentGitStatusSha256,
+    repository_head: {
+      mode: repositoryHeadMode,
+      audited_git_sha: auditReport.git_sha,
+      current_git_sha: currentGitSha,
+      certification_commit_entries: certificationCommitEntries,
+    },
     screenshots: screenshotEntries,
     contact_sheets: contactSheetEntries,
   },

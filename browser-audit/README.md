@@ -31,6 +31,12 @@ npm run certify
 `npm run certify` runs the exact mutation contract, the complete 51-workshop
 audit, and the final current-state attestation in that order.
 
+Run certification from a committed input state, then commit only the generated
+certification outputs. The attester remains independently rerunnable from that
+evidence commit only when the audited commit is its ancestor and every
+cumulative changed path is a generated certification output. Any source,
+workshop, registry, gate, rename-source, or other input change fails closed.
+
 For investigation only:
 
 ```bash
