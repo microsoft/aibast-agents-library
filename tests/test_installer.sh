@@ -195,7 +195,8 @@ else
 fi
 
 if grep -Fq 'Answer "Can AI do this?"' "$REPO_ROOT/beta/ui/index.html" \
-   && grep -q 'Open in VS Code' "$REPO_ROOT/beta/ui/index.html"; then
+   && grep -q 'GitHub Copilot + VS Code' "$REPO_ROOT/beta/ui/index.html" \
+   && ! grep -q 'id="vscode"' "$REPO_ROOT/beta/ui/index.html"; then
     pass "beta first-run guide explains rapid customer use cases"
 else
     fail "beta launcher should include customer-use-case onboarding"
