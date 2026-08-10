@@ -1,0 +1,638 @@
+{
+  "schema": "aibast-browser-certification-attestation/1.9",
+  "repository": "microsoft/aibast-agents-library",
+  "git_sha": "65eb534c764436eba1fb38378f84b10fc5875cb0",
+  "git_dirty": false,
+  "git_status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "audited_inputs_sha256": "2baf4594cef10e26126970b20918ae900d7758751d789619d8ee2c918d6dc0df",
+  "audited_files": 1060,
+  "audited_bytes": 361675148,
+  "audit": {
+    "schema": "aibast-browser-visual-audit/4.8",
+    "total": 51,
+    "passed": 51,
+    "failed": 0,
+    "rejected_snapshot_requests": [],
+    "rejected_external_requests": [],
+    "rejected_websocket_requests": [],
+    "service_workers_policy": "block",
+    "observed_service_workers": []
+  },
+  "mutations": {
+    "schema": "aibast-browser-audit-mutations/1.10",
+    "total": 42,
+    "passed": 42,
+    "failed": 0,
+    "baseline_restored": true,
+    "release_eligible": true,
+    "mutation_contract_sha256": "39a3df3b7b567822b8707b8c450eba5bda481c8015291e303afb90dcfeed2fc7",
+    "names": [
+      "catalog-scope-count",
+      "catalog-display-identity",
+      "registry-quest-identity",
+      "served-input-provenance",
+      "audited-input-toctou",
+      "gate-companion-toctou",
+      "screenshot-capture-toctou",
+      "workshop-body-identity",
+      "live-dom-evidence-swap",
+      "aria-tab-linkage",
+      "inactive-mode-visible-descendant",
+      "dynamic-image-inventory",
+      "dynamic-resource-outside-snapshot",
+      "external-script-request",
+      "external-stylesheet-request",
+      "external-fetch-request",
+      "external-srcset-request",
+      "external-websocket-request",
+      "service-worker-synthetic-resource",
+      "transparent-image-content",
+      "blank-image-content",
+      "mostly-transparent-image-content",
+      "mostly-blank-image-content",
+      "segmented-mostly-blank-boundary",
+      "five-tile-sparse-noise",
+      "eight-tile-isolated-noise",
+      "eight-tile-connected-diagonal-noise",
+      "inherited-opacity",
+      "css-filter",
+      "css-mask",
+      "stylesheet-individual-transform",
+      "object-position-rendered-blank",
+      "mix-blend-rendering",
+      "cross-mode-content-alias",
+      "cross-mode-decoded-visual-alias",
+      "offscreen-owner-pseudo-overlay",
+      "center-sample-pseudo-overlay",
+      "off-sample-band-pseudo-overlay",
+      "offscreen-visible-pseudo-band",
+      "pseudo-box-shadow-overlay",
+      "ancestor-clipping",
+      "undersized-evidence"
+    ]
+  },
+  "execution_environment": {
+    "node": "v25.2.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "chromium": "151.0.7922.34"
+  },
+  "assertions": {
+    "audit_schema": true,
+    "audit_complete": true,
+    "immutable_inputs": true,
+    "manifest_bound": true,
+    "repository_current": true,
+    "mutation_schema": true,
+    "mutations_complete": true,
+    "mutation_baseline_bound": true,
+    "scripts_bound": true,
+    "screenshots_complete": true,
+    "screenshot_count": true,
+    "screenshots_bound": true,
+    "contact_sheets_present": true,
+    "contact_sheets_bound": true
+  },
+  "bindings": {
+    "audit_script_sha256": "d5dceb6b8451869eb1389e5d48604d82a600adf5402c662614951019b044636c",
+    "mutation_script_sha256": "adbe5cec1e7fd7b3d3df278ebf3942c19b4b34381f403940e0bb0614bd23bd8e",
+    "attestation_script_sha256": "506bc70007330d76fd5320f1fbbda4e0d03bf468987498baddf8ef3a8e3741e7",
+    "audit_report_sha256": "2a9d522bd827880ef444a626bd052ffad402664045155921c7cd353cd185ed2c",
+    "mutation_report_sha256": "10524a82f876d055c7349d92bbb4ee9df4d74f9c4964724726f5ed5c7b4eb57e",
+    "snapshot_manifest_sha256": "8e692a8bc0547f7737a9189d0df6947d8519b37ef96a99d471c7260e92ef9a01",
+    "current_manifest_aggregate_sha256": "2baf4594cef10e26126970b20918ae900d7758751d789619d8ee2c918d6dc0df",
+    "current_git_sha": "65eb534c764436eba1fb38378f84b10fc5875cb0",
+    "current_git_status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "repository_head": {
+      "mode": "audited-input-commit",
+      "audited_git_sha": "65eb534c764436eba1fb38378f84b10fc5875cb0",
+      "current_git_sha": "65eb534c764436eba1fb38378f84b10fc5875cb0",
+      "certification_commit_entries": []
+    },
+    "screenshots": [
+      {
+        "path": "screenshots/account-intelligence-easy.png",
+        "bytes": 232151,
+        "sha256": "96de7547c8733425d1b35054ca0b9e1c9a74356c8868110bbfb7a18656af6a95"
+      },
+      {
+        "path": "screenshots/account-intelligence-hard.png",
+        "bytes": 283314,
+        "sha256": "6c3a35822ccad200b75403bd78ec948cf998206ac24eb59f3682e4a93def879b"
+      },
+      {
+        "path": "screenshots/ai-customer-assistant-easy.png",
+        "bytes": 221424,
+        "sha256": "cc94406f215b24e623f731f958438d5c851903b5592b8d5a5bc5640264068de1"
+      },
+      {
+        "path": "screenshots/ai-customer-assistant-hard.png",
+        "bytes": 180439,
+        "sha256": "f32a8ed6748fc7def4f4c92804fbf18c4188afc43f817d5e8761b408ebbf7e9f"
+      },
+      {
+        "path": "screenshots/ask-hr-easy.png",
+        "bytes": 268025,
+        "sha256": "e80256fdaa402956bc7a87d3c986dbb9beb514140345f50023ac2ff6f5d704f6"
+      },
+      {
+        "path": "screenshots/ask-hr-hard.png",
+        "bytes": 177585,
+        "sha256": "76cc3dbcc2d621a443d3c41e6a0b5425c383aaa6e43f5ec13c303261396cd7dc"
+      },
+      {
+        "path": "screenshots/asset-maintenance-forecast-easy.png",
+        "bytes": 283958,
+        "sha256": "78b36da7b539de8df73853d8067baf694e4bb97314820ecc1ed2435c5810bafe"
+      },
+      {
+        "path": "screenshots/asset-maintenance-forecast-hard.png",
+        "bytes": 185512,
+        "sha256": "eb59d723a6d64e1623b102565ee5f70020d8baf90e388bcf145675dc018c2e57"
+      },
+      {
+        "path": "screenshots/building-permit-processing-easy.png",
+        "bytes": 70809,
+        "sha256": "df5beed9aca08cb9143585a65c6d46705831a9b1dd1144e32e0a6f7cabd53ea5"
+      },
+      {
+        "path": "screenshots/building-permit-processing-hard.png",
+        "bytes": 208189,
+        "sha256": "34e9126861378fdc5fc91cbfb77b6d92fd9786c62c5dfcea1dd58867fdd40a64"
+      },
+      {
+        "path": "screenshots/care-gap-closure-easy.png",
+        "bytes": 230322,
+        "sha256": "ce66b4f61aaffa2e49ca505ccc1dc1505fe908ac77a3629aaaf9adaf4748ec13"
+      },
+      {
+        "path": "screenshots/care-gap-closure-hard.png",
+        "bytes": 175705,
+        "sha256": "2697c54c07781998eaea2f2c292b998b18e419c7e1ec17372274e865c63ba3a3"
+      },
+      {
+        "path": "screenshots/cart-abandonment-recovery-easy.png",
+        "bytes": 251571,
+        "sha256": "7fdfb3639fea69a529c0e24dc017aaae2f4f2757f1737c9839400c1494ad423b"
+      },
+      {
+        "path": "screenshots/cart-abandonment-recovery-hard.png",
+        "bytes": 181132,
+        "sha256": "4721474f7af5ab400c3bfef75d2bedf9b10a289fb79538e2e39258d0f709b590"
+      },
+      {
+        "path": "screenshots/claims-processing-easy.png",
+        "bytes": 206576,
+        "sha256": "0ed5041e2d297a5ed2572219dfa315cfd412ad5c82b89461a5f80e69fdb78f6d"
+      },
+      {
+        "path": "screenshots/claims-processing-hard.png",
+        "bytes": 180675,
+        "sha256": "8df1ae1780562a792a46de6b75597f9686570940cdb47060cae916e889a421a2"
+      },
+      {
+        "path": "screenshots/client-health-score-easy.png",
+        "bytes": 246363,
+        "sha256": "254d73987d4bedd7e7b2b2b1bc58279d2b149e4b1f71e928508801b6dcb5727a"
+      },
+      {
+        "path": "screenshots/client-health-score-hard.png",
+        "bytes": 189466,
+        "sha256": "c29edeac042b40d283cc0c20bcf60ef59da13e022bfb30c911cd99a0e369e0a6"
+      },
+      {
+        "path": "screenshots/clinical-notes-summarizer-easy.png",
+        "bytes": 189547,
+        "sha256": "bf215dc332d80b676a033ad45c44af6c62ae7c94188f7be95e5529b88e45ae0a"
+      },
+      {
+        "path": "screenshots/clinical-notes-summarizer-hard.png",
+        "bytes": 181896,
+        "sha256": "52531320e13a48a2f0d9581323235a03fe0397fd5e2fb6583bb7500c8b25c3ee"
+      },
+      {
+        "path": "screenshots/contract-risk-review-easy.png",
+        "bytes": 227079,
+        "sha256": "70d74d84a8d32e952fa17f1697ac47396e8b171c81d4b4a3eb7055af2b3ba433"
+      },
+      {
+        "path": "screenshots/contract-risk-review-hard.png",
+        "bytes": 190441,
+        "sha256": "16de83f422e125b58240cdd60fc02da888eca15cf6f94a2c0b60e08103027ca8"
+      },
+      {
+        "path": "screenshots/cross-selling-easy.png",
+        "bytes": 268497,
+        "sha256": "47945a344de2cbf31000304c5714fbf0b7d849902d08acb1d1f907fa2e2a04b8"
+      },
+      {
+        "path": "screenshots/cross-selling-hard.png",
+        "bytes": 172434,
+        "sha256": "2a52f3362796b526ae74914dde8b25e043791a6f5d6b0489bd61d64dd66ca7f5"
+      },
+      {
+        "path": "screenshots/customer-loyalty-rewards-easy.png",
+        "bytes": 251059,
+        "sha256": "5a043260b7cae6ab70e4e219cac5e3fc9b9bbe02fd623f21e270f02c69d1d229"
+      },
+      {
+        "path": "screenshots/customer-loyalty-rewards-hard.png",
+        "bytes": 188753,
+        "sha256": "1b005a8a87dbd54d5bc04b12fff5ea6d0b25b27fce938a04faa5359510891287"
+      },
+      {
+        "path": "screenshots/customer-sentiment-churn-easy.png",
+        "bytes": 199627,
+        "sha256": "ab78dbba11c4d0d2adcaa94e9f1fbf4e7c548b2c5a9c801909361a042333dfcd"
+      },
+      {
+        "path": "screenshots/customer-sentiment-churn-hard.png",
+        "bytes": 183600,
+        "sha256": "ee7949b19e0b44c47f800065f16269a3fa5991d10b0313e4a111e6fc581564d6"
+      },
+      {
+        "path": "screenshots/deal-progression-easy.png",
+        "bytes": 286752,
+        "sha256": "31702430a9fcd69df23417ab151bc9f7439d0b0f64fb7b5173f9092284fcc5bd"
+      },
+      {
+        "path": "screenshots/deal-progression-hard.png",
+        "bytes": 180102,
+        "sha256": "96b2b6e2f138d9a4c92d2c0ee250113314119c20196387c3cdd3883897977a96"
+      },
+      {
+        "path": "screenshots/emission-tracking-easy.png",
+        "bytes": 234700,
+        "sha256": "28b503f1d3c9edff30aca692b46911ba99ec77d13ab9307ebcf7c52c52ced1ba"
+      },
+      {
+        "path": "screenshots/emission-tracking-hard.png",
+        "bytes": 180946,
+        "sha256": "d7a9b3cdecb12fe8feb20e6d4b62e07607da7b657c083f90eafc7cc45a201eed"
+      },
+      {
+        "path": "screenshots/energy-regulatory-reporting-easy.png",
+        "bytes": 272134,
+        "sha256": "50f66084482d36f1516bbdfc600dc083a34289b05705bf44dd24f1f6e2c0fc50"
+      },
+      {
+        "path": "screenshots/energy-regulatory-reporting-hard.png",
+        "bytes": 174209,
+        "sha256": "0e6cff39960dcb9365409f039adb9036f190451c8c695eeb9df9d1f74f435dbf"
+      },
+      {
+        "path": "screenshots/field-service-dispatch-easy.png",
+        "bytes": 246829,
+        "sha256": "30bd5216f533ebd2290fb4b036ce3bc06a8faf5ca3d935f1cfa27ac7954fa066"
+      },
+      {
+        "path": "screenshots/field-service-dispatch-hard.png",
+        "bytes": 180865,
+        "sha256": "b2d26cd4c9695857ebf808010d0e007c3042f697277b5f90359e7bff72a6c895"
+      },
+      {
+        "path": "screenshots/financial-advisor-copilot-easy.png",
+        "bytes": 233455,
+        "sha256": "a45d1c1157f7ac36f342b3006a8fea04c85f731c4cc71367ca52f4af0a3c0880"
+      },
+      {
+        "path": "screenshots/financial-advisor-copilot-hard.png",
+        "bytes": 186482,
+        "sha256": "efc98ad75e10cdaf9a21c6d80317b93f6687d5f151a54bdb081f420641d7beed"
+      },
+      {
+        "path": "screenshots/fraud-detection-alert-easy.png",
+        "bytes": 191526,
+        "sha256": "b9a977fd6d0df7f1dd727088c01406b92a6f82f318645ec63e818573cad4da87"
+      },
+      {
+        "path": "screenshots/fraud-detection-alert-hard.png",
+        "bytes": 176224,
+        "sha256": "fa2c840835d9fbeef63aac90e38367ddd5735bc4a5e55be2a0787ffb715fd52b"
+      },
+      {
+        "path": "screenshots/fs-customer-onboarding-easy.png",
+        "bytes": 183737,
+        "sha256": "3a5c2dcb952b56d4059f92b83344c3aec87c291634a19350638ba90cce71f6db"
+      },
+      {
+        "path": "screenshots/fs-customer-onboarding-hard.png",
+        "bytes": 190946,
+        "sha256": "359ad0915d708b928953f48aeb793f823bd61064da7b7f257e103a180c02ef88"
+      },
+      {
+        "path": "screenshots/fs-regulatory-compliance-easy.png",
+        "bytes": 193543,
+        "sha256": "89ac19ad0a6a62d50260cd0b0ddd9a7eace49e4575f4a0299d8e070ab9558b16"
+      },
+      {
+        "path": "screenshots/fs-regulatory-compliance-hard.png",
+        "bytes": 179106,
+        "sha256": "a92843cf170873f49e8818aa19d0b38c8b97e615cd669bcca971e5ee71630b18"
+      },
+      {
+        "path": "screenshots/inventory-rebalancing-easy.png",
+        "bytes": 280518,
+        "sha256": "e383f1075109c684e3e30021ca8c3125b5a7ba976024e84e6faea91842c9258e"
+      },
+      {
+        "path": "screenshots/inventory-rebalancing-hard.png",
+        "bytes": 180426,
+        "sha256": "056f1ada75c2fdf6fc1bc2b67c806d19305398f8deed6afcfa5c9fc0f2d85f5f"
+      },
+      {
+        "path": "screenshots/inventory-visibility-easy.png",
+        "bytes": 191032,
+        "sha256": "72b84919d622e1091e9f1ed0790401219ddcfd0cd37ccd1c6858fa2dc37e348e"
+      },
+      {
+        "path": "screenshots/inventory-visibility-hard.png",
+        "bytes": 176114,
+        "sha256": "1502054d6a8317529e26d20cd732e09229715b6341cc42a40f829eaf93228623"
+      },
+      {
+        "path": "screenshots/license-renewal-expansion-easy.png",
+        "bytes": 301559,
+        "sha256": "3c1636457025f41b5d44320ea8d403d3040e376362db6e2060b963350b507bf5"
+      },
+      {
+        "path": "screenshots/license-renewal-expansion-hard.png",
+        "bytes": 178386,
+        "sha256": "0d19f57e88b3cb28f2ad2ce536d82167b13dc0cf5f3cbcd6e51c60a62292e616"
+      },
+      {
+        "path": "screenshots/loan-origination-assistant-easy.png",
+        "bytes": 200082,
+        "sha256": "0afcb179eba4d43d5af2a72a188aad62a6ac5835f6625d52d553feab2e05b49b"
+      },
+      {
+        "path": "screenshots/loan-origination-assistant-hard.png",
+        "bytes": 180015,
+        "sha256": "064d73eeb82e1786245beb6c31773fcc58163c81b614e9b45596118d3bca65ed"
+      },
+      {
+        "path": "screenshots/maintenance-scheduling-easy.png",
+        "bytes": 239093,
+        "sha256": "f3f287e07ee90fe8a055735267a7e6eb3b176c2ef94ca1327362706ae933e65d"
+      },
+      {
+        "path": "screenshots/maintenance-scheduling-hard.png",
+        "bytes": 190087,
+        "sha256": "5151af8964e5a523036e5d13f3bf6513154285a41a317f8bf0d3f4fcd77b4808"
+      },
+      {
+        "path": "screenshots/omnichannel-engagement-easy.png",
+        "bytes": 256390,
+        "sha256": "441afae6634909aa00c6fba1adc99a3a479daab4ebb86c9d04474f9c549bc480"
+      },
+      {
+        "path": "screenshots/omnichannel-engagement-hard.png",
+        "bytes": 191004,
+        "sha256": "4d1be9f2f061d0984815c818f8a06038e6219eb5d8d1186a7c765b24b4d8b47a"
+      },
+      {
+        "path": "screenshots/order-status-communication-easy.png",
+        "bytes": 238349,
+        "sha256": "f8be113b9ab945bb3cc7f71997760d464410107ccfaf2fe57239fae223562028"
+      },
+      {
+        "path": "screenshots/order-status-communication-hard.png",
+        "bytes": 180459,
+        "sha256": "29dd839cd86525457f7bf145928c56f7736298c13e3a64de5993208a4e35e72a"
+      },
+      {
+        "path": "screenshots/patient-intake-easy.png",
+        "bytes": 198276,
+        "sha256": "f79321b2773176010182517b6d407217fa6fb92bbf7a75feb9acf29bed3ef0f6"
+      },
+      {
+        "path": "screenshots/patient-intake-hard.png",
+        "bytes": 185033,
+        "sha256": "3fe71e92933b816e5d1c6bafcca1ebf0fb8c684457763b60c731ae44e0ffb905"
+      },
+      {
+        "path": "screenshots/permit-license-management-easy.png",
+        "bytes": 269101,
+        "sha256": "7cf827181f5d5825abcbb0cd85a6e8ee23787b93e63ce1aba107456244cfd91f"
+      },
+      {
+        "path": "screenshots/permit-license-management-hard.png",
+        "bytes": 180836,
+        "sha256": "c32a7a01479c8d2f97c194319a03f68e5ebe82dfc97d34f7a3686aa306b2c918"
+      },
+      {
+        "path": "screenshots/personalized-marketing-easy.png",
+        "bytes": 304049,
+        "sha256": "e1e0a486c4e288058b5bce388e0007269f5314b7744f5eca0aca5e104a5d3aef"
+      },
+      {
+        "path": "screenshots/personalized-marketing-hard.png",
+        "bytes": 193206,
+        "sha256": "37c444f9378ae4d6ee997d8274ce692708241fbdaa2d3686b810d0e83ba90661"
+      },
+      {
+        "path": "screenshots/personalized-shopping-assistant-easy.png",
+        "bytes": 202207,
+        "sha256": "217220f623ba779a687b321dcf7cfd0541e4f0ea0512c2e6209fb480a69f6f51"
+      },
+      {
+        "path": "screenshots/personalized-shopping-assistant-hard.png",
+        "bytes": 178347,
+        "sha256": "48bfafad31471b9d2c150b9c05339e2c69fc98f026e733319526f1e355bcb61b"
+      },
+      {
+        "path": "screenshots/portfolio-rebalancing-easy.png",
+        "bytes": 213332,
+        "sha256": "4e145f67f5bd8839aa6ca7cec58c699c5d8a584cd7abeb52de6f7cc57aa46e72"
+      },
+      {
+        "path": "screenshots/portfolio-rebalancing-hard.png",
+        "bytes": 188838,
+        "sha256": "d5b14131411017d3954de7a9abeed63b7f8eb41f5d8b516603297f0914d1ddd0"
+      },
+      {
+        "path": "screenshots/prior-authorization-easy.png",
+        "bytes": 208033,
+        "sha256": "3ba75f76fd5f2963f8ab326d42db6471df96a401e498d6f85ec125be9a293d4a"
+      },
+      {
+        "path": "screenshots/prior-authorization-hard.png",
+        "bytes": 174851,
+        "sha256": "60287bc7a70b04c233177f855b3edbf03cbca43b2c8de2de163d44bdd87196af"
+      },
+      {
+        "path": "screenshots/procurement-agent-easy.png",
+        "bytes": 256674,
+        "sha256": "bdc44401ff211d76889ebdbf53231011071f0935edd55f27c8b5a283f654a035"
+      },
+      {
+        "path": "screenshots/procurement-agent-hard.png",
+        "bytes": 184895,
+        "sha256": "a656527c82f6b9f27f9eb75f8ccfcf104c24e77ca2ca6ad7f766f09924a87e59"
+      },
+      {
+        "path": "screenshots/procurement-support-easy.png",
+        "bytes": 230755,
+        "sha256": "c3f54251193a15e138047a3d1459bbac952103713377b2f40e884415bd0a0acc"
+      },
+      {
+        "path": "screenshots/procurement-support-hard.png",
+        "bytes": 182827,
+        "sha256": "f82a542045793d22a70bbb34368f3c6ce743723ed761972b19b47213293f18c3"
+      },
+      {
+        "path": "screenshots/product-feedback-synthesizer-easy.png",
+        "bytes": 237394,
+        "sha256": "66278acfd85bdf66f768b4b3c46fb3c741fb134016a87a9e65ce4ff175224c3d"
+      },
+      {
+        "path": "screenshots/product-feedback-synthesizer-hard.png",
+        "bytes": 178150,
+        "sha256": "5a1d6effcf1a676f0c68e4928dbdf5eb7ae3eff0ca5fd1609315930c1212511d"
+      },
+      {
+        "path": "screenshots/product-line-optimization-easy.png",
+        "bytes": 270382,
+        "sha256": "590e561b0ca2fc2473fced265ca04f4361237a8e3ec32f09464ea14bf86bdbb6"
+      },
+      {
+        "path": "screenshots/product-line-optimization-hard.png",
+        "bytes": 182545,
+        "sha256": "5dc18c61511c651d2055832fc689e40b264eb305152f6fffcd070848d6248011"
+      },
+      {
+        "path": "screenshots/proposal-generation-easy.png",
+        "bytes": 249494,
+        "sha256": "f75b0de0130637049b6c8602499b2e25f36e5970369e0d4d243acbf277a1bd87"
+      },
+      {
+        "path": "screenshots/proposal-generation-hard.png",
+        "bytes": 180659,
+        "sha256": "d7b1567e792676b50ad74beacf567925cd53a6cc6e35a0abb48d1a224f888280"
+      },
+      {
+        "path": "screenshots/resource-utilization-easy.png",
+        "bytes": 244894,
+        "sha256": "6fd61aa975a023d9b08325a2e784a76ce0dc9acf8d40b86bc67b0cf7be05954f"
+      },
+      {
+        "path": "screenshots/resource-utilization-hard.png",
+        "bytes": 180724,
+        "sha256": "9ac7573a6ff964edf0f702554c51f7b4b92bb334caa1d8ccb9facd868603f4ec"
+      },
+      {
+        "path": "screenshots/returns-complaints-resolution-easy.png",
+        "bytes": 221570,
+        "sha256": "d3432308af90b48f107644ef5c5cef07d928669c3d82066ff49ee656785a5774"
+      },
+      {
+        "path": "screenshots/returns-complaints-resolution-hard.png",
+        "bytes": 180475,
+        "sha256": "aa332dff46f91adb8918874ccef56fc64f1a20bc125df231a2aa6c5e6b115cb5"
+      },
+      {
+        "path": "screenshots/sales-qualification-easy.png",
+        "bytes": 260486,
+        "sha256": "6a34a7f4c21ed1b3ec4b8188102284a77bcfc7ebf8cbe848273e06e82a6df354"
+      },
+      {
+        "path": "screenshots/sales-qualification-hard.png",
+        "bytes": 180853,
+        "sha256": "909ae2e0cad945755095efdf1ff5657c0474293f2ccdc12ec92a607935885be6"
+      },
+      {
+        "path": "screenshots/store-associate-copilot-easy.png",
+        "bytes": 209173,
+        "sha256": "b08b93be7071a6babfba2ff38322dcf8505f48d90755c32b226cd7caf19d0ace"
+      },
+      {
+        "path": "screenshots/store-associate-copilot-hard.png",
+        "bytes": 180551,
+        "sha256": "fceb8492c77bea55cfa5d488578f5dc0fb8e1ade22614639eed21c2f36df3442"
+      },
+      {
+        "path": "screenshots/supplier-risk-monitoring-easy.png",
+        "bytes": 246107,
+        "sha256": "b5b6366dd06534707f9c1d2872f80fb843c237d279663ac60ce6783f8a176ca3"
+      },
+      {
+        "path": "screenshots/supplier-risk-monitoring-hard.png",
+        "bytes": 180732,
+        "sha256": "6cbba64bbe2e2bc7101531dda1d9e1b50a1a697fbc6064b3c4d82c7fd6258d07"
+      },
+      {
+        "path": "screenshots/supply-chain-disruption-alert-easy.png",
+        "bytes": 214105,
+        "sha256": "eaebb39c18a933e3f892291b88fb2ec83cfbdf993c68d45c038c9516fd6cc1fa"
+      },
+      {
+        "path": "screenshots/supply-chain-disruption-alert-hard.png",
+        "bytes": 194289,
+        "sha256": "dcafaca17f70979636eb256425b73e5f607aa89ff6514ac49577423d74b24b95"
+      },
+      {
+        "path": "screenshots/time-entry-billing-easy.png",
+        "bytes": 217946,
+        "sha256": "27c62fb8eaa3bf00810317ff62692b21319fbe6a6716de21147afbe79237a1f0"
+      },
+      {
+        "path": "screenshots/time-entry-billing-hard.png",
+        "bytes": 175744,
+        "sha256": "1e27beef1d57b7fa118a2aafa6041ce024b9792e89f42d5ca01ab0f4d01deab0"
+      },
+      {
+        "path": "screenshots/underwriting-support-easy.png",
+        "bytes": 226209,
+        "sha256": "ec1db6a4bfde3c8b623ae82d374dd0421c405d1e9ca2e45c4c8a4aaf56ad7d67"
+      },
+      {
+        "path": "screenshots/underwriting-support-hard.png",
+        "bytes": 179842,
+        "sha256": "e0c44e905bd00ff15f44fa25e2dca2cfd6fa8602fe69933b6067da151f97fe36"
+      },
+      {
+        "path": "screenshots/utility-billing-assistance-easy.png",
+        "bytes": 230081,
+        "sha256": "6d9326888070c88005557feeec9beaa8a424c9e8695d0adf4be1ff4e8bae05e4"
+      },
+      {
+        "path": "screenshots/utility-billing-assistance-hard.png",
+        "bytes": 182330,
+        "sha256": "4e22186893a58d3d8f3a3e5de6d705db03cfe8ee17ef0d1ad625f4c6e04d0348"
+      },
+      {
+        "path": "screenshots/wealth-insights-generator-easy.png",
+        "bytes": 226058,
+        "sha256": "b662c4c80822a1b8442078b77c9b398d275f73acdf239b542e531d57e1268b8b"
+      },
+      {
+        "path": "screenshots/wealth-insights-generator-hard.png",
+        "bytes": 186890,
+        "sha256": "29a622f84038bc9aed0eb0ffa75b3f17acfc5588eafa595aa419c176b7f5e637"
+      },
+      {
+        "path": "screenshots/win-loss-analysis-easy.png",
+        "bytes": 270848,
+        "sha256": "258c0002bf6eb4839f4f592904103fc7df2eee2b49e4cfec13bd69f0960c4c1d"
+      },
+      {
+        "path": "screenshots/win-loss-analysis-hard.png",
+        "bytes": 189891,
+        "sha256": "32cf2fceca8444b0656fd3675186bd67ab7e3e731b973e103360c387feced7c7"
+      }
+    ],
+    "contact_sheets": [
+      {
+        "path": "easy-contact-sheet.jpg",
+        "bytes": 1204159,
+        "sha256": "01a3c62ecb7df6f3940dc781a4d656be70b5a90b614f880cb58c57e18b379e7e"
+      },
+      {
+        "path": "hard-contact-sheet.jpg",
+        "bytes": 1123612,
+        "sha256": "c400487067de13ef2809519a04f02f64e4d2aae42f559350f8bf2015c5626857"
+      }
+    ]
+  },
+  "integrity_sha256": "80cfa085fee6a4ffa4b195e18488ab3a26e6ce3180023a641aed0dac8ce14e30"
+}
