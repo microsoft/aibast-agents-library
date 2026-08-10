@@ -19,6 +19,7 @@ $BRAINSTEM_BIN = "$env:USERPROFILE\.local\bin"
 $REPO_URL = "https://github.com/microsoft/aibast-agents-library.git"
 $REMOTE_VERSION_URL = "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/rapp_brainstem/VERSION"
 $VENV_DIR = "$env:USERPROFILE\.brainstem\venv"
+$NO_LAUNCH = $false
 
 # Optional version pin: `--version vX.Y.Z` (also accepts a bare 0.6.14 or the release
 # tag form brainstem-v0.6.14). Parsed from the script arguments so a user can pin or
@@ -30,6 +31,8 @@ for ($i = 0; $i -lt $argList.Count; $i++) {
     if ($argList[$i] -eq "--version" -and ($i + 1) -lt $argList.Count) {
         $PIN_VERSION = [string]$argList[$i + 1]
         $i++
+    } elseif ($argList[$i] -eq "--no-launch") {
+        $NO_LAUNCH = $true
     }
 }
 
@@ -455,6 +458,62 @@ function Enable-BrainstemSparseCheckout {
     }
 }
 
+function Test-BrainstemSourceReady {
+    param([string]$RepoPath)
+    $runtime = Join-Path $RepoPath "rapp_brainstem"
+    return (
+        (Test-Path (Join-Path $runtime "brainstem.py")) -and
+        (Test-Path (Join-Path $runtime "requirements.txt")) -and
+        (Test-Path (Join-Path $runtime "VERSION"))
+    )
+}
+
+function Repair-BrainstemSource {
+    param([string]$RepoPath)
+    $repairPath = "$RepoPath-repair-$(Get-Random)"
+    $oldPath = "$RepoPath-broken-$(Get-Random)"
+    $prev = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    try {
+        Write-Host "  [..] Existing checkout is incomplete - downloading a clean Brainstem copy..." -ForegroundColor Yellow
+        git clone --progress --filter=blob:none --sparse --depth 1 --single-branch --no-tags --branch main $REPO_URL $repairPath 2>&1 |
+            ForEach-Object { Write-Host "$_" }
+        if ($LASTEXITCODE -ne 0) { return $false }
+        if (-not (Enable-BrainstemSparseCheckout $repairPath)) { return $false }
+
+        if ($PIN_VERSION) {
+            Push-Location $repairPath
+            try {
+                git fetch --filter=blob:none --tags --quiet origin 2>&1 | Out-Null
+                if ($LASTEXITCODE -ne 0) { return $false }
+                $repairTag = Resolve-PinnedTag $PIN_VERSION
+                if (-not $repairTag) { return $false }
+                git checkout --quiet $repairTag 2>&1 | Out-Null
+                if ($LASTEXITCODE -ne 0) { return $false }
+            } finally {
+                Pop-Location
+            }
+        }
+
+        if (-not (Test-BrainstemSourceReady $repairPath)) { return $false }
+        Move-Item $RepoPath $oldPath -ErrorAction Stop
+        try {
+            Move-Item $repairPath $RepoPath -ErrorAction Stop
+        } catch {
+            Move-Item $oldPath $RepoPath -ErrorAction SilentlyContinue
+            return $false
+        }
+        Remove-Item -Recurse -Force $oldPath -ErrorAction SilentlyContinue
+        Write-Host "  [OK] Clean sparse repair completed" -ForegroundColor Green
+        return $true
+    } finally {
+        if (Test-Path $repairPath) {
+            Remove-Item -Recurse -Force $repairPath -ErrorAction SilentlyContinue
+        }
+        $ErrorActionPreference = $prev
+    }
+}
+
 function Install-Brainstem {
     Write-Host ""
     Write-Host "Installing RAPP Brainstem..."
@@ -487,7 +546,7 @@ function Install-Brainstem {
             Write-Host "  Remote: v$RemoteVer"
         }
 
-        if ($LocalVer -eq $RemoteVer) {
+        if (($LocalVer -eq $RemoteVer) -and (Test-BrainstemSourceReady "$BRAINSTEM_HOME\src")) {
             Write-Host "  [OK] Already up to date (v$LocalVer)" -ForegroundColor Green
         } else {
             Write-Host "  Upgrading v$LocalVer -> v$RemoteVer..."
@@ -501,6 +560,17 @@ function Install-Brainstem {
             if (Test-Path $SoulFile) { Copy-Item $SoulFile "$Backup\soul.md" }
             if (Test-Path $EnvFile) { Copy-Item $EnvFile "$Backup\.env" }
             if (Test-Path $AgentsDir) { Copy-Item "$AgentsDir\*.py" "$Backup\" -ErrorAction SilentlyContinue }
+            if (Test-Path "$BRAINSTEM_HOME\src\rapp_brainstem\.brainstem_data") {
+                Copy-Item "$BRAINSTEM_HOME\src\rapp_brainstem\.brainstem_data" "$Backup\.brainstem_data" -Recurse -Force
+            }
+            foreach ($stateFile in @(
+                ".copilot_token", ".copilot_session", ".copilot_pending",
+                ".brainstem_model", ".brainstem_book.json", ".brainstem_secret",
+                "voice.zip"
+            )) {
+                $statePath = "$BRAINSTEM_HOME\src\rapp_brainstem\$stateFile"
+                if (Test-Path $statePath) { Copy-Item $statePath "$Backup\$stateFile" -Force }
+            }
             Write-Host "  [OK] Backed up soul, agents, config" -ForegroundColor Green
 
             # Pull latest from THIS installer's repo. A prior install may have cloned from a
@@ -538,6 +608,9 @@ function Install-Brainstem {
             Pop-Location
             if ($PIN_VERSION -and -not $TagRef) {
                 throw "pinned version $PIN_VERSION not found"
+            }
+            if ((-not $pullOk) -and (-not (Test-BrainstemSourceReady "$BRAINSTEM_HOME\src"))) {
+                $pullOk = Repair-BrainstemSource "$BRAINSTEM_HOME\src"
             }
             if ($pullOk) {
                 if ($PIN_VERSION) {
@@ -577,6 +650,21 @@ function Install-Brainstem {
                 if (-not $soulRefreshed) { Copy-Item "$Backup\soul.md" $SoulFile -Force }
             }
             if (Test-Path "$Backup\.env") { Copy-Item "$Backup\.env" $EnvFile -Force }
+            if (Test-Path "$Backup\.brainstem_data") {
+                $dataTarget = "$BRAINSTEM_HOME\src\rapp_brainstem\.brainstem_data"
+                New-Item -ItemType Directory -Force -Path $dataTarget | Out-Null
+                Get-ChildItem "$Backup\.brainstem_data" -Force -ErrorAction SilentlyContinue |
+                    Copy-Item -Destination $dataTarget -Recurse -Force
+            }
+            foreach ($stateFile in @(
+                ".copilot_token", ".copilot_session", ".copilot_pending",
+                ".brainstem_model", ".brainstem_book.json", ".brainstem_secret",
+                "voice.zip"
+            )) {
+                if (Test-Path "$Backup\$stateFile") {
+                    Copy-Item "$Backup\$stateFile" "$BRAINSTEM_HOME\src\rapp_brainstem\$stateFile" -Force
+                }
+            }
             # Only restore genuinely user-added agents. Compute the set the repo now
             # ships from the fresh checkout and skip-restore anything in it — otherwise
             # bundled agents (context_memory, manage_memory, hacker_news) get reverted
@@ -673,6 +761,9 @@ function Install-Brainstem {
             Remove-Item -Recurse -Force $FreshBackup -ErrorAction SilentlyContinue
             Write-Host "  [OK] Preserved your soul, agents, memories, and config" -ForegroundColor Green
         }
+    }
+    if (-not (Test-BrainstemSourceReady "$BRAINSTEM_HOME\src")) {
+        throw "Brainstem source is incomplete after install; rapp_brainstem\brainstem.py is missing"
     }
     Write-Host "  [OK] Source code ready" -ForegroundColor Green
 }
@@ -1037,6 +1128,10 @@ function Main {
             Ensure-Dependencies
             Install-CLI
             Create-Env
+            if ($NO_LAUNCH) {
+                Write-Host "  [OK] Brainstem runtime is ready (launch skipped)" -ForegroundColor Green
+                return
+            }
             Launch-Brainstem
             return
         }
@@ -1063,6 +1158,11 @@ function Main {
     Write-Host "  [OK] RAPP Brainstem v$installedVersion installed!" -ForegroundColor Green
     Write-Host "===================================================" -ForegroundColor Cyan
     Write-Host ""
+
+    if ($NO_LAUNCH) {
+        Write-Host "  [OK] Brainstem runtime is ready (launch skipped)" -ForegroundColor Green
+        return
+    }
 
     Launch-Brainstem
 }

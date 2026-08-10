@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'self'; frame-src http://127.0.0.1:* http://localhost:*; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self' data:;"
+  >
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RAPP Brainstem Beta</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #0d1117;
+      color: #e6edf3;
+    }
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+    body { display: grid; grid-template-rows: auto 1fr; }
+    header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 58px;
+      padding: 10px 14px;
+      border-bottom: 1px solid #30363d;
+      background: #161b22;
+    }
+    .title { display: flex; align-items: center; gap: 9px; min-width: 220px; font-weight: 700; }
+    .beta {
+      border: 1px solid #d29922;
+      border-radius: 999px;
+      padding: 2px 8px;
+      color: #f2cc60;
+      font-size: 11px;
+      letter-spacing: .08em;
+    }
+    .status { display: flex; flex: 1; gap: 8px; min-width: 0; }
+    .pill {
+      max-width: 360px;
+      overflow: hidden;
+      border: 1px solid #30363d;
+      border-radius: 999px;
+      padding: 5px 10px;
+      color: #8c959f;
+      font-size: 12px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .pill.ready { border-color: #238636; color: #3fb950; }
+    .pill.error { border-color: #da3633; color: #ff7b72; }
+    .pill.warning, .pill.signed-out { border-color: #9e6a03; color: #d29922; }
+    .actions { display: flex; gap: 8px; }
+    button {
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      padding: 7px 11px;
+      background: #21262d;
+      color: #e6edf3;
+      cursor: pointer;
+      font: inherit;
+      font-size: 12px;
+    }
+    button:hover { border-color: #58a6ff; background: #30363d; }
+    main { position: relative; min-height: 0; background: #0d1117; }
+    iframe { width: 100%; height: 100%; border: 0; display: none; background: #0d1117; }
+    iframe.ready { display: block; }
+    #splash {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 32px;
+      text-align: center;
+    }
+    #splash.hidden { display: none; }
+    .card {
+      width: min(620px, 90vw);
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 28px;
+      background: #161b22;
+      box-shadow: 0 20px 70px rgba(0,0,0,.35);
+    }
+    .card h1 { margin: 0 0 10px; font-size: 24px; }
+    .card p { margin: 7px 0; color: #8c959f; line-height: 1.55; }
+    #error { color: #ff7b72; white-space: pre-wrap; }
+    #intro {
+      position: fixed;
+      z-index: 20;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 28px;
+      background: rgba(1, 4, 9, .88);
+      backdrop-filter: blur(12px);
+    }
+    #intro.hidden { display: none; }
+    .intro-panel {
+      width: min(1080px, 96vw);
+      max-height: 92vh;
+      overflow: auto;
+      border: 1px solid #30363d;
+      border-radius: 16px;
+      background: #0d1117;
+      box-shadow: 0 28px 100px rgba(0,0,0,.55);
+    }
+    .intro-hero {
+      padding: 30px 32px 24px;
+      border-bottom: 1px solid #30363d;
+      background:
+        radial-gradient(circle at 85% 15%, rgba(31,111,235,.22), transparent 34%),
+        linear-gradient(135deg, #161b22, #0d1117);
+    }
+    .eyebrow {
+      color: #58a6ff;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .intro-hero h1 { margin: 8px 0 10px; font-size: clamp(28px, 4vw, 44px); line-height: 1.08; }
+    .intro-hero p { max-width: 850px; margin: 0; color: #b1bac4; font-size: 16px; line-height: 1.6; }
+    .intro-body { padding: 24px 32px 30px; }
+    .intro-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .intro-card {
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 18px;
+      background: #161b22;
+    }
+    .intro-card.wide { grid-column: 1 / -1; }
+    .intro-card h2 { margin: 0 0 8px; font-size: 16px; color: #f0f6fc; }
+    .intro-card p, .intro-card li { color: #b1bac4; font-size: 14px; line-height: 1.55; }
+    .intro-card p { margin: 6px 0; }
+    .intro-card ul, .intro-card ol { margin: 8px 0 0; padding-left: 20px; }
+    .tool-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
+    .tool {
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 12px;
+      background: #0d1117;
+    }
+    .tool strong { display: block; margin-bottom: 6px; color: #58a6ff; }
+    .tool span { color: #8c959f; font-size: 12px; line-height: 1.45; }
+    .prompt {
+      margin-top: 10px;
+      border: 1px solid #1f6feb;
+      border-radius: 8px;
+      padding: 14px;
+      background: #071d36;
+      color: #dbeafe;
+      font: 12px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      white-space: pre-wrap;
+    }
+    .intro-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-top: 20px;
+    }
+    .intro-footer small { color: #8c959f; line-height: 1.45; }
+    .primary { border-color: #238636; background: #238636; font-weight: 700; }
+    .primary:hover { border-color: #2ea043; background: #2ea043; }
+    @media (max-width: 850px) {
+      .intro-grid, .tool-grid { grid-template-columns: 1fr; }
+      .intro-card.wide { grid-column: auto; }
+      .status { display: none; }
+      .intro-body, .intro-hero { padding-left: 20px; padding-right: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="title">RAPP Brainstem <span class="beta">BETA</span></div>
+    <div class="status">
+      <div id="brainstem-status" class="pill">Starting shared Brainstem...</div>
+      <div id="copilot-status" class="pill">Connecting bundled Copilot CLI...</div>
+    </div>
+    <div class="actions">
+      <button id="guide" type="button">What is this?</button>
+      <button id="browser" type="button">Open in browser</button>
+      <button id="vscode" type="button">Open in VS Code</button>
+      <button id="restart" type="button">Restart</button>
+    </div>
+  </header>
+  <main>
+    <div id="splash">
+      <div class="card">
+        <h1>Starting your global Brainstem</h1>
+        <p>This launcher uses the same agents, memories, authentication, and port 7071 as the regular installer.</p>
+        <p id="error"></p>
+      </div>
+    </div>
+    <iframe id="brainstem" title="RAPP Brainstem chat"></iframe>
+  </main>
+  <section id="intro" aria-labelledby="intro-title">
+    <div class="intro-panel">
+      <div class="intro-hero">
+        <div class="eyebrow">Rapid customer use-case accelerator</div>
+        <h1 id="intro-title">Answer "Can AI do this?" with a working proof.</h1>
+        <p>RAPP Brainstem is a local prototype-and-test harness. GitHub Copilot builds and repairs the solution; Brainstem makes the behavior visible, repeatable, portable, and easy to test before you decide where it belongs in production.</p>
+      </div>
+      <div class="intro-body">
+        <div class="intro-grid">
+          <article class="intro-card">
+            <h2>What is this for?</h2>
+            <p>Turn a customer problem, transcript, screenshot, document, or expected outcome into one or more single-file agents. Run them locally, inspect every tool call, correct failures, and prove the workflow with the customer.</p>
+            <p><strong>It is the fastest path from an idea to evidence.</strong> It is not the final production host.</p>
+          </article>
+          <article class="intro-card">
+            <h2>Who should use it?</h2>
+            <p>Technical sellers, architects, specialists, engineers, partners, and customer builders who can steer a prototype and judge whether it solves the business problem.</p>
+            <p>It is not the default interface for account executives or end users. They consume the validated outcome in the right production experience.</p>
+          </article>
+          <article class="intro-card">
+            <h2>When should I reach for it?</h2>
+            <ul>
+              <li>A customer asks, "Can AI do this process?"</li>
+              <li>The requirements are still conversational or ambiguous.</li>
+              <li>You need a demo, feasibility proof, or process specification quickly.</li>
+              <li>You want failures to become concrete evidence Copilot can fix.</li>
+              <li>You need portable agent files that teammates can hot-load and improve.</li>
+            </ul>
+          </article>
+          <article class="intro-card">
+            <h2>When should I not use it?</h2>
+            <ul>
+              <li>Simple employee knowledge or Work IQ tasks already fit Scout.</li>
+              <li>The production design, integrations, governance, and target are already known.</li>
+              <li>You need to put real customer data into an unapproved local prototype.</li>
+              <li>You are treating a local proof as a production-ready solution.</li>
+            </ul>
+          </article>
+          <article class="intro-card wide">
+            <h2>How the tools fit together</h2>
+            <div class="tool-grid">
+              <div class="tool"><strong>Scout</strong><span>Use for accessible employee workflows, Work IQ, knowledge, and shareable skills when the experience already fits.</span></div>
+              <div class="tool"><strong>GitHub Copilot + VS Code</strong><span>Use as the builder and brain surgeon: create, test, diagnose, and repair agent code autonomously.</span></div>
+              <div class="tool"><strong>RAPP Brainstem</strong><span>Use as the local proving ground: hot-load capabilities, interview the agent, inspect tool calls, and lock in intent.</span></div>
+              <div class="tool"><strong>Copilot Studio / Foundry</strong><span>Use for governed production delivery, enterprise identity, connectors, telemetry, scale, and customer handoff.</span></div>
+            </div>
+          </article>
+          <article class="intro-card">
+            <h2>The rapid customer loop</h2>
+            <ol>
+              <li><strong>Frame:</strong> capture the problem, users, inputs, outputs, constraints, and success proof.</li>
+              <li><strong>Build:</strong> have Copilot create the smallest useful single-file agent set.</li>
+              <li><strong>Interview:</strong> test through Brainstem like a real user; inspect memory and tool calls.</li>
+              <li><strong>Correct:</strong> export the failed transcript, open VS Code, and tell Copilot to fix and retest.</li>
+              <li><strong>Package:</strong> share the agents, demo, evidence, requirements, and recommended production route.</li>
+            </ol>
+          </article>
+          <article class="intro-card">
+            <h2>What should come out?</h2>
+            <ul>
+              <li>A working, evidence-backed local prototype.</li>
+              <li>Portable single-file agents that document the process deterministically.</li>
+              <li>Known gaps for data, authentication, connectors, security, and governance.</li>
+              <li>A demo story plus design/SOW-ready requirements.</li>
+              <li>A clear route to Scout, Copilot Studio, Foundry, custom code, or "do not proceed."</li>
+            </ul>
+          </article>
+          <article class="intro-card wide">
+            <h2>Start with this prompt</h2>
+            <div class="prompt">I am working on a rapid customer proof. Interview me until you understand the business problem, users, inputs, expected outputs, constraints, and what would prove success. Then propose the smallest single-file RAPP agent set that can test the idea locally with synthetic or approved data. Build it, run it through Brainstem, show me the evidence, identify production gaps, and recommend whether the final experience belongs in Scout, Copilot Studio, Foundry, or custom code. Do not call the prototype production-ready.</div>
+          </article>
+        </div>
+        <div class="intro-footer">
+          <small>Default posture: builder-operated, local-first, synthetic or approved data, human validation, then governed promotion.</small>
+          <button id="enter" class="primary" type="button">Enter Brainstem</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script src="renderer.js"></script>
+</body>
+</html>

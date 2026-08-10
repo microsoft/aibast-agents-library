@@ -1,0 +1,75 @@
+{
+  "name": "@aibast/rapp-brainstem-beta-launcher",
+  "version": "0.1.0-beta.1",
+  "description": "Skill Recorder-style desktop launcher for the shared RAPP Brainstem runtime.",
+  "private": true,
+  "type": "module",
+  "main": "electron/main.mjs",
+  "engines": {
+    "node": ">=24.19.0 <26",
+    "npm": ">=11.6.0"
+  },
+  "scripts": {
+    "start": "electron .",
+    "check": "node --check electron/main.mjs && node --check electron/brainstem-process.mjs && node --check electron/copilot-runtime.mjs && node --check ui/renderer.js",
+    "test": "node --test tests/*.test.mjs",
+    "dist:mac": "electron-builder --mac dmg zip --arm64 --publish never"
+  },
+  "dependencies": {
+    "@github/copilot-sdk": "^1.0.6"
+  },
+  "devDependencies": {
+    "@electron/notarize": "^3.1.0",
+    "electron": "^43.0.0",
+    "electron-builder": "^26.15.6"
+  },
+  "build": {
+    "appId": "com.microsoft.aibast.rapp-brainstem-beta",
+    "productName": "RAPP Brainstem Beta",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "electron/**",
+      "ui/**",
+      "package.json",
+      "VERSION",
+      "LICENSE",
+      "THIRD-PARTY-NOTICES.md"
+    ],
+    "asarUnpack": [
+      "node_modules/@github/copilot-*/**"
+    ],
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "arm64"
+          ]
+        }
+      ],
+      "icon": "build/icon.icns",
+      "category": "public.app-category.developer-tools",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
+      "extendInfo": {
+        "NSMicrophoneUsageDescription": "RAPP Brainstem Beta uses the microphone only when you explicitly enable voice mode."
+      },
+      "artifactName": "${productName}-${version}-mac-${arch}.${ext}"
+    },
+    "dmg": {
+      "title": "RAPP Brainstem Beta ${version}",
+      "artifactName": "${productName}-${version}-mac-${arch}.${ext}"
+    }
+  }
+}

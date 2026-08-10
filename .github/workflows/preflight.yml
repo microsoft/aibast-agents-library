@@ -30,6 +30,7 @@ jobs:
         run: |
           bash -n install.sh
           bash -n install.command
+          bash -n beta/install.sh
           bash -n community_rapp/install.sh
           bash -n rapp_brainstem/start.sh
           bash -n tests/test_installer.sh
@@ -118,6 +119,19 @@ jobs:
       - name: Installer contracts
         run: bash tests/test_installer.sh
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+
+      - name: Beta desktop launcher contracts
+        working-directory: beta
+        env:
+          ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
+        run: |
+          npm ci --no-audit --no-fund
+          npm run check
+          npm test
+
       - name: AIBAST agent and registry contracts
         run: |
           python -m pip install -q "beautifulsoup4>=4.12.0"
@@ -151,6 +165,8 @@ jobs:
         include:
           - os: windows-latest
             scenario: fresh-nopip
+          - os: windows-latest
+            scenario: repair-fetch-failure
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -210,6 +226,61 @@ jobs:
           printf 'GITHUB_MODEL=auto\nPORT=7071\n# PREFLIGHT-ENV-MARKER\n' \
             > "$HOME/.brainstem/src/rapp_brainstem/.env"
 
+      - name: Seed incomplete checkout and fail first fetch
+        if: matrix.scenario == 'repair-fetch-failure'
+        shell: powershell
+        run: |
+          $source = Join-Path $HOME '.brainstem\src'
+          New-Item -ItemType Directory -Force -Path $source | Out-Null
+          git init $source
+          git -C $source config user.email preflight@localhost
+          git -C $source config user.name preflight
+          Set-Content -Path (Join-Path $source 'broken.txt') -Value 'missing runtime' -Encoding Ascii
+          git -C $source add broken.txt
+          git -C $source commit -m 'seed incomplete checkout'
+          git -C $source remote add origin https://github.com/microsoft/aibast-agents-library.git
+          $runtime = Join-Path $source 'rapp_brainstem'
+          New-Item -ItemType Directory -Force -Path (Join-Path $runtime 'agents') | Out-Null
+          New-Item -ItemType Directory -Force -Path (Join-Path $runtime '.brainstem_data\shared_memories') | Out-Null
+          Set-Content -Path (Join-Path $runtime 'soul.md') -Value 'REPAIR-SOUL-MARKER' -Encoding Ascii
+          Set-Content -Path (Join-Path $runtime '.env') -Value 'GITHUB_MODEL=auto', '# REPAIR-ENV-MARKER' -Encoding Ascii
+          @'
+          from agents.basic_agent import BasicAgent
+          class RepairCustomAgent(BasicAgent):
+              def __init__(self):
+                  self.name = 'RepairCustom'
+                  self.metadata = {
+                      'name': self.name,
+                      'description': 'repair marker agent',
+                      'parameters': {'type': 'object', 'properties': {}, 'required': []},
+                  }
+                  super().__init__(name=self.name, metadata=self.metadata)
+              def perform(self, **kwargs):
+                  return 'repair-marker'
+          '@ | Set-Content -Path (Join-Path $runtime 'agents\repair_custom_agent.py') -Encoding Ascii
+          Set-Content -Path (Join-Path $runtime '.copilot_token') -Value 'REPAIR-TOKEN-MARKER' -Encoding Ascii
+          Set-Content -Path (Join-Path $runtime '.copilot_session') -Value 'REPAIR-SESSION-MARKER' -Encoding Ascii
+          Set-Content -Path (Join-Path $runtime '.copilot_pending') -Value 'REPAIR-PENDING-MARKER' -Encoding Ascii
+          Set-Content -Path (Join-Path $runtime '.brainstem_model') -Value 'REPAIR-MODEL-MARKER' -Encoding Ascii
+          Set-Content -Path (Join-Path $runtime '.brainstem_book.json') -Value '{"marker":"REPAIR-BOOK-MARKER"}' -Encoding Ascii
+          Set-Content -Path (Join-Path $runtime '.brainstem_secret') -Value 'REPAIR-SECRET-MARKER' -Encoding Ascii
+          Set-Content -Path (Join-Path $runtime 'voice.zip') -Value 'REPAIR-VOICE-MARKER' -Encoding Ascii
+          Set-Content -Path (Join-Path $runtime '.brainstem_data\shared_memories\memory.json') -Value '{"marker":"REPAIR-DATA-MARKER"}' -Encoding Ascii
+
+          $realGit = (Get-Command git).Source
+          $shim = Join-Path $env:RUNNER_TEMP 'git-shim'
+          $marker = Join-Path $env:RUNNER_TEMP 'first-fetch-failed'
+          New-Item -ItemType Directory -Force -Path $shim | Out-Null
+          @"
+          @echo off
+          if /i "%~1"=="fetch" if not exist "$marker" (
+            type nul > "$marker"
+            exit /b 1
+          )
+          "$realGit" %*
+          "@ | Set-Content -Path (Join-Path $shim 'git.cmd') -Encoding Ascii
+          $shim | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
       - name: Block auth and remote-version endpoints
         if: runner.os != 'Windows'
         run: |
@@ -239,9 +310,42 @@ jobs:
         shell: powershell
         run: |
           $path = "$PWD\install.ps1"
-          $boot = "iex ([Text.Encoding]::UTF8.GetString([IO.File]::ReadAllBytes('$path')))"
-          $encoded = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($boot))
-          $command = "powershell -NoProfile -ExecutionPolicy Bypass -EncodedCommand $encoded > `"$env:RUNNER_TEMP\install.log`" 2>&1"
+          if ('${{ matrix.scenario }}' -eq 'repair-fetch-failure') {
+            $command = "powershell -NoProfile -ExecutionPolicy Bypass -File `"$path`" --no-launch > `"$env:RUNNER_TEMP\install.log`" 2>&1"
+            Start-Process cmd -ArgumentList '/c', $command -Wait
+          } else {
+            $boot = "iex ([Text.Encoding]::UTF8.GetString([IO.File]::ReadAllBytes('$path')))"
+            $encoded = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($boot))
+            $command = "powershell -NoProfile -ExecutionPolicy Bypass -EncodedCommand $encoded > `"$env:RUNNER_TEMP\install.log`" 2>&1"
+            Start-Process cmd -ArgumentList '/c', $command
+          }
+
+      - name: Assert repaired state before launch
+        if: matrix.scenario == 'repair-fetch-failure'
+        shell: powershell
+        run: |
+          $runtime = Join-Path $HOME '.brainstem\src\rapp_brainstem'
+          if (-not (Test-Path (Join-Path $runtime 'brainstem.py'))) { throw 'brainstem.py missing after repair' }
+          if ((Get-Content (Join-Path $runtime 'soul.md') -Raw) -notmatch 'REPAIR-SOUL-MARKER') { throw 'soul lost' }
+          if ((Get-Content (Join-Path $runtime '.env') -Raw) -notmatch 'REPAIR-ENV-MARKER') { throw '.env lost' }
+          foreach ($pair in @(
+            @('.copilot_token', 'REPAIR-TOKEN-MARKER'),
+            @('.copilot_session', 'REPAIR-SESSION-MARKER'),
+            @('.copilot_pending', 'REPAIR-PENDING-MARKER'),
+            @('.brainstem_model', 'REPAIR-MODEL-MARKER'),
+            @('.brainstem_book.json', 'REPAIR-BOOK-MARKER'),
+            @('.brainstem_secret', 'REPAIR-SECRET-MARKER'),
+            @('voice.zip', 'REPAIR-VOICE-MARKER'),
+            @('.brainstem_data\shared_memories\memory.json', 'REPAIR-DATA-MARKER')
+          )) {
+            $path = Join-Path $runtime $pair[0]
+            if (-not (Test-Path $path)) { throw "$($pair[0]) lost" }
+            if ((Get-Content $path -Raw) -notmatch $pair[1]) { throw "$($pair[0]) marker lost" }
+          }
+          if (-not (Test-Path (Join-Path $runtime 'agents\repair_custom_agent.py'))) { throw 'custom agent lost' }
+
+          $launcher = Join-Path $HOME '.local\bin\brainstem.cmd'
+          $command = "`"$launcher`" > `"$env:RUNNER_TEMP\install.log`" 2>&1"
           Start-Process cmd -ArgumentList '/c', $command
 
       - name: Wait for Brainstem and assert
@@ -273,6 +377,7 @@ jobs:
           curl -s -X POST http://localhost:7071/chat \
             -H 'Content-Type: application/json' -d '{}' \
             | python -c 'import json,sys; assert "error" in json.load(sys.stdin)'
+          test ! -e "$HOME/.brainstem/src/solutions"
 
       - name: Assert user files survived upgrade
         if: matrix.scenario == 'upgrade'
@@ -284,6 +389,15 @@ jobs:
           grep -q PREFLIGHT-ENV-MARKER "$HOME/.brainstem/src/rapp_brainstem/.env"
           curl -sf http://localhost:7071/health | python -c \
             'import json,sys; assert "PreflightCustom" in json.load(sys.stdin).get("agents", [])'
+
+      - name: Assert custom agent survived repair
+        if: matrix.scenario == 'repair-fetch-failure'
+        shell: bash
+        run: |
+          set -euxo pipefail
+          test -f "$HOME/.brainstem/src/rapp_brainstem/agents/repair_custom_agent.py"
+          curl -sf http://localhost:7071/health | python -c \
+            'import json,sys; assert "RepairCustom" in json.load(sys.stdin).get("agents", [])'
 
       - name: Collect installer log
         if: always()

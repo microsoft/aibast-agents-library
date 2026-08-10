@@ -72,6 +72,19 @@ else
     fail "install.sh should show Python setup progress"
 fi
 
+if grep -q -- '--no-launch' "$REPO_ROOT/install.sh"; then
+    pass "install.sh supports runtime-only setup for the beta launcher"
+else
+    fail "install.sh should support --no-launch"
+fi
+
+if grep -q 'brainstem_source_ready' "$REPO_ROOT/install.sh" \
+   && grep -q 'repair_brainstem_source' "$REPO_ROOT/install.sh"; then
+    pass "install.sh repairs an incomplete sparse checkout"
+else
+    fail "install.sh should repair missing Brainstem source"
+fi
+
 echo ""
 
 # ── install.ps1 tests ────────────────────────────────────────────────────────
@@ -102,6 +115,19 @@ if grep -q 'winget progress will appear below' "$REPO_ROOT/install.ps1" \
     pass "install.ps1 reports progress for long Python setup steps"
 else
     fail "install.ps1 should show Python setup progress"
+fi
+
+if grep -q -- '--no-launch' "$REPO_ROOT/install.ps1"; then
+    pass "install.ps1 supports runtime-only setup for the beta launcher"
+else
+    fail "install.ps1 should support --no-launch"
+fi
+
+if grep -q 'Test-BrainstemSourceReady' "$REPO_ROOT/install.ps1" \
+   && grep -q 'Repair-BrainstemSource' "$REPO_ROOT/install.ps1"; then
+    pass "install.ps1 repairs an incomplete sparse checkout"
+else
+    fail "install.ps1 should repair missing Brainstem source"
 fi
 
 BOOTSTRAP_BOMS=$("$PYTHON_BIN" - "$REPO_ROOT" <<'PY'
@@ -135,6 +161,43 @@ if grep -q 'FRESH_SHIPPED' "$REPO_ROOT/install.sh" \
     pass "repair installs preserve fresh bundled agents"
 else
     fail "repair installs should restore only custom agents"
+fi
+
+echo ""
+
+# ── beta launcher tests ───────────────────────────────────────────────────────
+
+echo "--- beta launcher ---"
+
+if [ -f "$REPO_ROOT/beta/install.sh" ] \
+   && [ -f "$REPO_ROOT/beta/install.cmd" ] \
+   && [ -f "$REPO_ROOT/beta/package.json" ]; then
+    pass "beta launcher release files exist"
+else
+    fail "beta launcher release files are incomplete"
+fi
+
+if bash -n "$REPO_ROOT/beta/install.sh" \
+   && grep -q 'microsoft/aibast-agents-library.git' "$REPO_ROOT/beta/install.sh" \
+   && ! grep -q 'kody-w/rapp-installer' "$REPO_ROOT/beta/install.sh"; then
+    pass "beta installer uses the canonical AIBAST source"
+else
+    fail "beta installer source or syntax is invalid"
+fi
+
+if grep -q -- '--filter=blob:none --sparse --depth 1' "$REPO_ROOT/beta/install.sh" \
+   && grep -q 'sparse-checkout set beta' "$REPO_ROOT/beta/install.sh" \
+   && grep -q 'Mainline and beta share' "$REPO_ROOT/beta/install.sh"; then
+    pass "beta installer is sparse and shares the global Brainstem"
+else
+    fail "beta installer should stay small and reuse the global Brainstem"
+fi
+
+if grep -Fq 'Answer "Can AI do this?"' "$REPO_ROOT/beta/ui/index.html" \
+   && grep -q 'Open in VS Code' "$REPO_ROOT/beta/ui/index.html"; then
+    pass "beta first-run guide explains rapid customer use cases"
+else
+    fail "beta launcher should include customer-use-case onboarding"
 fi
 
 echo ""
