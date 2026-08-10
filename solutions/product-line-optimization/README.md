@@ -62,8 +62,11 @@ customer KPIs, measured operational results, or commitments.
 | Source bundle | `solutions/product-line-optimization/exports/product-line-optimization-source.zip` |
 | Manual evidence | `solutions/product-line-optimization/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/product-line-optimization/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/product-line-optimization/exports/product-line-optimization-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/product-line-optimization/exports/product-line-optimization-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/product-line-optimization/exports/product-line-optimization-solution-export.json` |
 
-**Scaffold status:** 72 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 101 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

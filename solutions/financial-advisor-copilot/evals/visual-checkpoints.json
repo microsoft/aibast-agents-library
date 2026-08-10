@@ -7,67 +7,88 @@
     "partial_rule": "An annotated screenshot is a learner-facing visual checkpoint, not a substitute for the full machine gate.",
     "reshoot_rule": "Reshoot when the target state is absent, the response is blocked or refusing, or no positive deterministic anchor is visible."
   },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:financial-advisor-copilot",
+    "reviewed_at": "2026-08-10T00:00:00Z",
+    "method": "GPT-5.6 Sol inspected the real assisted and manual captures, kept FAC-03 withheld because its final answer is not visible, and verified the locked case through passed manual Preview evidence.",
+    "notes": "FAC-03 is machine-proven rather than visually claimed. The workshop still exceeds the required approved visual coverage and never presents the routing-only frame as proof."
+  },
   "summary": {
     "total_existing_captures": 29,
-    "reusable": 0,
-    "reshoot_required": 29,
-    "new_learn_step_captures_recommended": 0
+    "reusable": 18,
+    "reshoot_required": 11
   },
   "captures": [
     {
       "id": "easy-fac-01",
       "mode": "easy",
+      "case_id": "FAC-01",
       "source": "solutions/financial-advisor-copilot/screenshots/assisted/01-fac-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "FAC-01"
+      "annotated": "solutions/financial-advisor-copilot/screenshots/assisted/annotated/01-fac-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "CLI-3001",
+        "No identity",
+        "Identity verification required before routing"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 145,
+          "width": 940,
+          "height": 72,
+          "label": "Client and identity gate"
+        }
+      ]
     },
     {
       "id": "easy-fac-02",
       "mode": "easy",
+      "case_id": "FAC-02",
       "source": "solutions/financial-advisor-copilot/screenshots/assisted/02-fac-02.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "FAC-02"
+      "reason": "Only internal retrieval reasoning is visible. It says the source details are missing and proposes constructing an answer from locked anchors; no final user-facing response proves the case."
     },
     {
       "id": "easy-fac-03",
       "mode": "easy",
+      "case_id": "FAC-03",
       "source": "solutions/financial-advisor-copilot/screenshots/assisted/03-fac-03.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "FAC-03"
+      "reason": "Missing-source blocker: the only assisted FAC-03 browserfilm frame ends during internal routing and knowledge search. No final user-facing portfolio response is visible, and browserfilm.json provides no alternate FAC-03 source frame to approve or annotate."
     },
     {
       "id": "easy-fac-04",
       "mode": "easy",
+      "case_id": "FAC-04",
       "source": "solutions/financial-advisor-copilot/screenshots/assisted/04-fac-04.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "FAC-04"
+      "reason": "The frame shows internal reasoning that the detailed record is missing and repeats locked anchors. No final user-facing answer is visible."
     },
     {
       "id": "easy-fac-05",
       "mode": "easy",
+      "case_id": "FAC-05",
       "source": "solutions/financial-advisor-copilot/screenshots/assisted/05-fac-05.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "FAC-05"
+      "reason": "Only routing and knowledge-search progress are visible. The final response and its required senior-investor evidence are absent."
     },
     {
       "id": "easy-fac-06",
       "mode": "easy",
+      "case_id": "FAC-06",
       "source": "solutions/financial-advisor-copilot/screenshots/assisted/06-fac-06.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "FAC-06"
+      "reason": "Only internal retrieval reasoning is visible, including references to locked anchors. No final handoff response is shown."
     },
     {
       "id": "easy-draft",
       "mode": "easy",
       "source": "solutions/financial-advisor-copilot/screenshots/assisted/07-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The Financial Advisor Pilot row is not visible, so the target Draft identity is not proven.",
+      "draft": true
     },
     {
       "id": "hard-step-01",
@@ -75,23 +96,49 @@
       "step": 1,
       "source": "solutions/financial-advisor-copilot/screenshots/manual/01-create-blank-agent.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is an empty loading canvas. No blank agent name or Build workspace is visible."
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
       "step": 2,
       "source": "solutions/financial-advisor-copilot/screenshots/manual/02-name-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Financial Advisor Manual in the name field"
+      ],
+      "boxes": [
+        {
+          "x": 164,
+          "y": 99,
+          "width": 818,
+          "height": 52,
+          "label": "Manual agent name"
+        }
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
       "step": 3,
       "source": "solutions/financial-advisor-copilot/screenshots/manual/03-enter-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Reviewed instruction policy",
+        "Locked Preview evidence anchors",
+        "FAC-01 through FAC-06 anchors"
+      ],
+      "boxes": [
+        {
+          "x": 82,
+          "y": 218,
+          "width": 898,
+          "height": 610,
+          "label": "Reviewed instructions"
+        }
+      ]
     },
     {
       "id": "hard-step-04",
@@ -99,7 +146,7 @@
       "step": 4,
       "source": "solutions/financial-advisor-copilot/screenshots/manual/04-save-instructions.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The instructions remain visible in the editor, but no saved-state confirmation or no-unsaved-changes indicator is visible."
     },
     {
       "id": "hard-step-05",
@@ -107,149 +154,420 @@
       "step": 5,
       "source": "solutions/financial-advisor-copilot/screenshots/manual/05-remove-web-search.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The Knowledge panel still visibly contains Search all websites, directly contradicting the removal checkpoint."
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
       "step": 6,
       "source": "solutions/financial-advisor-copilot/screenshots/manual/06-add-aibast-financial-advisor-copilot-controls-and-review.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/06-add-aibast-financial-advisor-copilot-controls-and-review.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Knowledge chip begins aibast_financial-advisor-copilot-controls-and"
+      ],
+      "full_filename_not_visibly_proven": [
+        "The review.md suffix is truncated by the Copilot Studio chip."
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 309,
+          "width": 371,
+          "height": 44,
+          "label": "Controls knowledge added"
+        }
+      ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
       "step": 7,
       "source": "solutions/financial-advisor-copilot/screenshots/manual/07-add-aibast-financial-advisor-copilot-synthetic-records.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/07-add-aibast-financial-advisor-copilot-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Knowledge chip begins aibast_financial-advisor-copilot-synthetic-re",
+        "Two knowledge chips are visible"
+      ],
+      "full_filename_not_visibly_proven": [
+        "The cords.md suffix is truncated by the Copilot Studio chip."
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 309,
+          "width": 371,
+          "height": 44,
+          "label": "Synthetic records added"
+        }
+      ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
       "step": 8,
       "source": "solutions/financial-advisor-copilot/screenshots/manual/08-add-aibast-advisor-handoff-06.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/08-add-aibast-advisor-handoff-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "advisor-handoff skill"
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 184,
+          "width": 194,
+          "height": 43,
+          "label": "Advisor handoff skill"
+        }
+      ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
       "step": 9,
       "source": "solutions/financial-advisor-copilot/screenshots/manual/09-add-aibast-client-review-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/09-add-aibast-client-review-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "client-review skill",
+        "advisor-handoff skill"
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 184,
+          "width": 337,
+          "height": 43,
+          "label": "Client review skill"
+        }
+      ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
       "step": 10,
       "source": "solutions/financial-advisor-copilot/screenshots/manual/10-add-aibast-compliance-check-05.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/10-add-aibast-compliance-check-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "compliance-check skill"
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 184,
+          "width": 195,
+          "height": 43,
+          "label": "Compliance skill"
+        }
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
       "step": 11,
       "source": "solutions/financial-advisor-copilot/screenshots/manual/11-add-aibast-portfolio-summary-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/11-add-aibast-portfolio-summary-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "portfolio-summary skill"
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 184,
+          "width": 195,
+          "height": 43,
+          "label": "Portfolio skill"
+        }
+      ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
       "step": 12,
       "source": "solutions/financial-advisor-copilot/screenshots/manual/12-add-aibast-recommendation-engine-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/12-add-aibast-recommendation-engine-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "recommendation-engine skill"
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 184,
+          "width": 223,
+          "height": 43,
+          "label": "Recommendation skill"
+        }
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
       "step": 13,
       "source": "solutions/financial-advisor-copilot/screenshots/manual/13-add-aibast-service-intake-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/13-add-aibast-service-intake-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "service-intake skill",
+        "Five named skills plus one additional skill"
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 184,
+          "width": 195,
+          "height": 43,
+          "label": "Service intake skill"
+        }
+      ]
     },
     {
       "id": "hard-step-14",
       "mode": "hard",
       "step": 14,
       "source": "solutions/financial-advisor-copilot/screenshots/manual/14-review-inventory.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/14-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "Five named skills plus one additional skill",
+        "Two knowledge chips",
+        "Tools section contains no configured tool"
+      ],
+      "full_inventory_not_visibly_proven": [
+        "One of the six skill names is collapsed behind +1.",
+        "Both knowledge filenames are truncated by the Copilot Studio chips."
+      ],
+      "boxes": [
+        {
+          "x": 1204,
+          "y": 85,
+          "width": 193,
+          "height": 39,
+          "label": "Required model"
+        },
+        {
+          "x": 1026,
+          "y": 184,
+          "width": 343,
+          "height": 162,
+          "label": "Six configured skills"
+        },
+        {
+          "x": 1023,
+          "y": 365,
+          "width": 374,
+          "height": 61,
+          "label": "No configured tools"
+        },
+        {
+          "x": 1025,
+          "y": 467,
+          "width": 371,
+          "height": 86,
+          "label": "Two knowledge items"
+        }
+      ]
     },
     {
       "id": "hard-step-15",
       "mode": "hard",
       "step": 15,
       "source": "solutions/financial-advisor-copilot/screenshots/manual/15-open-preview.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/15-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab",
+        "New chat"
+      ],
+      "boxes": [
+        {
+          "x": 566,
+          "y": 10,
+          "width": 182,
+          "height": 43,
+          "label": "Preview selected"
+        },
+        {
+          "x": 836,
+          "y": 91,
+          "width": 108,
+          "height": 38,
+          "label": "Fresh chat control"
+        }
+      ]
     },
     {
-      "id": "hard-step-16",
+      "id": "hard-fac-01",
       "mode": "hard",
       "step": 16,
+      "case_id": "FAC-01",
       "source": "solutions/financial-advisor-copilot/screenshots/manual/16-fac-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "FAC-01"
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/16-fac-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Robert & Susan Whitfield (CLI-3001)",
+        "No identity verified",
+        "No identity has been verified"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 119,
+          "width": 940,
+          "height": 43,
+          "label": "CLI-3001 identity state"
+        },
+        {
+          "x": 286,
+          "y": 304,
+          "width": 940,
+          "height": 62,
+          "label": "Identity remains unverified"
+        }
+      ]
     },
     {
-      "id": "hard-step-17",
+      "id": "hard-fac-02",
       "mode": "hard",
       "step": 17,
+      "case_id": "FAC-02",
       "source": "solutions/financial-advisor-copilot/screenshots/manual/17-fac-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "FAC-02"
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/17-fac-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "CLI-3003",
+        "only retired client in the book",
+        "Age 72"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact capitalized marker Retired is outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 218,
+          "width": 520,
+          "height": 35,
+          "label": "Age 72"
+        },
+        {
+          "x": 285,
+          "y": 320,
+          "width": 940,
+          "height": 62,
+          "label": "CLI-3003 retired status"
+        }
+      ]
     },
     {
-      "id": "hard-step-18",
+      "id": "hard-fac-03",
       "mode": "hard",
       "step": 18,
+      "case_id": "FAC-03",
       "source": "solutions/financial-advisor-copilot/screenshots/manual/18-fac-03.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "FAC-03"
+      "reason": "Missing-source blocker: the only manual FAC-03 browserfilm frame ends during internal routing and knowledge search. No final user-facing portfolio response is visible, and browserfilm.json provides no alternate FAC-03 source frame to approve or annotate."
     },
     {
-      "id": "hard-step-19",
+      "id": "hard-fac-04",
       "mode": "hard",
       "step": 19,
+      "case_id": "FAC-04",
       "source": "solutions/financial-advisor-copilot/screenshots/manual/19-fac-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "FAC-04"
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/19-fac-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Angela Martinez",
+        "discussion candidates, not recommendations or orders"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 362,
+          "width": 955,
+          "height": 62,
+          "label": "Angela compliance state"
+        },
+        {
+          "x": 286,
+          "y": 428,
+          "width": 955,
+          "height": 62,
+          "label": "Not recommendations"
+        }
+      ]
     },
     {
-      "id": "hard-step-20",
+      "id": "hard-fac-05",
       "mode": "hard",
       "step": 20,
+      "case_id": "FAC-05",
       "source": "solutions/financial-advisor-copilot/screenshots/manual/20-fac-05.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "FAC-05"
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/20-fac-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Client Requiring Senior-Investor Controls",
+        "William Chen Trust — CLI-3003"
+      ],
+      "full_case_not_visibly_proven": [
+        "The remaining compliance checkpoints continue below the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 607,
+          "width": 940,
+          "height": 70,
+          "label": "CLI-3003 senior controls"
+        }
+      ]
     },
     {
-      "id": "hard-step-21",
+      "id": "hard-fac-06",
       "mode": "hard",
       "step": 21,
+      "case_id": "FAC-06",
       "source": "solutions/financial-advisor-copilot/screenshots/manual/21-fac-06.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "FAC-06"
+      "annotated": "solutions/financial-advisor-copilot/screenshots/manual/annotated/21-fac-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "No case transfer has occurred",
+        "Robert & Susan Whitfield",
+        "draft preparation document only"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 411,
+          "width": 938,
+          "height": 100,
+          "label": "No case transfer"
+        }
+      ]
     },
     {
-      "id": "hard-step-22",
+      "id": "hard-draft",
       "mode": "hard",
       "step": 22,
       "source": "solutions/financial-advisor-copilot/screenshots/manual/22-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The Agents page is still a loading skeleton and reports 0 items. Financial Advisor Manual and its Draft status are not visible."
     }
-  ]
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy FAC-02 through FAC-06 with each final user-facing response visible.",
+      "Easy Draft gate filtered to Financial Advisor Pilot with Draft visible.",
+      "Hard step 1 after the blank agent workspace finishes loading.",
+      "Hard step 4 with an explicit saved-state confirmation visible.",
+      "Hard step 5 after Search all websites is visibly removed.",
+      "Hard FAC-03 with the final portfolio response visible.",
+      "Hard Draft gate after Financial Advisor Manual and Draft are visible."
+    ]
+  }
 }

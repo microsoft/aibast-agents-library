@@ -27,6 +27,30 @@
       "status": "ready"
     },
     {
+      "id": "copilot-studio-solution",
+      "label": "Importable Copilot Studio solution",
+      "path": "solutions/account-intelligence/exports/account-intelligence-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/account-intelligence/exports/account-intelligence-copilot-studio-solution.zip",
+      "use": "Unmanaged solution ZIP for manual import; the agent remains unpublished",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-deployment-settings",
+      "label": "Copilot Studio deployment settings",
+      "path": "solutions/account-intelligence/exports/account-intelligence-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/account-intelligence/exports/account-intelligence-deployment-settings.json",
+      "use": "Connection-reference, environment-variable, and agent import settings",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-export-metadata",
+      "label": "Copilot Studio solution export metadata",
+      "path": "solutions/account-intelligence/exports/account-intelligence-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/account-intelligence/exports/account-intelligence-solution-export.json",
+      "use": "Export identity, integrity hash, source environment, and import caveats",
+      "status": "ready"
+    },
+    {
       "id": "field-guide",
       "label": "Customer field guide",
       "path": "solutions/account-intelligence/field-guide.html",
@@ -259,6 +283,14 @@
       "status": "ready"
     },
     {
+      "id": "easy-evidence-dataverse-draft-evidence",
+      "label": "Dataverse Draft Evidence",
+      "path": "solutions/account-intelligence/evals/dataverse-draft-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/account-intelligence/evals/dataverse-draft-evidence.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
       "id": "easy-evidence-demo-cases",
       "label": "Demo Cases",
       "path": "solutions/account-intelligence/evals/demo-cases.json",
@@ -296,6 +328,126 @@
       "path": "solutions/account-intelligence/evals/visual-checkpoints.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/account-intelligence/evals/visual-checkpoints.json",
       "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-review-build",
+      "label": "Annotated visual checkpoint: easy-build-review",
+      "path": "solutions/account-intelligence/screenshots/assisted/annotated/01-review-build.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/account-intelligence/screenshots/assisted/annotated/01-review-build.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-ai-01",
+      "label": "Annotated visual checkpoint: easy-ai-01",
+      "path": "solutions/account-intelligence/screenshots/assisted/annotated/02-ai-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/account-intelligence/screenshots/assisted/annotated/02-ai-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-ai-02",
+      "label": "Annotated visual checkpoint: easy-ai-02",
+      "path": "solutions/account-intelligence/screenshots/assisted/annotated/03-ai-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/account-intelligence/screenshots/assisted/annotated/03-ai-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-04-ai-03",
+      "label": "Annotated visual checkpoint: easy-ai-03",
+      "path": "solutions/account-intelligence/screenshots/assisted/annotated/04-ai-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/account-intelligence/screenshots/assisted/annotated/04-ai-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-05-ai-04",
+      "label": "Annotated visual checkpoint: easy-ai-04",
+      "path": "solutions/account-intelligence/screenshots/assisted/annotated/05-ai-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/account-intelligence/screenshots/assisted/annotated/05-ai-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-06-ai-05",
+      "label": "Annotated visual checkpoint: easy-ai-05",
+      "path": "solutions/account-intelligence/screenshots/assisted/annotated/06-ai-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/account-intelligence/screenshots/assisted/annotated/06-ai-05.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-07-ai-06",
+      "label": "Annotated visual checkpoint: easy-ai-06",
+      "path": "solutions/account-intelligence/screenshots/assisted/annotated/07-ai-06.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/account-intelligence/screenshots/assisted/annotated/07-ai-06.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-08-confirm-draft",
+      "label": "Annotated visual checkpoint: easy-confirm-manual-draft",
+      "path": "solutions/account-intelligence/screenshots/assisted/annotated/08-confirm-draft.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/account-intelligence/screenshots/assisted/annotated/08-confirm-draft.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-08-add-account-overview",
+      "label": "Annotated visual checkpoint: hard-step-08",
+      "path": "solutions/account-intelligence/screenshots/manual/annotated/08-add-account-overview.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/account-intelligence/screenshots/manual/annotated/08-add-account-overview.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-09-add-competitive-intel",
+      "label": "Annotated visual checkpoint: hard-step-09",
+      "path": "solutions/account-intelligence/screenshots/manual/annotated/09-add-competitive-intel.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/account-intelligence/screenshots/manual/annotated/09-add-competitive-intel.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-10-add-executive-briefing",
+      "label": "Annotated visual checkpoint: hard-step-10",
+      "path": "solutions/account-intelligence/screenshots/manual/annotated/10-add-executive-briefing.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/account-intelligence/screenshots/manual/annotated/10-add-executive-briefing.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-11-add-risk-assessment",
+      "label": "Annotated visual checkpoint: hard-step-11",
+      "path": "solutions/account-intelligence/screenshots/manual/annotated/11-add-risk-assessment.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/account-intelligence/screenshots/manual/annotated/11-add-risk-assessment.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-12-add-stakeholder-map",
+      "label": "Annotated visual checkpoint: hard-step-12",
+      "path": "solutions/account-intelligence/screenshots/manual/annotated/12-add-stakeholder-map.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/account-intelligence/screenshots/manual/annotated/12-add-stakeholder-map.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-14-review-inventory",
+      "label": "Annotated visual checkpoint: hard-step-14",
+      "path": "solutions/account-intelligence/screenshots/manual/annotated/14-review-inventory.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/account-intelligence/screenshots/manual/annotated/14-review-inventory.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-15-open-preview",
+      "label": "Annotated visual checkpoint: hard-step-15",
+      "path": "solutions/account-intelligence/screenshots/manual/annotated/15-open-preview.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/account-intelligence/screenshots/manual/annotated/15-open-preview.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
@@ -524,7 +676,7 @@
     },
     {
       "id": "assisted-frame-01",
-      "label": "Review the Copilot-assisted Draft configuration",
+      "label": "BUILD-01: Review the Copilot-assisted configuration",
       "path": "solutions/account-intelligence/screenshots/assisted/01-review-build.jpg",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/account-intelligence/screenshots/assisted/01-review-build.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
@@ -580,7 +732,7 @@
     },
     {
       "id": "assisted-frame-08",
-      "label": "Confirm the validated agent remains Draft",
+      "label": "Confirm Account Intelligence Manual remains Draft",
       "path": "solutions/account-intelligence/screenshots/assisted/08-confirm-draft.jpg",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/account-intelligence/screenshots/assisted/08-confirm-draft.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
@@ -650,5 +802,31 @@
       "use": "Copilot-assisted evidence inventory",
       "status": "ready"
     }
-  ]
+  ],
+  "copilot_studio_solution": {
+    "label": "Importable Account Intelligence Agent Copilot Studio solution",
+    "status": "exported",
+    "solution_unique_name": "aibast_AccountIntelligencePilot",
+    "zip": {
+      "path": "solutions/account-intelligence/exports/account-intelligence-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/account-intelligence/exports/account-intelligence-copilot-studio-solution.zip",
+      "sha256": "5136dcdcb4c389cda9cf78fd7f5f9a81fe38a00edb34a8520ab0b5081adeb1ba",
+      "bytes": 4215
+    },
+    "deployment_settings": {
+      "path": "solutions/account-intelligence/exports/account-intelligence-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/account-intelligence/exports/account-intelligence-deployment-settings.json"
+    },
+    "metadata": {
+      "path": "solutions/account-intelligence/exports/account-intelligence-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/account-intelligence/exports/account-intelligence-solution-export.json"
+    },
+    "managed": false,
+    "published": false,
+    "import_caveats": [
+      "Import as an unmanaged solution for manual review.",
+      "Map connection references and environment variables before enabling integrations.",
+      "The exported agent remains unpublished unless the target administrator explicitly publishes it."
+    ]
+  }
 }

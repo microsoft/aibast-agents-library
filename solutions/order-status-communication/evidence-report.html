@@ -226,8 +226,8 @@
     </section>
 
     <div class="summary-grid">
-      <article><strong>0</strong><span>Reusable positive checkpoints</span></article>
-      <article><strong>23</strong><span>Reference-only captures excluded from learner proof</span></article>
+      <article><strong>20</strong><span>Reusable positive checkpoints</span></article>
+      <article><strong>3</strong><span>Reference-only captures excluded from learner proof</span></article>
       <article><strong>0</strong><span>Optional future Learn-step captures</span></article>
     </div>
 
@@ -263,129 +263,151 @@
       <p>Only approved positive checkpoints count as learner proof. Annotated paths are included for facilitator traceability.</p>
       <table>
         <thead><tr><th>Checkpoint</th><th>Mode</th><th>Visible evidence</th><th>Annotated asset</th></tr></thead>
-        <tbody></tbody>
+        <tbody><tr>
+          <td><code>easy-os-01</code></td>
+          <td>easy</td>
+          <td>ORD-7813 delay notification requires review and approval; No email, EDI, portal, or Teams message was sent; Production and carrier facts require live-system validation</td>
+          <td>solutions/order-status-communication/screenshots/assisted/annotated/01-os-01.png</td>
+        </tr>
+<tr>
+          <td><code>easy-os-02</code></td>
+          <td>easy</td>
+          <td>OS-02 relates to shipment_tracking for ORD-7812 with tracking number XPO-884291047; Loading skill: shipment-tracking; Searched knowledge; Now I have all the information needed</td>
+          <td>solutions/order-status-communication/screenshots/assisted/annotated/02-os-02.png</td>
+        </tr>
+<tr>
+          <td><code>easy-os-04</code></td>
+          <td>easy</td>
+          <td>Human approval of all four drafts is required before any send; Approved communication tool per channel is required; No order, schedule, shipment, sourcing decision, or recovery plan was changed</td>
+          <td>solutions/order-status-communication/screenshots/assisted/annotated/04-os-04.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-01</code></td>
+          <td>hard</td>
+          <td>Untitled Agent; Blank Build workspace</td>
+          <td>solutions/order-status-communication/screenshots/manual/annotated/01-create-blank-agent.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-02</code></td>
+          <td>hard</td>
+          <td>Order Status Manual in the name field</td>
+          <td>solutions/order-status-communication/screenshots/manual/annotated/02-name-agent.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-03</code></td>
+          <td>hard</td>
+          <td>Reviewed instruction boundaries; Locked Preview evidence anchors; OS-01 through OS-04 deterministic markers</td>
+          <td>solutions/order-status-communication/screenshots/manual/annotated/03-enter-instructions.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-05</code></td>
+          <td>hard</td>
+          <td>Tools inventory is empty; Knowledge inventory contains no Search all websites chip</td>
+          <td>solutions/order-status-communication/screenshots/manual/annotated/05-remove-web-search.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-06</code></td>
+          <td>hard</td>
+          <td>Knowledge chip visibly begins aibast_order-status-communication-review-r</td>
+          <td>solutions/order-status-communication/screenshots/manual/annotated/06-add-aibast-order-status-communication-review-rules.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-07</code></td>
+          <td>hard</td>
+          <td>Synthetic-records knowledge chip is visible; Review-rules knowledge chip remains visible; Two knowledge sources are attached</td>
+          <td>solutions/order-status-communication/screenshots/manual/annotated/07-add-aibast-order-status-communication-synthetic-records.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-08</code></td>
+          <td>hard</td>
+          <td>customer-update skill</td>
+          <td>solutions/order-status-communication/screenshots/manual/annotated/08-add-aibast-customer-update.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-09</code></td>
+          <td>hard</td>
+          <td>delay-notification skill; customer-update skill</td>
+          <td>solutions/order-status-communication/screenshots/manual/annotated/09-add-aibast-delay-notification.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-10</code></td>
+          <td>hard</td>
+          <td>order-lookup skill; delay-notification skill; customer-update skill</td>
+          <td>solutions/order-status-communication/screenshots/manual/annotated/10-add-aibast-order-lookup.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-11</code></td>
+          <td>hard</td>
+          <td>shipment-tracking skill; order-lookup skill; delay-notification skill; customer-update skill</td>
+          <td>solutions/order-status-communication/screenshots/manual/annotated/11-add-aibast-shipment-tracking.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-12</code></td>
+          <td>hard</td>
+          <td>Claude Sonnet 4.6; Four configured skills; Tools section contains no configured tool; Two knowledge sources</td>
+          <td>solutions/order-status-communication/screenshots/manual/annotated/12-review-inventory.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-13</code></td>
+          <td>hard</td>
+          <td>Preview tab; New chat</td>
+          <td>solutions/order-status-communication/screenshots/manual/annotated/13-open-preview.png</td>
+        </tr>
+<tr>
+          <td><code>hard-os-01</code></td>
+          <td>hard</td>
+          <td>ORD-7810 is marked Watch; ORD-7811 is marked On Track; ORD-7812 is marked Shipped; XPO-884291047; No order, production schedule, recovery plan, or customer communication was changed or sent</td>
+          <td>solutions/order-status-communication/screenshots/manual/annotated/14-os-01.png</td>
+        </tr>
+<tr>
+          <td><code>hard-os-02</code></td>
+          <td>hard</td>
+          <td>OS-02 / shipment_tracking / ORD-7812 / XPO-884291047; Loading skill: shipment-tracking; Called 2 tools</td>
+          <td>solutions/order-status-communication/screenshots/manual/annotated/15-os-02.png</td>
+        </tr>
+<tr>
+          <td><code>hard-os-03</code></td>
+          <td>hard</td>
+          <td>Internal Delay Review; ORD-7813 — John Deere; No production schedule, shipment, or customer record was changed; Revised Date 2026-04-08</td>
+          <td>solutions/order-status-communication/screenshots/manual/annotated/16-os-03.png</td>
+        </tr>
+<tr>
+          <td><code>hard-os-04</code></td>
+          <td>hard</td>
+          <td>Human approval is required before any message is sent; Approved communication tool is required for email, EDI, portal, or Teams; External side effect: None — no communication was sent</td>
+          <td>solutions/order-status-communication/screenshots/manual/annotated/17-os-04.png</td>
+        </tr>
+<tr>
+          <td><code>hard-draft</code></td>
+          <td>hard</td>
+          <td>Order Status Manual; Draft</td>
+          <td>solutions/order-status-communication/screenshots/manual/annotated/18-confirm-draft.png</td>
+        </tr></tbody>
       </table>
     </section>
 
     <h2>Reference-only visual gaps</h2>
     <section class="card">
-      <p>These real captures may remain visible for orientation, but every one is labeled as reference-only and excluded from proof until its review or reshoot requirement is resolved.</p>
+      <p>These real source captures are inventoried for facilitators but withheld from learner pages until their review or reshoot requirement is resolved.</p>
       <table>
-        <thead><tr><th>Checkpoint</th><th>Mode</th><th>Reason</th></tr></thead>
+        <thead><tr><th>Checkpoint</th><th>Mode</th><th>Source asset</th><th>Reason</th></tr></thead>
         <tbody><tr>
-          <td><code>easy-os-01</code></td>
-          <td>easy</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>easy-os-02</code></td>
-          <td>easy</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
           <td><code>easy-os-03</code></td>
           <td>easy</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>easy-os-04</code></td>
-          <td>easy</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
+          <td>solutions/order-status-communication/screenshots/assisted/03-os-03.jpg</td>
+          <td>The frame shows only the prompt and internal reasoning/tool-routing text. No final answer is visible, so ORD-7813 and Recorded synthetic recovery options in the reasoning cannot count as visual pass evidence.</td>
         </tr>
 <tr>
           <td><code>easy-draft</code></td>
           <td>easy</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-01</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-02</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-03</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
+          <td>solutions/order-status-communication/screenshots/assisted/05-confirm-draft.jpg</td>
+          <td>The target Order Status Pilot row is not visible, so this agent-list frame cannot prove that the validated pilot remains Draft.</td>
         </tr>
 <tr>
           <td><code>hard-step-04</code></td>
           <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-05</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-06</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-07</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-08</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-09</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-10</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-11</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-12</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-13</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-14</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-15</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-16</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-17</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-18</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
+          <td>solutions/order-status-communication/screenshots/manual/04-save-instructions.jpg</td>
+          <td>The reviewed instruction text is visible, but the frame shows no save confirmation or No unsaved changes state. It therefore does not visually prove that the Save action completed.</td>
         </tr></tbody>
       </table>
     </section>
@@ -396,6 +418,7 @@
       <a class="button" href="evals/visual-checkpoints.json" download>Download visual checkpoint contract</a>
       <a class="button" href="export-manifest.json" download>Download export manifest</a>
       <a class="button" href="exports/order-status-communication-source.zip" download>Download portable bundle</a>
+      <a class="button primary" href="exports/order-status-communication-copilot-studio-solution.zip" download>Download Copilot Studio solution</a><a class="button" href="exports/order-status-communication-deployment-settings.json" download>Deployment settings</a><a class="button" href="exports/order-status-communication-solution-export.json" download>Export details</a>
 
     </section>
   </main>

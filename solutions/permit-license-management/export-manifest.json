@@ -27,6 +27,30 @@
       "status": "ready"
     },
     {
+      "id": "copilot-studio-solution",
+      "label": "Importable Copilot Studio solution",
+      "path": "solutions/permit-license-management/exports/permit-license-management-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/permit-license-management/exports/permit-license-management-copilot-studio-solution.zip",
+      "use": "Unmanaged solution ZIP for manual import; the agent remains unpublished",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-deployment-settings",
+      "label": "Copilot Studio deployment settings",
+      "path": "solutions/permit-license-management/exports/permit-license-management-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/permit-license-management/exports/permit-license-management-deployment-settings.json",
+      "use": "Connection-reference, environment-variable, and agent import settings",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-export-metadata",
+      "label": "Copilot Studio solution export metadata",
+      "path": "solutions/permit-license-management/exports/permit-license-management-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/permit-license-management/exports/permit-license-management-solution-export.json",
+      "use": "Export identity, integrity hash, source environment, and import caveats",
+      "status": "ready"
+    },
+    {
       "id": "field-guide",
       "label": "Customer field guide",
       "path": "solutions/permit-license-management/field-guide.html",
@@ -227,6 +251,14 @@
       "status": "ready"
     },
     {
+      "id": "easy-evidence-dataverse-draft-evidence",
+      "label": "Dataverse Draft Evidence",
+      "path": "solutions/permit-license-management/evals/dataverse-draft-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/permit-license-management/evals/dataverse-draft-evidence.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
       "id": "manual-evidence",
       "label": "Manual build evidence",
       "path": "solutions/permit-license-management/evals/manual-build-evidence.json",
@@ -264,6 +296,158 @@
       "path": "solutions/permit-license-management/evals/visual-checkpoints.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/permit-license-management/evals/visual-checkpoints.json",
       "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-permit-license-management-01",
+      "label": "Annotated visual checkpoint: easy-permit-license-management-01",
+      "path": "solutions/permit-license-management/screenshots/assisted/annotated/01-permit_license_management-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/permit-license-management/screenshots/assisted/annotated/01-permit_license_management-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-permit-license-management-02",
+      "label": "Annotated visual checkpoint: easy-permit-license-management-02",
+      "path": "solutions/permit-license-management/screenshots/assisted/annotated/02-permit_license_management-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/permit-license-management/screenshots/assisted/annotated/02-permit_license_management-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-permit-license-management-03",
+      "label": "Annotated visual checkpoint: easy-permit-license-management-03",
+      "path": "solutions/permit-license-management/screenshots/assisted/annotated/03-permit_license_management-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/permit-license-management/screenshots/assisted/annotated/03-permit_license_management-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-04-permit-license-management-04",
+      "label": "Annotated visual checkpoint: easy-permit-license-management-04",
+      "path": "solutions/permit-license-management/screenshots/assisted/annotated/04-permit_license_management-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/permit-license-management/screenshots/assisted/annotated/04-permit_license_management-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-create-blank-agent",
+      "label": "Annotated visual checkpoint: hard-step-01",
+      "path": "solutions/permit-license-management/screenshots/manual/annotated/01-create-blank-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/permit-license-management/screenshots/manual/annotated/01-create-blank-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-name-agent",
+      "label": "Annotated visual checkpoint: hard-step-02",
+      "path": "solutions/permit-license-management/screenshots/manual/annotated/02-name-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/permit-license-management/screenshots/manual/annotated/02-name-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-enter-instructions",
+      "label": "Annotated visual checkpoint: hard-step-03",
+      "path": "solutions/permit-license-management/screenshots/manual/annotated/03-enter-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/permit-license-management/screenshots/manual/annotated/03-enter-instructions.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-06-add-permit-license-management-rules-and-controls",
+      "label": "Annotated visual checkpoint: hard-step-06",
+      "path": "solutions/permit-license-management/screenshots/manual/annotated/06-add-permit-license-management-rules-and-controls.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/permit-license-management/screenshots/manual/annotated/06-add-permit-license-management-rules-and-controls.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-07-add-permit-license-management-synthetic-records",
+      "label": "Annotated visual checkpoint: hard-step-07",
+      "path": "solutions/permit-license-management/screenshots/manual/annotated/07-add-permit-license-management-synthetic-records.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/permit-license-management/screenshots/manual/annotated/07-add-permit-license-management-synthetic-records.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-08-add-aibast-application-status",
+      "label": "Annotated visual checkpoint: hard-step-08",
+      "path": "solutions/permit-license-management/screenshots/manual/annotated/08-add-aibast-application-status.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/permit-license-management/screenshots/manual/annotated/08-add-aibast-application-status.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-09-add-aibast-compliance-gaps",
+      "label": "Annotated visual checkpoint: hard-step-09",
+      "path": "solutions/permit-license-management/screenshots/manual/annotated/09-add-aibast-compliance-gaps.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/permit-license-management/screenshots/manual/annotated/09-add-aibast-compliance-gaps.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-10-add-aibast-permit-inventory",
+      "label": "Annotated visual checkpoint: hard-step-10",
+      "path": "solutions/permit-license-management/screenshots/manual/annotated/10-add-aibast-permit-inventory.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/permit-license-management/screenshots/manual/annotated/10-add-aibast-permit-inventory.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-11-add-aibast-renewal-calendar",
+      "label": "Annotated visual checkpoint: hard-step-11",
+      "path": "solutions/permit-license-management/screenshots/manual/annotated/11-add-aibast-renewal-calendar.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/permit-license-management/screenshots/manual/annotated/11-add-aibast-renewal-calendar.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-12-review-inventory",
+      "label": "Annotated visual checkpoint: hard-step-12",
+      "path": "solutions/permit-license-management/screenshots/manual/annotated/12-review-inventory.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/permit-license-management/screenshots/manual/annotated/12-review-inventory.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-13-open-preview",
+      "label": "Annotated visual checkpoint: hard-step-13",
+      "path": "solutions/permit-license-management/screenshots/manual/annotated/13-open-preview.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/permit-license-management/screenshots/manual/annotated/13-open-preview.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-14-permit-license-management-01",
+      "label": "Annotated visual checkpoint: hard-permit-license-management-01",
+      "path": "solutions/permit-license-management/screenshots/manual/annotated/14-permit_license_management-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/permit-license-management/screenshots/manual/annotated/14-permit_license_management-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-16-permit-license-management-03",
+      "label": "Annotated visual checkpoint: hard-permit-license-management-03",
+      "path": "solutions/permit-license-management/screenshots/manual/annotated/16-permit_license_management-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/permit-license-management/screenshots/manual/annotated/16-permit_license_management-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-17-permit-license-management-04",
+      "label": "Annotated visual checkpoint: hard-permit-license-management-04",
+      "path": "solutions/permit-license-management/screenshots/manual/annotated/17-permit_license_management-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/permit-license-management/screenshots/manual/annotated/17-permit_license_management-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-18-confirm-draft",
+      "label": "Annotated visual checkpoint: hard-draft",
+      "path": "solutions/permit-license-management/screenshots/manual/annotated/18-confirm-draft.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/permit-license-management/screenshots/manual/annotated/18-confirm-draft.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
@@ -562,5 +746,31 @@
       "use": "Copilot-assisted evidence inventory",
       "status": "ready"
     }
-  ]
+  ],
+  "copilot_studio_solution": {
+    "label": "Importable Permit Management Agent Copilot Studio solution",
+    "status": "exported",
+    "solution_unique_name": "aibast_PermitManagementPilot",
+    "zip": {
+      "path": "solutions/permit-license-management/exports/permit-license-management-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/permit-license-management/exports/permit-license-management-copilot-studio-solution.zip",
+      "sha256": "dd6767b58b50ceb7f0effff7ba5f95365ab0b4ef9b3fdc3dcd50cb7e81e60ea2",
+      "bytes": 3831
+    },
+    "deployment_settings": {
+      "path": "solutions/permit-license-management/exports/permit-license-management-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/permit-license-management/exports/permit-license-management-deployment-settings.json"
+    },
+    "metadata": {
+      "path": "solutions/permit-license-management/exports/permit-license-management-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/permit-license-management/exports/permit-license-management-solution-export.json"
+    },
+    "managed": false,
+    "published": false,
+    "import_caveats": [
+      "Import as an unmanaged solution for manual review.",
+      "Map connection references and environment variables before enabling integrations.",
+      "The exported agent remains unpublished unless the target administrator explicitly publishes it."
+    ]
+  }
 }

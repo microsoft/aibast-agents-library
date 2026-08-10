@@ -27,6 +27,30 @@
       "status": "ready"
     },
     {
+      "id": "copilot-studio-solution",
+      "label": "Importable Copilot Studio solution",
+      "path": "solutions/inventory-rebalancing/exports/inventory-rebalancing-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/exports/inventory-rebalancing-copilot-studio-solution.zip",
+      "use": "Unmanaged solution ZIP for manual import; the agent remains unpublished",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-deployment-settings",
+      "label": "Copilot Studio deployment settings",
+      "path": "solutions/inventory-rebalancing/exports/inventory-rebalancing-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/exports/inventory-rebalancing-deployment-settings.json",
+      "use": "Connection-reference, environment-variable, and agent import settings",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-export-metadata",
+      "label": "Copilot Studio solution export metadata",
+      "path": "solutions/inventory-rebalancing/exports/inventory-rebalancing-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/exports/inventory-rebalancing-solution-export.json",
+      "use": "Export identity, integrity hash, source environment, and import caveats",
+      "status": "ready"
+    },
+    {
       "id": "field-guide",
       "label": "Customer field guide",
       "path": "solutions/inventory-rebalancing/field-guide.html",
@@ -227,6 +251,14 @@
       "status": "ready"
     },
     {
+      "id": "easy-evidence-dataverse-draft-evidence",
+      "label": "Dataverse Draft Evidence",
+      "path": "solutions/inventory-rebalancing/evals/dataverse-draft-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/evals/dataverse-draft-evidence.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
       "id": "manual-evidence",
       "label": "Manual build evidence",
       "path": "solutions/inventory-rebalancing/evals/manual-build-evidence.json",
@@ -264,6 +296,214 @@
       "path": "solutions/inventory-rebalancing/evals/visual-checkpoints.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/evals/visual-checkpoints.json",
       "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-review-build-annotated",
+      "label": "Annotated visual checkpoint: easy-ir-01-config",
+      "path": "solutions/inventory-rebalancing/screenshots/assisted/01-review-build.annotated.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/assisted/01-review-build.annotated.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-ir-01-annotated",
+      "label": "Annotated visual checkpoint: easy-ir-01",
+      "path": "solutions/inventory-rebalancing/screenshots/assisted/02-ir-01.annotated.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/assisted/02-ir-01.annotated.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-ir-02-annotated",
+      "label": "Annotated visual checkpoint: easy-ir-02",
+      "path": "solutions/inventory-rebalancing/screenshots/assisted/03-ir-02.annotated.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/assisted/03-ir-02.annotated.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-04-ir-03-annotated",
+      "label": "Annotated visual checkpoint: easy-ir-03",
+      "path": "solutions/inventory-rebalancing/screenshots/assisted/04-ir-03.annotated.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/assisted/04-ir-03.annotated.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-05-ir-04-annotated",
+      "label": "Annotated visual checkpoint: easy-ir-04",
+      "path": "solutions/inventory-rebalancing/screenshots/assisted/05-ir-04.annotated.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/assisted/05-ir-04.annotated.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-06-confirm-draft-annotated",
+      "label": "Annotated visual checkpoint: easy-draft",
+      "path": "solutions/inventory-rebalancing/screenshots/assisted/06-confirm-draft.annotated.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/assisted/06-confirm-draft.annotated.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-create-blank-agent-annotated",
+      "label": "Annotated visual checkpoint: hard-step-01",
+      "path": "solutions/inventory-rebalancing/screenshots/manual/01-create-blank-agent.annotated.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/manual/01-create-blank-agent.annotated.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-name-agent-annotated",
+      "label": "Annotated visual checkpoint: hard-step-02",
+      "path": "solutions/inventory-rebalancing/screenshots/manual/02-name-agent.annotated.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/manual/02-name-agent.annotated.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-enter-instructions-annotated",
+      "label": "Annotated visual checkpoint: hard-step-03",
+      "path": "solutions/inventory-rebalancing/screenshots/manual/03-enter-instructions.annotated.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/manual/03-enter-instructions.annotated.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-04-save-instructions-annotated",
+      "label": "Annotated visual checkpoint: hard-step-04",
+      "path": "solutions/inventory-rebalancing/screenshots/manual/04-save-instructions.annotated.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/manual/04-save-instructions.annotated.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-05-remove-web-search-annotated",
+      "label": "Annotated visual checkpoint: hard-step-05",
+      "path": "solutions/inventory-rebalancing/screenshots/manual/05-remove-web-search.annotated.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/manual/05-remove-web-search.annotated.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-06-open-knowledge-upload-annotated",
+      "label": "Annotated visual checkpoint: hard-step-06",
+      "path": "solutions/inventory-rebalancing/screenshots/manual/06-open-knowledge-upload.annotated.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/manual/06-open-knowledge-upload.annotated.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-07-upload-synthetic-records-annotated",
+      "label": "Annotated visual checkpoint: hard-step-07",
+      "path": "solutions/inventory-rebalancing/screenshots/manual/07-upload-synthetic-records.annotated.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/manual/07-upload-synthetic-records.annotated.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-08-upload-review-rules-annotated",
+      "label": "Annotated visual checkpoint: hard-step-08",
+      "path": "solutions/inventory-rebalancing/screenshots/manual/08-upload-review-rules.annotated.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/manual/08-upload-review-rules.annotated.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-09-verify-two-knowledge-files-annotated",
+      "label": "Annotated visual checkpoint: hard-step-09",
+      "path": "solutions/inventory-rebalancing/screenshots/manual/09-verify-two-knowledge-files.annotated.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/manual/09-verify-two-knowledge-files.annotated.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-10-open-skill-upload-annotated",
+      "label": "Annotated visual checkpoint: hard-step-10",
+      "path": "solutions/inventory-rebalancing/screenshots/manual/10-open-skill-upload.annotated.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/manual/10-open-skill-upload.annotated.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-11-add-inventory-snapshot-skill-annotated",
+      "label": "Annotated visual checkpoint: hard-step-11",
+      "path": "solutions/inventory-rebalancing/screenshots/manual/11-add-inventory-snapshot-skill.annotated.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/manual/11-add-inventory-snapshot-skill.annotated.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-12-add-rebalance-recommendation-skill-annotated",
+      "label": "Annotated visual checkpoint: hard-step-12",
+      "path": "solutions/inventory-rebalancing/screenshots/manual/12-add-rebalance-recommendation-skill.annotated.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/manual/12-add-rebalance-recommendation-skill.annotated.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-13-add-transfer-plan-skill-annotated",
+      "label": "Annotated visual checkpoint: hard-step-13",
+      "path": "solutions/inventory-rebalancing/screenshots/manual/13-add-transfer-plan-skill.annotated.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/manual/13-add-transfer-plan-skill.annotated.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-14-add-cost-analysis-skill-annotated",
+      "label": "Annotated visual checkpoint: hard-step-14",
+      "path": "solutions/inventory-rebalancing/screenshots/manual/14-add-cost-analysis-skill.annotated.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/manual/14-add-cost-analysis-skill.annotated.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-15-select-sonnet46-annotated",
+      "label": "Annotated visual checkpoint: hard-step-15",
+      "path": "solutions/inventory-rebalancing/screenshots/manual/15-select-sonnet46.annotated.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/manual/15-select-sonnet46.annotated.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-17-open-preview-annotated",
+      "label": "Annotated visual checkpoint: hard-step-17",
+      "path": "solutions/inventory-rebalancing/screenshots/manual/17-open-preview.annotated.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/manual/17-open-preview.annotated.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-18-preview-ir01-capacity-review-annotated",
+      "label": "Annotated visual checkpoint: hard-step-18",
+      "path": "solutions/inventory-rebalancing/screenshots/manual/18-preview-ir01-capacity-review.annotated.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/manual/18-preview-ir01-capacity-review.annotated.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-19-preview-ir02-imbalance-review-annotated",
+      "label": "Annotated visual checkpoint: hard-step-19",
+      "path": "solutions/inventory-rebalancing/screenshots/manual/19-preview-ir02-imbalance-review.annotated.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/manual/19-preview-ir02-imbalance-review.annotated.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-20-preview-ir03-transfer-plan-annotated",
+      "label": "Annotated visual checkpoint: hard-step-20",
+      "path": "solutions/inventory-rebalancing/screenshots/manual/20-preview-ir03-transfer-plan.annotated.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/manual/20-preview-ir03-transfer-plan.annotated.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-21-preview-ir04-cost-analysis-annotated",
+      "label": "Annotated visual checkpoint: hard-step-21",
+      "path": "solutions/inventory-rebalancing/screenshots/manual/21-preview-ir04-cost-analysis.annotated.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/manual/21-preview-ir04-cost-analysis.annotated.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
@@ -412,7 +652,7 @@
     },
     {
       "id": "manual-frame-18",
-      "label": "Pass corrected IR-01 capacity review",
+      "label": "Pass corrected capacity review",
       "path": "solutions/inventory-rebalancing/screenshots/manual/18-preview-ir01-capacity-review.jpg",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/manual/18-preview-ir01-capacity-review.jpg",
       "use": "Real manual browser evidence frame",
@@ -420,7 +660,7 @@
     },
     {
       "id": "manual-frame-19",
-      "label": "Pass IR-02 imbalance review",
+      "label": "Pass imbalance review",
       "path": "solutions/inventory-rebalancing/screenshots/manual/19-preview-ir02-imbalance-review.jpg",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/manual/19-preview-ir02-imbalance-review.jpg",
       "use": "Real manual browser evidence frame",
@@ -428,7 +668,7 @@
     },
     {
       "id": "manual-frame-20",
-      "label": "Pass IR-03 transfer plan",
+      "label": "Pass transfer plan",
       "path": "solutions/inventory-rebalancing/screenshots/manual/20-preview-ir03-transfer-plan.jpg",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/manual/20-preview-ir03-transfer-plan.jpg",
       "use": "Real manual browser evidence frame",
@@ -436,7 +676,7 @@
     },
     {
       "id": "manual-frame-21",
-      "label": "Pass IR-04 cost routing and total cost",
+      "label": "Pass cost routing and total cost",
       "path": "solutions/inventory-rebalancing/screenshots/manual/21-preview-ir04-cost-analysis.jpg",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/manual/21-preview-ir04-cost-analysis.jpg",
       "use": "Real manual browser evidence frame",
@@ -492,7 +732,7 @@
     },
     {
       "id": "assisted-frame-01",
-      "label": "Review the Copilot-assisted Draft configuration",
+      "label": "Review IR-01 routing configuration",
       "path": "solutions/inventory-rebalancing/screenshots/assisted/01-review-build.jpg",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/screenshots/assisted/01-review-build.jpg",
       "use": "Real Copilot-assisted browser evidence frame",
@@ -602,5 +842,31 @@
       "use": "Copilot-assisted evidence inventory",
       "status": "ready"
     }
-  ]
+  ],
+  "copilot_studio_solution": {
+    "label": "Importable Inventory Rebalancing Agent Copilot Studio solution",
+    "status": "exported",
+    "solution_unique_name": "aibast_InventoryRebalancingPilot",
+    "zip": {
+      "path": "solutions/inventory-rebalancing/exports/inventory-rebalancing-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/exports/inventory-rebalancing-copilot-studio-solution.zip",
+      "sha256": "dcb9298d617c58dc314ed9d582f07f5468a43c32d2c4fe3f656d47a1e31a89ee",
+      "bytes": 3134
+    },
+    "deployment_settings": {
+      "path": "solutions/inventory-rebalancing/exports/inventory-rebalancing-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/exports/inventory-rebalancing-deployment-settings.json"
+    },
+    "metadata": {
+      "path": "solutions/inventory-rebalancing/exports/inventory-rebalancing-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/inventory-rebalancing/exports/inventory-rebalancing-solution-export.json"
+    },
+    "managed": false,
+    "published": false,
+    "import_caveats": [
+      "Import as an unmanaged solution for manual review.",
+      "Map connection references and environment variables before enabling integrations.",
+      "The exported agent remains unpublished unless the target administrator explicitly publishes it."
+    ]
+  }
 }

@@ -27,6 +27,30 @@
       "status": "ready"
     },
     {
+      "id": "copilot-studio-solution",
+      "label": "Importable Copilot Studio solution",
+      "path": "solutions/clinical-notes-summarizer/exports/clinical-notes-summarizer-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/clinical-notes-summarizer/exports/clinical-notes-summarizer-copilot-studio-solution.zip",
+      "use": "Unmanaged solution ZIP for manual import; the agent remains unpublished",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-deployment-settings",
+      "label": "Copilot Studio deployment settings",
+      "path": "solutions/clinical-notes-summarizer/exports/clinical-notes-summarizer-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/clinical-notes-summarizer/exports/clinical-notes-summarizer-deployment-settings.json",
+      "use": "Connection-reference, environment-variable, and agent import settings",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-export-metadata",
+      "label": "Copilot Studio solution export metadata",
+      "path": "solutions/clinical-notes-summarizer/exports/clinical-notes-summarizer-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/clinical-notes-summarizer/exports/clinical-notes-summarizer-solution-export.json",
+      "use": "Export identity, integrity hash, source environment, and import caveats",
+      "status": "ready"
+    },
+    {
       "id": "field-guide",
       "label": "Customer field guide",
       "path": "solutions/clinical-notes-summarizer/field-guide.html",
@@ -227,6 +251,14 @@
       "status": "ready"
     },
     {
+      "id": "easy-evidence-dataverse-draft-evidence",
+      "label": "Dataverse Draft Evidence",
+      "path": "solutions/clinical-notes-summarizer/evals/dataverse-draft-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/clinical-notes-summarizer/evals/dataverse-draft-evidence.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
       "id": "manual-evidence",
       "label": "Manual build evidence",
       "path": "solutions/clinical-notes-summarizer/evals/manual-build-evidence.json",
@@ -264,6 +296,126 @@
       "path": "solutions/clinical-notes-summarizer/evals/visual-checkpoints.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/clinical-notes-summarizer/evals/visual-checkpoints.json",
       "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-cn-01",
+      "label": "Annotated visual checkpoint: easy-cn-01",
+      "path": "solutions/clinical-notes-summarizer/screenshots/assisted/annotated/01-cn-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/clinical-notes-summarizer/screenshots/assisted/annotated/01-cn-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-cn-02",
+      "label": "Annotated visual checkpoint: easy-cn-02",
+      "path": "solutions/clinical-notes-summarizer/screenshots/assisted/annotated/02-cn-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/clinical-notes-summarizer/screenshots/assisted/annotated/02-cn-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-cn-03",
+      "label": "Annotated visual checkpoint: easy-cn-03",
+      "path": "solutions/clinical-notes-summarizer/screenshots/assisted/annotated/03-cn-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/clinical-notes-summarizer/screenshots/assisted/annotated/03-cn-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-04-cn-04",
+      "label": "Annotated visual checkpoint: easy-cn-04",
+      "path": "solutions/clinical-notes-summarizer/screenshots/assisted/annotated/04-cn-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/clinical-notes-summarizer/screenshots/assisted/annotated/04-cn-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-create-blank-agent",
+      "label": "Annotated visual checkpoint: hard-step-01",
+      "path": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/01-create-blank-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/clinical-notes-summarizer/screenshots/manual/annotated/01-create-blank-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-name-agent",
+      "label": "Annotated visual checkpoint: hard-step-02",
+      "path": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/02-name-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/clinical-notes-summarizer/screenshots/manual/annotated/02-name-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-enter-instructions",
+      "label": "Annotated visual checkpoint: hard-step-03",
+      "path": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/03-enter-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/clinical-notes-summarizer/screenshots/manual/annotated/03-enter-instructions.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-05-remove-web-search",
+      "label": "Annotated visual checkpoint: hard-step-05",
+      "path": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/05-remove-web-search.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/clinical-notes-summarizer/screenshots/manual/annotated/05-remove-web-search.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-12-review-inventory",
+      "label": "Annotated visual checkpoint: hard-step-12",
+      "path": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/12-review-inventory.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/clinical-notes-summarizer/screenshots/manual/annotated/12-review-inventory.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-13-open-preview",
+      "label": "Annotated visual checkpoint: hard-step-13",
+      "path": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/13-open-preview.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/clinical-notes-summarizer/screenshots/manual/annotated/13-open-preview.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-14-cn-01",
+      "label": "Annotated visual checkpoint: hard-cn-01",
+      "path": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/14-cn-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/clinical-notes-summarizer/screenshots/manual/annotated/14-cn-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-15-cn-02",
+      "label": "Annotated visual checkpoint: hard-cn-02",
+      "path": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/15-cn-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/clinical-notes-summarizer/screenshots/manual/annotated/15-cn-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-16-cn-03",
+      "label": "Annotated visual checkpoint: hard-cn-03",
+      "path": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/16-cn-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/clinical-notes-summarizer/screenshots/manual/annotated/16-cn-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-17-cn-04",
+      "label": "Annotated visual checkpoint: hard-cn-04",
+      "path": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/17-cn-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/clinical-notes-summarizer/screenshots/manual/annotated/17-cn-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-18-confirm-draft",
+      "label": "Annotated visual checkpoint: hard-draft",
+      "path": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/18-confirm-draft.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/clinical-notes-summarizer/screenshots/manual/annotated/18-confirm-draft.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
@@ -562,5 +714,31 @@
       "use": "Copilot-assisted evidence inventory",
       "status": "ready"
     }
-  ]
+  ],
+  "copilot_studio_solution": {
+    "label": "Importable Clinical Notes Summarizer Agent Copilot Studio solution",
+    "status": "exported",
+    "solution_unique_name": "aibast_ClinicalNotesSummarizerPilo",
+    "zip": {
+      "path": "solutions/clinical-notes-summarizer/exports/clinical-notes-summarizer-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/clinical-notes-summarizer/exports/clinical-notes-summarizer-copilot-studio-solution.zip",
+      "sha256": "c02394aeb3cc0f96ff67d751cf5f3eb919d427b695230b5c1ded2837713bdf49",
+      "bytes": 4170
+    },
+    "deployment_settings": {
+      "path": "solutions/clinical-notes-summarizer/exports/clinical-notes-summarizer-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/clinical-notes-summarizer/exports/clinical-notes-summarizer-deployment-settings.json"
+    },
+    "metadata": {
+      "path": "solutions/clinical-notes-summarizer/exports/clinical-notes-summarizer-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/clinical-notes-summarizer/exports/clinical-notes-summarizer-solution-export.json"
+    },
+    "managed": false,
+    "published": false,
+    "import_caveats": [
+      "Import as an unmanaged solution for manual review.",
+      "Map connection references and environment variables before enabling integrations.",
+      "The exported agent remains unpublished unless the target administrator explicitly publishes it."
+    ]
+  }
 }

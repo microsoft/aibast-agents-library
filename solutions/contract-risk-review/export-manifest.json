@@ -27,6 +27,30 @@
       "status": "ready"
     },
     {
+      "id": "copilot-studio-solution",
+      "label": "Importable Copilot Studio solution",
+      "path": "solutions/contract-risk-review/exports/contract-risk-review-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/contract-risk-review/exports/contract-risk-review-copilot-studio-solution.zip",
+      "use": "Unmanaged solution ZIP for manual import; the agent remains unpublished",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-deployment-settings",
+      "label": "Copilot Studio deployment settings",
+      "path": "solutions/contract-risk-review/exports/contract-risk-review-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/contract-risk-review/exports/contract-risk-review-deployment-settings.json",
+      "use": "Connection-reference, environment-variable, and agent import settings",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-export-metadata",
+      "label": "Copilot Studio solution export metadata",
+      "path": "solutions/contract-risk-review/exports/contract-risk-review-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/contract-risk-review/exports/contract-risk-review-solution-export.json",
+      "use": "Export identity, integrity hash, source environment, and import caveats",
+      "status": "ready"
+    },
+    {
       "id": "field-guide",
       "label": "Customer field guide",
       "path": "solutions/contract-risk-review/field-guide.html",
@@ -227,6 +251,14 @@
       "status": "ready"
     },
     {
+      "id": "easy-evidence-dataverse-draft-evidence",
+      "label": "Dataverse Draft Evidence",
+      "path": "solutions/contract-risk-review/evals/dataverse-draft-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/contract-risk-review/evals/dataverse-draft-evidence.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
       "id": "manual-evidence",
       "label": "Manual build evidence",
       "path": "solutions/contract-risk-review/evals/manual-build-evidence.json",
@@ -256,6 +288,86 @@
       "path": "solutions/contract-risk-review/evals/visual-checkpoints.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/contract-risk-review/evals/visual-checkpoints.json",
       "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-crr-01",
+      "label": "Annotated visual checkpoint: easy-crr-01",
+      "path": "solutions/contract-risk-review/screenshots/assisted/annotated/01-crr-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/contract-risk-review/screenshots/assisted/annotated/01-crr-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-crr-02",
+      "label": "Annotated visual checkpoint: easy-crr-02",
+      "path": "solutions/contract-risk-review/screenshots/assisted/annotated/02-crr-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/contract-risk-review/screenshots/assisted/annotated/02-crr-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-crr-03",
+      "label": "Annotated visual checkpoint: easy-crr-03",
+      "path": "solutions/contract-risk-review/screenshots/assisted/annotated/03-crr-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/contract-risk-review/screenshots/assisted/annotated/03-crr-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-04-crr-04",
+      "label": "Annotated visual checkpoint: easy-crr-04",
+      "path": "solutions/contract-risk-review/screenshots/assisted/annotated/04-crr-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/contract-risk-review/screenshots/assisted/annotated/04-crr-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-name-agent",
+      "label": "Annotated visual checkpoint: hard-step-02",
+      "path": "solutions/contract-risk-review/screenshots/manual/annotated/02-name-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/contract-risk-review/screenshots/manual/annotated/02-name-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-enter-instructions",
+      "label": "Annotated visual checkpoint: hard-step-03",
+      "path": "solutions/contract-risk-review/screenshots/manual/annotated/03-enter-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/contract-risk-review/screenshots/manual/annotated/03-enter-instructions.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-12-review-inventory",
+      "label": "Annotated visual checkpoint: hard-step-12",
+      "path": "solutions/contract-risk-review/screenshots/manual/annotated/12-review-inventory.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/contract-risk-review/screenshots/manual/annotated/12-review-inventory.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-13-open-preview",
+      "label": "Annotated visual checkpoint: hard-step-13",
+      "path": "solutions/contract-risk-review/screenshots/manual/annotated/13-open-preview.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/contract-risk-review/screenshots/manual/annotated/13-open-preview.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-17-crr-04",
+      "label": "Annotated visual checkpoint: hard-crr-04",
+      "path": "solutions/contract-risk-review/screenshots/manual/annotated/17-crr-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/contract-risk-review/screenshots/manual/annotated/17-crr-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-18-confirm-draft",
+      "label": "Annotated visual checkpoint: hard-draft",
+      "path": "solutions/contract-risk-review/screenshots/manual/annotated/18-confirm-draft.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/contract-risk-review/screenshots/manual/annotated/18-confirm-draft.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
@@ -554,5 +666,31 @@
       "use": "Copilot-assisted evidence inventory",
       "status": "ready"
     }
-  ]
+  ],
+  "copilot_studio_solution": {
+    "label": "Importable Contract Risk Review Agent Copilot Studio solution",
+    "status": "exported",
+    "solution_unique_name": "aibast_ContractRiskReviewPilot",
+    "zip": {
+      "path": "solutions/contract-risk-review/exports/contract-risk-review-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/contract-risk-review/exports/contract-risk-review-copilot-studio-solution.zip",
+      "sha256": "29a05b2a06ee91594a0a54fd8f44833d8105ea8f9f0d54b8d636e84b6811f2b0",
+      "bytes": 3990
+    },
+    "deployment_settings": {
+      "path": "solutions/contract-risk-review/exports/contract-risk-review-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/contract-risk-review/exports/contract-risk-review-deployment-settings.json"
+    },
+    "metadata": {
+      "path": "solutions/contract-risk-review/exports/contract-risk-review-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/contract-risk-review/exports/contract-risk-review-solution-export.json"
+    },
+    "managed": false,
+    "published": false,
+    "import_caveats": [
+      "Import as an unmanaged solution for manual review.",
+      "Map connection references and environment variables before enabling integrations.",
+      "The exported agent remains unpublished unless the target administrator explicitly publishes it."
+    ]
+  }
 }

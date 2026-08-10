@@ -63,8 +63,11 @@ side effect.
 | Source bundle | `solutions/inventory-rebalancing/exports/inventory-rebalancing-source.zip` |
 | Manual evidence | `solutions/inventory-rebalancing/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/inventory-rebalancing/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/inventory-rebalancing/exports/inventory-rebalancing-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/inventory-rebalancing/exports/inventory-rebalancing-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/inventory-rebalancing/exports/inventory-rebalancing-solution-export.json` |
 
-**Scaffold status:** 74 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 104 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

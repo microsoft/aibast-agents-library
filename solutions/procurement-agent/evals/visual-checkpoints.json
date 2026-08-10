@@ -9,49 +9,132 @@
   },
   "summary": {
     "total_existing_captures": 23,
-    "reusable": 0,
-    "reshoot_required": 23,
-    "new_learn_step_captures_recommended": 0
+    "reusable": 14,
+    "reshoot_required": 9
   },
   "captures": [
     {
       "id": "easy-proc-01",
       "mode": "easy",
+      "case_id": "PROC-01",
       "source": "solutions/procurement-agent/screenshots/assisted/01-proc-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PROC-01"
+      "annotated": "solutions/procurement-agent/screenshots/assisted/annotated/01-proc-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "The CFO is the authorized approver for PR-5001",
+        "The review is a recommendation only",
+        "No approval, routing action, or spend commitment has occurred"
+      ],
+      "full_case_not_visibly_proven": [
+        "The $125,000 amount is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 402,
+          "width": 935,
+          "height": 92,
+          "label": "PR-5001 CFO review and human action"
+        },
+        {
+          "x": 286,
+          "y": 510,
+          "width": 900,
+          "height": 65,
+          "label": "No approval or spend side effect"
+        }
+      ]
     },
     {
       "id": "easy-proc-02",
       "mode": "easy",
+      "case_id": "PROC-02",
       "source": "solutions/procurement-agent/screenshots/assisted/02-proc-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PROC-02"
+      "annotated": "solutions/procurement-agent/screenshots/assisted/annotated/02-proc-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "A category buyer or sourcing manager must conduct the full side-by-side evaluation",
+        "No vendor has been selected or awarded"
+      ],
+      "full_case_not_visibly_proven": [
+        "AWS and Azure are above the captured viewport.",
+        "The exact phrase not a supplier award is not visible."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 530,
+          "width": 935,
+          "height": 82,
+          "label": "Human selection gate; no vendor awarded"
+        }
+      ]
     },
     {
       "id": "easy-proc-03",
       "mode": "easy",
+      "case_id": "PROC-03",
       "source": "solutions/procurement-agent/screenshots/assisted/03-proc-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PROC-03"
+      "annotated": "solutions/procurement-agent/screenshots/assisted/annotated/03-proc-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "CFO Review",
+        "48 hours",
+        "This recommendation does not record an approval"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 186,
+          "width": 935,
+          "height": 77,
+          "label": "CFO gate and 48-hour review"
+        },
+        {
+          "x": 286,
+          "y": 403,
+          "width": 935,
+          "height": 92,
+          "label": "Recommendation does not record approval"
+        }
+      ]
     },
     {
       "id": "easy-proc-04",
       "mode": "easy",
+      "case_id": "PROC-04",
       "source": "solutions/procurement-agent/screenshots/assisted/04-proc-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PROC-04"
+      "annotated": "solutions/procurement-agent/screenshots/assisted/annotated/04-proc-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "PR-5001 is $125,000 and requires CFO review",
+        "The $60,000 Software budget gap must be surfaced",
+        "No purchase order is created from this review"
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 123,
+          "width": 660,
+          "height": 169,
+          "label": "Request amount and CFO review status"
+        },
+        {
+          "x": 287,
+          "y": 378,
+          "width": 940,
+          "height": 110,
+          "label": "Software gap and no purchase order"
+        }
+      ]
     },
     {
       "id": "easy-draft",
       "mode": "easy",
       "source": "solutions/procurement-agent/screenshots/assisted/05-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The target Procurement Pilot row is not visible; the frame shows unrelated Sales agents, so it cannot prove the pilot remains Draft.",
+      "draft": true
     },
     {
       "id": "hard-step-01",
@@ -59,23 +142,56 @@
       "step": 1,
       "source": "solutions/procurement-agent/screenshots/manual/01-create-blank-agent.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is an empty loading surface with a spinner; no blank agent name or Build workspace is visible."
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
       "step": 2,
       "source": "solutions/procurement-agent/screenshots/manual/02-name-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Procurement Manual is entered in the agent name field"
+      ],
+      "boxes": [
+        {
+          "x": 166,
+          "y": 99,
+          "width": 815,
+          "height": 50,
+          "label": "Manual agent name entered"
+        }
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
       "step": 3,
       "source": "solutions/procurement-agent/screenshots/manual/03-enter-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence-first response contract",
+        "Locked Preview evidence anchors",
+        "PROC-01 through PROC-04 acceptance anchors"
+      ],
+      "boxes": [
+        {
+          "x": 83,
+          "y": 207,
+          "width": 890,
+          "height": 306,
+          "label": "Reviewed evidence-first instruction policy"
+        },
+        {
+          "x": 82,
+          "y": 513,
+          "width": 895,
+          "height": 300,
+          "label": "Locked PROC-01 through PROC-04 anchors"
+        }
+      ]
     },
     {
       "id": "hard-step-04",
@@ -83,15 +199,27 @@
       "step": 4,
       "source": "solutions/procurement-agent/screenshots/manual/04-save-instructions.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The instruction text is visible, but no saved-state confirmation or No unsaved changes indicator is shown."
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
       "step": 5,
       "source": "solutions/procurement-agent/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "The Knowledge section is visibly empty and no Search all websites source is present"
+      ],
+      "boxes": [
+        {
+          "x": 1017,
+          "y": 257,
+          "width": 385,
+          "height": 60,
+          "label": "Knowledge has no web-search source"
+        }
+      ]
     },
     {
       "id": "hard-step-06",
@@ -99,7 +227,7 @@
       "step": 6,
       "source": "solutions/procurement-agent/screenshots/manual/06-add-aibast-procurement-agent-rules-and-guardrails.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The Knowledge section is collapsed and the aibast_procurement-agent-rules-and-guardrails.md filename is not visible."
     },
     {
       "id": "hard-step-07",
@@ -107,15 +235,27 @@
       "step": 7,
       "source": "solutions/procurement-agent/screenshots/manual/07-add-aibast-procurement-agent-synthetic-records.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is pixel-identical to step 6; the Knowledge section is collapsed and the aibast_procurement-agent-synthetic-records.md filename is not visible."
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
       "step": 8,
       "source": "solutions/procurement-agent/screenshots/manual/08-add-aibast-approval-routing-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/08-add-aibast-approval-routing-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "approval-routing skill chip"
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 181,
+          "width": 180,
+          "height": 52,
+          "label": "Approval-routing skill added"
+        }
+      ]
     },
     {
       "id": "hard-step-09",
@@ -123,23 +263,50 @@
       "step": 9,
       "source": "solutions/procurement-agent/screenshots/manual/09-add-aibast-purchase-request-01.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is pixel-identical to step 8 and shows only approval-routing; no purchase-request skill is visible."
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
       "step": 10,
       "source": "solutions/procurement-agent/screenshots/manual/10-add-aibast-spend-analysis-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/10-add-aibast-spend-analysis-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "spend-analysis skill chip",
+        "approval-routing skill chip"
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 181,
+          "width": 365,
+          "height": 52,
+          "label": "Spend-analysis skill added"
+        }
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
       "step": 11,
       "source": "solutions/procurement-agent/screenshots/manual/11-add-aibast-vendor-comparison-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/11-add-aibast-vendor-comparison-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "vendor-comparison skill chip",
+        "spend-analysis skill chip",
+        "approval-routing skill chip"
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 181,
+          "width": 365,
+          "height": 94,
+          "label": "Vendor-comparison skill added"
+        }
+      ]
     },
     {
       "id": "hard-step-12",
@@ -147,59 +314,159 @@
       "step": 12,
       "source": "solutions/procurement-agent/screenshots/manual/12-review-inventory.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The reviewed model is visible, but the inventory shows only three skills and omits purchase-request; Knowledge is collapsed, so the required four-skill, two-file state is not proven."
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
       "step": 13,
       "source": "solutions/procurement-agent/screenshots/manual/13-open-preview.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab is selected",
+        "New chat control",
+        "Procurement Manual greeting"
+      ],
+      "boxes": [
+        {
+          "x": 640,
+          "y": 8,
+          "width": 102,
+          "height": 44,
+          "label": "Preview selected"
+        },
+        {
+          "x": 832,
+          "y": 84,
+          "width": 115,
+          "height": 52,
+          "label": "Fresh chat control"
+        }
+      ]
     },
     {
       "id": "hard-step-14",
       "mode": "hard",
       "step": 14,
+      "case_id": "PROC-01",
       "source": "solutions/procurement-agent/screenshots/manual/14-proc-01.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PROC-01"
+      "reason": "Only internal reasoning and an incomplete final-answer fragment are visible. Reasoning text cannot prove PROC-01."
     },
     {
       "id": "hard-step-15",
       "mode": "hard",
       "step": 15,
+      "case_id": "PROC-02",
       "source": "solutions/procurement-agent/screenshots/manual/15-proc-02.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PROC-02"
+      "reason": "The answer says the synthetic-records file is currently absent and asks for an upload. That grounding blocker defeats the otherwise visible vendor anchors."
     },
     {
       "id": "hard-step-16",
       "mode": "hard",
       "step": 16,
+      "case_id": "PROC-03",
       "source": "solutions/procurement-agent/screenshots/manual/16-proc-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PROC-03"
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/16-proc-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "CFO Authorization",
+        "$125,000",
+        "48-hour review window",
+        "This recommendation does not record an approval"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 207,
+          "width": 940,
+          "height": 84,
+          "label": "CFO authorization and 48-hour gate"
+        },
+        {
+          "x": 286,
+          "y": 474,
+          "width": 940,
+          "height": 95,
+          "label": "Recommendation does not record approval"
+        }
+      ]
     },
     {
       "id": "hard-step-17",
       "mode": "hard",
       "step": 17,
+      "case_id": "PROC-04",
       "source": "solutions/procurement-agent/screenshots/manual/17-proc-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PROC-04"
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/17-proc-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Software spend",
+        "$60,000 pressure figure",
+        "PR-5001 at $125,000",
+        "CFO authorization threshold requires a 48-hour review window"
+      ],
+      "full_case_not_visibly_proven": [
+        "The no-purchase-order boundary is below the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 119,
+          "width": 940,
+          "height": 112,
+          "label": "Software budget pressure"
+        },
+        {
+          "x": 286,
+          "y": 224,
+          "width": 940,
+          "height": 111,
+          "label": "Open request and CFO threshold"
+        }
+      ]
     },
     {
       "id": "hard-step-18",
       "mode": "hard",
       "step": 18,
       "source": "solutions/procurement-agent/screenshots/manual/18-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/procurement-agent/screenshots/manual/annotated/18-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Procurement Manual",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 102,
+          "y": 237,
+          "width": 650,
+          "height": 72,
+          "label": "Target manual agent remains Draft"
+        }
+      ]
     }
-  ]
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy Draft gate filtered to Procurement Pilot with Draft visible.",
+      "Hard step 1 after the blank agent workspace finishes loading.",
+      "Hard step 4 with the saved-state or No unsaved changes confirmation visible.",
+      "One expanded Knowledge inventory showing both exact filenames; create separate checkpoints for steps 6 and 7.",
+      "Hard step 9 with the purchase-request skill visibly present.",
+      "Hard step 12 with Claude Sonnet 4.6, all four skills, both knowledge files, and no configured tools visible.",
+      "Hard PROC-01 with positive final-answer anchors visible rather than reasoning.",
+      "Hard PROC-02 after the missing-grounding blocker is fixed."
+    ]
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:procurement-agent",
+    "reviewed_at": "2026-08-10T00:27:58.163419+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  }
 }

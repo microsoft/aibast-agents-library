@@ -35,8 +35,11 @@ items, refunds funds, creates orders, or completes purchases.
 | Source bundle | `solutions/personalized-shopping-assistant/exports/personalized-shopping-assistant-source.zip` |
 | Manual evidence | `solutions/personalized-shopping-assistant/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/personalized-shopping-assistant/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/personalized-shopping-assistant/exports/personalized-shopping-assistant-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/personalized-shopping-assistant/exports/personalized-shopping-assistant-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/personalized-shopping-assistant/exports/personalized-shopping-assistant-solution-export.json` |
 
-**Scaffold status:** 69 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 90 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

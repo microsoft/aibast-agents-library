@@ -9,73 +9,188 @@
   },
   "summary": {
     "total_existing_captures": 23,
-    "reusable": 0,
-    "reshoot_required": 23,
-    "new_learn_step_captures_recommended": 0
+    "reusable": 14,
+    "reshoot_required": 9
   },
   "captures": [
     {
       "id": "easy-iv-01",
       "mode": "easy",
+      "case_id": "IV-01",
       "source": "solutions/inventory-visibility/screenshots/assisted/01-iv-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "IV-01"
+      "annotated": "solutions/inventory-visibility/screenshots/assisted/annotated/01-iv-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Total Network Inventory: 26,315 units across 6 locations",
+        "Verification Boundary",
+        "All quantities are synthetic, read-only pilot data"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Inventory Visibility Snapshot heading is above the captured viewport.",
+        "The incomplete no-stock-reservation row in the source capture is intentionally outside the annotation; the full marker remains machine-gated."
+      ],
+      "boxes": [
+        {
+          "x": 282,
+          "y": 406,
+          "width": 940,
+          "height": 190,
+          "label": "Complete network total and synthetic-data boundary"
+        }
+      ]
     },
     {
       "id": "easy-iv-02",
       "mode": "easy",
+      "case_id": "IV-02",
       "source": "solutions/inventory-visibility/screenshots/assisted/02-iv-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "IV-02"
+      "annotated": "solutions/inventory-visibility/screenshots/assisted/annotated/02-iv-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Low-Stock Warnings: 3",
+        "Michigan Ave Express has two SKUs at 1.9 days of supply",
+        "No inventory action has been taken"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Draft Stock Review heading and Review transfer candidate phrase are outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 211,
+          "width": 946,
+          "height": 372,
+          "label": "Warnings, observations, and no-action boundary"
+        }
+      ]
     },
     {
       "id": "easy-iv-03",
       "mode": "easy",
+      "case_id": "IV-03",
       "source": "solutions/inventory-visibility/screenshots/assisted/03-iv-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "IV-03"
+      "annotated": "solutions/inventory-visibility/screenshots/assisted/annotated/03-iv-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Target quantity formula: 14 × daily sell-through rate",
+        "No action taken: This is a draft scenario only",
+        "Approval gate requires authorized planner review"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Draft Replenishment Plan heading and Estimated Total Replenishment Cost are outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 151,
+          "width": 946,
+          "height": 340,
+          "label": "Fourteen-day assumptions and no-action state"
+        },
+        {
+          "x": 284,
+          "y": 520,
+          "width": 948,
+          "height": 62,
+          "label": "Authorized planner approval gate"
+        }
+      ]
     },
     {
       "id": "easy-iv-04",
       "mode": "easy",
+      "case_id": "IV-04",
       "source": "solutions/inventory-visibility/screenshots/assisted/04-iv-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "IV-04"
+      "annotated": "solutions/inventory-visibility/screenshots/assisted/annotated/04-iv-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Allocation Recommendations",
+        "BOPIS Buffer: do not reserve units",
+        "No reservation, transfer, allocation, or purchase has been executed"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Prepared for Category Manager and Channel Allocation Scenario headings are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 151,
+          "width": 946,
+          "height": 427,
+          "label": "Allocation guidance and no-execution boundary"
+        }
+      ]
     },
     {
       "id": "easy-draft",
       "mode": "easy",
       "source": "solutions/inventory-visibility/screenshots/assisted/05-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The target Inventory Visibility Pilot row is not visible; unrelated agent rows and Draft badges cannot prove the validated pilot identity or its Draft state.",
+      "draft": true
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
       "step": 1,
       "source": "solutions/inventory-visibility/screenshots/manual/01-create-blank-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent",
+        "Blank Build workspace"
+      ],
+      "boxes": [
+        {
+          "x": 82,
+          "y": 80,
+          "width": 902,
+          "height": 78,
+          "label": "Blank Untitled Agent workspace"
+        }
+      ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
       "step": 2,
       "source": "solutions/inventory-visibility/screenshots/manual/02-name-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Inventory Visibility Manual in the name field"
+      ],
+      "boxes": [
+        {
+          "x": 162,
+          "y": 98,
+          "width": 820,
+          "height": 54,
+          "label": "Manual agent name entered"
+        }
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
       "step": 3,
       "source": "solutions/inventory-visibility/screenshots/manual/03-enter-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Reviewed inventory visibility instruction policy",
+        "Locked Preview evidence anchors",
+        "No inventory change occurred boundary"
+      ],
+      "boxes": [
+        {
+          "x": 75,
+          "y": 228,
+          "width": 900,
+          "height": 595,
+          "label": "Reviewed instructions and locked anchors"
+        }
+      ]
     },
     {
       "id": "hard-step-04",
@@ -83,7 +198,7 @@
       "step": 4,
       "source": "solutions/inventory-visibility/screenshots/manual/04-save-instructions.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is byte-identical to steps 5-11 and shows the completed configuration, but it contains no save confirmation, tooltip, or other unambiguous saved-state indicator for this step."
     },
     {
       "id": "hard-step-05",
@@ -91,7 +206,7 @@
       "step": 5,
       "source": "solutions/inventory-visibility/screenshots/manual/05-remove-web-search.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is byte-identical to steps 4 and 6-11 and shows the completed configuration; it does not visibly capture Search all websites being removed."
     },
     {
       "id": "hard-step-06",
@@ -99,7 +214,7 @@
       "step": 6,
       "source": "solutions/inventory-visibility/screenshots/manual/06-add-aibast-inventory-visibility-rules-and-safety.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "Both knowledge files are already present in a final configuration that is byte-identical to steps 4, 5, and 7-11, so the rules-and-safety upload action is not isolated."
     },
     {
       "id": "hard-step-07",
@@ -107,7 +222,7 @@
       "step": 7,
       "source": "solutions/inventory-visibility/screenshots/manual/07-add-aibast-inventory-visibility-synthetic-records.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "Both knowledge files are already present, the synthetic-records filename is truncated, and the frame is byte-identical to steps 4-6 and 8-11 rather than an isolated upload state."
     },
     {
       "id": "hard-step-08",
@@ -115,7 +230,7 @@
       "step": 8,
       "source": "solutions/inventory-visibility/screenshots/manual/08-add-channel-allocation.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "All four final skills are already present and this frame is byte-identical to steps 4-7 and 9-11; it does not isolate addition of the category-channel-allocation-scenario skill."
     },
     {
       "id": "hard-step-09",
@@ -123,7 +238,7 @@
       "step": 9,
       "source": "solutions/inventory-visibility/screenshots/manual/09-add-inventory-dashboard.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "All four final skills are already present and this frame is byte-identical to steps 4-8 and 10-11; it does not isolate addition of the read-only-inventory-visibility skill."
     },
     {
       "id": "hard-step-10",
@@ -131,7 +246,7 @@
       "step": 10,
       "source": "solutions/inventory-visibility/screenshots/manual/10-add-replenishment-plan.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "All four final skills are already present and this frame is byte-identical to steps 4-9 and 11; it does not isolate addition of the draft-replenishment-scenario skill."
     },
     {
       "id": "hard-step-11",
@@ -139,67 +254,245 @@
       "step": 11,
       "source": "solutions/inventory-visibility/screenshots/manual/11-add-stock-alerts.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "All four final skills are already present and this frame is byte-identical to steps 4-10; it does not isolate addition of the store-stock-review-candidates skill."
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
       "step": 12,
       "source": "solutions/inventory-visibility/screenshots/manual/12-review-inventory.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/12-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "Four configured skills",
+        "Two knowledge entries",
+        "Tools section contains no configured tool"
+      ],
+      "full_inventory_not_visibly_proven": [
+        "The synthetic-records knowledge filename is truncated in the visible chip."
+      ],
+      "boxes": [
+        {
+          "x": 1198,
+          "y": 84,
+          "width": 198,
+          "height": 42,
+          "label": "Reviewed model"
+        },
+        {
+          "x": 1026,
+          "y": 184,
+          "width": 315,
+          "height": 158,
+          "label": "Four configured skills"
+        },
+        {
+          "x": 1020,
+          "y": 364,
+          "width": 382,
+          "height": 61,
+          "label": "No configured tools"
+        },
+        {
+          "x": 1024,
+          "y": 455,
+          "width": 377,
+          "height": 106,
+          "label": "Two knowledge entries"
+        }
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
       "step": 13,
       "source": "solutions/inventory-visibility/screenshots/manual/13-open-preview.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab selected",
+        "New chat",
+        "Inventory Visibility Manual greeting"
+      ],
+      "boxes": [
+        {
+          "x": 637,
+          "y": 9,
+          "width": 98,
+          "height": 42,
+          "label": "Preview selected"
+        },
+        {
+          "x": 833,
+          "y": 88,
+          "width": 108,
+          "height": 42,
+          "label": "Fresh chat control"
+        },
+        {
+          "x": 258,
+          "y": 143,
+          "width": 522,
+          "height": 91,
+          "label": "Manual agent greeting"
+        }
+      ]
     },
     {
       "id": "hard-step-14",
       "mode": "hard",
       "step": 14,
+      "case_id": "IV-01",
       "source": "solutions/inventory-visibility/screenshots/manual/14-iv-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "IV-01"
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/14-iv-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Michigan Ave Express inventory table",
+        "Classic Denim Jacket LOW at 1.9 days of supply",
+        "Smart Fitness Tracker LOW at 1.9 days of supply"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Inventory Visibility Snapshot and no stock is reserved markers are outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 205,
+          "width": 824,
+          "height": 440,
+          "label": "Store snapshot and low-stock rows"
+        }
+      ]
     },
     {
       "id": "hard-step-15",
       "mode": "hard",
       "step": 15,
+      "case_id": "IV-02",
       "source": "solutions/inventory-visibility/screenshots/manual/15-iv-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "IV-02"
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/15-iv-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Low-Stock Warnings: 3",
+        "Michigan Ave Express is the most exposed location",
+        "No inventory changes have been made"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Draft Stock Review and Review transfer candidate markers are outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 207,
+          "width": 947,
+          "height": 378,
+          "label": "Review candidates and no-change boundary"
+        }
+      ]
     },
     {
       "id": "hard-step-16",
       "mode": "hard",
       "step": 16,
+      "case_id": "IV-03",
       "source": "solutions/inventory-visibility/screenshots/manual/16-iv-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "IV-03"
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/16-iv-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Supply source WH-CENTRAL",
+        "Replenish quantity assumption",
+        "No inventory action has been taken"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Draft Replenishment Plan, 14-day supply, and Estimated Total Replenishment Cost markers are outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 119,
+          "width": 946,
+          "height": 343,
+          "label": "Replenishment assumptions"
+        },
+        {
+          "x": 286,
+          "y": 504,
+          "width": 945,
+          "height": 77,
+          "label": "Draft-only no-action boundary"
+        }
+      ]
     },
     {
       "id": "hard-step-17",
       "mode": "hard",
       "step": 17,
+      "case_id": "IV-04",
       "source": "solutions/inventory-visibility/screenshots/manual/17-iv-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "IV-04"
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/17-iv-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Allocation Recommendations",
+        "BOPIS Buffer: do not reserve units",
+        "No inventory action has been taken"
+      ],
+      "full_case_not_visibly_proven": [
+        "The Prepared for Category Manager and Channel Allocation Scenario headings are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 116,
+          "width": 946,
+          "height": 463,
+          "label": "Channel plan and no-action boundary"
+        }
+      ]
     },
     {
       "id": "hard-step-18",
       "mode": "hard",
       "step": 18,
       "source": "solutions/inventory-visibility/screenshots/manual/18-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/inventory-visibility/screenshots/manual/annotated/18-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Inventory Visibility Manual",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 102,
+          "y": 245,
+          "width": 1282,
+          "height": 56,
+          "label": "Inventory Visibility Manual remains Draft"
+        }
+      ]
     }
-  ]
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy Draft gate filtered to Inventory Visibility Pilot with Draft visible.",
+      "Hard save confirmation with No unsaved changes visible.",
+      "Hard web-search removal immediately after Search all websites is removed.",
+      "Separate Hard knowledge-upload states with each exact filename visible.",
+      "Separate Hard skill-add states showing each newly added rendered skill."
+    ],
+    "new_learn_step_captures": [
+      "Copilot-only skill attached in VS Code Copilot Chat.",
+      "Copilot-only local 4/4 verdict.",
+      "Copilot-only deploy response with Draft inventory.",
+      "Copilot-only final complete verdict.",
+      "Optional Brainstem equivalents when that persisted lane is selected."
+    ]
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:inventory-visibility",
+    "reviewed_at": "2026-08-10T00:27:58.153427+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  }
 }

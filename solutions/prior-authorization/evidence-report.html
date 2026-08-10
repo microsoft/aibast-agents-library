@@ -226,8 +226,8 @@
     </section>
 
     <div class="summary-grid">
-      <article><strong>0</strong><span>Reusable positive checkpoints</span></article>
-      <article><strong>23</strong><span>Reference-only captures excluded from learner proof</span></article>
+      <article><strong>21</strong><span>Reusable positive checkpoints</span></article>
+      <article><strong>2</strong><span>Reference-only captures excluded from learner proof</span></article>
       <article><strong>0</strong><span>Optional future Learn-step captures</span></article>
     </div>
 
@@ -263,129 +263,151 @@
       <p>Only approved positive checkpoints count as learner proof. Annotated paths are included for facilitator traceability.</p>
       <table>
         <thead><tr><th>Checkpoint</th><th>Mode</th><th>Visible evidence</th><th>Annotated asset</th></tr></thead>
-        <tbody></tbody>
+        <tbody><tr>
+          <td><code>easy-pa-01</code></td>
+          <td>easy</td>
+          <td>Checklist only; presence does not establish medical necessity or authorization; The missing conservative-care duration maps directly to reviewer check #3; Human review required</td>
+          <td>solutions/prior-authorization/screenshots/assisted/annotated/01-pa-01.png</td>
+        </tr>
+<tr>
+          <td><code>easy-pa-02</code></td>
+          <td>easy</td>
+          <td>Evidence Status in SYN-AUTH-001; Relevant encounter note and prior imaging evidence are Present; Documented duration fields are Not found in synthetic source</td>
+          <td>solutions/prior-authorization/screenshots/assisted/annotated/02-pa-02.png</td>
+        </tr>
+<tr>
+          <td><code>easy-pa-03</code></td>
+          <td>easy</td>
+          <td>This is a source transcription, not an agent determination; additional evidence requested; The recorded state is not an authorization approval, denial, or outcome</td>
+          <td>solutions/prior-authorization/screenshots/assisted/annotated/03-pa-03.png</td>
+        </tr>
+<tr>
+          <td><code>easy-pa-04</code></td>
+          <td>easy</td>
+          <td>SYN-POL-IMG-01 Reviewer Checks; Human utilization reviewer owns rationale, completeness, and submission; Reviewer must confirm reconsideration is appropriate</td>
+          <td>solutions/prior-authorization/screenshots/assisted/annotated/04-pa-04.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-01</code></td>
+          <td>hard</td>
+          <td>Untitled Agent; Blank Build workspace</td>
+          <td>solutions/prior-authorization/screenshots/manual/annotated/01-create-blank-agent.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-02</code></td>
+          <td>hard</td>
+          <td>Prior Authorization Manual in the name field</td>
+          <td>solutions/prior-authorization/screenshots/manual/annotated/02-name-agent.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-03</code></td>
+          <td>hard</td>
+          <td>Reviewed instruction policy; Locked Preview evidence anchors for PA-01 through PA-04</td>
+          <td>solutions/prior-authorization/screenshots/manual/annotated/03-enter-instructions.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-05</code></td>
+          <td>hard</td>
+          <td>The visible Knowledge inventory contains no Search all websites source</td>
+          <td>solutions/prior-authorization/screenshots/manual/annotated/05-remove-web-search.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-06</code></td>
+          <td>hard</td>
+          <td>aibast_prior-authorization-review-rules.md is visible in Knowledge</td>
+          <td>solutions/prior-authorization/screenshots/manual/annotated/06-add-aibast-prior-authorization-review-rules.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-07</code></td>
+          <td>hard</td>
+          <td>aibast_prior-authorization-synthetic-records is visible in Knowledge; aibast_prior-authorization-review-rules.md remains visible</td>
+          <td>solutions/prior-authorization/screenshots/manual/annotated/07-add-aibast-prior-authorization-synthetic-records.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-08</code></td>
+          <td>hard</td>
+          <td>prior-authorization-appeal-evidence-packet is visible in Skills</td>
+          <td>solutions/prior-authorization/screenshots/manual/annotated/08-add-appeal-evidence-packet.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-09</code></td>
+          <td>hard</td>
+          <td>prior-authorization-criteria-evidence is visible in Skills; prior-authorization-appeal-evidence-packet remains visible</td>
+          <td>solutions/prior-authorization/screenshots/manual/annotated/09-add-criteria-evidence.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-10</code></td>
+          <td>hard</td>
+          <td>prior-authorization-request-evidence is visible in Skills; Three configured skills are visible</td>
+          <td>solutions/prior-authorization/screenshots/manual/annotated/10-add-request-evidence.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-11</code></td>
+          <td>hard</td>
+          <td>prior-authorization-status-summary is visible in Skills; Four configured skills are visible</td>
+          <td>solutions/prior-authorization/screenshots/manual/annotated/11-add-status-summary.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-12</code></td>
+          <td>hard</td>
+          <td>Claude Sonnet 4.6; Four configured skills; Two configured knowledge sources; Tools section contains no configured tool; Save tooltip states No unsaved changes</td>
+          <td>solutions/prior-authorization/screenshots/manual/annotated/12-review-inventory.png</td>
+        </tr>
+<tr>
+          <td><code>hard-step-13</code></td>
+          <td>hard</td>
+          <td>Preview tab; New chat; Prior Authorization Manual greeting</td>
+          <td>solutions/prior-authorization/screenshots/manual/annotated/13-open-preview.png</td>
+        </tr>
+<tr>
+          <td><code>hard-pa-01</code></td>
+          <td>hard</td>
+          <td>Documented conservative-care duration fields are Not found in synthetic source; additional evidence requested; Human review required</td>
+          <td>solutions/prior-authorization/screenshots/manual/annotated/14-pa-01.png</td>
+        </tr>
+<tr>
+          <td><code>hard-pa-02</code></td>
+          <td>hard</td>
+          <td>Relevant encounter note and prior imaging evidence are Present; Documented duration fields are Not found in synthetic source; The crosswalk does not decide policy criteria satisfaction</td>
+          <td>solutions/prior-authorization/screenshots/manual/annotated/15-pa-02.png</td>
+        </tr>
+<tr>
+          <td><code>hard-pa-03</code></td>
+          <td>hard</td>
+          <td>This is a source transcription, not an agent determination; additional evidence requested; The state does not mean an authorization decision has been made</td>
+          <td>solutions/prior-authorization/screenshots/manual/annotated/16-pa-03.png</td>
+        </tr>
+<tr>
+          <td><code>hard-pa-04</code></td>
+          <td>hard</td>
+          <td>SYN-POL-IMG-01 Reviewer Checks; Human utilization reviewer owns rationale, completeness, and submission; This outline does not constitute an appeal recommendation, filing, payer contact, or record change</td>
+          <td>solutions/prior-authorization/screenshots/manual/annotated/17-pa-04.png</td>
+        </tr>
+<tr>
+          <td><code>hard-draft</code></td>
+          <td>hard</td>
+          <td>Prior Authorization Manual; Draft</td>
+          <td>solutions/prior-authorization/screenshots/manual/annotated/18-confirm-draft.png</td>
+        </tr></tbody>
       </table>
     </section>
 
     <h2>Reference-only visual gaps</h2>
     <section class="card">
-      <p>These real captures may remain visible for orientation, but every one is labeled as reference-only and excluded from proof until its review or reshoot requirement is resolved.</p>
+      <p>These real source captures are inventoried for facilitators but withheld from learner pages until their review or reshoot requirement is resolved.</p>
       <table>
-        <thead><tr><th>Checkpoint</th><th>Mode</th><th>Reason</th></tr></thead>
+        <thead><tr><th>Checkpoint</th><th>Mode</th><th>Source asset</th><th>Reason</th></tr></thead>
         <tbody><tr>
-          <td><code>easy-pa-01</code></td>
-          <td>easy</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>easy-pa-02</code></td>
-          <td>easy</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>easy-pa-03</code></td>
-          <td>easy</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>easy-pa-04</code></td>
-          <td>easy</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
           <td><code>easy-draft</code></td>
           <td>easy</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-01</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-02</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-03</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
+          <td>solutions/prior-authorization/screenshots/assisted/05-confirm-draft.jpg</td>
+          <td>The Agents list does not show Prior Authorization Pilot. Unrelated agent rows and their Draft badges cannot prove the target Draft identity.</td>
         </tr>
 <tr>
           <td><code>hard-step-04</code></td>
           <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-05</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-06</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-07</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-08</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-09</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-10</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-11</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-12</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-13</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-14</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-15</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-16</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-17</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
-        </tr>
-<tr>
-          <td><code>hard-step-18</code></td>
-          <td>hard</td>
-          <td>This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.</td>
+          <td>solutions/prior-authorization/screenshots/manual/04-save-instructions.jpg</td>
+          <td>The instructions are visible, but the screenshot does not show a saved-state indicator such as No unsaved changes. The action label alone is not visual proof that save completed.</td>
         </tr></tbody>
       </table>
     </section>
@@ -396,6 +418,7 @@
       <a class="button" href="evals/visual-checkpoints.json" download>Download visual checkpoint contract</a>
       <a class="button" href="export-manifest.json" download>Download export manifest</a>
       <a class="button" href="exports/prior-authorization-source.zip" download>Download portable bundle</a>
+      <a class="button primary" href="exports/prior-authorization-copilot-studio-solution.zip" download>Download Copilot Studio solution</a><a class="button" href="exports/prior-authorization-deployment-settings.json" download>Deployment settings</a><a class="button" href="exports/prior-authorization-solution-export.json" download>Export details</a>
 
     </section>
   </main>

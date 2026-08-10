@@ -35,8 +35,11 @@ refund, credit, replacement, shipment, reservation, or customer message.
 | Source bundle | `solutions/returns-complaints-resolution/exports/returns-complaints-resolution-source.zip` |
 | Manual evidence | `solutions/returns-complaints-resolution/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/returns-complaints-resolution/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/returns-complaints-resolution/exports/returns-complaints-resolution-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/returns-complaints-resolution/exports/returns-complaints-resolution-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/returns-complaints-resolution/exports/returns-complaints-resolution-solution-export.json` |
 
-**Scaffold status:** 69 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 92 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

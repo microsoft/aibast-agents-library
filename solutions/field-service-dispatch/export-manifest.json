@@ -27,6 +27,30 @@
       "status": "ready"
     },
     {
+      "id": "copilot-studio-solution",
+      "label": "Importable Copilot Studio solution",
+      "path": "solutions/field-service-dispatch/exports/field-service-dispatch-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/exports/field-service-dispatch-copilot-studio-solution.zip",
+      "use": "Unmanaged solution ZIP for manual import; the agent remains unpublished",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-deployment-settings",
+      "label": "Copilot Studio deployment settings",
+      "path": "solutions/field-service-dispatch/exports/field-service-dispatch-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/exports/field-service-dispatch-deployment-settings.json",
+      "use": "Connection-reference, environment-variable, and agent import settings",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-export-metadata",
+      "label": "Copilot Studio solution export metadata",
+      "path": "solutions/field-service-dispatch/exports/field-service-dispatch-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/exports/field-service-dispatch-solution-export.json",
+      "use": "Export identity, integrity hash, source environment, and import caveats",
+      "status": "ready"
+    },
+    {
       "id": "field-guide",
       "label": "Customer field guide",
       "path": "solutions/field-service-dispatch/field-guide.html",
@@ -227,6 +251,14 @@
       "status": "ready"
     },
     {
+      "id": "easy-evidence-dataverse-draft-evidence",
+      "label": "Dataverse Draft Evidence",
+      "path": "solutions/field-service-dispatch/evals/dataverse-draft-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/evals/dataverse-draft-evidence.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
       "id": "manual-evidence",
       "label": "Manual build evidence",
       "path": "solutions/field-service-dispatch/evals/manual-build-evidence.json",
@@ -264,6 +296,126 @@
       "path": "solutions/field-service-dispatch/evals/visual-checkpoints.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/evals/visual-checkpoints.json",
       "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-field-service-dispatch-01",
+      "label": "Annotated visual checkpoint: easy-field_service_dispatch-01",
+      "path": "solutions/field-service-dispatch/screenshots/assisted/annotated/01-field_service_dispatch-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/assisted/annotated/01-field_service_dispatch-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-field-service-dispatch-02",
+      "label": "Annotated visual checkpoint: easy-field_service_dispatch-02",
+      "path": "solutions/field-service-dispatch/screenshots/assisted/annotated/02-field_service_dispatch-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/assisted/annotated/02-field_service_dispatch-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-field-service-dispatch-03",
+      "label": "Annotated visual checkpoint: easy-field_service_dispatch-03",
+      "path": "solutions/field-service-dispatch/screenshots/assisted/annotated/03-field_service_dispatch-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/assisted/annotated/03-field_service_dispatch-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-04-field-service-dispatch-04",
+      "label": "Annotated visual checkpoint: easy-field_service_dispatch-04",
+      "path": "solutions/field-service-dispatch/screenshots/assisted/annotated/04-field_service_dispatch-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/assisted/annotated/04-field_service_dispatch-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-create-blank-agent",
+      "label": "Annotated visual checkpoint: hard-step-01",
+      "path": "solutions/field-service-dispatch/screenshots/manual/annotated/01-create-blank-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/annotated/01-create-blank-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-name-agent",
+      "label": "Annotated visual checkpoint: hard-step-02",
+      "path": "solutions/field-service-dispatch/screenshots/manual/annotated/02-name-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/annotated/02-name-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-enter-instructions",
+      "label": "Annotated visual checkpoint: hard-step-03",
+      "path": "solutions/field-service-dispatch/screenshots/manual/annotated/03-enter-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/annotated/03-enter-instructions.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-06-add-field-service-dispatch-rules-and-controls",
+      "label": "Annotated visual checkpoint: hard-step-06",
+      "path": "solutions/field-service-dispatch/screenshots/manual/annotated/06-add-field-service-dispatch-rules-and-controls.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/annotated/06-add-field-service-dispatch-rules-and-controls.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-12-review-inventory",
+      "label": "Annotated visual checkpoint: hard-step-12",
+      "path": "solutions/field-service-dispatch/screenshots/manual/annotated/12-review-inventory.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/annotated/12-review-inventory.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-13-open-preview",
+      "label": "Annotated visual checkpoint: hard-step-13",
+      "path": "solutions/field-service-dispatch/screenshots/manual/annotated/13-open-preview.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/annotated/13-open-preview.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-14-field-service-dispatch-01",
+      "label": "Annotated visual checkpoint: hard-field_service_dispatch-01",
+      "path": "solutions/field-service-dispatch/screenshots/manual/annotated/14-field_service_dispatch-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/annotated/14-field_service_dispatch-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-15-field-service-dispatch-02",
+      "label": "Annotated visual checkpoint: hard-field_service_dispatch-02",
+      "path": "solutions/field-service-dispatch/screenshots/manual/annotated/15-field_service_dispatch-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/annotated/15-field_service_dispatch-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-16-field-service-dispatch-03",
+      "label": "Annotated visual checkpoint: hard-field_service_dispatch-03",
+      "path": "solutions/field-service-dispatch/screenshots/manual/annotated/16-field_service_dispatch-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/annotated/16-field_service_dispatch-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-17-field-service-dispatch-04",
+      "label": "Annotated visual checkpoint: hard-field_service_dispatch-04",
+      "path": "solutions/field-service-dispatch/screenshots/manual/annotated/17-field_service_dispatch-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/annotated/17-field_service_dispatch-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-18-confirm-draft",
+      "label": "Annotated visual checkpoint: hard-draft",
+      "path": "solutions/field-service-dispatch/screenshots/manual/annotated/18-confirm-draft.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/screenshots/manual/annotated/18-confirm-draft.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
@@ -562,5 +714,31 @@
       "use": "Copilot-assisted evidence inventory",
       "status": "ready"
     }
-  ]
+  ],
+  "copilot_studio_solution": {
+    "label": "Importable Field Service Dispatch Agent Copilot Studio solution",
+    "status": "exported",
+    "solution_unique_name": "aibast_FieldServiceDispatchPilot",
+    "zip": {
+      "path": "solutions/field-service-dispatch/exports/field-service-dispatch-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/exports/field-service-dispatch-copilot-studio-solution.zip",
+      "sha256": "33b62d2cbb0fa7fd334b9a220c129eed647414f4f42c838ac57836caccff2d20",
+      "bytes": 3896
+    },
+    "deployment_settings": {
+      "path": "solutions/field-service-dispatch/exports/field-service-dispatch-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/exports/field-service-dispatch-deployment-settings.json"
+    },
+    "metadata": {
+      "path": "solutions/field-service-dispatch/exports/field-service-dispatch-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/field-service-dispatch/exports/field-service-dispatch-solution-export.json"
+    },
+    "managed": false,
+    "published": false,
+    "import_caveats": [
+      "Import as an unmanaged solution for manual review.",
+      "Map connection references and environment variables before enabling integrations.",
+      "The exported agent remains unpublished unless the target administrator explicitly publishes it."
+    ]
+  }
 }

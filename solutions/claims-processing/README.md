@@ -45,8 +45,11 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 | Source bundle | `solutions/claims-processing/exports/claims-processing-source.zip` |
 | Manual evidence | `solutions/claims-processing/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/claims-processing/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/claims-processing/exports/claims-processing-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/claims-processing/exports/claims-processing-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/claims-processing/exports/claims-processing-solution-export.json` |
 
-**Scaffold status:** 69 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 92 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

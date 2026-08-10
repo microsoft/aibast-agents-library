@@ -49,8 +49,11 @@ This customer package is synthetic and read-only. It provides evidence or drafts
 | Source bundle | `solutions/prior-authorization/exports/prior-authorization-source.zip` |
 | Manual evidence | `solutions/prior-authorization/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/prior-authorization/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/prior-authorization/exports/prior-authorization-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/prior-authorization/exports/prior-authorization-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/prior-authorization/exports/prior-authorization-solution-export.json` |
 
-**Scaffold status:** 69 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 94 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

@@ -46,8 +46,11 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 | Source bundle | `solutions/wealth-insights-generator/exports/wealth-insights-generator-source.zip` |
 | Manual evidence | `solutions/wealth-insights-generator/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/wealth-insights-generator/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/wealth-insights-generator/exports/wealth-insights-generator-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/wealth-insights-generator/exports/wealth-insights-generator-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/wealth-insights-generator/exports/wealth-insights-generator-solution-export.json` |
 
-**Scaffold status:** 74 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 91 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

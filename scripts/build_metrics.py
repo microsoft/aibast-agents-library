@@ -302,6 +302,7 @@ def build_agent_index(registry):
             "size_kb": a.get("_size_kb", 0),
             "lines": a.get("_lines", 0),
             "added_at": a.get("_added_at", ""),
+            "catalog_kind": a.get("_catalog_kind"),
             "downloads": 0,
         }
         agents[name] = rec
@@ -991,7 +992,13 @@ def classify_repository_file(path, agent_name=None):
         return "agent"
     if name == "skill.md":
         return "skill"
-    if re.match(r"^exports/[^/]+-source\.zip$", path):
+    if (
+        re.match(r"^exports/[^/]+-source\.zip$", path)
+        or re.match(
+            r"^solutions/[^/]+/exports/[^/]+-source\.zip$",
+            path,
+        )
+    ):
         return "source_bundle"
     if normalized in INSTALLER_FILES:
         return "installer"
@@ -1671,8 +1678,14 @@ def group_agent_discussions(discussions, agent_names, complete=True):
             continue
         count = _nonnegative_int(discussion.get("upvoteCount"))
         url = discussion.get("url")
-        if count is None or not isinstance(url, str) or not url.startswith(
-            "https://github.com/"
+        expected_url = re.compile(
+            rf"^https://github\.com/{re.escape(OWNER)}/"
+            rf"{re.escape(REPO)}/discussions/\d+$"
+        )
+        if (
+            count is None
+            or not isinstance(url, str)
+            or expected_url.fullmatch(url) is None
         ):
             diagnostics["invalid_discussions"] += 1
             continue
@@ -2815,6 +2828,7 @@ def slim(rec):
         "upvotes", "acquisitions", "upvote_discussion_url",
         "acquisition_discussion_url", "lines", "size_kb", "added_at", "file",
         "description", "stack", "vertical",
+        "catalog_kind",
     )
     return {k: rec[k] for k in fields if k in rec}
 
@@ -2835,6 +2849,7 @@ def build_agent_metrics(agents):
             "file": rec.get("file"),
             "category": rec.get("category"),
             "stack": rec.get("stack"),
+            "catalog_kind": rec.get("catalog_kind"),
         }
         for rec in sorted(agents.values(), key=lambda row: row["name"])
     ]
@@ -2842,11 +2857,24 @@ def build_agent_metrics(agents):
 
 def build_leaderboards(agents, registry):
     rows = list(agents.values())
+    advertised_workshop_agents = {
+        row["catalog_key"]
+        for row in build_workshop_catalog(registry)
+    }
+    leaderboard_rows = [
+        row
+        for row in rows
+        if (
+            row.get("catalog_kind") != "solution"
+            or row["name"] in advertised_workshop_agents
+        )
+    ]
+    leaderboard_names = {row["name"] for row in leaderboard_rows}
     categories = defaultdict(lambda: {"agents": 0, "downloads": 0, "lines": 0})
     verticals = defaultdict(lambda: {"agents": 0, "downloads": 0, "stacks": set()})
     tiers = defaultdict(int)
 
-    for r in rows:
+    for r in leaderboard_rows:
         c = categories[r["category"]]
         c["agents"] += 1
         c["downloads"] += r["downloads"] or 0
@@ -2869,7 +2897,13 @@ def build_leaderboards(agents, registry):
     # Stacks are the unit customers actually deploy, so they get their own board.
     stack_rows = []
     for s in registry.get("stacks", []):
-        members = [agents[n] for n in s.get("agents", []) if n in agents]
+        members = [
+            agents[name]
+            for name in s.get("agents", [])
+            if name in leaderboard_names
+        ]
+        if not members:
+            continue
         member_downloads = [member["downloads"] for member in members]
         stack_rows.append({
             "name": s["stack"],
@@ -2888,13 +2922,13 @@ def build_leaderboards(agents, registry):
         )
     )
 
-    newest = [r for r in rows if r["added_at"]]
+    newest = [r for r in leaderboard_rows if r["added_at"]]
     newest.sort(key=lambda r: r["added_at"], reverse=True)
     most_upvoted = [
         slim(row)
         for row in sorted(
             (
-                row for row in rows
+                row for row in leaderboard_rows
                 if isinstance(row.get("upvotes"), int) and row["upvotes"] > 0
             ),
             key=lambda row: (
@@ -2908,7 +2942,7 @@ def build_leaderboards(agents, registry):
         slim(row)
         for row in sorted(
             (
-                row for row in rows
+                row for row in leaderboard_rows
                 if isinstance(row.get("acquisitions"), int)
                 and row["acquisitions"] > 0
             ),
@@ -2921,10 +2955,14 @@ def build_leaderboards(agents, registry):
     ]
 
     return {
-        "most_downloaded": [slim(r) for r in top(rows, "downloads")],
+        "most_downloaded": [
+            slim(r) for r in top(leaderboard_rows, "downloads")
+        ],
         "most_upvoted": most_upvoted,
         "most_acquired": most_acquired,
-        "largest": [slim(r) for r in top(rows, "lines", n=15)],
+        "largest": [
+            slim(r) for r in top(leaderboard_rows, "lines", n=15)
+        ],
         "newest": [slim(r) for r in newest[:15]],
         "stacks": stack_rows[:20],
         "categories": cat_rows,
@@ -3143,17 +3181,55 @@ def main():
         prior_acquisition_urls = prior_agent_metric_map(
             prior, "acquisition_discussion_url"
         )
+        has_valid_discussion_signals = False
+        has_valid_upvote_signals = False
+        has_valid_acquisition_signals = False
+        discussion_pattern = re.compile(
+            rf"^https://github\.com/{re.escape(OWNER)}/"
+            rf"{re.escape(REPO)}/discussions/\d+$"
+        )
         for name, agent in agents.items():
-            agent["upvotes"] = prior_upvotes.get(name)
-            agent["acquisitions"] = prior_acquisitions.get(name)
-            agent["upvote_discussion_url"] = prior_upvote_urls.get(name)
+            upvote_url = prior_upvote_urls.get(name)
+            acquisition_url = prior_acquisition_urls.get(name)
+            valid_upvote = (
+                isinstance(upvote_url, str)
+                and discussion_pattern.fullmatch(upvote_url) is not None
+            )
+            valid_acquisition = (
+                isinstance(acquisition_url, str)
+                and discussion_pattern.fullmatch(acquisition_url) is not None
+            )
+            has_valid_discussion_signals = (
+                has_valid_discussion_signals
+                or valid_upvote
+                or valid_acquisition
+            )
+            has_valid_upvote_signals = (
+                has_valid_upvote_signals or valid_upvote
+            )
+            has_valid_acquisition_signals = (
+                has_valid_acquisition_signals or valid_acquisition
+            )
+            prior_upvotes[name] = (
+                prior_upvotes.get(name) if valid_upvote else None
+            )
+            prior_acquisitions[name] = (
+                prior_acquisitions.get(name) if valid_acquisition else None
+            )
+            agent["upvotes"] = prior_upvotes[name]
+            agent["acquisitions"] = prior_acquisitions[name]
+            agent["upvote_discussion_url"] = (
+                upvote_url if valid_upvote else None
+            )
             agent["acquisition_discussion_url"] = (
-                prior_acquisition_urls.get(name)
+                acquisition_url if valid_acquisition else None
             )
         file_metrics = carry_forward_file_metrics(file_scope, prior)
         apply_file_downloads_to_agents(agents, file_metrics)
-        agent_upvote_coverage = carried_block(
-            prior, "agent_upvote_coverage"
+        agent_upvote_coverage = (
+            carried_block(prior, "agent_upvote_coverage")
+            if has_valid_upvote_signals
+            else None
         ) or {
             "status": (
                 "carried_forward"
@@ -3169,8 +3245,10 @@ def main():
                 value is not None for value in prior_upvotes.values()
             ),
         }
-        agent_acquisition_coverage = carried_block(
-            prior, "agent_acquisition_coverage"
+        agent_acquisition_coverage = (
+            carried_block(prior, "agent_acquisition_coverage")
+            if has_valid_acquisition_signals
+            else None
         ) or {
             "status": (
                 "carried_forward"
@@ -3192,8 +3270,10 @@ def main():
                 value is not None for value in prior_acquisitions.values()
             ),
         }
-        agent_discussion_coverage = carried_block(
-            prior, "agent_discussion_coverage"
+        agent_discussion_coverage = (
+            carried_block(prior, "agent_discussion_coverage")
+            if has_valid_discussion_signals
+            else None
         ) or {
             "status": (
                 "carried_forward"
@@ -3278,14 +3358,12 @@ def main():
             field: prior_totals.get(field) if prior else None
             for field in REMOTE_TOTAL_FIELDS
         }
-        if remote_totals["agent_upvotes"] is None:
-            remote_totals["agent_upvotes"] = _sum_available(
-                prior_upvotes.values()
-            )
-        if remote_totals["agent_acquisitions"] is None:
-            remote_totals["agent_acquisitions"] = _sum_available(
-                prior_acquisitions.values()
-            )
+        remote_totals["agent_upvotes"] = _sum_available(
+            prior_upvotes.values()
+        )
+        remote_totals["agent_acquisitions"] = _sum_available(
+            prior_acquisitions.values()
+        )
         file_kind_totals = file_metrics["totals"]["by_kind"]
         remote_totals["agent_file_downloads"] = file_kind_totals["agent"]["downloads"]
         remote_totals["installer_downloads"] = file_kind_totals["installer"]["downloads"]
@@ -3630,9 +3708,13 @@ def main():
     doc = {
         "schema": "aibast-metrics/1.0",
         "generated_at": generated_at,
-        "repo": {"owner": OWNER, "name": REPO,
-                 "url": f"https://github.com/{OWNER}/{REPO}",
-                 "site": f"https://{OWNER}.github.io/{REPO}/", **repo},
+        "repo": {
+            **repo,
+            "owner": OWNER,
+            "name": REPO,
+            "url": f"https://github.com/{OWNER}/{REPO}",
+            "site": f"https://{OWNER}.github.io/{REPO}/",
+        },
         "totals": {
             **remote_totals,
             "global_agent_distribution_fetch_events": ecosystem[

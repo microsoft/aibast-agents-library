@@ -9,73 +9,206 @@
   },
   "summary": {
     "total_existing_captures": 23,
-    "reusable": 0,
-    "reshoot_required": 23,
-    "new_learn_step_captures_recommended": 0
+    "reusable": 17,
+    "reshoot_required": 6
   },
   "captures": [
     {
       "id": "easy-pfs-01",
       "mode": "easy",
+      "case_id": "PFS-01",
       "source": "solutions/product-feedback-synthesizer/screenshots/assisted/01-pfs-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PFS-01"
+      "annotated": "solutions/product-feedback-synthesizer/screenshots/assisted/annotated/01-pfs-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Three of six entries cite missing capabilities",
+        "Synthetic product evidence only",
+        "No roadmap commitment was made"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact Total Feedback Entries heading is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 249,
+          "width": 900,
+          "height": 47,
+          "label": "Six-entry cross-channel signal"
+        },
+        {
+          "x": 280,
+          "y": 504,
+          "width": 900,
+          "height": 78,
+          "label": "Synthetic boundary and no roadmap commitment"
+        }
+      ]
     },
     {
       "id": "easy-pfs-02",
       "mode": "easy",
+      "case_id": "PFS-02",
       "source": "solutions/product-feedback-synthesizer/screenshots/assisted/02-pfs-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PFS-02"
+      "annotated": "solutions/product-feedback-synthesizer/screenshots/assisted/annotated/02-pfs-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "candidate_for_review",
+        "evidence_under_review",
+        "No roadmap commitment was made"
+      ],
+      "full_case_not_visibly_proven": [
+        "Workflow Automation Builder is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 438,
+          "width": 800,
+          "height": 44,
+          "label": "Review labels, not delivery commitments"
+        },
+        {
+          "x": 280,
+          "y": 506,
+          "width": 900,
+          "height": 76,
+          "label": "No roadmap commitment"
+        }
+      ]
     },
     {
       "id": "easy-pfs-03",
       "mode": "easy",
+      "case_id": "PFS-03",
       "source": "solutions/product-feedback-synthesizer/screenshots/assisted/03-pfs-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PFS-03"
+      "annotated": "solutions/product-feedback-synthesizer/screenshots/assisted/annotated/03-pfs-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Positive signals",
+        "Negative signals"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact fictional pilot data disclosure is outside the capture."
+      ],
+      "boxes": [
+        {
+          "x": 280,
+          "y": 123,
+          "width": 950,
+          "height": 155,
+          "label": "Positive sentiment signals"
+        },
+        {
+          "x": 280,
+          "y": 283,
+          "width": 950,
+          "height": 165,
+          "label": "Negative sentiment signals"
+        }
+      ]
     },
     {
       "id": "easy-pfs-04",
       "mode": "easy",
+      "case_id": "PFS-04",
       "source": "solutions/product-feedback-synthesizer/screenshots/assisted/04-pfs-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PFS-04"
+      "annotated": "solutions/product-feedback-synthesizer/screenshots/assisted/annotated/04-pfs-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "RBAC compliance and regulatory validation question",
+        "No roadmap commitment was made"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact Review Candidates heading is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 290,
+          "y": 198,
+          "width": 940,
+          "height": 46,
+          "label": "RBAC validation question"
+        },
+        {
+          "x": 280,
+          "y": 504,
+          "width": 900,
+          "height": 78,
+          "label": "No roadmap commitment"
+        }
+      ]
     },
     {
       "id": "easy-draft",
       "mode": "easy",
       "source": "solutions/product-feedback-synthesizer/screenshots/assisted/05-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The target Product Feedback Pilot row is not visible, so the screenshot cannot prove that the validated agent remains Draft.",
+      "draft": true
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
       "step": 1,
       "source": "solutions/product-feedback-synthesizer/screenshots/manual/01-create-blank-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-feedback-synthesizer/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent",
+        "Blank Build workspace"
+      ],
+      "boxes": [
+        {
+          "x": 160,
+          "y": 91,
+          "width": 820,
+          "height": 65,
+          "label": "Blank agent workspace"
+        }
+      ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
       "step": 2,
       "source": "solutions/product-feedback-synthesizer/screenshots/manual/02-name-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-feedback-synthesizer/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Product Feedback Manual in the name field"
+      ],
+      "boxes": [
+        {
+          "x": 160,
+          "y": 92,
+          "width": 820,
+          "height": 65,
+          "label": "Manual agent name entered"
+        }
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
       "step": 3,
       "source": "solutions/product-feedback-synthesizer/screenshots/manual/03-enter-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-feedback-synthesizer/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Reviewed instruction policy",
+        "Locked Preview evidence anchors",
+        "PFS-01 through PFS-04 marker contracts"
+      ],
+      "boxes": [
+        {
+          "x": 78,
+          "y": 180,
+          "width": 910,
+          "height": 640,
+          "label": "Reviewed instructions and locked anchors"
+        }
+      ]
     },
     {
       "id": "hard-step-04",
@@ -83,7 +216,7 @@
       "step": 4,
       "source": "solutions/product-feedback-synthesizer/screenshots/manual/04-save-instructions.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The source is pixel-identical to steps 5-7 and shows a later fully configured inventory. No save confirmation or No unsaved changes state is visible."
     },
     {
       "id": "hard-step-05",
@@ -91,15 +224,31 @@
       "step": 5,
       "source": "solutions/product-feedback-synthesizer/screenshots/manual/05-remove-web-search.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The source is pixel-identical to steps 4, 6, and 7 and shows the later completed inventory rather than the web-search removal action. No positive removal control or confirmation is visible."
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
       "step": 6,
       "source": "solutions/product-feedback-synthesizer/screenshots/manual/06-add-aibast-product-feedback-synthesizer-rules-and-guardrails.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-feedback-synthesizer/screenshots/manual/annotated/06-add-aibast-product-feedback-synthesizer-rules-and-guardrails.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_product-feedback-synthesizer-rules-...",
+        "Knowledge inventory contains two uploaded files"
+      ],
+      "full_step_not_visibly_proven": [
+        "The and-guardrails.md suffix is truncated by the Copilot Studio chip."
+      ],
+      "boxes": [
+        {
+          "x": 1030,
+          "y": 432,
+          "width": 370,
+          "height": 40,
+          "label": "Rules and guardrails knowledge source"
+        }
+      ]
     },
     {
       "id": "hard-step-07",
@@ -107,99 +256,330 @@
       "step": 7,
       "source": "solutions/product-feedback-synthesizer/screenshots/manual/07-add-aibast-product-feedback-synthesizer-synthetic-records.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "full_step_not_visibly_proven": [
+        "The synthetic-records.md suffix is truncated by the Copilot Studio chip."
+      ],
+      "reason": "Duplicate visual evidence; retained capture hard-step-06."
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
       "step": 8,
       "source": "solutions/product-feedback-synthesizer/screenshots/manual/08-add-aibast-feature-requests-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-feedback-synthesizer/screenshots/manual/annotated/08-add-aibast-feature-requests-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "feature-requests"
+      ],
+      "boxes": [
+        {
+          "x": 1035,
+          "y": 185,
+          "width": 185,
+          "height": 42,
+          "label": "Feature requests skill"
+        }
+      ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
       "step": 9,
       "source": "solutions/product-feedback-synthesizer/screenshots/manual/09-add-aibast-feedback-summary-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-feedback-synthesizer/screenshots/manual/annotated/09-add-aibast-feedback-summary-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "feedback-summary"
+      ],
+      "boxes": [
+        {
+          "x": 1215,
+          "y": 185,
+          "width": 180,
+          "height": 42,
+          "label": "Feedback summary skill"
+        }
+      ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
       "step": 10,
       "source": "solutions/product-feedback-synthesizer/screenshots/manual/10-add-aibast-roadmap-impact-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-feedback-synthesizer/screenshots/manual/annotated/10-add-aibast-roadmap-impact-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "roadmap-impact"
+      ],
+      "boxes": [
+        {
+          "x": 1035,
+          "y": 225,
+          "width": 185,
+          "height": 42,
+          "label": "Roadmap impact skill"
+        }
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
       "step": 11,
       "source": "solutions/product-feedback-synthesizer/screenshots/manual/11-add-aibast-sentiment-analysis-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-feedback-synthesizer/screenshots/manual/annotated/11-add-aibast-sentiment-analysis-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "sentiment-analysis"
+      ],
+      "boxes": [
+        {
+          "x": 1205,
+          "y": 225,
+          "width": 190,
+          "height": 42,
+          "label": "Sentiment analysis skill"
+        }
+      ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
       "step": 12,
       "source": "solutions/product-feedback-synthesizer/screenshots/manual/12-review-inventory.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-feedback-synthesizer/screenshots/manual/annotated/12-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Reason: No unsaved changes",
+        "Claude Sonnet 4.6",
+        "Four configured skills",
+        "Two configured knowledge sources",
+        "Tools section contains no configured tool"
+      ],
+      "full_inventory_not_visibly_proven": [
+        "The complete knowledge filenames are truncated by the Copilot Studio chips."
+      ],
+      "boxes": [
+        {
+          "x": 1048,
+          "y": 47,
+          "width": 205,
+          "height": 45,
+          "label": "Saved: no unsaved changes"
+        },
+        {
+          "x": 1215,
+          "y": 84,
+          "width": 180,
+          "height": 40,
+          "label": "Reviewed model"
+        },
+        {
+          "x": 1028,
+          "y": 185,
+          "width": 367,
+          "height": 82,
+          "label": "Four configured skills"
+        },
+        {
+          "x": 1018,
+          "y": 278,
+          "width": 384,
+          "height": 68,
+          "label": "No configured tools"
+        },
+        {
+          "x": 1028,
+          "y": 392,
+          "width": 367,
+          "height": 80,
+          "label": "Two knowledge sources"
+        }
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
       "step": 13,
       "source": "solutions/product-feedback-synthesizer/screenshots/manual/13-open-preview.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-feedback-synthesizer/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab",
+        "New chat",
+        "Product Feedback Manual greeting"
+      ],
+      "boxes": [
+        {
+          "x": 640,
+          "y": 7,
+          "width": 95,
+          "height": 45,
+          "label": "Preview selected"
+        },
+        {
+          "x": 825,
+          "y": 82,
+          "width": 120,
+          "height": 55,
+          "label": "Fresh chat control"
+        },
+        {
+          "x": 280,
+          "y": 145,
+          "width": 500,
+          "height": 70,
+          "label": "Manual agent greeting"
+        }
+      ]
     },
     {
-      "id": "hard-step-14",
+      "id": "hard-pfs-01",
       "mode": "hard",
+      "case_id": "PFS-01",
       "step": 14,
       "source": "solutions/product-feedback-synthesizer/screenshots/manual/14-pfs-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PFS-01"
+      "annotated": "solutions/product-feedback-synthesizer/screenshots/manual/annotated/14-pfs-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "candidate_for_review",
+        "Synthetic product evidence only",
+        "No roadmap commitment was made"
+      ],
+      "full_case_not_visibly_proven": [
+        "Total Feedback Entries and 6 are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 835,
+          "y": 145,
+          "width": 195,
+          "height": 45,
+          "label": "Review candidate status"
+        },
+        {
+          "x": 280,
+          "y": 210,
+          "width": 920,
+          "height": 45,
+          "label": "Synthetic review candidates"
+        },
+        {
+          "x": 280,
+          "y": 504,
+          "width": 900,
+          "height": 78,
+          "label": "No roadmap commitment"
+        }
+      ]
     },
     {
-      "id": "hard-step-15",
+      "id": "hard-pfs-02",
       "mode": "hard",
+      "case_id": "PFS-02",
       "step": 15,
       "source": "solutions/product-feedback-synthesizer/screenshots/manual/15-pfs-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PFS-02"
+      "annotated": "solutions/product-feedback-synthesizer/screenshots/manual/annotated/15-pfs-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "candidate_for_review",
+        "under_review",
+        "evidence_under_review",
+        "No roadmap commitment was made"
+      ],
+      "full_case_not_visibly_proven": [
+        "Workflow Automation Builder is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 280,
+          "y": 438,
+          "width": 930,
+          "height": 45,
+          "label": "Review statuses, not delivery signals"
+        },
+        {
+          "x": 280,
+          "y": 504,
+          "width": 900,
+          "height": 78,
+          "label": "No roadmap commitment"
+        }
+      ]
     },
     {
-      "id": "hard-step-16",
+      "id": "hard-pfs-03",
       "mode": "hard",
+      "case_id": "PFS-03",
       "step": 16,
       "source": "solutions/product-feedback-synthesizer/screenshots/manual/16-pfs-03.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PFS-03"
+      "reason": "The screenshot shows account excerpts and an NPS table, but none of the deterministic PFS-03 anchors Positive, Negative, or fictional pilot data is visible."
     },
     {
-      "id": "hard-step-17",
+      "id": "hard-pfs-04",
       "mode": "hard",
+      "case_id": "PFS-04",
       "step": 17,
       "source": "solutions/product-feedback-synthesizer/screenshots/manual/17-pfs-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PFS-04"
+      "annotated": "solutions/product-feedback-synthesizer/screenshots/manual/annotated/17-pfs-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "RBAC regulatory and compliance obligation",
+        "No roadmap commitment was made"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact Review Candidates heading is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 290,
+          "y": 244,
+          "width": 620,
+          "height": 45,
+          "label": "RBAC validation owner"
+        },
+        {
+          "x": 285,
+          "y": 475,
+          "width": 940,
+          "height": 100,
+          "label": "Synthetic boundary and no roadmap commitment"
+        }
+      ]
     },
     {
-      "id": "hard-step-18",
+      "id": "hard-draft",
       "mode": "hard",
       "step": 18,
       "source": "solutions/product-feedback-synthesizer/screenshots/manual/18-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The target Product Feedback Manual row is not visible in the Agents list, so its Draft state is not visually proven."
     }
-  ]
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy Draft gate filtered to Product Feedback Pilot with Draft visible.",
+      "Hard step 4 with the save control explicitly showing No unsaved changes.",
+      "Hard step 5 immediately after Search all websites is removed.",
+      "Hard PFS-03 with Positive, Negative, and fictional pilot data visible in the final answer.",
+      "Hard Draft gate filtered to Product Feedback Manual with Draft visible."
+    ],
+    "new_learn_step_captures": [
+      "Brainstem skill attached in VS Code Copilot Chat.",
+      "Copilot-only skill attached in VS Code Copilot Chat.",
+      "Brainstem local 4/4 verdict.",
+      "Copilot-only local 4/4 verdict.",
+      "Brainstem deploy response with Draft inventory.",
+      "Copilot-only deploy response with Draft inventory.",
+      "Brainstem final complete verdict.",
+      "Copilot-only final complete verdict."
+    ]
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:product-feedback-synthesizer",
+    "reviewed_at": "2026-08-10T00:27:58.166761+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  }
 }

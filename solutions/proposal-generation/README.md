@@ -53,8 +53,11 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | Source bundle | `solutions/proposal-generation/exports/proposal-generation-source.zip` |
 | Manual evidence | `solutions/proposal-generation/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/proposal-generation/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/proposal-generation/exports/proposal-generation-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/proposal-generation/exports/proposal-generation-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/proposal-generation/exports/proposal-generation-solution-export.json` |
 
-**Scaffold status:** 79 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 110 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

@@ -9,9 +9,8 @@
   },
   "summary": {
     "total_existing_captures": 26,
-    "reusable": 19,
-    "reshoot_required": 7,
-    "new_learn_step_captures_recommended": 8
+    "reusable": 13,
+    "reshoot_required": 13
   },
   "captures": [
     {
@@ -155,7 +154,8 @@
       "mode": "easy",
       "source": "solutions/time-entry-billing/screenshots/assisted/06-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "The target Time Entry and Billing Pilot row is not visible."
+      "reason": "The target Time Entry and Billing Pilot row is not visible.",
+      "draft": true
     },
     {
       "id": "hard-step-01",
@@ -223,7 +223,7 @@
       "id": "hard-step-04",
       "mode": "hard",
       "step": 4,
-      "source": "solutions/time-entry-billing/screenshots/manual/13-review-inventory.jpg",
+      "source": "solutions/time-entry-billing/screenshots/manual/04-save-instructions.jpg",
       "annotated": "solutions/time-entry-billing/screenshots/manual/annotated/04-save-instructions.png",
       "status": "reusable",
       "visible_anchors": [
@@ -231,10 +231,10 @@
       ],
       "boxes": [
         {
-          "x": 1028,
-          "y": 34,
-          "width": 320,
-          "height": 82,
+          "x": 1048,
+          "y": 48,
+          "width": 198,
+          "height": 50,
           "label": "Saved: no unsaved changes"
         }
       ]
@@ -244,20 +244,8 @@
       "mode": "hard",
       "step": 5,
       "source": "solutions/time-entry-billing/screenshots/manual/05-remove-web-search.jpg",
-      "annotated": "solutions/time-entry-billing/screenshots/manual/annotated/05-remove-web-search.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Tools section contains no web-search chip"
-      ],
-      "boxes": [
-        {
-          "x": 1015,
-          "y": 395,
-          "width": 380,
-          "height": 70,
-          "label": "Tools empty; web search absent"
-        }
-      ]
+      "status": "reshoot_required",
+      "reason": "The frame is pixel-identical to steps 6-12 and near-identical to the retained step 13 inventory; it shows the completed five-skill state rather than the web-search removal action."
     },
     {
       "id": "hard-step-06",
@@ -280,100 +268,40 @@
       "mode": "hard",
       "step": 8,
       "source": "solutions/time-entry-billing/screenshots/manual/08-add-billing-summary.jpg",
-      "annotated": "solutions/time-entry-billing/screenshots/manual/annotated/08-add-billing-summary.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Rendered skill billing-close-summary"
-      ],
-      "boxes": [
-        {
-          "x": 1040,
-          "y": 298,
-          "width": 300,
-          "height": 50,
-          "label": "billing-summary rendered name"
-        }
-      ]
+      "status": "reshoot_required",
+      "reason": "The frame is pixel-identical to steps 5-12 and shows the completed five-skill inventory; it does not isolate the billing-close-summary addition."
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
       "step": 9,
       "source": "solutions/time-entry-billing/screenshots/manual/09-add-dispute-resolution.jpg",
-      "annotated": "solutions/time-entry-billing/screenshots/manual/annotated/09-add-dispute-resolution.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Rendered skill disputed-hours-evidence-brief"
-      ],
-      "boxes": [
-        {
-          "x": 1040,
-          "y": 336,
-          "width": 320,
-          "height": 50,
-          "label": "dispute-resolution rendered name"
-        }
-      ]
+      "status": "reshoot_required",
+      "reason": "The frame is pixel-identical to steps 5-12 and shows the completed five-skill inventory; it does not isolate the disputed-hours-evidence-brief addition."
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
       "step": 10,
       "source": "solutions/time-entry-billing/screenshots/manual/10-add-invoice-preparation.jpg",
-      "annotated": "solutions/time-entry-billing/screenshots/manual/annotated/10-add-invoice-preparation.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Rendered skill approval-gated-invoice-support"
-      ],
-      "boxes": [
-        {
-          "x": 1040,
-          "y": 178,
-          "width": 320,
-          "height": 50,
-          "label": "invoice-preparation rendered name"
-        }
-      ]
+      "status": "reshoot_required",
+      "reason": "The frame is pixel-identical to steps 5-12 and shows the completed five-skill inventory; it does not isolate the approval-gated-invoice-support addition."
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
       "step": 11,
       "source": "solutions/time-entry-billing/screenshots/manual/11-add-time-entry-audit.jpg",
-      "annotated": "solutions/time-entry-billing/screenshots/manual/annotated/11-add-time-entry-audit.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Rendered skill time-entry-audit"
-      ],
-      "boxes": [
-        {
-          "x": 1040,
-          "y": 218,
-          "width": 235,
-          "height": 50,
-          "label": "time-entry-audit"
-        }
-      ]
+      "status": "reshoot_required",
+      "reason": "The frame is pixel-identical to steps 5-12 and shows the completed five-skill inventory; it does not isolate the time-entry-audit addition."
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
       "step": 12,
       "source": "solutions/time-entry-billing/screenshots/manual/12-add-unbilled-report.jpg",
-      "annotated": "solutions/time-entry-billing/screenshots/manual/annotated/12-add-unbilled-report.png",
-      "status": "reusable",
-      "visible_anchors": [
-        "Rendered skill month-end-billing-blockers"
-      ],
-      "boxes": [
-        {
-          "x": 1040,
-          "y": 258,
-          "width": 320,
-          "height": 50,
-          "label": "unbilled-report rendered name"
-        }
-      ]
+      "status": "reshoot_required",
+      "reason": "The frame is pixel-identical to steps 5-12 and shows the completed five-skill inventory; it does not isolate the month-end-billing-blockers addition."
     },
     {
       "id": "hard-step-13",
@@ -384,33 +312,33 @@
       "status": "reusable",
       "visible_anchors": [
         "Claude Sonnet 4.6",
-        "Five rendered skills",
-        "No tools"
+        "Five configured skills",
+        "Tools section contains no configured tool"
       ],
       "full_inventory_not_visibly_proven": [
         "Knowledge files remain collapsed and require the step 6/7 reshoot."
       ],
       "boxes": [
         {
-          "x": 1205,
-          "y": 75,
-          "width": 205,
-          "height": 62,
+          "x": 1204,
+          "y": 86,
+          "width": 190,
+          "height": 39,
           "label": "Reviewed model"
         },
         {
-          "x": 1035,
-          "y": 175,
-          "width": 340,
-          "height": 220,
-          "label": "Five reviewed skills"
+          "x": 1028,
+          "y": 185,
+          "width": 285,
+          "height": 205,
+          "label": "Five configured skills"
         },
         {
-          "x": 1015,
-          "y": 395,
+          "x": 1018,
+          "y": 397,
           "width": 380,
-          "height": 70,
-          "label": "No tools"
+          "height": 68,
+          "label": "No configured tools"
         }
       ]
     },
@@ -459,13 +387,21 @@
       ],
       "boxes": [
         {
-          "x": 280,
-          "y": 292,
-          "width": 930,
-          "height": 205,
-          "label": "Blocked entry and approval chain"
+          "x": 282,
+          "y": 168,
+          "width": 940,
+          "height": 116,
+          "label": "TE-9011 approval and evidence gates"
+        },
+        {
+          "x": 282,
+          "y": 315,
+          "width": 940,
+          "height": 86,
+          "label": "Invoice remains blocked"
         }
-      ]
+      ],
+      "step": 15
     },
     {
       "id": "hard-teb-02",
@@ -473,7 +409,8 @@
       "case_id": "TEB-02",
       "source": "solutions/time-entry-billing/screenshots/manual/16-teb-02.jpg",
       "status": "reshoot_required",
-      "reason": "The response is a blocker saying the grounding files are not present. Negative or refusal text cannot verify a successful case."
+      "reason": "The response is a blocker saying the grounding files are not present. Negative or refusal text cannot verify a successful case.",
+      "step": 16
     },
     {
       "id": "hard-teb-03",
@@ -481,7 +418,8 @@
       "case_id": "TEB-03",
       "source": "solutions/time-entry-billing/screenshots/manual/17-teb-03.jpg",
       "status": "reshoot_required",
-      "reason": "The response says it is constructing the result from locked evidence anchors because the grounding files are missing."
+      "reason": "The response says it is constructing the result from locked evidence anchors because the grounding files are missing.",
+      "step": 17
     },
     {
       "id": "hard-teb-04",
@@ -489,7 +427,8 @@
       "case_id": "TEB-04",
       "source": "solutions/time-entry-billing/screenshots/manual/18-teb-04.jpg",
       "status": "reshoot_required",
-      "reason": "The response echoes the acceptance anchors after saying the grounding files are not found."
+      "reason": "The response echoes the acceptance anchors after saying the grounding files are not found.",
+      "step": 18
     },
     {
       "id": "hard-teb-05",
@@ -512,7 +451,8 @@
           "height": 190,
           "label": "Deterministic dispute controls"
         }
-      ]
+      ],
+      "step": 19
     },
     {
       "id": "hard-draft",
@@ -555,5 +495,12 @@
       "Brainstem final complete verdict.",
       "Copilot-only final complete verdict."
     ]
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:time-entry-billing",
+    "reviewed_at": "2026-08-10T00:27:58.193287+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
   }
 }

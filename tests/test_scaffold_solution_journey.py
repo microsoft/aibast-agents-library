@@ -350,6 +350,12 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "Compare and contrast while you build" not in quest
     assert "<iframe" not in quest
     assert 'class="path" data-path="hard"' in quest
+    assert 'data-workshop-slug="demo-journey"' in quest
+    assert 'role="tab" aria-controls="mode-panel-easy" aria-selected="true"' in quest
+    assert 'role="tab" aria-controls="mode-panel-hard" aria-selected="false"' in quest
+    assert 'role="tabpanel" aria-labelledby="mode-tab-easy"' in quest
+    assert 'role="tabpanel" aria-labelledby="mode-tab-hard"' in quest
+    assert 'button.setAttribute("aria-selected", String(selected));' in quest
     assert quest.count('<article class="step"') == len(frames)
     assert "manually on this page." in quest
     assert "manual-progress" in quest
@@ -768,3 +774,70 @@ def test_optional_export_uses_existing_builder_semantics(tmp_path):
     assert "solutions/demo-journey/quest.html" in names
     assert "solutions/demo-journey/manual-tutorial.html" in names
     assert "agents/demo_agent.py" in names
+
+
+def test_scaffold_exposes_complete_copilot_studio_solution_export(tmp_path):
+    package, _frames = build_fixture(tmp_path)
+    exports = package / "exports"
+    solution_zip = exports / "demo-journey-copilot-studio-solution.zip"
+    settings = exports / "demo-journey-deployment-settings.json"
+    metadata = exports / "demo-journey-solution-export.json"
+    write(solution_zip, b"PK\x03\x04fixture")
+    write(settings, json.dumps({"EnvironmentVariables": [], "ConnectionReferences": []}))
+    write(
+        metadata,
+        json.dumps(
+            {
+                "slug": "demo-journey",
+                "solution_unique_name": "aibast_DemoJourneyPilot",
+                "status": "exported",
+                "zip": "solutions/demo-journey/exports/demo-journey-copilot-studio-solution.zip",
+                "deployment_settings": "solutions/demo-journey/exports/demo-journey-deployment-settings.json",
+                "metadata": "solutions/demo-journey/exports/demo-journey-solution-export.json",
+                "published": False,
+                "managed": False,
+                "sha256": "fixture-sha256",
+                "bytes": 11,
+                "import_caveats": [
+                    "Import as an unmanaged solution for manual review.",
+                    "The imported agent remains unpublished.",
+                ],
+            }
+        ),
+    )
+
+    scaffold("demo-journey", root=tmp_path)
+
+    manifest = json.loads(
+        (package / "export-manifest.json").read_text(encoding="utf-8")
+    )
+    solution = manifest["copilot_studio_solution"]
+    assert solution["status"] == "exported"
+    assert solution["managed"] is False
+    assert solution["published"] is False
+    assert solution["zip"]["path"].endswith(
+        "demo-journey-copilot-studio-solution.zip"
+    )
+    resource_ids = {item["id"] for item in manifest["files"]}
+    assert {
+        "copilot-studio-solution",
+        "copilot-studio-deployment-settings",
+        "copilot-studio-export-metadata",
+    } <= resource_ids
+
+    for path in (
+        package / "field-guide.html",
+        package / "evidence-report.html",
+        package / "quest.html",
+    ):
+        text = path.read_text(encoding="utf-8")
+        assert "Download Copilot Studio solution" in text
+        assert "Deployment settings" in text
+        assert "Export details" in text
+
+    exports_readme = (exports / "README.md").read_text(encoding="utf-8")
+    assert "## Import the Copilot Studio solution" in exports_readme
+    assert "Importing it does not" in exports_readme
+    assert "publish the agent" in exports_readme
+    package_readme = (package / "README.md").read_text(encoding="utf-8")
+    assert "Copilot Studio solution ZIP" in package_readme

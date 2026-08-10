@@ -409,7 +409,11 @@ def test_catalog_scope_excludes_registry_only_non_advertised_solution(tmp_path):
                 "status": (
                     "GENERATED - not SharePoint-advertised. "
                     "Proves the generator; must be advertised before it ships."
-                )
+                ),
+                "distribution": {
+                    "sharepoint_advertised": False,
+                    "ship_gate": "advertise-before-ship",
+                },
             }
         ),
     )
@@ -545,7 +549,7 @@ def test_catches_malformed_inline_javascript(tmp_path):
     assert_failure(audit_fixture(tmp_path), "malformed inline JavaScript")
 
 
-def test_time_entry_billing_reference_passes():
+def test_time_entry_billing_reference_passes_with_withheld_reshoots():
     assert shutil.which("node"), "node is required by the acceptance gate"
     checker = AUDIT.ScriptChecker()
     global_failures = AUDIT.audit_global(ROOT, checker)
@@ -555,7 +559,11 @@ def test_time_entry_billing_reference_passes():
         checker=checker,
         global_failures=global_failures,
     )
-    assert result["passed"] is True, result["failures"]
+    assert result["passed"] is True
+    assert result["failures"] == []
+    assert result["metrics"]["visual_reusable"] == 13
+    assert result["metrics"]["visual_reshoot_required"] == 13
+    assert result["metrics"]["visual_reference_only_displayed"] == 0
 
 
 def test_repository_course_scope_uses_catalog_truth():
@@ -568,3 +576,15 @@ def test_repository_course_scope_uses_catalog_truth():
     assert [(item["slug"], item["status"]) for item in exclusions] == [
         ("grid-outage-response", "excluded_non_advertised")
     ]
+    grid_case = json.loads(
+        (
+            ROOT
+            / "tests"
+            / "demo_cases"
+            / "grid-outage-response.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert grid_case["distribution"] == {
+        "sharepoint_advertised": False,
+        "ship_gate": "advertise-before-ship",
+    }

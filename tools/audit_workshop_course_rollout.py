@@ -17,9 +17,15 @@ from typing import Any, Iterable
 from urllib.parse import unquote, urlparse
 from zipfile import BadZipFile, ZipFile
 
+try:
+    from tools import scaffold_solution_journey as scaffold
+except ModuleNotFoundError:
+    import scaffold_solution_journey as scaffold
+
 
 ROOT = Path(__file__).resolve().parent.parent
 SCHEMA = "aibast-workshop-course-rollout-audit/1.0"
+EXPECTED_WORKSHOPS = 51
 VISUAL_SCHEMA = "aibast-visual-checkpoints/1.0"
 BROWSERFILM_SCHEMA = "rapp-browserfilm/1.0"
 RAW_SUFFIXES = {".md", ".json", ".py"}
@@ -757,7 +763,9 @@ def capture_references(
     ):
         references.add((mode, "step", step))
     capture_id = str(capture.get("id", ""))
-    if mode == "easy" and "draft" in capture_id.lower():
+    if mode == "easy" and (
+        capture.get("draft") is True or "draft" in capture_id.lower()
+    ):
         references.add((mode, "draft", "draft"))
     case_id = capture.get("case_id")
     if isinstance(case_id, str) and case_id:
@@ -1110,11 +1118,58 @@ def check_manifest_and_zip(
         failures.add(f"{label}: source ZIP missing required file {missing}")
 
 
+def check_scaffold_parity(
+    root: Path,
+    slug: str,
+    failures: Failures,
+) -> None:
+    try:
+        context = scaffold.load_context(
+            root,
+            slug,
+            allow_pending=False,
+            raw_base=scaffold.DEFAULT_RAW_BASE,
+        )
+        resources, outputs = scaffold.generated_outputs(context)
+    except scaffold.ScaffoldError as exc:
+        failures.add(f"authoritative scaffold cannot render: {exc}")
+        return
+
+    for path, expected in outputs.items():
+        relative = path.relative_to(root).as_posix()
+        try:
+            actual = path.read_text(encoding="utf-8")
+        except OSError as exc:
+            failures.add(f"{relative}: cannot verify scaffold parity ({exc})")
+            continue
+        if actual != scaffold.normalize_generated_text(expected):
+            failures.add(f"{relative}: stale against authoritative scaffold")
+
+    readme_path = context.package / "README.md"
+    try:
+        readme = readme_path.read_text(encoding="utf-8")
+    except OSError as exc:
+        failures.add(f"solutions/{slug}/README.md: cannot verify parity ({exc})")
+        return
+    match = re.search(
+        re.escape(scaffold.README_START)
+        + r".*?"
+        + re.escape(scaffold.README_END),
+        readme,
+        re.DOTALL,
+    )
+    if not match:
+        failures.add(f"solutions/{slug}/README.md: generated package map is missing")
+    elif match.group(0) != scaffold.readme_block(context, resources):
+        failures.add(f"solutions/{slug}/README.md: stale against authoritative scaffold")
+
+
 def audit_solution(
     root: Path,
     slug: str,
     checker: ScriptChecker | None = None,
     global_failures: Iterable[str] = (),
+    verify_scaffold_parity: bool = False,
 ) -> dict[str, Any]:
     root = root.resolve()
     package = root / "solutions" / slug
@@ -1123,6 +1178,8 @@ def audit_solution(
     checker = checker or ScriptChecker()
     for failure in global_failures:
         failures.add(f"global: {failure}")
+    if verify_scaffold_parity:
+        check_scaffold_parity(root, slug, failures)
 
     locked_data = read_json(
         root / "tests" / "demo_cases" / f"{slug}.json",
@@ -1318,6 +1375,7 @@ def course_scope(
         agent = registry_by_name[name]
         slug = package_slug(agent)
         case_path = root / "tests" / "demo_cases" / f"{slug}.json"
+        distribution: Any = None
         try:
             case_data = json.loads(case_path.read_text(encoding="utf-8"))
         except (OSError, UnicodeError, json.JSONDecodeError) as exc:
@@ -1328,8 +1386,15 @@ def course_scope(
         else:
             status = case_data.get("status") if isinstance(case_data, dict) else None
             status_text = status if isinstance(status, str) else ""
-        if "not sharepoint-advertised" in status_text.lower() and re.search(
-            r"must\b.*\bship", status_text, re.IGNORECASE
+            distribution = (
+                case_data.get("distribution")
+                if isinstance(case_data, dict)
+                else None
+            )
+        if (
+            isinstance(distribution, dict)
+            and distribution.get("sharepoint_advertised") is False
+            and distribution.get("ship_gate") == "advertise-before-ship"
         ):
             exclusions.append(
                 {
@@ -1360,6 +1425,7 @@ def audit_repository(
     checker = ScriptChecker()
     scope_failures = Failures()
     slugs, exclusions = course_scope(root, scope_failures)
+    verify_scaffold_parity = len(slugs) == EXPECTED_WORKSHOPS
     if "time-entry-billing" not in slugs:
         scope_failures.add("solutions/catalog.json: missing required reference time-entry-billing")
     if only_slug is not None:
@@ -1372,7 +1438,14 @@ def audit_repository(
             slugs = [only_slug]
     global_failures = scope_failures.items + audit_global(root, checker)
     solutions = [
-        audit_solution(root, slug, checker, global_failures) for slug in slugs
+        audit_solution(
+            root,
+            slug,
+            checker,
+            global_failures,
+            verify_scaffold_parity=verify_scaffold_parity,
+        )
+        for slug in slugs
     ]
     passed = sum(solution["passed"] for solution in solutions)
     return {

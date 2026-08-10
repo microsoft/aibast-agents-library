@@ -186,10 +186,11 @@ def promote(
     push,
     update_existing=False,
     rename_existing=False,
+    display_name_override=None,
 ):
     package = ROOT / "solutions" / slug
     recipe = read_json(package / "deployment.json")
-    name = display_name(recipe)
+    name = display_name_override or display_name(recipe)
     if project.exists() and not update_existing:
         raise FileExistsError(project)
     instructions = (package / "manual" / "GLOBAL-INSTRUCTIONS.md").read_text(
@@ -287,6 +288,7 @@ def main():
     parser.add_argument("--push", action="store_true")
     parser.add_argument("--update-existing", action="store_true")
     parser.add_argument("--rename-existing", action="store_true")
+    parser.add_argument("--display-name")
     args = parser.parse_args()
     result = promote(
         args.slug,
@@ -296,6 +298,7 @@ def main():
         args.push,
         args.update_existing,
         args.rename_existing,
+        args.display_name,
     )
     print(json.dumps(result, indent=2))
     return 0

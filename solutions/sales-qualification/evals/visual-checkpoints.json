@@ -9,89 +9,230 @@
   },
   "summary": {
     "total_existing_captures": 29,
-    "reusable": 0,
-    "reshoot_required": 29,
-    "new_learn_step_captures_recommended": 0
+    "reusable": 25,
+    "reshoot_required": 4
   },
   "captures": [
     {
       "id": "easy-sq-01",
       "mode": "easy",
+      "case_id": "SQ-01",
       "source": "solutions/sales-qualification/screenshots/assisted/01-sq-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SQ-01"
+      "annotated": "solutions/sales-qualification/screenshots/assisted/annotated/01-sq-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "synthetic planning evidence",
+        "no CRM record was changed"
+      ],
+      "full_case_not_visibly_proven": [
+        "Lead Qualification Summary and Top Hot Leads are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 282,
+          "y": 421,
+          "width": 950,
+          "height": 160,
+          "label": "SQ-01 evidence boundary"
+        }
+      ]
     },
     {
       "id": "easy-sq-02",
       "mode": "easy",
+      "case_id": "SQ-02",
       "source": "solutions/sales-qualification/screenshots/assisted/02-sq-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SQ-02"
+      "annotated": "solutions/sales-qualification/screenshots/assisted/annotated/02-sq-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "synthetic planning evidence only",
+        "authorized manager review"
+      ],
+      "full_case_not_visibly_proven": [
+        "BANT Analysis and Strongest Engagement Signals are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 450,
+          "width": 940,
+          "height": 126,
+          "label": "SQ-02 evidence boundary"
+        }
+      ]
     },
     {
       "id": "easy-sq-03",
       "mode": "easy",
+      "case_id": "SQ-03",
       "source": "solutions/sales-qualification/screenshots/assisted/03-sq-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SQ-03"
+      "annotated": "solutions/sales-qualification/screenshots/assisted/annotated/03-sq-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "No outreach was sent",
+        "no sequence was activated"
+      ],
+      "full_case_not_visibly_proven": [
+        "Personalized Outreach and Draft Sequence Cadence are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 283,
+          "y": 474,
+          "width": 946,
+          "height": 104,
+          "label": "SQ-03 evidence boundary"
+        }
+      ]
     },
     {
       "id": "easy-sq-04",
       "mode": "easy",
+      "case_id": "SQ-04",
       "source": "solutions/sales-qualification/screenshots/assisted/04-sq-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SQ-04"
+      "annotated": "solutions/sales-qualification/screenshots/assisted/annotated/04-sq-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "read-only decision support",
+        "No lead was assigned"
+      ],
+      "full_case_not_visibly_proven": [
+        "Recommended Lead Routing and Handoff Package are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 449,
+          "width": 940,
+          "height": 128,
+          "label": "SQ-04 evidence boundary"
+        }
+      ]
     },
     {
       "id": "easy-sq-05",
       "mode": "easy",
+      "case_id": "SQ-05",
       "source": "solutions/sales-qualification/screenshots/assisted/05-sq-05.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SQ-05"
+      "annotated": "solutions/sales-qualification/screenshots/assisted/annotated/05-sq-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "synthetic planning evidence",
+        "monitoring items are drafts"
+      ],
+      "full_case_not_visibly_proven": [
+        "Draft SLA Tracking Plan and Proposed Monitoring are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 452,
+          "width": 946,
+          "height": 126,
+          "label": "SQ-05 evidence boundary"
+        }
+      ]
     },
     {
       "id": "easy-sq-06",
       "mode": "easy",
+      "case_id": "SQ-06",
       "source": "solutions/sales-qualification/screenshots/assisted/06-sq-06.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SQ-06"
+      "annotated": "solutions/sales-qualification/screenshots/assisted/annotated/06-sq-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "synthetic test evidence only",
+        "read-only decision support"
+      ],
+      "full_case_not_visibly_proven": [
+        "Qualification Report and Synthetic Conversion Assumptions are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 454,
+          "width": 946,
+          "height": 127,
+          "label": "SQ-06 evidence boundary"
+        }
+      ]
     },
     {
       "id": "easy-draft",
       "mode": "easy",
       "source": "solutions/sales-qualification/screenshots/assisted/07-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The Agents list shows other Draft rows, but the target Sales Qualification Pilot row is not visible.",
+      "draft": true
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
       "step": 1,
       "source": "solutions/sales-qualification/screenshots/manual/01-create-blank-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent",
+        "blank Build workspace"
+      ],
+      "boxes": [
+        {
+          "x": 162,
+          "y": 91,
+          "width": 824,
+          "height": 70,
+          "label": "Blank agent workspace"
+        }
+      ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
       "step": 2,
       "source": "solutions/sales-qualification/screenshots/manual/02-name-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Sales Qualification Manual in the name field"
+      ],
+      "boxes": [
+        {
+          "x": 162,
+          "y": 91,
+          "width": 824,
+          "height": 70,
+          "label": "Manual agent name entered"
+        }
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
       "step": 3,
       "source": "solutions/sales-qualification/screenshots/manual/03-enter-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence-first response contract",
+        "Locked Preview evidence anchors",
+        "SQ-01 through SQ-06 acceptance anchors"
+      ],
+      "boxes": [
+        {
+          "x": 76,
+          "y": 211,
+          "width": 906,
+          "height": 625,
+          "label": "Reviewed instruction policy"
+        }
+      ]
     },
     {
       "id": "hard-step-04",
@@ -99,157 +240,444 @@
       "step": 4,
       "source": "solutions/sales-qualification/screenshots/manual/04-save-instructions.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The instruction text is visible, but no saved-state tooltip or other visible confirmation proves that the save action completed."
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
       "step": 5,
       "source": "solutions/sales-qualification/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Knowledge section contains no Search all websites source"
+      ],
+      "boxes": [
+        {
+          "x": 1017,
+          "y": 251,
+          "width": 382,
+          "height": 80,
+          "label": "Web search source removed"
+        }
+      ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
       "step": 6,
       "source": "solutions/sales-qualification/screenshots/manual/06-add-aibast-sales-qualification-operating-rules.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/06-add-aibast-sales-qualification-operating-rules.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_sales-qualification-operating-rules.md"
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 306,
+          "width": 370,
+          "height": 43,
+          "label": "Operating rules knowledge"
+        }
+      ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
       "step": 7,
       "source": "solutions/sales-qualification/screenshots/manual/07-add-aibast-sales-qualification-synthetic-records.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/07-add-aibast-sales-qualification-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_sales-qualification-synthetic-records... unique filename prefix",
+        "aibast_sales-qualification-operating-rules.md"
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 305,
+          "width": 370,
+          "height": 86,
+          "label": "Two knowledge files"
+        }
+      ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
       "step": 8,
       "source": "solutions/sales-qualification/screenshots/manual/08-add-assign-leads.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/08-add-assign-leads.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "sales-qualification-assign-leads"
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 185,
+          "width": 320,
+          "height": 43,
+          "label": "Assign-leads skill"
+        }
+      ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
       "step": 9,
       "source": "solutions/sales-qualification/screenshots/manual/09-add-bant-analysis.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/09-add-bant-analysis.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "sales-qualification-bant-analysis"
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 185,
+          "width": 320,
+          "height": 43,
+          "label": "BANT-analysis skill"
+        }
+      ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
       "step": 10,
       "source": "solutions/sales-qualification/screenshots/manual/10-add-create-outreach.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/10-add-create-outreach.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "sales-qualification-create-outreach"
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 185,
+          "width": 335,
+          "height": 43,
+          "label": "Create-outreach skill"
+        }
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
       "step": 11,
       "source": "solutions/sales-qualification/screenshots/manual/11-add-qualification-report.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/11-add-qualification-report.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "sales-qualification-qualification-report"
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 185,
+          "width": 350,
+          "height": 43,
+          "label": "Qualification-report skill"
+        }
+      ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
       "step": 12,
       "source": "solutions/sales-qualification/screenshots/manual/12-add-score-leads.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/12-add-score-leads.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "sales-qualification-score-leads"
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 185,
+          "width": 315,
+          "height": 43,
+          "label": "Score-leads skill"
+        }
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
       "step": 13,
       "source": "solutions/sales-qualification/screenshots/manual/13-add-setup-tracking.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/13-add-setup-tracking.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "sales-qualification-setup-tracking"
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 185,
+          "width": 330,
+          "height": 43,
+          "label": "Setup-tracking skill"
+        }
+      ]
     },
     {
       "id": "hard-step-14",
       "mode": "hard",
       "step": 14,
       "source": "solutions/sales-qualification/screenshots/manual/14-review-inventory.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/14-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "six configured skills",
+        "Tools section contains no configured tool",
+        "two knowledge files",
+        "No unsaved changes"
+      ],
+      "full_inventory_not_visibly_proven": [
+        "Five skill names are visible and the +1 indicator confirms the sixth; the individual addition captures expose every exact skill name."
+      ],
+      "boxes": [
+        {
+          "x": 1047,
+          "y": 43,
+          "width": 205,
+          "height": 54,
+          "label": "Saved state"
+        },
+        {
+          "x": 1201,
+          "y": 86,
+          "width": 198,
+          "height": 39,
+          "label": "Reviewed model"
+        },
+        {
+          "x": 1025,
+          "y": 184,
+          "width": 355,
+          "height": 203,
+          "label": "Six skills: five +1"
+        },
+        {
+          "x": 1025,
+          "y": 400,
+          "width": 372,
+          "height": 64,
+          "label": "No configured tools"
+        },
+        {
+          "x": 1025,
+          "y": 486,
+          "width": 372,
+          "height": 105,
+          "label": "Two knowledge files"
+        }
+      ]
     },
     {
       "id": "hard-step-15",
       "mode": "hard",
       "step": 15,
       "source": "solutions/sales-qualification/screenshots/manual/15-open-preview.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/15-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab selected",
+        "New chat",
+        "Sales Qualification Manual greeting"
+      ],
+      "boxes": [
+        {
+          "x": 638,
+          "y": 8,
+          "width": 98,
+          "height": 45,
+          "label": "Preview selected"
+        },
+        {
+          "x": 260,
+          "y": 143,
+          "width": 560,
+          "height": 92,
+          "label": "Fresh Preview conversation"
+        }
+      ]
     },
     {
-      "id": "hard-step-16",
+      "id": "hard-sq-01",
       "mode": "hard",
+      "case_id": "SQ-01",
       "step": 16,
       "source": "solutions/sales-qualification/screenshots/manual/16-sq-01.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SQ-01"
+      "reason": "The screenshot shows scoring detail, but none of the locked SQ-01 positive markers Lead Qualification Summary, Top Hot Leads, or Evidence boundary is visible."
     },
     {
-      "id": "hard-step-17",
+      "id": "hard-sq-02",
       "mode": "hard",
+      "case_id": "SQ-02",
       "step": 17,
       "source": "solutions/sales-qualification/screenshots/manual/17-sq-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SQ-02"
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/17-sq-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "synthetic planning evidence only",
+        "No lead was assigned"
+      ],
+      "full_case_not_visibly_proven": [
+        "BANT Analysis and Strongest Engagement Signals are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 450,
+          "width": 942,
+          "height": 128,
+          "label": "SQ-02 evidence boundary"
+        }
+      ]
     },
     {
-      "id": "hard-step-18",
+      "id": "hard-sq-03",
       "mode": "hard",
+      "case_id": "SQ-03",
       "step": 18,
       "source": "solutions/sales-qualification/screenshots/manual/18-sq-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SQ-03"
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/18-sq-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "No outreach was sent",
+        "no sequence was activated"
+      ],
+      "full_case_not_visibly_proven": [
+        "Personalized Outreach and Draft Sequence Cadence are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 426,
+          "width": 946,
+          "height": 155,
+          "label": "SQ-03 evidence boundary"
+        }
+      ]
     },
     {
-      "id": "hard-step-19",
+      "id": "hard-sq-04",
       "mode": "hard",
+      "case_id": "SQ-04",
       "step": 19,
       "source": "solutions/sales-qualification/screenshots/manual/19-sq-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SQ-04"
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/19-sq-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "No CRM owner was assigned",
+        "no lead was routed"
+      ],
+      "full_case_not_visibly_proven": [
+        "Recommended Lead Routing and Handoff Package are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 476,
+          "width": 946,
+          "height": 104,
+          "label": "SQ-04 evidence boundary"
+        }
+      ]
     },
     {
-      "id": "hard-step-20",
+      "id": "hard-sq-05",
       "mode": "hard",
+      "case_id": "SQ-05",
       "step": 20,
       "source": "solutions/sales-qualification/screenshots/manual/20-sq-05.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SQ-05"
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/20-sq-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "monitoring items are drafts",
+        "no alert was activated"
+      ],
+      "full_case_not_visibly_proven": [
+        "Draft SLA Tracking Plan and Proposed Monitoring are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 451,
+          "width": 946,
+          "height": 126,
+          "label": "SQ-05 evidence boundary"
+        }
+      ]
     },
     {
-      "id": "hard-step-21",
+      "id": "hard-sq-06",
       "mode": "hard",
+      "case_id": "SQ-06",
       "step": 21,
       "source": "solutions/sales-qualification/screenshots/manual/21-sq-06.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SQ-06"
+      "annotated": "solutions/sales-qualification/screenshots/manual/annotated/21-sq-06.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "synthetic test evidence only",
+        "read-only decision support"
+      ],
+      "full_case_not_visibly_proven": [
+        "Qualification Report and Synthetic Conversion Assumptions are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 450,
+          "width": 946,
+          "height": 127,
+          "label": "SQ-06 evidence boundary"
+        }
+      ]
     },
     {
-      "id": "hard-step-22",
+      "id": "hard-draft",
       "mode": "hard",
       "step": 22,
       "source": "solutions/sales-qualification/screenshots/manual/22-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The source capture is blank and contains neither the Sales Qualification Manual identity nor a visible Draft status."
     }
-  ]
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy Draft gate filtered to Sales Qualification Pilot with Draft visible.",
+      "Hard step 4 with the Save tooltip stating No unsaved changes.",
+      "Hard SQ-01 with at least one locked positive marker visible in the final answer.",
+      "Hard Draft gate with Sales Qualification Manual and Draft visible."
+    ],
+    "new_learn_step_captures": [
+      "Brainstem skill attached in VS Code Copilot Chat.",
+      "Copilot-only skill attached in VS Code Copilot Chat.",
+      "Brainstem local 6/6 verdict.",
+      "Copilot-only local 6/6 verdict.",
+      "Brainstem deploy response with Draft inventory.",
+      "Copilot-only deploy response with Draft inventory.",
+      "Brainstem final complete verdict.",
+      "Copilot-only final complete verdict."
+    ]
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:sales-qualification",
+    "reviewed_at": "2026-08-10T00:27:58.182378+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  }
 }

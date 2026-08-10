@@ -21,6 +21,14 @@ Implemented operations: `leave_balance`, `submit_time_off`, `parental_leave`, `h
 
 This package is synthetic and read-only. It does not connect to customer systems or execute external actions. Exact identifiers, dates, names, amounts, scores, and policy values are fictional evidence rather than customer outcomes. Production connections require least-privilege access, approved data handling, and a human authorization gate.
 
+## Zero-install workshop preview
+
+Open `evidence-report.html` for a browser-only evidence tour before choosing a
+build lane. Approved checkpoints provide full-resolution annotated captures,
+while `evals/transcripts.json` provides the matching response text. This preview
+requires no PAC CLI or VS Code plugin and does not create, deploy, connect, or
+publish an agent.
+
 ## Manual Copilot Studio preparation
 
 Upload both Markdown files in `manual/knowledge/`, then upload the 6 `SKILL.md` files in `manual/skills/`. Bind only approved production connections after security and business-owner review. Keep the agent in Draft and stop before publish until an authorized reviewer validates every operation and guardrail.
@@ -42,8 +50,11 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 6 `SKILL.md` 
 | Source bundle | `solutions/ask-hr/exports/ask-hr-source.zip` |
 | Manual evidence | `solutions/ask-hr/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/ask-hr/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/ask-hr/exports/ask-hr-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/ask-hr/exports/ask-hr-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/ask-hr/exports/ask-hr-solution-export.json` |
 
-**Scaffold status:** 80 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 106 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

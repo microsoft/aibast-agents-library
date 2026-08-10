@@ -9,56 +9,120 @@
   },
   "summary": {
     "total_existing_captures": 24,
-    "reusable": 0,
-    "reshoot_required": 24,
-    "new_learn_step_captures_recommended": 0
+    "reusable": 11,
+    "reshoot_required": 13
   },
   "captures": [
     {
-      "id": "easy-draft",
+      "id": "easy-review-build",
       "mode": "easy",
+      "draft": true,
       "source": "solutions/maintenance-scheduling/screenshots/assisted/01-review-build.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The configuration is visible, but no Draft status indicator appears; this frame cannot prove the target remains an unpublished Draft."
     },
     {
       "id": "easy-ms-01",
       "mode": "easy",
+      "case_id": "MS-01",
       "source": "solutions/maintenance-scheduling/screenshots/assisted/02-ms-01.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "MS-01"
+      "reason": "The viewport shows parts, backup, and authorization boundaries, but neither EQ-INJ-01 nor the Technician Availability capacity picture is visible."
     },
     {
       "id": "easy-ms-02",
       "mode": "easy",
+      "case_id": "MS-02",
       "source": "solutions/maintenance-scheduling/screenshots/assisted/03-ms-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "MS-02"
+      "annotated": "solutions/maintenance-scheduling/screenshots/assisted/annotated/03-ms-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Priority 3 — Monitor; No Immediate Intervention Indicated",
+        "EQ-CNC-01",
+        "Spindle bearing wear"
+      ],
+      "full_case_not_visibly_proven": [
+        "The critical EQ-INJ-01 and Barrel heater band failure evidence is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 282,
+          "y": 220,
+          "width": 940,
+          "height": 190,
+          "label": "Visible ranked asset signal"
+        }
+      ]
     },
     {
       "id": "easy-ms-03",
       "mode": "easy",
+      "case_id": "MS-03",
       "source": "solutions/maintenance-scheduling/screenshots/assisted/04-ms-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "MS-03"
+      "annotated": "solutions/maintenance-scheduling/screenshots/assisted/annotated/04-ms-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Required Authorization Before Any Action",
+        "No work order is created or dispatched"
+      ],
+      "full_case_not_visibly_proven": [
+        "EQ-INJ-01 and the crew, parts, and backup candidate table are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 282,
+          "y": 236,
+          "width": 944,
+          "height": 225,
+          "label": "Required human authorization"
+        },
+        {
+          "x": 282,
+          "y": 465,
+          "width": 944,
+          "height": 112,
+          "label": "No work order side effect"
+        }
+      ]
     },
     {
       "id": "easy-ms-04",
       "mode": "easy",
+      "case_id": "MS-04",
       "source": "solutions/maintenance-scheduling/screenshots/assisted/05-ms-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "MS-04"
+      "annotated": "solutions/maintenance-scheduling/screenshots/assisted/annotated/05-ms-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preventive trade-offs for parts, technician demand, production impact, and recovery duration",
+        "EQ-INJ-01 represents the most acute case"
+      ],
+      "full_case_not_visibly_proven": [
+        "Modeled avoided-cost opportunity and the exact synthetic planning estimates phrase are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 282,
+          "y": 124,
+          "width": 710,
+          "height": 182,
+          "label": "Preventive trade-off table"
+        },
+        {
+          "x": 282,
+          "y": 328,
+          "width": 944,
+          "height": 62,
+          "label": "Most acute exposure"
+        }
+      ]
     },
     {
-      "id": "easy-draft-02",
+      "id": "easy-draft",
       "mode": "easy",
       "source": "solutions/maintenance-scheduling/screenshots/assisted/06-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The Agents list does not visibly contain Maintenance Scheduling Pilot, so it cannot prove the validated target remains Draft.",
+      "draft": true
     },
     {
       "id": "hard-step-01",
@@ -66,23 +130,56 @@
       "step": 1,
       "source": "solutions/maintenance-scheduling/screenshots/manual/01-create-blank-agent.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The screenshot is an empty loading surface with a spinner; no blank agent workspace, Untitled Agent label, or other positive creation anchor is visible."
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
       "step": 2,
       "source": "solutions/maintenance-scheduling/screenshots/manual/02-name-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Maintenance Scheduling Manual in the name field"
+      ],
+      "boxes": [
+        {
+          "x": 160,
+          "y": 92,
+          "width": 826,
+          "height": 60,
+          "label": "Manual agent name entered"
+        }
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
       "step": 3,
       "source": "solutions/maintenance-scheduling/screenshots/manual/03-enter-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Maintenance Scheduling Agent — Manual Global Instructions",
+        "Locked Preview evidence anchors",
+        "MS-01 through MS-04 acceptance anchors"
+      ],
+      "boxes": [
+        {
+          "x": 78,
+          "y": 218,
+          "width": 900,
+          "height": 158,
+          "label": "Reviewed instruction policy"
+        },
+        {
+          "x": 78,
+          "y": 495,
+          "width": 900,
+          "height": 318,
+          "label": "Locked Preview anchors"
+        }
+      ]
     },
     {
       "id": "hard-step-04",
@@ -90,7 +187,7 @@
       "step": 4,
       "source": "solutions/maintenance-scheduling/screenshots/manual/04-save-instructions.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The instruction policy is visible, but the screenshot contains no saved-state tooltip or other positive confirmation that the save completed."
     },
     {
       "id": "hard-step-05",
@@ -98,7 +195,7 @@
       "step": 5,
       "source": "solutions/maintenance-scheduling/screenshots/manual/05-remove-web-search.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is byte-for-byte identical to steps 6-11 and shows a later completed inventory rather than a distinct positive capture of the web-search removal."
     },
     {
       "id": "hard-step-06",
@@ -106,7 +203,7 @@
       "step": 6,
       "source": "solutions/maintenance-scheduling/screenshots/manual/06-add-aibast-maintenance-scheduling-review-rules.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The review-rules chip is visible, but this frame is byte-for-byte identical to steps 5 and 7-11, so it records the completed inventory rather than the distinct knowledge-add checkpoint."
     },
     {
       "id": "hard-step-07",
@@ -114,7 +211,7 @@
       "step": 7,
       "source": "solutions/maintenance-scheduling/screenshots/manual/07-add-aibast-maintenance-scheduling-synthetic-records.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The synthetic-records chip is visible, but this frame is byte-for-byte identical to steps 5-6 and 8-11, so it records the completed inventory rather than the distinct knowledge-add checkpoint."
     },
     {
       "id": "hard-step-08",
@@ -122,7 +219,7 @@
       "step": 8,
       "source": "solutions/maintenance-scheduling/screenshots/manual/08-add-aibast-downtime-analysis.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is byte-for-byte identical to steps 5-7 and 9-11 and shows all four final skills rather than isolating the downtime-analysis addition."
     },
     {
       "id": "hard-step-09",
@@ -130,7 +227,7 @@
       "step": 9,
       "source": "solutions/maintenance-scheduling/screenshots/manual/09-add-aibast-predictive-alerts.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is byte-for-byte identical to steps 5-8 and 10-11 and shows all four final skills rather than isolating the predictive-alerts addition."
     },
     {
       "id": "hard-step-10",
@@ -138,7 +235,7 @@
       "step": 10,
       "source": "solutions/maintenance-scheduling/screenshots/manual/10-add-aibast-schedule-overview.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is byte-for-byte identical to steps 5-9 and 11 and shows all four final skills rather than isolating the schedule-overview addition."
     },
     {
       "id": "hard-step-11",
@@ -146,67 +243,228 @@
       "step": 11,
       "source": "solutions/maintenance-scheduling/screenshots/manual/11-add-aibast-work-order-plan.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is byte-for-byte identical to steps 5-10 and shows all four final skills rather than isolating the work-order-plan addition."
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
       "step": 12,
       "source": "solutions/maintenance-scheduling/screenshots/manual/12-review-inventory.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/12-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Save tooltip states No unsaved changes",
+        "Claude Sonnet 4.6",
+        "Four configured skills",
+        "Two configured knowledge files"
+      ],
+      "boxes": [
+        {
+          "x": 1046,
+          "y": 45,
+          "width": 207,
+          "height": 56,
+          "label": "No unsaved changes"
+        },
+        {
+          "x": 1198,
+          "y": 84,
+          "width": 202,
+          "height": 42,
+          "label": "Reviewed model"
+        },
+        {
+          "x": 1020,
+          "y": 137,
+          "width": 382,
+          "height": 144,
+          "label": "Four configured skills"
+        },
+        {
+          "x": 1020,
+          "y": 382,
+          "width": 382,
+          "height": 105,
+          "label": "Two knowledge files"
+        }
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
       "step": 13,
       "source": "solutions/maintenance-scheduling/screenshots/manual/13-open-preview.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab",
+        "New chat",
+        "Maintenance Scheduling Manual greeting"
+      ],
+      "boxes": [
+        {
+          "x": 640,
+          "y": 3,
+          "width": 98,
+          "height": 55,
+          "label": "Preview selected"
+        },
+        {
+          "x": 833,
+          "y": 84,
+          "width": 112,
+          "height": 45,
+          "label": "Fresh chat control"
+        },
+        {
+          "x": 258,
+          "y": 144,
+          "width": 535,
+          "height": 100,
+          "label": "Manual agent greeting"
+        }
+      ]
     },
     {
-      "id": "hard-step-14",
+      "id": "hard-ms-01",
       "mode": "hard",
       "step": 14,
+      "case_id": "MS-01",
       "source": "solutions/maintenance-scheduling/screenshots/manual/14-ms-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "MS-01"
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/14-ms-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Technician candidates based on synthetic certifications and available hours",
+        "Confirm technician availability through the connected scheduling system",
+        "Parts & Backup Readiness"
+      ],
+      "full_case_not_visibly_proven": [
+        "EQ-INJ-01 and the Technician Availability heading are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 282,
+          "y": 118,
+          "width": 944,
+          "height": 74,
+          "label": "Technician capacity evidence"
+        },
+        {
+          "x": 282,
+          "y": 202,
+          "width": 944,
+          "height": 136,
+          "label": "Parts and backup readiness"
+        },
+        {
+          "x": 282,
+          "y": 350,
+          "width": 944,
+          "height": 228,
+          "label": "Authorization and availability gate"
+        }
+      ]
     },
     {
-      "id": "hard-step-15",
+      "id": "hard-ms-02",
       "mode": "hard",
       "step": 15,
+      "case_id": "MS-02",
       "source": "solutions/maintenance-scheduling/screenshots/manual/15-ms-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "MS-02"
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/15-ms-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Priority 3 — Monitor; Review at Next Maintenance Window",
+        "EQ-CNC-01",
+        "Spindle bearing wear"
+      ],
+      "full_case_not_visibly_proven": [
+        "The critical EQ-INJ-01 and Barrel heater band failure evidence is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 282,
+          "y": 154,
+          "width": 944,
+          "height": 215,
+          "label": "Visible ranked asset signal"
+        }
+      ]
     },
     {
-      "id": "hard-step-16",
+      "id": "hard-ms-03",
       "mode": "hard",
       "step": 16,
+      "case_id": "MS-03",
       "source": "solutions/maintenance-scheduling/screenshots/manual/16-ms-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "MS-03"
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/16-ms-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "EQ-INJ-01",
+        "Injection Molder",
+        "Barrel heater band failure",
+        "Maintenance Window Proposal"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact No work order is created or dispatched boundary is outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 282,
+          "y": 205,
+          "width": 760,
+          "height": 270,
+          "label": "Maintenance candidate evidence"
+        },
+        {
+          "x": 282,
+          "y": 575,
+          "width": 944,
+          "height": 104,
+          "label": "Proposed maintenance window"
+        }
+      ]
     },
     {
-      "id": "hard-step-17",
+      "id": "hard-ms-04",
       "mode": "hard",
       "step": 17,
+      "case_id": "MS-04",
       "source": "solutions/maintenance-scheduling/screenshots/manual/17-ms-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "MS-04"
+      "annotated": "solutions/maintenance-scheduling/screenshots/manual/annotated/17-ms-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Key Trade-Off Principles (Synthetic Planning Estimates)",
+        "Unplanned Failure Path",
+        "Preventive Intervention Path"
+      ],
+      "full_case_not_visibly_proven": [
+        "Modeled avoided-cost opportunity is outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 282,
+          "y": 336,
+          "width": 735,
+          "height": 316,
+          "label": "Synthetic preventive trade-offs"
+        }
+      ]
     },
     {
-      "id": "hard-step-18",
+      "id": "hard-draft",
       "mode": "hard",
       "step": 18,
       "source": "solutions/maintenance-scheduling/screenshots/manual/18-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The Agents list does not visibly contain Maintenance Scheduling Manual, so it cannot prove that the validated manual agent remains Draft."
     }
-  ]
+  ],
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:maintenance-scheduling",
+    "reviewed_at": "2026-08-10T00:27:58.156577+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  }
 }

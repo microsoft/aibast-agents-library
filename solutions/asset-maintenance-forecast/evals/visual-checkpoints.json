@@ -9,9 +9,8 @@
   },
   "summary": {
     "total_existing_captures": 24,
-    "reusable": 0,
-    "reshoot_required": 24,
-    "new_learn_step_captures_recommended": 0
+    "reusable": 19,
+    "reshoot_required": 5
   },
   "captures": [
     {
@@ -19,46 +18,107 @@
       "mode": "easy",
       "source": "solutions/asset-maintenance-forecast/screenshots/assisted/01-review-build.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The Build screen visibly confirms Asset Maintenance Pilot, Claude Sonnet 4.6, four skills, and two knowledge files, but the intended checkpoint is the Copilot-assisted Draft configuration and no Draft status is visible.",
+      "draft": true
     },
     {
       "id": "easy-asset_maintenance_forecast-01",
       "mode": "easy",
       "source": "solutions/asset-maintenance-forecast/screenshots/assisted/02-asset_maintenance_forecast-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "ASSET_MAINTENANCE_FORECAST-01"
+      "annotated": "solutions/asset-maintenance-forecast/screenshots/assisted/annotated/02-asset_maintenance_forecast-01.png",
+      "status": "reusable",
+      "case_id": "ASSET_MAINTENANCE_FORECAST-01",
+      "visible_anchors": [
+        "Substation Transformer B-12",
+        "2026-05-01",
+        "synthetic planning estimates"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 270,
+          "width": 940,
+          "height": 305,
+          "label": "B-12 + modeled date"
+        }
+      ]
     },
     {
       "id": "easy-asset_maintenance_forecast-02",
       "mode": "easy",
       "source": "solutions/asset-maintenance-forecast/screenshots/assisted/03-asset_maintenance_forecast-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "ASSET_MAINTENANCE_FORECAST-02"
+      "annotated": "solutions/asset-maintenance-forecast/screenshots/assisted/annotated/03-asset_maintenance_forecast-02.png",
+      "status": "reusable",
+      "case_id": "ASSET_MAINTENANCE_FORECAST-02",
+      "visible_anchors": [
+        "CRITICAL",
+        "not a safety determination"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 120,
+          "width": 940,
+          "height": 455,
+          "label": "Critical + safety boundary"
+        }
+      ]
     },
     {
       "id": "easy-asset_maintenance_forecast-03",
       "mode": "easy",
       "source": "solutions/asset-maintenance-forecast/screenshots/assisted/04-asset_maintenance_forecast-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "ASSET_MAINTENANCE_FORECAST-03"
+      "annotated": "solutions/asset-maintenance-forecast/screenshots/assisted/annotated/04-asset_maintenance_forecast-03.png",
+      "status": "reusable",
+      "case_id": "ASSET_MAINTENANCE_FORECAST-03",
+      "visible_anchors": [
+        "Synthetic planning estimate",
+        "finance and asset owners must validate and approve"
+      ],
+      "full_case_not_visibly_proven": [
+        "Substation Transformer B-12 and $273,000 are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 300,
+          "width": 940,
+          "height": 285,
+          "label": "Synthetic estimate"
+        }
+      ]
     },
     {
       "id": "easy-asset_maintenance_forecast-04",
       "mode": "easy",
       "source": "solutions/asset-maintenance-forecast/screenshots/assisted/05-asset_maintenance_forecast-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "ASSET_MAINTENANCE_FORECAST-04"
+      "annotated": "solutions/asset-maintenance-forecast/screenshots/assisted/annotated/05-asset_maintenance_forecast-04.png",
+      "status": "reusable",
+      "case_id": "ASSET_MAINTENANCE_FORECAST-04",
+      "visible_anchors": [
+        "Draft approval queue",
+        "No work order"
+      ],
+      "full_case_not_visibly_proven": [
+        "Substation Transformer B-12 is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 260,
+          "width": 940,
+          "height": 325,
+          "label": "Draft queue; no write"
+        }
+      ]
     },
     {
       "id": "easy-draft-02",
       "mode": "easy",
       "source": "solutions/asset-maintenance-forecast/screenshots/assisted/06-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The Agents list does not show Asset Maintenance Pilot; only unrelated agent rows are visible, so the target agent's Draft state cannot be verified.",
+      "draft": true
     },
     {
       "id": "hard-step-01",
@@ -66,23 +126,49 @@
       "step": 1,
       "source": "solutions/asset-maintenance-forecast/screenshots/manual/01-create-blank-agent.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is a blank loading canvas with a spinner; the blank-agent creation controls are not visible."
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
       "step": 2,
       "source": "solutions/asset-maintenance-forecast/screenshots/manual/02-name-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/asset-maintenance-forecast/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Asset Maintenance Manual"
+      ],
+      "boxes": [
+        {
+          "x": 165,
+          "y": 95,
+          "width": 820,
+          "height": 62,
+          "label": "Agent name entered"
+        }
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
       "step": 3,
       "source": "solutions/asset-maintenance-forecast/screenshots/manual/03-enter-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/asset-maintenance-forecast/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Response contract",
+        "Locked Preview evidence anchors",
+        "Substation Transformer B-12"
+      ],
+      "boxes": [
+        {
+          "x": 70,
+          "y": 185,
+          "width": 900,
+          "height": 635,
+          "label": "Reviewed instruction policy"
+        }
+      ]
     },
     {
       "id": "hard-step-04",
@@ -90,123 +176,305 @@
       "step": 4,
       "source": "solutions/asset-maintenance-forecast/screenshots/manual/04-save-instructions.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The instruction text is present, but no save confirmation, saved-state indicator, or success message is visible."
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
       "step": 5,
       "source": "solutions/asset-maintenance-forecast/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/asset-maintenance-forecast/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Tools section contains no web-search chip",
+        "Knowledge section contains no Search all websites chip"
+      ],
+      "boxes": [
+        {
+          "x": 1015,
+          "y": 188,
+          "width": 380,
+          "height": 132,
+          "label": "Default web search absent"
+        }
+      ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
       "step": 6,
       "source": "solutions/asset-maintenance-forecast/screenshots/manual/06-add-asset-maintenance-forecast-rules-and-controls.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/asset-maintenance-forecast/screenshots/manual/annotated/06-add-rules-and-controls.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "rules-and-controls knowledge chip"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 304,
+          "width": 370,
+          "height": 52,
+          "label": "Rules file added"
+        }
+      ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
       "step": 7,
       "source": "solutions/asset-maintenance-forecast/screenshots/manual/07-add-asset-maintenance-forecast-synthetic-records.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/asset-maintenance-forecast/screenshots/manual/annotated/07-add-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "synthetic-records knowledge chip",
+        "rules-and-controls knowledge chip"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 304,
+          "width": 370,
+          "height": 88,
+          "label": "Two knowledge files"
+        }
+      ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
       "step": 8,
       "source": "solutions/asset-maintenance-forecast/screenshots/manual/08-add-aibast-asset-health.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/asset-maintenance-forecast/screenshots/manual/annotated/08-add-asset-health.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "asset-maintenance-forecast-asset-health"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 184,
+          "width": 370,
+          "height": 52,
+          "label": "Asset-health skill"
+        }
+      ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
       "step": 9,
       "source": "solutions/asset-maintenance-forecast/screenshots/manual/09-add-aibast-budget-projection.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/asset-maintenance-forecast/screenshots/manual/annotated/09-add-budget-projection.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "asset-maintenance-forecast-budget-projection"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 184,
+          "width": 370,
+          "height": 52,
+          "label": "Budget skill"
+        }
+      ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
       "step": 10,
       "source": "solutions/asset-maintenance-forecast/screenshots/manual/10-add-aibast-maintenance-forecast.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/asset-maintenance-forecast/screenshots/manual/annotated/10-add-maintenance-forecast.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "maintenance-forecast skill chip"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 184,
+          "width": 370,
+          "height": 52,
+          "label": "Forecast skill"
+        }
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
       "step": 11,
       "source": "solutions/asset-maintenance-forecast/screenshots/manual/11-add-aibast-work-order-plan.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/asset-maintenance-forecast/screenshots/manual/annotated/11-add-work-order-plan.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "asset-maintenance-forecast-work-order-plan"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 184,
+          "width": 370,
+          "height": 52,
+          "label": "Work-order skill"
+        }
+      ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
       "step": 12,
       "source": "solutions/asset-maintenance-forecast/screenshots/manual/12-review-inventory.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/asset-maintenance-forecast/screenshots/manual/annotated/12-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "four skills",
+        "two knowledge files"
+      ],
+      "boxes": [
+        {
+          "x": 1022,
+          "y": 178,
+          "width": 380,
+          "height": 382,
+          "label": "Complete inventory"
+        }
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
       "step": 13,
       "source": "solutions/asset-maintenance-forecast/screenshots/manual/13-open-preview.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/asset-maintenance-forecast/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Asset Maintenance Manual",
+        "Preview",
+        "How can I help you today?"
+      ],
+      "boxes": [
+        {
+          "x": 255,
+          "y": 142,
+          "width": 590,
+          "height": 105,
+          "label": "Preview ready"
+        }
+      ]
     },
     {
       "id": "hard-step-14",
       "mode": "hard",
       "step": 14,
+      "case_id": "ASSET_MAINTENANCE_FORECAST-01",
       "source": "solutions/asset-maintenance-forecast/screenshots/manual/14-asset_maintenance_forecast-01.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "ASSET_MAINTENANCE_FORECAST-01"
+      "reason": "The visible portion shows only the secondary wind-turbine watch and uncertainty text; both locked Plant Manager anchors, Substation Transformer B-12 and 2026-05-01, are cropped out."
     },
     {
       "id": "hard-step-15",
       "mode": "hard",
       "step": 15,
+      "case_id": "ASSET_MAINTENANCE_FORECAST-02",
       "source": "solutions/asset-maintenance-forecast/screenshots/manual/15-asset_maintenance_forecast-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "ASSET_MAINTENANCE_FORECAST-02"
+      "annotated": "solutions/asset-maintenance-forecast/screenshots/manual/annotated/15-reliability-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Substation Transformer B-12",
+        "CRITICAL",
+        "not a safety determination"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 135,
+          "width": 940,
+          "height": 320,
+          "label": "Critical + safety boundary"
+        }
+      ]
     },
     {
       "id": "hard-step-16",
       "mode": "hard",
       "step": 16,
+      "case_id": "ASSET_MAINTENANCE_FORECAST-03",
       "source": "solutions/asset-maintenance-forecast/screenshots/manual/16-asset_maintenance_forecast-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "ASSET_MAINTENANCE_FORECAST-03"
+      "annotated": "solutions/asset-maintenance-forecast/screenshots/manual/annotated/16-finance-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "synthetic planning estimate",
+        "asset owner and finance authority"
+      ],
+      "full_case_not_visibly_proven": [
+        "Substation Transformer B-12 and $273,000 are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 300,
+          "width": 940,
+          "height": 170,
+          "label": "Synthetic estimate"
+        }
+      ]
     },
     {
       "id": "hard-step-17",
       "mode": "hard",
       "step": 17,
+      "case_id": "ASSET_MAINTENANCE_FORECAST-04",
       "source": "solutions/asset-maintenance-forecast/screenshots/manual/17-asset_maintenance_forecast-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "ASSET_MAINTENANCE_FORECAST-04"
+      "annotated": "solutions/asset-maintenance-forecast/screenshots/manual/annotated/17-planner-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft approval queue only",
+        "No work order"
+      ],
+      "full_case_not_visibly_proven": [
+        "Substation Transformer B-12 is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 495,
+          "width": 940,
+          "height": 88,
+          "label": "Draft queue; no write"
+        }
+      ]
     },
     {
       "id": "hard-step-18",
       "mode": "hard",
       "step": 18,
+      "evidence_role": "draft_confirmation",
       "source": "solutions/asset-maintenance-forecast/screenshots/manual/18-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/asset-maintenance-forecast/screenshots/manual/annotated/18-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Asset Maintenance Manual",
+        "Draft",
+        "GitHub Copilot"
+      ],
+      "boxes": [
+        {
+          "x": 104,
+          "y": 246,
+          "width": 1280,
+          "height": 56,
+          "label": "Target agent is Draft"
+        }
+      ]
     }
-  ]
+  ],
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:asset-maintenance-forecast",
+    "reviewed_at": "2026-08-10T00:27:58.127662+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  }
 }

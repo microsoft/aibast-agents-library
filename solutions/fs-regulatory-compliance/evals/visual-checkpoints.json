@@ -9,96 +9,245 @@
   },
   "summary": {
     "total_existing_captures": 33,
-    "reusable": 0,
-    "reshoot_required": 33,
-    "new_learn_step_captures_recommended": 0
+    "reusable": 29,
+    "reshoot_required": 4
   },
   "captures": [
     {
-      "id": "easy-draft",
+      "id": "easy-build",
       "mode": "easy",
+      "draft": true,
       "source": "solutions/fs-regulatory-compliance/screenshots/assisted/01-review-build.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/assisted/annotated/01-review-build.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Regulatory Compliance Pilot",
+        "Claude Sonnet 4.6",
+        "Five configured skills",
+        "Two configured knowledge files",
+        "Tools section has no configured tool"
+      ],
+      "boxes": [
+        {
+          "x": 166,
+          "y": 92,
+          "width": 810,
+          "height": 76,
+          "label": "Reviewed pilot identity"
+        },
+        {
+          "x": 1015,
+          "y": 74,
+          "width": 392,
+          "height": 668,
+          "label": "Model and package inventory"
+        }
+      ]
     },
     {
       "id": "easy-rc-01",
       "mode": "easy",
+      "case_id": "RC-01",
       "source": "solutions/fs-regulatory-compliance/screenshots/assisted/02-rc-01.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "RC-01"
+      "reason": "The source visibly contains T-2041, T-2233, and the authorized-review gate, but its right-hand algorithm table and lower action strip are cut off. Withhold it rather than present a truncated learner checkpoint."
     },
     {
       "id": "easy-rc-02",
       "mode": "easy",
+      "case_id": "RC-02",
       "source": "solutions/fs-regulatory-compliance/screenshots/assisted/03-rc-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "RC-02"
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/assisted/annotated/03-rc-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "T-2041",
+        "Desk Supervisor — EU Equities",
+        "T-2233",
+        "Desk Supervisor — Credit"
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 132,
+          "width": 372,
+          "height": 132,
+          "label": "Traders and supervisor calls"
+        }
+      ]
     },
     {
       "id": "easy-rc-03",
       "mode": "easy",
+      "case_id": "RC-03",
       "source": "solutions/fs-regulatory-compliance/screenshots/assisted/04-rc-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "RC-03"
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/assisted/annotated/04-rc-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "TRD-88133",
+        "Fields 59 & 7 missing",
+        "no ARM submission"
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 556,
+          "width": 790,
+          "height": 91,
+          "label": "Deterministic rejection evidence"
+        }
+      ]
     },
     {
       "id": "easy-rc-04",
       "mode": "easy",
+      "case_id": "RC-04",
       "source": "solutions/fs-regulatory-compliance/screenshots/assisted/05-rc-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "RC-04"
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/assisted/annotated/05-rc-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "ALGO-POV-NL",
+        "Block Required",
+        "Never validated",
+        "Risk controls",
+        "Kill-switch test"
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 337,
+          "width": 930,
+          "height": 111,
+          "label": "Go-live block"
+        },
+        {
+          "x": 288,
+          "y": 470,
+          "width": 270,
+          "height": 176,
+          "label": "Missing artefacts"
+        }
+      ]
     },
     {
       "id": "easy-rc-05",
       "mode": "easy",
+      "case_id": "RC-05",
       "source": "solutions/fs-regulatory-compliance/screenshots/assisted/06-rc-05.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "RC-05"
+      "reason": "The visible response shows TRD-88117, TRD-88129, TRD-88150, and an algorithm-documentation heading, but the required RC-05 anchor TRD-88133 is not visible."
     },
     {
-      "id": "easy-draft-02",
+      "id": "easy-draft",
       "mode": "easy",
       "source": "solutions/fs-regulatory-compliance/screenshots/assisted/07-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/assisted/annotated/07-confirm-draft.png",
+      "status": "reusable",
+      "draft": true,
+      "visible_anchors": [
+        "Regulatory Compliance Pilot",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 104,
+          "y": 631,
+          "width": 640,
+          "height": 49,
+          "label": "Pilot remains Draft"
+        }
+      ]
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
       "step": 1,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/01-create-blank-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent",
+        "Blank Build workspace"
+      ],
+      "boxes": [
+        {
+          "x": 165,
+          "y": 101,
+          "width": 814,
+          "height": 48,
+          "label": "Blank agent name field"
+        }
+      ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
       "step": 2,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/02-name-manual-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/02-name-manual-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Regulatory Manual Build in the name field"
+      ],
+      "boxes": [
+        {
+          "x": 165,
+          "y": 101,
+          "width": 814,
+          "height": 48,
+          "label": "Manual agent name"
+        }
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
       "step": 3,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/03-enter-global-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/03-enter-global-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Synthetic financial-services regulatory compliance pilot",
+        "Boundaries",
+        "Routing",
+        "Response contract"
+      ],
+      "boxes": [
+        {
+          "x": 85,
+          "y": 217,
+          "width": 890,
+          "height": 247,
+          "label": "Reviewed boundaries"
+        },
+        {
+          "x": 85,
+          "y": 536,
+          "width": 890,
+          "height": 129,
+          "label": "Reviewed routing"
+        }
+      ]
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
       "step": 4,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/04-save-global-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/04-save-global-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Save (Ctrl+S)",
+        "Reason: No unsaved changes"
+      ],
+      "boxes": [
+        {
+          "x": 1048,
+          "y": 48,
+          "width": 198,
+          "height": 51,
+          "label": "Saved instruction policy"
+        }
+      ]
     },
     {
       "id": "hard-step-05",
@@ -106,23 +255,48 @@
       "step": 5,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/05-open-web-search-settings.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "Duplicate visual evidence; retained capture hard-step-04."
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
       "step": 6,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/06-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/06-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Knowledge section shows only the add control and no Search all websites chip"
+      ],
+      "boxes": [
+        {
+          "x": 1024,
+          "y": 257,
+          "width": 376,
+          "height": 63,
+          "label": "Web search removed"
+        }
+      ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
       "step": 7,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/07-open-knowledge-upload.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/07-open-knowledge-upload.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Upload files",
+        "Drag and drop or browse your device"
+      ],
+      "boxes": [
+        {
+          "x": 314,
+          "y": 103,
+          "width": 795,
+          "height": 316,
+          "label": "Knowledge uploader"
+        }
+      ]
     },
     {
       "id": "hard-step-08",
@@ -130,156 +304,445 @@
       "step": 8,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/08-upload-synthetic-records.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "Duplicate visual evidence; retained capture hard-step-07."
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
       "step": 9,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/09-upload-rules-controls.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/09-upload-rules-controls.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_fs-regulatory-compliance-rules-and-controls.md",
+        "Add to agent"
+      ],
+      "boxes": [
+        {
+          "x": 338,
+          "y": 471,
+          "width": 756,
+          "height": 46,
+          "label": "Rules and controls selected"
+        }
+      ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
       "step": 10,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/10-verify-two-knowledge-files.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/10-verify-two-knowledge-files.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Rules-and-controls knowledge chip",
+        "Synthetic-records knowledge chip"
+      ],
+      "boxes": [
+        {
+          "x": 1024,
+          "y": 306,
+          "width": 376,
+          "height": 105,
+          "label": "Two knowledge files"
+        }
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
       "step": 11,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/11-open-skill-upload.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/11-open-skill-upload.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Add skill",
+        "Upload a skill",
+        "SKILL.md file requirement"
+      ],
+      "boxes": [
+        {
+          "x": 274,
+          "y": 65,
+          "width": 876,
+          "height": 558,
+          "label": "SKILL.md uploader"
+        }
+      ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
       "step": 12,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/12-upload-dashboard-skill.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/12-upload-dashboard-skill.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "compliance-dashboard-and-audit-readiness"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 184,
+          "width": 370,
+          "height": 44,
+          "label": "Dashboard skill"
+        }
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
       "step": 13,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/13-upload-surveillance-skill.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/13-upload-surveillance-skill.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "trade-reporting-and-execution-surveillance"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 184,
+          "width": 370,
+          "height": 44,
+          "label": "Surveillance skill"
+        }
+      ]
     },
     {
       "id": "hard-step-14",
       "mode": "hard",
       "step": 14,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/14-upload-documentation-skill.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/14-upload-documentation-skill.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "algorithm-documentation-and-go-live-review"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 184,
+          "width": 370,
+          "height": 44,
+          "label": "Documentation skill"
+        }
+      ]
     },
     {
       "id": "hard-step-15",
       "mode": "hard",
       "step": 15,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/15-upload-remediation-skill.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/15-upload-remediation-skill.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "regulatory-correction-and-submission-preparation"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 184,
+          "width": 370,
+          "height": 44,
+          "label": "Remediation skill"
+        }
+      ]
     },
     {
       "id": "hard-step-16",
       "mode": "hard",
       "step": 16,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/16-upload-certification-skill.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/16-upload-certification-skill.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "trader-certification-readiness",
+        "Five configured skills"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 184,
+          "width": 370,
+          "height": 44,
+          "label": "Certification skill"
+        }
+      ]
     },
     {
       "id": "hard-step-17",
       "mode": "hard",
       "step": 17,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/17-open-model-picker.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/17-open-model-picker.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6 is available in the open model picker"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 376,
+          "width": 350,
+          "height": 65,
+          "label": "Target model option"
+        }
+      ]
     },
     {
       "id": "hard-step-18",
       "mode": "hard",
       "step": 18,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/18-select-sonnet46.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/18-select-sonnet46.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6 selected"
+      ],
+      "boxes": [
+        {
+          "x": 1204,
+          "y": 85,
+          "width": 193,
+          "height": 42,
+          "label": "Claude Sonnet 4.6"
+        }
+      ]
     },
     {
       "id": "hard-step-19",
       "mode": "hard",
       "step": 19,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/19-review-complete-inventory.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/19-review-complete-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "Five configured skills",
+        "Tools section has no configured tool",
+        "Two configured knowledge files",
+        "Reason: No unsaved changes"
+      ],
+      "boxes": [
+        {
+          "x": 1204,
+          "y": 85,
+          "width": 193,
+          "height": 42,
+          "label": "Reviewed model"
+        },
+        {
+          "x": 1024,
+          "y": 181,
+          "width": 376,
+          "height": 207,
+          "label": "Five configured skills"
+        },
+        {
+          "x": 1024,
+          "y": 399,
+          "width": 376,
+          "height": 66,
+          "label": "No configured tools"
+        },
+        {
+          "x": 1024,
+          "y": 506,
+          "width": 376,
+          "height": 93,
+          "label": "Two knowledge files"
+        }
+      ]
     },
     {
       "id": "hard-step-20",
       "mode": "hard",
       "step": 20,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/20-open-preview.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/20-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab",
+        "New chat",
+        "Regulatory Manual Build greeting"
+      ],
+      "boxes": [
+        {
+          "x": 638,
+          "y": 11,
+          "width": 99,
+          "height": 42,
+          "label": "Preview selected"
+        },
+        {
+          "x": 838,
+          "y": 88,
+          "width": 100,
+          "height": 42,
+          "label": "Fresh chat"
+        }
+      ]
     },
     {
       "id": "hard-step-21",
       "mode": "hard",
       "step": 21,
+      "case_id": "RC-01",
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/21-preview-rc01-audit-readiness.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "RC-01"
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/21-preview-rc01-audit-readiness.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "T-2041",
+        "T-2233",
+        "Two Traders Must Be Stood Down"
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 421,
+          "width": 720,
+          "height": 132,
+          "label": "RC-01 trader evidence"
+        }
+      ]
     },
     {
       "id": "hard-step-22",
       "mode": "hard",
       "step": 22,
+      "case_id": "RC-02",
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/22-preview-rc02-certifications.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "RC-02"
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/22-preview-rc02-certifications.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "T-2041",
+        "T-2233",
+        "must be suspended from trading"
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 493,
+          "width": 932,
+          "height": 95,
+          "label": "RC-02 suspension controls"
+        }
+      ]
     },
     {
       "id": "hard-step-23",
       "mode": "hard",
       "step": 23,
+      "case_id": "RC-03",
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/23-preview-rc03-trade-surveillance.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "RC-03"
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/23-preview-rc03-trade-surveillance.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "TRD-88133",
+        "Fields 59 and 7",
+        "authorized review"
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 339,
+          "width": 932,
+          "height": 151,
+          "label": "RC-03 correction evidence"
+        }
+      ]
     },
     {
       "id": "hard-step-24",
       "mode": "hard",
       "step": 24,
+      "case_id": "RC-04",
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/24-preview-rc04-algorithm-go-live.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "RC-04"
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/24-preview-rc04-algorithm-go-live.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "ALGO-POV-NL",
+        "must be blocked from go-live",
+        "authorized human review and sign-off"
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 241,
+          "width": 932,
+          "height": 119,
+          "label": "RC-04 go-live gate"
+        }
+      ]
     },
     {
       "id": "hard-step-25",
       "mode": "hard",
       "step": 25,
+      "case_id": "RC-05",
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/25-preview-rc05-board-evidence.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "RC-05"
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/25-preview-rc05-board-evidence.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "TRD-88133",
+        "zero submission record",
+        "Summary scorecard for the board"
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 326,
+          "width": 830,
+          "height": 260,
+          "label": "RC-05 board scorecard"
+        }
+      ]
     },
     {
       "id": "hard-step-26",
       "mode": "hard",
       "step": 26,
       "source": "solutions/fs-regulatory-compliance/screenshots/manual/26-confirm-draft-no-publish.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-regulatory-compliance/screenshots/manual/annotated/26-confirm-draft-no-publish.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Regulatory Manual Build",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 104,
+          "y": 270,
+          "width": 632,
+          "height": 50,
+          "label": "Manual build remains Draft"
+        }
+      ]
     }
-  ]
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy RC-01 with the complete right-hand algorithm table and lower action strip visible.",
+      "Easy RC-05 with TRD-88133 visibly present in the final answer."
+    ],
+    "new_learn_step_captures": [
+      "Brainstem skill attached in VS Code Copilot Chat.",
+      "Copilot-only skill attached in VS Code Copilot Chat.",
+      "Brainstem local 5/5 verdict.",
+      "Copilot-only local 5/5 verdict.",
+      "Brainstem deploy response with Draft inventory.",
+      "Copilot-only deploy response with Draft inventory.",
+      "Brainstem final complete verdict.",
+      "Copilot-only final complete verdict."
+    ]
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:fs-regulatory-compliance",
+    "reviewed_at": "2026-08-10T00:57:29+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted source, demoted the truncated RC-01 learner checkpoint, regenerated annotations and workshop exports, and ran the base and strict package audits.",
+    "notes": "The easy RC-01 frame remains an honest reference source but is withheld because the right-hand table and lower action strip are truncated. Reusable hard-mode RC-01 evidence preserves case coverage, and reshoot-required images remain absent from learner pages and exports."
+  }
 }

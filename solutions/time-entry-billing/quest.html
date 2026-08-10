@@ -335,7 +335,7 @@
     @media (max-width: 620px) { .resource-list { columns: 1; } .prompt-heading { display: block; } .prompt-heading .button { margin-top: 12px; } .instruction-grid { grid-template-columns: 1fr; } .step header { grid-template-columns: 36px 1fr; } .step header .report-button { grid-column: 1 / -1; } }
   </style>
 </head>
-<body>
+<body data-workshop-slug="time-entry-billing">
   <header class="topbar">
     <div class="brand"><span class="brand-mark">A</span><span>AIBAST guided workshop</span></div>
     <div class="topbar-actions"><button class="button" type="button" data-theme-toggle aria-pressed="false">Use dark mode</button><a class="button" href="../_shared/workshop-settings.html?return=../time-entry-billing/quest.html">Workshop settings</a><a class="button primary" href="field-guide.html">Open field guide</a></div>
@@ -349,8 +349,8 @@
       <div class="notice"><strong>Boundary:</strong> synthetic qualitative evidence only—not a customer KPI, measured production result, live connection, or publication approval.</div>
       <div class="feedback-notice"><strong>Found something inaccurate?</strong> Use <em>Report an issue</em> at that point. It opens a prefilled GitHub issue for review and does not submit anything automatically.</div>
       <div class="mode-switch" role="tablist">
-        <button class="mode active" data-mode="easy" role="tab">Easy</button>
-        <button class="mode" data-mode="hard" role="tab">Hard</button>
+        <button class="mode active" id="mode-tab-easy" data-mode="easy" role="tab" aria-controls="mode-panel-easy" aria-selected="true">Easy</button>
+        <button class="mode" id="mode-tab-hard" data-mode="hard" role="tab" aria-controls="mode-panel-hard" aria-selected="false">Hard</button>
       </div>
     </section>
 
@@ -378,7 +378,7 @@
     </section>
     <div class="agi-toast" id="agi-badge-toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
-    <section class="path" data-path="easy">
+    <section class="path" data-path="easy" id="mode-panel-easy" role="tabpanel" aria-labelledby="mode-tab-easy">
       <div class="module-summary">
         <article>
           <h3>What you will learn</h3>
@@ -489,7 +489,7 @@
           <pre class="prompt-block" id="preview-prompt-teb-01">What billable work is still blocked from this close, and what has to happen before it can move?</pre>
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">TE-9004</span><span class="marker-chip">TE-9011</span><span class="marker-chip">Needs approval</span></div></div>
           <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">entries were approved automatically</span></div></div>
-          <div class="preview-shot-wrap"><img class="preview-shot" data-evidence-status="reusable" src="screenshots/assisted/annotated/01-teb-01.png" alt="TEB-01 positive visual checkpoint" loading="lazy"><p class="capture-meta">Visible positive anchors: TE-9004; TE-9011; blocked until approvals are obtained. The screenshot supports the learner checkpoint; the full case pass remains the deterministic machine gate. Source: 1424×863 JPEG. <a href="screenshots/assisted/01-teb-01.jpg" download="01-teb-01.jpg">Download original</a>.</p></div>
+          <div class="preview-shot-wrap"><a href="screenshots/assisted/annotated/01-teb-01.png" download="01-teb-01.png"><img class="preview-shot" data-evidence-status="reusable" src="screenshots/assisted/annotated/01-teb-01.png" alt="TEB-01 positive visual checkpoint" loading="lazy"></a><p class="capture-meta">Visible positive anchors: TE-9004; TE-9011; blocked until approvals are obtained. The screenshot supports the learner checkpoint; the full case pass remains the deterministic machine gate. Source: 1424×863 JPEG. <a href="screenshots/assisted/01-teb-01.jpg" download="01-teb-01.jpg">Download original</a>.</p></div>
           <label class="step-complete"><input type="checkbox" data-checkpoint="preview-teb-01" data-agi-group="preview-proven" data-agi-path="shared"><span>The Preview response matched this contract.</span></label>
         </article>
 
@@ -498,7 +498,7 @@
           <pre class="prompt-block" id="preview-prompt-teb-02">Give me the month-end billing rollup by project and consultant without treating it as posted revenue.</pre>
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">By Project</span><span class="marker-chip">By Consultant</span><span class="marker-chip">not posted revenue</span></div></div>
           <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">revenue recognized</span></div></div>
-          <div class="preview-shot-wrap"><img class="preview-shot" data-evidence-status="reusable" src="screenshots/assisted/annotated/02-teb-02.png" alt="TEB-02 positive visual checkpoint" loading="lazy"><p class="capture-meta">Visible positive anchors: Project rollup section; Consultant column; Synthetic value. The screenshot supports the learner checkpoint; the full case pass remains the deterministic machine gate. Source: 1424×863 JPEG. <a href="screenshots/assisted/02-teb-02.jpg" download="02-teb-02.jpg">Download original</a>.</p></div>
+          <div class="preview-shot-wrap"><a href="screenshots/assisted/annotated/02-teb-02.png" download="02-teb-02.png"><img class="preview-shot" data-evidence-status="reusable" src="screenshots/assisted/annotated/02-teb-02.png" alt="TEB-02 positive visual checkpoint" loading="lazy"></a><p class="capture-meta">Visible positive anchors: Project rollup section; Consultant column; Synthetic value. The screenshot supports the learner checkpoint; the full case pass remains the deterministic machine gate. Source: 1424×863 JPEG. <a href="screenshots/assisted/02-teb-02.jpg" download="02-teb-02.jpg">Download original</a>.</p></div>
           <label class="step-complete"><input type="checkbox" data-checkpoint="preview-teb-02" data-agi-group="preview-proven" data-agi-path="shared"><span>The Preview response matched this contract.</span></label>
         </article>
 
@@ -507,7 +507,7 @@
           <pre class="prompt-block" id="preview-prompt-teb-03">Which time cards would fail our billing review because of narrative, hours, rate, or budget concerns?</pre>
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">Missing description</span><span class="marker-chip">Exceeds 10-hour daily limit</span><span class="marker-chip">Budget Alert</span></div></div>
           <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">description completed automatically</span></div></div>
-          <div class="preview-shot-wrap"><img class="preview-shot" data-evidence-status="reusable" src="screenshots/assisted/annotated/03-teb-03.png" alt="TEB-03 positive visual checkpoint" loading="lazy"><p class="capture-meta">Visible positive anchors: Missing description; Exceeds 10-hour daily limit; No descriptions were rewritten. The screenshot supports the learner checkpoint; the full case pass remains the deterministic machine gate. Source: 1424×863 JPEG. <a href="screenshots/assisted/03-teb-03.jpg" download="03-teb-03.jpg">Download original</a>.</p></div>
+          <div class="preview-shot-wrap"><a href="screenshots/assisted/annotated/03-teb-03.png" download="03-teb-03.png"><img class="preview-shot" data-evidence-status="reusable" src="screenshots/assisted/annotated/03-teb-03.png" alt="TEB-03 positive visual checkpoint" loading="lazy"></a><p class="capture-meta">Visible positive anchors: Missing description; Exceeds 10-hour daily limit; No descriptions were rewritten. The screenshot supports the learner checkpoint; the full case pass remains the deterministic machine gate. Source: 1424×863 JPEG. <a href="screenshots/assisted/03-teb-03.jpg" download="03-teb-03.jpg">Download original</a>.</p></div>
           <label class="step-complete"><input type="checkbox" data-checkpoint="preview-teb-03" data-agi-group="preview-proven" data-agi-path="shared"><span>The Preview response matched this contract.</span></label>
         </article>
 
@@ -516,16 +516,16 @@
           <pre class="prompt-block" id="preview-prompt-teb-04">Prepare the invoice support that is actually ready, and keep anything without the right approval or milestone evidence out.</pre>
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">Invoices Ready to Generate</span><span class="marker-chip">Fixed-fee hold</span><span class="marker-chip">no invoice was generated</span></div></div>
           <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">Pinnacle Energy ERP | Pinnacle Energy</span></div></div>
-          <div class="preview-shot-wrap"><img class="preview-shot" data-evidence-status="reusable" src="screenshots/assisted/annotated/04-teb-04.png" alt="TEB-04 positive visual checkpoint" loading="lazy"><p class="capture-meta">Visible positive anchors: Grand total ready to invoice; Fixed-fee hold; No invoice was generated, posted, or sent. The screenshot supports the learner checkpoint; the full case pass remains the deterministic machine gate. Source: 1424×863 JPEG. <a href="screenshots/assisted/04-teb-04.jpg" download="04-teb-04.jpg">Download original</a>.</p></div>
+          <div class="preview-shot-wrap"><a href="screenshots/assisted/annotated/04-teb-04.png" download="04-teb-04.png"><img class="preview-shot" data-evidence-status="reusable" src="screenshots/assisted/annotated/04-teb-04.png" alt="TEB-04 positive visual checkpoint" loading="lazy"></a><p class="capture-meta">Visible positive anchors: Grand total ready to invoice; Fixed-fee hold; No invoice was generated, posted, or sent. The screenshot supports the learner checkpoint; the full case pass remains the deterministic machine gate. Source: 1424×863 JPEG. <a href="screenshots/assisted/04-teb-04.jpg" download="04-teb-04.jpg">Download original</a>.</p></div>
           <label class="step-complete"><input type="checkbox" data-checkpoint="preview-teb-04" data-agi-group="preview-proven" data-agi-path="shared"><span>The Preview response matched this contract.</span></label>
         </article>
 
-        <article class="preview-case preview-case-wide">
-          <header><div><p class="prompt-kicker">TEB-05 · Client Finance Partner</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-teb-05">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — TEB-05" data-report-expected="Must include: DSP-301, DSP-302, authorized review; must not include: contacted the client, charge was waived" data-report-evidence="solutions/time-entry-billing/screenshots/assisted/05-teb-05.jpg">Report an issue</button></div></header>
+        <article class="preview-case">
+          <header><div><p class="prompt-kicker">TEB-05 · Client Finance Partner</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="preview-prompt-teb-05">Copy Preview prompt</button><button class="button report-button" type="button" data-report-location="Easy Preview — TEB-05" data-report-expected="Must include: DSP-301, DSP-302, authorized review; must not include: contacted the client, charge was waived" data-report-evidence="solutions/time-entry-billing/evals/copilot-studio-preview-evidence.json">Report an issue</button></div></header>
           <pre class="prompt-block" id="preview-prompt-teb-05">What evidence is missing on the disputed hours, and what is the safest resolution path before we go back to the clients?</pre>
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">DSP-301</span><span class="marker-chip">DSP-302</span><span class="marker-chip">authorized review</span></div></div>
           <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">contacted the client</span><span class="marker-chip">charge was waived</span></div></div>
-          <div class="preview-shot-wrap reference-shot-wrap"><img class="preview-shot" data-evidence-status="reference-only" src="screenshots/assisted/05-teb-05.jpg" alt="TEB-05 reference capture" loading="lazy"><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: The screenshot shows routing and the answer heading, but the final answer does not visibly contain DSP-302 and authorized review. Reasoning text cannot be used as pass evidence.</p><p class="capture-meta">Source: 1424×863 JPEG. <a href="screenshots/assisted/05-teb-05.jpg" download="05-teb-05.jpg">Download original</a>.</p></div>
+          <div class="missing withheld-checkpoint"><strong>Withheld checkpoint — reshoot required.</strong> The recorded screenshot is not approved for learner display. Review note: The screenshot shows routing and the answer heading, but the final answer does not visibly contain DSP-302 and authorized review. Reasoning text cannot be used as pass evidence. Expected state: the TEB-05 response visibly matches every reviewed marker above.</div>
           <label class="step-complete"><input type="checkbox" data-checkpoint="preview-teb-05" data-agi-group="preview-proven" data-agi-path="shared"><span>The Preview response matched this contract.</span></label>
         </article>
           </div>
@@ -534,7 +534,7 @@
 
 
       <section class="learn-step" id="easy-step-5">
-        <header class="learn-step-header"><span>5</span><div><p>Recognize completion</p><h3>Know what “done” looks like</h3></div><button class="button report-button" type="button" data-report-location="Easy mode — final completion verdict" data-report-expected="Local 5/5; Preview 5/5; Draft Time Entry and Billing Pilot; published false." data-report-evidence="solutions/time-entry-billing/screenshots/assisted/06-confirm-draft.jpg">Report an issue</button></header>
+        <header class="learn-step-header"><span>5</span><div><p>Recognize completion</p><h3>Know what “done” looks like</h3></div><button class="button report-button" type="button" data-report-location="Easy mode — final completion verdict" data-report-expected="Local 5/5; Preview 5/5; Draft Time Entry and Billing Pilot; published false." data-report-evidence="solutions/time-entry-billing/evals/dataverse-draft-evidence.json">Report an issue</button></header>
         <div class="learn-step-body">
           <p>The workshop is complete only when both the portable agent and the Copilot Studio front door prove the same behavior.</p>
           <div class="done-grid">
@@ -545,7 +545,7 @@
             <article><strong>Inventory</strong><span>2 knowledge · 5 skills</span></article>
             <article><strong>Publication gate</strong><span>Draft · published false</span></article>
           </div>
-          <div class="preview-shot-wrap reference-shot-wrap"><img class="preview-shot" data-evidence-status="reference-only" src="screenshots/assisted/06-confirm-draft.jpg" alt="Draft-state reference capture" loading="lazy"><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> Use this real frame for orientation only; confirm the current Draft state yourself. Evidence note: The target Time Entry and Billing Pilot row is not visible.</p><p class="capture-meta">Source: 1424×863 JPEG. <a href="screenshots/assisted/06-confirm-draft.jpg" download="06-confirm-draft.jpg">Download original</a>.</p></div>
+          <div class="missing withheld-checkpoint"><strong>Withheld checkpoint — reshoot required.</strong> The recorded screenshot is not approved for learner display. Review note: The target Time Entry and Billing Pilot row is not visible. <strong>Expected state:</strong> the target agent is visibly Draft and publication remains off. The packaged Dataverse evidence supplies the machine-verifiable unpublished-state proof.</div>
           <div class="expected-panel"><strong>Final expected verdict</strong><p>The harness reports <code>status: complete</code>, exact case totals, the Draft identity, and <code>published: false</code>. The module ends here; it does not offer publication.</p></div>
           <label class="step-complete"><input type="checkbox" data-checkpoint="easy-complete" data-agi-group="final-verdict" data-agi-path="shared"><span>I confirmed the final Draft verdict.</span></label>
         </div>
@@ -575,13 +575,14 @@
           <a class="button" href="evidence-report.html">Evidence report</a>
           <a class="button" href="export-manifest.json" download>Download audit manifest</a>
           <a class="button" href="exports/time-entry-billing-source.zip" download>Download portable bundle</a>
+          <a class="button primary" href="exports/time-entry-billing-copilot-studio-solution.zip" download>Download Copilot Studio solution</a><a class="button" href="exports/time-entry-billing-deployment-settings.json" download>Deployment settings</a><a class="button" href="exports/time-entry-billing-solution-export.json" download>Export details</a>
           <a class="button" href="../../agents/@aibast-agents-library/templates/workshop_agent.py" download>Download generic workshop agent</a>
           <a class="button" href="https://kodyw.com/the-personless-harness/" target="_blank" rel="noopener">Personless harness article ↗</a>
         </div>
       </details>
     </section>
 
-    <section class="path" data-path="hard" hidden>
+    <section class="path" data-path="hard" id="mode-panel-hard" role="tabpanel" aria-labelledby="mode-tab-hard" hidden>
       <section class="card hard-overview">
         <p class="eyebrow">Hard mode · literal browser construction</p>
         <h2>Build Time Entry and Billing Agent manually on this page.</h2>
@@ -592,6 +593,7 @@
         <div class="hard-actions">
           <a class="button" href="manual-tutorial.html" target="_blank" rel="noopener">Open standalone Hard-mode guide ↗</a>
           <a class="button primary" href="exports/time-entry-billing-source.zip">Download source bundle</a>
+          <a class="button primary" href="exports/time-entry-billing-copilot-studio-solution.zip" download>Download Copilot Studio solution</a><a class="button" href="exports/time-entry-billing-deployment-settings.json" download>Deployment settings</a><a class="button" href="exports/time-entry-billing-solution-export.json" download>Export details</a>
         </div>
       </section>
 
@@ -633,7 +635,7 @@
             <div class="instruction expected"><strong>Expected result</strong>A blank Copilot Studio agent is visible in the captured Draft workspace.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/01-create-blank-agent.jpg" download="01-create-blank-agent.jpg"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/01-create-blank-agent.png" alt="Create a blank Copilot Studio agent annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Untitled Agent; Blank Build workspace. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/01-create-blank-agent.png" download="01-create-blank-agent.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/01-create-blank-agent.png" alt="Create a blank Copilot Studio agent annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Untitled Agent; Blank Build workspace. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/01-create-blank-agent.jpg" download="01-create-blank-agent.jpg">Download original</a>.</p>
           <footer>
             <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="1"> Mark complete</label>
@@ -648,7 +650,7 @@
             <div class="instruction expected"><strong>Expected result</strong>The page header shows the recorded manual build name: Time Entry and Billing Manual.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/02-name-agent.jpg" download="02-name-agent.jpg"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/02-name-agent.png" alt="Name Time Entry and Billing Manual annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Time Entry and Billing Manual in the name field. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/02-name-agent.png" download="02-name-agent.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/02-name-agent.png" alt="Name Time Entry and Billing Manual annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Time Entry and Billing Manual in the name field. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/02-name-agent.jpg" download="02-name-agent.jpg">Download original</a>.</p>
           <footer>
             <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="2"> Mark complete</label>
@@ -726,7 +728,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/03-enter-instructions.jpg" download="03-enter-instructions.jpg"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/03-enter-instructions.png" alt="Enter the reviewed global instructions annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Reviewed instruction policy; Locked Preview evidence anchors. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/03-enter-instructions.png" download="03-enter-instructions.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/03-enter-instructions.png" alt="Enter the reviewed global instructions annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Reviewed instruction policy; Locked Preview evidence anchors. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/03-enter-instructions.jpg" download="03-enter-instructions.jpg">Download original</a>.</p>
           <footer>
             <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
             <label><input class="complete" type="checkbox" data-step="3"> Mark complete</label>
@@ -741,7 +743,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/04-save-instructions.jpg" download="04-save-instructions.jpg"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/04-save-instructions.png" alt="Save the instruction policy annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Save tooltip states No unsaved changes. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/04-save-instructions.png" download="04-save-instructions.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/04-save-instructions.png" alt="Save the instruction policy annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Save tooltip states No unsaved changes. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/04-save-instructions.jpg" download="04-save-instructions.jpg">Download original</a>.</p>
           <footer>
             <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
             <label><input class="complete" type="checkbox" data-step="4"> Mark complete</label>
@@ -756,7 +758,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured inventory no longer lists the default web-search capability.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/05-remove-web-search.jpg" download="05-remove-web-search.jpg"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/05-remove-web-search.png" alt="Remove default web search annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Tools section contains no web-search chip. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
+          <div class="look-for withheld-checkpoint"><strong>Withheld checkpoint — reshoot required</strong><p>The recorded screenshot is not approved for learner display and has been withheld. Review note: The frame is pixel-identical to steps 6-12 and near-identical to the retained step 13 inventory; it shows the completed five-skill state rather than the web-search removal action.</p><p><strong>Expected state:</strong> The captured inventory no longer lists the default web-search capability.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="export-manifest.json" download>Download source: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="5"> Mark complete</label>
@@ -771,7 +773,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
           </div>
 
-          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/06-add-aibast-billing-rules-and-disputes.jpg" download="06-add-aibast-billing-rules-and-disputes.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/06-add-aibast-billing-rules-and-disputes.jpg" alt="Add knowledge: aibast_billing-rules-and-disputes.md reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: Knowledge is collapsed; the requested filename is not visible.</p><p class="capture-meta">Source capture: 1424×863 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="look-for withheld-checkpoint"><strong>Withheld checkpoint — reshoot required</strong><p>The recorded screenshot is not approved for learner display and has been withheld. Review note: Knowledge is collapsed; the requested filename is not visible.</p><p><strong>Expected state:</strong> The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="manual/knowledge/aibast_billing-rules-and-disputes.md" download>Download source: Aibast Billing Rules And Disputes</a>
             <label><input class="complete" type="checkbox" data-step="6"> Mark complete</label>
@@ -786,7 +788,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</div>
           </div>
 
-          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/07-add-aibast-billing-synthetic-ledger.jpg" download="07-add-aibast-billing-synthetic-ledger.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/07-add-aibast-billing-synthetic-ledger.jpg" alt="Add knowledge: aibast_billing-synthetic-ledger.md reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: Knowledge is collapsed; the requested filename is not visible. One expanded Knowledge capture can supply both steps with separate annotations.</p><p class="capture-meta">Source capture: 1424×863 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="look-for withheld-checkpoint"><strong>Withheld checkpoint — reshoot required</strong><p>The recorded screenshot is not approved for learner display and has been withheld. Review note: Knowledge is collapsed; the requested filename is not visible. One expanded Knowledge capture can supply both steps with separate annotations.</p><p><strong>Expected state:</strong> The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="manual/knowledge/aibast_billing-synthetic-ledger.md" download>Download source: Aibast Billing Synthetic Ledger</a>
             <label><input class="complete" type="checkbox" data-step="7"> Mark complete</label>
@@ -801,7 +803,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/08-add-billing-summary.jpg" download="08-add-billing-summary.jpg"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/08-add-billing-summary.png" alt="Add skill: billing-summary annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Rendered skill billing-close-summary. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
+          <div class="look-for withheld-checkpoint"><strong>Withheld checkpoint — reshoot required</strong><p>The recorded screenshot is not approved for learner display and has been withheld. Review note: The frame is pixel-identical to steps 5-12 and shows the completed five-skill inventory; it does not isolate the billing-close-summary addition.</p><p><strong>Expected state:</strong> The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="manual/skills/billing-summary/SKILL.md" download>Download source: Manual skill: billing summary</a>
             <label><input class="complete" type="checkbox" data-step="8"> Mark complete</label>
@@ -816,7 +818,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/09-add-dispute-resolution.jpg" download="09-add-dispute-resolution.jpg"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/09-add-dispute-resolution.png" alt="Add skill: dispute-resolution annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Rendered skill disputed-hours-evidence-brief. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
+          <div class="look-for withheld-checkpoint"><strong>Withheld checkpoint — reshoot required</strong><p>The recorded screenshot is not approved for learner display and has been withheld. Review note: The frame is pixel-identical to steps 5-12 and shows the completed five-skill inventory; it does not isolate the disputed-hours-evidence-brief addition.</p><p><strong>Expected state:</strong> The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="manual/skills/dispute-resolution/SKILL.md" download>Download source: Manual skill: dispute resolution</a>
             <label><input class="complete" type="checkbox" data-step="9"> Mark complete</label>
@@ -831,7 +833,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/10-add-invoice-preparation.jpg" download="10-add-invoice-preparation.jpg"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/10-add-invoice-preparation.png" alt="Add skill: invoice-preparation annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Rendered skill approval-gated-invoice-support. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
+          <div class="look-for withheld-checkpoint"><strong>Withheld checkpoint — reshoot required</strong><p>The recorded screenshot is not approved for learner display and has been withheld. Review note: The frame is pixel-identical to steps 5-12 and shows the completed five-skill inventory; it does not isolate the approval-gated-invoice-support addition.</p><p><strong>Expected state:</strong> The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="manual/skills/invoice-preparation/SKILL.md" download>Download source: Manual skill: invoice preparation</a>
             <label><input class="complete" type="checkbox" data-step="10"> Mark complete</label>
@@ -846,7 +848,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Sonnet 4.6, 5 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/11-add-time-entry-audit.jpg" download="11-add-time-entry-audit.jpg"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/11-add-time-entry-audit.png" alt="Add skill: time-entry-audit annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Rendered skill time-entry-audit. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
+          <div class="look-for withheld-checkpoint"><strong>Withheld checkpoint — reshoot required</strong><p>The recorded screenshot is not approved for learner display and has been withheld. Review note: The frame is pixel-identical to steps 5-12 and shows the completed five-skill inventory; it does not isolate the time-entry-audit addition.</p><p><strong>Expected state:</strong> The screenshot visibly confirms Claude Sonnet 4.6, 5 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="manual/skills/time-entry-audit/SKILL.md" download>Download source: Manual skill: time entry audit</a>
             <label><input class="complete" type="checkbox" data-step="11"> Mark complete</label>
@@ -861,7 +863,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/12-add-unbilled-report.jpg" download="12-add-unbilled-report.jpg"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/12-add-unbilled-report.png" alt="Add skill: unbilled-report annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Rendered skill month-end-billing-blockers. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
+          <div class="look-for withheld-checkpoint"><strong>Withheld checkpoint — reshoot required</strong><p>The recorded screenshot is not approved for learner display and has been withheld. Review note: The frame is pixel-identical to steps 5-12 and shows the completed five-skill inventory; it does not isolate the month-end-billing-blockers addition.</p><p><strong>Expected state:</strong> The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="manual/skills/unbilled-report/SKILL.md" download>Download source: Manual skill: unbilled report</a>
             <label><input class="complete" type="checkbox" data-step="12"> Mark complete</label>
@@ -876,7 +878,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The screenshot visibly confirms Claude Sonnet 4.6, 5 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/13-review-inventory.jpg" download="13-review-inventory.jpg"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/04-save-instructions.png" alt="Review model, skills, knowledge, and safety boundaries annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Save tooltip states No unsaved changes. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/13-review-inventory.png" download="13-review-inventory.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/13-review-inventory.png" alt="Review model, skills, knowledge, and safety boundaries annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Claude Sonnet 4.6; Five configured skills; Tools section contains no configured tool. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/13-review-inventory.jpg" download="13-review-inventory.jpg">Download original</a>.</p>
           <footer>
             <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="13"> Mark complete</label>
@@ -891,7 +893,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/14-open-preview.jpg" download="14-open-preview.jpg"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/14-open-preview.png" alt="Open a fresh Preview conversation annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Preview tab; New chat. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/14-open-preview.png" download="14-open-preview.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/14-open-preview.png" alt="Open a fresh Preview conversation annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Preview tab; New chat. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/14-open-preview.jpg" download="14-open-preview.jpg">Download original</a>.</p>
           <footer>
             <a href="export-manifest.json" download>Download source: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="14"> Mark complete</label>
@@ -906,7 +908,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records TEB-01 with the recorded identifiers TE-9004, TE-9011, Needs approval; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running TEB-01. A previous response must not influence the evidence.</p></div>
-          <a class="shot-link" href="screenshots/manual/15-teb-01.jpg" download="15-teb-01.jpg"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/15-teb-01.png" alt="Pass TEB-01: Billing Manager annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: TE-9011; Approval chain is outstanding; No invoice can be generated or sent. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/15-teb-01.png" download="15-teb-01.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/15-teb-01.png" alt="Pass TEB-01: Billing Manager annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: TE-9011; Approval chain is outstanding; No invoice can be generated or sent. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/15-teb-01.jpg" download="15-teb-01.jpg">Download original</a>.</p>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="15"> Mark complete</label>
@@ -921,7 +923,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records TEB-02 with the recorded identifiers By Project, By Consultant, not posted revenue; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running TEB-02. A previous response must not influence the evidence.</p></div>
-          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/16-teb-02.jpg" download="16-teb-02.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/16-teb-02.jpg" alt="Pass TEB-02: Finance Vice President reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: The response is a blocker saying the grounding files are not present. Negative or refusal text cannot verify a successful case.</p><p class="capture-meta">Source capture: 1424×863 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured Preview evidence records TEB-02 with the recorded identifiers By Project, By Consultant, not posted revenue; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="look-for withheld-checkpoint"><strong>Withheld checkpoint — reshoot required</strong><p>The recorded screenshot is not approved for learner display and has been withheld. Review note: The response is a blocker saying the grounding files are not present. Negative or refusal text cannot verify a successful case.</p><p><strong>Expected state:</strong> The captured Preview evidence records TEB-02 with the recorded identifiers By Project, By Consultant, not posted revenue; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="16"> Mark complete</label>
@@ -936,7 +938,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records TEB-03 with the recorded identifiers Missing description, Exceeds 10-hour daily limit, Budget Alert; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running TEB-03. A previous response must not influence the evidence.</p></div>
-          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/17-teb-03.jpg" download="17-teb-03.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/17-teb-03.jpg" alt="Pass TEB-03: Billing Compliance Lead reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: The response says it is constructing the result from locked evidence anchors because the grounding files are missing.</p><p class="capture-meta">Source capture: 1424×863 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured Preview evidence records TEB-03 with the recorded identifiers Missing description, Exceeds 10-hour daily limit, Budget Alert; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="look-for withheld-checkpoint"><strong>Withheld checkpoint — reshoot required</strong><p>The recorded screenshot is not approved for learner display and has been withheld. Review note: The response says it is constructing the result from locked evidence anchors because the grounding files are missing.</p><p><strong>Expected state:</strong> The captured Preview evidence records TEB-03 with the recorded identifiers Missing description, Exceeds 10-hour daily limit, Budget Alert; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="17"> Mark complete</label>
@@ -951,7 +953,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records TEB-04 with the recorded identifiers Invoices Ready to Generate, Fixed-fee hold, no invoice was generated; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running TEB-04. A previous response must not influence the evidence.</p></div>
-          <div class="reference-shot-wrap"><a class="shot-link" href="screenshots/manual/18-teb-04.jpg" download="18-teb-04.jpg"><img class="shot" data-evidence-status="reference-only" src="screenshots/manual/18-teb-04.jpg" alt="Pass TEB-04: Billing Manager reference capture" loading="lazy"></a><p class="quality-warning"><strong>Reference capture — not approved proof.</strong> This real frame remains visible for orientation, but the evidence contract requires review or reshoot: The response echoes the acceptance anchors after saying the grounding files are not found.</p><p class="capture-meta">Source capture: 1424×863 JPEG. Download the original to inspect at 100%.</p></div><div class="look-for"><strong>What to verify yourself</strong><p>The captured Preview evidence records TEB-04 with the recorded identifiers Invoices Ready to Generate, Fixed-fee hold, no invoice was generated; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="look-for withheld-checkpoint"><strong>Withheld checkpoint — reshoot required</strong><p>The recorded screenshot is not approved for learner display and has been withheld. Review note: The response echoes the acceptance anchors after saying the grounding files are not found.</p><p><strong>Expected state:</strong> The captured Preview evidence records TEB-04 with the recorded identifiers Invoices Ready to Generate, Fixed-fee hold, no invoice was generated; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="18"> Mark complete</label>
@@ -966,7 +968,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records TEB-05 with the recorded identifiers DSP-301, DSP-302, authorized review; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running TEB-05. A previous response must not influence the evidence.</p></div>
-          <a class="shot-link" href="screenshots/manual/19-teb-05.jpg" download="19-teb-05.jpg"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/19-teb-05.png" alt="Pass TEB-05: Client Finance Partner annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: DSP-301; DSP-302; authorized review; Do not concede or waive charges. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/19-teb-05.png" download="19-teb-05.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/19-teb-05.png" alt="Pass TEB-05: Client Finance Partner annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: DSP-301; DSP-302; authorized review; Do not concede or waive charges. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/19-teb-05.jpg" download="19-teb-05.jpg">Download original</a>.</p>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="19"> Mark complete</label>
@@ -981,7 +983,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The agent remains Draft and no Publish action is taken.</div>
           </div>
 
-          <a class="shot-link" href="screenshots/manual/20-confirm-draft.jpg" download="20-confirm-draft.jpg"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/20-confirm-draft.png" alt="Confirm Draft and stop before publish annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Time Entry and Billing Manual; Draft. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. Download the original to inspect at 100%.</p>
+          <a class="shot-link" href="screenshots/manual/annotated/20-confirm-draft.png" download="20-confirm-draft.png"><img class="shot" data-evidence-status="reusable" src="screenshots/manual/annotated/20-confirm-draft.png" alt="Confirm Draft and stop before publish annotated evidence" loading="lazy"></a><p class="capture-meta">Positive visual checkpoint: Time Entry and Billing Manual; Draft. Source capture: 1424×863 JPEG. The full pass remains the deterministic machine gate. <a href="screenshots/manual/20-confirm-draft.jpg" download="20-confirm-draft.jpg">Download original</a>.</p>
           <footer>
             <a href="deployment.json" download>Download source: Deployment</a>
             <label><input class="complete" type="checkbox" data-step="20"> Mark complete</label>
@@ -1386,7 +1388,11 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
       }
 
       function selectMode(mode) {
-        buttons.forEach((button) => button.classList.toggle("active", button.dataset.mode === mode));
+        buttons.forEach((button) => {
+          const selected = button.dataset.mode === mode;
+          button.classList.toggle("active", selected);
+          button.setAttribute("aria-selected", String(selected));
+        });
         paths.forEach((path) => { path.hidden = path.dataset.path !== mode; });
         localStorage.setItem(modeKey, mode);
         evaluateAgi(false);

@@ -119,15 +119,21 @@ console.log(JSON.stringify({
 
 def test_metrics_load_is_optional_and_builds_canonical_signal_map():
     text = library_text()
-    assert "const [registry, metrics] = await Promise.all([" in text
+    assert (
+        "const [registry, metrics, catalog, exportInventory] = await Promise.all(["
+        in text
+    )
     assert "state/metrics.json${stamp}" in text
     assert "${SITE}state/metrics.json${stamp}" in text
+    assert "solutions/catalog.json${stamp}" in text
+    assert "state/copilot_studio_solution_exports.json${stamp}" in text
     assert (
         "state.agentSignals = buildAgentSignalMap(metrics, state.agents);"
         in text
     )
-    assert 'if (!registry)' in text
+    assert 'if (!registry || !catalog)' in text
     assert 'if (!metrics)' not in text
+    assert 'if (!exportInventory)' not in text
 
     result = run_library_node(
         """
@@ -138,8 +144,8 @@ const available = buildAgentSignalMap({
       name: "canonical-a",
       upvotes: 7,
       acquisitions: 4,
-      upvote_discussion_url: "https://github.com/example/repo/discussions/1",
-      acquisition_discussion_url: "https://github.com/example/repo/discussions/2"
+      upvote_discussion_url: "https://github.com/microsoft/aibast-agents-library/discussions/1",
+      acquisition_discussion_url: "https://github.com/microsoft/aibast-agents-library/discussions/2"
     },
     {name: "canonical-b", upvotes: null, acquisitions: 0},
     {name: "not-in-registry", upvotes: 99}
@@ -156,14 +162,18 @@ console.log(JSON.stringify({
         "canonical-a": {
             "upvotes": 7,
             "acquisitions": 4,
-            "upvoteUrl": "https://github.com/example/repo/discussions/1",
+            "upvoteUrl": (
+                "https://github.com/microsoft/"
+                "aibast-agents-library/discussions/1"
+            ),
             "acquisitionUrl": (
-                "https://github.com/example/repo/discussions/2"
+                "https://github.com/microsoft/"
+                "aibast-agents-library/discussions/2"
             ),
         },
         "canonical-b": {
             "upvotes": None,
-            "acquisitions": 0,
+            "acquisitions": None,
             "upvoteUrl": "",
             "acquisitionUrl": "",
         },
@@ -217,8 +227,8 @@ const unavailable = agentUpvoteControl(agent);
 state.agentSignals = new Map([[agent.name, {
   upvotes: 12,
   acquisitions: 3,
-  upvoteUrl: "https://github.com/example/repo/discussions/1",
-  acquisitionUrl: "https://github.com/example/repo/discussions/2"
+  upvoteUrl: "https://github.com/microsoft/aibast-agents-library/discussions/1",
+  acquisitionUrl: "https://github.com/microsoft/aibast-agents-library/discussions/2"
 }]]);
 const available = agentUpvoteControl(agent);
 const acquisition = agentAcquisitionControl(agent);
@@ -227,7 +237,9 @@ console.log(JSON.stringify({unavailable, available, acquisition}));
     )
     assert ">—</span>" in result["unavailable"]
     assert ">0</span>" not in result["unavailable"]
+    assert 'disabled aria-disabled="true"' in result["unavailable"]
     assert ">12</span>" in result["available"]
+    assert 'disabled aria-disabled="true"' not in result["available"]
     assert "Record acquisition" in result["acquisition"]
     assert ">3</span>" in result["acquisition"]
 
@@ -239,6 +251,9 @@ def test_agent_detail_downloads_python_file_instead_of_showing_one_liner():
     assert "<h3>Download agent.py</h3>" in detail
     assert 'download="${esc(download.filename)}"' in detail
     assert ">Download agent.py</a>" in detail
+    assert ">Download Copilot Studio solution</a>" in detail
+    assert ">Deployment settings</a>" in detail
+    assert "the imported agent remains unpublished" in detail
     assert "Copy install command" not in detail
     assert '<pre class="code">${esc(install)}</pre>' not in detail
 
@@ -250,7 +265,11 @@ const direct = agentDownload({
 const renamed = agentDownload({
   _file: "agents/orchestrator.py"
 });
-console.log(JSON.stringify({direct, renamed}));
+state.exportedSolutionSlugs = new Set(["account-intelligence"]);
+const solution = copilotSolutionDownloads({
+  _solution: {package: {slug: "account-intelligence"}}
+});
+console.log(JSON.stringify({direct, renamed, solution}));
 """
     )
     assert result == {
@@ -262,6 +281,47 @@ console.log(JSON.stringify({direct, renamed}));
             "href": "agents/orchestrator.py",
             "filename": "orchestrator_agent.py",
         },
+        "solution": {
+            "zip": (
+                "solutions/account-intelligence/exports/"
+                "account-intelligence-copilot-studio-solution.zip"
+            ),
+            "settings": (
+                "solutions/account-intelligence/exports/"
+                "account-intelligence-deployment-settings.json"
+            ),
+        },
+    }
+
+
+def test_solution_cards_are_limited_to_advertised_catalog_scope():
+    result = run_library_node(
+        """
+state.advertisedSolutions = new Set([
+  "@aibast-agents-library/account-intelligence"
+]);
+state.agents = [
+  {
+    name: "@aibast-agents-library/account-intelligence",
+    _catalog_kind: "solution"
+  },
+  {
+    name: "@aibast-agents-library/grid-outage-response",
+    _catalog_kind: "solution"
+  }
+];
+let opened = false;
+openModal = () => { opened = true; };
+openAgent("@aibast-agents-library/grid-outage-response");
+console.log(JSON.stringify({
+  names: solutionAgents().map(agent => agent.name),
+  excludedDeepLinkOpened: opened
+}));
+"""
+    )
+    assert result == {
+        "names": ["@aibast-agents-library/account-intelligence"],
+        "excludedDeepLinkOpened": False,
     }
 
 
@@ -293,7 +353,7 @@ console.log(JSON.stringify({upvoteArgs, acquisitionArgs: openArgs}));
     assert result["acquisitionArgs"][0].endswith("/discussions/11")
 
 
-def test_missing_discussion_url_falls_back_to_current_pages_fork_search():
+def test_missing_discussion_url_disables_external_action():
     result = run_library_node(
         """
 const agent = {
@@ -308,19 +368,15 @@ state.agentSignals = new Map([[agent.name, {
   upvoteUrl: "",
   acquisitionUrl: ""
 }]]);
+globalThis.openArgs = null;
 openAgentUpvote(agent.name);
 const upvoteArgs = openArgs;
 openAgentSignal(agent.name, "acquisition");
 console.log(JSON.stringify({upvoteArgs, acquisitionArgs: openArgs}));
-""",
-        hostname="kody-w.github.io",
+"""
     )
 
-    assert result["upvoteArgs"][0].startswith(
-        "https://github.com/kody-w/aibast-agents-library/discussions?"
-    )
-    assert "%40aibast-agents-library%2Fexample" in result["upvoteArgs"][0]
-    assert "%5BAcquisition%5D" in result["acquisitionArgs"][0]
+    assert result == {"upvoteArgs": None, "acquisitionArgs": None}
 
 
 def test_upvote_action_stops_card_open_and_never_increments_count():

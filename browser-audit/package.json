@@ -1,0 +1,19 @@
+{
+  "name": "aibast-workshop-browser-audit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Immutable browser certification for the 51 advertised AIBAST workshops.",
+  "type": "module",
+  "scripts": {
+    "audit": "node audit.mjs",
+    "mutations": "node mutation-suite.mjs",
+    "attest": "node attest.mjs",
+    "certify": "npm run mutations && npm run audit && npm run attest"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "playwright": "1.62.1"
+  }
+}

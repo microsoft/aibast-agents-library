@@ -53,8 +53,11 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | Source bundle | `solutions/deal-progression/exports/deal-progression-source.zip` |
 | Manual evidence | `solutions/deal-progression/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/deal-progression/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/deal-progression/exports/deal-progression-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/deal-progression/exports/deal-progression-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/deal-progression/exports/deal-progression-solution-export.json` |
 
-**Scaffold status:** 79 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 109 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

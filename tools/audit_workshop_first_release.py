@@ -57,6 +57,280 @@ def _case_ids(data: Any) -> list[str]:
     return result
 
 
+def _draft_agent_identities(package: Path) -> set[str]:
+    path = package / "deployment.json"
+    try:
+        deployment = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return set()
+    if not isinstance(deployment, dict):
+        return set()
+    copilot = deployment.get("copilot_studio", {})
+    if not isinstance(copilot, dict):
+        return set()
+    export_agent = copilot.get("export_agent")
+    if isinstance(export_agent, dict):
+        display_name = export_agent.get("display_name")
+        return {
+            display_name.strip()
+            for display_name in [display_name]
+            if isinstance(display_name, str) and display_name.strip()
+        }
+    identities = set()
+    for key in ("validated_manual", "validated_pilot"):
+        agent = copilot.get(key)
+        display_name = (
+            agent.get("display_name") if isinstance(agent, dict) else None
+        )
+        if isinstance(display_name, str) and display_name.strip():
+            identities.add(display_name.strip())
+    return identities
+
+
+def _machine_draft_proven(package: Path) -> bool:
+    deployment_path = package / "deployment.json"
+    evidence_path = package / "evals" / "dataverse-draft-evidence.json"
+    try:
+        deployment = json.loads(deployment_path.read_text(encoding="utf-8"))
+        evidence = json.loads(evidence_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return False
+    if (
+        not isinstance(deployment, dict)
+        or not isinstance(evidence, dict)
+        or evidence.get("schema") != "aibast-dataverse-draft-evidence/1.0"
+    ):
+        return False
+    copilot = deployment.get("copilot_studio", {})
+    export_agent = (
+        copilot.get("export_agent")
+        or copilot.get("validated_pilot")
+        or {}
+    ) if isinstance(copilot, dict) else {}
+    if not isinstance(export_agent, dict):
+        return False
+    identity = evidence.get("identity")
+    source = evidence.get("source")
+    record = evidence.get("record")
+    assertions = evidence.get("assertions")
+    if not all(
+        isinstance(value, dict)
+        for value in (identity, source, record, assertions)
+    ):
+        return False
+    expected_identity = {
+        "slug": package.name,
+        "solution": deployment.get("name"),
+        "display_name": export_agent.get("display_name"),
+        "schema_name": export_agent.get("schema_name"),
+        "bot_id": export_agent.get("bot_id"),
+    }
+    if identity != expected_identity:
+        return False
+    if (
+        source.get("kind") != "Dataverse Web API"
+        or source.get("environment_name") != export_agent.get("environment_name")
+        or source.get("environment_id") != export_agent.get("environment_id")
+        or source.get("environment_url")
+        != "https://org7dfbd855.crm.dynamics.com"
+        or source.get("api_version") != "v9.2"
+    ):
+        return False
+    if (
+        record.get("botid") != export_agent.get("bot_id")
+        or record.get("name") != export_agent.get("display_name")
+        or record.get("publishedon") is not None
+        or record.get("componentstate") != 0
+        or record.get("statecode") != 0
+        or record.get("statuscode") != 1
+        or not isinstance(record.get("modifiedon"), str)
+        or not isinstance(record.get("versionnumber"), int)
+        or record["versionnumber"] <= 0
+        or not re.fullmatch(r'W/"\d+"', str(record.get("odata_etag") or ""))
+    ):
+        return False
+    synchronization = record.get("synchronizationstatus")
+    if (
+        not isinstance(synchronization, dict)
+        or synchronization.get("lastFinishedPublishOperation") is not None
+    ):
+        return False
+    canonical_record = json.dumps(
+        record,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=True,
+    ).encode("utf-8")
+    if hashlib.sha256(canonical_record).hexdigest() != evidence.get(
+        "record_sha256"
+    ):
+        return False
+    return assertions == {
+        "bot_id_matches": True,
+        "display_name_matches": True,
+        "publishedon_is_null": True,
+        "last_finished_publish_operation_is_null": True,
+    }
+
+
+def _machine_case_ids(root: Path, package: Path) -> set[str]:
+    evidence_path = package / "evals" / "copilot-studio-preview-evidence.json"
+    transcript_path = package / "evals" / "transcripts.json"
+    deployment_path = package / "deployment.json"
+    try:
+        evidence = json.loads(evidence_path.read_text(encoding="utf-8"))
+        transcripts = json.loads(transcript_path.read_text(encoding="utf-8"))
+        deployment = json.loads(deployment_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return set()
+    copilot = deployment.get("copilot_studio", {}) if isinstance(
+        deployment, dict
+    ) else {}
+    export_agent = (
+        copilot.get("export_agent")
+        or copilot.get("validated_pilot")
+        or {}
+    ) if isinstance(copilot, dict) else {}
+    if (
+        not isinstance(evidence, dict)
+        or evidence.get("schema")
+        != "aibast-copilot-studio-preview-evidence/1.0"
+        or evidence.get("status") != "Draft"
+        or evidence.get("published") is not False
+        or evidence.get("display_name") != export_agent.get("display_name")
+        or evidence.get("schema_name") != export_agent.get("schema_name")
+        or evidence.get("bot_id") != export_agent.get("bot_id")
+        or evidence.get("environment_name")
+        != export_agent.get("environment_name")
+        or evidence.get("environment_id")
+        != export_agent.get("environment_id")
+        or not _machine_draft_proven(package)
+        or not isinstance(transcripts, dict)
+        or transcripts.get("schema") != "aibast-canonical-transcripts/1.0"
+        or transcripts.get("strict_isolation") is not True
+    ):
+        return set()
+    preview = evidence.get("cases")
+    transcript_rows = transcripts.get("transcripts")
+    case_file = transcripts.get("case_file")
+    case_file_sha256 = transcripts.get("case_file_sha256")
+    agent_sources = transcripts.get("agent_sources")
+    if (
+        not isinstance(preview, list)
+        or not isinstance(transcript_rows, list)
+        or not isinstance(case_file, str)
+        or not isinstance(case_file_sha256, str)
+        or not isinstance(agent_sources, list)
+        or not agent_sources
+    ):
+        return set()
+
+    case_path = (root / case_file).resolve()
+    if not case_path.is_relative_to(root.resolve()) or not case_path.is_file():
+        return set()
+    try:
+        case_source = case_path.read_bytes()
+        case_data = json.loads(case_source.decode("utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError):
+        return set()
+    if hashlib.sha256(case_source).hexdigest() != case_file_sha256:
+        return set()
+
+    for source in agent_sources:
+        if not isinstance(source, dict):
+            return set()
+        raw_path = source.get("path")
+        expected_sha256 = source.get("sha256")
+        if not isinstance(raw_path, str) or not isinstance(expected_sha256, str):
+            return set()
+        agent_path = (root / raw_path).resolve()
+        if (
+            not agent_path.is_relative_to(root.resolve())
+            or not agent_path.is_file()
+        ):
+            return set()
+        try:
+            actual_sha256 = hashlib.sha256(agent_path.read_bytes()).hexdigest()
+        except OSError:
+            return set()
+        if actual_sha256 != expected_sha256:
+            return set()
+
+    locked_cases = {}
+    for case in case_data.get("cases", []) if isinstance(case_data, dict) else []:
+        if not isinstance(case, dict):
+            continue
+        case_id = case.get("case_id", case.get("id"))
+        if isinstance(case_id, str) and case_id.strip():
+            locked_cases[case_id.strip()] = case
+    captured = {
+        row.get("case_id"): row
+        for row in transcript_rows
+        if isinstance(row, dict) and isinstance(row.get("case_id"), str)
+    }
+    loaded_tools = transcripts.get("loaded_tools_after_capture")
+    if not isinstance(loaded_tools, list):
+        return set()
+
+    verified: set[str] = set()
+    for preview_case in preview:
+        if (
+            not isinstance(preview_case, dict)
+            or preview_case.get("passed") is not True
+            or not isinstance(preview_case.get("case_id"), str)
+        ):
+            continue
+        case_id = preview_case["case_id"].strip()
+        locked = locked_cases.get(case_id)
+        transcript = captured.get(case_id)
+        if not case_id or not isinstance(locked, dict) or not isinstance(
+            transcript, dict
+        ):
+            continue
+        prompt = locked.get("prompt")
+        must_include = locked.get("must_include")
+        must_not_include = locked.get("must_not_include")
+        expected_agent = locked.get("expects_agent")
+        if (
+            not isinstance(prompt, str)
+            or not isinstance(must_include, list)
+            or not must_include
+            or not all(isinstance(value, str) and value for value in must_include)
+            or not isinstance(must_not_include, list)
+            or not all(isinstance(value, str) for value in must_not_include)
+            or not isinstance(expected_agent, str)
+            or not expected_agent
+        ):
+            continue
+        if (
+            preview_case.get("prompt") != prompt
+            and preview_case.get("prompt") is not None
+        ):
+            continue
+        if (
+            preview_case.get("must_include") != must_include
+            or preview_case.get("must_not_include") != must_not_include
+            or transcript.get("prompt") != prompt
+            or transcript.get("must_include") != must_include
+            or transcript.get("expected_agent") != expected_agent
+            or transcript.get("passed") is not True
+            or expected_agent not in loaded_tools
+        ):
+            continue
+        output = "\n".join(
+            str(transcript.get(key) or "")
+            for key in ("assistant_response", "agent_logs")
+        ).casefold()
+        if not output.strip():
+            continue
+        if any(value.casefold() not in output for value in must_include):
+            continue
+        if any(value and value.casefold() in output for value in must_not_include):
+            continue
+        verified.add(case_id)
+    return verified
+
+
 def _capture_paths(
     root: Path,
     package: Path,
@@ -156,9 +430,16 @@ def _capture_claim(
     actual: set[tuple[str, str, str | int]],
 ) -> tuple[str, str, str | int] | None:
     mode = capture.get("mode")
+    case_id = _case_id(capture)
+    hard_case = (
+        ("hard", "case", case_id)
+        if mode == "hard" and case_id is not None
+        else None
+    )
+    if hard_case is not None and actual == {hard_case}:
+        return hard_case
     if mode == "hard" and isinstance(capture.get("step"), int):
         return "hard", "step", capture["step"]
-    case_id = _case_id(capture)
     if mode == "easy" and case_id is not None:
         return "easy", "case", case_id
     draft = ("easy", "draft", "draft")
@@ -382,6 +663,7 @@ def audit_workshop(
     reusable_claims: dict[
         int, tuple[str, str, str | int] | None
     ] = {}
+    draft_agent_identities = _draft_agent_identities(package)
     draft_reusable: list[dict[str, Any]] = []
     for capture in reusable:
         mode = capture.get("mode")
@@ -399,12 +681,6 @@ def audit_workshop(
         )
         expected = _capture_claim(capture, actual)
         reusable_claims[id(capture)] = expected
-        if (
-            mode == "easy"
-            and _case_id(capture) is None
-            and actual == {("easy", "draft", "draft")}
-        ):
-            draft_reusable.append(capture)
         if expected is None:
             failures.append(
                 f"reusable capture {capture_id} has no bindable case, Draft, "
@@ -418,6 +694,21 @@ def audit_workshop(
                 f"{expected[0]} {expected[1]} {expected[2]}"
                 + (f" (source classifies as {rendered})" if rendered else "")
             )
+            continue
+        visible_anchors = " ".join(
+            str(value)
+            for value in capture.get("visible_anchors", [])
+            if isinstance(value, str)
+        )
+        if (
+            draft_agent_identities
+            and "draft" in visible_anchors.casefold()
+            and any(
+                identity.casefold() in visible_anchors.casefold()
+                for identity in draft_agent_identities
+            )
+        ):
+            draft_reusable.append(capture)
     _audit_reusable_image_content(
         root,
         package,
@@ -466,16 +757,21 @@ def audit_workshop(
         for item in reusable
         if isinstance(item.get("case_id"), str) and item["case_id"].strip()
     }
+    machine_case_ids = _machine_case_ids(root, package)
+    covered_case_ids = reusable_case_ids | machine_case_ids
     missing_cases = [
-        case_id for case_id in locked_case_ids if case_id not in reusable_case_ids
+        case_id for case_id in locked_case_ids if case_id not in covered_case_ids
     ]
     if missing_cases:
         failures.append(
             "locked cases lack reusable captures: " + ", ".join(missing_cases)
         )
 
-    if not draft_reusable:
-        failures.append("no reusable Draft/confirm-state capture")
+    draft_machine_proven = _machine_draft_proven(package)
+    if not draft_reusable and not draft_machine_proven:
+        failures.append(
+            "Draft state lacks identity-bound visual or Dataverse proof"
+        )
     if len(hard_reusable) < 5:
         failures.append(
             f"reusable hard-mode captures {len(hard_reusable)} < 5"
@@ -503,11 +799,22 @@ def audit_workshop(
         package,
         [item for item in captures if item.get("status") == "reshoot_required"],
     )
+    allowed_derived_assets: set[Path] = set()
+    manual_sources = set(browserfilm_sources["hard"])
+    manual_walkthrough = (
+        package / "screenshots" / "manual" / "manual-build-walkthrough.gif"
+    ).resolve()
+    if (
+        manual_sources
+        and manual_sources.issubset(reusable_paths)
+        and manual_walkthrough.is_file()
+    ):
+        allowed_derived_assets.add(manual_walkthrough)
     reachable_reshoots = sorted(
         {
             course.repo_name(root, path)
             for path in learner_assets
-            if path in reshoot_paths
+            if path in reshoot_paths and path not in allowed_derived_assets
         }
     )
     if reachable_reshoots:
@@ -519,7 +826,10 @@ def audit_workshop(
         {
             course.repo_name(root, path)
             for path in learner_assets
-            if path not in reusable_paths
+            if (
+                path not in reusable_paths
+                and path not in allowed_derived_assets
+            )
         }
     )
     if unapproved:
@@ -533,6 +843,12 @@ def audit_workshop(
         "base_passed": bool(base_result.get("passed")),
         "locked_cases": len(locked_case_ids),
         "locked_cases_covered": len(locked_case_ids) - len(missing_cases),
+        "locked_cases_visually_covered": len(
+            set(locked_case_ids) & reusable_case_ids
+        ),
+        "locked_cases_machine_covered": len(
+            set(locked_case_ids) & machine_case_ids
+        ),
         "captures": len(captures),
         "reusable": len(reusable),
         "required_reusable": required_reusable,
@@ -541,10 +857,12 @@ def audit_workshop(
         ),
         "hard_reusable": len(hard_reusable),
         "draft_reusable": len(draft_reusable),
+        "draft_machine_proven": draft_machine_proven,
         "learner_images": learner_images,
         "learner_screenshot_links": learner_links,
         "learner_screenshot_assets": len(learner_assets),
         "reference_only_images": reference_only,
+        "allowed_derived_assets": len(allowed_derived_assets),
     }
     return {
         "slug": slug,

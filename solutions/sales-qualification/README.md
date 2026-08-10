@@ -51,8 +51,11 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | Source bundle | `solutions/sales-qualification/exports/sales-qualification-source.zip` |
 | Manual evidence | `solutions/sales-qualification/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/sales-qualification/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/sales-qualification/exports/sales-qualification-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/sales-qualification/exports/sales-qualification-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/sales-qualification/exports/sales-qualification-solution-export.json` |
 
-**Scaffold status:** 79 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 108 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

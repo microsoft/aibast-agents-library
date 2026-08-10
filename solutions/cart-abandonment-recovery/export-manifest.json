@@ -27,6 +27,30 @@
       "status": "ready"
     },
     {
+      "id": "copilot-studio-solution",
+      "label": "Importable Copilot Studio solution",
+      "path": "solutions/cart-abandonment-recovery/exports/cart-abandonment-recovery-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/exports/cart-abandonment-recovery-copilot-studio-solution.zip",
+      "use": "Unmanaged solution ZIP for manual import; the agent remains unpublished",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-deployment-settings",
+      "label": "Copilot Studio deployment settings",
+      "path": "solutions/cart-abandonment-recovery/exports/cart-abandonment-recovery-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/exports/cart-abandonment-recovery-deployment-settings.json",
+      "use": "Connection-reference, environment-variable, and agent import settings",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-export-metadata",
+      "label": "Copilot Studio solution export metadata",
+      "path": "solutions/cart-abandonment-recovery/exports/cart-abandonment-recovery-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/exports/cart-abandonment-recovery-solution-export.json",
+      "use": "Export identity, integrity hash, source environment, and import caveats",
+      "status": "ready"
+    },
+    {
       "id": "field-guide",
       "label": "Customer field guide",
       "path": "solutions/cart-abandonment-recovery/field-guide.html",
@@ -227,6 +251,14 @@
       "status": "ready"
     },
     {
+      "id": "easy-evidence-dataverse-draft-evidence",
+      "label": "Dataverse Draft Evidence",
+      "path": "solutions/cart-abandonment-recovery/evals/dataverse-draft-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/evals/dataverse-draft-evidence.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
       "id": "manual-evidence",
       "label": "Manual build evidence",
       "path": "solutions/cart-abandonment-recovery/evals/manual-build-evidence.json",
@@ -264,6 +296,174 @@
       "path": "solutions/cart-abandonment-recovery/evals/visual-checkpoints.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/evals/visual-checkpoints.json",
       "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-car-01",
+      "label": "Annotated visual checkpoint: easy-car-01",
+      "path": "solutions/cart-abandonment-recovery/screenshots/assisted/annotated/02-car-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/screenshots/assisted/annotated/02-car-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-car-02",
+      "label": "Annotated visual checkpoint: easy-car-02",
+      "path": "solutions/cart-abandonment-recovery/screenshots/assisted/annotated/03-car-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/screenshots/assisted/annotated/03-car-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-04-car-03",
+      "label": "Annotated visual checkpoint: easy-car-03",
+      "path": "solutions/cart-abandonment-recovery/screenshots/assisted/annotated/04-car-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/screenshots/assisted/annotated/04-car-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-05-car-04",
+      "label": "Annotated visual checkpoint: easy-car-04",
+      "path": "solutions/cart-abandonment-recovery/screenshots/assisted/annotated/05-car-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/screenshots/assisted/annotated/05-car-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-create-blank-agent",
+      "label": "Annotated visual checkpoint: hard-step-01",
+      "path": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/01-create-blank-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/screenshots/manual/annotated/01-create-blank-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-name-agent",
+      "label": "Annotated visual checkpoint: hard-step-02",
+      "path": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/02-name-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/screenshots/manual/annotated/02-name-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-enter-instructions",
+      "label": "Annotated visual checkpoint: hard-step-03",
+      "path": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/03-enter-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/screenshots/manual/annotated/03-enter-instructions.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-05-remove-web-search",
+      "label": "Annotated visual checkpoint: hard-step-05",
+      "path": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/05-remove-web-search.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/screenshots/manual/annotated/05-remove-web-search.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-06-add-aibast-cart-recovery-rules-and-safety",
+      "label": "Annotated visual checkpoint: hard-step-06",
+      "path": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/06-add-aibast-cart-recovery-rules-and-safety.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/screenshots/manual/annotated/06-add-aibast-cart-recovery-rules-and-safety.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-07-add-aibast-cart-recovery-synthetic-records",
+      "label": "Annotated visual checkpoint: hard-step-07",
+      "path": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/07-add-aibast-cart-recovery-synthetic-records.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/screenshots/manual/annotated/07-add-aibast-cart-recovery-synthetic-records.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-08-add-abandonment-analysis",
+      "label": "Annotated visual checkpoint: hard-step-08",
+      "path": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/08-add-abandonment-analysis.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/screenshots/manual/annotated/08-add-abandonment-analysis.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-09-add-conversion-tracking",
+      "label": "Annotated visual checkpoint: hard-step-09",
+      "path": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/09-add-conversion-tracking.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/screenshots/manual/annotated/09-add-conversion-tracking.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-10-add-incentive-optimization",
+      "label": "Annotated visual checkpoint: hard-step-10",
+      "path": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/10-add-incentive-optimization.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/screenshots/manual/annotated/10-add-incentive-optimization.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-11-add-recovery-campaign",
+      "label": "Annotated visual checkpoint: hard-step-11",
+      "path": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/11-add-recovery-campaign.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/screenshots/manual/annotated/11-add-recovery-campaign.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-12-review-inventory",
+      "label": "Annotated visual checkpoint: hard-step-12",
+      "path": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/12-review-inventory.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/screenshots/manual/annotated/12-review-inventory.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-13-open-preview",
+      "label": "Annotated visual checkpoint: hard-step-13",
+      "path": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/13-open-preview.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/screenshots/manual/annotated/13-open-preview.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-14-car-01",
+      "label": "Annotated visual checkpoint: hard-car-01",
+      "path": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/14-car-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/screenshots/manual/annotated/14-car-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-15-car-02",
+      "label": "Annotated visual checkpoint: hard-car-02",
+      "path": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/15-car-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/screenshots/manual/annotated/15-car-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-16-car-03",
+      "label": "Annotated visual checkpoint: hard-car-03",
+      "path": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/16-car-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/screenshots/manual/annotated/16-car-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-17-car-04",
+      "label": "Annotated visual checkpoint: hard-car-04",
+      "path": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/17-car-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/screenshots/manual/annotated/17-car-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-18-confirm-draft",
+      "label": "Annotated visual checkpoint: hard-draft",
+      "path": "solutions/cart-abandonment-recovery/screenshots/manual/annotated/18-confirm-draft.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/screenshots/manual/annotated/18-confirm-draft.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
@@ -562,5 +762,31 @@
       "use": "Copilot-assisted evidence inventory",
       "status": "ready"
     }
-  ]
+  ],
+  "copilot_studio_solution": {
+    "label": "Importable Cart Abandonment Recovery Agent Copilot Studio solution",
+    "status": "exported",
+    "solution_unique_name": "aibast_CartAbandonmentRecoveryPilo",
+    "zip": {
+      "path": "solutions/cart-abandonment-recovery/exports/cart-abandonment-recovery-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/exports/cart-abandonment-recovery-copilot-studio-solution.zip",
+      "sha256": "cd8842e5fc28fe64b13752d3aa99d82c66f644156a5d69febca66787bac84da6",
+      "bytes": 3408
+    },
+    "deployment_settings": {
+      "path": "solutions/cart-abandonment-recovery/exports/cart-abandonment-recovery-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/exports/cart-abandonment-recovery-deployment-settings.json"
+    },
+    "metadata": {
+      "path": "solutions/cart-abandonment-recovery/exports/cart-abandonment-recovery-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/cart-abandonment-recovery/exports/cart-abandonment-recovery-solution-export.json"
+    },
+    "managed": false,
+    "published": false,
+    "import_caveats": [
+      "Import as an unmanaged solution for manual review.",
+      "Map connection references and environment variables before enabling integrations.",
+      "The exported agent remains unpublished unless the target administrator explicitly publishes it."
+    ]
+  }
 }

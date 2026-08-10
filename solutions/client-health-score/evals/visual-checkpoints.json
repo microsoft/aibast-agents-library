@@ -9,57 +9,164 @@
   },
   "summary": {
     "total_existing_captures": 26,
-    "reusable": 0,
-    "reshoot_required": 26,
-    "new_learn_step_captures_recommended": 0
+    "reusable": 19,
+    "reshoot_required": 7
   },
   "captures": [
     {
       "id": "easy-chs-01",
       "mode": "easy",
+      "case_id": "CHS-01",
       "source": "solutions/client-health-score/screenshots/assisted/01-chs-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CHS-01"
+      "annotated": "solutions/client-health-score/screenshots/assisted/annotated/01-chs-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "HEALTHY — Monitor & Protect",
+        "Pinnacle Energy",
+        "Apex Manufacturing",
+        "National Logistics Group"
+      ],
+      "full_case_not_visibly_proven": [
+        "TechCorp Industries, Churn Indicator, and CRITICAL are outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 284,
+          "width": 940,
+          "height": 310,
+          "label": "Healthy portfolio segment"
+        }
+      ]
     },
     {
       "id": "easy-chs-02",
       "mode": "easy",
+      "case_id": "CHS-02",
       "source": "solutions/client-health-score/screenshots/assisted/02-chs-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CHS-02"
+      "annotated": "solutions/client-health-score/screenshots/assisted/annotated/02-chs-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Healthy Accounts — Engagement Benchmarks",
+        "TechCorp Industries",
+        "executive recovery review"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact No executive contact in 90 days and Declining billing trend markers are outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 150,
+          "width": 700,
+          "height": 260,
+          "label": "Healthy engagement benchmarks"
+        },
+        {
+          "x": 288,
+          "y": 520,
+          "width": 930,
+          "height": 72,
+          "label": "TechCorp recovery review"
+        }
+      ]
     },
     {
       "id": "easy-chs-03",
       "mode": "easy",
+      "case_id": "CHS-03",
       "source": "solutions/client-health-score/screenshots/assisted/03-chs-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CHS-03"
+      "annotated": "solutions/client-health-score/screenshots/assisted/annotated/03-chs-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "All Other Accounts — Positive NPS, Stable or Growing",
+        "Healthcare Solutions Inc",
+        "Pinnacle Energy"
+      ],
+      "full_case_not_visibly_proven": [
+        "Declining Accounts Requiring Attention, TechCorp Industries, and Global Finance Corp are outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 225,
+          "width": 565,
+          "height": 400,
+          "label": "Positive satisfaction contrast"
+        }
+      ]
     },
     {
       "id": "easy-chs-04",
       "mode": "easy",
+      "case_id": "CHS-04",
       "source": "solutions/client-health-score/screenshots/assisted/04-chs-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CHS-04"
+      "annotated": "solutions/client-health-score/screenshots/assisted/annotated/04-chs-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Healthcare Solutions Inc — AT_RISK",
+        "Health Score 61",
+        "Scenario Churn Indicator: 20%"
+      ],
+      "full_case_not_visibly_proven": [
+        "TechCorp Industries and Global Finance Corp are outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 112,
+          "width": 500,
+          "height": 40,
+          "label": "Healthcare at-risk identity"
+        },
+        {
+          "x": 286,
+          "y": 155,
+          "width": 286,
+          "height": 348,
+          "label": "Healthcare risk metrics"
+        }
+      ]
     },
     {
       "id": "easy-chs-05",
       "mode": "easy",
+      "case_id": "CHS-05",
       "source": "solutions/client-health-score/screenshots/assisted/05-chs-05.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CHS-05"
+      "annotated": "solutions/client-health-score/screenshots/assisted/annotated/05-chs-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Executive Engagement Plan",
+        "Approval gate",
+        "Nina Shah"
+      ],
+      "full_case_not_visibly_proven": [
+        "Morgan Lee and Value realization workshop are outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 185,
+          "width": 940,
+          "height": 360,
+          "label": "Executive engagement plan"
+        },
+        {
+          "x": 288,
+          "y": 438,
+          "width": 933,
+          "height": 49,
+          "label": "Approval gate"
+        }
+      ]
     },
     {
       "id": "easy-draft",
       "mode": "easy",
       "source": "solutions/client-health-score/screenshots/assisted/06-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The target Client Health Score Pilot row is not visible; unrelated Draft rows cannot prove the validated agent remains Draft.",
+      "draft": true
     },
     {
       "id": "hard-step-01",
@@ -67,23 +174,49 @@
       "step": 1,
       "source": "solutions/client-health-score/screenshots/manual/01-create-blank-agent.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The capture is a blank loading canvas with a spinner; no blank agent workspace or Untitled Agent identity is visible."
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
       "step": 2,
       "source": "solutions/client-health-score/screenshots/manual/02-name-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Client Health Score Manual in the name field"
+      ],
+      "boxes": [
+        {
+          "x": 160,
+          "y": 95,
+          "width": 825,
+          "height": 58,
+          "label": "Manual agent name entered"
+        }
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
       "step": 3,
       "source": "solutions/client-health-score/screenshots/manual/03-enter-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence-first response contract",
+        "Locked Preview evidence anchors",
+        "CHS-01 through CHS-05 anchors"
+      ],
+      "boxes": [
+        {
+          "x": 82,
+          "y": 439,
+          "width": 900,
+          "height": 375,
+          "label": "Reviewed locked-case instruction policy"
+        }
+      ]
     },
     {
       "id": "hard-step-04",
@@ -91,15 +224,27 @@
       "step": 4,
       "source": "solutions/client-health-score/screenshots/manual/04-save-instructions.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The instruction text is visible, but no save confirmation, disabled save state, or No unsaved changes indicator proves the policy was saved."
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
       "step": 5,
       "source": "solutions/client-health-score/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Tools and Knowledge sections contain no default web-search chip"
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 192,
+          "width": 380,
+          "height": 123,
+          "label": "Default web search absent"
+        }
+      ]
     },
     {
       "id": "hard-step-06",
@@ -107,7 +252,7 @@
       "step": 6,
       "source": "solutions/client-health-score/screenshots/manual/06-add-aibast-client-health-retention-playbook.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "Knowledge is collapsed and aibast_client-health-retention-playbook.md is not visible."
     },
     {
       "id": "hard-step-07",
@@ -115,116 +260,349 @@
       "step": 7,
       "source": "solutions/client-health-score/screenshots/manual/07-add-aibast-client-health-synthetic-portfolio.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "Knowledge is collapsed and aibast_client-health-synthetic-portfolio.md is not visible."
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
       "step": 8,
       "source": "solutions/client-health-score/screenshots/manual/08-add-at-risk-clients.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/08-add-at-risk-clients.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "at-risk-client-prioritization"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 183,
+          "width": 242,
+          "height": 45,
+          "label": "At-risk prioritization skill"
+        }
+      ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
       "step": 9,
       "source": "solutions/client-health-score/screenshots/manual/09-add-engagement-analysis.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/09-add-engagement-analysis.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "client-engagement-analysis",
+        "at-risk-client-prioritization"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 183,
+          "width": 245,
+          "height": 85,
+          "label": "Two reviewed skills"
+        }
+      ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
       "step": 10,
       "source": "solutions/client-health-score/screenshots/manual/10-add-health-dashboard.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/10-add-health-dashboard.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "client-portfolio-health-dashboard",
+        "client-engagement-analysis",
+        "at-risk-client-prioritization"
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 182,
+          "width": 286,
+          "height": 128,
+          "label": "Three reviewed skills"
+        }
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
       "step": 11,
       "source": "solutions/client-health-score/screenshots/manual/11-add-retention-plan.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/11-add-retention-plan.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "client-retention-playbook",
+        "client-portfolio-health-dashboard",
+        "client-engagement-analysis",
+        "at-risk-client-prioritization"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 183,
+          "width": 287,
+          "height": 168,
+          "label": "Four reviewed skills"
+        }
+      ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
       "step": 12,
       "source": "solutions/client-health-score/screenshots/manual/12-add-satisfaction-trend.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/12-add-satisfaction-trend.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "client-satisfaction-trend",
+        "client-retention-playbook",
+        "client-portfolio-health-dashboard",
+        "client-engagement-analysis",
+        "at-risk-client-prioritization"
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 182,
+          "width": 288,
+          "height": 211,
+          "label": "Five reviewed skills"
+        }
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
       "step": 13,
       "source": "solutions/client-health-score/screenshots/manual/13-review-inventory.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/13-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "No unsaved changes",
+        "Claude Sonnet 4.6",
+        "five reviewed skills"
+      ],
+      "full_inventory_not_visibly_proven": [
+        "The two Knowledge filenames remain collapsed and require reshoot evidence."
+      ],
+      "boxes": [
+        {
+          "x": 1045,
+          "y": 42,
+          "width": 202,
+          "height": 55,
+          "label": "Saved with no unsaved changes"
+        },
+        {
+          "x": 1198,
+          "y": 84,
+          "width": 200,
+          "height": 43,
+          "label": "Claude Sonnet 4.6"
+        },
+        {
+          "x": 1025,
+          "y": 180,
+          "width": 293,
+          "height": 210,
+          "label": "Five reviewed skills"
+        }
+      ]
     },
     {
       "id": "hard-step-14",
       "mode": "hard",
       "step": 14,
       "source": "solutions/client-health-score/screenshots/manual/14-open-preview.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/14-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview selected",
+        "New chat",
+        "Client Health Score Manual"
+      ],
+      "boxes": [
+        {
+          "x": 640,
+          "y": 13,
+          "width": 95,
+          "height": 36,
+          "label": "Preview selected"
+        },
+        {
+          "x": 837,
+          "y": 90,
+          "width": 95,
+          "height": 39,
+          "label": "Fresh chat control"
+        },
+        {
+          "x": 260,
+          "y": 147,
+          "width": 360,
+          "height": 86,
+          "label": "Manual agent Preview"
+        }
+      ]
     },
     {
-      "id": "hard-step-15",
+      "id": "hard-chs-01",
       "mode": "hard",
+      "case_id": "CHS-01",
       "step": 15,
       "source": "solutions/client-health-score/screenshots/manual/15-chs-01.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CHS-01"
+      "reason": "The visible response says the actual data files are not accessible and constructs the dashboard from embedded evidence anchors; blocker and reasoning text cannot prove a grounded CHS-01 result."
     },
     {
-      "id": "hard-step-16",
+      "id": "hard-chs-02",
       "mode": "hard",
+      "case_id": "CHS-02",
       "step": 16,
       "source": "solutions/client-health-score/screenshots/manual/16-chs-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CHS-02"
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/16-chs-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "TechCorp Industries",
+        "no executive contact",
+        "declining billing",
+        "elevated escalations"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact 90-day wording is outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 253,
+          "width": 940,
+          "height": 76,
+          "label": "TechCorp engagement breakdown"
+        }
+      ]
     },
     {
-      "id": "hard-step-17",
+      "id": "hard-chs-03",
       "mode": "hard",
+      "case_id": "CHS-03",
       "step": 17,
       "source": "solutions/client-health-score/screenshots/manual/17-chs-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CHS-03"
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/17-chs-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Declining Accounts Requiring Attention",
+        "TechCorp Industries",
+        "Global Finance Corp"
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 288,
+          "width": 930,
+          "height": 165,
+          "label": "Declining-account evidence"
+        },
+        {
+          "x": 285,
+          "y": 510,
+          "width": 735,
+          "height": 136,
+          "label": "TechCorp and Global Finance trend table"
+        }
+      ]
     },
     {
-      "id": "hard-step-18",
+      "id": "hard-chs-04",
       "mode": "hard",
+      "case_id": "CHS-04",
       "step": 18,
       "source": "solutions/client-health-score/screenshots/manual/18-chs-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CHS-04"
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/18-chs-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "First Recovery Actions",
+        "account-owner approval required",
+        "value realization workshop",
+        "No outreach, concessions, renewals, or CRM changes"
+      ],
+      "full_case_not_visibly_proven": [
+        "The three required account names are outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 437,
+          "width": 935,
+          "height": 122,
+          "label": "Approval-gated recovery actions"
+        },
+        {
+          "x": 285,
+          "y": 570,
+          "width": 938,
+          "height": 110,
+          "label": "No client-facing side effects"
+        }
+      ]
     },
     {
-      "id": "hard-step-19",
+      "id": "hard-chs-05",
       "mode": "hard",
+      "case_id": "CHS-05",
       "step": 19,
       "source": "solutions/client-health-score/screenshots/manual/19-chs-05.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CHS-05"
+      "reason": "The visible response says the source files are not present and relies on locked Preview anchors and skill context; echoed acceptance phrases cannot prove a grounded CHS-05 result."
     },
     {
-      "id": "hard-step-20",
+      "id": "hard-draft",
       "mode": "hard",
       "step": 20,
       "source": "solutions/client-health-score/screenshots/manual/20-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/client-health-score/screenshots/manual/annotated/20-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Client Health Score Manual",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 110,
+          "y": 247,
+          "width": 650,
+          "height": 52,
+          "label": "Target manual agent remains Draft"
+        }
+      ]
     }
-  ]
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy Draft gate filtered to Client Health Score Pilot with Draft visible.",
+      "Hard step 1 after the blank Untitled Agent workspace has fully loaded.",
+      "Hard step 4 with the save tooltip or another explicit saved-state indicator visible.",
+      "One expanded Hard-mode Knowledge inventory showing both exact filenames; capture both knowledge steps from the real UI.",
+      "Hard CHS-01 after both knowledge files are grounded, with the final answer visible and no missing-source blocker.",
+      "Hard CHS-05 after both knowledge files are grounded, with the final answer visible and no missing-source blocker."
+    ],
+    "new_learn_step_captures": [
+      "Brainstem skill attached in VS Code Copilot Chat.",
+      "Copilot-only skill attached in VS Code Copilot Chat.",
+      "Brainstem local 5/5 verdict.",
+      "Copilot-only local 5/5 verdict.",
+      "Brainstem deploy response with Draft inventory.",
+      "Copilot-only deploy response with Draft inventory.",
+      "Brainstem final complete verdict.",
+      "Copilot-only final complete verdict."
+    ]
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:client-health-score",
+    "reviewed_at": "2026-08-10T00:27:58.132065+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  }
 }

@@ -53,8 +53,11 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | Source bundle | `solutions/win-loss-analysis/exports/win-loss-analysis-source.zip` |
 | Manual evidence | `solutions/win-loss-analysis/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/win-loss-analysis/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/win-loss-analysis/exports/win-loss-analysis-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/win-loss-analysis/exports/win-loss-analysis-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/win-loss-analysis/exports/win-loss-analysis-solution-export.json` |
 
-**Scaffold status:** 79 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 101 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

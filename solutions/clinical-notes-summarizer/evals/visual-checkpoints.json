@@ -9,73 +9,194 @@
   },
   "summary": {
     "total_existing_captures": 23,
-    "reusable": 0,
-    "reshoot_required": 23,
-    "new_learn_step_captures_recommended": 0
+    "reusable": 15,
+    "reshoot_required": 8
   },
   "captures": [
     {
       "id": "easy-cn-01",
       "mode": "easy",
+      "case_id": "CN-01",
       "source": "solutions/clinical-notes-summarizer/screenshots/assisted/01-cn-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CN-01"
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/assisted/annotated/01-cn-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Clinical interpretation: not performed",
+        "clinician review required"
+      ],
+      "full_case_not_visibly_proven": [
+        "SYN-ENC-001 is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 280,
+          "y": 452,
+          "width": 720,
+          "height": 48,
+          "label": "No clinical interpretation performed"
+        }
+      ]
     },
     {
       "id": "easy-cn-02",
       "mode": "easy",
+      "case_id": "CN-02",
       "source": "solutions/clinical-notes-summarizer/screenshots/assisted/02-cn-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CN-02"
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/assisted/annotated/02-cn-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Metformin 1000 mg twice daily",
+        "clinician/pharmacist review"
+      ],
+      "boxes": [
+        {
+          "x": 282,
+          "y": 338,
+          "width": 860,
+          "height": 112,
+          "label": "Source-recorded medications"
+        },
+        {
+          "x": 282,
+          "y": 458,
+          "width": 760,
+          "height": 48,
+          "label": "Clinician or pharmacist review"
+        }
+      ]
     },
     {
       "id": "easy-cn-03",
       "mode": "easy",
+      "case_id": "CN-03",
       "source": "solutions/clinical-notes-summarizer/screenshots/assisted/03-cn-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CN-03"
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/assisted/annotated/03-cn-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "source-coded type 2 diabetes",
+        "No diagnosis was added"
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 142,
+          "width": 365,
+          "height": 174,
+          "label": "Source-coded problem list"
+        },
+        {
+          "x": 282,
+          "y": 442,
+          "width": 520,
+          "height": 44,
+          "label": "No diagnosis added"
+        }
+      ]
     },
     {
       "id": "easy-cn-04",
       "mode": "easy",
+      "case_id": "CN-04",
       "source": "solutions/clinical-notes-summarizer/screenshots/assisted/04-cn-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CN-04"
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/assisted/annotated/04-cn-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Orthopedics referral draft recorded",
+        "No referral was placed"
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 156,
+          "width": 410,
+          "height": 134,
+          "label": "Recorded referral draft"
+        },
+        {
+          "x": 282,
+          "y": 345,
+          "width": 700,
+          "height": 70,
+          "label": "No referral action occurred"
+        }
+      ]
     },
     {
       "id": "easy-draft",
       "mode": "easy",
       "source": "solutions/clinical-notes-summarizer/screenshots/assisted/05-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The Agents list does not visibly contain the target Clinical Notes Pilot row, so its Draft identity cannot be verified.",
+      "draft": true
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
       "step": 1,
       "source": "solutions/clinical-notes-summarizer/screenshots/manual/01-create-blank-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent",
+        "blank Build workspace"
+      ],
+      "boxes": [
+        {
+          "x": 72,
+          "y": 10,
+          "width": 920,
+          "height": 145,
+          "label": "Blank agent workspace"
+        }
+      ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
       "step": 2,
       "source": "solutions/clinical-notes-summarizer/screenshots/manual/02-name-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Clinical Notes Manual in the name field"
+      ],
+      "boxes": [
+        {
+          "x": 164,
+          "y": 100,
+          "width": 820,
+          "height": 50,
+          "label": "Manual agent name entered"
+        }
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
       "step": 3,
       "source": "solutions/clinical-notes-summarizer/screenshots/manual/03-enter-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Synthetic healthcare evidence only",
+        "Locked Preview evidence anchors"
+      ],
+      "boxes": [
+        {
+          "x": 80,
+          "y": 230,
+          "width": 900,
+          "height": 112,
+          "label": "Reviewed response boundary"
+        },
+        {
+          "x": 80,
+          "y": 500,
+          "width": 900,
+          "height": 320,
+          "label": "Locked Preview anchors"
+        }
+      ]
     },
     {
       "id": "hard-step-04",
@@ -83,15 +204,27 @@
       "step": 4,
       "source": "solutions/clinical-notes-summarizer/screenshots/manual/04-save-instructions.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The screenshot shows the completed Build inventory but no save confirmation or no-unsaved-changes indicator for this checkpoint."
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
       "step": 5,
       "source": "solutions/clinical-notes-summarizer/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Tools section contains no web-search chip"
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 360,
+          "width": 380,
+          "height": 70,
+          "label": "Tools empty; web search absent"
+        }
+      ]
     },
     {
       "id": "hard-step-06",
@@ -99,7 +232,7 @@
       "step": 6,
       "source": "solutions/clinical-notes-summarizer/screenshots/manual/06-add-aibast-clinical-notes-summarizer-review-rules.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The Knowledge chip is truncated, so the exact aibast_clinical-notes-summarizer-review-rules.md filename is not visibly proven."
     },
     {
       "id": "hard-step-07",
@@ -107,7 +240,7 @@
       "step": 7,
       "source": "solutions/clinical-notes-summarizer/screenshots/manual/07-add-aibast-clinical-notes-summarizer-synthetic-records.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The Knowledge chip is truncated, so the exact aibast_clinical-notes-summarizer-synthetic-records.md filename is not visibly proven."
     },
     {
       "id": "hard-step-08",
@@ -115,7 +248,7 @@
       "step": 8,
       "source": "solutions/clinical-notes-summarizer/screenshots/manual/08-add-encounter-summary.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "Duplicate visual evidence; retained capture hard-step-05."
     },
     {
       "id": "hard-step-09",
@@ -123,7 +256,7 @@
       "step": 9,
       "source": "solutions/clinical-notes-summarizer/screenshots/manual/09-add-medication-inventory.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The medication-inventory skill chip is truncated before the full skill name, so the requested upload is not visibly proven."
     },
     {
       "id": "hard-step-10",
@@ -131,7 +264,7 @@
       "step": 10,
       "source": "solutions/clinical-notes-summarizer/screenshots/manual/10-add-problem-list-extract.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "Duplicate visual evidence; retained capture hard-step-05."
     },
     {
       "id": "hard-step-11",
@@ -139,67 +272,210 @@
       "step": 11,
       "source": "solutions/clinical-notes-summarizer/screenshots/manual/11-add-referral-context.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "Duplicate visual evidence; retained capture hard-step-05."
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
       "step": 12,
       "source": "solutions/clinical-notes-summarizer/screenshots/manual/12-review-inventory.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/12-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "four Clinical Notes skills",
+        "two knowledge sources",
+        "No unsaved changes"
+      ],
+      "boxes": [
+        {
+          "x": 1014,
+          "y": 82,
+          "width": 390,
+          "height": 478,
+          "label": "Reviewed model and inventory"
+        },
+        {
+          "x": 1045,
+          "y": 42,
+          "width": 210,
+          "height": 54,
+          "label": "No unsaved changes"
+        }
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
       "step": 13,
       "source": "solutions/clinical-notes-summarizer/screenshots/manual/13-open-preview.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab",
+        "New chat",
+        "Clinical Notes Manual"
+      ],
+      "boxes": [
+        {
+          "x": 635,
+          "y": 8,
+          "width": 108,
+          "height": 45,
+          "label": "Preview selected"
+        },
+        {
+          "x": 836,
+          "y": 92,
+          "width": 105,
+          "height": 42,
+          "label": "Fresh chat control"
+        }
+      ]
     },
     {
-      "id": "hard-step-14",
+      "id": "hard-cn-01",
       "mode": "hard",
+      "case_id": "CN-01",
       "step": 14,
       "source": "solutions/clinical-notes-summarizer/screenshots/manual/14-cn-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CN-01"
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/14-cn-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Clinical interpretation: not performed",
+        "clinician review required"
+      ],
+      "full_case_not_visibly_proven": [
+        "SYN-ENC-001 is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 280,
+          "y": 452,
+          "width": 720,
+          "height": 50,
+          "label": "No clinical interpretation performed"
+        }
+      ]
     },
     {
-      "id": "hard-step-15",
+      "id": "hard-cn-02",
       "mode": "hard",
+      "case_id": "CN-02",
       "step": 15,
       "source": "solutions/clinical-notes-summarizer/screenshots/manual/15-cn-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CN-02"
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/15-cn-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Metformin | 1000 mg | Twice daily",
+        "Reconciliation review required",
+        "clinician or pharmacist review"
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 132,
+          "width": 486,
+          "height": 178,
+          "label": "Source-recorded medications"
+        },
+        {
+          "x": 284,
+          "y": 392,
+          "width": 940,
+          "height": 104,
+          "label": "Reconciliation review boundary"
+        }
+      ]
     },
     {
-      "id": "hard-step-16",
+      "id": "hard-cn-03",
       "mode": "hard",
+      "case_id": "CN-03",
       "step": 16,
       "source": "solutions/clinical-notes-summarizer/screenshots/manual/16-cn-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CN-03"
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/16-cn-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Source-coded type 2 diabetes",
+        "No diagnosis was added"
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 124,
+          "width": 370,
+          "height": 168,
+          "label": "Source-coded problem list"
+        },
+        {
+          "x": 284,
+          "y": 402,
+          "width": 940,
+          "height": 88,
+          "label": "No diagnosis added"
+        }
+      ]
     },
     {
-      "id": "hard-step-17",
+      "id": "hard-cn-04",
       "mode": "hard",
+      "case_id": "CN-04",
       "step": 17,
       "source": "solutions/clinical-notes-summarizer/screenshots/manual/17-cn-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CN-04"
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/17-cn-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Orthopedics referral draft recorded",
+        "No referral was placed",
+        "Authorized clinician/staff review is required"
+      ],
+      "boxes": [
+        {
+          "x": 282,
+          "y": 350,
+          "width": 920,
+          "height": 138,
+          "label": "Referral context and no-action boundary"
+        }
+      ]
     },
     {
-      "id": "hard-step-18",
+      "id": "hard-draft",
       "mode": "hard",
       "step": 18,
       "source": "solutions/clinical-notes-summarizer/screenshots/manual/18-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/clinical-notes-summarizer/screenshots/manual/annotated/18-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Clinical Notes Manual",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 110,
+          "y": 240,
+          "width": 680,
+          "height": 62,
+          "label": "Target agent remains Draft"
+        }
+      ]
     }
-  ]
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy Draft gate filtered to Clinical Notes Pilot with its Draft status visible.",
+      "Hard step 4 with the save confirmation or no-unsaved-changes state visible.",
+      "Expanded Hard Knowledge inventory showing both exact filenames; one capture may supply separate step 6 and step 7 annotations.",
+      "Hard step 9 with the full clinical-notes-summarizer-medication-inventory skill name visible."
+    ],
+    "new_learn_step_captures": []
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:clinical-notes-summarizer",
+    "reviewed_at": "2026-08-10T00:27:58.133617+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  }
 }

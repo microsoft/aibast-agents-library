@@ -35,8 +35,11 @@ replenishes, allocates, promises, or purchases inventory.
 | Source bundle | `solutions/inventory-visibility/exports/inventory-visibility-source.zip` |
 | Manual evidence | `solutions/inventory-visibility/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/inventory-visibility/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/inventory-visibility/exports/inventory-visibility-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/inventory-visibility/exports/inventory-visibility-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/inventory-visibility/exports/inventory-visibility-solution-export.json` |
 
-**Scaffold status:** 69 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 87 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

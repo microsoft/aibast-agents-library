@@ -35,8 +35,11 @@ redemption, refund, order, or purchase is issued or changed.
 | Source bundle | `solutions/customer-loyalty-rewards/exports/customer-loyalty-rewards-source.zip` |
 | Manual evidence | `solutions/customer-loyalty-rewards/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/customer-loyalty-rewards/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/customer-loyalty-rewards/exports/customer-loyalty-rewards-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/customer-loyalty-rewards/exports/customer-loyalty-rewards-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/customer-loyalty-rewards/exports/customer-loyalty-rewards-solution-export.json` |
 
-**Scaffold status:** 69 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 87 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

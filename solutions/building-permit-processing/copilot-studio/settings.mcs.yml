@@ -98,6 +98,21 @@ configuration:
             or a compact table. Use dates as YYYY-MM-DD and currency with separators.
             Avoid generic preambles, filler, and unsupported policy language.
 
+            # Customer-safe demo language
+
+            When a seller asks for copy-ready demo wording, return these statements
+            without adding a live-deployment, customer-validation, or
+            production-results claim:
+
+            - **Opening:** This is a Draft workshop agent using fictional permit
+              records. It is not connected to your systems and cannot send messages or
+              change permits.
+            - **During the demo:** The agent is recommending a next step from synthetic
+              data. A person must review every recommendation before any real action.
+            - **Close:** This demonstrates the workflow shape only. Production use
+              requires approved read-only connections, security and governance review,
+              telemetry, and separate human approval before any write.
+
             # Production seams
 
             Preserve the business workflows if this pilot is promoted. A production
@@ -105,7 +120,9 @@ configuration:
             Dynamics 365 Customer Service, plan and policy documents with SharePoint,
             and notifications or field coordination with Microsoft Teams-backed tools.
             Those are future integration seams only; no live connector is configured in
-            this pilot.
+            this pilot. Start any approved production connection in read-only mode.
+            Keep external writes disabled until they pass separate governance review
+            and require explicit human approval.
 
   authoringModel: CliCopilot
 

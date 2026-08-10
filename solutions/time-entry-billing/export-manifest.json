@@ -27,6 +27,30 @@
       "status": "ready"
     },
     {
+      "id": "copilot-studio-solution",
+      "label": "Importable Copilot Studio solution",
+      "path": "solutions/time-entry-billing/exports/time-entry-billing-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/exports/time-entry-billing-copilot-studio-solution.zip",
+      "use": "Unmanaged solution ZIP for manual import; the agent remains unpublished",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-deployment-settings",
+      "label": "Copilot Studio deployment settings",
+      "path": "solutions/time-entry-billing/exports/time-entry-billing-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/exports/time-entry-billing-deployment-settings.json",
+      "use": "Connection-reference, environment-variable, and agent import settings",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-export-metadata",
+      "label": "Copilot Studio solution export metadata",
+      "path": "solutions/time-entry-billing/exports/time-entry-billing-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/exports/time-entry-billing-solution-export.json",
+      "use": "Export identity, integrity hash, source environment, and import caveats",
+      "status": "ready"
+    },
+    {
       "id": "field-guide",
       "label": "Customer field guide",
       "path": "solutions/time-entry-billing/field-guide.html",
@@ -251,6 +275,14 @@
       "status": "ready"
     },
     {
+      "id": "easy-evidence-dataverse-draft-evidence",
+      "label": "Dataverse Draft Evidence",
+      "path": "solutions/time-entry-billing/evals/dataverse-draft-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/evals/dataverse-draft-evidence.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
       "id": "manual-evidence",
       "label": "Manual build evidence",
       "path": "solutions/time-entry-billing/evals/manual-build-evidence.json",
@@ -343,54 +375,6 @@
       "label": "Annotated visual checkpoint: hard-step-04",
       "path": "solutions/time-entry-billing/screenshots/manual/annotated/04-save-instructions.png",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/annotated/04-save-instructions.png",
-      "use": "Positive deterministic evidence highlighted for learner verification",
-      "status": "ready"
-    },
-    {
-      "id": "annotated-evidence-05-remove-web-search",
-      "label": "Annotated visual checkpoint: hard-step-05",
-      "path": "solutions/time-entry-billing/screenshots/manual/annotated/05-remove-web-search.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/annotated/05-remove-web-search.png",
-      "use": "Positive deterministic evidence highlighted for learner verification",
-      "status": "ready"
-    },
-    {
-      "id": "annotated-evidence-08-add-billing-summary",
-      "label": "Annotated visual checkpoint: hard-step-08",
-      "path": "solutions/time-entry-billing/screenshots/manual/annotated/08-add-billing-summary.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/annotated/08-add-billing-summary.png",
-      "use": "Positive deterministic evidence highlighted for learner verification",
-      "status": "ready"
-    },
-    {
-      "id": "annotated-evidence-09-add-dispute-resolution",
-      "label": "Annotated visual checkpoint: hard-step-09",
-      "path": "solutions/time-entry-billing/screenshots/manual/annotated/09-add-dispute-resolution.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/annotated/09-add-dispute-resolution.png",
-      "use": "Positive deterministic evidence highlighted for learner verification",
-      "status": "ready"
-    },
-    {
-      "id": "annotated-evidence-10-add-invoice-preparation",
-      "label": "Annotated visual checkpoint: hard-step-10",
-      "path": "solutions/time-entry-billing/screenshots/manual/annotated/10-add-invoice-preparation.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/annotated/10-add-invoice-preparation.png",
-      "use": "Positive deterministic evidence highlighted for learner verification",
-      "status": "ready"
-    },
-    {
-      "id": "annotated-evidence-11-add-time-entry-audit",
-      "label": "Annotated visual checkpoint: hard-step-11",
-      "path": "solutions/time-entry-billing/screenshots/manual/annotated/11-add-time-entry-audit.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/annotated/11-add-time-entry-audit.png",
-      "use": "Positive deterministic evidence highlighted for learner verification",
-      "status": "ready"
-    },
-    {
-      "id": "annotated-evidence-12-add-unbilled-report",
-      "label": "Annotated visual checkpoint: hard-step-12",
-      "path": "solutions/time-entry-billing/screenshots/manual/annotated/12-add-unbilled-report.png",
-      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/screenshots/manual/annotated/12-add-unbilled-report.png",
       "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
@@ -754,5 +738,31 @@
       "use": "Copilot-assisted evidence inventory",
       "status": "ready"
     }
-  ]
+  ],
+  "copilot_studio_solution": {
+    "label": "Importable Time Entry and Billing Agent Copilot Studio solution",
+    "status": "exported",
+    "solution_unique_name": "aibast_TimeEntryandBillingPilot",
+    "zip": {
+      "path": "solutions/time-entry-billing/exports/time-entry-billing-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/exports/time-entry-billing-copilot-studio-solution.zip",
+      "sha256": "32f0e66ded06345e266b06cd2b1b17e64bc5acd09746967346c316de0944ce29",
+      "bytes": 4018
+    },
+    "deployment_settings": {
+      "path": "solutions/time-entry-billing/exports/time-entry-billing-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/exports/time-entry-billing-deployment-settings.json"
+    },
+    "metadata": {
+      "path": "solutions/time-entry-billing/exports/time-entry-billing-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/time-entry-billing/exports/time-entry-billing-solution-export.json"
+    },
+    "managed": false,
+    "published": false,
+    "import_caveats": [
+      "Import as an unmanaged solution for manual review.",
+      "Map connection references and environment variables before enabling integrations.",
+      "The exported agent remains unpublished unless the target administrator explicitly publishes it."
+    ]
+  }
 }

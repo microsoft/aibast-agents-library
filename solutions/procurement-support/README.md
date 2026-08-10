@@ -42,8 +42,11 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 4 `SKILL.md` 
 | Source bundle | `solutions/procurement-support/exports/procurement-support-source.zip` |
 | Manual evidence | `solutions/procurement-support/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/procurement-support/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/procurement-support/exports/procurement-support-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/procurement-support/exports/procurement-support-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/procurement-support/exports/procurement-support-solution-export.json` |
 
-**Scaffold status:** 69 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 91 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

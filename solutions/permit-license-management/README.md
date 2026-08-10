@@ -42,8 +42,11 @@ The local agent uses fictional records and produces decision support only. It do
 | Source bundle | `solutions/permit-license-management/exports/permit-license-management-source.zip` |
 | Manual evidence | `solutions/permit-license-management/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/permit-license-management/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/permit-license-management/exports/permit-license-management-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/permit-license-management/exports/permit-license-management-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/permit-license-management/exports/permit-license-management-solution-export.json` |
 
-**Scaffold status:** 69 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 92 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

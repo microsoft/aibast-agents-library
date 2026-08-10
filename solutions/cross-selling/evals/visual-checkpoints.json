@@ -9,73 +9,186 @@
   },
   "summary": {
     "total_existing_captures": 23,
-    "reusable": 0,
-    "reshoot_required": 23,
-    "new_learn_step_captures_recommended": 0
+    "reusable": 12,
+    "reshoot_required": 11
   },
   "captures": [
     {
       "id": "easy-cs-01",
       "mode": "easy",
+      "case_id": "CS-01",
       "source": "solutions/cross-selling/screenshots/assisted/01-cs-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CS-01"
+      "annotated": "solutions/cross-selling/screenshots/assisted/annotated/01-cs-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "Synthetic sales evidence only",
+        "Human approval required"
+      ],
+      "full_case_not_visibly_proven": [
+        "Cross-Sell Opportunity Scan and Synthetic Usage Signals are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 278,
+          "y": 395,
+          "width": 950,
+          "height": 116,
+          "label": "Evidence boundary"
+        },
+        {
+          "x": 278,
+          "y": 516,
+          "width": 920,
+          "height": 55,
+          "label": "Synthetic-only approval boundary"
+        }
+      ]
     },
     {
       "id": "easy-cs-02",
       "mode": "easy",
+      "case_id": "CS-02",
       "source": "solutions/cross-selling/screenshots/assisted/02-cs-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CS-02"
+      "annotated": "solutions/cross-selling/screenshots/assisted/annotated/02-cs-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "Fixed synthetic scenario inputs",
+        "Planning assumptions for human review"
+      ],
+      "full_case_not_visibly_proven": [
+        "Product Affinity Matrix is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 282,
+          "y": 142,
+          "width": 580,
+          "height": 225,
+          "label": "Synthetic assumption treatment"
+        },
+        {
+          "x": 278,
+          "y": 410,
+          "width": 950,
+          "height": 164,
+          "label": "Evidence boundary"
+        }
+      ]
     },
     {
       "id": "easy-cs-03",
       "mode": "easy",
+      "case_id": "CS-03",
       "source": "solutions/cross-selling/screenshots/assisted/03-cs-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CS-03"
+      "annotated": "solutions/cross-selling/screenshots/assisted/annotated/03-cs-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "Suggested Review Sequence (Draft — No Actions Taken)",
+        "No CRM change has occurred"
+      ],
+      "full_case_not_visibly_proven": [
+        "Prioritized Recommendations and Draft Engagement Plan are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 280,
+          "y": 174,
+          "width": 948,
+          "height": 190,
+          "label": "Draft review sequence"
+        },
+        {
+          "x": 278,
+          "y": 393,
+          "width": 950,
+          "height": 181,
+          "label": "Evidence and no-action boundary"
+        }
+      ]
     },
     {
       "id": "easy-cs-04",
       "mode": "easy",
+      "case_id": "CS-04",
       "source": "solutions/cross-selling/screenshots/assisted/04-cs-04.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CS-04"
+      "reason": "The screenshot shows internal reasoning that repeats the required anchors as instructions, not the final user-facing answer. Reasoning text cannot be used as pass evidence."
     },
     {
       "id": "easy-draft",
       "mode": "easy",
       "source": "solutions/cross-selling/screenshots/assisted/05-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The target Cross-Selling Pilot row is not visible, so the screenshot does not prove its Draft identity.",
+      "draft": true
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
       "step": 1,
       "source": "solutions/cross-selling/screenshots/manual/01-create-blank-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent",
+        "Blank Build workspace"
+      ],
+      "boxes": [
+        {
+          "x": 164,
+          "y": 101,
+          "width": 816,
+          "height": 50,
+          "label": "Blank agent workspace"
+        }
+      ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
       "step": 2,
       "source": "solutions/cross-selling/screenshots/manual/02-name-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Cross-Selling Manual in the name field"
+      ],
+      "boxes": [
+        {
+          "x": 164,
+          "y": 101,
+          "width": 816,
+          "height": 50,
+          "label": "Manual agent name entered"
+        }
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
       "step": 3,
       "source": "solutions/cross-selling/screenshots/manual/03-enter-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Reviewed instruction policy",
+        "Locked Preview evidence anchors"
+      ],
+      "full_checkpoint_not_visibly_proven": [
+        "The screenshot predates the later Claude Sonnet 4.6 inventory confirmation."
+      ],
+      "boxes": [
+        {
+          "x": 70,
+          "y": 188,
+          "width": 910,
+          "height": 628,
+          "label": "Reviewed instruction policy"
+        }
+      ]
     },
     {
       "id": "hard-step-04",
@@ -83,7 +196,7 @@
       "step": 4,
       "source": "solutions/cross-selling/screenshots/manual/04-save-instructions.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is pixel-identical to steps 5-11 and shows the completed inventory without a saved-state indicator or Save confirmation."
     },
     {
       "id": "hard-step-05",
@@ -91,15 +204,27 @@
       "step": 5,
       "source": "solutions/cross-selling/screenshots/manual/05-remove-web-search.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is pixel-identical to steps 4 and 6-11 and shows the completed inventory rather than the web-search removal action or an explicit removal confirmation."
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
       "step": 6,
       "source": "solutions/cross-selling/screenshots/manual/06-add-aibast-cross-selling-operating-rules.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/06-add-aibast-cross-selling-operating-rules.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_cross-selling-operating-rules.md"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 509,
+          "width": 340,
+          "height": 48,
+          "label": "Operating rules knowledge file"
+        }
+      ]
     },
     {
       "id": "hard-step-07",
@@ -107,7 +232,7 @@
       "step": 7,
       "source": "solutions/cross-selling/screenshots/manual/07-add-aibast-cross-selling-synthetic-records.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "Duplicate visual evidence; retained capture hard-step-06."
     },
     {
       "id": "hard-step-08",
@@ -115,7 +240,7 @@
       "step": 8,
       "source": "solutions/cross-selling/screenshots/manual/08-add-opportunity-scan.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is pixel-identical to steps 4-11 and shows the completed four-skill inventory; it does not isolate the opportunity-scan addition."
     },
     {
       "id": "hard-step-09",
@@ -123,7 +248,7 @@
       "step": 9,
       "source": "solutions/cross-selling/screenshots/manual/09-add-product-affinity.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is pixel-identical to steps 4-11 and shows the completed four-skill inventory; it does not isolate the product-affinity addition."
     },
     {
       "id": "hard-step-10",
@@ -131,7 +256,7 @@
       "step": 10,
       "source": "solutions/cross-selling/screenshots/manual/10-add-recommendation-engine.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is pixel-identical to steps 4-11 and shows the completed four-skill inventory; it does not isolate the recommendation-engine addition."
     },
     {
       "id": "hard-step-11",
@@ -139,67 +264,217 @@
       "step": 11,
       "source": "solutions/cross-selling/screenshots/manual/11-add-revenue-impact.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is pixel-identical to steps 4-11 and shows the completed four-skill inventory; it does not isolate the revenue-impact addition."
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
       "step": 12,
       "source": "solutions/cross-selling/screenshots/manual/12-review-inventory.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/12-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "Four configured skills",
+        "Two configured knowledge files",
+        "Tools section contains no configured tool"
+      ],
+      "boxes": [
+        {
+          "x": 1202,
+          "y": 85,
+          "width": 192,
+          "height": 42,
+          "label": "Reviewed model"
+        },
+        {
+          "x": 1028,
+          "y": 181,
+          "width": 340,
+          "height": 168,
+          "label": "Four configured skills"
+        },
+        {
+          "x": 1018,
+          "y": 365,
+          "width": 380,
+          "height": 56,
+          "label": "No configured tools"
+        },
+        {
+          "x": 1028,
+          "y": 423,
+          "width": 340,
+          "height": 132,
+          "label": "Two knowledge files"
+        }
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
       "step": 13,
       "source": "solutions/cross-selling/screenshots/manual/13-open-preview.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab",
+        "New chat",
+        "Cross-Selling Manual"
+      ],
+      "boxes": [
+        {
+          "x": 632,
+          "y": 3,
+          "width": 112,
+          "height": 54,
+          "label": "Preview selected"
+        },
+        {
+          "x": 835,
+          "y": 82,
+          "width": 112,
+          "height": 48,
+          "label": "Fresh chat control"
+        }
+      ]
     },
     {
-      "id": "hard-step-14",
+      "id": "hard-cs-01",
       "mode": "hard",
+      "case_id": "CS-01",
       "step": 14,
       "source": "solutions/cross-selling/screenshots/manual/14-cs-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CS-01"
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/14-cs-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "Synthetic source model",
+        "Human approval required"
+      ],
+      "full_case_not_visibly_proven": [
+        "Cross-Sell Opportunity Scan and Synthetic Usage Signals are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 278,
+          "y": 365,
+          "width": 950,
+          "height": 207,
+          "label": "Evidence and approval boundary"
+        }
+      ]
     },
     {
-      "id": "hard-step-15",
+      "id": "hard-cs-02",
       "mode": "hard",
+      "case_id": "CS-02",
       "step": 15,
       "source": "solutions/cross-selling/screenshots/manual/15-cs-02.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CS-02"
+      "reason": "The screenshot shows analysis content above an empty Response heading and does not show the final user-facing answer. Reasoning text cannot be used as pass evidence."
     },
     {
-      "id": "hard-step-16",
+      "id": "hard-cs-03",
       "mode": "hard",
+      "case_id": "CS-03",
       "step": 16,
       "source": "solutions/cross-selling/screenshots/manual/16-cs-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CS-03"
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/16-cs-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "Pricing & compliance review",
+        "Engagement authorization"
+      ],
+      "full_case_not_visibly_proven": [
+        "Prioritized Recommendations and Draft Engagement Plan are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 300,
+          "y": 219,
+          "width": 915,
+          "height": 119,
+          "label": "Review and authorization gates"
+        },
+        {
+          "x": 278,
+          "y": 362,
+          "width": 950,
+          "height": 214,
+          "label": "Evidence boundary"
+        }
+      ]
     },
     {
-      "id": "hard-step-17",
+      "id": "hard-cs-04",
       "mode": "hard",
+      "case_id": "CS-04",
       "step": 17,
       "source": "solutions/cross-selling/screenshots/manual/17-cs-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CS-04"
+      "annotated": "solutions/cross-selling/screenshots/manual/annotated/17-cs-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence boundary",
+        "Scenario B captures 78% of Scenario C's synthetic value",
+        "Human approval required"
+      ],
+      "full_case_not_visibly_proven": [
+        "Synthetic Cross-Sell Value Scenario and Portfolio Totals are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 319,
+          "width": 934,
+          "height": 75,
+          "label": "Synthetic scenario comparison"
+        },
+        {
+          "x": 284,
+          "y": 414,
+          "width": 944,
+          "height": 167,
+          "label": "Evidence and approval boundary"
+        }
+      ]
     },
     {
-      "id": "hard-step-18",
+      "id": "hard-draft",
       "mode": "hard",
       "step": 18,
       "source": "solutions/cross-selling/screenshots/manual/18-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The source image is blank white and contains no visible Copilot Studio UI, agent identity, or Draft status."
     }
-  ]
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy CS-04 with the final user-facing Synthetic Cross-Sell Value Scenario, Portfolio Totals, and Evidence boundary visible.",
+      "Easy Draft gate filtered to Cross-Selling Pilot with Draft visible.",
+      "Hard save confirmation showing No unsaved changes.",
+      "Hard web-search removal with the removed capability or explicit post-removal state visible.",
+      "One action-specific capture for each of the four Hard-mode skill additions.",
+      "Hard CS-02 with the final Product Affinity Matrix, Response Assumption, and Evidence boundary visible.",
+      "Hard Draft gate showing Cross-Selling Manual and Draft."
+    ],
+    "new_learn_step_captures": [
+      "Brainstem skill attached in VS Code Copilot Chat.",
+      "Copilot-only skill attached in VS Code Copilot Chat.",
+      "Brainstem local 4/4 verdict.",
+      "Copilot-only local 4/4 verdict.",
+      "Brainstem deploy response with Draft inventory.",
+      "Copilot-only deploy response with Draft inventory.",
+      "Brainstem final complete verdict.",
+      "Copilot-only final complete verdict."
+    ]
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:cross-selling",
+    "reviewed_at": "2026-08-10T00:27:58.136650+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  }
 }

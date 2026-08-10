@@ -42,8 +42,11 @@ The local agent uses fictional records and produces decision support only. It do
 | Source bundle | `solutions/supply-chain-disruption-alert/exports/supply-chain-disruption-alert-source.zip` |
 | Manual evidence | `solutions/supply-chain-disruption-alert/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/supply-chain-disruption-alert/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/supply-chain-disruption-alert/exports/supply-chain-disruption-alert-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/supply-chain-disruption-alert/exports/supply-chain-disruption-alert-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/supply-chain-disruption-alert/exports/supply-chain-disruption-alert-solution-export.json` |
 
-**Scaffold status:** 69 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 92 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

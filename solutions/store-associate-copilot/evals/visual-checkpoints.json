@@ -9,73 +9,204 @@
   },
   "summary": {
     "total_existing_captures": 23,
-    "reusable": 0,
-    "reshoot_required": 23,
-    "new_learn_step_captures_recommended": 0
+    "reusable": 21,
+    "reshoot_required": 2
   },
   "captures": [
     {
       "id": "easy-sa-01",
       "mode": "easy",
+      "case_id": "SA-01",
       "source": "solutions/store-associate-copilot/screenshots/assisted/01-sa-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SA-01"
+      "annotated": "solutions/store-associate-copilot/screenshots/assisted/annotated/01-sa-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "SKU-1006 and SKU-1009 optional complements",
+        "38 units on hand",
+        "verify current stock before advising a customer",
+        "No inventory has been reserved or held"
+      ],
+      "full_case_not_visibly_proven": [
+        "Prepared for: Store Associate and Product Lookup Snapshot are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 270,
+          "width": 715,
+          "height": 136,
+          "label": "Optional complements"
+        },
+        {
+          "x": 284,
+          "y": 464,
+          "width": 940,
+          "height": 112,
+          "label": "Availability verification gate"
+        }
+      ]
     },
     {
       "id": "easy-sa-02",
       "mode": "easy",
+      "case_id": "SA-02",
       "source": "solutions/store-associate-copilot/screenshots/assisted/02-sa-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SA-02"
+      "annotated": "solutions/store-associate-copilot/screenshots/assisted/annotated/02-sa-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "escalate the decision to an authorized associate",
+        "No action has been taken",
+        "This is a draft script only"
+      ],
+      "full_case_not_visibly_proven": [
+        "Draft Customer Assistance Guide and Suggested Draft Language are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 136,
+          "width": 942,
+          "height": 61,
+          "label": "Authorized-associate decision gate"
+        },
+        {
+          "x": 285,
+          "y": 498,
+          "width": 941,
+          "height": 79,
+          "label": "Draft-only boundary"
+        }
+      ]
     },
     {
       "id": "easy-sa-03",
       "mode": "easy",
+      "case_id": "SA-03",
       "source": "solutions/store-associate-copilot/screenshots/assisted/03-sa-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SA-03"
+      "annotated": "solutions/store-associate-copilot/screenshots/assisted/annotated/03-sa-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Items 1 and 2 are gate tasks",
+        "Item 5 is the largest time block",
+        "planning guide for authorized associate review",
+        "No doors, alarms, POS, deposits, or inventory counts have been changed"
+      ],
+      "full_case_not_visibly_proven": [
+        "Prepared for: Floor Specialist, Daily Task Planning Checklist, and Opening Shift are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 291,
+          "width": 944,
+          "height": 282,
+          "label": "Prioritized planning and no-execution boundary"
+        }
+      ]
     },
     {
       "id": "easy-sa-04",
       "mode": "easy",
+      "case_id": "SA-04",
       "source": "solutions/store-associate-copilot/screenshots/assisted/04-sa-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SA-04"
+      "annotated": "solutions/store-associate-copilot/screenshots/assisted/annotated/04-sa-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Task Completion Signals",
+        "Opening, midday, and closing role cohorts",
+        "Coaching observations",
+        "Opening cohorts are performing at 92–100% task completion"
+      ],
+      "full_case_not_visibly_proven": [
+        "Prepared for: Sales Manager, Synthetic Role-Cohort Performance Dashboard, and Aggregate Coaching Signals are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 218,
+          "width": 634,
+          "height": 275,
+          "label": "Role-cohort completion signals"
+        },
+        {
+          "x": 284,
+          "y": 514,
+          "width": 944,
+          "height": 151,
+          "label": "Aggregate coaching observations"
+        }
+      ]
     },
     {
       "id": "easy-draft",
       "mode": "easy",
       "source": "solutions/store-associate-copilot/screenshots/assisted/05-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The Agents list does not show Retail Store Associate Pilot. Only unrelated agent rows are visible, so the target Draft identity is not visually proven.",
+      "draft": true
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
       "step": 1,
       "source": "solutions/store-associate-copilot/screenshots/manual/01-create-blank-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/store-associate-copilot/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent",
+        "Blank Build workspace"
+      ],
+      "boxes": [
+        {
+          "x": 164,
+          "y": 94,
+          "width": 820,
+          "height": 64,
+          "label": "Blank agent name field"
+        }
+      ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
       "step": 2,
       "source": "solutions/store-associate-copilot/screenshots/manual/02-name-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/store-associate-copilot/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Retail Store Associate Manual in the name field"
+      ],
+      "boxes": [
+        {
+          "x": 164,
+          "y": 94,
+          "width": 820,
+          "height": 64,
+          "label": "Manual agent name entered"
+        }
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
       "step": 3,
       "source": "solutions/store-associate-copilot/screenshots/manual/03-enter-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/store-associate-copilot/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Reviewed inventory, transaction, and personnel-decision boundaries",
+        "Locked Preview evidence anchors",
+        "SA-01 through SA-04 acceptance anchors"
+      ],
+      "boxes": [
+        {
+          "x": 78,
+          "y": 250,
+          "width": 906,
+          "height": 580,
+          "label": "Reviewed instruction policy and locked anchors"
+        }
+      ]
     },
     {
       "id": "hard-step-04",
@@ -83,123 +214,400 @@
       "step": 4,
       "source": "solutions/store-associate-copilot/screenshots/manual/04-save-instructions.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The instruction text is visible, but the screenshot contains no save confirmation, no No unsaved changes tooltip, and no other unambiguous persisted-state indicator. The save checkpoint is therefore uncertain."
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
       "step": 5,
       "source": "solutions/store-associate-copilot/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/store-associate-copilot/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Knowledge section is visibly empty",
+        "The default Search all websites chip is absent"
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 250,
+          "width": 385,
+          "height": 92,
+          "label": "Web search absent from Knowledge"
+        }
+      ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
       "step": 6,
       "source": "solutions/store-associate-copilot/screenshots/manual/06-add-aibast-store-associate-rules-and-safety.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/store-associate-copilot/screenshots/manual/annotated/06-add-aibast-store-associate-rules-and-safety.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_store-associate-rules-and-safety.md"
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 250,
+          "width": 380,
+          "height": 101,
+          "label": "Rules and safety knowledge"
+        }
+      ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
       "step": 7,
       "source": "solutions/store-associate-copilot/screenshots/manual/07-add-aibast-store-associate-synthetic-records.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/store-associate-copilot/screenshots/manual/annotated/07-add-aibast-store-associate-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_store-associate-synthetic-records.md",
+        "aibast_store-associate-rules-and-safety.md"
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 250,
+          "width": 381,
+          "height": 145,
+          "label": "Two reviewed knowledge files"
+        }
+      ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
       "step": 8,
       "source": "solutions/store-associate-copilot/screenshots/manual/08-add-customer-assist.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/store-associate-copilot/screenshots/manual/annotated/08-add-customer-assist.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "respectful-customer-assistance-draft"
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 135,
+          "width": 381,
+          "height": 105,
+          "label": "Customer assistance skill"
+        }
+      ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
       "step": 9,
       "source": "solutions/store-associate-copilot/screenshots/manual/09-add-performance-dashboard.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/store-associate-copilot/screenshots/manual/annotated/09-add-performance-dashboard.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aggregate-store-coaching-review",
+        "respectful-customer-assistance-draft"
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 135,
+          "width": 381,
+          "height": 147,
+          "label": "Two configured skills"
+        }
+      ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
       "step": 10,
       "source": "solutions/store-associate-copilot/screenshots/manual/10-add-product-lookup.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/store-associate-copilot/screenshots/manual/annotated/10-add-product-lookup.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "verified-product-lookup-draft",
+        "aggregate-store-coaching-review",
+        "respectful-customer-assistance-draft"
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 135,
+          "width": 381,
+          "height": 188,
+          "label": "Three configured skills"
+        }
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
       "step": 11,
       "source": "solutions/store-associate-copilot/screenshots/manual/11-add-task-checklist.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/store-associate-copilot/screenshots/manual/annotated/11-add-task-checklist.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "store-shift-planning-checklist",
+        "verified-product-lookup-draft",
+        "aggregate-store-coaching-review",
+        "respectful-customer-assistance-draft"
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 135,
+          "width": 381,
+          "height": 228,
+          "label": "Four configured skills"
+        }
+      ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
       "step": 12,
       "source": "solutions/store-associate-copilot/screenshots/manual/12-review-inventory.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/store-associate-copilot/screenshots/manual/annotated/12-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "Four configured skills",
+        "Tools section contains no configured tool",
+        "Two reviewed knowledge files",
+        "No unsaved changes"
+      ],
+      "boxes": [
+        {
+          "x": 1045,
+          "y": 48,
+          "width": 202,
+          "height": 47,
+          "label": "Saved state"
+        },
+        {
+          "x": 1203,
+          "y": 85,
+          "width": 192,
+          "height": 43,
+          "label": "Reviewed model"
+        },
+        {
+          "x": 1018,
+          "y": 135,
+          "width": 381,
+          "height": 228,
+          "label": "Four configured skills"
+        },
+        {
+          "x": 1018,
+          "y": 360,
+          "width": 381,
+          "height": 61,
+          "label": "No configured tools"
+        },
+        {
+          "x": 1018,
+          "y": 425,
+          "width": 381,
+          "height": 126,
+          "label": "Two knowledge files"
+        }
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
       "step": 13,
       "source": "solutions/store-associate-copilot/screenshots/manual/13-open-preview.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/store-associate-copilot/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab",
+        "New chat",
+        "Retail Store Associate Manual greeting"
+      ],
+      "boxes": [
+        {
+          "x": 565,
+          "y": 8,
+          "width": 181,
+          "height": 45,
+          "label": "Preview selected"
+        },
+        {
+          "x": 834,
+          "y": 86,
+          "width": 122,
+          "height": 46,
+          "label": "Fresh chat control"
+        },
+        {
+          "x": 255,
+          "y": 140,
+          "width": 522,
+          "height": 101,
+          "label": "Manual agent greeting"
+        }
+      ]
     },
     {
-      "id": "hard-step-14",
+      "id": "hard-sa-01",
       "mode": "hard",
       "step": 14,
+      "case_id": "SA-01",
       "source": "solutions/store-associate-copilot/screenshots/manual/14-sa-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SA-01"
+      "annotated": "solutions/store-associate-copilot/screenshots/manual/annotated/14-sa-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "SKU-1005 floor location",
+        "SKU-1006 and SKU-1009 optional complements",
+        "38 units on hand",
+        "Verify before advising the customer",
+        "no inventory has been reserved or committed"
+      ],
+      "full_case_not_visibly_proven": [
+        "Prepared for: Store Associate and Product Lookup Snapshot are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 484,
+          "width": 945,
+          "height": 105,
+          "label": "Availability verification boundary"
+        }
+      ]
     },
     {
-      "id": "hard-step-15",
+      "id": "hard-sa-02",
       "mode": "hard",
       "step": 15,
+      "case_id": "SA-02",
       "source": "solutions/store-associate-copilot/screenshots/manual/15-sa-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SA-02"
+      "annotated": "solutions/store-associate-copilot/screenshots/manual/annotated/15-sa-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "authorized associate review",
+        "Keep the decision with an authorized associate",
+        "No return, refund, pricing adjustment, or resolution has been processed or promised"
+      ],
+      "full_case_not_visibly_proven": [
+        "Draft Customer Assistance Guide and Suggested Draft Language are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 135,
+          "width": 945,
+          "height": 106,
+          "label": "Authorized-associate draft language"
+        },
+        {
+          "x": 284,
+          "y": 565,
+          "width": 945,
+          "height": 77,
+          "label": "No-action boundary"
+        }
+      ]
     },
     {
-      "id": "hard-step-16",
+      "id": "hard-sa-03",
       "mode": "hard",
       "step": 16,
+      "case_id": "SA-03",
       "source": "solutions/store-associate-copilot/screenshots/manual/16-sa-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SA-03"
+      "annotated": "solutions/store-associate-copilot/screenshots/manual/annotated/16-sa-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Prioritized task rows with HIGH and MEDIUM labels",
+        "Start with the two CRITICAL items",
+        "planning guide for authorized associate action",
+        "No inventory has been pulled, no signage has been changed, and no systems have been activated"
+      ],
+      "full_case_not_visibly_proven": [
+        "Prepared for: Floor Specialist, Daily Task Planning Checklist, and Opening Shift are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 124,
+          "width": 820,
+          "height": 180,
+          "label": "Prioritized task rows"
+        },
+        {
+          "x": 284,
+          "y": 359,
+          "width": 945,
+          "height": 214,
+          "label": "Planning-only execution boundary"
+        }
+      ]
     },
     {
-      "id": "hard-step-17",
+      "id": "hard-sa-04",
       "mode": "hard",
       "step": 17,
+      "case_id": "SA-04",
       "source": "solutions/store-associate-copilot/screenshots/manual/17-sa-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SA-04"
+      "annotated": "solutions/store-associate-copilot/screenshots/manual/annotated/17-sa-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Coaching Signal Areas to Review",
+        "Upsell Rate Spread across cohorts",
+        "CSAT Consistently Strong",
+        "Task Completion Solid"
+      ],
+      "full_case_not_visibly_proven": [
+        "Prepared for: Sales Manager, Synthetic Role-Cohort Performance Dashboard, and Aggregate Coaching Signals are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 174,
+          "width": 945,
+          "height": 515,
+          "label": "Aggregate role-cohort coaching signals"
+        }
+      ]
     },
     {
-      "id": "hard-step-18",
+      "id": "hard-draft",
       "mode": "hard",
       "step": 18,
       "source": "solutions/store-associate-copilot/screenshots/manual/18-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/store-associate-copilot/screenshots/manual/annotated/18-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Retail Store Associate Manual",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 102,
+          "y": 244,
+          "width": 1281,
+          "height": 55,
+          "label": "Target manual agent remains Draft"
+        }
+      ]
     }
-  ]
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy Draft gate filtered to Retail Store Associate Pilot with Draft visible.",
+      "Hard step 4 with an explicit saved-state confirmation such as the No unsaved changes tooltip."
+    ],
+    "new_learn_step_captures": []
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:store-associate-copilot",
+    "reviewed_at": "2026-08-10T00:27:58.184068+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  }
 }

@@ -919,6 +919,10 @@ def test_offline_carries_remote_blocks_and_recomputes_local_scope(tmp_path):
                 "name": "@aibast-agents-library/account-intelligence",
                 "downloads": 2,
                 "upvotes": 3,
+                "upvote_discussion_url": (
+                    "https://github.com/microsoft/"
+                    "aibast-agents-library/discussions/10"
+                ),
             }
         ],
         "agent_upvote_coverage": {
@@ -1002,11 +1006,15 @@ def test_offline_carries_remote_blocks_and_recomputes_local_scope(tmp_path):
             "agent_file_downloads",
             "installer_downloads",
             "skill_downloads",
+            "agent_upvotes",
+            "agent_acquisitions",
         }:
             assert doc["totals"][field] == value
     assert doc["totals"]["agent_file_downloads"] == 2
     assert doc["totals"]["installer_downloads"] is None
     assert doc["totals"]["skill_downloads"] is None
+    assert doc["totals"]["agent_upvotes"] == 3
+    assert doc["totals"]["agent_acquisitions"] is None
     assert doc["file_metrics"]["carried_forward"] is True
     assert doc["file_metrics"]["as_of"] == prior_at
     assert len(doc["file_metrics"]["rows"]) == len(
@@ -1055,6 +1063,30 @@ def test_repo_metrics_publish_repository_stars_only(monkeypatch):
 
 def test_metrics_target_can_be_parameterized_without_changing_defaults(tmp_path):
     out = tmp_path / "fork-metrics.json"
+    out.write_text(
+        json.dumps(
+            {
+                "repo": {
+                    "owner": "stale-owner",
+                    "name": "stale-repo",
+                    "url": "https://github.com/stale-owner/stale-repo",
+                    "site": "https://stale-owner.github.io/stale-repo/",
+                },
+                "totals": {"agent_upvotes": 9},
+                "agent_metrics": [
+                    {
+                        "name": "@aibast-agents-library/account-intelligence",
+                        "upvotes": 9,
+                        "upvote_discussion_url": (
+                            "https://github.com/kody-w/"
+                            "aibast-agents-library-proof/discussions/not-a-number"
+                        ),
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
     env = {
         **os.environ,
         "METRICS_OWNER": "kody-w",
@@ -1081,6 +1113,15 @@ def test_metrics_target_can_be_parameterized_without_changing_defaults(tmp_path)
     assert repo["name"] == "aibast-agents-library-proof"
     assert repo["url"] == "https://github.com/kody-w/aibast-agents-library-proof"
     assert repo["site"] == "https://kody-w.github.io/aibast-agents-library-proof/"
+    doc = json.loads(out.read_text(encoding="utf-8"))
+    account = next(
+        row
+        for row in doc["agent_metrics"]
+        if row["name"] == "@aibast-agents-library/account-intelligence"
+    )
+    assert account["upvotes"] is None
+    assert account["upvote_discussion_url"] is None
+    assert doc["totals"]["agent_upvotes"] is None
     assert build_metrics.OWNER == "microsoft"
     assert build_metrics.REPO == "aibast-agents-library"
 
@@ -1154,6 +1195,9 @@ def test_file_scope_covers_every_tracked_file_and_classifies_all_skills():
     ) == "workshop"
     assert build_metrics.classify_repository_file(
         "exports/example-source.zip"
+    ) == "source_bundle"
+    assert build_metrics.classify_repository_file(
+        "solutions/example/exports/example-source.zip"
     ) == "source_bundle"
     assert build_metrics.classify_repository_file("install.sh") == "installer"
     assert build_metrics.classify_repository_file("README.md") == "documentation"
@@ -1639,7 +1683,7 @@ def test_agent_discussions_validate_schema_and_keep_signals_separate():
             "number": 1,
             "body": body("@aibast-agents-library/account-intelligence"),
             "upvoteCount": 3,
-            "url": "https://github.com/example/repo/discussions/1",
+            "url": "https://github.com/microsoft/aibast-agents-library/discussions/1",
         },
         {
             "number": 2,
@@ -1648,25 +1692,25 @@ def test_agent_discussions_validate_schema_and_keep_signals_separate():
                 signal="acquisition",
             ),
             "upvoteCount": 2,
-            "url": "https://github.com/example/repo/discussions/2",
+            "url": "https://github.com/microsoft/aibast-agents-library/discussions/2",
         },
         {
             "number": 3,
             "body": body("@aibast-agents-library/account-intelligence"),
             "upvoteCount": 50,
-            "url": "https://github.com/example/repo/discussions/3",
+            "url": "https://github.com/microsoft/aibast-agents-library/discussions/3",
         },
         {
             "number": 4,
             "body": body("@aibast-agents-library/deal-progression"),
             "upvoteCount": 1,
-            "url": "https://github.com/example/repo/discussions/4",
+            "url": "https://github.com/microsoft/aibast-agents-library/discussions/4",
         },
         {
             "number": 5,
             "body": body("@aibast-agents-library/not-registered"),
             "upvoteCount": 8,
-            "url": "https://github.com/example/repo/discussions/5",
+            "url": "https://github.com/microsoft/aibast-agents-library/discussions/5",
         },
         {
             "number": 6,
@@ -1675,7 +1719,16 @@ def test_agent_discussions_validate_schema_and_keep_signals_separate():
                 schema="wrong",
             ),
             "upvoteCount": 4,
-            "url": "https://github.com/example/repo/discussions/6",
+            "url": "https://github.com/microsoft/aibast-agents-library/discussions/6",
+        },
+        {
+            "number": 7,
+            "body": body(
+                "@aibast-agents-library/deal-progression",
+                signal="acquisition",
+            ),
+            "upvoteCount": 9,
+            "url": "https://github.com/attacker/repo/discussions/7",
         },
     ]
 
@@ -1696,7 +1749,7 @@ def test_agent_discussions_validate_schema_and_keep_signals_separate():
     assert grouped["signals"]["acquisition"]["total"] is None
     assert grouped["diagnostics"] == {
         "duplicate_discussions": 1,
-        "invalid_discussions": 1,
+        "invalid_discussions": 2,
         "stale_agent_discussions": 1,
         "upvote_discussions": 2,
         "acquisition_discussions": 1,
@@ -1727,7 +1780,8 @@ def test_agent_discussion_fetch_complete_zero_and_partial_null(monkeypatch):
                     ),
                     "upvoteCount": 0,
                     "url": (
-                        "https://github.com/example/repo/discussions/"
+                        "https://github.com/microsoft/"
+                        "aibast-agents-library/discussions/"
                         f"{number}"
                     ),
                 }
@@ -1794,7 +1848,14 @@ def test_agent_metrics_array_total_and_most_upvoted_leaderboard():
     assert isinstance(metrics, list)
     assert len(metrics) == len(registry["agents"])
     assert all(
-        {"name", "downloads", "upvotes", "acquisitions"} <= set(row)
+        {
+            "name",
+            "downloads",
+            "upvotes",
+            "acquisitions",
+            "catalog_kind",
+        }
+        <= set(row)
         for row in metrics
     )
     assert sum(row["upvotes"] for row in metrics) == 7
@@ -1809,6 +1870,36 @@ def test_agent_metrics_array_total_and_most_upvoted_leaderboard():
         "@aibast-agents-library/proposal-generation",
         "@aibast-agents-library/deal-progression",
     ]
+    excluded = "@aibast-agents-library/grid-outage-response"
+    for board in (
+        "most_downloaded",
+        "most_upvoted",
+        "most_acquired",
+        "largest",
+        "newest",
+    ):
+        assert excluded not in {
+            row["name"] for row in leaderboards[board]
+        }
+    assert "grid_outage_response" not in {
+        row["name"] for row in leaderboards["stacks"]
+    }
+    advertised = {
+        row["catalog_key"]
+        for row in build_metrics.build_workshop_catalog(registry)
+    }
+    expected_energy = sum(
+        row["category"] == "energy"
+        and (
+            row.get("catalog_kind") != "solution"
+            or row["name"] in advertised
+        )
+        for row in agents.values()
+    )
+    energy = next(
+        row for row in leaderboards["categories"] if row["name"] == "energy"
+    )
+    assert energy["agents"] == expected_energy
 
 
 def test_workshop_totals_reconcile_and_rows_sort_by_usage():
@@ -2062,6 +2153,8 @@ def test_metrics_page_binds_workshop_adoption_schema():
     assert "t.agent_upvotes" in html
     assert "t.agent_acquisitions" in html
     assert "Array.isArray(M.agent_metrics) ? M.agent_metrics : []" in html
+    assert "const advertisedWorkshopAgents = new Set(" in html
+    assert "row.catalog_kind !== 'solution'" in html
     assert "GitHub permits one active upvote per account" in html
     assert "RAR is intentionally excluded from these counts" in html
     assert 'id="global-agent-ecosystem"' not in html

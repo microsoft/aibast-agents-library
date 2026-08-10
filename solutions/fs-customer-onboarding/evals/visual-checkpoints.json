@@ -9,49 +9,102 @@
   },
   "summary": {
     "total_existing_captures": 23,
-    "reusable": 0,
-    "reshoot_required": 23,
-    "new_learn_step_captures_recommended": 0
+    "reusable": 19,
+    "reshoot_required": 4
   },
   "captures": [
     {
       "id": "easy-fco-01",
       "mode": "easy",
+      "case_id": "FCO-01",
       "source": "solutions/fs-customer-onboarding/screenshots/assisted/01-fco-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "FCO-01"
+      "annotated": "solutions/fs-customer-onboarding/screenshots/assisted/annotated/01-fco-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Reasoning trace routes to kyc-verification",
+        "Reasoning trace names APP-6003 and PEP"
+      ],
+      "full_case_not_visibly_proven": [
+        "The capture ends after knowledge search; no final answer is visible."
+      ],
+      "boxes": [
+        {
+          "x": 313,
+          "y": 426,
+          "width": 994,
+          "height": 86,
+          "label": "Reasoning trace: APP-6003 and PEP"
+        }
+      ]
     },
     {
       "id": "easy-fco-02",
       "mode": "easy",
+      "case_id": "FCO-02",
       "source": "solutions/fs-customer-onboarding/screenshots/assisted/02-fco-02.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "FCO-02"
+      "reason": "The screenshot stops in the reasoning trace. APP-6004 and Basic Savings appear only in reasoning, and no final answer with positive case evidence is visible."
     },
     {
       "id": "easy-fco-03",
       "mode": "easy",
+      "case_id": "FCO-03",
       "source": "solutions/fs-customer-onboarding/screenshots/assisted/03-fco-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "FCO-03"
+      "annotated": "solutions/fs-customer-onboarding/screenshots/assisted/annotated/03-fco-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "APP-6002 — Blackwood | Business Document Checklist",
+        "Outstanding / Key Gap: Beneficial Ownership",
+        "Beneficial Ownership Declaration"
+      ],
+      "boxes": [
+        {
+          "x": 278,
+          "y": 158,
+          "width": 950,
+          "height": 205,
+          "label": "APP-6002 and Beneficial Ownership gap"
+        },
+        {
+          "x": 397,
+          "y": 431,
+          "width": 730,
+          "height": 43,
+          "label": "Beneficial Ownership Declaration"
+        }
+      ]
     },
     {
       "id": "easy-fco-04",
       "mode": "easy",
+      "case_id": "FCO-04",
       "source": "solutions/fs-customer-onboarding/screenshots/assisted/04-fco-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "FCO-04"
+      "annotated": "solutions/fs-customer-onboarding/screenshots/assisted/annotated/04-fco-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Reasoning trace routes to onboarding-status",
+        "Reasoning trace names APP-6001 and APP-6003"
+      ],
+      "full_case_not_visibly_proven": [
+        "The capture ends after knowledge search; no final queue answer is visible."
+      ],
+      "boxes": [
+        {
+          "x": 313,
+          "y": 404,
+          "width": 1000,
+          "height": 86,
+          "label": "Reasoning trace: APP-6001 and APP-6003"
+        }
+      ]
     },
     {
       "id": "easy-draft",
       "mode": "easy",
       "source": "solutions/fs-customer-onboarding/screenshots/assisted/05-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The target Customer Onboarding Pilot row is not visible, so the screenshot cannot prove that the validated pilot remains Draft.",
+      "draft": true
     },
     {
       "id": "hard-step-01",
@@ -59,23 +112,49 @@
       "step": 1,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/01-create-blank-agent.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is an almost entirely blank loading canvas. No blank agent workspace, agent identity, or completed creation state is visible."
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
       "step": 2,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/02-name-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Customer Onboarding Manual entered in the agent name field"
+      ],
+      "boxes": [
+        {
+          "x": 160,
+          "y": 92,
+          "width": 825,
+          "height": 58,
+          "label": "Manual agent name entered"
+        }
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
       "step": 3,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/03-enter-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence-first response contract",
+        "Locked Preview evidence anchors",
+        "FCO-01 through FCO-04 deterministic anchors"
+      ],
+      "boxes": [
+        {
+          "x": 80,
+          "y": 192,
+          "width": 900,
+          "height": 635,
+          "label": "Reviewed instruction policy and locked anchors"
+        }
+      ]
     },
     {
       "id": "hard-step-04",
@@ -83,123 +162,384 @@
       "step": 4,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/04-save-instructions.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The instruction text is visible, but no save confirmation or No unsaved changes state is shown. The frame does not visually prove that the policy was saved."
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
       "step": 5,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Knowledge section is visible without the Search all websites source",
+        "Tools section contains no configured tool"
+      ],
+      "boxes": [
+        {
+          "x": 1015,
+          "y": 194,
+          "width": 392,
+          "height": 190,
+          "label": "Web search removed; no tools configured"
+        }
+      ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
       "step": 6,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/06-add-aibast-fs-customer-onboarding-controls-and-review.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/06-add-aibast-fs-customer-onboarding-controls-and-review.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Knowledge chip beginning aibast_fs-customer-onboarding-controls-and..."
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 307,
+          "width": 374,
+          "height": 48,
+          "label": "Controls and review knowledge added"
+        }
+      ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
       "step": 7,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/07-add-aibast-fs-customer-onboarding-synthetic-records.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/07-add-aibast-fs-customer-onboarding-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Knowledge chip beginning aibast_fs-customer-onboarding-synthetic-re...",
+        "Knowledge chip beginning aibast_fs-customer-onboarding-controls-and..."
+      ],
+      "boxes": [
+        {
+          "x": 1024,
+          "y": 306,
+          "width": 376,
+          "height": 92,
+          "label": "Both packaged knowledge files added"
+        }
+      ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
       "step": 8,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/08-add-aibast-account-setup-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/08-add-aibast-account-setup-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "account-setup skill chip"
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 187,
+          "width": 201,
+          "height": 43,
+          "label": "account-setup skill added"
+        }
+      ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
       "step": 9,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/09-add-aibast-document-checklist-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/09-add-aibast-document-checklist-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "document-checklist skill chip",
+        "account-setup skill chip"
+      ],
+      "boxes": [
+        {
+          "x": 1024,
+          "y": 187,
+          "width": 373,
+          "height": 44,
+          "label": "document-checklist skill added"
+        }
+      ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
       "step": 10,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/10-add-aibast-kyc-verification-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/10-add-aibast-kyc-verification-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "kyc-verification skill chip",
+        "document-checklist skill chip",
+        "account-setup skill chip"
+      ],
+      "boxes": [
+        {
+          "x": 1024,
+          "y": 187,
+          "width": 374,
+          "height": 80,
+          "label": "kyc-verification skill added"
+        }
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
       "step": 11,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/11-add-aibast-onboarding-status-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/11-add-aibast-onboarding-status-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "onboarding-status skill chip",
+        "kyc-verification skill chip",
+        "document-checklist skill chip",
+        "account-setup skill chip"
+      ],
+      "boxes": [
+        {
+          "x": 1024,
+          "y": 187,
+          "width": 374,
+          "height": 81,
+          "label": "Four packaged skills configured"
+        }
+      ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
       "step": 12,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/12-review-inventory.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/12-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "Four configured skills",
+        "Tools section contains no configured tool",
+        "Two packaged knowledge chips",
+        "Save tooltip states No unsaved changes"
+      ],
+      "boxes": [
+        {
+          "x": 1047,
+          "y": 45,
+          "width": 206,
+          "height": 51,
+          "label": "Saved: no unsaved changes"
+        },
+        {
+          "x": 1203,
+          "y": 86,
+          "width": 193,
+          "height": 40,
+          "label": "Claude Sonnet 4.6"
+        },
+        {
+          "x": 1024,
+          "y": 184,
+          "width": 374,
+          "height": 125,
+          "label": "Four configured skills"
+        },
+        {
+          "x": 1024,
+          "y": 323,
+          "width": 374,
+          "height": 190,
+          "label": "No tools and two knowledge files"
+        }
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
       "step": 13,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/13-open-preview.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab selected",
+        "New chat control",
+        "Fresh Customer Onboarding Manual greeting"
+      ],
+      "boxes": [
+        {
+          "x": 563,
+          "y": 7,
+          "width": 360,
+          "height": 48,
+          "label": "Preview selected"
+        },
+        {
+          "x": 829,
+          "y": 82,
+          "width": 154,
+          "height": 53,
+          "label": "Fresh chat control"
+        }
+      ]
     },
     {
-      "id": "hard-step-14",
+      "id": "hard-fco-01",
       "mode": "hard",
       "step": 14,
+      "case_id": "FCO-01",
       "source": "solutions/fs-customer-onboarding/screenshots/manual/14-fco-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "FCO-01"
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/14-fco-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Reasoning trace routes to kyc-verification",
+        "Reasoning trace names APP-6003 and PEP"
+      ],
+      "full_case_not_visibly_proven": [
+        "The capture ends after knowledge search; no final answer is visible."
+      ],
+      "boxes": [
+        {
+          "x": 313,
+          "y": 404,
+          "width": 1000,
+          "height": 90,
+          "label": "Reasoning trace: APP-6003 and PEP"
+        }
+      ]
     },
     {
-      "id": "hard-step-15",
+      "id": "hard-fco-02",
       "mode": "hard",
       "step": 15,
+      "case_id": "FCO-02",
       "source": "solutions/fs-customer-onboarding/screenshots/manual/15-fco-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "FCO-02"
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/15-fco-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Product Being Prepared: Basic Savings",
+        "KYC Checks (All Complete/Clear)"
+      ],
+      "full_case_not_visibly_proven": [
+        "APP-6004 is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 281,
+          "y": 151,
+          "width": 735,
+          "height": 151,
+          "label": "Basic Savings preparation details"
+        }
+      ]
     },
     {
-      "id": "hard-step-16",
+      "id": "hard-fco-03",
       "mode": "hard",
       "step": 16,
+      "case_id": "FCO-03",
       "source": "solutions/fs-customer-onboarding/screenshots/manual/16-fco-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "FCO-03"
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/16-fco-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Beneficial Ownership — In Progress",
+        "Beneficial Ownership Declaration (FinCEN BOI) is the outstanding blocker",
+        "Authorized human review required"
+      ],
+      "full_case_not_visibly_proven": [
+        "APP-6002 is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 282,
+          "width": 316,
+          "height": 61,
+          "label": "Beneficial Ownership in progress"
+        },
+        {
+          "x": 283,
+          "y": 402,
+          "width": 943,
+          "height": 174,
+          "label": "Outstanding BOI blocker and human gate"
+        }
+      ]
     },
     {
-      "id": "hard-step-17",
+      "id": "hard-fco-04",
       "mode": "hard",
       "step": 17,
+      "case_id": "FCO-04",
       "source": "solutions/fs-customer-onboarding/screenshots/manual/17-fco-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "FCO-04"
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/17-fco-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Reasoning trace routes to onboarding-status",
+        "Reasoning trace names APP-6001 and APP-6003"
+      ],
+      "full_case_not_visibly_proven": [
+        "The capture ends after knowledge search; no final queue answer is visible."
+      ],
+      "boxes": [
+        {
+          "x": 313,
+          "y": 404,
+          "width": 1000,
+          "height": 86,
+          "label": "Reasoning trace: APP-6001 and APP-6003"
+        }
+      ]
     },
     {
-      "id": "hard-step-18",
+      "id": "hard-draft",
       "mode": "hard",
       "step": 18,
       "source": "solutions/fs-customer-onboarding/screenshots/manual/18-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/fs-customer-onboarding/screenshots/manual/annotated/18-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Customer Onboarding Manual",
+        "Draft",
+        "GitHub Copilot"
+      ],
+      "boxes": [
+        {
+          "x": 108,
+          "y": 246,
+          "width": 654,
+          "height": 54,
+          "label": "Target manual agent remains Draft"
+        }
+      ]
     }
-  ]
+  ],
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:fs-customer-onboarding",
+    "reviewed_at": "2026-08-09T20:27:15-04:00",
+    "method": "Direct review of every exact source screenshot against the positive-anchor visual policy, followed by annotation and learner-page audit.",
+    "notes": "Approved FCO-01 and FCO-04 as partial reusable checkpoints because their routed skills and required identifiers are visibly present without a refusal. The annotations explicitly state that no final answer is visible. The assisted Draft source remains reshoot-required because Customer Onboarding Pilot is absent; Draft is machine-proven instead."
+  },
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy FCO-02 with APP-6004 and Basic Savings visible in the final answer.",
+      "Easy Draft gate filtered to Customer Onboarding Pilot with Draft visible.",
+      "Hard step 1 after the blank agent workspace has finished loading.",
+      "Hard step 4 with a visible save confirmation or No unsaved changes state."
+    ],
+    "new_learn_step_captures": [
+      "Brainstem skill attached in VS Code Copilot Chat.",
+      "Copilot-only skill attached in VS Code Copilot Chat.",
+      "Brainstem local 4/4 verdict.",
+      "Copilot-only local 4/4 verdict.",
+      "Brainstem deploy response with Draft inventory.",
+      "Copilot-only deploy response with Draft inventory.",
+      "Brainstem final complete verdict.",
+      "Copilot-only final complete verdict."
+    ]
+  }
 }

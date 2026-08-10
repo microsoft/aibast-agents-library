@@ -27,6 +27,30 @@
       "status": "ready"
     },
     {
+      "id": "copilot-studio-solution",
+      "label": "Importable Copilot Studio solution",
+      "path": "solutions/store-associate-copilot/exports/store-associate-copilot-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/exports/store-associate-copilot-copilot-studio-solution.zip",
+      "use": "Unmanaged solution ZIP for manual import; the agent remains unpublished",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-deployment-settings",
+      "label": "Copilot Studio deployment settings",
+      "path": "solutions/store-associate-copilot/exports/store-associate-copilot-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/exports/store-associate-copilot-deployment-settings.json",
+      "use": "Connection-reference, environment-variable, and agent import settings",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-export-metadata",
+      "label": "Copilot Studio solution export metadata",
+      "path": "solutions/store-associate-copilot/exports/store-associate-copilot-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/exports/store-associate-copilot-solution-export.json",
+      "use": "Export identity, integrity hash, source environment, and import caveats",
+      "status": "ready"
+    },
+    {
       "id": "field-guide",
       "label": "Customer field guide",
       "path": "solutions/store-associate-copilot/field-guide.html",
@@ -227,6 +251,14 @@
       "status": "ready"
     },
     {
+      "id": "easy-evidence-dataverse-draft-evidence",
+      "label": "Dataverse Draft Evidence",
+      "path": "solutions/store-associate-copilot/evals/dataverse-draft-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/evals/dataverse-draft-evidence.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
       "id": "manual-evidence",
       "label": "Manual build evidence",
       "path": "solutions/store-associate-copilot/evals/manual-build-evidence.json",
@@ -264,6 +296,174 @@
       "path": "solutions/store-associate-copilot/evals/visual-checkpoints.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/evals/visual-checkpoints.json",
       "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-sa-01",
+      "label": "Annotated visual checkpoint: easy-sa-01",
+      "path": "solutions/store-associate-copilot/screenshots/assisted/annotated/01-sa-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/screenshots/assisted/annotated/01-sa-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-sa-02",
+      "label": "Annotated visual checkpoint: easy-sa-02",
+      "path": "solutions/store-associate-copilot/screenshots/assisted/annotated/02-sa-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/screenshots/assisted/annotated/02-sa-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-sa-03",
+      "label": "Annotated visual checkpoint: easy-sa-03",
+      "path": "solutions/store-associate-copilot/screenshots/assisted/annotated/03-sa-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/screenshots/assisted/annotated/03-sa-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-04-sa-04",
+      "label": "Annotated visual checkpoint: easy-sa-04",
+      "path": "solutions/store-associate-copilot/screenshots/assisted/annotated/04-sa-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/screenshots/assisted/annotated/04-sa-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-create-blank-agent",
+      "label": "Annotated visual checkpoint: hard-step-01",
+      "path": "solutions/store-associate-copilot/screenshots/manual/annotated/01-create-blank-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/screenshots/manual/annotated/01-create-blank-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-name-agent",
+      "label": "Annotated visual checkpoint: hard-step-02",
+      "path": "solutions/store-associate-copilot/screenshots/manual/annotated/02-name-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/screenshots/manual/annotated/02-name-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-enter-instructions",
+      "label": "Annotated visual checkpoint: hard-step-03",
+      "path": "solutions/store-associate-copilot/screenshots/manual/annotated/03-enter-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/screenshots/manual/annotated/03-enter-instructions.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-05-remove-web-search",
+      "label": "Annotated visual checkpoint: hard-step-05",
+      "path": "solutions/store-associate-copilot/screenshots/manual/annotated/05-remove-web-search.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/screenshots/manual/annotated/05-remove-web-search.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-06-add-aibast-store-associate-rules-and-safety",
+      "label": "Annotated visual checkpoint: hard-step-06",
+      "path": "solutions/store-associate-copilot/screenshots/manual/annotated/06-add-aibast-store-associate-rules-and-safety.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/screenshots/manual/annotated/06-add-aibast-store-associate-rules-and-safety.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-07-add-aibast-store-associate-synthetic-records",
+      "label": "Annotated visual checkpoint: hard-step-07",
+      "path": "solutions/store-associate-copilot/screenshots/manual/annotated/07-add-aibast-store-associate-synthetic-records.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/screenshots/manual/annotated/07-add-aibast-store-associate-synthetic-records.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-08-add-customer-assist",
+      "label": "Annotated visual checkpoint: hard-step-08",
+      "path": "solutions/store-associate-copilot/screenshots/manual/annotated/08-add-customer-assist.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/screenshots/manual/annotated/08-add-customer-assist.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-09-add-performance-dashboard",
+      "label": "Annotated visual checkpoint: hard-step-09",
+      "path": "solutions/store-associate-copilot/screenshots/manual/annotated/09-add-performance-dashboard.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/screenshots/manual/annotated/09-add-performance-dashboard.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-10-add-product-lookup",
+      "label": "Annotated visual checkpoint: hard-step-10",
+      "path": "solutions/store-associate-copilot/screenshots/manual/annotated/10-add-product-lookup.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/screenshots/manual/annotated/10-add-product-lookup.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-11-add-task-checklist",
+      "label": "Annotated visual checkpoint: hard-step-11",
+      "path": "solutions/store-associate-copilot/screenshots/manual/annotated/11-add-task-checklist.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/screenshots/manual/annotated/11-add-task-checklist.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-12-review-inventory",
+      "label": "Annotated visual checkpoint: hard-step-12",
+      "path": "solutions/store-associate-copilot/screenshots/manual/annotated/12-review-inventory.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/screenshots/manual/annotated/12-review-inventory.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-13-open-preview",
+      "label": "Annotated visual checkpoint: hard-step-13",
+      "path": "solutions/store-associate-copilot/screenshots/manual/annotated/13-open-preview.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/screenshots/manual/annotated/13-open-preview.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-14-sa-01",
+      "label": "Annotated visual checkpoint: hard-sa-01",
+      "path": "solutions/store-associate-copilot/screenshots/manual/annotated/14-sa-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/screenshots/manual/annotated/14-sa-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-15-sa-02",
+      "label": "Annotated visual checkpoint: hard-sa-02",
+      "path": "solutions/store-associate-copilot/screenshots/manual/annotated/15-sa-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/screenshots/manual/annotated/15-sa-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-16-sa-03",
+      "label": "Annotated visual checkpoint: hard-sa-03",
+      "path": "solutions/store-associate-copilot/screenshots/manual/annotated/16-sa-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/screenshots/manual/annotated/16-sa-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-17-sa-04",
+      "label": "Annotated visual checkpoint: hard-sa-04",
+      "path": "solutions/store-associate-copilot/screenshots/manual/annotated/17-sa-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/screenshots/manual/annotated/17-sa-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-18-confirm-draft",
+      "label": "Annotated visual checkpoint: hard-draft",
+      "path": "solutions/store-associate-copilot/screenshots/manual/annotated/18-confirm-draft.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/screenshots/manual/annotated/18-confirm-draft.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
@@ -562,5 +762,31 @@
       "use": "Copilot-assisted evidence inventory",
       "status": "ready"
     }
-  ]
+  ],
+  "copilot_studio_solution": {
+    "label": "Importable Retail Store Associate Copilot Copilot Studio solution",
+    "status": "exported",
+    "solution_unique_name": "aibast_RetailStoreAssociateCopilot",
+    "zip": {
+      "path": "solutions/store-associate-copilot/exports/store-associate-copilot-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/exports/store-associate-copilot-copilot-studio-solution.zip",
+      "sha256": "4f57ac30f6b5de97a74431faf48688e365ee38dd3dfc338403c003d4536c09ad",
+      "bytes": 3439
+    },
+    "deployment_settings": {
+      "path": "solutions/store-associate-copilot/exports/store-associate-copilot-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/exports/store-associate-copilot-deployment-settings.json"
+    },
+    "metadata": {
+      "path": "solutions/store-associate-copilot/exports/store-associate-copilot-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/store-associate-copilot/exports/store-associate-copilot-solution-export.json"
+    },
+    "managed": false,
+    "published": false,
+    "import_caveats": [
+      "Import as an unmanaged solution for manual review.",
+      "Map connection references and environment variables before enabling integrations.",
+      "The exported agent remains unpublished unless the target administrator explicitly publishes it."
+    ]
+  }
 }

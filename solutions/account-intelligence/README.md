@@ -30,8 +30,21 @@ Single-file portable agent with allow-listed account routing, six deterministic 
 - Source routing is locked to bundled synthetic evidence.
 - There is one locked persona demo case and one uploadable skill per operation.
 - All six locked cases passed in strict Brainstem isolation with only `AccountIntelligenceAgent` loaded.
-- No Copilot Studio project, tutorial, screenshot, export bundle, publication, or external connector has been created.
+- The package includes a source-controlled Copilot Studio Draft, recorded assisted and manual browser evidence, and a literal-browser tutorial.
+- Recorded Copilot Studio evidence is dated workshop evidence, not a claim of a current live deployment, remote revalidation, customer proof, or production readiness.
+- No production connector or customer-system write is configured, and publication remains off.
 - Human approval remains required before any pricing, proposal, outreach, CRM write, task, alert, forecast, or customer communication action.
+
+## Seller starting paths
+
+- **No-install guided replay:** inspect the approved annotated checkpoints and
+  practice the six prompts without creating an agent. This is the lowest-friction
+  orientation path and is not deployment proof.
+- **Facilitator-assisted Easy mode:** a facilitator or IT owner provides the
+  supported Copilot Studio plugin and PAC CLI; the seller sends two short
+  messages and reviews the six case and Draft gates.
+- **Hard mode:** a reviewer reconstructs the Draft in the browser and stops
+  before Publish.
 
 ## Evidence boundary
 All exact names, dates, counts, values, scores, percentages, pricing, ARR, margins, conversion assumptions, and projections are synthetic. They demonstrate deterministic package behavior and do not represent measured customer outcomes, realized revenue, or commitments.
@@ -53,8 +66,11 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | Source bundle | `solutions/account-intelligence/exports/account-intelligence-source.zip` |
 | Manual evidence | `solutions/account-intelligence/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/account-intelligence/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/account-intelligence/exports/account-intelligence-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/account-intelligence/exports/account-intelligence-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/account-intelligence/exports/account-intelligence-solution-export.json` |
 
-**Scaffold status:** 80 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 99 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

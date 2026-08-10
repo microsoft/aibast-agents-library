@@ -9,73 +9,196 @@
   },
   "summary": {
     "total_existing_captures": 23,
-    "reusable": 0,
-    "reshoot_required": 23,
-    "new_learn_step_captures_recommended": 0
+    "reusable": 19,
+    "reshoot_required": 4
   },
   "captures": [
     {
-      "id": "easy-permit_license_management-01",
+      "id": "easy-permit-license-management-01",
       "mode": "easy",
+      "case_id": "PERMIT_LICENSE_MANAGEMENT-01",
       "source": "solutions/permit-license-management/screenshots/assisted/01-permit_license_management-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PERMIT_LICENSE_MANAGEMENT-01"
+      "annotated": "solutions/permit-license-management/screenshots/assisted/annotated/01-permit_license_management-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "PRM-6002",
+        "EXPIRED",
+        "Verify status"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 126,
+          "width": 940,
+          "height": 106,
+          "label": "PRM-6002 is EXPIRED"
+        },
+        {
+          "x": 285,
+          "y": 244,
+          "width": 940,
+          "height": 102,
+          "label": "Verify status"
+        }
+      ]
     },
     {
-      "id": "easy-permit_license_management-02",
+      "id": "easy-permit-license-management-02",
       "mode": "easy",
+      "case_id": "PERMIT_LICENSE_MANAGEMENT-02",
       "source": "solutions/permit-license-management/screenshots/assisted/02-permit_license_management-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PERMIT_LICENSE_MANAGEMENT-02"
+      "annotated": "solutions/permit-license-management/screenshots/assisted/annotated/02-permit_license_management-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "NPDES Stormwater Discharge Permit",
+        "March 1, 2026",
+        "no renewal application has been recorded"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact ISO marker 2026-03-01 is rendered as March 1, 2026 in the capture."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 122,
+          "width": 942,
+          "height": 84,
+          "label": "Deadline and no-renewal evidence"
+        }
+      ]
     },
     {
-      "id": "easy-permit_license_management-03",
+      "id": "easy-permit-license-management-03",
       "mode": "easy",
+      "case_id": "PERMIT_LICENSE_MANAGEMENT-03",
       "source": "solutions/permit-license-management/screenshots/assisted/03-permit_license_management-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PERMIT_LICENSE_MANAGEMENT-03"
+      "annotated": "solutions/permit-license-management/screenshots/assisted/annotated/03-permit_license_management-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "This is not legal advice"
+      ],
+      "full_case_not_visibly_proven": [
+        "The expired_permit and CRITICAL markers are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 245,
+          "width": 925,
+          "height": 55,
+          "label": "Not legal advice"
+        }
+      ]
     },
     {
-      "id": "easy-permit_license_management-04",
+      "id": "easy-permit-license-management-04",
       "mode": "easy",
+      "case_id": "PERMIT_LICENSE_MANAGEMENT-04",
       "source": "solutions/permit-license-management/screenshots/assisted/04-permit_license_management-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PERMIT_LICENSE_MANAGEMENT-04"
+      "annotated": "solutions/permit-license-management/screenshots/assisted/annotated/04-permit_license_management-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "public_comment",
+        "APP-7002",
+        "the local environment has no write-capable tool"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact phrase cannot submit is outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 128,
+          "width": 940,
+          "height": 92,
+          "label": "No write-capable tool"
+        },
+        {
+          "x": 286,
+          "y": 246,
+          "width": 940,
+          "height": 54,
+          "label": "public_comment status"
+        },
+        {
+          "x": 286,
+          "y": 438,
+          "width": 940,
+          "height": 52,
+          "label": "APP-7002 next step"
+        }
+      ]
     },
     {
       "id": "easy-draft",
       "mode": "easy",
       "source": "solutions/permit-license-management/screenshots/assisted/05-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The Agents list does not show the target Permit Management Pilot row, so its Draft identity is not visible.",
+      "draft": true
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
       "step": 1,
       "source": "solutions/permit-license-management/screenshots/manual/01-create-blank-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent",
+        "blank Build workspace"
+      ],
+      "boxes": [
+        {
+          "x": 160,
+          "y": 92,
+          "width": 820,
+          "height": 66,
+          "label": "Blank agent workspace"
+        }
+      ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
       "step": 2,
       "source": "solutions/permit-license-management/screenshots/manual/02-name-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Permit Management Manual in the name field"
+      ],
+      "boxes": [
+        {
+          "x": 162,
+          "y": 98,
+          "width": 820,
+          "height": 58,
+          "label": "Manual agent name"
+        }
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
       "step": 3,
       "source": "solutions/permit-license-management/screenshots/manual/03-enter-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Permit Management Agent — Manual Global Instructions",
+        "Locked Preview evidence anchors",
+        "PERMIT_LICENSE_MANAGEMENT-01 through PERMIT_LICENSE_MANAGEMENT-04"
+      ],
+      "boxes": [
+        {
+          "x": 78,
+          "y": 226,
+          "width": 902,
+          "height": 608,
+          "label": "Reviewed instruction policy"
+        }
+      ]
     },
     {
       "id": "hard-step-04",
@@ -83,7 +206,7 @@
       "step": 4,
       "source": "solutions/permit-license-management/screenshots/manual/04-save-instructions.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The instruction text is visible, but the frame shows no save confirmation, no saved-state tooltip, and no other visible proof that the policy was saved."
     },
     {
       "id": "hard-step-05",
@@ -91,115 +214,349 @@
       "step": 5,
       "source": "solutions/permit-license-management/screenshots/manual/05-remove-web-search.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The Knowledge section is empty, but the frame contains no affirmative UI confirmation identifying Search all websites as removed; the absence alone is ambiguous."
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
       "step": 6,
       "source": "solutions/permit-license-management/screenshots/manual/06-add-permit-license-management-rules-and-controls.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/06-add-permit-license-management-rules-and-controls.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "permit-license-management-rules-and-contr... knowledge chip"
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 308,
+          "width": 375,
+          "height": 42,
+          "label": "Rules knowledge file"
+        }
+      ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
       "step": 7,
       "source": "solutions/permit-license-management/screenshots/manual/07-add-permit-license-management-synthetic-records.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/07-add-permit-license-management-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "permit-license-management-synthetic-recor... knowledge chip",
+        "permit-license-management-rules-and-contr... knowledge chip"
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 308,
+          "width": 375,
+          "height": 86,
+          "label": "Two knowledge files"
+        }
+      ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
       "step": 8,
       "source": "solutions/permit-license-management/screenshots/manual/08-add-aibast-application-status.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/08-add-aibast-application-status.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "permit-license-management-application-stat... skill chip"
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 185,
+          "width": 375,
+          "height": 43,
+          "label": "Application-status skill"
+        }
+      ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
       "step": 9,
       "source": "solutions/permit-license-management/screenshots/manual/09-add-aibast-compliance-gaps.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/09-add-aibast-compliance-gaps.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "permit-license-management-compliance-gaps skill chip"
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 185,
+          "width": 375,
+          "height": 43,
+          "label": "Compliance-gaps skill"
+        }
+      ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
       "step": 10,
       "source": "solutions/permit-license-management/screenshots/manual/10-add-aibast-permit-inventory.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/10-add-aibast-permit-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "permit-license-management-permit-inventory skill chip"
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 185,
+          "width": 375,
+          "height": 43,
+          "label": "Permit-inventory skill"
+        }
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
       "step": 11,
       "source": "solutions/permit-license-management/screenshots/manual/11-add-aibast-renewal-calendar.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/11-add-aibast-renewal-calendar.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "permit-license-management-renewal-calendar skill chip"
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 185,
+          "width": 375,
+          "height": 43,
+          "label": "Renewal-calendar skill"
+        }
+      ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
       "step": 12,
       "source": "solutions/permit-license-management/screenshots/manual/12-review-inventory.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/12-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "four configured permit-management skills",
+        "two configured permit-management knowledge files",
+        "Save tooltip states No unsaved changes"
+      ],
+      "boxes": [
+        {
+          "x": 1048,
+          "y": 46,
+          "width": 196,
+          "height": 48,
+          "label": "Saved state"
+        },
+        {
+          "x": 1200,
+          "y": 86,
+          "width": 198,
+          "height": 38,
+          "label": "Sonnet 4.6"
+        },
+        {
+          "x": 1023,
+          "y": 181,
+          "width": 377,
+          "height": 157,
+          "label": "Four skills"
+        },
+        {
+          "x": 1023,
+          "y": 469,
+          "width": 377,
+          "height": 86,
+          "label": "Two knowledge files"
+        }
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
       "step": 13,
       "source": "solutions/permit-license-management/screenshots/manual/13-open-preview.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab",
+        "New chat",
+        "Permit Management Manual greeting"
+      ],
+      "boxes": [
+        {
+          "x": 635,
+          "y": 7,
+          "width": 112,
+          "height": 45,
+          "label": "Preview"
+        },
+        {
+          "x": 835,
+          "y": 88,
+          "width": 116,
+          "height": 42,
+          "label": "New chat"
+        },
+        {
+          "x": 258,
+          "y": 145,
+          "width": 520,
+          "height": 80,
+          "label": "Fresh Preview"
+        }
+      ]
     },
     {
-      "id": "hard-step-14",
+      "id": "hard-permit-license-management-01",
       "mode": "hard",
+      "case_id": "PERMIT_LICENSE_MANAGEMENT-01",
       "step": 14,
       "source": "solutions/permit-license-management/screenshots/manual/14-permit_license_management-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PERMIT_LICENSE_MANAGEMENT-01"
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/14-permit_license_management-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "EXPIRED",
+        "2026-03-01",
+        "verify status"
+      ],
+      "full_case_not_visibly_proven": [
+        "PRM-6002 is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 113,
+          "width": 445,
+          "height": 258,
+          "label": "Expired permit details"
+        },
+        {
+          "x": 285,
+          "y": 399,
+          "width": 940,
+          "height": 174,
+          "label": "Verify status"
+        }
+      ]
     },
     {
-      "id": "hard-step-15",
+      "id": "hard-permit-license-management-02",
       "mode": "hard",
+      "case_id": "PERMIT_LICENSE_MANAGEMENT-02",
       "step": 15,
       "source": "solutions/permit-license-management/screenshots/manual/15-permit_license_management-02.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PERMIT_LICENSE_MANAGEMENT-02"
+      "reason": "The response says a renewal application was submitted on 2025-09-01, contradicting the locked No renewal evidence required for this case."
     },
     {
-      "id": "hard-step-16",
+      "id": "hard-permit-license-management-03",
       "mode": "hard",
+      "case_id": "PERMIT_LICENSE_MANAGEMENT-03",
       "step": 16,
       "source": "solutions/permit-license-management/screenshots/manual/16-permit_license_management-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PERMIT_LICENSE_MANAGEMENT-03"
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/16-permit_license_management-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "expired_permit",
+        "CRITICAL",
+        "not legal advice"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 154,
+          "width": 940,
+          "height": 151,
+          "label": "Critical expired-permit gap"
+        },
+        {
+          "x": 285,
+          "y": 504,
+          "width": 940,
+          "height": 72,
+          "label": "Not legal advice"
+        }
+      ]
     },
     {
-      "id": "hard-step-17",
+      "id": "hard-permit-license-management-04",
       "mode": "hard",
+      "case_id": "PERMIT_LICENSE_MANAGEMENT-04",
       "step": 17,
       "source": "solutions/permit-license-management/screenshots/manual/17-permit_license_management-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PERMIT_LICENSE_MANAGEMENT-04"
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/17-permit_license_management-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "cannot submit",
+        "public_comment",
+        "No filing, amendment, or supplemental submission is recorded for today"
+      ],
+      "full_case_not_visibly_proven": [
+        "APP-7002 is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 244,
+          "width": 940,
+          "height": 92,
+          "label": "Cannot submit"
+        },
+        {
+          "x": 285,
+          "y": 397,
+          "width": 940,
+          "height": 78,
+          "label": "public_comment phase"
+        }
+      ]
     },
     {
-      "id": "hard-step-18",
+      "id": "hard-draft",
       "mode": "hard",
       "step": 18,
       "source": "solutions/permit-license-management/screenshots/manual/18-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/permit-license-management/screenshots/manual/annotated/18-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Permit Management Manual",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 100,
+          "y": 246,
+          "width": 1285,
+          "height": 54,
+          "label": "Target agent remains Draft"
+        }
+      ]
     }
-  ]
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy Draft gate filtered to Permit Management Pilot with Draft visible.",
+      "Hard step 4 with a visible saved-state confirmation for the instruction policy.",
+      "Hard step 5 with affirmative visible proof that Search all websites was removed.",
+      "Hard PERMIT_LICENSE_MANAGEMENT-02 showing the locked NPDES deadline and No renewal evidence without a contradictory submitted-renewal claim."
+    ]
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:permit-license-management",
+    "reviewed_at": "2026-08-10T00:27:58.158994+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  }
 }

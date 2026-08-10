@@ -47,8 +47,11 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 | Source bundle | `solutions/financial-advisor-copilot/exports/financial-advisor-copilot-source.zip` |
 | Manual evidence | `solutions/financial-advisor-copilot/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/financial-advisor-copilot/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/financial-advisor-copilot/exports/financial-advisor-copilot-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/financial-advisor-copilot/exports/financial-advisor-copilot-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/financial-advisor-copilot/exports/financial-advisor-copilot-solution-export.json` |
 
-**Scaffold status:** 79 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 101 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

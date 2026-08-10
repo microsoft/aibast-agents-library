@@ -9,57 +9,136 @@
   },
   "summary": {
     "total_existing_captures": 26,
-    "reusable": 0,
-    "reshoot_required": 26,
-    "new_learn_step_captures_recommended": 0
+    "reusable": 13,
+    "reshoot_required": 13
   },
   "captures": [
     {
       "id": "easy-wig-01",
       "mode": "easy",
+      "case_id": "WIG-01",
       "source": "solutions/wealth-insights-generator/screenshots/assisted/01-wig-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "WIG-01"
+      "annotated": "solutions/wealth-insights-generator/screenshots/assisted/annotated/01-wig-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "NASDAQ Composite",
+        "Fixed Synthetic",
+        "Not current market data"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 122,
+          "width": 970,
+          "height": 38,
+          "label": "NASDAQ Composite anchor"
+        },
+        {
+          "x": 285,
+          "y": 448,
+          "width": 950,
+          "height": 62,
+          "label": "Fixed Synthetic and not current"
+        }
+      ]
     },
     {
       "id": "easy-wig-02",
       "mode": "easy",
+      "case_id": "WIG-02",
       "source": "solutions/wealth-insights-generator/screenshots/assisted/02-wig-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "WIG-02"
+      "annotated": "solutions/wealth-insights-generator/screenshots/assisted/annotated/02-wig-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Estate Plan Revision",
+        "needs validation",
+        "Licensed human review required"
+      ],
+      "full_case_not_visibly_proven": [
+        "WM-003 and Held Away are above the captured final-answer viewport; the machine gate proves the full locked case."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 160,
+          "width": 940,
+          "height": 135,
+          "label": "Life event requiring validation"
+        },
+        {
+          "x": 285,
+          "y": 498,
+          "width": 945,
+          "height": 78,
+          "label": "Human-review boundary"
+        }
+      ]
     },
     {
       "id": "easy-wig-03",
       "mode": "easy",
+      "case_id": "WIG-03",
       "source": "solutions/wealth-insights-generator/screenshots/assisted/03-wig-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "WIG-03"
+      "annotated": "solutions/wealth-insights-generator/screenshots/assisted/annotated/03-wig-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Harrison Family Trust",
+        "Dr. Anita Rao",
+        "Human Review Required"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 240,
+          "width": 750,
+          "height": 220,
+          "label": "Two high-priority clients"
+        }
+      ]
     },
     {
       "id": "easy-wig-04",
       "mode": "easy",
+      "case_id": "WIG-04",
       "source": "solutions/wealth-insights-generator/screenshots/assisted/04-wig-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "WIG-04"
+      "annotated": "solutions/wealth-insights-generator/screenshots/assisted/annotated/04-wig-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Tidewater Ventures LLC",
+        "Underperformance"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 120,
+          "width": 690,
+          "height": 60,
+          "label": "Below-benchmark client"
+        },
+        {
+          "x": 285,
+          "y": 392,
+          "width": 950,
+          "height": 72,
+          "label": "Underperformance attribution"
+        }
+      ]
     },
     {
       "id": "easy-wig-05",
       "mode": "easy",
+      "case_id": "WIG-05",
       "source": "solutions/wealth-insights-generator/screenshots/assisted/05-wig-05.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "WIG-05"
+      "reason": "George & Martha Kensington and preparation material appear only in reasoning text. Reasoning text is not visual proof, and the visible final answer contains neither required anchor."
     },
     {
       "id": "easy-draft",
       "mode": "easy",
       "source": "solutions/wealth-insights-generator/screenshots/assisted/06-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The target Wealth Insights Pilot row is not visible, so the screenshot cannot prove that the validated agent remains Draft.",
+      "draft": true
     },
     {
       "id": "hard-step-01",
@@ -67,23 +146,48 @@
       "step": 1,
       "source": "solutions/wealth-insights-generator/screenshots/manual/01-create-blank-agent.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The screenshot is a mostly blank loading surface and does not visibly show an Untitled Agent or a blank Build workspace."
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
       "step": 2,
       "source": "solutions/wealth-insights-generator/screenshots/manual/02-name-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Wealth Insights Manual in the name field"
+      ],
+      "boxes": [
+        {
+          "x": 165,
+          "y": 100,
+          "width": 815,
+          "height": 52,
+          "label": "Manual agent name entered"
+        }
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
       "step": 3,
       "source": "solutions/wealth-insights-generator/screenshots/manual/03-enter-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence-first response contract",
+        "Locked Preview evidence anchors"
+      ],
+      "boxes": [
+        {
+          "x": 72,
+          "y": 195,
+          "width": 905,
+          "height": 615,
+          "label": "Reviewed instruction policy"
+        }
+      ]
     },
     {
       "id": "hard-step-04",
@@ -91,7 +195,7 @@
       "step": 4,
       "source": "solutions/wealth-insights-generator/screenshots/manual/04-save-instructions.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is pixel-identical to steps 5-12 and does not show a save confirmation or No unsaved changes tooltip; the completed inventory does not prove the save action."
     },
     {
       "id": "hard-step-05",
@@ -99,7 +203,7 @@
       "step": 5,
       "source": "solutions/wealth-insights-generator/screenshots/manual/05-remove-web-search.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is pixel-identical to steps 4 and 6-12 and shows the completed inventory rather than the web-search removal action."
     },
     {
       "id": "hard-step-06",
@@ -107,7 +211,7 @@
       "step": 6,
       "source": "solutions/wealth-insights-generator/screenshots/manual/06-add-aibast-wealth-insights-generator-controls-and-review.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is pixel-identical to steps 4-5 and 7-12. The knowledge pill is truncated and the capture does not isolate the controls-and-review file addition."
     },
     {
       "id": "hard-step-07",
@@ -115,7 +219,7 @@
       "step": 7,
       "source": "solutions/wealth-insights-generator/screenshots/manual/07-add-aibast-wealth-insights-generator-synthetic-records.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is pixel-identical to steps 4-6 and 8-12. The knowledge pill is truncated and the capture does not isolate the synthetic-records file addition."
     },
     {
       "id": "hard-step-08",
@@ -123,7 +227,7 @@
       "step": 8,
       "source": "solutions/wealth-insights-generator/screenshots/manual/08-add-aibast-client-insights-02.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is pixel-identical to steps 4-7 and 9-12 and shows the completed five-skill inventory; it does not isolate the client-insights addition."
     },
     {
       "id": "hard-step-09",
@@ -131,7 +235,7 @@
       "step": 9,
       "source": "solutions/wealth-insights-generator/screenshots/manual/09-add-aibast-market-brief-01.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is pixel-identical to steps 4-8 and 10-12 and shows the completed five-skill inventory; it does not isolate the market-brief addition."
     },
     {
       "id": "hard-step-10",
@@ -139,7 +243,7 @@
       "step": 10,
       "source": "solutions/wealth-insights-generator/screenshots/manual/10-add-aibast-meeting-brief-05.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is pixel-identical to steps 4-9 and 11-12 and shows the completed five-skill inventory; it does not isolate the meeting-brief addition."
     },
     {
       "id": "hard-step-11",
@@ -147,7 +251,7 @@
       "step": 11,
       "source": "solutions/wealth-insights-generator/screenshots/manual/11-add-aibast-opportunity-alerts-03.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is pixel-identical to steps 4-10 and 12 and shows the completed five-skill inventory; it does not isolate the opportunity-alerts addition."
     },
     {
       "id": "hard-step-12",
@@ -155,76 +259,249 @@
       "step": 12,
       "source": "solutions/wealth-insights-generator/screenshots/manual/12-add-aibast-performance-attribution-04.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is pixel-identical to steps 4-11 and shows the completed five-skill inventory; it does not isolate the performance-attribution addition."
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
       "step": 13,
       "source": "solutions/wealth-insights-generator/screenshots/manual/13-review-inventory.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/13-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Save tooltip states No unsaved changes",
+        "Claude Sonnet 4.6",
+        "Five configured skills",
+        "Two configured knowledge files",
+        "Tools section contains no configured tool"
+      ],
+      "boxes": [
+        {
+          "x": 1045,
+          "y": 45,
+          "width": 205,
+          "height": 52,
+          "label": "Saved: no unsaved changes"
+        },
+        {
+          "x": 1195,
+          "y": 85,
+          "width": 205,
+          "height": 45,
+          "label": "Reviewed model"
+        },
+        {
+          "x": 1025,
+          "y": 140,
+          "width": 380,
+          "height": 170,
+          "label": "Five configured skills"
+        },
+        {
+          "x": 1025,
+          "y": 328,
+          "width": 380,
+          "height": 55,
+          "label": "No configured tools"
+        },
+        {
+          "x": 1025,
+          "y": 388,
+          "width": 380,
+          "height": 135,
+          "label": "Two knowledge files"
+        }
+      ]
     },
     {
       "id": "hard-step-14",
       "mode": "hard",
       "step": 14,
       "source": "solutions/wealth-insights-generator/screenshots/manual/14-open-preview.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/14-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab",
+        "New chat"
+      ],
+      "boxes": [
+        {
+          "x": 635,
+          "y": 8,
+          "width": 110,
+          "height": 45,
+          "label": "Preview selected"
+        },
+        {
+          "x": 830,
+          "y": 86,
+          "width": 105,
+          "height": 48,
+          "label": "Fresh chat control"
+        }
+      ]
     },
     {
-      "id": "hard-step-15",
+      "id": "hard-wig-01",
       "mode": "hard",
+      "case_id": "WIG-01",
       "step": 15,
       "source": "solutions/wealth-insights-generator/screenshots/manual/15-wig-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "WIG-01"
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/15-wig-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "NASDAQ Composite",
+        "Synthetic wealth evidence only; not current market data"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact phrase Fixed Synthetic is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 305,
+          "width": 940,
+          "height": 190,
+          "label": "NASDAQ Composite market result"
+        },
+        {
+          "x": 285,
+          "y": 500,
+          "width": 945,
+          "height": 72,
+          "label": "Synthetic and not current boundary"
+        }
+      ]
     },
     {
-      "id": "hard-step-16",
+      "id": "hard-wig-02",
       "mode": "hard",
+      "case_id": "WIG-02",
       "step": 16,
       "source": "solutions/wealth-insights-generator/screenshots/manual/16-wig-02.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "WIG-02"
+      "reason": "The Manual source frame shows WM-003 and Held Away only in reasoning text while no final answer is visible. Reasoning text cannot verify the case."
     },
     {
-      "id": "hard-step-17",
+      "id": "hard-wig-03",
       "mode": "hard",
+      "case_id": "WIG-03",
       "step": 17,
       "source": "solutions/wealth-insights-generator/screenshots/manual/17-wig-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "WIG-03"
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/17-wig-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "High-Priority Planning Signals",
+        "Harrison Family Trust",
+        "Dr. Anita Rao"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 320,
+          "width": 945,
+          "height": 325,
+          "label": "Two high-priority planning signals"
+        }
+      ]
     },
     {
-      "id": "hard-step-18",
+      "id": "hard-wig-04",
       "mode": "hard",
+      "case_id": "WIG-04",
       "step": 18,
       "source": "solutions/wealth-insights-generator/screenshots/manual/18-wig-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "WIG-04"
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/18-wig-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Tidewater Ventures LLC"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact Underperformance label is not visible in the final answer; reasoning text is not counted."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 605,
+          "width": 805,
+          "height": 78,
+          "label": "Below-benchmark client"
+        }
+      ]
     },
     {
-      "id": "hard-step-19",
+      "id": "hard-wig-05",
       "mode": "hard",
+      "case_id": "WIG-05",
       "step": 19,
       "source": "solutions/wealth-insights-generator/screenshots/manual/19-wig-05.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "WIG-05"
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/19-wig-05.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "preparation material only"
+      ],
+      "full_case_not_visibly_proven": [
+        "George & Martha Kensington is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 450,
+          "width": 945,
+          "height": 72,
+          "label": "Preparation material boundary"
+        }
+      ]
     },
     {
-      "id": "hard-step-20",
+      "id": "hard-draft",
       "mode": "hard",
       "step": 20,
       "source": "solutions/wealth-insights-generator/screenshots/manual/20-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/wealth-insights-generator/screenshots/manual/annotated/20-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Wealth Insights Manual",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 105,
+          "y": 250,
+          "width": 690,
+          "height": 58,
+          "label": "Target agent remains Draft"
+        }
+      ]
     }
-  ]
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy WIG-02 with WM-003 and Held Away visible in the final answer.",
+      "Easy WIG-05 with George & Martha Kensington and preparation material visible in the final answer.",
+      "Easy Draft gate filtered to Wealth Insights Pilot with Draft visible.",
+      "Hard step 1 after the blank Build workspace has fully loaded.",
+      "Hard step 4 with a visible save confirmation or No unsaved changes tooltip.",
+      "One expanded Hard-mode Knowledge inventory showing both exact filenames; create two annotated checkpoints from it.",
+      "Distinct Hard-mode captures for each of the five skill additions.",
+      "Hard WIG-02 with WM-003 and Held Away visible in the final answer."
+    ],
+    "new_learn_step_captures": [
+      "Brainstem skill attached in VS Code Copilot Chat.",
+      "Copilot-only skill attached in VS Code Copilot Chat.",
+      "Brainstem local 5/5 verdict.",
+      "Copilot-only local 5/5 verdict.",
+      "Brainstem deploy response with Draft inventory.",
+      "Copilot-only deploy response with Draft inventory.",
+      "Brainstem final complete verdict.",
+      "Copilot-only final complete verdict."
+    ]
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:wealth-insights-generator",
+    "reviewed_at": "2026-08-10T00:35:00Z",
+    "method": "Inspected all raw assisted and manual source frames, including both WIG-02 frames, and retained only checkpoints with visible positive anchors.",
+    "notes": "All five locked cases have reusable visual coverage. Partial checkpoints are explicitly bounded by the deterministic machine gate, and genuine missing or non-proving source frames remain reshoot-required."
+  }
 }

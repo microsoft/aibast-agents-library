@@ -9,49 +9,129 @@
   },
   "summary": {
     "total_existing_captures": 23,
-    "reusable": 0,
-    "reshoot_required": 23,
-    "new_learn_step_captures_recommended": 0
+    "reusable": 18,
+    "reshoot_required": 5
   },
   "captures": [
     {
       "id": "easy-disc-01",
       "mode": "easy",
+      "case_id": "DISC-01",
       "source": "solutions/procurement-support/screenshots/assisted/01-disc-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "DISC-01"
+      "annotated": "solutions/procurement-support/screenshots/assisted/annotated/01-disc-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "DISC-101",
+        "DISC-102",
+        "not realized savings"
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 249,
+          "width": 895,
+          "height": 175,
+          "label": "Savings signal IDs"
+        },
+        {
+          "x": 285,
+          "y": 452,
+          "width": 950,
+          "height": 80,
+          "label": "Not realized savings"
+        }
+      ]
     },
     {
       "id": "easy-disc-02",
       "mode": "easy",
+      "case_id": "DISC-02",
       "source": "solutions/procurement-support/screenshots/assisted/02-disc-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "DISC-02"
+      "annotated": "solutions/procurement-support/screenshots/assisted/annotated/02-disc-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "2026-09-30",
+        "approved procurement process"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact 2026-08-31 marker is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 230,
+          "width": 930,
+          "height": 48,
+          "label": "2026-09-30 review date"
+        },
+        {
+          "x": 286,
+          "y": 447,
+          "width": 940,
+          "height": 80,
+          "label": "Approved process gate"
+        }
+      ]
     },
     {
       "id": "easy-disc-03",
       "mode": "easy",
+      "case_id": "DISC-03",
       "source": "solutions/procurement-support/screenshots/assisted/03-disc-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "DISC-03"
+      "annotated": "solutions/procurement-support/screenshots/assisted/annotated/03-disc-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "does not recommend a supplier award"
+      ],
+      "full_case_not_visibly_proven": [
+        "Clinical consumables and the exact facility count are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 398,
+          "width": 940,
+          "height": 112,
+          "label": "No supplier award"
+        }
+      ]
     },
     {
       "id": "easy-disc-04",
       "mode": "easy",
+      "case_id": "DISC-04",
       "source": "solutions/procurement-support/screenshots/assisted/04-disc-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "DISC-04"
+      "annotated": "solutions/procurement-support/screenshots/assisted/annotated/04-disc-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Northstar Imaging",
+        "MedSupply Cooperative",
+        "No supplier is selected"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 249,
+          "width": 835,
+          "height": 176,
+          "label": "Supplier review order"
+        },
+        {
+          "x": 286,
+          "y": 452,
+          "width": 940,
+          "height": 77,
+          "label": "No supplier selected"
+        }
+      ]
     },
     {
       "id": "easy-draft",
       "mode": "easy",
       "source": "solutions/procurement-support/screenshots/assisted/05-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The Discount Finder Pilot row is not visible, so the screenshot cannot prove the target agent remains Draft.",
+      "draft": true
     },
     {
       "id": "hard-step-01",
@@ -59,23 +139,56 @@
       "step": 1,
       "source": "solutions/procurement-support/screenshots/manual/01-create-blank-agent.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is a blank loading view and contains no visible blank-agent workspace or other positive target-state anchor."
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
       "step": 2,
       "source": "solutions/procurement-support/screenshots/manual/02-name-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Discount Finder Manual in the name field"
+      ],
+      "boxes": [
+        {
+          "x": 165,
+          "y": 99,
+          "width": 815,
+          "height": 49,
+          "label": "Manual agent name"
+        }
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
       "step": 3,
       "source": "solutions/procurement-support/screenshots/manual/03-enter-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Discount Finder Agent — Manual Global Instructions",
+        "Locked Preview evidence anchors",
+        "DISC-01 through DISC-04 acceptance anchors"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 222,
+          "width": 890,
+          "height": 50,
+          "label": "Reviewed instructions"
+        },
+        {
+          "x": 84,
+          "y": 510,
+          "width": 890,
+          "height": 304,
+          "label": "Locked Preview anchors"
+        }
+      ]
     },
     {
       "id": "hard-step-04",
@@ -83,39 +196,93 @@
       "step": 4,
       "source": "solutions/procurement-support/screenshots/manual/04-save-instructions.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The save icon is visible, but no saved-state confirmation such as No unsaved changes appears; the screenshot does not prove the instruction policy was saved."
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
       "step": 5,
       "source": "solutions/procurement-support/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "The visible Knowledge section contains no Search all websites entry"
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 255,
+          "width": 385,
+          "height": 78,
+          "label": "Web search removed"
+        }
+      ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
       "step": 6,
       "source": "solutions/procurement-support/screenshots/manual/06-add-aibast-procurement-support-rules-and-guardrails.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/06-add-aibast-procurement-support-rules-and-guardrails.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_procurement-support-rules-and-guar... knowledge entry"
+      ],
+      "full_filename_not_visibly_proven": [
+        "The Copilot Studio chip truncates the end of the filename."
+      ],
+      "boxes": [
+        {
+          "x": 1030,
+          "y": 310,
+          "width": 370,
+          "height": 38,
+          "label": "Rules file added"
+        }
+      ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
       "step": 7,
       "source": "solutions/procurement-support/screenshots/manual/07-add-aibast-procurement-support-synthetic-records.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/07-add-aibast-procurement-support-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_procurement-support-synthetic-recor... knowledge entry"
+      ],
+      "full_filename_not_visibly_proven": [
+        "The Copilot Studio chip truncates the end of the filename."
+      ],
+      "boxes": [
+        {
+          "x": 1030,
+          "y": 310,
+          "width": 370,
+          "height": 39,
+          "label": "Synthetic records added"
+        }
+      ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
       "step": 8,
       "source": "solutions/procurement-support/screenshots/manual/08-add-aibast-consolidation-analysis-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/08-add-aibast-consolidation-analysis-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "consolidation-analysis skill"
+      ],
+      "boxes": [
+        {
+          "x": 1030,
+          "y": 187,
+          "width": 205,
+          "height": 38,
+          "label": "Consolidation skill"
+        }
+      ]
     },
     {
       "id": "hard-step-09",
@@ -123,23 +290,47 @@
       "step": 9,
       "source": "solutions/procurement-support/screenshots/manual/09-add-aibast-purchase-timing-04.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is pixel-identical to step 8 and shows only consolidation-analysis; purchase-timing is not visible."
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
       "step": 10,
       "source": "solutions/procurement-support/screenshots/manual/10-add-aibast-savings-scan-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/10-add-aibast-savings-scan-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "savings-scan skill"
+      ],
+      "boxes": [
+        {
+          "x": 1029,
+          "y": 187,
+          "width": 151,
+          "height": 38,
+          "label": "Savings skill"
+        }
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
       "step": 11,
       "source": "solutions/procurement-support/screenshots/manual/11-add-aibast-time-sensitive-deals-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/11-add-aibast-time-sensitive-deals-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "time-sensitive-deals skill"
+      ],
+      "boxes": [
+        {
+          "x": 1029,
+          "y": 187,
+          "width": 195,
+          "height": 39,
+          "label": "Time-sensitive skill"
+        }
+      ]
     },
     {
       "id": "hard-step-12",
@@ -147,59 +338,183 @@
       "step": 12,
       "source": "solutions/procurement-support/screenshots/manual/12-review-inventory.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The inventory shows only three skills and omits purchase-timing, so the visible state defeats the required four-skill review checkpoint."
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
       "step": 13,
       "source": "solutions/procurement-support/screenshots/manual/13-open-preview.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab",
+        "New chat",
+        "Discount Finder Manual"
+      ],
+      "boxes": [
+        {
+          "x": 566,
+          "y": 10,
+          "width": 170,
+          "height": 52,
+          "label": "Preview selected"
+        },
+        {
+          "x": 833,
+          "y": 88,
+          "width": 108,
+          "height": 41,
+          "label": "Fresh chat"
+        }
+      ]
     },
     {
-      "id": "hard-step-14",
+      "id": "hard-disc-01",
       "mode": "hard",
-      "step": 14,
+      "case_id": "DISC-01",
       "source": "solutions/procurement-support/screenshots/manual/14-disc-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "DISC-01"
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/14-disc-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "DISC-101",
+        "DISC-102",
+        "not realized savings"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 292,
+          "width": 752,
+          "height": 133,
+          "label": "DISC-101 and DISC-102"
+        },
+        {
+          "x": 287,
+          "y": 452,
+          "width": 940,
+          "height": 80,
+          "label": "Not realized savings"
+        }
+      ],
+      "step": 14
     },
     {
-      "id": "hard-step-15",
+      "id": "hard-disc-02",
       "mode": "hard",
-      "step": 15,
+      "case_id": "DISC-02",
       "source": "solutions/procurement-support/screenshots/manual/15-disc-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "DISC-02"
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/15-disc-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "2026-08-31",
+        "2026-09-30"
+      ],
+      "full_case_not_visibly_proven": [
+        "The approved procurement process marker is partially cropped at the top of the frame."
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 389,
+          "width": 812,
+          "height": 173,
+          "label": "Locked review dates"
+        }
+      ],
+      "step": 15
     },
     {
-      "id": "hard-step-16",
+      "id": "hard-disc-03",
       "mode": "hard",
-      "step": 16,
+      "case_id": "DISC-03",
       "source": "solutions/procurement-support/screenshots/manual/16-disc-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "DISC-03"
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/16-disc-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Clinical consumables",
+        "does not recommend a supplier award"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact facility count 4 is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 399,
+          "width": 940,
+          "height": 112,
+          "label": "Review-only sourcing boundary"
+        }
+      ],
+      "step": 16
     },
     {
-      "id": "hard-step-17",
+      "id": "hard-disc-04",
       "mode": "hard",
-      "step": 17,
+      "case_id": "DISC-04",
       "source": "solutions/procurement-support/screenshots/manual/17-disc-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "DISC-04"
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/17-disc-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Northstar Imaging",
+        "MedSupply Cooperative",
+        "No supplier is selected"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 249,
+          "width": 788,
+          "height": 176,
+          "label": "Supplier sequence"
+        },
+        {
+          "x": 286,
+          "y": 451,
+          "width": 930,
+          "height": 80,
+          "label": "No supplier selected"
+        }
+      ],
+      "step": 17
     },
     {
-      "id": "hard-step-18",
+      "id": "hard-draft",
       "mode": "hard",
       "step": 18,
       "source": "solutions/procurement-support/screenshots/manual/18-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/procurement-support/screenshots/manual/annotated/18-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Discount Finder Manual",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 103,
+          "y": 243,
+          "width": 1280,
+          "height": 58,
+          "label": "Target agent remains Draft"
+        }
+      ]
     }
-  ]
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy Draft gate filtered to Discount Finder Pilot with Draft visible.",
+      "Hard step 1 with the blank-agent Build workspace visible after loading completes.",
+      "Hard step 4 with an explicit saved-state confirmation such as No unsaved changes.",
+      "Hard step 9 with purchase-timing visibly attached.",
+      "Hard step 12 with Claude Sonnet 4.6, all four skills, both knowledge files, and no configured tools visible."
+    ]
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:procurement-support",
+    "reviewed_at": "2026-08-10T00:27:58.164968+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  }
 }

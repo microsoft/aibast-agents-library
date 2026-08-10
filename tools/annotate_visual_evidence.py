@@ -32,9 +32,9 @@ def font(size: int, bold: bool = False):
     return ImageFont.load_default()
 
 
-def annotate(item: dict) -> None:
-    source = ROOT / item["source"]
-    target = ROOT / item["annotated"]
+def annotate(item: dict, root: Path = ROOT) -> None:
+    source = root / item["source"]
+    target = root / item["annotated"]
     image = Image.open(source).convert("RGB")
     draw = ImageDraw.Draw(image, "RGBA")
     for index, box in enumerate(item.get("boxes", []), start=1):
@@ -72,13 +72,13 @@ def annotate(item: dict) -> None:
     image.save(target, format="PNG", optimize=True)
 
 
-def build(spec_path: Path) -> tuple[int, int]:
+def build(spec_path: Path, root: Path = ROOT) -> tuple[int, int]:
     document = json.loads(spec_path.read_text(encoding="utf-8"))
     reusable = 0
     reshoot = 0
     for item in document["captures"]:
         if item["status"] == "reusable":
-            annotate(item)
+            annotate(item, root=root)
             reusable += 1
         elif item["status"] == "reshoot_required":
             reshoot += 1

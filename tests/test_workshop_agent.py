@@ -128,10 +128,23 @@ def test_generic_engine_returns_front_door_handoff(tmp_path, monkeypatch):
     assert handoff["callback_schema"]["cases"][0]["response"] == (
         "The actual Copilot Studio Preview response."
     )
-    assert result["visual_evidence"]["reusable"] == 19
-    assert result["visual_evidence"]["reshoot_required"] == 7
-    assert len(result["visual_evidence"]["reshoot_jobs"]) == 7
-    assert len(result["visual_evidence"]["new_capture_jobs"]) == 8
+    visual_contract = json.loads(
+        (
+            ROOT
+            / "solutions"
+            / "time-entry-billing"
+            / "evals"
+            / "visual-checkpoints.json"
+        ).read_text(encoding="utf-8")
+    )
+    captures = visual_contract["captures"]
+    reusable = sum(item["status"] == "reusable" for item in captures)
+    reshoots = sum(item["status"] == "reshoot_required" for item in captures)
+    new_captures = visual_contract["reshoot_plan"]["new_learn_step_captures"]
+    assert result["visual_evidence"]["reusable"] == reusable
+    assert result["visual_evidence"]["reshoot_required"] == reshoots
+    assert len(result["visual_evidence"]["reshoot_jobs"]) == reshoots
+    assert len(result["visual_evidence"]["new_capture_jobs"]) == len(new_captures)
 
 
 def test_two_message_flow_resolves_it_from_the_active_solution(

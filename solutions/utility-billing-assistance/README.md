@@ -42,8 +42,11 @@ The local agent uses fictional records and produces decision support only. It do
 | Source bundle | `solutions/utility-billing-assistance/exports/utility-billing-assistance-source.zip` |
 | Manual evidence | `solutions/utility-billing-assistance/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/utility-billing-assistance/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/utility-billing-assistance/exports/utility-billing-assistance-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/utility-billing-assistance/exports/utility-billing-assistance-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/utility-billing-assistance/exports/utility-billing-assistance-solution-export.json` |
 
-**Scaffold status:** 69 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 93 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

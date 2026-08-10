@@ -1227,6 +1227,8 @@ const state = {
   stacks: [],
   stats: {},
   agentSignals: new Map(),
+  advertisedSolutions: new Set(),
+  exportedSolutionSlugs: new Set(),
   view: "solutions",
   query: "",
   industry: "",
@@ -1330,17 +1332,28 @@ async function getJSON(paths) {
 
 async function init() {
   const stamp = `?t=${Date.now()}`;
-  const [registry, metrics] = await Promise.all([
+  const [registry, metrics, catalog, exportInventory] = await Promise.all([
     getJSON([`registry.json${stamp}`, `${RAW}/registry.json${stamp}`]),
-    getJSON([`state/metrics.json${stamp}`, `${SITE}state/metrics.json${stamp}`])
+    getJSON([`state/metrics.json${stamp}`, `${SITE}state/metrics.json${stamp}`]),
+    getJSON([`solutions/catalog.json${stamp}`, `${RAW}/solutions/catalog.json${stamp}`]),
+    getJSON([
+      `state/copilot_studio_solution_exports.json${stamp}`,
+      `${RAW}/state/copilot_studio_solution_exports.json${stamp}`
+    ])
   ]);
-  if (!registry) {
-    $("grid").innerHTML = `<div class="empty"><h3>Library unavailable</h3><p>Could not load <code>registry.json</code>.</p></div>`;
+  if (!registry || !catalog) {
+    $("grid").innerHTML = `<div class="empty"><h3>Library unavailable</h3><p>Could not load the canonical registry and advertised-solution catalog.</p></div>`;
     return;
   }
   state.agents = registry.agents || [];
   state.stacks = registry.stacks || [];
   state.stats = registry.stats || {};
+  state.advertisedSolutions = new Set(Object.keys(catalog.solutions || {}));
+  state.exportedSolutionSlugs = new Set(
+    (exportInventory?.solutions || [])
+      .filter(row => row?.status === "exported" && row?.settings_error == null)
+      .map(row => row.slug)
+  );
   state.agentSignals = buildAgentSignalMap(metrics, state.agents);
   restoreState();
   renderStats();
@@ -1445,7 +1458,10 @@ function solutionOf(agent) {
 }
 
 function solutionAgents() {
-  return state.agents.filter(agent => agent._catalog_kind === "solution");
+  return state.agents.filter(agent => (
+    agent._catalog_kind === "solution"
+    && state.advertisedSolutions.has(agent.name)
+  ));
 }
 
 function shown(agent) {
@@ -1615,7 +1631,10 @@ function matchesReadiness(agent) {
 
 function filteredAgents() {
   const kind = state.view === "solutions" ? "solution" : "template";
-  let rows = state.agents.filter(agent => agent._catalog_kind === kind)
+  const candidates = kind === "solution"
+    ? solutionAgents()
+    : state.agents.filter(agent => agent._catalog_kind === kind);
+  let rows = candidates
     .map(agent => ({ agent, score: scoreAgent(agent, state.query) }));
   if (state.query) {
     const topScore = Math.max(0, ...rows.map(row => row.score));
@@ -1711,11 +1730,19 @@ function buildAgentSignalMap(metrics, agents) {
     if (!row || typeof row.name !== "string") return;
     const upvotes = row.upvotes;
     const acquisitions = row.acquisitions;
+    const upvoteUrl = canonicalDiscussionUrl(row.upvote_discussion_url);
+    const acquisitionUrl = canonicalDiscussionUrl(
+      row.acquisition_discussion_url
+    );
     supplied.set(row.name, {
-      upvotes: Number.isSafeInteger(upvotes) && upvotes >= 0 ? upvotes : null,
-      acquisitions: Number.isSafeInteger(acquisitions) && acquisitions >= 0 ? acquisitions : null,
-      upvoteUrl: typeof row.upvote_discussion_url === "string" ? row.upvote_discussion_url : "",
-      acquisitionUrl: typeof row.acquisition_discussion_url === "string" ? row.acquisition_discussion_url : ""
+      upvotes: upvoteUrl && Number.isSafeInteger(upvotes) && upvotes >= 0
+        ? upvotes : null,
+      acquisitions: acquisitionUrl
+        && Number.isSafeInteger(acquisitions)
+        && acquisitions >= 0
+        ? acquisitions : null,
+      upvoteUrl,
+      acquisitionUrl
     });
   });
   return new Map(agents.map(agent => [
@@ -1729,6 +1756,14 @@ function buildAgentSignalMap(metrics, agents) {
   ]));
 }
 
+function canonicalDiscussionUrl(value) {
+  const url = typeof value === "string" ? value : "";
+  const pattern = new RegExp(
+    `^https://github\\.com/${OWNER}/${REPO}/discussions/\\d+$`
+  );
+  return pattern.test(url) ? url : "";
+}
+
 function aggregateAgentSignal(agentName, signal) {
   const record = state.agentSignals.get(agentName) || {};
   const count = record[signal];
@@ -1737,6 +1772,8 @@ function aggregateAgentSignal(agentName, signal) {
 
 function agentUpvoteControl(agent) {
   const count = aggregateAgentSignal(agent.name, "upvotes");
+  const record = state.agentSignals.get(agent.name) || {};
+  const url = canonicalDiscussionUrl(record.upvoteUrl);
   const countText = count === null ? "—" : count.toLocaleString();
   const countLabel = count === null
     ? "Aggregate upvotes unavailable"
@@ -1745,13 +1782,16 @@ function agentUpvoteControl(agent) {
     <div class="agent-upvote">
       <button class="button small" type="button" data-action="upvote-agent"
         data-agent-name="${enc(agent.name)}"
-        aria-label="Open the canonical rating Discussion for ${esc(shown(agent))}">Upvote</button>
+        ${url ? "" : 'disabled aria-disabled="true"'}
+        aria-label="${url ? "Open the canonical rating Discussion" : "Rating Discussion unavailable"} for ${esc(shown(agent))}">Upvote</button>
       <span class="upvote-count" aria-label="${esc(countLabel)}" title="${esc(countLabel)}">${countText}</span>
     </div>`;
 }
 
 function agentAcquisitionControl(agent) {
   const count = aggregateAgentSignal(agent.name, "acquisitions");
+  const record = state.agentSignals.get(agent.name) || {};
+  const url = canonicalDiscussionUrl(record.acquisitionUrl);
   const countText = count === null ? "—" : count.toLocaleString();
   const countLabel = count === null
     ? "Signed-in acquisitions unavailable"
@@ -1760,30 +1800,22 @@ function agentAcquisitionControl(agent) {
     <div class="agent-upvote">
       <button class="button" type="button" data-action="record-agent-acquisition"
         data-agent-name="${enc(agent.name)}"
-        aria-label="Open the canonical acquisition Discussion for ${esc(shown(agent))}">Record acquisition ↗</button>
+        ${url ? "" : 'disabled aria-disabled="true"'}
+        aria-label="${url ? "Open the canonical acquisition Discussion" : "Acquisition Discussion unavailable"} for ${esc(shown(agent))}">Record acquisition ↗</button>
       <span class="upvote-count" aria-label="${esc(countLabel)}" title="${esc(countLabel)}">${countText}</span>
     </div>`;
-}
-
-function discussionFallbackUrl(agentName, signal) {
-  const pagesOwner = String(globalThis.location?.hostname || "")
-    .match(/^([a-z0-9-]+)\.github\.io$/i)?.[1];
-  const signalOwner = pagesOwner || OWNER;
-  const title = signal === "acquisition"
-    ? `[Acquisition] ${agentName}`
-    : agentName;
-  return `https://github.com/${signalOwner}/${REPO}/discussions?discussions_q=${encodeURIComponent(`"${title}"`)}`;
 }
 
 function openAgentSignal(agentName, signal) {
   const agent = state.agents.find(item => item.name === agentName);
   if (!agent) return;
   const record = state.agentSignals.get(agentName) || {};
-  const url = (
+  const url = canonicalDiscussionUrl(
     signal === "acquisition"
       ? record.acquisitionUrl
       : record.upvoteUrl
-  ) || discussionFallbackUrl(agentName, signal);
+  );
+  if (!url) return;
   window.open(url, '_blank', 'noopener');
 }
 
@@ -1929,6 +1961,16 @@ function agentDownload(agent) {
   return {href: encodeURI(file), filename};
 }
 
+function copilotSolutionDownloads(agent) {
+  const slug = agent?._solution?.package?.slug || "";
+  if (!slug || !state.exportedSolutionSlugs.has(slug)) return null;
+  const base = `solutions/${slug}/exports/${slug}`;
+  return {
+    zip: `${base}-copilot-studio-solution.zip`,
+    settings: `${base}-deployment-settings.json`,
+  };
+}
+
 function architectureHTML(architecture, solution) {
   if (!architecture) return "";
   const flow = architecture.business_flow || [];
@@ -1987,6 +2029,12 @@ function architectureHTML(architecture, solution) {
 function openAgent(name) {
   const agent = state.agents.find(item => item.name === name);
   if (!agent) return;
+  if (
+    agent._catalog_kind === "solution"
+    && !state.advertisedSolutions.has(agent.name)
+  ) {
+    return;
+  }
   const solution = solutionOf(agent);
   const capabilities = solution.capabilities || [];
   const outcomes = solution.outcomes || [];
@@ -1998,6 +2046,7 @@ function openAgent(name) {
     interactive_demo_url: interactiveDemoUrl(agent, item),
   }));
   const download = agentDownload(agent);
+  const solutionDownloads = copilotSolutionDownloads(agent);
   const architecture = solution.architecture;
   const stack = state.stacks.find(item =>
     item.stack_type === "multi_agent"
@@ -2066,10 +2115,12 @@ function openAgent(name) {
             <p>Download the reviewed portable Python agent directly. Review the source before running it locally.</p>
             <div class="detail-actions">
               <a class="button primary" href="${esc(download.href)}" download="${esc(download.filename)}">Download agent.py</a>
+              ${solutionDownloads ? `<a class="button" href="${esc(solutionDownloads.zip)}" download>Download Copilot Studio solution</a>` : ""}
+              ${solutionDownloads ? `<a class="button" href="${esc(solutionDownloads.settings)}" download>Deployment settings</a>` : ""}
               ${agentAcquisitionControl(agent)}
               <a class="button" href="${BLOB}/${encodeURI(agent._file)}" target="_blank" rel="noopener">View source ↗</a>
             </div>
-            <p class="detail-note">The download stays immediate. Use the acquisition Discussion once per GitHub account to add a traceable signed-in acquisition signal; CDN and release transfers are reported separately.</p>
+            <p class="detail-note">Download the portable Python file or import the unmanaged Copilot Studio solution manually. Map the supplied deployment settings before enabling integrations; the imported agent remains unpublished until an administrator explicitly publishes it. Use the acquisition Discussion once per GitHub account to add a traceable signed-in acquisition signal.</p>
           </section>
         </div>
         <aside class="detail-aside">

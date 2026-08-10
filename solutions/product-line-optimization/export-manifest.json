@@ -27,6 +27,30 @@
       "status": "ready"
     },
     {
+      "id": "copilot-studio-solution",
+      "label": "Importable Copilot Studio solution",
+      "path": "solutions/product-line-optimization/exports/product-line-optimization-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/exports/product-line-optimization-copilot-studio-solution.zip",
+      "use": "Unmanaged solution ZIP for manual import; the agent remains unpublished",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-deployment-settings",
+      "label": "Copilot Studio deployment settings",
+      "path": "solutions/product-line-optimization/exports/product-line-optimization-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/exports/product-line-optimization-deployment-settings.json",
+      "use": "Connection-reference, environment-variable, and agent import settings",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-export-metadata",
+      "label": "Copilot Studio solution export metadata",
+      "path": "solutions/product-line-optimization/exports/product-line-optimization-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/exports/product-line-optimization-solution-export.json",
+      "use": "Export identity, integrity hash, source environment, and import caveats",
+      "status": "ready"
+    },
+    {
       "id": "field-guide",
       "label": "Customer field guide",
       "path": "solutions/product-line-optimization/field-guide.html",
@@ -211,6 +235,14 @@
       "status": "ready"
     },
     {
+      "id": "easy-evidence-dataverse-draft-evidence",
+      "label": "Dataverse Draft Evidence",
+      "path": "solutions/product-line-optimization/evals/dataverse-draft-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/evals/dataverse-draft-evidence.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
       "id": "manual-evidence",
       "label": "Manual build evidence",
       "path": "solutions/product-line-optimization/evals/manual-build-evidence.json",
@@ -240,6 +272,206 @@
       "path": "solutions/product-line-optimization/evals/visual-checkpoints.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/evals/visual-checkpoints.json",
       "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-plo-01",
+      "label": "Annotated visual checkpoint: easy-plo-01",
+      "path": "solutions/product-line-optimization/screenshots/assisted/annotated/02-plo-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/assisted/annotated/02-plo-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-plo-02",
+      "label": "Annotated visual checkpoint: easy-plo-02",
+      "path": "solutions/product-line-optimization/screenshots/assisted/annotated/03-plo-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/assisted/annotated/03-plo-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-04-plo-03",
+      "label": "Annotated visual checkpoint: easy-plo-03",
+      "path": "solutions/product-line-optimization/screenshots/assisted/annotated/04-plo-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/assisted/annotated/04-plo-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-create-blank-agent",
+      "label": "Annotated visual checkpoint: hard-step-01",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/01-create-blank-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/01-create-blank-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-name-agent",
+      "label": "Annotated visual checkpoint: hard-step-02",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/02-name-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/02-name-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-enter-instructions",
+      "label": "Annotated visual checkpoint: hard-step-03",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/03-enter-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/03-enter-instructions.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-04-save-instructions",
+      "label": "Annotated visual checkpoint: hard-step-04",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/04-save-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/04-save-instructions.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-06-open-knowledge-upload",
+      "label": "Annotated visual checkpoint: hard-step-06",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/06-open-knowledge-upload.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/06-open-knowledge-upload.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-07-upload-production-records",
+      "label": "Annotated visual checkpoint: hard-step-07",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/07-upload-production-records.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/07-upload-production-records.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-08-upload-optimization-rules",
+      "label": "Annotated visual checkpoint: hard-step-08",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/08-upload-optimization-rules.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/08-upload-optimization-rules.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-09-verify-two-knowledge-files",
+      "label": "Annotated visual checkpoint: hard-step-09",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/09-verify-two-knowledge-files.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/09-verify-two-knowledge-files.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-10-open-skill-upload",
+      "label": "Annotated visual checkpoint: hard-step-10",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/10-open-skill-upload.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/10-open-skill-upload.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-11-add-line-health-skill",
+      "label": "Annotated visual checkpoint: hard-step-11",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/11-add-line-health-skill.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/11-add-line-health-skill.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-12-add-bottleneck-skill",
+      "label": "Annotated visual checkpoint: hard-step-12",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/12-add-bottleneck-skill.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/12-add-bottleneck-skill.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-13-add-throughput-options-skill",
+      "label": "Annotated visual checkpoint: hard-step-13",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/13-add-throughput-options-skill.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/13-add-throughput-options-skill.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-14-add-shift-plan-skill",
+      "label": "Annotated visual checkpoint: hard-step-14",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/14-add-shift-plan-skill.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/14-add-shift-plan-skill.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-15-open-model-picker",
+      "label": "Annotated visual checkpoint: hard-step-15",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/15-open-model-picker.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/15-open-model-picker.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-16-select-sonnet46",
+      "label": "Annotated visual checkpoint: hard-step-16",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/16-select-sonnet46.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/16-select-sonnet46.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-17-review-inventory",
+      "label": "Annotated visual checkpoint: hard-step-17",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/17-review-inventory.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/17-review-inventory.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-18-open-preview",
+      "label": "Annotated visual checkpoint: hard-step-18",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/18-open-preview.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/18-open-preview.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-19-preview-plo01-line-health",
+      "label": "Annotated visual checkpoint: hard-plo-01",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/19-preview-plo01-line-health.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/19-preview-plo01-line-health.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-20-preview-plo02-bottlenecks",
+      "label": "Annotated visual checkpoint: hard-plo-02",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/20-preview-plo02-bottlenecks.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/20-preview-plo02-bottlenecks.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-21-preview-plo03-options",
+      "label": "Annotated visual checkpoint: hard-plo-03",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/21-preview-plo03-options.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/21-preview-plo03-options.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-22-preview-plo04-shift-plan",
+      "label": "Annotated visual checkpoint: hard-plo-04",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/22-preview-plo04-shift-plan.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/22-preview-plo04-shift-plan.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-23-verify-draft-no-publish",
+      "label": "Annotated visual checkpoint: hard-draft",
+      "path": "solutions/product-line-optimization/screenshots/manual/annotated/23-verify-draft-no-publish.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/screenshots/manual/annotated/23-verify-draft-no-publish.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
@@ -586,5 +818,31 @@
       "use": "Copilot-assisted evidence inventory",
       "status": "ready"
     }
-  ]
+  ],
+  "copilot_studio_solution": {
+    "label": "Importable Product Line Optimization Agent Copilot Studio solution",
+    "status": "exported",
+    "solution_unique_name": "aibast_ProductLineOptimizationPilot",
+    "zip": {
+      "path": "solutions/product-line-optimization/exports/product-line-optimization-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/exports/product-line-optimization-copilot-studio-solution.zip",
+      "sha256": "15a1957e0c937fa1cf44da378f5293e38f41fb83912fa38c99cb82ac7e5831e1",
+      "bytes": 4555
+    },
+    "deployment_settings": {
+      "path": "solutions/product-line-optimization/exports/product-line-optimization-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/exports/product-line-optimization-deployment-settings.json"
+    },
+    "metadata": {
+      "path": "solutions/product-line-optimization/exports/product-line-optimization-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/product-line-optimization/exports/product-line-optimization-solution-export.json"
+    },
+    "managed": false,
+    "published": false,
+    "import_caveats": [
+      "Import as an unmanaged solution for manual review.",
+      "Map connection references and environment variables before enabling integrations.",
+      "The exported agent remains unpublished unless the target administrator explicitly publishes it."
+    ]
+  }
 }

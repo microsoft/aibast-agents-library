@@ -74,8 +74,11 @@ Preview cases for `Regulatory Manual Build`.
 | Source bundle | `solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-source.zip` |
 | Manual evidence | `solutions/fs-regulatory-compliance/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/fs-regulatory-compliance/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-solution-export.json` |
 
-**Scaffold status:** 81 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 114 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

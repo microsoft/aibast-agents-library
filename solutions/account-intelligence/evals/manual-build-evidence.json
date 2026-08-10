@@ -144,11 +144,18 @@
     "status": "captured",
     "manifest": "solutions/account-intelligence/screenshots/manual/browserfilm.json",
     "gif": "solutions/account-intelligence/screenshots/manual/manual-build-walkthrough.gif",
-    "contact_sheet": "solutions/account-intelligence/screenshots/manual/manual-build-contact-sheet.jpg"
+    "contact_sheet": "solutions/account-intelligence/screenshots/manual/manual-build-contact-sheet.jpg",
+    "visual_review": "See evals/visual-checkpoints.json; only approved annotated frames are reusable learner proof."
   },
   "publication_gate": {
     "required_state": "Draft",
     "published": false,
-    "confirmation_screenshot": "22-confirm-draft.jpg"
+    "confirmation_screenshot": "../assisted/08-confirm-draft.jpg",
+    "confirmation_identity": "Account Intelligence Manual",
+    "manual_frame_22": {
+      "screenshot": "22-confirm-draft.jpg",
+      "status": "reshoot_required",
+      "reason": "The Agents page is still a 0-item loading skeleton, so neither Account Intelligence Manual nor Draft is visible."
+    }
   }
 }

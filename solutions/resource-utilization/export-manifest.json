@@ -27,6 +27,30 @@
       "status": "ready"
     },
     {
+      "id": "copilot-studio-solution",
+      "label": "Importable Copilot Studio solution",
+      "path": "solutions/resource-utilization/exports/resource-utilization-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/resource-utilization/exports/resource-utilization-copilot-studio-solution.zip",
+      "use": "Unmanaged solution ZIP for manual import; the agent remains unpublished",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-deployment-settings",
+      "label": "Copilot Studio deployment settings",
+      "path": "solutions/resource-utilization/exports/resource-utilization-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/resource-utilization/exports/resource-utilization-deployment-settings.json",
+      "use": "Connection-reference, environment-variable, and agent import settings",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-export-metadata",
+      "label": "Copilot Studio solution export metadata",
+      "path": "solutions/resource-utilization/exports/resource-utilization-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/resource-utilization/exports/resource-utilization-solution-export.json",
+      "use": "Export identity, integrity hash, source environment, and import caveats",
+      "status": "ready"
+    },
+    {
       "id": "field-guide",
       "label": "Customer field guide",
       "path": "solutions/resource-utilization/field-guide.html",
@@ -243,6 +267,14 @@
       "status": "ready"
     },
     {
+      "id": "easy-evidence-dataverse-draft-evidence",
+      "label": "Dataverse Draft Evidence",
+      "path": "solutions/resource-utilization/evals/dataverse-draft-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/resource-utilization/evals/dataverse-draft-evidence.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
       "id": "manual-evidence",
       "label": "Manual build evidence",
       "path": "solutions/resource-utilization/evals/manual-build-evidence.json",
@@ -272,6 +304,86 @@
       "path": "solutions/resource-utilization/evals/visual-checkpoints.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/resource-utilization/evals/visual-checkpoints.json",
       "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-ru-01",
+      "label": "Annotated visual checkpoint: easy-ru-01",
+      "path": "solutions/resource-utilization/screenshots/assisted/annotated/01-ru-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/resource-utilization/screenshots/assisted/annotated/01-ru-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-ru-02",
+      "label": "Annotated visual checkpoint: easy-ru-02",
+      "path": "solutions/resource-utilization/screenshots/assisted/annotated/02-ru-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/resource-utilization/screenshots/assisted/annotated/02-ru-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-ru-03",
+      "label": "Annotated visual checkpoint: easy-ru-03",
+      "path": "solutions/resource-utilization/screenshots/assisted/annotated/03-ru-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/resource-utilization/screenshots/assisted/annotated/03-ru-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-04-ru-04",
+      "label": "Annotated visual checkpoint: easy-ru-04",
+      "path": "solutions/resource-utilization/screenshots/assisted/annotated/04-ru-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/resource-utilization/screenshots/assisted/annotated/04-ru-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-05-ru-05",
+      "label": "Annotated visual checkpoint: easy-ru-05",
+      "path": "solutions/resource-utilization/screenshots/assisted/annotated/05-ru-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/resource-utilization/screenshots/assisted/annotated/05-ru-05.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-create-blank-agent",
+      "label": "Annotated visual checkpoint: hard-step-01",
+      "path": "solutions/resource-utilization/screenshots/manual/annotated/01-create-blank-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/resource-utilization/screenshots/manual/annotated/01-create-blank-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-name-agent",
+      "label": "Annotated visual checkpoint: hard-step-02",
+      "path": "solutions/resource-utilization/screenshots/manual/annotated/02-name-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/resource-utilization/screenshots/manual/annotated/02-name-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-enter-instructions",
+      "label": "Annotated visual checkpoint: hard-step-03",
+      "path": "solutions/resource-utilization/screenshots/manual/annotated/03-enter-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/resource-utilization/screenshots/manual/annotated/03-enter-instructions.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-13-review-inventory",
+      "label": "Annotated visual checkpoint: hard-step-13",
+      "path": "solutions/resource-utilization/screenshots/manual/annotated/13-review-inventory.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/resource-utilization/screenshots/manual/annotated/13-review-inventory.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-14-open-preview",
+      "label": "Annotated visual checkpoint: hard-step-14",
+      "path": "solutions/resource-utilization/screenshots/manual/annotated/14-open-preview.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/resource-utilization/screenshots/manual/annotated/14-open-preview.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
@@ -594,5 +706,31 @@
       "use": "Copilot-assisted evidence inventory",
       "status": "ready"
     }
-  ]
+  ],
+  "copilot_studio_solution": {
+    "label": "Importable Resource Utilization Agent Copilot Studio solution",
+    "status": "exported",
+    "solution_unique_name": "aibast_ResourceUtilizationPilot",
+    "zip": {
+      "path": "solutions/resource-utilization/exports/resource-utilization-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/resource-utilization/exports/resource-utilization-copilot-studio-solution.zip",
+      "sha256": "07cc2c5f272f2c3ab216dba913d8bdb140685de45ab4071f52cb63a52cdedd65",
+      "bytes": 4081
+    },
+    "deployment_settings": {
+      "path": "solutions/resource-utilization/exports/resource-utilization-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/resource-utilization/exports/resource-utilization-deployment-settings.json"
+    },
+    "metadata": {
+      "path": "solutions/resource-utilization/exports/resource-utilization-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/resource-utilization/exports/resource-utilization-solution-export.json"
+    },
+    "managed": false,
+    "published": false,
+    "import_caveats": [
+      "Import as an unmanaged solution for manual review.",
+      "Map connection references and environment variables before enabling integrations.",
+      "The exported agent remains unpublished unless the target administrator explicitly publishes it."
+    ]
+  }
 }

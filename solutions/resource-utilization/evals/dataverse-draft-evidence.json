@@ -1,0 +1,56 @@
+{
+  "schema": "aibast-dataverse-draft-evidence/1.0",
+  "captured_at": "2026-08-10T09:30:33.043768+00:00",
+  "source": {
+    "kind": "Dataverse Web API",
+    "environment_name": "kodyv8",
+    "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+    "environment_url": "https://org7dfbd855.crm.dynamics.com",
+    "api_version": "v9.2",
+    "select": [
+      "name",
+      "botid",
+      "componentstate",
+      "statecode",
+      "statuscode",
+      "modifiedon",
+      "publishedon",
+      "synchronizationstatus",
+      "versionnumber"
+    ]
+  },
+  "identity": {
+    "slug": "resource-utilization",
+    "solution": "@aibast-agents-library/resource-utilization",
+    "display_name": "Resource Utilization Pilot",
+    "schema_name": "aibast_ResourceUtilizationPilot",
+    "bot_id": "85ea6539-485e-40e9-8ce2-fd10521bf65c"
+  },
+  "record": {
+    "name": "Resource Utilization Pilot",
+    "botid": "85ea6539-485e-40e9-8ce2-fd10521bf65c",
+    "componentstate": 0,
+    "statecode": 0,
+    "statuscode": 1,
+    "modifiedon": "2026-08-08T05:55:13Z",
+    "publishedon": null,
+    "versionnumber": 12308375,
+    "synchronizationstatus": {
+      "lastFinishedPublishOperation": null,
+      "contentVersion": 2,
+      "$kind": "BotSynchronizationDetails",
+      "currentSynchronizationState": {
+        "$kind": "SynchronizationState",
+        "provisioningStatus": "Provisioning"
+      }
+    },
+    "odata_etag": "W/\"12308375\""
+  },
+  "record_sha256": "d20206b40e0b25d44d7d8b467a1ff20c654522570bad02d3b01c4c5707802c3b",
+  "assertions": {
+    "bot_id_matches": true,
+    "display_name_matches": true,
+    "publishedon_is_null": true,
+    "last_finished_publish_operation_is_null": true
+  }
+}

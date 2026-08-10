@@ -36,8 +36,11 @@ employment records, book revenue, approve training, or contact anyone.
 | Source bundle | `solutions/resource-utilization/exports/resource-utilization-source.zip` |
 | Manual evidence | `solutions/resource-utilization/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/resource-utilization/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/resource-utilization/exports/resource-utilization-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/resource-utilization/exports/resource-utilization-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/resource-utilization/exports/resource-utilization-solution-export.json` |
 
-**Scaffold status:** 73 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 87 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

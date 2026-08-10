@@ -9,197 +9,556 @@
   },
   "summary": {
     "total_existing_captures": 23,
-    "reusable": 0,
-    "reshoot_required": 23,
-    "new_learn_step_captures_recommended": 0
+    "reusable": 22,
+    "reshoot_required": 1
   },
   "captures": [
     {
       "id": "easy-csc-01",
       "mode": "easy",
+      "case_id": "CSC-01",
       "source": "solutions/customer-sentiment-churn/screenshots/assisted/01-csc-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CSC-01"
+      "annotated": "solutions/customer-sentiment-churn/screenshots/assisted/annotated/01-csc-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Negative sentiment",
+        "4 interactions",
+        "40.0% share"
+      ],
+      "full_case_not_visibly_proven": [
+        "CUST-8002 is outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 542,
+          "width": 365,
+          "height": 52,
+          "label": "Negative sentiment anchor"
+        }
+      ]
     },
     {
       "id": "easy-csc-02",
       "mode": "easy",
+      "case_id": "CSC-02",
       "source": "solutions/customer-sentiment-churn/screenshots/assisted/02-csc-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CSC-02"
+      "annotated": "solutions/customer-sentiment-churn/screenshots/assisted/annotated/02-csc-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "CUST-8004",
+        "top candidate for human review"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact phrase prioritize review is not visible."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 137,
+          "width": 950,
+          "height": 82,
+          "label": "CUST-8004 review priority"
+        }
+      ]
     },
     {
       "id": "easy-csc-03",
       "mode": "easy",
+      "case_id": "CSC-03",
       "source": "solutions/customer-sentiment-churn/screenshots/assisted/03-csc-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CSC-03"
+      "annotated": "solutions/customer-sentiment-churn/screenshots/assisted/annotated/03-csc-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "No customer was contacted",
+        "no fee was changed",
+        "no account or CRM record was altered"
+      ],
+      "full_case_not_visibly_proven": [
+        "Marcus Johnson is outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 454,
+          "width": 940,
+          "height": 92,
+          "label": "No customer action occurred"
+        }
+      ]
     },
     {
       "id": "easy-csc-04",
       "mode": "easy",
+      "case_id": "CSC-04",
       "source": "solutions/customer-sentiment-churn/screenshots/assisted/04-csc-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CSC-04"
+      "annotated": "solutions/customer-sentiment-churn/screenshots/assisted/annotated/04-csc-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Mass Market",
+        "benchmark of 2.0",
+        "20 transactions/month segment average"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 120,
+          "width": 944,
+          "height": 260,
+          "label": "Mass Market benchmark evidence"
+        }
+      ]
     },
     {
       "id": "easy-draft",
       "mode": "easy",
       "source": "solutions/customer-sentiment-churn/screenshots/assisted/05-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The target Customer Sentiment Pilot row is not visible, so the screenshot cannot prove that the validated assisted agent remains Draft.",
+      "draft": true
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
       "step": 1,
       "source": "solutions/customer-sentiment-churn/screenshots/manual/01-create-blank-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent",
+        "blank Build workspace"
+      ],
+      "boxes": [
+        {
+          "x": 158,
+          "y": 88,
+          "width": 825,
+          "height": 70,
+          "label": "Blank agent workspace"
+        }
+      ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
       "step": 2,
       "source": "solutions/customer-sentiment-churn/screenshots/manual/02-name-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Customer Sentiment Manual in the name field"
+      ],
+      "boxes": [
+        {
+          "x": 160,
+          "y": 90,
+          "width": 824,
+          "height": 70,
+          "label": "Manual agent name entered"
+        }
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
       "step": 3,
       "source": "solutions/customer-sentiment-churn/screenshots/manual/03-enter-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Evidence-first response contract",
+        "Locked Preview evidence anchors",
+        "CSC-01 through CSC-04 anchors"
+      ],
+      "boxes": [
+        {
+          "x": 70,
+          "y": 184,
+          "width": 910,
+          "height": 645,
+          "label": "Reviewed instructions and locked anchors"
+        }
+      ]
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
       "step": 4,
       "source": "solutions/customer-sentiment-churn/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Customer Sentiment and Churn Prediction Agent — Global Instructions",
+        "Role",
+        "Allowed operations"
+      ],
+      "full_step_not_visibly_proven": [
+        "No explicit save-complete tooltip is visible; the checkpoint proves the reviewed policy is present after the save action."
+      ],
+      "boxes": [
+        {
+          "x": 74,
+          "y": 214,
+          "width": 910,
+          "height": 420,
+          "label": "Reviewed policy visible after save"
+        }
+      ]
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
       "step": 5,
       "source": "solutions/customer-sentiment-churn/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Knowledge section contains no Search all websites chip",
+        "Tools section contains no configured tool"
+      ],
+      "boxes": [
+        {
+          "x": 1016,
+          "y": 178,
+          "width": 385,
+          "height": 178,
+          "label": "Default web search removed"
+        }
+      ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
       "step": 6,
       "source": "solutions/customer-sentiment-churn/screenshots/manual/06-add-aibast-customer-sentiment-churn-controls-and-review.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/06-add-aibast-customer-sentiment-churn-controls-and-review.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_customer-sentiment-churn-controls-a… knowledge chip"
+      ],
+      "full_filename_not_visibly_proven": [
+        "The end of the reviewed controls-and-review filename is truncated by the Copilot Studio chip."
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 294,
+          "width": 372,
+          "height": 60,
+          "label": "Controls knowledge added"
+        }
+      ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
       "step": 7,
       "source": "solutions/customer-sentiment-churn/screenshots/manual/07-add-aibast-customer-sentiment-churn-synthetic-records.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/07-add-aibast-customer-sentiment-churn-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_customer-sentiment-churn-synthetic-… knowledge chip",
+        "aibast_customer-sentiment-churn-controls-a… knowledge chip"
+      ],
+      "full_filename_not_visibly_proven": [
+        "Both reviewed filenames are truncated by the Copilot Studio chips."
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 294,
+          "width": 372,
+          "height": 103,
+          "label": "Two reviewed knowledge sources"
+        }
+      ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
       "step": 8,
       "source": "solutions/customer-sentiment-churn/screenshots/manual/08-add-aibast-churn-prediction-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/08-add-aibast-churn-prediction-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "churn-prediction skill"
+      ],
+      "boxes": [
+        {
+          "x": 1026,
+          "y": 176,
+          "width": 190,
+          "height": 58,
+          "label": "Churn prediction skill added"
+        }
+      ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
       "step": 9,
       "source": "solutions/customer-sentiment-churn/screenshots/manual/09-add-aibast-retention-actions-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/09-add-aibast-retention-actions-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "retention-actions skill"
+      ],
+      "boxes": [
+        {
+          "x": 1026,
+          "y": 176,
+          "width": 190,
+          "height": 58,
+          "label": "Retention actions skill added"
+        }
+      ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
       "step": 10,
       "source": "solutions/customer-sentiment-churn/screenshots/manual/10-add-aibast-segment-analysis-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/10-add-aibast-segment-analysis-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "segment-analysis skill"
+      ],
+      "boxes": [
+        {
+          "x": 1026,
+          "y": 176,
+          "width": 190,
+          "height": 58,
+          "label": "Segment analysis skill added"
+        }
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
       "step": 11,
       "source": "solutions/customer-sentiment-churn/screenshots/manual/11-add-aibast-sentiment-dashboard-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/11-add-aibast-sentiment-dashboard-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "sentiment-dashboard skill",
+        "four configured skills"
+      ],
+      "boxes": [
+        {
+          "x": 1026,
+          "y": 176,
+          "width": 220,
+          "height": 58,
+          "label": "Sentiment dashboard skill added"
+        }
+      ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
       "step": 12,
       "source": "solutions/customer-sentiment-churn/screenshots/manual/12-review-inventory.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/12-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "four configured skills",
+        "two knowledge files",
+        "Tools section contains no configured tool"
+      ],
+      "boxes": [
+        {
+          "x": 1202,
+          "y": 84,
+          "width": 195,
+          "height": 48,
+          "label": "Reviewed model"
+        },
+        {
+          "x": 1024,
+          "y": 176,
+          "width": 374,
+          "height": 137,
+          "label": "Four configured skills"
+        },
+        {
+          "x": 1018,
+          "y": 315,
+          "width": 382,
+          "height": 202,
+          "label": "No tools and two knowledge sources"
+        }
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
       "step": 13,
       "source": "solutions/customer-sentiment-churn/screenshots/manual/13-open-preview.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab",
+        "New chat",
+        "Customer Sentiment Manual greeting"
+      ],
+      "boxes": [
+        {
+          "x": 636,
+          "y": 6,
+          "width": 108,
+          "height": 52,
+          "label": "Preview selected"
+        },
+        {
+          "x": 834,
+          "y": 84,
+          "width": 115,
+          "height": 50,
+          "label": "Fresh chat control"
+        }
+      ]
     },
     {
-      "id": "hard-step-14",
+      "id": "hard-csc-01",
       "mode": "hard",
+      "case_id": "CSC-01",
       "step": 14,
       "source": "solutions/customer-sentiment-churn/screenshots/manual/14-csc-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CSC-01"
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/14-csc-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Marcus Johnson (CUST-8002)",
+        "3 consecutive Negative interactions"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 266,
+          "width": 720,
+          "height": 72,
+          "label": "CUST-8002 relationship priority"
+        },
+        {
+          "x": 288,
+          "y": 400,
+          "width": 920,
+          "height": 80,
+          "label": "Negative interaction evidence"
+        }
+      ]
     },
     {
-      "id": "hard-step-15",
+      "id": "hard-csc-02",
       "mode": "hard",
+      "case_id": "CSC-02",
       "step": 15,
       "source": "solutions/customer-sentiment-churn/screenshots/manual/15-csc-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CSC-02"
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/15-csc-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Gerald Thompson (CUST-8004)",
+        "prioritize human review"
+      ],
+      "boxes": [
+        {
+          "x": 404,
+          "y": 139,
+          "width": 580,
+          "height": 58,
+          "label": "CUST-8004 ranked first"
+        },
+        {
+          "x": 286,
+          "y": 424,
+          "width": 940,
+          "height": 104,
+          "label": "Prioritize human review"
+        }
+      ]
     },
     {
-      "id": "hard-step-16",
+      "id": "hard-csc-03",
       "mode": "hard",
+      "case_id": "CSC-03",
       "step": 16,
       "source": "solutions/customer-sentiment-churn/screenshots/manual/16-csc-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CSC-03"
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/16-csc-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "No customer was contacted",
+        "no fee was changed",
+        "no offer was made"
+      ],
+      "full_case_not_visibly_proven": [
+        "Marcus Johnson is outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 462,
+          "width": 944,
+          "height": 110,
+          "label": "No customer action occurred"
+        }
+      ]
     },
     {
-      "id": "hard-step-17",
+      "id": "hard-csc-04",
       "mode": "hard",
+      "case_id": "CSC-04",
       "step": 17,
       "source": "solutions/customer-sentiment-churn/screenshots/manual/17-csc-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CSC-04"
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/17-csc-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Mass Market benchmark is 20 transactions/month",
+        "average NPS of 3.5 against a 6.5 benchmark"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 300,
+          "width": 940,
+          "height": 130,
+          "label": "Mass Market benchmark gaps"
+        }
+      ]
     },
     {
-      "id": "hard-step-18",
+      "id": "hard-draft",
       "mode": "hard",
       "step": 18,
       "source": "solutions/customer-sentiment-churn/screenshots/manual/18-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/customer-sentiment-churn/screenshots/manual/annotated/18-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Customer Sentiment Manual",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 104,
+          "y": 232,
+          "width": 680,
+          "height": 72,
+          "label": "Target manual agent remains Draft"
+        }
+      ]
     }
-  ]
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy Draft gate filtered to Customer Sentiment Pilot with the target row and Draft status visible."
+    ],
+    "new_learn_step_captures": []
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:customer-sentiment-churn",
+    "reviewed_at": "2026-08-10T00:27:58.138732+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  }
 }

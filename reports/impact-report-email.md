@@ -1,18 +1,18 @@
-**Subject:** AIBAST weekly and monthly impact report - August 9, 2026
+**Subject:** AIBAST weekly and monthly impact report - August 10, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-08-09T20:11:59Z`
-**Site:** https://kody-w.github.io/aibast-agents-library/
+**Snapshot:** `2026-08-10T11:28:19Z`
+**Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 1,505 | +1,111 observed - partial | Baseline pending |
-| Git clones | 1,117 | +1,111 observed | Baseline pending |
+| AIBAST observed repository downloads | 1,505 | Baseline pending | Baseline pending |
+| Git clones | 1,117 | Baseline pending | Baseline pending |
 | Clones excluding CI estimate | 1,117 | Baseline pending | Baseline pending |
-| AIBAST repository and Pages views | 7 | +7 observed | Baseline pending |
+| AIBAST repository and Pages views | 7 | Baseline pending | Baseline pending |
 | jsDelivr file hits | 388 | Baseline pending | Baseline pending |
 | Release asset downloads | 0 | Baseline pending | Baseline pending |
 | AIBAST direct agent file downloads | 0 | Baseline pending | Baseline pending |
@@ -29,8 +29,8 @@
 | GitHub forks | 0 | Baseline pending | Baseline pending |
 | GitHub watchers | 0 | Baseline pending | Baseline pending |
 | Open GitHub issues | 2 | Baseline pending | Baseline pending |
-| Agent upvotes | 0 | Baseline pending | Baseline pending |
-| Signed-in agent acquisitions | 0 | Baseline pending | Baseline pending |
+| Agent upvotes | Unavailable | Unavailable | Unavailable |
+| Signed-in agent acquisitions | Unavailable | Unavailable | Unavailable |
 | Workshop usage events | 0 | Baseline pending | Baseline pending |
 | Workshop views (14-day top paths) | Unavailable | Unavailable | Unavailable |
 | Workshop file downloads | 0 | Baseline pending | Baseline pending |
@@ -55,8 +55,8 @@
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| Tracked repository files | 4,007 | Baseline pending | Baseline pending |
-| Files covered by download observations | 4,007 | Baseline pending | Baseline pending |
+| Tracked repository files | 5,202 | Baseline pending | Baseline pending |
+| Files covered by download observations | 4,006 | Baseline pending | Baseline pending |
 | Catalog agents | 72 | Baseline pending | Baseline pending |
 | Tracked SKILL.md files | 234 | Baseline pending | Baseline pending |
 | Canonical workshops | 51 | Baseline pending | Baseline pending |
@@ -80,4 +80,4 @@ No complete dated baseline or non-zero movers yet.
 - Verified achievements confirm authenticated GitHub issue authorship and schema only; the underlying self-reported completion is not independently proven.
 - A native upvote on an agent rating Discussion records preference. A native upvote on its acquisition Discussion records one signed-in account's declared download, copy, or install. Neither replaces observable CDN or release file-transfer counts.
 
-[Open report](https://kody-w.github.io/aibast-agents-library/reports/impact-report.html) | [Download PDF](https://kody-w.github.io/aibast-agents-library/reports/impact-report.pdf) | [Live metrics](https://kody-w.github.io/aibast-agents-library/metrics.html)
+[Open report](https://microsoft.github.io/aibast-agents-library/reports/impact-report.html) | [Download PDF](https://microsoft.github.io/aibast-agents-library/reports/impact-report.pdf) | [Live metrics](https://microsoft.github.io/aibast-agents-library/metrics.html)

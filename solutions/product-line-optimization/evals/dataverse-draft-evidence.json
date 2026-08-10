@@ -1,0 +1,56 @@
+{
+  "schema": "aibast-dataverse-draft-evidence/1.0",
+  "captured_at": "2026-08-10T09:30:33.043768+00:00",
+  "source": {
+    "kind": "Dataverse Web API",
+    "environment_name": "kodyv8",
+    "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+    "environment_url": "https://org7dfbd855.crm.dynamics.com",
+    "api_version": "v9.2",
+    "select": [
+      "name",
+      "botid",
+      "componentstate",
+      "statecode",
+      "statuscode",
+      "modifiedon",
+      "publishedon",
+      "synchronizationstatus",
+      "versionnumber"
+    ]
+  },
+  "identity": {
+    "slug": "product-line-optimization",
+    "solution": "@aibast-agents-library/production-line-optimization",
+    "display_name": "Product Line Optimization Pilot",
+    "schema_name": "aibast_ProductLineOptimizationPilot",
+    "bot_id": "643beb44-c693-44b6-b58d-7631cd1f190c"
+  },
+  "record": {
+    "name": "Product Line Optimization Pilot",
+    "botid": "643beb44-c693-44b6-b58d-7631cd1f190c",
+    "componentstate": 0,
+    "statecode": 0,
+    "statuscode": 1,
+    "modifiedon": "2026-08-08T01:56:37Z",
+    "publishedon": null,
+    "versionnumber": 12299152,
+    "synchronizationstatus": {
+      "lastFinishedPublishOperation": null,
+      "contentVersion": 2,
+      "$kind": "BotSynchronizationDetails",
+      "currentSynchronizationState": {
+        "$kind": "SynchronizationState",
+        "provisioningStatus": "Provisioning"
+      }
+    },
+    "odata_etag": "W/\"12299152\""
+  },
+  "record_sha256": "9441985be03e31757146920c5ac18243510755719cfccb0acdd311ace4156463",
+  "assertions": {
+    "bot_id_matches": true,
+    "display_name_matches": true,
+    "publishedon_is_null": true,
+    "last_finished_publish_operation_is_null": true
+  }
+}

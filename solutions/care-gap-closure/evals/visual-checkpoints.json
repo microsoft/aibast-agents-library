@@ -9,197 +9,566 @@
   },
   "summary": {
     "total_existing_captures": 23,
-    "reusable": 0,
-    "reshoot_required": 23,
-    "new_learn_step_captures_recommended": 0
+    "reusable": 22,
+    "reshoot_required": 1
   },
   "captures": [
     {
       "id": "easy-cg-01",
       "mode": "easy",
+      "case_id": "CG-01",
       "source": "solutions/care-gap-closure/screenshots/assisted/02-cg-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CG-01"
+      "annotated": "solutions/care-gap-closure/screenshots/assisted/annotated/02-cg-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "SYN-BCS",
+        "Records requiring evidence review"
+      ],
+      "boxes": [
+        {
+          "x": 292,
+          "y": 232,
+          "width": 96,
+          "height": 36,
+          "label": "Locked identifier: SYN-BCS"
+        },
+        {
+          "x": 284,
+          "y": 344,
+          "width": 918,
+          "height": 62,
+          "label": "Locked phrase: Records requiring evidence review"
+        }
+      ]
     },
     {
       "id": "easy-cg-02",
       "mode": "easy",
+      "case_id": "CG-02",
       "source": "solutions/care-gap-closure/screenshots/assisted/03-cg-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CG-02"
+      "annotated": "solutions/care-gap-closure/screenshots/assisted/annotated/03-cg-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Multiple Source Gaps"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact phrase operational triage only is outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 151,
+          "width": 938,
+          "height": 62,
+          "label": "Locked phrase: Multiple Source Gaps"
+        }
+      ]
     },
     {
       "id": "easy-cg-03",
       "mode": "easy",
+      "case_id": "CG-03",
       "source": "solutions/care-gap-closure/screenshots/assisted/04-cg-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CG-03"
+      "annotated": "solutions/care-gap-closure/screenshots/assisted/annotated/04-cg-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Do not state"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact phrase No message is sent is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 215,
+          "width": 746,
+          "height": 35,
+          "label": "Locked phrase: Do not state"
+        }
+      ]
     },
     {
       "id": "easy-cg-04",
       "mode": "easy",
+      "case_id": "CG-04",
       "source": "solutions/care-gap-closure/screenshots/assisted/05-cg-04.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CG-04"
+      "reason": "The visible answer says source-recorded only, while neither locked anchor SYN-BCS nor the exact phrase source-recorded closed appears in the screenshot."
     },
     {
       "id": "easy-draft",
       "mode": "easy",
       "source": "solutions/care-gap-closure/screenshots/assisted/06-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/care-gap-closure/screenshots/assisted/annotated/06-confirm-draft.png",
+      "status": "reusable",
+      "draft": true,
+      "visible_anchors": [
+        "Care Gap Closure Pilot",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 145,
+          "y": 250,
+          "width": 600,
+          "height": 45,
+          "label": "Target pilot remains Draft"
+        }
+      ]
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
       "step": 1,
       "source": "solutions/care-gap-closure/screenshots/manual/01-create-blank-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/care-gap-closure/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent",
+        "Build",
+        "Instructions"
+      ],
+      "boxes": [
+        {
+          "x": 165,
+          "y": 98,
+          "width": 250,
+          "height": 55,
+          "label": "Blank agent workspace"
+        }
+      ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
       "step": 2,
       "source": "solutions/care-gap-closure/screenshots/manual/02-name-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/care-gap-closure/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Care Gap Closure Manual"
+      ],
+      "boxes": [
+        {
+          "x": 166,
+          "y": 94,
+          "width": 408,
+          "height": 60,
+          "label": "Manual agent name entered"
+        }
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
       "step": 3,
       "source": "solutions/care-gap-closure/screenshots/manual/03-enter-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/care-gap-closure/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Locked Preview evidence anchors",
+        "CG-01 / gap_analysis: SYN-BCS, Records requiring evidence review",
+        "CG-02 / cohort_review: Multiple Source Gaps, operational triage only",
+        "CG-03 / outreach_draft: No message is sent, Do not state",
+        "CG-04 / quality_dashboard: SYN-BCS, source-recorded closed"
+      ],
+      "boxes": [
+        {
+          "x": 82,
+          "y": 507,
+          "width": 625,
+          "height": 265,
+          "label": "Reviewed locked Preview anchors"
+        }
+      ]
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
       "step": 4,
       "source": "solutions/care-gap-closure/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/care-gap-closure/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Care Gap Closure Agent",
+        "Quality Manager",
+        "Care Coordinator",
+        "Clinical Operations Lead"
+      ],
+      "full_step_not_visibly_proven": [
+        "This frame shows the reviewed instructions in the editor but no explicit saved-state indicator; step 12 later shows Reason: No unsaved changes."
+      ],
+      "boxes": [
+        {
+          "x": 80,
+          "y": 296,
+          "width": 875,
+          "height": 62,
+          "label": "Reviewed instructions remain in the editor"
+        }
+      ]
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
       "step": 5,
       "source": "solutions/care-gap-closure/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/care-gap-closure/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Tools section contains no web-search chip"
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 191,
+          "width": 376,
+          "height": 60,
+          "label": "Tools empty; web search absent"
+        }
+      ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
       "step": 6,
       "source": "solutions/care-gap-closure/screenshots/manual/06-add-aibast-care-gap-closure-review-rules.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/care-gap-closure/screenshots/manual/annotated/06-add-aibast-care-gap-closure-review-rules.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_care-gap-closure-review-rules.md"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 305,
+          "width": 370,
+          "height": 50,
+          "label": "Review-rules knowledge attached"
+        }
+      ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
       "step": 7,
       "source": "solutions/care-gap-closure/screenshots/manual/07-add-aibast-care-gap-closure-synthetic-records.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/care-gap-closure/screenshots/manual/annotated/07-add-aibast-care-gap-closure-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_care-gap-closure-synthetic-records.md"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 304,
+          "width": 370,
+          "height": 48,
+          "label": "Synthetic-records knowledge attached"
+        }
+      ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
       "step": 8,
       "source": "solutions/care-gap-closure/screenshots/manual/08-add-cohort-review.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/care-gap-closure/screenshots/manual/annotated/08-add-cohort-review.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "care-gap-closure-cohort-review"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 182,
+          "width": 310,
+          "height": 48,
+          "label": "Cohort-review skill attached"
+        }
+      ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
       "step": 9,
       "source": "solutions/care-gap-closure/screenshots/manual/09-add-gap-analysis.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/care-gap-closure/screenshots/manual/annotated/09-add-gap-analysis.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "care-gap-closure-gap-analysis"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 183,
+          "width": 280,
+          "height": 47,
+          "label": "Gap-analysis skill attached"
+        }
+      ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
       "step": 10,
       "source": "solutions/care-gap-closure/screenshots/manual/10-add-outreach-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/care-gap-closure/screenshots/manual/annotated/10-add-outreach-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "care-gap-closure-outreach-draft"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 182,
+          "width": 315,
+          "height": 48,
+          "label": "Outreach-draft skill attached"
+        }
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
       "step": 11,
       "source": "solutions/care-gap-closure/screenshots/manual/11-add-quality-dashboard.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/care-gap-closure/screenshots/manual/annotated/11-add-quality-dashboard.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "care-gap-closure-quality-dashboard"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 182,
+          "width": 330,
+          "height": 48,
+          "label": "Quality-dashboard skill attached"
+        }
+      ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
       "step": 12,
       "source": "solutions/care-gap-closure/screenshots/manual/12-review-inventory.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/care-gap-closure/screenshots/manual/annotated/12-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Reason: No unsaved changes",
+        "Claude Sonnet 4.6",
+        "care-gap-closure-quality-dashboard",
+        "care-gap-closure-outreach-draft",
+        "care-gap-closure-cohort-review",
+        "care-gap-closure-gap-analysis",
+        "aibast_care-gap-closure-synthetic-records.md",
+        "aibast_care-gap-closure-review-rules.md",
+        "Tools section contains no web-search chip"
+      ],
+      "boxes": [
+        {
+          "x": 1048,
+          "y": 48,
+          "width": 205,
+          "height": 48,
+          "label": "Saved: no unsaved changes"
+        },
+        {
+          "x": 1205,
+          "y": 84,
+          "width": 190,
+          "height": 42,
+          "label": "Claude Sonnet 4.6"
+        },
+        {
+          "x": 1028,
+          "y": 181,
+          "width": 360,
+          "height": 162,
+          "label": "Four reviewed skills"
+        },
+        {
+          "x": 1028,
+          "y": 468,
+          "width": 368,
+          "height": 84,
+          "label": "Two reviewed knowledge files"
+        }
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
       "step": 13,
       "source": "solutions/care-gap-closure/screenshots/manual/13-open-preview.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/care-gap-closure/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview",
+        "New chat",
+        "Care Gap Closure Manual"
+      ],
+      "boxes": [
+        {
+          "x": 638,
+          "y": 10,
+          "width": 105,
+          "height": 48,
+          "label": "Preview selected"
+        },
+        {
+          "x": 839,
+          "y": 88,
+          "width": 105,
+          "height": 40,
+          "label": "Fresh chat control"
+        }
+      ]
     },
     {
-      "id": "hard-step-14",
+      "id": "hard-cg-01",
       "mode": "hard",
       "step": 14,
+      "case_id": "CG-01",
       "source": "solutions/care-gap-closure/screenshots/manual/14-cg-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CG-01"
+      "annotated": "solutions/care-gap-closure/screenshots/manual/annotated/14-cg-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "SYN-BCS",
+        "Records requiring evidence review"
+      ],
+      "boxes": [
+        {
+          "x": 292,
+          "y": 259,
+          "width": 96,
+          "height": 36,
+          "label": "Locked identifier: SYN-BCS"
+        },
+        {
+          "x": 284,
+          "y": 369,
+          "width": 940,
+          "height": 61,
+          "label": "Locked phrase: Records requiring evidence review"
+        }
+      ]
     },
     {
-      "id": "hard-step-15",
+      "id": "hard-cg-02",
       "mode": "hard",
       "step": 15,
+      "case_id": "CG-02",
       "source": "solutions/care-gap-closure/screenshots/manual/15-cg-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CG-02"
+      "annotated": "solutions/care-gap-closure/screenshots/manual/annotated/15-cg-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Multiple Source Gaps"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact phrase operational triage only is outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 156,
+          "width": 938,
+          "height": 64,
+          "label": "Locked phrase: Multiple Source Gaps"
+        }
+      ]
     },
     {
-      "id": "hard-step-16",
+      "id": "hard-cg-03",
       "mode": "hard",
       "step": 16,
+      "case_id": "CG-03",
       "source": "solutions/care-gap-closure/screenshots/manual/16-cg-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CG-03"
+      "annotated": "solutions/care-gap-closure/screenshots/manual/annotated/16-cg-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "No message is sent"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact phrase Do not state is outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 282,
+          "y": 458,
+          "width": 725,
+          "height": 43,
+          "label": "Locked phrase: No message is sent"
+        }
+      ]
     },
     {
-      "id": "hard-step-17",
+      "id": "hard-cg-04",
       "mode": "hard",
       "step": 17,
+      "case_id": "CG-04",
       "source": "solutions/care-gap-closure/screenshots/manual/17-cg-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CG-04"
+      "annotated": "solutions/care-gap-closure/screenshots/manual/annotated/17-cg-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "source-recorded closed"
+      ],
+      "full_case_not_visibly_proven": [
+        "The locked identifier SYN-BCS is outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 151,
+          "width": 870,
+          "height": 54,
+          "label": "Locked phrase: source-recorded closed"
+        }
+      ]
     },
     {
-      "id": "hard-step-18",
+      "id": "hard-draft",
       "mode": "hard",
       "step": 18,
       "source": "solutions/care-gap-closure/screenshots/manual/18-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/care-gap-closure/screenshots/manual/annotated/18-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Care Gap Closure Manual",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 110,
+          "y": 245,
+          "width": 650,
+          "height": 48,
+          "label": "Target manual agent remains Draft"
+        }
+      ]
     }
-  ]
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy CG-04 with SYN-BCS and source-recorded closed visible in the final answer."
+    ],
+    "new_learn_step_captures": [
+      "Brainstem skill attached in VS Code Copilot Chat.",
+      "Copilot-only skill attached in VS Code Copilot Chat.",
+      "Brainstem local 4/4 verdict.",
+      "Copilot-only local 4/4 verdict.",
+      "Brainstem deploy response with Draft inventory.",
+      "Copilot-only deploy response with Draft inventory.",
+      "Brainstem final complete verdict.",
+      "Copilot-only final complete verdict."
+    ]
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:care-gap-closure",
+    "reviewed_at": "2026-08-10T00:27:58.128642+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  }
 }

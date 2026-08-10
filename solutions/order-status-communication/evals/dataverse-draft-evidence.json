@@ -1,0 +1,56 @@
+{
+  "schema": "aibast-dataverse-draft-evidence/1.0",
+  "captured_at": "2026-08-10T09:30:33.043768+00:00",
+  "source": {
+    "kind": "Dataverse Web API",
+    "environment_name": "kodyv8",
+    "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+    "environment_url": "https://org7dfbd855.crm.dynamics.com",
+    "api_version": "v9.2",
+    "select": [
+      "name",
+      "botid",
+      "componentstate",
+      "statecode",
+      "statuscode",
+      "modifiedon",
+      "publishedon",
+      "synchronizationstatus",
+      "versionnumber"
+    ]
+  },
+  "identity": {
+    "slug": "order-status-communication",
+    "solution": "@aibast-agents-library/order-status-communication",
+    "display_name": "Order Status Pilot",
+    "schema_name": "aibast_OrderStatusCommunicationsPi",
+    "bot_id": "79066933-9b60-4d80-83cb-967555369ce5"
+  },
+  "record": {
+    "name": "Order Status Pilot",
+    "botid": "79066933-9b60-4d80-83cb-967555369ce5",
+    "componentstate": 0,
+    "statecode": 0,
+    "statuscode": 1,
+    "modifiedon": "2026-08-08T12:16:08Z",
+    "publishedon": null,
+    "versionnumber": 12314730,
+    "synchronizationstatus": {
+      "lastFinishedPublishOperation": null,
+      "contentVersion": 2,
+      "$kind": "BotSynchronizationDetails",
+      "currentSynchronizationState": {
+        "$kind": "SynchronizationState",
+        "provisioningStatus": "Provisioning"
+      }
+    },
+    "odata_etag": "W/\"12314730\""
+  },
+  "record_sha256": "1c2b0a9103dbe01786de042617d4e5c24ce6792d58199510159f6b0f3c7bc967",
+  "assertions": {
+    "bot_id_matches": true,
+    "display_name_matches": true,
+    "publishedon_is_null": true,
+    "last_finished_publish_operation_is_null": true
+  }
+}

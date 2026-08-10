@@ -9,80 +9,209 @@
   },
   "summary": {
     "total_existing_captures": 24,
-    "reusable": 0,
-    "reshoot_required": 24,
-    "new_learn_step_captures_recommended": 0
+    "reusable": 19,
+    "reshoot_required": 5
   },
   "captures": [
     {
-      "id": "easy-draft",
+      "id": "easy-draft-configuration",
       "mode": "easy",
       "source": "solutions/ai-customer-assistant/screenshots/assisted/01-review-build.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The Build page shows the target configuration, but it does not show a Draft status badge or another visible unpublished-state anchor. Because the browserfilm labels this as a Draft configuration checkpoint, the configuration alone cannot prove the claimed Draft state.",
+      "draft": true
     },
     {
       "id": "easy-ces-01",
       "mode": "easy",
       "source": "solutions/ai-customer-assistant/screenshots/assisted/02-ces-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CES-01"
+      "annotated": "solutions/ai-customer-assistant/screenshots/assisted/annotated/02-ces-01.png",
+      "status": "reusable",
+      "case_id": "CES-01",
+      "visible_anchors": [
+        "KB-104",
+        "No customer message is sent"
+      ],
+      "full_case_not_visibly_proven": [
+        "INQ-4001 is above the captured viewport; the full machine gate remains authoritative."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 286,
+          "width": 944,
+          "height": 218,
+          "label": "KB-104 review steps"
+        },
+        {
+          "x": 286,
+          "y": 520,
+          "width": 944,
+          "height": 62,
+          "label": "No-message safety gate"
+        }
+      ]
     },
     {
       "id": "easy-ces-02",
       "mode": "easy",
       "source": "solutions/ai-customer-assistant/screenshots/assisted/03-ces-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CES-02"
+      "annotated": "solutions/ai-customer-assistant/screenshots/assisted/annotated/03-ces-02.png",
+      "status": "reusable",
+      "case_id": "CES-02",
+      "visible_anchors": [
+        "Resolution Steps",
+        "No customer message is sent"
+      ],
+      "full_case_not_visibly_proven": [
+        "KB-104 is above the captured viewport; the full machine gate remains authoritative."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 270,
+          "width": 944,
+          "height": 160,
+          "label": "Resolution Steps"
+        },
+        {
+          "x": 286,
+          "y": 492,
+          "width": 944,
+          "height": 88,
+          "label": "Review and no-message gate"
+        }
+      ]
     },
     {
       "id": "easy-ces-03",
       "mode": "easy",
       "source": "solutions/ai-customer-assistant/screenshots/assisted/04-ces-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CES-03"
+      "annotated": "solutions/ai-customer-assistant/screenshots/assisted/annotated/04-ces-03.png",
+      "status": "reusable",
+      "case_id": "CES-03",
+      "visible_anchors": [
+        "Tier 2 Engineering",
+        "2 hours",
+        "does not execute"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 116,
+          "width": 372,
+          "height": 198,
+          "label": "Queue and 2-hour target"
+        },
+        {
+          "x": 286,
+          "y": 500,
+          "width": 946,
+          "height": 82,
+          "label": "Does not execute"
+        }
+      ]
     },
     {
       "id": "easy-ces-04",
       "mode": "easy",
       "source": "solutions/ai-customer-assistant/screenshots/assisted/05-ces-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CES-04"
+      "annotated": "solutions/ai-customer-assistant/screenshots/assisted/annotated/05-ces-04.png",
+      "status": "reusable",
+      "case_id": "CES-04",
+      "visible_anchors": [
+        "fictional pilot records",
+        "Signals Requiring Human Review"
+      ],
+      "full_case_not_visibly_proven": [
+        "4.3/5.0 and the Recent Surveys heading are above the captured viewport; the full machine gate remains authoritative."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 278,
+          "width": 946,
+          "height": 190,
+          "label": "Human-review signals"
+        },
+        {
+          "x": 286,
+          "y": 500,
+          "width": 946,
+          "height": 82,
+          "label": "Fictional-records boundary"
+        }
+      ]
     },
     {
-      "id": "easy-draft-02",
+      "id": "easy-draft",
       "mode": "easy",
       "source": "solutions/ai-customer-assistant/screenshots/assisted/06-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The Agents list shows Draft badges for other agents, but the target Customer Escalations Pilot row is not visible, so this frame cannot prove the Easy-mode Draft state.",
+      "draft": true
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
       "step": 1,
       "source": "solutions/ai-customer-assistant/screenshots/manual/01-create-blank-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent",
+        "Blank Build workspace"
+      ],
+      "boxes": [
+        {
+          "x": 156,
+          "y": 92,
+          "width": 826,
+          "height": 82,
+          "label": "Blank agent workspace"
+        }
+      ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
       "step": 2,
       "source": "solutions/ai-customer-assistant/screenshots/manual/02-name-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Customer Escalations Manual in the name field"
+      ],
+      "boxes": [
+        {
+          "x": 156,
+          "y": 92,
+          "width": 826,
+          "height": 82,
+          "label": "Manual agent name entered"
+        }
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
       "step": 3,
       "source": "solutions/ai-customer-assistant/screenshots/manual/03-enter-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Manual Global Instructions",
+        "Locked Preview evidence anchors"
+      ],
+      "boxes": [
+        {
+          "x": 70,
+          "y": 216,
+          "width": 910,
+          "height": 610,
+          "label": "Reviewed instruction policy"
+        }
+      ]
     },
     {
       "id": "hard-step-04",
@@ -90,15 +219,27 @@
       "step": 4,
       "source": "solutions/ai-customer-assistant/screenshots/manual/04-save-instructions.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame shows the configured Build page but no save confirmation, tooltip, or other visible saved-state anchor, so it cannot prove step 4."
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
       "step": 5,
       "source": "solutions/ai-customer-assistant/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Tools section is empty after web search removal"
+      ],
+      "boxes": [
+        {
+          "x": 1016,
+          "y": 306,
+          "width": 384,
+          "height": 86,
+          "label": "Tools empty; web search absent"
+        }
+      ]
     },
     {
       "id": "hard-step-06",
@@ -106,7 +247,7 @@
       "step": 6,
       "source": "solutions/ai-customer-assistant/screenshots/manual/06-add-aibast-ai-customer-assistant-rules-and-guardrails.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "Duplicate visual evidence; retained capture hard-step-05."
     },
     {
       "id": "hard-step-07",
@@ -114,99 +255,315 @@
       "step": 7,
       "source": "solutions/ai-customer-assistant/screenshots/manual/07-add-aibast-ai-customer-assistant-synthetic-records.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "Duplicate visual evidence; retained capture hard-step-05."
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
       "step": 8,
       "source": "solutions/ai-customer-assistant/screenshots/manual/08-add-aibast-escalation-routing-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/08-add-aibast-escalation-routing-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "escalation-routing skill"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 178,
+          "width": 190,
+          "height": 58,
+          "label": "escalation-routing skill"
+        }
+      ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
       "step": 9,
       "source": "solutions/ai-customer-assistant/screenshots/manual/09-add-aibast-handle-inquiry-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/09-add-aibast-handle-inquiry-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "handle-inquiry skill"
+      ],
+      "boxes": [
+        {
+          "x": 1208,
+          "y": 178,
+          "width": 190,
+          "height": 58,
+          "label": "handle-inquiry skill"
+        }
+      ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
       "step": 10,
       "source": "solutions/ai-customer-assistant/screenshots/manual/10-add-aibast-knowledge-search-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/10-add-aibast-knowledge-search-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "knowledge-search skill"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 218,
+          "width": 196,
+          "height": 58,
+          "label": "knowledge-search skill"
+        }
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
       "step": 11,
       "source": "solutions/ai-customer-assistant/screenshots/manual/11-add-aibast-satisfaction-survey-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/11-add-aibast-satisfaction-survey-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "satisfaction-survey skill"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 258,
+          "width": 205,
+          "height": 58,
+          "label": "satisfaction-survey skill"
+        }
+      ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
       "step": 12,
       "source": "solutions/ai-customer-assistant/screenshots/manual/12-review-inventory.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/12-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "No unsaved changes",
+        "Claude Sonnet 4.6",
+        "Four skills",
+        "Two knowledge files",
+        "No connected tools"
+      ],
+      "boxes": [
+        {
+          "x": 1044,
+          "y": 44,
+          "width": 215,
+          "height": 58,
+          "label": "Saved configuration"
+        },
+        {
+          "x": 1198,
+          "y": 82,
+          "width": 202,
+          "height": 52,
+          "label": "Reviewed model"
+        },
+        {
+          "x": 1020,
+          "y": 174,
+          "width": 380,
+          "height": 140,
+          "label": "Four reviewed skills"
+        },
+        {
+          "x": 1020,
+          "y": 418,
+          "width": 380,
+          "height": 112,
+          "label": "Two knowledge files"
+        }
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
       "step": 13,
       "source": "solutions/ai-customer-assistant/screenshots/manual/13-open-preview.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab",
+        "Customer Escalations Manual greeting"
+      ],
+      "boxes": [
+        {
+          "x": 636,
+          "y": 2,
+          "width": 104,
+          "height": 56,
+          "label": "Preview selected"
+        },
+        {
+          "x": 280,
+          "y": 140,
+          "width": 520,
+          "height": 112,
+          "label": "Fresh Preview conversation"
+        }
+      ]
     },
     {
       "id": "hard-step-14",
       "mode": "hard",
       "step": 14,
       "source": "solutions/ai-customer-assistant/screenshots/manual/14-ces-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CES-01"
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/14-ces-01.png",
+      "status": "reusable",
+      "case_id": "CES-01",
+      "visible_anchors": [
+        "No customer message is sent",
+        "Tier 1 Technical Support",
+        "4 hours"
+      ],
+      "full_case_not_visibly_proven": [
+        "INQ-4001 and KB-104 are above the captured viewport; the full machine gate remains authoritative."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 126,
+          "width": 414,
+          "height": 150,
+          "label": "Team and SLA"
+        },
+        {
+          "x": 286,
+          "y": 530,
+          "width": 946,
+          "height": 62,
+          "label": "No-message safety gate"
+        }
+      ]
     },
     {
       "id": "hard-step-15",
       "mode": "hard",
       "step": 15,
       "source": "solutions/ai-customer-assistant/screenshots/manual/15-ces-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CES-02"
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/15-ces-02.png",
+      "status": "reusable",
+      "case_id": "CES-02",
+      "visible_anchors": [
+        "Resolution Steps",
+        "No customer message is sent"
+      ],
+      "full_case_not_visibly_proven": [
+        "KB-104 is above the captured viewport; the full machine gate remains authoritative."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 176,
+          "width": 946,
+          "height": 190,
+          "label": "Resolution Steps"
+        },
+        {
+          "x": 286,
+          "y": 532,
+          "width": 946,
+          "height": 62,
+          "label": "No-message safety gate"
+        }
+      ]
     },
     {
       "id": "hard-step-16",
       "mode": "hard",
       "step": 16,
       "source": "solutions/ai-customer-assistant/screenshots/manual/16-ces-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CES-03"
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/16-ces-03.png",
+      "status": "reusable",
+      "case_id": "CES-03",
+      "visible_anchors": [
+        "Tier 2 Engineering",
+        "2 hours",
+        "does not execute"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 124,
+          "width": 374,
+          "height": 164,
+          "label": "Queue and 2-hour target"
+        },
+        {
+          "x": 286,
+          "y": 408,
+          "width": 946,
+          "height": 178,
+          "label": "Human gate; does not execute"
+        }
+      ]
     },
     {
       "id": "hard-step-17",
       "mode": "hard",
       "step": 17,
       "source": "solutions/ai-customer-assistant/screenshots/manual/17-ces-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "CES-04"
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/17-ces-04.png",
+      "status": "reusable",
+      "case_id": "CES-04",
+      "visible_anchors": [
+        "fictional pilot records",
+        "Human-review service signals"
+      ],
+      "full_case_not_visibly_proven": [
+        "4.3/5.0 and the Recent Surveys heading are above the captured viewport; the full machine gate remains authoritative."
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 118,
+          "width": 946,
+          "height": 328,
+          "label": "Human-review service signals"
+        },
+        {
+          "x": 286,
+          "y": 470,
+          "width": 946,
+          "height": 104,
+          "label": "Fictional-records boundary"
+        }
+      ]
     },
     {
       "id": "hard-step-18",
       "mode": "hard",
       "step": 18,
       "source": "solutions/ai-customer-assistant/screenshots/manual/18-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/ai-customer-assistant/screenshots/manual/annotated/18-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Customer Escalations Manual",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 108,
+          "y": 626,
+          "width": 1278,
+          "height": 56,
+          "label": "Target agent remains Draft"
+        }
+      ]
     }
-  ]
+  ],
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:ai-customer-assistant",
+    "reviewed_at": "2026-08-10T00:27:58.125479+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  }
 }

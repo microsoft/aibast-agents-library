@@ -27,6 +27,30 @@
       "status": "ready"
     },
     {
+      "id": "copilot-studio-solution",
+      "label": "Importable Copilot Studio solution",
+      "path": "solutions/customer-sentiment-churn/exports/customer-sentiment-churn-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/exports/customer-sentiment-churn-copilot-studio-solution.zip",
+      "use": "Unmanaged solution ZIP for manual import; the agent remains unpublished",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-deployment-settings",
+      "label": "Copilot Studio deployment settings",
+      "path": "solutions/customer-sentiment-churn/exports/customer-sentiment-churn-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/exports/customer-sentiment-churn-deployment-settings.json",
+      "use": "Connection-reference, environment-variable, and agent import settings",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-export-metadata",
+      "label": "Copilot Studio solution export metadata",
+      "path": "solutions/customer-sentiment-churn/exports/customer-sentiment-churn-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/exports/customer-sentiment-churn-solution-export.json",
+      "use": "Export identity, integrity hash, source environment, and import caveats",
+      "status": "ready"
+    },
+    {
       "id": "field-guide",
       "label": "Customer field guide",
       "path": "solutions/customer-sentiment-churn/field-guide.html",
@@ -227,6 +251,14 @@
       "status": "ready"
     },
     {
+      "id": "easy-evidence-dataverse-draft-evidence",
+      "label": "Dataverse Draft Evidence",
+      "path": "solutions/customer-sentiment-churn/evals/dataverse-draft-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/evals/dataverse-draft-evidence.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
       "id": "manual-evidence",
       "label": "Manual build evidence",
       "path": "solutions/customer-sentiment-churn/evals/manual-build-evidence.json",
@@ -264,6 +296,182 @@
       "path": "solutions/customer-sentiment-churn/evals/visual-checkpoints.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/evals/visual-checkpoints.json",
       "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-csc-01",
+      "label": "Annotated visual checkpoint: easy-csc-01",
+      "path": "solutions/customer-sentiment-churn/screenshots/assisted/annotated/01-csc-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/screenshots/assisted/annotated/01-csc-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-csc-02",
+      "label": "Annotated visual checkpoint: easy-csc-02",
+      "path": "solutions/customer-sentiment-churn/screenshots/assisted/annotated/02-csc-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/screenshots/assisted/annotated/02-csc-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-csc-03",
+      "label": "Annotated visual checkpoint: easy-csc-03",
+      "path": "solutions/customer-sentiment-churn/screenshots/assisted/annotated/03-csc-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/screenshots/assisted/annotated/03-csc-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-04-csc-04",
+      "label": "Annotated visual checkpoint: easy-csc-04",
+      "path": "solutions/customer-sentiment-churn/screenshots/assisted/annotated/04-csc-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/screenshots/assisted/annotated/04-csc-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-create-blank-agent",
+      "label": "Annotated visual checkpoint: hard-step-01",
+      "path": "solutions/customer-sentiment-churn/screenshots/manual/annotated/01-create-blank-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/screenshots/manual/annotated/01-create-blank-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-name-agent",
+      "label": "Annotated visual checkpoint: hard-step-02",
+      "path": "solutions/customer-sentiment-churn/screenshots/manual/annotated/02-name-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/screenshots/manual/annotated/02-name-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-enter-instructions",
+      "label": "Annotated visual checkpoint: hard-step-03",
+      "path": "solutions/customer-sentiment-churn/screenshots/manual/annotated/03-enter-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/screenshots/manual/annotated/03-enter-instructions.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-04-save-instructions",
+      "label": "Annotated visual checkpoint: hard-step-04",
+      "path": "solutions/customer-sentiment-churn/screenshots/manual/annotated/04-save-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/screenshots/manual/annotated/04-save-instructions.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-05-remove-web-search",
+      "label": "Annotated visual checkpoint: hard-step-05",
+      "path": "solutions/customer-sentiment-churn/screenshots/manual/annotated/05-remove-web-search.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/screenshots/manual/annotated/05-remove-web-search.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-06-add-aibast-customer-sentiment-churn-controls-and-review",
+      "label": "Annotated visual checkpoint: hard-step-06",
+      "path": "solutions/customer-sentiment-churn/screenshots/manual/annotated/06-add-aibast-customer-sentiment-churn-controls-and-review.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/screenshots/manual/annotated/06-add-aibast-customer-sentiment-churn-controls-and-review.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-07-add-aibast-customer-sentiment-churn-synthetic-records",
+      "label": "Annotated visual checkpoint: hard-step-07",
+      "path": "solutions/customer-sentiment-churn/screenshots/manual/annotated/07-add-aibast-customer-sentiment-churn-synthetic-records.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/screenshots/manual/annotated/07-add-aibast-customer-sentiment-churn-synthetic-records.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-08-add-aibast-churn-prediction-02",
+      "label": "Annotated visual checkpoint: hard-step-08",
+      "path": "solutions/customer-sentiment-churn/screenshots/manual/annotated/08-add-aibast-churn-prediction-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/screenshots/manual/annotated/08-add-aibast-churn-prediction-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-09-add-aibast-retention-actions-03",
+      "label": "Annotated visual checkpoint: hard-step-09",
+      "path": "solutions/customer-sentiment-churn/screenshots/manual/annotated/09-add-aibast-retention-actions-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/screenshots/manual/annotated/09-add-aibast-retention-actions-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-10-add-aibast-segment-analysis-04",
+      "label": "Annotated visual checkpoint: hard-step-10",
+      "path": "solutions/customer-sentiment-churn/screenshots/manual/annotated/10-add-aibast-segment-analysis-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/screenshots/manual/annotated/10-add-aibast-segment-analysis-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-11-add-aibast-sentiment-dashboard-01",
+      "label": "Annotated visual checkpoint: hard-step-11",
+      "path": "solutions/customer-sentiment-churn/screenshots/manual/annotated/11-add-aibast-sentiment-dashboard-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/screenshots/manual/annotated/11-add-aibast-sentiment-dashboard-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-12-review-inventory",
+      "label": "Annotated visual checkpoint: hard-step-12",
+      "path": "solutions/customer-sentiment-churn/screenshots/manual/annotated/12-review-inventory.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/screenshots/manual/annotated/12-review-inventory.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-13-open-preview",
+      "label": "Annotated visual checkpoint: hard-step-13",
+      "path": "solutions/customer-sentiment-churn/screenshots/manual/annotated/13-open-preview.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/screenshots/manual/annotated/13-open-preview.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-14-csc-01",
+      "label": "Annotated visual checkpoint: hard-csc-01",
+      "path": "solutions/customer-sentiment-churn/screenshots/manual/annotated/14-csc-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/screenshots/manual/annotated/14-csc-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-15-csc-02",
+      "label": "Annotated visual checkpoint: hard-csc-02",
+      "path": "solutions/customer-sentiment-churn/screenshots/manual/annotated/15-csc-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/screenshots/manual/annotated/15-csc-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-16-csc-03",
+      "label": "Annotated visual checkpoint: hard-csc-03",
+      "path": "solutions/customer-sentiment-churn/screenshots/manual/annotated/16-csc-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/screenshots/manual/annotated/16-csc-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-17-csc-04",
+      "label": "Annotated visual checkpoint: hard-csc-04",
+      "path": "solutions/customer-sentiment-churn/screenshots/manual/annotated/17-csc-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/screenshots/manual/annotated/17-csc-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-18-confirm-draft",
+      "label": "Annotated visual checkpoint: hard-draft",
+      "path": "solutions/customer-sentiment-churn/screenshots/manual/annotated/18-confirm-draft.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/screenshots/manual/annotated/18-confirm-draft.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
@@ -562,5 +770,31 @@
       "use": "Copilot-assisted evidence inventory",
       "status": "ready"
     }
-  ]
+  ],
+  "copilot_studio_solution": {
+    "label": "Importable Customer Sentiment and Churn Prediction Agent Copilot Studio solution",
+    "status": "exported",
+    "solution_unique_name": "aibast_CustomerSentimentandChurnP",
+    "zip": {
+      "path": "solutions/customer-sentiment-churn/exports/customer-sentiment-churn-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/exports/customer-sentiment-churn-copilot-studio-solution.zip",
+      "sha256": "f02e717c4c2dac65cd7caaff902ccdc583590b53e13d2e0d6b58064e5af1ca73",
+      "bytes": 4147
+    },
+    "deployment_settings": {
+      "path": "solutions/customer-sentiment-churn/exports/customer-sentiment-churn-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/exports/customer-sentiment-churn-deployment-settings.json"
+    },
+    "metadata": {
+      "path": "solutions/customer-sentiment-churn/exports/customer-sentiment-churn-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/customer-sentiment-churn/exports/customer-sentiment-churn-solution-export.json"
+    },
+    "managed": false,
+    "published": false,
+    "import_caveats": [
+      "Import as an unmanaged solution for manual review.",
+      "Map connection references and environment variables before enabling integrations.",
+      "The exported agent remains unpublished unless the target administrator explicitly publishes it."
+    ]
+  }
 }

@@ -200,8 +200,20 @@ def audit_public_pages(root: Path, failures: Failures) -> None:
 
     if '<a href="achievements.html">Achievements</a>' not in library:
         failures.add("library.html: Achievements navigation is missing")
-    if "globalThis.location?.hostname" not in library:
-        failures.add("library.html: structured signals are not fork-aware")
+    for token in (
+        "function canonicalDiscussionUrl",
+        'disabled aria-disabled="true"',
+        "if (!url) return;",
+    ):
+        if token not in library:
+            failures.add(
+                "library.html: unavailable structured signals are not "
+                f"fail-closed ({token})"
+            )
+    if "discussionFallbackUrl" in library:
+        failures.add(
+            "library.html: unavailable structured signals must not open searches"
+        )
 
     metrics_workflow_tokens = {
         "issues: read",

@@ -1,3 +1,4 @@
+import hashlib
 import json
 
 from PIL import Image
@@ -20,6 +21,20 @@ def write_distinct_image(path, index):
 
 def create_release_fixture(root):
     package = create_fixture(root)
+    (package / "deployment.json").write_text(
+        json.dumps(
+            {
+                "copilot_studio": {
+                    "validated_manual": {
+                        "display_name": "Fixture Manual",
+                        "status": "Draft",
+                        "published": False,
+                    }
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
     path = package / "evals" / "visual-checkpoints.json"
     visual = json.loads(path.read_text(encoding="utf-8"))
     visual["release_review"] = {
@@ -40,7 +55,11 @@ def create_release_fixture(root):
                 "confirm-draft.png"
             ),
             "status": "reusable",
-            "visible_anchors": ["Draft", "Published false"],
+            "visible_anchors": [
+                "Fixture Manual",
+                "Draft",
+                "Published false",
+            ],
             "boxes": [{"x": 0, "y": 0, "width": 1, "height": 1}],
         }
     ]
@@ -166,6 +185,197 @@ def mutate_visual(package, mutation):
     path.write_text(json.dumps(visual), encoding="utf-8")
 
 
+def enable_machine_draft(package):
+    path = package / "evals" / "manual-build-evidence.json"
+    evidence = {
+        "schema": "aibast-manual-build-evidence/1.0",
+        "status": "passed",
+        "canonical_preview": [{"case_id": "TEB-01", "passed": True}],
+        "publication_gate": {
+            "required_state": "Draft",
+            "published": False,
+        },
+    }
+    path.write_text(json.dumps(evidence), encoding="utf-8")
+
+
+def enable_dataverse_draft(package):
+    deployment_path = package / "deployment.json"
+    deployment = json.loads(deployment_path.read_text(encoding="utf-8"))
+    deployment["name"] = f"@aibast-agents-library/{SLUG}"
+    deployment["copilot_studio"]["export_agent"] = {
+        "display_name": "Fixture Pilot",
+        "schema_name": "aibast_FixturePilot",
+        "bot_id": "11111111-1111-1111-1111-111111111111",
+        "environment_name": "kodyv8",
+        "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+        "status": "Draft",
+        "published": False,
+    }
+    deployment_path.write_text(json.dumps(deployment), encoding="utf-8")
+    record = {
+        "name": "Fixture Pilot",
+        "botid": "11111111-1111-1111-1111-111111111111",
+        "componentstate": 0,
+        "statecode": 0,
+        "statuscode": 1,
+        "modifiedon": "2026-08-10T00:00:00Z",
+        "publishedon": None,
+        "versionnumber": 123,
+        "synchronizationstatus": {
+            "lastFinishedPublishOperation": None,
+            "contentVersion": 2,
+        },
+        "odata_etag": 'W/"123"',
+    }
+    canonical = json.dumps(
+        record,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=True,
+    ).encode("utf-8")
+    evidence = {
+        "schema": "aibast-dataverse-draft-evidence/1.0",
+        "captured_at": "2026-08-10T00:00:00+00:00",
+        "source": {
+            "kind": "Dataverse Web API",
+            "environment_name": "kodyv8",
+            "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+            "environment_url": "https://org7dfbd855.crm.dynamics.com",
+            "api_version": "v9.2",
+            "select": [],
+        },
+        "identity": {
+            "slug": SLUG,
+            "solution": f"@aibast-agents-library/{SLUG}",
+            "display_name": "Fixture Pilot",
+            "schema_name": "aibast_FixturePilot",
+            "bot_id": "11111111-1111-1111-1111-111111111111",
+        },
+        "record": record,
+        "record_sha256": hashlib.sha256(canonical).hexdigest(),
+        "assertions": {
+            "bot_id_matches": True,
+            "display_name_matches": True,
+            "publishedon_is_null": True,
+            "last_finished_publish_operation_is_null": True,
+        },
+    }
+    (package / "evals" / "dataverse-draft-evidence.json").write_text(
+        json.dumps(evidence),
+        encoding="utf-8",
+    )
+
+
+def enable_machine_case(package, case_id):
+    root = package.parents[1]
+    enable_dataverse_draft(package)
+    case_path = root / "tests" / "demo_cases" / f"{SLUG}.json"
+    case_data = json.loads(case_path.read_text(encoding="utf-8"))
+    locked_case = next(
+        case
+        for case in case_data["cases"]
+        if case.get("case_id", case.get("id")) == case_id
+    )
+    locked_case.update(
+        {
+            "prompt": "Run the bound machine case",
+            "must_include": ["BOUND-MARKER"],
+            "must_not_include": ["FORBIDDEN-MARKER"],
+            "expects_agent": "BoundMachineAgent",
+        }
+    )
+    case_path.write_text(json.dumps(case_data), encoding="utf-8")
+    case_sha256 = hashlib.sha256(case_path.read_bytes()).hexdigest()
+
+    agent_path = root / "agents" / "bound_machine_agent.py"
+    agent_path.parent.mkdir(parents=True, exist_ok=True)
+    agent_path.write_text("class BoundMachineAgent:\n    pass\n", encoding="utf-8")
+    agent_sha256 = hashlib.sha256(agent_path.read_bytes()).hexdigest()
+
+    transcript_path = package / "evals" / "transcripts.json"
+    transcript_path.write_text(
+        json.dumps(
+            {
+                "schema": "aibast-canonical-transcripts/1.0",
+                "strict_isolation": True,
+                "case_file": f"tests/demo_cases/{SLUG}.json",
+                "case_file_sha256": case_sha256,
+                "loaded_tools_after_capture": ["BoundMachineAgent"],
+                "agent_sources": [
+                    {
+                        "path": "agents/bound_machine_agent.py",
+                        "sha256": agent_sha256,
+                    }
+                ],
+                "transcripts": [
+                    {
+                        "case_id": case_id,
+                        "prompt": locked_case["prompt"],
+                        "assistant_response": "BOUND-MARKER",
+                        "agent_logs": "Bound machine execution output",
+                        "expected_agent": "BoundMachineAgent",
+                        "must_include": locked_case["must_include"],
+                        "passed": True,
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    preview_path = package / "evals" / "copilot-studio-preview-evidence.json"
+    preview_path.write_text(
+        json.dumps(
+            {
+                "schema": "aibast-copilot-studio-preview-evidence/1.0",
+                "solution": f"@aibast-agents-library/{SLUG}",
+                "environment_name": "kodyv8",
+                "environment_id": "ee67a404-325c-e726-a18a-886fe708ca0b",
+                "display_name": "Fixture Pilot",
+                "schema_name": "aibast_FixturePilot",
+                "bot_id": "11111111-1111-1111-1111-111111111111",
+                "status": "Draft",
+                "published": False,
+                "cases": [
+                    {
+                        "case_id": case_id,
+                        "must_include": locked_case["must_include"],
+                        "must_not_include": locked_case["must_not_include"],
+                        "passed": True,
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    path = package / "evals" / "manual-build-evidence.json"
+    if path.exists():
+        evidence = json.loads(path.read_text(encoding="utf-8"))
+    else:
+        evidence = {
+            "schema": "aibast-manual-build-evidence/1.0",
+            "status": "passed",
+            "canonical_preview": [],
+            "publication_gate": {
+                "required_state": "Draft",
+                "published": False,
+            },
+        }
+    evidence["status"] = "passed"
+    preview = evidence.setdefault("canonical_preview", [])
+    preview.append(
+        {
+            "case_id": case_id,
+            "prompt": locked_case["prompt"],
+            "must_include": locked_case["must_include"],
+            "must_not_include": locked_case["must_not_include"],
+            "passed": True,
+        }
+    )
+    path.write_text(json.dumps(evidence), encoding="utf-8")
+
+
 def assert_fails(result, fragment):
     assert result["passed"] is False
     assert any(fragment in failure for failure in result["failures"]), result
@@ -212,6 +422,53 @@ def test_rejects_missing_locked_case_coverage(tmp_path):
     assert_fails(run_gate(tmp_path), "locked cases lack reusable captures")
 
 
+def test_accepts_machine_proven_locked_case_without_visual_capture(tmp_path):
+    package = create_release_fixture(tmp_path)
+
+    def remove_case(visual):
+        visual["captures"] = [
+            capture
+            for capture in visual["captures"]
+            if capture["id"] != "easy-case-01"
+        ]
+
+    mutate_visual(package, remove_case)
+    enable_machine_case(package, "CASE-01")
+    quest = package / "quest.html"
+    quest.write_text(
+        quest.read_text(encoding="utf-8").replace(
+            '<img src="screenshots/assisted/annotated/01-case.png" '
+            'alt="Reusable evidence">',
+            "",
+        ),
+        encoding="utf-8",
+    )
+    result = run_gate(tmp_path)
+    assert result["passed"] is True, result["failures"]
+    assert result["metrics"]["locked_cases_visually_covered"] == 0
+    assert result["metrics"]["locked_cases_machine_covered"] == 1
+
+
+def test_rejects_machine_case_without_bound_execution_output(tmp_path):
+    package = create_release_fixture(tmp_path)
+
+    def remove_case(visual):
+        visual["captures"] = [
+            capture
+            for capture in visual["captures"]
+            if capture["id"] != "easy-case-01"
+        ]
+
+    mutate_visual(package, remove_case)
+    enable_machine_case(package, "CASE-01")
+    transcripts = package / "evals" / "transcripts.json"
+    payload = json.loads(transcripts.read_text(encoding="utf-8"))
+    payload["transcripts"][0]["assistant_response"] = "No bound marker"
+    payload["transcripts"][0]["agent_logs"] = ""
+    transcripts.write_text(json.dumps(payload), encoding="utf-8")
+    assert_fails(run_gate(tmp_path), "locked cases lack reusable captures")
+
+
 def test_rejects_missing_draft_coverage(tmp_path):
     package = create_release_fixture(tmp_path)
 
@@ -223,7 +480,46 @@ def test_rejects_missing_draft_coverage(tmp_path):
         ]
 
     mutate_visual(package, remove_draft)
-    assert_fails(run_gate(tmp_path), "no reusable Draft/confirm-state capture")
+    assert_fails(
+        run_gate(tmp_path),
+        "Draft state lacks identity-bound visual or Dataverse proof",
+    )
+
+
+def test_rejects_machine_only_draft_without_visual_capture(tmp_path):
+    package = create_release_fixture(tmp_path)
+    enable_machine_draft(package)
+
+    def remove_draft(visual):
+        visual["captures"] = [
+            item
+            for item in visual["captures"]
+            if item["id"] != "easy-confirm-draft"
+        ]
+
+    mutate_visual(package, remove_draft)
+    assert_fails(
+        run_gate(tmp_path),
+        "Draft state lacks identity-bound visual or Dataverse proof",
+    )
+
+
+def test_accepts_bound_dataverse_draft_without_visual_capture(tmp_path):
+    package = create_release_fixture(tmp_path)
+    enable_dataverse_draft(package)
+
+    def remove_draft(visual):
+        visual["captures"] = [
+            item
+            for item in visual["captures"]
+            if item["id"] != "easy-confirm-draft"
+        ]
+
+    mutate_visual(package, remove_draft)
+    result = run_gate(tmp_path)
+    assert result["passed"] is True, result["failures"]
+    assert result["metrics"]["draft_reusable"] == 0
+    assert result["metrics"]["draft_machine_proven"] is True
 
 
 def test_case_capture_containing_draft_does_not_satisfy_draft_coverage(
@@ -245,7 +541,10 @@ def test_case_capture_containing_draft_does_not_satisfy_draft_coverage(
         case_capture["visible_anchors"].append("Draft")
 
     mutate_visual(package, replace_draft_with_case_word)
-    assert_fails(run_gate(tmp_path), "no reusable Draft/confirm-state capture")
+    assert_fails(
+        run_gate(tmp_path),
+        "Draft state lacks identity-bound visual or Dataverse proof",
+    )
 
 
 def test_rejects_insufficient_hard_coverage(tmp_path):

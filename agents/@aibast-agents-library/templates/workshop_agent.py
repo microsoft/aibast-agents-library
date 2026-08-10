@@ -576,9 +576,11 @@ class AIBASTWorkshopAgent(BasicAgent):
             pac,
             environment_id,
         )
-        recorded = deployment.get("copilot_studio", {}).get(
-            "validated_pilot",
-            {},
+        studio = deployment.get("copilot_studio", {})
+        recorded = (
+            studio.get("export_agent")
+            or studio.get("validated_pilot")
+            or {}
         )
         display_name = str(
             recorded.get("display_name")
@@ -633,6 +635,8 @@ class AIBASTWorkshopAgent(BasicAgent):
             str(project),
             "--environment",
             environment,
+            "--display-name",
+            display_name,
             "--push",
         ]
         if connected:

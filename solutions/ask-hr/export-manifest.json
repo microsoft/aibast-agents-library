@@ -27,6 +27,30 @@
       "status": "ready"
     },
     {
+      "id": "copilot-studio-solution",
+      "label": "Importable Copilot Studio solution",
+      "path": "solutions/ask-hr/exports/ask-hr-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/exports/ask-hr-copilot-studio-solution.zip",
+      "use": "Unmanaged solution ZIP for manual import; the agent remains unpublished",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-deployment-settings",
+      "label": "Copilot Studio deployment settings",
+      "path": "solutions/ask-hr/exports/ask-hr-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/exports/ask-hr-deployment-settings.json",
+      "use": "Connection-reference, environment-variable, and agent import settings",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-export-metadata",
+      "label": "Copilot Studio solution export metadata",
+      "path": "solutions/ask-hr/exports/ask-hr-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/exports/ask-hr-solution-export.json",
+      "use": "Export identity, integrity hash, source environment, and import caveats",
+      "status": "ready"
+    },
+    {
       "id": "field-guide",
       "label": "Customer field guide",
       "path": "solutions/ask-hr/field-guide.html",
@@ -259,6 +283,14 @@
       "status": "ready"
     },
     {
+      "id": "easy-evidence-dataverse-draft-evidence",
+      "label": "Dataverse Draft Evidence",
+      "path": "solutions/ask-hr/evals/dataverse-draft-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/evals/dataverse-draft-evidence.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
       "id": "manual-evidence",
       "label": "Manual build evidence",
       "path": "solutions/ask-hr/evals/manual-build-evidence.json",
@@ -296,6 +328,182 @@
       "path": "solutions/ask-hr/evals/visual-checkpoints.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/evals/visual-checkpoints.json",
       "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-hr-01",
+      "label": "Annotated visual checkpoint: easy-hr-01",
+      "path": "solutions/ask-hr/screenshots/assisted/annotated/02-hr-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/screenshots/assisted/annotated/02-hr-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-hr-02",
+      "label": "Annotated visual checkpoint: easy-hr-02",
+      "path": "solutions/ask-hr/screenshots/assisted/annotated/03-hr-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/screenshots/assisted/annotated/03-hr-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-04-hr-03",
+      "label": "Annotated visual checkpoint: easy-hr-03",
+      "path": "solutions/ask-hr/screenshots/assisted/annotated/04-hr-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/screenshots/assisted/annotated/04-hr-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-05-hr-04",
+      "label": "Annotated visual checkpoint: easy-hr-04",
+      "path": "solutions/ask-hr/screenshots/assisted/annotated/05-hr-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/screenshots/assisted/annotated/05-hr-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-06-hr-05",
+      "label": "Annotated visual checkpoint: easy-hr-05",
+      "path": "solutions/ask-hr/screenshots/assisted/annotated/06-hr-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/screenshots/assisted/annotated/06-hr-05.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-07-hr-06",
+      "label": "Annotated visual checkpoint: easy-hr-06",
+      "path": "solutions/ask-hr/screenshots/assisted/annotated/07-hr-06.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/screenshots/assisted/annotated/07-hr-06.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-name-agent",
+      "label": "Annotated visual checkpoint: hard-step-02",
+      "path": "solutions/ask-hr/screenshots/manual/annotated/02-name-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/screenshots/manual/annotated/02-name-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-enter-instructions",
+      "label": "Annotated visual checkpoint: hard-step-03",
+      "path": "solutions/ask-hr/screenshots/manual/annotated/03-enter-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/screenshots/manual/annotated/03-enter-instructions.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-05-remove-web-search",
+      "label": "Annotated visual checkpoint: hard-step-05",
+      "path": "solutions/ask-hr/screenshots/manual/annotated/05-remove-web-search.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/screenshots/manual/annotated/05-remove-web-search.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-06-add-aibast-ask-hr-rules-and-guardrails",
+      "label": "Annotated visual checkpoint: hard-step-06",
+      "path": "solutions/ask-hr/screenshots/manual/annotated/06-add-aibast-ask-hr-rules-and-guardrails.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/screenshots/manual/annotated/06-add-aibast-ask-hr-rules-and-guardrails.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-07-add-aibast-ask-hr-synthetic-records",
+      "label": "Annotated visual checkpoint: hard-step-07",
+      "path": "solutions/ask-hr/screenshots/manual/annotated/07-add-aibast-ask-hr-synthetic-records.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/screenshots/manual/annotated/07-add-aibast-ask-hr-synthetic-records.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-08-add-aibast-benefits-summary-06",
+      "label": "Annotated visual checkpoint: hard-step-08",
+      "path": "solutions/ask-hr/screenshots/manual/annotated/08-add-aibast-benefits-summary-06.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/screenshots/manual/annotated/08-add-aibast-benefits-summary-06.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-09-add-aibast-health-insurance-04",
+      "label": "Annotated visual checkpoint: hard-step-09",
+      "path": "solutions/ask-hr/screenshots/manual/annotated/09-add-aibast-health-insurance-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/screenshots/manual/annotated/09-add-aibast-health-insurance-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-13-add-aibast-submit-time-off-02",
+      "label": "Annotated visual checkpoint: hard-step-13",
+      "path": "solutions/ask-hr/screenshots/manual/annotated/13-add-aibast-submit-time-off-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/screenshots/manual/annotated/13-add-aibast-submit-time-off-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-15-open-preview",
+      "label": "Annotated visual checkpoint: hard-step-15",
+      "path": "solutions/ask-hr/screenshots/manual/annotated/15-open-preview.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/screenshots/manual/annotated/15-open-preview.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-16-hr-01",
+      "label": "Annotated visual checkpoint: hard-step-16",
+      "path": "solutions/ask-hr/screenshots/manual/annotated/16-hr-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/screenshots/manual/annotated/16-hr-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-17-hr-02",
+      "label": "Annotated visual checkpoint: hard-step-17",
+      "path": "solutions/ask-hr/screenshots/manual/annotated/17-hr-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/screenshots/manual/annotated/17-hr-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-18-hr-03",
+      "label": "Annotated visual checkpoint: hard-step-18",
+      "path": "solutions/ask-hr/screenshots/manual/annotated/18-hr-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/screenshots/manual/annotated/18-hr-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-19-hr-04",
+      "label": "Annotated visual checkpoint: hard-step-19",
+      "path": "solutions/ask-hr/screenshots/manual/annotated/19-hr-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/screenshots/manual/annotated/19-hr-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-20-hr-05",
+      "label": "Annotated visual checkpoint: hard-step-20",
+      "path": "solutions/ask-hr/screenshots/manual/annotated/20-hr-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/screenshots/manual/annotated/20-hr-05.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-21-hr-06",
+      "label": "Annotated visual checkpoint: hard-step-21",
+      "path": "solutions/ask-hr/screenshots/manual/annotated/21-hr-06.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/screenshots/manual/annotated/21-hr-06.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-22-confirm-draft",
+      "label": "Annotated visual checkpoint: hard-step-22",
+      "path": "solutions/ask-hr/screenshots/manual/annotated/22-confirm-draft.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/screenshots/manual/annotated/22-confirm-draft.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
@@ -650,5 +858,31 @@
       "use": "Copilot-assisted evidence inventory",
       "status": "ready"
     }
-  ]
+  ],
+  "copilot_studio_solution": {
+    "label": "Importable Ask HR Agent Copilot Studio solution",
+    "status": "exported",
+    "solution_unique_name": "aibast_AskHRPilot",
+    "zip": {
+      "path": "solutions/ask-hr/exports/ask-hr-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/exports/ask-hr-copilot-studio-solution.zip",
+      "sha256": "012570287b022fd44f1d116e22aa2af6de07bcfb52bcf087efa647d65d33bf90",
+      "bytes": 4285
+    },
+    "deployment_settings": {
+      "path": "solutions/ask-hr/exports/ask-hr-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/exports/ask-hr-deployment-settings.json"
+    },
+    "metadata": {
+      "path": "solutions/ask-hr/exports/ask-hr-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/ask-hr/exports/ask-hr-solution-export.json"
+    },
+    "managed": false,
+    "published": false,
+    "import_caveats": [
+      "Import as an unmanaged solution for manual review.",
+      "Map connection references and environment variables before enabling integrations.",
+      "The exported agent remains unpublished unless the target administrator explicitly publishes it."
+    ]
+  }
 }

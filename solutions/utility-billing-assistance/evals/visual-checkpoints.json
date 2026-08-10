@@ -9,49 +9,135 @@
   },
   "summary": {
     "total_existing_captures": 23,
-    "reusable": 0,
-    "reshoot_required": 23,
-    "new_learn_step_captures_recommended": 0
+    "reusable": 20,
+    "reshoot_required": 3
   },
   "captures": [
     {
       "id": "easy-utility_billing_assistance-01",
       "mode": "easy",
+      "case_id": "UTILITY_BILLING_ASSISTANCE-01",
       "source": "solutions/utility-billing-assistance/screenshots/assisted/01-utility_billing_assistance-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "UTILITY_BILLING_ASSISTANCE-01"
+      "annotated": "solutions/utility-billing-assistance/screenshots/assisted/annotated/01-utility_billing_assistance-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "ACCT-90003",
+        "$489.20",
+        "No balance, payment, service, or account record was changed"
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 253,
+          "width": 940,
+          "height": 84,
+          "label": "Account and past-due balance"
+        },
+        {
+          "x": 287,
+          "y": 530,
+          "width": 936,
+          "height": 47,
+          "label": "No account record changed"
+        }
+      ]
     },
     {
       "id": "easy-utility_billing_assistance-02",
       "mode": "easy",
+      "case_id": "UTILITY_BILLING_ASSISTANCE-02",
       "source": "solutions/utility-billing-assistance/screenshots/assisted/02-utility_billing_assistance-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "UTILITY_BILLING_ASSISTANCE-02"
+      "annotated": "solutions/utility-billing-assistance/screenshots/assisted/annotated/02-utility_billing_assistance-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft Policy Estimate: $18.55",
+        "Draft policy estimate only",
+        "not a leak diagnosis"
+      ],
+      "full_case_not_visibly_proven": [
+        "REVIEW POSSIBLE LEAK is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 126,
+          "width": 930,
+          "height": 112,
+          "label": "Draft policy estimate"
+        },
+        {
+          "x": 287,
+          "y": 426,
+          "width": 932,
+          "height": 64,
+          "label": "Not a leak diagnosis"
+        }
+      ]
     },
     {
       "id": "easy-utility_billing_assistance-03",
       "mode": "easy",
+      "case_id": "UTILITY_BILLING_ASSISTANCE-03",
       "source": "solutions/utility-billing-assistance/screenshots/assisted/03-utility_billing_assistance-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "UTILITY_BILLING_ASSISTANCE-03"
+      "annotated": "solutions/utility-billing-assistance/screenshots/assisted/annotated/03-utility_billing_assistance-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Maximum term: 12 months",
+        "No payment arrangement was created"
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 126,
+          "width": 610,
+          "height": 76,
+          "label": "Maximum term: 12 months"
+        },
+        {
+          "x": 287,
+          "y": 505,
+          "width": 935,
+          "height": 72,
+          "label": "No payment arrangement created"
+        }
+      ]
     },
     {
       "id": "easy-utility_billing_assistance-04",
       "mode": "easy",
+      "case_id": "UTILITY_BILLING_ASSISTANCE-04",
       "source": "solutions/utility-billing-assistance/screenshots/assisted/04-utility_billing_assistance-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "UTILITY_BILLING_ASSISTANCE-04"
+      "annotated": "solutions/utility-billing-assistance/screenshots/assisted/annotated/04-utility_billing_assistance-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "POTENTIALLY ELIGIBLE",
+        "No eligibility determination",
+        "enrollment"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 378,
+          "width": 936,
+          "height": 113,
+          "label": "Potentially eligible screening"
+        },
+        {
+          "x": 287,
+          "y": 505,
+          "width": 936,
+          "height": 70,
+          "label": "No determination or enrollment"
+        }
+      ]
     },
     {
       "id": "easy-draft",
       "mode": "easy",
       "source": "solutions/utility-billing-assistance/screenshots/assisted/05-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The Agents list is visible, but the target Utility Billing Pilot row is not in the captured viewport, so its Draft identity is not visually proven.",
+      "draft": true
     },
     {
       "id": "hard-step-01",
@@ -59,23 +145,48 @@
       "step": 1,
       "source": "solutions/utility-billing-assistance/screenshots/manual/01-create-blank-agent.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame shows a blank loading canvas and spinner; no created blank-agent workspace, agent name, or other positive target-state anchor is visible."
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
       "step": 2,
       "source": "solutions/utility-billing-assistance/screenshots/manual/02-name-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Utility Billing Manual in the agent name field"
+      ],
+      "boxes": [
+        {
+          "x": 166,
+          "y": 99,
+          "width": 812,
+          "height": 50,
+          "label": "Manual agent name entered"
+        }
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
       "step": 3,
       "source": "solutions/utility-billing-assistance/screenshots/manual/03-enter-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Locked Preview evidence anchors",
+        "All four Utility Billing acceptance-anchor rows"
+      ],
+      "boxes": [
+        {
+          "x": 84,
+          "y": 459,
+          "width": 892,
+          "height": 354,
+          "label": "Reviewed locked Preview anchors"
+        }
+      ]
     },
     {
       "id": "hard-step-04",
@@ -83,123 +194,383 @@
       "step": 4,
       "source": "solutions/utility-billing-assistance/screenshots/manual/04-save-instructions.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The reviewed instructions are visible, but the frame has no saved-state confirmation such as the Save tooltip stating No unsaved changes; the save action itself is not visually proven."
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
       "step": 5,
       "source": "solutions/utility-billing-assistance/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Knowledge section is empty",
+        "Search all websites is absent from the complete Build inventory"
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 252,
+          "width": 389,
+          "height": 109,
+          "label": "Default web search removed"
+        }
+      ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
       "step": 6,
       "source": "solutions/utility-billing-assistance/screenshots/manual/06-add-utility-billing-assistance-rules-and-controls.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/06-add-utility-billing-assistance-rules-and-controls.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "utility-billing-assistance-rules-and-controls filename in Knowledge"
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 310,
+          "width": 370,
+          "height": 39,
+          "label": "Rules and controls knowledge"
+        }
+      ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
       "step": 7,
       "source": "solutions/utility-billing-assistance/screenshots/manual/07-add-utility-billing-assistance-synthetic-records.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/07-add-utility-billing-assistance-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "utility-billing-assistance-synthetic-records.md",
+        "utility-billing-assistance-rules-and-controls filename"
+      ],
+      "boxes": [
+        {
+          "x": 1027,
+          "y": 303,
+          "width": 371,
+          "height": 88,
+          "label": "Two reviewed knowledge files"
+        }
+      ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
       "step": 8,
       "source": "solutions/utility-billing-assistance/screenshots/manual/08-add-aibast-assistance-programs.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/08-add-aibast-assistance-programs.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "utility-billing-assistance-assistance-programs skill"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 189,
+          "width": 370,
+          "height": 38,
+          "label": "Assistance programs skill"
+        }
+      ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
       "step": 9,
       "source": "solutions/utility-billing-assistance/screenshots/manual/09-add-aibast-billing-inquiry.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/09-add-aibast-billing-inquiry.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "utility-billing-assistance-billing-inquiry skill",
+        "utility-billing-assistance-assistance-programs skill"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 189,
+          "width": 370,
+          "height": 77,
+          "label": "Billing inquiry skill added"
+        }
+      ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
       "step": 10,
       "source": "solutions/utility-billing-assistance/screenshots/manual/10-add-aibast-payment-plan.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/10-add-aibast-payment-plan.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "utility-billing-assistance-payment-plan skill",
+        "Three configured Utility Billing skills"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 189,
+          "width": 370,
+          "height": 119,
+          "label": "Payment plan skill added"
+        }
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
       "step": 11,
       "source": "solutions/utility-billing-assistance/screenshots/manual/11-add-aibast-usage-analysis.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/11-add-aibast-usage-analysis.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "utility-billing-assistance-usage-analysis skill",
+        "All four Utility Billing skills"
+      ],
+      "boxes": [
+        {
+          "x": 1028,
+          "y": 189,
+          "width": 370,
+          "height": 160,
+          "label": "All four reviewed skills"
+        }
+      ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
       "step": 12,
       "source": "solutions/utility-billing-assistance/screenshots/manual/12-review-inventory.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/12-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "Four configured Utility Billing skills",
+        "Two configured knowledge files",
+        "Tools section has no configured tool"
+      ],
+      "boxes": [
+        {
+          "x": 1202,
+          "y": 86,
+          "width": 194,
+          "height": 40,
+          "label": "Reviewed model"
+        },
+        {
+          "x": 1028,
+          "y": 189,
+          "width": 370,
+          "height": 160,
+          "label": "Four configured skills"
+        },
+        {
+          "x": 1019,
+          "y": 358,
+          "width": 384,
+          "height": 53,
+          "label": "No configured tools"
+        },
+        {
+          "x": 1028,
+          "y": 437,
+          "width": 370,
+          "height": 111,
+          "label": "Two knowledge files"
+        }
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
       "step": 13,
       "source": "solutions/utility-billing-assistance/screenshots/manual/13-open-preview.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab selected",
+        "New chat",
+        "Utility Billing Manual"
+      ],
+      "boxes": [
+        {
+          "x": 639,
+          "y": 10,
+          "width": 99,
+          "height": 43,
+          "label": "Preview selected"
+        },
+        {
+          "x": 838,
+          "y": 91,
+          "width": 108,
+          "height": 38,
+          "label": "New chat control"
+        },
+        {
+          "x": 283,
+          "y": 143,
+          "width": 448,
+          "height": 91,
+          "label": "Fresh manual Preview"
+        }
+      ]
     },
     {
-      "id": "hard-step-14",
+      "id": "hard-utility_billing_assistance-01",
       "mode": "hard",
+      "case_id": "UTILITY_BILLING_ASSISTANCE-01",
       "step": 14,
       "source": "solutions/utility-billing-assistance/screenshots/manual/14-utility_billing_assistance-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "UTILITY_BILLING_ASSISTANCE-01"
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/14-utility_billing_assistance-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "$489.20",
+        "No balance, payment, service, or account record was changed"
+      ],
+      "full_case_not_visibly_proven": [
+        "ACCT-90003 is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 125,
+          "width": 925,
+          "height": 94,
+          "label": "Balance evidence includes $489.20"
+        },
+        {
+          "x": 287,
+          "y": 530,
+          "width": 936,
+          "height": 47,
+          "label": "No account record changed"
+        }
+      ]
     },
     {
-      "id": "hard-step-15",
+      "id": "hard-utility_billing_assistance-02",
       "mode": "hard",
+      "case_id": "UTILITY_BILLING_ASSISTANCE-02",
       "step": 15,
       "source": "solutions/utility-billing-assistance/screenshots/manual/15-utility_billing_assistance-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "UTILITY_BILLING_ASSISTANCE-02"
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/15-utility_billing_assistance-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft policy estimate: $18.55",
+        "not a leak diagnosis"
+      ],
+      "full_case_not_visibly_proven": [
+        "REVIEW POSSIBLE LEAK is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 123,
+          "width": 932,
+          "height": 116,
+          "label": "Estimate and diagnosis boundary"
+        }
+      ]
     },
     {
-      "id": "hard-step-16",
+      "id": "hard-utility_billing_assistance-03",
       "mode": "hard",
+      "case_id": "UTILITY_BILLING_ASSISTANCE-03",
       "step": 16,
       "source": "solutions/utility-billing-assistance/screenshots/manual/16-utility_billing_assistance-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "UTILITY_BILLING_ASSISTANCE-03"
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/16-utility_billing_assistance-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "12 months",
+        "No payment arrangement was created"
+      ],
+      "boxes": [
+        {
+          "x": 288,
+          "y": 126,
+          "width": 391,
+          "height": 99,
+          "label": "12-month option"
+        },
+        {
+          "x": 287,
+          "y": 476,
+          "width": 936,
+          "height": 91,
+          "label": "No payment arrangement created"
+        }
+      ]
     },
     {
-      "id": "hard-step-17",
+      "id": "hard-utility_billing_assistance-04",
       "mode": "hard",
+      "case_id": "UTILITY_BILLING_ASSISTANCE-04",
       "step": 17,
       "source": "solutions/utility-billing-assistance/screenshots/manual/17-utility_billing_assistance-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "UTILITY_BILLING_ASSISTANCE-04"
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/17-utility_billing_assistance-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "POTENTIALLY ELIGIBLE",
+        "No eligibility determination",
+        "enrollment"
+      ],
+      "boxes": [
+        {
+          "x": 287,
+          "y": 351,
+          "width": 936,
+          "height": 80,
+          "label": "Potentially eligible screening"
+        },
+        {
+          "x": 287,
+          "y": 505,
+          "width": 936,
+          "height": 70,
+          "label": "No determination or enrollment"
+        }
+      ]
     },
     {
-      "id": "hard-step-18",
+      "id": "hard-draft",
       "mode": "hard",
       "step": 18,
       "source": "solutions/utility-billing-assistance/screenshots/manual/18-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/utility-billing-assistance/screenshots/manual/annotated/18-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Utility Billing Manual",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 105,
+          "y": 248,
+          "width": 654,
+          "height": 50,
+          "label": "Target manual agent remains Draft"
+        }
+      ]
     }
-  ]
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy Draft gate filtered so Utility Billing Pilot and Draft are visible in the same frame.",
+      "Hard step 1 after the blank agent workspace finishes loading.",
+      "Hard step 4 with the Save tooltip visibly stating No unsaved changes."
+    ]
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:utility-billing-assistance",
+    "reviewed_at": "2026-08-10T00:27:58.196935+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  }
 }

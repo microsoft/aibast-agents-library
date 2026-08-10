@@ -229,6 +229,62 @@ def test_draft_promoter_refreshes_an_existing_project(tmp_path, monkeypatch):
     assert (package / "copilot-studio" / "settings.mcs.yml").exists()
 
 
+def test_draft_promoter_uses_explicit_name_for_fresh_project(
+    tmp_path,
+    monkeypatch,
+):
+    module = load("promote_solution_draft")
+    monkeypatch.setattr(module, "ROOT", tmp_path)
+    package = tmp_path / "solutions" / "test-solution"
+    (package / "manual" / "skills" / "review").mkdir(parents=True)
+    (package / "manual" / "knowledge").mkdir(parents=True)
+    (package / "deployment.json").write_text(
+        json.dumps({"display_name": "Generic Agent"}),
+        encoding="utf-8",
+    )
+    (package / "manual" / "GLOBAL-INSTRUCTIONS.md").write_text(
+        "# Role\n\nUse synthetic evidence.",
+        encoding="utf-8",
+    )
+    (package / "manual" / "skills" / "review" / "SKILL.md").write_text(
+        "---\nname: review\ndescription: Review evidence.\n---\n# Review\n",
+        encoding="utf-8",
+    )
+    (package / "manual" / "knowledge" / "records.md").write_text(
+        "# Records\n",
+        encoding="utf-8",
+    )
+    commands = []
+
+    def fake_run(command, cwd=None):
+        commands.append(command)
+        project = tmp_path / "project"
+        project.mkdir(parents=True, exist_ok=True)
+        (project / "settings.mcs.yml").write_text(
+            "displayName: Export Draft\nschemaName: aibast_ExportDraft\n",
+            encoding="utf-8",
+        )
+        (project / "agent.sync.yaml").write_text(
+            "components: []\n",
+            encoding="utf-8",
+        )
+        return "initialized"
+
+    monkeypatch.setattr(module, "run", fake_run)
+    result = module.promote(
+        "test-solution",
+        tmp_path / "project",
+        "environment-id",
+        "aibast",
+        False,
+        display_name_override="Export Draft",
+    )
+
+    assert result["display_name"] == "Export Draft"
+    assert "--name" in commands[0]
+    assert commands[0][commands[0].index("--name") + 1] == "Export Draft"
+
+
 def test_draft_promoter_uses_reviewed_studio_knowledge_fallback(
     tmp_path,
     monkeypatch,

@@ -9,49 +9,162 @@
   },
   "summary": {
     "total_existing_captures": 23,
-    "reusable": 0,
-    "reshoot_required": 23,
-    "new_learn_step_captures_recommended": 0
+    "reusable": 19,
+    "reshoot_required": 4
   },
   "captures": [
     {
       "id": "easy-pm-01",
       "mode": "easy",
+      "case_id": "PM-01",
       "source": "solutions/personalized-marketing/screenshots/assisted/01-pm-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PM-01"
+      "annotated": "solutions/personalized-marketing/screenshots/assisted/annotated/01-pm-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Priority 3 — Convert New Explorers (SEG-NEW)",
+        "Priority 4 — Assess Dormant Reactivation ROI (SEG-DORMANT)",
+        "All figures are fixed synthetic planning examples",
+        "human review and approval before any message, offer, or campaign is launched"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact Prepared for Marketing Director, Total Addressable Customers, and no-sensitive-attribute markers are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 280,
+          "y": 130,
+          "width": 950,
+          "height": 350,
+          "label": "Aggregate segment review priorities"
+        },
+        {
+          "x": 285,
+          "y": 505,
+          "width": 940,
+          "height": 72,
+          "label": "Synthetic and approval boundary"
+        }
+      ]
     },
     {
       "id": "easy-pm-02",
       "mode": "easy",
+      "case_id": "PM-02",
       "source": "solutions/personalized-marketing/screenshots/assisted/02-pm-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PM-02"
+      "annotated": "solutions/personalized-marketing/screenshots/assisted/annotated/02-pm-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Four-Stage Win-Back Sequence (CAMP-WINBACK)",
+        "Stage dependency",
+        "Consent & suppression"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact Prepared for Campaign Manager and Draft Campaign Design Portfolio markers are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 280,
+          "y": 220,
+          "width": 950,
+          "height": 285,
+          "label": "Review-only win-back sequence"
+        },
+        {
+          "x": 285,
+          "y": 610,
+          "width": 900,
+          "height": 75,
+          "label": "Consent assumption"
+        }
+      ]
     },
     {
       "id": "easy-pm-03",
       "mode": "easy",
+      "case_id": "PM-03",
       "source": "solutions/personalized-marketing/screenshots/assisted/03-pm-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PM-03"
+      "annotated": "solutions/personalized-marketing/screenshots/assisted/annotated/03-pm-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Draft Headline",
+        "Draft CTA",
+        "No inferred personal traits",
+        "All copy labeled draft throughout",
+        "Draft-Only Boundary"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact Draft Content Personalization Matrix, New Explorers, and Draft Hero Copy markers are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 190,
+          "width": 925,
+          "height": 130,
+          "label": "Draft content suggestions"
+        },
+        {
+          "x": 285,
+          "y": 365,
+          "width": 940,
+          "height": 155,
+          "label": "Content guardrails"
+        },
+        {
+          "x": 285,
+          "y": 550,
+          "width": 940,
+          "height": 55,
+          "label": "Draft-only boundary"
+        }
+      ]
     },
     {
       "id": "easy-pm-04",
       "mode": "easy",
+      "case_id": "PM-04",
       "source": "solutions/personalized-marketing/screenshots/assisted/04-pm-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PM-04"
+      "annotated": "solutions/personalized-marketing/screenshots/assisted/annotated/04-pm-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "CAMP-WINBACK (4-stage Win-Back Journey)",
+        "All rates are fixed synthetic examples, not observed customer KPIs",
+        "Measurement Limitations — Call-Outs Before Any Decision"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact Marketing Performance Analysis and A/B Test Results headings are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 285,
+          "y": 150,
+          "width": 945,
+          "height": 220,
+          "label": "Synthetic campaign test portfolio"
+        },
+        {
+          "x": 285,
+          "y": 395,
+          "width": 930,
+          "height": 42,
+          "label": "Synthetic KPI disclosure"
+        },
+        {
+          "x": 285,
+          "y": 455,
+          "width": 940,
+          "height": 215,
+          "label": "Measurement limitations"
+        }
+      ]
     },
     {
       "id": "easy-draft",
       "mode": "easy",
       "source": "solutions/personalized-marketing/screenshots/assisted/05-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The Personalized Marketing Pilot row is not visible, so the screenshot does not prove the target agent remains Draft.",
+      "draft": true
     },
     {
       "id": "hard-step-01",
@@ -59,23 +172,49 @@
       "step": 1,
       "source": "solutions/personalized-marketing/screenshots/manual/01-create-blank-agent.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The screenshot is a blank loading canvas with a spinner; no blank-agent workspace or agent identity is visible."
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
       "step": 2,
       "source": "solutions/personalized-marketing/screenshots/manual/02-name-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Personalized Marketing Manual in the name field"
+      ],
+      "boxes": [
+        {
+          "x": 160,
+          "y": 95,
+          "width": 825,
+          "height": 60,
+          "label": "Manual agent name entered"
+        }
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
       "step": 3,
       "source": "solutions/personalized-marketing/screenshots/manual/03-enter-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Personalized Marketing Agent — Manual Global Instructions",
+        "Locked Preview evidence anchors",
+        "PM-01 through PM-04 acceptance anchors"
+      ],
+      "boxes": [
+        {
+          "x": 75,
+          "y": 225,
+          "width": 900,
+          "height": 605,
+          "label": "Reviewed instructions and locked anchors"
+        }
+      ]
     },
     {
       "id": "hard-step-04",
@@ -83,123 +222,398 @@
       "step": 4,
       "source": "solutions/personalized-marketing/screenshots/manual/04-save-instructions.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The instructions are visible, but no save confirmation or no-unsaved-changes state is shown; the screenshot does not prove the save action completed."
     },
     {
       "id": "hard-step-05",
       "mode": "hard",
       "step": 5,
       "source": "solutions/personalized-marketing/screenshots/manual/05-remove-web-search.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/05-remove-web-search.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Tools section contains no configured tool",
+        "Knowledge section contains no Search all websites item"
+      ],
+      "boxes": [
+        {
+          "x": 1015,
+          "y": 135,
+          "width": 390,
+          "height": 315,
+          "label": "Web search removed from inventory"
+        }
+      ]
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
       "step": 6,
       "source": "solutions/personalized-marketing/screenshots/manual/06-add-aibast-personalized-marketing-rules-and-safety.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/06-add-aibast-personalized-marketing-rules-and-safety.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Knowledge pill begins aibast_personalized-marketing-rules-and-saf"
+      ],
+      "full_filename_not_visibly_proven": [
+        "The final characters of the rules-and-safety filename are truncated by the product UI."
+      ],
+      "boxes": [
+        {
+          "x": 1020,
+          "y": 260,
+          "width": 380,
+          "height": 100,
+          "label": "Rules and safety knowledge added"
+        }
+      ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
       "step": 7,
       "source": "solutions/personalized-marketing/screenshots/manual/07-add-aibast-personalized-marketing-synthetic-records.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/07-add-aibast-personalized-marketing-synthetic-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Knowledge pill begins aibast_personalized-marketing-synthetic-rec",
+        "Knowledge pill begins aibast_personalized-marketing-rules-and-saf"
+      ],
+      "full_filename_not_visibly_proven": [
+        "The final characters of both knowledge filenames are truncated by the product UI."
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 260,
+          "width": 382,
+          "height": 140,
+          "label": "Two reviewed knowledge files"
+        }
+      ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
       "step": 8,
       "source": "solutions/personalized-marketing/screenshots/manual/08-add-campaign-design.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/08-add-campaign-design.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "review-only-campaign-design"
+      ],
+      "boxes": [
+        {
+          "x": 1020,
+          "y": 135,
+          "width": 375,
+          "height": 100,
+          "label": "Campaign design skill added"
+        }
+      ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
       "step": 9,
       "source": "solutions/personalized-marketing/screenshots/manual/09-add-content-personalization.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/09-add-content-personalization.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "consent-aware-content-personalization",
+        "review-only-campaign-design"
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 135,
+          "width": 380,
+          "height": 135,
+          "label": "Content personalization skill added"
+        }
+      ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
       "step": 10,
       "source": "solutions/personalized-marketing/screenshots/manual/10-add-customer-segmentation.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/10-add-customer-segmentation.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "privacy-safe-customer-segmentation",
+        "consent-aware-content-personalization",
+        "review-only-campaign-design"
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 135,
+          "width": 380,
+          "height": 190,
+          "label": "Customer segmentation skill added"
+        }
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
       "step": 11,
       "source": "solutions/personalized-marketing/screenshots/manual/11-add-performance-analysis.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/11-add-performance-analysis.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "synthetic-marketing-performance-analysis",
+        "privacy-safe-customer-segmentation",
+        "consent-aware-content-personalization",
+        "review-only-campaign-design"
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 135,
+          "width": 380,
+          "height": 225,
+          "label": "Performance analysis skill added"
+        }
+      ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
       "step": 12,
       "source": "solutions/personalized-marketing/screenshots/manual/12-review-inventory.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/12-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "four configured skills",
+        "Tools section contains no configured tool",
+        "two knowledge files",
+        "Save tooltip states No unsaved changes"
+      ],
+      "boxes": [
+        {
+          "x": 1040,
+          "y": 48,
+          "width": 215,
+          "height": 47,
+          "label": "Saved: no unsaved changes"
+        },
+        {
+          "x": 1203,
+          "y": 86,
+          "width": 195,
+          "height": 40,
+          "label": "Reviewed model"
+        },
+        {
+          "x": 1018,
+          "y": 135,
+          "width": 382,
+          "height": 420,
+          "label": "4 skills, no tools, 2 knowledge files"
+        }
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
       "step": 13,
       "source": "solutions/personalized-marketing/screenshots/manual/13-open-preview.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab",
+        "New chat",
+        "Personalized Marketing Manual"
+      ],
+      "boxes": [
+        {
+          "x": 635,
+          "y": 8,
+          "width": 105,
+          "height": 48,
+          "label": "Preview selected"
+        },
+        {
+          "x": 830,
+          "y": 80,
+          "width": 130,
+          "height": 55,
+          "label": "Fresh chat control"
+        },
+        {
+          "x": 260,
+          "y": 145,
+          "width": 470,
+          "height": 85,
+          "label": "Manual agent preview"
+        }
+      ]
     },
     {
-      "id": "hard-step-14",
+      "id": "hard-pm-01",
       "mode": "hard",
+      "case_id": "PM-01",
       "step": 14,
       "source": "solutions/personalized-marketing/screenshots/manual/14-pm-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PM-01"
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/14-pm-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Portfolio Review Priorities",
+        "Priority 2 — Intervene on At-Risk Churners",
+        "Priority 3 — Convert New Explorers Before They Lapse",
+        "synthetic aggregate"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact Prepared for Marketing Director, Total Addressable Customers, and no-sensitive-attribute markers are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 280,
+          "y": 175,
+          "width": 950,
+          "height": 500,
+          "label": "Aggregate portfolio review priorities"
+        }
+      ]
     },
     {
-      "id": "hard-step-15",
+      "id": "hard-pm-02",
       "mode": "hard",
+      "case_id": "PM-02",
       "step": 15,
       "source": "solutions/personalized-marketing/screenshots/manual/15-pm-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PM-02"
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/15-pm-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Planning Assumptions",
+        "SEG-DORMANT (34,200 contacts)",
+        "carries no sensitive attribute profiling",
+        "Approval Gates (all required before any activation)"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact Prepared for Campaign Manager, Draft Campaign Design Portfolio, and Win-Back Journey headings are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 280,
+          "y": 180,
+          "width": 950,
+          "height": 310,
+          "label": "Review-only planning assumptions"
+        },
+        {
+          "x": 280,
+          "y": 510,
+          "width": 545,
+          "height": 145,
+          "label": "Activation approval gates"
+        }
+      ]
     },
     {
-      "id": "hard-step-16",
+      "id": "hard-pm-03",
       "mode": "hard",
+      "case_id": "PM-03",
       "step": 16,
       "source": "solutions/personalized-marketing/screenshots/manual/16-pm-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PM-03"
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/16-pm-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Tone & Messaging Guidance (Draft)",
+        "Welcoming, not pressuring",
+        "Neutral alternatives",
+        "authorized human review and approval",
+        "No action has been taken"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact Draft Content Personalization Matrix, New Explorers, and Draft Hero Copy markers are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 280,
+          "y": 280,
+          "width": 950,
+          "height": 200,
+          "label": "Draft messaging guidance"
+        },
+        {
+          "x": 280,
+          "y": 490,
+          "width": 950,
+          "height": 100,
+          "label": "Human approval and no-action gate"
+        }
+      ]
     },
     {
-      "id": "hard-step-17",
+      "id": "hard-pm-04",
       "mode": "hard",
+      "case_id": "PM-04",
       "step": 17,
       "source": "solutions/personalized-marketing/screenshots/manual/17-pm-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PM-04"
+      "annotated": "solutions/personalized-marketing/screenshots/manual/annotated/17-pm-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "ABT-003 — VIP Exclusive Preview",
+        "88% confidence",
+        "Measurement Limitations — Flag Before Any Decision",
+        "Synthetic data only"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact Marketing Performance Analysis and A/B Test Results headings are above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 280,
+          "y": 130,
+          "width": 950,
+          "height": 215,
+          "label": "A/B test comparison"
+        },
+        {
+          "x": 280,
+          "y": 380,
+          "width": 950,
+          "height": 270,
+          "label": "Measurement and synthetic-data limits"
+        }
+      ]
     },
     {
-      "id": "hard-step-18",
+      "id": "hard-draft",
       "mode": "hard",
       "step": 18,
       "source": "solutions/personalized-marketing/screenshots/manual/18-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The Agents list is still a loading skeleton and shows zero items; Personalized Marketing Manual and its Draft status are not visible."
     }
-  ]
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy Draft gate filtered to Personalized Marketing Pilot with Draft visible.",
+      "Hard step 1 after the blank agent workspace has fully loaded.",
+      "Hard step 4 with an explicit saved or no-unsaved-changes confirmation visible.",
+      "Hard Draft gate filtered to Personalized Marketing Manual with Draft visible."
+    ],
+    "new_learn_step_captures": [
+      "Brainstem skill attached in VS Code Copilot Chat.",
+      "Copilot-only skill attached in VS Code Copilot Chat.",
+      "Brainstem local 4/4 verdict.",
+      "Copilot-only local 4/4 verdict.",
+      "Brainstem deploy response with Draft inventory.",
+      "Copilot-only deploy response with Draft inventory.",
+      "Brainstem final complete verdict.",
+      "Copilot-only final complete verdict."
+    ]
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:personalized-marketing",
+    "reviewed_at": "2026-08-10T00:27:58.159956+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  }
 }

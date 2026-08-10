@@ -27,6 +27,30 @@
       "status": "ready"
     },
     {
+      "id": "copilot-studio-solution",
+      "label": "Importable Copilot Studio solution",
+      "path": "solutions/proposal-generation/exports/proposal-generation-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/exports/proposal-generation-copilot-studio-solution.zip",
+      "use": "Unmanaged solution ZIP for manual import; the agent remains unpublished",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-deployment-settings",
+      "label": "Copilot Studio deployment settings",
+      "path": "solutions/proposal-generation/exports/proposal-generation-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/exports/proposal-generation-deployment-settings.json",
+      "use": "Connection-reference, environment-variable, and agent import settings",
+      "status": "ready"
+    },
+    {
+      "id": "copilot-studio-export-metadata",
+      "label": "Copilot Studio solution export metadata",
+      "path": "solutions/proposal-generation/exports/proposal-generation-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/exports/proposal-generation-solution-export.json",
+      "use": "Export identity, integrity hash, source environment, and import caveats",
+      "status": "ready"
+    },
+    {
       "id": "field-guide",
       "label": "Customer field guide",
       "path": "solutions/proposal-generation/field-guide.html",
@@ -259,6 +283,14 @@
       "status": "ready"
     },
     {
+      "id": "easy-evidence-dataverse-draft-evidence",
+      "label": "Dataverse Draft Evidence",
+      "path": "solutions/proposal-generation/evals/dataverse-draft-evidence.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/evals/dataverse-draft-evidence.json",
+      "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
       "id": "easy-evidence-demo-cases",
       "label": "Demo Cases",
       "path": "solutions/proposal-generation/evals/demo-cases.json",
@@ -296,6 +328,222 @@
       "path": "solutions/proposal-generation/evals/visual-checkpoints.json",
       "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/evals/visual-checkpoints.json",
       "use": "Easy-mode deployment or Preview evidence",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-pg-01",
+      "label": "Annotated visual checkpoint: easy-pg-01",
+      "path": "solutions/proposal-generation/screenshots/assisted/annotated/01-pg-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/screenshots/assisted/annotated/01-pg-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-pg-02",
+      "label": "Annotated visual checkpoint: easy-pg-02",
+      "path": "solutions/proposal-generation/screenshots/assisted/annotated/02-pg-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/screenshots/assisted/annotated/02-pg-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-pg-03",
+      "label": "Annotated visual checkpoint: easy-pg-03",
+      "path": "solutions/proposal-generation/screenshots/assisted/annotated/03-pg-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/screenshots/assisted/annotated/03-pg-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-04-pg-04",
+      "label": "Annotated visual checkpoint: easy-pg-04",
+      "path": "solutions/proposal-generation/screenshots/assisted/annotated/04-pg-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/screenshots/assisted/annotated/04-pg-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-05-pg-05",
+      "label": "Annotated visual checkpoint: easy-pg-05",
+      "path": "solutions/proposal-generation/screenshots/assisted/annotated/05-pg-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/screenshots/assisted/annotated/05-pg-05.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-06-pg-06",
+      "label": "Annotated visual checkpoint: easy-pg-06",
+      "path": "solutions/proposal-generation/screenshots/assisted/annotated/06-pg-06.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/screenshots/assisted/annotated/06-pg-06.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-01-create-blank-agent",
+      "label": "Annotated visual checkpoint: hard-step-01",
+      "path": "solutions/proposal-generation/screenshots/manual/annotated/01-create-blank-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/screenshots/manual/annotated/01-create-blank-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-02-name-agent",
+      "label": "Annotated visual checkpoint: hard-step-02",
+      "path": "solutions/proposal-generation/screenshots/manual/annotated/02-name-agent.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/screenshots/manual/annotated/02-name-agent.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-03-enter-instructions",
+      "label": "Annotated visual checkpoint: hard-step-03",
+      "path": "solutions/proposal-generation/screenshots/manual/annotated/03-enter-instructions.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/screenshots/manual/annotated/03-enter-instructions.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-05-remove-web-search",
+      "label": "Annotated visual checkpoint: hard-step-05",
+      "path": "solutions/proposal-generation/screenshots/manual/annotated/05-remove-web-search.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/screenshots/manual/annotated/05-remove-web-search.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-06-add-aibast-proposal-generation-operating-rules",
+      "label": "Annotated visual checkpoint: hard-step-06",
+      "path": "solutions/proposal-generation/screenshots/manual/annotated/06-add-aibast-proposal-generation-operating-rules.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/screenshots/manual/annotated/06-add-aibast-proposal-generation-operating-rules.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-07-add-aibast-proposal-generation-synthetic-records",
+      "label": "Annotated visual checkpoint: hard-step-07",
+      "path": "solutions/proposal-generation/screenshots/manual/annotated/07-add-aibast-proposal-generation-synthetic-records.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/screenshots/manual/annotated/07-add-aibast-proposal-generation-synthetic-records.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-08-add-analyze-rfp",
+      "label": "Annotated visual checkpoint: hard-step-08",
+      "path": "solutions/proposal-generation/screenshots/manual/annotated/08-add-analyze-rfp.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/screenshots/manual/annotated/08-add-analyze-rfp.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-09-add-compile-proposal",
+      "label": "Annotated visual checkpoint: hard-step-09",
+      "path": "solutions/proposal-generation/screenshots/manual/annotated/09-add-compile-proposal.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/screenshots/manual/annotated/09-add-compile-proposal.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-10-add-delivery-summary",
+      "label": "Annotated visual checkpoint: hard-step-10",
+      "path": "solutions/proposal-generation/screenshots/manual/annotated/10-add-delivery-summary.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/screenshots/manual/annotated/10-add-delivery-summary.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-11-add-executive-summary",
+      "label": "Annotated visual checkpoint: hard-step-11",
+      "path": "solutions/proposal-generation/screenshots/manual/annotated/11-add-executive-summary.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/screenshots/manual/annotated/11-add-executive-summary.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-12-add-references-positioning",
+      "label": "Annotated visual checkpoint: hard-step-12",
+      "path": "solutions/proposal-generation/screenshots/manual/annotated/12-add-references-positioning.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/screenshots/manual/annotated/12-add-references-positioning.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-13-add-solution-pricing",
+      "label": "Annotated visual checkpoint: hard-step-13",
+      "path": "solutions/proposal-generation/screenshots/manual/annotated/13-add-solution-pricing.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/screenshots/manual/annotated/13-add-solution-pricing.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-14-review-inventory",
+      "label": "Annotated visual checkpoint: hard-step-14",
+      "path": "solutions/proposal-generation/screenshots/manual/annotated/14-review-inventory.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/screenshots/manual/annotated/14-review-inventory.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-15-open-preview",
+      "label": "Annotated visual checkpoint: hard-step-15",
+      "path": "solutions/proposal-generation/screenshots/manual/annotated/15-open-preview.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/screenshots/manual/annotated/15-open-preview.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-16-pg-01",
+      "label": "Annotated visual checkpoint: hard-pg-01",
+      "path": "solutions/proposal-generation/screenshots/manual/annotated/16-pg-01.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/screenshots/manual/annotated/16-pg-01.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-17-pg-02",
+      "label": "Annotated visual checkpoint: hard-pg-02",
+      "path": "solutions/proposal-generation/screenshots/manual/annotated/17-pg-02.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/screenshots/manual/annotated/17-pg-02.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-18-pg-03",
+      "label": "Annotated visual checkpoint: hard-pg-03",
+      "path": "solutions/proposal-generation/screenshots/manual/annotated/18-pg-03.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/screenshots/manual/annotated/18-pg-03.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-19-pg-04",
+      "label": "Annotated visual checkpoint: hard-pg-04",
+      "path": "solutions/proposal-generation/screenshots/manual/annotated/19-pg-04.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/screenshots/manual/annotated/19-pg-04.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-20-pg-05",
+      "label": "Annotated visual checkpoint: hard-pg-05",
+      "path": "solutions/proposal-generation/screenshots/manual/annotated/20-pg-05.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/screenshots/manual/annotated/20-pg-05.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-21-pg-06",
+      "label": "Annotated visual checkpoint: hard-pg-06",
+      "path": "solutions/proposal-generation/screenshots/manual/annotated/21-pg-06.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/screenshots/manual/annotated/21-pg-06.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
+      "status": "ready"
+    },
+    {
+      "id": "annotated-evidence-22-confirm-draft",
+      "label": "Annotated visual checkpoint: hard-draft",
+      "path": "solutions/proposal-generation/screenshots/manual/annotated/22-confirm-draft.png",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/screenshots/manual/annotated/22-confirm-draft.png",
+      "use": "Positive deterministic evidence highlighted for learner verification",
       "status": "ready"
     },
     {
@@ -642,5 +890,31 @@
       "use": "Copilot-assisted evidence inventory",
       "status": "ready"
     }
-  ]
+  ],
+  "copilot_studio_solution": {
+    "label": "Importable Proposal Generation Agent Copilot Studio solution",
+    "status": "exported",
+    "solution_unique_name": "aibast_ProposalGenerationPilot",
+    "zip": {
+      "path": "solutions/proposal-generation/exports/proposal-generation-copilot-studio-solution.zip",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/exports/proposal-generation-copilot-studio-solution.zip",
+      "sha256": "1a73224ec11be6188a9a533faf5d7385b8e4da92535290f495eefab6409992fe",
+      "bytes": 4190
+    },
+    "deployment_settings": {
+      "path": "solutions/proposal-generation/exports/proposal-generation-deployment-settings.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/exports/proposal-generation-deployment-settings.json"
+    },
+    "metadata": {
+      "path": "solutions/proposal-generation/exports/proposal-generation-solution-export.json",
+      "raw_url": "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/solutions/proposal-generation/exports/proposal-generation-solution-export.json"
+    },
+    "managed": false,
+    "published": false,
+    "import_caveats": [
+      "Import as an unmanaged solution for manual review.",
+      "Map connection references and environment variables before enabling integrations.",
+      "The exported agent remains unpublished unless the target administrator explicitly publishes it."
+    ]
+  }
 }

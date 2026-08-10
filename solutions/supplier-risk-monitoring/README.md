@@ -43,8 +43,11 @@ Upload both Markdown files in `manual/knowledge/`, then upload one `SKILL.md` fi
 | Source bundle | `solutions/supplier-risk-monitoring/exports/supplier-risk-monitoring-source.zip` |
 | Manual evidence | `solutions/supplier-risk-monitoring/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/supplier-risk-monitoring/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/supplier-risk-monitoring/exports/supplier-risk-monitoring-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/supplier-risk-monitoring/exports/supplier-risk-monitoring-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/supplier-risk-monitoring/exports/supplier-risk-monitoring-solution-export.json` |
 
-**Scaffold status:** 69 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 85 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

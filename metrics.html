@@ -1838,15 +1838,26 @@ function renderBoards() {
   const cfg = ALL_BOARDS.find(board => board.id === activeBoard);
   const signalBoard = activeBoard === 'most_upvoted'
     || activeBoard === 'most_acquired';
-  const rows = signalBoard
+  const advertisedWorkshopAgents = new Set(
+    ((M.workshops || {}).rows || [])
+      .map(row => row.agent_name)
+      .filter(Boolean)
+  );
+  const eligibleAgent = row => (
+    row.catalog_kind !== 'solution'
+    || advertisedWorkshopAgents.has(row.name)
+  );
+  const rows = (signalBoard
     ? (Array.isArray(M.agent_metrics) ? M.agent_metrics : [])
+        .filter(eligibleAgent)
         .filter(row => Number(row[cfg.metric]) > 0)
         .sort((left, right) =>
           (Number(right[cfg.metric]) || 0) - (Number(left[cfg.metric]) || 0)
           || (Number(right.downloads) || 0) - (Number(left.downloads) || 0)
           || String(left.name).localeCompare(String(right.name)))
         .slice(0, 15)
-    : ((M.leaderboards || {})[activeBoard] || []);
+    : ((M.leaderboards || {})[activeBoard] || [])
+        .filter(eligibleAgent));
   if (!rows.length) {
     panel.innerHTML = activeBoard === 'most_downloaded'
       ? '<div class="empty">No per-file CDN fetches recorded yet. Agent files pulled over <code>raw.githubusercontent.com</code> are not counted by any public API — only jsDelivr publishes per-file numbers.</div>'

@@ -222,9 +222,9 @@ def test_manual_tutorial_uses_exact_theme_and_matches_browserfilm_actions():
         checkpoint = hard_visuals[index]
         assert checkpoint["source"].endswith(frame["file"])
         if checkpoint["status"] == "reshoot_required":
-            assert step["images"]
-            assert "Reference capture" in step["text"]
-            assert "not approved proof" in step["text"]
+            assert not step["images"]
+            assert "Withheld checkpoint" in step["text"]
+            assert "not approved for learner display" in step["text"]
             assert checkpoint["reason"]
         else:
             assert checkpoint["status"] == "reusable"

@@ -51,8 +51,11 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | Source bundle | `solutions/cross-selling/exports/cross-selling-source.zip` |
 | Manual evidence | `solutions/cross-selling/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/cross-selling/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/cross-selling/exports/cross-selling-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/cross-selling/exports/cross-selling-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/cross-selling/exports/cross-selling-solution-export.json` |
 
-**Scaffold status:** 69 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 85 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

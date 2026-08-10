@@ -42,8 +42,11 @@ The local agent uses fictional records and produces decision support only. It do
 | Source bundle | `solutions/field-service-dispatch/exports/field-service-dispatch-source.zip` |
 | Manual evidence | `solutions/field-service-dispatch/evals/manual-build-evidence.json` |
 | Manual browserfilm | `solutions/field-service-dispatch/screenshots/manual/browserfilm.json` |
+| Copilot Studio solution ZIP | `solutions/field-service-dispatch/exports/field-service-dispatch-copilot-studio-solution.zip` |
+| Copilot Studio deployment settings | `solutions/field-service-dispatch/exports/field-service-dispatch-deployment-settings.json` |
+| Copilot Studio export metadata | `solutions/field-service-dispatch/exports/field-service-dispatch-solution-export.json` |
 
-**Scaffold status:** 69 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 88 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

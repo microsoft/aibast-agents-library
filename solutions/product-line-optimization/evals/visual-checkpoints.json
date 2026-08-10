@@ -9,88 +9,197 @@
   },
   "summary": {
     "total_existing_captures": 29,
-    "reusable": 0,
-    "reshoot_required": 29,
-    "new_learn_step_captures_recommended": 0
+    "reusable": 25,
+    "reshoot_required": 4
   },
   "captures": [
     {
-      "id": "easy-draft",
+      "id": "easy-draft-review",
       "mode": "easy",
       "source": "solutions/product-line-optimization/screenshots/assisted/01-review-build.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The build configuration, model, skills, and knowledge are visible, but the screenshot does not visibly prove Draft status or published false. This is the first assisted frame labeled Draft and is therefore the generated completion checkpoint; configuration alone cannot prove that gate.",
+      "draft": true
     },
     {
       "id": "easy-plo-01",
       "mode": "easy",
+      "case_id": "PLO-01",
       "source": "solutions/product-line-optimization/screenshots/assisted/02-plo-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PLO-01"
+      "annotated": "solutions/product-line-optimization/screenshots/assisted/annotated/02-plo-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Line A — Electronics Assembly",
+        "Line B — Metal Fabrication",
+        "Start with Line C availability"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact full phrase Polymer Molding Line C is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 282,
+          "y": 150,
+          "width": 945,
+          "height": 175,
+          "label": "Line A and Line B health"
+        },
+        {
+          "x": 282,
+          "y": 345,
+          "width": 945,
+          "height": 225,
+          "label": "Line C then Line A sequence"
+        }
+      ]
     },
     {
       "id": "easy-plo-02",
       "mode": "easy",
+      "case_id": "PLO-02",
       "source": "solutions/product-line-optimization/screenshots/assisted/03-plo-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PLO-02"
+      "annotated": "solutions/product-line-optimization/screenshots/assisted/annotated/03-plo-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Functional Test (A5)",
+        "Injection Molding (C2)",
+        "Robotic Welding (B3)"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 128,
+          "width": 940,
+          "height": 178,
+          "label": "Three constraining stations"
+        }
+      ]
     },
     {
       "id": "easy-plo-03",
       "mode": "easy",
+      "case_id": "PLO-03",
       "source": "solutions/product-line-optimization/screenshots/assisted/04-plo-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PLO-03"
+      "annotated": "solutions/product-line-optimization/screenshots/assisted/annotated/04-plo-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Option 1",
+        "Option 2",
+        "Quality improvement"
+      ],
+      "boxes": [
+        {
+          "x": 286,
+          "y": 128,
+          "width": 940,
+          "height": 178,
+          "label": "Process, capacity, and quality options"
+        }
+      ]
     },
     {
       "id": "easy-plo-04",
       "mode": "easy",
+      "case_id": "PLO-04",
       "source": "solutions/product-line-optimization/screenshots/assisted/05-plo-04.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PLO-04"
+      "reason": "The screenshot shows the user prompt and internal skill-routing activity, but no final answer with Day, Swing, and Night. Prompt and reasoning text are not visual proof of the result."
     },
     {
-      "id": "easy-draft-02",
+      "id": "easy-draft-confirmation",
       "mode": "easy",
       "source": "solutions/product-line-optimization/screenshots/assisted/06-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The target Product Line Optimization Pilot row is not visible, so the screenshot cannot prove its Draft identity or unpublished state.",
+      "draft": true
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
       "step": 1,
       "source": "solutions/product-line-optimization/screenshots/manual/01-create-blank-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent",
+        "Blank Build workspace"
+      ],
+      "boxes": [
+        {
+          "x": 160,
+          "y": 90,
+          "width": 825,
+          "height": 72,
+          "label": "Blank agent workspace"
+        }
+      ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
       "step": 2,
       "source": "solutions/product-line-optimization/screenshots/manual/02-name-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Product Line Manual Build in the name field"
+      ],
+      "boxes": [
+        {
+          "x": 160,
+          "y": 90,
+          "width": 825,
+          "height": 72,
+          "label": "Manual agent name"
+        }
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
       "step": 3,
       "source": "solutions/product-line-optimization/screenshots/manual/03-enter-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Never require an operation name",
+        "Decision and safety rules",
+        "Production seams"
+      ],
+      "boxes": [
+        {
+          "x": 78,
+          "y": 215,
+          "width": 910,
+          "height": 405,
+          "label": "Reviewed routing and safety policy"
+        }
+      ]
     },
     {
       "id": "hard-step-04",
       "mode": "hard",
       "step": 4,
       "source": "solutions/product-line-optimization/screenshots/manual/04-save-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/04-save-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Product Line Optimization Pilot role",
+        "Pilot data boundary",
+        "Natural-language routing"
+      ],
+      "full_step_not_visibly_proven": [
+        "No explicit saved or no-unsaved-changes confirmation is visible."
+      ],
+      "boxes": [
+        {
+          "x": 78,
+          "y": 215,
+          "width": 910,
+          "height": 445,
+          "label": "Reviewed instructions remain visible"
+        }
+      ]
     },
     {
       "id": "hard-step-05",
@@ -98,155 +207,451 @@
       "step": 5,
       "source": "solutions/product-line-optimization/screenshots/manual/05-remove-web-search.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The screenshot shows an empty Knowledge area, but it has no explicit removal confirmation or before-and-after state. The absence of a web-search chip is not a positive visual anchor proving that default web search was removed."
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
       "step": 6,
       "source": "solutions/product-line-optimization/screenshots/manual/06-open-knowledge-upload.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/06-open-knowledge-upload.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Add knowledge",
+        "Drag and drop or click to upload"
+      ],
+      "boxes": [
+        {
+          "x": 312,
+          "y": 100,
+          "width": 805,
+          "height": 330,
+          "label": "Knowledge uploader"
+        }
+      ]
     },
     {
       "id": "hard-step-07",
       "mode": "hard",
       "step": 7,
       "source": "solutions/product-line-optimization/screenshots/manual/07-upload-production-records.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/07-upload-production-records.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_production-line-synthetic-records.md",
+        "Add to agent"
+      ],
+      "boxes": [
+        {
+          "x": 334,
+          "y": 425,
+          "width": 765,
+          "height": 92,
+          "label": "Synthetic records selected"
+        }
+      ]
     },
     {
       "id": "hard-step-08",
       "mode": "hard",
       "step": 8,
       "source": "solutions/product-line-optimization/screenshots/manual/08-upload-optimization-rules.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/08-upload-optimization-rules.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_production-optimization-rules.md",
+        "Add to agent"
+      ],
+      "boxes": [
+        {
+          "x": 334,
+          "y": 425,
+          "width": 765,
+          "height": 92,
+          "label": "Optimization rules selected"
+        }
+      ]
     },
     {
       "id": "hard-step-09",
       "mode": "hard",
       "step": 9,
       "source": "solutions/product-line-optimization/screenshots/manual/09-verify-two-knowledge-files.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/09-verify-two-knowledge-files.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_production-optimization-rules.md",
+        "aibast_production-line-synthetic-records.md"
+      ],
+      "boxes": [
+        {
+          "x": 1020,
+          "y": 305,
+          "width": 375,
+          "height": 88,
+          "label": "Two knowledge files"
+        }
+      ]
     },
     {
       "id": "hard-step-10",
       "mode": "hard",
       "step": 10,
       "source": "solutions/product-line-optimization/screenshots/manual/10-open-skill-upload.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/10-open-skill-upload.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Add skill",
+        "Upload a skill",
+        "SKILL.md file requirement"
+      ],
+      "boxes": [
+        {
+          "x": 272,
+          "y": 64,
+          "width": 880,
+          "height": 560,
+          "label": "SKILL.md uploader"
+        }
+      ]
     },
     {
       "id": "hard-step-11",
       "mode": "hard",
       "step": 11,
       "source": "solutions/product-line-optimization/screenshots/manual/11-add-line-health-skill.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/11-add-line-health-skill.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "plant-wide-operating-health-review"
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 182,
+          "width": 345,
+          "height": 55,
+          "label": "First skill"
+        }
+      ]
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
       "step": 12,
       "source": "solutions/product-line-optimization/screenshots/manual/12-add-bottleneck-skill.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/12-add-bottleneck-skill.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "constraining-station-identification",
+        "plant-wide-operating-health-review"
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 182,
+          "width": 345,
+          "height": 92,
+          "label": "Two skills"
+        }
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
       "step": 13,
       "source": "solutions/product-line-optimization/screenshots/manual/13-add-throughput-options-skill.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/13-add-throughput-options-skill.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "improvement-option-comparison",
+        "constraining-station-identification",
+        "plant-wide-operating-health-review"
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 182,
+          "width": 345,
+          "height": 132,
+          "label": "Three skills"
+        }
+      ]
     },
     {
       "id": "hard-step-14",
       "mode": "hard",
       "step": 14,
       "source": "solutions/product-line-optimization/screenshots/manual/14-add-shift-plan-skill.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/14-add-shift-plan-skill.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "day-swing-night-production-plan",
+        "improvement-option-comparison",
+        "constraining-station-identification",
+        "plant-wide-operating-health-review"
+      ],
+      "boxes": [
+        {
+          "x": 1018,
+          "y": 182,
+          "width": 345,
+          "height": 172,
+          "label": "Four skills"
+        }
+      ]
     },
     {
       "id": "hard-step-15",
       "mode": "hard",
       "step": 15,
       "source": "solutions/product-line-optimization/screenshots/manual/15-open-model-picker.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/15-open-model-picker.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Model picker is open",
+        "Claude Sonnet 4.6"
+      ],
+      "boxes": [
+        {
+          "x": 1015,
+          "y": 348,
+          "width": 370,
+          "height": 92,
+          "label": "Sonnet 4.6 option"
+        }
+      ]
     },
     {
       "id": "hard-step-16",
       "mode": "hard",
       "step": 16,
       "source": "solutions/product-line-optimization/screenshots/manual/16-select-sonnet46.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/16-select-sonnet46.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6 selected"
+      ],
+      "boxes": [
+        {
+          "x": 1200,
+          "y": 84,
+          "width": 198,
+          "height": 42,
+          "label": "Sonnet 4.6"
+        }
+      ]
     },
     {
       "id": "hard-step-17",
       "mode": "hard",
       "step": 17,
       "source": "solutions/product-line-optimization/screenshots/manual/17-review-inventory.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/17-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "Four configured skills",
+        "Tools section contains no configured tool",
+        "Two configured knowledge files"
+      ],
+      "boxes": [
+        {
+          "x": 1200,
+          "y": 84,
+          "width": 198,
+          "height": 42,
+          "label": "Model"
+        },
+        {
+          "x": 1018,
+          "y": 182,
+          "width": 345,
+          "height": 172,
+          "label": "Skills"
+        },
+        {
+          "x": 1018,
+          "y": 365,
+          "width": 382,
+          "height": 54,
+          "label": "No tools"
+        },
+        {
+          "x": 1018,
+          "y": 445,
+          "width": 382,
+          "height": 106,
+          "label": "Knowledge"
+        }
+      ]
     },
     {
       "id": "hard-step-18",
       "mode": "hard",
       "step": 18,
       "source": "solutions/product-line-optimization/screenshots/manual/18-open-preview.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/18-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab",
+        "New chat"
+      ],
+      "boxes": [
+        {
+          "x": 637,
+          "y": 3,
+          "width": 105,
+          "height": 52,
+          "label": "Preview"
+        },
+        {
+          "x": 830,
+          "y": 82,
+          "width": 118,
+          "height": 56,
+          "label": "New chat"
+        }
+      ]
     },
     {
-      "id": "hard-step-19",
+      "id": "hard-plo-01",
       "mode": "hard",
       "step": 19,
+      "case_id": "PLO-01",
       "source": "solutions/product-line-optimization/screenshots/manual/19-preview-plo01-line-health.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PLO-01"
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/19-preview-plo01-line-health.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Line A — Electronics Assembly",
+        "Start with Line C",
+        "Then Line A"
+      ],
+      "full_case_not_visibly_proven": [
+        "The exact full phrase Polymer Molding Line C is above the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 135,
+          "width": 945,
+          "height": 180,
+          "label": "Line A loss evidence"
+        },
+        {
+          "x": 284,
+          "y": 320,
+          "width": 945,
+          "height": 225,
+          "label": "Line C then Line A sequence"
+        }
+      ]
     },
     {
-      "id": "hard-step-20",
+      "id": "hard-plo-02",
       "mode": "hard",
       "step": 20,
+      "case_id": "PLO-02",
       "source": "solutions/product-line-optimization/screenshots/manual/20-preview-plo02-bottlenecks.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PLO-02"
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/20-preview-plo02-bottlenecks.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Functional Test (A5)",
+        "Injection Molding (C2)",
+        "Robotic Welding (B3)"
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 210,
+          "width": 945,
+          "height": 185,
+          "label": "Cross-plant bottleneck ranking"
+        }
+      ]
     },
     {
-      "id": "hard-step-21",
+      "id": "hard-plo-03",
       "mode": "hard",
       "step": 21,
+      "case_id": "PLO-03",
       "source": "solutions/product-line-optimization/screenshots/manual/21-preview-plo03-options.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PLO-03"
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/21-preview-plo03-options.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Option 1",
+        "Option 2",
+        "Quality improvement"
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 220,
+          "width": 945,
+          "height": 345,
+          "label": "Three improvement choices"
+        }
+      ]
     },
     {
-      "id": "hard-step-22",
+      "id": "hard-plo-04",
       "mode": "hard",
       "step": 22,
+      "case_id": "PLO-04",
       "source": "solutions/product-line-optimization/screenshots/manual/22-preview-plo04-shift-plan.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "PLO-04"
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/22-preview-plo04-shift-plan.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Night Shift Tradeoffs",
+        "Day and Swing",
+        "Reserve Night"
+      ],
+      "boxes": [
+        {
+          "x": 284,
+          "y": 155,
+          "width": 945,
+          "height": 425,
+          "label": "Day, Swing, and Night plan"
+        }
+      ]
     },
     {
-      "id": "hard-step-23",
+      "id": "hard-draft",
       "mode": "hard",
       "step": 23,
       "source": "solutions/product-line-optimization/screenshots/manual/23-verify-draft-no-publish.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/product-line-optimization/screenshots/manual/annotated/23-verify-draft-no-publish.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Product Line Manual Build",
+        "Product Line Optimization Pilot",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 100,
+          "y": 248,
+          "width": 1282,
+          "height": 208,
+          "label": "Target agents remain Draft"
+        }
+      ]
     }
-  ]
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Assisted build-review completion with Product Line Optimization Pilot visibly marked Draft and publication still off.",
+      "Assisted PLO-04 final answer with Day, Swing, and Night visible outside prompt or reasoning text.",
+      "Assisted final Draft gate filtered so Product Line Optimization Pilot and Draft are visible together.",
+      "Hard step 5 with an explicit successful web-search removal state rather than inference from an empty section."
+    ]
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:product-line-optimization",
+    "reviewed_at": "2026-08-10T00:27:58.168476+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Draft publication remains machine-proven when no reusable Draft screenshot is available; reshoot-required sources stay withheld from learner pages."
+  }
 }

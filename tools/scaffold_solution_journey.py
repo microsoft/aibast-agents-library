@@ -487,6 +487,85 @@ def read_json(path: Path) -> dict[str, Any]:
     return value
 
 
+@dataclass(frozen=True)
+class CopilotSolutionArtifacts:
+    zip_path: Path
+    settings_path: Path
+    metadata_path: Path
+    metadata: dict[str, Any]
+
+
+def copilot_solution_artifacts(
+    ctx: JourneyContext,
+) -> CopilotSolutionArtifacts | None:
+    exports = ctx.package / "exports"
+    artifacts = CopilotSolutionArtifacts(
+        zip_path=exports / f"{ctx.slug}-copilot-studio-solution.zip",
+        settings_path=exports / f"{ctx.slug}-deployment-settings.json",
+        metadata_path=exports / f"{ctx.slug}-solution-export.json",
+        metadata={},
+    )
+    paths = (
+        artifacts.zip_path,
+        artifacts.settings_path,
+        artifacts.metadata_path,
+    )
+    present = [path.exists() for path in paths]
+    if not any(present):
+        return None
+    if not all(present):
+        missing = ", ".join(
+            ctx.rel(path) for path, exists in zip(paths, present) if not exists
+        )
+        raise ScaffoldError(
+            f"Incomplete Copilot Studio solution export for {ctx.slug}: {missing}"
+        )
+
+    metadata = read_json(artifacts.metadata_path)
+    expected_paths = {
+        "zip": ctx.rel(artifacts.zip_path),
+        "deployment_settings": ctx.rel(artifacts.settings_path),
+        "metadata": ctx.rel(artifacts.metadata_path),
+    }
+    for key, expected in expected_paths.items():
+        if metadata.get(key) != expected:
+            raise ScaffoldError(
+                f"Copilot Studio export metadata {key} must be {expected}"
+            )
+    if metadata.get("status") != "exported":
+        raise ScaffoldError(
+            f"Copilot Studio solution export for {ctx.slug} is not complete"
+        )
+    if metadata.get("managed") is not False:
+        raise ScaffoldError(
+            f"Copilot Studio solution export for {ctx.slug} must be unmanaged"
+        )
+    if metadata.get("published") is not False:
+        raise ScaffoldError(
+            f"Copilot Studio solution export for {ctx.slug} must remain unpublished"
+        )
+    return CopilotSolutionArtifacts(
+        zip_path=artifacts.zip_path,
+        settings_path=artifacts.settings_path,
+        metadata_path=artifacts.metadata_path,
+        metadata=metadata,
+    )
+
+
+def copilot_solution_download_links(ctx: JourneyContext) -> str:
+    artifacts = copilot_solution_artifacts(ctx)
+    if not artifacts:
+        return ""
+    return (
+        f'<a class="button primary" href="exports/{html.escape(artifacts.zip_path.name)}" '
+        'download>Download Copilot Studio solution</a>'
+        f'<a class="button" href="exports/{html.escape(artifacts.settings_path.name)}" '
+        'download>Deployment settings</a>'
+        f'<a class="button" href="exports/{html.escape(artifacts.metadata_path.name)}" '
+        'download>Export details</a>'
+    )
+
+
 def visual_checkpoint_document(ctx: JourneyContext) -> dict[str, Any]:
     path = ctx.package / "evals" / "visual-checkpoints.json"
     return read_json(path) if path.exists() else {}
@@ -866,7 +945,12 @@ def model_name(ctx: JourneyContext) -> str:
             value = ctx.manual_evidence.get(key)
             if isinstance(value, str) and value:
                 return value
-    pilot = ctx.deployment.get("copilot_studio", {}).get("validated_pilot", {})
+    studio = ctx.deployment.get("copilot_studio", {})
+    pilot = (
+        studio.get("export_agent")
+        or studio.get("validated_pilot")
+        or {}
+    ) if isinstance(studio, dict) else {}
     value = pilot.get("model") if isinstance(pilot, dict) else None
     return str(value or "the reviewed Easy-mode model")
 
@@ -1030,6 +1114,35 @@ def collect_resources(ctx: JourneyContext) -> list[Resource]:
             "Local Brainstem runtime and production-logic reference",
         )
     add_resource(resources, seen, ctx, "deployment-recipe", "Deployment recipe", ctx.package / "deployment.json", "Easy-mode deployment contract")
+    solution_artifacts = copilot_solution_artifacts(ctx)
+    if solution_artifacts:
+        add_resource(
+            resources,
+            seen,
+            ctx,
+            "copilot-studio-solution",
+            "Importable Copilot Studio solution",
+            solution_artifacts.zip_path,
+            "Unmanaged solution ZIP for manual import; the agent remains unpublished",
+        )
+        add_resource(
+            resources,
+            seen,
+            ctx,
+            "copilot-studio-deployment-settings",
+            "Copilot Studio deployment settings",
+            solution_artifacts.settings_path,
+            "Connection-reference, environment-variable, and agent import settings",
+        )
+        add_resource(
+            resources,
+            seen,
+            ctx,
+            "copilot-studio-export-metadata",
+            "Copilot Studio solution export metadata",
+            solution_artifacts.metadata_path,
+            "Export identity, integrity hash, source environment, and import caveats",
+        )
     add_resource(resources, seen, ctx, "field-guide", "Customer field guide", ctx.package / "field-guide.html", "Styled facilitation, evidence boundaries, gates, and recovery", generated=True)
     add_resource(resources, seen, ctx, "field-guide-source", "Field guide source", ctx.package / "FIELD-GUIDE.md", "Markdown source retained for audit and export", generated=True)
     visual_audit = ctx.package / "VISUAL-EVIDENCE-AUDIT.md"
@@ -1231,6 +1344,7 @@ def collect_resources(ctx: JourneyContext) -> list[Resource]:
 def render_manifest(ctx: JourneyContext, resources: list[Resource]) -> str:
     solution = ctx.deployment.get("name") or f"@aibast-agents-library/{ctx.slug}"
     bundle_path = f"solutions/{ctx.slug}/exports/{ctx.slug}-source.zip"
+    solution_artifacts = copilot_solution_artifacts(ctx)
     manifest = {
         "schema": "aibast-solution-export/1.0",
         "solution": solution,
@@ -1260,6 +1374,30 @@ def render_manifest(ctx: JourneyContext, resources: list[Resource]) -> str:
             for resource in resources
         ],
     }
+    if solution_artifacts:
+        metadata = solution_artifacts.metadata
+        manifest["copilot_studio_solution"] = {
+            "label": f"Importable {ctx.title} Copilot Studio solution",
+            "status": metadata["status"],
+            "solution_unique_name": metadata.get("solution_unique_name"),
+            "zip": {
+                "path": ctx.rel(solution_artifacts.zip_path),
+                "raw_url": ctx.raw(ctx.rel(solution_artifacts.zip_path)),
+                "sha256": metadata.get("sha256"),
+                "bytes": metadata.get("bytes"),
+            },
+            "deployment_settings": {
+                "path": ctx.rel(solution_artifacts.settings_path),
+                "raw_url": ctx.raw(ctx.rel(solution_artifacts.settings_path)),
+            },
+            "metadata": {
+                "path": ctx.rel(solution_artifacts.metadata_path),
+                "raw_url": ctx.raw(ctx.rel(solution_artifacts.metadata_path)),
+            },
+            "managed": metadata["managed"],
+            "published": metadata["published"],
+            "import_caveats": metadata.get("import_caveats", []),
+        }
     return json.dumps(manifest, indent=2) + "\n"
 
 
@@ -1653,6 +1791,7 @@ def render_field_guide_html(ctx: JourneyContext) -> str:
     ]
     brainstem_skill = easy_mode_skill_path(ctx, "brainstem")
     copilot_skill = easy_mode_skill_path(ctx, "copilot")
+    solution_downloads = copilot_solution_download_links(ctx)
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -1750,7 +1889,7 @@ def render_field_guide_html(ctx: JourneyContext) -> str:
       </table>
     </section>
 
-    <p><a class="button primary" href="quest.html">Start the workshop</a> <a class="button" href="manual-tutorial.html">Open Hard mode directly</a></p>
+    <p class="downloads"><a class="button primary" href="quest.html">Start the workshop</a><a class="button" href="manual-tutorial.html">Open Hard mode directly</a>{solution_downloads}</p>
   </main>
 </body>
 </html>
@@ -1759,6 +1898,7 @@ def render_field_guide_html(ctx: JourneyContext) -> str:
 
 def render_evidence_report_html(ctx: JourneyContext) -> str:
     document = visual_checkpoint_document(ctx)
+    solution_downloads = copilot_solution_download_links(ctx)
     summary = document.get("summary", {})
     captures = [
         item
@@ -1874,6 +2014,7 @@ def render_evidence_report_html(ctx: JourneyContext) -> str:
       <a class="button" href="evals/visual-checkpoints.json" download>Download visual checkpoint contract</a>
       <a class="button" href="export-manifest.json" download>Download export manifest</a>
       <a class="button" href="exports/{html.escape(ctx.slug)}-source.zip" download>Download portable bundle</a>
+      {solution_downloads}
       {audit_download}
     </section>
   </main>
@@ -2326,7 +2467,7 @@ def validated_pilot(ctx: JourneyContext) -> dict[str, Any]:
     studio = ctx.deployment.get("copilot_studio", {})
     if not isinstance(studio, dict):
         return {}
-    pilot = studio.get("validated_pilot", {})
+    pilot = studio.get("export_agent") or studio.get("validated_pilot", {})
     return pilot if isinstance(pilot, dict) else {}
 
 
@@ -2547,6 +2688,17 @@ def render_preview_case_cards(ctx: JourneyContext) -> str:
                 f'Source: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. '
                 f'<a href="{html.escape(original_url)}" download="{html.escape(original.name)}">Download original</a>.</p></div>'
             )
+        elif checkpoint and checkpoint.get("status") == "reshoot_required":
+            reason = str(
+                checkpoint.get("reason")
+                or "This capture is not approved as learner evidence."
+            )
+            screenshot_html = (
+                '<div class="missing withheld-checkpoint">'
+                "<strong>Withheld checkpoint — reshoot required.</strong> "
+                f"{html.escape(reason)} The export-agent Preview artifact and "
+                "hashed canonical transcript remain the machine gate.</div>"
+            )
         elif screenshot:
             screenshot_html = (
                 f'<div class="preview-shot-wrap"><img class="preview-shot" src="screenshots/assisted/{html.escape(screenshot)}" alt="{html.escape(case_id)} passed in Copilot Studio Preview" loading="lazy">'
@@ -2554,11 +2706,21 @@ def render_preview_case_cards(ctx: JourneyContext) -> str:
             )
         else:
             screenshot_html = '<div class="missing">No assisted Preview screenshot is packaged for this case.</div>'
+        case_report_evidence = (
+            str(
+                (checkpoint or {}).get("annotated")
+                or (checkpoint or {}).get("source")
+            )
+            if checkpoint and checkpoint.get("status") == "reusable"
+            else ctx.rel(
+                ctx.package / "evals" / "copilot-studio-preview-evidence.json"
+            )
+        )
         card_classes = "preview-case preview-case-wide" if "<img " in screenshot_html else "preview-case"
         cards.append(
             f"""
         <article class="{card_classes}">
-          <header><div><p class="prompt-kicker">{html.escape(case_id)} · {html.escape(str(case.get("persona", "Workshop learner")))}</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="{target}">Copy Preview prompt</button>{report_button(ctx, location=f"Easy Preview — {case_id}", expected=f"Must include: {', '.join(case.get('must_include', []))}; must not include: {', '.join(case.get('must_not_include', []))}", evidence=str((checkpoint or {}).get("annotated") or (checkpoint or {}).get("source") or screenshot or ""))}</div></header>
+          <header><div><p class="prompt-kicker">{html.escape(case_id)} · {html.escape(str(case.get("persona", "Workshop learner")))}</p><h4>Confirm the expected evidence</h4></div><div class="report-actions"><button class="button" type="button" data-copy-target="{target}">Copy Preview prompt</button>{report_button(ctx, location=f"Easy Preview — {case_id}", expected=f"Must include: {', '.join(case.get('must_include', []))}; must not include: {', '.join(case.get('must_not_include', []))}", evidence=case_report_evidence)}</div></header>
           <pre class="prompt-block" id="{target}">{html.escape(str(case["prompt"]))}</pre>
           <div class="marker-group"><strong>Must include</strong><div>{marker_chips(case.get("must_include", []), "Reviewed evidence")}</div></div>
           <div class="marker-group"><strong>Must not claim</strong><div>{marker_chips(case.get("must_not_include", []), "No unsupported side effect")}</div></div>
@@ -2578,6 +2740,19 @@ def render_completion_state(ctx: JourneyContext) -> str:
     )
     capture_width = (ctx.assisted_browserfilm or {}).get("width", "unknown")
     capture_height = (ctx.assisted_browserfilm or {}).get("height", "unknown")
+    dataverse_evidence = ctx.package / "evals" / "dataverse-draft-evidence.json"
+    report_evidence = (
+        str(
+            (checkpoint or {}).get("annotated")
+            or (checkpoint or {}).get("source")
+        )
+        if checkpoint and checkpoint.get("status") == "reusable"
+        else (
+            ctx.rel(dataverse_evidence)
+            if dataverse_evidence.is_file()
+            else ""
+        )
+    )
     if (
         checkpoint
         and checkpoint.get("status") == "reshoot_required"
@@ -2594,7 +2769,8 @@ def render_completion_state(ctx: JourneyContext) -> str:
             "The recorded screenshot is not approved for learner display. "
             f"Review note: {html.escape(reason)} "
             "<strong>Expected state:</strong> the target agent is visibly Draft "
-            "and publication remains off.</div>"
+            "and publication remains off. The packaged Dataverse evidence "
+            "supplies the machine-verifiable unpublished-state proof.</div>"
         )
     elif checkpoint and checkpoint.get("status") == "reshoot_required":
         screenshot = (
@@ -2602,7 +2778,8 @@ def render_completion_state(ctx: JourneyContext) -> str:
             "<strong>Withheld checkpoint — reshoot required.</strong> "
             "The recorded screenshot is not approved for learner display. "
             "<strong>Expected state:</strong> the target agent is visibly Draft "
-            "and publication remains off.</div>"
+            "and publication remains off. The packaged Dataverse evidence "
+            "supplies the machine-verifiable unpublished-state proof.</div>"
         )
     elif checkpoint and checkpoint.get("status") == "reusable":
         annotated = checkpoint_asset(ctx, checkpoint, "annotated")
@@ -2618,14 +2795,16 @@ def render_completion_state(ctx: JourneyContext) -> str:
         )
     elif draft_frame:
         screenshot = (
-            f'<div class="preview-shot-wrap"><img class="preview-shot" src="screenshots/assisted/{html.escape(draft_frame)}" alt="Validated agent remains Draft" loading="lazy">'
-            f'<p class="capture-meta">Source capture: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. Shown at or below natural size. <a href="screenshots/assisted/{html.escape(draft_frame)}" download="{html.escape(draft_frame)}">Download original</a>.</p></div>'
+            '<div class="missing withheld-checkpoint">'
+            "<strong>No approved Draft screenshot is packaged.</strong> "
+            "The Dataverse evidence artifact supplies the machine-verifiable "
+            "unpublished-state proof without displaying an unreviewed frame.</div>"
         )
     else:
         screenshot = ""
     return f"""
       <section class="learn-step" id="easy-step-5">
-        <header class="learn-step-header"><span>5</span><div><p>Recognize completion</p><h3>Know what “done” looks like</h3></div>{report_button(ctx, location="Easy mode — final completion verdict", expected=f"Local {case_total}/{case_total}; Preview {case_total}/{case_total}; Draft {pilot.get('display_name') or ctx.title}; published false.", evidence=str((checkpoint or {}).get("annotated") or (checkpoint or {}).get("source") or draft_frame or ""))}</header>
+        <header class="learn-step-header"><span>5</span><div><p>Recognize completion</p><h3>Know what “done” looks like</h3></div>{report_button(ctx, location="Easy mode — final completion verdict", expected=f"Local {case_total}/{case_total}; Preview {case_total}/{case_total}; Draft {pilot.get('display_name') or ctx.title}; published false.", evidence=report_evidence)}</header>
         <div class="learn-step-body">
           <p>The workshop is complete only when both the portable agent and the Copilot Studio front door prove the same behavior.</p>
           <div class="done-grid">
@@ -2674,6 +2853,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     visual_audit_link = (
         '<a class="button" href="evidence-report.html">Evidence report</a>'
     )
+    solution_downloads = copilot_solution_download_links(ctx)
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -2815,7 +2995,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     @media (max-width: 620px) {{ .resource-list {{ columns: 1; }} .prompt-heading {{ display: block; }} .prompt-heading .button {{ margin-top: 12px; }} .instruction-grid {{ grid-template-columns: 1fr; }} .step header {{ grid-template-columns: 36px 1fr; }} .step header .report-button {{ grid-column: 1 / -1; }} }}
   </style>
 </head>
-<body>
+<body data-workshop-slug="{html.escape(ctx.slug)}">
   <header class="topbar">
     <div class="brand"><span class="brand-mark">A</span><span>AIBAST guided workshop</span></div>
     <div class="topbar-actions"><button class="button" type="button" data-theme-toggle aria-pressed="false">Use dark mode</button><a class="button" href="../_shared/workshop-settings.html?return=../{html.escape(ctx.slug)}/quest.html">Workshop settings</a><a class="button primary" href="field-guide.html">Open field guide</a></div>
@@ -2829,8 +3009,8 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
       <div class="notice"><strong>Boundary:</strong> synthetic qualitative evidence only—not a customer KPI, measured production result, live connection, or publication approval.</div>
       <div class="feedback-notice"><strong>Found something inaccurate?</strong> Use <em>Report an issue</em> at that point. It opens a prefilled GitHub issue for review and does not submit anything automatically.</div>
       <div class="mode-switch" role="tablist">
-        <button class="mode active" data-mode="easy" role="tab">Easy</button>
-        <button class="mode" data-mode="hard" role="tab">Hard</button>
+        <button class="mode active" id="mode-tab-easy" data-mode="easy" role="tab" aria-controls="mode-panel-easy" aria-selected="true">Easy</button>
+        <button class="mode" id="mode-tab-hard" data-mode="hard" role="tab" aria-controls="mode-panel-hard" aria-selected="false">Hard</button>
       </div>
     </section>
 
@@ -2858,7 +3038,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     </section>
     <div class="agi-toast" id="agi-badge-toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
-    <section class="path" data-path="easy">
+    <section class="path" data-path="easy" id="mode-panel-easy" role="tabpanel" aria-labelledby="mode-tab-easy">
       <div class="module-summary">
         <article>
           <h3>What you will learn</h3>
@@ -2932,13 +3112,14 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
           {visual_audit_link}
           <a class="button" href="export-manifest.json" download>Download audit manifest</a>
           <a class="button" href="exports/{html.escape(ctx.slug)}-source.zip" download>Download portable bundle</a>
+          {solution_downloads}
           {workshop_agent_link}
           <a class="button" href="https://kodyw.com/the-personless-harness/" target="_blank" rel="noopener">Personless harness article ↗</a>
         </div>
       </details>
     </section>
 
-    <section class="path" data-path="hard" hidden>
+    <section class="path" data-path="hard" id="mode-panel-hard" role="tabpanel" aria-labelledby="mode-tab-hard" hidden>
       <section class="card hard-overview">
         <p class="eyebrow">Hard mode · literal browser construction</p>
         <h2>Build {html.escape(ctx.title)} manually on this page.</h2>
@@ -2949,6 +3130,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         <div class="hard-actions">
           <a class="button" href="manual-tutorial.html" target="_blank" rel="noopener">Open standalone Hard-mode guide ↗</a>
           <a class="button primary" href="exports/{html.escape(ctx.slug)}-source.zip">Download source bundle</a>
+          {solution_downloads}
         </div>
       </section>
 
@@ -3201,7 +3383,11 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
       }}
 
       function selectMode(mode) {{
-        buttons.forEach((button) => button.classList.toggle("active", button.dataset.mode === mode));
+        buttons.forEach((button) => {{
+          const selected = button.dataset.mode === mode;
+          button.classList.toggle("active", selected);
+          button.setAttribute("aria-selected", String(selected));
+        }});
         paths.forEach((path) => {{ path.hidden = path.dataset.path !== mode; }});
         localStorage.setItem(modeKey, mode);
         evaluateAgi(false);
@@ -3344,6 +3530,27 @@ no frame is a customer KPI, production result, or publication approval.
 
 
 def render_exports_readme(ctx: JourneyContext) -> str:
+    artifacts = copilot_solution_artifacts(ctx)
+    solution_section = ""
+    if artifacts:
+        caveats = artifacts.metadata.get("import_caveats", [])
+        caveat_lines = "\n".join(
+            f"- {value}" for value in caveats if isinstance(value, str)
+        )
+        solution_section = f"""
+
+## Import the Copilot Studio solution
+
+- Solution ZIP: [`{artifacts.zip_path.name}`]({artifacts.zip_path.name})
+- Deployment settings: [`{artifacts.settings_path.name}`]({artifacts.settings_path.name})
+- Export details: [`{artifacts.metadata_path.name}`]({artifacts.metadata_path.name})
+
+The ZIP is an unmanaged solution for manual review. Importing it does not
+publish the agent. Review connection references and environment variables
+before enabling any integration.
+
+{caveat_lines}
+"""
     return f"""# Export bundle
 
 Build `{ctx.slug}-source.zip` from the generated manifest:
@@ -3356,6 +3563,7 @@ python3 tools/build_solution_export.py \\
 The existing builder includes the complete solution package plus every
 non-pending resource declared by the manifest. Items marked `pending_capture`
 are intentionally excluded until real evidence exists.
+{solution_section}
 """
 
 
@@ -3388,6 +3596,24 @@ def readme_block(ctx: JourneyContext, resources: list[Resource]) -> str:
         ("Manual evidence", f"`solutions/{ctx.slug}/evals/manual-build-evidence.json`"),
         ("Manual browserfilm", f"`solutions/{ctx.slug}/screenshots/manual/browserfilm.json`"),
     ]
+    solution_artifacts = copilot_solution_artifacts(ctx)
+    if solution_artifacts:
+        rows.extend(
+            [
+                (
+                    "Copilot Studio solution ZIP",
+                    f"`{ctx.rel(solution_artifacts.zip_path)}`",
+                ),
+                (
+                    "Copilot Studio deployment settings",
+                    f"`{ctx.rel(solution_artifacts.settings_path)}`",
+                ),
+                (
+                    "Copilot Studio export metadata",
+                    f"`{ctx.rel(solution_artifacts.metadata_path)}`",
+                ),
+            ]
+        )
     if (ctx.package / "VISUAL-EVIDENCE-AUDIT.md").exists():
         rows.insert(
             1,
@@ -3438,8 +3664,11 @@ def normalize_generated_text(content: str) -> str:
     return "\n".join(line.rstrip() for line in content.strip().splitlines()) + "\n"
 
 
-def write_outputs(ctx: JourneyContext) -> list[Resource]:
-    resources = collect_resources(ctx)
+def generated_outputs(
+    ctx: JourneyContext,
+    resources: list[Resource] | None = None,
+) -> tuple[list[Resource], dict[Path, str]]:
+    resources = resources or collect_resources(ctx)
     outputs = {
         ctx.package / "FIELD-GUIDE.md": render_field_guide(ctx),
         ctx.package / "field-guide.html": render_field_guide_html(ctx),
@@ -3457,6 +3686,11 @@ def write_outputs(ctx: JourneyContext) -> list[Resource]:
         outputs[ctx.package / "screenshots" / "assisted" / "README.md"] = render_film_readme(
             ctx, "assisted"
         )
+    return resources, outputs
+
+
+def write_outputs(ctx: JourneyContext) -> list[Resource]:
+    resources, outputs = generated_outputs(ctx)
     for path, content in outputs.items():
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(normalize_generated_text(content), encoding="utf-8")

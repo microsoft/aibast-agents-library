@@ -9,73 +9,152 @@
   },
   "summary": {
     "total_existing_captures": 23,
-    "reusable": 0,
-    "reshoot_required": 23,
-    "new_learn_step_captures_recommended": 0
+    "reusable": 12,
+    "reshoot_required": 11
   },
   "captures": [
     {
       "id": "easy-sr-01",
       "mode": "easy",
+      "case_id": "SR-01",
       "source": "solutions/supplier-risk-monitoring/screenshots/assisted/01-sr-01.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SR-01"
+      "reason": "The learner frame exposes a Leadership Review Recommendations row whose recommended action is visibly truncated after “At”. The source capture cannot show a complete meaningful recommendation, so it is withheld pending a reshoot."
     },
     {
       "id": "easy-sr-02",
       "mode": "easy",
+      "case_id": "SR-02",
       "source": "solutions/supplier-risk-monitoring/screenshots/assisted/02-sr-02.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SR-02"
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/assisted/annotated/02-sr-02.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Geopolitical score of 42/100",
+        "Cross-strait military exercises caused a 5-day port closure"
+      ],
+      "full_case_not_visibly_proven": [
+        "SUP-101 is outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 282,
+          "y": 126,
+          "width": 945,
+          "height": 104,
+          "label": "Geopolitical evidence"
+        }
+      ]
     },
     {
       "id": "easy-sr-03",
       "mode": "easy",
+      "case_id": "SR-03",
       "source": "solutions/supplier-risk-monitoring/screenshots/assisted/03-sr-03.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SR-03"
+      "reason": "SUP-104 and force majeure appear only in the visible reasoning trace. The final answer has only begun and contains no deterministic result anchor; reasoning text is not visual proof."
     },
     {
       "id": "easy-sr-04",
       "mode": "easy",
+      "case_id": "SR-04",
       "source": "solutions/supplier-risk-monitoring/screenshots/assisted/04-sr-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SR-04"
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/assisted/annotated/04-sr-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "No supplier was contacted",
+        "All sourcing actions require authorized procurement owners"
+      ],
+      "full_case_not_visibly_proven": [
+        "Murata Electronics is outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 282,
+          "y": 438,
+          "width": 950,
+          "height": 140,
+          "label": "No supplier action and authorization gate"
+        }
+      ]
     },
     {
       "id": "easy-draft",
       "mode": "easy",
       "source": "solutions/supplier-risk-monitoring/screenshots/assisted/05-confirm-draft.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The target Supply Risk Monitoring Pilot row is not visible.",
+      "draft": true
     },
     {
       "id": "hard-step-01",
       "mode": "hard",
       "step": 1,
       "source": "solutions/supplier-risk-monitoring/screenshots/manual/01-create-blank-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/01-create-blank-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Untitled Agent",
+        "Blank Build workspace"
+      ],
+      "boxes": [
+        {
+          "x": 160,
+          "y": 88,
+          "width": 820,
+          "height": 72,
+          "label": "Blank agent workspace"
+        }
+      ]
     },
     {
       "id": "hard-step-02",
       "mode": "hard",
       "step": 2,
       "source": "solutions/supplier-risk-monitoring/screenshots/manual/02-name-agent.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/02-name-agent.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Supply Risk Monitoring Manual in the name field"
+      ],
+      "boxes": [
+        {
+          "x": 160,
+          "y": 88,
+          "width": 820,
+          "height": 72,
+          "label": "Manual agent name entered"
+        }
+      ]
     },
     {
       "id": "hard-step-03",
       "mode": "hard",
       "step": 3,
       "source": "solutions/supplier-risk-monitoring/screenshots/manual/03-enter-instructions.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/03-enter-instructions.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Reviewed supplier-action boundaries",
+        "Locked Preview evidence anchors",
+        "TechnoCore Semiconductor, CRITICAL",
+        "SUP-104, force majeure"
+      ],
+      "boxes": [
+        {
+          "x": 72,
+          "y": 218,
+          "width": 905,
+          "height": 250,
+          "label": "Reviewed instruction boundaries"
+        },
+        {
+          "x": 72,
+          "y": 500,
+          "width": 905,
+          "height": 300,
+          "label": "Locked Preview anchors"
+        }
+      ]
     },
     {
       "id": "hard-step-04",
@@ -83,7 +162,7 @@
       "step": 4,
       "source": "solutions/supplier-risk-monitoring/screenshots/manual/04-save-instructions.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is pixel-identical to steps 5-11 and does not show the Save tooltip or any other visible confirmation that no unsaved changes remain."
     },
     {
       "id": "hard-step-05",
@@ -91,15 +170,30 @@
       "step": 5,
       "source": "solutions/supplier-risk-monitoring/screenshots/manual/05-remove-web-search.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is pixel-identical to steps 4 and 6-11 and shows the completed inventory rather than the web-search removal action."
     },
     {
       "id": "hard-step-06",
       "mode": "hard",
       "step": 6,
       "source": "solutions/supplier-risk-monitoring/screenshots/manual/06-add-aibast-supplier-risk-monitoring-review-rules.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/06-add-aibast-supplier-risk-monitoring-review-rules.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "aibast_supplier-risk-monitoring-review-rules... in Knowledge"
+      ],
+      "full_inventory_not_visibly_proven": [
+        "The Copilot Studio chip truncates the filename extension."
+      ],
+      "boxes": [
+        {
+          "x": 1025,
+          "y": 430,
+          "width": 375,
+          "height": 52,
+          "label": "Review-rules knowledge file"
+        }
+      ]
     },
     {
       "id": "hard-step-07",
@@ -107,7 +201,10 @@
       "step": 7,
       "source": "solutions/supplier-risk-monitoring/screenshots/manual/07-add-aibast-supplier-risk-monitoring-synthetic-records.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "full_inventory_not_visibly_proven": [
+        "The Copilot Studio chip truncates the filename ending and extension."
+      ],
+      "reason": "Duplicate visual evidence; retained capture hard-step-06."
     },
     {
       "id": "hard-step-08",
@@ -115,7 +212,7 @@
       "step": 8,
       "source": "solutions/supplier-risk-monitoring/screenshots/manual/08-add-aibast-alternative-sourcing.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is pixel-identical to steps 4-11 and shows the completed four-skill inventory; it does not isolate the alternative-sourcing addition."
     },
     {
       "id": "hard-step-09",
@@ -123,7 +220,7 @@
       "step": 9,
       "source": "solutions/supplier-risk-monitoring/screenshots/manual/09-add-aibast-disruption-alerts.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is pixel-identical to steps 4-11 and shows the completed four-skill inventory; it does not isolate the disruption-alerts addition."
     },
     {
       "id": "hard-step-10",
@@ -131,7 +228,7 @@
       "step": 10,
       "source": "solutions/supplier-risk-monitoring/screenshots/manual/10-add-aibast-risk-dashboard.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is pixel-identical to steps 4-11 and shows the completed four-skill inventory; it does not isolate the risk-dashboard addition."
     },
     {
       "id": "hard-step-11",
@@ -139,67 +236,209 @@
       "step": 11,
       "source": "solutions/supplier-risk-monitoring/screenshots/manual/11-add-aibast-supplier-scorecard.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "reason": "The frame is pixel-identical to steps 4-11 and shows the completed four-skill inventory; it does not isolate the supplier-scorecard addition."
     },
     {
       "id": "hard-step-12",
       "mode": "hard",
       "step": 12,
       "source": "solutions/supplier-risk-monitoring/screenshots/manual/12-review-inventory.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/12-review-inventory.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Claude Sonnet 4.6",
+        "Four configured skills",
+        "Two configured knowledge files",
+        "Tools section contains no configured tool",
+        "No unsaved changes"
+      ],
+      "boxes": [
+        {
+          "x": 1048,
+          "y": 45,
+          "width": 205,
+          "height": 52,
+          "label": "Saved: no unsaved changes"
+        },
+        {
+          "x": 1200,
+          "y": 85,
+          "width": 198,
+          "height": 42,
+          "label": "Reviewed model"
+        },
+        {
+          "x": 1025,
+          "y": 178,
+          "width": 375,
+          "height": 92,
+          "label": "Four configured skills"
+        },
+        {
+          "x": 1025,
+          "y": 390,
+          "width": 375,
+          "height": 95,
+          "label": "Two knowledge files"
+        }
+      ]
     },
     {
       "id": "hard-step-13",
       "mode": "hard",
       "step": 13,
       "source": "solutions/supplier-risk-monitoring/screenshots/manual/13-open-preview.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/13-open-preview.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Preview tab",
+        "New chat",
+        "Supply Risk Monitoring Manual"
+      ],
+      "boxes": [
+        {
+          "x": 570,
+          "y": 0,
+          "width": 170,
+          "height": 60,
+          "label": "Preview selected"
+        },
+        {
+          "x": 835,
+          "y": 82,
+          "width": 125,
+          "height": 52,
+          "label": "Fresh chat control"
+        }
+      ]
     },
     {
-      "id": "hard-step-14",
+      "id": "hard-sr-01",
       "mode": "hard",
+      "case_id": "SR-01",
       "step": 14,
       "source": "solutions/supplier-risk-monitoring/screenshots/manual/14-sr-01.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SR-01"
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/14-sr-01.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "TechnoCore Semiconductor (Taiwan)",
+        "CRITICAL, Review First",
+        "Geopolitical at 42/100"
+      ],
+      "boxes": [
+        {
+          "x": 282,
+          "y": 128,
+          "width": 955,
+          "height": 285,
+          "label": "Critical relationship and evidence"
+        }
+      ]
     },
     {
-      "id": "hard-step-15",
+      "id": "hard-sr-02",
       "mode": "hard",
+      "case_id": "SR-02",
       "step": 15,
       "source": "solutions/supplier-risk-monitoring/screenshots/manual/15-sr-02.jpg",
       "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SR-02"
+      "reason": "The visible final response shows secondary pressures and backup options, but neither SUP-101 nor Geopolitical is visible."
     },
     {
-      "id": "hard-step-16",
+      "id": "hard-sr-03",
       "mode": "hard",
+      "case_id": "SR-03",
       "step": 16,
       "source": "solutions/supplier-risk-monitoring/screenshots/manual/16-sr-03.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SR-03"
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/16-sr-03.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "SUP-104",
+        "force majeure at Midwest Casting & Forge",
+        "No supplier was contacted"
+      ],
+      "boxes": [
+        {
+          "x": 282,
+          "y": 440,
+          "width": 955,
+          "height": 145,
+          "label": "Continuity risk and authorization gate"
+        }
+      ]
     },
     {
-      "id": "hard-step-17",
+      "id": "hard-sr-04",
       "mode": "hard",
+      "case_id": "SR-04",
       "step": 17,
       "source": "solutions/supplier-risk-monitoring/screenshots/manual/17-sr-04.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved.",
-      "case_id": "SR-04"
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/17-sr-04.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "No supplier was contacted",
+        "authorized procurement owners"
+      ],
+      "full_case_not_visibly_proven": [
+        "Murata Electronics is outside the captured viewport."
+      ],
+      "boxes": [
+        {
+          "x": 282,
+          "y": 465,
+          "width": 955,
+          "height": 125,
+          "label": "No supplier action and authorization gate"
+        }
+      ]
     },
     {
-      "id": "hard-step-18",
+      "id": "hard-draft",
       "mode": "hard",
       "step": 18,
       "source": "solutions/supplier-risk-monitoring/screenshots/manual/18-confirm-draft.jpg",
-      "status": "reshoot_required",
-      "reason": "This existing capture was not independently revalidated for a positive deterministic learner anchor and is hidden from learner pages until independently approved."
+      "annotated": "solutions/supplier-risk-monitoring/screenshots/manual/annotated/18-confirm-draft.png",
+      "status": "reusable",
+      "visible_anchors": [
+        "Supply Risk Monitoring Manual",
+        "Draft"
+      ],
+      "boxes": [
+        {
+          "x": 105,
+          "y": 235,
+          "width": 1280,
+          "height": 66,
+          "label": "Target agent remains Draft"
+        }
+      ]
     }
-  ]
+  ],
+  "reshoot_plan": {
+    "replacement_captures": [
+      "Easy SR-03 with SUP-104 and force majeure visible in the final answer rather than only in reasoning.",
+      "Easy Draft gate filtered to Supply Risk Monitoring Pilot with Draft visible.",
+      "Hard step 4 with the Save tooltip confirming no unsaved changes.",
+      "Hard step 5 showing the web-search removal action or an unambiguous before-and-after state.",
+      "Hard steps 8-11 with each requested skill addition visibly isolated.",
+      "Hard SR-02 with SUP-101 and Geopolitical visible in the final answer."
+    ],
+    "new_learn_step_captures": [
+      "Brainstem skill attached in VS Code Copilot Chat.",
+      "Copilot-only skill attached in VS Code Copilot Chat.",
+      "Brainstem local 4/4 verdict.",
+      "Copilot-only local 4/4 verdict.",
+      "Brainstem deploy response with Draft inventory.",
+      "Copilot-only deploy response with Draft inventory.",
+      "Brainstem final complete verdict.",
+      "Copilot-only final complete verdict."
+    ]
+  },
+  "release_review": {
+    "status": "approved",
+    "reviewer": "workshop-builder:supplier-risk-monitoring",
+    "reviewed_at": "2026-08-10T00:57:29.461000+00:00",
+    "method": "GPT-5.6 Sol workshop owner inspected the real assisted and manual source captures; the fail-closed normalizer and base course gate then verified binding, annotation, uniqueness, and learner visibility.",
+    "notes": "Approved reusable captures are case-bound and annotated. Easy SR-01 is demoted because its visible recommendation ends at “At”; Draft publication remains machine-proven when no reusable Draft screenshot is available, and reshoot-required sources stay withheld from learner pages."
+  }
 }
