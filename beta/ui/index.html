@@ -17,26 +17,6 @@
     }
     * { box-sizing: border-box; }
     html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
-    body { display: grid; grid-template-rows: auto 1fr; }
-    header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-height: 58px;
-      padding: 10px 14px;
-      border-bottom: 1px solid #30363d;
-      background: #161b22;
-    }
-    .title { display: flex; align-items: center; gap: 9px; min-width: 220px; font-weight: 700; }
-    .beta {
-      border: 1px solid #d29922;
-      border-radius: 999px;
-      padding: 2px 8px;
-      color: #f2cc60;
-      font-size: 11px;
-      letter-spacing: .08em;
-    }
-    .actions { display: flex; gap: 8px; margin-left: auto; }
     button {
       border: 1px solid #30363d;
       border-radius: 6px;
@@ -48,7 +28,7 @@
       font-size: 12px;
     }
     button:hover { border-color: #58a6ff; background: #30363d; }
-    main { position: relative; min-height: 0; background: #0d1117; }
+    main { position: relative; width: 100%; height: 100%; background: #0d1117; }
     iframe { width: 100%; height: 100%; border: 0; display: none; background: #0d1117; }
     iframe.ready { display: block; }
     #splash {
@@ -157,15 +137,6 @@
   </style>
 </head>
 <body>
-  <header>
-    <div class="title">RAPP Brainstem <span class="beta">BETA</span></div>
-    <div class="actions">
-      <button id="guide" type="button">What is this?</button>
-      <button id="browser" type="button">Open in browser</button>
-      <button id="vscode" type="button">Open in VS Code</button>
-      <button id="restart" type="button">Restart</button>
-    </div>
-  </header>
   <main>
     <div id="splash">
       <div class="card">

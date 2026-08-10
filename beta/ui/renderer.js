@@ -25,18 +25,6 @@ function render(state) {
     : "";
 }
 
-document.getElementById("browser").addEventListener("click", () => {
-  void window.brainstemBeta.openBrowser();
-});
-document.getElementById("vscode").addEventListener("click", () => {
-  void window.brainstemBeta.openVscode();
-});
-document.getElementById("restart").addEventListener("click", () => {
-  void window.brainstemBeta.restart();
-});
-document.getElementById("guide").addEventListener("click", () => {
-  intro.classList.remove("hidden");
-});
 document.getElementById("enter").addEventListener("click", () => {
   localStorage.setItem(introStorageKey, "seen");
   intro.classList.add("hidden");

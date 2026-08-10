@@ -60,11 +60,11 @@ test("dedicated beta page scripts parse", () => {
   }
 });
 
-test("beta launcher reuses the global Brainstem and preserves VS Code pop-out", () => {
+test("beta launcher reuses the global Brainstem without duplicate toolbar IPC", () => {
   assert.match(main, /resolveBrainstemConfig/);
-  assert.match(main, /beta:open-vscode/);
-  assert.match(main, /vscode:\/\/file/);
-  assert.match(preload, /openVscode/);
+  assert.match(main, /beta:get-state/);
+  assert.doesNotMatch(main, /beta:open-browser|beta:open-vscode|beta:restart/);
+  assert.doesNotMatch(preload, /openBrowser|openVscode|restart/);
 });
 
 test("Electron renderer is isolated from Node", () => {
@@ -83,7 +83,10 @@ test("first-run guide explains the customer rapid-use-case loop", () => {
   assert.match(ui, /Do not call the prototype production-ready/);
 });
 
-test("desktop chrome omits redundant runtime status pills", () => {
+test("desktop chrome omits the redundant wrapper toolbar", () => {
   assert.doesNotMatch(ui, /brainstem-status|copilot-status/);
+  assert.doesNotMatch(ui, /id="guide"|id="browser"|id="vscode"|id="restart"/);
+  assert.doesNotMatch(ui, /<header>/);
   assert.doesNotMatch(renderer, /brainstemStatus|copilotStatus|setPill/);
+  assert.doesNotMatch(renderer, /openBrowser|openVscode|restart/);
 });

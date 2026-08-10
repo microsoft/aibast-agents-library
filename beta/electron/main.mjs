@@ -30,7 +30,6 @@ const state = {
   brainstem: { phase: "starting", message: "Starting shared Brainstem..." },
   copilot: { phase: "starting", message: "Connecting bundled Copilot CLI..." },
   url: config.url,
-  brainstemDir: config.brainstemDir,
 };
 
 function emitState() {
@@ -97,39 +96,8 @@ function createWindow() {
   return win;
 }
 
-function vscodeUri(targetPath) {
-  return `vscode://file${pathToFileURL(targetPath).pathname}`;
-}
-
 function registerIpc() {
   ipcMain.handle("beta:get-state", () => structuredClone(state));
-  ipcMain.handle("beta:open-browser", async () => {
-    await shell.openExternal(config.url);
-    return { ok: true };
-  });
-  ipcMain.handle("beta:open-vscode", async () => {
-    await shell.openExternal(vscodeUri(config.brainstemDir));
-    return { ok: true };
-  });
-  ipcMain.handle("beta:restart", async () => {
-    state.brainstem = { phase: "starting", message: "Restarting Brainstem..." };
-    emitState();
-    try {
-      const result = await brainstem.restart();
-      state.brainstem = {
-        phase: "ready",
-        message: result.reused
-          ? `Using shared Brainstem v${result.health.version}`
-          : `Brainstem v${result.health.version} restarted`,
-      };
-      emitState();
-      return { ok: true };
-    } catch (error) {
-      state.brainstem = { phase: "error", message: String(error.message || error) };
-      emitState();
-      return { ok: false, error: state.brainstem.message };
-    }
-  });
 }
 
 async function startServices() {

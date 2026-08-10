@@ -142,11 +142,6 @@ export class BrainstemProcess {
     return { reused: false, health, ...this.config };
   }
 
-  async restart() {
-    if (this.owned) await this.stop();
-    return this.start();
-  }
-
   async stop() {
     const child = this.child;
     this.child = null;

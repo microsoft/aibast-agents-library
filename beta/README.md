@@ -21,9 +21,9 @@ The beta and the regular installer use the same global runtime:
 `- beta-launcher/        beta-only Electron, Copilot CLI, and launcher source
 ```
 
-Both launch paths serve the same chat at `http://localhost:7071`. The desktop
-toolbar retains **Open in VS Code**, which opens the shared
-`~/.brainstem/src/rapp_brainstem` directory.
+Both launch paths serve the same chat at `http://localhost:7071`. The Electron
+window adds no second toolbar; the embedded Brainstem UI remains the single
+surface for model, agent, voice, settings, and VS Code controls.
 
 ## What it is for
 
