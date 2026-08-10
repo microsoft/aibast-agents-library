@@ -12,6 +12,10 @@ const main = readFileSync(path.join(root, "electron", "main.mjs"), "utf8");
 const preload = readFileSync(path.join(root, "electron", "preload.cjs"), "utf8");
 const ui = readFileSync(path.join(root, "ui", "index.html"), "utf8");
 const renderer = readFileSync(path.join(root, "ui", "renderer.js"), "utf8");
+const brainstemUi = readFileSync(
+  path.join(root, "..", "rapp_brainstem", "index.html"),
+  "utf8",
+);
 
 test("beta installers use AIBAST as the canonical source", () => {
   for (const installer of [unix, windows]) {
@@ -65,6 +69,15 @@ test("beta launcher reuses the global Brainstem without duplicate toolbar IPC", 
   assert.match(main, /beta:get-state/);
   assert.doesNotMatch(main, /beta:open-browser|beta:open-vscode|beta:restart/);
   assert.doesNotMatch(preload, /openBrowser|openVscode|restart/);
+});
+
+test("embedded VS Code link opens externally without replacing Brainstem", () => {
+  assert.match(
+    brainstemUi,
+    /<a[^>]+id="vscode-link"[^>]+target="_blank"[^>]+rel="noopener noreferrer"/,
+  );
+  assert.match(main, /setWindowOpenHandler/);
+  assert.match(main, /shell\.openExternal/);
 });
 
 test("Electron renderer is isolated from Node", () => {
