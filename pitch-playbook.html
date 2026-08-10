@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAPP — Portable, Shareable, Vibe Swarm Building Tool</title>
+<meta name="description" content="End-to-end playbook for pitching RAPP to executive leadership. Covers the problem, the demo, and the ask.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='28'%3E🧠%3C/text%3E%3C/svg%3E">
+<script>
+(function(){
+  try {
+    var saved = localStorage.getItem('rapp-pitch-theme');
+    var prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+    var theme = saved || (prefersLight ? 'light' : 'dark');
+    if (theme === 'light') document.documentElement.setAttribute('data-theme', 'light');
+  } catch(e){}
+})();
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0d1117;--surface:#161b22;--surface2:#1c2128;--border:#30363d;--border2:#21262d;
+  --text:#e6edf3;--text-dim:#8b949e;--muted:#484f58;
+  --accent:#58a6ff;--green:#3fb950;--green-2:#2ea043;--purple:#a78bfa;--purple-2:#8b5cf6;
+  --orange:#f0883e;--yellow:#e3b341;--red:#f85149;--code-bg:#04060c;
+  --chrome-bg:rgba(22,27,34,.92);
+  --grad-1:#7df0c8;--grad-2:#58a6ff;--grad-3:#a78bfa;
+  --tint-green:rgba(63,185,80,.08);--tint-purple:rgba(139,92,246,.08);
+  --logo-glow:rgba(125,240,200,.3);
+}
+[data-theme="light"]{
+  --bg:#ffffff;--surface:#f6f8fa;--surface2:#eaeef2;--border:#d0d7de;--border2:#afb8c1;
+  --text:#1f2328;--text-dim:#59636e;--muted:#8c959f;
+  --accent:#0969da;--green:#1a7f37;--green-2:#2da44e;--purple:#8250df;--purple-2:#6639ba;
+  --orange:#bc4c00;--yellow:#9a6700;--red:#cf222e;--code-bg:#f6f8fa;
+  --chrome-bg:rgba(255,255,255,.88);
+  --grad-1:#2da44e;--grad-2:#0969da;--grad-3:#8250df;
+  --tint-green:rgba(26,127,55,.08);--tint-purple:rgba(130,80,223,.08);
+  --logo-glow:rgba(9,105,218,.2);
+}
+html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;transition:background-color .25s,color .25s}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+code,kbd,pre{font-family:'SF Mono','Fira Code',ui-monospace,monospace;font-size:13px}
+code{background:var(--surface);padding:2px 6px;border-radius:4px;border:1px solid var(--border2)}
+
+.deck{position:relative;width:100%;height:100%}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:48px 64px 96px;opacity:0;pointer-events:none;transition:opacity .5s,transform .5s;transform:translateX(40px);overflow-y:auto}
+.slide.active{opacity:1;pointer-events:all;transform:translateX(0)}
+.slide.prev{opacity:0;transform:translateX(-40px)}
+.slide-inner{width:100%;max-width:1200px}
+
+/* Typography — sized for screenshare presentation */
+h1{font-size:3.6rem;font-weight:800;line-height:1.1;margin-bottom:16px;letter-spacing:-.3px}
+h1 .grad{background:linear-gradient(135deg,var(--grad-1),var(--grad-2),var(--grad-3));-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-size:2.6rem;font-weight:700;margin-bottom:22px;color:var(--text);letter-spacing:-.2px}
+h3.kicker{font-size:.95rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px}
+h3{font-size:1.3rem;font-weight:600;color:var(--text);margin:18px 0 8px}
+h4{font-size:1.15rem;font-weight:600;color:var(--text);margin-bottom:6px}
+p{font-size:1.25rem;line-height:1.65;color:var(--text-dim);max-width:960px}
+.big{font-size:1.5rem;color:var(--text);line-height:1.55}
+.dim{color:var(--text-dim)}
+.highlight{color:var(--accent);font-weight:600}
+.green{color:var(--green)}
+.purple{color:var(--purple)}
+.orange{color:var(--orange)}
+
+blockquote{border-left:3px solid var(--purple);padding:16px 20px;margin:18px auto;background:var(--tint-purple);border-radius:0 10px 10px 0;max-width:860px}
+blockquote p{color:var(--purple);margin:0;font-size:1.25rem;font-style:italic}
+
+.center{text-align:center}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:36px;width:100%;align-items:start}
+.cols-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;width:100%}
+.num-badge{display:inline-block;color:var(--accent);font-size:1rem;font-weight:700;letter-spacing:1px;margin-right:10px}
+
+/* Hero */
+.logo{font-size:72px;filter:drop-shadow(0 0 16px var(--logo-glow));margin-bottom:12px}
+.tag{display:inline-block;margin-top:14px;color:var(--green);font-weight:600;font-size:.9rem;text-transform:uppercase;letter-spacing:1.5px}
+
+/* Cards */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 22px;transition:border-color .15s;text-align:left}
+.card:hover{border-color:var(--accent)}
+.card .label{font-size:.85rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--accent);font-weight:700;margin-bottom:8px}
+.card ul{margin:8px 0 0 20px;color:var(--text-dim);font-size:1.15rem}
+.card ul li{margin-bottom:8px}
+.card ul li strong{color:var(--text)}
+.card p{font-size:1.15rem;color:var(--text-dim)}
+
+/* Feature list */
+.feature-list{list-style:none;text-align:left;max-width:720px;margin:8px auto 0}
+.feature-list li{padding:12px 0;font-size:1.2rem;color:var(--text-dim);border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:12px}
+.feature-list li:last-child{border:0}
+.feature-list strong{color:var(--text)}
+.feature-list .icon{font-size:1.4rem;flex-shrink:0;width:28px;text-align:center;margin-top:2px}
+
+/* Pipeline / flow */
+.pipeline{display:flex;align-items:center;gap:4px;margin:20px 0;flex-wrap:wrap;justify-content:center}
+.pipeline .step{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 22px;text-align:center;min-width:140px}
+.pipeline .step:hover{border-color:var(--green)}
+.pipeline .step .emoji{font-size:28px;margin-bottom:6px}
+.pipeline .step .name{font-size:1.15rem;font-weight:600;color:var(--text)}
+.pipeline .step .role{font-size:.9rem;color:var(--muted);margin-top:3px}
+.pipeline .arrow{color:var(--muted);font-size:22px;margin:0 6px;flex-shrink:0}
+
+/* Email preview */
+.email-preview{background:var(--code-bg);border:1px solid var(--border);border-radius:10px;padding:24px 28px;margin:8px auto;font-size:1.1rem;line-height:1.6;text-align:left;max-width:900px}
+.email-preview .subject{color:var(--text);font-weight:700;margin-bottom:14px;font-size:1.15rem;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.email-preview .body{color:var(--text-dim)}
+.email-preview .body p{font-size:1.1rem;margin-bottom:10px}
+.email-preview .body strong{color:var(--text)}
+.email-preview .body ul{margin:6px 0 10px 20px;font-size:1.05rem}
+.email-preview .body ul li{margin-bottom:4px}
+.email-preview .body .ask{color:var(--green);font-weight:600}
+
+/* Timeline */
+.timeline{position:relative;margin:12px auto;padding-left:28px;max-width:780px;text-align:left}
+.timeline::before{content:'';position:absolute;left:8px;top:4px;bottom:4px;width:2px;background:var(--border)}
+.timeline .t-step{position:relative;margin-bottom:14px}
+.timeline .t-step::before{content:'';position:absolute;left:-24px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--green);border:2px solid var(--bg)}
+.timeline .t-step .time{font-size:.88rem;color:var(--green);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.timeline .t-step p{margin:0;font-size:1.1rem;line-height:1.55}
+
+/* File tree */
+.file-tree{background:var(--code-bg);border:1px solid var(--border);border-radius:10px;padding:16px 22px;margin:10px auto;font-family:'SF Mono',monospace;font-size:.95rem;color:var(--text-dim);line-height:1.8;text-align:left;max-width:700px}
+.file-tree .dir{color:var(--accent)}
+.file-tree .file{color:var(--text)}
+.file-tree .note{color:var(--muted);font-style:italic}
+
+/* Code */
+pre.cmd{background:var(--code-bg);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin:10px auto;overflow-x:auto;color:var(--text);font-size:1.05rem;text-align:left;max-width:860px;white-space:pre}
+pre.cmd .dollar{color:var(--muted);user-select:none}
+pre.cmd .comment{color:var(--muted)}
+pre.cmd .green{color:var(--green)}
+
+/* Highlight box */
+.highlight-box{background:var(--tint-green);border:1px solid var(--green);border-radius:10px;padding:18px 22px;margin:16px auto;max-width:900px}
+.highlight-box p{color:var(--green);margin:0;font-size:1.2rem}
+.highlight-box p strong{color:var(--text)}
+
+/* Integrated slide question — the hinge line. Not a callout box, not a presenter cue.
+   Reads as the natural second beat of the slide: claim → support → question. */
+.slide-q{display:block;margin:40px auto 0;max-width:880px;font-size:1.85rem;line-height:1.4;color:var(--text);font-weight:600;font-style:italic;position:relative;padding-top:30px;letter-spacing:-.1px}
+.slide-q::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:44px;height:2px;background:linear-gradient(90deg,var(--grad-1),var(--grad-3));border-radius:1px;opacity:.8}
+.slide-q .accent{background:linear-gradient(135deg,var(--grad-1),var(--grad-2),var(--grad-3));-webkit-background-clip:text;background-clip:text;color:transparent;font-style:normal;font-weight:700}
+
+/* Toggle demo */
+.toggle-demo{display:flex;align-items:center;gap:12px;margin:8px auto;padding:10px 16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;max-width:420px}
+.toggle-switch{width:36px;height:20px;background:var(--green);border-radius:10px;position:relative;flex-shrink:0}
+.toggle-switch::after{content:'';position:absolute;top:3px;left:19px;width:14px;height:14px;border-radius:50%;background:#fff}
+.toggle-switch.off{background:var(--border)}
+.toggle-switch.off::after{left:3px;background:var(--muted)}
+.toggle-label{font-size:.95rem;font-family:'SF Mono',monospace}
+.toggle-label .on{color:var(--green)}
+.toggle-label .off{color:var(--muted);text-decoration:line-through}
+
+/* Stats */
+.stat-row{display:flex;gap:28px;justify-content:center;flex-wrap:wrap;margin:24px 0}
+.stat{text-align:center}
+.stat .num{font-size:2.6rem;font-weight:800;display:block;line-height:1}
+.stat .lbl{font-size:.75rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;margin-top:4px;display:block}
+
+/* TOC */
+.toc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:900px;margin:12px auto 0;text-align:left}
+.toc-item{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 14px;cursor:pointer;transition:border-color .15s,transform .15s}
+.toc-item:hover{border-color:var(--accent);transform:translateY(-2px)}
+.toc-item .n{font-size:.7rem;color:var(--accent);font-weight:700;letter-spacing:1px}
+.toc-item .t{font-size:.88rem;color:var(--text);font-weight:600;margin-top:2px}
+
+/* Buttons */
+.btn-row{display:flex;gap:14px;margin-top:24px;flex-wrap:wrap;justify-content:center}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:10px;font-size:1.15rem;font-weight:600;text-decoration:none;transition:all .15s;border:none;cursor:pointer}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:#79c0ff;transform:translateY(-1px);text-decoration:none}
+.btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.btn-green{background:rgba(63,185,80,.12);border:1.5px solid var(--green);color:var(--green)}
+.btn-green:hover{background:rgba(63,185,80,.2);text-decoration:none}
+
+/* Navigation */
+.nav{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;z-index:100;background:var(--chrome-bg);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:40px;padding:8px 18px}
+.nav button{background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:1.1rem;padding:6px 10px;border-radius:6px;transition:all .15s}
+.nav button:hover{color:var(--text);background:var(--surface2)}
+.nav .dots{display:flex;gap:6px}
+.nav .dot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:all .2s}
+.nav .dot.active{background:var(--accent);width:24px;border-radius:4px}
+.slide-counter{font-size:.78rem;color:var(--text-dim);font-variant-numeric:tabular-nums;min-width:42px;text-align:right}
+
+/* Top-right corner controls (brand + gear) */
+.corner-controls{position:fixed;top:18px;right:22px;z-index:50;display:flex;align-items:center;gap:8px;padding:4px 4px 4px 32px;margin:-4px -4px -4px -32px}
+.brand-link{display:flex;align-items:center;gap:10px;padding:8px 14px;background:var(--chrome-bg);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:20px;font-size:.82rem;color:var(--text-dim);text-decoration:none;transition:all .15s}
+.brand-link:hover{color:var(--text);border-color:var(--accent);text-decoration:none}
+.brand-link .brand-logo{font-size:1rem}
+
+/* Gear: hidden until the top-right corner is hovered; sticky when rehearse mode is on */
+.mode-toggle{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;padding:0;background:var(--chrome-bg);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:50%;color:var(--text-dim);cursor:pointer;font-size:.95rem;line-height:1;opacity:0;pointer-events:none;transform:scale(.9);transition:opacity .25s,transform .25s,color .15s,border-color .15s}
+.corner-controls:hover .mode-toggle{opacity:1;pointer-events:auto;transform:scale(1)}
+.mode-toggle:hover{color:var(--text);border-color:var(--accent)}
+[data-mode="rehearse"] .mode-toggle{opacity:1;pointer-events:auto;transform:scale(1);color:var(--accent);border-color:var(--accent)}
+.mode-toggle .gear{display:inline-block;transition:transform .4s}
+[data-mode="rehearse"] .mode-toggle .gear{transform:rotate(90deg)}
+
+/* Theme toggle */
+.theme-toggle{position:fixed;top:18px;left:22px;z-index:50;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;padding:0;background:var(--chrome-bg);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:50%;color:var(--text-dim);cursor:pointer;font-size:1rem;transition:all .15s;line-height:1}
+.theme-toggle:hover{color:var(--text);border-color:var(--accent);transform:translateY(-1px)}
+.theme-toggle .sun{display:none}
+.theme-toggle .moon{display:inline}
+[data-theme="light"] .theme-toggle .sun{display:inline}
+[data-theme="light"] .theme-toggle .moon{display:none}
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.slide.active .animate{animation:fadeUp .55s ease both}
+.slide.active .animate.d1{animation-delay:.08s}
+.slide.active .animate.d2{animation-delay:.16s}
+.slide.active .animate.d3{animation-delay:.24s}
+.slide.active .animate.d4{animation-delay:.32s}
+
+/* Responsive */
+@media(max-width:820px){
+  .slide{padding:32px 20px 88px}
+  h1{font-size:2rem}h2{font-size:1.5rem}
+  .cols,.cols-3,.toc-grid{grid-template-columns:1fr;gap:16px}
+  .stat .num{font-size:2rem}
+  pre.cmd,.email-preview{font-size:.78rem}
+  .corner-controls{top:10px;right:10px}
+  .brand-link{padding:6px 10px;font-size:.7rem}
+  .theme-toggle{top:10px;left:10px;width:32px;height:32px;font-size:.85rem}
+  .mode-toggle{width:28px;height:28px;font-size:.82rem}
+  /* On touch devices (no hover), always show the gear subtly */
+  @media (hover:none){ .mode-toggle{opacity:.55;pointer-events:auto} }
+}
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle light/dark mode">
+  <span class="moon">🌙</span><span class="sun">☀️</span>
+</button>
+
+<div class="corner-controls" id="cornerControls">
+  <button class="mode-toggle" id="modeToggle" onclick="toggleMode()" aria-label="Toggle rehearse mode" title="Toggle full deck (rehearse)">
+    <span class="gear">⚙</span>
+  </button>
+  <a href="./" class="brand-link">
+    <span class="brand-logo">🧠</span> AIBAST Agents Library
+  </a>
+</div>
+
+<div class="deck" id="deck">
+
+<!--
+  SALES DECK — 8 public slides. One claim per slide, one question at the bottom
+  that hands the mic to the prospect. Kody talks ~20%, prospect talks ~80%.
+  Every slide follows the same rhythm:
+    1. One-sentence hook
+    2. One visual proof (or number)
+    3. ONE question → Kody shuts up.
+  The differentiators are adoption-shaped: ease of learning, portability,
+  shareability, simplicity. Not a feature comparison with other AI tools.
+-->
+
+<!-- ── SLIDE 1: The Adoption Gap (pure augmentation framing, no product names) ── -->
+<div class="slide active center">
+  <div class="slide-inner">
+    <div class="logo animate">🧠</div>
+    <h1 class="animate d1">Your AI stack is <span class="grad">already great.</span></h1>
+    <p class="big animate d2" style="margin:18px auto 20px;max-width:800px">
+      The question isn't what you've bought. It's whether your team's best work can actually travel — or stays stuck with the one person who built it.
+    </p>
+    <p class="slide-q animate d3">When someone on your team cracks something — <span class="accent">how fast does the next person get to build on it?</span></p>
+  </div>
+</div>
+
+<!-- ── SLIDE 2: RAPP is pure augmentation for acceleration ── -->
+<div class="slide center">
+  <div class="slide-inner">
+    <h3 class="kicker animate">Portable · Shareable · Vibe Swarm Building</h3>
+    <h1 class="animate d1">RAPP is <span class="green">the acceleration layer.</span></h1>
+    <p class="big animate d2" style="margin:18px auto 20px;max-width:820px">
+      Not a replacement. Not a competitor. The 15-minute ramp that turns whatever you already pay for into something your people actually use — faster.
+    </p>
+    <p class="slide-q animate d3">If adoption on your team moved <span class="accent">twice as fast</span> — what would that unlock for you?</p>
+  </div>
+</div>
+
+<!-- ── SLIDE 3: Where the rapid proof harness fits ── -->
+<div class="slide center">
+  <div class="slide-inner">
+    <h3 class="kicker animate">Where it fits · Customer rapid use cases</h3>
+    <h1 class="animate d1">Use RAPP to answer: <span class="green">Can AI do this?</span></h1>
+    <div class="cols animate d2" style="margin:24px auto 0;max-width:1040px;gap:18px">
+      <div class="card">
+        <div class="label">Who operates it</div>
+        <p>Technical sellers, architects, specialists, engineers, partners, and customer builders who can steer a proof and judge the business result.</p>
+      </div>
+      <div class="card">
+        <div class="label">When to use it</div>
+        <p>The customer problem is still conversational, the route is unclear, and you need working evidence before committing to an architecture.</p>
+      </div>
+      <div class="card">
+        <div class="label">How the tools fit</div>
+        <p>GitHub Copilot builds and repairs. Brainstem proves the behavior. Scout fits ready employee workflows. Copilot Studio or Foundry governs production.</p>
+      </div>
+      <div class="card">
+        <div class="label">What walks away</div>
+        <p>An evidence-backed prototype, portable single-file agents, known integration gaps, and a clear production route — not a local proof mislabeled as production.</p>
+      </div>
+    </div>
+    <p class="slide-q animate d3" style="margin-top:26px">Which customer problem needs <span class="accent">evidence before architecture</span>?</p>
+  </div>
+</div>
+
+<!-- ── SLIDE 4: Ease of Learning ── -->
+<div class="slide center">
+  <div class="slide-inner">
+    <h3 class="kicker animate">01 · Learning curve</h3>
+    <h1 class="animate d1">Zero to shipping in <span class="green">60 seconds.</span></h1>
+    <p class="big animate d2" style="margin:18px auto 20px;max-width:780px">
+      A non-engineer opens the folder, names an agent, and runs it before the coffee hits the desk. No SDK, no framework, no tenant setup — just a file. Your team's next builder shouldn't take six weeks to onboard.
+    </p>
+    <p class="slide-q animate d3">How long does it take someone new on your team to go <span class="accent">from zero to their first working agent</span> today?</p>
+  </div>
+</div>
+
+<!-- ── SLIDE 5: Shareability — the social layer ── -->
+<div class="slide center">
+  <div class="slide-inner">
+    <h3 class="kicker animate">02 · Shareability</h3>
+    <h1 class="animate d1">AirDrop it. Share it. <span class="green">It runs.</span></h1>
+    <p class="big animate d2" style="margin:18px auto 20px;max-width:820px">
+      Your best builder's work is a single file. AirDropped, emailed, dropped into a chat — live the moment it lands. Stack a few of them in the same folder and the brainstem composes them into a swarm. One person's breakthrough becomes the whole team's starting line.
+    </p>
+    <p class="slide-q animate d3">What does your team build when every teammate gets to start from <span class="accent">your best builder's best day?</span></p>
+  </div>
+</div>
+
+<!-- ── SLIDE 6: The ramp — generic, no product names ── -->
+<div class="slide center">
+  <div class="slide-inner">
+    <h3 class="kicker animate">03 · The ramp</h3>
+    <h1 class="animate d1">Learn on a laptop. <span class="grad">Promote into your stack.</span></h1>
+    <p class="big animate d2" style="margin:18px auto 24px;max-width:840px">
+      Same file, three tiers. Write it local today. Run it in the cloud tomorrow. Ship it into whatever your team already uses next week. Nothing gets thrown away on the way up.
+    </p>
+    <div class="pipeline animate d3" style="margin:0 auto 8px">
+      <div class="step"><div class="emoji">💻</div><div class="name">Laptop</div><div class="role" style="color:var(--text-dim);font-size:.85rem">Learn fast</div></div>
+      <div class="arrow">→</div>
+      <div class="step"><div class="emoji">☁️</div><div class="name">Cloud</div><div class="role" style="color:var(--text-dim);font-size:.85rem">Scale safely</div></div>
+      <div class="arrow">→</div>
+      <div class="step" style="border-color:var(--green)"><div class="emoji">🏢</div><div class="name">Your stack</div><div class="role" style="color:var(--green);font-size:.85rem">Your team's tools</div></div>
+    </div>
+    <p class="slide-q animate d4">If your team could prototype in an afternoon and <span class="accent">promote it into production the same week</span> — what would they build first?</p>
+  </div>
+</div>
+
+<!-- ── SLIDE 7: Receipts — what one non-engineer shipped in week 1 ── -->
+<div class="slide center">
+  <div class="slide-inner">
+    <h3 class="kicker animate">Receipts · Week 1</h3>
+    <h1 class="animate d1">One hour of training. <span class="green">~195 hours of consultant work.</span></h1>
+    <p class="big animate d2" style="margin:18px auto 22px;max-width:840px">
+      A functional consultant — not an engineer — used RAPP for one hour. Then she asked it to estimate the build work she'd just done. The breakdown reads like a partner SOW.
+    </p>
+
+    <div class="animate d3" style="max-width:720px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 22px;text-align:left;font-size:1rem">
+      <div style="display:grid;grid-template-columns:1.4fr .8fr 1.6fr;gap:10px 18px;align-items:center">
+        <span style="color:var(--text-dim);font-size:.72rem;letter-spacing:.6px;text-transform:uppercase;font-weight:600">Tier</span>
+        <span style="color:var(--text-dim);font-size:.72rem;letter-spacing:.6px;text-transform:uppercase;font-weight:600">Hours</span>
+        <span style="color:var(--text-dim);font-size:.72rem;letter-spacing:.6px;text-transform:uppercase;font-weight:600">Who normally does it</span>
+
+        <span style="color:var(--text)">Standard config</span>
+        <span style="color:var(--text);font-variant-numeric:tabular-nums">9.5</span>
+        <span style="color:var(--muted)">Functional consultant</span>
+
+        <span style="color:var(--text)">Advanced config</span>
+        <span style="color:var(--text);font-variant-numeric:tabular-nums">25</span>
+        <span style="color:var(--muted)">Power Platform consultant</span>
+
+        <span style="color:var(--text)">Web resources</span>
+        <span style="color:var(--text);font-variant-numeric:tabular-nums">91</span>
+        <span style="color:var(--muted)">Frontend dev + D365 tech consultant</span>
+
+        <span style="color:var(--text)">AI / Agents</span>
+        <span style="color:var(--text);font-variant-numeric:tabular-nums">70</span>
+        <span style="color:var(--muted)">AI/ML engineer + D365 developer</span>
+
+        <strong style="color:var(--text);border-top:1px solid var(--border);padding-top:12px">Total</strong>
+        <strong style="color:var(--green);border-top:1px solid var(--border);padding-top:12px;font-variant-numeric:tabular-nums">~195.5 hrs</strong>
+        <strong style="color:var(--green);border-top:1px solid var(--border);padding-top:12px">£29K–£39K · ~5 weeks</strong>
+      </div>
+    </div>
+
+    <p class="slide-q animate d4">What does your team ship in week one when the new builder is the <span class="accent">non-engineer</span>?</p>
+  </div>
+</div>
+
+<!-- ── SLIDE 8: The Ask ── -->
+<div class="slide center">
+  <div class="slide-inner">
+    <div class="logo animate" style="margin-bottom:20px">🧠</div>
+    <h3 class="kicker animate">The ask</h3>
+    <h1 class="animate d1">30-day pilot. 5 people. <span class="green">I set it up in an hour.</span></h1>
+    <p class="big animate d2" style="margin:22px auto 40px;max-width:780px">
+      Pick five people who've never shipped an agent. If at the end of 30 days every one of them has something running — and at least one has promoted their work into your production stack — we expand. If not, you turn it off. Files walk away the same way they arrived.
+    </p>
+    <p class="animate d4 dim" style="margin-top:48px;font-size:.82rem">
+      Kody Wildfeuer · RAPP
+    </p>
+  </div>
+</div>
+
+<!-- ── SLIDE 9 (rehearse-only): Send-ahead video script ── -->
+<div class="slide" data-rehearse-only>
+  <div class="slide-inner">
+    <h3 class="kicker animate">Send-ahead video · 75 sec target · 3 min ceiling</h3>
+    <h2 class="animate d1" style="margin-bottom:10px">Record this. Email it <em>before</em> the meeting.</h2>
+    <p class="animate d2 dim" style="max-width:880px;margin-bottom:22px;font-size:1.05rem">
+      Goal: they walk in already half-sold. Each beat is one claim + one visual. No talking-head intro, no title card longer than 2 seconds, no feature comparisons. Adoption differentiators only.
+    </p>
+
+    <div class="animate d3" style="max-width:920px;margin:0 auto;display:grid;gap:12px">
+
+      <div style="display:grid;grid-template-columns:92px 1fr;gap:16px;padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:10px;align-items:flex-start">
+        <div style="color:var(--accent);font-family:ui-monospace,monospace;font-weight:700">0:00–0:10</div>
+        <div>
+          <div style="font-weight:600;color:var(--text);margin-bottom:4px">Hook — on camera, 10 seconds flat</div>
+          <p style="color:var(--text-dim);font-size:1rem;margin:0;max-width:none"><em>"Your AI stack is already great. But how many of your people have actually shipped something with it this quarter? That's the gap I want to help you close."</em></p>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:92px 1fr;gap:16px;padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:10px;align-items:flex-start">
+        <div style="color:var(--accent);font-family:ui-monospace,monospace;font-weight:700">0:08–0:25</div>
+        <div>
+          <div style="font-weight:600;color:var(--text);margin-bottom:4px">Ease of learning — screen share</div>
+          <p style="color:var(--text-dim);font-size:1rem;margin:0;max-width:none">Open the <code>agents/</code> folder. Five Python files. Click one open. <em>"This is an agent. Top to bottom. One file. A teenager ships their first one in a minute."</em></p>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:92px 1fr;gap:16px;padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:10px;align-items:flex-start">
+        <div style="color:var(--accent);font-family:ui-monospace,monospace;font-weight:700">0:25–0:45</div>
+        <div>
+          <div style="font-weight:600;color:var(--text);margin-bottom:4px">Shareability — the drop</div>
+          <p style="color:var(--text-dim);font-size:1rem;margin:0;max-width:none">Drag a <code>.py</code> file from Finder/Explorer INTO the brainstem window. Agents panel updates live. <em>"That's the entire share cycle. AirDrop it, email it, drop it in chat, drag it in. Running."</em></p>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:92px 1fr;gap:16px;padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:10px;align-items:flex-start">
+        <div style="color:var(--accent);font-family:ui-monospace,monospace;font-weight:700">0:45–1:00</div>
+        <div>
+          <div style="font-weight:600;color:var(--text);margin-bottom:4px">The ramp — graduation into your stack</div>
+          <p style="color:var(--text-dim);font-size:1rem;margin:0;max-width:none">Flash a 3-step diagram: laptop → cloud → your stack. <em>"Same file, three tiers. They learn here, they graduate into whatever you already use — with the work intact."</em></p>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:92px 1fr;gap:16px;padding:14px 18px;background:var(--tint-green);border:1px solid var(--green);border-radius:10px;align-items:flex-start">
+        <div style="color:var(--green);font-family:ui-monospace,monospace;font-weight:700">1:00–1:15</div>
+        <div>
+          <div style="font-weight:600;color:var(--text);margin-bottom:4px">The ask — back on camera</div>
+          <p style="color:var(--text-dim);font-size:1rem;margin:0;max-width:none"><em>"Thirty-day pilot. Five people who've never shipped an agent. I set it up in an hour. If one of them hasn't promoted their work into your production stack by day 30, you turn it off. See you at [meeting time]."</em></p>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:92px 1fr;gap:16px;padding:14px 18px;background:var(--surface2);border:1px dashed var(--border);border-radius:10px;align-items:flex-start">
+        <div style="color:var(--muted);font-family:ui-monospace,monospace;font-weight:700">end card</div>
+        <div>
+          <div style="font-weight:600;color:var(--text);margin-bottom:4px">🧠 · 2-second hold</div>
+          <p style="color:var(--text-dim);font-size:1rem;margin:0;max-width:none">Logo, your name, calendar link. No QR code, no social, no "learn more." They have the meeting on their calendar already.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="animate d4" style="margin:28px auto 0;max-width:880px;padding:18px 22px;background:var(--tint-purple);border:1px solid var(--purple);border-radius:10px">
+      <div style="color:var(--purple);font-weight:700;font-size:.85rem;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:8px">Recording rules</div>
+      <ul style="color:var(--text);font-size:1rem;line-height:1.55;margin:0 0 0 22px;max-width:none">
+        <li>One take. Conversational. If you flub it, keep going — authenticity beats polish.</li>
+        <li>No music. No intro animation. Straight to the first line.</li>
+        <li>Screen-share quality > camera quality. They need to see the files crisp.</li>
+        <li>Cap it at 75 seconds. Every second past that costs you a view.</li>
+        <li>Send as a video attachment, not a link. Links get deferred.</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+</div><!-- /deck -->
+
+<!-- Navigation -->
+<nav class="nav" id="nav">
+  <button onclick="prev()" aria-label="Previous">◀</button>
+  <div class="dots" id="dots"></div>
+  <button onclick="next()" aria-label="Next">▶</button>
+  <span class="slide-counter" id="counter"></span>
+</nav>
+
+<script>
+function toggleTheme(){
+  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+  if (isLight) {
+    document.documentElement.removeAttribute('data-theme');
+    localStorage.setItem('rapp-pitch-theme', 'dark');
+  } else {
+    document.documentElement.setAttribute('data-theme', 'light');
+    localStorage.setItem('rapp-pitch-theme', 'light');
+  }
+}
+
+// Two modes: 'exec' (default — just the pitch) and 'rehearse' (full deck, including speaker prep)
+const allSlides = Array.from(document.querySelectorAll('.slide'));
+const dotsEl = document.getElementById('dots');
+const counterEl = document.getElementById('counter');
+let visibleSlides = [];
+let current = 0;
+let mode = localStorage.getItem('rapp-pitch-mode') || 'exec';
+document.documentElement.setAttribute('data-mode', mode);
+
+function applyMode(){
+  visibleSlides = allSlides.filter(s => mode === 'rehearse' || !s.hasAttribute('data-rehearse-only'));
+  allSlides.forEach(s => {
+    if (visibleSlides.includes(s)) {
+      s.style.display = '';
+    } else {
+      s.style.display = 'none';
+      s.classList.remove('active', 'prev');
+    }
+  });
+  buildDots();
+}
+
+function buildDots(){
+  dotsEl.innerHTML = '';
+  visibleSlides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === current ? ' active' : '');
+    d.onclick = () => showSlide(i);
+    dotsEl.appendChild(d);
+  });
+}
+
+function showSlide(n) {
+  if (n < 0 || n >= visibleSlides.length) return;
+  visibleSlides.forEach((s, i) => {
+    s.classList.remove('active', 'prev');
+    if (i === n) s.classList.add('active');
+    else if (i < n) s.classList.add('prev');
+  });
+  current = n;
+  document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === n));
+  counterEl.textContent = `${n + 1} / ${visibleSlides.length}${mode === 'rehearse' ? ' · R' : ''}`;
+  history.replaceState(null, '', `#${n}`);
+}
+
+function next() { if (current < visibleSlides.length - 1) showSlide(current + 1); }
+function prev() { if (current > 0) showSlide(current - 1); }
+
+function toggleMode(){
+  const prevActive = visibleSlides[current] || allSlides[0];
+  mode = (mode === 'exec') ? 'rehearse' : 'exec';
+  localStorage.setItem('rapp-pitch-mode', mode);
+  document.documentElement.setAttribute('data-mode', mode);
+  applyMode();
+  const idx = visibleSlides.indexOf(prevActive);
+  current = idx >= 0 ? idx : 0;
+  showSlide(current);
+}
+
+function downloadAgent(url, filename) {
+  fetch(url).then(r => r.blob()).then(b => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(b);
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+}
+
+applyMode();
+showSlide(0);
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); next(); }
+  if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+  if (e.key === 'Home') { e.preventDefault(); showSlide(0); }
+  if (e.key === 'End') { e.preventDefault(); showSlide(visibleSlides.length - 1); }
+  if (e.key === 't' || e.key === 'T') { e.preventDefault(); toggleTheme(); }
+  if (e.key === 'r' || e.key === 'R') { e.preventDefault(); toggleMode(); }
+});
+
+// Touch / swipe
+let touchX = 0;
+document.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchX;
+  if (Math.abs(dx) > 50) { dx < 0 ? next() : prev(); }
+});
+
+// Deep-link via hash (e.g., #5)
+window.addEventListener('load', () => {
+  const n = parseInt(location.hash.slice(1), 10);
+  if (!isNaN(n) && n >= 0 && n < visibleSlides.length) showSlide(n);
+});
+</script>
+</body>
+</html>
