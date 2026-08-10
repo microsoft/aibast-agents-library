@@ -1,25 +1,25 @@
-**Subject:** AIBAST weekly and monthly impact report - August 9, 2026
+**Subject:** AIBAST weekly and monthly impact report - August 10, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-08-09T20:11:59Z`
+**Snapshot:** `2026-08-10T06:45:57Z`
 **Site:** https://kody-w.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 1,505 | +1,111 observed - partial | Baseline pending |
-| Git clones | 1,117 | +1,111 observed | Baseline pending |
-| Clones excluding CI estimate | 1,117 | Baseline pending | Baseline pending |
-| AIBAST repository and Pages views | 7 | +7 observed | Baseline pending |
+| AIBAST observed repository downloads | 1,786 | +1,392 observed - partial | Baseline pending |
+| Git clones | 1,398 | +1,392 observed | Baseline pending |
+| Clones excluding CI estimate | 1,398 | Baseline pending | Baseline pending |
+| AIBAST repository and Pages views | 9 | +9 observed | Baseline pending |
 | jsDelivr file hits | 388 | Baseline pending | Baseline pending |
 | Release asset downloads | 0 | Baseline pending | Baseline pending |
 | AIBAST direct agent file downloads | 0 | Baseline pending | Baseline pending |
 | AIBAST skill file downloads | 0 | Baseline pending | Baseline pending |
 | AIBAST installer file downloads | 0 | Baseline pending | Baseline pending |
-| Unique cloners (14-day window) | 135 | Baseline pending | Baseline pending |
-| Unique visitors (14-day window) | 3 | Baseline pending | Baseline pending |
+| Unique cloners (14-day window) | 170 | Baseline pending | Baseline pending |
+| Unique visitors (14-day window) | 4 | Baseline pending | Baseline pending |
 
 ## Community engagement
 
