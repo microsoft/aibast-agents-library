@@ -2,33 +2,33 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-08-10T11:28:19Z`
+**Snapshot:** `2026-08-10T12:14:11Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 1,505 | Baseline pending | Baseline pending |
-| Git clones | 1,117 | Baseline pending | Baseline pending |
-| Clones excluding CI estimate | 1,117 | Baseline pending | Baseline pending |
-| AIBAST repository and Pages views | 7 | Baseline pending | Baseline pending |
+| AIBAST observed repository downloads | 1,786 | Baseline pending | Baseline pending |
+| Git clones | 1,398 | Baseline pending | Baseline pending |
+| Clones excluding CI estimate | 1,398 | Baseline pending | Baseline pending |
+| AIBAST repository and Pages views | 9 | Baseline pending | Baseline pending |
 | jsDelivr file hits | 388 | Baseline pending | Baseline pending |
 | Release asset downloads | 0 | Baseline pending | Baseline pending |
 | AIBAST direct agent file downloads | 0 | Baseline pending | Baseline pending |
 | AIBAST skill file downloads | 0 | Baseline pending | Baseline pending |
 | AIBAST installer file downloads | 0 | Baseline pending | Baseline pending |
-| Unique cloners (14-day window) | 135 | Baseline pending | Baseline pending |
-| Unique visitors (14-day window) | 3 | Baseline pending | Baseline pending |
+| Unique cloners (14-day window) | 170 | Baseline pending | Baseline pending |
+| Unique visitors (14-day window) | 4 | Baseline pending | Baseline pending |
 
 ## Community engagement
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| GitHub stars | 0 | Baseline pending | Baseline pending |
-| GitHub forks | 0 | Baseline pending | Baseline pending |
+| GitHub stars | 4 | Baseline pending | Baseline pending |
+| GitHub forks | 2 | Baseline pending | Baseline pending |
 | GitHub watchers | 0 | Baseline pending | Baseline pending |
-| Open GitHub issues | 2 | Baseline pending | Baseline pending |
+| Open GitHub issues | 5 | Baseline pending | Baseline pending |
 | Agent upvotes | Unavailable | Unavailable | Unavailable |
 | Signed-in agent acquisitions | Unavailable | Unavailable | Unavailable |
 | Workshop usage events | 0 | Baseline pending | Baseline pending |
@@ -41,22 +41,22 @@
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| Verified achievement participants | 1 | Baseline pending | Baseline pending |
-| Verified achievement points | 5 | Baseline pending | Baseline pending |
-| Verified achievements | 1 | Baseline pending | Baseline pending |
-| Workshop starts | 1 | Baseline pending | Baseline pending |
+| Verified achievement participants | 0 | Baseline pending | Baseline pending |
+| Verified achievement points | 0 | Baseline pending | Baseline pending |
+| Verified achievements | 0 | Baseline pending | Baseline pending |
+| Workshop starts | 0 | Baseline pending | Baseline pending |
 | Workshop completions | 0 | Baseline pending | Baseline pending |
 | Hard-mode completions | 0 | Baseline pending | Baseline pending |
 | Workshop completion rate | 0.0% | Baseline pending | Baseline pending |
 | Hard-mode completion rate | 0.0% | Baseline pending | Baseline pending |
-| Achievement completion rate | 16.7% | Baseline pending | Baseline pending |
+| Achievement completion rate | 0.0% | Baseline pending | Baseline pending |
 
 ## Library footprint
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| Tracked repository files | 5,202 | Baseline pending | Baseline pending |
-| Files covered by download observations | 4,006 | Baseline pending | Baseline pending |
+| Tracked repository files | 5,310 | Baseline pending | Baseline pending |
+| Files covered by download observations | 5,310 | Baseline pending | Baseline pending |
 | Catalog agents | 72 | Baseline pending | Baseline pending |
 | Tracked SKILL.md files | 234 | Baseline pending | Baseline pending |
 | Canonical workshops | 51 | Baseline pending | Baseline pending |
