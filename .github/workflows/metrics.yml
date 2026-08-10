@@ -91,7 +91,7 @@ jobs:
           required = {
               'total_downloads', 'page_views', 'agent_upvotes',
               'agent_acquisitions',
-              'workshop_usage_events', 'agi_points', 'agi_completions',
+              'workshop_usage_events', 'achievement_points', 'achievement_completions',
               'agent_file_downloads', 'tracked_files', 'skills',
           }
           assert required <= metric_ids
@@ -115,19 +115,19 @@ jobs:
           workshops = snapshot.get('workshops', {})
           rows = workshops.get('rows', [])
           workshop_slugs = {row.get('slug') for row in rows}
-          agi = snapshot.get('agi', {})
-          agi_totals = agi.get('totals', {})
-          agi_profiles = agi.get('profiles', [])
-          agi_rows = agi.get('workshops', [])
+          achievements = snapshot.get('achievements', {})
+          achievement_totals = achievements.get('totals', {})
+          achievement_profiles = achievements.get('profiles', [])
+          achievement_workshop_rows = achievements.get('workshops', [])
           file_rows = snapshot.get('file_metrics', {}).get('rows', [])
           agent_rows = snapshot.get('agent_metrics', [])
           print(
               f"workshop metrics: {len(rows)} rows; "
               f"{workshops.get('totals', {}).get('usage_events')} observed events; "
               f"agent upvotes={snapshot.get('totals', {}).get('agent_upvotes')}; "
-              f"achievement status={agi.get('status')}; "
-              f"achievement participants={agi_totals.get('participants')}; "
-              f"achievement points={agi_totals.get('points')}"
+              f"achievement status={achievements.get('status')}; "
+              f"achievement participants={achievement_totals.get('participants')}; "
+              f"achievement points={achievement_totals.get('points')}"
           )
           print(f"file metrics: {len(file_rows)} tracked files; agent metrics: {len(agent_rows)} rows")
           if len(rows) != 51:
@@ -166,7 +166,7 @@ jobs:
           if len(ecosystem_agents) != ecosystem_totals.get('logical_agents'):
               print('AIBAST logical-agent rows do not reconcile', file=sys.stderr)
               raise SystemExit(1)
-          if agi.get('status') in {'available', 'partial'}:
+          if achievements.get('status') in {'available', 'partial'}:
               achievement_order = [
                   'started', 'local-proof', 'draft-builder', 'preview-proven',
                   'workshop-completed', 'hard-mode-completed'
@@ -184,19 +184,19 @@ jobs:
                   'workshop_completions', 'hard_completions', 'badges',
                   'achievement_ids', 'completed_workshops'
               }
-              if agi.get('schema') != 'aibast-agi/2.0':
+              if achievements.get('schema') != 'aibast-achievements/2.0':
                   print('Achievement snapshot schema is missing or unsupported', file=sys.stderr)
                   raise SystemExit(1)
-              if len(agi_rows) != 51 or {
-                  row.get('slug') for row in agi_rows
+              if len(achievement_workshop_rows) != 51 or {
+                  row.get('slug') for row in achievement_workshop_rows
               } != workshop_slugs:
                   print('Achievement workshop rows must match the canonical 51-workshop scope', file=sys.stderr)
                   raise SystemExit(1)
-              if any(set(profile) != allowed_profile_keys for profile in agi_profiles):
+              if any(set(profile) != allowed_profile_keys for profile in achievement_profiles):
                   print('Achievement profiles contain unexpected or privacy-unsafe fields', file=sys.stderr)
                   raise SystemExit(1)
               expected_profiles = sorted(
-                  agi_profiles,
+                  achievement_profiles,
                   key=lambda row: (
                       -row['points'],
                       -row['achievement_count'],
@@ -206,10 +206,10 @@ jobs:
                       row['login'],
                   ),
               )
-              if agi_profiles != expected_profiles:
+              if achievement_profiles != expected_profiles:
                   print('Achievement profiles are not sorted by points/badges/completions/login', file=sys.stderr)
                   raise SystemExit(1)
-              for profile in agi_profiles:
+              for profile in achievement_profiles:
                   badges = profile['badges']
                   if any(
                       set(badge) != {'workshop', 'achievement', 'points'}
@@ -287,56 +287,56 @@ jobs:
                   if profile['points'] > profile['starts'] * 150:
                       print('Achievement profile exceeds 150 points per started workshop', file=sys.stderr)
                       raise SystemExit(1)
-              if agi_totals.get('participants') != len(agi_profiles):
+              if achievement_totals.get('participants') != len(achievement_profiles):
                   print('Achievement participant total does not reconcile', file=sys.stderr)
                   raise SystemExit(1)
-              if agi_totals.get('points') != sum(
-                  profile['points'] for profile in agi_profiles
+              if achievement_totals.get('points') != sum(
+                  profile['points'] for profile in achievement_profiles
               ):
                   print('Achievement point total does not reconcile', file=sys.stderr)
                   raise SystemExit(1)
-              if agi_totals.get('achievements') != sum(
-                  profile['achievement_count'] for profile in agi_profiles
+              if achievement_totals.get('achievements') != sum(
+                  profile['achievement_count'] for profile in achievement_profiles
               ):
                   print('Achievement total does not reconcile', file=sys.stderr)
                   raise SystemExit(1)
-              if agi_totals.get('starts') != sum(
-                  profile['starts'] for profile in agi_profiles
+              if achievement_totals.get('starts') != sum(
+                  profile['starts'] for profile in achievement_profiles
               ):
                   print('Achievement start total does not reconcile', file=sys.stderr)
                   raise SystemExit(1)
-              if agi_totals.get('workshop_completions') != sum(
-                  profile['workshop_completions'] for profile in agi_profiles
+              if achievement_totals.get('workshop_completions') != sum(
+                  profile['workshop_completions'] for profile in achievement_profiles
               ):
                   print('Achievement workshop completion total does not reconcile', file=sys.stderr)
                   raise SystemExit(1)
-              if agi_totals.get('hard_completions') != sum(
-                  profile['hard_completions'] for profile in agi_profiles
+              if achievement_totals.get('hard_completions') != sum(
+                  profile['hard_completions'] for profile in achievement_profiles
               ):
                   print('Achievement hard completion total does not reconcile', file=sys.stderr)
                   raise SystemExit(1)
-              if agi_totals.get('starts') != sum(
-                  row['starts'] for row in agi_rows
+              if achievement_totals.get('starts') != sum(
+                  row['starts'] for row in achievement_workshop_rows
               ):
                   print('Achievement workshop starts do not reconcile', file=sys.stderr)
                   raise SystemExit(1)
-              if agi_totals.get('workshop_completions') != sum(
-                  row['workshop_completions'] for row in agi_rows
+              if achievement_totals.get('workshop_completions') != sum(
+                  row['workshop_completions'] for row in achievement_workshop_rows
               ):
                   print('Achievement workshop completions do not reconcile', file=sys.stderr)
                   raise SystemExit(1)
-              if agi_totals.get('hard_completions') != sum(
-                  row['hard_completions'] for row in agi_rows
+              if achievement_totals.get('hard_completions') != sum(
+                  row['hard_completions'] for row in achievement_workshop_rows
               ):
                   print('Achievement workshop hard completions do not reconcile', file=sys.stderr)
                   raise SystemExit(1)
-              if agi_totals.get('points') != sum(
-                  row['points'] for row in agi_rows
+              if achievement_totals.get('points') != sum(
+                  row['points'] for row in achievement_workshop_rows
               ):
                   print('Achievement workshop points do not reconcile', file=sys.stderr)
                   raise SystemExit(1)
-              if agi_totals.get('achievements') != sum(
-                  row['achievements'] for row in agi_rows
+              if achievement_totals.get('achievements') != sum(
+                  row['achievements'] for row in achievement_workshop_rows
               ):
                   print('Achievement workshop counts do not reconcile', file=sys.stderr)
                   raise SystemExit(1)
@@ -346,7 +346,7 @@ jobs:
               }
               def rate(numerator, denominator):
                   return round((numerator / denominator) * 100, 1) if denominator else 0.0
-              for row in agi_rows:
+              for row in achievement_workshop_rows:
                   counts = row.get('achievement_counts', {})
                   if (
                       row.get('agent_name') != catalog_agents.get(row.get('slug'))
@@ -366,35 +366,35 @@ jobs:
                       print('Achievement workshop identity, counts, or rates do not reconcile', file=sys.stderr)
                       raise SystemExit(1)
               if (
-                  agi_totals.get('completion_rate') != rate(
-                      agi_totals['workshop_completions'], agi_totals['starts']
+                  achievement_totals.get('completion_rate') != rate(
+                      achievement_totals['workshop_completions'], achievement_totals['starts']
                   )
-                  or agi_totals.get('hard_completion_rate') != rate(
-                      agi_totals['hard_completions'], agi_totals['starts']
+                  or achievement_totals.get('hard_completion_rate') != rate(
+                      achievement_totals['hard_completions'], achievement_totals['starts']
                   )
-                  or agi_totals.get('achievement_completion_rate') != rate(
-                      agi_totals['achievements'],
-                      agi_totals['starts'] * len(achievement_order),
+                  or achievement_totals.get('achievement_completion_rate') != rate(
+                      achievement_totals['achievements'],
+                      achievement_totals['starts'] * len(achievement_order),
                   )
               ):
                   print('Achievement completion rates do not reconcile', file=sys.stderr)
                   raise SystemExit(1)
-              achievement_rows = agi.get('achievements', [])
+              achievement_type_rows = achievements.get('achievements', [])
               if (
-                  [row.get('id') for row in achievement_rows] != achievement_order
+                  [row.get('id') for row in achievement_type_rows] != achievement_order
                   or any(
                       row.get('points') != achievement_points[row['id']]
-                      for row in achievement_rows
+                      for row in achievement_type_rows
                   )
-                  or sum(row['claims'] for row in achievement_rows)
-                      != agi_totals.get('achievements')
+                  or sum(row['claims'] for row in achievement_type_rows)
+                      != achievement_totals.get('achievements')
                   or any(
                       (
                           lambda claims: (
                               row['claims'] != len(claims)
                               or row['claims'] != sum(
                                   workshop['achievement_counts'][row['id']]
-                                  for workshop in agi_rows
+                                  for workshop in achievement_workshop_rows
                               )
                               or row['participants'] != len({
                                   login for login, _slug in claims
@@ -403,16 +403,16 @@ jobs:
                                   slug for _login, slug in claims
                               })
                               or row['attainment_rate'] != rate(
-                                  len(claims), agi_totals['starts']
+                                  len(claims), achievement_totals['starts']
                               )
                           )
                       )({
                           (profile['login'].casefold(), badge['workshop'])
-                          for profile in agi_profiles
+                          for profile in achievement_profiles
                           for badge in profile['badges']
                           if badge['achievement'] == row['id']
                       })
-                      for row in achievement_rows
+                      for row in achievement_type_rows
                   )
               ):
                   print('Achievement rollups do not reconcile', file=sys.stderr)

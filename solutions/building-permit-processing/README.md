@@ -84,7 +84,7 @@ again in the target environment.
 | Copilot Studio deployment settings | `solutions/building-permit-processing/exports/building-permit-processing-deployment-settings.json` |
 | Copilot Studio export metadata | `solutions/building-permit-processing/exports/building-permit-processing-solution-export.json` |
 
-**Scaffold status:** 109 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
+**Scaffold status:** 110 resources ready; 0 pending. Manual evidence and referenced screenshots passed scaffold validation.
 
 The journey uses synthetic inputs and qualitative proof. It is not a customer
 KPI, live-system result, production-readiness claim, or publication approval.

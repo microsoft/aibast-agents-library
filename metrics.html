@@ -489,34 +489,34 @@ code,
   font-size: .8rem;
 }
 
-.agi-grid {
+.achievements-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 16px;
 }
 
-.agi-card {
+.achievements-card {
   min-width: 0;
 }
 
-.agi-card h3 {
+.achievements-card h3 {
   margin: 0 0 5px;
   font-size: 1rem;
 }
 
-.agi-card .hint {
+.achievements-card .hint {
   margin-bottom: 12px;
 }
 
-.agi-card.wide {
+.achievements-card.wide {
   grid-column: 1 / -1;
 }
 
-.agi-login {
+.achievements-login {
   font-weight: 750;
 }
 
-.agi-badges {
+.achievements-badges {
   color: var(--cp-text-soft);
   font-size: .72rem;
 }
@@ -939,7 +939,7 @@ footer {
 
   .grid2,
   .grid3,
-  .agi-grid {
+  .achievements-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1067,45 +1067,45 @@ footer {
     </div>
   </section>
 
-  <section class="section" id="agi-points" aria-labelledby="agi-heading">
+  <section class="section" id="achievements-points" aria-labelledby="achievements-heading">
     <div class="section-head">
-      <h2 id="agi-heading">Verified workshop achievements</h2>
+      <h2 id="achievements-heading">Verified workshop achievements</h2>
       <div class="hint">verified public progress synced through opt-in GitHub issues</div>
     </div>
-    <div class="workshop-summary" id="agi-summary" aria-live="polite"></div>
-    <p class="coverage-status" id="agi-coverage" role="status" aria-live="polite" aria-atomic="true">Verified achievement coverage is loading.</p>
+    <div class="workshop-summary" id="achievements-summary" aria-live="polite"></div>
+    <p class="coverage-status" id="achievements-coverage" role="status" aria-live="polite" aria-atomic="true">Verified achievement coverage is loading.</p>
     <div class="card">
       <p class="coverage-note"><b>Verification scope.</b> GitHub verification confirms authenticated issue authorship and canonical claim format only; achievement completion remains self-reported and is not independently proven.</p>
       <p class="coverage-note"><b>Verified public achievements</b> are server-scored from submitted public GitHub progress issues. Fixed achievement values are: started 5, local proof 15, draft builder 20, preview proven 25, workshop completed 35, and hard mode completed 50, for at most 150 points per workshop. Re-syncing unions explicitly claimed achievement IDs and never duplicates points. Missing prerequisite badges are not inferred.</p>
       <p class="coverage-note"><b>Local self-paced achievements are different.</b> Progress on <a href="achievements.html">achievements.html</a> stays local until a person deliberately submits a verification issue. Submission explicitly opts that GitHub login into the public verified profile and leaderboard. Verified achievement points are never repository stars, agent upvotes, downloads, or workshop usage events, and they are not added to those metrics. Administrators can review the <a href="docs/metrics-admin-setup.html">achievement metrics setup and privacy checklist</a>.</p>
-      <div class="agi-grid">
-        <section class="agi-card" aria-labelledby="agi-leaderboard-heading">
-          <h3 id="agi-leaderboard-heading">Public achievement leaderboard</h3>
-          <div class="hint" id="agi-profile-hint">Profiles are public only after opt-in submission</div>
+      <div class="achievements-grid">
+        <section class="achievements-card" aria-labelledby="achievements-leaderboard-heading">
+          <h3 id="achievements-leaderboard-heading">Public achievement leaderboard</h3>
+          <div class="hint" id="achievements-profile-hint">Profiles are public only after opt-in submission</div>
           <div class="table-scroll">
-            <table id="agi-leaderboard" aria-label="Verified public achievement profile leaderboard">
+            <table id="achievements-leaderboard" aria-label="Verified public achievement profile leaderboard">
               <caption>Verified public achievement profiles ranked by points</caption>
               <thead><tr><th scope="col">GitHub login</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Hard completions</th></tr></thead>
               <tbody><tr><td colspan="6">Loading verified achievement profiles&hellip;</td></tr></tbody>
             </table>
           </div>
         </section>
-        <section class="agi-card" aria-labelledby="agi-workshop-heading">
-          <h3 id="agi-workshop-heading">Workshop achievement completion</h3>
-          <div class="hint" id="agi-workshop-hint">Canonical 51-workshop verified scope</div>
+        <section class="achievements-card" aria-labelledby="achievements-workshop-heading">
+          <h3 id="achievements-workshop-heading">Workshop achievement completion</h3>
+          <div class="hint" id="achievements-workshop-hint">Canonical 51-workshop verified scope</div>
           <div class="table-scroll">
-            <table id="agi-workshop-table" aria-label="Verified per-workshop achievement completion">
+            <table id="achievements-workshop-table" aria-label="Verified per-workshop achievement completion">
               <caption>Canonical workshops ranked by verified achievement points</caption>
               <thead><tr><th scope="col">Workshop</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Hard completions</th><th class="num" scope="col">Achievement completion</th></tr></thead>
               <tbody><tr><td colspan="7">Loading verified workshop achievements&hellip;</td></tr></tbody>
             </table>
           </div>
         </section>
-        <section class="agi-card wide" aria-labelledby="agi-rollup-heading">
-          <h3 id="agi-rollup-heading">Achievement rollup</h3>
-          <div class="hint" id="agi-rollup-hint">Fixed server values and verified attainment</div>
+        <section class="achievements-card wide" aria-labelledby="achievements-rollup-heading">
+          <h3 id="achievements-rollup-heading">Achievement rollup</h3>
+          <div class="hint" id="achievements-rollup-hint">Fixed server values and verified attainment</div>
           <div class="table-scroll">
-            <table id="agi-rollup-table" aria-label="Verified achievement rollup">
+            <table id="achievements-rollup-table" aria-label="Verified achievement rollup">
               <caption>Verified claims by canonical achievement</caption>
               <thead><tr><th scope="col">Achievement</th><th class="num" scope="col">Points each</th><th class="num" scope="col">Claims</th><th class="num" scope="col">Participants</th><th class="num" scope="col">Workshops</th><th class="num" scope="col">Attainment</th></tr></thead>
               <tbody><tr><td colspan="6">Loading verified achievement rollups&hellip;</td></tr></tbody>
@@ -1486,7 +1486,7 @@ function render() {
     trafficGap.appendChild(callout);
   }
   renderKPIs();
-  renderAgiPoints();
+  renderAchievementPoints();
   renderWorkshops();
   $('board-hint').textContent = `ranked across ${num(t.agents)} single-file agents`;
   renderChart();
@@ -1507,11 +1507,11 @@ function render() {
 function renderKPIs() {
   const t = M.totals, r = M.repo || {};
   const workshopTotals = (M.workshops || {}).totals || {};
-  const agiTotals = (M.agi || {}).totals || {};
+  const achievementTotals = (M.achievements || {}).totals || {};
   const cards = [
     { primary: true, label: 'AIBAST direct agent fetches', value: num(t.agent_file_downloads), sub: 'observable jsDelivr agent-file transfers · raw GitHub transfers are uncounted' },
     { primary: true, label: 'AIBAST repository downloads', value: num(t.downloads), sub: `${num(t.clones)} repository clones (includes this repo's own CI) · ${num(t.cdn_hits)} CDN hits · ${num(t.release_downloads)} release assets` },
-    { primary: true, label: 'Verified achievement points', value: num(agiTotals.points), sub: `${num(agiTotals.participants)} opt-in public participants · ${num(agiTotals.achievements)} badges · ${num(agiTotals.starts)} starts · ${num(agiTotals.workshop_completions)} workshop completions · ${num(agiTotals.hard_completions)} hard completions` },
+    { primary: true, label: 'Verified achievement points', value: num(achievementTotals.points), sub: `${num(achievementTotals.participants)} opt-in public participants · ${num(achievementTotals.achievements)} badges · ${num(achievementTotals.starts)} starts · ${num(achievementTotals.workshop_completions)} workshop completions · ${num(achievementTotals.hard_completions)} hard completions` },
     { label: 'Agent upvotes', value: num(t.agent_upvotes), sub: 'native rating-Discussion upvotes · one active signal per GitHub account and agent' },
     { label: 'Signed-in acquisitions', value: num(t.agent_acquisitions), sub: 'native acquisition-Discussion upvotes · declared downloads/copies/installs, separate from file transfers' },
     { label: 'Workshop usage events', value: num(workshopTotals.usage_events), sub: `${num(workshopTotals.workshops)} advertised workshops · public event-count floor, not users` },
@@ -1531,12 +1531,12 @@ function renderKPIs() {
      </article>`).join('');
 }
 
-function renderAgiPoints() {
-  const agi = M.agi || {};
-  const totals = agi.totals || {};
-  const profiles = Array.isArray(agi.profiles) ? agi.profiles.slice() : [];
-  const workshops = Array.isArray(agi.workshops) ? agi.workshops.slice() : [];
-  const achievements = Array.isArray(agi.achievements) ? agi.achievements.slice() : [];
+function renderAchievementPoints() {
+  const achievementMetrics = M.achievements || {};
+  const totals = achievementMetrics.totals || {};
+  const profiles = Array.isArray(achievementMetrics.profiles) ? achievementMetrics.profiles.slice() : [];
+  const workshops = Array.isArray(achievementMetrics.workshops) ? achievementMetrics.workshops.slice() : [];
+  const achievementRows = Array.isArray(achievementMetrics.achievements) ? achievementMetrics.achievements.slice() : [];
   const summary = [
     { label: 'Verified participants', value: totals.participants },
     { label: 'Achievement points', value: totals.points },
@@ -1547,19 +1547,19 @@ function renderAgiPoints() {
     { label: 'Completion rate', value: percent(totals.completion_rate), formatted: true },
     { label: 'Achievement completion', value: percent(totals.achievement_completion_rate), formatted: true }
   ];
-  $('agi-summary').innerHTML = summary.map(item =>
+  $('achievements-summary').innerHTML = summary.map(item =>
     `<div class="workshop-stat"><b>${item.formatted ? item.value : num(item.value)}</b><span>${esc(item.label)}</span></div>`).join('');
 
-  const coverage = agi.coverage || {};
-  const status = agi.status || coverage.status || 'unavailable';
-  const agiCoverage = $('agi-coverage');
+  const coverage = achievementMetrics.coverage || {};
+  const status = achievementMetrics.status || coverage.status || 'unavailable';
+  const achievementCoverage = $('achievements-coverage');
   const coverageText = status === 'unavailable'
     ? 'Verified public achievement claims are unavailable in this snapshot. Null values are not verified zeros.'
     : `${status === 'partial' ? 'Partial' : 'Available'} verified achievement coverage · ${num((coverage.diagnostics || {}).accepted_achievements)} unique achievements from ${num(coverage.issues_scanned)} marker-matched public issues.`;
-  agiCoverage.textContent = agi.carried_forward
-    ? `Carried forward from ${agi.as_of || 'the prior snapshot'} · ${coverageText}`
+  achievementCoverage.textContent = achievementMetrics.carried_forward
+    ? `Carried forward from ${achievementMetrics.as_of || 'the prior snapshot'} · ${coverageText}`
     : coverageText;
-  if (status === 'unavailable') appendAdminSetupNotice(agiCoverage);
+  if (status === 'unavailable') appendAdminSetupNotice(achievementCoverage);
 
   profiles.sort((left, right) =>
     (Number(right.points) || 0) - (Number(left.points) || 0)
@@ -1568,10 +1568,10 @@ function renderAgiPoints() {
     || (Number(right.hard_completions) || 0) - (Number(left.hard_completions) || 0)
     || String(left.login).localeCompare(String(right.login), undefined, { sensitivity: 'base' })
   );
-  $('agi-profile-hint').textContent = profiles.length
+  $('achievements-profile-hint').textContent = profiles.length
     ? `${num(profiles.length)} opt-in public profile${profiles.length === 1 ? '' : 's'}`
     : 'Profiles are public only after opt-in submission';
-  const profileTable = $('agi-leaderboard');
+  const profileTable = $('achievements-leaderboard');
   profileTable.innerHTML = `<caption>Verified public achievement profiles ranked by points</caption>
     <thead><tr><th scope="col">GitHub login</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Hard completions</th></tr></thead>
     <tbody>${profiles.length ? profiles.map(profile => {
@@ -1583,9 +1583,9 @@ function renderAgiPoints() {
         ? profile.achievement_ids
         : [];
       return `<tr>
-        <td class="agi-login"><a href="${profileUrl}" target="_blank" rel="noopener">${esc(login)}</a></td>
+        <td class="achievements-login"><a href="${profileUrl}" target="_blank" rel="noopener">${esc(login)}</a></td>
         <td class="num">${num(profile.points)}</td>
-        <td class="num agi-badges" title="${esc(achievementIds.join(', '))}">${num(profile.achievement_count)}</td>
+        <td class="num achievements-badges" title="${esc(achievementIds.join(', '))}">${num(profile.achievement_count)}</td>
         <td class="num">${num(profile.starts)}</td>
         <td class="num">${num(profile.workshop_completions)}</td>
         <td class="num">${num(profile.hard_completions)}</td>
@@ -1600,10 +1600,10 @@ function renderAgiPoints() {
     || (Number(right.starts) || 0) - (Number(left.starts) || 0)
     || String(left.display_name || left.slug).localeCompare(String(right.display_name || right.slug))
   );
-  $('agi-workshop-hint').textContent = workshops.length
+  $('achievements-workshop-hint').textContent = workshops.length
     ? `${num(workshops.length)} canonical workshops; Grid Outage excluded`
     : 'Canonical workshop achievement rows are unavailable';
-  const workshopTable = $('agi-workshop-table');
+  const workshopTable = $('achievements-workshop-table');
   workshopTable.innerHTML = `<caption>Canonical workshops ranked by verified achievement points</caption>
     <thead><tr><th scope="col">Workshop</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Hard completions</th><th class="num" scope="col">Achievement completion</th></tr></thead>
     <tbody>${workshops.length ? workshops.map(row => {
@@ -1622,14 +1622,14 @@ function renderAgiPoints() {
       </tr>`;
     }).join('') : '<tr><td class="empty" colspan="7">No canonical achievement workshop rows are available. Regenerate the metrics snapshot.</td></tr>'}</tbody>`;
 
-  $('agi-rollup-hint').textContent = achievements.length
-    ? `${num(achievements.length)} canonical achievement IDs`
+  $('achievements-rollup-hint').textContent = achievementRows.length
+    ? `${num(achievementRows.length)} canonical achievement IDs`
     : 'Canonical achievement rollup is unavailable';
-  const achievementTable = $('agi-rollup-table');
+  const achievementTable = $('achievements-rollup-table');
   achievementTable.innerHTML = `<caption>Verified claims by canonical achievement</caption>
     <thead><tr><th scope="col">Achievement</th><th class="num" scope="col">Points each</th><th class="num" scope="col">Claims</th><th class="num" scope="col">Participants</th><th class="num" scope="col">Workshops</th><th class="num" scope="col">Attainment</th></tr></thead>
-    <tbody>${achievements.length ? achievements.map(row => `<tr>
-      <td><span class="agi-login">${esc(row.label || pretty(row.id))}</span><div class="rank-meta mono">${esc(row.id || '')}</div></td>
+    <tbody>${achievementRows.length ? achievementRows.map(row => `<tr>
+      <td><span class="achievements-login">${esc(row.label || pretty(row.id))}</span><div class="rank-meta mono">${esc(row.id || '')}</div></td>
       <td class="num">${num(row.points)}</td>
       <td class="num">${num(row.claims)}</td>
       <td class="num">${num(row.participants)}</td>

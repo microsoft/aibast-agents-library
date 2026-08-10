@@ -199,8 +199,9 @@ def test_manual_tutorial_is_aibast_themed_and_matches_browserfilm_actions():
         assert checkpoint["source"].endswith(frame["file"])
         if checkpoint["status"] == "reshoot_required":
             assert not step["images"]
-            assert "Withheld checkpoint" in step["text"]
-            assert "not approved for learner display" in step["text"]
+            assert "Live verification checkpoint" in step["text"]
+            assert "Withheld checkpoint" not in step["text"]
+            assert "not approved for learner display" not in step["text"]
             assert checkpoint["reason"]
         else:
             assert checkpoint["status"] == "reusable"

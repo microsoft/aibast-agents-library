@@ -221,18 +221,18 @@ def test_required_setup_permissions_commands_and_acceptance_checks_are_present()
         "aibast-agent-discussion/1.0",
         "aibast-workshop-feedback:v1",
         "aibast-workshop-feedback/1.0",
-        "aibast-agi-progress:v1",
-        "aibast-agi-progress/1.0",
+        "aibast-achievement-progress:v1",
+        "aibast-achievement-progress/1.0",
         "Achievement progress signal",
         "Submitting the public issue explicitly opts the GitHub login",
         "maximum of 150 per workshop",
         "never infers missing prerequisite IDs",
         "Claims containing a",
-        "agi-progress",
-        "agi.totals",
-        "agi.profiles",
-        "agi.workshops",
-        "agi.achievements",
+        "achievement-progress",
+        "achievements.totals",
+        "achievements.profiles",
+        "achievements.workshops",
+        "achievements.achievements",
         "one active upvote per signed-in GitHub account",
         "publishes only the aggregate upvoteCount",
         "never combines duplicate mirror threads",
@@ -338,12 +338,12 @@ def test_per_agent_discussion_ingestion_deduplication_and_privacy_are_checked():
         assert phrase.lower() in text.lower(), phrase
 
 
-def test_agi_marker_schema_consent_dedupe_scoring_aggregates_and_privacy_are_checked():
+def test_achievement_marker_schema_consent_dedupe_scoring_aggregates_and_privacy_are_checked():
     text = visible_text()
-    assert "aibast-agi-achievement" not in HTML
+    assert "aibast-achievements-achievement" not in HTML
     for phrase in (
-        "<!-- aibast-agi-progress:v1 -->",
-        "aibast-agi-progress/1.0",
+        "<!-- aibast-achievement-progress:v1 -->",
+        "aibast-achievement-progress/1.0",
         "canonical 51 with Grid Outage excluded",
         "canonical primary agent",
         "started",
@@ -358,7 +358,7 @@ def test_agi_marker_schema_consent_dedupe_scoring_aggregates_and_privacy_are_che
         "Claims containing a",
         "explicitly opts the GitHub login into a public profile",
         "Invalid, quoted, duplicate-field, conflicting, pull-request, unknown-user",
-        "only the agi-progress label",
+        "only the achievement-progress label",
         "persists no issue body, free text, source issue ID",
         "Offline runs carry forward that prior block",
     ):
@@ -382,16 +382,16 @@ def test_agi_marker_schema_consent_dedupe_scoring_aggregates_and_privacy_are_che
     ) in text
 
 
-def test_agi_snapshot_and_page_checks_keep_all_other_metrics_separate():
+def test_achievement_snapshot_and_page_checks_keep_all_other_metrics_separate():
     for field in (
-        "agi.status",
-        "agi.as_of",
-        "agi.coverage",
-        "agi.caveat",
-        "agi.totals",
-        "agi.profiles",
-        "agi.workshops",
-        "agi.achievements",
+        "achievements.status",
+        "achievements.as_of",
+        "achievements.coverage",
+        "achievements.caveat",
+        "achievements.totals",
+        "achievements.profiles",
+        "achievements.workshops",
+        "achievements.achievements",
         "usage_events",
         "totals.agent_upvotes",
         "totals.agent_acquisitions",

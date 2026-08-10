@@ -9,15 +9,15 @@
   },
   "summary": {
     "total_existing_captures": 31,
-    "reusable": 23,
-    "reshoot_required": 8
+    "reusable": 24,
+    "reshoot_required": 7
   },
   "release_review": {
     "status": "approved",
     "reviewer": "workshop-builder:building-permit-processing",
     "reviewed_at": "2026-08-09T21:13:57Z",
     "method": "Opened all 31 original assisted and manual JPEG captures in an image viewer, compared each visible product state with the locked cases and browserfilm step, restored visually verified frames to their correct filenames, then inspected generated annotated PNG evidence.",
-    "notes": "Approved 23 hard-mode steps. The historical published pilot configuration and five pilot case frames, blank assisted frame, and manual frontmatter-error frame remain withheld; locked-case behavior is machine-proven by the export-agent Preview artifact and hashed transcripts, while unpublished release status is proven by Dataverse."
+    "notes": "Approved all 24 hard-mode steps, including the intentional frontmatter-diagnostic checkpoint. The historical published pilot configuration, five pilot case frames, and blank assisted frame remain excluded; locked-case behavior is machine-proven by the export-agent Preview artifact and hashed transcripts, while unpublished release status is proven by Dataverse."
   },
   "captures": [
     {
@@ -406,8 +406,21 @@
       "mode": "hard",
       "step": 16,
       "source": "solutions/building-permit-processing/screenshots/manual/16-inspector-skill-validation-error.jpg",
-      "status": "reshoot_required",
-      "reason": "The screenshot visibly shows a Frontmatter incomplete validation error, so it is a blocker rather than positive evidence for a completed learner step."
+      "status": "reusable",
+      "annotated": "solutions/building-permit-processing/screenshots/annotated/hard-step-16.png",
+      "visible_anchors": [
+        "The Frontmatter incomplete validation message is visible.",
+        "The message identifies the missing name and description fields."
+      ],
+      "boxes": [
+        {
+          "x": 300,
+          "y": 195,
+          "width": 820,
+          "height": 82,
+          "label": "Expected validation error"
+        }
+      ]
     },
     {
       "id": "hard-step-17",

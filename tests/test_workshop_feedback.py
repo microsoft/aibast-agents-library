@@ -59,14 +59,14 @@ def test_workshop_feedback_workflow_detects_structured_signal():
     assert "actions: write" in text
     assert "issues: write" in text
     assert "<!-- aibast-workshop-feedback:v1 -->" in text
-    assert "<!-- aibast-agi-progress:v1 -->" in text
+    assert "<!-- aibast-achievement-progress:v1 -->" in text
     assert "<!-- aibast-agent-upvote:v1 -->" not in text
-    assert "aibast-agi-achievement" not in text
+    assert "aibast-achievements-achievement" not in text
     assert "||" in text
     assert "workshop-feedback" in text
     assert "needs-triage" in text
     assert "agent-upvote" not in text
-    assert "agi-progress" in text
+    assert "achievement-progress" in text
     assert "createLabel" in text
     assert "addLabels" in text
     assert "removeLabel" in text
@@ -92,7 +92,7 @@ def test_signal_classification_fails_closed_and_reconciles_removed_markers():
 
     assert 'id: process-signal' in text
     assert 'const isWorkshopFeedback = body.includes("<!-- aibast-workshop-feedback:v1 -->")' in text
-    assert "const hasCurrentMarker = isWorkshopFeedback || isAgiProgress;" in text
+    assert "const hasCurrentMarker = isWorkshopFeedback || isAchievementProgress;" in text
     assert "const hasManagedLabel = currentNames.some((name) => managedNames.has(name));" in text
     assert "if (!hasCurrentMarker && !hasManagedLabel)" in text
     assert "return false;" in text
@@ -108,11 +108,11 @@ def test_signal_classifier_behavior_is_fail_closed_and_removal_safe():
 
     stale = run_signal_classifier(
         body="marker removed",
-        labels=({"name": "agi-progress"}, {"name": "bug"}),
+        labels=({"name": "achievement-progress"}, {"name": "bug"}),
     )
     assert stale["result"] is True
     assert [call[0] for call in stale["calls"]] == ["removeLabel"]
-    assert stale["calls"][0][1]["name"] == "agi-progress"
+    assert stale["calls"][0][1]["name"] == "achievement-progress"
 
     current = run_signal_classifier(
         body="<!-- aibast-workshop-feedback:v1 -->",
@@ -169,8 +169,8 @@ def test_metrics_workflow_compiles_issues_from_its_own_repository():
 def test_workflow_applies_signal_specific_labels_and_descriptions():
     text = WORKFLOW.read_text(encoding="utf-8")
 
-    assert 'const isAgiProgress = body.includes("<!-- aibast-agi-progress:v1 -->")' in text
-    assert '? ["agi-progress"]' in text
+    assert 'const isAchievementProgress = body.includes("<!-- aibast-achievement-progress:v1 -->")' in text
+    assert '? ["achievement-progress"]' in text
     assert '? ["workshop-feedback", "needs-triage"]' in text
     assert "Structured feedback submitted from an AIBAST workshop." in text
     assert "Opt-in public workshop achievement progress sync." in text
@@ -178,23 +178,23 @@ def test_workflow_applies_signal_specific_labels_and_descriptions():
     assert "AIBAST Beta workshop" not in text
 
 
-def test_agi_progress_gets_only_agi_label_without_changing_other_signal_labels():
+def test_achievement_progress_gets_only_achievement_label_without_changing_other_signal_labels():
     text = WORKFLOW.read_text(encoding="utf-8")
 
-    assert "const selectedNames = isAgiProgress" in text
-    assert '? ["agi-progress"]' in text
+    assert "const selectedNames = isAchievementProgress" in text
+    assert '? ["achievement-progress"]' in text
     assert '? ["workshop-feedback", "needs-triage"]' in text
     assert 'const managedNames = new Set(Object.keys(definitions));' in text
 
 
-def test_metrics_workflow_reads_issues_and_verifies_agi_profiles_and_scoring():
+def test_metrics_workflow_reads_issues_and_verifies_achievement_profiles_and_scoring():
     text = METRICS_WORKFLOW.read_text(encoding="utf-8")
 
     assert "issues: read" in text
-    assert "snapshot.get('agi', {})" in text
-    assert "agi.get('schema') != 'aibast-agi/2.0'" in text
-    assert "agi.get('profiles', [])" in text
-    assert "agi.get('workshops', [])" in text
+    assert "snapshot.get('achievements', {})" in text
+    assert "achievements.get('schema') != 'aibast-achievements/2.0'" in text
+    assert "achievements.get('profiles', [])" in text
+    assert "achievements.get('workshops', [])" in text
     assert "allowed_profile_keys" in text
     assert "'workshop_completions', 'hard_completions', 'badges'" in text
     assert "'achievement_ids', 'completed_workshops'" in text
@@ -205,7 +205,7 @@ def test_metrics_workflow_reads_issues_and_verifies_agi_profiles_and_scoring():
     assert "Achievement completion rates do not reconcile" in text
     assert "Achievement profiles contain unexpected or privacy-unsafe fields" in text
     assert "Achievement point total does not reconcile" in text
-    assert "aibast-agi/1.0" not in text
+    assert "aibast-achievements/1.0" not in text
 
 
 def test_generated_workshops_expose_contextual_beta_reports():

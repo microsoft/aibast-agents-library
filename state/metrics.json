@@ -1,6 +1,6 @@
 {
  "schema": "aibast-metrics/1.0",
- "generated_at": "2026-08-10T12:14:11Z",
+ "generated_at": "2026-08-10T13:34:19Z",
  "repo": {
   "stars": 4,
   "forks": 2,
@@ -12,7 +12,7 @@
   "description": "Main repository for AI BAST Specialist Teal AI Agents Library",
   "homepage": null,
   "as_of": "2026-08-10T12:14:11Z",
-  "carried_forward": false,
+  "carried_forward": true,
   "owner": "microsoft",
   "name": "aibast-agents-library",
   "url": "https://github.com/microsoft/aibast-agents-library",
@@ -196,8 +196,8 @@
   "views_14d": 9,
   "live": false,
   "as_of": "2026-08-10T06:46:01Z",
-  "unavailable_reason": "The token is not SSO-authorized for the owning organization. Authorize it for the org, or set METRICS_TOKEN to one that is.",
-  "carried_forward": false
+  "unavailable_reason": "Offline mode made zero network calls; traffic figures are carried forward from the original as_of timestamp.",
+  "carried_forward": true
  },
  "cdn": {
   "total_hits": 0,
@@ -207,14 +207,14 @@
   "installer_hits": 0,
   "files": [],
   "as_of": "2026-08-10T12:14:11Z",
-  "carried_forward": false
+  "carried_forward": true
  },
  "releases": {
   "total_downloads": 0,
   "count": 0,
   "releases": [],
   "as_of": "2026-08-10T12:14:11Z",
-  "carried_forward": false
+  "carried_forward": true
  },
  "leaderboards": {
   "most_downloaded": [],
@@ -2100,54 +2100,26 @@
  "agent_discussion_coverage": {
   "status": "unavailable",
   "as_of": null,
-  "pages": 0,
-  "discussions_scanned": 0,
-  "diagnostics": {},
-  "unavailable_reason": "Resource protected by organization SAML enforcement. You must grant your OAuth token access to this organization.",
-  "carried_forward": false,
-  "signals": {
-   "upvote": {
-    "status": "unavailable",
-    "discussions": 0,
-    "missing_discussions": 72
-   },
-   "acquisition": {
-    "status": "unavailable",
-    "discussions": 0,
-    "missing_discussions": 72
-   }
-  }
+  "carried_forward": false
  },
  "agent_upvote_coverage": {
   "status": "unavailable",
   "as_of": null,
-  "pages": 0,
-  "discussions_scanned": 0,
-  "discussions": 0,
-  "missing_discussions": 72,
-  "diagnostics": {},
-  "carried_forward": false,
-  "scope": "One canonical mirrored GitHub Discussion per agent. Its native upvoteCount is the preference signal, and GitHub permits one active upvote per signed-in account on that Discussion."
+  "carried_forward": false
  },
  "agent_acquisition_coverage": {
   "status": "unavailable",
   "as_of": null,
-  "pages": 0,
-  "discussions_scanned": 0,
-  "discussions": 0,
-  "missing_discussions": 72,
-  "diagnostics": {},
-  "carried_forward": false,
-  "scope": "One parallel acquisition Discussion per canonical agent. A native upvote records one signed-in account's declared download, copy, or install acquisition. This is separate from observable CDN and release file-transfer counters."
+  "carried_forward": false
  },
  "file_metrics": {
   "schema": "aibast-file-metrics/1.0",
   "source_status": "complete",
   "as_of": "2026-08-10T12:14:11Z",
-  "carried_forward": false,
+  "carried_forward": true,
   "totals": {
    "files": 5310,
-   "observed_files": 5310,
+   "observed_files": 5307,
    "downloads": 0,
    "by_kind": {
     "agent": {
@@ -2187,7 +2159,7 @@
     },
     "code": {
      "files": 152,
-     "observed_files": 152,
+     "observed_files": 149,
      "downloads": 0
     },
     "asset": {
@@ -44079,20 +44051,20 @@
     "status": "observed_zero"
    },
    {
-    "path": "tests/test_agi_points.py",
+    "path": "tests/test_achievement_points.py",
     "kind": "code",
     "agent_name": null,
     "workshop_slug": null,
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": null,
+    "status": "not_observed"
    },
    {
-    "path": "tests/test_agi_points_audit.py",
+    "path": "tests/test_achievement_points_audit.py",
     "kind": "code",
     "agent_name": null,
     "workshop_slug": null,
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": null,
+    "status": "not_observed"
    },
    {
     "path": "tests/test_apply_workshop_course_rollout.py",
@@ -44463,12 +44435,12 @@
     "status": "observed_zero"
    },
    {
-    "path": "tools/audit_agi_points.py",
+    "path": "tools/audit_achievement_points.py",
     "kind": "code",
     "agent_name": null,
     "workshop_slug": null,
-    "downloads": 0,
-    "status": "observed_zero"
+    "downloads": null,
+    "status": "not_observed"
    },
    {
     "path": "tools/audit_metrics_page.py",
@@ -45622,8 +45594,10 @@
    "agent_upvotes": {
     "status": "unavailable",
     "as_of": null,
-    "scope": "Native upvotes on each primary agent's canonical rating Discussion. This preference signal is separate from usage_events and acquisition Discussions."
-   }
+    "carried_forward": false,
+    "scope": "Canonical primary-agent upvotes carried separately from workshop usage events."
+   },
+   "carried_forward": true
   },
   "sources": [
    {
@@ -45653,13 +45627,13 @@
    }
   ],
   "as_of": "2026-08-10T12:14:11Z",
-  "carried_forward": false
+  "carried_forward": true
  },
- "agi": {
-  "schema": "aibast-agi/2.0",
+ "achievements": {
+  "schema": "aibast-achievements/2.0",
   "status": "available",
   "as_of": "2026-08-10T12:14:11Z",
-  "carried_forward": false,
+  "carried_forward": true,
   "caveat": "Verified achievement points are server-scored from opt-in public GitHub progress claims. Each explicitly claimed achievement has a fixed value: started 5, local-proof 15, draft-builder 20, preview-proven 25, workshop-completed 35, and hard-mode-completed 50, for at most 150 points per workshop. Re-syncing unions achievement IDs without duplicating points. Profiles are public by explicit submission consent. GitHub verification confirms authenticated issue authorship and canonical claim format only; achievement completion remains self-reported and is not independently proven. Verified public achievements remain separate from local self-paced state, repository stars, agent upvotes, downloads, and workshop usage events.",
   "totals": {
    "participants": 0,
@@ -46865,13 +46839,14 @@
     "pull_requests": 0
    },
    "pages": 1,
-   "issues_scanned": 0
+   "issues_scanned": 0,
+   "carried_forward": true
   }
  },
  "ecosystem": {
   "schema": "aibast-ecosystem-metrics/1.0",
   "status": "available",
-  "as_of": "2026-08-10T12:14:11Z",
+  "as_of": "2026-08-10T13:34:19Z",
   "sources": {
    "aibast": {
     "status": "available",

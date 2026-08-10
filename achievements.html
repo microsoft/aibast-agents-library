@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Agent Growth &amp; Impact Points — AIBAST Agents Library</title>
-  <meta name="description" content="Review self-paced local Agent Growth &amp; Impact Points and opt-in public verified workshop achievements.">
+  <title>Workshop Achievements — AIBAST Agents Library</title>
+  <meta name="description" content="Review self-paced local workshop achievements and opt in to a public verified achievement profile.">
   <script>
     (() => {
       const param = new URLSearchParams(window.location.search).get("scoutTheme");
@@ -236,11 +236,11 @@
     <div class="topbar-inner">
       <a class="brand" href="index.html" aria-label="AIBAST Agents Library home">
         <span class="brand-mark" aria-hidden="true">AIB</span>
-        <span>Agent Growth &amp; Impact</span>
+        <span>Workshop Achievements</span>
       </a>
       <nav class="topnav" aria-label="AIBAST resources">
         <a class="nav-link" href="library.html">Library</a>
-        <a class="nav-link" href="achievements.html" aria-current="page">AGI Points</a>
+        <a class="nav-link" href="achievements.html" aria-current="page">Achievements</a>
         <a class="nav-link" href="metrics.html">Metrics</a>
         <a class="nav-link" href="https://github.com/microsoft/aibast-agents-library" target="_blank" rel="noopener">Repository</a>
         <button class="nav-link" id="themeToggle" type="button" aria-pressed="false">Use dark theme</button>
@@ -251,16 +251,16 @@
   <main class="page" id="main" tabindex="-1">
     <section class="hero">
       <p class="eyebrow">Self-paced workshop progress</p>
-      <h1>Your local Agent Growth &amp; Impact Points.</h1>
-      <p class="lede">AGI means <strong>Agent Growth &amp; Impact</strong>. It records workshop milestones on this browser and device; it is not an evaluation of agent capability or externally verified proof.</p>
+      <h1>Your workshop achievements.</h1>
+      <p class="lede">Track workshop milestones, badges, and points on this browser and device. These are self-reported learning achievements, not an evaluation of agent capability or independently verified proof.</p>
       <div class="notice"><strong>Local versus verified:</strong> local points are private, self-reported checkpoint progress. An earned badge remains <em>Local unsynced</em> until it appears in the accepted public metrics snapshot as <em>Verified synced</em>. No local progress is sent automatically.</div>
     </section>
 
     <h2>Local personal profile</h2>
-    <section class="grid" aria-label="Local AGI summary">
+    <section class="grid" aria-label="Local achievement summary">
       <article class="card score-card">
         <span class="score" id="totalScore">0</span>
-        <strong>local AGI points</strong>
+        <strong>achievement points</strong>
         <span class="muted" id="earnedSummary">No badges earned yet</span>
       </article>
       <article class="card">
@@ -280,7 +280,7 @@
 
     <h2>Local data controls</h2>
     <section class="card">
-      <p>Export, import, or reset only the privacy-filtered local AGI profile. Import discards unknown fields rather than trusting them.</p>
+      <p>Export, import, or reset only the privacy-filtered local achievement profile. Import discards unknown fields rather than trusting them.</p>
       <div class="actions">
         <button class="button" id="exportProfile" type="button">Export local profile</button>
         <button class="button" id="importProfile" type="button">Import local profile</button>
@@ -290,9 +290,9 @@
       <p class="fine-print" id="dataStatus" role="status" aria-live="polite" aria-atomic="true"></p>
     </section>
 
-    <h2>Opt-in public verified AGI profiles</h2>
+    <h2>Opt-in public verified achievements</h2>
     <section class="card">
-      <p>Public verified achievements come from submitted AGI progress issues, not from this browser's local score. Opening the prefilled form is not a sync until it is submitted. Resubmitting later merges newly earned canonical badge IDs without duplicate score; the server computes the verified score. One public GitHub issue submission opts that account into a public verified profile.</p>
+      <p>Public verified achievements come from submitted achievement progress issues, not from this browser's local score. Opening the prefilled form is not a sync until it is submitted. Resubmitting later merges newly earned canonical badge IDs without duplicate score; the server computes the verified score. One public GitHub issue submission opts that account into a public verified profile.</p>
       <div class="field">
         <label for="githubHighlight">Highlight a GitHub username in the public list</label>
         <input id="githubHighlight" type="text" inputmode="text" autocomplete="off" spellcheck="false" aria-describedby="highlightHelp">
@@ -310,8 +310,8 @@
 
   <script>
     (() => {
-      const PROFILE_KEY = "aibast:agi-profile:v1";
-      const HIGHLIGHT_KEY = "aibast:agi-highlight:v1";
+      const PROFILE_KEY = "aibast:achievement-profile:v1";
+      const HIGHLIGHT_KEY = "aibast:achievement-highlight:v1";
       const BADGES = Object.freeze([
         { id: "started", claimId: "started", label: "Started", points: 5, description: "First meaningful workshop checkpoint." },
         { id: "local-proof", claimId: "local-proof", label: "Local proof", points: 15, description: "Locked local cases confirmed." },
@@ -546,14 +546,10 @@
 
       function publicRows(metrics) {
         const candidates = [
-          metrics?.agi,
-          metrics?.agent_growth_impact,
-          metrics?.agent_growth_and_impact,
-          metrics?.agentGrowthImpact,
-          metrics?.agi_points,
-          metrics?.verified_agi,
+          metrics?.achievements,
+          metrics?.achievement_points,
+          metrics?.verified_achievements,
           metrics?.workshop_achievements,
-          metrics?.achievements?.agi,
         ].filter(Boolean);
         for (const candidate of candidates) {
           const rows =
@@ -566,7 +562,8 @@
           if (rows && typeof rows === "object") return Object.values(rows);
         }
         const fallback =
-          metrics?.leaderboards?.verified_agi || metrics?.leaderboards?.agi;
+          metrics?.leaderboards?.verified_achievements ||
+          metrics?.leaderboards?.achievements;
         return Array.isArray(fallback) ? fallback : [];
       }
 
@@ -719,7 +716,7 @@
           appendText(
             root,
             "p",
-            "The current metrics snapshot does not include an opt-in verified AGI profile dataset.",
+            "The current metrics snapshot does not include an opt-in verified achievement profile dataset.",
             "empty",
           );
           return;
@@ -727,7 +724,7 @@
         const table = document.createElement("table");
         table.className = "leaderboard";
         table.innerHTML =
-          "<caption>Opt-in public verified Agent Growth &amp; Impact profiles</caption><thead><tr><th scope=\"col\">GitHub profile</th><th scope=\"col\">Verified workshops</th><th scope=\"col\">Verified score</th></tr></thead>";
+          "<caption>Opt-in public verified achievement profiles</caption><thead><tr><th scope=\"col\">GitHub profile</th><th scope=\"col\">Verified workshops</th><th scope=\"col\">Verified score</th></tr></thead>";
         const body = document.createElement("tbody");
         rows.forEach((row) => {
           const username = String(
@@ -786,7 +783,7 @@
           appendText(
             root,
             "p",
-            "Public verified AGI profiles are unavailable in this metrics snapshot.",
+            "Public verified achievement profiles are unavailable in this metrics snapshot.",
             "empty",
           );
         }
@@ -799,7 +796,7 @@
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
-        link.download = "aibast-agi-profile.json";
+        link.download = "aibast-achievement-profile.json";
         link.click();
         URL.revokeObjectURL(url);
         status.textContent = "Privacy-filtered local profile exported.";
@@ -821,10 +818,10 @@
         }
       });
       document.getElementById("resetProfile").addEventListener("click", () => {
-        if (!window.confirm("Reset local AGI score, workshop progress, and badges on this device?")) return;
+        if (!window.confirm("Reset the local achievement score, workshop progress, and badges on this device?")) return;
         localStorage.removeItem(PROFILE_KEY);
         renderLocal();
-        status.textContent = "Local AGI profile reset.";
+        status.textContent = "Local achievement profile reset.";
       });
 
       const highlightInput = document.getElementById("githubHighlight");

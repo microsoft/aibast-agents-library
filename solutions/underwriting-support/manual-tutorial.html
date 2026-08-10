@@ -232,7 +232,7 @@
     .report-button { border-color: var(--cp-accent); color: var(--cp-accent); }
     .feedback-notice { margin-top: 14px; padding: 14px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
     .step footer { display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
-    .agi-manual-note { margin-top: 10px; color: var(--cp-text-muted); font-size: 13px; }
+    .achievements-manual-note { margin-top: 10px; color: var(--cp-text-muted); font-size: 13px; }
     .troubleshooting details { padding: 14px 0; border-bottom: 1px solid var(--cp-border); }
     summary { cursor: pointer; font-weight: 700; }
     @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } .sidebar { position: static; max-height: none; } }
@@ -248,8 +248,8 @@
     <aside class="sidebar">
       <strong id="progress-label">0 of 18 complete</strong>
       <div class="progress"><span id="progress-bar"></span></div>
-      <p class="agi-manual-note">Hard-mode progress earns self-paced local Agent Growth &amp; Impact points on this device.</p>
-      <p class="agi-manual-note" id="agi-manual-toast" role="status" aria-live="polite" aria-atomic="true"></p>
+      <p class="achievements-manual-note">Hard-mode progress earns self-paced local achievement points on this device.</p>
+      <p class="achievements-manual-note" id="achievements-manual-toast" role="status" aria-live="polite" aria-atomic="true"></p>
       <nav class="toc" aria-label="Tutorial actions"><a href="#step-1">1. Create a blank Copilot Studio agent</a>
 <a href="#step-2">2. Name Underwriting Support Manual</a>
 <a href="#step-3">3. Enter the reviewed global instructions</a>
@@ -390,7 +390,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
           </div>
 
-          <div class="look-for withheld-checkpoint"><strong>Withheld checkpoint — reshoot required</strong><p>The recorded screenshot is not approved for learner display and has been withheld. Review note: The instruction content is visible, but the screenshot has no saved-state indicator such as No unsaved changes. The frame does not independently prove the save checkpoint.</p><p><strong>Expected state:</strong> The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
           <footer>
             <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
             <label><input class="complete" type="checkbox" data-step="4"> Mark complete</label>
@@ -405,7 +405,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured inventory no longer lists the default web-search capability.</div>
           </div>
 
-          <div class="look-for withheld-checkpoint"><strong>Withheld checkpoint — reshoot required</strong><p>The recorded screenshot is not approved for learner display and has been withheld. Review note: The screenshot shows a completed Build page with no web-search chip, but it contains no positive visible confirmation that Search all websites was removed. Absence alone is not sufficient proof for this action.</p><p><strong>Expected state:</strong> The captured inventory no longer lists the default web-search capability.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured inventory no longer lists the default web-search capability.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
           <footer>
             <a href="export-manifest.json" download>Download source: Export manifest</a>
             <label><input class="complete" type="checkbox" data-step="5"> Mark complete</label>
@@ -540,7 +540,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records UWS-01 with the recorded identifiers UW-2025-103, Substandard; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running UWS-01. A previous response must not influence the evidence.</p></div>
-          <div class="look-for withheld-checkpoint"><strong>Withheld checkpoint — reshoot required</strong><p>The recorded screenshot is not approved for learner display and has been withheld. Review note: The visible final-answer viewport does not contain either required deterministic marker UW-2025-103 or Substandard. The safety boundary alone does not prove UWS-01.</p><p><strong>Expected state:</strong> The captured Preview evidence records UWS-01 with the recorded identifiers UW-2025-103, Substandard; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured Preview evidence records UWS-01 with the recorded identifiers UW-2025-103, Substandard; do not infer results beyond it.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="14"> Mark complete</label>
@@ -555,7 +555,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records UWS-02 with the recorded identifiers UW-2025-101, Indicated Premium; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running UWS-02. A previous response must not influence the evidence.</p></div>
-          <div class="look-for withheld-checkpoint"><strong>Withheld checkpoint — reshoot required</strong><p>The recorded screenshot is not approved for learner display and has been withheld. Review note: The visible final-answer viewport contains loss and review details but neither required deterministic marker UW-2025-101 nor Indicated Premium.</p><p><strong>Expected state:</strong> The captured Preview evidence records UWS-02 with the recorded identifiers UW-2025-101, Indicated Premium; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured Preview evidence records UWS-02 with the recorded identifiers UW-2025-101, Indicated Premium; do not infer results beyond it.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="15"> Mark complete</label>
@@ -585,7 +585,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The captured Preview evidence records UWS-04 with the recorded identifiers UW-2025-103, No approval; do not infer results beyond it.</div>
           </div>
           <div class="look-for"><strong>Before this case</strong><p>Open Preview in a fresh conversation before running UWS-04. A previous response must not influence the evidence.</p></div>
-          <div class="look-for withheld-checkpoint"><strong>Withheld checkpoint — reshoot required</strong><p>The recorded screenshot is not approved for learner display and has been withheld. Review note: UW-2025-103 and No approval appear only in the model reasoning trace; no final answer is visible. Reasoning text is not learner-facing pass evidence.</p><p><strong>Expected state:</strong> The captured Preview evidence records UWS-04 with the recorded identifiers UW-2025-103, No approval; do not infer results beyond it.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The captured Preview evidence records UWS-04 with the recorded identifiers UW-2025-103, No approval; do not infer results beyond it.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
           <footer>
             <a href="evals/manual-build-evidence.json" download>Download source: Manual Build Evidence</a>
             <label><input class="complete" type="checkbox" data-step="17"> Mark complete</label>
@@ -621,27 +621,27 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
   <script>
     (() => {
 
-      const AGI_PROFILE_KEY = "aibast:agi-profile:v1";
-      const AGI_WORKSHOP_SLUG = "underwriting-support";
-      const AGI_BADGES = Object.freeze([{"id":"started","label":"Started","points":5},{"id":"local-proof","label":"Local proof","points":15},{"id":"draft-builder","label":"Draft builder","points":20},{"id":"preview-proven","label":"Preview proven","points":25},{"id":"workshop-complete","label":"Workshop complete","points":35},{"id":"hard-mode-complete","label":"Hard mode complete","points":50}]);
-      const AGI_BADGE_IDS = new Set(AGI_BADGES.map((badge) => badge.id));
+      const ACHIEVEMENT_PROFILE_KEY = "aibast:achievement-profile:v1";
+      const ACHIEVEMENT_WORKSHOP_SLUG = "underwriting-support";
+      const ACHIEVEMENT_BADGES = Object.freeze([{"id":"started","label":"Started","points":5},{"id":"local-proof","label":"Local proof","points":15},{"id":"draft-builder","label":"Draft builder","points":20},{"id":"preview-proven","label":"Preview proven","points":25},{"id":"workshop-complete","label":"Workshop complete","points":35},{"id":"hard-mode-complete","label":"Hard mode complete","points":50}]);
+      const ACHIEVEMENT_BADGE_IDS = new Set(ACHIEVEMENT_BADGES.map((badge) => badge.id));
 
-      function emptyAgiProfile() {
+      function emptyAchievementProfile() {
         return { score: 0, workshops: {}, updatedAt: null };
       }
 
-      function validAgiTimestamp(value) {
+      function validAchievementTimestamp(value) {
         return typeof value === "string" && !Number.isNaN(Date.parse(value))
           ? value
           : null;
       }
 
-      function agiCount(value) {
+      function achievementCount(value) {
         return Number.isInteger(value) && value >= 0 ? value : 0;
       }
 
-      function sanitizeAgiProfile(value) {
-        const clean = emptyAgiProfile();
+      function sanitizeAchievementProfile(value) {
+        const clean = emptyAchievementProfile();
         const source =
           value && typeof value === "object" && !Array.isArray(value) ? value : {};
         const workshops =
@@ -658,13 +658,13 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
               ? rawWorkshop.progress
               : {};
           const progress = {
-            easyChecked: agiCount(rawProgress.easyChecked),
-            easyTotal: agiCount(rawProgress.easyTotal),
-            hardChecked: agiCount(rawProgress.hardChecked),
-            hardTotal: agiCount(rawProgress.hardTotal),
+            easyChecked: achievementCount(rawProgress.easyChecked),
+            easyTotal: achievementCount(rawProgress.easyTotal),
+            hardChecked: achievementCount(rawProgress.hardChecked),
+            hardTotal: achievementCount(rawProgress.hardTotal),
             easyComplete: rawProgress.easyComplete === true,
             hardComplete: rawProgress.hardComplete === true,
-            updatedAt: validAgiTimestamp(rawProgress.updatedAt),
+            updatedAt: validAchievementTimestamp(rawProgress.updatedAt),
           };
           const achievements = {};
           const rawAchievements =
@@ -672,7 +672,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             typeof rawWorkshop.achievements === "object"
               ? rawWorkshop.achievements
               : {};
-          AGI_BADGES.forEach((badge) => {
+          ACHIEVEMENT_BADGES.forEach((badge) => {
             const raw = rawAchievements[badge.id];
             const earned =
               raw === true ||
@@ -680,7 +680,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             if (earned) {
               achievements[badge.id] = {
                 earned: true,
-                earnedAt: validAgiTimestamp(raw?.earnedAt),
+                earnedAt: validAchievementTimestamp(raw?.earnedAt),
               };
             }
           });
@@ -694,7 +694,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         clean.score = Object.values(clean.workshops).reduce(
           (total, workshop) =>
             total +
-            AGI_BADGES.reduce(
+            ACHIEVEMENT_BADGES.reduce(
               (subtotal, badge) =>
                 subtotal +
                 (workshop.achievements[badge.id]?.earned ? badge.points : 0),
@@ -702,31 +702,31 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             ),
           0,
         );
-        clean.updatedAt = validAgiTimestamp(source.updatedAt);
+        clean.updatedAt = validAchievementTimestamp(source.updatedAt);
         return clean;
       }
 
-      function readAgiProfile() {
+      function readAchievementProfile() {
         try {
-          return sanitizeAgiProfile(
-            JSON.parse(localStorage.getItem(AGI_PROFILE_KEY) || "{}"),
+          return sanitizeAchievementProfile(
+            JSON.parse(localStorage.getItem(ACHIEVEMENT_PROFILE_KEY) || "{}"),
           );
         } catch (_error) {
-          return emptyAgiProfile();
+          return emptyAchievementProfile();
         }
       }
 
-      function writeAgiProfile(profile) {
-        const clean = sanitizeAgiProfile(profile);
+      function writeAchievementProfile(profile) {
+        const clean = sanitizeAchievementProfile(profile);
         clean.updatedAt = new Date().toISOString();
-        localStorage.setItem(AGI_PROFILE_KEY, JSON.stringify(clean));
+        localStorage.setItem(ACHIEVEMENT_PROFILE_KEY, JSON.stringify(clean));
         return clean;
       }
 
-      function ensureAgiWorkshop(profile, mode = "easy") {
-        if (!profile.workshops[AGI_WORKSHOP_SLUG]) {
-          profile.workshops[AGI_WORKSHOP_SLUG] = {
-            slug: AGI_WORKSHOP_SLUG,
+      function ensureAchievementWorkshop(profile, mode = "easy") {
+        if (!profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG]) {
+          profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG] = {
+            slug: ACHIEVEMENT_WORKSHOP_SLUG,
             mode: mode === "hard" ? "hard" : "easy",
             progress: {
               easyChecked: 0,
@@ -740,36 +740,36 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             achievements: {},
           };
         }
-        const workshop = profile.workshops[AGI_WORKSHOP_SLUG];
+        const workshop = profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG];
         workshop.mode = mode === "hard" ? "hard" : "easy";
         return workshop;
       }
 
-      function setAgiWorkshopProgress(profile, mode, patch) {
-        const workshop = ensureAgiWorkshop(profile, mode);
+      function setAchievementWorkshopProgress(profile, mode, patch) {
+        const workshop = ensureAchievementWorkshop(profile, mode);
         workshop.progress = {
           ...workshop.progress,
           ...patch,
           updatedAt: new Date().toISOString(),
         };
-        return writeAgiProfile(profile);
+        return writeAchievementProfile(profile);
       }
 
-      function awardAgi(profile, badgeId, mode = "easy") {
-        if (!AGI_BADGE_IDS.has(badgeId)) {
-          return { profile: sanitizeAgiProfile(profile), awarded: null };
+      function awardAchievement(profile, badgeId, mode = "easy") {
+        if (!ACHIEVEMENT_BADGE_IDS.has(badgeId)) {
+          return { profile: sanitizeAchievementProfile(profile), awarded: null };
         }
-        const workshop = ensureAgiWorkshop(profile, mode);
+        const workshop = ensureAchievementWorkshop(profile, mode);
         if (workshop.achievements[badgeId]?.earned) {
-          return { profile: sanitizeAgiProfile(profile), awarded: null };
+          return { profile: sanitizeAchievementProfile(profile), awarded: null };
         }
         workshop.achievements[badgeId] = {
           earned: true,
           earnedAt: new Date().toISOString(),
         };
         return {
-          profile: writeAgiProfile(profile),
-          awarded: AGI_BADGES.find((badge) => badge.id === badgeId),
+          profile: writeAchievementProfile(profile),
+          awarded: ACHIEVEMENT_BADGES.find((badge) => badge.id === badgeId),
         };
       }
 
@@ -786,7 +786,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
       const boxes = Array.from(document.querySelectorAll(".complete"));
       const label = document.getElementById("progress-label");
       const bar = document.getElementById("progress-bar");
-      const agiToast = document.getElementById("agi-manual-toast");
+      const achievementToast = document.getElementById("achievements-manual-toast");
       let saved = [];
       try {
         const parsed = JSON.parse(localStorage.getItem(key) || "[]");
@@ -806,9 +806,9 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         localStorage.setItem(key, JSON.stringify(done));
         label.textContent = `${done.length} of ${boxes.length} complete`;
         bar.style.width = boxes.length ? `${(done.length / boxes.length) * 100}%` : "0%";
-        let profile = readAgiProfile();
-        if (done.length > 0 || profile.workshops[AGI_WORKSHOP_SLUG]) {
-          profile = setAgiWorkshopProgress(profile, "hard", {
+        let profile = readAchievementProfile();
+        if (done.length > 0 || profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG]) {
+          profile = setAchievementWorkshopProgress(profile, "hard", {
             hardChecked: done.length,
             hardTotal: boxes.length,
             hardComplete: complete,
@@ -817,10 +817,10 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
           if (done.length > 0) badgeIds.push("started");
           if (complete) badgeIds.push("hard-mode-complete");
           badgeIds.forEach((badgeId) => {
-            const result = awardAgi(profile, badgeId, "hard");
+            const result = awardAchievement(profile, badgeId, "hard");
             profile = result.profile;
-            if (result.awarded && agiToast) {
-              agiToast.textContent =
+            if (result.awarded && achievementToast) {
+              achievementToast.textContent =
                 `${result.awarded.label} earned: +${result.awarded.points} local achievement points.`;
             }
           });

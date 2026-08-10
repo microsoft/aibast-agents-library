@@ -288,83 +288,83 @@ METRICS = (
         "unit": "count",
     },
     {
-        "id": "agi_participants",
+        "id": "achievement_participants",
         "label": "Verified achievement participants",
         "section": "Learning impact",
-        "path": ("agi", "totals", "participants"),
-        "source": "agi",
+        "path": ("achievements", "totals", "participants"),
+        "source": "achievements",
         "kind": "gauge",
         "unit": "count",
     },
     {
-        "id": "agi_points",
+        "id": "achievement_points",
         "label": "Verified achievement points",
         "section": "Learning impact",
-        "path": ("agi", "totals", "points"),
-        "source": "agi",
+        "path": ("achievements", "totals", "points"),
+        "source": "achievements",
         "kind": "gauge",
         "unit": "count",
     },
     {
-        "id": "agi_achievements",
+        "id": "verified_achievements",
         "label": "Verified achievements",
         "section": "Learning impact",
-        "path": ("agi", "totals", "achievements"),
-        "source": "agi",
+        "path": ("achievements", "totals", "achievements"),
+        "source": "achievements",
         "kind": "gauge",
         "unit": "count",
     },
     {
-        "id": "agi_starts",
+        "id": "achievement_starts",
         "label": "Workshop starts",
         "section": "Learning impact",
-        "path": ("agi", "totals", "starts"),
-        "source": "agi",
+        "path": ("achievements", "totals", "starts"),
+        "source": "achievements",
         "kind": "gauge",
         "unit": "count",
     },
     {
-        "id": "agi_completions",
+        "id": "achievement_completions",
         "label": "Workshop completions",
         "section": "Learning impact",
-        "path": ("agi", "totals", "workshop_completions"),
-        "source": "agi",
+        "path": ("achievements", "totals", "workshop_completions"),
+        "source": "achievements",
         "kind": "gauge",
         "unit": "count",
     },
     {
-        "id": "agi_hard_completions",
+        "id": "achievement_hard_completions",
         "label": "Hard-mode completions",
         "section": "Learning impact",
-        "path": ("agi", "totals", "hard_completions"),
-        "source": "agi",
+        "path": ("achievements", "totals", "hard_completions"),
+        "source": "achievements",
         "kind": "gauge",
         "unit": "count",
     },
     {
-        "id": "agi_completion_rate",
+        "id": "achievement_completion_rate",
         "label": "Workshop completion rate",
         "section": "Learning impact",
-        "path": ("agi", "totals", "completion_rate"),
-        "source": "agi",
+        "path": ("achievements", "totals", "completion_rate"),
+        "source": "achievements",
         "kind": "rate",
         "unit": "percent",
     },
     {
-        "id": "agi_hard_completion_rate",
+        "id": "achievement_hard_completion_rate",
         "label": "Hard-mode completion rate",
         "section": "Learning impact",
-        "path": ("agi", "totals", "hard_completion_rate"),
-        "source": "agi",
+        "path": ("achievements", "totals", "hard_completion_rate"),
+        "source": "achievements",
         "kind": "rate",
         "unit": "percent",
     },
     {
-        "id": "agi_achievement_rate",
+        "id": "achievement_achievement_rate",
         "label": "Achievement completion rate",
         "section": "Learning impact",
-        "path": ("agi", "totals", "achievement_completion_rate"),
-        "source": "agi",
+        "path": ("achievements", "totals", "achievement_completion_rate"),
+        "source": "achievements",
         "kind": "rate",
         "unit": "percent",
     },
@@ -484,7 +484,7 @@ def source_status(document: dict[str, Any], source: str) -> str:
     acquisitions = document.get("agent_acquisition_coverage") or {}
     workshops = document.get("workshops") or {}
     workshop_coverage = workshops.get("coverage") or {}
-    agi = document.get("agi") or {}
+    achievements = document.get("achievements") or {}
     if source == "catalog":
         return "available"
     if source == "repo":
@@ -546,9 +546,9 @@ def source_status(document: dict[str, Any], source: str) -> str:
     if source == "workshop_feedback":
         status = (workshop_coverage.get("feedback") or {}).get("status")
         return normalized_source_status(status)
-    if source == "agi":
-        status = agi.get("status")
-        if status == "available" and not agi.get("carried_forward"):
+    if source == "achievements":
+        status = achievements.get("status")
+        if status == "available" and not achievements.get("carried_forward"):
             return "available"
         return (
             "partial"
@@ -602,9 +602,9 @@ def extract_metric_rows(document: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def compact_workshops(document: dict[str, Any]) -> dict[str, dict[str, Any]]:
-    agi_rows = {
+    achievement_rows = {
         row.get("slug"): row
-        for row in (document.get("agi") or {}).get("workshops", [])
+        for row in (document.get("achievements") or {}).get("workshops", [])
         if isinstance(row, dict) and row.get("slug")
     }
     result = {}
@@ -612,7 +612,7 @@ def compact_workshops(document: dict[str, Any]) -> dict[str, dict[str, Any]]:
         if not isinstance(row, dict) or not row.get("slug"):
             continue
         slug = row["slug"]
-        agi = agi_rows.get(slug, {})
+        achievements = achievement_rows.get(slug, {})
         result[slug] = {
             "display_name": row.get("display_name") or slug,
             "usage_events": numeric(row.get("usage_events")),
@@ -621,10 +621,10 @@ def compact_workshops(document: dict[str, Any]) -> dict[str, dict[str, Any]]:
             "bundle_downloads": numeric(row.get("bundle_downloads")),
             "feedback_reports": numeric(row.get("feedback_reports")),
             "agent_upvotes": numeric(row.get("agent_upvotes")),
-            "agi_points": numeric(agi.get("points")),
-            "agi_starts": numeric(agi.get("starts")),
-            "agi_completions": numeric(agi.get("workshop_completions")),
-            "agi_hard_completions": numeric(agi.get("hard_completions")),
+            "achievement_points": numeric(achievements.get("points")),
+            "achievement_starts": numeric(achievements.get("starts")),
+            "achievement_completions": numeric(achievements.get("workshop_completions")),
+            "achievement_hard_completions": numeric(achievements.get("hard_completions")),
         }
     return result
 
@@ -951,10 +951,10 @@ def build_period(
                 prior_workshops,
                 "usage_events",
             ),
-            "workshop_agi_points": top_movers(
+            "workshop_achievement_points": top_movers(
                 current.get("workshops") or {},
                 prior_workshops,
-                "agi_points",
+                "achievement_points",
             ),
             "agent_downloads": top_movers(
                 current.get("agents") or {},
@@ -979,7 +979,7 @@ def coverage_summary(document: dict[str, Any]) -> dict[str, Any]:
     traffic = document.get("traffic") or {}
     file_metrics = document.get("file_metrics") or {}
     workshops = document.get("workshops") or {}
-    agi = document.get("agi") or {}
+    achievements = document.get("achievements") or {}
     upvotes = document.get("agent_upvote_coverage") or {}
     acquisitions = document.get("agent_acquisition_coverage") or {}
     return {
@@ -1007,9 +1007,9 @@ def coverage_summary(document: dict[str, Any]) -> dict[str, Any]:
             or "unavailable",
             "as_of": workshops.get("as_of"),
         },
-        "agi": {
-            "status": agi.get("status") or "unavailable",
-            "as_of": agi.get("as_of"),
+        "achievements": {
+            "status": achievements.get("status") or "unavailable",
+            "as_of": achievements.get("as_of"),
         },
     }
 
@@ -1165,7 +1165,7 @@ def grouped_metrics(report: dict[str, Any]) -> dict[str, list[dict[str, Any]]]:
 
 MOVER_GROUPS = (
     ("workshop_usage", "Workshop usage"),
-    ("workshop_agi_points", "Workshop achievement points"),
+    ("workshop_achievement_points", "Workshop achievement points"),
     ("agent_downloads", "Agent downloads"),
     ("agent_upvotes", "Agent upvotes"),
     ("agent_acquisitions", "Signed-in agent acquisitions"),

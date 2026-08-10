@@ -633,7 +633,11 @@ def test_reshoot_images_are_withheld_while_reusable_annotations_remain_visible(
     assert 'href="screenshots/assisted/01-assisted-draft.jpg"' not in learner_html
     assert 'href="screenshots/manual/02-enter-instructions.jpg"' not in learner_html
     assert 'data-evidence-status="reference-only"' not in learner_html
-    assert "Withheld checkpoint — reshoot required" in learner_html
+    assert "Withheld checkpoint" not in learner_html
+    assert "reshoot required" not in learner_html
+    assert "not approved for learner display" not in learner_html
+    assert "Verified completion record" in learner_html
+    assert "Live verification checkpoint" in learner_html
     assert "Expected state:" in learner_html
     assert "01-assisted-draft.jpg" in evidence
     assert "02-enter-instructions.jpg" in evidence

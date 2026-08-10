@@ -19,7 +19,7 @@ jobs:
           script: |
             const body = context.payload.issue.body || "";
             const isWorkshopFeedback = body.includes("<!-- aibast-workshop-feedback:v1 -->");
-            const isAgiProgress = body.includes("<!-- aibast-agi-progress:v1 -->");
+            const isAchievementProgress = body.includes("<!-- aibast-achievement-progress:v1 -->");
             const definitions = {
               "workshop-feedback": {
                 name: "workshop-feedback",
@@ -31,8 +31,8 @@ jobs:
                 color: "f59e0b",
                 description: "Requires review and routing."
               },
-              "agi-progress": {
-                name: "agi-progress",
+              "achievement-progress": {
+                name: "achievement-progress",
                 color: "8250df",
                 description: "Opt-in public workshop achievement progress sync."
               }
@@ -41,14 +41,14 @@ jobs:
             const currentNames = (context.payload.issue.labels || []).map((label) =>
               typeof label === "string" ? label : label.name
             );
-            const hasCurrentMarker = isWorkshopFeedback || isAgiProgress;
+            const hasCurrentMarker = isWorkshopFeedback || isAchievementProgress;
             const hasManagedLabel = currentNames.some((name) => managedNames.has(name));
             if (!hasCurrentMarker && !hasManagedLabel) {
               return false;
             }
 
-            const selectedNames = isAgiProgress
-              ? ["agi-progress"]
+            const selectedNames = isAchievementProgress
+              ? ["achievement-progress"]
               : isWorkshopFeedback
                   ? ["workshop-feedback", "needs-triage"]
                   : [];

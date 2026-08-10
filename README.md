@@ -94,7 +94,7 @@ The [**Agent Library**](https://microsoft.github.io/aibast-agents-library/librar
 
 The files themselves live under [`agents/@aibast-agents-library/`](agents/@aibast-agents-library/), grouped into `*_stacks/*_stack/` folders — a stack is the set of agents that solves one industry scenario end to end. Review a template, adapt it to your environment, then drag the trusted `*_agent.py` file into the Brainstem chat or place it in the configured agents directory. Agent files are Python code and execute locally, so review them before installation.
 
-[**Workshop achievements**](https://microsoft.github.io/aibast-agents-library/achievements.html) record self-paced milestones locally and let learners explicitly sync canonical badges to a public GitHub-attributed profile. The profile page shows the learner's full AGI score.
+[**Workshop achievements**](https://microsoft.github.io/aibast-agents-library/achievements.html) record self-paced milestones locally and let learners explicitly sync canonical badges to a public GitHub-attributed profile. The profile page shows the learner's achievement score.
 
 [**Library metrics**](https://microsoft.github.io/aibast-agents-library/metrics.html) publishes AIBAST-only public downloads, every-file observations, per-agent rating Discussion upvotes, signed-in acquisition Discussion signals, workshop adoption, and opt-in achievement rollups. Each run also generates a shareable weekly/monthly PDF plus email-ready text under `reports/`. `scripts/build_metrics.py` builds the snapshot, and `scripts/build_impact_report.py` turns its dated history into the exportable impact report without converting unavailable coverage to zero.
 

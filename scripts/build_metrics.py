@@ -68,10 +68,10 @@ WORKSHOP_FEEDBACK_LABEL = "workshop-feedback"
 AGENT_DISCUSSION_MARKER = "<!-- aibast-agent-discussion:v1 -->"
 AGENT_DISCUSSION_SCHEMA = "aibast-agent-discussion/1.0"
 AGENT_DISCUSSION_SIGNALS = ("upvote", "acquisition")
-AGI_PROGRESS_MARKER = "<!-- aibast-agi-progress:v1 -->"
-AGI_PROGRESS_SCHEMA = "aibast-agi-progress/1.0"
-AGI_PROGRESS_LABEL = "agi-progress"
-AGI_ACHIEVEMENT_ORDER = (
+ACHIEVEMENT_PROGRESS_MARKER = "<!-- aibast-achievement-progress:v1 -->"
+ACHIEVEMENT_PROGRESS_SCHEMA = "aibast-achievement-progress/1.0"
+ACHIEVEMENT_PROGRESS_LABEL = "achievement-progress"
+ACHIEVEMENT_ORDER = (
     "started",
     "local-proof",
     "draft-builder",
@@ -79,7 +79,7 @@ AGI_ACHIEVEMENT_ORDER = (
     "workshop-completed",
     "hard-mode-completed",
 )
-AGI_POINTS = {
+ACHIEVEMENT_POINTS = {
     "started": 5,
     "local-proof": 15,
     "draft-builder": 20,
@@ -87,7 +87,7 @@ AGI_POINTS = {
     "workshop-completed": 35,
     "hard-mode-completed": 50,
 }
-AGI_LABELS = {
+ACHIEVEMENT_LABELS = {
     "started": "Started",
     "local-proof": "Local proof",
     "draft-builder": "Draft builder",
@@ -95,7 +95,7 @@ AGI_LABELS = {
     "workshop-completed": "Workshop completed",
     "hard-mode-completed": "Hard mode completed",
 }
-AGI_CAVEAT = (
+ACHIEVEMENT_CAVEAT = (
     "Verified achievement points are server-scored from opt-in public GitHub "
     "progress claims. Each explicitly claimed achievement has a fixed "
     "value: started 5, local-proof 15, draft-builder 20, preview-proven 25, "
@@ -1869,7 +1869,7 @@ def fetch_agent_discussion_signals(token, agent_names):
     }
 
 
-def _agi_catalog_map(catalog):
+def _achievement_catalog_map(catalog):
     return {
         row.get("slug"): row
         for row in catalog
@@ -1877,7 +1877,7 @@ def _agi_catalog_map(catalog):
     }
 
 
-def _agi_field_value(raw):
+def _achievement_field_value(raw):
     if raw != raw.strip() or not raw:
         return None
     if raw.startswith("`") or raw.endswith("`"):
@@ -1896,10 +1896,10 @@ def _agi_field_value(raw):
     return raw
 
 
-def parse_agi_claim(body, catalog):
-    """Parse one strict opt-in AGI progress claim."""
+def parse_achievement_claim(body, catalog):
+    """Parse one strict opt-in achievement progress claim."""
     text = body or ""
-    if not text.startswith(AGI_PROGRESS_MARKER):
+    if not text.startswith(ACHIEVEMENT_PROGRESS_MARKER):
         return None
     field_names = (
         "Schema",
@@ -1946,14 +1946,14 @@ def parse_agi_claim(body, catalog):
     ):
         return None
     values = {
-        name: _agi_field_value(fields[name][0])
+        name: _achievement_field_value(fields[name][0])
         for name in required_fields
     }
-    values["Source"] = _agi_field_value(source_values[0])
+    values["Source"] = _achievement_field_value(source_values[0])
     if any(value is None for value in values.values()):
         return None
 
-    workshop_map = _agi_catalog_map(catalog)
+    workshop_map = _achievement_catalog_map(catalog)
     workshop = values["Workshop"]
     expected = workshop_map.get(workshop)
     achievement_ids = [
@@ -1964,10 +1964,10 @@ def parse_agi_claim(body, catalog):
         not achievement_ids
         or any(not value for value in achievement_ids)
         or len(set(achievement_ids)) != len(achievement_ids)
-        or any(value not in AGI_POINTS for value in achievement_ids)
+        or any(value not in ACHIEVEMENT_POINTS for value in achievement_ids)
         or achievement_ids != sorted(
             achievement_ids,
-            key=AGI_ACHIEVEMENT_ORDER.index,
+            key=ACHIEVEMENT_ORDER.index,
         )
     ):
         return None
@@ -1984,7 +1984,7 @@ def parse_agi_claim(body, catalog):
     if "hard-mode-completed" in claimed and "started" not in claimed:
         return None
     if (
-        values["Schema"] != AGI_PROGRESS_SCHEMA
+        values["Schema"] != ACHIEVEMENT_PROGRESS_SCHEMA
         or expected is None
         or values["Agent"] != expected["catalog_key"]
     ):
@@ -2012,13 +2012,13 @@ def _completion_rate(completions, starts):
 
 
 def _achievement_completion_rate(achievements, starts):
-    possible = starts * len(AGI_ACHIEVEMENT_ORDER)
+    possible = starts * len(ACHIEVEMENT_ORDER)
     return round((achievements / possible) * 100, 1) if possible else 0.0
 
 
-def group_agi_progress(issues, catalog, complete=True, as_of=None):
+def group_achievement_progress(issues, catalog, complete=True, as_of=None):
     """Union verified progress into public profiles without source issue content."""
-    workshop_map = _agi_catalog_map(catalog)
+    workshop_map = _achievement_catalog_map(catalog)
     achievements_by_profile = defaultdict(lambda: defaultdict(set))
     display_logins = {}
     seen_achievements = set()
@@ -2034,7 +2034,7 @@ def group_agi_progress(issues, catalog, complete=True, as_of=None):
         if issue.get("pull_request"):
             diagnostics["pull_requests"] += 1
             continue
-        claim = parse_agi_claim(issue.get("body", ""), catalog)
+        claim = parse_achievement_claim(issue.get("body", ""), catalog)
         login = _github_login((issue.get("user") or {}).get("login"))
         if not login:
             diagnostics["invalid_users"] += 1
@@ -2071,14 +2071,14 @@ def group_agi_progress(issues, catalog, complete=True, as_of=None):
             "hard_completions": 0,
             "achievement_counts": {
                 achievement_id: 0
-                for achievement_id in AGI_ACHIEVEMENT_ORDER
+                for achievement_id in ACHIEVEMENT_ORDER
             },
         }
         for slug in workshop_map
     }
     achievement_claims = {
         achievement_id: set()
-        for achievement_id in AGI_ACHIEVEMENT_ORDER
+        for achievement_id in ACHIEVEMENT_ORDER
     }
     for login_key, workshops in achievements_by_profile.items():
         completed_workshops = sorted(
@@ -2094,7 +2094,7 @@ def group_agi_progress(issues, catalog, complete=True, as_of=None):
         for slug in sorted(workshops):
             achievement_ids = workshops[slug]
             workshop_points = sum(
-                AGI_POINTS[achievement_id]
+                ACHIEVEMENT_POINTS[achievement_id]
                 for achievement_id in achievement_ids
             )
             points += workshop_points
@@ -2118,7 +2118,7 @@ def group_agi_progress(issues, catalog, complete=True, as_of=None):
             workshop_counts[slug]["hard_completions"] += int(
                 "hard-mode-completed" in achievement_ids
             )
-            for achievement_id in AGI_ACHIEVEMENT_ORDER:
+            for achievement_id in ACHIEVEMENT_ORDER:
                 if achievement_id not in achievement_ids:
                     continue
                 workshop_counts[slug]["achievement_counts"][
@@ -2128,7 +2128,7 @@ def group_agi_progress(issues, catalog, complete=True, as_of=None):
                 badges.append({
                     "workshop": slug,
                     "achievement": achievement_id,
-                    "points": AGI_POINTS[achievement_id],
+                    "points": ACHIEVEMENT_POINTS[achievement_id],
                 })
         profiles.append({
             "login": display_logins[login_key],
@@ -2195,23 +2195,23 @@ def group_agi_progress(issues, catalog, complete=True, as_of=None):
     points = sum(row["points"] for row in profiles)
     achievement_count = sum(row["achievement_count"] for row in profiles)
     achievement_rows = []
-    for achievement_id in AGI_ACHIEVEMENT_ORDER:
+    for achievement_id in ACHIEVEMENT_ORDER:
         claims = achievement_claims[achievement_id]
         achievement_rows.append({
             "id": achievement_id,
-            "label": AGI_LABELS[achievement_id],
-            "points": AGI_POINTS[achievement_id],
+            "label": ACHIEVEMENT_LABELS[achievement_id],
+            "points": ACHIEVEMENT_POINTS[achievement_id],
             "claims": len(claims),
             "participants": len({login for login, _slug in claims}),
             "workshops": len({_slug for _login, _slug in claims}),
             "attainment_rate": _completion_rate(len(claims), starts),
         })
     return {
-        "schema": "aibast-agi/2.0",
+        "schema": "aibast-achievements/2.0",
         "status": "available" if complete else "partial",
         "as_of": as_of,
         "carried_forward": False,
-        "caveat": AGI_CAVEAT,
+        "caveat": ACHIEVEMENT_CAVEAT,
         "totals": {
             "participants": len(profiles),
             "points": points,
@@ -2249,9 +2249,9 @@ def group_agi_progress(issues, catalog, complete=True, as_of=None):
     }
 
 
-def unavailable_agi_metrics(catalog):
+def unavailable_achievement_metrics(catalog):
     rows = []
-    for workshop in _agi_catalog_map(catalog).values():
+    for workshop in _achievement_catalog_map(catalog).values():
         rows.append({
             "slug": workshop["slug"],
             "display_name": workshop["display_name"],
@@ -2267,16 +2267,16 @@ def unavailable_agi_metrics(catalog):
             "achievement_completion_rate": None,
             "achievement_counts": {
                 achievement_id: None
-                for achievement_id in AGI_ACHIEVEMENT_ORDER
+                for achievement_id in ACHIEVEMENT_ORDER
             },
         })
     rows.sort(key=lambda row: (row["display_name"].casefold(), row["slug"]))
     return {
-        "schema": "aibast-agi/2.0",
+        "schema": "aibast-achievements/2.0",
         "status": "unavailable",
         "as_of": None,
         "carried_forward": False,
-        "caveat": AGI_CAVEAT,
+        "caveat": ACHIEVEMENT_CAVEAT,
         "totals": {
             "participants": None,
             "points": None,
@@ -2293,14 +2293,14 @@ def unavailable_agi_metrics(catalog):
         "achievements": [
             {
                 "id": achievement_id,
-                "label": AGI_LABELS[achievement_id],
-                "points": AGI_POINTS[achievement_id],
+                "label": ACHIEVEMENT_LABELS[achievement_id],
+                "points": ACHIEVEMENT_POINTS[achievement_id],
                 "claims": None,
                 "participants": None,
                 "workshops": None,
                 "attainment_rate": None,
             }
-            for achievement_id in AGI_ACHIEVEMENT_ORDER
+            for achievement_id in ACHIEVEMENT_ORDER
         ],
         "coverage": {
             "status": "unavailable",
@@ -2312,12 +2312,12 @@ def unavailable_agi_metrics(catalog):
     }
 
 
-def carry_forward_agi(prior, catalog):
-    previous = prior.get("agi")
-    canonical_slugs = set(_agi_catalog_map(catalog))
+def carry_forward_achievements(prior, catalog):
+    previous = prior.get("achievements")
+    canonical_slugs = set(_achievement_catalog_map(catalog))
     if (
         not isinstance(previous, dict)
-        or previous.get("schema") != "aibast-agi/2.0"
+        or previous.get("schema") != "aibast-achievements/2.0"
         or previous.get("status") == "unavailable"
         or {
             row.get("slug")
@@ -2325,27 +2325,27 @@ def carry_forward_agi(prior, catalog):
             if row.get("slug")
         } != canonical_slugs
     ):
-        return unavailable_agi_metrics(catalog)
+        return unavailable_achievement_metrics(catalog)
     carried = json.loads(json.dumps(previous))
     carried["carried_forward"] = True
     carried.setdefault("as_of", prior.get("generated_at"))
-    carried["caveat"] = AGI_CAVEAT
+    carried["caveat"] = ACHIEVEMENT_CAVEAT
     coverage = carried.setdefault("coverage", {})
     coverage["carried_forward"] = True
     return carried
 
 
-def fetch_agi_progress(token, catalog, as_of=None):
-    """Fetch marker-authoritative AGI progress from all public issue states."""
+def fetch_achievement_progress(token, catalog, as_of=None):
+    """Fetch marker-authoritative achievement progress from public issues."""
     page_result = fetch_issue_pages(token)
     if not page_result["available"]:
-        return unavailable_agi_metrics(catalog)
+        return unavailable_achievement_metrics(catalog)
     candidates = [
         issue
         for issue in page_result["issues"]
-        if (issue.get("body") or "").startswith(AGI_PROGRESS_MARKER)
+        if (issue.get("body") or "").startswith(ACHIEVEMENT_PROGRESS_MARKER)
     ]
-    result = group_agi_progress(
+    result = group_achievement_progress(
         candidates,
         catalog,
         complete=page_result["complete"],
@@ -3351,7 +3351,7 @@ def main():
                 "workshop usage events."
             ),
         }
-        agi = carry_forward_agi(prior, workshop_catalog)
+        achievements = carry_forward_achievements(prior, workshop_catalog)
         daily = prior.get("daily", []) if prior else []
         prior_totals = prior.get("totals") or {}
         remote_totals = {
@@ -3399,14 +3399,14 @@ def main():
         )
         agent_upvotes = agent_discussions["signals"]["upvote"]
         agent_acquisitions = agent_discussions["signals"]["acquisition"]
-        log("· agi progress")
-        agi = fetch_agi_progress(
+        log("· achievements progress")
+        achievements = fetch_achievement_progress(
             token,
             workshop_catalog,
             as_of=generated_at,
         )
-        if agi["status"] == "unavailable":
-            agi = carry_forward_agi(prior, workshop_catalog)
+        if achievements["status"] == "unavailable":
+            achievements = carry_forward_achievements(prior, workshop_catalog)
         for name, agent in agents.items():
             agent["upvotes"] = agent_upvotes["counts"].get(name)
             agent["acquisitions"] = agent_acquisitions["counts"].get(name)
@@ -3739,7 +3739,7 @@ def main():
         "agent_acquisition_coverage": agent_acquisition_coverage,
         "file_metrics": file_metrics,
         "workshops": workshops,
-        "agi": agi,
+        "achievements": achievements,
         "ecosystem": ecosystem,
         "sources": [
             {"name": "GitHub Traffic API", "metric": "clones, views, popular paths (clones include this repo's own CI checkouts)", "url": f"{GH_API}/repos/{OWNER}/{REPO}/traffic/clones"},
@@ -3768,9 +3768,9 @@ def main():
     log(f"  workshops={workshops['totals']['workshops']} "
         f"workshop_usage_events={workshops['totals']['usage_events']}")
     log(
-        f"  achievement_status={agi['status']} "
-        f"achievement_participants={agi['totals']['participants']} "
-        f"achievement_points={agi['totals']['points']}"
+        f"  achievement_status={achievements['status']} "
+        f"achievement_participants={achievements['totals']['participants']} "
+        f"achievement_points={achievements['totals']['points']}"
     )
     log(
         f"  ecosystem_status={ecosystem['status']} "

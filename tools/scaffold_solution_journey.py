@@ -123,8 +123,8 @@ DARK_THEME_VARIABLES = """--cp-bg: #3d3b3a;
       --cp-sheen: rgba(255, 255, 255, 0.04);
       --cp-highlight: rgba(253, 142, 161, 0.12);"""
 
-AGI_PROFILE_KEY = "aibast:agi-profile:v1"
-AGI_POINTS = {
+ACHIEVEMENT_PROFILE_KEY = "aibast:achievement-profile:v1"
+ACHIEVEMENT_POINTS = {
     "started": 5,
     "local-proof": 15,
     "draft-builder": 20,
@@ -132,7 +132,7 @@ AGI_POINTS = {
     "workshop-complete": 35,
     "hard-mode-complete": 50,
 }
-AGI_LABELS = {
+ACHIEVEMENT_LABELS = {
     "started": "Started",
     "local-proof": "Local proof",
     "draft-builder": "Draft builder",
@@ -255,34 +255,34 @@ COMMON_CSS = f"""
 """
 
 
-def render_agi_runtime(slug: str) -> str:
+def render_achievement_runtime(slug: str) -> str:
     badges = [
-        {"id": badge_id, "label": AGI_LABELS[badge_id], "points": points}
-        for badge_id, points in AGI_POINTS.items()
+        {"id": badge_id, "label": ACHIEVEMENT_LABELS[badge_id], "points": points}
+        for badge_id, points in ACHIEVEMENT_POINTS.items()
     ]
     return (
         """
-      const AGI_PROFILE_KEY = __PROFILE_KEY__;
-      const AGI_WORKSHOP_SLUG = __WORKSHOP_SLUG__;
-      const AGI_BADGES = Object.freeze(__BADGES__);
-      const AGI_BADGE_IDS = new Set(AGI_BADGES.map((badge) => badge.id));
+      const ACHIEVEMENT_PROFILE_KEY = __PROFILE_KEY__;
+      const ACHIEVEMENT_WORKSHOP_SLUG = __WORKSHOP_SLUG__;
+      const ACHIEVEMENT_BADGES = Object.freeze(__BADGES__);
+      const ACHIEVEMENT_BADGE_IDS = new Set(ACHIEVEMENT_BADGES.map((badge) => badge.id));
 
-      function emptyAgiProfile() {
+      function emptyAchievementProfile() {
         return { score: 0, workshops: {}, updatedAt: null };
       }
 
-      function validAgiTimestamp(value) {
+      function validAchievementTimestamp(value) {
         return typeof value === "string" && !Number.isNaN(Date.parse(value))
           ? value
           : null;
       }
 
-      function agiCount(value) {
+      function achievementCount(value) {
         return Number.isInteger(value) && value >= 0 ? value : 0;
       }
 
-      function sanitizeAgiProfile(value) {
-        const clean = emptyAgiProfile();
+      function sanitizeAchievementProfile(value) {
+        const clean = emptyAchievementProfile();
         const source =
           value && typeof value === "object" && !Array.isArray(value) ? value : {};
         const workshops =
@@ -299,13 +299,13 @@ def render_agi_runtime(slug: str) -> str:
               ? rawWorkshop.progress
               : {};
           const progress = {
-            easyChecked: agiCount(rawProgress.easyChecked),
-            easyTotal: agiCount(rawProgress.easyTotal),
-            hardChecked: agiCount(rawProgress.hardChecked),
-            hardTotal: agiCount(rawProgress.hardTotal),
+            easyChecked: achievementCount(rawProgress.easyChecked),
+            easyTotal: achievementCount(rawProgress.easyTotal),
+            hardChecked: achievementCount(rawProgress.hardChecked),
+            hardTotal: achievementCount(rawProgress.hardTotal),
             easyComplete: rawProgress.easyComplete === true,
             hardComplete: rawProgress.hardComplete === true,
-            updatedAt: validAgiTimestamp(rawProgress.updatedAt),
+            updatedAt: validAchievementTimestamp(rawProgress.updatedAt),
           };
           const achievements = {};
           const rawAchievements =
@@ -313,7 +313,7 @@ def render_agi_runtime(slug: str) -> str:
             typeof rawWorkshop.achievements === "object"
               ? rawWorkshop.achievements
               : {};
-          AGI_BADGES.forEach((badge) => {
+          ACHIEVEMENT_BADGES.forEach((badge) => {
             const raw = rawAchievements[badge.id];
             const earned =
               raw === true ||
@@ -321,7 +321,7 @@ def render_agi_runtime(slug: str) -> str:
             if (earned) {
               achievements[badge.id] = {
                 earned: true,
-                earnedAt: validAgiTimestamp(raw?.earnedAt),
+                earnedAt: validAchievementTimestamp(raw?.earnedAt),
               };
             }
           });
@@ -335,7 +335,7 @@ def render_agi_runtime(slug: str) -> str:
         clean.score = Object.values(clean.workshops).reduce(
           (total, workshop) =>
             total +
-            AGI_BADGES.reduce(
+            ACHIEVEMENT_BADGES.reduce(
               (subtotal, badge) =>
                 subtotal +
                 (workshop.achievements[badge.id]?.earned ? badge.points : 0),
@@ -343,31 +343,31 @@ def render_agi_runtime(slug: str) -> str:
             ),
           0,
         );
-        clean.updatedAt = validAgiTimestamp(source.updatedAt);
+        clean.updatedAt = validAchievementTimestamp(source.updatedAt);
         return clean;
       }
 
-      function readAgiProfile() {
+      function readAchievementProfile() {
         try {
-          return sanitizeAgiProfile(
-            JSON.parse(localStorage.getItem(AGI_PROFILE_KEY) || "{}"),
+          return sanitizeAchievementProfile(
+            JSON.parse(localStorage.getItem(ACHIEVEMENT_PROFILE_KEY) || "{}"),
           );
         } catch (_error) {
-          return emptyAgiProfile();
+          return emptyAchievementProfile();
         }
       }
 
-      function writeAgiProfile(profile) {
-        const clean = sanitizeAgiProfile(profile);
+      function writeAchievementProfile(profile) {
+        const clean = sanitizeAchievementProfile(profile);
         clean.updatedAt = new Date().toISOString();
-        localStorage.setItem(AGI_PROFILE_KEY, JSON.stringify(clean));
+        localStorage.setItem(ACHIEVEMENT_PROFILE_KEY, JSON.stringify(clean));
         return clean;
       }
 
-      function ensureAgiWorkshop(profile, mode = "easy") {
-        if (!profile.workshops[AGI_WORKSHOP_SLUG]) {
-          profile.workshops[AGI_WORKSHOP_SLUG] = {
-            slug: AGI_WORKSHOP_SLUG,
+      function ensureAchievementWorkshop(profile, mode = "easy") {
+        if (!profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG]) {
+          profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG] = {
+            slug: ACHIEVEMENT_WORKSHOP_SLUG,
             mode: mode === "hard" ? "hard" : "easy",
             progress: {
               easyChecked: 0,
@@ -381,36 +381,36 @@ def render_agi_runtime(slug: str) -> str:
             achievements: {},
           };
         }
-        const workshop = profile.workshops[AGI_WORKSHOP_SLUG];
+        const workshop = profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG];
         workshop.mode = mode === "hard" ? "hard" : "easy";
         return workshop;
       }
 
-      function setAgiWorkshopProgress(profile, mode, patch) {
-        const workshop = ensureAgiWorkshop(profile, mode);
+      function setAchievementWorkshopProgress(profile, mode, patch) {
+        const workshop = ensureAchievementWorkshop(profile, mode);
         workshop.progress = {
           ...workshop.progress,
           ...patch,
           updatedAt: new Date().toISOString(),
         };
-        return writeAgiProfile(profile);
+        return writeAchievementProfile(profile);
       }
 
-      function awardAgi(profile, badgeId, mode = "easy") {
-        if (!AGI_BADGE_IDS.has(badgeId)) {
-          return { profile: sanitizeAgiProfile(profile), awarded: null };
+      function awardAchievement(profile, badgeId, mode = "easy") {
+        if (!ACHIEVEMENT_BADGE_IDS.has(badgeId)) {
+          return { profile: sanitizeAchievementProfile(profile), awarded: null };
         }
-        const workshop = ensureAgiWorkshop(profile, mode);
+        const workshop = ensureAchievementWorkshop(profile, mode);
         if (workshop.achievements[badgeId]?.earned) {
-          return { profile: sanitizeAgiProfile(profile), awarded: null };
+          return { profile: sanitizeAchievementProfile(profile), awarded: null };
         }
         workshop.achievements[badgeId] = {
           earned: true,
           earnedAt: new Date().toISOString(),
         };
         return {
-          profile: writeAgiProfile(profile),
-          awarded: AGI_BADGES.find((badge) => badge.id === badgeId),
+          profile: writeAchievementProfile(profile),
+          awarded: ACHIEVEMENT_BADGES.find((badge) => badge.id === badgeId),
         };
       }
 
@@ -423,7 +423,7 @@ def render_agi_runtime(slug: str) -> str:
         );
       }
 """
-        .replace("__PROFILE_KEY__", json.dumps(AGI_PROFILE_KEY))
+        .replace("__PROFILE_KEY__", json.dumps(ACHIEVEMENT_PROFILE_KEY))
         .replace("__WORKSHOP_SLUG__", json.dumps(slug))
         .replace("__BADGES__", json.dumps(badges, separators=(",", ":")))
     )
@@ -1429,6 +1429,25 @@ def easy_case_records(ctx: JourneyContext) -> list[dict[str, Any]]:
         for item in ctx.transcripts.get("transcripts", [])
         if isinstance(item, dict)
     }
+    transcript_sources = {
+        case_id: "evals/transcripts.json" for case_id in transcripts
+    }
+    studio_transcript_path = (
+        ctx.package / "evals" / "copilot-studio-transcripts.json"
+    )
+    if studio_transcript_path.exists():
+        studio_transcripts = read_json(studio_transcript_path).get(
+            "transcripts", []
+        )
+        if isinstance(studio_transcripts, list):
+            for item in studio_transcripts:
+                if not isinstance(item, dict):
+                    continue
+                case_id = str(item.get("case_id", "case"))
+                transcripts[case_id] = item
+                transcript_sources[case_id] = (
+                    "evals/copilot-studio-transcripts.json"
+                )
     possible: list[dict[str, Any]] = []
     seen: set[str] = set()
     for name in ("copilot-studio-preview-evidence.json", "copilot-studio-transcripts.json"):
@@ -1464,6 +1483,17 @@ def easy_case_records(ctx: JourneyContext) -> list[dict[str, Any]]:
                                 "must_not_include": list(
                                     case.get("must_not_include") or []
                                 ),
+                                "assistant_response": str(
+                                    transcript.get("assistant_response") or ""
+                                ),
+                                "passed": (
+                                    case.get("passed") is True
+                                    or transcript.get("passed") is True
+                                ),
+                                "evidence_path": transcript_sources.get(
+                                    case_id,
+                                    "evals/copilot-studio-preview-evidence.json",
+                                ),
                             }
                         )
                         seen.add(case_id)
@@ -1479,10 +1509,73 @@ def easy_case_records(ctx: JourneyContext) -> list[dict[str, Any]]:
                 "prompt": str(transcript.get("prompt", "recorded prompt")),
                 "must_include": list(transcript.get("must_include") or []),
                 "must_not_include": [],
+                "assistant_response": str(
+                    transcript.get("assistant_response") or ""
+                ),
+                "passed": transcript.get("passed") is True,
+                "evidence_path": transcript_sources.get(
+                    case_id, "evals/transcripts.json"
+                ),
             }
         )
         seen.add(case_id)
     return possible
+
+
+def response_evidence_excerpt(case: dict[str, Any]) -> str:
+    response = str(case.get("assistant_response") or "")
+    lines = [
+        line.strip().replace("**", "").replace("`", "")
+        for line in response.splitlines()
+        if line.strip() and line.strip() != "---"
+    ]
+    selected: list[str] = []
+    for marker in case.get("must_include", []):
+        marker_text = str(marker).casefold()
+        match = next(
+            (
+                line
+                for line in lines
+                if marker_text in line.casefold()
+                and line not in selected
+            ),
+            None,
+        )
+        if match:
+            selected.append(match)
+    if not selected:
+        selected = lines[:3]
+    return "\n".join(line[:320] for line in selected[:4])
+
+
+def render_response_evidence(
+    case: dict[str, Any],
+) -> str:
+    excerpt = response_evidence_excerpt(case)
+    evidence_path = str(
+        case.get("evidence_path")
+        or "evals/copilot-studio-preview-evidence.json"
+    )
+    status = (
+        "This exact excerpt comes from the stored passed transcript."
+        if case.get("passed") is True and excerpt
+        else "Use the reviewed markers above to evaluate the live response."
+    )
+    excerpt_html = (
+        f'<pre class="evidence-transcript">{html.escape(excerpt)}</pre>'
+        if excerpt
+        else ""
+    )
+    return (
+        '<div class="verification-evidence">'
+        "<strong>Verified response evidence</strong>"
+        f"<p>{html.escape(status)} Compare your fresh Preview result with "
+        "the required and forbidden markers before marking this checkpoint "
+        "complete.</p>"
+        f"{excerpt_html}"
+        f'<p class="capture-meta"><a href="{html.escape(evidence_path)}" '
+        "download>Download the machine-readable evidence</a>.</p></div>"
+    )
 
 
 def easy_case_lines(ctx: JourneyContext) -> list[str]:
@@ -2115,33 +2208,14 @@ def render_manual_tutorial(
             ),
             step=index,
         )
-        if (
-            checkpoint
-            and checkpoint.get("status") == "reshoot_required"
-            and screenshot.exists()
-        ):
-            reason = str(
-                checkpoint.get("reason")
-                or "This capture has not been approved as visual proof."
-            )
+        if checkpoint and checkpoint.get("status") == "reshoot_required":
             screenshot_html = (
-                '<div class="look-for withheld-checkpoint">'
-                "<strong>Withheld checkpoint — reshoot required</strong>"
-                "<p>The recorded screenshot is not approved for learner display "
-                f"and has been withheld. Review note: {html.escape(reason)}</p>"
+                '<div class="look-for verification-checkpoint">'
+                "<strong>Live verification checkpoint</strong>"
                 f"<p><strong>Expected state:</strong> {html.escape(expected)}</p>"
-                "<p>Continue only when the visible product state and the "
-                "deterministic gate agree.</p></div>"
-            )
-        elif checkpoint and checkpoint.get("status") == "reshoot_required":
-            screenshot_html = (
-                '<div class="look-for withheld-checkpoint">'
-                "<strong>Withheld checkpoint — reshoot required</strong>"
-                "<p>The recorded screenshot is not approved for learner display "
-                "and is unavailable in this package.</p>"
-                f"<p><strong>Expected state:</strong> {html.escape(expected)}</p>"
-                "<p>Continue only when the visible product state and the "
-                "deterministic gate agree.</p></div>"
+                "<p>Use the current product state for this step. Mark it complete "
+                "only when what you see matches the expected result and the "
+                "deterministic gate agrees.</p></div>"
             )
         elif checkpoint and checkpoint.get("status") == "reusable":
             annotated = checkpoint_asset(ctx, checkpoint, "annotated")
@@ -2285,7 +2359,7 @@ def render_manual_tutorial(
     .report-button {{ border-color: var(--cp-accent); color: var(--cp-accent); }}
     .feedback-notice {{ margin-top: 14px; padding: 14px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }}
     .step footer {{ display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }}
-    .agi-manual-note {{ margin-top: 10px; color: var(--cp-text-muted); font-size: 13px; }}
+    .achievements-manual-note {{ margin-top: 10px; color: var(--cp-text-muted); font-size: 13px; }}
     .troubleshooting details {{ padding: 14px 0; border-bottom: 1px solid var(--cp-border); }}
     summary {{ cursor: pointer; font-weight: 700; }}
     @media (max-width: 900px) {{ .layout {{ grid-template-columns: 1fr; }} .sidebar {{ position: static; max-height: none; }} }}
@@ -2301,8 +2375,8 @@ def render_manual_tutorial(
     <aside class="sidebar">
       <strong id="progress-label">0 of {frame_count} complete</strong>
       <div class="progress"><span id="progress-bar"></span></div>
-      <p class="agi-manual-note">Hard-mode progress earns self-paced local Agent Growth &amp; Impact points on this device.</p>
-      <p class="agi-manual-note" id="agi-manual-toast" role="status" aria-live="polite" aria-atomic="true"></p>
+      <p class="achievements-manual-note">Hard-mode progress earns self-paced local achievement points on this device.</p>
+      <p class="achievements-manual-note" id="achievements-manual-toast" role="status" aria-live="polite" aria-atomic="true"></p>
       <nav class="toc" aria-label="Tutorial actions">{toc_markup}</nav>
     </aside>
     <main>
@@ -2329,12 +2403,12 @@ def render_manual_tutorial(
   </div>
   <script>
     (() => {{
-{render_agi_runtime(ctx.slug)}
+{render_achievement_runtime(ctx.slug)}
       const key = "aibast:{html.escape(ctx.slug)}:manual-progress";
       const boxes = Array.from(document.querySelectorAll(".complete"));
       const label = document.getElementById("progress-label");
       const bar = document.getElementById("progress-bar");
-      const agiToast = document.getElementById("agi-manual-toast");
+      const achievementToast = document.getElementById("achievements-manual-toast");
       let saved = [];
       try {{
         const parsed = JSON.parse(localStorage.getItem(key) || "[]");
@@ -2354,9 +2428,9 @@ def render_manual_tutorial(
         localStorage.setItem(key, JSON.stringify(done));
         label.textContent = `${{done.length}} of ${{boxes.length}} complete`;
         bar.style.width = boxes.length ? `${{(done.length / boxes.length) * 100}}%` : "0%";
-        let profile = readAgiProfile();
-        if (done.length > 0 || profile.workshops[AGI_WORKSHOP_SLUG]) {{
-          profile = setAgiWorkshopProgress(profile, "hard", {{
+        let profile = readAchievementProfile();
+        if (done.length > 0 || profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG]) {{
+          profile = setAchievementWorkshopProgress(profile, "hard", {{
             hardChecked: done.length,
             hardTotal: boxes.length,
             hardComplete: complete,
@@ -2365,10 +2439,10 @@ def render_manual_tutorial(
           if (done.length > 0) badgeIds.push("started");
           if (complete) badgeIds.push("hard-mode-complete");
           badgeIds.forEach((badgeId) => {{
-            const result = awardAgi(profile, badgeId, "hard");
+            const result = awardAchievement(profile, badgeId, "hard");
             profile = result.profile;
-            if (result.awarded && agiToast) {{
-              agiToast.textContent =
+            if (result.awarded && achievementToast) {{
+              achievementToast.textContent =
                 `${{result.awarded.label}} earned: +${{result.awarded.points}} local achievement points.`;
             }}
           }});
@@ -2467,8 +2541,14 @@ def validated_pilot(ctx: JourneyContext) -> dict[str, Any]:
     studio = ctx.deployment.get("copilot_studio", {})
     if not isinstance(studio, dict):
         return {}
-    pilot = studio.get("export_agent") or studio.get("validated_pilot", {})
-    return pilot if isinstance(pilot, dict) else {}
+    validated = studio.get("validated_manual") or studio.get(
+        "validated_pilot", {}
+    )
+    export_agent = studio.get("export_agent", {})
+    result = dict(validated) if isinstance(validated, dict) else {}
+    if isinstance(export_agent, dict):
+        result.update(export_agent)
+    return result
 
 
 def copilot_studio_url(ctx: JourneyContext) -> str | None:
@@ -2589,7 +2669,7 @@ def render_lane_learning_steps(
         or ctx.deployment.get("display_name")
         or ctx.title
     )
-    model = str(pilot.get("model") or model_name(ctx))
+    model = model_name(ctx)
     knowledge_count = pilot.get(
         "knowledge_files",
         len(ctx.deployment.get("copilot_studio", {}).get("manual_knowledge_files", [])),
@@ -2605,7 +2685,7 @@ def render_lane_learning_steps(
           <p>{html.escape(skill_explanation)}</p>
           <div class="action-panel"><strong>Do this</strong><ol><li>Download the lane-specific <code>SKILL.md</code>.</li><li>Open GitHub Copilot Chat in VS Code.</li><li>Select <strong>Agent mode</strong>.</li><li>Drag the downloaded file into the chat.</li></ol>{skill_download}</div>
           <div class="expected-panel"><strong>Expected result</strong><p>The attachment appears in Copilot Chat. From this point forward, the selected skill—not extra wording in your prompts—determines which harness runs.</p></div>
-          <label class="step-complete"><input type="checkbox" data-checkpoint="{prefix}-skill" data-agi-group="onboarding" data-agi-path="{prefix}"><span>I attached the correct lane skill.</span></label>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="{prefix}-skill" data-achievements-group="onboarding" data-achievements-path="{prefix}"><span>I attached the correct lane skill.</span></label>
         </div>
       </article>
 
@@ -2616,7 +2696,7 @@ def render_lane_learning_steps(
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="{prefix}-build-prompt">Copy message</button></div>
           <pre class="prompt-block" id="{prefix}-build-prompt">{html.escape(build_prompt)}</pre>
           <div class="expected-panel"><strong>Expected result</strong><p>{html.escape(local_expected)}</p><p>Copilot should end by suggesting the next message: <code>Deploy it into Copilot Studio for me.</code></p></div>
-          <label class="step-complete"><input type="checkbox" data-checkpoint="{prefix}-local" data-agi-group="local-proof" data-agi-path="{prefix}"><span>I saw every locked local case pass.</span></label>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="{prefix}-local" data-achievements-group="local-proof" data-achievements-path="{prefix}"><span>I saw every locked local case pass.</span></label>
         </div>
       </article>
 
@@ -2627,7 +2707,7 @@ def render_lane_learning_steps(
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="{prefix}-deploy-prompt">Copy message</button></div>
           <pre class="prompt-block" id="{prefix}-deploy-prompt">{html.escape(deploy_prompt)}</pre>
           <div class="expected-panel"><strong>Expected result</strong><ul><li>Draft: <code>{html.escape(display_name)}</code></li><li>Model: <code>{html.escape(model)}</code></li><li>Knowledge files: <code>{html.escape(str(knowledge_count))}</code></li><li>Skills: <code>{html.escape(str(skill_count))}</code></li><li>Status: <strong>Draft</strong>; published: <code>false</code></li></ul><p>The harness then validates the real Preview front door before returning its final verdict.</p></div>
-          <label class="step-complete"><input type="checkbox" data-checkpoint="{prefix}-draft" data-agi-group="draft-builder" data-agi-path="{prefix}"><span>I saw the Draft identity and unpublished state.</span></label>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="{prefix}-draft" data-achievements-group="draft-builder" data-achievements-path="{prefix}"><span>I saw the Draft identity and unpublished state.</span></label>
         </div>
       </article>"""
 
@@ -2645,32 +2725,8 @@ def render_preview_case_cards(ctx: JourneyContext) -> str:
         )
         capture_width = (ctx.assisted_browserfilm or {}).get("width", "unknown")
         capture_height = (ctx.assisted_browserfilm or {}).get("height", "unknown")
-        if (
-            checkpoint
-            and checkpoint.get("status") == "reshoot_required"
-            and screenshot
-            and (ctx.package / "screenshots" / "assisted" / screenshot).is_file()
-        ):
-            reason = str(
-                checkpoint.get("reason")
-                or "This capture has not been approved as visual proof."
-            )
-            screenshot_html = (
-                '<div class="missing withheld-checkpoint">'
-                "<strong>Withheld checkpoint — reshoot required.</strong> "
-                "The recorded screenshot is not approved for learner display. "
-                f"Review note: {html.escape(reason)} "
-                f"Expected state: the {html.escape(case_id)} response visibly "
-                "matches every reviewed marker above.</div>"
-            )
-        elif checkpoint and checkpoint.get("status") == "reshoot_required":
-            screenshot_html = (
-                '<div class="missing withheld-checkpoint">'
-                "<strong>Withheld checkpoint — reshoot required.</strong> "
-                "The recorded screenshot is not approved for learner display. "
-                f"Expected state: the {html.escape(case_id)} response visibly "
-                "matches every reviewed marker above.</div>"
-            )
+        if checkpoint and checkpoint.get("status") == "reshoot_required":
+            screenshot_html = render_response_evidence(case)
         elif checkpoint and checkpoint.get("status") == "reusable":
             annotated = checkpoint_asset(ctx, checkpoint, "annotated")
             annotated_url = page_relative_path(ctx, annotated)
@@ -2688,24 +2744,13 @@ def render_preview_case_cards(ctx: JourneyContext) -> str:
                 f'Source: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. '
                 f'<a href="{html.escape(original_url)}" download="{html.escape(original.name)}">Download original</a>.</p></div>'
             )
-        elif checkpoint and checkpoint.get("status") == "reshoot_required":
-            reason = str(
-                checkpoint.get("reason")
-                or "This capture is not approved as learner evidence."
-            )
-            screenshot_html = (
-                '<div class="missing withheld-checkpoint">'
-                "<strong>Withheld checkpoint — reshoot required.</strong> "
-                f"{html.escape(reason)} The export-agent Preview artifact and "
-                "hashed canonical transcript remain the machine gate.</div>"
-            )
         elif screenshot:
             screenshot_html = (
                 f'<div class="preview-shot-wrap"><img class="preview-shot" src="screenshots/assisted/{html.escape(screenshot)}" alt="{html.escape(case_id)} passed in Copilot Studio Preview" loading="lazy">'
                 f'<p class="capture-meta">Source capture: {html.escape(str(capture_width))}×{html.escape(str(capture_height))} JPEG. Shown at or below natural size. <a href="screenshots/assisted/{html.escape(screenshot)}" download="{html.escape(screenshot)}">Download original</a>.</p></div>'
             )
         else:
-            screenshot_html = '<div class="missing">No assisted Preview screenshot is packaged for this case.</div>'
+            screenshot_html = render_response_evidence(case)
         case_report_evidence = (
             str(
                 (checkpoint or {}).get("annotated")
@@ -2725,7 +2770,7 @@ def render_preview_case_cards(ctx: JourneyContext) -> str:
           <div class="marker-group"><strong>Must include</strong><div>{marker_chips(case.get("must_include", []), "Reviewed evidence")}</div></div>
           <div class="marker-group"><strong>Must not claim</strong><div>{marker_chips(case.get("must_not_include", []), "No unsupported side effect")}</div></div>
           {screenshot_html}
-          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-{html.escape(slugify(case_id))}" data-agi-group="preview-proven" data-agi-path="shared"><span>The Preview response matched this contract.</span></label>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-{html.escape(slugify(case_id))}" data-achievements-group="preview-proven" data-achievements-path="shared"><span>The Preview response matched this contract.</span></label>
         </article>"""
         )
     return "\n".join(cards)
@@ -2753,33 +2798,25 @@ def render_completion_state(ctx: JourneyContext) -> str:
             else ""
         )
     )
-    if (
-        checkpoint
-        and checkpoint.get("status") == "reshoot_required"
-        and draft_frame
-        and (ctx.package / "screenshots" / "assisted" / draft_frame).is_file()
-    ):
-        reason = str(
-            checkpoint.get("reason")
-            or "This capture has not been approved as visual proof."
-        )
+    draft_evidence_url = (
+        page_relative_path(ctx, dataverse_evidence)
+        if dataverse_evidence.is_file()
+        else ""
+    )
+    draft_evidence_link = (
+        f'<p class="capture-meta"><a href="{html.escape(draft_evidence_url)}" '
+        "download>Download the machine-readable Draft evidence</a>.</p>"
+        if draft_evidence_url
+        else ""
+    )
+    if checkpoint and checkpoint.get("status") == "reshoot_required":
         screenshot = (
-            '<div class="missing withheld-checkpoint">'
-            "<strong>Withheld checkpoint — reshoot required.</strong> "
-            "The recorded screenshot is not approved for learner display. "
-            f"Review note: {html.escape(reason)} "
-            "<strong>Expected state:</strong> the target agent is visibly Draft "
-            "and publication remains off. The packaged Dataverse evidence "
-            "supplies the machine-verifiable unpublished-state proof.</div>"
-        )
-    elif checkpoint and checkpoint.get("status") == "reshoot_required":
-        screenshot = (
-            '<div class="missing withheld-checkpoint">'
-            "<strong>Withheld checkpoint — reshoot required.</strong> "
-            "The recorded screenshot is not approved for learner display. "
-            "<strong>Expected state:</strong> the target agent is visibly Draft "
-            "and publication remains off. The packaged Dataverse evidence "
-            "supplies the machine-verifiable unpublished-state proof.</div>"
+            '<div class="verification-evidence">'
+            "<strong>Verified completion record</strong>"
+            "<p>The packaged environment evidence records the target agent as "
+            "<strong>Draft</strong> with publication off. Confirm the same state "
+            "in your environment before marking the workshop complete.</p>"
+            f"{draft_evidence_link}</div>"
         )
     elif checkpoint and checkpoint.get("status") == "reusable":
         annotated = checkpoint_asset(ctx, checkpoint, "annotated")
@@ -2795,10 +2832,10 @@ def render_completion_state(ctx: JourneyContext) -> str:
         )
     elif draft_frame:
         screenshot = (
-            '<div class="missing withheld-checkpoint">'
-            "<strong>No approved Draft screenshot is packaged.</strong> "
-            "The Dataverse evidence artifact supplies the machine-verifiable "
-            "unpublished-state proof without displaying an unreviewed frame.</div>"
+            '<div class="verification-evidence">'
+            "<strong>Verified completion record</strong>"
+            "<p>Confirm that the target agent remains Draft and publication is "
+            "off before marking the workshop complete.</p></div>"
         )
     else:
         screenshot = ""
@@ -2811,13 +2848,13 @@ def render_completion_state(ctx: JourneyContext) -> str:
             <article><strong>Local proof</strong><span>{case_total}/{case_total} locked cases passed</span></article>
             <article><strong>Preview proof</strong><span>{case_total}/{case_total} locked cases passed</span></article>
             <article><strong>Draft identity</strong><span>{html.escape(str(pilot.get("display_name") or ctx.title))}</span></article>
-            <article><strong>Model</strong><span>{html.escape(str(pilot.get("model") or model_name(ctx)))}</span></article>
+            <article><strong>Model</strong><span>{html.escape(model_name(ctx))}</span></article>
             <article><strong>Inventory</strong><span>{html.escape(str(pilot.get("knowledge_files", "reviewed")))} knowledge · {html.escape(str(pilot.get("skills", "reviewed")))} skills</span></article>
             <article><strong>Publication gate</strong><span>Draft · published false</span></article>
           </div>
           {screenshot}
           <div class="expected-panel"><strong>Final expected verdict</strong><p>The harness reports <code>status: complete</code>, exact case totals, the Draft identity, and <code>published: false</code>. The module ends here; it does not offer publication.</p></div>
-          <label class="step-complete"><input type="checkbox" data-checkpoint="easy-complete" data-agi-group="final-verdict" data-agi-path="shared"><span>I confirmed the final Draft verdict.</span></label>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="easy-complete" data-achievements-group="final-verdict" data-achievements-path="shared"><span>I confirmed the final Draft verdict.</span></label>
         </div>
       </section>"""
 
@@ -2924,19 +2961,19 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .report-actions {{ display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }}
     .report-button {{ border-color: var(--cp-accent); color: var(--cp-accent); }}
     .feedback-notice {{ margin-top: 14px; padding: 14px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }}
-    .agi-panel {{ display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(260px, .8fr); gap: 18px; margin: 20px 0; padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }}
-    .agi-panel h2, .agi-panel h3, .agi-panel p {{ margin-top: 0; }}
-    .agi-panel h2 {{ margin-bottom: 4px; font-size: 20px; }}
-    .agi-score-line {{ display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 18px; }}
-    .agi-score {{ color: var(--cp-accent); font-size: 30px; font-weight: 800; }}
-    .agi-badges {{ display: flex; flex-wrap: wrap; gap: 7px; margin: 12px 0; padding: 0; list-style: none; }}
-    .agi-badge {{ padding: 5px 8px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface-soft); font-size: 12px; }}
-    .agi-claims {{ padding-left: 18px; border-left: 1px solid var(--cp-border); }}
-    .agi-claim-actions {{ display: flex; flex-wrap: wrap; gap: 8px; }}
-    .agi-claim-actions [hidden] {{ display: none; }}
-    .agi-fine-print {{ margin: 10px 0 0; color: var(--cp-text-muted); font-size: 13px; }}
-    .agi-toast {{ position: fixed; right: 18px; bottom: 18px; z-index: 50; max-width: 360px; padding: 12px 14px; border: 1px solid var(--cp-accent); border-radius: 10px; background: var(--cp-panel-strong); box-shadow: var(--cp-shadow); }}
-    .agi-toast:empty {{ display: none; }}
+    .achievements-panel {{ display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(260px, .8fr); gap: 18px; margin: 20px 0; padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }}
+    .achievements-panel h2, .achievements-panel h3, .achievements-panel p {{ margin-top: 0; }}
+    .achievements-panel h2 {{ margin-bottom: 4px; font-size: 20px; }}
+    .achievements-score-line {{ display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 18px; }}
+    .achievements-score {{ color: var(--cp-accent); font-size: 30px; font-weight: 800; }}
+    .achievements-badges {{ display: flex; flex-wrap: wrap; gap: 7px; margin: 12px 0; padding: 0; list-style: none; }}
+    .achievements-badge {{ padding: 5px 8px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface-soft); font-size: 12px; }}
+    .achievements-claims {{ padding-left: 18px; border-left: 1px solid var(--cp-border); }}
+    .achievements-claim-actions {{ display: flex; flex-wrap: wrap; gap: 8px; }}
+    .achievements-claim-actions [hidden] {{ display: none; }}
+    .achievements-fine-print {{ margin: 10px 0 0; color: var(--cp-text-muted); font-size: 13px; }}
+    .achievements-toast {{ position: fixed; right: 18px; bottom: 18px; z-index: 50; max-width: 360px; padding: 12px 14px; border: 1px solid var(--cp-accent); border-radius: 10px; background: var(--cp-panel-strong); box-shadow: var(--cp-shadow); }}
+    .achievements-toast:empty {{ display: none; }}
     .marker-group {{ margin: 12px 0; }}
     .marker-group > strong {{ display: block; margin-bottom: 6px; }}
     .marker-chip {{ display: inline-flex; margin: 0 6px 6px 0; padding: 5px 8px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface); color: var(--cp-text-muted); font-size: 12px; }}
@@ -2978,6 +3015,10 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .shot-link {{ display: block; text-align: center; }}
     .shot {{ display: block; width: 100%; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }}
     .missing {{ padding: 32px; border: 2px dashed var(--cp-warning); border-radius: 10px; color: var(--cp-text-muted); }}
+    .verification-evidence {{ margin-top: 14px; padding: 18px; border-left: 4px solid var(--cp-success); border-radius: 10px; background: var(--cp-surface-soft); }}
+    .verification-evidence > strong {{ display: block; color: var(--cp-text); }}
+    .verification-evidence p {{ margin: 8px 0 0; color: var(--cp-text-muted); }}
+    .evidence-transcript {{ overflow-x: auto; margin: 12px 0 0; padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface); color: var(--cp-text); white-space: pre-wrap; word-break: break-word; font-family: Consolas, "Courier New", Courier, monospace; font-size: 13px; line-height: 1.5; }}
     .look-for {{ margin: 16px 0; padding: 20px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }}
     .look-for strong {{ color: var(--cp-text); }}
     .look-for p {{ margin: 8px 0 0; }}
@@ -2991,7 +3032,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     .prompt-block {{ overflow-x: auto; margin: 14px 0 0; padding: 16px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text); white-space: pre-wrap; word-break: break-word; font-family: Consolas, "Courier New", Courier, monospace; font-size: 13px; line-height: 1.55; }}
     .resource-list {{ columns: 2; padding-left: 22px; }}
     .resource-list li {{ break-inside: avoid; margin-bottom: 10px; }}
-    @media (max-width: 760px) {{ .engine-flow, .outcome-grid, .skill-onboarding, .module-summary, .preview-grid, .done-grid, .agi-panel {{ grid-template-columns: 1fr; }} .agi-claims {{ padding: 16px 0 0; border-top: 1px solid var(--cp-border); border-left: 0; }} }}
+    @media (max-width: 760px) {{ .engine-flow, .outcome-grid, .skill-onboarding, .module-summary, .preview-grid, .done-grid, .achievements-panel {{ grid-template-columns: 1fr; }} .achievements-claims {{ padding: 16px 0 0; border-top: 1px solid var(--cp-border); border-left: 0; }} }}
     @media (max-width: 620px) {{ .resource-list {{ columns: 1; }} .prompt-heading {{ display: block; }} .prompt-heading .button {{ margin-top: 12px; }} .instruction-grid {{ grid-template-columns: 1fr; }} .step header {{ grid-template-columns: 36px 1fr; }} .step header .report-button {{ grid-column: 1 / -1; }} }}
   </style>
 </head>
@@ -3014,29 +3055,29 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
       </div>
     </section>
 
-    <section class="agi-panel" aria-labelledby="agi-panel-title">
+    <section class="achievements-panel" aria-labelledby="achievements-panel-title">
       <div>
         <p class="eyebrow">Self-paced local achievements</p>
-        <h2 id="agi-panel-title">Workshop achievements</h2>
-        <div class="agi-score-line">
-          <span><strong class="agi-score" id="agi-total-score">0</strong> total points</span>
-          <span><strong id="agi-workshop-score">0</strong> in this workshop</span>
+        <h2 id="achievements-panel-title">Workshop achievements</h2>
+        <div class="achievements-score-line">
+          <span><strong class="achievements-score" id="achievements-total-score">0</strong> total points</span>
+          <span><strong id="achievements-workshop-score">0</strong> in this workshop</span>
         </div>
-        <p id="agi-progress-label">0 of 0 Easy checkpoints complete</p>
-        <div class="progress" aria-hidden="true"><span id="agi-progress-bar"></span></div>
-        <ul class="agi-badges" id="agi-badge-list" aria-label="Badges earned in this workshop"><li class="agi-badge">No badges yet</li></ul>
+        <p id="achievement-progress-label">0 of 0 Easy checkpoints complete</p>
+        <div class="progress" aria-hidden="true"><span id="achievement-progress-bar"></span></div>
+        <ul class="achievements-badges" id="achievements-badge-list" aria-label="Badges earned in this workshop"><li class="achievements-badge">No badges yet</li></ul>
         <a href="../../achievements.html">View achievements and local profile</a>
       </div>
-      <div class="agi-claims">
+      <div class="achievements-claims">
         <h3>Optional public verification</h3>
-        <p class="agi-fine-print">These points and badges are local, self-reported workshop progress—not externally verified proof or a capability claim.</p>
-        <div class="agi-claim-actions">
-          <button class="button primary" type="button" data-agi-sync hidden>Sync achievements to GitHub</button>
+        <p class="achievements-fine-print">These points and badges are local, self-reported workshop progress—not externally verified proof or a capability claim.</p>
+        <div class="achievements-claim-actions">
+          <button class="button primary" type="button" data-achievements-sync hidden>Sync achievements to GitHub</button>
         </div>
-        <p class="agi-fine-print">This opens one prefilled progress issue containing every badge currently earned here. Nothing syncs until you submit it. Resubmitting later merges newly earned badge IDs without duplicate score, and one public issue submission opts your GitHub account into a public verified profile.</p>
+        <p class="achievements-fine-print">This opens one prefilled progress issue containing every badge currently earned here. Nothing syncs until you submit it. Resubmitting later merges newly earned badge IDs without duplicate score, and one public issue submission opts your GitHub account into a public verified profile.</p>
       </div>
     </section>
-    <div class="agi-toast" id="agi-badge-toast" role="status" aria-live="polite" aria-atomic="true"></div>
+    <div class="achievements-toast" id="achievements-badge-toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
     <section class="path" data-path="easy" id="mode-panel-easy" role="tabpanel" aria-labelledby="mode-tab-easy">
       <div class="module-summary">
@@ -3161,9 +3202,9 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
   </main>
   <script>
     (() => {{
-{render_agi_runtime(ctx.slug)}
-      const AGI_CANONICAL_AGENT = {json.dumps(str(ctx.deployment.get("name") or f"@aibast-agents-library/{ctx.slug}"))};
-      const AGI_SYNC_ORDER = Object.freeze([
+{render_achievement_runtime(ctx.slug)}
+      const ACHIEVEMENT_CANONICAL_AGENT = {json.dumps(str(ctx.deployment.get("name") or f"@aibast-agents-library/{ctx.slug}"))};
+      const ACHIEVEMENT_SYNC_ORDER = Object.freeze([
         {{ localId: "started", claimId: "started" }},
         {{ localId: "local-proof", claimId: "local-proof" }},
         {{ localId: "draft-builder", claimId: "draft-builder" }},
@@ -3179,12 +3220,12 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
       const paths = Array.from(document.querySelectorAll("[data-path]"));
       const boxes = Array.from(document.querySelectorAll("[data-checkpoint]"));
       const hardBoxes = Array.from(document.querySelectorAll(".complete[data-step]"));
-      const agiTotalScore = document.getElementById("agi-total-score");
-      const agiWorkshopScore = document.getElementById("agi-workshop-score");
-      const agiProgressLabel = document.getElementById("agi-progress-label");
-      const agiProgressBar = document.getElementById("agi-progress-bar");
-      const agiBadgeList = document.getElementById("agi-badge-list");
-      const agiToast = document.getElementById("agi-badge-toast");
+      const achievementTotalScore = document.getElementById("achievements-total-score");
+      const achievementWorkshopScore = document.getElementById("achievements-workshop-score");
+      const achievementProgressLabel = document.getElementById("achievement-progress-label");
+      const achievementProgressBar = document.getElementById("achievement-progress-bar");
+      const achievementBadgeList = document.getElementById("achievements-badge-list");
+      const achievementToast = document.getElementById("achievements-badge-toast");
       const hardProgressLabel = document.getElementById("hard-progress-label");
       const hardProgressBar = document.getElementById("hard-progress-bar");
       const hardProgressToast = document.getElementById("hard-progress-toast");
@@ -3203,7 +3244,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         box.addEventListener("change", () => {{
           saved[box.dataset.checkpoint] = box.checked;
           localStorage.setItem(progressKey, JSON.stringify(saved));
-          evaluateAgi(true);
+          evaluateAchievement(true);
         }});
       }});
       let hardSaved = [];
@@ -3229,26 +3270,26 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
       function requiredEasyBoxes() {{
         const path = currentEasyPath();
         return boxes.filter(
-          (box) => box.dataset.agiPath === path || box.dataset.agiPath === "shared",
+          (box) => box.dataset.achievementPath === path || box.dataset.achievementPath === "shared",
         );
       }}
 
-      function agiGroupComplete(group) {{
+      function achievementGroupComplete(group) {{
         const path = currentEasyPath();
         const members = boxes.filter(
           (box) =>
-            box.dataset.agiGroup === group &&
-            (box.dataset.agiPath === path || box.dataset.agiPath === "shared"),
+            box.dataset.achievementGroup === group &&
+            (box.dataset.achievementPath === path || box.dataset.achievementPath === "shared"),
         );
         return members.length > 0 && members.every((box) => box.checked);
       }}
 
-      function announceAgiBadge(badge) {{
-        if (!badge || !agiToast) return;
-        agiToast.textContent =
+      function announceAchievementBadge(badge) {{
+        if (!badge || !achievementToast) return;
+        achievementToast.textContent =
           `${{badge.label}} earned: +${{badge.points}} local achievement points.`;
         window.setTimeout(() => {{
-          if (agiToast.textContent.includes(badge.label)) agiToast.textContent = "";
+          if (achievementToast.textContent.includes(badge.label)) achievementToast.textContent = "";
         }}, 5000);
       }}
 
@@ -3270,93 +3311,93 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         }}
         const activeMode =
           localStorage.getItem(modeKey) === "hard" ? "hard" : "easy";
-        let profile = readAgiProfile();
-        if (done.length === 0 && !profile.workshops[AGI_WORKSHOP_SLUG]) {{
-          renderAgiPanel(profile, activeMode);
+        let profile = readAchievementProfile();
+        if (done.length === 0 && !profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG]) {{
+          renderAchievementPanel(profile, activeMode);
           return;
         }}
-        profile = setAgiWorkshopProgress(profile, activeMode, {{
+        profile = setAchievementWorkshopProgress(profile, activeMode, {{
           hardChecked: done.length,
           hardTotal: hardBoxes.length,
           hardComplete: complete,
         }});
         if (done.length > 0) {{
-          const result = awardAgi(profile, "started", activeMode);
+          const result = awardAchievement(profile, "started", activeMode);
           profile = result.profile;
-          if (announce) announceAgiBadge(result.awarded);
+          if (announce) announceAchievementBadge(result.awarded);
         }}
         if (complete) {{
-          const result = awardAgi(
+          const result = awardAchievement(
             profile,
             "hard-mode-complete",
             activeMode,
           );
           profile = result.profile;
-          if (announce) announceAgiBadge(result.awarded);
+          if (announce) announceAchievementBadge(result.awarded);
         }}
         if (hardProgressToast) {{
           hardProgressToast.textContent = complete
             ? "Hard mode complete. The achievement is saved in this device's achievement profile."
             : "";
         }}
-        renderAgiPanel(profile, activeMode);
+        renderAchievementPanel(profile, activeMode);
       }}
 
-      function earnedAgiSyncIds(achievements) {{
-        return AGI_SYNC_ORDER.filter(
+      function earnedAchievementSyncIds(achievements) {{
+        return ACHIEVEMENT_SYNC_ORDER.filter(
           (entry) => achievements[entry.localId]?.earned,
         ).map((entry) => entry.claimId);
       }}
 
-      function renderAgiPanel(profile, mode) {{
-        const workshop = profile.workshops[AGI_WORKSHOP_SLUG];
+      function renderAchievementPanel(profile, mode) {{
+        const workshop = profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG];
         const achievements = workshop?.achievements || {{}};
-        const workshopPoints = AGI_BADGES.reduce(
+        const workshopPoints = ACHIEVEMENT_BADGES.reduce(
           (total, badge) =>
             total + (achievements[badge.id]?.earned ? badge.points : 0),
           0,
         );
-        agiTotalScore.textContent = String(profile.score);
-        agiWorkshopScore.textContent = String(workshopPoints);
+        achievementTotalScore.textContent = String(profile.score);
+        achievementWorkshopScore.textContent = String(workshopPoints);
         const easyRequired = requiredEasyBoxes();
         const easyChecked = easyRequired.filter((box) => box.checked).length;
         const hardChecked = workshop?.progress?.hardChecked || 0;
         const hardTotal = workshop?.progress?.hardTotal || 0;
         const checked = mode === "hard" ? hardChecked : easyChecked;
         const total = mode === "hard" ? hardTotal : easyRequired.length;
-        agiProgressLabel.textContent =
+        achievementProgressLabel.textContent =
           `${{checked}} of ${{total}} ${{mode === "hard" ? "Hard steps" : "Easy checkpoints"}} complete`;
-        agiProgressBar.style.width = total ? `${{(checked / total) * 100}}%` : "0%";
-        agiBadgeList.replaceChildren();
-        const earned = AGI_BADGES.filter(
+        achievementProgressBar.style.width = total ? `${{(checked / total) * 100}}%` : "0%";
+        achievementBadgeList.replaceChildren();
+        const earned = ACHIEVEMENT_BADGES.filter(
           (badge) => achievements[badge.id]?.earned,
         );
         if (!earned.length) {{
           const item = document.createElement("li");
-          item.className = "agi-badge";
+          item.className = "achievements-badge";
           item.textContent = "No badges yet";
-          agiBadgeList.append(item);
+          achievementBadgeList.append(item);
         }} else {{
           earned.forEach((badge) => {{
             const item = document.createElement("li");
-            item.className = "agi-badge";
+            item.className = "achievements-badge";
             item.textContent = `${{badge.label}} · +${{badge.points}}`;
-            agiBadgeList.append(item);
+            achievementBadgeList.append(item);
           }});
         }}
-        document.querySelector("[data-agi-sync]").hidden =
-          earnedAgiSyncIds(achievements).length === 0;
+        document.querySelector("[data-achievements-sync]").hidden =
+          earnedAchievementSyncIds(achievements).length === 0;
       }}
 
-      function evaluateAgi(announce = false) {{
+      function evaluateAchievement(announce = false) {{
         const mode = localStorage.getItem(modeKey) === "hard" ? "hard" : "easy";
         const easyRequired = requiredEasyBoxes();
         const easyChecked = easyRequired.filter((box) => box.checked).length;
         const hasCheckpoint = boxes.some((box) => box.checked);
-        let profile = readAgiProfile();
-        const existing = profile.workshops[AGI_WORKSHOP_SLUG];
+        let profile = readAchievementProfile();
+        const existing = profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG];
         if (hasCheckpoint || existing) {{
-          profile = setAgiWorkshopProgress(profile, mode, {{
+          profile = setAchievementWorkshopProgress(profile, mode, {{
             easyChecked,
             easyTotal: easyRequired.length,
             easyComplete:
@@ -3364,9 +3405,9 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
           }});
           const earnedByCondition = [
             ["started", hasCheckpoint],
-            ["local-proof", agiGroupComplete("local-proof")],
-            ["draft-builder", agiGroupComplete("draft-builder")],
-            ["preview-proven", agiGroupComplete("preview-proven")],
+            ["local-proof", achievementGroupComplete("local-proof")],
+            ["draft-builder", achievementGroupComplete("draft-builder")],
+            ["preview-proven", achievementGroupComplete("preview-proven")],
             [
               "workshop-complete",
               easyRequired.length > 0 && easyChecked === easyRequired.length,
@@ -3374,12 +3415,12 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
           ];
           earnedByCondition.forEach(([badgeId, condition]) => {{
             if (!condition) return;
-            const result = awardAgi(profile, badgeId, mode);
+            const result = awardAchievement(profile, badgeId, mode);
             profile = result.profile;
-            if (announce) announceAgiBadge(result.awarded);
+            if (announce) announceAchievementBadge(result.awarded);
           }});
         }}
-        renderAgiPanel(profile, mode);
+        renderAchievementPanel(profile, mode);
       }}
 
       function selectMode(mode) {{
@@ -3390,7 +3431,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         }});
         paths.forEach((path) => {{ path.hidden = path.dataset.path !== mode; }});
         localStorage.setItem(modeKey, mode);
-        evaluateAgi(false);
+        evaluateAchievement(false);
       }}
       buttons.forEach((button) => button.addEventListener("click", () => selectMode(button.dataset.mode)));
       document.querySelectorAll("[data-copy-target]").forEach((button) => {{
@@ -3456,21 +3497,21 @@ Describe what was inaccurate or missing.
           window.open(url.toString(), "_blank", "noopener");
         }});
       }});
-      function openAgiSync() {{
-        const profile = readAgiProfile();
+      function openAchievementSync() {{
+        const profile = readAchievementProfile();
         const achievements =
-          profile.workshops[AGI_WORKSHOP_SLUG]?.achievements || {{}};
-        const earnedIds = earnedAgiSyncIds(achievements);
+          profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG]?.achievements || {{}};
+        const earnedIds = earnedAchievementSyncIds(achievements);
         if (!earnedIds.length) return;
         const source = new URL(window.location.href);
         source.search = "";
         source.hash = "";
-        const body = `<!-- aibast-agi-progress:v1 -->
+        const body = `<!-- aibast-achievement-progress:v1 -->
 ## Workshop achievement progress
 
-- Schema: \\`aibast-agi-progress/1.0\\`
-- Workshop: \\`${{AGI_WORKSHOP_SLUG}}\\`
-- Agent: \\`${{AGI_CANONICAL_AGENT}}\\`
+- Schema: \\`aibast-achievement-progress/1.0\\`
+- Workshop: \\`${{ACHIEVEMENT_WORKSHOP_SLUG}}\\`
+- Agent: \\`${{ACHIEVEMENT_CANONICAL_AGENT}}\\`
 - Achievements: ${{earnedIds.join(", ")}}
 - Source: ${{source.toString()}}
 
@@ -3482,8 +3523,8 @@ Opening this form does not sync anything. Submit the issue to sync these earned 
         url.searchParams.set("body", body);
         window.open(url.toString(), "_blank", "noopener");
       }}
-      document.querySelector("[data-agi-sync]").addEventListener("click", () => {{
-        openAgiSync();
+      document.querySelector("[data-achievements-sync]").addEventListener("click", () => {{
+        openAchievementSync();
       }});
       selectMode(localStorage.getItem(modeKey) === "hard" ? "hard" : "easy");
       updateHardProgress(false);

@@ -15,27 +15,27 @@ from tools.audit_metrics_page import (
 CONTRACT = load_contract(DEFAULT_CONTRACT)
 
 
-def test_actual_page_exposes_accessible_verified_agi_surface():
+def test_actual_page_exposes_accessible_verified_achievement_surface():
     html = DEFAULT_PAGE.read_text(encoding="utf-8")
     for element_id in (
-        "agi-points",
-        "agi-heading",
-        "agi-summary",
-        "agi-coverage",
-        "agi-profile-hint",
-        "agi-leaderboard",
-        "agi-workshop-hint",
-        "agi-workshop-table",
-        "agi-rollup-heading",
-        "agi-rollup-hint",
-        "agi-rollup-table",
+        "achievements-points",
+        "achievements-heading",
+        "achievements-summary",
+        "achievements-coverage",
+        "achievements-profile-hint",
+        "achievements-leaderboard",
+        "achievements-workshop-hint",
+        "achievements-workshop-table",
+        "achievements-rollup-heading",
+        "achievements-rollup-hint",
+        "achievements-rollup-table",
     ):
         assert f'id="{element_id}"' in html
-    assert 'aria-labelledby="agi-heading"' in html
-    assert 'role="status"' in html.split('id="agi-coverage"', 1)[1].split(
+    assert 'aria-labelledby="achievements-heading"' in html
+    assert 'role="status"' in html.split('id="achievements-coverage"', 1)[1].split(
         ">", 1
     )[0]
-    assert 'aria-live="polite"' in html.split('id="agi-summary"', 1)[1].split(
+    assert 'aria-live="polite"' in html.split('id="achievements-summary"', 1)[1].split(
         ">", 1
     )[0]
     assert (
@@ -44,11 +44,11 @@ def test_actual_page_exposes_accessible_verified_agi_surface():
     )
     assert '<caption>Canonical workshops ranked by verified achievement points</caption>' in html
     assert '<caption>Verified claims by canonical achievement</caption>' in html
-    assert "function renderAgiPoints()" in html
-    assert "renderAgiPoints();" in html
+    assert "function renderAchievementPoints()" in html
+    assert "renderAchievementPoints();" in html
     assert "href=\"achievements.html\"" in html
     assert "href=\"docs/metrics-admin-setup.html\"" in html
-    assert ".agi-card {\n  min-width: 0;\n}" in html
+    assert ".achievements-card {\n  min-width: 0;\n}" in html
 
 
 def test_feedback_targets_pages_owner_with_microsoft_fallback():

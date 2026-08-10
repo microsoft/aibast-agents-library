@@ -49,11 +49,11 @@ solutions/
   that browser and device.
 - Hard mode recreates the same agent manually in the Copilot Studio browser:
   instructions, knowledge, every skill, model selection, and Preview.
-- Generated quests award self-paced local **Agent Growth & Impact (AGI) Points**
+- Generated quests award self-paced local **achievement points**
   for idempotent workshop milestones. Progress remains in the browser under
-  `aibast:agi-profile:v1`; `achievements.html` provides privacy-filtered
+  `aibast:achievement-profile:v1`; `achievements.html` provides privacy-filtered
   export/import/reset controls and clearly separates local progress from
-  optional GitHub-verified sync. A single opt-in AGI progress issue carries the
+  optional GitHub-verified sync. A single opt-in achievement progress issue carries the
   workshop's canonical earned badge IDs; later submissions merge newly earned
   IDs without duplicating server-defined score.
 

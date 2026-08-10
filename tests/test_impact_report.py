@@ -12,8 +12,8 @@ def metrics_fixture(
     generated_at="2026-08-09T12:00:00Z",
     *,
     stars=12,
-    agi_points=150,
-    agi_rate=50.0,
+    achievement_points=150,
+    achievement_rate=50.0,
 ):
     return {
         "schema": "aibast-metrics/1.0",
@@ -122,24 +122,24 @@ def metrics_fixture(
                 }
             ],
         },
-        "agi": {
+        "achievements": {
             "status": "available",
             "as_of": generated_at,
             "totals": {
                 "participants": 2,
-                "points": agi_points,
+                "points": achievement_points,
                 "achievements": 8,
                 "starts": 2,
                 "workshop_completions": 1,
                 "hard_completions": 1,
-                "completion_rate": agi_rate,
+                "completion_rate": achievement_rate,
                 "hard_completion_rate": 50.0,
                 "achievement_completion_rate": 66.7,
             },
             "workshops": [
                 {
                     "slug": "account-intelligence",
-                    "points": agi_points,
+                    "points": achievement_points,
                     "starts": 2,
                     "workshop_completions": 1,
                     "hard_completions": 1,
@@ -226,14 +226,14 @@ def history_with_baselines():
     monthly = metrics_fixture(
         "2026-07-09T12:00:00Z",
         stars=5,
-        agi_points=0,
-        agi_rate=0.0,
+        achievement_points=0,
+        achievement_rate=0.0,
     )
     weekly = metrics_fixture(
         "2026-08-01T12:00:00Z",
         stars=10,
-        agi_points=100,
-        agi_rate=40.0,
+        achievement_points=100,
+        achievement_rate=40.0,
     )
     history = {"schema": build_impact_report.HISTORY_SCHEMA, "snapshots": []}
     for document in (monthly, weekly):
@@ -289,13 +289,13 @@ def test_report_calculates_weekly_monthly_and_daily_activity():
     assert week["metrics"]["stars"]["change"] == 2
     assert week["metrics"]["stars"]["change_percent"] == 20.0
     assert month["metrics"]["stars"]["change"] == 7
-    assert week["metrics"]["agi_points"]["change"] == 50
-    assert month["metrics"]["agi_points"]["change"] == 150
-    assert month["metrics"]["agi_points"]["change_percent"] is None
-    assert week["metrics"]["agi_completion_rate"]["change"] == 10.0
+    assert week["metrics"]["achievement_points"]["change"] == 50
+    assert month["metrics"]["achievement_points"]["change"] == 150
+    assert month["metrics"]["achievement_points"]["change_percent"] is None
+    assert week["metrics"]["achievement_completion_rate"]["change"] == 10.0
     assert build_impact_report.format_period_metric(
-        next(row for row in report["current"]["metrics"] if row["id"] == "agi_completion_rate"),
-        week["metrics"]["agi_completion_rate"],
+        next(row for row in report["current"]["metrics"] if row["id"] == "achievement_completion_rate"),
+        week["metrics"]["achievement_completion_rate"],
     ) == "+10.0 pp"
     current = {row["id"]: row for row in report["current"]["metrics"]}
     assert current["agent_acquisitions"]["value"] == 4
@@ -396,7 +396,7 @@ def test_partial_and_censored_sources_stay_partial():
     document = metrics_fixture()
     document["file_metrics"]["source_status"] = "censored"
     document["agent_upvote_coverage"]["status"] = "partial"
-    document["agi"]["status"] = "partial"
+    document["achievements"]["status"] = "partial"
     document["workshops"]["coverage"]["views"]["status"] = (
         "last authorized popular-path response"
     )
@@ -407,7 +407,7 @@ def test_partial_and_censored_sources_stay_partial():
 
     assert rows["agent_file_downloads"]["status"] == "partial"
     assert rows["agent_upvotes"]["status"] == "partial"
-    assert rows["agi_points"]["status"] == "partial"
+    assert rows["achievement_points"]["status"] == "partial"
     assert rows["workshop_views_14d"]["status"] == "partial"
 
 

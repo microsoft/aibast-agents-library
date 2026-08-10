@@ -8,6 +8,10 @@
     "A native upvote on an agent rating Discussion records preference. A native upvote on its acquisition Discussion records one signed-in account's declared download, copy, or install. Neither replaces observable CDN or release file-transfer counts."
   ],
   "coverage": {
+    "achievements": {
+      "as_of": "2026-08-10T12:14:11Z",
+      "status": "available"
+    },
     "agent_acquisitions": {
       "as_of": null,
       "status": "unavailable"
@@ -16,17 +20,13 @@
       "as_of": null,
       "status": "unavailable"
     },
-    "agi": {
-      "as_of": "2026-08-10T12:14:11Z",
-      "status": "available"
-    },
     "file_downloads": {
       "as_of": "2026-08-10T12:14:11Z",
       "status": "complete"
     },
     "traffic": {
       "as_of": "2026-08-10T06:46:01Z",
-      "reason": "The token is not SSO-authorized for the owning organization. Authorize it for the org, or set METRICS_TOKEN to one that is.",
+      "reason": "Offline mode made zero network calls; traffic figures are carried forward from the original as_of timestamp.",
       "status": "carried_forward"
     },
     "workshops": {
@@ -549,7 +549,7 @@
         ],
         "section": "Reach and consumption",
         "source": "cdn",
-        "status": "available",
+        "status": "partial",
         "unit": "count",
         "value": 388
       },
@@ -563,7 +563,7 @@
         ],
         "section": "Reach and consumption",
         "source": "releases",
-        "status": "available",
+        "status": "partial",
         "unit": "count",
         "value": 0
       },
@@ -577,7 +577,7 @@
         ],
         "section": "Reach and consumption",
         "source": "file_metrics",
-        "status": "available",
+        "status": "partial",
         "unit": "count",
         "value": 0
       },
@@ -591,7 +591,7 @@
         ],
         "section": "Reach and consumption",
         "source": "file_metrics",
-        "status": "available",
+        "status": "partial",
         "unit": "count",
         "value": 0
       },
@@ -605,7 +605,7 @@
         ],
         "section": "Reach and consumption",
         "source": "file_metrics",
-        "status": "available",
+        "status": "partial",
         "unit": "count",
         "value": 0
       },
@@ -647,7 +647,7 @@
         ],
         "section": "Community engagement",
         "source": "repo",
-        "status": "available",
+        "status": "partial",
         "unit": "count",
         "value": 4
       },
@@ -661,7 +661,7 @@
         ],
         "section": "Community engagement",
         "source": "repo",
-        "status": "available",
+        "status": "partial",
         "unit": "count",
         "value": 2
       },
@@ -675,7 +675,7 @@
         ],
         "section": "Community engagement",
         "source": "repo",
-        "status": "available",
+        "status": "partial",
         "unit": "count",
         "value": 0
       },
@@ -689,7 +689,7 @@
         ],
         "section": "Community engagement",
         "source": "repo",
-        "status": "available",
+        "status": "partial",
         "unit": "count",
         "value": 5
       },
@@ -797,137 +797,137 @@
         "value": 0
       },
       {
-        "id": "agi_participants",
+        "id": "achievement_participants",
         "kind": "gauge",
         "label": "Verified achievement participants",
         "path": [
-          "agi",
+          "achievements",
           "totals",
           "participants"
         ],
         "section": "Learning impact",
-        "source": "agi",
-        "status": "available",
+        "source": "achievements",
+        "status": "partial",
         "unit": "count",
         "value": 0
       },
       {
-        "id": "agi_points",
+        "id": "achievement_points",
         "kind": "gauge",
         "label": "Verified achievement points",
         "path": [
-          "agi",
+          "achievements",
           "totals",
           "points"
         ],
         "section": "Learning impact",
-        "source": "agi",
-        "status": "available",
+        "source": "achievements",
+        "status": "partial",
         "unit": "count",
         "value": 0
       },
       {
-        "id": "agi_achievements",
+        "id": "verified_achievements",
         "kind": "gauge",
         "label": "Verified achievements",
         "path": [
-          "agi",
+          "achievements",
           "totals",
           "achievements"
         ],
         "section": "Learning impact",
-        "source": "agi",
-        "status": "available",
+        "source": "achievements",
+        "status": "partial",
         "unit": "count",
         "value": 0
       },
       {
-        "id": "agi_starts",
+        "id": "achievement_starts",
         "kind": "gauge",
         "label": "Workshop starts",
         "path": [
-          "agi",
+          "achievements",
           "totals",
           "starts"
         ],
         "section": "Learning impact",
-        "source": "agi",
-        "status": "available",
+        "source": "achievements",
+        "status": "partial",
         "unit": "count",
         "value": 0
       },
       {
-        "id": "agi_completions",
+        "id": "achievement_completions",
         "kind": "gauge",
         "label": "Workshop completions",
         "path": [
-          "agi",
+          "achievements",
           "totals",
           "workshop_completions"
         ],
         "section": "Learning impact",
-        "source": "agi",
-        "status": "available",
+        "source": "achievements",
+        "status": "partial",
         "unit": "count",
         "value": 0
       },
       {
-        "id": "agi_hard_completions",
+        "id": "achievement_hard_completions",
         "kind": "gauge",
         "label": "Hard-mode completions",
         "path": [
-          "agi",
+          "achievements",
           "totals",
           "hard_completions"
         ],
         "section": "Learning impact",
-        "source": "agi",
-        "status": "available",
+        "source": "achievements",
+        "status": "partial",
         "unit": "count",
         "value": 0
       },
       {
-        "id": "agi_completion_rate",
+        "id": "achievement_completion_rate",
         "kind": "rate",
         "label": "Workshop completion rate",
         "path": [
-          "agi",
+          "achievements",
           "totals",
           "completion_rate"
         ],
         "section": "Learning impact",
-        "source": "agi",
-        "status": "available",
+        "source": "achievements",
+        "status": "partial",
         "unit": "percent",
         "value": 0.0
       },
       {
-        "id": "agi_hard_completion_rate",
+        "id": "achievement_hard_completion_rate",
         "kind": "rate",
         "label": "Hard-mode completion rate",
         "path": [
-          "agi",
+          "achievements",
           "totals",
           "hard_completion_rate"
         ],
         "section": "Learning impact",
-        "source": "agi",
-        "status": "available",
+        "source": "achievements",
+        "status": "partial",
         "unit": "percent",
         "value": 0.0
       },
       {
-        "id": "agi_achievement_rate",
+        "id": "achievement_achievement_rate",
         "kind": "rate",
         "label": "Achievement completion rate",
         "path": [
-          "agi",
+          "achievements",
           "totals",
           "achievement_completion_rate"
         ],
         "section": "Learning impact",
-        "source": "agi",
-        "status": "available",
+        "source": "achievements",
+        "status": "partial",
         "unit": "percent",
         "value": 0.0
       },
@@ -957,9 +957,9 @@
         ],
         "section": "Library footprint",
         "source": "file_metrics",
-        "status": "available",
+        "status": "partial",
         "unit": "count",
-        "value": 5310
+        "value": 5307
       },
       {
         "id": "agents",
@@ -1038,11 +1038,11 @@
     ],
     "workshops": {
       "account-intelligence": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Account Intelligence Agent",
         "feedback_reports": 0,
@@ -1051,11 +1051,11 @@
         "views_14d": null
       },
       "ai-customer-assistant": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Customer Escalations Agent",
         "feedback_reports": 0,
@@ -1064,11 +1064,11 @@
         "views_14d": null
       },
       "ask-hr": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Ask HR Agent",
         "feedback_reports": 0,
@@ -1077,11 +1077,11 @@
         "views_14d": null
       },
       "asset-maintenance-forecast": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Asset Maintenance Forecast Agent",
         "feedback_reports": 0,
@@ -1090,11 +1090,11 @@
         "views_14d": null
       },
       "building-permit-processing": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Building Permit Processing Agent",
         "feedback_reports": 0,
@@ -1103,11 +1103,11 @@
         "views_14d": null
       },
       "care-gap-closure": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Care Gap Closure Agent",
         "feedback_reports": 0,
@@ -1116,11 +1116,11 @@
         "views_14d": null
       },
       "cart-abandonment-recovery": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Cart Abandonment Recovery Agent",
         "feedback_reports": 0,
@@ -1129,11 +1129,11 @@
         "views_14d": null
       },
       "claims-processing": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Claims Processing Agent",
         "feedback_reports": 0,
@@ -1142,11 +1142,11 @@
         "views_14d": null
       },
       "client-health-score": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Client Health Score Agent",
         "feedback_reports": 0,
@@ -1155,11 +1155,11 @@
         "views_14d": null
       },
       "clinical-notes-summarizer": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Clinical Notes Summarizer Agent",
         "feedback_reports": 0,
@@ -1168,11 +1168,11 @@
         "views_14d": null
       },
       "contract-risk-review": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Contract Risk Review Agent",
         "feedback_reports": 0,
@@ -1181,11 +1181,11 @@
         "views_14d": null
       },
       "cross-selling": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Cross-Selling Opportunities Agent",
         "feedback_reports": 0,
@@ -1194,11 +1194,11 @@
         "views_14d": null
       },
       "customer-loyalty-rewards": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Customer Loyalty and Rewards Agent",
         "feedback_reports": 0,
@@ -1207,11 +1207,11 @@
         "views_14d": null
       },
       "customer-sentiment-churn": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Customer Sentiment and Churn Prediction Agent",
         "feedback_reports": 0,
@@ -1220,11 +1220,11 @@
         "views_14d": null
       },
       "deal-progression": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Deal Progression Agent",
         "feedback_reports": 0,
@@ -1233,11 +1233,11 @@
         "views_14d": null
       },
       "emission-tracking": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Emissions Tracking Agent",
         "feedback_reports": 0,
@@ -1246,11 +1246,11 @@
         "views_14d": null
       },
       "energy-regulatory-reporting": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Regulatory Reporting Agent",
         "feedback_reports": 0,
@@ -1259,11 +1259,11 @@
         "views_14d": null
       },
       "field-service-dispatch": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Field Service Dispatch Agent",
         "feedback_reports": 0,
@@ -1272,11 +1272,11 @@
         "views_14d": null
       },
       "financial-advisor-copilot": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Financial Advisor Agent",
         "feedback_reports": 0,
@@ -1285,11 +1285,11 @@
         "views_14d": null
       },
       "fraud-detection-alert": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Fraud Detection and Alert Agent",
         "feedback_reports": 0,
@@ -1298,11 +1298,11 @@
         "views_14d": null
       },
       "fs-customer-onboarding": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Customer Onboarding Agent",
         "feedback_reports": 0,
@@ -1311,11 +1311,11 @@
         "views_14d": null
       },
       "fs-regulatory-compliance": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Regulatory Compliance Agent",
         "feedback_reports": 0,
@@ -1324,11 +1324,11 @@
         "views_14d": null
       },
       "inventory-rebalancing": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Inventory Rebalancing Agent",
         "feedback_reports": 0,
@@ -1337,11 +1337,11 @@
         "views_14d": null
       },
       "inventory-visibility": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Inventory Visibility Agent",
         "feedback_reports": 0,
@@ -1350,11 +1350,11 @@
         "views_14d": null
       },
       "license-renewal-expansion": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "License Renewal and Expansion Agent",
         "feedback_reports": 0,
@@ -1363,11 +1363,11 @@
         "views_14d": null
       },
       "loan-origination-assistant": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Loan Origination Assistant",
         "feedback_reports": 0,
@@ -1376,11 +1376,11 @@
         "views_14d": null
       },
       "maintenance-scheduling": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Maintenance Scheduling Agent",
         "feedback_reports": 0,
@@ -1389,11 +1389,11 @@
         "views_14d": null
       },
       "omnichannel-engagement": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Omnichannel Engagement Agent",
         "feedback_reports": 0,
@@ -1402,11 +1402,11 @@
         "views_14d": null
       },
       "order-status-communication": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Order Status Communications Agent",
         "feedback_reports": 0,
@@ -1415,11 +1415,11 @@
         "views_14d": null
       },
       "patient-intake": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Patient Intake and Scheduling Agent",
         "feedback_reports": 0,
@@ -1428,11 +1428,11 @@
         "views_14d": null
       },
       "permit-license-management": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Permit Management Agent",
         "feedback_reports": 0,
@@ -1441,11 +1441,11 @@
         "views_14d": null
       },
       "personalized-marketing": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Personalized Marketing Agent",
         "feedback_reports": 0,
@@ -1454,11 +1454,11 @@
         "views_14d": null
       },
       "personalized-shopping-assistant": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Personalized Shopping Agent",
         "feedback_reports": 0,
@@ -1467,11 +1467,11 @@
         "views_14d": null
       },
       "portfolio-rebalancing": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Portfolio Rebalancing Agent",
         "feedback_reports": 0,
@@ -1480,11 +1480,11 @@
         "views_14d": null
       },
       "prior-authorization": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Prior Authorization Agent",
         "feedback_reports": 0,
@@ -1493,11 +1493,11 @@
         "views_14d": null
       },
       "procurement-agent": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Procurement Agent",
         "feedback_reports": 0,
@@ -1506,11 +1506,11 @@
         "views_14d": null
       },
       "procurement-support": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Discount Finder Agent",
         "feedback_reports": 0,
@@ -1519,11 +1519,11 @@
         "views_14d": null
       },
       "product-feedback-synthesizer": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Product Feedback Synthesizer Agent",
         "feedback_reports": 0,
@@ -1532,11 +1532,11 @@
         "views_14d": null
       },
       "product-line-optimization": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Product Line Optimization Agent",
         "feedback_reports": 0,
@@ -1545,11 +1545,11 @@
         "views_14d": null
       },
       "proposal-generation": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Proposal Generation Agent",
         "feedback_reports": 0,
@@ -1558,11 +1558,11 @@
         "views_14d": null
       },
       "resource-utilization": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Resource Utilization Agent",
         "feedback_reports": 0,
@@ -1571,11 +1571,11 @@
         "views_14d": null
       },
       "returns-complaints-resolution": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Returns and Complaints Resolution Agent",
         "feedback_reports": 0,
@@ -1584,11 +1584,11 @@
         "views_14d": null
       },
       "sales-qualification": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Sales Qualification Agent",
         "feedback_reports": 0,
@@ -1597,11 +1597,11 @@
         "views_14d": null
       },
       "store-associate-copilot": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Retail Store Associate Copilot",
         "feedback_reports": 0,
@@ -1610,11 +1610,11 @@
         "views_14d": null
       },
       "supplier-risk-monitoring": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Supply Risk Monitoring Agent",
         "feedback_reports": 0,
@@ -1623,11 +1623,11 @@
         "views_14d": null
       },
       "supply-chain-disruption-alert": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Supply Chain Disruption Alert Agent",
         "feedback_reports": 0,
@@ -1636,11 +1636,11 @@
         "views_14d": null
       },
       "time-entry-billing": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Time Entry and Billing Agent",
         "feedback_reports": 0,
@@ -1649,11 +1649,11 @@
         "views_14d": null
       },
       "underwriting-support": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Underwriting Support Agent",
         "feedback_reports": 0,
@@ -1662,11 +1662,11 @@
         "views_14d": null
       },
       "utility-billing-assistance": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Utility Billing and Assistance Agent",
         "feedback_reports": 0,
@@ -1675,11 +1675,11 @@
         "views_14d": null
       },
       "wealth-insights-generator": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Wealth Insights Generator Agent",
         "feedback_reports": 0,
@@ -1688,11 +1688,11 @@
         "views_14d": null
       },
       "win-loss-analysis": {
+        "achievement_completions": 0,
+        "achievement_hard_completions": 0,
+        "achievement_points": 0,
+        "achievement_starts": 0,
         "agent_upvotes": null,
-        "agi_completions": 0,
-        "agi_hard_completions": 0,
-        "agi_points": 0,
-        "agi_starts": 0,
         "bundle_downloads": 0,
         "display_name": "Win/Loss Analysis Agent",
         "feedback_reports": 0,
@@ -1702,7 +1702,7 @@
       }
     }
   },
-  "generated_at": "2026-08-10T12:14:11Z",
+  "generated_at": "2026-08-10T13:34:19Z",
   "links": {
     "email": "https://microsoft.github.io/aibast-agents-library/reports/impact-report-email.txt",
     "html": "https://microsoft.github.io/aibast-agents-library/reports/impact-report.html",
@@ -1716,6 +1716,70 @@
       "baseline_at": null,
       "days": 30,
       "metrics": {
+        "achievement_achievement_rate": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0.0
+        },
+        "achievement_completion_rate": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0.0
+        },
+        "achievement_completions": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "achievement_hard_completion_rate": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0.0
+        },
+        "achievement_hard_completions": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "achievement_participants": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "achievement_points": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "achievement_starts": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
         "agent_acquisitions": {
           "baseline": null,
           "calculation": "snapshot_change",
@@ -1747,78 +1811,6 @@
           "change_percent": null,
           "status": "baseline_pending",
           "value": 72
-        },
-        "agi_achievement_rate": {
-          "baseline": null,
-          "calculation": "snapshot_change",
-          "change": null,
-          "change_percent": null,
-          "status": "baseline_pending",
-          "value": 0.0
-        },
-        "agi_achievements": {
-          "baseline": null,
-          "calculation": "snapshot_change",
-          "change": null,
-          "change_percent": null,
-          "status": "baseline_pending",
-          "value": 0
-        },
-        "agi_completion_rate": {
-          "baseline": null,
-          "calculation": "snapshot_change",
-          "change": null,
-          "change_percent": null,
-          "status": "baseline_pending",
-          "value": 0.0
-        },
-        "agi_completions": {
-          "baseline": null,
-          "calculation": "snapshot_change",
-          "change": null,
-          "change_percent": null,
-          "status": "baseline_pending",
-          "value": 0
-        },
-        "agi_hard_completion_rate": {
-          "baseline": null,
-          "calculation": "snapshot_change",
-          "change": null,
-          "change_percent": null,
-          "status": "baseline_pending",
-          "value": 0.0
-        },
-        "agi_hard_completions": {
-          "baseline": null,
-          "calculation": "snapshot_change",
-          "change": null,
-          "change_percent": null,
-          "status": "baseline_pending",
-          "value": 0
-        },
-        "agi_participants": {
-          "baseline": null,
-          "calculation": "snapshot_change",
-          "change": null,
-          "change_percent": null,
-          "status": "baseline_pending",
-          "value": 0
-        },
-        "agi_points": {
-          "baseline": null,
-          "calculation": "snapshot_change",
-          "change": null,
-          "change_percent": null,
-          "status": "baseline_pending",
-          "value": 0
-        },
-        "agi_starts": {
-          "baseline": null,
-          "calculation": "snapshot_change",
-          "change": null,
-          "change_percent": null,
-          "status": "baseline_pending",
-          "value": 0
         },
         "cdn_hits": {
           "baseline": null,
@@ -1874,7 +1866,7 @@
           "change": null,
           "change_percent": null,
           "status": "baseline_pending",
-          "value": 5310
+          "value": 5307
         },
         "open_issues": {
           "baseline": null,
@@ -1947,6 +1939,14 @@
           "change_percent": null,
           "status": "baseline_pending",
           "value": 5310
+        },
+        "verified_achievements": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
         },
         "verticals": {
           "baseline": null,
@@ -2025,7 +2025,7 @@
         "agent_acquisitions": [],
         "agent_downloads": [],
         "agent_upvotes": [],
-        "workshop_agi_points": [],
+        "workshop_achievement_points": [],
         "workshop_usage": []
       },
       "name": "Monthly",
@@ -2036,6 +2036,70 @@
       "baseline_at": null,
       "days": 7,
       "metrics": {
+        "achievement_achievement_rate": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0.0
+        },
+        "achievement_completion_rate": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0.0
+        },
+        "achievement_completions": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "achievement_hard_completion_rate": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0.0
+        },
+        "achievement_hard_completions": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "achievement_participants": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "achievement_points": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
+        "achievement_starts": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
+        },
         "agent_acquisitions": {
           "baseline": null,
           "calculation": "snapshot_change",
@@ -2067,78 +2131,6 @@
           "change_percent": null,
           "status": "baseline_pending",
           "value": 72
-        },
-        "agi_achievement_rate": {
-          "baseline": null,
-          "calculation": "snapshot_change",
-          "change": null,
-          "change_percent": null,
-          "status": "baseline_pending",
-          "value": 0.0
-        },
-        "agi_achievements": {
-          "baseline": null,
-          "calculation": "snapshot_change",
-          "change": null,
-          "change_percent": null,
-          "status": "baseline_pending",
-          "value": 0
-        },
-        "agi_completion_rate": {
-          "baseline": null,
-          "calculation": "snapshot_change",
-          "change": null,
-          "change_percent": null,
-          "status": "baseline_pending",
-          "value": 0.0
-        },
-        "agi_completions": {
-          "baseline": null,
-          "calculation": "snapshot_change",
-          "change": null,
-          "change_percent": null,
-          "status": "baseline_pending",
-          "value": 0
-        },
-        "agi_hard_completion_rate": {
-          "baseline": null,
-          "calculation": "snapshot_change",
-          "change": null,
-          "change_percent": null,
-          "status": "baseline_pending",
-          "value": 0.0
-        },
-        "agi_hard_completions": {
-          "baseline": null,
-          "calculation": "snapshot_change",
-          "change": null,
-          "change_percent": null,
-          "status": "baseline_pending",
-          "value": 0
-        },
-        "agi_participants": {
-          "baseline": null,
-          "calculation": "snapshot_change",
-          "change": null,
-          "change_percent": null,
-          "status": "baseline_pending",
-          "value": 0
-        },
-        "agi_points": {
-          "baseline": null,
-          "calculation": "snapshot_change",
-          "change": null,
-          "change_percent": null,
-          "status": "baseline_pending",
-          "value": 0
-        },
-        "agi_starts": {
-          "baseline": null,
-          "calculation": "snapshot_change",
-          "change": null,
-          "change_percent": null,
-          "status": "baseline_pending",
-          "value": 0
         },
         "cdn_hits": {
           "baseline": null,
@@ -2194,7 +2186,7 @@
           "change": null,
           "change_percent": null,
           "status": "baseline_pending",
-          "value": 5310
+          "value": 5307
         },
         "open_issues": {
           "baseline": null,
@@ -2267,6 +2259,14 @@
           "change_percent": null,
           "status": "baseline_pending",
           "value": 5310
+        },
+        "verified_achievements": {
+          "baseline": null,
+          "calculation": "snapshot_change",
+          "change": null,
+          "change_percent": null,
+          "status": "baseline_pending",
+          "value": 0
         },
         "verticals": {
           "baseline": null,
@@ -2345,7 +2345,7 @@
         "agent_acquisitions": [],
         "agent_downloads": [],
         "agent_upvotes": [],
-        "workshop_agi_points": [],
+        "workshop_achievement_points": [],
         "workshop_usage": []
       },
       "name": "Weekly",
@@ -2355,7 +2355,7 @@
   },
   "repo": {
     "as_of": "2026-08-10T12:14:11Z",
-    "carried_forward": false,
+    "carried_forward": true,
     "created_at": "2025-10-17T16:17:53Z",
     "description": "Main repository for AI BAST Specialist Teal AI Agents Library",
     "forks": 2,

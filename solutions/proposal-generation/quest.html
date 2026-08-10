@@ -264,19 +264,19 @@
     .report-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
     .report-button { border-color: var(--cp-accent); color: var(--cp-accent); }
     .feedback-notice { margin-top: 14px; padding: 14px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
-    .agi-panel { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(260px, .8fr); gap: 18px; margin: 20px 0; padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
-    .agi-panel h2, .agi-panel h3, .agi-panel p { margin-top: 0; }
-    .agi-panel h2 { margin-bottom: 4px; font-size: 20px; }
-    .agi-score-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 18px; }
-    .agi-score { color: var(--cp-accent); font-size: 30px; font-weight: 800; }
-    .agi-badges { display: flex; flex-wrap: wrap; gap: 7px; margin: 12px 0; padding: 0; list-style: none; }
-    .agi-badge { padding: 5px 8px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface-soft); font-size: 12px; }
-    .agi-claims { padding-left: 18px; border-left: 1px solid var(--cp-border); }
-    .agi-claim-actions { display: flex; flex-wrap: wrap; gap: 8px; }
-    .agi-claim-actions [hidden] { display: none; }
-    .agi-fine-print { margin: 10px 0 0; color: var(--cp-text-muted); font-size: 13px; }
-    .agi-toast { position: fixed; right: 18px; bottom: 18px; z-index: 50; max-width: 360px; padding: 12px 14px; border: 1px solid var(--cp-accent); border-radius: 10px; background: var(--cp-panel-strong); box-shadow: var(--cp-shadow); }
-    .agi-toast:empty { display: none; }
+    .achievements-panel { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(260px, .8fr); gap: 18px; margin: 20px 0; padding: 18px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); }
+    .achievements-panel h2, .achievements-panel h3, .achievements-panel p { margin-top: 0; }
+    .achievements-panel h2 { margin-bottom: 4px; font-size: 20px; }
+    .achievements-score-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 18px; }
+    .achievements-score { color: var(--cp-accent); font-size: 30px; font-weight: 800; }
+    .achievements-badges { display: flex; flex-wrap: wrap; gap: 7px; margin: 12px 0; padding: 0; list-style: none; }
+    .achievements-badge { padding: 5px 8px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface-soft); font-size: 12px; }
+    .achievements-claims { padding-left: 18px; border-left: 1px solid var(--cp-border); }
+    .achievements-claim-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+    .achievements-claim-actions [hidden] { display: none; }
+    .achievements-fine-print { margin: 10px 0 0; color: var(--cp-text-muted); font-size: 13px; }
+    .achievements-toast { position: fixed; right: 18px; bottom: 18px; z-index: 50; max-width: 360px; padding: 12px 14px; border: 1px solid var(--cp-accent); border-radius: 10px; background: var(--cp-panel-strong); box-shadow: var(--cp-shadow); }
+    .achievements-toast:empty { display: none; }
     .marker-group { margin: 12px 0; }
     .marker-group > strong { display: block; margin-bottom: 6px; }
     .marker-chip { display: inline-flex; margin: 0 6px 6px 0; padding: 5px 8px; border: 1px solid var(--cp-border); border-radius: 999px; background: var(--cp-surface); color: var(--cp-text-muted); font-size: 12px; }
@@ -318,6 +318,10 @@
     .shot-link { display: block; text-align: center; }
     .shot { display: block; width: 100%; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--cp-border); border-radius: 10px; image-rendering: auto; }
     .missing { padding: 32px; border: 2px dashed var(--cp-warning); border-radius: 10px; color: var(--cp-text-muted); }
+    .verification-evidence { margin-top: 14px; padding: 18px; border-left: 4px solid var(--cp-success); border-radius: 10px; background: var(--cp-surface-soft); }
+    .verification-evidence > strong { display: block; color: var(--cp-text); }
+    .verification-evidence p { margin: 8px 0 0; color: var(--cp-text-muted); }
+    .evidence-transcript { overflow-x: auto; margin: 12px 0 0; padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface); color: var(--cp-text); white-space: pre-wrap; word-break: break-word; font-family: Consolas, "Courier New", Courier, monospace; font-size: 13px; line-height: 1.5; }
     .look-for { margin: 16px 0; padding: 20px; border-left: 4px solid var(--cp-accent); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text-muted); }
     .look-for strong { color: var(--cp-text); }
     .look-for p { margin: 8px 0 0; }
@@ -331,7 +335,7 @@
     .prompt-block { overflow-x: auto; margin: 14px 0 0; padding: 16px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); color: var(--cp-text); white-space: pre-wrap; word-break: break-word; font-family: Consolas, "Courier New", Courier, monospace; font-size: 13px; line-height: 1.55; }
     .resource-list { columns: 2; padding-left: 22px; }
     .resource-list li { break-inside: avoid; margin-bottom: 10px; }
-    @media (max-width: 760px) { .engine-flow, .outcome-grid, .skill-onboarding, .module-summary, .preview-grid, .done-grid, .agi-panel { grid-template-columns: 1fr; } .agi-claims { padding: 16px 0 0; border-top: 1px solid var(--cp-border); border-left: 0; } }
+    @media (max-width: 760px) { .engine-flow, .outcome-grid, .skill-onboarding, .module-summary, .preview-grid, .done-grid, .achievements-panel { grid-template-columns: 1fr; } .achievements-claims { padding: 16px 0 0; border-top: 1px solid var(--cp-border); border-left: 0; } }
     @media (max-width: 620px) { .resource-list { columns: 1; } .prompt-heading { display: block; } .prompt-heading .button { margin-top: 12px; } .instruction-grid { grid-template-columns: 1fr; } .step header { grid-template-columns: 36px 1fr; } .step header .report-button { grid-column: 1 / -1; } }
   </style>
 </head>
@@ -354,29 +358,29 @@
       </div>
     </section>
 
-    <section class="agi-panel" aria-labelledby="agi-panel-title">
+    <section class="achievements-panel" aria-labelledby="achievements-panel-title">
       <div>
         <p class="eyebrow">Self-paced local achievements</p>
-        <h2 id="agi-panel-title">Workshop achievements</h2>
-        <div class="agi-score-line">
-          <span><strong class="agi-score" id="agi-total-score">0</strong> total points</span>
-          <span><strong id="agi-workshop-score">0</strong> in this workshop</span>
+        <h2 id="achievements-panel-title">Workshop achievements</h2>
+        <div class="achievements-score-line">
+          <span><strong class="achievements-score" id="achievements-total-score">0</strong> total points</span>
+          <span><strong id="achievements-workshop-score">0</strong> in this workshop</span>
         </div>
-        <p id="agi-progress-label">0 of 0 Easy checkpoints complete</p>
-        <div class="progress" aria-hidden="true"><span id="agi-progress-bar"></span></div>
-        <ul class="agi-badges" id="agi-badge-list" aria-label="Badges earned in this workshop"><li class="agi-badge">No badges yet</li></ul>
+        <p id="achievement-progress-label">0 of 0 Easy checkpoints complete</p>
+        <div class="progress" aria-hidden="true"><span id="achievement-progress-bar"></span></div>
+        <ul class="achievements-badges" id="achievements-badge-list" aria-label="Badges earned in this workshop"><li class="achievements-badge">No badges yet</li></ul>
         <a href="../../achievements.html">View achievements and local profile</a>
       </div>
-      <div class="agi-claims">
+      <div class="achievements-claims">
         <h3>Optional public verification</h3>
-        <p class="agi-fine-print">These points and badges are local, self-reported workshop progress—not externally verified proof or a capability claim.</p>
-        <div class="agi-claim-actions">
-          <button class="button primary" type="button" data-agi-sync hidden>Sync achievements to GitHub</button>
+        <p class="achievements-fine-print">These points and badges are local, self-reported workshop progress—not externally verified proof or a capability claim.</p>
+        <div class="achievements-claim-actions">
+          <button class="button primary" type="button" data-achievements-sync hidden>Sync achievements to GitHub</button>
         </div>
-        <p class="agi-fine-print">This opens one prefilled progress issue containing every badge currently earned here. Nothing syncs until you submit it. Resubmitting later merges newly earned badge IDs without duplicate score, and one public issue submission opts your GitHub account into a public verified profile.</p>
+        <p class="achievements-fine-print">This opens one prefilled progress issue containing every badge currently earned here. Nothing syncs until you submit it. Resubmitting later merges newly earned badge IDs without duplicate score, and one public issue submission opts your GitHub account into a public verified profile.</p>
       </div>
     </section>
-    <div class="agi-toast" id="agi-badge-toast" role="status" aria-live="polite" aria-atomic="true"></div>
+    <div class="achievements-toast" id="achievements-badge-toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
     <section class="path" data-path="easy" id="mode-panel-easy" role="tabpanel" aria-labelledby="mode-tab-easy">
       <div class="module-summary">
@@ -413,7 +417,7 @@
           <p>This file fixes the workshop to Brainstem. Copilot remains the work surface while the learner&#x27;s on-device training AI persists state, loads the generic workshop engine, and continues every handoff.</p>
           <div class="action-panel"><strong>Do this</strong><ol><li>Download the lane-specific <code>SKILL.md</code>.</li><li>Open GitHub Copilot Chat in VS Code.</li><li>Select <strong>Agent mode</strong>.</li><li>Drag the downloaded file into the chat.</li></ol><a class="button primary" href="../../skills/aibast-easy-mode-brainstem/SKILL.md" download="SKILL.md">Download Brainstem SKILL.md</a></div>
           <div class="expected-panel"><strong>Expected result</strong><p>The attachment appears in Copilot Chat. From this point forward, the selected skill—not extra wording in your prompts—determines which harness runs.</p></div>
-          <label class="step-complete"><input type="checkbox" data-checkpoint="brainstem-skill" data-agi-group="onboarding" data-agi-path="brainstem"><span>I attached the correct lane skill.</span></label>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="brainstem-skill" data-achievements-group="onboarding" data-achievements-path="brainstem"><span>I attached the correct lane skill.</span></label>
         </div>
       </article>
 
@@ -424,18 +428,18 @@
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="brainstem-build-prompt">Copy message</button></div>
           <pre class="prompt-block" id="brainstem-build-prompt">Give me Proposal Generation using Easy Mode and test it for me.</pre>
           <div class="expected-panel"><strong>Expected result</strong><p>Brainstem reports the generic AIBAST Workshop Engine and ProposalGenerationAgent loaded, with 6/6 locked local cases passed.</p><p>Copilot should end by suggesting the next message: <code>Deploy it into Copilot Studio for me.</code></p></div>
-          <label class="step-complete"><input type="checkbox" data-checkpoint="brainstem-local" data-agi-group="local-proof" data-agi-path="brainstem"><span>I saw every locked local case pass.</span></label>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="brainstem-local" data-achievements-group="local-proof" data-achievements-path="brainstem"><span>I saw every locked local case pass.</span></label>
         </div>
       </article>
 
       <article class="learn-step" id="brainstem-step-3">
-        <header class="learn-step-header"><span>3</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 3: Draft deployment" data-report-expected="Draft Proposal Generation Pilot; model Sonnet46; 2 knowledge files; 6 skills; published false." data-report-evidence="">Report an issue</button></header>
+        <header class="learn-step-header"><span>3</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 3: Draft deployment" data-report-expected="Draft Proposal Generation Manual; model Claude Sonnet 4.6; 2 knowledge files; 6 skills; published false." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>The harness now uses the verified Microsoft Copilot Studio plugin to reuse or create the source-controlled Draft, synchronize the reviewed instructions and assets, validate the PAC project, and leave publication off.</p>
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="brainstem-deploy-prompt">Copy message</button></div>
           <pre class="prompt-block" id="brainstem-deploy-prompt">Deploy it into Copilot Studio for me.</pre>
-          <div class="expected-panel"><strong>Expected result</strong><ul><li>Draft: <code>Proposal Generation Pilot</code></li><li>Model: <code>Sonnet46</code></li><li>Knowledge files: <code>2</code></li><li>Skills: <code>6</code></li><li>Status: <strong>Draft</strong>; published: <code>false</code></li></ul><p>The harness then validates the real Preview front door before returning its final verdict.</p></div>
-          <label class="step-complete"><input type="checkbox" data-checkpoint="brainstem-draft" data-agi-group="draft-builder" data-agi-path="brainstem"><span>I saw the Draft identity and unpublished state.</span></label>
+          <div class="expected-panel"><strong>Expected result</strong><ul><li>Draft: <code>Proposal Generation Manual</code></li><li>Model: <code>Claude Sonnet 4.6</code></li><li>Knowledge files: <code>2</code></li><li>Skills: <code>6</code></li><li>Status: <strong>Draft</strong>; published: <code>false</code></li></ul><p>The harness then validates the real Preview front door before returning its final verdict.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="brainstem-draft" data-achievements-group="draft-builder" data-achievements-path="brainstem"><span>I saw the Draft identity and unpublished state.</span></label>
         </div>
       </article>
       </div>
@@ -449,7 +453,7 @@
           <p>This file fixes the workshop to GitHub Copilot alone. The skill carries the same discovery, testing, deployment, and validation contract directly in the active Copilot session and bootstraps the official Microsoft Copilot Studio plugin.</p>
           <div class="action-panel"><strong>Do this</strong><ol><li>Download the lane-specific <code>SKILL.md</code>.</li><li>Open GitHub Copilot Chat in VS Code.</li><li>Select <strong>Agent mode</strong>.</li><li>Drag the downloaded file into the chat.</li></ol><a class="button primary" href="../../skills/aibast-easy-mode-copilot/SKILL.md" download="SKILL.md">Download Copilot-only SKILL.md</a></div>
           <div class="expected-panel"><strong>Expected result</strong><p>The attachment appears in Copilot Chat. From this point forward, the selected skill—not extra wording in your prompts—determines which harness runs.</p></div>
-          <label class="step-complete"><input type="checkbox" data-checkpoint="copilot-skill" data-agi-group="onboarding" data-agi-path="copilot"><span>I attached the correct lane skill.</span></label>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="copilot-skill" data-achievements-group="onboarding" data-achievements-path="copilot"><span>I attached the correct lane skill.</span></label>
         </div>
       </article>
 
@@ -460,18 +464,18 @@
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="copilot-build-prompt">Copy message</button></div>
           <pre class="prompt-block" id="copilot-build-prompt">Give me Proposal Generation using Easy Mode and test it for me.</pre>
           <div class="expected-panel"><strong>Expected result</strong><p>Copilot reports the verified mcs-assistant plugin and PAC CLI, an isolated workspace, a verified source hash, and 6/6 locked local cases passed.</p><p>Copilot should end by suggesting the next message: <code>Deploy it into Copilot Studio for me.</code></p></div>
-          <label class="step-complete"><input type="checkbox" data-checkpoint="copilot-local" data-agi-group="local-proof" data-agi-path="copilot"><span>I saw every locked local case pass.</span></label>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="copilot-local" data-achievements-group="local-proof" data-achievements-path="copilot"><span>I saw every locked local case pass.</span></label>
         </div>
       </article>
 
       <article class="learn-step" id="copilot-step-3">
-        <header class="learn-step-header"><span>3</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 3: Draft deployment" data-report-expected="Draft Proposal Generation Pilot; model Sonnet46; 2 knowledge files; 6 skills; published false." data-report-evidence="">Report an issue</button></header>
+        <header class="learn-step-header"><span>3</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 3: Draft deployment" data-report-expected="Draft Proposal Generation Manual; model Claude Sonnet 4.6; 2 knowledge files; 6 skills; published false." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>The harness now uses the verified Microsoft Copilot Studio plugin to reuse or create the source-controlled Draft, synchronize the reviewed instructions and assets, validate the PAC project, and leave publication off.</p>
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="copilot-deploy-prompt">Copy message</button></div>
           <pre class="prompt-block" id="copilot-deploy-prompt">Deploy it into Copilot Studio for me.</pre>
-          <div class="expected-panel"><strong>Expected result</strong><ul><li>Draft: <code>Proposal Generation Pilot</code></li><li>Model: <code>Sonnet46</code></li><li>Knowledge files: <code>2</code></li><li>Skills: <code>6</code></li><li>Status: <strong>Draft</strong>; published: <code>false</code></li></ul><p>The harness then validates the real Preview front door before returning its final verdict.</p></div>
-          <label class="step-complete"><input type="checkbox" data-checkpoint="copilot-draft" data-agi-group="draft-builder" data-agi-path="copilot"><span>I saw the Draft identity and unpublished state.</span></label>
+          <div class="expected-panel"><strong>Expected result</strong><ul><li>Draft: <code>Proposal Generation Manual</code></li><li>Model: <code>Claude Sonnet 4.6</code></li><li>Knowledge files: <code>2</code></li><li>Skills: <code>6</code></li><li>Status: <strong>Draft</strong>; published: <code>false</code></li></ul><p>The harness then validates the real Preview front door before returning its final verdict.</p></div>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="copilot-draft" data-achievements-group="draft-builder" data-achievements-path="copilot"><span>I saw the Draft identity and unpublished state.</span></label>
         </div>
       </article>
       </div>
@@ -480,7 +484,7 @@
         <header class="learn-step-header"><span>4</span><div><p>Verify the real experience</p><h3>Confirm the Draft in Copilot Studio Preview</h3></div></header>
         <div class="learn-step-body">
           <p>The harness already runs these checks automatically. Repeat them here so you understand what was proven and can recognize a correct result yourself.</p>
-          <div class="preview-intro"><ol><li>Open the validated Draft.</li><li>Select <strong>Preview</strong>.</li><li>Choose <strong>New chat</strong> before each case.</li><li>Paste the exact prompt.</li><li>Compare the answer with the required and forbidden markers.</li></ol><div><a class="button primary" href="https://copilotstudio.preview.microsoft.com/environments/ee67a404-325c-e726-a18a-886fe708ca0b/agents/03e16c79-855d-489b-b769-20757d3cd852" target="_blank" rel="noopener">Open the Copilot Studio Draft ↗</a></div></div>
+          <div class="preview-intro"><ol><li>Open the validated Draft.</li><li>Select <strong>Preview</strong>.</li><li>Choose <strong>New chat</strong> before each case.</li><li>Paste the exact prompt.</li><li>Compare the answer with the required and forbidden markers.</li></ol><div><a class="button primary" href="https://copilotstudio.preview.microsoft.com/environments/ee67a404-325c-e726-a18a-886fe708ca0b/agents/2b695875-3cee-43a9-9719-f4fb923f90f5" target="_blank" rel="noopener">Open the Copilot Studio Draft ↗</a></div></div>
           <div class="expected-panel"><strong>Expected result</strong><p>Every case passes in a fresh Preview conversation, and the agent still appears as <strong>Draft</strong>.</p></div>
           <div class="preview-grid">
 
@@ -490,7 +494,7 @@
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">RFP Analysis</span><span class="marker-chip">Requirements Analysis</span><span class="marker-chip">Evidence boundary</span></div></div>
           <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">I don&#x27;t have access</span><span class="marker-chip">provide the record</span><span class="marker-chip">message was sent</span><span class="marker-chip">CRM record updated successfully</span></div></div>
           <div class="preview-shot-wrap"><a href="screenshots/assisted/annotated/01-pg-01.png" download="01-pg-01.png"><img class="preview-shot" data-evidence-status="reusable" src="screenshots/assisted/annotated/01-pg-01.png" alt="PG-01 positive visual checkpoint" loading="lazy"></a><p class="capture-meta">Visible positive anchors: Evidence boundary; RFP-2024-0147; Authorized human review is required before any external use. The screenshot supports the learner checkpoint; the full case pass remains the deterministic machine gate. Source: 1424×863 JPEG. <a href="screenshots/assisted/01-pg-01.jpg" download="01-pg-01.jpg">Download original</a>.</p></div>
-          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-pg-01" data-agi-group="preview-proven" data-agi-path="shared"><span>The Preview response matched this contract.</span></label>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-pg-01" data-achievements-group="preview-proven" data-achievements-path="shared"><span>The Preview response matched this contract.</span></label>
         </article>
 
         <article class="preview-case preview-case-wide">
@@ -499,7 +503,7 @@
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">Executive Summary</span><span class="marker-chip">Personalization Applied</span><span class="marker-chip">Evidence boundary</span></div></div>
           <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">I don&#x27;t have access</span><span class="marker-chip">provide the record</span><span class="marker-chip">message was sent</span><span class="marker-chip">CRM record updated successfully</span></div></div>
           <div class="preview-shot-wrap"><a href="screenshots/assisted/annotated/02-pg-02.png" download="02-pg-02.png"><img class="preview-shot" data-evidence-status="reusable" src="screenshots/assisted/annotated/02-pg-02.png" alt="PG-02 positive visual checkpoint" loading="lazy"></a><p class="capture-meta">Visible positive anchors: Evidence boundary; No pricing was approved; No proposal was submitted. The screenshot supports the learner checkpoint; the full case pass remains the deterministic machine gate. Source: 1424×863 JPEG. <a href="screenshots/assisted/02-pg-02.jpg" download="02-pg-02.jpg">Download original</a>.</p></div>
-          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-pg-02" data-agi-group="preview-proven" data-agi-path="shared"><span>The Preview response matched this contract.</span></label>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-pg-02" data-achievements-group="preview-proven" data-achievements-path="shared"><span>The Preview response matched this contract.</span></label>
         </article>
 
         <article class="preview-case preview-case-wide">
@@ -508,7 +512,7 @@
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">Solution &amp; Pricing</span><span class="marker-chip">Budget Analysis</span><span class="marker-chip">Evidence boundary</span></div></div>
           <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">I don&#x27;t have access</span><span class="marker-chip">provide the record</span><span class="marker-chip">message was sent</span><span class="marker-chip">CRM record updated successfully</span></div></div>
           <div class="preview-shot-wrap"><a href="screenshots/assisted/annotated/03-pg-03.png" download="03-pg-03.png"><img class="preview-shot" data-evidence-status="reusable" src="screenshots/assisted/annotated/03-pg-03.png" alt="PG-03 positive visual checkpoint" loading="lazy"></a><p class="capture-meta">Visible positive anchors: Evidence boundary; No price, discount, or concession has been approved; Authorized bid-owner review. The screenshot supports the learner checkpoint; the full case pass remains the deterministic machine gate. Source: 1424×863 JPEG. <a href="screenshots/assisted/03-pg-03.jpg" download="03-pg-03.jpg">Download original</a>.</p></div>
-          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-pg-03" data-agi-group="preview-proven" data-agi-path="shared"><span>The Preview response matched this contract.</span></label>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-pg-03" data-achievements-group="preview-proven" data-achievements-path="shared"><span>The Preview response matched this contract.</span></label>
         </article>
 
         <article class="preview-case preview-case-wide">
@@ -517,7 +521,7 @@
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">References &amp; Competitive Positioning</span><span class="marker-chip">Win Theme</span><span class="marker-chip">Evidence boundary</span></div></div>
           <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">I don&#x27;t have access</span><span class="marker-chip">provide the record</span><span class="marker-chip">message was sent</span><span class="marker-chip">CRM record updated successfully</span></div></div>
           <div class="preview-shot-wrap"><a href="screenshots/assisted/annotated/04-pg-04.png" download="04-pg-04.png"><img class="preview-shot" data-evidence-status="reusable" src="screenshots/assisted/annotated/04-pg-04.png" alt="PG-04 positive visual checkpoint" loading="lazy"></a><p class="capture-meta">Visible positive anchors: Evidence boundary; No reference was contacted; Authorized human review before external use. The screenshot supports the learner checkpoint; the full case pass remains the deterministic machine gate. Source: 1424×863 JPEG. <a href="screenshots/assisted/04-pg-04.jpg" download="04-pg-04.jpg">Download original</a>.</p></div>
-          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-pg-04" data-agi-group="preview-proven" data-agi-path="shared"><span>The Preview response matched this contract.</span></label>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-pg-04" data-achievements-group="preview-proven" data-achievements-path="shared"><span>The Preview response matched this contract.</span></label>
         </article>
 
         <article class="preview-case preview-case-wide">
@@ -526,7 +530,7 @@
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">Proposal Package</span><span class="marker-chip">Required Human Review Before Delivery</span><span class="marker-chip">Evidence boundary</span></div></div>
           <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">I don&#x27;t have access</span><span class="marker-chip">provide the record</span><span class="marker-chip">message was sent</span><span class="marker-chip">CRM record updated successfully</span></div></div>
           <div class="preview-shot-wrap"><a href="screenshots/assisted/annotated/05-pg-05.png" download="05-pg-05.png"><img class="preview-shot" data-evidence-status="reusable" src="screenshots/assisted/annotated/05-pg-05.png" alt="PG-05 positive visual checkpoint" loading="lazy"></a><p class="capture-meta">Visible positive anchors: Evidence boundary; Draft outline for authorized human review; No proposal was created or delivered. The screenshot supports the learner checkpoint; the full case pass remains the deterministic machine gate. Source: 1424×863 JPEG. <a href="screenshots/assisted/05-pg-05.jpg" download="05-pg-05.jpg">Download original</a>.</p></div>
-          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-pg-05" data-agi-group="preview-proven" data-agi-path="shared"><span>The Preview response matched this contract.</span></label>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-pg-05" data-achievements-group="preview-proven" data-achievements-path="shared"><span>The Preview response matched this contract.</span></label>
         </article>
 
         <article class="preview-case preview-case-wide">
@@ -535,7 +539,7 @@
           <div class="marker-group"><strong>Must include</strong><div><span class="marker-chip">Delivery Summary</span><span class="marker-chip">Human-Governed Next-Step Options</span><span class="marker-chip">Evidence boundary</span></div></div>
           <div class="marker-group"><strong>Must not claim</strong><div><span class="marker-chip">I don&#x27;t have access</span><span class="marker-chip">provide the record</span><span class="marker-chip">message was sent</span><span class="marker-chip">CRM record updated successfully</span></div></div>
           <div class="preview-shot-wrap"><a href="screenshots/assisted/annotated/06-pg-06.png" download="06-pg-06.png"><img class="preview-shot" data-evidence-status="reusable" src="screenshots/assisted/annotated/06-pg-06.png" alt="PG-06 positive visual checkpoint" loading="lazy"></a><p class="capture-meta">Visible positive anchors: Evidence Boundary; Required reviews not yet completed; Explicit authorized human review and action. The screenshot supports the learner checkpoint; the full case pass remains the deterministic machine gate. Source: 1424×863 JPEG. <a href="screenshots/assisted/06-pg-06.jpg" download="06-pg-06.jpg">Download original</a>.</p></div>
-          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-pg-06" data-agi-group="preview-proven" data-agi-path="shared"><span>The Preview response matched this contract.</span></label>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="preview-pg-06" data-achievements-group="preview-proven" data-achievements-path="shared"><span>The Preview response matched this contract.</span></label>
         </article>
           </div>
         </div>
@@ -543,20 +547,20 @@
 
 
       <section class="learn-step" id="easy-step-5">
-        <header class="learn-step-header"><span>5</span><div><p>Recognize completion</p><h3>Know what “done” looks like</h3></div><button class="button report-button" type="button" data-report-location="Easy mode — final completion verdict" data-report-expected="Local 6/6; Preview 6/6; Draft Proposal Generation Pilot; published false." data-report-evidence="solutions/proposal-generation/evals/dataverse-draft-evidence.json">Report an issue</button></header>
+        <header class="learn-step-header"><span>5</span><div><p>Recognize completion</p><h3>Know what “done” looks like</h3></div><button class="button report-button" type="button" data-report-location="Easy mode — final completion verdict" data-report-expected="Local 6/6; Preview 6/6; Draft Proposal Generation Manual; published false." data-report-evidence="solutions/proposal-generation/evals/dataverse-draft-evidence.json">Report an issue</button></header>
         <div class="learn-step-body">
           <p>The workshop is complete only when both the portable agent and the Copilot Studio front door prove the same behavior.</p>
           <div class="done-grid">
             <article><strong>Local proof</strong><span>6/6 locked cases passed</span></article>
             <article><strong>Preview proof</strong><span>6/6 locked cases passed</span></article>
-            <article><strong>Draft identity</strong><span>Proposal Generation Pilot</span></article>
-            <article><strong>Model</strong><span>Sonnet46</span></article>
+            <article><strong>Draft identity</strong><span>Proposal Generation Manual</span></article>
+            <article><strong>Model</strong><span>Claude Sonnet 4.6</span></article>
             <article><strong>Inventory</strong><span>2 knowledge · 6 skills</span></article>
             <article><strong>Publication gate</strong><span>Draft · published false</span></article>
           </div>
-          <div class="missing withheld-checkpoint"><strong>Withheld checkpoint — reshoot required.</strong> The recorded screenshot is not approved for learner display. Review note: The Proposal Generation Pilot row is not visible. Draft badges for unrelated agents cannot prove the target pilot remains Draft. <strong>Expected state:</strong> the target agent is visibly Draft and publication remains off. The packaged Dataverse evidence supplies the machine-verifiable unpublished-state proof.</div>
+          <div class="verification-evidence"><strong>Verified completion record</strong><p>The packaged environment evidence records the target agent as <strong>Draft</strong> with publication off. Confirm the same state in your environment before marking the workshop complete.</p><p class="capture-meta"><a href="evals/dataverse-draft-evidence.json" download>Download the machine-readable Draft evidence</a>.</p></div>
           <div class="expected-panel"><strong>Final expected verdict</strong><p>The harness reports <code>status: complete</code>, exact case totals, the Draft identity, and <code>published: false</code>. The module ends here; it does not offer publication.</p></div>
-          <label class="step-complete"><input type="checkbox" data-checkpoint="easy-complete" data-agi-group="final-verdict" data-agi-path="shared"><span>I confirmed the final Draft verdict.</span></label>
+          <label class="step-complete"><input type="checkbox" data-checkpoint="easy-complete" data-achievements-group="final-verdict" data-achievements-path="shared"><span>I confirmed the final Draft verdict.</span></label>
         </div>
       </section>
 
@@ -750,7 +754,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             <div class="instruction expected"><strong>Expected result</strong>The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</div>
           </div>
 
-          <div class="look-for withheld-checkpoint"><strong>Withheld checkpoint — reshoot required</strong><p>The recorded screenshot is not approved for learner display and has been withheld. Review note: The instruction policy is visible, but the screenshot has no saved-state indicator or No unsaved changes tooltip. Visible editor content alone does not prove the save checkpoint.</p><p><strong>Expected state:</strong> The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</p><p>Continue only when the visible product state and the deterministic gate agree.</p></div>
+          <div class="look-for verification-checkpoint"><strong>Live verification checkpoint</strong><p><strong>Expected state:</strong> The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits.</p><p>Use the current product state for this step. Mark it complete only when what you see matches the expected result and the deterministic gate agrees.</p></div>
           <footer>
             <a href="manual/GLOBAL-INSTRUCTIONS.md" download>Download source: Global Instructions</a>
             <label><input class="complete" type="checkbox" data-step="4"> Mark complete</label>
@@ -1043,27 +1047,27 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
   <script>
     (() => {
 
-      const AGI_PROFILE_KEY = "aibast:agi-profile:v1";
-      const AGI_WORKSHOP_SLUG = "proposal-generation";
-      const AGI_BADGES = Object.freeze([{"id":"started","label":"Started","points":5},{"id":"local-proof","label":"Local proof","points":15},{"id":"draft-builder","label":"Draft builder","points":20},{"id":"preview-proven","label":"Preview proven","points":25},{"id":"workshop-complete","label":"Workshop complete","points":35},{"id":"hard-mode-complete","label":"Hard mode complete","points":50}]);
-      const AGI_BADGE_IDS = new Set(AGI_BADGES.map((badge) => badge.id));
+      const ACHIEVEMENT_PROFILE_KEY = "aibast:achievement-profile:v1";
+      const ACHIEVEMENT_WORKSHOP_SLUG = "proposal-generation";
+      const ACHIEVEMENT_BADGES = Object.freeze([{"id":"started","label":"Started","points":5},{"id":"local-proof","label":"Local proof","points":15},{"id":"draft-builder","label":"Draft builder","points":20},{"id":"preview-proven","label":"Preview proven","points":25},{"id":"workshop-complete","label":"Workshop complete","points":35},{"id":"hard-mode-complete","label":"Hard mode complete","points":50}]);
+      const ACHIEVEMENT_BADGE_IDS = new Set(ACHIEVEMENT_BADGES.map((badge) => badge.id));
 
-      function emptyAgiProfile() {
+      function emptyAchievementProfile() {
         return { score: 0, workshops: {}, updatedAt: null };
       }
 
-      function validAgiTimestamp(value) {
+      function validAchievementTimestamp(value) {
         return typeof value === "string" && !Number.isNaN(Date.parse(value))
           ? value
           : null;
       }
 
-      function agiCount(value) {
+      function achievementCount(value) {
         return Number.isInteger(value) && value >= 0 ? value : 0;
       }
 
-      function sanitizeAgiProfile(value) {
-        const clean = emptyAgiProfile();
+      function sanitizeAchievementProfile(value) {
+        const clean = emptyAchievementProfile();
         const source =
           value && typeof value === "object" && !Array.isArray(value) ? value : {};
         const workshops =
@@ -1080,13 +1084,13 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
               ? rawWorkshop.progress
               : {};
           const progress = {
-            easyChecked: agiCount(rawProgress.easyChecked),
-            easyTotal: agiCount(rawProgress.easyTotal),
-            hardChecked: agiCount(rawProgress.hardChecked),
-            hardTotal: agiCount(rawProgress.hardTotal),
+            easyChecked: achievementCount(rawProgress.easyChecked),
+            easyTotal: achievementCount(rawProgress.easyTotal),
+            hardChecked: achievementCount(rawProgress.hardChecked),
+            hardTotal: achievementCount(rawProgress.hardTotal),
             easyComplete: rawProgress.easyComplete === true,
             hardComplete: rawProgress.hardComplete === true,
-            updatedAt: validAgiTimestamp(rawProgress.updatedAt),
+            updatedAt: validAchievementTimestamp(rawProgress.updatedAt),
           };
           const achievements = {};
           const rawAchievements =
@@ -1094,7 +1098,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             typeof rawWorkshop.achievements === "object"
               ? rawWorkshop.achievements
               : {};
-          AGI_BADGES.forEach((badge) => {
+          ACHIEVEMENT_BADGES.forEach((badge) => {
             const raw = rawAchievements[badge.id];
             const earned =
               raw === true ||
@@ -1102,7 +1106,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             if (earned) {
               achievements[badge.id] = {
                 earned: true,
-                earnedAt: validAgiTimestamp(raw?.earnedAt),
+                earnedAt: validAchievementTimestamp(raw?.earnedAt),
               };
             }
           });
@@ -1116,7 +1120,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         clean.score = Object.values(clean.workshops).reduce(
           (total, workshop) =>
             total +
-            AGI_BADGES.reduce(
+            ACHIEVEMENT_BADGES.reduce(
               (subtotal, badge) =>
                 subtotal +
                 (workshop.achievements[badge.id]?.earned ? badge.points : 0),
@@ -1124,31 +1128,31 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             ),
           0,
         );
-        clean.updatedAt = validAgiTimestamp(source.updatedAt);
+        clean.updatedAt = validAchievementTimestamp(source.updatedAt);
         return clean;
       }
 
-      function readAgiProfile() {
+      function readAchievementProfile() {
         try {
-          return sanitizeAgiProfile(
-            JSON.parse(localStorage.getItem(AGI_PROFILE_KEY) || "{}"),
+          return sanitizeAchievementProfile(
+            JSON.parse(localStorage.getItem(ACHIEVEMENT_PROFILE_KEY) || "{}"),
           );
         } catch (_error) {
-          return emptyAgiProfile();
+          return emptyAchievementProfile();
         }
       }
 
-      function writeAgiProfile(profile) {
-        const clean = sanitizeAgiProfile(profile);
+      function writeAchievementProfile(profile) {
+        const clean = sanitizeAchievementProfile(profile);
         clean.updatedAt = new Date().toISOString();
-        localStorage.setItem(AGI_PROFILE_KEY, JSON.stringify(clean));
+        localStorage.setItem(ACHIEVEMENT_PROFILE_KEY, JSON.stringify(clean));
         return clean;
       }
 
-      function ensureAgiWorkshop(profile, mode = "easy") {
-        if (!profile.workshops[AGI_WORKSHOP_SLUG]) {
-          profile.workshops[AGI_WORKSHOP_SLUG] = {
-            slug: AGI_WORKSHOP_SLUG,
+      function ensureAchievementWorkshop(profile, mode = "easy") {
+        if (!profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG]) {
+          profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG] = {
+            slug: ACHIEVEMENT_WORKSHOP_SLUG,
             mode: mode === "hard" ? "hard" : "easy",
             progress: {
               easyChecked: 0,
@@ -1162,36 +1166,36 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
             achievements: {},
           };
         }
-        const workshop = profile.workshops[AGI_WORKSHOP_SLUG];
+        const workshop = profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG];
         workshop.mode = mode === "hard" ? "hard" : "easy";
         return workshop;
       }
 
-      function setAgiWorkshopProgress(profile, mode, patch) {
-        const workshop = ensureAgiWorkshop(profile, mode);
+      function setAchievementWorkshopProgress(profile, mode, patch) {
+        const workshop = ensureAchievementWorkshop(profile, mode);
         workshop.progress = {
           ...workshop.progress,
           ...patch,
           updatedAt: new Date().toISOString(),
         };
-        return writeAgiProfile(profile);
+        return writeAchievementProfile(profile);
       }
 
-      function awardAgi(profile, badgeId, mode = "easy") {
-        if (!AGI_BADGE_IDS.has(badgeId)) {
-          return { profile: sanitizeAgiProfile(profile), awarded: null };
+      function awardAchievement(profile, badgeId, mode = "easy") {
+        if (!ACHIEVEMENT_BADGE_IDS.has(badgeId)) {
+          return { profile: sanitizeAchievementProfile(profile), awarded: null };
         }
-        const workshop = ensureAgiWorkshop(profile, mode);
+        const workshop = ensureAchievementWorkshop(profile, mode);
         if (workshop.achievements[badgeId]?.earned) {
-          return { profile: sanitizeAgiProfile(profile), awarded: null };
+          return { profile: sanitizeAchievementProfile(profile), awarded: null };
         }
         workshop.achievements[badgeId] = {
           earned: true,
           earnedAt: new Date().toISOString(),
         };
         return {
-          profile: writeAgiProfile(profile),
-          awarded: AGI_BADGES.find((badge) => badge.id === badgeId),
+          profile: writeAchievementProfile(profile),
+          awarded: ACHIEVEMENT_BADGES.find((badge) => badge.id === badgeId),
         };
       }
 
@@ -1204,8 +1208,8 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         );
       }
 
-      const AGI_CANONICAL_AGENT = "@aibast-agents-library/proposal-generation";
-      const AGI_SYNC_ORDER = Object.freeze([
+      const ACHIEVEMENT_CANONICAL_AGENT = "@aibast-agents-library/proposal-generation";
+      const ACHIEVEMENT_SYNC_ORDER = Object.freeze([
         { localId: "started", claimId: "started" },
         { localId: "local-proof", claimId: "local-proof" },
         { localId: "draft-builder", claimId: "draft-builder" },
@@ -1221,12 +1225,12 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
       const paths = Array.from(document.querySelectorAll("[data-path]"));
       const boxes = Array.from(document.querySelectorAll("[data-checkpoint]"));
       const hardBoxes = Array.from(document.querySelectorAll(".complete[data-step]"));
-      const agiTotalScore = document.getElementById("agi-total-score");
-      const agiWorkshopScore = document.getElementById("agi-workshop-score");
-      const agiProgressLabel = document.getElementById("agi-progress-label");
-      const agiProgressBar = document.getElementById("agi-progress-bar");
-      const agiBadgeList = document.getElementById("agi-badge-list");
-      const agiToast = document.getElementById("agi-badge-toast");
+      const achievementTotalScore = document.getElementById("achievements-total-score");
+      const achievementWorkshopScore = document.getElementById("achievements-workshop-score");
+      const achievementProgressLabel = document.getElementById("achievement-progress-label");
+      const achievementProgressBar = document.getElementById("achievement-progress-bar");
+      const achievementBadgeList = document.getElementById("achievements-badge-list");
+      const achievementToast = document.getElementById("achievements-badge-toast");
       const hardProgressLabel = document.getElementById("hard-progress-label");
       const hardProgressBar = document.getElementById("hard-progress-bar");
       const hardProgressToast = document.getElementById("hard-progress-toast");
@@ -1245,7 +1249,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         box.addEventListener("change", () => {
           saved[box.dataset.checkpoint] = box.checked;
           localStorage.setItem(progressKey, JSON.stringify(saved));
-          evaluateAgi(true);
+          evaluateAchievement(true);
         });
       });
       let hardSaved = [];
@@ -1271,26 +1275,26 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
       function requiredEasyBoxes() {
         const path = currentEasyPath();
         return boxes.filter(
-          (box) => box.dataset.agiPath === path || box.dataset.agiPath === "shared",
+          (box) => box.dataset.achievementPath === path || box.dataset.achievementPath === "shared",
         );
       }
 
-      function agiGroupComplete(group) {
+      function achievementGroupComplete(group) {
         const path = currentEasyPath();
         const members = boxes.filter(
           (box) =>
-            box.dataset.agiGroup === group &&
-            (box.dataset.agiPath === path || box.dataset.agiPath === "shared"),
+            box.dataset.achievementGroup === group &&
+            (box.dataset.achievementPath === path || box.dataset.achievementPath === "shared"),
         );
         return members.length > 0 && members.every((box) => box.checked);
       }
 
-      function announceAgiBadge(badge) {
-        if (!badge || !agiToast) return;
-        agiToast.textContent =
+      function announceAchievementBadge(badge) {
+        if (!badge || !achievementToast) return;
+        achievementToast.textContent =
           `${badge.label} earned: +${badge.points} local achievement points.`;
         window.setTimeout(() => {
-          if (agiToast.textContent.includes(badge.label)) agiToast.textContent = "";
+          if (achievementToast.textContent.includes(badge.label)) achievementToast.textContent = "";
         }, 5000);
       }
 
@@ -1312,93 +1316,93 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         }
         const activeMode =
           localStorage.getItem(modeKey) === "hard" ? "hard" : "easy";
-        let profile = readAgiProfile();
-        if (done.length === 0 && !profile.workshops[AGI_WORKSHOP_SLUG]) {
-          renderAgiPanel(profile, activeMode);
+        let profile = readAchievementProfile();
+        if (done.length === 0 && !profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG]) {
+          renderAchievementPanel(profile, activeMode);
           return;
         }
-        profile = setAgiWorkshopProgress(profile, activeMode, {
+        profile = setAchievementWorkshopProgress(profile, activeMode, {
           hardChecked: done.length,
           hardTotal: hardBoxes.length,
           hardComplete: complete,
         });
         if (done.length > 0) {
-          const result = awardAgi(profile, "started", activeMode);
+          const result = awardAchievement(profile, "started", activeMode);
           profile = result.profile;
-          if (announce) announceAgiBadge(result.awarded);
+          if (announce) announceAchievementBadge(result.awarded);
         }
         if (complete) {
-          const result = awardAgi(
+          const result = awardAchievement(
             profile,
             "hard-mode-complete",
             activeMode,
           );
           profile = result.profile;
-          if (announce) announceAgiBadge(result.awarded);
+          if (announce) announceAchievementBadge(result.awarded);
         }
         if (hardProgressToast) {
           hardProgressToast.textContent = complete
             ? "Hard mode complete. The achievement is saved in this device's achievement profile."
             : "";
         }
-        renderAgiPanel(profile, activeMode);
+        renderAchievementPanel(profile, activeMode);
       }
 
-      function earnedAgiSyncIds(achievements) {
-        return AGI_SYNC_ORDER.filter(
+      function earnedAchievementSyncIds(achievements) {
+        return ACHIEVEMENT_SYNC_ORDER.filter(
           (entry) => achievements[entry.localId]?.earned,
         ).map((entry) => entry.claimId);
       }
 
-      function renderAgiPanel(profile, mode) {
-        const workshop = profile.workshops[AGI_WORKSHOP_SLUG];
+      function renderAchievementPanel(profile, mode) {
+        const workshop = profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG];
         const achievements = workshop?.achievements || {};
-        const workshopPoints = AGI_BADGES.reduce(
+        const workshopPoints = ACHIEVEMENT_BADGES.reduce(
           (total, badge) =>
             total + (achievements[badge.id]?.earned ? badge.points : 0),
           0,
         );
-        agiTotalScore.textContent = String(profile.score);
-        agiWorkshopScore.textContent = String(workshopPoints);
+        achievementTotalScore.textContent = String(profile.score);
+        achievementWorkshopScore.textContent = String(workshopPoints);
         const easyRequired = requiredEasyBoxes();
         const easyChecked = easyRequired.filter((box) => box.checked).length;
         const hardChecked = workshop?.progress?.hardChecked || 0;
         const hardTotal = workshop?.progress?.hardTotal || 0;
         const checked = mode === "hard" ? hardChecked : easyChecked;
         const total = mode === "hard" ? hardTotal : easyRequired.length;
-        agiProgressLabel.textContent =
+        achievementProgressLabel.textContent =
           `${checked} of ${total} ${mode === "hard" ? "Hard steps" : "Easy checkpoints"} complete`;
-        agiProgressBar.style.width = total ? `${(checked / total) * 100}%` : "0%";
-        agiBadgeList.replaceChildren();
-        const earned = AGI_BADGES.filter(
+        achievementProgressBar.style.width = total ? `${(checked / total) * 100}%` : "0%";
+        achievementBadgeList.replaceChildren();
+        const earned = ACHIEVEMENT_BADGES.filter(
           (badge) => achievements[badge.id]?.earned,
         );
         if (!earned.length) {
           const item = document.createElement("li");
-          item.className = "agi-badge";
+          item.className = "achievements-badge";
           item.textContent = "No badges yet";
-          agiBadgeList.append(item);
+          achievementBadgeList.append(item);
         } else {
           earned.forEach((badge) => {
             const item = document.createElement("li");
-            item.className = "agi-badge";
+            item.className = "achievements-badge";
             item.textContent = `${badge.label} · +${badge.points}`;
-            agiBadgeList.append(item);
+            achievementBadgeList.append(item);
           });
         }
-        document.querySelector("[data-agi-sync]").hidden =
-          earnedAgiSyncIds(achievements).length === 0;
+        document.querySelector("[data-achievements-sync]").hidden =
+          earnedAchievementSyncIds(achievements).length === 0;
       }
 
-      function evaluateAgi(announce = false) {
+      function evaluateAchievement(announce = false) {
         const mode = localStorage.getItem(modeKey) === "hard" ? "hard" : "easy";
         const easyRequired = requiredEasyBoxes();
         const easyChecked = easyRequired.filter((box) => box.checked).length;
         const hasCheckpoint = boxes.some((box) => box.checked);
-        let profile = readAgiProfile();
-        const existing = profile.workshops[AGI_WORKSHOP_SLUG];
+        let profile = readAchievementProfile();
+        const existing = profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG];
         if (hasCheckpoint || existing) {
-          profile = setAgiWorkshopProgress(profile, mode, {
+          profile = setAchievementWorkshopProgress(profile, mode, {
             easyChecked,
             easyTotal: easyRequired.length,
             easyComplete:
@@ -1406,9 +1410,9 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
           });
           const earnedByCondition = [
             ["started", hasCheckpoint],
-            ["local-proof", agiGroupComplete("local-proof")],
-            ["draft-builder", agiGroupComplete("draft-builder")],
-            ["preview-proven", agiGroupComplete("preview-proven")],
+            ["local-proof", achievementGroupComplete("local-proof")],
+            ["draft-builder", achievementGroupComplete("draft-builder")],
+            ["preview-proven", achievementGroupComplete("preview-proven")],
             [
               "workshop-complete",
               easyRequired.length > 0 && easyChecked === easyRequired.length,
@@ -1416,12 +1420,12 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
           ];
           earnedByCondition.forEach(([badgeId, condition]) => {
             if (!condition) return;
-            const result = awardAgi(profile, badgeId, mode);
+            const result = awardAchievement(profile, badgeId, mode);
             profile = result.profile;
-            if (announce) announceAgiBadge(result.awarded);
+            if (announce) announceAchievementBadge(result.awarded);
           });
         }
-        renderAgiPanel(profile, mode);
+        renderAchievementPanel(profile, mode);
       }
 
       function selectMode(mode) {
@@ -1432,7 +1436,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         });
         paths.forEach((path) => { path.hidden = path.dataset.path !== mode; });
         localStorage.setItem(modeKey, mode);
-        evaluateAgi(false);
+        evaluateAchievement(false);
       }
       buttons.forEach((button) => button.addEventListener("click", () => selectMode(button.dataset.mode)));
       document.querySelectorAll("[data-copy-target]").forEach((button) => {
@@ -1498,21 +1502,21 @@ Describe what was inaccurate or missing.
           window.open(url.toString(), "_blank", "noopener");
         });
       });
-      function openAgiSync() {
-        const profile = readAgiProfile();
+      function openAchievementSync() {
+        const profile = readAchievementProfile();
         const achievements =
-          profile.workshops[AGI_WORKSHOP_SLUG]?.achievements || {};
-        const earnedIds = earnedAgiSyncIds(achievements);
+          profile.workshops[ACHIEVEMENT_WORKSHOP_SLUG]?.achievements || {};
+        const earnedIds = earnedAchievementSyncIds(achievements);
         if (!earnedIds.length) return;
         const source = new URL(window.location.href);
         source.search = "";
         source.hash = "";
-        const body = `<!-- aibast-agi-progress:v1 -->
+        const body = `<!-- aibast-achievement-progress:v1 -->
 ## Workshop achievement progress
 
-- Schema: \`aibast-agi-progress/1.0\`
-- Workshop: \`${AGI_WORKSHOP_SLUG}\`
-- Agent: \`${AGI_CANONICAL_AGENT}\`
+- Schema: \`aibast-achievement-progress/1.0\`
+- Workshop: \`${ACHIEVEMENT_WORKSHOP_SLUG}\`
+- Agent: \`${ACHIEVEMENT_CANONICAL_AGENT}\`
 - Achievements: ${earnedIds.join(", ")}
 - Source: ${source.toString()}
 
@@ -1524,8 +1528,8 @@ Opening this form does not sync anything. Submit the issue to sync these earned 
         url.searchParams.set("body", body);
         window.open(url.toString(), "_blank", "noopener");
       }
-      document.querySelector("[data-agi-sync]").addEventListener("click", () => {
-        openAgiSync();
+      document.querySelector("[data-achievements-sync]").addEventListener("click", () => {
+        openAchievementSync();
       });
       selectMode(localStorage.getItem(modeKey) === "hard" ? "hard" : "easy");
       updateHardProgress(false);
