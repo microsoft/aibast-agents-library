@@ -456,7 +456,11 @@ jobs:
           test -x "$HOME/.local/bin/brainstem"
           test -f "$HOME/.brainstem/src/rapp_brainstem/brainstem.py"
           test ! -e "$HOME/.brainstem/src/solutions"
-          test "$(git -C "$HOME/.brainstem/src" rev-parse HEAD)" = "$CANDIDATE_SHA"
+          expected_runtime_tree="$(git rev-parse "$CANDIDATE_SHA:rapp_brainstem")"
+          installed_runtime_tree="$(
+            git -C "$HOME/.brainstem/src" rev-parse HEAD:rapp_brainstem
+          )"
+          test "$installed_runtime_tree" = "$expected_runtime_tree"
 
           printf '0.0.0\n' > "$HOME/.brainstem/src/rapp_brainstem/VERSION"
           printf '\nONE-LINER-SOUL-MARKER\n' >> "$HOME/.brainstem/src/rapp_brainstem/soul.md"
@@ -503,8 +507,14 @@ jobs:
           if (Test-Path (Join-Path $env:USERPROFILE '.brainstem\src\solutions')) { throw 'sparse checkout included solutions' }
           if (-not (Test-Path (Join-Path $env:USERPROFILE '.local\bin\brainstem.cmd'))) { throw 'brainstem.cmd missing' }
           if (-not (Test-Path (Join-Path $env:USERPROFILE '.local\bin\brainstem.ps1'))) { throw 'brainstem.ps1 missing' }
-          $installedSha = (git -C (Join-Path $env:USERPROFILE '.brainstem\src') rev-parse HEAD).Trim()
-          if ($installedSha -ne $env:CANDIDATE_SHA) { throw "installed $installedSha instead of $env:CANDIDATE_SHA" }
+          $candidateTree = '{0}:rapp_brainstem' -f $env:CANDIDATE_SHA
+          $expectedRuntimeTree = (git rev-parse $candidateTree).Trim()
+          $installedRuntimeTree = (
+            git -C (Join-Path $env:USERPROFILE '.brainstem\src') rev-parse 'HEAD:rapp_brainstem'
+          ).Trim()
+          if ($installedRuntimeTree -ne $expectedRuntimeTree) {
+            throw "installed Brainstem tree $installedRuntimeTree instead of $expectedRuntimeTree"
+          }
 
           Set-Content -Path (Join-Path $runtime 'VERSION') -Value '0.0.0' -Encoding Ascii
           Add-Content -Path (Join-Path $runtime 'soul.md') -Value 'ONE-LINER-SOUL-MARKER'

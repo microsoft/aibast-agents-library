@@ -138,5 +138,6 @@ def test_asset_workflow_publishes_and_refreshes_static_metrics():
         "Auto-build registry.json [skip ci]",
         'git push',
         'git rev-parse HEAD',
+        'fetch-depth: 0',
     ):
         assert token in text
