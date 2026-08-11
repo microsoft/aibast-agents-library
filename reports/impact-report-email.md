@@ -2,20 +2,20 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-08-11T22:29:05Z`
+**Snapshot:** `2026-08-11T22:34:09Z`
 **Site:** https://kody-w.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 2,030 | +1,467 observed - partial | Baseline pending |
+| AIBAST observed repository downloads | 2,031 | +1,467 observed - partial | Baseline pending |
 | Git clones | 1,565 | +1,467 observed | Baseline pending |
 | Clones excluding CI estimate | 1,565 | Baseline pending | Baseline pending |
 | AIBAST repository and Pages views | 11 | +11 observed | Baseline pending |
 | jsDelivr file hits | 388 | Baseline pending | Baseline pending |
-| Release asset downloads | 77 | Baseline pending | Baseline pending |
-| AIBAST direct agent file downloads | 77 | Baseline pending | Baseline pending |
+| Release asset downloads | 78 | Baseline pending | Baseline pending |
+| AIBAST direct agent file downloads | 78 | Baseline pending | Baseline pending |
 | AIBAST skill file downloads | 0 | Baseline pending | Baseline pending |
 | AIBAST installer file downloads | 0 | Baseline pending | Baseline pending |
 | Unique cloners (14-day window) | 194 | Baseline pending | Baseline pending |
