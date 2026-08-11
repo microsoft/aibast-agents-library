@@ -145,10 +145,11 @@ const available = buildAgentSignalMap({
       name: "canonical-a",
       upvotes: 7,
       acquisitions: 4,
+      downloads: 142,
       upvote_discussion_url: "https://github.com/microsoft/aibast-agents-library/discussions/1",
       acquisition_discussion_url: "https://github.com/microsoft/aibast-agents-library/discussions/2"
     },
-    {name: "canonical-b", upvotes: null, acquisitions: 0},
+    {name: "canonical-b", upvotes: null, acquisitions: 0, downloads: 0},
     {name: "not-in-registry", upvotes: 99}
   ]
 }, agents);
@@ -163,6 +164,7 @@ console.log(JSON.stringify({
         "canonical-a": {
             "upvotes": 7,
             "acquisitions": 4,
+            "downloads": 142,
             "upvoteUrl": (
                 "https://github.com/microsoft/"
                 "aibast-agents-library/discussions/1"
@@ -175,12 +177,14 @@ console.log(JSON.stringify({
         "canonical-b": {
             "upvotes": None,
             "acquisitions": None,
+            "downloads": 0,
             "upvoteUrl": "",
             "acquisitionUrl": "",
         },
         "canonical-c": {
             "upvotes": None,
             "acquisitions": None,
+            "downloads": None,
             "upvoteUrl": "",
             "acquisitionUrl": "",
         },
@@ -189,6 +193,7 @@ console.log(JSON.stringify({
         name: {
             "upvotes": None,
             "acquisitions": None,
+            "downloads": None,
             "upvoteUrl": "",
             "acquisitionUrl": "",
         }
@@ -202,7 +207,9 @@ def test_card_and_detail_render_upvote_action_and_read_only_count():
     detail = text[text.index("function openAgent"):text.index("function openStack")]
 
     assert "${agentUpvoteControl(agent)}" in card
+    assert "${agentDownloadCount(agent)}" in card
     assert "${agentUpvoteControl(agent)}" in detail
+    assert "${agentDownloadCount(agent)}" in detail
     assert 'data-action="upvote-agent"' in text
     assert 'data-agent-name="${enc(agent.name)}"' in text
     assert "Aggregate upvotes unavailable" in text
@@ -221,6 +228,7 @@ const agent = {
 state.agentSignals = new Map([[agent.name, {
   upvotes: null,
   acquisitions: null,
+  downloads: null,
   upvoteUrl: "",
   acquisitionUrl: ""
 }]]);
@@ -228,12 +236,14 @@ const unavailable = agentUpvoteControl(agent);
 state.agentSignals = new Map([[agent.name, {
   upvotes: 12,
   acquisitions: 3,
+  downloads: 142,
   upvoteUrl: "https://github.com/microsoft/aibast-agents-library/discussions/1",
   acquisitionUrl: "https://github.com/microsoft/aibast-agents-library/discussions/2"
 }]]);
 const available = agentUpvoteControl(agent);
 const acquisition = agentAcquisitionControl(agent);
-console.log(JSON.stringify({unavailable, available, acquisition}));
+const downloads = agentDownloadCount(agent);
+console.log(JSON.stringify({unavailable, available, acquisition, downloads}));
 """
     )
     assert ">—</span>" in result["unavailable"]
@@ -243,6 +253,14 @@ console.log(JSON.stringify({unavailable, available, acquisition}));
     assert 'disabled aria-disabled="true"' not in result["available"]
     assert "Record acquisition" in result["acquisition"]
     assert ">3</span>" in result["acquisition"]
+    assert "↓ 142" in result["downloads"]
+
+
+def test_library_supports_top_downloaded_sort():
+    text = library_text()
+    assert '<option value="downloads">Top downloaded</option>' in text
+    assert 'downloads: (a, b) =>' in text
+    assert 'aggregateAgentSignal(a.agent.name, "downloads")' in text
 
 
 def test_agent_detail_downloads_python_file_instead_of_showing_one_liner():

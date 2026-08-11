@@ -419,3 +419,111 @@ jobs:
           name: preflight-${{ matrix.os }}-${{ matrix.scenario }}
           path: ${{ runner.temp }}/install.*
           if-no-files-found: ignore
+
+  installer-one-liner:
+    name: one-liner ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Fresh, upgrade, and current one-liner on macOS
+        if: runner.os == 'macOS'
+        shell: bash
+        env:
+          CANDIDATE_REPO: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name || github.repository }}
+          CANDIDATE_REF: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || github.ref_name }}
+          CANDIDATE_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          export HOME="$RUNNER_TEMP/one-liner-home"
+          export BRAINSTEM_REPO_URL="https://github.com/$CANDIDATE_REPO.git"
+          export BRAINSTEM_REPO_REF="$CANDIDATE_REF"
+          export BRAINSTEM_VERSION_URL="https://raw.githubusercontent.com/$CANDIDATE_REPO/$CANDIDATE_SHA/rapp_brainstem/VERSION"
+          installer="https://raw.githubusercontent.com/$CANDIDATE_REPO/$CANDIDATE_SHA/install.sh"
+          run_installer() {
+            curl -fsSL "$installer" | bash -s -- --no-launch
+          }
+
+          run_installer | tee "$RUNNER_TEMP/fresh-install.log"
+          test -x "$HOME/.local/bin/brainstem"
+          test -f "$HOME/.brainstem/src/rapp_brainstem/brainstem.py"
+          test ! -e "$HOME/.brainstem/src/solutions"
+          test "$(git -C "$HOME/.brainstem/src" rev-parse HEAD)" = "$CANDIDATE_SHA"
+
+          printf '0.0.0\n' > "$HOME/.brainstem/src/rapp_brainstem/VERSION"
+          printf '\nONE-LINER-SOUL-MARKER\n' >> "$HOME/.brainstem/src/rapp_brainstem/soul.md"
+          printf 'custom = true\n' > "$HOME/.brainstem/src/rapp_brainstem/agents/one_liner_custom_agent.py"
+          printf 'ONE-LINER-TOKEN\n' > "$HOME/.brainstem/src/rapp_brainstem/.copilot_token"
+          chmod 600 "$HOME/.brainstem/src/rapp_brainstem/.copilot_token"
+
+          run_installer | tee "$RUNNER_TEMP/upgrade-install.log"
+          grep -q ONE-LINER-SOUL-MARKER "$HOME/.brainstem/src/rapp_brainstem/soul.md"
+          test -f "$HOME/.brainstem/src/rapp_brainstem/agents/one_liner_custom_agent.py"
+          grep -q ONE-LINER-TOKEN "$HOME/.brainstem/src/rapp_brainstem/.copilot_token"
+          test "$(stat -f '%Lp' "$HOME/.brainstem/src/rapp_brainstem/.copilot_token")" = "600"
+
+          run_installer | tee "$RUNNER_TEMP/current-install.log"
+          grep -q "Already up to date" "$RUNNER_TEMP/current-install.log"
+          grep -q "runtime is ready" "$RUNNER_TEMP/current-install.log"
+
+      - name: Fresh, upgrade, and current one-liner on Windows
+        if: runner.os == 'Windows'
+        shell: powershell
+        env:
+          CANDIDATE_REPO: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name || github.repository }}
+          CANDIDATE_REF: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || github.ref_name }}
+          CANDIDATE_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $env:USERPROFILE = Join-Path $env:RUNNER_TEMP 'one-liner-home'
+          $env:BRAINSTEM_REPO_URL = "https://github.com/$env:CANDIDATE_REPO.git"
+          $env:BRAINSTEM_REPO_REF = $env:CANDIDATE_REF
+          $env:BRAINSTEM_VERSION_URL = "https://raw.githubusercontent.com/$env:CANDIDATE_REPO/$env:CANDIDATE_SHA/rapp_brainstem/VERSION"
+          New-Item -ItemType Directory -Force -Path $env:USERPROFILE | Out-Null
+          $installer = "https://raw.githubusercontent.com/$env:CANDIDATE_REPO/$env:CANDIDATE_SHA/install.ps1"
+
+          function Invoke-OneLiner([string]$LogPath) {
+            $content = (Invoke-WebRequest -Uri $installer -UseBasicParsing).Content
+            & ([scriptblock]::Create($content)) --no-launch 2>&1 |
+              Tee-Object -FilePath $LogPath |
+              Write-Host
+          }
+
+          $runtime = Join-Path $env:USERPROFILE '.brainstem\src\rapp_brainstem'
+          Invoke-OneLiner (Join-Path $env:RUNNER_TEMP 'fresh-install.log')
+          if (-not (Test-Path (Join-Path $runtime 'brainstem.py'))) { throw 'fresh brainstem.py missing' }
+          if (Test-Path (Join-Path $env:USERPROFILE '.brainstem\src\solutions')) { throw 'sparse checkout included solutions' }
+          if (-not (Test-Path (Join-Path $env:USERPROFILE '.local\bin\brainstem.cmd'))) { throw 'brainstem.cmd missing' }
+          if (-not (Test-Path (Join-Path $env:USERPROFILE '.local\bin\brainstem.ps1'))) { throw 'brainstem.ps1 missing' }
+          $installedSha = (git -C (Join-Path $env:USERPROFILE '.brainstem\src') rev-parse HEAD).Trim()
+          if ($installedSha -ne $env:CANDIDATE_SHA) { throw "installed $installedSha instead of $env:CANDIDATE_SHA" }
+
+          Set-Content -Path (Join-Path $runtime 'VERSION') -Value '0.0.0' -Encoding Ascii
+          Add-Content -Path (Join-Path $runtime 'soul.md') -Value 'ONE-LINER-SOUL-MARKER'
+          Set-Content -Path (Join-Path $runtime 'agents\one_liner_custom_agent.py') -Value 'custom = true' -Encoding Ascii
+          Set-Content -Path (Join-Path $runtime '.copilot_token') -Value 'ONE-LINER-TOKEN' -Encoding Ascii
+
+          Invoke-OneLiner (Join-Path $env:RUNNER_TEMP 'upgrade-install.log')
+          if ((Get-Content (Join-Path $runtime 'soul.md') -Raw) -notmatch 'ONE-LINER-SOUL-MARKER') { throw 'soul marker lost' }
+          if (-not (Test-Path (Join-Path $runtime 'agents\one_liner_custom_agent.py'))) { throw 'custom agent lost' }
+          if ((Get-Content (Join-Path $runtime '.copilot_token') -Raw) -notmatch 'ONE-LINER-TOKEN') { throw 'token marker lost' }
+
+          $currentLog = Join-Path $env:RUNNER_TEMP 'current-install.log'
+          Invoke-OneLiner $currentLog
+          if ((Get-Content $currentLog -Raw) -notmatch 'Already up to date') { throw 'update check did not take current fast path' }
+          if ((Get-Content $currentLog -Raw) -notmatch 'runtime is ready') { throw 'current rerun did not finish ready' }
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: one-liner-${{ matrix.os }}
+          path: ${{ runner.temp }}/*-install.log
+          if-no-files-found: ignore

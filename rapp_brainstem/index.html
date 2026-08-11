@@ -2345,6 +2345,16 @@
 
   // ── Input ──
   const input = document.getElementById('input');
+  const prefilledPrompt = new URLSearchParams(window.location.search).get('prompt');
+  if (prefilledPrompt) {
+    input.value = prefilledPrompt.slice(0, 4000);
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+    input.focus();
+    const cleanUrl = new URL(window.location.href);
+    cleanUrl.searchParams.delete('prompt');
+    history.replaceState(null, '', cleanUrl.pathname + cleanUrl.search + cleanUrl.hash);
+  }
   input.addEventListener('input', () => {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 120) + 'px';

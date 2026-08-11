@@ -307,23 +307,21 @@
       <summary>Facilitator crash course: optional Brainstem track</summary>
       <div class="certification-content">
         <p>Brainstem is the learner's local-first, inspectable agent runtime. GitHub Copilot remains the familiar work surface; Brainstem adds persistent local workshop context, hot-loaded Python agents, and a visible tool-calling loop. Core setup uses the learner's GitHub account with Copilot access and requires no separate model API key.</p>
-        <div class="notice"><strong>Current stable preparation source:</strong> this guide intentionally uses the <a href="https://github.com/kody-w/rapp-installer" target="_blank" rel="noopener">Grail installer at <code>kody-w/rapp-installer</code></a>, pinned to audited commit <code>5fbde1776a72715935c3d597a9ddfce28a04032b</code> (Brainstem <code>0.6.16</code>). It does not change the workshop package or the default Copilot-only lane.</div>
+        <div class="notice"><strong>Canonical preparation source:</strong> this guide uses the <a href="https://github.com/microsoft/aibast-agents-library" target="_blank" rel="noopener">Microsoft AIBAST Brainstem installer</a>. The former upstream Grail installer is not used by this Microsoft/AIBAST workshop path.</div>
 
         <h3>Pre-work: participants install it themselves</h3>
         <div class="certification-grid">
           <section>
             <h3>macOS / Linux</h3>
-            <pre class="prompt">curl -fsSL https://raw.githubusercontent.com/kody-w/rapp-installer/5fbde1776a72715935c3d597a9ddfce28a04032b/install.sh | bash -s -- --version 5fbde1776a72715935c3d597a9ddfce28a04032b</pre>
+            <pre class="prompt">curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash</pre>
           </section>
           <section>
             <h3>Windows PowerShell</h3>
-            <pre class="prompt">&amp; ([scriptblock]::Create((irm https://raw.githubusercontent.com/kody-w/rapp-installer/5fbde1776a72715935c3d597a9ddfce28a04032b/install.ps1))) --version 5fbde1776a72715935c3d597a9ddfce28a04032b</pre>
+            <pre class="prompt">irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex</pre>
           </section>
         </div>
-        <p>Then open a new terminal and run:</p>
-        <pre class="prompt">gh auth login
-brainstem</pre>
-        <p>Open <code>http://localhost:7071</code> and verify:</p>
+        <p>The one-liner installs the runtime, starts Brainstem, opens GitHub authorization when needed, and opens <code>http://localhost:7071</code>. Participants do not run <code>gh auth login</code> or <code>brainstem</code> separately.</p>
+        <p>Before the session, verify:</p>
         <pre class="prompt">curl -s localhost:7071/health | python3 -m json.tool</pre>
         <p>The facilitator completes setup first, then asks Brainstem-track participants to run the one-liner themselves before workshop day. Never collect participant GitHub tokens or run one shared installation on their behalf.</p>
 

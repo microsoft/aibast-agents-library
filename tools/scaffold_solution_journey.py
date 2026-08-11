@@ -32,18 +32,15 @@ QUALIFICATION_FORM_FILE = "AIBAST-Badge-Qualification.docx"
 GITHUB_ISSUES_NEW = (
     "https://github.com/microsoft/aibast-agents-library/issues/new"
 )
-GRAIL_PIN = "5fbde1776a72715935c3d597a9ddfce28a04032b"
-GRAIL_VERSION = "0.6.16"
-GRAIL_INSTALL_MAC_LINUX = (
-    "curl -fsSL https://raw.githubusercontent.com/kody-w/rapp-installer/"
-    f"{GRAIL_PIN}/install.sh | bash -s -- --version {GRAIL_PIN}"
+BRAINSTEM_INSTALL_MAC_LINUX = (
+    "curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash"
 )
-GRAIL_INSTALL_WINDOWS = (
-    "& ([scriptblock]::Create((irm "
-    "https://raw.githubusercontent.com/kody-w/rapp-installer/"
-    f"{GRAIL_PIN}/install.ps1))) --version {GRAIL_PIN}"
+BRAINSTEM_INSTALL_WINDOWS = (
+    "irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex"
 )
-GRAIL_REPO_URL = "https://github.com/kody-w/rapp-installer"
+BRAINSTEM_REPO_URL = (
+    "https://github.com/microsoft/aibast-agents-library"
+)
 
 THEME_SCRIPT = """(() => {
       const param = new URLSearchParams(window.location.search).get("scoutTheme");
@@ -2008,33 +2005,27 @@ workshop context, hot-loaded Python agents, and a visible tool-calling loop.
 Core setup uses the learner's GitHub account with Copilot access and does not
 require a separate model API key.
 
-For current workshop stability, this preparation guide intentionally uses the
-[Grail installer]({GRAIL_REPO_URL}) from `kody-w/rapp-installer`, pinned to
-audited commit `{GRAIL_PIN}` (Brainstem `{GRAIL_VERSION}`). It does not change
-the workshop package or the default Copilot-only lane.
+This preparation guide uses the canonical
+[AIBAST Brainstem installer]({BRAINSTEM_REPO_URL}). The former upstream Grail
+installer is not used by this Microsoft/AIBAST workshop path.
 
 ### Pre-work: every Brainstem-track participant installs it themselves
 
 **macOS / Linux**
 
 ```bash
-{GRAIL_INSTALL_MAC_LINUX}
+{BRAINSTEM_INSTALL_MAC_LINUX}
 ```
 
 **Windows PowerShell**
 
 ```powershell
-{GRAIL_INSTALL_WINDOWS}
+{BRAINSTEM_INSTALL_WINDOWS}
 ```
 
-Then, in a new terminal:
-
-```bash
-gh auth login
-brainstem
-```
-
-Open `http://localhost:7071`. Before the session, verify:
+The one-liner installs the runtime, starts Brainstem, opens GitHub
+authorization when needed, and opens `http://localhost:7071`. Participants do
+not run `gh auth login` or `brainstem` separately. Before the session, verify:
 
 ```bash
 curl -s localhost:7071/health | python3 -m json.tool
@@ -2104,23 +2095,21 @@ def brainstem_facilitator_html() -> str:
       <summary>Facilitator crash course: optional Brainstem track</summary>
       <div class="certification-content">
         <p>Brainstem is the learner's local-first, inspectable agent runtime. GitHub Copilot remains the familiar work surface; Brainstem adds persistent local workshop context, hot-loaded Python agents, and a visible tool-calling loop. Core setup uses the learner's GitHub account with Copilot access and requires no separate model API key.</p>
-        <div class="notice"><strong>Current stable preparation source:</strong> this guide intentionally uses the <a href="{html.escape(GRAIL_REPO_URL)}" target="_blank" rel="noopener">Grail installer at <code>kody-w/rapp-installer</code></a>, pinned to audited commit <code>{GRAIL_PIN}</code> (Brainstem <code>{GRAIL_VERSION}</code>). It does not change the workshop package or the default Copilot-only lane.</div>
+        <div class="notice"><strong>Canonical preparation source:</strong> this guide uses the <a href="{html.escape(BRAINSTEM_REPO_URL)}" target="_blank" rel="noopener">Microsoft AIBAST Brainstem installer</a>. The former upstream Grail installer is not used by this Microsoft/AIBAST workshop path.</div>
 
         <h3>Pre-work: participants install it themselves</h3>
         <div class="certification-grid">
           <section>
             <h3>macOS / Linux</h3>
-            <pre class="prompt">{html.escape(GRAIL_INSTALL_MAC_LINUX)}</pre>
+            <pre class="prompt">{html.escape(BRAINSTEM_INSTALL_MAC_LINUX)}</pre>
           </section>
           <section>
             <h3>Windows PowerShell</h3>
-            <pre class="prompt">{html.escape(GRAIL_INSTALL_WINDOWS)}</pre>
+            <pre class="prompt">{html.escape(BRAINSTEM_INSTALL_WINDOWS)}</pre>
           </section>
         </div>
-        <p>Then open a new terminal and run:</p>
-        <pre class="prompt">gh auth login
-brainstem</pre>
-        <p>Open <code>http://localhost:7071</code> and verify:</p>
+        <p>The one-liner installs the runtime, starts Brainstem, opens GitHub authorization when needed, and opens <code>http://localhost:7071</code>. Participants do not run <code>gh auth login</code> or <code>brainstem</code> separately.</p>
+        <p>Before the session, verify:</p>
         <pre class="prompt">curl -s localhost:7071/health | python3 -m json.tool</pre>
         <p>The facilitator completes setup first, then asks Brainstem-track participants to run the one-liner themselves before workshop day. Never collect participant GitHub tokens or run one shared installation on their behalf.</p>
 

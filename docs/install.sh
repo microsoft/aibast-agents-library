@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+umask 077
 
 # RAPP Brainstem Installer
 # Usage: curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash
@@ -8,8 +9,9 @@ set -e
 BRAINSTEM_HOME="$HOME/.brainstem"
 BRAINSTEM_BIN="$HOME/.local/bin"
 VENV_DIR="$BRAINSTEM_HOME/venv"
-REPO_URL="https://github.com/microsoft/aibast-agents-library.git"
-REMOTE_VERSION_URL="https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/rapp_brainstem/VERSION"
+REPO_URL="${BRAINSTEM_REPO_URL:-https://github.com/microsoft/aibast-agents-library.git}"
+REPO_REF="${BRAINSTEM_REPO_REF:-main}"
+REMOTE_VERSION_URL="${BRAINSTEM_VERSION_URL:-https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/rapp_brainstem/VERSION}"
 PIN_VERSION=""
 NO_LAUNCH=false
 
@@ -86,7 +88,7 @@ repair_brainstem_source() {
 
     rm -rf "$repair_dir" "$old_dir" 2>/dev/null || true
     echo -e "  ${YELLOW}Existing checkout is incomplete — downloading a clean Brainstem copy...${NC}"
-    if ! git clone --progress --filter=blob:none --sparse --depth 1 --single-branch --no-tags --branch main "$REPO_URL" "$repair_dir"; then
+    if ! git clone --progress --filter=blob:none --sparse --depth 1 --single-branch --no-tags --branch "$REPO_REF" "$REPO_URL" "$repair_dir"; then
         rm -rf "$repair_dir" 2>/dev/null || true
         return 1
     fi
@@ -288,18 +290,34 @@ check_prereqs() {
     export PYTHON_CMD
 
     # Git
-    if command -v git &> /dev/null; then
-        echo -e "  ${GREEN}✓${NC} Git $(git --version | cut -d' ' -f3)"
+    local git_version=""
+    git_version=$(git --version 2>/dev/null) || true
+    if [[ "$git_version" == git\ version\ * ]]; then
+        echo -e "  ${GREEN}✓${NC} Git $(echo "$git_version" | cut -d' ' -f3)"
     else
         echo -e "  ${YELLOW}⚠${NC} Git not found, installing..."
         if [[ "$(detect_os)" == "macos" ]]; then
-            xcode-select --install 2>/dev/null || brew install git
+            ensure_brew_on_path
+            if command -v brew &> /dev/null; then
+                brew install git
+            else
+                xcode-select --install 2>/dev/null || true
+                echo -e "  ${YELLOW}!${NC} Complete the macOS Command Line Tools installation, then rerun this command."
+                exit 1
+            fi
         elif command -v apt-get &> /dev/null; then
             sudo apt-get update && sudo apt-get install -y git
         else
             echo -e "  ${RED}✗${NC} Git required — install from https://git-scm.com"
             exit 1
         fi
+        git_version=$(git --version 2>/dev/null) || true
+        if [[ "$git_version" != git\ version\ * ]]; then
+            echo -e "  ${RED}✗${NC} Git installation did not complete"
+            echo "    Install Git, open a new terminal, and rerun this command."
+            exit 1
+        fi
+        echo -e "  ${GREEN}✓${NC} Git $(echo "$git_version" | cut -d' ' -f3) installed"
     fi
 
     # GitHub CLI (required for Copilot token auth)
@@ -381,6 +399,15 @@ maybe_refresh_soul() {
     return 0
 }
 
+preserve_agent_collision() {
+    local agent_file="$1"
+    local recovery_dir="$BRAINSTEM_HOME/recovery/agent-collisions-$(date +%Y%m%d-%H%M%S)"
+    mkdir -p "$recovery_dir"
+    chmod 700 "$BRAINSTEM_HOME/recovery" "$recovery_dir" 2>/dev/null || true
+    cp "$agent_file" "$recovery_dir/$(basename "$agent_file")"
+    echo -e "  ${YELLOW}⚠${NC} Preserved custom-agent name collision at $recovery_dir/$(basename "$agent_file")"
+}
+
 install_brainstem() {
     echo ""
     echo "Installing RAPP Brainstem..."
@@ -442,6 +469,7 @@ install_brainstem() {
             # Guard the fetch: offline (or a black-holed github) must not abort the
             # whole script under `set -e` — we fall back to whatever is already local.
             cd "$BRAINSTEM_HOME/src"
+            git remote set-url origin "$REPO_URL" 2>/dev/null || true
             git stash --quiet 2>/dev/null || true
             git fetch --filter=blob:none origin --tags --quiet 2>/dev/null || true
             if [ -n "$PIN_VERSION" ]; then
@@ -461,7 +489,7 @@ install_brainstem() {
                 fi
             else
                 local update_ok=false
-                if git fetch --filter=blob:none --quiet origin main 2>/dev/null \
+                if git fetch --filter=blob:none --quiet origin "$REPO_REF" 2>/dev/null \
                     && git reset --hard --quiet FETCH_HEAD 2>/dev/null; then
                     update_ok=true
                     echo -e "  ${GREEN}✓${NC} Framework updated"
@@ -512,7 +540,12 @@ install_brainstem() {
                         basic_agent.py|__init__.py) continue ;;
                     esac
                     # Skip anything shipped in the fresh checkout (bundled agents)
-                    case " $SHIPPED " in *" $fname "*) continue ;; esac
+                    case " $SHIPPED " in
+                        *" $fname "*)
+                            preserve_agent_collision "$agent_file"
+                            continue
+                            ;;
+                    esac
                     # Genuinely user-added agent — keep it
                     cp "$agent_file" "$AGENTS_DIR/$fname"
                 done
@@ -530,41 +563,74 @@ install_brainstem() {
         # before wiping so a re-run can't silently destroy the user's work. The common
         # case (no existing src) leaves FRESH_BACKUP empty and skips all of this.
         local FRESH_BACKUP=""
+        local SOURCE_STAGE="$BRAINSTEM_HOME/src-fresh-$$"
+        local OLD_SOURCE=""
+        rm -rf "$SOURCE_STAGE" 2>/dev/null || true
         if [ -d "$BRAINSTEM_HOME/src/rapp_brainstem" ]; then
             FRESH_BACKUP=$(mktemp -d "${TMPDIR:-/tmp}/brainstem-fresh-XXXXXX")
+            chmod 700 "$FRESH_BACKUP"
             mkdir -p "$FRESH_BACKUP/agents"
             [ -f "$SOUL_FILE" ] && cp "$SOUL_FILE" "$FRESH_BACKUP/soul.md" 2>/dev/null || true
             [ -f "$ENV_FILE" ] && cp "$ENV_FILE" "$FRESH_BACKUP/.env" 2>/dev/null || true
             [ -d "$AGENTS_DIR" ] && cp "$AGENTS_DIR"/*.py "$FRESH_BACKUP/agents/" 2>/dev/null || true
             [ -d "$DATA_DIR" ] && cp -R "$DATA_DIR" "$FRESH_BACKUP/.brainstem_data" 2>/dev/null || true
+            for state_file in .copilot_token .copilot_session .copilot_pending .brainstem_model .brainstem_book.json .brainstem_secret voice.zip; do
+                [ -f "$BRAINSTEM_HOME/src/rapp_brainstem/$state_file" ] \
+                    && cp "$BRAINSTEM_HOME/src/rapp_brainstem/$state_file" "$FRESH_BACKUP/$state_file" 2>/dev/null || true
+            done
         fi
-        rm -rf "$BRAINSTEM_HOME/src" 2>/dev/null || true
         echo "  Downloading only the Brainstem runtime; solution ZIPs stay in the web library."
-        if ! git clone --progress --filter=blob:none --sparse --depth 1 --single-branch --no-tags --branch main "$REPO_URL" "$BRAINSTEM_HOME/src"; then
+        if ! git clone --progress --filter=blob:none --sparse --depth 1 --single-branch --no-tags --branch "$REPO_REF" "$REPO_URL" "$SOURCE_STAGE"; then
+            rm -rf "$SOURCE_STAGE" "$FRESH_BACKUP" 2>/dev/null || true
             echo -e "  ${RED}✗${NC} Failed to download the Brainstem source"
+            echo "    Your existing files were left untouched."
             echo "    Git 2.25+ is required for the lightweight checkout."
             exit 1
         fi
-        if ! enable_brainstem_sparse_checkout "$BRAINSTEM_HOME/src"; then
+        if ! enable_brainstem_sparse_checkout "$SOURCE_STAGE"; then
+            rm -rf "$SOURCE_STAGE" "$FRESH_BACKUP" 2>/dev/null || true
             echo -e "  ${RED}✗${NC} Failed to limit the checkout to rapp_brainstem/"
+            echo "    Your existing files were left untouched."
             exit 1
         fi
         # If pinning, checkout the specific tag after clone (accepts every tag form).
         if [ -n "$PIN_VERSION" ]; then
-            cd "$BRAINSTEM_HOME/src"
-            git fetch --filter=blob:none origin --tags --quiet 2>/dev/null || true
+            git -C "$SOURCE_STAGE" fetch --filter=blob:none origin --tags --quiet 2>/dev/null || true
             TAG_REF=""
             for cand in "$PIN_VERSION" "v${PIN_VERSION#v}" "brainstem-${PIN_VERSION#v}" "brainstem-v${PIN_VERSION#v}"; do
-                if git rev-parse "$cand" >/dev/null 2>&1; then TAG_REF="$cand"; break; fi
+                if git -C "$SOURCE_STAGE" rev-parse "$cand" >/dev/null 2>&1; then TAG_REF="$cand"; break; fi
             done
             if [ -n "$TAG_REF" ]; then
-                git checkout "$TAG_REF" --quiet 2>/dev/null
+                git -C "$SOURCE_STAGE" checkout "$TAG_REF" --quiet 2>/dev/null
                 echo -e "  ${GREEN}✓${NC} Checked out ${TAG_REF}"
             else
                 echo -e "  ${RED}✗${NC} Version ${PIN_VERSION} not found. Available versions:"
-                git tag -l 'brainstem-v*' 'v*' | sort -V | sed 's/^/    /'
+                git -C "$SOURCE_STAGE" tag -l 'brainstem-v*' 'v*' | sort -V | sed 's/^/    /'
+                rm -rf "$SOURCE_STAGE" "$FRESH_BACKUP" 2>/dev/null || true
+                echo "    Your existing files were left untouched."
                 exit 1
             fi
+        fi
+        if ! brainstem_source_ready "$SOURCE_STAGE"; then
+            rm -rf "$SOURCE_STAGE" "$FRESH_BACKUP" 2>/dev/null || true
+            echo -e "  ${RED}✗${NC} Downloaded Brainstem source is incomplete"
+            echo "    Your existing files were left untouched."
+            exit 1
+        fi
+        if [ -d "$BRAINSTEM_HOME/src" ]; then
+            OLD_SOURCE="$BRAINSTEM_HOME/src-broken-$$"
+            rm -rf "$OLD_SOURCE" 2>/dev/null || true
+            if ! mv "$BRAINSTEM_HOME/src" "$OLD_SOURCE"; then
+                rm -rf "$SOURCE_STAGE" "$FRESH_BACKUP" 2>/dev/null || true
+                echo -e "  ${RED}✗${NC} Could not preserve the existing source directory"
+                exit 1
+            fi
+        fi
+        if ! mv "$SOURCE_STAGE" "$BRAINSTEM_HOME/src"; then
+            [ -n "$OLD_SOURCE" ] && mv "$OLD_SOURCE" "$BRAINSTEM_HOME/src" 2>/dev/null || true
+            rm -rf "$SOURCE_STAGE" "$FRESH_BACKUP" 2>/dev/null || true
+            echo -e "  ${RED}✗${NC} Could not activate the downloaded Brainstem source"
+            exit 1
         fi
         # Restore any preserved user files over the fresh checkout.
         if [ -n "$FRESH_BACKUP" ]; then
@@ -579,13 +645,26 @@ install_brainstem() {
                 [ -f "$af" ] || continue
                 fn=$(basename "$af")
                 case "$fn" in basic_agent.py|__init__.py) continue ;; esac
-                case " $FRESH_SHIPPED " in *" $fn "*) continue ;; esac
+                case " $FRESH_SHIPPED " in
+                    *" $fn "*)
+                        preserve_agent_collision "$af"
+                        continue
+                        ;;
+                esac
                 cp "$af" "$AGENTS_DIR/$fn" 2>/dev/null || true
             done
-            [ -d "$FRESH_BACKUP/.brainstem_data" ] && cp -R "$FRESH_BACKUP/.brainstem_data" "$DATA_DIR" 2>/dev/null || true
+            if [ -d "$FRESH_BACKUP/.brainstem_data" ]; then
+                mkdir -p "$DATA_DIR"
+                cp -R "$FRESH_BACKUP/.brainstem_data/." "$DATA_DIR/" 2>/dev/null || true
+            fi
+            for state_file in .copilot_token .copilot_session .copilot_pending .brainstem_model .brainstem_book.json .brainstem_secret voice.zip; do
+                [ -f "$FRESH_BACKUP/$state_file" ] \
+                    && cp "$FRESH_BACKUP/$state_file" "$BRAINSTEM_HOME/src/rapp_brainstem/$state_file" 2>/dev/null || true
+            done
             rm -rf "$FRESH_BACKUP"
             echo -e "  ${GREEN}✓${NC} Preserved your soul, agents, memories, and config"
         fi
+        [ -n "$OLD_SOURCE" ] && rm -rf "$OLD_SOURCE" 2>/dev/null || true
     fi
     if ! brainstem_source_ready "$BRAINSTEM_HOME/src"; then
         echo -e "  ${RED}✗${NC} Brainstem source is incomplete after install"
@@ -713,6 +792,7 @@ create_env() {
     if [ ! -f "$env_file" ]; then
         cp "$BRAINSTEM_HOME/src/rapp_brainstem/.env.example" "$env_file" 2>/dev/null || true
     fi
+    [ -f "$env_file" ] && chmod 600 "$env_file" 2>/dev/null || true
 }
 
 launch_brainstem() {
@@ -846,6 +926,7 @@ out = {'access_token': d['access_token']}
 if d.get('refresh_token'): out['refresh_token'] = d['refresh_token']
 with open(sys.argv[2], 'w') as f: json.dump(out, f)
 " "$poll_resp" "$token_file"
+                    chmod 600 "$token_file" 2>/dev/null || true
 
                     # Validate Copilot access immediately
                     local copilot_check copilot_status
@@ -899,9 +980,17 @@ with open(sys.argv[2], 'w') as f: json.dump(out, f)
     local existing_pid
     existing_pid=$(lsof -ti:7071 2>/dev/null | head -1)
     if [ -n "$existing_pid" ]; then
-        echo -e "  ${YELLOW}⚠${NC} Stopping existing server (PID $existing_pid)..."
-        kill "$existing_pid" 2>/dev/null
-        sleep 1
+        local existing_cmd=""
+        existing_cmd=$(ps -p "$existing_pid" -o command= 2>/dev/null) || true
+        if [[ "$existing_cmd" == *"brainstem.py"* || "$existing_cmd" == *"$BRAINSTEM_HOME"* ]]; then
+            echo -e "  ${YELLOW}⚠${NC} Stopping existing Brainstem server (PID $existing_pid)..."
+            kill "$existing_pid" 2>/dev/null
+            sleep 1
+        else
+            echo -e "  ${RED}✗${NC} Port 7071 is already used by another process (PID $existing_pid)."
+            echo "    Stop that process or set PORT in $BRAINSTEM_HOME/src/rapp_brainstem/.env, then rerun."
+            exit 1
+        fi
     fi
 
     # Open the browser once the server actually answers (#14) — a fixed delay
@@ -972,19 +1061,22 @@ main() {
     if [ -z "$PIN_VERSION" ] && [ -d "$BRAINSTEM_HOME/src/.git" ]; then
         echo "Checking for updates..."
         if ! check_for_upgrade; then
-            # Already up to date — still verify everything works before launching
-            check_prereqs
-            setup_venv
-            ensure_deps
-            install_cli
-            create_env
-            if [[ "$NO_LAUNCH" == true ]]; then
-                echo -e "  ${GREEN}✓${NC} Brainstem runtime is ready (launch skipped)"
-                exit 0
+            if brainstem_source_ready "$BRAINSTEM_HOME/src"; then
+                # Already up to date — still verify everything works before launching
+                check_prereqs
+                setup_venv
+                ensure_deps
+                install_cli
+                create_env
+                if [[ "$NO_LAUNCH" == true ]]; then
+                    echo -e "  ${GREEN}✓${NC} Brainstem runtime is ready (launch skipped)"
+                    exit 0
+                fi
+                export PATH="$BRAINSTEM_BIN:/opt/homebrew/bin:/usr/local/bin:$PATH"
+                launch_brainstem
+                exit $?  # launch uses exec, but guard against fall-through
             fi
-            export PATH="$BRAINSTEM_BIN:/opt/homebrew/bin:/usr/local/bin:$PATH"
-            launch_brainstem
-            exit $?  # launch uses exec, but guard against fall-through
+            echo -e "  ${YELLOW}⚠${NC} Installed version matches, but Brainstem source is incomplete — repairing"
         fi
         # Upgrade available — fall through to full install path
     fi

@@ -99,33 +99,27 @@ workshop context, hot-loaded Python agents, and a visible tool-calling loop.
 Core setup uses the learner's GitHub account with Copilot access and does not
 require a separate model API key.
 
-For current workshop stability, this preparation guide intentionally uses the
-[Grail installer](https://github.com/kody-w/rapp-installer) from `kody-w/rapp-installer`, pinned to
-audited commit `5fbde1776a72715935c3d597a9ddfce28a04032b` (Brainstem `0.6.16`). It does not change
-the workshop package or the default Copilot-only lane.
+This preparation guide uses the canonical
+[AIBAST Brainstem installer](https://github.com/microsoft/aibast-agents-library). The former upstream Grail
+installer is not used by this Microsoft/AIBAST workshop path.
 
 ### Pre-work: every Brainstem-track participant installs it themselves
 
 **macOS / Linux**
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/kody-w/rapp-installer/5fbde1776a72715935c3d597a9ddfce28a04032b/install.sh | bash -s -- --version 5fbde1776a72715935c3d597a9ddfce28a04032b
+curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash
 ```
 
 **Windows PowerShell**
 
 ```powershell
-& ([scriptblock]::Create((irm https://raw.githubusercontent.com/kody-w/rapp-installer/5fbde1776a72715935c3d597a9ddfce28a04032b/install.ps1))) --version 5fbde1776a72715935c3d597a9ddfce28a04032b
+irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex
 ```
 
-Then, in a new terminal:
-
-```bash
-gh auth login
-brainstem
-```
-
-Open `http://localhost:7071`. Before the session, verify:
+The one-liner installs the runtime, starts Brainstem, opens GitHub
+authorization when needed, and opens `http://localhost:7071`. Participants do
+not run `gh auth login` or `brainstem` separately. Before the session, verify:
 
 ```bash
 curl -s localhost:7071/health | python3 -m json.tool

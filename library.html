@@ -746,6 +746,15 @@ body.first-party-view .agent-card h2 {
   font-variant-numeric: tabular-nums;
   text-align: center;
 }
+.download-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--cp-text-muted);
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
 .detail-head .agent-upvote { margin-top: 12px; }
 .empty, .loading {
   grid-column: 1 / -1;
@@ -753,6 +762,19 @@ body.first-party-view .agent-card h2 {
   color: var(--cp-text-muted);
   text-align: center;
 }
+.empty-path {
+  width: min(760px, 100%);
+  margin: 22px auto 0;
+  padding: 18px;
+  border: 1px solid var(--cp-border);
+  border-radius: 14px;
+  background: var(--cp-bg-elevated);
+  text-align: left;
+}
+.empty-path h4 { margin: 0 0 8px; }
+.empty-path ol { margin: 12px 0; padding-left: 22px; }
+.empty-path li { margin: 7px 0; }
+.empty-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
 .empty h3 {
   margin: 0 0 7px;
   color: var(--cp-text);
@@ -1328,6 +1350,7 @@ footer {
           <option value="relevance">Best match</option>
           <option value="name">A-Z</option>
           <option value="demo">Demo-ready first</option>
+          <option value="downloads">Top downloaded</option>
         </select>
       </div>
     </div>
@@ -1449,7 +1472,17 @@ const SYNONYMS = {
   compliance: ["regulatory", "audit", "risk"],
   manufacturing: ["plant", "production", "factory"],
   service: ["support", "case", "ticket"],
-  healthcare: ["patient", "clinical", "care"]
+  healthcare: ["patient", "clinical", "care"],
+  billing: ["invoice", "payment", "charge", "revenue"],
+  document: ["file", "pdf", "word", "content"],
+  knowledge: ["article", "search", "grounding", "faq"],
+  inventory: ["stock", "warehouse", "supply"],
+  maintenance: ["repair", "asset", "service"],
+  onboarding: ["intake", "enrollment", "registration"],
+  dispatch: ["routing", "assignment", "field service"],
+  forecast: ["prediction", "planning", "projection"],
+  summarize: ["summary", "synthesis", "brief"],
+  automate: ["automation", "workflow", "orchestration"]
 };
 const STACK_COPY = {
   "b2b_sales/account_intelligence": {
@@ -1751,6 +1784,54 @@ function normalize(value) {
     .replace(/[^a-z0-9]+/g, " ");
 }
 
+function stemSearchTerm(value) {
+  return value
+    .replace(/(ing|ments|ment|ations|ation|ers|er|ies|s)$/i, "")
+    .slice(0, 24);
+}
+
+function editDistance(left, right) {
+  if (left === right) return 0;
+  const previous = Array.from({ length: right.length + 1 }, (_value, i) => i);
+  for (let i = 1; i <= left.length; i += 1) {
+    let diagonal = previous[0];
+    previous[0] = i;
+    for (let j = 1; j <= right.length; j += 1) {
+      const above = previous[j];
+      previous[j] = Math.min(
+        previous[j] + 1,
+        previous[j - 1] + 1,
+        diagonal + (left[i - 1] === right[j - 1] ? 0 : 1)
+      );
+      diagonal = above;
+    }
+  }
+  return previous[right.length];
+}
+
+function searchTermScore(text, term) {
+  if (text.includes(term)) return 1;
+  const words = text.split(" ").filter(Boolean);
+  if (words.some(word => word.startsWith(term) || term.startsWith(word))) {
+    return 0.45;
+  }
+  const stem = stemSearchTerm(term);
+  if (stem.length >= 3 && words.some(word => stemSearchTerm(word) === stem)) {
+    return 0.55;
+  }
+  const maxDistance = term.length >= 7 ? 2 : term.length >= 4 ? 1 : 0;
+  if (
+    maxDistance &&
+    words.some(word =>
+      Math.abs(word.length - term.length) <= maxDistance
+      && editDistance(word, term) <= maxDistance
+    )
+  ) {
+    return 0.25;
+  }
+  return 0;
+}
+
 function queryTerms(query) {
   const base = normalize(query).split(" ")
     .filter(term => term.length > 1 && !STOP_WORDS.has(term));
@@ -1802,8 +1883,7 @@ function scoreAgent(agent, query) {
     if (!text) return;
     if (phrase.length > 2 && text.includes(phrase)) score += field.weight * 4;
     terms.forEach(term => {
-      if (text.includes(term)) score += field.weight;
-      if (text.split(" ").some(word => word.startsWith(term))) score += field.weight * 0.25;
+      score += field.weight * searchTermScore(text, term);
     });
   });
   if (agent._demo && agent._demo.case_count) score += 2;
@@ -1843,6 +1923,16 @@ function filteredAgents() {
     demo: (a, b) => Number(Boolean(b.agent._demo)) - Number(Boolean(a.agent._demo))
       || Number(Boolean(solutionOf(b.agent).has_demo_video)) - Number(Boolean(solutionOf(a.agent).has_demo_video))
       || shown(a.agent).localeCompare(shown(b.agent)),
+    downloads: (a, b) => {
+      const left = aggregateAgentSignal(a.agent.name, "downloads");
+      const right = aggregateAgentSignal(b.agent.name, "downloads");
+      if (left === null && right === null) {
+        return shown(a.agent).localeCompare(shown(b.agent));
+      }
+      if (left === null) return 1;
+      if (right === null) return -1;
+      return right - left || shown(a.agent).localeCompare(shown(b.agent));
+    },
   };
   rows.sort(sorters[state.sort] || sorters.relevance);
   return rows;
@@ -2003,6 +2093,7 @@ function buildAgentSignalMap(metrics, agents) {
     if (!row || typeof row.name !== "string") return;
     const upvotes = row.upvotes;
     const acquisitions = row.acquisitions;
+    const downloads = row.downloads;
     const upvoteUrl = canonicalDiscussionUrl(row.upvote_discussion_url);
     const acquisitionUrl = canonicalDiscussionUrl(
       row.acquisition_discussion_url
@@ -2014,6 +2105,8 @@ function buildAgentSignalMap(metrics, agents) {
         && Number.isSafeInteger(acquisitions)
         && acquisitions >= 0
         ? acquisitions : null,
+      downloads: Number.isSafeInteger(downloads) && downloads >= 0
+        ? downloads : null,
       upvoteUrl,
       acquisitionUrl
     });
@@ -2023,6 +2116,7 @@ function buildAgentSignalMap(metrics, agents) {
     supplied.has(agent.name) ? supplied.get(agent.name) : {
       upvotes: null,
       acquisitions: null,
+      downloads: null,
       upvoteUrl: "",
       acquisitionUrl: ""
     }
@@ -2059,6 +2153,13 @@ function agentUpvoteControl(agent) {
         aria-label="${url ? "Open the canonical rating Discussion" : "Rating Discussion unavailable"} for ${esc(shown(agent))}">Upvote</button>
       <span class="upvote-count" aria-label="${esc(countLabel)}" title="${esc(countLabel)}">${countText}</span>
     </div>`;
+}
+
+function agentDownloadCount(agent) {
+  const count = aggregateAgentSignal(agent.name, "downloads");
+  if (count === null) return "";
+  const label = `${count.toLocaleString()} observed agent.py download${count === 1 ? "" : "s"}`;
+  return `<span class="download-count" aria-label="${esc(label)}" title="${esc(label)}">↓ ${count.toLocaleString()}</span>`;
 }
 
 function agentAcquisitionControl(agent) {
@@ -2130,6 +2231,7 @@ function agentCard(agent) {
         <div class="card-foot">
           <span class="persona">For ${esc(persona)}</span>
           <div class="card-actions">
+            ${agentDownloadCount(agent)}
             ${agentUpvoteControl(agent)}
             <button class="button primary small" type="button" data-action="open-agent" data-name="${enc(agent.name)}">View agent</button>
           </div>
@@ -2184,7 +2286,13 @@ function renderSuggestions() {
     .filter(row => row.score >= Math.max(8, topScore * 0.5))
     .slice(0, 5);
   if (!rows.length) {
-    $("suggestions").classList.remove("visible");
+    const promptUrl = learnNewBrainstemUrl(query);
+    $("suggestions").innerHTML = `
+      <a class="suggestion" href="${esc(promptUrl)}" target="_blank" rel="noopener">
+        <div><strong>Create "${esc(query)}" with Learn New</strong><span>Open Brainstem with the request prefilled; review it, then press Send.</span></div>
+        <em>Build it</em>
+      </a>`;
+    $("suggestions").classList.add("visible");
     return;
   }
   $("suggestions").innerHTML = rows.map(row => `
@@ -2194,6 +2302,16 @@ function renderSuggestions() {
     </button>
   `).join("");
   $("suggestions").classList.add("visible");
+}
+
+function learnNewPrompt(query) {
+  return `Use Learn New to preview, create, self-test, and hot-load an agent for this unmet AIBAST library search: "${query}". Return the agent.py filename, what it does, a test prompt, and the VS Code Brain Surgeon repair steps if its behavior needs work.`;
+}
+
+function learnNewBrainstemUrl(query) {
+  const url = new URL("http://localhost:7071/");
+  url.searchParams.set("prompt", learnNewPrompt(query));
+  return url.toString();
 }
 
 function renderActiveFilters() {
@@ -2210,6 +2328,30 @@ function renderActiveFilters() {
 }
 
 function emptyState() {
+  const query = compact(state.query);
+  if (query) {
+    const promptUrl = learnNewBrainstemUrl(query);
+    return `
+      <div class="empty">
+        <h3>No library match for "${esc(query)}"</h3>
+        <p>Try a broader phrase, a different product, or build the missing capability locally.</p>
+        <div class="empty-actions" style="justify-content:center">
+          <button class="button" type="button" data-action="clear-all">Clear search and filters</button>
+          <a class="button" href="rapp_brainstem/agents/rar_rapp_learn_new_agent.py" download="rar_rapp_learn_new_agent.py">Download Learn New agent.py</a>
+          <a class="button primary" href="${esc(promptUrl)}" target="_blank" rel="noopener">Open Brainstem with this request ↗</a>
+        </div>
+        <div class="empty-path">
+          <h4>Teach the Brainstem to build what is missing</h4>
+          <ol>
+            <li>Open Brainstem. The search request is prefilled but is <strong>not sent automatically</strong>; review it and press Send.</li>
+            <li>Current AIBAST Brainstem includes Learn New. If it is missing, download the file above and drag it into the Brainstem window to hot-load it.</li>
+            <li>Learn New creates and self-tests the new <code>agent.py</code> locally.</li>
+            <li>If the result is not what you expected, export the Brainstem transcript, click the <strong>VS Code</strong> button, drag the transcript into Copilot Chat (Brain Surgeon), and ask it to test and fix the generated agent against <code>localhost:7071</code>.</li>
+          </ol>
+          <p>This keeps the failed search useful: first discover, then create, test, correct, and reuse.</p>
+        </div>
+      </div>`;
+  }
   return `
     <div class="empty">
       <h3>No agents found</h3>
@@ -2445,6 +2587,7 @@ function openAgent(name) {
               <a class="button primary" href="${esc(download.href)}" download="${esc(download.filename)}">Download agent.py</a>
               ${solutionDownloads ? `<a class="button" href="${esc(solutionDownloads.zip)}" download>Download Copilot Studio solution</a>` : ""}
               ${solutionDownloads ? `<a class="button" href="${esc(solutionDownloads.settings)}" download>Deployment settings</a>` : ""}
+              ${agentDownloadCount(agent)}
               ${agentAcquisitionControl(agent)}
               <a class="button" href="${BLOB}/${encodeURI(agent._file)}" target="_blank" rel="noopener">View source ↗</a>
             </div>

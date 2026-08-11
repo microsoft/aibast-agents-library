@@ -8,7 +8,6 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
 from scripts import build_metrics
-from tools.scaffold_solution_journey import GRAIL_PIN
 
 ROOT = Path(__file__).resolve().parent.parent
 REGISTRY = json.loads((ROOT / "registry.json").read_text(encoding="utf-8"))
@@ -100,14 +99,13 @@ def test_every_canonical_field_guide_contains_the_gated_flow():
         ):
             assert token in markdown, f"{row['slug']} markdown missing {token}"
             assert token in page, f"{row['slug']} HTML missing {token}"
-        pinned_installer = (
-            "raw.githubusercontent.com/kody-w/rapp-installer/"
-            f"{GRAIL_PIN}/install.sh"
+        canonical_installer = (
+            "microsoft.github.io/aibast-agents-library/install.sh"
         )
-        assert pinned_installer in markdown
-        assert pinned_installer in page
-        assert "kody-w.github.io/rapp-installer/install.sh" not in markdown
-        assert "/kody-w/rapp-installer/main/install.ps1" not in markdown
+        assert canonical_installer in markdown
+        assert canonical_installer in page
+        assert "kody-w.github.io/rapp-installer" not in markdown
+        assert "raw.githubusercontent.com/kody-w/rapp-installer" not in markdown
         assert "claim -> test -> verify" in markdown
         assert "claim -&gt; test -&gt; verify" in page
 

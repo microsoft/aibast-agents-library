@@ -73,7 +73,10 @@ assert_sparse_beta() {
 
 install_mainline() {
     local home="$1"
-    HOME="$home" bash "$MAIN_INSTALLER" --no-launch
+    HOME="$home" \
+    BRAINSTEM_REPO_URL="$BETA_REPO_URL" \
+    BRAINSTEM_REPO_REF="$BETA_REF" \
+        bash "$MAIN_INSTALLER" --no-launch
     [ -x "$home/.local/bin/brainstem" ]
     assert_sparse_global "$home"
 }
