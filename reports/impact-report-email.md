@@ -1,8 +1,8 @@
-**Subject:** AIBAST weekly and monthly impact report - August 10, 2026
+**Subject:** AIBAST weekly and monthly impact report - August 11, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-08-10T13:34:19Z`
+**Snapshot:** `2026-08-11T05:43:02Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
@@ -29,8 +29,8 @@
 | GitHub forks | 2 | Baseline pending | Baseline pending |
 | GitHub watchers | 0 | Baseline pending | Baseline pending |
 | Open GitHub issues | 5 | Baseline pending | Baseline pending |
-| Agent upvotes | Unavailable | Unavailable | Unavailable |
-| Signed-in agent acquisitions | Unavailable | Unavailable | Unavailable |
+| Agent upvotes | 0 | Baseline pending | Baseline pending |
+| Signed-in agent acquisitions | 0 | Baseline pending | Baseline pending |
 | Workshop usage events | 0 | Baseline pending | Baseline pending |
 | Workshop views (14-day top paths) | Unavailable | Unavailable | Unavailable |
 | Workshop file downloads | 0 | Baseline pending | Baseline pending |
@@ -55,8 +55,8 @@
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| Tracked repository files | 5,310 | Baseline pending | Baseline pending |
-| Files covered by download observations | 5,307 | Baseline pending | Baseline pending |
+| Tracked repository files | 5,311 | Baseline pending | Baseline pending |
+| Files covered by download observations | 5,311 | Baseline pending | Baseline pending |
 | Catalog agents | 72 | Baseline pending | Baseline pending |
 | Tracked SKILL.md files | 234 | Baseline pending | Baseline pending |
 | Canonical workshops | 51 | Baseline pending | Baseline pending |
