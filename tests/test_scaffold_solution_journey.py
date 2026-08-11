@@ -289,7 +289,7 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     )
     assert "two short messages" in guide
     assert "personal, on-device training AI" in guide
-    assert "Hard mode — literal browser construction" in guide
+    assert "Manual mode — literal browser construction" in guide
     assert "Production replacement seams" in guide
     assert "Failure recovery" in guide
     assert "Evidence gates" in guide
@@ -363,7 +363,7 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "manual-tutorial.html" in quest
     assert "Watch assisted film" not in quest
     assert "copilot-assisted-walkthrough.gif" not in quest
-    assert "Open standalone Hard-mode guide" in quest
+    assert "Open standalone Manual-mode guide" in quest
     assert "Attach the Brainstem skill" in personless
     assert "drag `SKILL.md` into the" in personless
     assert "Give me Demo Journey using Easy Mode and test it for me." in personless

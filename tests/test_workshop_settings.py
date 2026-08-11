@@ -145,7 +145,7 @@ def test_hard_mode_renders_the_complete_manual_tutorial_natively():
     for token in ("aibast-hard-mode-height", "data-embedded", "postMessage"):
         assert token not in quest
         assert token not in manual
-    assert "Open standalone Hard-mode guide" in quest
+    assert "Open standalone Manual-mode guide" in quest
 
 
 def test_new_html_scripts_parse(tmp_path):

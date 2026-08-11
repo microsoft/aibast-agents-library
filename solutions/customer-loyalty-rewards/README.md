@@ -29,7 +29,7 @@ redemption, refund, order, or purchase is issued or changed.
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/customer-loyalty-rewards/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/customer-loyalty-rewards/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/customer-loyalty-rewards/quest.html` |
+| Guided Easy/Manual quest | `solutions/customer-loyalty-rewards/quest.html` |
 | Literal browser tutorial | `solutions/customer-loyalty-rewards/manual-tutorial.html` |
 | Raw export manifest | `solutions/customer-loyalty-rewards/export-manifest.json` |
 | Source bundle | `solutions/customer-loyalty-rewards/exports/customer-loyalty-rewards-source.zip` |

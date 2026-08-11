@@ -36,7 +36,7 @@ The local agent uses fictional records and produces decision support only. It do
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/supply-chain-disruption-alert/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/supply-chain-disruption-alert/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/supply-chain-disruption-alert/quest.html` |
+| Guided Easy/Manual quest | `solutions/supply-chain-disruption-alert/quest.html` |
 | Literal browser tutorial | `solutions/supply-chain-disruption-alert/manual-tutorial.html` |
 | Raw export manifest | `solutions/supply-chain-disruption-alert/export-manifest.json` |
 | Source bundle | `solutions/supply-chain-disruption-alert/exports/supply-chain-disruption-alert-source.zip` |

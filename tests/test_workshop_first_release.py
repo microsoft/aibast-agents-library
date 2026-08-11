@@ -77,7 +77,7 @@ def create_release_fixture(root):
                     f"{index:02d}-step.png"
                 ),
                 "status": "reusable",
-                "visible_anchors": [f"Hard step {index}"],
+                "visible_anchors": [f"Manual step {index}"],
                 "boxes": [{"x": 0, "y": 0, "width": 1, "height": 1}],
             }
         )
@@ -145,7 +145,7 @@ def create_release_fixture(root):
         [
             {
                 "file": f"{index:02d}-step.png",
-                "label": f"Hard step {index}",
+                "label": f"Manual step {index}",
             }
             for index in range(2, 6)
         ]
@@ -557,14 +557,14 @@ def test_rejects_insufficient_hard_coverage(tmp_path):
                 if removed:
                     continue
                 capture["status"] = "reshoot_required"
-                capture["reason"] = "The expected hard-mode state is cropped."
+                capture["reason"] = "The expected manual-mode state is cropped."
                 capture.pop("annotated", None)
                 capture.pop("visible_anchors", None)
                 capture.pop("boxes", None)
                 removed = True
 
     mutate_visual(package, reduce_hard)
-    assert_fails(run_gate(tmp_path), "reusable hard-mode captures 4 < 5")
+    assert_fails(run_gate(tmp_path), "reusable manual-mode captures 4 < 5")
 
 
 def test_rejects_reusable_ratio_below_floor(tmp_path):

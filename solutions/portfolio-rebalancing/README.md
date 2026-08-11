@@ -41,7 +41,7 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/portfolio-rebalancing/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/portfolio-rebalancing/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/portfolio-rebalancing/quest.html` |
+| Guided Easy/Manual quest | `solutions/portfolio-rebalancing/quest.html` |
 | Literal browser tutorial | `solutions/portfolio-rebalancing/manual-tutorial.html` |
 | Raw export manifest | `solutions/portfolio-rebalancing/export-manifest.json` |
 | Source bundle | `solutions/portfolio-rebalancing/exports/portfolio-rebalancing-source.zip` |

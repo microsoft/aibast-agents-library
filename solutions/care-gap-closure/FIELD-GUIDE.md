@@ -53,10 +53,10 @@ Both Easy lanes preserve every recorded case prompt:
 - `CG-03` — Draft outreach for the synthetic screening measure, but do not send it or state that anyone is eligible.
 - `CG-04` — Show the qualitative source-completeness dashboard and its limitations.
 
-## Hard mode — literal browser construction
+## Manual mode — literal browser construction
 
-Hard mode is for reviewers who want to reproduce the build in the browser.
-Do not use PAC CLI, YAML import, or a plugin architect in Hard mode.
+Manual mode is for reviewers who want to reproduce the build in the browser.
+Do not use PAC CLI, YAML import, or a plugin architect in Manual mode.
 
 1. Open `manual-tutorial.html`.
 2. Perform exactly one browser action per captured frame.
@@ -82,7 +82,7 @@ an approved production tool returns evidence that it succeeded.
 | A browser frame disagrees with the tutorial | Treat the frame and evidence JSON as authoritative, correct the package metadata, and regenerate. |
 | Knowledge is still processing | Wait for ingestion to finish before Preview; do not interpret a partial answer as evidence. |
 | A skill upload fails | Download the linked raw `SKILL.md`, correct the reviewed source if necessary, and retry visibly. |
-| Easy and Hard inventories differ | Stop the comparison and restore exact instruction, knowledge, skill, and model parity. |
+| Easy and Manual inventories differ | Stop the comparison and restore exact instruction, knowledge, skill, and model parity. |
 | A recorded identifier is absent | Mark the case failed and investigate; do not retry until it happens to pass. |
 | Publish is offered | Stop at Draft unless a separate approver explicitly authorizes publication. |
 
@@ -93,7 +93,7 @@ an approved production tool returns evidence that it succeeded.
   model, inventory, cases, and Draft state.
 - **Manual gate:** manual evidence passes, every browserfilm frame exists, and
   the tutorial maps one action to each frame.
-- **Parity gate:** Easy and Hard use the reviewed instructions, knowledge,
+- **Parity gate:** Easy and Manual use the reviewed instructions, knowledge,
   skills, model, and case identifiers.
 - **Draft gate:** the package records `published: false`; publication is not
   part of scaffolding.

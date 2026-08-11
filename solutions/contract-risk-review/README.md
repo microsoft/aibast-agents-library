@@ -36,7 +36,7 @@ passing.
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/contract-risk-review/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/contract-risk-review/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/contract-risk-review/quest.html` |
+| Guided Easy/Manual quest | `solutions/contract-risk-review/quest.html` |
 | Literal browser tutorial | `solutions/contract-risk-review/manual-tutorial.html` |
 | Raw export manifest | `solutions/contract-risk-review/export-manifest.json` |
 | Source bundle | `solutions/contract-risk-review/exports/contract-risk-review-source.zip` |

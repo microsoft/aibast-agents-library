@@ -32,7 +32,7 @@ accounting system, contacts clients, or sends invoices.
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/time-entry-billing/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/time-entry-billing/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/time-entry-billing/quest.html` |
+| Guided Easy/Manual quest | `solutions/time-entry-billing/quest.html` |
 | Literal browser tutorial | `solutions/time-entry-billing/manual-tutorial.html` |
 | Raw export manifest | `solutions/time-entry-billing/export-manifest.json` |
 | Source bundle | `solutions/time-entry-billing/exports/time-entry-billing-source.zip` |

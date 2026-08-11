@@ -1,7 +1,7 @@
 # Time Entry and Billing visual evidence audit
 
 **Audit date:** 2026-08-08
-**Method:** Every packaged Easy and Hard screenshot was opened individually in
+**Method:** Every packaged Easy and Manual screenshot was opened individually in
 the authenticated browser and compared with the exact tutorial claim displayed
 beside it. File hashes were also checked for duplicate captures.
 
@@ -15,21 +15,21 @@ beside it. File hashes were also checked for duplicate captures.
 | Partial | 15 | The screenshot supports part of the claim but omits, renames, crops, or does not capture the requested action. |
 | Fail | 7 | The screenshot does not prove the claim or visibly contradicts it. |
 
-The most serious issue is not cosmetic. The Hard-mode Preview screenshots show
+The most serious issue is not cosmetic. The Manual-mode Preview screenshots show
 that the two grounding files were unavailable, while the marker-based validator
 still recorded passes because expected phrases appeared in reasoning,
 instructions, or refusal text.
 
 ## Blocking findings
 
-1. **Hard-mode knowledge is not visually present.** Frames 06, 07, and 13
+1. **Manual-mode knowledge is not visually present.** Frames 06, 07, and 13
    show a collapsed Knowledge section with no files. Frames 16–18 explicitly
    say the grounding files are not present.
-2. **The Hard-mode validator produced false positives.** TEB-02 cannot produce
+2. **The Manual-mode validator produced false positives.** TEB-02 cannot produce
    the requested rollups, while TEB-03 and TEB-04 state that they are using
    locked evidence anchors because the data files are missing. All three were
    recorded as passed.
-3. **Nine Hard-mode screenshots are byte-for-byte identical.** Files
+3. **Nine Manual-mode screenshots are byte-for-byte identical.** Files
    `04-save-instructions.jpg` through `12-add-unbilled-report.jpg` have the same
    SHA-256. They are not literal captures of nine separate actions.
 4. **The Easy-mode Draft screenshot does not show the validated agent.**
@@ -82,7 +82,7 @@ The tutorial now:
 | `05-teb-05.jpg` | Partial | DSP-301, DSP-302, and authorized review are visible in the reasoning trace. | The final answer portion does not visibly contain the complete marker contract; reasoning text can satisfy the current matcher. |
 | `06-confirm-draft.jpg` | **Fail** | An Agents list containing unrelated Draft and Published agents. | The validated Time Entry and Billing Pilot row is not visible, so the image cannot prove its Draft state. |
 
-## Hard-mode screenshots
+## Manual-mode screenshots
 
 | Step | File | Result | Visual finding |
 | ---: | --- | --- | --- |
@@ -157,7 +157,7 @@ grounded behavior.
 
 ## Release recommendation
 
-Do not present the current Hard-mode run as proven end to end. The manual agent
+Do not present the current Manual-mode run as proven end to end. The manual agent
 exists and remains Draft, but its knowledge grounding and three Preview passes
 are not supported by the screenshots. The Easy-mode screenshots are useful
 qualitative references, but they need tighter framing and a correct Draft-gate

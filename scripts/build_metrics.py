@@ -93,7 +93,7 @@ ACHIEVEMENT_LABELS = {
     "draft-builder": "Draft builder",
     "preview-proven": "Preview proven",
     "workshop-completed": "Workshop completed",
-    "hard-mode-completed": "Hard mode completed",
+    "hard-mode-completed": "Manual mode completed",
 }
 ACHIEVEMENT_CAVEAT = (
     "Verified achievement points are server-scored from opt-in public GitHub "

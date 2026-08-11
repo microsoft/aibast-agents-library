@@ -2065,7 +2065,7 @@ def test_metrics_page_binds_workshop_adoption_schema():
         "Verified badges",
         "Verified starts",
         "Workshop completions",
-        "Hard completions",
+        "Manual completions",
         "Completion rate",
         "Public achievement leaderboard",
         "Workshop achievement completion",

@@ -35,7 +35,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 4 `SKILL.md` 
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/product-feedback-synthesizer/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/product-feedback-synthesizer/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/product-feedback-synthesizer/quest.html` |
+| Guided Easy/Manual quest | `solutions/product-feedback-synthesizer/quest.html` |
 | Literal browser tutorial | `solutions/product-feedback-synthesizer/manual-tutorial.html` |
 | Raw export manifest | `solutions/product-feedback-synthesizer/export-manifest.json` |
 | Source bundle | `solutions/product-feedback-synthesizer/exports/product-feedback-synthesizer-source.zip` |

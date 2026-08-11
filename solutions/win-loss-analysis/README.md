@@ -47,7 +47,7 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/win-loss-analysis/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/win-loss-analysis/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/win-loss-analysis/quest.html` |
+| Guided Easy/Manual quest | `solutions/win-loss-analysis/quest.html` |
 | Literal browser tutorial | `solutions/win-loss-analysis/manual-tutorial.html` |
 | Raw export manifest | `solutions/win-loss-analysis/export-manifest.json` |
 | Source bundle | `solutions/win-loss-analysis/exports/win-loss-analysis-source.zip` |

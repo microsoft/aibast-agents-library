@@ -46,9 +46,9 @@
 | Verified achievements | 0 | Baseline pending | Baseline pending |
 | Workshop starts | 0 | Baseline pending | Baseline pending |
 | Workshop completions | 0 | Baseline pending | Baseline pending |
-| Hard-mode completions | 0 | Baseline pending | Baseline pending |
+| Manual-mode completions | 0 | Baseline pending | Baseline pending |
 | Workshop completion rate | 0.0% | Baseline pending | Baseline pending |
-| Hard-mode completion rate | 0.0% | Baseline pending | Baseline pending |
+| Manual-mode completion rate | 0.0% | Baseline pending | Baseline pending |
 | Achievement completion rate | 0.0% | Baseline pending | Baseline pending |
 
 ## Library footprint

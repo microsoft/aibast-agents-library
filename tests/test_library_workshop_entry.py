@@ -13,7 +13,7 @@ def test_library_routes_architecture_into_the_beta_workshop():
     for required in (
         "Learn and build",
         "Guided Easy mode",
-        "Hard mode — inline manual tutorial",
+        "Manual mode — inline manual tutorial",
         "Open workshop",
         "Open interactive demo",
         "Workshop settings",

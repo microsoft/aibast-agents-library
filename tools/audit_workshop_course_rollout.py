@@ -441,7 +441,7 @@ def check_quest(
     if not default_script:
         failures.add(f"{label}: Copilot-default global engine script is not measurable")
     if parser.find("iframe"):
-        failures.add(f"{label}: Hard mode must not use an iframe")
+        failures.add(f"{label}: Manual mode must not use an iframe")
     hard_paths = [
         tag
         for tag in parser.tags
@@ -449,7 +449,7 @@ def check_quest(
     ]
     hard_steps: list[Tag] = []
     if len(hard_paths) != 1:
-        failures.add(f"{label}: expected one native Hard-mode path")
+        failures.add(f"{label}: expected one native Manual-mode path")
     else:
         hard_steps = [
             tag
@@ -458,7 +458,7 @@ def check_quest(
         ]
         if len(hard_steps) != len(manual_frames):
             failures.add(
-                f"{label}: native Hard steps {len(hard_steps)} != "
+                f"{label}: native Manual steps {len(hard_steps)} != "
                 f"browserfilm frames {len(manual_frames)}"
             )
     metrics["quest_hard_steps"] = len(hard_steps)
@@ -501,7 +501,7 @@ def check_quest(
             failures.add(
                 f"{label}: report buttons {len(report_buttons)} != "
                 f"7 + {len(locked_cases)} locked cases + "
-                f"{len(manual_frames)} native Hard steps ({expected_reports})"
+                f"{len(manual_frames)} native Manual steps ({expected_reports})"
             )
         if len(preview_prompts) != len(locked_cases):
             failures.add(
@@ -1278,7 +1278,7 @@ def audit_solution(
         ):
             failures.add(
                 "manual-tutorial.html: exposes the manual film while one or "
-                "more Hard captures require reshoot"
+                "more Manual captures require reshoot"
             )
     if "evidence-report.html" in documents:
         check_evidence_report(

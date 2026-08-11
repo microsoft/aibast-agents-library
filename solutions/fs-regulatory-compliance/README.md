@@ -12,7 +12,7 @@
 | Copilot Studio Preview evidence | `solutions/fs-regulatory-compliance/evals/copilot-studio-preview-evidence.json` |
 | Copilot Studio source | `solutions/fs-regulatory-compliance/copilot-studio/` |
 | Customer field guide | `solutions/fs-regulatory-compliance/FIELD-GUIDE.md` |
-| Easy/Hard quest | `solutions/fs-regulatory-compliance/quest.html` |
+| Easy/Manual quest | `solutions/fs-regulatory-compliance/quest.html` |
 | Manual browser tutorial | `solutions/fs-regulatory-compliance/manual-tutorial.html` |
 | Export manifest | `solutions/fs-regulatory-compliance/export-manifest.json` |
 | Manual knowledge | `solutions/fs-regulatory-compliance/manual/knowledge/` |
@@ -68,7 +68,7 @@ Preview cases for `Regulatory Manual Build`.
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/fs-regulatory-compliance/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/fs-regulatory-compliance/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/fs-regulatory-compliance/quest.html` |
+| Guided Easy/Manual quest | `solutions/fs-regulatory-compliance/quest.html` |
 | Literal browser tutorial | `solutions/fs-regulatory-compliance/manual-tutorial.html` |
 | Raw export manifest | `solutions/fs-regulatory-compliance/export-manifest.json` |
 | Source bundle | `solutions/fs-regulatory-compliance/exports/fs-regulatory-compliance-source.zip` |

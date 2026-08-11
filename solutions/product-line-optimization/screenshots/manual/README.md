@@ -1,4 +1,4 @@
-# Literal browser hard-mode evidence
+# Literal browser manual-mode evidence
 
 `browserfilm.json` is the ordered authority for 23 real browser frames.
 `manual-build-walkthrough.gif` and `manual-build-contact-sheet.jpg` summarize those frames when the files are present.

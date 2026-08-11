@@ -39,7 +39,7 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/fs-customer-onboarding/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/fs-customer-onboarding/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/fs-customer-onboarding/quest.html` |
+| Guided Easy/Manual quest | `solutions/fs-customer-onboarding/quest.html` |
 | Literal browser tutorial | `solutions/fs-customer-onboarding/manual-tutorial.html` |
 | Raw export manifest | `solutions/fs-customer-onboarding/export-manifest.json` |
 | Source bundle | `solutions/fs-customer-onboarding/exports/fs-customer-onboarding-source.zip` |

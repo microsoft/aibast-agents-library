@@ -28,7 +28,7 @@ message, offer, reward, or purchase action occurs.
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/omnichannel-engagement/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/omnichannel-engagement/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/omnichannel-engagement/quest.html` |
+| Guided Easy/Manual quest | `solutions/omnichannel-engagement/quest.html` |
 | Literal browser tutorial | `solutions/omnichannel-engagement/manual-tutorial.html` |
 | Raw export manifest | `solutions/omnichannel-engagement/export-manifest.json` |
 | Source bundle | `solutions/omnichannel-engagement/exports/omnichannel-engagement-source.zip` |

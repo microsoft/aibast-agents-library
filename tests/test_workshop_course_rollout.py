@@ -378,7 +378,7 @@ def test_rejects_manual_film_when_hard_capture_requires_reshoot(tmp_path):
 
     assert_failure(
         audit_fixture(tmp_path),
-        "exposes the manual film while one or more Hard captures require reshoot",
+        "exposes the manual film while one or more Manual captures require reshoot",
     )
 
 

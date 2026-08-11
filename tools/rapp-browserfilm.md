@@ -32,8 +32,8 @@ Every frame must come from the actual authenticated environment.
    ```text
    python3 tools/rapp-browserfilm.py \
      solutions/<slug>/screenshots/browserfilm.json \
-     solutions/<slug>/screenshots/hard-mode-walkthrough.gif \
-     --contact-sheet solutions/<slug>/screenshots/hard-mode-contact-sheet.jpg
+     solutions/<slug>/screenshots/manual-mode-walkthrough.gif \
+     --contact-sheet solutions/<slug>/screenshots/manual-mode-contact-sheet.jpg
    ```
 
 The script requires Pillow. Frames are normalized to one size and receive:

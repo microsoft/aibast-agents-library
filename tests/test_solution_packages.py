@@ -302,7 +302,7 @@ def test_rapp_browserfilm_assets_are_reproducible():
     assert "evidence-report.html" in quest
     assert "<iframe" not in quest
     assert 'class="path" data-path="hard"' in quest
-    assert "Open standalone Hard-mode guide" in quest
+    assert "Open standalone Manual-mode guide" in quest
     assert 'data-easy-lane="copilot"' in quest
     assert 'data-easy-lane="brainstem"' in quest
     assert 'localStorage.getItem("aibast:workshop-engine") === "brainstem"' in quest

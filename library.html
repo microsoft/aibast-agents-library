@@ -2187,7 +2187,7 @@ function architectureHTML(architecture, solution, agentName) {
         `).join("")}
       </div>
       <h3>Learn and build</h3>
-      <p>The workshop is the single entry point. It teaches the use case, runs the globally configured Easy harness, and keeps the complete manual Hard mode inline on the same page.</p>
+      <p>The workshop is the single entry point. It teaches the use case, runs the globally configured Easy harness, and keeps the complete Manual mode inline on the same page.</p>
       <div class="capability-grid">
         <article class="capability-card">
           <code>Guided Easy mode</code>
@@ -2196,8 +2196,8 @@ function architectureHTML(architecture, solution, agentName) {
         </article>
         <article class="capability-card">
           <code>Build it yourself</code>
-          <strong>Hard mode — inline manual tutorial</strong>
-          <p>Use the Hard tab inside the same workshop to reproduce every reviewed Copilot Studio action and Preview gate. No separate prompt or PAC command block is required here.</p>
+          <strong>Manual mode — inline manual tutorial</strong>
+          <p>Use the Manual tab inside the same workshop to reproduce every reviewed Copilot Studio action and Preview gate. No separate prompt or PAC command block is required here.</p>
         </article>
       </div>
       <div class="detail-actions">
@@ -2332,7 +2332,7 @@ function openAgent(name) {
             ${solution.source_verified ? `<div class="asset"><strong>Content source</strong><span>Approved AI BAST PowerPoint</span></div>` : ""}
             ${solution.package ? `<div class="workshop-launch">
               <strong>Hands-on workshop</strong>
-              <span>Use the guided Easy path or switch to the complete inline Hard mode from one focused learning page.</span>
+              <span>Use the guided Easy path or switch to the complete inline Manual mode from one focused learning page.</span>
               ${solution.package.quest_url ? `<a class="button primary" href="${esc(solution.package.quest_url)}">Open workshop</a>` : ""}
               ${solution.package.slug ? `<a class="button" href="solutions/${esc(solution.package.slug)}/field-guide.html">Open field guide</a>` : ""}
             </div>` : ""}

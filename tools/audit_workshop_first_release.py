@@ -774,7 +774,7 @@ def audit_workshop(
         )
     if len(hard_reusable) < 5:
         failures.append(
-            f"reusable hard-mode captures {len(hard_reusable)} < 5"
+            f"reusable manual-mode captures {len(hard_reusable)} < 5"
         )
 
     required_reusable = max(10, math.ceil(len(captures) * 0.35))

@@ -1076,7 +1076,7 @@ footer {
     <p class="coverage-status" id="achievements-coverage" role="status" aria-live="polite" aria-atomic="true">Verified achievement coverage is loading.</p>
     <div class="card">
       <p class="coverage-note"><b>Verification scope.</b> GitHub verification confirms authenticated issue authorship and canonical claim format only; achievement completion remains self-reported and is not independently proven.</p>
-      <p class="coverage-note"><b>Verified public achievements</b> are server-scored from submitted public GitHub progress issues. Fixed achievement values are: started 5, local proof 15, draft builder 20, preview proven 25, workshop completed 35, and hard mode completed 50, for at most 150 points per workshop. Re-syncing unions explicitly claimed achievement IDs and never duplicates points. Missing prerequisite badges are not inferred.</p>
+      <p class="coverage-note"><b>Verified public achievements</b> are server-scored from submitted public GitHub progress issues. Fixed achievement values are: started 5, local proof 15, draft builder 20, preview proven 25, workshop completed 35, and manual mode completed 50, for at most 150 points per workshop. Re-syncing unions explicitly claimed achievement IDs and never duplicates points. Missing prerequisite badges are not inferred.</p>
       <p class="coverage-note"><b>Local self-paced achievements are different.</b> Progress on <a href="achievements.html">achievements.html</a> stays local until a person deliberately submits a verification issue. Submission explicitly opts that GitHub login into the public verified profile and leaderboard. Verified achievement points are never repository stars, agent upvotes, downloads, or workshop usage events, and they are not added to those metrics. Administrators can review the <a href="docs/metrics-admin-setup.html">achievement metrics setup and privacy checklist</a>.</p>
       <div class="achievements-grid">
         <section class="achievements-card" aria-labelledby="achievements-leaderboard-heading">
@@ -1085,7 +1085,7 @@ footer {
           <div class="table-scroll">
             <table id="achievements-leaderboard" aria-label="Verified public achievement profile leaderboard">
               <caption>Verified public achievement profiles ranked by points</caption>
-              <thead><tr><th scope="col">GitHub login</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Hard completions</th></tr></thead>
+              <thead><tr><th scope="col">GitHub login</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Manual completions</th></tr></thead>
               <tbody><tr><td colspan="6">Loading verified achievement profiles&hellip;</td></tr></tbody>
             </table>
           </div>
@@ -1096,7 +1096,7 @@ footer {
           <div class="table-scroll">
             <table id="achievements-workshop-table" aria-label="Verified per-workshop achievement completion">
               <caption>Canonical workshops ranked by verified achievement points</caption>
-              <thead><tr><th scope="col">Workshop</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Hard completions</th><th class="num" scope="col">Achievement completion</th></tr></thead>
+              <thead><tr><th scope="col">Workshop</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Manual completions</th><th class="num" scope="col">Achievement completion</th></tr></thead>
               <tbody><tr><td colspan="7">Loading verified workshop achievements&hellip;</td></tr></tbody>
             </table>
           </div>
@@ -1543,7 +1543,7 @@ function renderAchievementPoints() {
     { label: 'Verified badges', value: totals.achievements },
     { label: 'Verified starts', value: totals.starts },
     { label: 'Workshop completions', value: totals.workshop_completions },
-    { label: 'Hard completions', value: totals.hard_completions },
+    { label: 'Manual completions', value: totals.hard_completions },
     { label: 'Completion rate', value: percent(totals.completion_rate), formatted: true },
     { label: 'Achievement completion', value: percent(totals.achievement_completion_rate), formatted: true }
   ];
@@ -1573,7 +1573,7 @@ function renderAchievementPoints() {
     : 'Profiles are public only after opt-in submission';
   const profileTable = $('achievements-leaderboard');
   profileTable.innerHTML = `<caption>Verified public achievement profiles ranked by points</caption>
-    <thead><tr><th scope="col">GitHub login</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Hard completions</th></tr></thead>
+    <thead><tr><th scope="col">GitHub login</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Manual completions</th></tr></thead>
     <tbody>${profiles.length ? profiles.map(profile => {
       const login = String(profile.login || '');
       const profileUrl = /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?$/.test(login)
@@ -1605,7 +1605,7 @@ function renderAchievementPoints() {
     : 'Canonical workshop achievement rows are unavailable';
   const workshopTable = $('achievements-workshop-table');
   workshopTable.innerHTML = `<caption>Canonical workshops ranked by verified achievement points</caption>
-    <thead><tr><th scope="col">Workshop</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Hard completions</th><th class="num" scope="col">Achievement completion</th></tr></thead>
+    <thead><tr><th scope="col">Workshop</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Manual completions</th><th class="num" scope="col">Achievement completion</th></tr></thead>
     <tbody>${workshops.length ? workshops.map(row => {
       const slug = String(row.slug || '');
       const quest = /^[a-z0-9-]+$/.test(slug)

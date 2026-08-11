@@ -74,7 +74,7 @@ again in the target environment.
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/building-permit-processing/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/building-permit-processing/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/building-permit-processing/quest.html` |
+| Guided Easy/Manual quest | `solutions/building-permit-processing/quest.html` |
 | Literal browser tutorial | `solutions/building-permit-processing/manual-tutorial.html` |
 | Raw export manifest | `solutions/building-permit-processing/export-manifest.json` |
 | Source bundle | `solutions/building-permit-processing/exports/building-permit-processing-source.zip` |

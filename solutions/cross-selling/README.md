@@ -45,7 +45,7 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/cross-selling/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/cross-selling/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/cross-selling/quest.html` |
+| Guided Easy/Manual quest | `solutions/cross-selling/quest.html` |
 | Literal browser tutorial | `solutions/cross-selling/manual-tutorial.html` |
 | Raw export manifest | `solutions/cross-selling/export-manifest.json` |
 | Source bundle | `solutions/cross-selling/exports/cross-selling-source.zip` |

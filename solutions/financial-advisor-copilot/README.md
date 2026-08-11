@@ -41,7 +41,7 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/financial-advisor-copilot/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/financial-advisor-copilot/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/financial-advisor-copilot/quest.html` |
+| Guided Easy/Manual quest | `solutions/financial-advisor-copilot/quest.html` |
 | Literal browser tutorial | `solutions/financial-advisor-copilot/manual-tutorial.html` |
 | Raw export manifest | `solutions/financial-advisor-copilot/export-manifest.json` |
 | Source bundle | `solutions/financial-advisor-copilot/exports/financial-advisor-copilot-source.zip` |

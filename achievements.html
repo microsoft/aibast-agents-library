@@ -318,7 +318,7 @@
         { id: "draft-builder", claimId: "draft-builder", label: "Draft builder", points: 20, description: "Reviewed unpublished Draft confirmed." },
         { id: "preview-proven", claimId: "preview-proven", label: "Preview proven", points: 25, description: "Every named Preview checkpoint confirmed." },
         { id: "workshop-complete", claimId: "workshop-completed", label: "Workshop complete", points: 35, description: "Every required checkpoint in the current Easy path." },
-        { id: "hard-mode-complete", claimId: "hard-mode-completed", label: "Hard mode complete", points: 50, description: "Every manual browserfilm step marked complete." },
+        { id: "hard-mode-complete", claimId: "hard-mode-completed", label: "Manual mode complete", points: 50, description: "Every manual browserfilm step marked complete." },
       ]);
       const BADGE_IDS = new Set(BADGES.map((badge) => badge.id));
       const CLAIM_ORDER = Object.freeze(BADGES.map((badge) => badge.claimId));

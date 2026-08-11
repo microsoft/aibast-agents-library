@@ -14,7 +14,7 @@ solutions/
 └── <solution-slug>/
     ├── README.md                        # Package map and quality status
     ├── deployment.json                  # Machine-readable no-terminal deployment recipe
-    ├── quest.html                       # Guided Easy/Hard workshop
+    ├── quest.html                       # Guided Easy/Manual workshop
     ├── field-guide.html                 # Styled facilitator and learner guide
     ├── evidence-report.html             # Styled deterministic/visual evidence summary
     ├── manual-tutorial.html             # Screenshot-by-screenshot no-assistance build
@@ -47,7 +47,7 @@ solutions/
   default; the optional Brainstem harness is selected once in
   `solutions/_shared/workshop-settings.html` and persists across workshops on
   that browser and device.
-- Hard mode recreates the same agent manually in the Copilot Studio browser:
+- Manual mode recreates the same agent manually in the Copilot Studio browser:
   instructions, knowledge, every skill, model selection, and Preview.
 - Generated quests award self-paced local **achievement points**
   for idempotent workshop milestones. Progress remains in the browser under

@@ -36,7 +36,7 @@ passing.
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/client-health-score/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/client-health-score/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/client-health-score/quest.html` |
+| Guided Easy/Manual quest | `solutions/client-health-score/quest.html` |
 | Literal browser tutorial | `solutions/client-health-score/manual-tutorial.html` |
 | Raw export manifest | `solutions/client-health-score/export-manifest.json` |
 | Source bundle | `solutions/client-health-score/exports/client-health-score-source.zip` |

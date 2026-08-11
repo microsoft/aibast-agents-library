@@ -43,7 +43,7 @@ This customer package is synthetic and read-only. It provides evidence or drafts
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/prior-authorization/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/prior-authorization/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/prior-authorization/quest.html` |
+| Guided Easy/Manual quest | `solutions/prior-authorization/quest.html` |
 | Literal browser tutorial | `solutions/prior-authorization/manual-tutorial.html` |
 | Raw export manifest | `solutions/prior-authorization/export-manifest.json` |
 | Source bundle | `solutions/prior-authorization/exports/prior-authorization-source.zip` |

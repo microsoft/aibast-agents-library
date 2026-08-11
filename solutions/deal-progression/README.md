@@ -47,7 +47,7 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/deal-progression/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/deal-progression/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/deal-progression/quest.html` |
+| Guided Easy/Manual quest | `solutions/deal-progression/quest.html` |
 | Literal browser tutorial | `solutions/deal-progression/manual-tutorial.html` |
 | Raw export manifest | `solutions/deal-progression/export-manifest.json` |
 | Source bundle | `solutions/deal-progression/exports/deal-progression-source.zip` |

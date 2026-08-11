@@ -35,7 +35,7 @@
       "findings": [],
       "fine": [
         "Package is target-specific: deployment title is \"Account Intelligence Agent\"; 6 operation controls, 6 locked cases, and both \"preview_cases_passed\": 6 counts align. All 6 prompts are account-intelligence-specific.",
-        "Required boundaries are present: \"AIBAST guided workshop\", \"Beta workshop evidence\", \"Workshop settings\", embedded Hard mode, and \"This workshop ends at Draft.\" All 7 required files exist.",
+        "Required boundaries are present: \"AIBAST guided workshop\", \"Beta workshop evidence\", \"Workshop settings\", embedded Manual mode, and \"This workshop ends at Draft.\" All 7 required files exist.",
         "One Hard capture is \"reshoot_required\"; evidence-report.html labels the count as 1 and states it \"is hidden from learner pages until independently approved.\" manual-tutorial.html has 0 manual-build-walkthrough.gif references.",
         "All .md/.json/.py anchors have download attributes; Add-skill mappings match their SKILL.md names. Open Preview requires fresh Preview state. Forbidden-content and unapproved-media counts are 0."
       ],
@@ -49,7 +49,7 @@
         "tools/audit_workshop_course_rollout.py: \"1/1 passed; 0 failed\" and \"PASS ai-customer-assistant\".",
         "deployment.json: \"Customer Escalations Agent\"; 4 operations, 4 skills, 2 knowledge files, both previews 4/4, Draft and unpublished.",
         "tests/demo_cases/ai-customer-assistant.json: 4/4 locked CES prompts are customer-escalation-specific.",
-        "evals/visual-checkpoints.json: \"reshoot_required\": 24; all 18 Hard captures require reshoot. manual-tutorial.html links manual-build-walkthrough.gif 0 times; evidence-report.html explicitly labels the 24 reshoot-required captures.",
+        "evals/visual-checkpoints.json: \"reshoot_required\": 24; all 18 Manual captures require reshoot. manual-tutorial.html links manual-build-walkthrough.gif 0 times; evidence-report.html explicitly labels the 24 reshoot-required captures.",
         "HTML checks: all required pages exist; raw anchors have download attributes; 4/4 Add-skill links match NAME/SKILL.md; Open Preview expects fresh Preview state; prohibited content and unapproved displayed captures count 0."
       ],
       "gate": "clean \u2014 AIBAST workshop-course rollout: 1/1 passed; 0 failed"
@@ -61,7 +61,7 @@
       "fine": [
         "deployment.json declares \"display_name\": \"Ask HR Agent\"; all four inspected pages use Ask HR Agent in their title/H1.",
         "All six locked prompts appear exactly once in quest.html, matching six article.preview-case controls.",
-        "AIBAST, Beta, Workshop settings, Report an issue, and embedded Hard-mode controls are present.",
+        "AIBAST, Beta, Workshop settings, Report an issue, and embedded Manual-mode controls are present.",
         "No Clawpilot, assisted-film, publication offer, or generic foreign-solution prompt was found.",
         "visual-checkpoints.json reports 30 existing captures, 0 reusable, and 30 reshoot_required; no source screenshot media element is rendered on the inspected pages."
       ],
@@ -135,7 +135,7 @@
       "findings": [],
       "fine": [
         "deployment.json: \"Client Health Score Agent\"; 5 skills and 5/5 target-specific prompts.",
-        "manual-tutorial.html: 20 Hard steps, 5/5 matching SKILL.md downloads, 0 GIF links; Draft-only and fresh Preview boundaries present.",
+        "manual-tutorial.html: 20 Manual steps, 5/5 matching SKILL.md downloads, 0 GIF links; Draft-only and fresh Preview boundaries present.",
         "evidence-report.html labels \"Reshoot required\" as 26; visual-checkpoints.json agrees. Seven required files exist; 0 prohibited terms/raw-link violations."
       ],
       "gate": "AIBAST workshop-course rollout: 1/1 passed; 0 failed; PASS client-health-score"
@@ -316,7 +316,7 @@
       "findings": [],
       "fine": [
         "Title and all 4 locked prompts are target-specific; operations and 4/4 preview controls match.",
-        "23 captures are reshoot-required, including 18 Hard captures; manual-build-walkthrough.gif links: 0.",
+        "23 captures are reshoot-required, including 18 Manual captures; manual-build-walkthrough.gif links: 0.",
         "evidence-report.html explicitly says \"23 Reshoot-required captures hidden from learner proof\".",
         "All 27 raw artifact anchors use download; all 4 Add skill steps map to the matching SKILL.md.",
         "AIBAST, Beta, settings, report, embedded Hard, and Draft/no-publish boundaries exist; forbidden-content and displayed-unapproved-capture counts are 0."
@@ -331,7 +331,7 @@
         "deployment.json declares \"display_name\": \"Loan Origination Assistant\"; all four pages use that package-specific title/H1.",
         "tests/demo_cases/loan-origination-assistant.json defines 5 cases; each locked prompt appears exactly once in quest.html, with five LOA-01\u2013LOA-05 Preview controls and 5/5 totals.",
         "evals/visual-checkpoints.json reports reusable=0 and reshoot_required=26; evidence-report.html states \"26 Reshoot-required captures hidden from learner proof\". All four pages contain zero image/video/media tags, so zero browserfilms are rendered.",
-        "quest.html includes AIBAST branding, \"Beta workshop\", Workshop settings, reporting buttons, a Hard tab, and embedded manual-tutorial.html?embedded=1; manual-tutorial.html implements embedded mode.",
+        "quest.html includes AIBAST branding, \"Beta workshop\", Workshop settings, reporting buttons, a Manual tab, and embedded manual-tutorial.html?embedded=1; manual-tutorial.html implements embedded mode.",
         "Across the four reviewed pages, Clawpilot, assisted-film, raw-file, publication-offer, and foreign-solution markers each occur zero times. Publication text consistently requires Draft/published false and explicitly says it \"does not offer publication\"."
       ],
       "gate": "Command: python3 tools/audit_workshop_course_rollout.py --slug loan-origination-assistant\nExit code: 0\nOutput:\nAIBAST workshop-course rollout: 1/1 passed; 0 failed\nBuilders: 1 non-reference; critics: 1 including time-entry-billing\nEXCLUDED_NON_ADVERTISED grid-outage-response: GENERATED - not SharePoint-advertised. Proves the generator; must be advertised before it ships (Article I.1).\nPASS loan-origination-assistant"
@@ -344,7 +344,7 @@
         "deployment.json and quest.html consistently use \u201cMaintenance Scheduling Agent\u201d; quest title and H1 match.",
         "quest.html contains each locked MS-01 through MS-04 prompt exactly once; four cases match the demo-case contract.",
         "visual-checkpoints.json reports 24 existing captures, 0 reusable, and 24 reshoot_required; the clean gate confirms unreviewed captures remain hidden.",
-        "AIBAST branding, Beta reporting, workshop settings, embedded Hard mode, and package-specific prompts are present; prohibited Clawpilot, assisted-film, publication-offer, and foreign-solution content was not found."
+        "AIBAST branding, Beta reporting, workshop settings, embedded Manual mode, and package-specific prompts are present; prohibited Clawpilot, assisted-film, publication-offer, and foreign-solution content was not found."
       ],
       "gate": "AIBAST workshop-course rollout: 1/1 passed; 0 failed\nBuilders: 1 non-reference; critics: 1 including time-entry-billing\nEXCLUDED_NON_ADVERTISED grid-outage-response: GENERATED - not SharePoint-advertised. Proves the generator; must be advertised before it ships (Article I.1).\nPASS maintenance-scheduling\nExit code: 0"
     },
@@ -354,8 +354,8 @@
       "findings": [],
       "fine": [
         "All four pages use the package title \u201cOmnichannel Engagement Agent\u201d.",
-        "All four locked prompts appear exactly once in quest.html; four Preview controls match four cases. Hard mode has 18 steps, checkboxes, and report controls matching 18 Hard captures.",
-        "AIBAST, Beta, reporting, settings, Easy/Hard, and embedded Hard-mode controls exist. No Clawpilot, assisted-film, foreign-solution prompt, publication offer, or navigable raw-file link was found.",
+        "All four locked prompts appear exactly once in quest.html; four Preview controls match four cases. Manual mode has 18 steps, checkboxes, and report controls matching 18 Manual captures.",
+        "AIBAST, Beta, reporting, settings, Easy/Manual, and embedded Manual-mode controls exist. No Clawpilot, assisted-film, foreign-solution prompt, publication offer, or navigable raw-file link was found.",
         "All pages contain zero image/video elements. The evidence report states \u201c23 Reshoot-required captures hidden from learner proof,\u201d matching visual-checkpoints.json\u2019s 23 reshoot-required captures."
       ],
       "gate": "exit_code=0\nAIBAST workshop-course rollout: 1/1 passed; 0 failed\nBuilders: 1 non-reference; critics: 1 including time-entry-billing\nEXCLUDED_NON_ADVERTISED grid-outage-response: GENERATED - not SharePoint-advertised. Proves the generator; must be advertised before it ships (Article I.1).\nPASS omnichannel-engagement"
@@ -404,7 +404,7 @@
       "fine": [
         "Gate: 1/1 passed; 0 failed; PASS personalized-marketing.",
         "Title, 4 operations, 4 locked prompts, 4 skills, 2 knowledge files, Draft/unpublished controls match.",
-        "AIBAST, Beta, Settings, Report, embedded Hard mode, and Draft-stop boundaries exist.",
+        "AIBAST, Beta, Settings, Report, embedded Manual mode, and Draft-stop boundaries exist.",
         "All raw links have download attributes; all four skill downloads match their names; Preview requires a fresh state.",
         "23 reshoot-required captures are explicitly labeled; 18 are Hard. No GIF link, prohibited content, displayed screenshots, or missing required pages."
       ],
@@ -428,7 +428,7 @@
       "fine": [
         "deployment.json and quest.html use \u201cPortfolio Rebalancing Agent\u201d; all 6 locked prompts appear exactly once across 6 quest preview-case controls.",
         "Counts align: deployment has 6 scenarios; quest has 6 cases; manual-tutorial.html has 22 browserfilm articles and 22 completion controls.",
-        "quest.html includes AIBAST, Beta, settings, 13 reporting controls, Hard mode, and embedded manual-tutorial.html?embedded=1. Prohibited content was absent; raw sources are download-only.",
+        "quest.html includes AIBAST, Beta, settings, 13 reporting controls, Manual mode, and embedded manual-tutorial.html?embedded=1. Prohibited content was absent; raw sources are download-only.",
         "visual-checkpoints.json reports 29 total, 0 reusable, 29 reshoot-required. evidence-report.html states \u201c29 Reshoot-required captures hidden from learner proof\u201d; all four pages contain 0 images."
       ],
       "gate": "AIBAST workshop-course rollout: 1/1 passed; 0 failed\nBuilders: 1 non-reference; critics: 1 including time-entry-billing\nEXCLUDED_NON_ADVERTISED grid-outage-response: GENERATED - not SharePoint-advertised. Proves the generator; must be advertised before it ships (Article I.1).\nPASS portfolio-rebalancing"
@@ -519,7 +519,7 @@
       "fine": [
         "deployment.json: title is \"Returns and Complaints Resolution Agent\"; 4 skills, 2 knowledge files, publish=false, Draft statuses, and 4/4 previews.",
         "tests/demo_cases/returns-complaints-resolution.json: 4 target-specific locked prompts; zero unexpected persona prompts.",
-        "evals/visual-checkpoints.json: 23/23 captures require reshoot, including 18 Hard captures; manual-tutorial.html has zero walkthrough GIF or unapproved capture references.",
+        "evals/visual-checkpoints.json: 23/23 captures require reshoot, including 18 Manual captures; manual-tutorial.html has zero walkthrough GIF or unapproved capture references.",
         "manual-tutorial.html: 18 report controls for 18 steps; all four skill steps download their matching SKILL.md. All 27 raw-file anchors use download attributes.",
         "evidence-report.html: explicitly states \"23 Reshoot-required captures hidden from learner proof\". Required boundaries exist; prohibited-content counts are zero."
       ],
@@ -590,7 +590,7 @@
       "fine": [
         "deployment.json: \"Underwriting Support Agent\"; 4 skills, 2 knowledge files, Draft/unpublished, 4/4 preview cases.",
         "tests/demo_cases/underwriting-support.json: 4 target-specific locked prompts.",
-        "evals/visual-checkpoints.json: 23 captures; 23 \"reshoot_required\"; 18 Hard captures."
+        "evals/visual-checkpoints.json: 23 captures; 23 \"reshoot_required\"; 18 Manual captures."
       ],
       "gate": "AIBAST workshop-course rollout: 1/1 passed; 0 failed \u2014 PASS underwriting-support"
     },
@@ -615,7 +615,7 @@
         "solutions/wealth-insights-generator/deployment.json: title \"Wealth Insights Generator Agent\"; manual_skill_count=5; safety gate requires \"no-advice/no-approval/no-transaction behavior before publish.\"",
         "tests/demo_cases/wealth-insights-generator.json: 5/5 locked prompts are wealth-specific; controls and case counts match the five manual skills.",
         "solutions/wealth-insights-generator/manual-tutorial.html: all 5 \"Add skill\" steps download the matching SKILL.md; raw artifact links have download attributes; manual-build-walkthrough.gif link count=0.",
-        "solutions/wealth-insights-generator/evals/visual-checkpoints.json: Hard captures=20 and reshoot_required=26; solutions/wealth-insights-generator/evidence-report.html explicitly labels \"26 Reshoot-required\"; no unapproved screenshot is displayed.",
+        "solutions/wealth-insights-generator/evals/visual-checkpoints.json: Manual captures=20 and reshoot_required=26; solutions/wealth-insights-generator/evidence-report.html explicitly labels \"26 Reshoot-required\"; no unapproved screenshot is displayed.",
         "quest.html, manual-tutorial.html, field-guide.html, and evidence-report.html contain the required AIBAST/Beta/settings/report/Hard/Draft boundaries; forbidden-term counts are Clawpilot=0, assisted-film=0, foreign-solution=0."
       ],
       "gate": "AIBAST workshop-course rollout: 1/1 passed; 0 failed \u2014 PASS wealth-insights-generator"

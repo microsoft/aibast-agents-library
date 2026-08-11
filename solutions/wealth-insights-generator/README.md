@@ -40,7 +40,7 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/wealth-insights-generator/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/wealth-insights-generator/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/wealth-insights-generator/quest.html` |
+| Guided Easy/Manual quest | `solutions/wealth-insights-generator/quest.html` |
 | Literal browser tutorial | `solutions/wealth-insights-generator/manual-tutorial.html` |
 | Raw export manifest | `solutions/wealth-insights-generator/export-manifest.json` |
 | Source bundle | `solutions/wealth-insights-generator/exports/wealth-insights-generator-source.zip` |

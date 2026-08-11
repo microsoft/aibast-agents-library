@@ -36,7 +36,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 4 `SKILL.md` 
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/procurement-support/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/procurement-support/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/procurement-support/quest.html` |
+| Guided Easy/Manual quest | `solutions/procurement-support/quest.html` |
 | Literal browser tutorial | `solutions/procurement-support/manual-tutorial.html` |
 | Raw export manifest | `solutions/procurement-support/export-manifest.json` |
 | Source bundle | `solutions/procurement-support/exports/procurement-support-source.zip` |

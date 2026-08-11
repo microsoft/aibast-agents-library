@@ -138,7 +138,7 @@ ACHIEVEMENT_LABELS = {
     "draft-builder": "Draft builder",
     "preview-proven": "Preview proven",
     "workshop-complete": "Workshop complete",
-    "hard-mode-complete": "Hard mode complete",
+    "hard-mode-complete": "Manual mode complete",
 }
 WORKSHOP_MISSION = (
     "Turn motivated, open-minded, non-technical sales professionals into AI "
@@ -1321,7 +1321,7 @@ def collect_resources(ctx: JourneyContext) -> list[Resource]:
     generated = [
         ("workshop-settings", "Global workshop settings", ctx.root / "solutions" / "_shared" / "workshop-settings.html", "Site-wide persisted Easy-mode harness preference"),
         ("evidence-report", "Styled evidence report", ctx.package / "evidence-report.html", "Learner-safe HTML summary of deterministic and visual evidence"),
-        ("quest", "Guided field quest", ctx.package / "quest.html", "Resumable Easy/Hard customer journey"),
+        ("quest", "Guided field quest", ctx.package / "quest.html", "Resumable Easy/Manual customer journey"),
         ("manual-tutorial", "Manual browser tutorial", ctx.package / "manual-tutorial.html", "One action per real manual evidence frame"),
         ("screenshots-readme", "Screenshot evidence README", ctx.package / "screenshots" / "README.md", "Evidence boundary and capture inventory"),
         ("manual-screenshots-readme", "Manual screenshot README", ctx.package / "screenshots" / "manual" / "README.md", "Manual frame and film inventory"),
@@ -1818,10 +1818,10 @@ Both Easy lanes preserve every recorded case prompt:
 
 {markdown_list(easy_case_lines(ctx), "No Easy-mode case evidence is recorded; treat this checkpoint as pending.")}
 
-## Hard mode — literal browser construction
+## Manual mode — literal browser construction
 
-Hard mode is for reviewers who want to reproduce the build in the browser.
-Do not use PAC CLI, YAML import, or a plugin architect in Hard mode.
+Manual mode is for reviewers who want to reproduce the build in the browser.
+Do not use PAC CLI, YAML import, or a plugin architect in Manual mode.
 
 1. Open `manual-tutorial.html`.
 2. Perform exactly one browser action per captured frame.
@@ -1846,7 +1846,7 @@ an approved production tool returns evidence that it succeeded.
 | A browser frame disagrees with the tutorial | Treat the frame and evidence JSON as authoritative, correct the package metadata, and regenerate. |
 | Knowledge is still processing | Wait for ingestion to finish before Preview; do not interpret a partial answer as evidence. |
 | A skill upload fails | Download the linked raw `SKILL.md`, correct the reviewed source if necessary, and retry visibly. |
-| Easy and Hard inventories differ | Stop the comparison and restore exact instruction, knowledge, skill, and model parity. |
+| Easy and Manual inventories differ | Stop the comparison and restore exact instruction, knowledge, skill, and model parity. |
 | A recorded identifier is absent | Mark the case failed and investigate; do not retry until it happens to pass. |
 | Publish is offered | Stop at Draft unless a separate approver explicitly authorizes publication. |
 
@@ -1857,7 +1857,7 @@ an approved production tool returns evidence that it succeeded.
   model, inventory, cases, and Draft state.
 - **Manual gate:** manual evidence passes, every browserfilm frame exists, and
   the tutorial maps one action to each frame.
-- **Parity gate:** Easy and Hard use the reviewed instructions, knowledge,
+- **Parity gate:** Easy and Manual use the reviewed instructions, knowledge,
   skills, model, and case identifiers.
 - **Draft gate:** the package records `published: false`; publication is not
   part of scaffolding.
@@ -1982,7 +1982,7 @@ def render_field_guide_html(ctx: JourneyContext) -> str:
       </table>
     </section>
 
-    <p class="downloads"><a class="button primary" href="quest.html">Start the workshop</a><a class="button" href="manual-tutorial.html">Open Hard mode directly</a>{solution_downloads}</p>
+    <p class="downloads"><a class="button primary" href="quest.html">Start the workshop</a><a class="button" href="manual-tutorial.html">Open Manual mode directly</a>{solution_downloads}</p>
   </main>
 </body>
 </html>
@@ -2258,7 +2258,7 @@ def render_manual_tutorial(
         step_cards.append(
             f"""
       <article class="step" id="step-{index}">
-        <header><span>{index}</span><div><h3>{html.escape(action)}</h3><p>Step {index} of {len(ctx.manual_frames)}</p></div>{report_button(ctx, location=f"Hard mode — step {index}: {action}", expected=expected, evidence=ctx.rel(screenshot))}</header>
+        <header><span>{index}</span><div><h3>{html.escape(action)}</h3><p>Step {index} of {len(ctx.manual_frames)}</p></div>{report_button(ctx, location=f"Manual mode — step {index}: {action}", expected=expected, evidence=ctx.rel(screenshot))}</header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong>{copy_markup}</div><span>{html.escape(action)}</span></div>
@@ -2375,13 +2375,13 @@ def render_manual_tutorial(
     <aside class="sidebar">
       <strong id="progress-label">0 of {frame_count} complete</strong>
       <div class="progress"><span id="progress-bar"></span></div>
-      <p class="achievements-manual-note">Hard-mode progress earns self-paced local achievement points on this device.</p>
+      <p class="achievements-manual-note">Manual-mode progress earns self-paced local achievement points on this device.</p>
       <p class="achievements-manual-note" id="achievements-manual-toast" role="status" aria-live="polite" aria-atomic="true"></p>
       <nav class="toc" aria-label="Tutorial actions">{toc_markup}</nav>
     </aside>
     <main>
       <section class="hero">
-        <p class="eyebrow">Hard mode · literal browser construction</p>
+        <p class="eyebrow">Manual mode · literal browser construction</p>
         <h1>Build {html.escape(ctx.title)} manually.</h1>
         <p class="lede">No PAC CLI, YAML import, or plugin architect. Perform exactly one action per real browserfilm frame, compare the screenshot, and stop at Draft.</p>
         <div class="notice"><strong>Synthetic disclosure:</strong> this is qualitative workflow evidence using packaged synthetic inputs. It is not a customer KPI or a live-system result.</div>
@@ -2395,7 +2395,7 @@ def render_manual_tutorial(
         <details open><summary>A screenshot or browserfilm frame is missing</summary><p>Stop. Do not invent, recreate, or substitute an image. Capture the real frame, update the browserfilm manifest, and regenerate without <code>--allow-pending</code>.</p></details>
         <details><summary>A knowledge file is still processing</summary><p>Wait for ingestion to finish before Preview. A partial answer is not evidence.</p></details>
         <details><summary>A skill upload fails</summary><p>Use the linked raw <code>SKILL.md</code>. Fix the reviewed source deliberately; do not silently skip the action.</p></details>
-        <details><summary>The model differs from Easy mode</summary><p>Record the substitution and stop the parity claim until Easy and Hard use the same reviewed model.</p></details>
+        <details><summary>The model differs from Easy mode</summary><p>Record the substitution and stop the parity claim until Easy and Manual use the same reviewed model.</p></details>
         <details><summary>The Preview answer misses an identifier</summary><p>Mark the recorded case failed, inspect instructions and inventory, then replay the exact prompt in a fresh conversation.</p></details>
         <details><summary>Should I publish?</summary><p>No. Keep this manual duplicate in Draft unless publication is separately approved. Do not choose Publish as part of this tutorial.</p></details>
       </section>
@@ -2468,7 +2468,7 @@ def render_manual_tutorial(
       }});
       document.querySelectorAll("[data-report-location]").forEach((button) => {{
         button.addEventListener("click", () => {{
-          const locationLabel = button.dataset.reportLocation || "Hard-mode step";
+          const locationLabel = button.dataset.reportLocation || "Manual-mode step";
           const expected = button.dataset.reportExpected || "Describe the expected result.";
           const evidence = button.dataset.reportEvidence || "No evidence path supplied.";
           const title = `[Workshop feedback] {ctx.title}: ${{locationLabel}}`;
@@ -2492,7 +2492,7 @@ Describe what was inaccurate or missing.
 
 ## Reproduction
 
-1. Open the Hard-mode tutorial.
+1. Open the Manual-mode tutorial.
 2. Follow the step shown above.
 3. Record the visible Copilot Studio state.
 
@@ -2862,7 +2862,7 @@ def render_completion_state(ctx: JourneyContext) -> str:
 def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     manual_content = render_manual_tutorial(ctx, content_only=True)
     if not isinstance(manual_content, ManualTutorialContent):
-        raise ScaffoldError("Hard-mode tutorial content could not be generated")
+        raise ScaffoldError("Manual-mode tutorial content could not be generated")
     workshop_agent = workshop_agent_path(ctx)
     workshop_agent_link = (
         f'<a class="button" href="../../{html.escape(ctx.rel(workshop_agent))}" download>Download generic workshop agent</a>'
@@ -3045,13 +3045,13 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     <section class="hero">
       <p class="eyebrow">Evidence-grounded customer journey</p>
       <h1>{html.escape(ctx.title)}</h1>
-      <p class="lede">Use your globally configured Easy-mode harness, or reproduce every action directly in Hard mode.</p>
+      <p class="lede">Use your globally configured Easy-mode harness, or reproduce every action directly in Manual mode.</p>
       <div class="notice"><strong>Workshop mission:</strong> {html.escape(WORKSHOP_MISSION)}</div>
       <div class="notice"><strong>Boundary:</strong> synthetic qualitative evidence only—not a customer KPI, measured production result, live connection, or publication approval.</div>
       <div class="feedback-notice"><strong>Found something inaccurate?</strong> Use <em>Report an issue</em> at that point. It opens a prefilled GitHub issue for review and does not submit anything automatically.</div>
       <div class="mode-switch" role="tablist">
         <button class="mode active" id="mode-tab-easy" data-mode="easy" role="tab" aria-controls="mode-panel-easy" aria-selected="true">Easy</button>
-        <button class="mode" id="mode-tab-hard" data-mode="hard" role="tab" aria-controls="mode-panel-hard" aria-selected="false">Hard</button>
+        <button class="mode" id="mode-tab-hard" data-mode="hard" role="tab" aria-controls="mode-panel-hard" aria-selected="false">Manual</button>
       </div>
     </section>
 
@@ -3162,14 +3162,14 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
 
     <section class="path" data-path="hard" id="mode-panel-hard" role="tabpanel" aria-labelledby="mode-tab-hard" hidden>
       <section class="card hard-overview">
-        <p class="eyebrow">Hard mode · literal browser construction</p>
+        <p class="eyebrow">Manual mode · literal browser construction</p>
         <h2>Build {html.escape(ctx.title)} manually on this page.</h2>
         <p class="lede">No PAC CLI, YAML import, plugin architect, or nested tutorial frame. Perform one action per real browserfilm frame, compare the screenshot, and stop at Draft.</p>
         <div class="notice"><strong>Synthetic disclosure:</strong> this is qualitative workflow evidence using packaged synthetic inputs. It is not a customer KPI or a live-system result.</div>
         <div class="feedback-notice"><strong>Found something inaccurate?</strong> Use <em>Report an issue</em> on that step. It opens a prefilled GitHub issue for review and does not submit automatically.</div>
         {manual_content.pending_notice}
         <div class="hard-actions">
-          <a class="button" href="manual-tutorial.html" target="_blank" rel="noopener">Open standalone Hard-mode guide ↗</a>
+          <a class="button" href="manual-tutorial.html" target="_blank" rel="noopener">Open standalone Manual-mode guide ↗</a>
           <a class="button primary" href="exports/{html.escape(ctx.slug)}-source.zip">Download source bundle</a>
           {solution_downloads}
         </div>
@@ -3178,22 +3178,22 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
       <section class="hard-progress-card" aria-labelledby="hard-progress-label">
         <div class="hard-progress-heading">
           <strong id="hard-progress-label">0 of {manual_content.frame_count} complete</strong>
-          <p>Hard-mode progress is saved on this device and contributes to the same achievement profile.</p>
+          <p>Manual-mode progress is saved on this device and contributes to the same achievement profile.</p>
         </div>
         <div class="progress" aria-hidden="true"><span id="hard-progress-bar"></span></div>
         <p class="muted" id="hard-progress-toast" role="status" aria-live="polite" aria-atomic="true"></p>
-        <nav class="hard-toc" aria-label="Hard-mode tutorial actions">{manual_content.toc_markup}</nav>
+        <nav class="hard-toc" aria-label="Manual-mode tutorial actions">{manual_content.toc_markup}</nav>
       </section>
 
       <h2>Build and verify</h2>
       {manual_content.steps_markup}
 
-      <h2 id="hard-troubleshooting">Hard-mode troubleshooting</h2>
+      <h2 id="hard-troubleshooting">Manual-mode troubleshooting</h2>
       <section class="card hard-troubleshooting">
         <details open><summary>A screenshot or browserfilm frame is missing</summary><p>Stop. Do not invent, recreate, or substitute an image. Capture the real frame, update the browserfilm manifest, and regenerate without <code>--allow-pending</code>.</p></details>
         <details><summary>A knowledge file is still processing</summary><p>Wait for ingestion to finish before Preview. A partial answer is not evidence.</p></details>
         <details><summary>A skill upload fails</summary><p>Use the linked raw <code>SKILL.md</code>. Fix the reviewed source deliberately; do not silently skip the action.</p></details>
-        <details><summary>The model differs from Easy mode</summary><p>Record the substitution and stop the parity claim until Easy and Hard use the same reviewed model.</p></details>
+        <details><summary>The model differs from Easy mode</summary><p>Record the substitution and stop the parity claim until Easy and Manual use the same reviewed model.</p></details>
         <details><summary>The Preview answer misses an identifier</summary><p>Mark the recorded case failed, inspect instructions and inventory, then replay the exact prompt in a fresh conversation.</p></details>
         <details><summary>Should I publish?</summary><p>No. Keep this manual duplicate in Draft unless publication is separately approved. Do not choose Publish as part of this tutorial.</p></details>
       </section>
@@ -3337,7 +3337,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         }}
         if (hardProgressToast) {{
           hardProgressToast.textContent = complete
-            ? "Hard mode complete. The achievement is saved in this device's achievement profile."
+            ? "Manual mode complete. The achievement is saved in this device's achievement profile."
             : "";
         }}
         renderAchievementPanel(profile, activeMode);
@@ -3366,7 +3366,7 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         const checked = mode === "hard" ? hardChecked : easyChecked;
         const total = mode === "hard" ? hardTotal : easyRequired.length;
         achievementProgressLabel.textContent =
-          `${{checked}} of ${{total}} ${{mode === "hard" ? "Hard steps" : "Easy checkpoints"}} complete`;
+          `${{checked}} of ${{total}} ${{mode === "hard" ? "Manual steps" : "Easy checkpoints"}} complete`;
         achievementProgressBar.style.width = total ? `${{(checked / total) * 100}}%` : "0%";
         achievementBadgeList.replaceChildren();
         const earned = ACHIEVEMENT_BADGES.filter(
@@ -3558,7 +3558,7 @@ def render_film_readme(ctx: JourneyContext, mode: str) -> str:
     count = len((browserfilm or {}).get("frames", []))
     film = "manual-build-walkthrough.gif" if mode == "manual" else "copilot-assisted-walkthrough.gif"
     contact = "manual-build-contact-sheet.jpg" if mode == "manual" else "copilot-assisted-contact-sheet.jpg"
-    label = "literal browser Hard-mode" if mode == "manual" else "Copilot-assisted Easy-mode"
+    label = "literal browser Manual-mode" if mode == "manual" else "Copilot-assisted Easy-mode"
     return f"""# {label.capitalize()} evidence
 
 `browserfilm.json` is the ordered authority for {count} real browser frames.
@@ -3630,7 +3630,7 @@ def readme_block(ctx: JourneyContext, resources: list[Resource]) -> str:
             "Copilot-only Easy-mode comparison",
             f"`solutions/{ctx.slug}/EASY-MODE-COPILOT-CHAT.md`",
         ),
-        ("Guided Easy/Hard quest", f"`solutions/{ctx.slug}/quest.html`"),
+        ("Guided Easy/Manual quest", f"`solutions/{ctx.slug}/quest.html`"),
         ("Literal browser tutorial", f"`solutions/{ctx.slug}/manual-tutorial.html`"),
         ("Raw export manifest", f"`solutions/{ctx.slug}/export-manifest.json`"),
         ("Source bundle", f"`solutions/{ctx.slug}/exports/{ctx.slug}-source.zip`"),

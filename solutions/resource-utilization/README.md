@@ -30,7 +30,7 @@ employment records, book revenue, approve training, or contact anyone.
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/resource-utilization/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/resource-utilization/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/resource-utilization/quest.html` |
+| Guided Easy/Manual quest | `solutions/resource-utilization/quest.html` |
 | Literal browser tutorial | `solutions/resource-utilization/manual-tutorial.html` |
 | Raw export manifest | `solutions/resource-utilization/export-manifest.json` |
 | Source bundle | `solutions/resource-utilization/exports/resource-utilization-source.zip` |
