@@ -40,7 +40,7 @@ jobs:
 
       - name: Synchronize AIBAST agent Discussions
         env:
-          DISCUSSIONS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DISCUSSIONS_TOKEN: ${{ secrets.DISCUSSIONS_TOKEN || secrets.GITHUB_TOKEN }}
           METRICS_OWNER: ${{ github.repository_owner }}
           METRICS_REPO: ${{ github.event.repository.name }}
           METRICS_REF: ${{ github.ref_name }}
@@ -66,7 +66,7 @@ jobs:
         # they just stop advancing until an authorized run happens.
         env:
           GITHUB_TOKEN: ${{ secrets.METRICS_TOKEN || secrets.GITHUB_TOKEN }}
-          DISCUSSIONS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DISCUSSIONS_TOKEN: ${{ secrets.DISCUSSIONS_TOKEN || secrets.GITHUB_TOKEN }}
           METRICS_OWNER: ${{ github.repository_owner }}
           METRICS_REPO: ${{ github.event.repository.name }}
           METRICS_REF: ${{ github.ref_name }}
