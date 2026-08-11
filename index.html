@@ -279,7 +279,7 @@
           <h3>Run the one-liner</h3>
           <p>This is the only step. It installs Python, clones the repo, sets up a venv, authenticates, and launches.</p>
           <div class="cmd" id="brainstem-cmd" onclick="copyCmd(event, this)">curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash</div>
-          <p style="margin-top:6px;font-size:12px;color:#8b949e;">Windows: <code style="cursor:pointer" onclick="copyCmd(event, this)">irm https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/install.ps1 | iex</code></p>
+          <p style="margin-top:6px;font-size:12px;color:#8b949e;">Windows: <code id="brainstem-win-cmd" style="cursor:pointer" onclick="copyCmd(event, this)">irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex</code></p>
         </div>
       </div>
       <div class="install-download" id="install-download" style="margin-top:12px">
@@ -423,11 +423,16 @@
 
 <script>
   // ── Install widget ──
+  const publishedBase = (
+    location.protocol === 'https:' && location.hostname.endsWith('.github.io')
+      ? new URL('.', location.href).href
+      : 'https://microsoft.github.io/aibast-agents-library/'
+  );
   const installs = {
     'macOS/Linux': {
       'one-liner': {
         comment: '# Works everywhere. Installs everything. 🧠',
-        cmd: 'curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash',
+        cmd: `curl -fsSL ${publishedBase}install.sh | bash`,
         hint: 'Works on macOS & Linux. Auto-installs Python 3.11 if missing.'
       },
       'manual': {
@@ -439,7 +444,7 @@
     'Windows': {
       'one-liner': {
         comment: '# Factory Windows 11 ready. Installs everything via winget. 🧠',
-        cmd: 'irm https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/install.ps1 | iex',
+        cmd: `irm ${publishedBase}install.ps1 | iex`,
         hint: 'Run in PowerShell. Auto-installs Python, Git & GitHub CLI via winget.'
       },
       'manual': {
@@ -460,6 +465,10 @@
 
   function renderInstall() {
     const data = installs[currentOS][currentTab];
+    document.getElementById('brainstem-cmd').textContent =
+      installs['macOS/Linux']['one-liner'].cmd;
+    document.getElementById('brainstem-win-cmd').textContent =
+      installs.Windows['one-liner'].cmd;
     document.getElementById('os-label').textContent = currentOS;
     document.getElementById('install-comment').textContent = data.comment;
     document.getElementById('install-cmd').textContent = data.cmd;
