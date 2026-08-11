@@ -31,6 +31,41 @@ export HOME={str(tmp_path)!r}
     )
 
 
+def init_source_repo(path, branch, brainstem_source, extra_file=None):
+    (path / "rapp_brainstem").mkdir(parents=True)
+    (path / "rapp_brainstem/VERSION").write_text("0.6.16\n", encoding="utf-8")
+    (path / "rapp_brainstem/brainstem.py").write_text(
+        brainstem_source,
+        encoding="utf-8",
+    )
+    (path / "rapp_brainstem/requirements.txt").write_text(
+        "flask\n",
+        encoding="utf-8",
+    )
+    if extra_file:
+        target = path / extra_file
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text("snapshot\n", encoding="utf-8")
+    subprocess.run(["git", "init", "-b", branch], cwd=path, check=True, capture_output=True)
+    subprocess.run(
+        ["git", "config", "user.email", "test@example.com"],
+        cwd=path,
+        check=True,
+    )
+    subprocess.run(
+        ["git", "config", "user.name", "Test"],
+        cwd=path,
+        check=True,
+    )
+    subprocess.run(["git", "add", "."], cwd=path, check=True)
+    subprocess.run(
+        ["git", "commit", "-m", "fixture"],
+        cwd=path,
+        check=True,
+        capture_output=True,
+    )
+
+
 def test_incomplete_matching_version_falls_through_to_repair(tmp_path):
     source = tmp_path / ".brainstem/src"
     (source / ".git").mkdir(parents=True)
@@ -51,6 +86,125 @@ main --no-launch
     )
     assert result.returncode == 0, result.stderr
     assert trace.read_text().splitlines() == ["prereqs", "repair"]
+
+
+def test_same_version_different_requested_brainstem_tree_forces_refresh(tmp_path):
+    installed = tmp_path / ".brainstem/src"
+    staging = tmp_path / "staging-source"
+    init_source_repo(installed, "main", "print('production')\n")
+    init_source_repo(
+        staging,
+        "easy-mode-copilot-chat-pilot",
+        "print('staging health public')\n",
+    )
+
+    result = run_harness(
+        tmp_path,
+        f"""
+REPO_URL={str(staging)!r}
+REPO_REF=easy-mode-copilot-chat-pilot
+REMOTE_VERSION_URL=https://example.invalid/VERSION
+curl() {{ printf '0.6.16\\n'; }}
+if check_for_upgrade; then echo REFRESH; else echo CURRENT; fi
+""",
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert "REFRESH" in result.stdout
+    assert "CURRENT" not in result.stdout
+
+
+def test_same_version_staging_override_replaces_production_runtime(tmp_path):
+    installed = tmp_path / ".brainstem/src"
+    staging = tmp_path / "staging-source"
+    init_source_repo(installed, "main", "print('production')\n")
+    init_source_repo(
+        staging,
+        "easy-mode-copilot-chat-pilot",
+        "print('staging health public')\n",
+    )
+
+    result = run_harness(
+        tmp_path,
+        f"""
+SOURCE_OVERRIDE_REQUESTED=true
+REPO_URL={str(staging)!r}
+REPO_REF=easy-mode-copilot-chat-pilot
+REMOTE_VERSION_URL=https://example.invalid/VERSION
+curl() {{ printf '0.6.16\\n'; }}
+install_brainstem
+""",
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert (installed / "rapp_brainstem/brainstem.py").read_text(
+        encoding="utf-8"
+    ) == "print('staging health public')\n"
+
+
+def test_requested_source_failure_keeps_runtime_and_fails_closed(tmp_path):
+    installed = tmp_path / ".brainstem/src"
+    init_source_repo(installed, "main", "print('production preserved')\n")
+
+    result = run_harness(
+        tmp_path,
+        f"""
+SOURCE_OVERRIDE_REQUESTED=true
+REPO_URL={str(tmp_path / "missing-source")!r}
+REPO_REF=easy-mode-copilot-chat-pilot
+REMOTE_VERSION_URL=https://example.invalid/VERSION
+curl() {{ printf '0.6.16\\n'; }}
+install_brainstem
+""",
+    )
+
+    assert result.returncode != 0
+    assert "Could not refresh the requested repository/ref" in result.stdout
+    assert (installed / "rapp_brainstem/brainstem.py").read_text(
+        encoding="utf-8"
+    ) == "print('production preserved')\n"
+
+
+def test_unrelated_commit_with_same_brainstem_tree_stays_current(tmp_path):
+    installed = tmp_path / ".brainstem/src"
+    staging = tmp_path / "staging-source"
+    init_source_repo(installed, "main", "print('same runtime')\n")
+    subprocess.run(
+        ["git", "clone", str(installed), str(staging)],
+        check=True,
+        capture_output=True,
+    )
+    subprocess.run(
+        ["git", "checkout", "-b", "easy-mode-copilot-chat-pilot"],
+        cwd=staging,
+        check=True,
+        capture_output=True,
+    )
+    (staging / "state").mkdir()
+    (staging / "state/metrics.json").write_text("{}\n", encoding="utf-8")
+    subprocess.run(["git", "add", "."], cwd=staging, check=True)
+    subprocess.run(
+        ["git", "-c", "user.email=test@example.com", "-c", "user.name=Test",
+         "commit", "-m", "metrics only"],
+        cwd=staging,
+        check=True,
+        capture_output=True,
+    )
+
+    result = run_harness(
+        tmp_path,
+        f"""
+REPO_URL={str(staging)!r}
+REPO_REF=easy-mode-copilot-chat-pilot
+REMOTE_VERSION_URL=https://example.invalid/VERSION
+curl() {{ printf '0.6.16\\n'; }}
+if check_for_upgrade; then echo REFRESH; else echo CURRENT; fi
+""",
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert "CURRENT" in result.stdout
+    assert "REFRESH" not in result.stdout
 
 
 def test_failed_fresh_clone_leaves_broken_install_untouched(tmp_path):
@@ -163,3 +317,6 @@ def test_windows_repair_and_port_paths_match_safety_contract():
     assert "agent-collisions-" in text
     assert "Get-CimInstance Win32_Process" in text
     assert "Port 7071 is already used by another process" in text
+    assert "Test-RequestedBrainstemTreeCurrent" in text
+    assert "FETCH_HEAD:rapp_brainstem" in text
+    assert "Could not refresh the requested repository/ref" in text

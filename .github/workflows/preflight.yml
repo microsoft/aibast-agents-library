@@ -478,6 +478,26 @@ jobs:
           grep -q "Already up to date" "$RUNNER_TEMP/current-install.log"
           grep -q "runtime is ready" "$RUNNER_TEMP/current-install.log"
 
+          if [[ "$CANDIDATE_REPO/$CANDIDATE_REF" != "microsoft/aibast-agents-library/main" ]]; then
+            git -C "$HOME/.brainstem/src" fetch --filter=blob:none --quiet \
+              https://github.com/microsoft/aibast-agents-library.git main
+            production_tree="$(
+              git -C "$HOME/.brainstem/src" rev-parse FETCH_HEAD:rapp_brainstem
+            )"
+            if [[ "$production_tree" != "$expected_runtime_tree" ]]; then
+              git -C "$HOME/.brainstem/src" reset --hard --quiet FETCH_HEAD
+              printf '\nONE-LINER-SOUL-MARKER\n' >> "$HOME/.brainstem/src/rapp_brainstem/soul.md"
+              run_installer | tee "$RUNNER_TEMP/source-switch-install.log"
+              test "$(
+                git -C "$HOME/.brainstem/src" rev-parse HEAD:rapp_brainstem
+              )" = "$expected_runtime_tree"
+              grep -q "health/public" "$HOME/.brainstem/src/rapp_brainstem/brainstem.py"
+              grep -q ONE-LINER-SOUL-MARKER "$HOME/.brainstem/src/rapp_brainstem/soul.md"
+              test -f "$HOME/.brainstem/src/rapp_brainstem/agents/one_liner_custom_agent.py"
+              grep -q ONE-LINER-TOKEN "$HOME/.brainstem/src/rapp_brainstem/.copilot_token"
+            fi
+          fi
+
       - name: Fresh, upgrade, and current one-liner on Windows
         if: runner.os == 'Windows'
         shell: powershell
@@ -530,6 +550,25 @@ jobs:
           Invoke-OneLiner $currentLog
           if ((Get-Content $currentLog -Raw) -notmatch 'Already up to date') { throw 'update check did not take current fast path' }
           if ((Get-Content $currentLog -Raw) -notmatch 'runtime is ready') { throw 'current rerun did not finish ready' }
+
+          if ("$env:CANDIDATE_REPO/$env:CANDIDATE_REF" -ne 'microsoft/aibast-agents-library/main') {
+            $sourceRoot = Join-Path $env:USERPROFILE '.brainstem\src'
+            git -C $sourceRoot fetch --filter=blob:none --quiet https://github.com/microsoft/aibast-agents-library.git main
+            if ($LASTEXITCODE -ne 0) { throw 'could not fetch production source-switch fixture' }
+            $productionTree = (git -C $sourceRoot rev-parse 'FETCH_HEAD:rapp_brainstem').Trim()
+            if ($productionTree -ne $expectedRuntimeTree) {
+              git -C $sourceRoot reset --hard --quiet FETCH_HEAD
+              if ($LASTEXITCODE -ne 0) { throw 'could not stage production source tree' }
+              Add-Content -Path (Join-Path $runtime 'soul.md') -Value 'ONE-LINER-SOUL-MARKER'
+              Invoke-OneLiner (Join-Path $env:RUNNER_TEMP 'source-switch-install.log')
+              $switchedTree = (git -C $sourceRoot rev-parse 'HEAD:rapp_brainstem').Trim()
+              if ($switchedTree -ne $expectedRuntimeTree) { throw 'same-version source switch did not install candidate runtime' }
+              if ((Get-Content (Join-Path $runtime 'brainstem.py') -Raw) -notmatch 'health/public') { throw 'candidate readiness endpoint missing after source switch' }
+              if ((Get-Content (Join-Path $runtime 'soul.md') -Raw) -notmatch 'ONE-LINER-SOUL-MARKER') { throw 'soul marker lost during source switch' }
+              if (-not (Test-Path (Join-Path $runtime 'agents\one_liner_custom_agent.py'))) { throw 'custom agent lost during source switch' }
+              if ((Get-Content (Join-Path $runtime '.copilot_token') -Raw) -notmatch 'ONE-LINER-TOKEN') { throw 'token marker lost during source switch' }
+            }
+          }
 
       - uses: actions/upload-artifact@v4
         if: always()

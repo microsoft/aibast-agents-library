@@ -2115,7 +2115,7 @@ function buildAgentSignalMap(metrics, agents) {
 function canonicalDiscussionUrl(value) {
   const url = typeof value === "string" ? value : "";
   const pattern = new RegExp(
-    `^https://github\\.com/${OWNER}/${REPO}/discussions/\\d+$`
+    `^https://github\\.com/${DISTRIBUTION_OWNER}/${REPO}/discussions/\\d+$`
   );
   return pattern.test(url) ? url : "";
 }

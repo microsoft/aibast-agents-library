@@ -9,6 +9,10 @@ umask 077
 BRAINSTEM_HOME="$HOME/.brainstem"
 BRAINSTEM_BIN="$HOME/.local/bin"
 VENV_DIR="$BRAINSTEM_HOME/venv"
+SOURCE_OVERRIDE_REQUESTED=false
+if [[ -n "${BRAINSTEM_REPO_URL:-}" || -n "${BRAINSTEM_REPO_REF:-}" || -n "${BRAINSTEM_VERSION_URL:-}" ]]; then
+    SOURCE_OVERRIDE_REQUESTED=true
+fi
 REPO_URL="${BRAINSTEM_REPO_URL:-https://github.com/microsoft/aibast-agents-library.git}"
 REPO_REF="${BRAINSTEM_REPO_REF:-main}"
 REMOTE_VERSION_URL="${BRAINSTEM_VERSION_URL:-https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/rapp_brainstem/VERSION}"
@@ -223,6 +227,19 @@ version_gt() {
     return 1  # equal
 }
 
+requested_brainstem_tree_current() {
+    local repo_dir="$BRAINSTEM_HOME/src"
+    [ -d "$repo_dir/.git" ] || return 1
+
+    local current_tree target_tree
+    current_tree=$(git -C "$repo_dir" rev-parse HEAD:rapp_brainstem 2>/dev/null) || return 1
+    if ! git -C "$repo_dir" fetch --filter=blob:none --quiet "$REPO_URL" "$REPO_REF" 2>/dev/null; then
+        return 1
+    fi
+    target_tree=$(git -C "$repo_dir" rev-parse FETCH_HEAD:rapp_brainstem 2>/dev/null) || return 1
+    [[ "$current_tree" == "$target_tree" ]]
+}
+
 check_for_upgrade() {
     local version_file="$BRAINSTEM_HOME/src/rapp_brainstem/VERSION"
 
@@ -245,6 +262,11 @@ check_for_upgrade() {
 
     echo -e "  Local version:  ${CYAN}${local_version}${NC}"
     echo -e "  Remote version: ${CYAN}${remote_version}${NC}"
+
+    if ! requested_brainstem_tree_current; then
+        echo -e "  ${YELLOW}↻${NC} Refreshing the requested repository/ref"
+        return 0
+    fi
 
     if [[ "$local_version" == "$remote_version" ]]; then
         echo ""
@@ -442,7 +464,9 @@ install_brainstem() {
         echo "  Local:  v${LOCAL_VER}"
         echo "  Target: v${TARGET_VER}${PIN_VERSION:+ (pinned)}"
 
-        if [ "$LOCAL_VER" = "$TARGET_VER" ] && brainstem_source_ready "$BRAINSTEM_HOME/src"; then
+        if [ "$LOCAL_VER" = "$TARGET_VER" ] \
+            && brainstem_source_ready "$BRAINSTEM_HOME/src" \
+            && requested_brainstem_tree_current; then
             echo -e "  ${GREEN}✓${NC} Already on v${LOCAL_VER}"
         else
             echo "  Switching v${LOCAL_VER} → v${TARGET_VER}..."
@@ -472,6 +496,7 @@ install_brainstem() {
             git remote set-url origin "$REPO_URL" 2>/dev/null || true
             git stash --quiet 2>/dev/null || true
             git fetch --filter=blob:none origin --tags --quiet 2>/dev/null || true
+            local update_succeeded=true
             if [ -n "$PIN_VERSION" ]; then
                 # Resolve the pin against every tag form we ship: the documented
                 # v0.6.0 UX, a bare 0.6.0, and the actual release tag brainstem-v0.6.0.
@@ -499,9 +524,7 @@ install_brainstem() {
                         update_ok=true
                     fi
                 fi
-                if [[ "$update_ok" != true ]]; then
-                    echo -e "  ${YELLOW}Warning: Could not update — keeping existing files${NC}"
-                fi
+                update_succeeded=$update_ok
             fi
 
             # 3. Restore user's local files (merge, don't overwrite)
@@ -554,7 +577,14 @@ install_brainstem() {
 
             # 4. Clean up backup
             rm -rf "$BACKUP"
-            echo -e "  ${GREEN}✓${NC} ${PIN_VERSION:+Pinned to}${PIN_VERSION:-Upgrade complete:} v${TARGET_VER}"
+            if [[ "$update_succeeded" == true ]]; then
+                echo -e "  ${GREEN}✓${NC} ${PIN_VERSION:+Pinned to}${PIN_VERSION:-Upgrade complete:} v${TARGET_VER}"
+            elif [[ "$SOURCE_OVERRIDE_REQUESTED" == true ]]; then
+                echo -e "  ${RED}✗${NC} Could not refresh the requested repository/ref; existing files were restored"
+                return 1
+            else
+                echo -e "  ${YELLOW}Warning: Could not update — existing runtime preserved at v${LOCAL_VER}${NC}"
+            fi
         fi
     else
         echo "  Fresh install — cloning repository..."

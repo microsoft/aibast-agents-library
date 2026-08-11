@@ -234,6 +234,41 @@ console.log(JSON.stringify({
     }
 
 
+def test_staging_accepts_only_staging_discussion_urls():
+    result = run_library_node(
+        """
+const agents = [{name: "canonical-a"}];
+const signals = buildAgentSignalMap({
+  agent_metrics: [{
+    name: "canonical-a",
+    upvotes: 5,
+    downloads: 7,
+    upvote_discussion_url: "https://github.com/kody-w/aibast-agents-library/discussions/42"
+  }]
+}, agents);
+console.log(JSON.stringify({
+  signal: signals.get("canonical-a"),
+  productionUrl: canonicalDiscussionUrl(
+    "https://github.com/microsoft/aibast-agents-library/discussions/42"
+  )
+}));
+""",
+        hostname="kody-w.github.io",
+    )
+
+    assert result == {
+        "signal": {
+            "upvotes": 5,
+            "downloads": 7,
+            "upvoteUrl": (
+                "https://github.com/kody-w/"
+                "aibast-agents-library/discussions/42"
+            ),
+        },
+        "productionUrl": "",
+    }
+
+
 def test_card_shows_only_workshop_and_agent_actions():
     text = library_text()
     card = text[text.index("function agentCard"):text.index("function stackCard")]

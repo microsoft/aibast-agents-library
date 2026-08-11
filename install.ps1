@@ -16,6 +16,11 @@ try {
 
 $BRAINSTEM_HOME = "$env:USERPROFILE\.brainstem"
 $BRAINSTEM_BIN = "$env:USERPROFILE\.local\bin"
+$SOURCE_OVERRIDE_REQUESTED = [bool](
+    $env:BRAINSTEM_REPO_URL -or
+    $env:BRAINSTEM_REPO_REF -or
+    $env:BRAINSTEM_VERSION_URL
+)
 $REPO_URL = if ($env:BRAINSTEM_REPO_URL) { $env:BRAINSTEM_REPO_URL } else { "https://github.com/microsoft/aibast-agents-library.git" }
 $REPO_REF = if ($env:BRAINSTEM_REPO_REF) { $env:BRAINSTEM_REPO_REF } else { "main" }
 $REMOTE_VERSION_URL = if ($env:BRAINSTEM_VERSION_URL) { $env:BRAINSTEM_VERSION_URL } else { "https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/rapp_brainstem/VERSION" }
@@ -58,6 +63,25 @@ function Compare-SemVer {
     return 0  # equal
 }
 
+function Test-RequestedBrainstemTreeCurrent {
+    param([string]$RepoPath)
+    if (-not (Test-Path "$RepoPath\.git")) { return $false }
+
+    $prev = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    try {
+        $currentTree = (git -C $RepoPath rev-parse 'HEAD:rapp_brainstem' 2>$null | Select-Object -First 1)
+        if ($LASTEXITCODE -ne 0 -or -not $currentTree) { return $false }
+        git -C $RepoPath fetch --filter=blob:none --quiet $REPO_URL $REPO_REF 2>&1 | Out-Null
+        if ($LASTEXITCODE -ne 0) { return $false }
+        $targetTree = (git -C $RepoPath rev-parse 'FETCH_HEAD:rapp_brainstem' 2>$null | Select-Object -First 1)
+        if ($LASTEXITCODE -ne 0 -or -not $targetTree) { return $false }
+        return $currentTree.Trim() -eq $targetTree.Trim()
+    } finally {
+        $ErrorActionPreference = $prev
+    }
+}
+
 function Check-ForUpgrade {
     $versionFile = "$BRAINSTEM_HOME\src\rapp_brainstem\VERSION"
 
@@ -74,6 +98,11 @@ function Check-ForUpgrade {
 
     Write-Host "  Local version:  $localVersion" -ForegroundColor Cyan
     Write-Host "  Remote version: $remoteVersion" -ForegroundColor Cyan
+
+    if (-not (Test-RequestedBrainstemTreeCurrent "$BRAINSTEM_HOME\src")) {
+        Write-Host "  [..] Refreshing the requested repository/ref" -ForegroundColor Yellow
+        return $true
+    }
 
     if ($localVersion -eq $remoteVersion) {
         Write-Host ""
@@ -547,7 +576,11 @@ function Install-Brainstem {
             Write-Host "  Remote: v$RemoteVer"
         }
 
-        if (($LocalVer -eq $RemoteVer) -and (Test-BrainstemSourceReady "$BRAINSTEM_HOME\src")) {
+        if (
+            ($LocalVer -eq $RemoteVer) -and
+            (Test-BrainstemSourceReady "$BRAINSTEM_HOME\src") -and
+            (Test-RequestedBrainstemTreeCurrent "$BRAINSTEM_HOME\src")
+        ) {
             Write-Host "  [OK] Already up to date (v$LocalVer)" -ForegroundColor Green
         } else {
             Write-Host "  Upgrading v$LocalVer -> v$RemoteVer..."
@@ -687,6 +720,9 @@ function Install-Brainstem {
                 }
             }
             Remove-Item -Recurse -Force $Backup -ErrorAction SilentlyContinue
+            if ((-not $pullOk) -and $SOURCE_OVERRIDE_REQUESTED) {
+                throw "Could not refresh the requested repository/ref; existing files were restored"
+            }
             # Report the version actually on disk after the pull, not the remote string —
             # if the pull failed the banner must not claim a successful upgrade.
             $NewVer = $LocalVer
