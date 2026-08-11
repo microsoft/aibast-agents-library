@@ -1840,14 +1840,16 @@ def certification_issue_urls(ctx: JourneyContext) -> tuple[str, str]:
 - Private qualification form submitted: `yes`
 - Public profile consent: `yes`
 """
-    cohort_url = f"{GITHUB_ISSUES_NEW}?{urlencode({
+    cohort_query = urlencode({
         'title': f'[Workshop cohort] {ctx.title}',
         'body': cohort_body,
-    })}"
-    qualification_url = f"{GITHUB_ISSUES_NEW}?{urlencode({
+    })
+    qualification_query = urlencode({
         'title': f'[Badge qualification] {ctx.title}',
         'body': qualification_body,
-    })}"
+    })
+    cohort_url = f"{GITHUB_ISSUES_NEW}?{cohort_query}"
+    qualification_url = f"{GITHUB_ISSUES_NEW}?{qualification_query}"
     return cohort_url, qualification_url
 
 
