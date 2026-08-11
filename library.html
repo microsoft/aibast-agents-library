@@ -2162,24 +2162,6 @@ function agentDownloadCount(agent) {
   return `<span class="download-count" aria-label="${esc(label)}" title="${esc(label)}">↓ ${count.toLocaleString()}</span>`;
 }
 
-function agentAcquisitionControl(agent) {
-  const count = aggregateAgentSignal(agent.name, "acquisitions");
-  const record = state.agentSignals.get(agent.name) || {};
-  const url = canonicalDiscussionUrl(record.acquisitionUrl);
-  const countText = count === null ? "—" : count.toLocaleString();
-  const countLabel = count === null
-    ? "Signed-in acquisitions unavailable"
-    : `${count.toLocaleString()} signed-in acquisition${count === 1 ? "" : "s"}`;
-  return `
-    <div class="agent-upvote">
-      <button class="button" type="button" data-action="record-agent-acquisition"
-        data-agent-name="${enc(agent.name)}"
-        ${url ? "" : 'disabled aria-disabled="true"'}
-        aria-label="${url ? "Open the canonical acquisition Discussion" : "Acquisition Discussion unavailable"} for ${esc(shown(agent))}">Record acquisition ↗</button>
-      <span class="upvote-count" aria-label="${esc(countLabel)}" title="${esc(countLabel)}">${countText}</span>
-    </div>`;
-}
-
 function openAgentSignal(agentName, signal) {
   const agent = state.agents.find(item => item.name === agentName);
   if (!agent) return;
@@ -2588,10 +2570,9 @@ function openAgent(name) {
               ${solutionDownloads ? `<a class="button" href="${esc(solutionDownloads.zip)}" download>Download Copilot Studio solution</a>` : ""}
               ${solutionDownloads ? `<a class="button" href="${esc(solutionDownloads.settings)}" download>Deployment settings</a>` : ""}
               ${agentDownloadCount(agent)}
-              ${agentAcquisitionControl(agent)}
               <a class="button" href="${BLOB}/${encodeURI(agent._file)}" target="_blank" rel="noopener">View source ↗</a>
             </div>
-            <p class="detail-note">Download the portable Python file or import the unmanaged Copilot Studio solution manually. Map the supplied deployment settings before enabling integrations; the imported agent remains unpublished until an administrator explicitly publishes it. Use the acquisition Discussion once per GitHub account to add a traceable signed-in acquisition signal.</p>
+            <p class="detail-note">Download the portable Python file or import the unmanaged Copilot Studio solution manually. Map the supplied deployment settings before enabling integrations; the imported agent remains unpublished until an administrator explicitly publishes it.</p>
           </section>
         </div>
         <aside class="detail-aside">
@@ -2866,10 +2847,6 @@ document.addEventListener("click", event => {
     event.preventDefault();
     event.stopPropagation();
     openAgentUpvote(dec(target.dataset.agentName));
-  } else if (action === "record-agent-acquisition") {
-    event.preventDefault();
-    event.stopPropagation();
-    openAgentSignal(dec(target.dataset.agentName), "acquisition");
   } else if (action === "open-agent") {
     $("suggestions").classList.remove("visible");
     openAgent(dec(target.dataset.name));

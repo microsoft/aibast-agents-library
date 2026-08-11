@@ -241,9 +241,8 @@ state.agentSignals = new Map([[agent.name, {
   acquisitionUrl: "https://github.com/microsoft/aibast-agents-library/discussions/2"
 }]]);
 const available = agentUpvoteControl(agent);
-const acquisition = agentAcquisitionControl(agent);
 const downloads = agentDownloadCount(agent);
-console.log(JSON.stringify({unavailable, available, acquisition, downloads}));
+console.log(JSON.stringify({unavailable, available, downloads}));
 """
     )
     assert ">—</span>" in result["unavailable"]
@@ -251,8 +250,6 @@ console.log(JSON.stringify({unavailable, available, acquisition, downloads}));
     assert 'disabled aria-disabled="true"' in result["unavailable"]
     assert ">12</span>" in result["available"]
     assert 'disabled aria-disabled="true"' not in result["available"]
-    assert "Record acquisition" in result["acquisition"]
-    assert ">3</span>" in result["acquisition"]
     assert "↓ 142" in result["downloads"]
 
 
@@ -272,6 +269,8 @@ def test_agent_detail_downloads_python_file_instead_of_showing_one_liner():
     assert ">Download agent.py</a>" in detail
     assert ">Download Copilot Studio solution</a>" in detail
     assert ">Deployment settings</a>" in detail
+    assert "Record acquisition" not in detail
+    assert "agentAcquisitionControl" not in detail
     assert "the imported agent remains unpublished" in detail
     assert "Copy install command" not in detail
     assert '<pre class="code">${esc(install)}</pre>' not in detail
