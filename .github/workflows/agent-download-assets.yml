@@ -42,16 +42,15 @@ jobs:
           from pathlib import Path
 
           registry_path = Path("registry.json")
+          previous_path = Path(os.environ["RUNNER_TEMP"]) / "registry-before.json"
           registry = json.loads(registry_path.read_text())
-          previous = json.loads(
-              (Path(os.environ["RUNNER_TEMP"]) / "registry-before.json").read_text()
-          )
+          previous = json.loads(previous_path.read_text())
           comparable = lambda value: {
               key: item for key, item in value.items() if key != "generated_at"
           }
           if comparable(registry) == comparable(previous):
-              registry["generated_at"] = previous.get("generated_at")
-              registry_path.write_text(json.dumps(registry, indent=2) + "\n")
+              registry = previous
+              registry_path.write_bytes(previous_path.read_bytes())
 
           output = Path("dist/agent-downloads")
           output.mkdir(parents=True, exist_ok=True)
@@ -70,7 +69,17 @@ jobs:
           git add registry.json
           if ! git diff --cached --quiet; then
             git commit -m "Auto-build registry.json [skip ci]"
-            git push
+            pushed=false
+            for attempt in 1 2 3; do
+              git fetch origin "$GITHUB_REF_NAME"
+              git rebase "origin/$GITHUB_REF_NAME"
+              if git push origin "HEAD:$GITHUB_REF_NAME"; then
+                pushed=true
+                break
+              fi
+              echo "Registry push attempt $attempt failed; retrying"
+            done
+            test "$pushed" = true
           fi
 
       - name: Publish missing assets

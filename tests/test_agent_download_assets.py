@@ -139,5 +139,7 @@ def test_asset_workflow_publishes_and_refreshes_static_metrics():
         'git push',
         'git rev-parse HEAD',
         'fetch-depth: 0',
+        'registry_path.write_bytes(previous_path.read_bytes())',
+        'git rebase "origin/$GITHUB_REF_NAME"',
     ):
         assert token in text
