@@ -73,6 +73,52 @@ def test_library_scripts_parse_with_node():
     assert result.returncode == 0, result.stderr
 
 
+def test_toolbar_only_links_agent_library_and_industry_workshops():
+    text = library_text()
+    nav = text[
+        text.index('<nav class="nav" aria-label="Primary navigation">'):
+        text.index("</nav>", text.index('<nav class="nav" aria-label="Primary navigation">'))
+    ]
+
+    assert nav.count("<a ") == 2
+    assert ">Agent Library</a>" in nav
+    assert (
+        'href="library.html?view=solutions#workshops">'
+        "Industry Workshops</a>"
+    ) in nav
+    for removed in (
+        "Workshop settings",
+        "Guide",
+        "Achievements",
+        "Metrics",
+        "GitHub",
+        "toggle-theme",
+    ):
+        assert removed not in nav
+    assert '<div class="results-head" id="workshops">' in text
+
+
+def test_catalog_selector_only_shows_solutions_and_first_party():
+    text = library_text()
+    tabs = text[
+        text.index('<div class="tabs" role="tablist" aria-label="Library type">'):
+        text.index(
+            "</div>",
+            text.index('<div class="tabs" role="tablist" aria-label="Library type">'),
+        )
+    ]
+
+    assert tabs.count('data-action="view"') == 2
+    assert 'data-view="solutions">Industry solutions</button>' in tabs
+    assert 'data-view="first-party">Microsoft first-party</button>' in tabs
+    assert "Multi-agent stacks" not in tabs
+    assert "Building blocks" not in tabs
+    assert (
+        '["solutions", "first-party"].includes(params.get("view"))'
+        in text
+    )
+
+
 def test_example_prompts_open_direct_or_inherited_interactive_demo():
     result = run_library_node(
         """

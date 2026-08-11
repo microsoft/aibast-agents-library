@@ -1284,13 +1284,8 @@ footer {
     <span class="brand-copy">AI BAST Agent Library<small>Industry Solutions</small></span>
   </a>
   <nav class="nav" aria-label="Primary navigation">
-    <a class="keep-mobile" href="#library">Library</a>
-    <a href="solutions/_shared/workshop-settings.html?return=../../library.html">Workshop settings</a>
-    <a href="docs/rapp-guide.html">Guide</a>
-    <a href="achievements.html">Achievements</a>
-    <a href="metrics.html">Metrics</a>
-    <a href="https://github.com/microsoft/aibast-agents-library" target="_blank" rel="noopener">GitHub</a>
-    <button class="icon-button" type="button" data-action="toggle-theme" aria-label="Toggle color theme">◐</button>
+    <a class="keep-mobile" href="library.html" aria-current="page">Agent Library</a>
+    <a class="keep-mobile" href="library.html?view=solutions#workshops">Industry Workshops</a>
   </nav>
 </header>
 
@@ -1332,8 +1327,6 @@ footer {
     <div class="controls">
       <div class="tabs" role="tablist" aria-label="Library type">
         <button class="tab active" type="button" data-action="view" data-view="solutions">Industry solutions</button>
-        <button class="tab" type="button" data-action="view" data-view="stacks">Multi-agent stacks</button>
-        <button class="tab" type="button" data-action="view" data-view="templates">Building blocks</button>
         <button class="tab" type="button" data-action="view" data-view="first-party">Microsoft first-party</button>
       </div>
       <div class="filters">
@@ -1357,7 +1350,7 @@ footer {
 
     <div class="active-filters" id="active-filters"></div>
     <p class="upvote-explainer">Each AIBAST agent has one public GitHub rating Discussion. Signed-in GitHub users can add one active upvote per agent. Upvotes are community preference—not a repository star, download count, security review, or production-readiness claim.</p>
-    <div class="results-head">
+    <div class="results-head" id="workshops">
       <span id="result-count">Loading agents...</span>
       <span id="result-context"></span>
     </div>
@@ -1562,7 +1555,7 @@ async function init() {
 function restoreState() {
   const params = new URLSearchParams(location.search);
   state.query = params.get("q") || "";
-  state.view = ["solutions", "stacks", "templates", "first-party"].includes(params.get("view"))
+  state.view = ["solutions", "first-party"].includes(params.get("view"))
     ? params.get("view") : "solutions";
   $("search").value = state.query;
 }
