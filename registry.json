@@ -1,7 +1,7 @@
 {
   "schema": "rapp-registry/1.0",
   "version": "1.0.0",
-  "generated_at": "2026-08-10T13:51:48.084097+00:00",
+  "generated_at": "2026-08-11T17:07:31.667826+00:00",
   "stats": {
     "total_agents": 72,
     "publishers": 1,
@@ -18,6 +18,18 @@
     "solution_demo_videos": 47,
     "total_lines": 30699,
     "total_kb": 1503.5,
+    "total_first_party": 14,
+    "first_party_available": 12,
+    "first_party_preview": 2,
+    "first_party_documented": 14,
+    "first_party_products": [
+      "Dynamics 365 Contact Center",
+      "Dynamics 365 Contact Center / Customer Service",
+      "Dynamics 365 Customer Service",
+      "Dynamics 365 Sales",
+      "Microsoft 365 Copilot",
+      "Microsoft Agent 365"
+    ],
     "publisher_list": [
       "@aibast-agents-library"
     ],
@@ -13604,6 +13616,396 @@
       "_added_at": "2026-08-08T20:37:40-04:00",
       "_catalog_kind": "template",
       "_readiness": []
+    }
+  ],
+  "first_party": [
+    {
+      "id": "ai-powered-data-enrichment",
+      "name": "AI-powered Data Enrichment for opportunities",
+      "deck_label": "AI-powered Data Enrichment",
+      "product": "Dynamics 365 Sales",
+      "vertical": "b2b_sales",
+      "deck_status": "GA",
+      "deck_description": "Enriches opportunity data from email interactions",
+      "description": "Analyzes recent email and Teams meeting context to suggest or make configured updates to opportunity records.",
+      "use_cases": [
+        "Analyze recent email exchanges and Teams meeting context for selected opportunities",
+        "Identify missing or outdated opportunity information",
+        "Suggest or automatically make configured opportunity-field updates",
+        "Associate relevant email conversations with the opportunity record"
+      ],
+      "personas": [
+        "Seller",
+        "Sales Manager",
+        "Sales Operations"
+      ],
+      "overview_url": "https://learn.microsoft.com/en-us/dynamics365/sales/data-enrichment-agent-overview",
+      "configure_url": "https://learn.microsoft.com/en-us/dynamics365/sales/data-enrichment-agent-configure",
+      "doc_status": "dedicated",
+      "source_slide": 1,
+      "_catalog_kind": "first_party",
+      "_documented": true,
+      "_availability_label": "Available"
+    },
+    {
+      "id": "recommended-actions-agent",
+      "name": "Recommended Actions agent",
+      "product": "Dynamics 365 Sales",
+      "vertical": "b2b_sales",
+      "deck_status": "Preview",
+      "lifecycle": "Preview",
+      "lifecycle_source_url": "https://learn.microsoft.com/en-us/dynamics365/sales/recommended-actions-overview",
+      "deck_description": "Prioritized seller actions based on opportunity context",
+      "description": "Presents prioritized recommended actions so sellers can focus on the most relevant tasks for their opportunities.",
+      "use_cases": [
+        "Review a prioritized list of recommended seller actions",
+        "Use opportunity context to focus attention on the most relevant next tasks",
+        "Combine recommendations from Sales Opportunity Agent and configured custom agents",
+        "Review Data Enrichment actions alongside the prioritized recommendations"
+      ],
+      "personas": [
+        "Seller",
+        "Sales Manager"
+      ],
+      "overview_url": "https://learn.microsoft.com/en-us/dynamics365/sales/recommended-actions-overview",
+      "configure_url": "https://learn.microsoft.com/en-us/dynamics365/sales/configure-recommended-actions",
+      "doc_status": "dedicated",
+      "source_slide": 1,
+      "_catalog_kind": "first_party",
+      "_documented": true,
+      "_availability_label": "Preview"
+    },
+    {
+      "id": "sales-development-agent",
+      "name": "Sales Development agent",
+      "deck_label": "Sales Deployment Agent",
+      "product": "Microsoft Agent 365",
+      "vertical": "b2b_sales",
+      "deck_status": "Preview",
+      "lifecycle": "Preview",
+      "lifecycle_source_url": "https://learn.microsoft.com/en-us/microsoft-agent-365/use",
+      "deck_description": "Automats sales outreach and prospect management within Microsoft Teams",
+      "description": "Automates sales outreach and prospect management in Microsoft Teams through an Agent 365 agent with its own identity.",
+      "use_cases": [
+        "Automate personalized prospect outreach and follow-up in Microsoft Teams",
+        "Configure the agent playbook, guidelines, product knowledge, and settings through chat",
+        "Integrate Dynamics 365 for lead management and activity tracking",
+        "Review prospect status and scale a reviewed configuration across teams"
+      ],
+      "personas": [
+        "Sales Development Representative",
+        "Sales Manager",
+        "Agent Administrator"
+      ],
+      "overview_url": "https://learn.microsoft.com/en-us/microsoft-agent-365/use",
+      "configure_url": "https://learn.microsoft.com/en-us/microsoft-agent-365/use#deploy-and-create-the-sales-development-agent",
+      "doc_status": "dedicated",
+      "source_slide": 1,
+      "_catalog_kind": "first_party",
+      "_documented": true,
+      "_availability_label": "Preview"
+    },
+    {
+      "id": "sales-opportunity-agent",
+      "name": "Sales Opportunity Agent",
+      "product": "Dynamics 365 Sales",
+      "vertical": "b2b_sales",
+      "deck_status": "GA",
+      "deck_description": "Continuous opportunity research, risk & stakeholder intelligence",
+      "description": "Researches open opportunities and provides deal prioritization, risk, stakeholder, competitor, and deal-health insights.",
+      "use_cases": [
+        "Continuously research open opportunities using available sales context",
+        "Surface deal risks and material changes that need seller attention",
+        "Prioritize opportunities so sellers can focus on the deals that need action",
+        "Review stakeholder, competitor, and deal-health context for an opportunity"
+      ],
+      "personas": [
+        "Seller",
+        "Sales Manager",
+        "Sales Director"
+      ],
+      "overview_url": "https://learn.microsoft.com/en-us/dynamics365/sales/sales-opportunity-agent",
+      "configure_url": "https://learn.microsoft.com/en-us/dynamics365/sales/configure-opportunity-research-agent",
+      "doc_status": "dedicated",
+      "source_slide": 1,
+      "_catalog_kind": "first_party",
+      "_documented": true,
+      "_availability_label": "Available"
+    },
+    {
+      "id": "sales-qualification-agent",
+      "name": "Sales Qualification Agent",
+      "product": "Dynamics 365 Sales",
+      "vertical": "b2b_sales",
+      "deck_status": "GA",
+      "deck_description": "Researches leads, evaluates fit, autonomous outreach",
+      "description": "Automates lead research and, when configured for research and engage mode, lead outreach and follow-up.",
+      "use_cases": [
+        "Research selected leads and assess their fit against a target customer profile",
+        "Generate an initial outreach email for matching leads in research-only mode",
+        "Send outreach and follow-up messages in research and engage mode",
+        "Evaluate purchase intent and BANT criteria before handing promising leads to sellers"
+      ],
+      "personas": [
+        "Sales Development Representative",
+        "Seller",
+        "Sales Supervisor"
+      ],
+      "overview_url": "https://learn.microsoft.com/en-us/dynamics365/sales/sales-qualification-agent",
+      "configure_url": "https://learn.microsoft.com/en-us/dynamics365/sales/configure-sales-qualification-agent",
+      "doc_status": "dedicated",
+      "source_slide": 1,
+      "_catalog_kind": "first_party",
+      "_documented": true,
+      "_availability_label": "Available"
+    },
+    {
+      "id": "sales-research-agent",
+      "name": "Sales Research Agent",
+      "product": "Dynamics 365 Sales",
+      "vertical": "b2b_sales",
+      "deck_status": "GA",
+      "deck_description": "Natural language dialog with sales data",
+      "description": "Answers strategic sales questions through natural-language research over Dynamics 365 Sales data and other configured data sources.",
+      "use_cases": [
+        "Explore pipeline and sales operations questions using natural language",
+        "Research Dynamics 365 Sales data together with uploaded CSV, Excel, or PDF files",
+        "Generate a research blueprint with findings, suggested next steps, and visualizations",
+        "Ask follow-up questions, change visualizations, and add data to an active analysis"
+      ],
+      "personas": [
+        "Seller",
+        "Sales Manager",
+        "Sales Operations"
+      ],
+      "overview_url": "https://learn.microsoft.com/en-us/dynamics365/sales/sales-research-agent",
+      "configure_url": "https://learn.microsoft.com/en-us/dynamics365/sales/configure-sales-research-agent",
+      "doc_status": "dedicated",
+      "source_slide": 1,
+      "_catalog_kind": "first_party",
+      "_documented": true,
+      "_availability_label": "Available"
+    },
+    {
+      "id": "sales-agent-m365-copilot",
+      "name": "Sales agent",
+      "deck_label": "Sales Agent (M365 Copilot)",
+      "product": "Microsoft 365 Copilot",
+      "vertical": "b2b_sales",
+      "deck_status": "GA",
+      "deck_description": "Search, synthesize & act on sales data in M365 apps",
+      "description": "Provides a natural-language interface in Microsoft 365 Copilot for searching, synthesizing, and acting on connected sales data.",
+      "use_cases": [
+        "Query connected Dynamics 365 Sales or Salesforce CRM data using natural language",
+        "Synthesize CRM records with eligible email, Teams meeting, and Teams message context",
+        "Prepare account and opportunity summaries before customer engagement",
+        "Draft follow-up communications and actions from the available sales context"
+      ],
+      "personas": [
+        "Seller",
+        "Sales Manager"
+      ],
+      "overview_url": "https://learn.microsoft.com/en-us/microsoft-sales-copilot/sales-chat-overview",
+      "configure_url": "https://learn.microsoft.com/en-us/microsoft-sales-copilot/set-up-sales-chat",
+      "doc_status": "dedicated",
+      "source_slide": 1,
+      "_catalog_kind": "first_party",
+      "_documented": true,
+      "_availability_label": "Available"
+    },
+    {
+      "id": "case-management-agent",
+      "name": "Case Management Agent",
+      "product": "Dynamics 365 Customer Service",
+      "vertical": "customer_service",
+      "deck_status": "GA",
+      "deck_description": "Automates case lifecycle - create, update, resolve, close",
+      "description": "Creates cases from supported conversations and updates configured case fields from conversation or email context.",
+      "use_cases": [
+        "Create cases from chat, digital messaging, and incoming voice conversations",
+        "Update configured case fields when a conversation reaches wrap-up",
+        "Update configured fields from incoming emails associated with a case",
+        "Populate suggested field values when a representative creates a case manually"
+      ],
+      "personas": [
+        "Customer Service Representative",
+        "Service Supervisor",
+        "Service Administrator"
+      ],
+      "overview_url": "https://learn.microsoft.com/en-us/dynamics365/customer-service/use/use-case-creation-agent",
+      "configure_url": "https://learn.microsoft.com/en-us/dynamics365/customer-service/administer/set-up-autonomous-case-agents",
+      "doc_status": "dedicated",
+      "source_slide": 2,
+      "_catalog_kind": "first_party",
+      "_documented": true,
+      "_availability_label": "Available"
+    },
+    {
+      "id": "customer-intent-agent",
+      "name": "Customer Intent Agent",
+      "product": "Dynamics 365 Contact Center / Customer Service",
+      "vertical": "customer_service",
+      "deck_status": "GA",
+      "deck_description": "Discovers intents from cases/conversations, builds intent library",
+      "description": "Discovers intents from historical customer interactions and manages them as an intent library for assisted and self-service experiences.",
+      "use_cases": [
+        "Discover new customer intents from historical cases and conversations",
+        "Manage intents, intent groups, and optional lines of business",
+        "Provide representatives with intent-based questions and suggested solutions",
+        "Use intent context to support self-service follow-up questions and knowledge retrieval"
+      ],
+      "personas": [
+        "Service Administrator",
+        "Contact Center Manager",
+        "Customer Service Representative"
+      ],
+      "overview_url": "https://learn.microsoft.com/en-us/dynamics365/contact-center/administer/overview-customer-intent-agent",
+      "configure_url": "https://learn.microsoft.com/en-us/dynamics365/contact-center/administer/manage-customer-intent-agent",
+      "doc_status": "dedicated",
+      "source_slide": 2,
+      "_catalog_kind": "first_party",
+      "_documented": true,
+      "_availability_label": "Available"
+    },
+    {
+      "id": "customer-intent-agent-voice",
+      "name": "Customer Intent Agent for voice",
+      "deck_label": "Customer Intent Agent (Voice)",
+      "product": "Dynamics 365 Contact Center",
+      "vertical": "customer_service",
+      "deck_status": "GA",
+      "deck_description": "Autonomous voice resolution using intent library + playbooks",
+      "description": "Uses the Customer Intent Agent intent library to support intent-driven voice self-service and escalation.",
+      "use_cases": [
+        "Detect customer intent during an inbound voice interaction",
+        "Ask intent-specific follow-up questions and provide a solution from configured resources",
+        "Escalate the conversation to a representative when self-service cannot resolve it",
+        "Connect an intent-enabled voice agent to a queue or workstream"
+      ],
+      "personas": [
+        "Contact Center Administrator",
+        "Contact Center Manager",
+        "Customer Service Representative"
+      ],
+      "overview_url": "https://learn.microsoft.com/en-us/dynamics365/contact-center/administer/set-up-voice-agents-to-use-intents",
+      "configure_url": "https://learn.microsoft.com/en-us/dynamics365/contact-center/administer/set-up-voice-agents-to-use-intents",
+      "doc_status": "dedicated",
+      "source_slide": 2,
+      "_catalog_kind": "first_party",
+      "_documented": true,
+      "_availability_label": "Available"
+    },
+    {
+      "id": "customer-knowledge-management-agent",
+      "name": "Customer Knowledge Management Agent",
+      "deck_label": "Customer Knowledge Mgmt Agent",
+      "product": "Dynamics 365 Customer Service",
+      "vertical": "customer_service",
+      "deck_status": "GA",
+      "deck_description": "Extracts knowledge from closed cases, fills gaps",
+      "description": "Creates knowledge articles from cases and related conversations, emails, and notes.",
+      "use_cases": [
+        "Create draft knowledge articles from resolved cases and related communications",
+        "Harvest knowledge from conversations, emails, and notes associated with a case",
+        "Run knowledge harvesting in real time or through configured processing",
+        "Review generated article content before it enters the governed knowledge lifecycle"
+      ],
+      "personas": [
+        "Knowledge Manager",
+        "Service Manager",
+        "Customer Service Representative"
+      ],
+      "overview_url": "https://learn.microsoft.com/en-us/dynamics365/customer-service/administer/admin-km-agent",
+      "configure_url": "https://learn.microsoft.com/en-us/dynamics365/customer-service/administer/admin-km-agent",
+      "doc_status": "dedicated",
+      "source_slide": 2,
+      "_catalog_kind": "first_party",
+      "_documented": true,
+      "_availability_label": "Available"
+    },
+    {
+      "id": "quality-assurance-agent",
+      "name": "Quality Assurance Agent",
+      "product": "Dynamics 365 Contact Center",
+      "vertical": "customer_service",
+      "deck_status": "Preview",
+      "deck_description": "Real-time quality eval & coaching (CC umbrella)",
+      "description": "Monitors live contact-center conversations, alerts supervisors to quality issues, and supports real-time coaching.",
+      "use_cases": [
+        "Monitor active customer conversations for quality issues",
+        "Alert supervisors when a quality indicator or guardrail needs attention",
+        "Run real-time or conversation-close evaluation plans",
+        "Send coaching nudges to representatives during active conversations"
+      ],
+      "personas": [
+        "Contact Center Supervisor",
+        "Quality Manager",
+        "Customer Service Representative"
+      ],
+      "overview_url": "https://learn.microsoft.com/en-us/dynamics365/contact-center/administer/use-quality-assurance-agent",
+      "configure_url": "https://learn.microsoft.com/en-us/dynamics365/contact-center/administer/configure-quality-coach",
+      "doc_status": "dedicated",
+      "source_slide": 2,
+      "_catalog_kind": "first_party",
+      "_documented": true,
+      "_availability_label": "Available"
+    },
+    {
+      "id": "quality-evaluation-agent",
+      "name": "Quality Evaluation Agent",
+      "product": "Dynamics 365 Contact Center / Customer Service",
+      "vertical": "customer_service",
+      "deck_status": "GA",
+      "deck_description": "AI-scored assessments of interactions (cases + conversations)",
+      "description": "Uses supervisor-defined criteria and evaluation plans to score selected interactions and provide summaries and recommended actions.",
+      "use_cases": [
+        "Define reusable quality criteria and scoring logic",
+        "Create evaluation plans that select which cases or conversations are assessed",
+        "Generate evaluation scores, summaries, and recommended actions",
+        "Review quality trends and outliers across evaluated interactions"
+      ],
+      "capability_notes": [
+        "Email evaluation is explicitly documented as Preview."
+      ],
+      "personas": [
+        "Service Supervisor",
+        "Quality Analyst",
+        "Contact Center Manager"
+      ],
+      "overview_url": "https://learn.microsoft.com/en-us/dynamics365/contact-center/administer/manage-quality-evaluation-agent",
+      "configure_url": "https://learn.microsoft.com/en-us/dynamics365/contact-center/use/evaluation-plan",
+      "doc_status": "dedicated",
+      "source_slide": 2,
+      "_catalog_kind": "first_party",
+      "_documented": true,
+      "_availability_label": "Available"
+    },
+    {
+      "id": "quality-management-agent",
+      "name": "Quality Management Agent",
+      "product": "Dynamics 365 Customer Service",
+      "vertical": "customer_service",
+      "deck_status": "Preview",
+      "deck_description": "Governance + screen/call recording + eval (CS umbrella)",
+      "description": "Provides a unified set of quality-management capabilities for evaluation, communication governance, and screen and call recording.",
+      "use_cases": [
+        "Evaluate customer interactions against defined quality criteria",
+        "Apply governance policies to outgoing customer communications",
+        "Capture screen and call context for quality review",
+        "Support coaching, compliance, and continuous service improvement"
+      ],
+      "personas": [
+        "Service Manager",
+        "Quality Analyst",
+        "Compliance Manager"
+      ],
+      "overview_url": "https://learn.microsoft.com/en-us/dynamics365/contact-center/use/overview-quality-management",
+      "doc_status": "dedicated",
+      "configure_note": "Quality Management Agent is configured through its individual quality evaluation, governance, and recording capabilities, which are linked from the overview.",
+      "source_slide": 2,
+      "_catalog_kind": "first_party",
+      "_documented": true,
+      "_availability_label": "Available"
     }
   ]
 }

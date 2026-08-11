@@ -10,6 +10,7 @@ import os
 import re
 import subprocess
 import sys
+from urllib.parse import urlencode
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable
@@ -21,6 +22,28 @@ DEFAULT_RAW_BASE = (
 )
 README_START = "<!-- scaffold-solution-journey:start -->"
 README_END = "<!-- scaffold-solution-journey:end -->"
+FACILITATOR_CERTIFICATION_MARKER = "aibast-facilitator-certification:v1"
+COHORT_ISSUE_MARKER = "<!-- aibast-workshop-cohort:v1 -->"
+COHORT_ISSUE_SCHEMA = "aibast-workshop-cohort/1.0"
+QUALIFICATION_ISSUE_MARKER = "<!-- aibast-badge-qualification:v1 -->"
+QUALIFICATION_ISSUE_SCHEMA = "aibast-badge-qualification/1.0"
+FACILITATOR_FORM_FILE = "AIBAST-Facilitator-Cohort-Registration.docx"
+QUALIFICATION_FORM_FILE = "AIBAST-Badge-Qualification.docx"
+GITHUB_ISSUES_NEW = (
+    "https://github.com/microsoft/aibast-agents-library/issues/new"
+)
+GRAIL_PIN = "5fbde1776a72715935c3d597a9ddfce28a04032b"
+GRAIL_VERSION = "0.6.16"
+GRAIL_INSTALL_MAC_LINUX = (
+    "curl -fsSL https://raw.githubusercontent.com/kody-w/rapp-installer/"
+    f"{GRAIL_PIN}/install.sh | bash -s -- --version {GRAIL_PIN}"
+)
+GRAIL_INSTALL_WINDOWS = (
+    "& ([scriptblock]::Create((irm "
+    "https://raw.githubusercontent.com/kody-w/rapp-installer/"
+    f"{GRAIL_PIN}/install.ps1))) --version {GRAIL_PIN}"
+)
+GRAIL_REPO_URL = "https://github.com/kody-w/rapp-installer"
 
 THEME_SCRIPT = """(() => {
       const param = new URLSearchParams(window.location.search).get("scoutTheme");
@@ -1145,6 +1168,32 @@ def collect_resources(ctx: JourneyContext) -> list[Resource]:
         )
     add_resource(resources, seen, ctx, "field-guide", "Customer field guide", ctx.package / "field-guide.html", "Styled facilitation, evidence boundaries, gates, and recovery", generated=True)
     add_resource(resources, seen, ctx, "field-guide-source", "Field guide source", ctx.package / "FIELD-GUIDE.md", "Markdown source retained for audit and export", generated=True)
+    facilitator_form = (
+        ctx.root / "solutions" / "_shared" / FACILITATOR_FORM_FILE
+    )
+    if facilitator_form.exists():
+        add_resource(
+            resources,
+            seen,
+            ctx,
+            "facilitator-cohort-form",
+            "Facilitator cohort registration form",
+            facilitator_form,
+            "Private Microsoft Forms Quick Import template for SE identity, MSIX, and cohort registration",
+        )
+    qualification_form = (
+        ctx.root / "solutions" / "_shared" / QUALIFICATION_FORM_FILE
+    )
+    if qualification_form.exists():
+        add_resource(
+            resources,
+            seen,
+            ctx,
+            "badge-qualification-form",
+            "Badge qualification form",
+            qualification_form,
+            "Private Microsoft Forms Quick Import template for consent, module test, and reviewer matching",
+        )
     visual_audit = ctx.package / "VISUAL-EVIDENCE-AUDIT.md"
     if visual_audit.exists():
         add_resource(
@@ -1758,6 +1807,357 @@ production write remain separate human approval gates.
 """
 
 
+def certification_issue_urls(ctx: JourneyContext) -> tuple[str, str]:
+    """Return public-safe, user-submitted GitHub issue triggers.
+
+    GitHub supplies the authenticated issue author. The bodies intentionally
+    contain no Microsoft alias, MSIX ID, customer name, roster, email address,
+    test answer, token, or other private enrollment data. Those fields stay in
+    Microsoft Forms and are joined during human review by the public cohort
+    code plus the issue author's GitHub login.
+    """
+    agent_name = str(ctx.deployment.get("name", ""))
+    cohort_body = f"""{COHORT_ISSUE_MARKER}
+## Public workshop cohort trigger
+
+- Schema: `{COHORT_ISSUE_SCHEMA}`
+- Workshop: `{ctx.slug}`
+- Agent: `{agent_name}`
+- Cohort code: `REPLACE-WITH-PUBLIC-CODE`
+- Session date: `YYYY-MM-DD`
+- Attendee count: `REPLACE-WITH-NUMBER`
+- Private facilitator form submitted: `yes`
+- Public progress consent: `yes`
+"""
+    qualification_body = f"""{QUALIFICATION_ISSUE_MARKER}
+## Public badge qualification trigger
+
+- Schema: `{QUALIFICATION_ISSUE_SCHEMA}`
+- Workshop: `{ctx.slug}`
+- Agent: `{agent_name}`
+- Cohort code: `REPLACE-WITH-PUBLIC-CODE`
+- Achievement progress issue: `https://github.com/microsoft/aibast-agents-library/issues/REPLACE`
+- Private qualification form submitted: `yes`
+- Public profile consent: `yes`
+"""
+    cohort_url = f"{GITHUB_ISSUES_NEW}?{urlencode({
+        'title': f'[Workshop cohort] {ctx.title}',
+        'body': cohort_body,
+    })}"
+    qualification_url = f"{GITHUB_ISSUES_NEW}?{urlencode({
+        'title': f'[Badge qualification] {ctx.title}',
+        'body': qualification_body,
+    })}"
+    return cohort_url, qualification_url
+
+
+def facilitator_certification_markdown(ctx: JourneyContext) -> str:
+    cohort_url, qualification_url = certification_issue_urls(ctx)
+    case_ids = ", ".join(
+        str(case["case_id"]) for case in easy_case_records(ctx)
+    ) or "No locked case IDs are recorded"
+    return f"""<!-- {FACILITATOR_CERTIFICATION_MARKER} -->
+## Optional badge certification onboarding
+
+This is a **facilitator-led, opt-in layer**. It does not change the workshop.
+Anyone may complete the workshop anonymously with device-local progress and
+skip every step in this section; anonymous completion is not badge-certified
+and is not included in cohort reporting.
+
+### Facilitator enrollment and cohort registration
+
+1. Import
+   [`{FACILITATOR_FORM_FILE}`](../_shared/{FACILITATOR_FORM_FILE})
+   into Microsoft Forms with Quick Import.
+2. Restrict this form to the Microsoft organization, record the respondent
+   identity, and limit response access to the approved reviewers.
+3. Before delivery, submit one private response with the facilitator's
+   Microsoft identity and MSIX ID, GitHub username, public non-identifying
+   cohort code, private audience details, session date, module, attendee
+   count, and the candidate GitHub usernames supplied for matching.
+4. Each badge candidate must separately opt in. A facilitator may register a
+   cohort, but cannot consent to a public profile on an attendee's behalf.
+5. From the same GitHub account named in the private form, open and submit the
+   [public cohort trigger]({cohort_url}). Replace every placeholder first.
+
+### Candidate qualification for this module
+
+1. Import
+   [`{QUALIFICATION_FORM_FILE}`](../_shared/{QUALIFICATION_FORM_FILE})
+   into Microsoft Forms. Allow external responses when customer attendees
+   need access; keep the response workbook private to approved reviewers.
+2. The candidate completes this workshop normally. The existing workshop
+   achievement control may be used to submit canonical progress from the
+   candidate's own signed-in GitHub account.
+3. The candidate submits the private qualification form with the cohort code,
+   GitHub username, workshop slug `{ctx.slug}`, progress-issue URL, consent,
+   and answers to the manual module check below.
+4. From that same GitHub account, the candidate submits the
+   [public badge qualification trigger]({qualification_url}). The public
+   issue is only a processing trigger; answers and private identity fields
+   never belong in GitHub.
+5. A reviewer matches the GitHub issue author to the private response,
+   validates canonical progress, checks the answers, and applies
+   `badge-qualified` only when every gate passes.
+
+### Manual module check
+
+Submit these answers in the **private qualification form**, never in the
+public issue:
+
+1. Which locked case IDs did you complete? Expected scope: `{case_ids}`.
+2. What determines a pass: the deterministic validator or similar wording?
+3. What is the publication boundary for this workshop?
+4. What must you do when required evidence is missing?
+5. State one evidence-grounded result from this module and one unsupported
+   claim you deliberately did not make.
+
+### Public and private data boundary
+
+| Public GitHub record | Private Microsoft Forms record |
+| --- | --- |
+| GitHub issue author/login | Microsoft identity and MSIX ID |
+| Non-identifying cohort code | Customer, organization, or audience details |
+| Workshop slug and canonical agent | Roster matching and internal notes |
+| Session date and attendee count | Module-test answers and reviewer scoring |
+| Canonical achievement IDs or issue URL | Email and other contact details |
+| Processing and reviewer labels | Approved retention and deletion record |
+
+Never place credentials, tokens, customer data, MSIX IDs, email addresses,
+private rosters, or test answers in a public GitHub issue. A cohort contributes
+to facilitator expertise only after `cohort-verified`; a candidate contributes
+to badge-qualified reporting only after `badge-qualified`.
+"""
+
+
+def facilitator_certification_html(ctx: JourneyContext) -> str:
+    cohort_url, qualification_url = certification_issue_urls(ctx)
+    case_ids = ", ".join(
+        str(case["case_id"]) for case in easy_case_records(ctx)
+    ) or "No locked case IDs are recorded"
+    facilitator_form = f"../_shared/{FACILITATOR_FORM_FILE}"
+    qualification_form = f"../_shared/{QUALIFICATION_FORM_FILE}"
+    return f"""
+    <!-- {FACILITATOR_CERTIFICATION_MARKER} -->
+    <details class="card certification-gate">
+      <summary>Optional badge certification onboarding (facilitator-led)</summary>
+      <div class="certification-content">
+        <div class="notice"><strong>Anonymous lane remains available:</strong> anyone may complete the workshop with device-local progress and skip this entire section. Anonymous completion is not badge-certified and is not included in cohort reporting.</div>
+
+        <div class="certification-grid">
+          <section>
+            <h3>Facilitator enrollment and cohort registration</h3>
+            <ol>
+              <li>Quick Import the private <a href="{html.escape(facilitator_form)}" download>{html.escape(FACILITATOR_FORM_FILE)}</a> into Microsoft Forms.</li>
+              <li>Restrict it to the Microsoft organization, record respondent identity, and limit response access to approved reviewers.</li>
+              <li>Submit the facilitator Microsoft identity and MSIX ID, GitHub username, public non-identifying cohort code, private audience details, session date, this module, attendee count, and candidate GitHub usernames.</li>
+              <li>Each candidate must separately opt in; the facilitator cannot consent to a public attendee profile.</li>
+              <li>Using the same GitHub account named in Forms, replace every placeholder and submit the public cohort trigger.</li>
+            </ol>
+            <p><a class="button primary" href="{html.escape(cohort_url, quote=True)}" target="_blank" rel="noopener">Open public cohort trigger</a></p>
+          </section>
+          <section>
+            <h3>Candidate qualification for this module</h3>
+            <ol>
+              <li>Quick Import the private <a href="{html.escape(qualification_form)}" download>{html.escape(QUALIFICATION_FORM_FILE)}</a>. Allow external responses when customer attendees need access; keep responses private to approved reviewers.</li>
+              <li>Complete the workshop normally and use its existing achievement control to submit canonical progress from the candidate's own signed-in GitHub account.</li>
+              <li>Submit the private form with cohort code, GitHub username, workshop slug <code>{html.escape(ctx.slug)}</code>, progress-issue URL, consent, and the manual module answers.</li>
+              <li>Using that same GitHub account, replace every placeholder and submit the public qualification trigger. Do not place answers or private identity fields in GitHub.</li>
+              <li>A reviewer matches the issue author to Forms, validates progress, checks the answers, and applies <code>badge-qualified</code> only when every gate passes.</li>
+            </ol>
+            <p><a class="button primary" href="{html.escape(qualification_url, quote=True)}" target="_blank" rel="noopener">Open badge qualification trigger</a></p>
+          </section>
+        </div>
+
+        <h3>Manual module check</h3>
+        <p>Submit answers in the <strong>private qualification form</strong>, never in the public issue.</p>
+        <ol>
+          <li>Which locked case IDs did you complete? Expected scope: <code>{html.escape(case_ids)}</code>.</li>
+          <li>What determines a pass: the deterministic validator or similar wording?</li>
+          <li>What is the publication boundary for this workshop?</li>
+          <li>What must you do when required evidence is missing?</li>
+          <li>State one evidence-grounded result from this module and one unsupported claim you deliberately did not make.</li>
+        </ol>
+
+        <h3>Public and private data boundary</h3>
+        <table class="privacy-boundary">
+          <thead><tr><th>Public GitHub record</th><th>Private Microsoft Forms record</th></tr></thead>
+          <tbody>
+            <tr><td>GitHub issue author/login</td><td>Microsoft identity and MSIX ID</td></tr>
+            <tr><td>Non-identifying cohort code</td><td>Customer, organization, or audience details</td></tr>
+            <tr><td>Workshop slug and canonical agent</td><td>Roster matching and internal notes</td></tr>
+            <tr><td>Session date and attendee count</td><td>Module-test answers and reviewer scoring</td></tr>
+            <tr><td>Canonical achievement IDs or issue URL</td><td>Email and other contact details</td></tr>
+            <tr><td>Processing and reviewer labels</td><td>Approved retention and deletion record</td></tr>
+          </tbody>
+        </table>
+        <div class="notice"><strong>Never publish private enrollment data:</strong> credentials, tokens, customer data, MSIX IDs, email addresses, private rosters, and test answers do not belong in a GitHub issue. Facilitator expertise counts only after <code>cohort-verified</code>; candidate qualification counts only after <code>badge-qualified</code>.</div>
+      </div>
+    </details>
+"""
+
+
+def brainstem_facilitator_markdown() -> str:
+    return f"""## Facilitator crash course — optional Brainstem track
+
+Brainstem is the learner's local-first, inspectable agent runtime. GitHub
+Copilot remains the familiar work surface; Brainstem adds persistent local
+workshop context, hot-loaded Python agents, and a visible tool-calling loop.
+Core setup uses the learner's GitHub account with Copilot access and does not
+require a separate model API key.
+
+For current workshop stability, this preparation guide intentionally uses the
+[Grail installer]({GRAIL_REPO_URL}) from `kody-w/rapp-installer`, pinned to
+audited commit `{GRAIL_PIN}` (Brainstem `{GRAIL_VERSION}`). It does not change
+the workshop package or the default Copilot-only lane.
+
+### Pre-work: every Brainstem-track participant installs it themselves
+
+**macOS / Linux**
+
+```bash
+{GRAIL_INSTALL_MAC_LINUX}
+```
+
+**Windows PowerShell**
+
+```powershell
+{GRAIL_INSTALL_WINDOWS}
+```
+
+Then, in a new terminal:
+
+```bash
+gh auth login
+brainstem
+```
+
+Open `http://localhost:7071`. Before the session, verify:
+
+```bash
+curl -s localhost:7071/health | python3 -m json.tool
+```
+
+The facilitator should complete this setup first, then ask participants to run
+the one-liner themselves before workshop day. Do not collect GitHub tokens or
+run a shared installation on their behalf.
+
+### Run the built-in five-minute interview loop
+
+Use **New here? Take the 5-minute guided tour** in the Brainstem chat UI. Let
+participants click and type; do not turn it into a slide lecture.
+
+1. **Interview:** click **What can you do?** Treat the answer as a resume, not
+   proof.
+2. **Teach:** enter a non-sensitive preference such as
+   `Remember that I prefer concise answers.` Watch the visible agent call that
+   decides whether the memory is worth keeping.
+3. **Reset:** clear the conversation. Explain that chat history is short-term
+   context, while approved memory persists locally.
+4. **Verify:** click **What do you remember?** Reinforce the operating loop:
+   **claim -> test -> verify**.
+5. **Inspect:** open the agents panel. Every capability is a readable local
+   `*_agent.py` file; the visible inventory is the governance boundary.
+6. **Trade safely (when the tour offers it):** export a removable agent,
+   delete it, ask Brainstem to use it, and confirm it reports the capability
+   honestly. Drag the exported file back to hot-load it without a restart.
+7. **Use the registry (optional):** open the book panel, find
+   `@rapp/learn_new`, and add it. Skip this step if the registry is unavailable.
+8. **Create:** ask the new agent to create a small `QuoteOfTheDay` agent.
+   Confirm the file appears in the agents panel.
+9. **Continue:** click **What should I do next?** Summarize the method:
+   **interview, teach, correct, trade, create**.
+
+The tour automatically skips the export/delete/restore sequence when no safe
+removable agent exists. Never delete memory agents or ask participants to use
+customer, credential, health, financial, or other sensitive information for
+the memory demonstration.
+
+### Connect the tour to this workshop
+
+After the tour, participants choosing the optional Brainstem lane select
+**GitHub Copilot + Brainstem** in Workshop settings and use the Brainstem
+Easy-mode skill already linked below. Brainstem preserves the local training
+context and hot-loads specialized instructors; GitHub Copilot still performs
+the build and deployment work. The same synthetic evidence, deterministic
+tests, and Draft-only publication boundary apply to both lanes.
+
+### Facilitator recovery
+
+| Symptom | Recovery |
+| --- | --- |
+| `brainstem` is not found | Open a new terminal so the installer-updated PATH is loaded, then retry. |
+| GitHub authentication fails | Run `gh auth login`; never ask a participant to share a token. |
+| The UI does not open | Start `brainstem`, then visit `http://localhost:7071`. |
+| Health check fails | Read the terminal error, correct the local prerequisite, and rerun the health check. |
+| Port 7071 is occupied | Stop the conflicting local process or use the Brainstem `PORT` setting deliberately. |
+| No removable agent exists | Continue; the built-in tour skips the surgery sequence. |
+| Registry or agent creation is unavailable | Skip the optional step and preserve the core interview, memory, reset, inspect, and verify loop. |
+"""
+
+
+def brainstem_facilitator_html() -> str:
+    return f"""
+    <details class="card brainstem-crash-course">
+      <summary>Facilitator crash course: optional Brainstem track</summary>
+      <div class="certification-content">
+        <p>Brainstem is the learner's local-first, inspectable agent runtime. GitHub Copilot remains the familiar work surface; Brainstem adds persistent local workshop context, hot-loaded Python agents, and a visible tool-calling loop. Core setup uses the learner's GitHub account with Copilot access and requires no separate model API key.</p>
+        <div class="notice"><strong>Current stable preparation source:</strong> this guide intentionally uses the <a href="{html.escape(GRAIL_REPO_URL)}" target="_blank" rel="noopener">Grail installer at <code>kody-w/rapp-installer</code></a>, pinned to audited commit <code>{GRAIL_PIN}</code> (Brainstem <code>{GRAIL_VERSION}</code>). It does not change the workshop package or the default Copilot-only lane.</div>
+
+        <h3>Pre-work: participants install it themselves</h3>
+        <div class="certification-grid">
+          <section>
+            <h3>macOS / Linux</h3>
+            <pre class="prompt">{html.escape(GRAIL_INSTALL_MAC_LINUX)}</pre>
+          </section>
+          <section>
+            <h3>Windows PowerShell</h3>
+            <pre class="prompt">{html.escape(GRAIL_INSTALL_WINDOWS)}</pre>
+          </section>
+        </div>
+        <p>Then open a new terminal and run:</p>
+        <pre class="prompt">gh auth login
+brainstem</pre>
+        <p>Open <code>http://localhost:7071</code> and verify:</p>
+        <pre class="prompt">curl -s localhost:7071/health | python3 -m json.tool</pre>
+        <p>The facilitator completes setup first, then asks Brainstem-track participants to run the one-liner themselves before workshop day. Never collect participant GitHub tokens or run one shared installation on their behalf.</p>
+
+        <h3>Run the built-in five-minute interview loop</h3>
+        <p>Choose <strong>New here? Take the 5-minute guided tour</strong> in the Brainstem chat UI. Let participants click and type; do not turn the tour into a slide lecture.</p>
+        <ol>
+          <li><strong>Interview:</strong> click <strong>What can you do?</strong> Treat the response as a resume, not proof.</li>
+          <li><strong>Teach:</strong> enter a non-sensitive preference such as <code>Remember that I prefer concise answers.</code> Watch the visible memory-agent decision.</li>
+          <li><strong>Reset:</strong> clear the conversation. Chat history is short-term context; approved memory persists locally.</li>
+          <li><strong>Verify:</strong> click <strong>What do you remember?</strong> Reinforce <strong>claim -&gt; test -&gt; verify</strong>.</li>
+          <li><strong>Inspect:</strong> open the agents panel. Every capability is a readable local <code>*_agent.py</code> file.</li>
+          <li><strong>Trade safely:</strong> when offered, export a removable agent, delete it, verify Brainstem reports the missing capability honestly, then drag the file back to hot-load it.</li>
+          <li><strong>Use the registry (optional):</strong> open the book panel, find <code>@rapp/learn_new</code>, and add it. Skip when unavailable.</li>
+          <li><strong>Create:</strong> ask it to create a small <code>QuoteOfTheDay</code> agent and confirm the file appears.</li>
+          <li><strong>Continue:</strong> click <strong>What should I do next?</strong> Summarize: interview, teach, correct, trade, create.</li>
+        </ol>
+        <div class="notice"><strong>Safety:</strong> the tour skips export/delete/restore when no removable agent exists. Never delete memory agents or use customer, credential, health, financial, or other sensitive information in the memory demonstration.</div>
+
+        <h3>Connect the tour to this workshop</h3>
+        <p>Participants choosing the optional Brainstem lane select <strong>GitHub Copilot + Brainstem</strong> in Workshop settings and use the Brainstem Easy-mode skill linked below. Brainstem preserves local training context and hot-loads specialized instructors; GitHub Copilot still performs build and deployment work. Both lanes retain the same synthetic evidence, deterministic tests, and Draft-only publication boundary.</p>
+
+        <h3>Facilitator recovery</h3>
+        <table>
+          <thead><tr><th>Symptom</th><th>Recovery</th></tr></thead>
+          <tbody>
+            <tr><td><code>brainstem</code> is not found</td><td>Open a new terminal so the installer-updated PATH is loaded, then retry.</td></tr>
+            <tr><td>GitHub authentication fails</td><td>Run <code>gh auth login</code>; never ask a participant to share a token.</td></tr>
+            <tr><td>The UI does not open</td><td>Start <code>brainstem</code>, then visit <code>http://localhost:7071</code>.</td></tr>
+            <tr><td>Health check fails</td><td>Read the terminal error, correct the local prerequisite, and rerun the health check.</td></tr>
+            <tr><td>Port 7071 is occupied</td><td>Stop the conflicting local process or use the Brainstem <code>PORT</code> setting deliberately.</td></tr>
+            <tr><td>No removable agent exists</td><td>Continue; the built-in tour skips the surgery sequence.</td></tr>
+            <tr><td>Registry or creation is unavailable</td><td>Skip the optional step and preserve the interview, memory, reset, inspect, and verify loop.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+"""
+
+
 def render_field_guide(ctx: JourneyContext) -> str:
     missing = (
         "\n## Pending evidence\n\n"
@@ -1785,6 +2185,10 @@ blueprint, and decide what production integration would require.
 - A screenshot proves only the visible state in that frame.
 - No image, GIF, transcript, connector result, or publication state is implied
   unless the corresponding file is present in `export-manifest.json`.
+
+{facilitator_certification_markdown(ctx)}
+
+{brainstem_facilitator_markdown()}
 
 ## Easy mode — GitHub Copilot (default)
 
@@ -1902,12 +2306,22 @@ def render_field_guide_html(ctx: JourneyContext) -> str:
     .engine-panel {{ display: none; }}
     html[data-workshop-engine="copilot"] .engine-panel.copilot {{ display: block; }}
     html[data-workshop-engine="brainstem"] .engine-panel.brainstem {{ display: block; }}
-    .prompt {{ padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); white-space: pre-wrap; font-family: Consolas, "Courier New", Courier, monospace; }}
+    .prompt {{ padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; font-family: Consolas, "Courier New", Courier, monospace; }}
     table {{ width: 100%; border-collapse: collapse; }}
     th, td {{ padding: 11px; border: 1px solid var(--cp-border); text-align: left; vertical-align: top; }}
     th {{ background: var(--cp-surface-soft); }}
     .gate-list li, .seam-list li {{ margin-bottom: 8px; }}
+    .certification-gate {{ margin-top: 24px; }}
+    .brainstem-crash-course {{ margin-top: 16px; }}
+    .certification-gate > summary, .brainstem-crash-course > summary {{ cursor: pointer; font-size: 18px; font-weight: 800; }}
+    .certification-content {{ margin-top: 18px; }}
+    .certification-grid {{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }}
+    .certification-grid section {{ min-width: 0; padding: 18px; border: 1px solid var(--cp-border); border-radius: 12px; background: var(--cp-bg-elevated); }}
+    .certification-grid h3 {{ margin-top: 0; }}
+    .certification-grid li, .certification-content > ol li {{ margin-bottom: 8px; }}
+    .privacy-boundary {{ margin-top: 12px; }}
     @media (max-width: 760px) {{ .grid {{ grid-template-columns: 1fr; }} }}
+    @media (max-width: 760px) {{ .certification-grid {{ grid-template-columns: 1fr; }} }}
   </style>
 </head>
 <body>
@@ -1923,6 +2337,10 @@ def render_field_guide_html(ctx: JourneyContext) -> str:
       <div class="notice"><strong>Workshop mission:</strong> {html.escape(WORKSHOP_MISSION)}</div>
       <div class="notice"><strong>Evidence boundary:</strong> all packaged records and outcomes are synthetic qualitative evidence—not customer KPIs, measured production results, live connections, or publication approval.</div>
     </section>
+
+{facilitator_certification_html(ctx)}
+
+{brainstem_facilitator_html()}
 
     <h2>Use your configured Easy-mode harness</h2>
     <section class="engine-panel copilot card">
@@ -3609,8 +4027,18 @@ are intentionally excluded until real evidence exists.
 
 
 def readme_block(ctx: JourneyContext, resources: list[Resource]) -> str:
-    ready = sum(resource.status == "ready" for resource in resources)
-    pending = sum(resource.status != "ready" for resource in resources)
+    field_guide_gated = {
+        "facilitator-cohort-form",
+        "badge-qualification-form",
+    }
+    visible_resources = [
+        resource for resource in resources
+        if resource.id not in field_guide_gated
+    ]
+    ready = sum(resource.status == "ready" for resource in visible_resources)
+    pending = sum(
+        resource.status != "ready" for resource in visible_resources
+    )
     rows = [
         ("Customer field guide", f"`solutions/{ctx.slug}/field-guide.html`"),
         ("Evidence report", f"`solutions/{ctx.slug}/evidence-report.html`"),

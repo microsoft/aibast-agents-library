@@ -211,12 +211,22 @@
     .engine-panel { display: none; }
     html[data-workshop-engine="copilot"] .engine-panel.copilot { display: block; }
     html[data-workshop-engine="brainstem"] .engine-panel.brainstem { display: block; }
-    .prompt { padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); white-space: pre-wrap; font-family: Consolas, "Courier New", Courier, monospace; }
+    .prompt { padding: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface-soft); white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; font-family: Consolas, "Courier New", Courier, monospace; }
     table { width: 100%; border-collapse: collapse; }
     th, td { padding: 11px; border: 1px solid var(--cp-border); text-align: left; vertical-align: top; }
     th { background: var(--cp-surface-soft); }
     .gate-list li, .seam-list li { margin-bottom: 8px; }
+    .certification-gate { margin-top: 24px; }
+    .brainstem-crash-course { margin-top: 16px; }
+    .certification-gate > summary, .brainstem-crash-course > summary { cursor: pointer; font-size: 18px; font-weight: 800; }
+    .certification-content { margin-top: 18px; }
+    .certification-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .certification-grid section { min-width: 0; padding: 18px; border: 1px solid var(--cp-border); border-radius: 12px; background: var(--cp-bg-elevated); }
+    .certification-grid h3 { margin-top: 0; }
+    .certification-grid li, .certification-content > ol li { margin-bottom: 8px; }
+    .privacy-boundary { margin-top: 12px; }
     @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+    @media (max-width: 760px) { .certification-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -232,6 +242,125 @@
       <div class="notice"><strong>Workshop mission:</strong> Turn motivated, open-minded, non-technical sales professionals into AI superheroes who can match the practical output and problem-solving pace of technical peers who are not using AI, while staying evidence-grounded, governed, and honest about what the tools proved.</div>
       <div class="notice"><strong>Evidence boundary:</strong> all packaged records and outcomes are synthetic qualitative evidence—not customer KPIs, measured production results, live connections, or publication approval.</div>
     </section>
+
+
+    <!-- aibast-facilitator-certification:v1 -->
+    <details class="card certification-gate">
+      <summary>Optional badge certification onboarding (facilitator-led)</summary>
+      <div class="certification-content">
+        <div class="notice"><strong>Anonymous lane remains available:</strong> anyone may complete the workshop with device-local progress and skip this entire section. Anonymous completion is not badge-certified and is not included in cohort reporting.</div>
+
+        <div class="certification-grid">
+          <section>
+            <h3>Facilitator enrollment and cohort registration</h3>
+            <ol>
+              <li>Quick Import the private <a href="../_shared/AIBAST-Facilitator-Cohort-Registration.docx" download>AIBAST-Facilitator-Cohort-Registration.docx</a> into Microsoft Forms.</li>
+              <li>Restrict it to the Microsoft organization, record respondent identity, and limit response access to approved reviewers.</li>
+              <li>Submit the facilitator Microsoft identity and MSIX ID, GitHub username, public non-identifying cohort code, private audience details, session date, this module, attendee count, and candidate GitHub usernames.</li>
+              <li>Each candidate must separately opt in; the facilitator cannot consent to a public attendee profile.</li>
+              <li>Using the same GitHub account named in Forms, replace every placeholder and submit the public cohort trigger.</li>
+            </ol>
+            <p><a class="button primary" href="https://github.com/microsoft/aibast-agents-library/issues/new?title=%5BWorkshop+cohort%5D+Cart+Abandonment+Recovery+Agent&amp;body=%3C%21--+aibast-workshop-cohort%3Av1+--%3E%0A%23%23+Public+workshop+cohort+trigger%0A%0A-+Schema%3A+%60aibast-workshop-cohort%2F1.0%60%0A-+Workshop%3A+%60cart-abandonment-recovery%60%0A-+Agent%3A+%60%40aibast-agents-library%2Fcart-abandonment-recovery%60%0A-+Cohort+code%3A+%60REPLACE-WITH-PUBLIC-CODE%60%0A-+Session+date%3A+%60YYYY-MM-DD%60%0A-+Attendee+count%3A+%60REPLACE-WITH-NUMBER%60%0A-+Private+facilitator+form+submitted%3A+%60yes%60%0A-+Public+progress+consent%3A+%60yes%60%0A" target="_blank" rel="noopener">Open public cohort trigger</a></p>
+          </section>
+          <section>
+            <h3>Candidate qualification for this module</h3>
+            <ol>
+              <li>Quick Import the private <a href="../_shared/AIBAST-Badge-Qualification.docx" download>AIBAST-Badge-Qualification.docx</a>. Allow external responses when customer attendees need access; keep responses private to approved reviewers.</li>
+              <li>Complete the workshop normally and use its existing achievement control to submit canonical progress from the candidate's own signed-in GitHub account.</li>
+              <li>Submit the private form with cohort code, GitHub username, workshop slug <code>cart-abandonment-recovery</code>, progress-issue URL, consent, and the manual module answers.</li>
+              <li>Using that same GitHub account, replace every placeholder and submit the public qualification trigger. Do not place answers or private identity fields in GitHub.</li>
+              <li>A reviewer matches the issue author to Forms, validates progress, checks the answers, and applies <code>badge-qualified</code> only when every gate passes.</li>
+            </ol>
+            <p><a class="button primary" href="https://github.com/microsoft/aibast-agents-library/issues/new?title=%5BBadge+qualification%5D+Cart+Abandonment+Recovery+Agent&amp;body=%3C%21--+aibast-badge-qualification%3Av1+--%3E%0A%23%23+Public+badge+qualification+trigger%0A%0A-+Schema%3A+%60aibast-badge-qualification%2F1.0%60%0A-+Workshop%3A+%60cart-abandonment-recovery%60%0A-+Agent%3A+%60%40aibast-agents-library%2Fcart-abandonment-recovery%60%0A-+Cohort+code%3A+%60REPLACE-WITH-PUBLIC-CODE%60%0A-+Achievement+progress+issue%3A+%60https%3A%2F%2Fgithub.com%2Fmicrosoft%2Faibast-agents-library%2Fissues%2FREPLACE%60%0A-+Private+qualification+form+submitted%3A+%60yes%60%0A-+Public+profile+consent%3A+%60yes%60%0A" target="_blank" rel="noopener">Open badge qualification trigger</a></p>
+          </section>
+        </div>
+
+        <h3>Manual module check</h3>
+        <p>Submit answers in the <strong>private qualification form</strong>, never in the public issue.</p>
+        <ol>
+          <li>Which locked case IDs did you complete? Expected scope: <code>CAR-01, CAR-02, CAR-03, CAR-04</code>.</li>
+          <li>What determines a pass: the deterministic validator or similar wording?</li>
+          <li>What is the publication boundary for this workshop?</li>
+          <li>What must you do when required evidence is missing?</li>
+          <li>State one evidence-grounded result from this module and one unsupported claim you deliberately did not make.</li>
+        </ol>
+
+        <h3>Public and private data boundary</h3>
+        <table class="privacy-boundary">
+          <thead><tr><th>Public GitHub record</th><th>Private Microsoft Forms record</th></tr></thead>
+          <tbody>
+            <tr><td>GitHub issue author/login</td><td>Microsoft identity and MSIX ID</td></tr>
+            <tr><td>Non-identifying cohort code</td><td>Customer, organization, or audience details</td></tr>
+            <tr><td>Workshop slug and canonical agent</td><td>Roster matching and internal notes</td></tr>
+            <tr><td>Session date and attendee count</td><td>Module-test answers and reviewer scoring</td></tr>
+            <tr><td>Canonical achievement IDs or issue URL</td><td>Email and other contact details</td></tr>
+            <tr><td>Processing and reviewer labels</td><td>Approved retention and deletion record</td></tr>
+          </tbody>
+        </table>
+        <div class="notice"><strong>Never publish private enrollment data:</strong> credentials, tokens, customer data, MSIX IDs, email addresses, private rosters, and test answers do not belong in a GitHub issue. Facilitator expertise counts only after <code>cohort-verified</code>; candidate qualification counts only after <code>badge-qualified</code>.</div>
+      </div>
+    </details>
+
+
+
+    <details class="card brainstem-crash-course">
+      <summary>Facilitator crash course: optional Brainstem track</summary>
+      <div class="certification-content">
+        <p>Brainstem is the learner's local-first, inspectable agent runtime. GitHub Copilot remains the familiar work surface; Brainstem adds persistent local workshop context, hot-loaded Python agents, and a visible tool-calling loop. Core setup uses the learner's GitHub account with Copilot access and requires no separate model API key.</p>
+        <div class="notice"><strong>Current stable preparation source:</strong> this guide intentionally uses the <a href="https://github.com/kody-w/rapp-installer" target="_blank" rel="noopener">Grail installer at <code>kody-w/rapp-installer</code></a>, pinned to audited commit <code>5fbde1776a72715935c3d597a9ddfce28a04032b</code> (Brainstem <code>0.6.16</code>). It does not change the workshop package or the default Copilot-only lane.</div>
+
+        <h3>Pre-work: participants install it themselves</h3>
+        <div class="certification-grid">
+          <section>
+            <h3>macOS / Linux</h3>
+            <pre class="prompt">curl -fsSL https://raw.githubusercontent.com/kody-w/rapp-installer/5fbde1776a72715935c3d597a9ddfce28a04032b/install.sh | bash -s -- --version 5fbde1776a72715935c3d597a9ddfce28a04032b</pre>
+          </section>
+          <section>
+            <h3>Windows PowerShell</h3>
+            <pre class="prompt">&amp; ([scriptblock]::Create((irm https://raw.githubusercontent.com/kody-w/rapp-installer/5fbde1776a72715935c3d597a9ddfce28a04032b/install.ps1))) --version 5fbde1776a72715935c3d597a9ddfce28a04032b</pre>
+          </section>
+        </div>
+        <p>Then open a new terminal and run:</p>
+        <pre class="prompt">gh auth login
+brainstem</pre>
+        <p>Open <code>http://localhost:7071</code> and verify:</p>
+        <pre class="prompt">curl -s localhost:7071/health | python3 -m json.tool</pre>
+        <p>The facilitator completes setup first, then asks Brainstem-track participants to run the one-liner themselves before workshop day. Never collect participant GitHub tokens or run one shared installation on their behalf.</p>
+
+        <h3>Run the built-in five-minute interview loop</h3>
+        <p>Choose <strong>New here? Take the 5-minute guided tour</strong> in the Brainstem chat UI. Let participants click and type; do not turn the tour into a slide lecture.</p>
+        <ol>
+          <li><strong>Interview:</strong> click <strong>What can you do?</strong> Treat the response as a resume, not proof.</li>
+          <li><strong>Teach:</strong> enter a non-sensitive preference such as <code>Remember that I prefer concise answers.</code> Watch the visible memory-agent decision.</li>
+          <li><strong>Reset:</strong> clear the conversation. Chat history is short-term context; approved memory persists locally.</li>
+          <li><strong>Verify:</strong> click <strong>What do you remember?</strong> Reinforce <strong>claim -&gt; test -&gt; verify</strong>.</li>
+          <li><strong>Inspect:</strong> open the agents panel. Every capability is a readable local <code>*_agent.py</code> file.</li>
+          <li><strong>Trade safely:</strong> when offered, export a removable agent, delete it, verify Brainstem reports the missing capability honestly, then drag the file back to hot-load it.</li>
+          <li><strong>Use the registry (optional):</strong> open the book panel, find <code>@rapp/learn_new</code>, and add it. Skip when unavailable.</li>
+          <li><strong>Create:</strong> ask it to create a small <code>QuoteOfTheDay</code> agent and confirm the file appears.</li>
+          <li><strong>Continue:</strong> click <strong>What should I do next?</strong> Summarize: interview, teach, correct, trade, create.</li>
+        </ol>
+        <div class="notice"><strong>Safety:</strong> the tour skips export/delete/restore when no removable agent exists. Never delete memory agents or use customer, credential, health, financial, or other sensitive information in the memory demonstration.</div>
+
+        <h3>Connect the tour to this workshop</h3>
+        <p>Participants choosing the optional Brainstem lane select <strong>GitHub Copilot + Brainstem</strong> in Workshop settings and use the Brainstem Easy-mode skill linked below. Brainstem preserves local training context and hot-loads specialized instructors; GitHub Copilot still performs build and deployment work. Both lanes retain the same synthetic evidence, deterministic tests, and Draft-only publication boundary.</p>
+
+        <h3>Facilitator recovery</h3>
+        <table>
+          <thead><tr><th>Symptom</th><th>Recovery</th></tr></thead>
+          <tbody>
+            <tr><td><code>brainstem</code> is not found</td><td>Open a new terminal so the installer-updated PATH is loaded, then retry.</td></tr>
+            <tr><td>GitHub authentication fails</td><td>Run <code>gh auth login</code>; never ask a participant to share a token.</td></tr>
+            <tr><td>The UI does not open</td><td>Start <code>brainstem</code>, then visit <code>http://localhost:7071</code>.</td></tr>
+            <tr><td>Health check fails</td><td>Read the terminal error, correct the local prerequisite, and rerun the health check.</td></tr>
+            <tr><td>Port 7071 is occupied</td><td>Stop the conflicting local process or use the Brainstem <code>PORT</code> setting deliberately.</td></tr>
+            <tr><td>No removable agent exists</td><td>Continue; the built-in tour skips the surgery sequence.</td></tr>
+            <tr><td>Registry or creation is unavailable</td><td>Skip the optional step and preserve the interview, memory, reset, inspect, and verify loop.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
 
     <h2>Use your configured Easy-mode harness</h2>
     <section class="engine-panel copilot card">

@@ -717,6 +717,22 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+body.first-party-view .industry-selector,
+body.first-party-view .industry-blueprint,
+body.first-party-view .popular,
+body.first-party-view #readiness,
+body.first-party-view #sort,
+body.first-party-view .upvote-explainer {
+  display: none;
+}
+body.first-party-view .persona {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+}
+body.first-party-view .agent-card h2 {
+  font-size: 1.18rem;
+}
 .card-actions, .agent-upvote {
   display: flex;
   align-items: center;
@@ -1296,6 +1312,7 @@ footer {
         <button class="tab active" type="button" data-action="view" data-view="solutions">Industry solutions</button>
         <button class="tab" type="button" data-action="view" data-view="stacks">Multi-agent stacks</button>
         <button class="tab" type="button" data-action="view" data-view="templates">Building blocks</button>
+        <button class="tab" type="button" data-action="view" data-view="first-party">Microsoft first-party</button>
       </div>
       <div class="filters">
         <select class="field" id="industry" aria-label="Industry"><option value="">All industries</option></select>
@@ -1346,6 +1363,7 @@ const AGENT_DIR = "~/.brainstem/src/rapp_brainstem/agents";
 const state = {
   agents: [],
   stacks: [],
+  firstParty: [],
   stats: {},
   architectureLevel2: new Map(),
   agentSignals: new Map(),
@@ -1391,7 +1409,11 @@ const CATEGORY_ICONS = {
   b2b_sales: "↗", b2c_sales: "◎", energy: "⚡", financial_services: "◆",
   general: "✦", healthcare: "✚", human_resources: "◇", manufacturing: "⚙",
   professional_services: "§", retail_cpg: "▦", slg_government: "⌂",
-  software_digital_products: "⌘"
+  software_digital_products: "⌘", customer_service: "☎"
+};
+
+const FIRST_PARTY_VERTICALS = {
+  customer_service: "Customer Service & Contact Center"
 };
 const INDUSTRY_BLUEPRINTS = {
   b2b_sales: "Build a connected seller journey from account understanding and qualification through deal progression, proposals, forecasting, and renewal.",
@@ -1473,6 +1495,7 @@ async function init() {
   }
   state.agents = registry.agents || [];
   state.stacks = registry.stacks || [];
+  state.firstParty = registry.first_party || [];
   state.stats = registry.stats || {};
   state.advertisedSolutions = new Set(Object.keys(catalog.solutions || {}));
   state.exportedSolutionSlugs = new Set(
@@ -1493,33 +1516,71 @@ async function init() {
 
   if (location.hash.startsWith("#agent/")) openAgent(dec(location.hash.slice(7)));
   if (location.hash.startsWith("#stack/")) openStack(dec(location.hash.slice(7)));
+  if (location.hash.startsWith("#first-party/")) openFirstParty(dec(location.hash.slice(13)));
 }
 
 function restoreState() {
   const params = new URLSearchParams(location.search);
   state.query = params.get("q") || "";
-  state.view = ["solutions", "stacks", "templates"].includes(params.get("view"))
+  state.view = ["solutions", "stacks", "templates", "first-party"].includes(params.get("view"))
     ? params.get("view") : "solutions";
   $("search").value = state.query;
 }
 
 function renderStats() {
+  if (state.view === "first-party") {
+    $("stats").innerHTML = `
+      <span class="stat"><strong>${Number(state.stats.total_first_party || 0).toLocaleString()}</strong> first-party agents</span>
+      <span class="stat"><strong>${Number(state.stats.first_party_available || 0).toLocaleString()}</strong> available</span>
+      <span class="stat"><strong>${Number(state.stats.first_party_preview || 0).toLocaleString()}</strong> preview</span>
+      <span class="stat"><strong>${Number((state.stats.first_party_products || []).length).toLocaleString()}</strong> product groupings</span>`;
+    return;
+  }
   $("stats").innerHTML = `
     <span class="stat"><strong>${Number(state.stats.advertised_solutions || 0).toLocaleString()}</strong> solutions</span>
     <span class="stat"><strong>${Number(state.stats.total_verticals || 0).toLocaleString()}</strong> industries</span>
     <span class="stat"><strong>${Number(state.stats.source_verified_solutions || 0).toLocaleString()}</strong> slide-sourced</span>
-    <span class="stat"><strong>${Number(state.stats.solution_demo_videos || 0).toLocaleString()}</strong> demos</span>`;
+    <span class="stat"><strong>${Number(state.stats.solution_demo_videos || 0).toLocaleString()}</strong> demos</span>
+    <span class="stat"><strong>${Number(state.stats.total_first_party || 0).toLocaleString()}</strong> Microsoft 1P agents</span>`;
 }
 
 function buildFilters() {
+  const firstPartyView = state.view === "first-party";
   const solutions = solutionAgents();
-  fillSelect("industry", Object.entries(CATEGORY_NAMES)
-    .filter(([key]) => solutions.some(agent => agent.category === key))
-    .map(([value, label]) => ({ value, label })), "All industries");
-  fillSelect("persona", uniq(solutions.flatMap(agent => solutionOf(agent).personas || []))
-    .sort().map(value => ({ value, label: value })), "All personas");
-  fillSelect("system", uniq(solutions.flatMap(agent => microsoftTools(agent)))
-    .sort().map(value => ({ value, label: value })), "All Microsoft products");
+
+  const industries = firstPartyView
+    ? uniq(state.firstParty.map(agent => agent.vertical))
+        .map(value => ({ value, label: firstPartyVerticalName(value) }))
+        .sort((a, b) => a.label.localeCompare(b.label))
+    : Object.entries(CATEGORY_NAMES)
+        .filter(([key]) => solutions.some(agent => agent.category === key))
+        .map(([value, label]) => ({ value, label }));
+
+  const personas = (firstPartyView
+    ? uniq(state.firstParty.flatMap(agent => agent.personas || []))
+    : uniq(solutions.flatMap(agent => solutionOf(agent).personas || []))
+  ).sort().map(value => ({ value, label: value }));
+
+  const systems = (firstPartyView
+    ? uniq(state.firstParty.map(agent => agent.product))
+    : uniq(solutions.flatMap(agent => microsoftTools(agent)))
+  ).sort().map(value => ({ value, label: value }));
+
+  applyFilterOptions(
+    "industry",
+    industries,
+    firstPartyView ? "All solution areas" : "All industries"
+  );
+  applyFilterOptions("persona", personas, "All personas");
+  applyFilterOptions("system", systems, "All Microsoft products");
+}
+
+function applyFilterOptions(id, values, placeholder) {
+  const current = state[id];
+  fillSelect(id, values, placeholder);
+  const stillValid = current && values.some(item => item.value === current);
+  state[id] = stillValid ? current : "";
+  $(id).value = state[id];
 }
 
 function renderIndustryMenu() {
@@ -1800,7 +1861,79 @@ function filteredStacks() {
     .sort((a, b) => b.score - a.score || a.stack.display_name.localeCompare(b.stack.display_name));
 }
 
+function firstPartyVerticalName(vertical) {
+  return CATEGORY_NAMES[vertical] || FIRST_PARTY_VERTICALS[vertical] || pretty(vertical);
+}
+
+function filteredFirstParty() {
+  const query = normalize(state.query);
+  const terms = query ? queryTerms(query) : [];
+  return state.firstParty
+    .map(agent => {
+      const text = normalize([
+        agent.name, agent.deck_label, agent.product, agent.description,
+        agent.deck_description, (agent.use_cases || []).join(" "),
+        (agent.personas || []).join(" "), agent.lifecycle,
+        firstPartyVerticalName(agent.vertical)
+      ].filter(Boolean).join(" "));
+      const score = !terms.length ? 1 : terms.reduce((total, term) => total + (text.includes(term) ? 5 : 0), 0);
+      return { agent, score };
+    })
+    .filter(row => !terms.length || row.score > 0)
+    .filter(row => !state.industry || row.agent.vertical === state.industry)
+    .filter(row => !state.persona || (row.agent.personas || []).includes(state.persona))
+    .filter(row => !state.system || row.agent.product === state.system)
+    .sort((a, b) => b.score - a.score
+      || Number(a.agent.lifecycle === "Preview") - Number(b.agent.lifecycle === "Preview")
+      || a.agent.name.localeCompare(b.agent.name));
+}
+
+function firstPartyCard(agent) {
+  const availability = agent._availability_label || agent.lifecycle || "Available";
+  const badges = [
+    `<span class="badge ${availability === "Preview" ? "demo" : "proven"}">${esc(availability)}</span>`,
+    `<span class="badge stage-badge">Microsoft 1P</span>`
+  ];
+  return `
+    <article class="agent-card" tabindex="0" data-action="open-first-party" data-id="${enc(agent.id)}">
+      <div class="card-head">
+        <span class="agent-icon">${esc(CATEGORY_ICONS[agent.vertical] || "▣")}</span>
+        <div class="badges">${badges.join("")}</div>
+      </div>
+      <div class="card-body">
+        <div class="category">${esc(agent.product)}</div>
+        <h2>${esc(agent.name)}</h2>
+        <p class="what">${esc(agent.description)}</p>
+        <div class="card-foot">
+          <span class="persona" title="${esc(first(agent.personas, "Business user"))}">For ${esc(first(agent.personas, "Business user"))}</span>
+          <div class="card-actions">
+            <a class="button small" href="${esc(agent.overview_url)}" target="_blank" rel="noopener" data-action="stop">Microsoft Learn ↗</a>
+            <button class="button primary small" type="button" data-action="open-first-party" data-id="${enc(agent.id)}">View agent</button>
+          </div>
+        </div>
+      </div>
+    </article>`;
+}
+
 function render() {
+  const firstPartyView = state.view === "first-party";
+  document.body.classList.toggle("first-party-view", firstPartyView);
+  document.querySelector(".intro .eyebrow").textContent = firstPartyView
+    ? "Microsoft first-party catalog"
+    : "AI BAST Agent Library";
+  document.querySelector(".intro h1").textContent = firstPartyView
+    ? "Microsoft agents available today."
+    : "Choose an industry. Build the AI journey.";
+  document.querySelector(".intro p").textContent = firstPartyView
+    ? "Browse current publicly documented Microsoft first-party agents across Dynamics 365, Microsoft 365 Copilot, and Agent 365. Lifecycle is shown only when Microsoft Learn states it explicitly."
+    : "Start from proven solution patterns, run them safely with synthetic domain data, then connect customer systems and publish through Copilot Studio—or any downstream surface that can host the portable agent.";
+  document.querySelector(".brand-copy small").textContent = firstPartyView
+    ? "Microsoft First-Party"
+    : "Industry Solutions";
+  $("search").placeholder = firstPartyView
+    ? "Search first-party agents, products, use cases, or personas..."
+    : "Search: claims fraud, permit backlog, plant manager, Dynamics 365...";
+  renderStats();
   document.querySelectorAll(".tab").forEach(tab => {
     tab.classList.toggle("active", tab.dataset.view === state.view);
   });
@@ -1816,6 +1949,17 @@ function render() {
     $("result-context").textContent = state.query ? `matching "${state.query}"` : "";
     $("grid").classList.remove("journey-mode");
     $("grid").innerHTML = rows.length ? rows.map(stackCard).join("") : emptyState();
+    return;
+  }
+
+  if (state.view === "first-party") {
+    const rows = filteredFirstParty();
+    $("result-count").innerHTML = `<strong>${rows.length}</strong> Microsoft first-party agent${rows.length === 1 ? "" : "s"}`;
+    $("result-context").textContent = state.query
+      ? `matching "${state.query}"`
+      : "current publicly documented Microsoft capabilities";
+    $("grid").classList.remove("journey-mode");
+    $("grid").innerHTML = rows.length ? rows.map(row => firstPartyCard(row.agent)).join("") : emptyState();
     return;
   }
 
@@ -2411,6 +2555,59 @@ function openStack(key) {
   location.hash = `stack/${enc(key)}`;
 }
 
+function openFirstParty(id) {
+  const agent = state.firstParty.find(item => item.id === id);
+  if (!agent) return;
+  const availability = agent._availability_label || agent.lifecycle || "Available";
+  const notes = [
+    ...(agent.capability_notes || []),
+    agent.configure_note
+  ].filter(Boolean);
+  openModal(`
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="first-party-title">
+      <button class="icon-button modal-close" type="button" data-action="close-modal" aria-label="Close">×</button>
+      <header class="detail-head">
+        <span class="detail-icon">${esc(CATEGORY_ICONS[agent.vertical] || "▣")}</span>
+        <div>
+          <div class="category">${esc(agent.product)} · ${esc(firstPartyVerticalName(agent.vertical))} · ${esc(availability)}</div>
+          <h2 id="first-party-title">${esc(agent.name)}</h2>
+          <p>${esc(agent.description)}</p>
+        </div>
+      </header>
+      <div class="detail-body">
+        <div>
+          <section class="detail-section">
+            <h3>Current use cases</h3>
+            <ul>${(agent.use_cases || []).map(item => `<li>${esc(item)}</li>`).join("")}</ul>
+          </section>
+          ${notes.length ? `
+          <section class="detail-section">
+            <h3>Notes</h3>
+            <ul>${notes.map(note => `<li>${esc(note)}</li>`).join("")}</ul>
+          </section>` : ""}
+        </div>
+        <aside class="detail-aside">
+          <section class="aside-block microsoft-panel">
+            <h3>Microsoft first-party</h3>
+            <p>This is a current publicly documented capability in ${esc(agent.product)}.</p>
+          </section>
+          <section class="aside-block">
+            <h3>Microsoft Learn</h3>
+            <a class="button full" href="${esc(agent.overview_url)}" target="_blank" rel="noopener">Overview ↗</a>
+            ${agent.configure_url ? `<a class="button full" href="${esc(agent.configure_url)}" target="_blank" rel="noopener">Configure ↗</a>` : ""}
+          </section>
+          ${(agent.personas || []).length ? `
+          <section class="aside-block">
+            <h3>Personas</h3>
+            <div class="tool-chips">${agent.personas.map(p => `<span class="tool-chip">${esc(p)}</span>`).join("")}</div>
+          </section>` : ""}
+        </aside>
+      </div>
+    </div>
+  `);
+  location.hash = `first-party/${enc(agent.id)}`;
+}
+
 function openModal(html) {
   $("modal-root").innerHTML = html;
   $("modal-root").classList.add("open");
@@ -2422,7 +2619,8 @@ function closeModal() {
   $("modal-root").classList.remove("open");
   $("modal-root").innerHTML = "";
   document.body.classList.remove("modal-open");
-  if (location.hash.startsWith("#agent/") || location.hash.startsWith("#stack/")) {
+  if (location.hash.startsWith("#agent/") || location.hash.startsWith("#stack/")
+    || location.hash.startsWith("#first-party/")) {
     history.replaceState(null, "", location.pathname + location.search);
   }
 }
@@ -2502,12 +2700,17 @@ document.addEventListener("click", event => {
     render();
   } else if (action === "view") {
     state.view = target.dataset.view;
+    if (state.view === "first-party") {
+      state.readiness = "";
+      state.sort = "relevance";
+    }
+    buildFilters();
     render();
   } else if (action === "industry-menu") {
     const industry = target.dataset.industry;
-    state.industry = state.industry === industry ? "" : industry;
-    $("industry").value = state.industry;
     state.view = "solutions";
+    state.industry = state.industry === industry ? "" : industry;
+    buildFilters();
     render();
   } else if (action === "clear-filter") {
     const key = target.dataset.filter;
@@ -2529,6 +2732,10 @@ document.addEventListener("click", event => {
     openAgent(dec(target.dataset.name));
   } else if (action === "open-stack") {
     openStack(dec(target.dataset.key));
+  } else if (action === "open-first-party") {
+    openFirstParty(dec(target.dataset.id));
+  } else if (action === "stop") {
+    event.stopPropagation();
   } else if (action === "copy") {
     copyText(dec(target.dataset.text));
   } else if (action === "detail-tab") {

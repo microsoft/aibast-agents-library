@@ -34,6 +34,7 @@ Exit code is 0 even when network sources fail — partial metrics are still writ
 """
 
 import argparse
+import html
 import json
 import math
 import os
@@ -42,6 +43,7 @@ import subprocess
 import sys
 import urllib.error
 import urllib.request
+import unicodedata
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -71,6 +73,14 @@ AGENT_DISCUSSION_SIGNALS = ("upvote", "acquisition")
 ACHIEVEMENT_PROGRESS_MARKER = "<!-- aibast-achievement-progress:v1 -->"
 ACHIEVEMENT_PROGRESS_SCHEMA = "aibast-achievement-progress/1.0"
 ACHIEVEMENT_PROGRESS_LABEL = "achievement-progress"
+WORKSHOP_COHORT_MARKER = "<!-- aibast-workshop-cohort:v1 -->"
+WORKSHOP_COHORT_SCHEMA = "aibast-workshop-cohort/1.0"
+WORKSHOP_COHORT_LABEL = "workshop-cohort"
+COHORT_VERIFIED_LABEL = "cohort-verified"
+BADGE_QUALIFICATION_MARKER = "<!-- aibast-badge-qualification:v1 -->"
+BADGE_QUALIFICATION_SCHEMA = "aibast-badge-qualification/1.0"
+BADGE_QUALIFICATION_LABEL = "badge-qualification"
+BADGE_QUALIFIED_LABEL = "badge-qualified"
 ACHIEVEMENT_ORDER = (
     "started",
     "local-proof",
@@ -1985,6 +1995,19 @@ def parse_achievement_claim(body, catalog):
         return None
     if (
         values["Schema"] != ACHIEVEMENT_PROGRESS_SCHEMA
+        or not _exact_signal_body_shape(
+            body,
+            ACHIEVEMENT_PROGRESS_MARKER,
+            "## Workshop achievement progress",
+            5,
+            (
+                (),
+                (
+                    "Opening this form does not sync anything. Submit the issue to sync these earned IDs. Resubmitting later merges newly earned IDs without duplicate score; the server computes the verified score. One public GitHub issue submission opts this account into a public verified profile.",
+                    "> Do not add credentials, tokens, customer data, or other sensitive information.",
+                ),
+            ),
+        )
         or expected is None
         or values["Agent"] != expected["catalog_key"]
     ):
@@ -1995,6 +2018,453 @@ def parse_achievement_claim(body, catalog):
         "achievements": achievement_ids,
         "source": values["Source"],
     }
+
+
+def _parse_strict_signal_fields(body, marker, field_names):
+    """Parse one exact public-safe issue shape with no duplicate fields."""
+    text = body or ""
+    if not text.startswith(marker):
+        return None
+    field_pattern = re.compile(
+        rf"^(?:- )?({'|'.join(re.escape(name) for name in field_names)}): (.+)$"
+    )
+    field_like_pattern = re.compile(
+        r"^\s*(?:>+\s*)?"
+        r"(?:(?:[-*+•]|\d+[.)])\s*)?"
+        r"[^:\n]{1,80}\s*:"
+    )
+    forbidden_private_field = re.compile(
+        r"^\s*(?:>+\s*)?"
+        r"(?:(?:[-*+•]|\d+[.)])\s*)?"
+        r"(?:MSIX|Microsoft alias|Email|Customer|Organization|Roster|"
+        r"Test answers?|Token|Credential|Secret)\s*:",
+        re.IGNORECASE,
+    )
+    fields = defaultdict(list)
+    for line in text.splitlines()[1:]:
+        if "<!--" in line or "-->" in line:
+            return None
+        normalized_line = html.unescape(line)
+        normalized_line = unicodedata.normalize("NFKC", normalized_line)
+        normalized_line = re.sub(r"[\u200B-\u200D\uFEFF]", "", normalized_line)
+        normalized_line = re.sub(r"<[^>]*>", "", normalized_line)
+        normalized_line = re.sub(r"[`*_~]", "", normalized_line)
+        if forbidden_private_field.match(normalized_line):
+            return None
+        match = field_pattern.match(line)
+        if match:
+            fields[match.group(1)].append(match.group(2))
+        elif field_like_pattern.match(normalized_line):
+            return None
+    if any(len(fields[name]) != 1 for name in field_names):
+        return None
+    values = {
+        name: _achievement_field_value(fields[name][0])
+        for name in field_names
+    }
+    return values if all(value is not None for value in values.values()) else None
+
+
+def _exact_signal_body_shape(
+    body,
+    marker,
+    heading,
+    field_count,
+    allowed_extra_sets=((),),
+):
+    lines = [line.strip() for line in (body or "").splitlines() if line.strip()]
+    if len(lines) < 2 or lines[0] != marker or lines[1] != heading:
+        return False
+    tail = lines[2:]
+    field_lines = [line for line in tail if line.startswith("- ")]
+    extras = [line for line in tail if not line.startswith("- ")]
+    return (
+        len(field_lines) == field_count
+        and any(tuple(extras) == tuple(allowed) for allowed in allowed_extra_sets)
+    )
+
+
+def _valid_cohort_code(value):
+    return (
+        "REPLACE" not in value
+        and "YYYY" not in value
+        and bool(
+            re.fullmatch(
+                r"[A-Z0-9](?:[A-Z0-9-]{4,38}[A-Z0-9])",
+                value,
+            )
+        )
+    )
+
+
+def parse_workshop_cohort_claim(body, catalog):
+    """Parse a public-safe facilitator cohort trigger."""
+    names = (
+        "Schema",
+        "Workshop",
+        "Agent",
+        "Cohort code",
+        "Session date",
+        "Attendee count",
+        "Private facilitator form submitted",
+        "Public progress consent",
+    )
+    values = _parse_strict_signal_fields(body, WORKSHOP_COHORT_MARKER, names)
+    if not values:
+        return None
+    workshop = _achievement_catalog_map(catalog).get(values["Workshop"])
+    try:
+        datetime.strptime(values["Session date"], "%Y-%m-%d")
+        attendee_count = int(values["Attendee count"])
+    except (TypeError, ValueError):
+        return None
+    if (
+        values["Schema"] != WORKSHOP_COHORT_SCHEMA
+        or not _exact_signal_body_shape(
+            body,
+            WORKSHOP_COHORT_MARKER,
+            "## Public workshop cohort trigger",
+            len(names),
+        )
+        or workshop is None
+        or values["Agent"] != workshop["catalog_key"]
+        or not _valid_cohort_code(values["Cohort code"])
+        or not 1 <= attendee_count <= 10000
+        or values["Private facilitator form submitted"].casefold() != "yes"
+        or values["Public progress consent"].casefold() != "yes"
+    ):
+        return None
+    return {
+        "workshop": values["Workshop"],
+        "agent": values["Agent"],
+        "cohort_code": values["Cohort code"],
+        "session_date": values["Session date"],
+        "attendee_count": attendee_count,
+    }
+
+
+def parse_badge_qualification_claim(body, catalog):
+    """Parse a public-safe module qualification trigger."""
+    names = (
+        "Schema",
+        "Workshop",
+        "Agent",
+        "Cohort code",
+        "Achievement progress issue",
+        "Private qualification form submitted",
+        "Public profile consent",
+    )
+    values = _parse_strict_signal_fields(
+        body,
+        BADGE_QUALIFICATION_MARKER,
+        names,
+    )
+    if not values:
+        return None
+    workshop = _achievement_catalog_map(catalog).get(values["Workshop"])
+    issue_url_pattern = re.compile(
+        rf"https://github\.com/{re.escape(OWNER)}/{re.escape(REPO)}/issues/[1-9]\d*"
+    )
+    if (
+        values["Schema"] != BADGE_QUALIFICATION_SCHEMA
+        or not _exact_signal_body_shape(
+            body,
+            BADGE_QUALIFICATION_MARKER,
+            "## Public badge qualification trigger",
+            len(names),
+        )
+        or workshop is None
+        or values["Agent"] != workshop["catalog_key"]
+        or not _valid_cohort_code(values["Cohort code"])
+        or not issue_url_pattern.fullmatch(values["Achievement progress issue"])
+        or values["Private qualification form submitted"].casefold() != "yes"
+        or values["Public profile consent"].casefold() != "yes"
+    ):
+        return None
+    return {
+        "workshop": values["Workshop"],
+        "agent": values["Agent"],
+        "cohort_code": values["Cohort code"],
+        "achievement_issue_url": values["Achievement progress issue"],
+    }
+
+
+def _issue_label_names(issue):
+    return {
+        label if isinstance(label, str) else label.get("name")
+        for label in issue.get("labels", [])
+        if isinstance(label, str) or isinstance(label, dict)
+    } - {None}
+
+
+def group_workshop_certification(issues, catalog, complete=True, as_of=None):
+    """Aggregate public-safe facilitator and candidate review records."""
+    workshop_map = _achievement_catalog_map(catalog)
+    facilitators = defaultdict(
+        lambda: {
+            "display": None,
+            "verified_cohorts": set(),
+            "workshops": set(),
+            "attendees": 0,
+        }
+    )
+    candidates = defaultdict(
+        lambda: {
+            "display": None,
+            "qualified_workshops": set(),
+        }
+    )
+    workshop_counts = {
+        slug: {
+            "cohort_submissions": 0,
+            "verified_cohorts": 0,
+            "attendees_reported": 0,
+            "qualification_submissions": 0,
+            "qualified_profiles": set(),
+        }
+        for slug in workshop_map
+    }
+    seen_cohorts = set()
+    seen_qualifications = set()
+    diagnostics = {
+        "cohort_submissions": 0,
+        "qualification_submissions": 0,
+        "verified_cohorts": 0,
+        "qualified_modules": 0,
+        "duplicate_submissions": 0,
+        "invalid_issues": 0,
+        "invalid_users": 0,
+        "pull_requests": 0,
+    }
+    for issue in issues or []:
+        if issue.get("pull_request"):
+            diagnostics["pull_requests"] += 1
+            continue
+        body = issue.get("body", "")
+        cohort = parse_workshop_cohort_claim(body, catalog)
+        qualification = parse_badge_qualification_claim(body, catalog)
+        if not cohort and not qualification:
+            diagnostics["invalid_issues"] += 1
+            continue
+        login = _github_login((issue.get("user") or {}).get("login"))
+        if not login:
+            diagnostics["invalid_users"] += 1
+            continue
+        login_key = login.casefold()
+        labels = _issue_label_names(issue)
+        if cohort:
+            diagnostics["cohort_submissions"] += 1
+            workshop_counts[cohort["workshop"]]["cohort_submissions"] += 1
+            key = (login_key, cohort["cohort_code"], cohort["workshop"])
+            if COHORT_VERIFIED_LABEL not in labels:
+                continue
+            if key in seen_cohorts:
+                diagnostics["duplicate_submissions"] += 1
+                continue
+            seen_cohorts.add(key)
+            diagnostics["verified_cohorts"] += 1
+            row = facilitators[login_key]
+            row["display"] = row["display"] or login
+            row["verified_cohorts"].add(
+                f"{cohort['cohort_code']}:{cohort['workshop']}"
+            )
+            row["workshops"].add(cohort["workshop"])
+            row["attendees"] += cohort["attendee_count"]
+            workshop_counts[cohort["workshop"]]["verified_cohorts"] += 1
+            workshop_counts[cohort["workshop"]]["attendees_reported"] += (
+                cohort["attendee_count"]
+            )
+            continue
+
+        diagnostics["qualification_submissions"] += 1
+        workshop_counts[qualification["workshop"]][
+            "qualification_submissions"
+        ] += 1
+        if BADGE_QUALIFIED_LABEL not in labels:
+            continue
+        key = (login_key, qualification["workshop"])
+        if key in seen_qualifications:
+            diagnostics["duplicate_submissions"] += 1
+            continue
+        seen_qualifications.add(key)
+        diagnostics["qualified_modules"] += 1
+        row = candidates[login_key]
+        row["display"] = row["display"] or login
+        row["qualified_workshops"].add(qualification["workshop"])
+        workshop_counts[qualification["workshop"]]["qualified_profiles"].add(
+            login_key
+        )
+
+    facilitator_profiles = [
+        {
+            "login": row["display"],
+            "verified_cohorts": len(row["verified_cohorts"]),
+            "attendees_reported": row["attendees"],
+            "workshops": sorted(row["workshops"]),
+        }
+        for row in facilitators.values()
+    ]
+    facilitator_profiles.sort(
+        key=lambda row: (
+            -row["verified_cohorts"],
+            -row["attendees_reported"],
+            row["login"].casefold(),
+            row["login"],
+        )
+    )
+    candidate_profiles = [
+        {
+            "login": row["display"],
+            "qualified_modules": len(row["qualified_workshops"]),
+            "workshops": sorted(row["qualified_workshops"]),
+        }
+        for row in candidates.values()
+    ]
+    candidate_profiles.sort(
+        key=lambda row: (
+            -row["qualified_modules"],
+            row["login"].casefold(),
+            row["login"],
+        )
+    )
+    workshop_rows = []
+    for slug, workshop in workshop_map.items():
+        counts = workshop_counts[slug]
+        workshop_rows.append({
+            "slug": slug,
+            "display_name": workshop["display_name"],
+            "agent_name": workshop["catalog_key"],
+            "cohort_submissions": counts["cohort_submissions"],
+            "verified_cohorts": counts["verified_cohorts"],
+            "attendees_reported": counts["attendees_reported"],
+            "qualification_submissions": counts[
+                "qualification_submissions"
+            ],
+            "qualified_profiles": len(counts["qualified_profiles"]),
+        })
+    workshop_rows.sort(key=lambda row: row["display_name"].casefold())
+    return {
+        "schema": "aibast-workshop-certification/1.0",
+        "status": "available" if complete else "partial",
+        "as_of": as_of,
+        "carried_forward": False,
+        "totals": {
+            "cohort_submissions": diagnostics["cohort_submissions"],
+            "verified_cohorts": diagnostics["verified_cohorts"],
+            "facilitators": len(facilitator_profiles),
+            "attendees_reported": sum(
+                row["attendees_reported"] for row in facilitator_profiles
+            ),
+            "qualification_submissions": diagnostics[
+                "qualification_submissions"
+            ],
+            "qualified_modules": diagnostics["qualified_modules"],
+            "qualified_profiles": len(candidate_profiles),
+        },
+        "facilitators": facilitator_profiles,
+        "candidates": candidate_profiles,
+        "workshops": workshop_rows,
+        "coverage": {
+            "status": "available" if complete else "partial",
+            "scope": (
+                "Public GitHub issues with exact cohort or badge qualification "
+                "markers. Private Microsoft identity, MSIX, customer, roster, "
+                "and test-answer data are deliberately excluded. Cohorts count "
+                "only with cohort-verified; qualifications count only with "
+                "badge-qualified."
+            ),
+            "diagnostics": diagnostics,
+        },
+    }
+
+
+def unavailable_workshop_certification(catalog):
+    rows = [
+        {
+            "slug": workshop["slug"],
+            "display_name": workshop["display_name"],
+            "agent_name": workshop["catalog_key"],
+            "cohort_submissions": None,
+            "verified_cohorts": None,
+            "attendees_reported": None,
+            "qualification_submissions": None,
+            "qualified_profiles": None,
+        }
+        for workshop in _achievement_catalog_map(catalog).values()
+    ]
+    rows.sort(key=lambda row: row["display_name"].casefold())
+    return {
+        "schema": "aibast-workshop-certification/1.0",
+        "status": "unavailable",
+        "as_of": None,
+        "carried_forward": False,
+        "totals": {
+            "cohort_submissions": None,
+            "verified_cohorts": None,
+            "facilitators": None,
+            "attendees_reported": None,
+            "qualification_submissions": None,
+            "qualified_modules": None,
+            "qualified_profiles": None,
+        },
+        "facilitators": [],
+        "candidates": [],
+        "workshops": rows,
+        "coverage": {
+            "status": "unavailable",
+            "scope": (
+                "Certification issue records were not read. Null means "
+                "unavailable, not zero."
+            ),
+            "diagnostics": {},
+        },
+    }
+
+
+def carry_forward_workshop_certification(prior, catalog):
+    previous = prior.get("workshop_certification")
+    canonical_slugs = set(_achievement_catalog_map(catalog))
+    if (
+        not isinstance(previous, dict)
+        or previous.get("schema") != "aibast-workshop-certification/1.0"
+        or previous.get("status") == "unavailable"
+        or {
+            row.get("slug")
+            for row in previous.get("workshops", [])
+            if row.get("slug")
+        } != canonical_slugs
+    ):
+        return unavailable_workshop_certification(catalog)
+    carried = json.loads(json.dumps(previous))
+    carried["carried_forward"] = True
+    carried.setdefault("as_of", prior.get("generated_at"))
+    coverage = carried.setdefault("coverage", {})
+    coverage["carried_forward"] = True
+    return carried
+
+
+def fetch_workshop_certification(token, catalog, as_of=None):
+    page_result = fetch_issue_pages(token)
+    if not page_result["available"]:
+        return unavailable_workshop_certification(catalog)
+    candidates = [
+        issue
+        for issue in page_result["issues"]
+        if (issue.get("body") or "").startswith(
+            (WORKSHOP_COHORT_MARKER, BADGE_QUALIFICATION_MARKER)
+        )
+    ]
+    result = group_workshop_certification(
+        candidates,
+        catalog,
+        complete=page_result["complete"],
+        as_of=as_of,
+    )
+    result["coverage"].update({
+        "pages": page_result["pages"],
+        "issues_scanned": len(candidates),
+    })
+    return result
 
 
 def _github_login(login):
@@ -3352,6 +3822,10 @@ def main():
             ),
         }
         achievements = carry_forward_achievements(prior, workshop_catalog)
+        workshop_certification = carry_forward_workshop_certification(
+            prior,
+            workshop_catalog,
+        )
         daily = prior.get("daily", []) if prior else []
         prior_totals = prior.get("totals") or {}
         remote_totals = {
@@ -3407,6 +3881,17 @@ def main():
         )
         if achievements["status"] == "unavailable":
             achievements = carry_forward_achievements(prior, workshop_catalog)
+        log("· workshop certification")
+        workshop_certification = fetch_workshop_certification(
+            token,
+            workshop_catalog,
+            as_of=generated_at,
+        )
+        if workshop_certification["status"] == "unavailable":
+            workshop_certification = carry_forward_workshop_certification(
+                prior,
+                workshop_catalog,
+            )
         for name, agent in agents.items():
             agent["upvotes"] = agent_upvotes["counts"].get(name)
             agent["acquisitions"] = agent_acquisitions["counts"].get(name)
@@ -3740,13 +4225,14 @@ def main():
         "file_metrics": file_metrics,
         "workshops": workshops,
         "achievements": achievements,
+        "workshop_certification": workshop_certification,
         "ecosystem": ecosystem,
         "sources": [
             {"name": "GitHub Traffic API", "metric": "clones, views, popular paths (clones include this repo's own CI checkouts)", "url": f"{GH_API}/repos/{OWNER}/{REPO}/traffic/clones"},
             {"name": "jsDelivr CDN", "metric": "per-file download observations across every tracked repository file, including agents, skills, workshops, installers, documentation, code, and assets", "url": f"{JSDELIVR}/stats/packages/gh/{OWNER}/{REPO}"},
             {"name": "GitHub Releases", "metric": "release asset downloads", "url": f"{GH_API}/repos/{OWNER}/{REPO}/releases"},
             {"name": "GitHub Discussions", "metric": "canonical per-agent preference and signed-in acquisition ledgers using native upvote counts", "url": f"https://github.com/{OWNER}/{REPO}/discussions"},
-            {"name": "GitHub Issues", "metric": "structured public workshop feedback and opt-in verified achievement progress syncs validated from issue bodies", "url": f"{GH_API}/repos/{OWNER}/{REPO}/issues?state=all"},
+            {"name": "GitHub Issues", "metric": "structured public workshop feedback, opt-in achievement progress, cohort delivery, and badge qualification triggers validated from issue bodies and reviewer labels", "url": f"{GH_API}/repos/{OWNER}/{REPO}/issues?state=all"},
             {"name": "registry.json", "metric": "agents, stacks, verticals, categories", "url": f"https://{OWNER}.github.io/{REPO}/registry.json"},
         ],
     }
@@ -3771,6 +4257,13 @@ def main():
         f"  achievement_status={achievements['status']} "
         f"achievement_participants={achievements['totals']['participants']} "
         f"achievement_points={achievements['totals']['points']}"
+    )
+    log(
+        f"  certification_status={workshop_certification['status']} "
+        f"verified_cohorts="
+        f"{workshop_certification['totals']['verified_cohorts']} "
+        f"qualified_profiles="
+        f"{workshop_certification['totals']['qualified_profiles']}"
     )
     log(
         f"  ecosystem_status={ecosystem['status']} "
