@@ -2161,9 +2161,7 @@ def test_metrics_page_binds_workshop_adoption_schema():
     assert "Repository stars" in html
     assert "AIBAST distribution, engagement, and learning impact" in html
     assert "label: 'Most upvoted'" in html
-    assert "label: 'Most acquired'" in html
     assert "t.agent_upvotes" in html
-    assert "t.agent_acquisitions" in html
     assert "Array.isArray(M.agent_metrics) ? M.agent_metrics : []" in html
     assert "const advertisedWorkshopAgents = new Set(" in html
     assert "row.catalog_kind !== 'solution'" in html
@@ -2188,8 +2186,8 @@ def test_metrics_page_binds_workshop_adoption_schema():
     assert "M.file_metrics || {}" in html
     assert "Array.isArray(metrics.rows)" in html
     assert "FILE_LEDGER_PAGE_SIZE = 50" in html
-    assert "t.skill_downloads" in html
-    assert "Skill downloads" in html
+    assert "Agent downloads" in html
+    assert "Skill downloads" not in html
     assert "Skill (SKILL.md)" in html
     assert "const DEFAULT_OWNER = 'microsoft'" in html
     assert "DEFAULT_REPO = 'aibast-agents-library'" in html

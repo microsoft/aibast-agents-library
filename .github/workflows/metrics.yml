@@ -5,12 +5,13 @@ on:
     - cron: '20 5 * * *'  # 5:20 AM UTC daily
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [main, easy-mode-copilot-chat-pilot]
     paths:
       - 'scripts/build_metrics.py'
       - 'scripts/sync_agent_discussions.py'
       - 'scripts/build_impact_report.py'
       - 'scripts/impact-report-requirements.txt'
+      - 'library.html'
       - 'metrics.html'
       - 'registry.json'
       - 'solutions/catalog.json'
@@ -42,6 +43,7 @@ jobs:
           DISCUSSIONS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           METRICS_OWNER: ${{ github.repository_owner }}
           METRICS_REPO: ${{ github.event.repository.name }}
+          METRICS_REF: ${{ github.ref_name }}
         run: python scripts/sync_agent_discussions.py
 
       - name: Collect public metrics
@@ -67,6 +69,7 @@ jobs:
           DISCUSSIONS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           METRICS_OWNER: ${{ github.repository_owner }}
           METRICS_REPO: ${{ github.event.repository.name }}
+          METRICS_REF: ${{ github.ref_name }}
         run: python scripts/build_metrics.py
 
       - name: Build weekly and monthly impact report

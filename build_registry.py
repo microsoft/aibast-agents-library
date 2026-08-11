@@ -411,6 +411,16 @@ def build_registry():
         manifest["_size_kb"] = round(len(raw) / 1024, 1)
         manifest["_lines"] = len(content.split('\n'))
         manifest["_sha256"] = hashlib.sha256(raw).hexdigest()
+        install_slug = re.sub(
+            r"[^a-z0-9]+",
+            "_",
+            manifest["name"].split("/", 1)[-1].lower(),
+        ).strip("_")
+        manifest["_install_prefix"] = f"{install_slug}__"
+        manifest["_install_filename"] = (
+            f"{manifest['_install_prefix']}"
+            f"{manifest['_sha256'][:12]}_agent.py"
+        )
         manifest["_stack"] = stack
         manifest["_stack_vertical"] = vertical
         manifest["_synthetic_data"] = bool(

@@ -144,12 +144,10 @@ const available = buildAgentSignalMap({
     {
       name: "canonical-a",
       upvotes: 7,
-      acquisitions: 4,
       downloads: 142,
       upvote_discussion_url: "https://github.com/microsoft/aibast-agents-library/discussions/1",
-      acquisition_discussion_url: "https://github.com/microsoft/aibast-agents-library/discussions/2"
     },
-    {name: "canonical-b", upvotes: null, acquisitions: 0, downloads: 0},
+    {name: "canonical-b", upvotes: null, downloads: 0},
     {name: "not-in-registry", upvotes: 99}
   ]
 }, agents);
@@ -163,39 +161,28 @@ console.log(JSON.stringify({
     assert result["available"] == {
         "canonical-a": {
             "upvotes": 7,
-            "acquisitions": 4,
             "downloads": 142,
             "upvoteUrl": (
                 "https://github.com/microsoft/"
                 "aibast-agents-library/discussions/1"
             ),
-            "acquisitionUrl": (
-                "https://github.com/microsoft/"
-                "aibast-agents-library/discussions/2"
-            ),
         },
         "canonical-b": {
             "upvotes": None,
-            "acquisitions": None,
             "downloads": 0,
             "upvoteUrl": "",
-            "acquisitionUrl": "",
         },
         "canonical-c": {
             "upvotes": None,
-            "acquisitions": None,
             "downloads": None,
             "upvoteUrl": "",
-            "acquisitionUrl": "",
         },
     }
     assert result["unavailable"] == {
         name: {
             "upvotes": None,
-            "acquisitions": None,
             "downloads": None,
             "upvoteUrl": "",
-            "acquisitionUrl": "",
         }
         for name in ("canonical-a", "canonical-b", "canonical-c")
     }
@@ -227,18 +214,14 @@ const agent = {
 };
 state.agentSignals = new Map([[agent.name, {
   upvotes: null,
-  acquisitions: null,
   downloads: null,
   upvoteUrl: "",
-  acquisitionUrl: ""
 }]]);
 const unavailable = agentUpvoteControl(agent);
 state.agentSignals = new Map([[agent.name, {
   upvotes: 12,
-  acquisitions: 3,
   downloads: 142,
   upvoteUrl: "https://github.com/microsoft/aibast-agents-library/discussions/1",
-  acquisitionUrl: "https://github.com/microsoft/aibast-agents-library/discussions/2"
 }]]);
 const available = agentUpvoteControl(agent);
 const downloads = agentDownloadCount(agent);
@@ -271,6 +254,10 @@ def test_agent_detail_downloads_python_file_instead_of_showing_one_liner():
     assert ">Deployment settings</a>" in detail
     assert "Record acquisition" not in detail
     assert "agentAcquisitionControl" not in detail
+    assert "releases/download" in text
+    assert "const AGENT_RELEASE" in text
+    assert 'href: `${AGENT_RELEASE}/${encodeURIComponent(filename)}`' in text
+    assert "curl -fsSL ${AGENT_RELEASE}/" in text
     assert "the imported agent remains unpublished" in detail
     assert "Copy install command" not in detail
     assert '<pre class="code">${esc(install)}</pre>' not in detail
@@ -278,10 +265,10 @@ def test_agent_detail_downloads_python_file_instead_of_showing_one_liner():
     result = run_library_node(
         """
 const direct = agentDownload({
-  _file: "agents/example_agent.py"
+  _install_filename: "example__aaaaaaaaaaaa_agent.py"
 });
 const renamed = agentDownload({
-  _file: "agents/orchestrator.py"
+  _install_filename: "orchestrator__bbbbbbbbbbbb_agent.py"
 });
 state.exportedSolutionSlugs = new Set(["account-intelligence"]);
 const solution = copilotSolutionDownloads({
@@ -292,12 +279,20 @@ console.log(JSON.stringify({direct, renamed, solution}));
     )
     assert result == {
         "direct": {
-            "href": "agents/example_agent.py",
-            "filename": "example_agent.py",
+            "href": (
+                "https://github.com/microsoft/aibast-agents-library/"
+                "releases/download/agent-downloads/"
+                "example__aaaaaaaaaaaa_agent.py"
+            ),
+            "filename": "example__aaaaaaaaaaaa_agent.py",
         },
         "renamed": {
-            "href": "agents/orchestrator.py",
-            "filename": "orchestrator_agent.py",
+            "href": (
+                "https://github.com/microsoft/aibast-agents-library/"
+                "releases/download/agent-downloads/"
+                "orchestrator__bbbbbbbbbbbb_agent.py"
+            ),
+            "filename": "orchestrator__bbbbbbbbbbbb_agent.py",
         },
         "solution": {
             "zip": (
@@ -343,7 +338,7 @@ console.log(JSON.stringify({
     }
 
 
-def test_upvote_and_acquisition_open_canonical_discussions():
+def test_upvote_opens_canonical_discussion():
     result = run_library_node(
         """
 const agent = {
@@ -354,21 +349,16 @@ const agent = {
 state.agents = [agent];
 state.agentSignals = new Map([[agent.name, {
   upvotes: 8,
-  acquisitions: 5,
-  upvoteUrl: "https://github.com/microsoft/aibast-agents-library/discussions/10",
-  acquisitionUrl: "https://github.com/microsoft/aibast-agents-library/discussions/11"
+  upvoteUrl: "https://github.com/microsoft/aibast-agents-library/discussions/10"
 }]]);
 openAgentUpvote(agent.name);
-const upvoteArgs = openArgs;
-openAgentSignal(agent.name, "acquisition");
-console.log(JSON.stringify({upvoteArgs, acquisitionArgs: openArgs}));
+console.log(JSON.stringify({upvoteArgs: openArgs}));
 """
     )
     url, target, features = result["upvoteArgs"]
     assert url.endswith("/discussions/10")
     assert target == "_blank"
     assert features == "noopener"
-    assert result["acquisitionArgs"][0].endswith("/discussions/11")
 
 
 def test_missing_discussion_url_disables_external_action():
@@ -382,19 +372,15 @@ const agent = {
 state.agents = [agent];
 state.agentSignals = new Map([[agent.name, {
   upvotes: null,
-  acquisitions: null,
-  upvoteUrl: "",
-  acquisitionUrl: ""
+  upvoteUrl: ""
 }]]);
 globalThis.openArgs = null;
 openAgentUpvote(agent.name);
-const upvoteArgs = openArgs;
-openAgentSignal(agent.name, "acquisition");
-console.log(JSON.stringify({upvoteArgs, acquisitionArgs: openArgs}));
+console.log(JSON.stringify({upvoteArgs: openArgs}));
 """
     )
 
-    assert result == {"upvoteArgs": None, "acquisitionArgs": None}
+    assert result == {"upvoteArgs": None}
 
 
 def test_upvote_action_stops_card_open_and_never_increments_count():
@@ -423,7 +409,8 @@ def test_upvote_action_stops_card_open_and_never_increments_count():
 
 def test_library_explains_public_agent_signal_and_snapshot_refresh():
     text = library_text()
-    assert "two stable public GitHub Discussions" in text
-    assert "signed-in acquisition" in text
-    assert "observable CDN and release file transfers" in text
+    assert "one public GitHub rating Discussion" in text
+    assert "Signed-in GitHub users" in text
+    assert "Upvotes are community preference" in text
+    assert "acquisition" not in text.lower()
     assert '<a href="achievements.html">Achievements</a>' in text

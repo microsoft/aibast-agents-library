@@ -349,6 +349,7 @@ def test_metrics_workflow_compiles_issues_from_its_own_repository():
 
     assert "METRICS_OWNER: ${{ github.repository_owner }}" in collect_step
     assert "METRICS_REPO: ${{ github.event.repository.name }}" in collect_step
+    assert "METRICS_REF: ${{ github.ref_name }}" in collect_step
     assert "run: python scripts/build_metrics.py" in collect_step
     assert "METRICS_OWNER: microsoft" not in collect_step
     assert "DISCUSSIONS_TOKEN: ${{ secrets.GITHUB_TOKEN }}" in text

@@ -1,0 +1,113 @@
+name: Agent Download Assets
+
+on:
+  push:
+    branches: [main, easy-mode-copilot-chat-pilot]
+    paths:
+      - 'agents/**/*.py'
+      - 'build_registry.py'
+      - 'registry.json'
+      - '.github/workflows/agent-download-assets.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: agent-download-assets-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Build immutable agent assets
+        run: |
+          cp registry.json "$RUNNER_TEMP/registry-before.json"
+          python build_registry.py
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          import shutil
+          from pathlib import Path
+
+          registry_path = Path("registry.json")
+          registry = json.loads(registry_path.read_text())
+          previous = json.loads(
+              (Path(os.environ["RUNNER_TEMP"]) / "registry-before.json").read_text()
+          )
+          comparable = lambda value: {
+              key: item for key, item in value.items() if key != "generated_at"
+          }
+          if comparable(registry) == comparable(previous):
+              registry["generated_at"] = previous.get("generated_at")
+              registry_path.write_text(json.dumps(registry, indent=2) + "\n")
+
+          output = Path("dist/agent-downloads")
+          output.mkdir(parents=True, exist_ok=True)
+          for agent in registry["agents"]:
+              source = Path(agent["_file"])
+              payload = source.read_bytes()
+              digest = hashlib.sha256(payload).hexdigest()
+              assert digest == agent["_sha256"], agent["name"]
+              filename = agent["_install_filename"]
+              assert filename.endswith("_agent.py"), filename
+              shutil.copyfile(source, output / filename)
+          print(f"Prepared {len(registry['agents'])} immutable agent assets")
+          PY
+          git config user.name "RAPP Registry Bot"
+          git config user.email "rapp-bot@users.noreply.github.com"
+          git add registry.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Auto-build registry.json [skip ci]"
+            git push
+          fi
+
+      - name: Publish missing assets
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ "$GITHUB_REF_NAME" = "main" ]; then
+            tag="agent-downloads"
+            title="AIBAST Agent Downloads"
+          else
+            tag="agent-downloads-staging"
+            title="AIBAST Agent Downloads (staging)"
+          fi
+          if ! gh release view "$tag" >/dev/null 2>&1; then
+            gh release create "$tag" \
+              --target "$(git rev-parse HEAD)" \
+              --title "$title" \
+              --notes "Immutable agent.py assets. GitHub records each asset download."
+          fi
+          gh release view "$tag" --json assets --jq '.assets[].name' \
+            > "$RUNNER_TEMP/existing-assets.txt"
+          uploaded=0
+          for asset in dist/agent-downloads/*.py; do
+            name="$(basename "$asset")"
+            if grep -Fxq "$name" "$RUNNER_TEMP/existing-assets.txt"; then
+              continue
+            fi
+            gh release upload "$tag" "$asset"
+            uploaded=$((uploaded + 1))
+          done
+          echo "Uploaded $uploaded new immutable agent assets"
+
+      - name: Refresh static metrics JSON
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: "metrics.yml",
+              ref: context.ref.replace("refs/heads/", "")
+            });

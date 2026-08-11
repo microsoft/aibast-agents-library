@@ -57,6 +57,7 @@ HISTORY = ROOT / "state" / "metrics_history.json"
 
 OWNER = os.environ.get("METRICS_OWNER", "microsoft")
 REPO = os.environ.get("METRICS_REPO", "aibast-agents-library")
+REF = os.environ.get("METRICS_REF", "main")
 RAR_OWNER = os.environ.get("RAR_METRICS_OWNER", "kody-w")
 RAR_REPO = os.environ.get("RAR_METRICS_REPO", "RAR")
 GH_API = "https://api.github.com"
@@ -313,6 +314,8 @@ def build_agent_index(registry):
             "lines": a.get("_lines", 0),
             "added_at": a.get("_added_at", ""),
             "catalog_kind": a.get("_catalog_kind"),
+            "install_filename": a.get("_install_filename"),
+            "install_prefix": a.get("_install_prefix"),
             "downloads": 0,
         }
         agents[name] = rec
@@ -1193,6 +1196,66 @@ def apply_file_downloads_to_agents(agents, file_metrics):
     }
     for name, agent in agents.items():
         agent["downloads"] = by_agent.get(name)
+
+
+def agent_download_release_tag(ref=None):
+    """Return the immutable agent-asset release for this deployment ref."""
+    return "agent-downloads" if (ref or REF) == "main" else (
+        "agent-downloads-staging"
+    )
+
+
+def resolve_release_metrics(fetched, prior):
+    """Carry the last release snapshot through a transient API failure."""
+    if fetched.get("available"):
+        return fetched
+    carried = carried_block(prior, "releases")
+    if carried:
+        carried.setdefault(
+            "available",
+            carried.get("total_downloads") is not None,
+        )
+        return carried
+    return fetched
+
+
+def apply_release_downloads_to_agents(
+    agents,
+    releases,
+    release_tag=None,
+):
+    """Add immutable GitHub Release asset downloads to per-agent totals."""
+    if not releases.get("available"):
+        return False
+    release_tag = release_tag or agent_download_release_tag()
+    prefixes = {
+        record.get("install_prefix"): name
+        for name, record in agents.items()
+        if record.get("install_prefix")
+    }
+    counts = {name: 0 for name in agents}
+    for release in releases.get("releases", []):
+        if release.get("tag") != release_tag:
+            continue
+        for asset in release.get("assets", []):
+            filename = asset.get("name", "")
+            downloads = _nonnegative_int(asset.get("downloads"))
+            if downloads is None:
+                continue
+            agent_name = next(
+                (
+                    name for prefix, name in prefixes.items()
+                    if filename.startswith(prefix)
+                    and filename.endswith("_agent.py")
+                ),
+                None,
+            )
+            if agent_name:
+                counts[agent_name] += downloads
+    for name, record in agents.items():
+        legacy = record.get("downloads")
+        record["downloads"] = (legacy or 0) + counts[name]
+    return True
 
 
 def workshop_downloads_from_file_metrics(file_metrics, workshop_slugs):
@@ -2997,7 +3060,17 @@ def fetch_repo(token):
 
 
 def fetch_releases(token):
-    rels = fetch_public(f"{GH_API}/repos/{OWNER}/{REPO}/releases?per_page=100", token) or []
+    rels = fetch_public(
+        f"{GH_API}/repos/{OWNER}/{REPO}/releases?per_page=100",
+        token,
+    )
+    if not isinstance(rels, list):
+        return {
+            "available": False,
+            "total_downloads": None,
+            "count": None,
+            "releases": [],
+        }
     out, total = [], 0
     for r in rels:
         dl = sum(a.get("download_count", 0) for a in r.get("assets", []))
@@ -3010,7 +3083,12 @@ def fetch_releases(token):
             "assets": [{"name": a["name"], "downloads": a.get("download_count", 0), "size": a.get("size", 0)}
                        for a in r.get("assets", [])],
         })
-    return {"total_downloads": total, "count": len(out), "releases": out[:10]}
+    return {
+        "available": True,
+        "total_downloads": total,
+        "count": len(out),
+        "releases": out,
+    }
 
 
 def traffic_gap(err):
@@ -3092,7 +3170,7 @@ def fetch_jsdelivr_file_pages(page_size=100, max_pages=100):
     previous_signature = None
     for page in range(1, max_pages + 1):
         url = (
-            f"{JSDELIVR}/stats/packages/gh/{OWNER}/{REPO}@main/files"
+            f"{JSDELIVR}/stats/packages/gh/{OWNER}/{REPO}@{REF}/files"
             f"?period=year&limit={page_size}&page={page}"
         )
         batch = fetch_json(url)
@@ -3151,7 +3229,9 @@ def fetch_jsdelivr(by_file, agents, workshop_slugs=()):
         ),
         "workshop_download_diagnostics": {},
     }
-    pkg = fetch_json(f"{JSDELIVR}/stats/packages/gh/{OWNER}/{REPO}?period=year")
+    pkg = fetch_json(
+        f"{JSDELIVR}/stats/packages/gh/{OWNER}/{REPO}@{REF}?period=year"
+    )
     if isinstance(pkg, dict):
         out["package_available"] = True
         out["total_hits"] = pkg.get("hits", {}).get("total", 0)
@@ -3767,12 +3847,18 @@ def main():
             ),
         }
         releases = carried_block(prior, "releases") or {
+            "available": False,
             "total_downloads": None,
             "count": None,
             "releases": [],
             "as_of": None,
             "carried_forward": False,
         }
+        releases.setdefault(
+            "available",
+            releases.get("total_downloads") is not None,
+        )
+        apply_release_downloads_to_agents(agents, releases)
         cdn = carried_block(prior, "cdn") or {
             "total_hits": None,
             "bandwidth": None,
@@ -3850,7 +3936,7 @@ def main():
         log("· github repo")
         repo = fetch_repo(token)
         log("· releases")
-        releases = fetch_releases(token)
+        releases = resolve_release_metrics(fetch_releases(token), prior)
         log("· traffic")
         traffic_raw = fetch_traffic(token)
         log("· jsdelivr cdn")
@@ -3864,6 +3950,7 @@ def main():
             diagnostics=jsd.get("workshop_download_diagnostics", {}),
         )
         apply_file_downloads_to_agents(agents, file_metrics)
+        apply_release_downloads_to_agents(agents, releases)
         log("· workshop feedback")
         workshop_feedback = fetch_workshop_feedback(token, workshop_slugs)
         log("· agent Discussion signals")
@@ -4126,9 +4213,13 @@ def main():
         workshops["as_of"] = generated_at
         workshops["carried_forward"] = False
 
-        release_dl = releases.get("total_downloads", 0)
+        release_dl = releases.get("total_downloads") or 0
         file_kind_totals = file_metrics["totals"]["by_kind"]
-        agent_hits = file_kind_totals["agent"]["downloads"]
+        agent_hits = (
+            sum((agent.get("downloads") or 0) for agent in agents.values())
+            if releases.get("available")
+            else file_kind_totals["agent"]["downloads"]
+        )
         installer_hits = file_kind_totals["installer"]["downloads"]
         skill_hits = file_kind_totals["skill"]["downloads"]
         daily_clones = sorted(

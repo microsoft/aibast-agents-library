@@ -1356,7 +1356,7 @@ footer {
     </div>
 
     <div class="active-filters" id="active-filters"></div>
-    <p class="upvote-explainer">Each AIBAST agent has two stable public GitHub Discussions: one for community preference and one for signed-in acquisition. GitHub's native upvote control counts one active signal per account. Acquisition signals remain separate from observable CDN and release file transfers, and neither signal is a repository star.</p>
+    <p class="upvote-explainer">Each AIBAST agent has one public GitHub rating Discussion. Signed-in GitHub users can add one active upvote per agent. Upvotes are community preference—not a repository star, download count, security review, or production-readiness claim.</p>
     <div class="results-head">
       <span id="result-count">Loading agents...</span>
       <span id="result-context"></span>
@@ -1381,6 +1381,13 @@ const REPO = "aibast-agents-library";
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main`;
 const SITE = `https://${OWNER}.github.io/${REPO}/`;
 const BLOB = `https://github.com/${OWNER}/${REPO}/blob/main`;
+const DISTRIBUTION_OWNER = location.hostname.endsWith(".github.io")
+  ? location.hostname.split(".")[0]
+  : OWNER;
+const AGENT_RELEASE_TAG = DISTRIBUTION_OWNER === "kody-w"
+  ? "agent-downloads-staging"
+  : "agent-downloads";
+const AGENT_RELEASE = `https://github.com/${DISTRIBUTION_OWNER}/${REPO}/releases/download/${AGENT_RELEASE_TAG}`;
 const AGENT_DIR = "~/.brainstem/src/rapp_brainstem/agents";
 
 const state = {
@@ -2092,33 +2099,22 @@ function buildAgentSignalMap(metrics, agents) {
   rows.forEach(row => {
     if (!row || typeof row.name !== "string") return;
     const upvotes = row.upvotes;
-    const acquisitions = row.acquisitions;
     const downloads = row.downloads;
     const upvoteUrl = canonicalDiscussionUrl(row.upvote_discussion_url);
-    const acquisitionUrl = canonicalDiscussionUrl(
-      row.acquisition_discussion_url
-    );
     supplied.set(row.name, {
       upvotes: upvoteUrl && Number.isSafeInteger(upvotes) && upvotes >= 0
         ? upvotes : null,
-      acquisitions: acquisitionUrl
-        && Number.isSafeInteger(acquisitions)
-        && acquisitions >= 0
-        ? acquisitions : null,
       downloads: Number.isSafeInteger(downloads) && downloads >= 0
         ? downloads : null,
-      upvoteUrl,
-      acquisitionUrl
+      upvoteUrl
     });
   });
   return new Map(agents.map(agent => [
     agent.name,
     supplied.has(agent.name) ? supplied.get(agent.name) : {
       upvotes: null,
-      acquisitions: null,
       downloads: null,
-      upvoteUrl: "",
-      acquisitionUrl: ""
+      upvoteUrl: ""
     }
   ]));
 }
@@ -2162,21 +2158,17 @@ function agentDownloadCount(agent) {
   return `<span class="download-count" aria-label="${esc(label)}" title="${esc(label)}">↓ ${count.toLocaleString()}</span>`;
 }
 
-function openAgentSignal(agentName, signal) {
+function openAgentSignal(agentName) {
   const agent = state.agents.find(item => item.name === agentName);
   if (!agent) return;
   const record = state.agentSignals.get(agentName) || {};
-  const url = canonicalDiscussionUrl(
-    signal === "acquisition"
-      ? record.acquisitionUrl
-      : record.upvoteUrl
-  );
+  const url = canonicalDiscussionUrl(record.upvoteUrl);
   if (!url) return;
   window.open(url, '_blank', 'noopener');
 }
 
 function openAgentUpvote(agentName) {
-  openAgentSignal(agentName, "upvote");
+  openAgentSignal(agentName);
 }
 
 function agentCard(agent) {
@@ -2343,19 +2335,16 @@ function emptyState() {
 }
 
 function installCommand(agent) {
-  const file = agent._file || "";
-  const base = file.split("/").pop();
-  const target = base.endsWith("_agent.py") ? base : base.replace(/\.py$/, "_agent.py");
-  return `curl -fsSL ${RAW}/${encodeURI(file)} -o ${AGENT_DIR}/${target}`;
+  const filename = agent._install_filename || "";
+  return `curl -fsSL ${AGENT_RELEASE}/${encodeURIComponent(filename)} -o ${AGENT_DIR}/${filename}`;
 }
 
 function agentDownload(agent) {
-  const file = agent._file || "";
-  const base = file.split("/").pop();
-  const filename = base.endsWith("_agent.py")
-    ? base
-    : base.replace(/\.py$/, "_agent.py");
-  return {href: encodeURI(file), filename};
+  const filename = agent._install_filename || "";
+  return {
+    href: `${AGENT_RELEASE}/${encodeURIComponent(filename)}`,
+    filename,
+  };
 }
 
 function copilotSolutionDownloads(agent) {
