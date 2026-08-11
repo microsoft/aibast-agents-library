@@ -344,6 +344,16 @@ jobs:
           }
           if (-not (Test-Path (Join-Path $runtime 'agents\repair_custom_agent.py'))) { throw 'custom agent lost' }
 
+          # The markers above prove that repair preserved private runtime files.
+          # Remove the intentionally invalid test credentials/config before boot;
+          # other matrix scenarios cover normal persisted authentication.
+          foreach ($stateFile in @(
+            '.copilot_token', '.copilot_session', '.copilot_pending',
+            '.brainstem_model', '.brainstem_secret', 'voice.zip'
+          )) {
+            Remove-Item (Join-Path $runtime $stateFile) -Force -ErrorAction SilentlyContinue
+          }
+
           $python = Join-Path $HOME '.brainstem\venv\Scripts\python.exe'
           Start-Process -FilePath $python `
             -ArgumentList 'brainstem.py' `
