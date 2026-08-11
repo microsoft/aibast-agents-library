@@ -120,13 +120,14 @@ console.log(JSON.stringify({
 def test_metrics_load_is_optional_and_builds_canonical_signal_map():
     text = library_text()
     assert (
-        "const [registry, metrics, catalog, exportInventory] = await Promise.all(["
+        "const [registry, metrics, catalog, exportInventory, architectureLevel2] = await Promise.all(["
         in text
     )
     assert "state/metrics.json${stamp}" in text
     assert "${SITE}state/metrics.json${stamp}" in text
     assert "solutions/catalog.json${stamp}" in text
     assert "state/copilot_studio_solution_exports.json${stamp}" in text
+    assert "state/architecture_level2.json${stamp}" in text
     assert (
         "state.agentSignals = buildAgentSignalMap(metrics, state.agents);"
         in text

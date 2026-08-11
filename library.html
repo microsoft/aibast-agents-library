@@ -972,6 +972,28 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   color: var(--cp-text-muted);
   font-size: 0.8rem;
 }
+.arch-level-heading {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 18px 0 10px;
+}
+.arch-level-heading span {
+  display: inline-grid;
+  min-width: 34px;
+  min-height: 24px;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--cp-accent);
+  color: var(--cp-accent-fg);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.05em;
+}
+.arch-level-heading h4 {
+  margin: 0;
+  font-size: 0.88rem;
+}
 .arch-flow {
   display: flex;
   align-items: stretch;
@@ -998,6 +1020,86 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   place-items: center;
   color: var(--cp-accent);
   font-weight: 850;
+}
+.arch-l2 {
+  overflow: hidden;
+  margin: 14px 0 26px;
+  border: 1px solid var(--cp-border);
+  border-radius: 12px;
+  background: var(--cp-surface);
+}
+.arch-l2-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(180px, 1fr));
+}
+.arch-l2-domain {
+  min-width: 0;
+  min-height: 286px;
+  padding: 14px;
+  border-right: 1px solid var(--cp-border);
+  border-top: 5px solid var(--cp-accent);
+}
+.arch-l2-domain:last-child { border-right: 0; }
+.arch-l2-domain:nth-child(2) { border-top-color: var(--cp-link); }
+.arch-l2-domain:nth-child(3) { border-top-color: var(--cp-success); }
+.arch-l2-domain:nth-child(4) { border-top-color: var(--cp-warning); }
+.arch-l2-domain h5 {
+  min-height: 34px;
+  margin: 0 0 11px;
+  font-size: 0.72rem;
+  line-height: 1.25;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.arch-l2-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.arch-l2-item {
+  padding: 9px;
+  border: 1px solid var(--cp-border);
+  border-radius: 8px;
+  background: var(--cp-surface-soft);
+}
+.arch-l2-item strong {
+  display: block;
+  font-size: 0.7rem;
+}
+.arch-l2-item span {
+  display: block;
+  margin-top: 3px;
+  color: var(--cp-text-muted);
+  font-size: 0.64rem;
+  line-height: 1.35;
+}
+.arch-l2-bands {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(260px, 0.55fr);
+  border-top: 1px solid var(--cp-border);
+  background: var(--cp-surface-soft);
+}
+.arch-l2-band {
+  min-width: 0;
+  padding: 13px 14px;
+}
+.arch-l2-band + .arch-l2-band {
+  border-left: 1px solid var(--cp-border);
+}
+.arch-l2-band h5 {
+  margin: 0 0 8px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.arch-l2-band .tool-chips { margin: 0; }
+.arch-l2-band p {
+  margin: 6px 0 0;
+  color: var(--cp-text-muted);
+  font-size: 0.66rem;
 }
 .capability-grid {
   display: grid;
@@ -1116,7 +1218,24 @@ footer {
   .detail-body { padding: 20px 18px 26px; }
   .detail-tabs, .architecture-body { padding-right: 18px; padding-left: 18px; }
   .capability-grid { grid-template-columns: 1fr; }
+  .arch-l2-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .arch-l2-domain:nth-child(2) { border-right: 0; }
+  .arch-l2-domain:nth-child(-n+2) { border-bottom: 1px solid var(--cp-border); }
+  .arch-l2-bands { grid-template-columns: 1fr; }
+  .arch-l2-band + .arch-l2-band {
+    border-top: 1px solid var(--cp-border);
+    border-left: 0;
+  }
   .modal-root { padding: 8px; }
+}
+@media (max-width: 620px) {
+  .arch-l2-grid { grid-template-columns: 1fr; }
+  .arch-l2-domain {
+    min-height: 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--cp-border);
+  }
+  .arch-l2-domain:last-child { border-bottom: 0; }
 }
 </style>
 </head>
@@ -1228,6 +1347,7 @@ const state = {
   agents: [],
   stacks: [],
   stats: {},
+  architectureLevel2: new Map(),
   agentSignals: new Map(),
   advertisedSolutions: new Set(),
   exportedSolutionSlugs: new Set(),
@@ -1334,13 +1454,17 @@ async function getJSON(paths) {
 
 async function init() {
   const stamp = `?t=${Date.now()}`;
-  const [registry, metrics, catalog, exportInventory] = await Promise.all([
+  const [registry, metrics, catalog, exportInventory, architectureLevel2] = await Promise.all([
     getJSON([`registry.json${stamp}`, `${RAW}/registry.json${stamp}`]),
     getJSON([`state/metrics.json${stamp}`, `${SITE}state/metrics.json${stamp}`]),
     getJSON([`solutions/catalog.json${stamp}`, `${RAW}/solutions/catalog.json${stamp}`]),
     getJSON([
       `state/copilot_studio_solution_exports.json${stamp}`,
       `${RAW}/state/copilot_studio_solution_exports.json${stamp}`
+    ]),
+    getJSON([
+      `state/architecture_level2.json${stamp}`,
+      `${RAW}/state/architecture_level2.json${stamp}`
     ])
   ]);
   if (!registry || !catalog) {
@@ -1355,6 +1479,9 @@ async function init() {
     (exportInventory?.solutions || [])
       .filter(row => row?.status === "exported" && row?.settings_error == null)
       .map(row => row.slug)
+  );
+  state.architectureLevel2 = new Map(
+    Object.entries(architectureLevel2?.solutions || {})
   );
   state.agentSignals = buildAgentSignalMap(metrics, state.agents);
   restoreState();
@@ -1973,7 +2100,57 @@ function copilotSolutionDownloads(agent) {
   };
 }
 
-function architectureHTML(architecture, solution) {
+function architectureLevel2HTML(agentName) {
+  const architecture = state.architectureLevel2.get(agentName);
+  if (!architecture) return "";
+  const domains = [
+    ["knowledge", "Knowledge"],
+    ["intelligence_processing", "Intelligence layer / processing"],
+    ["clients_user_interface", "Clients / user interface"],
+    ["management_reporting", "Management / reporting"]
+  ];
+  const itemsHTML = items => `
+    <ul class="arch-l2-list">
+      ${(items || []).map(item => `
+        <li class="arch-l2-item">
+          <strong>${esc(item.name)}</strong>
+          <span>${esc(item.detail)}</span>
+        </li>
+      `).join("")}
+    </ul>`;
+  return `
+    <div class="arch-level-heading">
+      <span>L2</span>
+      <h4>Solution system view</h4>
+    </div>
+    <div class="arch-l2">
+      <div class="arch-l2-grid">
+        ${domains.map(([key, label]) => `
+          <section class="arch-l2-domain" aria-label="${esc(label)}">
+            <h5>${esc(label)}</h5>
+            ${itemsHTML(architecture.domains?.[key])}
+          </section>
+        `).join("")}
+      </div>
+      <div class="arch-l2-bands">
+        <section class="arch-l2-band" aria-label="Tools">
+          <h5>Tools</h5>
+          <div class="tool-chips">
+            ${(architecture.tools || []).map(item => `<span class="tool-chip" title="${esc(item.detail)}">${esc(item.name)}</span>`).join("")}
+          </div>
+          <p>Orchestration, connectors, APIs, and operational tools used by this solution.</p>
+        </section>
+        <section class="arch-l2-band" aria-label="Supporting features and foundation models">
+          <h5>Supporting features &amp; foundation models</h5>
+          <div class="tool-chips">
+            ${(architecture.supporting_features || []).map(item => `<span class="tool-chip" title="${esc(item.detail)}">${esc(item.name)}</span>`).join("")}
+          </div>
+        </section>
+      </div>
+    </div>`;
+}
+
+function architectureHTML(architecture, solution, agentName) {
   if (!architecture) return "";
   const flow = architecture.business_flow || [];
   const capabilities = architecture.capabilities || [];
@@ -1991,9 +2168,14 @@ function architectureHTML(architecture, solution) {
     <div class="architecture-body">
       <h3>Solution architecture</h3>
       <p>This blueprint preserves the portable Python agent as the business-logic source while Copilot Studio provides the default conversational and deployment surface.</p>
+      <div class="arch-level-heading">
+        <span>L1</span>
+        <h4>Business flow</h4>
+      </div>
       <div class="arch-flow">
         ${flow.map((node, index) => `${index ? `<span class="arch-arrow">→</span>` : ""}<div class="arch-node">${esc(node)}</div>`).join("")}
       </div>
+      ${architectureLevel2HTML(agentName)}
       <h3>Capability mapping</h3>
       <div class="capability-grid">
         ${capabilities.map(item => `
@@ -2170,7 +2352,7 @@ function openAgent(name) {
         </aside>
       </div>
       </div>
-      ${architecture ? `<div class="detail-panel" data-detail-panel="architecture">${architectureHTML(architecture, solution)}</div>` : ""}
+      ${architecture ? `<div class="detail-panel" data-detail-panel="architecture">${architectureHTML(architecture, solution, agent.name)}</div>` : ""}
     </div>
   `);
   location.hash = `agent/${enc(agent.name)}`;

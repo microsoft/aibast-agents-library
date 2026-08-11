@@ -1,0 +1,144 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "maintenance-scheduling",
+  "agent": "@aibast-agents-library/maintenance-scheduling",
+  "display_name": "Maintenance Scheduling Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Fixed synthetic maintenance snapshot",
+        "detail": "Bundled equipment, sensor, failure-risk, technician, service, cost, parts, and backup records provide deterministic evidence."
+      },
+      {
+        "name": "Maintenance review rules and boundaries",
+        "detail": "Uploaded guidance defines evidence use, condition review, resource checks, approval gates, and prohibited maintenance actions."
+      },
+      {
+        "name": "Locked persona evidence",
+        "detail": "Four canonical cases preserve exact schedule, alert, work-plan, and downtime anchors for repeatable Brainstem and Copilot Studio validation."
+      },
+      {
+        "name": "Approved production connection seams",
+        "detail": "Condition monitoring, IoT, CMMS, MES, inventory, technician-roster, and Teams connections are documented future seams, not enabled sources."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Equipment and technician overview",
+        "detail": "Summarizes synthetic equipment status, risk scores, service history, certifications, shifts, commitments, and available capacity for review."
+      },
+      {
+        "name": "Predictive maintenance alert ranking",
+        "detail": "Ranks fixed sensor readings and modeled failure probabilities, exposing the evidence and failure mode that require immediate human review."
+      },
+      {
+        "name": "Approval-gated maintenance planning",
+        "detail": "Proposes ranked candidates, windows, technician candidates, parts checks, and backup checks for maintenance planner approval only."
+      },
+      {
+        "name": "Downtime and cost trade-off analysis",
+        "detail": "Compares synthetic failure exposure, downtime estimates, preventive cost, avoided-cost opportunity, and historical maintenance spend."
+      },
+      {
+        "name": "Persona-led operation routing",
+        "detail": "Maps maintenance manager, production supervisor, planner, and operations leader requests to one bounded read-only operation."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "The single-file BasicAgent exposes four deterministic operations through local Brainstem chat, streaming, and API surfaces."
+      },
+      {
+        "name": "Copilot Studio Draft experience",
+        "detail": "Four skills and two synthetic knowledge files support natural-language preview while the validated pilot remains Draft and unpublished."
+      },
+      {
+        "name": "Evidence-first planner review",
+        "detail": "Responses distinguish synthetic facts from recommendations, name the authorization gate, and confirm that no external side effect occurred."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Maintenance Schedule Overview",
+        "detail": "Reports equipment status, runtime, last service, risk score, technician certifications, shifts, commitments, and free capacity."
+      },
+      {
+        "name": "Predictive Maintenance Alerts",
+        "detail": "Reports ranked critical, warning, and watch candidates with modeled failure probabilities, risk scores, and sensor evidence."
+      },
+      {
+        "name": "Proposed Work Order Plan",
+        "detail": "Reports priority, maintenance description, estimated hours, technician candidate, shift, parts check, and backup check for planner approval."
+      },
+      {
+        "name": "Downtime and Cost Analysis",
+        "detail": "Reports synthetic downtime exposure, prevention cost, modeled avoided-cost opportunity, and historical preventive-versus-corrective spend."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "MaintenanceSchedulingAgent portable RAPP tool",
+      "detail": "Single-file Python BasicAgent implements four deterministic, recommendation-only operations over bundled synthetic records."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server discovers the portable agent and exposes conversational chat, streaming, health, and tool-routing endpoints."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the validated Draft pilot with four skills and two knowledge files; publication remains separately approval-gated."
+    },
+    {
+      "name": "Deployment-selected foundation model",
+      "detail": "The host model routes natural-language requests and composes responses from deterministic agent or skill evidence."
+    },
+    {
+      "name": "Approved condition monitoring and IoT",
+      "detail": "Future least-privilege source for verified telemetry; the packaged pilot uses a fixed snapshot and has no live equipment access."
+    },
+    {
+      "name": "CMMS work management",
+      "detail": "Future governed seam for maintenance records and approved execution; the current agent cannot create or mutate work orders."
+    },
+    {
+      "name": "MES production schedules",
+      "detail": "Future governed seam for production-impact review; the current agent cannot alter schedules or control equipment."
+    },
+    {
+      "name": "Approved resource and collaboration systems",
+      "detail": "Future seams for parts inventory, technician rosters, and Teams review; no reservation, assignment, approval, or message occurs."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic-only evidence boundary",
+      "detail": "Every asset, sensor reading, probability, technician, part, date, duration, score, and cost is fictional pilot evidence."
+    },
+    {
+      "name": "Four independently routable operations",
+      "detail": "Schedule overview, predictive alerts, work-order planning, and downtime analysis remain separately callable and reviewable."
+    },
+    {
+      "name": "Fail-closed evidence handling",
+      "detail": "The agent uses only bundled records, does not browse or invent evidence, and requires approved systems to verify production conditions."
+    },
+    {
+      "name": "Maintenance planner approval gate",
+      "detail": "Work-plan outputs are proposals for authorized maintenance planner and production-owner review, never execution instructions."
+    },
+    {
+      "name": "No work-order mutation or field action",
+      "detail": "No work order is created or dispatched; no technician is assigned, part reserved, schedule changed, or equipment controlled."
+    },
+    {
+      "name": "Controlled production-action pattern",
+      "detail": "Any future action requires approved connections, authenticated roles, current-state validation, explicit authorization, and audit controls."
+    },
+    {
+      "name": "Locked validation and publication control",
+      "detail": "Four canonical cases passed strict and Copilot Studio previews while validated agents remained Draft, unpublished, and confirmation-gated."
+    }
+  ]
+}

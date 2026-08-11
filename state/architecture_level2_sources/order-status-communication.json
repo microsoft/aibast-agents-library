@@ -1,0 +1,144 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "order-status-communication",
+  "agent": "@aibast-agents-library/order-status-communication",
+  "display_name": "Order Status Communications Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic order and production snapshot",
+        "detail": "Fixed fictional orders provide customer, product, quantity, value, completion, promise-date, status, and delay-risk evidence."
+      },
+      {
+        "name": "Synthetic shipment evidence",
+        "detail": "A fixed carrier record supplies tracking, route, weight, ship date, estimated delivery, and recorded transit status for review."
+      },
+      {
+        "name": "Delay, recovery, and account context",
+        "detail": "Bundled delay causes, revised dates, recovery options, owners, customer tiers, response windows, and channel preferences ground drafts."
+      },
+      {
+        "name": "Review rules and production seams",
+        "detail": "Locked evidence rules and documented ERP, MES, carrier, CRM, and communication seams separate pilot facts from future live access."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Order status and risk aggregation",
+        "detail": "Calculates order value and fixed days-left evidence, identifies delayed records, and prioritizes internal customer-service review."
+      },
+      {
+        "name": "Shipment evidence validation review",
+        "detail": "Summarizes the recorded shipment while identifying carrier milestones and delivery proof that still require approved-system validation."
+      },
+      {
+        "name": "Delay and recovery synthesis",
+        "detail": "Combines cause, schedule impact, cost, recovery options, ownership, SLA, and preferred channel without changing operations."
+      },
+      {
+        "name": "Channel-aware communication drafting",
+        "detail": "Prepares customer-specific status drafts using tier, channel, owner, order, shipment, and delay evidence for authorized review only."
+      },
+      {
+        "name": "Persona-led bounded routing",
+        "detail": "Routes service, account, and operations questions to one deterministic operation and does not invent absent records or actions."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "The single-file RAPP agent exposes four read-only operations through local Brainstem chat, streaming, API, and health surfaces."
+      },
+      {
+        "name": "Copilot Studio draft experience",
+        "detail": "Four skills and two synthetic knowledge files support natural-language previews while the validated pilot remains Draft and unpublished."
+      },
+      {
+        "name": "Reviewed communication workspace",
+        "detail": "Customer service, account, and operations users review evidence and message drafts before an authorized sender uses an approved channel."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Order Status Dashboard",
+        "detail": "Reports order progress, promise dates, values, days left, delayed status, total book value, and at-risk value from the fixed snapshot."
+      },
+      {
+        "name": "Shipment Tracking Review",
+        "detail": "Reports carrier, tracking, route, weight, dates, and recorded status while requiring confirmation in the approved carrier system."
+      },
+      {
+        "name": "Internal Delay Review",
+        "detail": "Reports delayed order evidence, cause, revised date, cost, recovery options, owner, SLA, and channel without changing a schedule."
+      },
+      {
+        "name": "Customer Update Drafts",
+        "detail": "Presents tailored status, shipment, and delay drafts for approval; no email, EDI, portal, Teams, or other message is sent."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "OrderStatusCommunicationAgent RAPP tool",
+      "detail": "Portable single-file Python BasicAgent implements four deterministic, read-only operations over bundled synthetic records."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server discovers the agent and exposes conversational chat, streaming, health, and tool-routing endpoints."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts four skills and two knowledge files in a validated Draft pilot; publication requires explicit confirmation."
+    },
+    {
+      "name": "Deployment-selected foundation model",
+      "detail": "The host model routes natural-language requests and composes responses from deterministic agent or skill evidence."
+    },
+    {
+      "name": "Dynamics 365 Supply Chain Management and MES",
+      "detail": "Documented approved seam for live order and production evidence; the packaged pilot has no live read or write connection."
+    },
+    {
+      "name": "Approved carrier and logistics tracking",
+      "detail": "Future least-privilege source for shipment milestones and proof; current tracking evidence is fixed and synthetic."
+    },
+    {
+      "name": "Dynamics 365 Customer Service",
+      "detail": "Documented approved seam for account, owner, preference, and customer context; no production CRM is connected."
+    },
+    {
+      "name": "Power Automate and approved communication channels",
+      "detail": "Future approval and sending seam for email, EDI, portal, or Teams; the current package sends no message or notification."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic-only evidence boundary",
+      "detail": "Every identifier, person, company, date, amount, status, tracking record, recovery option, and message is fictional pilot evidence."
+    },
+    {
+      "name": "Four deterministic operations",
+      "detail": "Order lookup, shipment tracking, delay review, and customer-update drafting remain independently callable and reviewable."
+    },
+    {
+      "name": "Evidence validation and fail-closed handling",
+      "detail": "Carrier and production facts require approved-system validation, and absent records are not browsed, invented, or silently substituted."
+    },
+    {
+      "name": "Reviewed communications approval gate",
+      "detail": "Drafts preserve customer tier, channel, owner, and source evidence while requiring human review and an authorized sender."
+    },
+    {
+      "name": "No operational write or message sending",
+      "detail": "No order, schedule, shipment, sourcing, logistics, recovery, CRM, email, EDI, portal, Teams, or other action is changed or sent."
+    },
+    {
+      "name": "Controlled future-action pattern",
+      "detail": "Any future action tool must be separate, authenticated, role-authorized, state-validated, explicitly confirmed, and audited."
+    },
+    {
+      "name": "Locked validation and publication control",
+      "detail": "Four persona cases passed deterministic and Copilot Studio previews while both validated agents remained Draft and unpublished."
+    }
+  ]
+}

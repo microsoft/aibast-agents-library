@@ -1,0 +1,136 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "sales-qualification",
+  "agent": "@aibast-agents-library/sales-qualification",
+  "display_name": "Sales Qualification Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Bundled synthetic lead snapshot",
+        "detail": "Fixed lead, firmographic, technology, intent, engagement, territory, capacity, and SLA evidence; no live lookup."
+      },
+      {
+        "name": "ICP and BANT qualification rules",
+        "detail": "Documented weights, thresholds, field mappings, tier labels, ordering, and rounding drive repeatable qualification."
+      },
+      {
+        "name": "Sales routing and SLA policies",
+        "detail": "Synthetic AE specialties, territories, capacity, response windows, escalation rules, and sequence plans support review."
+      },
+      {
+        "name": "Operating and evidence boundaries",
+        "detail": "Knowledge files require synthetic-only answers, missing-field disclosure, assumption labels, and authorized review."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "ICP scoring and lead tiering",
+        "detail": "Scores size, industry, technology fit, budget, and authority, then classifies leads into four documented tiers."
+      },
+      {
+        "name": "BANT evidence assessment",
+        "detail": "Breaks down budget, authority, need, and timeline evidence and surfaces missing or weak qualification fields."
+      },
+      {
+        "name": "Personalized outreach drafting",
+        "detail": "Builds reviewable subjects, hooks, calls to action, and cadence ideas from synthetic lead context without sending."
+      },
+      {
+        "name": "Lead routing recommendation",
+        "detail": "Matches actionable leads to synthetic AE specialty and capacity data; recommendations never assign CRM ownership."
+      },
+      {
+        "name": "SLA and escalation planning",
+        "detail": "Drafts tier-based response windows, monitoring, and escalation rules without creating alerts, tasks, or automation."
+      },
+      {
+        "name": "Qualification scenario reporting",
+        "detail": "Summarizes tier, industry, pipeline, and conversion scenarios while labeling all values as synthetic assumptions."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Portable RAPP Brainstem chat",
+        "detail": "The single-file portable agent installs into Brainstem and exposes its allow-listed operations through chat."
+      },
+      {
+        "name": "Copilot Studio draft workspace",
+        "detail": "CLI-authored skills and knowledge provide a seller-facing draft experience that remains unpublished by default."
+      },
+      {
+        "name": "Persona-guided review flows",
+        "detail": "Locked prompts cover sales manager, business development representative, and account executive review scenarios."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Lead qualification summary",
+        "detail": "Reports tier counts, average scores, top synthetic leads, and documented review actions with evidence boundaries."
+      },
+      {
+        "name": "BANT and engagement review",
+        "detail": "Shows dimension scores, strongest recorded signals, and qualification gaps for sales-team review."
+      },
+      {
+        "name": "Routing and SLA review packs",
+        "detail": "Presents capacity-aware routing, handoff contents, response windows, and draft escalation plans for manager approval."
+      },
+      {
+        "name": "Pipeline assumption report",
+        "detail": "Summarizes synthetic pipeline and modeled conversions without treating scenarios as forecasts, commitments, or outcomes."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "SalesQualificationAgent RAPP tool",
+      "detail": "Portable Python tool with deterministic dispatch, synthetic-only source validation, and six allow-listed operations."
+    },
+    {
+      "name": "Bundled knowledge files",
+      "detail": "Synthetic records and operating rules provide the complete evidence route for local and Copilot Studio use."
+    },
+    {
+      "name": "Copilot Studio operation skills",
+      "detail": "Six uploadable skills mirror scoring, BANT, outreach drafting, routing, SLA planning, and reporting operations."
+    },
+    {
+      "name": "PAC CLI authoring workflow",
+      "detail": "Initializes, validates, pulls, and pushes the draft package; publication remains a separate approved command."
+    },
+    {
+      "name": "Deployment recipe and smoke test",
+      "detail": "Pins the portable source, expected tool, synthetic route, operation inventory, and required response evidence."
+    },
+    {
+      "name": "Deployment-selected foundation model",
+      "detail": "The host selects the supported model; deterministic agent calculations and evidence boundaries remain authoritative."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic-only fail-closed routing",
+      "detail": "Unknown operations, sources, filters, or identifiers are rejected instead of triggering browsing or live-system access."
+    },
+    {
+      "name": "Human approval gates",
+      "detail": "Managers retain control over qualification, routing, ownership, SLA rules, outreach content, and customer contact."
+    },
+    {
+      "name": "Review-only action boundary",
+      "detail": "The agent never writes CRM data, assigns owners, sends outreach, activates sequences, creates alerts, or publishes."
+    },
+    {
+      "name": "Locked evidence validation",
+      "detail": "Six persona cases verify required response anchors and prohibit claims that messages or CRM updates occurred."
+    },
+    {
+      "name": "Portable RAPP packaging",
+      "detail": "The same credential-free synthetic agent runs locally and can seed a Copilot Studio package without live connectors."
+    },
+    {
+      "name": "Draft and publish separation",
+      "detail": "Copilot Studio artifacts remain in Draft; push and validation do not authorize publication or external actions."
+    }
+  ]
+}

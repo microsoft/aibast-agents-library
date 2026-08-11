@@ -1,0 +1,144 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "permit-license-management",
+  "agent": "@aibast-agents-library/permit-license-management",
+  "display_name": "Permit Management Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic permit and license register",
+        "detail": "Fixed records provide facility, authority, permit number, status, type, expiration, conditions, lead time, and inspections."
+      },
+      {
+        "name": "Synthetic application status snapshot",
+        "detail": "Submitted applications record facility, authority, filing date, review status, expected decision, and public comments."
+      },
+      {
+        "name": "Regulatory requirement mappings",
+        "detail": "Bundled air, water, waste, pipeline, and spill-control requirements support evidence-gap screening only."
+      },
+      {
+        "name": "Rules, controls, and locked evidence",
+        "detail": "Packaged controls define routing, calculations, exact demo anchors, synthetic limits, and prohibited legal or filing claims."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Facility-scoped permit consolidation",
+        "detail": "Filters the fixed register by facility and summarizes active and expired permits with source-backed identifiers and dates."
+      },
+      {
+        "name": "Renewal calendar prioritization",
+        "detail": "Sorts expiration dates and lead times into a planning calendar without initiating renewal, notice, or authority submission."
+      },
+      {
+        "name": "Compliance evidence-gap triage",
+        "detail": "Flags expired permits and requirements at risk by severity while withholding any legal compliance determination."
+      },
+      {
+        "name": "Submitted-application monitoring",
+        "detail": "Reports recorded application stage, authority, filing date, expected decision, and comments without changing the filing."
+      },
+      {
+        "name": "Deterministic intent routing",
+        "detail": "Routes four persona questions to explicit operations, preserves exact evidence, and fails closed when records are absent."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Portable RAPP Brainstem chat",
+        "detail": "Local chat and API routes expose one credential-free, read-only agent with four independently callable operations."
+      },
+      {
+        "name": "Copilot Studio draft experience",
+        "detail": "Four skills and two knowledge files support persona-led previews in an integrated-auth Draft agent that remains unpublished."
+      },
+      {
+        "name": "Evidence-first compliance responses",
+        "detail": "Answers lead with the record, explain uncertainty, name the authorized reviewer and connection, and end with the no-write boundary."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Permit inventory review",
+        "detail": "Shows permit identity, facility, authority, status, expiration, and conditions for facility and compliance review."
+      },
+      {
+        "name": "Renewal planning calendar",
+        "detail": "Orders upcoming and expired permits by date and lead time so permit coordinators can prepare an authorized review queue."
+      },
+      {
+        "name": "Compliance gap review",
+        "detail": "Surfaces critical expired-permit evidence and high-risk requirements for permit staff and legal review, not legal advice."
+      },
+      {
+        "name": "Application status brief",
+        "detail": "Summarizes already-submitted applications and review stages for environmental counsel without implying a new filing occurred."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable PermitLicenseManagementAgent",
+      "detail": "Single-file Python BasicAgent provides four deterministic, read-only operations over bundled synthetic records."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server discovers the portable agent and exposes chat, streaming, health, and tool-routing endpoints."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the validated Draft pilot with four skills and two knowledge files; publication requires explicit confirmation."
+    },
+    {
+      "name": "Permit system of record",
+      "detail": "Approved future least-privilege source for current permit records; the packaged pilot has no live connection."
+    },
+    {
+      "name": "SharePoint controlled documents",
+      "detail": "Approved production seam for governed permit evidence; the current package uses two bundled synthetic knowledge files."
+    },
+    {
+      "name": "Dynamics 365 case management",
+      "detail": "Approved future seam for review cases and handoffs; the current agent does not create, update, or close cases."
+    },
+    {
+      "name": "Approved authority portal connector",
+      "detail": "Future authenticated filing seam isolated from analysis and gated by authorization, current-state checks, and confirmation."
+    },
+    {
+      "name": "Microsoft Teams authorized review",
+      "detail": "Future collaboration seam for reviewer handoffs and approvals; the current package sends no messages or approval requests."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic-only evidence boundary",
+      "detail": "All organizations, identifiers, dates, statuses, measurements, and recommendations are fictional pilot evidence."
+    },
+    {
+      "name": "Four deterministic operations",
+      "detail": "Permit inventory, renewal calendar, compliance gaps, and application status remain independently routable and reviewable."
+    },
+    {
+      "name": "Fail-closed record handling",
+      "detail": "Unknown identifiers produce no substitutions, and the agent does not browse, enrich, or invent missing permit evidence."
+    },
+    {
+      "name": "Non-legal compliance boundary",
+      "detail": "Gap findings are triage evidence, not legal advice or proof of compliance, approval, renewal, or filing status."
+    },
+    {
+      "name": "Human authorization and approval gates",
+      "detail": "Authorized permit owners and legal or regulatory reviewers retain every decision and external action."
+    },
+    {
+      "name": "Read-only workflow governance",
+      "detail": "No permit is submitted, renewed, amended, withdrawn, approved, or changed in an external system by the agent."
+    },
+    {
+      "name": "Validated draft and future-write controls",
+      "detail": "Four locked cases pass; publishing is separate, and future writes require confirmation, error handling, and immutable audit logs."
+    }
+  ]
+}

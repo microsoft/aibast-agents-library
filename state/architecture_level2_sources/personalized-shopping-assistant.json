@@ -1,0 +1,128 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "personalized-shopping-assistant",
+  "agent": "@aibast-agents-library/personalized-shopping-assistant",
+  "display_name": "Personalized Shopping Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic Product Catalog",
+        "detail": "Eight packaged SKUs provide product, brand, price, rating, style tags, colors, sizes, and size-level stock snapshots."
+      },
+      {
+        "name": "Opt-In Shopper Profiles",
+        "detail": "Two synthetic profiles contain only stated sizing, style, brand, color, budget, and prior-product examples."
+      },
+      {
+        "name": "Fixed Outfit Templates",
+        "detail": "Business Casual, Weekend Smart, Active Weekend, and Evening Out define the supported coordinated looks."
+      },
+      {
+        "name": "Shopping Rules and Safety",
+        "detail": "Uploaded guidance limits responses to explainable drafts and prohibits sensitive inference or external side effects."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Explainable Preference Matching",
+        "detail": "Scores catalog items from stated style, brand, color, and budget signals without deriving sensitive traits."
+      },
+      {
+        "name": "Ranked Product Drafting",
+        "detail": "Excludes prior products, ranks remaining items by match score, and presents price, brand, rating, and tradeoffs."
+      },
+      {
+        "name": "Profile Summary Generation",
+        "detail": "Formats stated shopper sizing and preferences for clienteling continuity without adding inferred attributes."
+      },
+      {
+        "name": "Availability Classification",
+        "detail": "Reports synthetic quantity by size and labels each entry In Stock, Low Stock, or Out of Stock."
+      },
+      {
+        "name": "Coordinated Outfit Assembly",
+        "detail": "Selects the best matching catalog piece for each fixed template slot and calculates an illustrative total."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Personal Shopper View",
+        "detail": "Presents occasion-ready product and outfit options with transparent match rationale, prices, and tradeoffs."
+      },
+      {
+        "name": "Clienteling Specialist View",
+        "detail": "Surfaces opt-in preference summaries for continuity and respectful follow-up drafting."
+      },
+      {
+        "name": "Retail Manager View",
+        "detail": "Shows size-level inventory snapshots, availability caveats, and service-quality context."
+      },
+      {
+        "name": "Brainstem and Studio Chat",
+        "detail": "The portable agent runs in Brainstem chat and has passed four draft Copilot Studio preview cases."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Recommendation Evidence Table",
+        "detail": "Ranks draft products with SKU, brand, price, match score, and rating for transparent review."
+      },
+      {
+        "name": "Inventory Snapshot Report",
+        "detail": "Lists stock by size, status, and total units while requiring verification before any operational use."
+      },
+      {
+        "name": "Outfit Cost Summary",
+        "detail": "Breaks each coordinated look into selected pieces and an illustrative total without ordering items."
+      },
+      {
+        "name": "Safety and Verification Notice",
+        "detail": "Every operation states the synthetic scope and confirms that no inventory, benefit, order, return, refund, or purchase changed."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Product Recommendations",
+      "detail": "Routes transparent product-option requests to the product_recommendations operation."
+    },
+    {
+      "name": "Style Profile",
+      "detail": "Routes stated-preference summaries to the style_profile operation."
+    },
+    {
+      "name": "Inventory Check",
+      "detail": "Routes SKU or catalog availability requests to the read-only inventory_check operation."
+    },
+    {
+      "name": "Outfit Builder",
+      "detail": "Routes coordinated-look and outfit-total requests to the review-only outfit_builder operation."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic-Only Data Boundary",
+      "detail": "The package accepts its fixed synthetic records only and rejects any non-synthetic data_source value."
+    },
+    {
+      "name": "Recommendation-Only Safety",
+      "detail": "The agent never reserves stock, applies benefits, creates orders, processes returns or refunds, or completes purchases."
+    },
+    {
+      "name": "Sensitive-Inference Guardrail",
+      "detail": "Instructions prohibit inferring body, health, identity, wealth, eligibility, or other sensitive traits."
+    },
+    {
+      "name": "Persona-Aware Responses",
+      "detail": "Approved roles are Personal Shopper, Clienteling Specialist, and Retail Manager, each with an explicit focus."
+    },
+    {
+      "name": "Human Review and Verification",
+      "detail": "All recommendations and totals are drafts, and inventory must be verified before operational use."
+    },
+    {
+      "name": "Claude Sonnet 4.6 Preview",
+      "detail": "The draft Copilot Studio pilot was validated with Claude Sonnet 4.6 across all four canonical preview cases."
+    }
+  ]
+}

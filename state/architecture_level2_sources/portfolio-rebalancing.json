@@ -1,0 +1,144 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "portfolio-rebalancing",
+  "agent": "@aibast-agents-library/portfolio-rebalancing",
+  "display_name": "Portfolio Rebalancing Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Client and portfolio context",
+        "detail": "Dynamics 365 context links client objectives and review roles to the approved portfolio record without making suitability decisions."
+      },
+      {
+        "name": "Allocation and policy snapshot",
+        "detail": "Current holdings, target weights, benchmarks, rebalance cadence, and drift thresholds form the governed analysis baseline."
+      },
+      {
+        "name": "Tax-lot and cost-basis evidence",
+        "detail": "Approved accounting data supplies values and cost basis for illustrative tax and loss-candidate review by qualified professionals."
+      },
+      {
+        "name": "Planning assumptions and controls",
+        "detail": "Retirement inputs, tax assumptions, wash-sale checks, suitability rules, and authorization boundaries remain explicit and reviewable."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Drift threshold detection",
+        "detail": "Compares current and target allocations, calculates each gap, and identifies portfolios that meet configured review thresholds."
+      },
+      {
+        "name": "Rebalancing candidate construction",
+        "detail": "Translates threshold breaches into nonbinding increase and reduction candidates for licensed-advisor and client review."
+      },
+      {
+        "name": "Illustrative tax impact",
+        "detail": "Estimates gain-related tax exposure from fixed assumptions and presents validation questions rather than individualized tax advice."
+      },
+      {
+        "name": "Loss-candidate screening",
+        "detail": "Surfaces unrealized-loss positions while requiring tax-lot, holding-period, account-type, wash-sale, and suitability checks."
+      },
+      {
+        "name": "Retirement scenario framing",
+        "detail": "Frames horizon, withdrawal, return, volatility, inflation, fee, tax, and longevity inputs without asserting success probability."
+      },
+      {
+        "name": "Controlled implementation sequencing",
+        "detail": "Builds a review, cash, settlement, approval, and verification checklist; it never creates, routes, or executes an order."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Advisor Copilot workspace",
+        "detail": "Microsoft 365 Copilot or Copilot Studio gives advisors a conversational view of drift, candidates, assumptions, and controls."
+      },
+      {
+        "name": "Portfolio manager review",
+        "detail": "Portfolio managers inspect concentration, allocation gaps, thresholds, and candidate changes before client discussion or action."
+      },
+      {
+        "name": "Paraplanner and tax review",
+        "detail": "Specialists review scenario inputs, illustrative estimates, tax-loss candidates, and missing professional validations."
+      },
+      {
+        "name": "Teams approval collaboration",
+        "detail": "Microsoft Teams supports licensed-advisor, compliance, and authorized-trading review without exposing trade execution."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Power BI drift reporting",
+        "detail": "Power BI visualizes allocation gaps, threshold status, and review queues using approved portfolio evidence."
+      },
+      {
+        "name": "Client review presentation",
+        "detail": "PowerPoint-ready summaries explain candidate changes, assumptions, scenarios, and unresolved controls for advisor-led meetings."
+      },
+      {
+        "name": "Compliance review record",
+        "detail": "Review outputs document synthetic provenance, tax and suitability caveats, required approvers, and the no-transaction boundary."
+      },
+      {
+        "name": "Validation evidence dashboard",
+        "detail": "Locked persona cases and draft-state evidence report deterministic coverage, safety assertions, and publication readiness."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the advisor-facing draft agent, six governed operations, two knowledge files, and prepublication validation."
+    },
+    {
+      "name": "Dynamics 365",
+      "detail": "Provides approved wealth-management client context while leaving suitability and advice decisions with licensed professionals."
+    },
+    {
+      "name": "Portfolio accounting and tax-lot service",
+      "detail": "Supplies authorized holdings, targets, values, and cost basis for drift and illustrative tax analysis."
+    },
+    {
+      "name": "Financial planning system",
+      "detail": "Receives advisor-validated retirement assumptions for scenario modeling outside the agent's fixed demonstration data."
+    },
+    {
+      "name": "Power BI",
+      "detail": "Presents portfolio drift, review status, and governed reporting views from approved data sources."
+    },
+    {
+      "name": "Microsoft Teams",
+      "detail": "Coordinates human approvals among advisors, compliance reviewers, and authorized trading personnel before external action."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Fixed synthetic evidence",
+      "detail": "Fictional portfolios and deterministic outputs enable safe demonstrations without live client or market data."
+    },
+    {
+      "name": "Deterministic operation routing",
+      "detail": "Six persona-language cases map to the expected PortfolioRebalancingAgent operation under strict tool isolation."
+    },
+    {
+      "name": "Claude Sonnet 4.6",
+      "detail": "The validated Copilot Studio draft uses Claude Sonnet 4.6 while preserving operation and safety instructions."
+    },
+    {
+      "name": "Least-privilege connections",
+      "detail": "Only approved connector references may be bound, with production data and external actions excluded from demonstration."
+    },
+    {
+      "name": "Advisor and specialist review",
+      "detail": "Licensed advisors, qualified tax professionals, compliance, clients, and authorized traders retain consequential decisions."
+    },
+    {
+      "name": "No advice or trade execution",
+      "detail": "Outputs are review candidates only; the agent gives no investment or tax advice and creates, routes, or executes no order."
+    },
+    {
+      "name": "Draft publication gate",
+      "detail": "All six locked cases must pass with safety boundaries intact, and explicit confirmation is required before publication."
+    }
+  ]
+}
