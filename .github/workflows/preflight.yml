@@ -475,7 +475,7 @@ jobs:
           test "$(stat -f '%Lp' "$HOME/.brainstem/src/rapp_brainstem/.copilot_token")" = "600"
 
           run_installer | tee "$RUNNER_TEMP/current-install.log"
-          grep -q "Already up to date" "$RUNNER_TEMP/current-install.log"
+          grep -q "Framework updated" "$RUNNER_TEMP/current-install.log"
           grep -q "runtime is ready" "$RUNNER_TEMP/current-install.log"
 
           if [[ "$CANDIDATE_REPO/$CANDIDATE_REF" != "microsoft/aibast-agents-library/main" ]]; then
@@ -548,7 +548,7 @@ jobs:
 
           $currentLog = Join-Path $env:RUNNER_TEMP 'current-install.log'
           Invoke-OneLiner $currentLog
-          if ((Get-Content $currentLog -Raw) -notmatch 'Already up to date') { throw 'update check did not take current fast path' }
+          if ((Get-Content $currentLog -Raw) -notmatch 'Framework updated') { throw 'explicit source rerun did not refresh the requested ref' }
           if ((Get-Content $currentLog -Raw) -notmatch 'runtime is ready') { throw 'current rerun did not finish ready' }
 
           if ("$env:CANDIDATE_REPO/$env:CANDIDATE_REF" -ne 'microsoft/aibast-agents-library/main') {

@@ -227,19 +227,6 @@ version_gt() {
     return 1  # equal
 }
 
-requested_brainstem_tree_current() {
-    local repo_dir="$BRAINSTEM_HOME/src"
-    [ -d "$repo_dir/.git" ] || return 1
-
-    local current_tree target_tree
-    current_tree=$(git -C "$repo_dir" rev-parse HEAD:rapp_brainstem 2>/dev/null) || return 1
-    if ! git -C "$repo_dir" fetch --filter=blob:none --quiet "$REPO_URL" "$REPO_REF" 2>/dev/null; then
-        return 1
-    fi
-    target_tree=$(git -C "$repo_dir" rev-parse FETCH_HEAD:rapp_brainstem 2>/dev/null) || return 1
-    [[ "$current_tree" == "$target_tree" ]]
-}
-
 check_for_upgrade() {
     local version_file="$BRAINSTEM_HOME/src/rapp_brainstem/VERSION"
 
@@ -263,8 +250,8 @@ check_for_upgrade() {
     echo -e "  Local version:  ${CYAN}${local_version}${NC}"
     echo -e "  Remote version: ${CYAN}${remote_version}${NC}"
 
-    if ! requested_brainstem_tree_current; then
-        echo -e "  ${YELLOW}↻${NC} Refreshing the requested repository/ref"
+    if [[ "$SOURCE_OVERRIDE_REQUESTED" == true ]]; then
+        echo -e "  ${YELLOW}↻${NC} Refreshing the explicitly requested repository/ref"
         return 0
     fi
 
@@ -466,7 +453,7 @@ install_brainstem() {
 
         if [ "$LOCAL_VER" = "$TARGET_VER" ] \
             && brainstem_source_ready "$BRAINSTEM_HOME/src" \
-            && requested_brainstem_tree_current; then
+            && [[ "$SOURCE_OVERRIDE_REQUESTED" != true ]]; then
             echo -e "  ${GREEN}✓${NC} Already on v${LOCAL_VER}"
         else
             echo "  Switching v${LOCAL_VER} → v${TARGET_VER}..."

@@ -63,25 +63,6 @@ function Compare-SemVer {
     return 0  # equal
 }
 
-function Test-RequestedBrainstemTreeCurrent {
-    param([string]$RepoPath)
-    if (-not (Test-Path "$RepoPath\.git")) { return $false }
-
-    $prev = $ErrorActionPreference
-    $ErrorActionPreference = 'Continue'
-    try {
-        $currentTree = (git -C $RepoPath rev-parse 'HEAD:rapp_brainstem' 2>$null | Select-Object -First 1)
-        if ($LASTEXITCODE -ne 0 -or -not $currentTree) { return $false }
-        git -C $RepoPath fetch --filter=blob:none --quiet $REPO_URL $REPO_REF 2>&1 | Out-Null
-        if ($LASTEXITCODE -ne 0) { return $false }
-        $targetTree = (git -C $RepoPath rev-parse 'FETCH_HEAD:rapp_brainstem' 2>$null | Select-Object -First 1)
-        if ($LASTEXITCODE -ne 0 -or -not $targetTree) { return $false }
-        return $currentTree.Trim() -eq $targetTree.Trim()
-    } finally {
-        $ErrorActionPreference = $prev
-    }
-}
-
 function Check-ForUpgrade {
     $versionFile = "$BRAINSTEM_HOME\src\rapp_brainstem\VERSION"
 
@@ -99,8 +80,8 @@ function Check-ForUpgrade {
     Write-Host "  Local version:  $localVersion" -ForegroundColor Cyan
     Write-Host "  Remote version: $remoteVersion" -ForegroundColor Cyan
 
-    if (-not (Test-RequestedBrainstemTreeCurrent "$BRAINSTEM_HOME\src")) {
-        Write-Host "  [..] Refreshing the requested repository/ref" -ForegroundColor Yellow
+    if ($SOURCE_OVERRIDE_REQUESTED) {
+        Write-Host "  [..] Refreshing the explicitly requested repository/ref" -ForegroundColor Yellow
         return $true
     }
 
@@ -579,7 +560,7 @@ function Install-Brainstem {
         if (
             ($LocalVer -eq $RemoteVer) -and
             (Test-BrainstemSourceReady "$BRAINSTEM_HOME\src") -and
-            (Test-RequestedBrainstemTreeCurrent "$BRAINSTEM_HOME\src")
+            (-not $SOURCE_OVERRIDE_REQUESTED)
         ) {
             Write-Host "  [OK] Already up to date (v$LocalVer)" -ForegroundColor Green
         } else {

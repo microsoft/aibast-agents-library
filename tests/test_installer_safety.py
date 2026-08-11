@@ -104,6 +104,7 @@ def test_same_version_different_requested_brainstem_tree_forces_refresh(tmp_path
 REPO_URL={str(staging)!r}
 REPO_REF=easy-mode-copilot-chat-pilot
 REMOTE_VERSION_URL=https://example.invalid/VERSION
+SOURCE_OVERRIDE_REQUESTED=true
 curl() {{ printf '0.6.16\\n'; }}
 if check_for_upgrade; then echo REFRESH; else echo CURRENT; fi
 """,
@@ -165,7 +166,7 @@ install_brainstem
     ) == "print('production preserved')\n"
 
 
-def test_unrelated_commit_with_same_brainstem_tree_stays_current(tmp_path):
+def test_same_version_without_explicit_override_stays_current(tmp_path):
     installed = tmp_path / ".brainstem/src"
     staging = tmp_path / "staging-source"
     init_source_repo(installed, "main", "print('same runtime')\n")
@@ -317,6 +318,6 @@ def test_windows_repair_and_port_paths_match_safety_contract():
     assert "agent-collisions-" in text
     assert "Get-CimInstance Win32_Process" in text
     assert "Port 7071 is already used by another process" in text
-    assert "Test-RequestedBrainstemTreeCurrent" in text
-    assert "FETCH_HEAD:rapp_brainstem" in text
+    assert "$SOURCE_OVERRIDE_REQUESTED" in text
+    assert "Refreshing the explicitly requested repository/ref" in text
     assert "Could not refresh the requested repository/ref" in text
