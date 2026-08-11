@@ -2173,6 +2173,7 @@ function openAgentUpvote(agentName) {
 
 function agentCard(agent) {
   const solution = solutionOf(agent);
+  const workshopUrl = workshopPackageFor(agent).quest_url || "";
   const tools = microsoftTools(agent).slice(0, 3);
   const persona = first(solution.personas, state.view === "templates" ? "Agent builder" : "Business user");
   const badges = [];
@@ -2205,8 +2206,7 @@ function agentCard(agent) {
         <div class="card-foot">
           <span class="persona">For ${esc(persona)}</span>
           <div class="card-actions">
-            ${agentDownloadCount(agent)}
-            ${agentUpvoteControl(agent)}
+            ${workshopUrl ? `<a class="button small" href="${esc(workshopUrl)}" data-action="stop">View workshop</a>` : ""}
             <button class="button primary small" type="button" data-action="open-agent" data-name="${enc(agent.name)}">View agent</button>
           </div>
         </div>

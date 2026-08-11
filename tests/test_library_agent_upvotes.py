@@ -188,13 +188,15 @@ console.log(JSON.stringify({
     }
 
 
-def test_card_and_detail_render_upvote_action_and_read_only_count():
+def test_card_shows_only_workshop_and_agent_actions():
     text = library_text()
     card = text[text.index("function agentCard"):text.index("function stackCard")]
     detail = text[text.index("function openAgent"):text.index("function openStack")]
 
-    assert "${agentUpvoteControl(agent)}" in card
-    assert "${agentDownloadCount(agent)}" in card
+    assert ">View workshop</a>" in card
+    assert ">View agent</button>" in card
+    assert "${agentUpvoteControl(agent)}" not in card
+    assert "${agentDownloadCount(agent)}" not in card
     assert "${agentUpvoteControl(agent)}" in detail
     assert "${agentDownloadCount(agent)}" in detail
     assert 'data-action="upvote-agent"' in text
