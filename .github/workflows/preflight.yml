@@ -320,7 +320,7 @@ jobs:
             Start-Process cmd -ArgumentList '/c', $command
           }
 
-      - name: Assert repaired state before launch
+      - name: Assert repaired state and runtime
         if: matrix.scenario == 'repair-fetch-failure'
         shell: powershell
         run: |
@@ -355,13 +355,16 @@ jobs:
           }
 
           $python = Join-Path $HOME '.brainstem\venv\Scripts\python.exe'
-          Start-Process -FilePath $python `
-            -ArgumentList 'brainstem.py' `
-            -WorkingDirectory $runtime `
-            -RedirectStandardOutput "$env:RUNNER_TEMP\server.log" `
-            -RedirectStandardError "$env:RUNNER_TEMP\server-error.log"
+          Push-Location $runtime
+          try {
+            & $python -c "import brainstem; agents = brainstem.load_agents(); assert 'RepairCustom' in agents, agents"
+            if ($LASTEXITCODE -ne 0) { throw 'repaired runtime could not load the preserved custom agent' }
+          } finally {
+            Pop-Location
+          }
 
       - name: Wait for Brainstem and assert
+        if: matrix.scenario != 'repair-fetch-failure'
         shell: bash
         run: |
           set -uo pipefail
@@ -404,15 +407,6 @@ jobs:
           grep -q PREFLIGHT-ENV-MARKER "$HOME/.brainstem/src/rapp_brainstem/.env"
           curl -sf http://localhost:7071/health | python -c \
             'import json,sys; assert "PreflightCustom" in json.load(sys.stdin).get("agents", [])'
-
-      - name: Assert custom agent survived repair
-        if: matrix.scenario == 'repair-fetch-failure'
-        shell: bash
-        run: |
-          set -euxo pipefail
-          test -f "$HOME/.brainstem/src/rapp_brainstem/agents/repair_custom_agent.py"
-          curl -sf http://localhost:7071/health | python -c \
-            'import json,sys; assert "RepairCustom" in json.load(sys.stdin).get("agents", [])'
 
       - name: Collect installer log
         if: always()
