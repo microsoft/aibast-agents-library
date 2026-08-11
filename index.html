@@ -535,12 +535,11 @@
     const label = document.getElementById('status-label');
     const btn = document.getElementById('open-btn');
     try {
-      const r = await fetch('http://localhost:7071/health', { signal: AbortSignal.timeout(3000) });
+      const r = await fetch('http://localhost:7071/health/public', { signal: AbortSignal.timeout(3000) });
       const d = await r.json();
       if (d.status === 'ok') {
         dot.className = 'dot online';
-        const agents = d.agents ? d.agents.length : 0;
-        label.textContent = `Brainstem running · ${d.model} · ${agents} agent${agents !== 1 ? 's' : ''}`;
+        label.textContent = `Brainstem running · v${d.version}`;
         btn.disabled = false;
       } else {
         dot.className = 'dot offline';

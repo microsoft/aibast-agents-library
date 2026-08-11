@@ -7,6 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 INSTALLER = ROOT / "install.sh"
 WINDOWS_INSTALLER = ROOT / "install.ps1"
+LANDING_PAGE = ROOT / "index.html"
 
 
 def installer_functions():
@@ -131,6 +132,18 @@ def test_staging_can_override_repository_and_ref_without_changing_defaults():
     assert 'REPO_REF="${BRAINSTEM_REPO_REF:-main}"' in text
     assert '--branch "$REPO_REF"' in text
     assert 'origin "$REPO_REF"' in text
+
+
+def test_static_landing_page_uses_minimal_public_readiness_probe():
+    text = LANDING_PAGE.read_text(encoding="utf-8")
+    check = text[text.index("async function checkBrainstem"):text.index(
+        "checkBrainstem();"
+    )]
+
+    assert "http://localhost:7071/health/public" in check
+    assert "http://localhost:7071/health'" not in check
+    assert "d.agents" not in check
+    assert "d.model" not in check
 
 
 def test_windows_repair_and_port_paths_match_safety_contract():

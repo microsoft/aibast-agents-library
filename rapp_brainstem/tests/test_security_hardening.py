@@ -316,6 +316,45 @@ def test_cors_allows_localhost_blocks_other_origins(client):
     assert bad.headers.get("Access-Control-Allow-Origin") is None
 
 
+@pytest.mark.parametrize("origin", [
+    "https://microsoft.github.io",
+    "https://kody-w.github.io",
+])
+def test_public_health_allows_trusted_library_without_secret(
+    client,
+    monkeypatch,
+    origin,
+):
+    def unexpected_secret_load():
+        raise AssertionError("public health must not load the LAN secret")
+
+    monkeypatch.setattr(bs, "_load_or_create_secret", unexpected_secret_load)
+    r = client.get(
+        "/health/public",
+        headers={"Origin": origin, "Sec-Fetch-Site": "cross-site"},
+        environ_overrides={"REMOTE_ADDR": "127.0.0.1"},
+    )
+
+    assert r.status_code == 200
+    assert r.get_json() == {"status": "ok", "version": bs.VERSION}
+    assert r.headers.get("Access-Control-Allow-Origin") == origin
+
+
+def test_public_health_does_not_allow_untrusted_origin_to_read(client):
+    r = client.get(
+        "/health/public",
+        headers={
+            "Origin": "https://attacker.example",
+            "Sec-Fetch-Site": "cross-site",
+        },
+        environ_overrides={"REMOTE_ADDR": "127.0.0.1"},
+    )
+
+    assert r.status_code == 200
+    assert r.headers.get("Access-Control-Allow-Origin") is None
+    assert set(r.get_json()) == {"status", "version"}
+
+
 def test_foreign_origin_cannot_post_to_loopback(client, monkeypatch):
     called = {"chat": False}
 
