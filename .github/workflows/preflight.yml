@@ -492,7 +492,7 @@ jobs:
 
           function Invoke-OneLiner([string]$LogPath) {
             $content = (Invoke-WebRequest -Uri $installer -UseBasicParsing).Content
-            & ([scriptblock]::Create($content)) --no-launch 2>&1 |
+            & ([scriptblock]::Create($content)) --no-launch *>&1 |
               Tee-Object -FilePath $LogPath |
               Write-Host
           }
