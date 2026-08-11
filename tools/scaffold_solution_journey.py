@@ -89,9 +89,9 @@ THEME_PREFERENCE_SCRIPT = """(() => {
 
 WORKSHOP_ENGINE_SCRIPT = """(() => {
       const engine =
-        localStorage.getItem("aibast:workshop-engine") === "brainstem"
-          ? "brainstem"
-          : "copilot";
+        localStorage.getItem("aibast:workshop-engine") === "copilot"
+          ? "copilot"
+          : "brainstem";
       document.documentElement.setAttribute("data-workshop-engine", engine);
     })();"""
 

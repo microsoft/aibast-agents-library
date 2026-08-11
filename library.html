@@ -2447,9 +2447,9 @@ function architectureHTML(architecture, solution, agentName) {
   const fieldGuideUrl = packageInfo.slug
     ? `solutions/${packageInfo.slug}/field-guide.html`
     : "";
-  const configuredEngine = localStorage.getItem("aibast:workshop-engine") === "brainstem"
-    ? "GitHub Copilot + Brainstem"
-    : "GitHub Copilot";
+  const configuredEngine = localStorage.getItem("aibast:workshop-engine") === "copilot"
+    ? "GitHub Copilot"
+    : "GitHub Copilot + Brainstem";
   return `
     <div class="architecture-body">
       <h3>Solution architecture</h3>

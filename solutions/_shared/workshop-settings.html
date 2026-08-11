@@ -206,7 +206,6 @@
         <label class="option">
           <input type="radio" name="engine" value="copilot">
           <span>
-            <span class="recommended">Default</span>
             <strong>GitHub Copilot only</strong>
             <span>Use the familiar VS Code Copilot surface with the lane-specific skill carrying discovery, testing, deployment, and validation.</span>
           </span>
@@ -214,6 +213,7 @@
         <label class="option">
           <input type="radio" name="engine" value="brainstem">
           <span>
+            <span class="recommended">Default</span>
             <strong>GitHub Copilot + Brainstem</strong>
             <span>Add the optional personal, on-device training AI for persistent workshop state, hot-loaded agents, and autonomous handoffs.</span>
           </span>
@@ -249,9 +249,9 @@
         return fallbackReturn.href;
       };
       const safeReturn = resolveReturn(requestedReturn);
-      const current = localStorage.getItem(key) === "brainstem"
-        ? "brainstem"
-        : "copilot";
+      const current = localStorage.getItem(key) === "copilot"
+        ? "copilot"
+        : "brainstem";
       const form = document.getElementById("settings-form");
       const back = document.getElementById("back-link");
       form.elements.engine.value = current;
