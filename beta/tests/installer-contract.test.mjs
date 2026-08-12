@@ -90,6 +90,12 @@ test("dedicated beta page resolves fork releases without changing main install",
   assert.match(installerPage, /The production installer is unchanged/);
   assert.match(installerPage, /--cp-bg/);
   assert.match(installerPage, /data-theme/);
+  assert.match(installerPage, /white-space: pre;/);
+  assert.match(
+    installerPage,
+    /return `curl -fsSL[\s\S]*BRAINSTEM_BETA_COMMIT="\$\{commit\}" bash`;/,
+  );
+  assert.doesNotMatch(installerPage, /\.join\("\\n"\)/);
 });
 
 test("dedicated beta page scripts parse", () => {

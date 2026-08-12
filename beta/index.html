@@ -327,7 +327,7 @@
     }
 
     .command {
-      min-height: 144px;
+      min-height: 76px;
       margin: 0 0 16px;
       padding: 16px;
       overflow: auto;
@@ -338,8 +338,8 @@
       font-family: Consolas, "Courier New", Courier, monospace;
       font-size: 12px;
       line-height: 1.6;
-      white-space: pre-wrap;
-      word-break: break-word;
+      white-space: pre;
+      word-break: normal;
     }
 
     .button-row {
@@ -727,24 +727,19 @@
       }
 
       function unixInstallCommand(repo, commit) {
-        return [
-          `commit="${commit}"`,
-          `curl -fsSL "https://raw.githubusercontent.com/${repo}/$commit/beta/install.sh" \\`,
-          `  | BRAINSTEM_BETA_REPO_URL="https://github.com/${repo}.git" \\`,
-          `    BRAINSTEM_BETA_COMMIT="$commit" bash`,
-        ].join("\n");
+        return `curl -fsSL "https://raw.githubusercontent.com/${repo}/${commit}/beta/install.sh" | BRAINSTEM_BETA_REPO_URL="https://github.com/${repo}.git" BRAINSTEM_BETA_COMMIT="${commit}" bash`;
       }
 
       function windowsInstallCommand(repo, commit) {
         return [
-          `$repo="${repo}"; $commit="${commit}"`,
+          `$repo="${repo}";$commit="${commit}"`,
           `$env:BRAINSTEM_BETA_REPO_URL="https://github.com/$repo.git"`,
           `$env:BRAINSTEM_BETA_COMMIT=$commit`,
           `$env:BRAINSTEM_BETA_BOOTSTRAP_URL="https://raw.githubusercontent.com/$repo/$commit/install.ps1"`,
-          `$installer=Join-Path $env:TEMP "rapp-brainstem-beta-$commit.cmd"`,
-          `Invoke-WebRequest "https://raw.githubusercontent.com/$repo/$commit/beta/install.cmd" -OutFile $installer -UseBasicParsing`,
-          `& $installer`,
-        ].join("; ");
+          `$p=Join-Path $env:TEMP "rapp-frontier-$commit.cmd"`,
+          `iwr "https://raw.githubusercontent.com/$repo/$commit/beta/install.cmd" -OutFile $p -UseBasicParsing`,
+          `& $p`,
+        ].join(";");
       }
 
       async function copyText(button, value) {
