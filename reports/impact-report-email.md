@@ -1,38 +1,38 @@
-**Subject:** AIBAST weekly and monthly impact report - August 11, 2026
+**Subject:** AIBAST weekly and monthly impact report - August 12, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-08-11T23:03:06Z`
-**Site:** https://kody-w.github.io/aibast-agents-library/
+**Snapshot:** `2026-08-12T19:52:51Z`
+**Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 2,032 | +1,467 observed - partial | Baseline pending |
-| Git clones | 1,565 | +1,467 observed | Baseline pending |
-| Clones excluding CI estimate | 1,565 | Baseline pending | Baseline pending |
-| AIBAST repository and Pages views | 11 | +11 observed | Baseline pending |
-| jsDelivr file hits | 388 | Baseline pending | Baseline pending |
-| Release asset downloads | 79 | Baseline pending | Baseline pending |
-| AIBAST direct agent file downloads | 79 | Baseline pending | Baseline pending |
+| AIBAST observed repository downloads | 2,085 | +1,682 observed - partial | Baseline pending |
+| Git clones | 1,697 | +1,294 observed | Baseline pending |
+| Clones excluding CI estimate | 1,697 | Baseline pending | Baseline pending |
+| AIBAST repository and Pages views | 191 | +106 observed | Baseline pending |
+| jsDelivr file hits | 388 | +388 observed | Baseline pending |
+| Release asset downloads | 0 | Baseline pending | Baseline pending |
+| AIBAST direct agent file downloads | 0 | Baseline pending | Baseline pending |
 | AIBAST skill file downloads | 0 | Baseline pending | Baseline pending |
 | AIBAST installer file downloads | 0 | Baseline pending | Baseline pending |
-| Unique cloners (14-day window) | 194 | Baseline pending | Baseline pending |
-| Unique visitors (14-day window) | 6 | Baseline pending | Baseline pending |
+| Unique cloners (14-day window) | 137 | Baseline pending | Baseline pending |
+| Unique visitors (14-day window) | 17 | Baseline pending | Baseline pending |
 
 ## Community engagement
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| GitHub stars | 0 | Baseline pending | Baseline pending |
-| GitHub forks | 0 | Baseline pending | Baseline pending |
+| GitHub stars | 4 | Baseline pending | Baseline pending |
+| GitHub forks | 2 | Baseline pending | Baseline pending |
 | GitHub watchers | 0 | Baseline pending | Baseline pending |
-| Open GitHub issues | 2 | Baseline pending | Baseline pending |
+| Open GitHub issues | 6 | Baseline pending | Baseline pending |
 | Agent upvotes | 0 | Baseline pending | Baseline pending |
 | Signed-in agent acquisitions | 0 | Baseline pending | Baseline pending |
-| Workshop usage events | 0 | Baseline pending | Baseline pending |
-| Workshop views (14-day top paths) | Unavailable | Unavailable | Unavailable |
+| Workshop usage events | 8 | Baseline pending | Baseline pending |
+| Workshop views (14-day top paths) | 8 | Baseline pending | Baseline pending |
 | Workshop file downloads | 0 | Baseline pending | Baseline pending |
 | Workshop bundle downloads | 0 | Baseline pending | Baseline pending |
 | Workshop feedback reports | 0 | Baseline pending | Baseline pending |
@@ -55,8 +55,8 @@
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| Tracked repository files | 5,403 | Baseline pending | Baseline pending |
-| Files covered by download observations | 5,403 | Baseline pending | Baseline pending |
+| Tracked repository files | 5,445 | Baseline pending | Baseline pending |
+| Files covered by download observations | 5,445 | Baseline pending | Baseline pending |
 | Catalog agents | 72 | Baseline pending | Baseline pending |
 | Tracked SKILL.md files | 234 | Baseline pending | Baseline pending |
 | Canonical workshops | 51 | Baseline pending | Baseline pending |
@@ -80,4 +80,4 @@ No complete dated baseline or non-zero movers yet.
 - Verified achievements confirm authenticated GitHub issue authorship and schema only; the underlying self-reported completion is not independently proven.
 - A native upvote on an agent rating Discussion records preference. A native upvote on its acquisition Discussion records one signed-in account's declared download, copy, or install. Neither replaces observable CDN or release file-transfer counts.
 
-[Open report](https://kody-w.github.io/aibast-agents-library/reports/impact-report.html) | [Download PDF](https://kody-w.github.io/aibast-agents-library/reports/impact-report.pdf) | [Live metrics](https://kody-w.github.io/aibast-agents-library/metrics.html)
+[Open report](https://microsoft.github.io/aibast-agents-library/reports/impact-report.html) | [Download PDF](https://microsoft.github.io/aibast-agents-library/reports/impact-report.pdf) | [Live metrics](https://microsoft.github.io/aibast-agents-library/metrics.html)
