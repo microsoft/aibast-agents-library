@@ -1,19 +1,19 @@
-**Subject:** AIBAST weekly and monthly impact report - August 11, 2026
+**Subject:** AIBAST weekly and monthly impact report - August 12, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-08-11T05:43:02Z`
+**Snapshot:** `2026-08-12T05:55:37Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 1,786 | Baseline pending | Baseline pending |
+| AIBAST observed repository downloads | 1,786 | +388 observed - partial | Baseline pending |
 | Git clones | 1,398 | Baseline pending | Baseline pending |
 | Clones excluding CI estimate | 1,398 | Baseline pending | Baseline pending |
 | AIBAST repository and Pages views | 9 | Baseline pending | Baseline pending |
-| jsDelivr file hits | 388 | Baseline pending | Baseline pending |
+| jsDelivr file hits | 388 | +388 observed | Baseline pending |
 | Release asset downloads | 0 | Baseline pending | Baseline pending |
 | AIBAST direct agent file downloads | 0 | Baseline pending | Baseline pending |
 | AIBAST skill file downloads | 0 | Baseline pending | Baseline pending |
