@@ -1,36 +1,93 @@
 import path from "node:path";
+import { readFileSync } from "node:fs";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 import {
   app,
   BrowserWindow,
   ipcMain,
+  Menu,
   session,
   shell,
 } from "electron";
 
 import {
-  BrainstemProcess,
   resolveBrainstemConfig,
 } from "./brainstem-process.mjs";
+import { BrainSurgeon } from "./brain-surgeon.mjs";
+import { CopilotStudioAuthManager } from "./copilot-studio-auth.mjs";
 import { CopilotRuntime } from "./copilot-runtime.mjs";
+import { BetaRouteManager } from "./route-manager.mjs";
+import {
+  allowsUiDriverMediaPermission,
+  startUiDriverServer,
+} from "./ui-driver-server.mjs";
+import {
+  checkForUpdates,
+  consumeUpdateResult,
+  prepareUpdate,
+} from "./update-manager.mjs";
+import {
+  betaSourceFingerprint,
+  runtimeDirectoryFingerprint,
+} from "../scripts/walkthrough-provenance.mjs";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
+const packageDir = path.resolve(dirname, "..");
 const uiFile = path.join(dirname, "..", "ui", "index.html");
 const uiUrl = pathToFileURL(uiFile).href;
 const config = resolveBrainstemConfig();
-const brainstem = new BrainstemProcess(config);
-const copilot = new CopilotRuntime();
+const startupFingerprint = betaSourceFingerprint(path.resolve(packageDir, ".."));
+const brainstemRuntimeFingerprint = runtimeDirectoryFingerprint(
+  config.brainstemDir,
+);
+const copilot = new CopilotRuntime({
+  tokenFile: path.join(config.brainstemDir, ".copilot_token"),
+  workingDirectory: config.brainstemDir,
+});
+const copilotStudioAuth = new CopilotStudioAuthManager();
+const betaHome = process.env.BRAINSTEM_BETA_HOME
+  || path.join(config.brainstemHome, "beta-launcher");
 
 let mainWindow = null;
 let shutdownStarted = false;
 let shutdownComplete = false;
+let updateCheckInFlight = false;
+let updateMenuItem = null;
+let availableUpdate = null;
+let uiDriver = null;
+let brainSurgeon = null;
 
 const state = {
   brainstem: { phase: "starting", message: "Starting shared Brainstem..." },
   copilot: { phase: "starting", message: "Connecting bundled Copilot CLI..." },
+  surgeon: {
+    phase: "starting",
+    message: "Preparing GitHub Copilot Agent mode...",
+  },
+  uiDriver: { phase: "starting", message: "Preparing visible AI controls..." },
+  update: {
+    phase: "idle",
+    message: "Check GitHub for the latest RAPP Brainstem Beta.",
+  },
   url: config.url,
 };
+const routeManager = new BetaRouteManager({
+  betaHome,
+  brainstemConfig: config,
+  onActivate: async (route) => {
+    state.url = route.url;
+    state.brainstem = {
+      phase: "ready",
+      message: `Routed Brainstem v${route.health.version}`,
+      callerRappid: route.callerRappid,
+      memoryGuid: route.memoryGuid,
+      stackRappid: route.stackRappid,
+      compositionHash: route.transientCompositionHash || route.compositionHash,
+    };
+    emitState();
+  },
+});
 
 function emitState() {
   if (mainWindow && !mainWindow.isDestroyed()) {
@@ -38,11 +95,61 @@ function emitState() {
   }
 }
 
+function emitSurgeonEvent(event) {
+  if (mainWindow && !mainWindow.isDestroyed()) {
+    mainWindow.webContents.send("beta:surgeon-event", structuredClone(event));
+  }
+}
+
+async function executeUiCommand(command) {
+  if (!uiDriver?.metadataPath) {
+    throw new Error("The visible Brainstem control bridge is not ready.");
+  }
+  const metadata = JSON.parse(readFileSync(uiDriver.metadataPath, "utf8"));
+  const response = await fetch(
+    `http://${metadata.host}:${metadata.port}/v1/command`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${metadata.token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(command),
+    },
+  );
+  const payload = await response.json();
+  if (!response.ok || !payload.ok) {
+    throw new Error(payload.error || `Visible UI command failed with HTTP ${response.status}.`);
+  }
+  return payload.result;
+}
+
+function ensureBrainSurgeon() {
+  if (!brainSurgeon) {
+    brainSurgeon = new BrainSurgeon({
+      runtime: copilot,
+      brainstemUrl: config.url,
+      checkForUpdates: () => handleCheckForUpdates({ openPanel: true }),
+      copilotStudioAuth,
+      routeManager,
+      uiCommand: executeUiCommand,
+      onEvent: emitSurgeonEvent,
+    });
+  }
+  return brainSurgeon;
+}
+
 function loopbackUrl(raw) {
   try {
     const url = new URL(raw);
     const allowedHost = ["127.0.0.1", "localhost"].includes(url.hostname);
-    return allowedHost && Number(url.port || 80) === config.port;
+    const active = new URL(state.url);
+    return (
+      allowedHost
+      && url.protocol === active.protocol
+      && url.hostname === active.hostname
+      && Number(url.port || 80) === Number(active.port || 80)
+    );
   } catch {
     return false;
   }
@@ -57,13 +164,36 @@ function externalUrl(raw) {
   }
 }
 
-function routeNavigation(event, details) {
-  const raw = typeof details === "string" ? details : details?.url;
-  if (!raw || raw === "about:blank" || raw === uiUrl || loopbackUrl(raw)) {
-    return;
-  }
+function routeMainNavigation(event, raw) {
+  if (!raw || raw === "about:blank" || raw === uiUrl) return;
   event.preventDefault();
   if (externalUrl(raw)) void shell.openExternal(raw);
+}
+
+function routeFrameNavigation(details) {
+  const raw = details?.url;
+  if (!raw || raw === "about:blank") return;
+  if (details.isMainFrame) {
+    if (raw !== uiUrl) {
+      details.preventDefault();
+      if (externalUrl(raw)) void shell.openExternal(raw);
+    }
+    return;
+  }
+  if (loopbackUrl(raw)) return;
+  details.preventDefault();
+  if (externalUrl(raw)) void shell.openExternal(raw);
+}
+
+function assertTrustedIpc(event) {
+  if (
+    !mainWindow
+    || event.sender !== mainWindow.webContents
+    || event.senderFrame !== mainWindow.webContents.mainFrame
+    || event.senderFrame.url !== uiUrl
+  ) {
+    throw new Error("Rejected IPC from an untrusted frame.");
+  }
 }
 
 function createWindow() {
@@ -87,8 +217,8 @@ function createWindow() {
     if (externalUrl(url)) void shell.openExternal(url);
     return { action: "deny" };
   });
-  win.webContents.on("will-navigate", routeNavigation);
-  win.webContents.on("will-frame-navigate", routeNavigation);
+  win.webContents.on("will-navigate", routeMainNavigation);
+  win.webContents.on("will-frame-navigate", routeFrameNavigation);
   win.on("closed", () => {
     mainWindow = null;
   });
@@ -96,18 +226,297 @@ function createWindow() {
   return win;
 }
 
+function shortCommit(commit) {
+  return commit.slice(0, 8);
+}
+
+function openUpdatePanel() {
+  if (mainWindow && !mainWindow.isDestroyed()) {
+    mainWindow.webContents.send("beta:open-update");
+  }
+}
+
+function setUpdateState(update) {
+  state.update = update;
+  emitState();
+  return structuredClone(update);
+}
+
+async function handleCheckForUpdates({ openPanel = false } = {}) {
+  if (openPanel) openUpdatePanel();
+  if (updateCheckInFlight) return structuredClone(state.update);
+  updateCheckInFlight = true;
+  if (updateMenuItem) updateMenuItem.enabled = false;
+  availableUpdate = null;
+  setUpdateState({
+    phase: "checking",
+    message: "Checking GitHub for updates...",
+  });
+
+  try {
+    const update = await checkForUpdates({
+      packageDir,
+      env: process.env,
+    });
+    if (!update.published) {
+      return setUpdateState({
+        phase: "current",
+        message: `No RAPP Brainstem Beta update is published on ${update.updateRef} yet.`,
+        detail: `This source build remains on ${update.currentVersion} `
+          + `(${shortCommit(update.currentCommit)}). The latest repository commit `
+          + `(${shortCommit(update.latestCommit)}) has no beta/VERSION manifest.`,
+        source: `${update.repository}@${update.updateRef}`,
+      });
+    }
+    if (!update.available) {
+      return setUpdateState({
+        phase: "current",
+        message: "RAPP Brainstem Beta is up to date.",
+        detail: `Version ${update.currentVersion} (${shortCommit(update.currentCommit)})`,
+        source: `${update.repository}@${update.updateRef}`,
+      });
+    }
+
+    if (update.dirty) {
+      return setUpdateState({
+        phase: "blocked",
+        message: "An update is available, but local launcher changes block it.",
+        detail: `Installed ${update.currentVersion} (${shortCommit(update.currentCommit)}); `
+          + `available ${update.latestVersion} (${shortCommit(update.latestCommit)}).`,
+        source: `${update.repository}@${update.updateRef}`,
+        guidance: `Preserve or discard the changes in ${update.repoRoot}, then check again.`,
+      });
+    }
+
+    availableUpdate = update;
+    return setUpdateState({
+      phase: "available",
+      message: `RAPP Brainstem Beta ${update.latestVersion} is available.`,
+      detail: `Installed ${update.currentVersion} (${shortCommit(update.currentCommit)}); `
+        + `latest ${update.latestVersion} (${shortCommit(update.latestCommit)}).`,
+      source: `${update.repository}@${update.updateRef}`,
+      guidance: "Update and Restart refreshes the launcher and shared Brainstem "
+        + "from this exact GitHub commit.",
+    });
+  } catch (error) {
+    return setUpdateState({
+      phase: "error",
+      message: "RAPP Brainstem Beta could not check for updates.",
+      detail: String(error.message || error),
+    });
+  } finally {
+    updateCheckInFlight = false;
+    if (updateMenuItem && !shutdownStarted) updateMenuItem.enabled = true;
+  }
+}
+
+async function handleInstallUpdate() {
+  if (!availableUpdate) {
+    return setUpdateState({
+      phase: "error",
+      message: "No ready update is available.",
+      detail: "Check for updates again before installing.",
+    });
+  }
+  const update = availableUpdate;
+  setUpdateState({
+    phase: "applying",
+    message: `Installing RAPP Brainstem Beta ${update.latestVersion}...`,
+    detail: "The app will close, run the pinned installer, and reopen.",
+  });
+  try {
+    await prepareUpdate({
+      update,
+      brainstemHome: config.brainstemHome,
+      env: process.env,
+    });
+    app.quit();
+    return structuredClone(state.update);
+  } catch (error) {
+    return setUpdateState({
+      phase: "error",
+      message: "RAPP Brainstem Beta could not start the update.",
+      detail: String(error.message || error),
+    });
+  }
+}
+
+function installApplicationMenu() {
+  const checkForUpdatesItem = {
+    id: "check-for-updates",
+    label: "Check for Updates...",
+    accelerator: "CmdOrCtrl+Shift+U",
+    click: () => void handleCheckForUpdates({ openPanel: true }),
+  };
+  const editMenu = {
+    label: "Edit",
+    submenu: [
+      { role: "undo" },
+      { role: "redo" },
+      { type: "separator" },
+      { role: "cut" },
+      { role: "copy" },
+      { role: "paste" },
+      { role: "selectAll" },
+    ],
+  };
+  const viewMenu = {
+    label: "View",
+    submenu: [
+      { role: "reload" },
+      { role: "forceReload" },
+      { role: "toggleDevTools" },
+      { type: "separator" },
+      { role: "resetZoom" },
+      { role: "zoomIn" },
+      { role: "zoomOut" },
+      { type: "separator" },
+      { role: "togglefullscreen" },
+    ],
+  };
+  const template = process.platform === "darwin"
+    ? [
+        {
+          label: app.name,
+          submenu: [
+            { role: "about" },
+            { type: "separator" },
+            checkForUpdatesItem,
+            { type: "separator" },
+            { role: "services" },
+            { type: "separator" },
+            { role: "hide" },
+            { role: "hideOthers" },
+            { role: "unhide" },
+            { type: "separator" },
+            { role: "quit" },
+          ],
+        },
+        editMenu,
+        viewMenu,
+        { role: "windowMenu" },
+      ]
+    : [
+        { label: "File", submenu: [{ role: "quit" }] },
+        editMenu,
+        viewMenu,
+        { role: "windowMenu" },
+        { label: "Help", submenu: [checkForUpdatesItem] },
+      ];
+
+  Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+  updateMenuItem = Menu.getApplicationMenu()?.getMenuItemById(
+    "check-for-updates",
+  );
+}
+
+function loadPendingUpdateResult() {
+  let result;
+  try {
+    result = consumeUpdateResult({ packageDir, env: process.env });
+  } catch (error) {
+    result = {
+      success: false,
+      error: `The update result could not be read: ${String(error.message || error)}`,
+    };
+  }
+  if (!result) return;
+
+  if (result.success) {
+    state.update = {
+      phase: "success",
+      message: `RAPP Brainstem Beta updated to ${result.latestVersion}.`,
+      detail: `Installed commit: ${shortCommit(result.commit)}\n`
+        + "The launcher and shared Brainstem source were refreshed.",
+    };
+    return;
+  }
+
+  state.update = {
+    phase: "error",
+    message: "RAPP Brainstem Beta could not finish the update.",
+    detail: `${result.error || "Unknown updater error."}\n\nLog: ${
+      result.logPath || "unavailable"
+    }`,
+  };
+}
+
 function registerIpc() {
-  ipcMain.handle("beta:get-state", () => structuredClone(state));
+  ipcMain.handle("beta:get-state", (event) => {
+    assertTrustedIpc(event);
+    return structuredClone(state);
+  });
+  ipcMain.handle("beta:list-agent-files", async (event) => {
+    assertTrustedIpc(event);
+    const identity = routeManager.identity();
+    const route = routeManager.activeRoute;
+    return {
+      caller_rappid: identity.caller_rappid,
+      memory_guid: identity.memory_guid,
+      active_stack_rappid: route?.stackRappid || identity.active_stack_rappid,
+      overlay_stack_rappids: route?.overlayStackRappids
+        || identity.overlay_stack_rappids,
+      stack_lineage: route?.stackLineage || [],
+      stack_tree: routeManager.stackTree(),
+      composition_hash: route?.transientCompositionHash
+        || route?.compositionHash
+        || null,
+      files: routeManager.activeAgentFiles().map((agent) => ({
+        filename: agent.filename,
+        agents: [],
+        loadable: true,
+        revision: agent.address || agent.filename,
+        scope: agent.scope,
+      })),
+    };
+  });
+  ipcMain.handle("beta:read-agent-file", async (
+    event,
+    filename,
+    scope,
+  ) => {
+    assertTrustedIpc(event);
+    const safeName = String(filename || "");
+    if (
+      !/^[A-Za-z0-9_.-]+\.py$/.test(safeName)
+      || safeName.startsWith(".")
+    ) {
+      throw new Error("A safe Python agent filename is required.");
+    }
+    return {
+      filename: safeName,
+      scope: String(scope || "global"),
+      content: routeManager.readActiveAgent(safeName),
+    };
+  });
+  ipcMain.handle(
+    "beta:check-for-updates",
+    (event) => {
+      assertTrustedIpc(event);
+      return handleCheckForUpdates();
+    },
+  );
+  ipcMain.handle(
+    "beta:install-update",
+    (event) => {
+      assertTrustedIpc(event);
+      return handleInstallUpdate();
+    },
+  );
+  ipcMain.handle("beta:surgeon-send", async (event, prompt) => {
+    assertTrustedIpc(event);
+    return ensureBrainSurgeon().send(prompt);
+  });
+  ipcMain.handle("beta:surgeon-reset", async (event) => {
+    assertTrustedIpc(event);
+    if (brainSurgeon) await brainSurgeon.reset();
+    return { ok: true };
+  });
 }
 
 async function startServices() {
-  const brainstemTask = brainstem.start().then((result) => {
-    state.brainstem = {
-      phase: "ready",
-      message: result.reused
-        ? `Using shared Brainstem v${result.health.version}`
-        : `Brainstem v${result.health.version} started`,
-    };
+  const brainstemTask = routeManager.startDefault().then((route) => {
+    state.url = route.url;
     emitState();
   }).catch((error) => {
     state.brainstem = { phase: "error", message: String(error.message || error) };
@@ -126,11 +535,24 @@ async function startServices() {
           phase: "signed-out",
           message: "Copilot CLI is bundled; sign in through Brainstem chat.",
         };
+    state.surgeon = result.authenticated
+      ? {
+          phase: "ready",
+          message: "GitHub Copilot Agent mode is ready inside the beta client.",
+        }
+      : {
+          phase: "signed-out",
+          message: "Sign in to GitHub Copilot before using Brain Surgeon.",
+        };
     emitState();
   }).catch((error) => {
     state.copilot = {
       phase: "warning",
       message: `Copilot CLI status unavailable: ${String(error.message || error)}`,
+    };
+    state.surgeon = {
+      phase: "error",
+      message: state.copilot.message,
     };
     emitState();
   });
@@ -150,11 +572,36 @@ if (!hasLock) {
   });
 
   app.whenReady().then(() => {
-    session.defaultSession.setPermissionRequestHandler((_webContents, _permission, callback) => {
-      callback(false);
+    session.defaultSession.setPermissionRequestHandler((webContents, permission, callback) => {
+      callback(allowsUiDriverMediaPermission(webContents, permission));
     });
     registerIpc();
+    installApplicationMenu();
+    loadPendingUpdateResult();
     mainWindow = createWindow();
+    startUiDriverServer({
+      window: mainWindow,
+      brainstemHome: config.brainstemHome,
+      loopbackUrl,
+      env: process.env,
+      routeTelemetry: () => routeManager.telemetrySnapshot(),
+      brainstemRuntimeFingerprint,
+      runtimeFingerprint: startupFingerprint,
+    }).then((driver) => {
+      uiDriver = driver;
+      state.uiDriver = {
+        phase: "ready",
+        message: "Chat agents can visibly operate this Brainstem.",
+      };
+      emitState();
+    }).catch((error) => {
+      state.uiDriver = {
+        phase: "error",
+        message: `Visible AI controls unavailable: ${String(error.message || error)}`,
+      };
+      console.error(state.uiDriver.message);
+      emitState();
+    });
     void startServices();
     const smokeExitMs = Number.parseInt(
       process.env.BRAINSTEM_BETA_SMOKE_EXIT_MS || "0",
@@ -179,7 +626,12 @@ if (!hasLock) {
     event.preventDefault();
     if (shutdownStarted) return;
     shutdownStarted = true;
-    Promise.allSettled([brainstem.stop(), copilot.stop()]).finally(() => {
+    Promise.allSettled([
+      brainSurgeon?.stop(),
+      copilot.stop(),
+      routeManager.stop(),
+      uiDriver?.stop(),
+    ]).finally(() => {
       shutdownComplete = true;
       app.quit();
     });

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta
     http-equiv="Content-Security-Policy"
-    content="default-src 'self'; frame-src http://127.0.0.1:* http://localhost:*; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self' data:;"
+    content="default-src 'self'; connect-src 'self' http://127.0.0.1:* http://localhost:*; frame-src http://127.0.0.1:* http://localhost:*; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self' data: http://127.0.0.1:* http://localhost:*; media-src http://127.0.0.1:* http://localhost:*;"
   >
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>RAPP Brainstem Beta</title>
@@ -17,6 +17,10 @@
     }
     * { box-sizing: border-box; }
     html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+    :root {
+      --explorer-width: min(400px, 100vw);
+      --surgeon-width: min(460px, 100vw);
+    }
     button {
       border: 1px solid #30363d;
       border-radius: 6px;
@@ -28,7 +32,22 @@
       font-size: 12px;
     }
     button:hover { border-color: #58a6ff; background: #30363d; }
-    main { position: relative; width: 100%; height: 100%; background: #0d1117; }
+    main {
+      position: relative; width: 100%; height: 100%; background: #0d1117;
+      margin-left: 0;
+      transition: width .28s cubic-bezier(.22,.9,.3,1),
+                  margin-left .28s cubic-bezier(.22,.9,.3,1);
+    }
+    @media (min-width: 820px) {
+      body.surgeon-open main { width: calc(100vw - var(--surgeon-width)); }
+      body.explorer-open main {
+        width: calc(100vw - var(--explorer-width));
+        margin-left: var(--explorer-width);
+      }
+      body.explorer-open.surgeon-open main {
+        width: calc(100vw - var(--explorer-width) - var(--surgeon-width));
+      }
+    }
     iframe { width: 100%; height: 100%; border: 0; display: none; background: #0d1117; }
     iframe.ready { display: block; }
     #splash {
@@ -129,10 +148,308 @@
     .intro-footer small { color: #8c959f; line-height: 1.45; }
     .primary { border-color: #238636; background: #238636; font-weight: 700; }
     .primary:hover { border-color: #2ea043; background: #2ea043; }
+    #explorer-tab {
+      position: fixed; z-index: 14; top: 50%; left: 0;
+      display: flex; align-items: center; gap: 7px;
+      transform: translateY(-50%); padding: 14px 9px;
+      border: 1px solid #30363d; border-left: 0;
+      border-radius: 0 12px 12px 0; background: #1c1e22;
+      box-shadow: 4px 0 20px rgba(0,0,0,.45);
+      writing-mode: vertical-rl; letter-spacing: .06em; font-weight: 700;
+      transition: padding .15s, background .15s;
+    }
+    #explorer-tab:hover { padding-left: 13px; background: #23262c; }
+    body.explorer-open #explorer-tab { display: none; }
+    #explorer {
+      position: fixed; z-index: 15; top: 0; left: 0;
+      display: flex; flex-direction: column;
+      width: var(--explorer-width); height: 100dvh;
+      transform: translateX(-100%);
+      border-right: 1px solid #2a2c31; background: #18191c;
+      box-shadow: 24px 0 60px rgba(0,0,0,.5);
+      transition: transform .28s cubic-bezier(.22,.9,.3,1);
+    }
+    #explorer.open { transform: translateX(0); }
+    #explorer header {
+      display: flex; align-items: center; gap: 9px; padding: 13px 14px;
+      border-bottom: 1px solid #26282d;
+      background: linear-gradient(180deg,#1c1e22,#17181b);
+    }
+    .explorer-title { display: flex; flex-direction: column; line-height: 1.15; }
+    .explorer-title strong { font-size: 14px; }
+    .explorer-title span { color: #8b8f98; font-size: 10.5px; }
+    .explorer-head-actions { display: flex; gap: 5px; margin-left: auto; }
+    .explorer-head-actions button {
+      width: 28px; height: 28px; padding: 0; border-color: #2c2f35;
+      background: #1e2025; color: #9aa0a9; font-size: 15px;
+    }
+    #agent-tree {
+      max-height: 42%; overflow-y: auto; padding: 8px 0;
+      border-bottom: 1px solid #26282d; background: #202124;
+    }
+    .agent-tree-root,
+    .agent-tree-folder,
+    .agent-tree-file {
+      display: flex; align-items: center; gap: 7px; min-width: 0;
+      padding: 4px 10px; color: #c8c9cc; font-size: 12px;
+    }
+    .agent-tree-root {
+      color: #f0f1f3; font-size: 11px; font-weight: 800;
+      letter-spacing: .06em;
+    }
+    .agent-tree-folder { padding-left: 20px; color: #d7d9dd; font-weight: 700; }
+    .agent-tree-identity,
+    .agent-tree-stack {
+      display: flex; align-items: center; gap: 7px; min-width: 0;
+      padding: 3px 10px 3px 20px; color: #9aa0a9; font-size: 10.5px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    .agent-tree-stack {
+      color: #c8c9cc; font-family: inherit; font-size: 11.5px;
+    }
+    .agent-tree-stack.active { color: #7ee787; font-weight: 800; }
+    .agent-tree-stack.overlay { color: #79c0ff; }
+    .agent-tree-file {
+      width: 100%; border: 0; border-radius: 0; padding-left: 38px;
+      background: transparent; text-align: left;
+    }
+    .agent-tree-file:hover,
+    .agent-tree-file.active { background: #2a2c31; color: #fff; }
+    .agent-tree-file .name {
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .agent-tree-file .count {
+      margin-left: auto; color: #6f747d; font-size: 10px; white-space: nowrap;
+    }
+    #agent-viewer { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+    #agent-viewer-tab {
+      min-height: 34px; padding: 8px 12px; border-bottom: 1px solid #26282d;
+      background: #222327; color: #c8c9cc;
+      font: 11px ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    #agent-source {
+      flex: 1; margin: 0; overflow: auto; padding: 13px;
+      background: #111214; color: #d4d4d4;
+      font: 11.5px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      tab-size: 4; white-space: pre;
+    }
+    .agent-viewer-empty {
+      margin: auto; max-width: 280px; padding: 24px; color: #7f848d;
+      text-align: center; font-size: 12px; line-height: 1.6;
+    }
+    #explorer-status {
+      padding: 5px 10px; border-top: 1px solid #26282d;
+      background: #18191c; color: #6f747d; font-size: 10px;
+    }
+    #beta-menu-wrap {
+      position: fixed; z-index: 13; top: 64px; right: 16px;
+      transition: right .28s cubic-bezier(.22,.9,.3,1);
+    }
+    body.surgeon-open #beta-menu-wrap {
+      right: calc(var(--surgeon-width) + 16px);
+    }
+    #beta-menu-toggle {
+      width: 38px; height: 34px; padding: 0;
+      border-radius: 9px; border-color: #30363d;
+      background: rgba(28,30,34,.95); font-size: 19px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.35);
+    }
+    #beta-menu-panel {
+      display: none; width: min(360px, calc(100vw - 32px)); margin-top: 7px;
+      padding: 14px; border: 1px solid #30363d; border-radius: 12px;
+      background: rgba(22,27,34,.98); box-shadow: 0 16px 48px rgba(0,0,0,.5);
+    }
+    #beta-menu-panel.open { display: block; }
+    #beta-menu-panel h2 { margin: 0 0 5px; font-size: 14px; }
+    #beta-menu-panel p { margin: 0 0 12px; color: #8b949e; font-size: 11px; line-height: 1.45; }
+    #beta-check-updates,
+    #beta-install-update { width: 100%; font-weight: 700; }
+    #beta-install-update {
+      margin-top: 9px; border-color: #238636; background: #238636;
+    }
+    #beta-install-update[hidden] { display: none; }
+    #beta-update-status {
+      margin-top: 10px; padding: 9px; border: 1px solid #30363d;
+      border-radius: 8px; background: #0d1117; color: #8b949e;
+      font-size: 11px; line-height: 1.4; white-space: pre-wrap;
+    }
+    #beta-update-status[data-phase="checking"],
+    #beta-update-status[data-phase="applying"] { border-color: #9e6a03; color: #d29922; }
+    #beta-update-status[data-phase="current"],
+    #beta-update-status[data-phase="success"] { border-color: #238636; color: #3fb950; }
+    #beta-update-status[data-phase="available"] { border-color: #1f6feb; color: #58a6ff; }
+    #beta-update-status[data-phase="blocked"],
+    #beta-update-status[data-phase="error"] { border-color: #da3633; color: #ff7b72; }
+    #surgeon-tab {
+      position: fixed; z-index: 14; top: 50%; right: 0;
+      display: flex; align-items: center; gap: 7px;
+      transform: translateY(-50%); padding: 14px 9px;
+      border: 1px solid #30363d; border-right: 0;
+      border-radius: 12px 0 0 12px; background: #1c1e22;
+      box-shadow: -4px 0 20px rgba(0,0,0,.45);
+      writing-mode: vertical-rl; letter-spacing: .06em; font-weight: 700;
+      transition: padding .15s, background .15s;
+    }
+    #surgeon-tab:hover { padding-right: 13px; background: #23262c; }
+    body.surgeon-open #surgeon-tab { display: none; }
+    #surgeon {
+      position: fixed; z-index: 15; top: 0; right: 0;
+      display: flex; flex-direction: column;
+      width: var(--surgeon-width); height: 100dvh;
+      transform: translateX(100%);
+      border-left: 1px solid #2a2c31; background: #141518;
+      box-shadow: -24px 0 60px rgba(0,0,0,.5);
+      transition: transform .28s cubic-bezier(.22,.9,.3,1);
+    }
+    #surgeon.open { transform: translateX(0); }
+    #surgeon header {
+      display: flex; align-items: center; gap: 10px;
+      padding: 13px 15px; border-bottom: 1px solid #26282d;
+      background: linear-gradient(180deg,#1c1e22,#17181b);
+    }
+    .surgeon-badge {
+      display: grid; place-items: center; flex: none;
+      width: 30px; height: 30px; border: 1px solid #2f3238;
+      border-radius: 8px; background: #22252b;
+    }
+    .surgeon-title { display: flex; flex-direction: column; line-height: 1.15; }
+    .surgeon-title strong { font-size: 14px; }
+    .surgeon-title span { color: #8b8f98; font-size: 10.5px; }
+    #surgeon-model {
+      margin-left: auto; max-width: 150px; overflow: hidden;
+      padding: 3px 9px; border: 1px solid #2c2f35; border-radius: 20px;
+      background: #1e2025; color: #9aa0a9;
+      font: 10px ui-monospace, SFMono-Regular, Menlo, monospace;
+      text-overflow: ellipsis; white-space: nowrap;
+    }
+    .surgeon-head-btn {
+      width: 28px; height: 28px; padding: 0; border-color: #2c2f35;
+      background: #1e2025; color: #9aa0a9; font-size: 17px;
+    }
+    #surgeon-log {
+      flex: 1; display: flex; flex-direction: column; gap: 11px;
+      overflow-y: auto; padding: 16px 15px;
+      scrollbar-width: thin; scrollbar-color: #33363c transparent;
+    }
+    .surgeon-empty {
+      margin: auto 0; padding: 8px 6px; color: #9a9ea7;
+      text-align: center; font-size: 13px; line-height: 1.7;
+    }
+    .surgeon-empty svg { width: 38px; height: 38px; color: #e7e8ea; }
+    .surgeon-empty h2 { margin: 8px 0 5px; color: #e7e8ea; font-size: 16px; }
+    .surgeon-caps {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 6px;
+      margin: 14px 0;
+    }
+    .surgeon-caps span {
+      padding: 3px 9px; border: 1px solid #2a2d33; border-radius: 20px;
+      background: #1b1d22; color: #aeb2ba; font-size: 10px;
+    }
+    .surgeon-starters { display: flex; flex-direction: column; gap: 7px; }
+    .surgeon-starters button {
+      padding: 9px 12px; border-color: #2a2d33; border-radius: 10px;
+      background: #1a1c21; color: #d7dae0; text-align: left;
+    }
+    .surgeon-starters button.deploy-copilot-studio {
+      margin-top: 5px; border-color: #8957e5;
+      background: linear-gradient(135deg,#25163f,#10263f);
+      color: #f0e7ff; font-weight: 800;
+      box-shadow: inset 3px 0 #a371f7;
+    }
+    .surgeon-starters button.deploy-copilot-studio::before {
+      content: "🚀"; margin-right: 8px;
+    }
+    .surgeon-message {
+      max-width: 92%; padding: 10px 13px; border-radius: 12px;
+      font-size: 13px; line-height: 1.55; white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .surgeon-message.user {
+      align-self: flex-end; border-bottom-right-radius: 5px;
+      background: linear-gradient(180deg,#3d7cf0,#356fe0); color: #fff;
+    }
+    .surgeon-message.assistant {
+      align-self: flex-start; border: 1px solid #2a2d33;
+      border-left: 2px solid #3d7cf0; border-bottom-left-radius: 5px;
+      background: #1c1e23;
+    }
+    .surgeon-message.error {
+      align-self: flex-start; border: 1px solid #5a2626;
+      background: #2a1618; color: #ff9a9a;
+    }
+    .surgeon-thinking {
+      align-self: flex-start; display: flex; align-items: center; gap: 8px;
+      color: #8b8f98; font-size: 12px;
+    }
+    .surgeon-dots span {
+      display: inline-block; width: 5px; height: 5px; margin: 0 1px;
+      border-radius: 50%; background: #3d7cf0;
+      animation: surgeon-bounce 1.2s infinite;
+    }
+    .surgeon-dots span:nth-child(2) { animation-delay: .18s; }
+    .surgeon-dots span:nth-child(3) { animation-delay: .36s; }
+    @keyframes surgeon-bounce {
+      0%,60%,100% { opacity: .3; transform: translateY(0); }
+      30% { opacity: 1; transform: translateY(-3px); }
+    }
+    .surgeon-tool {
+      align-self: flex-start; width: min(92%, 390px);
+      overflow: hidden; border: 1px solid #282b31; border-radius: 10px;
+      background: #16181c;
+    }
+    .surgeon-tool-head {
+      display: flex; align-items: center; gap: 8px; padding: 8px 11px;
+      font: 11px ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .surgeon-tool-status { margin-left: auto; color: #8b8f98; }
+    .surgeon-artifact {
+      align-self: flex-start; width: min(92%, 390px); overflow: hidden;
+      border: 1px solid #2a2d33; border-radius: 10px; background: #0f1013;
+    }
+    .surgeon-artifact img,
+    .surgeon-artifact video { display: block; width: 100%; max-height: 300px; object-fit: contain; }
+    .surgeon-artifact a {
+      display: block; padding: 7px 9px; color: #8fc4ff; font-size: 11px;
+      text-decoration: none;
+    }
+    .surgeon-artifact.link {
+      border-color: #8957e5;
+      background: linear-gradient(135deg,#25163f,#10263f);
+    }
+    .surgeon-artifact.link a {
+      padding: 16px; color: #f0e7ff;
+      font-size: 14px; font-weight: 800;
+    }
+    .surgeon-artifact.link a::before { content: "🚀 "; }
+    .surgeon-composer {
+      padding: 12px 13px calc(12px + env(safe-area-inset-bottom));
+      border-top: 1px solid #26282d; background: #17181b;
+    }
+    .surgeon-box {
+      padding: 4px; border: 1px solid #2c2f35; border-radius: 14px;
+      background: #1c1e23;
+    }
+    .surgeon-box:focus-within { border-color: #3d7cf0; }
+    #surgeon-input {
+      width: 100%; max-height: 150px; resize: none; padding: 9px 11px 4px;
+      border: 0; outline: 0; background: none; color: #e7e8ea;
+      font: 13.5px/1.5 inherit;
+    }
+    .surgeon-bar { display: flex; align-items: center; gap: 8px; padding: 2px 6px 4px; }
+    #surgeon-mode { color: #8b8f98; font-size: 10px; }
+    #surgeon-send {
+      margin-left: auto; padding: 8px 18px; border: 0; border-radius: 9px;
+      background: linear-gradient(180deg,#3d7cf0,#2f66d8); color: #fff;
+      font-weight: 700;
+    }
+    #surgeon-send:disabled { opacity: .55; cursor: default; }
+    .surgeon-hint { margin-top: 7px; color: #5f636b; font-size: 10px; text-align: center; }
     @media (max-width: 850px) {
       .intro-grid, .tool-grid { grid-template-columns: 1fr; }
       .intro-card.wide { grid-column: auto; }
       .intro-body, .intro-hero { padding-left: 20px; padding-right: 20px; }
+      #explorer { width: 100vw; }
+      #surgeon { width: 100vw; }
     }
   </style>
 </head>
@@ -145,20 +462,95 @@
         <p id="error"></p>
       </div>
     </div>
-    <iframe id="brainstem" title="RAPP Brainstem chat"></iframe>
+    <iframe
+      id="brainstem"
+      title="RAPP Brainstem chat"
+      sandbox="allow-scripts allow-same-origin allow-forms allow-downloads allow-modals allow-popups"
+    ></iframe>
   </main>
+  <div id="beta-menu-wrap">
+    <button id="beta-menu-toggle" type="button" title="RAPP Brainstem Beta menu">⋯</button>
+    <div id="beta-menu-panel">
+      <h2>RAPP Brainstem Beta</h2>
+      <p>Beta controls stay outside the RAPP/1 kernel.</p>
+      <button id="beta-check-updates" type="button">Check for updates</button>
+      <div id="beta-update-status" data-phase="idle" role="status" aria-live="polite">
+        Check GitHub for the latest beta.
+      </div>
+      <button id="beta-install-update" type="button" hidden>Update and Restart</button>
+    </div>
+  </div>
+  <button id="explorer-tab" type="button" title="Open live Brainstem agents folder">
+    🗂️ Live agents
+  </button>
+  <aside id="explorer" aria-label="Live Brainstem agents Explorer">
+    <header>
+      <span aria-hidden="true">🗂️</span>
+      <span class="explorer-title">
+        <strong>Explorer</strong>
+        <span>live Brainstem workspace</span>
+      </span>
+      <span class="explorer-head-actions">
+        <button id="explorer-refresh" type="button" title="Refresh agents">↻</button>
+        <button id="explorer-close" type="button" title="Hide Explorer">×</button>
+      </span>
+    </header>
+    <div id="agent-tree" role="tree"></div>
+    <div id="agent-viewer">
+      <div id="agent-viewer-tab">No agent selected</div>
+      <div class="agent-viewer-empty" id="agent-viewer-empty">
+        Select an <code>agent.py</code> file to inspect the exact source the
+        live Brainstem discovers on every chat request.
+      </div>
+      <pre id="agent-source" hidden></pre>
+    </div>
+    <div id="explorer-status">Waiting for the live agents folder…</div>
+  </aside>
+  <button id="surgeon-tab" type="button" title="Open GitHub Copilot Agent mode">
+    <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
+      <path d="M12 2c-2.3 0-3.6.9-4.3 2.1-.5-.1-1-.1-1.5-.1C3.4 4 2 5.6 2 8.2v.3C1 9 .5 9.9.5 11.2v2.1c0 2 1 3.4 2.8 4.2C5.1 18.9 8.2 20 12 20s6.9-1.1 8.7-2.5c1.8-.8 2.8-2.2 2.8-4.2v-2.1c0-1.3-.5-2.2-1.5-2.7v-.3C22 5.6 20.6 4 17.8 4c-.5 0-1 0-1.5.1C15.6 2.9 14.3 2 12 2Z"/>
+    </svg>
+    GitHub Copilot
+  </button>
+  <aside id="surgeon" aria-label="GitHub Copilot Brain Surgeon">
+    <header>
+      <span class="surgeon-badge">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+          <path d="M12 2c-2.3 0-3.6.9-4.3 2.1-.5-.1-1-.1-1.5-.1C3.4 4 2 5.6 2 8.2v.3C1 9 .5 9.9.5 11.2v2.1c0 2 1 3.4 2.8 4.2C5.1 18.9 8.2 20 12 20s6.9-1.1 8.7-2.5c1.8-.8 2.8-2.2 2.8-4.2v-2.1c0-1.3-.5-2.2-1.5-2.7v-.3C22 5.6 20.6 4 17.8 4c-.5 0-1 0-1.5.1C15.6 2.9 14.3 2 12 2Z"/>
+        </svg>
+      </span>
+      <span class="surgeon-title">
+        <strong>GitHub Copilot</strong>
+        <span>Brain Surgeon · agent mode</span>
+      </span>
+      <span id="surgeon-model">Agent</span>
+      <button class="surgeon-head-btn" id="surgeon-new" type="button" title="New Copilot chat">+</button>
+      <button class="surgeon-head-btn" id="surgeon-close" type="button" title="Hide Copilot">×</button>
+    </header>
+    <div id="surgeon-log" role="log" aria-live="polite"></div>
+    <div class="surgeon-composer">
+      <div class="surgeon-box">
+        <textarea id="surgeon-input" rows="2" placeholder="Describe what to build or do…"></textarea>
+        <div class="surgeon-bar">
+          <span id="surgeon-mode">Agent · files, shell, tests, Brainstem</span>
+          <button id="surgeon-send" type="button">Build</button>
+        </div>
+      </div>
+      <div class="surgeon-hint">runs on your GitHub Copilot account · ⌘↵ to send</div>
+    </div>
+  </aside>
   <section id="intro" aria-labelledby="intro-title">
     <div class="intro-panel">
       <div class="intro-hero">
-        <div class="eyebrow">Rapid customer use-case accelerator</div>
-        <h1 id="intro-title">Answer "Can AI do this?" with a working proof.</h1>
-        <p>RAPP Brainstem is a local prototype-and-test harness. GitHub Copilot builds and repairs the solution; Brainstem makes the behavior visible, repeatable, portable, and easy to test before you decide where it belongs in production.</p>
+        <div class="eyebrow">Learn AI · teach AI · keep the skill</div>
+        <h1 id="intro-title">Learn it, teach it back, and take it with you.</h1>
+        <p>Chat is the control surface. GitHub Copilot teaches by doing: it can build and hotload an agent, drive the visible Brainstem, test the result, and explain the loop while you watch. The new skill becomes a portable RAPP capability that can follow you into the right Microsoft platform downstream.</p>
       </div>
       <div class="intro-body">
         <div class="intro-grid">
           <article class="intro-card">
             <h2>What is this for?</h2>
-            <p>Turn a customer problem, transcript, screenshot, document, or expected outcome into one or more single-file agents. Run them locally, inspect every tool call, correct failures, and prove the workflow with the customer.</p>
+            <p>Tell Copilot the outcome you need. It helps you learn the pattern, turns that learning into a single-file capability, hotloads it beside the global agents, and proves it through the real Brainstem chat.</p>
             <p><strong>It is the fastest path from an idea to evidence.</strong> It is not the final production host.</p>
           </article>
           <article class="intro-card">
@@ -189,7 +581,7 @@
             <h2>How the tools fit together</h2>
             <div class="tool-grid">
               <div class="tool"><strong>Scout</strong><span>Use for accessible employee workflows, Work IQ, knowledge, and shareable skills when the experience already fits.</span></div>
-              <div class="tool"><strong>GitHub Copilot + VS Code</strong><span>Use as the builder and brain surgeon: create, test, diagnose, and repair agent code autonomously.</span></div>
+              <div class="tool"><strong>GitHub Copilot</strong><span>Use the built-in Brain Surgeon panel as the full builder: create, test, diagnose, repair, and operate agents without leaving this window. VS Code remains optional.</span></div>
               <div class="tool"><strong>RAPP Brainstem</strong><span>Use as the local proving ground: hot-load capabilities, interview the agent, inspect tool calls, and lock in intent.</span></div>
               <div class="tool"><strong>Copilot Studio / Foundry</strong><span>Use for governed production delivery, enterprise identity, connectors, telemetry, scale, and customer handoff.</span></div>
             </div>
@@ -198,9 +590,9 @@
             <h2>The rapid customer loop</h2>
             <ol>
               <li><strong>Frame:</strong> capture the problem, users, inputs, outputs, constraints, and success proof.</li>
-              <li><strong>Build:</strong> have Copilot create the smallest useful single-file agent set.</li>
-              <li><strong>Interview:</strong> test through Brainstem like a real user; inspect memory and tool calls.</li>
-              <li><strong>Correct:</strong> export the failed transcript, open VS Code, and tell Copilot to fix and retest.</li>
+              <li><strong>Delegate:</strong> chat with the Brainstem; let the AI load the smallest useful agent set.</li>
+              <li><strong>Watch:</strong> let the agent operate the real interface with visible cursor, click, and typing feedback.</li>
+              <li><strong>Correct:</strong> tell the built-in Brain Surgeon to inspect the failure, fix it, and retest while you watch.</li>
               <li><strong>Package:</strong> share the agents, demo, evidence, requirements, and recommended production route.</li>
             </ol>
           </article>

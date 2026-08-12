@@ -10,6 +10,7 @@ BETA_HOME="${BRAINSTEM_BETA_HOME:-$BRAINSTEM_HOME/beta-launcher}"
 BETA_SOURCE="$BETA_HOME/src"
 REPO_URL="${BRAINSTEM_BETA_REPO_URL:-https://github.com/microsoft/aibast-agents-library.git}"
 REPO_REF="${BRAINSTEM_BETA_REF:-main}"
+UPDATE_REF="${BRAINSTEM_BETA_UPDATE_REF:-$REPO_REF}"
 REPO_COMMIT="${BRAINSTEM_BETA_COMMIT:-}"
 NODE_VERSION="${BRAINSTEM_BETA_NODE_VERSION:-24.19.0}"
 NO_LAUNCH="${BRAINSTEM_BETA_NO_LAUNCH:-0}"
@@ -239,10 +240,17 @@ write_launchers() {
     fi
     [ -x "$electron_bin" ] || fail "Electron runtime is missing at $electron_bin"
 
+    "$PORTABLE_NODE_DIR/bin/node" -e \
+        'const fs=require("node:fs");fs.writeFileSync(process.argv[1],JSON.stringify({repositoryUrl:process.argv[2],updateRef:process.argv[3]},null,2)+"\n",{mode:0o600})' \
+        "$BETA_HOME/update-config.json" "$REPO_URL" "$UPDATE_REF"
+
     local launcher="$BETA_HOME/launch.sh"
     cat > "$launcher" <<EOF
 #!/bin/sh
 export BRAINSTEM_HOME="$BRAINSTEM_HOME"
+export BRAINSTEM_BETA_HOME="$BETA_HOME"
+export BRAINSTEM_BETA_REPO_URL="$REPO_URL"
+export BRAINSTEM_BETA_UPDATE_REF="$UPDATE_REF"
 exec "$electron_bin" "$BETA_SOURCE/beta" "\$@"
 EOF
     chmod +x "$launcher"
@@ -253,6 +261,51 @@ EOF
 exec "$launcher" "\$@"
 EOF
     chmod +x "$HOME/.local/bin/brainstem-beta"
+
+    local surgeon_launcher="$BETA_HOME/surgeon-chat.sh"
+    cat > "$surgeon_launcher" <<EOF
+#!/bin/sh
+export BRAINSTEM_HOME="$BRAINSTEM_HOME"
+export BRAINSTEM_BETA_HOME="$BETA_HOME"
+export BRAINSTEM_BETA_LAUNCHER="$launcher"
+exec "$PORTABLE_NODE_DIR/bin/node" "$BETA_SOURCE/beta/scripts/surgeon-chat.mjs" "\$@"
+EOF
+    chmod +x "$surgeon_launcher"
+    cat > "$HOME/.local/bin/brainstem-surgeon" <<EOF
+#!/bin/sh
+exec "$surgeon_launcher" "\$@"
+EOF
+    chmod +x "$HOME/.local/bin/brainstem-surgeon"
+
+    local chat_launcher="$BETA_HOME/brainstem-chat.sh"
+    cat > "$chat_launcher" <<EOF
+#!/bin/sh
+export BRAINSTEM_HOME="$BRAINSTEM_HOME"
+export BRAINSTEM_BETA_HOME="$BETA_HOME"
+export BRAINSTEM_BETA_LAUNCHER="$launcher"
+exec "$PORTABLE_NODE_DIR/bin/node" "$BETA_SOURCE/beta/scripts/brainstem-chat.mjs" "\$@"
+EOF
+    chmod +x "$chat_launcher"
+    cat > "$HOME/.local/bin/brainstem-chat" <<EOF
+#!/bin/sh
+exec "$chat_launcher" "\$@"
+EOF
+    chmod +x "$HOME/.local/bin/brainstem-chat"
+
+    local walkthrough_launcher="$BETA_HOME/brainstem-walkthrough.sh"
+    cat > "$walkthrough_launcher" <<EOF
+#!/bin/sh
+export BRAINSTEM_HOME="$BRAINSTEM_HOME"
+export BRAINSTEM_BETA_HOME="$BETA_HOME"
+export BRAINSTEM_BETA_LAUNCHER="$launcher"
+exec "$PORTABLE_NODE_DIR/bin/node" "$BETA_SOURCE/beta/scripts/walkthrough-via-chat.mjs" "\$@"
+EOF
+    chmod +x "$walkthrough_launcher"
+    cat > "$HOME/.local/bin/brainstem-walkthrough" <<EOF
+#!/bin/sh
+exec "$walkthrough_launcher" "\$@"
+EOF
+    chmod +x "$HOME/.local/bin/brainstem-walkthrough"
 
     if [[ "$platform" == darwin-* ]]; then
         local app_dir="$HOME/Applications/RAPP Brainstem Beta.app"

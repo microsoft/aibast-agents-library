@@ -9,9 +9,45 @@ const unix = readFileSync(path.join(root, "install.sh"), "utf8");
 const windows = readFileSync(path.join(root, "install.cmd"), "utf8");
 const installerPage = readFileSync(path.join(root, "index.html"), "utf8");
 const main = readFileSync(path.join(root, "electron", "main.mjs"), "utf8");
+const brainSurgeon = readFileSync(
+  path.join(root, "electron", "brain-surgeon.mjs"),
+  "utf8",
+);
+const routeManager = readFileSync(
+  path.join(root, "electron", "route-manager.mjs"),
+  "utf8",
+);
+const uiDriverServer = readFileSync(
+  path.join(root, "electron", "ui-driver-server.mjs"),
+  "utf8",
+);
 const preload = readFileSync(path.join(root, "electron", "preload.cjs"), "utf8");
 const ui = readFileSync(path.join(root, "ui", "index.html"), "utf8");
 const renderer = readFileSync(path.join(root, "ui", "renderer.js"), "utf8");
+const uiDriverAgent = readFileSync(
+  path.join(root, "scripts", "brainstem_ui_driver_agent.py"),
+  "utf8",
+);
+const surgeonChat = readFileSync(
+  path.join(root, "scripts", "surgeon-chat.mjs"),
+  "utf8",
+);
+const driveViaChat = readFileSync(
+  path.join(root, "scripts", "drive-via-chat.mjs"),
+  "utf8",
+);
+const walkthrough = readFileSync(
+  path.join(root, "scripts", "walkthrough-via-chat.mjs"),
+  "utf8",
+);
+const walkthroughGate = readFileSync(
+  path.join(root, "scripts", "walkthrough-gate.mjs"),
+  "utf8",
+);
+const walkthroughCertify = readFileSync(
+  path.join(root, "scripts", "walkthrough-certify.mjs"),
+  "utf8",
+);
 const brainstemUi = readFileSync(
   path.join(root, "..", "rapp_brainstem", "index.html"),
   "utf8",
@@ -71,6 +107,103 @@ test("beta launcher reuses the global Brainstem without duplicate toolbar IPC", 
   assert.doesNotMatch(preload, /openBrowser|openVscode|restart/);
 });
 
+test("desktop menu checks GitHub for source updates", () => {
+  assert.match(main, /Check for Updates\.\.\./);
+  assert.match(main, /Menu\.setApplicationMenu/);
+  assert.match(main, /checkForUpdates/);
+  assert.match(main, /prepareUpdate/);
+  assert.match(
+    readFileSync(path.join(root, "electron", "update-manager.mjs"), "utf8"),
+    /refs\/heads\/\$\{updateRef\}/,
+  );
+  assert.match(
+    readFileSync(path.join(root, "electron", "update-runner.mjs"), "utf8"),
+    /BRAINSTEM_BETA_COMMIT/,
+  );
+});
+
+test("chat can hot-load an animated driver for the real frontend", () => {
+  assert.match(main, /startUiDriverServer/);
+  assert.match(main, /Chat agents can visibly operate this Brainstem/);
+  assert.match(uiDriverAgent, /class BrainstemUiDriver/);
+  assert.match(uiDriverAgent, /actual visible RAPP Brainstem Beta frontend/);
+  assert.match(uiDriverAgent, /animated AI cursor/);
+  assert.match(uiDriverAgent, /start_recording/);
+  assert.match(uiDriverAgent, /stop_recording/);
+  assert.match(renderer, /brainstemBeta\.checkForUpdates/);
+  assert.match(routeManager, /hardlinkOrCopy/);
+  assert.match(routeManager, /AGENTS_PATH/);
+  assert.match(routeManager, /ephemeralAgent/);
+  assert.match(routeManager, /globalAgentEntries/);
+  assert.match(uiDriverServer, /\/v1\/recording-upload/);
+  assert.match(uiDriverServer, /createWriteStream/);
+  assert.match(driveViaChat, /action: "surgeon_chat"/);
+  assert.match(driveViaChat, /ephemeral_agent/);
+  assert.doesNotMatch(driveViaChat, /\/agents\/import|agent_lease|user_guid/);
+  assert.doesNotMatch(brainstemUi, /agent_lease|user_guid.*conversation_history/);
+});
+
+test("beta embeds the full GitHub Copilot Brain Surgeon loop", () => {
+  assert.match(ui, /id="surgeon-tab"/);
+  assert.match(ui, /Brain Surgeon · agent mode/);
+  assert.match(ui, /files, shell, tests, Brainstem/);
+  assert.match(renderer, /brainstemBeta\.surgeonSend/);
+  assert.match(preload, /beta:surgeon-send/);
+  assert.match(main, /new BrainSurgeon/);
+  assert.match(brainSurgeon, /real GitHub Copilot coding-agent loop/);
+  assert.match(brainSurgeon, /onPermissionRequest: approveAll/);
+  assert.match(brainSurgeon, /delegate_to_brainstem/);
+  assert.match(brainSurgeon, /ephemeral_agent/);
+  assert.match(brainSurgeon, /ensure_copilot_studio_deploy_agents/);
+  assert.match(brainSurgeon, /start_copilot_studio_login/);
+  assert.match(renderer, /Deploy loaded agents to Copilot Studio/);
+  assert.match(ui, /deploy-copilot-studio/);
+  assert.match(surgeonChat, /action: "surgeon_chat"/);
+  assert.match(walkthrough, /action: "surgeon_chat"/);
+  assert.match(walkthrough, /FIVE_MINUTE_WALKTHROUGH_COMPLETE/);
+  assert.match(walkthrough, /LEARNED_AND_TAUGHT:RAPP_READY/);
+  assert.match(walkthrough, /ephemeral_removed/);
+  assert.match(walkthrough, /minimum_duration_ms=300000/);
+  assert.match(walkthrough, /ffprobe/);
+  assert.match(walkthrough, /walkthroughsDir/);
+  assert.match(walkthrough, /index\.html/);
+  assert.match(walkthrough, /BRAINSTEM_BETA_LAUNCHER/);
+  assert.match(walkthrough, /launchBeta/);
+  assert.match(walkthrough, /repeat-ephemeral/);
+  assert.match(walkthrough, /SECOND_TURN_READY/);
+  assert.match(walkthrough, /stack-churn/);
+  assert.match(walkthrough, /STACK_CHURN_READY/);
+  assert.match(walkthroughGate, /PERFECT/);
+  assert.match(walkthroughGate, /Grail kernel has no beta diff/);
+  assert.match(walkthroughGate, /evidence matches current beta source/);
+  assert.match(walkthroughCertify, /validation/);
+  assert.match(walkthroughCertify, /--allow-uncertified/);
+  assert.match(unix, /brainstem-surgeon/);
+  assert.match(unix, /brainstem-walkthrough/);
+  assert.match(windows, /brainstem-surgeon\.cmd/);
+  assert.match(windows, /brainstem-walkthrough\.cmd/);
+  assert.match(
+    main,
+    /function emitState\(\)[\s\S]*?\n}\n\nfunction emitSurgeonEvent/,
+  );
+});
+
+test("beta exposes the live agents folder in a left Explorer", () => {
+  assert.match(ui, /id="explorer-tab"/);
+  assert.match(ui, /id="agent-tree"/);
+  assert.match(ui, /live Brainstem workspace/);
+  assert.match(renderer, /brainstemBeta\.listAgentFiles/);
+  assert.match(renderer, /brainstemBeta\.readAgentFile/);
+  assert.match(preload, /beta:list-agent-files/);
+  assert.match(preload, /beta:read-agent-file/);
+  assert.match(main, /routeManager\.activeAgentFiles/);
+  assert.match(main, /routeManager\.readActiveAgent/);
+  assert.match(main, /routeManager\.stackTree/);
+  assert.match(renderer, /stack RAPPIDs/);
+  assert.doesNotMatch(main, /beta:save-recording/);
+  assert.doesNotMatch(preload, /saveRecording/);
+});
+
 test("embedded VS Code link opens externally without replacing Brainstem", () => {
   assert.match(
     brainstemUi,
@@ -86,10 +219,16 @@ test("Electron renderer is isolated from Node", () => {
   assert.match(main, /sandbox: true/);
   assert.match(main, /BRAINSTEM_BETA_HEADLESS/);
   assert.match(main, /BRAINSTEM_BETA_SMOKE_EXIT_MS/);
+  assert.match(
+    ui,
+    /connect-src 'self' http:\/\/127\.0\.0\.1:\* http:\/\/localhost:\*/,
+  );
 });
 
 test("first-run guide explains the customer rapid-use-case loop", () => {
-  assert.match(ui, /Can AI do this\?/);
+  assert.match(ui, /Chat is the control surface/);
+  assert.match(ui, /GitHub Copilot teaches by doing/);
+  assert.match(ui, /portable RAPP capability/);
   assert.match(ui, /When should I reach for it\?/);
   assert.match(ui, /Scout/);
   assert.match(ui, /Copilot Studio \/ Foundry/);
@@ -99,7 +238,7 @@ test("first-run guide explains the customer rapid-use-case loop", () => {
 test("desktop chrome omits the redundant wrapper toolbar", () => {
   assert.doesNotMatch(ui, /brainstem-status|copilot-status/);
   assert.doesNotMatch(ui, /id="guide"|id="browser"|id="vscode"|id="restart"/);
-  assert.doesNotMatch(ui, /<header>/);
+  assert.doesNotMatch(ui, /<body>\s*<header>/);
   assert.doesNotMatch(renderer, /brainstemStatus|copilotStatus|setPill/);
   assert.doesNotMatch(renderer, /openBrowser|openVscode|restart/);
 });

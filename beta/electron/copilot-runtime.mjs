@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
 
@@ -41,6 +41,18 @@ export function resolveCopilotCliPath(
   return undefined;
 }
 
+export function readGitHubTokenFile(tokenFile) {
+  if (!tokenFile || !existsSync(tokenFile)) return null;
+  try {
+    const value = JSON.parse(readFileSync(tokenFile, "utf8"));
+    return typeof value?.access_token === "string" && value.access_token
+      ? value.access_token
+      : null;
+  } catch {
+    return null;
+  }
+}
+
 export function withTimeout(
   promise,
   label,
@@ -65,9 +77,16 @@ export function withTimeout(
 }
 
 export class CopilotRuntime {
-  constructor({ timeoutMs = DEFAULT_START_TIMEOUT_MS } = {}) {
+  constructor({
+    timeoutMs = DEFAULT_START_TIMEOUT_MS,
+    tokenFile = null,
+    workingDirectory = process.cwd(),
+  } = {}) {
     this.timeoutMs = timeoutMs;
+    this.tokenFile = tokenFile;
+    this.workingDirectory = workingDirectory;
     this.client = null;
+    this.activeToken = null;
     this.startPromise = null;
   }
 
@@ -76,9 +95,19 @@ export class CopilotRuntime {
 
     this.startPromise = (async () => {
       const cliPath = resolveCopilotCliPath();
+      const gitHubToken = readGitHubTokenFile(this.tokenFile);
       const options = cliPath
-        ? { connection: RuntimeConnection.forStdio({ path: cliPath }) }
-        : undefined;
+        ? {
+            connection: RuntimeConnection.forStdio({ path: cliPath }),
+            gitHubToken: gitHubToken || undefined,
+            mode: "copilot-cli",
+            workingDirectory: this.workingDirectory,
+          }
+        : {
+            gitHubToken: gitHubToken || undefined,
+            mode: "copilot-cli",
+            workingDirectory: this.workingDirectory,
+          };
       const client = new CopilotClient(options);
 
       try {
@@ -89,6 +118,7 @@ export class CopilotRuntime {
         );
         const auth = await client.getAuthStatus();
         this.client = client;
+        this.activeToken = gitHubToken;
         return {
           available: true,
           authenticated: Boolean(auth?.isAuthenticated),
@@ -112,7 +142,31 @@ export class CopilotRuntime {
   async stop() {
     const client = this.client;
     this.client = null;
+    this.activeToken = null;
     this.startPromise = null;
-    if (client) await client.stop().catch(() => undefined);
+    if (!client) return;
+    try {
+      await withTimeout(
+        client.stop(),
+        "Bundled GitHub Copilot CLI shutdown",
+        5000,
+      );
+    } catch {
+      await client.forceStop().catch(() => undefined);
+    }
+  }
+
+  async createSession(config) {
+    const currentToken = readGitHubTokenFile(this.tokenFile);
+    if (
+      this.client
+      && currentToken !== this.activeToken
+      && (currentToken || this.activeToken)
+    ) {
+      await this.stop();
+    }
+    await this.start();
+    if (!this.client) throw new Error("Bundled GitHub Copilot CLI is unavailable.");
+    return this.client.createSession(config);
   }
 }

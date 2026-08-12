@@ -14,6 +14,8 @@ set "BOOTSTRAP_URL=https://raw.githubusercontent.com/microsoft/aibast-agents-lib
 if defined BRAINSTEM_BETA_HOME set "BETA_HOME=%BRAINSTEM_BETA_HOME%"
 if defined BRAINSTEM_BETA_REPO_URL set "REPO_URL=%BRAINSTEM_BETA_REPO_URL%"
 if defined BRAINSTEM_BETA_REF set "REPO_REF=%BRAINSTEM_BETA_REF%"
+set "UPDATE_REF=%REPO_REF%"
+if defined BRAINSTEM_BETA_UPDATE_REF set "UPDATE_REF=%BRAINSTEM_BETA_UPDATE_REF%"
 if defined BRAINSTEM_BETA_COMMIT set "REPO_COMMIT=%BRAINSTEM_BETA_COMMIT%"
 if defined BRAINSTEM_BETA_NODE_VERSION set "NODE_VERSION=%BRAINSTEM_BETA_NODE_VERSION%"
 if defined BRAINSTEM_BETA_BOOTSTRAP_URL set "BOOTSTRAP_URL=%BRAINSTEM_BETA_BOOTSTRAP_URL%"
@@ -152,6 +154,9 @@ if not exist "%NODE_DIR%\node.exe" (
 )
 echo [OK] Portable Node.js verified.
 
+"%NODE_DIR%\node.exe" -e "const fs=require('node:fs');fs.writeFileSync(process.argv[1],JSON.stringify({repositoryUrl:process.argv[2],updateRef:process.argv[3]},null,2)+'\n')" "%BETA_HOME%\update-config.json" "%REPO_URL%" "%UPDATE_REF%"
+if errorlevel 1 goto :fail
+
 echo.
 echo [..] Installing Electron and the bundled GitHub Copilot CLI...
 set "npm_config_cache=%BETA_HOME%\npm-cache"
@@ -170,7 +175,40 @@ if not exist "%ELECTRON_EXE%" (
 
 set "LAUNCHER=%BETA_HOME%\launch.cmd"
 > "%LAUNCHER%" echo @echo off
+>>"%LAUNCHER%" echo set "BRAINSTEM_HOME=%BRAINSTEM_HOME%"
+>>"%LAUNCHER%" echo set "BRAINSTEM_BETA_HOME=%BETA_HOME%"
+>>"%LAUNCHER%" echo set "BRAINSTEM_BETA_REPO_URL=%REPO_URL%"
+>>"%LAUNCHER%" echo set "BRAINSTEM_BETA_UPDATE_REF=%UPDATE_REF%"
 >>"%LAUNCHER%" echo start "" "%ELECTRON_EXE%" "%BETA_SOURCE%\beta"
+
+set "SURGEON_LAUNCHER=%BETA_HOME%\brainstem-surgeon.cmd"
+> "%SURGEON_LAUNCHER%" echo @echo off
+>>"%SURGEON_LAUNCHER%" echo set "BRAINSTEM_HOME=%BRAINSTEM_HOME%"
+>>"%SURGEON_LAUNCHER%" echo set "BRAINSTEM_BETA_HOME=%BETA_HOME%"
+>>"%SURGEON_LAUNCHER%" echo set "BRAINSTEM_BETA_LAUNCHER=%LAUNCHER%"
+>>"%SURGEON_LAUNCHER%" echo "%NODE_DIR%\node.exe" "%BETA_SOURCE%\beta\scripts\surgeon-chat.mjs" %%*
+set "USER_BIN=%USERPROFILE%\.local\bin"
+if not exist "%USER_BIN%" mkdir "%USER_BIN%"
+copy /y "%SURGEON_LAUNCHER%" "%USER_BIN%\brainstem-surgeon.cmd" >nul
+if exist "%LOCALAPPDATA%\Microsoft\WindowsApps" copy /y "%SURGEON_LAUNCHER%" "%LOCALAPPDATA%\Microsoft\WindowsApps\brainstem-surgeon.cmd" >nul
+
+set "CHAT_LAUNCHER=%BETA_HOME%\brainstem-chat.cmd"
+> "%CHAT_LAUNCHER%" echo @echo off
+>>"%CHAT_LAUNCHER%" echo set "BRAINSTEM_HOME=%BRAINSTEM_HOME%"
+>>"%CHAT_LAUNCHER%" echo set "BRAINSTEM_BETA_HOME=%BETA_HOME%"
+>>"%CHAT_LAUNCHER%" echo set "BRAINSTEM_BETA_LAUNCHER=%LAUNCHER%"
+>>"%CHAT_LAUNCHER%" echo "%NODE_DIR%\node.exe" "%BETA_SOURCE%\beta\scripts\brainstem-chat.mjs" %%*
+copy /y "%CHAT_LAUNCHER%" "%USER_BIN%\brainstem-chat.cmd" >nul
+if exist "%LOCALAPPDATA%\Microsoft\WindowsApps" copy /y "%CHAT_LAUNCHER%" "%LOCALAPPDATA%\Microsoft\WindowsApps\brainstem-chat.cmd" >nul
+
+set "WALKTHROUGH_LAUNCHER=%BETA_HOME%\brainstem-walkthrough.cmd"
+> "%WALKTHROUGH_LAUNCHER%" echo @echo off
+>>"%WALKTHROUGH_LAUNCHER%" echo set "BRAINSTEM_HOME=%BRAINSTEM_HOME%"
+>>"%WALKTHROUGH_LAUNCHER%" echo set "BRAINSTEM_BETA_HOME=%BETA_HOME%"
+>>"%WALKTHROUGH_LAUNCHER%" echo set "BRAINSTEM_BETA_LAUNCHER=%LAUNCHER%"
+>>"%WALKTHROUGH_LAUNCHER%" echo "%NODE_DIR%\node.exe" "%BETA_SOURCE%\beta\scripts\walkthrough-via-chat.mjs" %%*
+copy /y "%WALKTHROUGH_LAUNCHER%" "%USER_BIN%\brainstem-walkthrough.cmd" >nul
+if exist "%LOCALAPPDATA%\Microsoft\WindowsApps" copy /y "%WALKTHROUGH_LAUNCHER%" "%LOCALAPPDATA%\Microsoft\WindowsApps\brainstem-walkthrough.cmd" >nul
 
 cscript.exe //nologo "%BETA_SOURCE%\beta\scripts\create-windows-shortcuts.js" "%ELECTRON_EXE%" "%BETA_SOURCE%\beta"
 if errorlevel 1 goto :fail

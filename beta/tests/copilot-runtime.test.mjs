@@ -1,8 +1,12 @@
 import assert from "node:assert/strict";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import path from "node:path";
 import test from "node:test";
 
 import {
   copilotPackageName,
+  readGitHubTokenFile,
   withTimeout,
 } from "../electron/copilot-runtime.mjs";
 
@@ -30,4 +34,20 @@ test("Copilot startup timeout rejects a hung runtime", async () => {
 
 test("Copilot startup timeout preserves successful results", async () => {
   assert.equal(await withTimeout(Promise.resolve("ready"), "test runtime", 50), "ready");
+});
+
+test("Copilot runtime reads the protected Brainstem device token", () => {
+  const directory = mkdtempSync(path.join(tmpdir(), "brainstem-token-"));
+  const tokenFile = path.join(directory, ".copilot_token");
+  try {
+    writeFileSync(tokenFile, JSON.stringify({
+      access_token: "ghu_example",
+      refresh_token: "hidden",
+    }));
+    assert.equal(readGitHubTokenFile(tokenFile), "ghu_example");
+    writeFileSync(tokenFile, "{not json");
+    assert.equal(readGitHubTokenFile(tokenFile), null);
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
 });

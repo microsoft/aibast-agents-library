@@ -118,6 +118,7 @@ export class BrainstemProcess {
       cwd: this.config.brainstemDir,
       env: {
         ...process.env,
+        ...(this.config.env || {}),
         PORT: String(this.config.port),
         BRAINSTEM_BETA_LAUNCHER: "1",
         PYTHONUTF8: "1",
