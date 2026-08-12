@@ -14,6 +14,7 @@ import {
 import {
   resolveBrainstemConfig,
 } from "./brainstem-process.mjs";
+import { humanizeAgentName } from "./agent-display.mjs";
 import { BrainSurgeon } from "./brain-surgeon.mjs";
 import { CopilotStudioAuthManager } from "./copilot-studio-auth.mjs";
 import { CopilotRuntime } from "./copilot-runtime.mjs";
@@ -44,6 +45,7 @@ const brainstemRuntimeFingerprint = runtimeDirectoryFingerprint(
 const BETA_FRAME_BRIDGE_SOURCE = `(() => {
   if (window.__rappBetaFrameBridge) return true;
   window.__rappBetaFrameBridge = true;
+  const humanizeAgentName = ${humanizeAgentName.toString()};
   const style = document.createElement("style");
   style.textContent = [
     ".beta-agent-icon-button{display:grid!important;place-items:center;",
@@ -91,7 +93,12 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     + 'stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/>'
     + '<path d="M8 6V4h8v2"/><path d="m19 6-1 15H6L5 6"/>'
     + '<path d="M10 11v6M14 11v6"/></svg>';
-  function decorateAgentButtons(root = document) {
+  function decorateAgentRows(root = document) {
+    root.querySelectorAll(".agent-title").forEach((title) => {
+      if (title.dataset.betaAgentDisplay) return;
+      title.dataset.betaAgentDisplay = "1";
+      title.textContent = humanizeAgentName(title.textContent);
+    });
     root.querySelectorAll(".export-btn").forEach((button) => {
       const deleting = button.classList.contains("del-btn");
       const iconKind = deleting ? "delete" : "download";
@@ -106,10 +113,10 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
       );
     });
   }
-  decorateAgentButtons();
+  decorateAgentRows();
   const agentList = document.getElementById("agent-list-ul");
   if (agentList) {
-    new MutationObserver(() => decorateAgentButtons(agentList)).observe(
+    new MutationObserver(() => decorateAgentRows(agentList)).observe(
       agentList,
       { childList: true, subtree: true },
     );
