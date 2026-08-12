@@ -593,8 +593,8 @@
           macOS or Linux
         </h2>
         <p class="platform-copy">
-          Paste this command into a terminal. The launcher starts automatically
-          after its checks pass.
+          Use this same command anytime to install, update or repair, and launch
+          Frontier automatically.
         </p>
         <pre class="command"><code id="unix-command">Waiting for release metadata...</code></pre>
         <div class="button-row">
@@ -614,8 +614,8 @@
           Windows 11
         </h2>
         <p class="platform-copy">
-          Paste this command into PowerShell. It downloads the exact release
-          installer and creates Desktop and Start Menu shortcuts.
+          Use this same command anytime to install, update or repair, and launch
+          Frontier with its Desktop and Start Menu shortcuts.
         </p>
         <pre class="command"><code id="windows-command">Waiting for release metadata...</code></pre>
         <div class="button-row">
@@ -726,20 +726,16 @@
         return response.json();
       }
 
-      function unixInstallCommand(repo, commit) {
-        return `curl -fsSL "https://raw.githubusercontent.com/${repo}/${commit}/beta/install.sh" | BRAINSTEM_BETA_REPO_URL="https://github.com/${repo}.git" BRAINSTEM_BETA_COMMIT="${commit}" bash`;
+      function bootstrapUrl(filename) {
+        return new URL(filename, window.location.href).href;
       }
 
-      function windowsInstallCommand(repo, commit) {
-        return [
-          `$repo="${repo}";$commit="${commit}"`,
-          `$env:BRAINSTEM_BETA_REPO_URL="https://github.com/$repo.git"`,
-          `$env:BRAINSTEM_BETA_COMMIT=$commit`,
-          `$env:BRAINSTEM_BETA_BOOTSTRAP_URL="https://raw.githubusercontent.com/$repo/$commit/install.ps1"`,
-          `$p=Join-Path $env:TEMP "rapp-frontier-$commit.cmd"`,
-          `iwr "https://raw.githubusercontent.com/$repo/$commit/beta/install.cmd" -OutFile $p -UseBasicParsing`,
-          `& $p`,
-        ].join(";");
+      function unixInstallCommand(repo) {
+        return `curl -fsSL "${bootstrapUrl("frontier.sh")}" | RAPP_FRONTIER_REPO="${repo}" bash`;
+      }
+
+      function windowsInstallCommand(repo) {
+        return `$env:RAPP_FRONTIER_REPO="${repo}";irm "${bootstrapUrl("frontier.ps1")}" | iex`;
       }
 
       async function copyText(button, value) {
@@ -806,8 +802,8 @@
           ? release.tag_name.slice(TAG_PREFIX.length)
           : release.tag_name;
         const rawRoot = `https://raw.githubusercontent.com/${repo}/${commit}`;
-        const unixCommand = unixInstallCommand(repo, commit);
-        const windowsCommand = windowsInstallCommand(repo, commit);
+        const unixCommand = unixInstallCommand(repo);
+        const windowsCommand = windowsInstallCommand(repo);
 
         elements.sourceLink.href =
           `https://github.com/${repo}/tree/${encodeURIComponent(release.tag_name)}/beta`;
@@ -818,8 +814,8 @@
         elements.commit.title = commit;
         elements.unixCommand.textContent = unixCommand;
         elements.windowsCommand.textContent = windowsCommand;
-        elements.unixScript.href = `${rawRoot}/beta/install.sh`;
-        elements.windowsScript.href = `${rawRoot}/beta/install.cmd`;
+        elements.unixScript.href = bootstrapUrl("frontier.sh");
+        elements.windowsScript.href = bootstrapUrl("frontier.ps1");
         elements.copyUnix.disabled = false;
         elements.copyWindows.disabled = false;
         elements.copyUnix.addEventListener("click", () => copyText(elements.copyUnix, unixCommand));

@@ -132,32 +132,21 @@ and production remain separate.
 
 ### Windows 11
 
-Download [`install.cmd`](install.cmd), then double-click it. The bootstrap runs
-inside the installer, creates Desktop and Start Menu shortcuts, and does not
-require the user to open PowerShell to launch chat afterward.
+Run this in PowerShell:
+
+```powershell
+irm https://microsoft.github.io/aibast-agents-library/beta/frontier.ps1 | iex
+```
 
 ### macOS or Linux
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/install.sh | bash
+curl -fsSL https://microsoft.github.io/aibast-agents-library/beta/frontier.sh | bash
 ```
 
-Published releases use the Skill Recorder commit-pinned source pattern. Replace
-the placeholders with the repository and full 40-character commit from the
-release notes:
-
-```bash
-repo="microsoft/aibast-agents-library"
-commit="<40-character-release-commit>"
-curl -fsSL "https://raw.githubusercontent.com/$repo/$commit/beta/install.sh" \
-  | BRAINSTEM_BETA_REPO_URL="https://github.com/$repo.git" \
-    BRAINSTEM_BETA_COMMIT="$commit" bash
-```
-
-The commit appears twice deliberately: it pins both the installer being run and
-the launcher plus shared Brainstem source that the installer checks out.
-`BRAINSTEM_BETA_REF` remains available for mutable fork-branch testing; release
-instructions use `BRAINSTEM_BETA_COMMIT`.
+The same one-liner is used every time: first install, update, repair, and launch.
+The bootstrap resolves the latest published Frontier release to its immutable
+40-character commit before running the platform installer.
 
 After the first install, launch **RAPP Brainstem Frontier** from Applications,
 Launchpad, the Linux app menu, the Windows Desktop/Start Menu, or run:

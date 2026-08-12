@@ -8,6 +8,8 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const unix = readFileSync(path.join(root, "install.sh"), "utf8");
 const windows = readFileSync(path.join(root, "install.cmd"), "utf8");
 const installerPage = readFileSync(path.join(root, "index.html"), "utf8");
+const frontierUnix = readFileSync(path.join(root, "frontier.sh"), "utf8");
+const frontierWindows = readFileSync(path.join(root, "frontier.ps1"), "utf8");
 const main = readFileSync(path.join(root, "electron", "main.mjs"), "utf8");
 const brainSurgeon = readFileSync(
   path.join(root, "electron", "brain-surgeon.mjs"),
@@ -84,18 +86,28 @@ test("released beta installs can pin the launcher and runtime to one commit", ()
 test("dedicated beta page resolves fork releases without changing main install", () => {
   assert.match(installerPage, /brainstem-beta-v/);
   assert.match(installerPage, /api\.github\.com\/repos/);
-  assert.match(installerPage, /BRAINSTEM_BETA_COMMIT/);
-  assert.match(installerPage, /beta\/install\.sh/);
-  assert.match(installerPage, /beta\/install\.cmd/);
+  assert.match(installerPage, /frontier\.sh/);
+  assert.match(installerPage, /frontier\.ps1/);
   assert.match(installerPage, /The production installer is unchanged/);
   assert.match(installerPage, /--cp-bg/);
   assert.match(installerPage, /data-theme/);
   assert.match(installerPage, /white-space: pre;/);
-  assert.match(
-    installerPage,
-    /return `curl -fsSL[\s\S]*BRAINSTEM_BETA_COMMIT="\$\{commit\}" bash`;/,
-  );
+  assert.match(installerPage, /frontier\.sh/);
+  assert.match(installerPage, /frontier\.ps1/);
+  assert.match(installerPage, /RAPP_FRONTIER_REPO/);
+  assert.match(installerPage, /install, update or repair, and launch/);
   assert.doesNotMatch(installerPage, /\.join\("\\n"\)/);
+});
+
+test("stable Frontier bootstraps resolve and run the latest published release", () => {
+  for (const bootstrap of [frontierUnix, frontierWindows]) {
+    assert.match(bootstrap, /brainstem-beta-v/);
+    assert.match(bootstrap, /api\.github\.com\/repos/);
+    assert.match(bootstrap, /BRAINSTEM_BETA_COMMIT/);
+    assert.match(bootstrap, /RAPP_FRONTIER_RESOLVE_ONLY/);
+  }
+  assert.match(frontierUnix, /beta\/install\.sh/);
+  assert.match(frontierWindows, /beta\/install\.cmd/);
 });
 
 test("dedicated beta page scripts parse", () => {
