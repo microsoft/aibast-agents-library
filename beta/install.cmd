@@ -183,6 +183,9 @@ set "npm_config_cache=%BETA_HOME%\npm-cache"
 pushd "%BETA_SOURCE%\beta"
 call "%NODE_DIR%\npm.cmd" ci --no-audit --no-fund
 if errorlevel 1 goto :fail
+echo [..] Installing Electron runtime...
+"%NODE_DIR%\node.exe" node_modules\electron\install.js
+if errorlevel 1 goto :fail
 call "%NODE_DIR%\npm.cmd" run check
 if errorlevel 1 goto :fail
 set "BRAINSTEM_BETA_RUNTIME_DIR=%BRAINSTEM_HOME%\src\rapp_brainstem"

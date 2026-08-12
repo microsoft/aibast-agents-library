@@ -69,7 +69,7 @@ test("beta installers use AIBAST as the canonical source", () => {
 
 test("Frontier is the primary customer-facing launcher identity", () => {
   assert.equal(packageJson.name, "@aibast/rapp-brainstem-frontier");
-  assert.equal(packageJson.version, "0.1.0-beta.3");
+  assert.equal(packageJson.version, "0.1.0-beta.4");
   for (const installer of [unix, windows]) {
     assert.match(installer, /brainstem-frontier/);
     assert.match(installer, /Frontier and standard Brainstem share/);
@@ -85,6 +85,8 @@ test("beta installers exclude the solution library", () => {
   assert.match(windows, /BRAINSTEM_BETA_RUNTIME_DIR=/);
   assert.match(unix, /cd "\$BETA_SOURCE\/beta"/);
   assert.match(windows, /pushd "%BETA_SOURCE%\\beta"/);
+  assert.match(unix, /node_modules\/electron\/install\.js/);
+  assert.match(windows, /node_modules\\electron\\install\.js/);
   assert.doesNotMatch(unix, /npm" ci --prefix/);
   assert.doesNotMatch(windows, /npm\.cmd" ci --prefix/);
   assert.match(unix, /--no-launch/);

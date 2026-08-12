@@ -250,6 +250,8 @@ install_desktop_dependencies() {
         cd "$BETA_SOURCE/beta"
         run_with_heartbeat "Installing Electron and bundled Copilot CLI" \
             "$node_dir/bin/npm" ci --no-audit --no-fund
+        run_with_heartbeat "Installing Electron runtime" \
+            "$node_dir/bin/node" node_modules/electron/install.js
         "$node_dir/bin/npm" run check
         BRAINSTEM_BETA_RUNTIME_DIR="$BRAINSTEM_HOME/src/rapp_brainstem" \
             "$node_dir/bin/npm" test
