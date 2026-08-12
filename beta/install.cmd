@@ -8,6 +8,8 @@ set "BETA_SOURCE=%BETA_HOME%\src"
 set "REPO_URL=https://github.com/microsoft/aibast-agents-library.git"
 set "REPO_REF=main"
 set "REPO_COMMIT="
+set "RELEASE_TAG="
+set "RUNTIME_VERSION_URL="
 set "NODE_VERSION=24.19.0"
 set "BOOTSTRAP_URL=https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/install.ps1"
 
@@ -17,6 +19,8 @@ if defined BRAINSTEM_BETA_REF set "REPO_REF=%BRAINSTEM_BETA_REF%"
 set "UPDATE_REF=%REPO_REF%"
 if defined BRAINSTEM_BETA_UPDATE_REF set "UPDATE_REF=%BRAINSTEM_BETA_UPDATE_REF%"
 if defined BRAINSTEM_BETA_COMMIT set "REPO_COMMIT=%BRAINSTEM_BETA_COMMIT%"
+if defined BRAINSTEM_BETA_RELEASE_TAG set "RELEASE_TAG=%BRAINSTEM_BETA_RELEASE_TAG%"
+if defined BRAINSTEM_BETA_RUNTIME_VERSION_URL set "RUNTIME_VERSION_URL=%BRAINSTEM_BETA_RUNTIME_VERSION_URL%"
 if defined BRAINSTEM_BETA_NODE_VERSION set "NODE_VERSION=%BRAINSTEM_BETA_NODE_VERSION%"
 if defined BRAINSTEM_BETA_BOOTSTRAP_URL set "BOOTSTRAP_URL=%BRAINSTEM_BETA_BOOTSTRAP_URL%"
 set "BETA_SOURCE=%BETA_HOME%\src"
@@ -31,6 +35,17 @@ if defined REPO_COMMIT (
   if errorlevel 1 (
     echo [X] BRAINSTEM_BETA_COMMIT must be a full 40-character commit SHA.
     exit /b 1
+  )
+  if defined RELEASE_TAG (
+    powershell.exe -NoProfile -Command "if ($env:BRAINSTEM_BETA_RELEASE_TAG -notmatch '^brainstem-beta-v[0-9A-Za-z._-]+$') { exit 1 }"
+    if errorlevel 1 (
+      echo [X] BRAINSTEM_BETA_RELEASE_TAG must be a Frontier release tag.
+      exit /b 1
+    )
+    if not defined RUNTIME_VERSION_URL (
+      echo [X] BRAINSTEM_BETA_RUNTIME_VERSION_URL is required for a Frontier release.
+      exit /b 1
+    )
   )
   set "REPO_REF=%REPO_COMMIT%"
 )
@@ -50,7 +65,12 @@ if /i not "%REPO_URL%"=="https://github.com/microsoft/aibast-agents-library.git"
   set "GIT_CONFIG_KEY_0=url.%REPO_URL%.insteadOf"
   set "GIT_CONFIG_VALUE_0=https://github.com/microsoft/aibast-agents-library.git"
 )
-if defined REPO_COMMIT (
+if defined RELEASE_TAG (
+  set "BRAINSTEM_REPO_URL=%REPO_URL%"
+  set "BRAINSTEM_REPO_REF=%RELEASE_TAG%"
+  set "BRAINSTEM_VERSION_URL=%RUNTIME_VERSION_URL%"
+  powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%BOOTSTRAP%" --no-launch
+) else if defined REPO_COMMIT (
   powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%BOOTSTRAP%" --no-launch --version "%REPO_COMMIT%"
 ) else (
   powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%BOOTSTRAP%" --no-launch
@@ -68,13 +88,13 @@ if not defined GIT_EXE (
 )
 
 echo.
-echo [..] Downloading only the beta launcher source...
+echo [..] Downloading only the Frontier launcher source...
 if exist "%BETA_SOURCE%\.git" (
   "%GIT_EXE%" -C "%BETA_SOURCE%" remote set-url origin "%REPO_URL%"
   if errorlevel 1 goto :fail
   "%GIT_EXE%" -C "%BETA_SOURCE%" sparse-checkout init --cone
   if errorlevel 1 goto :fail
-  "%GIT_EXE%" -C "%BETA_SOURCE%" sparse-checkout set beta
+  "%GIT_EXE%" -C "%BETA_SOURCE%" sparse-checkout set beta tools/rapp1
   if errorlevel 1 goto :fail
   "%GIT_EXE%" -C "%BETA_SOURCE%" config remote.origin.promisor true
   "%GIT_EXE%" -C "%BETA_SOURCE%" config remote.origin.partialclonefilter blob:none
@@ -90,7 +110,7 @@ if exist "%BETA_SOURCE%\.git" (
   if errorlevel 1 goto :fail
   "%GIT_EXE%" -C "%BETA_SOURCE%" sparse-checkout init --cone
   if errorlevel 1 goto :fail
-  "%GIT_EXE%" -C "%BETA_SOURCE%" sparse-checkout set beta
+  "%GIT_EXE%" -C "%BETA_SOURCE%" sparse-checkout set beta tools/rapp1
   if errorlevel 1 goto :fail
   "%GIT_EXE%" -C "%BETA_SOURCE%" config remote.origin.promisor true
   "%GIT_EXE%" -C "%BETA_SOURCE%" config remote.origin.partialclonefilter blob:none
@@ -164,6 +184,7 @@ call "%NODE_DIR%\npm.cmd" ci --prefix "%BETA_SOURCE%\beta" --no-audit --no-fund
 if errorlevel 1 goto :fail
 call "%NODE_DIR%\npm.cmd" --prefix "%BETA_SOURCE%\beta" run check
 if errorlevel 1 goto :fail
+set "BRAINSTEM_BETA_RUNTIME_DIR=%BRAINSTEM_HOME%\src\rapp_brainstem"
 call "%NODE_DIR%\npm.cmd" --prefix "%BETA_SOURCE%\beta" test
 if errorlevel 1 goto :fail
 
@@ -189,6 +210,10 @@ set "SURGEON_LAUNCHER=%BETA_HOME%\brainstem-surgeon.cmd"
 >>"%SURGEON_LAUNCHER%" echo "%NODE_DIR%\node.exe" "%BETA_SOURCE%\beta\scripts\surgeon-chat.mjs" %%*
 set "USER_BIN=%USERPROFILE%\.local\bin"
 if not exist "%USER_BIN%" mkdir "%USER_BIN%"
+copy /y "%LAUNCHER%" "%USER_BIN%\brainstem-frontier.cmd" >nul
+copy /y "%LAUNCHER%" "%USER_BIN%\brainstem-beta.cmd" >nul
+if exist "%LOCALAPPDATA%\Microsoft\WindowsApps" copy /y "%LAUNCHER%" "%LOCALAPPDATA%\Microsoft\WindowsApps\brainstem-frontier.cmd" >nul
+if exist "%LOCALAPPDATA%\Microsoft\WindowsApps" copy /y "%LAUNCHER%" "%LOCALAPPDATA%\Microsoft\WindowsApps\brainstem-beta.cmd" >nul
 copy /y "%SURGEON_LAUNCHER%" "%USER_BIN%\brainstem-surgeon.cmd" >nul
 if exist "%LOCALAPPDATA%\Microsoft\WindowsApps" copy /y "%SURGEON_LAUNCHER%" "%LOCALAPPDATA%\Microsoft\WindowsApps\brainstem-surgeon.cmd" >nul
 
@@ -215,7 +240,8 @@ if errorlevel 1 goto :fail
 
 echo.
 echo [OK] RAPP Brainstem Frontier is installed.
-echo      Mainline and beta share: %BRAINSTEM_HOME%
+echo      Frontier and standard Brainstem share: %BRAINSTEM_HOME%
+echo      Start later with: brainstem-frontier
 echo      Use the RAPP Brainstem Frontier desktop or Start Menu shortcut.
 echo.
 if not "%BRAINSTEM_BETA_NO_LAUNCH%"=="1" start "" "%ELECTRON_EXE%" "%BETA_SOURCE%\beta"

@@ -152,7 +152,7 @@ After the first install, launch **RAPP Brainstem Frontier** from Applications,
 Launchpad, the Linux app menu, the Windows Desktop/Start Menu, or run:
 
 ```bash
-brainstem-beta
+brainstem-frontier
 ```
 
 ## Check for updates
@@ -202,8 +202,9 @@ with playback controls in the agent activity attached to the chat response.
 ## Download boundary
 
 The global runtime clone uses a shallow partial sparse checkout restricted to
-`rapp_brainstem/`. Frontier uses a second shallow partial sparse
-checkout restricted to `beta/`. Neither checkout downloads `solutions/`.
+`rapp_brainstem/`. Frontier uses a second shallow partial sparse checkout
+restricted to `beta/` plus the small `tools/rapp1` conformance fixture needed
+by its release tests. Neither checkout downloads `solutions/`.
 
 Both installers default to:
 
@@ -234,9 +235,9 @@ Removing Frontier does not remove the shared Brainstem or user data.
 
 ```bash
 rm -rf ~/.brainstem/beta-launcher
-rm -f ~/.local/bin/brainstem-beta
+rm -f ~/.local/bin/brainstem-frontier ~/.local/bin/brainstem-beta
 rm -rf "$HOME/Applications/RAPP Brainstem Frontier.app"
-rm -f "${XDG_DATA_HOME:-$HOME/.local/share}/applications/rapp-brainstem-beta.desktop"
+rm -f "${XDG_DATA_HOME:-$HOME/.local/share}/applications/rapp-brainstem-frontier.desktop"
 ```
 
 On Windows, remove the two **RAPP Brainstem Frontier** shortcuts and delete:

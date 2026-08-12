@@ -44,4 +44,6 @@ fi
 
 curl -fsSL "https://raw.githubusercontent.com/$repo/$commit/beta/install.sh" \
     | BRAINSTEM_BETA_REPO_URL="https://github.com/$repo.git" \
+      BRAINSTEM_BETA_RELEASE_TAG="$tag" \
+      BRAINSTEM_BETA_RUNTIME_VERSION_URL="https://raw.githubusercontent.com/$repo/$commit/rapp_brainstem/VERSION" \
       BRAINSTEM_BETA_COMMIT="$commit" bash

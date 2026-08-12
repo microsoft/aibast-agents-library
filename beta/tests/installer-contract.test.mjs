@@ -10,6 +10,9 @@ const windows = readFileSync(path.join(root, "install.cmd"), "utf8");
 const installerPage = readFileSync(path.join(root, "index.html"), "utf8");
 const frontierUnix = readFileSync(path.join(root, "frontier.sh"), "utf8");
 const frontierWindows = readFileSync(path.join(root, "frontier.ps1"), "utf8");
+const packageJson = JSON.parse(
+  readFileSync(path.join(root, "package.json"), "utf8"),
+);
 const main = readFileSync(path.join(root, "electron", "main.mjs"), "utf8");
 const brainSurgeon = readFileSync(
   path.join(root, "electron", "brain-surgeon.mjs"),
@@ -51,7 +54,9 @@ const walkthroughCertify = readFileSync(
   "utf8",
 );
 const brainstemUi = readFileSync(
-  path.join(root, "..", "rapp_brainstem", "index.html"),
+  process.env.BRAINSTEM_BETA_RUNTIME_DIR
+    ? path.join(process.env.BRAINSTEM_BETA_RUNTIME_DIR, "index.html")
+    : path.join(root, "..", "rapp_brainstem", "index.html"),
   "utf8",
 );
 
@@ -62,11 +67,22 @@ test("beta installers use AIBAST as the canonical source", () => {
   }
 });
 
+test("Frontier is the primary customer-facing launcher identity", () => {
+  assert.equal(packageJson.name, "@aibast/rapp-brainstem-frontier");
+  assert.equal(packageJson.version, "0.1.0-beta.2");
+  for (const installer of [unix, windows]) {
+    assert.match(installer, /brainstem-frontier/);
+    assert.match(installer, /Frontier and standard Brainstem share/);
+  }
+});
+
 test("beta installers exclude the solution library", () => {
   assert.match(unix, /fetch --progress --filter=blob:none --depth 1 origin "\$REPO_REF"/);
-  assert.match(unix, /sparse-checkout set beta/);
+  assert.match(unix, /sparse-checkout set beta tools\/rapp1/);
   assert.match(windows, /fetch --progress --filter=blob:none --depth 1 origin "%REPO_REF%"/);
-  assert.match(windows, /sparse-checkout set beta/);
+  assert.match(windows, /sparse-checkout set beta tools\/rapp1/);
+  assert.match(unix, /BRAINSTEM_BETA_RUNTIME_DIR=/);
+  assert.match(windows, /BRAINSTEM_BETA_RUNTIME_DIR=/);
   assert.match(unix, /--no-launch/);
   assert.match(windows, /--no-launch/);
 });
@@ -104,6 +120,8 @@ test("stable Frontier bootstraps resolve and run the latest published release", 
     assert.match(bootstrap, /brainstem-beta-v/);
     assert.match(bootstrap, /api\.github\.com\/repos/);
     assert.match(bootstrap, /BRAINSTEM_BETA_COMMIT/);
+    assert.match(bootstrap, /BRAINSTEM_BETA_RELEASE_TAG/);
+    assert.match(bootstrap, /BRAINSTEM_BETA_RUNTIME_VERSION_URL/);
     assert.match(bootstrap, /RAPP_FRONTIER_RESOLVE_ONLY/);
   }
   assert.match(frontierUnix, /beta\/install\.sh/);

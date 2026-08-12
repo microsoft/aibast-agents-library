@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-# RAPP Brainstem beta desktop launcher.
+# RAPP Brainstem Frontier desktop launcher.
 # Installs a Skill Recorder-style Electron launcher while reusing the global
 # ~/.brainstem runtime installed by the mainline AIBAST installer.
 
@@ -12,6 +12,8 @@ REPO_URL="${BRAINSTEM_BETA_REPO_URL:-https://github.com/microsoft/aibast-agents-
 REPO_REF="${BRAINSTEM_BETA_REF:-main}"
 UPDATE_REF="${BRAINSTEM_BETA_UPDATE_REF:-$REPO_REF}"
 REPO_COMMIT="${BRAINSTEM_BETA_COMMIT:-}"
+RELEASE_TAG="${BRAINSTEM_BETA_RELEASE_TAG:-}"
+RUNTIME_VERSION_URL="${BRAINSTEM_BETA_RUNTIME_VERSION_URL:-}"
 NODE_VERSION="${BRAINSTEM_BETA_NODE_VERSION:-24.19.0}"
 NO_LAUNCH="${BRAINSTEM_BETA_NO_LAUNCH:-0}"
 PORTABLE_NODE_DIR=""
@@ -74,6 +76,12 @@ require_command() {
 }
 
 validate_source_ref() {
+    if [ -n "$RELEASE_TAG" ]; then
+        case "$RELEASE_TAG" in
+            brainstem-beta-v[0-9A-Za-z._-]*) ;;
+            *) fail "BRAINSTEM_BETA_RELEASE_TAG must be a Frontier release tag" ;;
+        esac
+    fi
     [ -z "$REPO_COMMIT" ] && return
     case "$REPO_COMMIT" in
         *[!0-9a-fA-F]*) fail "BRAINSTEM_BETA_COMMIT must be a full 40-character commit SHA" ;;
@@ -95,12 +103,12 @@ git_supports_sparse_checkout() {
 
 sync_beta_source() {
     echo ""
-    echo "Downloading the beta launcher source..."
+    echo "Downloading the Frontier launcher source..."
     mkdir -p "$BETA_HOME"
     if [ -d "$BETA_SOURCE/.git" ]; then
         git -C "$BETA_SOURCE" remote set-url origin "$REPO_URL"
         git -C "$BETA_SOURCE" sparse-checkout init --cone >/dev/null
-        git -C "$BETA_SOURCE" sparse-checkout set beta >/dev/null
+        git -C "$BETA_SOURCE" sparse-checkout set beta tools/rapp1 >/dev/null
         git -C "$BETA_SOURCE" config remote.origin.promisor true
         git -C "$BETA_SOURCE" config remote.origin.partialclonefilter blob:none
         git -C "$BETA_SOURCE" fetch --progress --filter=blob:none --depth 1 origin "$REPO_REF"
@@ -113,7 +121,7 @@ sync_beta_source() {
         git -C "$BETA_SOURCE" init --quiet
         git -C "$BETA_SOURCE" remote add origin "$REPO_URL"
         git -C "$BETA_SOURCE" sparse-checkout init --cone >/dev/null
-        git -C "$BETA_SOURCE" sparse-checkout set beta >/dev/null
+        git -C "$BETA_SOURCE" sparse-checkout set beta tools/rapp1 >/dev/null
         git -C "$BETA_SOURCE" config remote.origin.promisor true
         git -C "$BETA_SOURCE" config remote.origin.partialclonefilter blob:none
         git -C "$BETA_SOURCE" fetch --progress --filter=blob:none --depth 1 origin "$REPO_REF"
@@ -129,12 +137,26 @@ sync_beta_source() {
 
     [ -f "$BETA_SOURCE/beta/package.json" ] || fail "beta/package.json is missing from $REPO_REF"
     [ ! -e "$BETA_SOURCE/solutions" ] || fail "solution bundles leaked into the beta launcher checkout"
-    echo -e "  ${GREEN}[OK]${NC} Beta checkout contains only root bootstrap files and beta/"
+    echo -e "  ${GREEN}[OK]${NC} Frontier checkout contains beta/ plus RAPP/1 test vectors"
 }
 
 setup_global_brainstem() {
     echo ""
     echo "Preparing the shared global Brainstem..."
+    if [ -n "$RELEASE_TAG" ]; then
+        [ -n "$RUNTIME_VERSION_URL" ] \
+            || fail "BRAINSTEM_BETA_RUNTIME_VERSION_URL is required for a Frontier release"
+        BRAINSTEM_HOME="$BRAINSTEM_HOME" \
+        BRAINSTEM_REPO_URL="$REPO_URL" \
+        BRAINSTEM_REPO_REF="$RELEASE_TAG" \
+        BRAINSTEM_VERSION_URL="$RUNTIME_VERSION_URL" \
+            bash "$BETA_SOURCE/install.sh" --no-launch
+        [ -f "$BRAINSTEM_HOME/src/rapp_brainstem/brainstem.py" ] \
+            || fail "the global Brainstem runtime was not installed"
+        [ ! -e "$BRAINSTEM_HOME/src/solutions" ] \
+            || fail "solution bundles leaked into the global Brainstem checkout"
+        return
+    fi
     local install_args=(--no-launch)
     if [ -n "$REPO_COMMIT" ]; then
         install_args+=(--version "$REPO_COMMIT")
@@ -227,7 +249,8 @@ install_desktop_dependencies() {
     run_with_heartbeat "Installing Electron and bundled Copilot CLI" \
         "$node_dir/bin/npm" ci --prefix "$BETA_SOURCE/beta" --no-audit --no-fund
     "$node_dir/bin/npm" --prefix "$BETA_SOURCE/beta" run check
-    "$node_dir/bin/npm" --prefix "$BETA_SOURCE/beta" test
+    BRAINSTEM_BETA_RUNTIME_DIR="$BRAINSTEM_HOME/src/rapp_brainstem" \
+        "$node_dir/bin/npm" --prefix "$BETA_SOURCE/beta" test
 }
 
 write_launchers() {
@@ -256,9 +279,14 @@ EOF
     chmod +x "$launcher"
 
     mkdir -p "$HOME/.local/bin"
-    cat > "$HOME/.local/bin/brainstem-beta" <<EOF
+    cat > "$HOME/.local/bin/brainstem-frontier" <<EOF
 #!/bin/sh
 exec "$launcher" "\$@"
+EOF
+    chmod +x "$HOME/.local/bin/brainstem-frontier"
+    cat > "$HOME/.local/bin/brainstem-beta" <<EOF
+#!/bin/sh
+exec "$HOME/.local/bin/brainstem-frontier" "\$@"
 EOF
     chmod +x "$HOME/.local/bin/brainstem-beta"
 
@@ -336,7 +364,8 @@ EOF
     else
         local applications="${XDG_DATA_HOME:-$HOME/.local/share}/applications"
         mkdir -p "$applications"
-        cat > "$applications/rapp-brainstem-beta.desktop" <<EOF
+        rm -f "$applications/rapp-brainstem-beta.desktop"
+        cat > "$applications/rapp-brainstem-frontier.desktop" <<EOF
 [Desktop Entry]
 Type=Application
 Name=RAPP Brainstem Frontier
@@ -346,7 +375,7 @@ Terminal=false
 Categories=Development;Utility;
 StartupNotify=true
 EOF
-        chmod +x "$applications/rapp-brainstem-beta.desktop"
+        chmod +x "$applications/rapp-brainstem-frontier.desktop"
         echo -e "  ${GREEN}[OK]${NC} Desktop entry installed"
     fi
 
@@ -375,8 +404,8 @@ main() {
 
     echo ""
     echo -e "  ${GREEN}[OK] RAPP Brainstem Frontier is installed.${NC}"
-    echo "  Mainline and beta share: $BRAINSTEM_HOME"
-    echo "  Start later with: brainstem-beta"
+    echo "  Frontier and standard Brainstem share: $BRAINSTEM_HOME"
+    echo "  Start later with: brainstem-frontier"
     echo ""
     if [ "$NO_LAUNCH" != "1" ]; then
         nohup "$BETA_LAUNCHER_PATH" >"$BETA_HOME/launcher.log" 2>&1 &
