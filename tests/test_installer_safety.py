@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parent.parent
 INSTALLER = ROOT / "install.sh"
 WINDOWS_INSTALLER = ROOT / "install.ps1"
 LANDING_PAGE = ROOT / "index.html"
+PREFLIGHT_WORKFLOW = ROOT / ".github/workflows/preflight.yml"
 
 
 def installer_functions():
@@ -64,6 +65,16 @@ def init_source_repo(path, branch, brainstem_source, extra_file=None):
         check=True,
         capture_output=True,
     )
+
+
+def test_pr_one_liner_fetches_the_candidate_head_commit():
+    text = PREFLIGHT_WORKFLOW.read_text(encoding="utf-8")
+    job = text.split("  installer-one-liner:", 1)[1]
+    checkout = job.split("      - uses: actions/setup-python@v5", 1)[0]
+
+    assert "- uses: actions/checkout@v4" in checkout
+    assert "fetch-depth: 0" in checkout
+    assert "github.event.pull_request.head.sha" in job
 
 
 def test_incomplete_matching_version_falls_through_to_repair(tmp_path):

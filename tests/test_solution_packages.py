@@ -310,7 +310,7 @@ def test_rapp_browserfilm_assets_are_reproducible():
     assert "GitHub Copilot only" in quest
     assert "GitHub Copilot + Brainstem" in quest
     assert len(re.findall(r"<[^>]+\bdata-report-location=", quest)) == (
-        7 + len(cases) + len(manual_manifest["frames"])
+        8 + len(cases) + len(manual_manifest["frames"])
     )
     assert "aibast-workshop-feedback/1.0" in quest
     assert "Watch assisted film" not in quest

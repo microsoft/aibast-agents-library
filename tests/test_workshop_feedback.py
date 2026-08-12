@@ -341,6 +341,21 @@ def test_metrics_dispatch_cannot_retrigger_from_snapshot_state_commits():
     assert "state/metrics_history.json" not in push_paths
 
 
+def test_metrics_snapshot_rebases_before_retrying_generated_commits():
+    text = METRICS_WORKFLOW.read_text(encoding="utf-8")
+    commit_step = text.split("- name: Commit snapshot", 1)[1]
+
+    for token in (
+        "pushed=false",
+        "for attempt in 1 2 3",
+        'git fetch origin "$GITHUB_REF_NAME"',
+        'git rebase "origin/$GITHUB_REF_NAME"',
+        'git push origin "HEAD:$GITHUB_REF_NAME"',
+        'test "$pushed" = true',
+    ):
+        assert token in commit_step
+
+
 def test_metrics_workflow_compiles_issues_from_its_own_repository():
     text = METRICS_WORKFLOW.read_text(encoding="utf-8")
     collect_step = text.split("- name: Collect public metrics", 1)[1].split(
@@ -433,4 +448,4 @@ def test_generated_workshops_expose_contextual_beta_reports():
 
     manual_reports = manual.count('data-report-location=')
     assert manual_reports == 20
-    assert quest.count('data-report-location=') == 12 + manual_reports
+    assert quest.count('data-report-location=') == 13 + manual_reports
