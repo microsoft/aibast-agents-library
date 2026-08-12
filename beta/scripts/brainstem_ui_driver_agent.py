@@ -1,4 +1,4 @@
-"""Hot-loadable agent that operates the visible RAPP Brainstem Beta frontend."""
+"""Hot-loadable agent that operates the visible RAPP Brainstem Frontier frontend."""
 
 import json
 import os
@@ -103,7 +103,7 @@ class BrainstemUiDriver(BasicAgent):
         self.metadata = {
             "name": self.name,
             "description": (
-                "Operate the actual visible RAPP Brainstem Beta frontend. "
+                "Operate the actual visible RAPP Brainstem Frontier frontend. "
                 "Every click and typed character is animated with an AI cursor so "
                 "the user can watch and follow along. Prefer one run action with a "
                 "short ordered steps array. Inspect first only when selectors are unknown."
@@ -146,7 +146,7 @@ class BrainstemUiDriver(BasicAgent):
     def system_context(self):
         return (
             "When the user asks you to operate, demonstrate, configure, or test the "
-            "visible RAPP Brainstem Beta application, use BrainstemUiDriver. The user "
+            "visible RAPP Brainstem Frontier application, use BrainstemUiDriver. The user "
             "is watching the real interface: narrate actions briefly, prefer stable "
             "selectors, and use one run call for a sequence. After an important click "
             "or completed workflow, call screenshot so you and the user can inspect "
@@ -162,8 +162,8 @@ class BrainstemUiDriver(BasicAgent):
                 metadata = json.load(handle)
         except (OSError, ValueError) as error:
             return (
-                "The RAPP Brainstem Beta UI driver is unavailable. "
-                f"Expected a running beta client at {metadata_path}: {error}"
+                "The RAPP Brainstem Frontier UI driver is unavailable. "
+                f"Expected a running Frontier client at {metadata_path}: {error}"
             )
 
         command = _camelize({"action": action, **kwargs})
@@ -200,7 +200,7 @@ class BrainstemUiDriver(BasicAgent):
             screenshot.pop("dataUrl", "")
             visible_text = screenshot.pop("visibleText", "")
             content = (
-                "Stopped the RAPP Brainstem Beta window recording. "
+                "Stopped the RAPP Brainstem Frontier window recording. "
                 f"Saved {recording.get('path', 'the recording')} and captured "
                 "the final visible state."
             )
@@ -212,7 +212,7 @@ class BrainstemUiDriver(BasicAgent):
                 "captures": [{
                     "url": screenshot.get("captureUrl"),
                     "path": screenshot.get("path"),
-                    "alt": "Final RAPP Brainstem Beta state after the recording",
+                    "alt": "Final RAPP Brainstem Frontier state after the recording",
                 }],
                 "recordings": [{
                     "url": recording.get("url"),
@@ -228,7 +228,7 @@ class BrainstemUiDriver(BasicAgent):
             visible_text = result.pop("visibleText", "")
             capture_url = result.get("captureUrl", "")
             content = (
-                "Captured the actual RAPP Brainstem Beta window after the UI action. "
+                "Captured the actual RAPP Brainstem Frontier window after the UI action. "
                 f"Saved locally at {result.get('path', 'unknown path')}."
             )
             if visible_text:
@@ -239,7 +239,7 @@ class BrainstemUiDriver(BasicAgent):
                 "captures": [{
                     "url": capture_url,
                     "path": result.get("path"),
-                    "alt": "RAPP Brainstem Beta after the agent action",
+                    "alt": "RAPP Brainstem Frontier after the agent action",
                 }],
             }
             return structured

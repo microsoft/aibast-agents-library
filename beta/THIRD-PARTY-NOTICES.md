@@ -1,6 +1,6 @@
 # Third-party notices
 
-RAPP Brainstem Beta is distributed under the repository MIT license and uses
+RAPP Brainstem Frontier is distributed under the repository MIT license and uses
 the following principal third-party components:
 
 - GitHub Copilot SDK and the unmodified GitHub Copilot CLI platform package,

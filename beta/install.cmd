@@ -1,6 +1,6 @@
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
-title RAPP Brainstem Beta Installer
+title RAPP Brainstem Frontier Installer
 
 set "BRAINSTEM_HOME=%USERPROFILE%\.brainstem"
 set "BETA_HOME=%BRAINSTEM_HOME%\beta-launcher"
@@ -22,7 +22,7 @@ if defined BRAINSTEM_BETA_BOOTSTRAP_URL set "BOOTSTRAP_URL=%BRAINSTEM_BETA_BOOTS
 set "BETA_SOURCE=%BETA_HOME%\src"
 
 echo.
-echo RAPP Brainstem Beta Launcher
+echo RAPP Brainstem Frontier Launcher
 echo Skill Recorder-style desktop launch over the shared global Brainstem
 echo.
 
@@ -214,15 +214,15 @@ cscript.exe //nologo "%BETA_SOURCE%\beta\scripts\create-windows-shortcuts.js" "%
 if errorlevel 1 goto :fail
 
 echo.
-echo [OK] RAPP Brainstem Beta is installed.
+echo [OK] RAPP Brainstem Frontier is installed.
 echo      Mainline and beta share: %BRAINSTEM_HOME%
-echo      Use the RAPP Brainstem Beta desktop or Start Menu shortcut.
+echo      Use the RAPP Brainstem Frontier desktop or Start Menu shortcut.
 echo.
 if not "%BRAINSTEM_BETA_NO_LAUNCH%"=="1" start "" "%ELECTRON_EXE%" "%BETA_SOURCE%\beta"
 exit /b 0
 
 :fail
 echo.
-echo [X] RAPP Brainstem Beta installation failed.
+echo [X] RAPP Brainstem Frontier installation failed.
 echo     Review the error above and re-run this installer.
 exit /b 1

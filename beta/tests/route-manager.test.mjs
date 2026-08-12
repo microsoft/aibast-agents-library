@@ -370,7 +370,7 @@ test("active-agent deletion persists for stack and global sources", async () => 
       () => manager.removeActiveAgent({
         filename: "context_memory_agent.py",
       }),
-      /generated from the beta identity/,
+      /generated from the Frontier identity/,
     );
   } finally {
     rmSync(root, { recursive: true, force: true });

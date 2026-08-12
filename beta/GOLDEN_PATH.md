@@ -1,4 +1,4 @@
-# RAPP Brainstem Beta Golden Path
+# RAPP Brainstem Frontier Golden Path
 
 ## North star
 
@@ -116,7 +116,7 @@ The Brain Surgeon start surface includes **Deploy loaded agents to Copilot
 Studio**. That pill completes the local-to-production story without sending the
 user to VS Code or a terminal:
 
-1. verify or inject the beta-only `RappCopilotStudioFactory` and
+1. verify or inject the Frontier-only `RappCopilotStudioFactory` and
    `CopilotStudioDeploy` agent.py capabilities;
 2. enumerate the business and industry agents currently loaded in the active
    Brainstem composition;
@@ -129,22 +129,22 @@ user to VS Code or a terminal:
    finalize;
 6. show the exact environment, AgentId, Draft parity evidence, and clickable
    Copilot Studio link;
-7. keep the beta automation Draft-only; live publication is a separate manual
+7. keep the Frontier automation Draft-only; live publication is a separate manual
    user action in the linked Copilot Studio UI;
 8. use the real authenticated browser to run the same test cases against the
    exact Draft Preview and the source agent.py tools in Brainstem, preserving
    screenshots, recordings, responses, and a functional-parity verdict.
 
-Authentication remains user-owned. The beta may display PAC device-login
+Authentication remains user-owned. Frontier may display PAC device-login
 instructions and poll completion, but it never captures credentials or returns
 client secrets. `local.settings.json` may provide non-secret environment,
 tenant, client ID, and naming defaults; secret values are only reported as
 present and are never copied into chat, source, logs, or checkpoints.
 
-The deployment engine remains the existing agent.py pipeline. The beta pill is
+The deployment engine remains the existing agent.py pipeline. The Frontier pill is
 only the visible conversational entry point and safety/control loop around it.
 
-Generic conversion is proven against the beta-owned industry matrix at
+Generic conversion is proven against the Frontier-owned industry matrix at
 `resources/copilot-studio/industry-agent-matrix.json`. The matrix covers
 read-only network tools, deterministic content, workflow orchestration,
 business scoring, stateful operations, memory, and complex reporting. Every
@@ -160,7 +160,7 @@ test the gate.
 
 ## The unstuck handoff
 
-The user never has to abandon the beta because they do not know the next
+The user never has to abandon Frontier because they do not know the next
 technical step.
 
 They can ask an external AI to take over:
@@ -177,7 +177,7 @@ shows cursor movement, files, tools, logs, screenshots, and results, then hands
 control back. The person keeps context and learns from the recovery instead of
 being sent to a separate developer tool.
 
-This visible human/AI control handoff is a defining RAPP Beta capability.
+This visible human/AI control handoff is a defining RAPP Frontier capability.
 
 ## Native agent hotloading
 
@@ -188,7 +188,7 @@ The Grail mechanism is the mechanism of record:
 3. Each file is dynamically loaded and converted into an LLM tool.
 4. No kernel routing endpoint or alternate loader is added.
 
-The beta composes an isolated worker directory from:
+Frontier composes an isolated worker directory from:
 
 ```text
 shared global agents
@@ -221,7 +221,7 @@ Every useful demonstration follows the same observable loop:
 
 ## RAPP/1 constitutional boundary
 
-The beta may orchestrate around the kernel, but it does not fork the kernel.
+Frontier may orchestrate around the kernel, but it does not fork the kernel.
 
 - One Grail `brainstem.py`.
 - One RAPP/1 `/chat` wire.
@@ -231,7 +231,7 @@ The beta may orchestrate around the kernel, but it does not fork the kernel.
 - Portable artifacts are RAPP/1 eggs.
 - New capabilities are agents or orchestration, not competing APIs.
 
-The beta and Hippocampus must pass the same conformance vectors and produce
+Frontier and Hippocampus must pass the same conformance vectors and produce
 byte-identical identities, hashes, frames, and eggs.
 
 ## Identity, stacks, and useful specialization
@@ -277,7 +277,7 @@ This is how twins can trust relatives encountered in the wild.
 
 ## Microsoft downstream path
 
-The local beta is the teaching and proof environment. Once the behavior is
+Local Frontier is the teaching and proof environment. Once the behavior is
 proven, the same RAPP/1 artifacts can move into:
 
 - **Hippocampus / Azure Functions** — durable cloud execution and memory.
@@ -299,7 +299,7 @@ present from the first meeting and first use case, helps turn ambiguity into
 working evidence, teaches the customer through the visible RAPP loop, and stays
 with the solution until it reaches the right production destination.
 
-That end-to-end accountability is why the beta must connect learning, proof,
+That end-to-end accountability is why Frontier must connect learning, proof,
 architecture choice, governance, and downstream promotion in one coherent
 path.
 
@@ -311,4 +311,4 @@ They can watch the system do their work, understand how it did it, inspect the
 capabilities it used, replay the demonstration, and promote the proven solution
 without first becoming a software engineer.
 
-That visible teach-by-doing loop is the RAPP Brainstem Beta golden path.
+That visible teach-by-doing loop is the RAPP Brainstem Frontier golden path.

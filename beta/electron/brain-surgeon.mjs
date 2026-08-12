@@ -10,7 +10,7 @@ import {
 import path from "node:path";
 
 const SURGEON_SYSTEM_MESSAGE = `
-You are the Brain Surgeon inside RAPP Brainstem Beta.
+You are the Brain Surgeon inside RAPP Brainstem Frontier.
 
 You are the real GitHub Copilot coding-agent loop, embedded side-by-side with a
 running Brainstem. You have the normal Copilot CLI powers for files, shell,
@@ -559,7 +559,7 @@ export class BrainSurgeon {
       },
       {
         name: "start_demo_recording",
-        description: "Start recording the RAPP Brainstem Beta window for a replayable demo.",
+        description: "Start recording the RAPP Brainstem Frontier window for a replayable demo.",
         defer: "never",
         skipPermission: true,
         parameters: {
@@ -578,7 +578,7 @@ export class BrainSurgeon {
       },
       {
         name: "stop_demo_recording",
-        description: "Stop the beta-window recording and attach the WebM plus "
+        description: "Stop the Frontier-window recording and attach the WebM plus "
           + "final screenshot. A minimum duration keeps a full walkthrough "
           + "watchable with visible recap cards instead of dead air.",
         defer: "never",
@@ -611,7 +611,7 @@ export class BrainSurgeon {
     if (this.startPromise) return this.startPromise;
     this.startPromise = (async () => {
       const session = await this.runtime.createSession({
-        clientName: "RAPP Brainstem Beta Brain Surgeon",
+        clientName: "RAPP Brainstem Frontier Brain Surgeon",
         enableConfigDiscovery: true,
         infiniteSessions: { enabled: true },
         memory: { enabled: true },
@@ -715,7 +715,7 @@ export class BrainSurgeon {
   requireRouteManager() {
     if (!this.routeManager) {
       throw new Error(
-        "Beta identity and stack routing is not ready. "
+        "Frontier identity and stack routing is not ready. "
         + "The legacy Brainstem kernel was not modified.",
       );
     }
@@ -1118,7 +1118,7 @@ export class BrainSurgeon {
             type: "image",
             data: base64,
             mimeType: "image/jpeg",
-            description: "The visible RAPP Brainstem Beta window",
+            description: "The visible RAPP Brainstem Frontier window",
           }]
         : undefined,
       resultType: "success",

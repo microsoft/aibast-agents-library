@@ -187,7 +187,7 @@ async function main() {
   try {
     writeSync(
       logFd,
-      `\n[${new Date().toISOString()}] Updating RAPP Brainstem Beta to ${request.commit}\n`,
+      `\n[${new Date().toISOString()}] Updating RAPP Brainstem Frontier to ${request.commit}\n`,
     );
     await waitForParent(request.parentPid);
     assertCheckoutUnchanged(

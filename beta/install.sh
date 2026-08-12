@@ -308,26 +308,30 @@ EOF
     chmod +x "$HOME/.local/bin/brainstem-walkthrough"
 
     if [[ "$platform" == darwin-* ]]; then
-        local app_dir="$HOME/Applications/RAPP Brainstem Beta.app"
+        local app_dir="$HOME/Applications/RAPP Brainstem Frontier.app"
+        local legacy_app_dir="$HOME/Applications/RAPP Brainstem Beta.app"
+        if [[ -d "$legacy_app_dir" ]]; then
+            rm -rf "$legacy_app_dir"
+        fi
         mkdir -p "$app_dir/Contents/MacOS"
         cat > "$app_dir/Contents/Info.plist" <<'EOF'
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0"><dict>
-  <key>CFBundleName</key><string>RAPP Brainstem Beta</string>
-  <key>CFBundleDisplayName</key><string>RAPP Brainstem Beta</string>
+  <key>CFBundleName</key><string>RAPP Brainstem Frontier</string>
+  <key>CFBundleDisplayName</key><string>RAPP Brainstem Frontier</string>
   <key>CFBundleIdentifier</key><string>com.microsoft.aibast.rapp-brainstem-beta</string>
   <key>CFBundleVersion</key><string>0.1.0</string>
   <key>CFBundlePackageType</key><string>APPL</string>
-  <key>CFBundleExecutable</key><string>RAPP Brainstem Beta</string>
+  <key>CFBundleExecutable</key><string>RAPP Brainstem Frontier</string>
   <key>LSMinimumSystemVersion</key><string>12.0</string>
 </dict></plist>
 EOF
-        cat > "$app_dir/Contents/MacOS/RAPP Brainstem Beta" <<EOF
+        cat > "$app_dir/Contents/MacOS/RAPP Brainstem Frontier" <<EOF
 #!/bin/sh
 exec "$launcher"
 EOF
-        chmod +x "$app_dir/Contents/MacOS/RAPP Brainstem Beta"
+        chmod +x "$app_dir/Contents/MacOS/RAPP Brainstem Frontier"
         echo -e "  ${GREEN}[OK]${NC} App installed: $app_dir"
     else
         local applications="${XDG_DATA_HOME:-$HOME/.local/share}/applications"
@@ -335,7 +339,7 @@ EOF
         cat > "$applications/rapp-brainstem-beta.desktop" <<EOF
 [Desktop Entry]
 Type=Application
-Name=RAPP Brainstem Beta
+Name=RAPP Brainstem Frontier
 Comment=Desktop launcher for the shared RAPP Brainstem
 Exec="$launcher"
 Terminal=false
@@ -351,7 +355,7 @@ EOF
 
 main() {
     echo ""
-    echo -e "${CYAN}RAPP Brainstem Beta Launcher${NC}"
+    echo -e "${CYAN}RAPP Brainstem Frontier Launcher${NC}"
     echo "Skill Recorder-style desktop launch over the shared global Brainstem"
     echo ""
 
@@ -370,7 +374,7 @@ main() {
     write_launchers "$platform"
 
     echo ""
-    echo -e "  ${GREEN}[OK] RAPP Brainstem Beta is installed.${NC}"
+    echo -e "  ${GREEN}[OK] RAPP Brainstem Frontier is installed.${NC}"
     echo "  Mainline and beta share: $BRAINSTEM_HOME"
     echo "  Start later with: brainstem-beta"
     echo ""

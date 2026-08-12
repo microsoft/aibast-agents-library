@@ -13,9 +13,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta
     name="description"
-    content="Install the source-only RAPP Brainstem Beta Electron launcher from an immutable GitHub release commit."
+    content="Install the source-only RAPP Brainstem Frontier Electron launcher from an immutable GitHub release commit."
   >
-  <title>RAPP Brainstem Beta Installer</title>
+  <title>RAPP Brainstem Frontier Installer</title>
   <style>
     :root {
       color-scheme: light;
@@ -535,7 +535,7 @@
         <img src="build/icon.svg" alt="">
         <span>AIBAST Agents Library</span>
       </a>
-      <nav class="toplinks" aria-label="Beta installer links">
+      <nav class="toplinks" aria-label="Frontier installer links">
         <a id="source-link" href="#" target="_blank" rel="noreferrer">Source</a>
         <a id="release-link-top" href="#" target="_blank" rel="noreferrer">Release notes</a>
       </nav>
@@ -545,11 +545,11 @@
       <div>
         <div class="eyebrow">
           <span class="eyebrow-dot" aria-hidden="true"></span>
-          Source-only Electron beta
+          Source-only Frontier desktop
         </div>
         <h1>Launch Brainstem like a desktop app.</h1>
         <p class="hero-copy">
-          Install the RAPP Brainstem Beta launcher from one immutable GitHub
+          Install the RAPP Brainstem Frontier launcher from one immutable GitHub
           release commit. It bundles Electron and the GitHub Copilot CLI while
           reusing your local Brainstem, agents, soul, and memories.
         </p>
@@ -566,7 +566,7 @@
 
     <div id="load-error" class="error-box" role="alert"></div>
 
-    <section class="release-panel" aria-label="Resolved beta release">
+    <section class="release-panel" aria-label="Resolved Frontier release">
       <div class="release-stat">
         <span class="release-label">Status</span>
         <span id="release-status" class="release-value status-loading">Loading</span>
@@ -634,7 +634,7 @@
         <span class="detail-number">1</span>
         <h3>Exact source revision</h3>
         <p>
-          The page resolves an annotated beta tag to its full commit and pins
+          The page resolves an annotated Frontier release tag to its full commit and pins
           both downloaded scripts and checked-out source to that SHA.
         </p>
       </article>
@@ -642,7 +642,7 @@
         <span class="detail-number">2</span>
         <h3>Shared Brainstem</h3>
         <p>
-          The beta reuses <code>~/.brainstem</code>, so your agents, soul,
+          Frontier reuses <code>~/.brainstem</code>, so your agents, soul,
           authentication, memories, and local storage remain in one place.
         </p>
       </article>
@@ -844,7 +844,7 @@
         elements.status.textContent = "Unavailable";
         elements.status.className = "release-value status-error";
         elements.error.textContent =
-          `${error.message} Publish the beta tag and GitHub prerelease, then reload this page.`;
+          `${error.message} Publish the Frontier tag and GitHub prerelease, then reload this page.`;
         elements.error.classList.add("visible");
       });
     })();

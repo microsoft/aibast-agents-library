@@ -601,7 +601,7 @@ export class BetaRouteManager {
     if (!active) throw new Error(`Active agent not found: ${safeName}`);
     if (active.scope === "memory") {
       throw new Error(
-        `${safeName} is generated from the beta identity and cannot be deleted.`,
+        `${safeName} is generated from the Frontier identity and cannot be deleted.`,
       );
     }
     if (active.scope === "ephemeral") {

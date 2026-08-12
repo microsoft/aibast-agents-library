@@ -35,6 +35,10 @@ const reviewsDir = path.join(walkthroughsDir, "reviews");
 const marker = "FIVE_MINUTE_WALKTHROUGH_COMPLETE";
 const brainstemMarker = "LEARNED_AND_TAUGHT:RAPP_READY";
 const secondBrainstemMarker = "LEARNED_AND_TAUGHT:SECOND_TURN_READY";
+const directBrainstemMarkers = [
+  "DIRECT_BRAINSTEM_READY_1",
+  "DIRECT_BRAINSTEM_READY_2",
+];
 const timeoutMs = Number.parseInt(
   process.env.BRAINSTEM_BETA_WALKTHROUGH_TIMEOUT_MS || "1200000",
   10,
@@ -59,6 +63,7 @@ for (let index = 0; index < cliArguments.length; index += 1) {
 }
 const repeatEphemeral = scenario === "repeat-ephemeral";
 const stackChurn = scenario === "stack-churn";
+const controlHandoff = scenario === "control-handoff";
 const additionalDirection = directions.join(" ").trim();
 const agentSource = `from agents.basic_agent import BasicAgent
 
@@ -112,8 +117,56 @@ class StackChurnProofAgent(BasicAgent):
         return "STACK_CHURN_READY" if proof == "STACK_CHURN_READY" else "INVALID_PROOF"
 `;
 
+export function evaluateControlHandoff({
+  directTurns = [],
+  transcript = "",
+  routeTelemetryBefore = {},
+  routeTelemetryAfter = {},
+} = {}) {
+  const requestIds = directTurns.map((turn) => turn.request_id);
+  const events = (routeTelemetryAfter.events || []).filter(
+    (event) => event.sequence > Number(routeTelemetryBefore.sequence || 0),
+  );
+  const surgeonRequestIds = events
+    .filter((event) => event.type === "ephemeral-callback-end")
+    .map((event) => event.request_id)
+    .filter(Number.isInteger);
+  const markerPositions = directBrainstemMarkers.map(
+    (markerValue) => String(transcript).indexOf(markerValue),
+  );
+  const surgeonMarkerPosition = String(transcript).indexOf(brainstemMarker);
+  return {
+    direct_turns_complete:
+      directTurns.length === directBrainstemMarkers.length
+      && directTurns.every((turn, index) => (
+        String(turn.response || "").includes(directBrainstemMarkers[index])
+      )),
+    direct_request_ids_ordered:
+      requestIds.length === directBrainstemMarkers.length
+      && requestIds.every(Number.isInteger)
+      && new Set(requestIds).size === directBrainstemMarkers.length
+      && requestIds[0] < requestIds[1],
+    transcript_handoff_ordered:
+      markerPositions.every((position) => position >= 0)
+      && markerPositions[0] < markerPositions[1]
+      && markerPositions[1] < surgeonMarkerPosition,
+    surgeon_request_followed_direct_turns:
+      surgeonRequestIds.length >= 1
+      && surgeonRequestIds.every((requestId) => requestId > requestIds[1]),
+    no_iframe_replacement:
+      routeTelemetryAfter.navigation_count
+      === routeTelemetryBefore.navigation_count,
+    worker_count_stable:
+      routeTelemetryBefore.worker_count === 1
+      && routeTelemetryAfter.worker_count === 1,
+    chat_lease_released:
+      routeTelemetryBefore.chat_lease_count === 0
+      && routeTelemetryAfter.chat_lease_count === 0,
+  };
+}
+
 const prompt = [
-  "Run the complete RAPP Brainstem Beta five-minute walkthrough now.",
+  "Run the complete RAPP Brainstem Frontier five-minute walkthrough now.",
   "Execute every chapter through tools; do not merely describe the plan.",
   "Keep the teaching narration concise and visible so a first-time user can",
   "follow what the Explorer, Brainstem, and Brain Surgeon are each proving.",
@@ -127,14 +180,27 @@ const prompt = [
   "  the full GitHub Copilot coding-agent loop.",
   "",
   "Chapter 2 — prepare visible evidence:",
-  "- Clear the Brainstem chat.",
-  "- Start demo recording with max_duration_ms=420000.",
+  ...(controlHandoff
+    ? [
+        "- The external driver already started the recording and completed two",
+        "  direct Brainstem turns. Do not start a second recording.",
+        "- Do not clear the Brainstem chat. Confirm the visible transcript shows",
+        `  ${directBrainstemMarkers[0]} followed by ${directBrainstemMarkers[1]}.`,
+        "- Explain that direct human control is now handing the same mounted chat",
+        "  to Brain Surgeon without replacing the iframe or transcript.",
+      ]
+    : [
+        "- Clear the Brainstem chat.",
+        "- Start demo recording with max_duration_ms=420000.",
+      ]),
   "- Inspect the visible Brainstem and confirm its chat input is ready.",
   "",
   stackChurn
     ? "Chapter 3 — create, select, install, and prove persistent stacks:"
     : repeatEphemeral
     ? "Chapter 3 — prove two consecutive one-turn hotloads:"
+    : controlHandoff
+    ? "Chapter 3 — prove the direct-to-Surgeon control handoff:"
     : "Chapter 3 — learn, build, and teach in one turn:",
   ...(stackChurn
     ? [
@@ -162,6 +228,17 @@ const prompt = [
         `  the exact marker ${secondBrainstemMarker}.`,
         "- Confirm the center transcript still visibly contains both turns and",
         "  that the iframe was not replaced between them.",
+      ]
+    : controlHandoff
+    ? [
+        "- Read the existing two direct turns before acting.",
+        "- Call delegate_to_brainstem with the ephemeral agent below.",
+        "- Use filename five_minute_walkthrough_agent.py.",
+        "- Tell Brainstem to call FiveMinuteWalkthrough exactly once with",
+        "  lesson='RAPP_READY', explain that Brain Surgeon now controls the same",
+        "  mounted chat, and end with the exact marker",
+        `  ${brainstemMarker}.`,
+        "- Confirm all three markers remain visible in chronological order.",
       ]
     : [
         "- Call delegate_to_brainstem with the ephemeral agent below.",
@@ -208,7 +285,7 @@ const prompt = [
   "Chapter 5 — show the production path:",
   "- Use check_beta_updates and report the exact visible status without",
   "  clicking Update and Restart.",
-  "- Explain the path in one sentence: prove locally in Beta Brainstem, freeze",
+  "- Explain the path in one sentence: prove locally in Frontier Brainstem, freeze",
   "  the RAPP/1 organism for Hippocampus, then promote the proven capability",
   "  into the Microsoft experience that fits.",
   "",
@@ -218,6 +295,8 @@ const prompt = [
       ? "stack-churn"
       : repeatEphemeral
         ? "repeat-ephemeral"
+        : controlHandoff
+          ? "control-handoff"
         : "baseline"
   }' so this is a true`,
   "  five-minute replay. Let the visible recap cards fill any remaining time.",
@@ -229,6 +308,11 @@ const prompt = [
   `- Include BRAINSTEM_RESULT=${brainstemMarker}.`,
   repeatEphemeral
     ? `- Include SECOND_BRAINSTEM_RESULT=${secondBrainstemMarker}.`
+    : "",
+  controlHandoff
+    ? `- Include DIRECT_BRAINSTEM_RESULT=${
+        directBrainstemMarkers.join(" -> ")
+      }.`
     : "",
   stackChurn ? "- Include STACK_CHURN_RESULT=STACK_CHURN_READY." : "",
   stackChurn ? "- Include STACK_CLEANUP=CONFIRMED." : "",
@@ -274,7 +358,7 @@ async function waitForBridge(limitMs = timeoutMs) {
     await sleep(250);
   }
   throw new Error(
-    `RAPP Brainstem Beta is not ready: ${lastError?.message || "timeout"}`,
+    `RAPP Brainstem Frontier is not ready: ${lastError?.message || "timeout"}`,
   );
 }
 
@@ -285,7 +369,7 @@ function launchBeta() {
   );
   if (!existsSync(launcher)) {
     throw new Error(
-      `RAPP Brainstem Beta is closed and its launcher is missing at ${launcher}.`,
+      `RAPP Brainstem Frontier is closed and its launcher is missing at ${launcher}.`,
     );
   }
   const child = process.platform === "win32"
@@ -562,7 +646,7 @@ function writeReportAndGallery(report) {
   writeFileSync(galleryPath, `<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>RAPP Brainstem Beta · Walkthrough Improvements</title>
+<title>RAPP Brainstem Frontier · Walkthrough Improvements</title>
 <style>
 body{margin:0;background:#0d1117;color:#f0f6fc;font:15px/1.5 ui-sans-serif,system-ui,sans-serif}
 main{width:min(1240px,calc(100% - 32px));margin:32px auto 80px}
@@ -578,7 +662,7 @@ video{width:100%;max-height:720px;background:#000;border-radius:10px}
 .frames img{width:100%;border-radius:8px}details{margin-top:12px}summary{cursor:pointer;color:#c9d1d9}
 pre{white-space:pre-wrap;word-break:break-word;background:#0d1117;padding:12px;border-radius:8px;color:#c9d1d9}
 </style></head><body><main>
-<h1>RAPP Brainstem Beta improvements</h1>
+<h1>RAPP Brainstem Frontier improvements</h1>
 <p>Newest first. Every scored run was fully decoded and sampled before the next loop.</p>
 ${reports.map(reportCard).join("")}
 ${historyCards ? `<h2>Earlier recordings</h2>${historyCards}` : ""}
@@ -671,15 +755,46 @@ async function main() {
   await waitForBrainstem(metadata);
   await driverCommand(metadata, {
     action: "click",
-    target: "shell",
-    selector: "#explorer-tab",
+    selector: "header .logo",
     optional: true,
-    label: "Opening the live RAPPID stack Explorer",
+    label: "Opening live agents from the Brainstem icon",
   });
   const routeTelemetryBefore = await driverCommand(metadata, {
     action: "route_telemetry",
     target: "shell",
   });
+  const directTurns = [];
+  if (controlHandoff) {
+    const recordingStatus = await driverCommand(metadata, {
+      action: "recording_status",
+      target: "shell",
+    });
+    if (recordingStatus.active) {
+      throw new Error("Control-handoff requires a clean recording baseline.");
+    }
+    await driverCommand(metadata, {
+      action: "start_recording",
+      target: "shell",
+      maxDurationMs: 420000,
+    });
+    for (const directMarker of directBrainstemMarkers) {
+      const directResult = await driverCommand(metadata, {
+        action: "chat",
+        value: [
+          "This is a direct visible Brainstem control-handoff probe.",
+          `Reply with exactly ${directMarker} and nothing else.`,
+          "Do not call any tools.",
+        ].join(" "),
+        label: `Direct Brainstem turn ${directTurns.length + 1}`,
+        timeoutMs: 180000,
+      });
+      directTurns.push({
+        marker: directMarker,
+        request_id: directResult.requestId,
+        response: directResult.response,
+      });
+    }
+  }
   const result = await driverCommand(metadata, {
     action: "surgeon_chat",
     target: "shell",
@@ -920,6 +1035,14 @@ async function main() {
           })(),
         }
       : {}),
+    ...(controlHandoff
+      ? evaluateControlHandoff({
+          directTurns,
+          transcript: brainstem?.text,
+          routeTelemetryBefore,
+          routeTelemetryAfter,
+        })
+      : {}),
     recording_created: Boolean(recording),
     recording_decoded: !review.available || review.decoded,
     five_minute_duration: !review.available
@@ -937,6 +1060,7 @@ async function main() {
     ok: Object.values(checks).every(Boolean),
     checks,
     response: response.slice(-4000),
+    direct_turns: directTurns,
     brainstem: String(brainstem?.text || "").slice(-4000),
     explorer: String(explorer?.text || "").slice(0, 4000),
     recording,
@@ -966,7 +1090,12 @@ async function main() {
   if (!Object.values(checks).every(Boolean)) process.exitCode = 1;
 }
 
-main().catch((error) => {
-  process.stderr.write(`${String(error?.stack || error)}\n`);
-  process.exitCode = 1;
-});
+const executedPath = process.argv[1]
+  ? pathToFileURL(path.resolve(process.argv[1])).href
+  : null;
+if (executedPath === import.meta.url) {
+  main().catch((error) => {
+    process.stderr.write(`${String(error?.stack || error)}\n`);
+    process.exitCode = 1;
+  });
+}

@@ -37,6 +37,7 @@ frame.addEventListener("load", () => {
   window.__brainstemBetaNavigationCount = brainstemNavigationCount;
   void window.brainstemBeta.installFrameBridge().then(() => {
     syncBetaUpdate(latestState?.update, openBetaMenuOnNextSync);
+    syncExplorerState();
     openBetaMenuOnNextSync = false;
   });
 });
@@ -49,6 +50,10 @@ window.addEventListener("message", async (event) => {
   }
   if (type === "rapp-beta:install-update") {
     await window.brainstemBeta.installUpdate();
+    return;
+  }
+  if (type === "rapp-beta:toggle-explorer") {
+    setExplorerOpen(!explorer.classList.contains("open"));
     return;
   }
   if (!["rapp-beta-delete-agent", "rapp-beta-export-agent"].includes(type)) return;
@@ -81,7 +86,15 @@ function setExplorerOpen(open) {
   explorer.classList.toggle("open", open);
   document.body.classList.toggle("explorer-open", open);
   localStorage.setItem(explorerOpenKey, open ? "open" : "closed");
+  syncExplorerState();
   if (open) void refreshAgentExplorer();
+}
+
+function syncExplorerState() {
+  frame.contentWindow?.postMessage({
+    type: "rapp-beta:explorer-state",
+    open: explorer.classList.contains("open"),
+  }, "*");
 }
 
 function setSurgeonOpen(open) {
@@ -595,7 +608,7 @@ function betaUrl(raw) {
 function syncBetaUpdate(update, openPanel = false) {
   const value = update || {
     phase: "idle",
-    message: "Check GitHub for the latest RAPP Brainstem Beta.",
+    message: "Check GitHub for the latest RAPP Brainstem Frontier.",
   };
   frame.contentWindow?.postMessage({
     type: "rapp-beta:update-state",
@@ -638,10 +651,6 @@ document.getElementById("enter").addEventListener("click", () => {
 document.getElementById("surgeon-tab").addEventListener(
   "click",
   () => setSurgeonOpen(true),
-);
-document.getElementById("explorer-tab").addEventListener(
-  "click",
-  () => setExplorerOpen(true),
 );
 document.getElementById("explorer-close").addEventListener(
   "click",

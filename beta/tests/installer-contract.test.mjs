@@ -126,7 +126,7 @@ test("chat can hot-load an animated driver for the real frontend", () => {
   assert.match(main, /startUiDriverServer/);
   assert.match(main, /Chat agents can visibly operate this Brainstem/);
   assert.match(uiDriverAgent, /class BrainstemUiDriver/);
-  assert.match(uiDriverAgent, /actual visible RAPP Brainstem Beta frontend/);
+  assert.match(uiDriverAgent, /actual visible RAPP Brainstem Frontier frontend/);
   assert.match(uiDriverAgent, /animated AI cursor/);
   assert.match(uiDriverAgent, /start_recording/);
   assert.match(uiDriverAgent, /stop_recording/);
@@ -163,6 +163,7 @@ test("beta embeds the full GitHub Copilot Brain Surgeon loop", () => {
   assert.match(main, /Download agent\.py/);
   assert.match(main, /Delete agent/);
   assert.match(main, /beta-agent-icon-button/);
+  assert.match(main, /humanizeAgentName/);
   assert.doesNotMatch(ui, /beta-menu-toggle/);
   assert.match(brainSurgeon, /real GitHub Copilot coding-agent loop/);
   assert.match(brainSurgeon, /onPermissionRequest: approveAll/);
@@ -187,6 +188,9 @@ test("beta embeds the full GitHub Copilot Brain Surgeon loop", () => {
   assert.match(walkthrough, /SECOND_TURN_READY/);
   assert.match(walkthrough, /stack-churn/);
   assert.match(walkthrough, /STACK_CHURN_READY/);
+  assert.match(walkthrough, /control-handoff/);
+  assert.match(walkthrough, /DIRECT_BRAINSTEM_READY_1/);
+  assert.match(walkthrough, /evaluateControlHandoff/);
   assert.match(walkthroughGate, /PERFECT/);
   assert.match(walkthroughGate, /Grail kernel has no beta diff/);
   assert.match(walkthroughGate, /evidence matches current beta source/);
@@ -202,10 +206,14 @@ test("beta embeds the full GitHub Copilot Brain Surgeon loop", () => {
   );
 });
 
-test("beta exposes the live agents folder in a left Explorer", () => {
-  assert.match(ui, /id="explorer-tab"/);
+test("blue Brainstem icon toggles the live agents Explorer", () => {
+  assert.doesNotMatch(ui, /id="explorer-tab"/);
   assert.match(ui, /id="agent-tree"/);
   assert.match(ui, /live Brainstem workspace/);
+  assert.match(main, /rapp-beta:toggle-explorer/);
+  assert.match(main, /betaExplorerToggle/);
+  assert.match(renderer, /rapp-beta:toggle-explorer/);
+  assert.match(renderer, /syncExplorerState/);
   assert.match(renderer, /brainstemBeta\.listAgentFiles/);
   assert.match(renderer, /brainstemBeta\.readAgentFile/);
   assert.match(preload, /beta:list-agent-files/);

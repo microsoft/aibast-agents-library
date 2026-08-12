@@ -157,7 +157,7 @@ export function resolvePortableNode({
     const candidate = path.join(betaHome, directory, executable);
     if (existsSync(candidate)) return candidate;
   }
-  throw new Error(`Portable Node.js is missing from ${betaHome}. Re-run the beta installer.`);
+  throw new Error(`Portable Node.js is missing from ${betaHome}. Re-run the Frontier installer.`);
 }
 
 function electronExecutable(repoRoot, platform) {
@@ -204,15 +204,15 @@ export function resolveManagedInstall({
   const betaHome = inferManagedBetaHome(packageDir, env);
   if (!betaHome || path.resolve(repoRoot) !== path.join(betaHome, "src")) {
     throw new Error(
-      "This checkout is not managed by the RAPP Brainstem Beta installer. "
-      + "Update it with Git or re-run the beta installer.",
+      "This checkout is not managed by the RAPP Brainstem Frontier installer. "
+      + "Update it with Git or re-run the Frontier installer.",
     );
   }
 
   const node = resolvePortableNode({ betaHome, env, platform, arch });
   const electron = electronExecutable(repoRoot, platform);
   if (!existsSync(electron)) {
-    throw new Error(`Electron is missing at ${electron}. Re-run the beta installer.`);
+    throw new Error(`Electron is missing at ${electron}. Re-run the Frontier installer.`);
   }
   return { betaHome, electron, node };
 }
@@ -531,7 +531,7 @@ export async function prepareUpdate({
     for (const temporaryPath of [installerPath, runnerPath, requestPath]) {
       rmSync(temporaryPath, { force: true });
     }
-    throw new Error(`Could not start the beta updater: ${asErrorMessage(error)}`);
+    throw new Error(`Could not start the Frontier updater: ${asErrorMessage(error)}`);
   }
 
   return {

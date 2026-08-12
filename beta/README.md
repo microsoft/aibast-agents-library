@@ -1,14 +1,14 @@
-# RAPP Brainstem Beta Launcher
+# RAPP Brainstem Frontier
 
 See [`GOLDEN_PATH.md`](GOLDEN_PATH.md) for the guiding product path:
 learn AI, teach it back immediately as a working capability, and keep that
 portable skill for life.
 
-This opt-in beta applies the launcher architecture used by Skill Recorder to
+This opt-in Frontier experience applies the launcher architecture used by Skill Recorder to
 RAPP Brainstem:
 
 - chat remains the universal control surface for people and other AIs;
-- the beta composes global and routed single-file agents into an isolated
+- Frontier composes global and routed single-file agents into an isolated
   worker `AGENTS_PATH`, then invokes them through the unchanged `/chat`;
 - the included `BrainstemUiDriver` agent can operate the actual visible
   frontend with an animated cursor, clicks, typing, narration, and waits so the
@@ -20,7 +20,7 @@ RAPP Brainstem:
   content-addressed, hardlinked agent compositions;
 - app shutdown disposes the bundled Copilot client and every worker it owns.
 
-The beta and the regular installer use the same global runtime:
+Frontier and the regular installer use the same global runtime:
 
 ```text
 ~/.brainstem/
@@ -29,16 +29,16 @@ The beta and the regular installer use the same global runtime:
 `- beta-launcher/
    |- routing/           RAPPID, stack, egg, object, and composition state
    |- recordings/        captured teaching demos
-   `- src/               beta-only Electron, Copilot CLI, and launcher source
+   `- src/               Frontier-only Electron, Copilot CLI, and launcher source
 ```
 
-The regular installer may keep serving `http://localhost:7071`. The beta uses
+The regular installer may keep serving `http://localhost:7071`. Frontier uses
 isolated loopback workers and embeds their unchanged Brainstem UI between a
 live Explorer and GitHub Copilot Brain Surgeon.
 
 ## What it is for
 
-Use this beta as a builder-operated rapid proof harness for the customer
+Use Frontier as a builder-operated rapid proof harness for the customer
 question: **"Can AI do this?"**
 
 It is also the teaching path: learn the AI pattern on real work, have Copilot
@@ -65,12 +65,12 @@ delegates to agents, and visible UI actions show exactly what is being done.
 
 ## Brain Surgeon: GitHub Copilot without requiring VS Code
 
-The beta ports the proven vBrainstem Brain Surgeon pattern into the desktop
+Frontier ports the proven vBrainstem Brain Surgeon pattern into the desktop
 client. Open the **GitHub Copilot** tab on the right edge to reveal the full
 Copilot coding-agent loop side-by-side with the live Brainstem.
 
 This is not a second Brainstem or a simplified chatbot. It is GitHub Copilot
-Agent mode with its normal file, shell, search, edit, and test loop. The beta
+Agent mode with its normal file, shell, search, edit, and test loop. Frontier
 adds RAPP-specific tools so that loop can:
 
 - visibly type into the same Brainstem composer a person uses;
@@ -88,7 +88,7 @@ they are no longer prerequisites for using GitHub Copilot as the Brainstem's
 builder.
 
 If the user gets stuck, another AI can visibly take over the same Brain Surgeon
-or Brainstem chat, perform the next steps in the beta client, show the evidence,
+or Brainstem chat, perform the next steps in Frontier, show the evidence,
 and hand control back without losing context.
 
 External AIs and CLIs can enter the same visible loop:
@@ -159,7 +159,7 @@ the launcher plus shared Brainstem source that the installer checks out.
 `BRAINSTEM_BETA_REF` remains available for mutable fork-branch testing; release
 instructions use `BRAINSTEM_BETA_COMMIT`.
 
-After the first install, launch **RAPP Brainstem Beta** from Applications,
+After the first install, launch **RAPP Brainstem Frontier** from Applications,
 Launchpad, the Linux app menu, the Windows Desktop/Start Menu, or run:
 
 ```bash
@@ -168,18 +168,18 @@ brainstem-beta
 
 ## Check for updates
 
-Open the three-dot **RAPP Brainstem Beta** dropdown in the Brainstem toolbar and
+Open the three-dot **RAPP Brainstem Frontier** dropdown in the Brainstem toolbar and
 choose **Check for updates**. The native application menu also exposes
 **Check for Updates...**. The launcher compares its installed commit with the
 latest commit on the configured GitHub branch (`main` by default).
 
-When an update is available, **Update and Restart** runs the existing beta
+When an update is available, **Update and Restart** runs the existing Frontier
 installer against that exact commit. This refreshes both the desktop launcher
-and the shared Brainstem source, runs the beta checks, and reopens the app.
-Tracked local changes in the beta checkout block the update instead of being
+and the shared Brainstem source, runs the Frontier checks, and reopens the app.
+Tracked local changes in the Frontier checkout block the update instead of being
 discarded.
 
-## Drive the beta through chat
+## Drive Frontier through chat
 
 The source checkout includes `scripts/brainstem_ui_driver_agent.py`. The
 `drive:e2e` harness sends that source through the visible GitHub Copilot Brain
@@ -189,7 +189,7 @@ RAPPID stack without changing the shared Brainstem kernel. The agent does not
 expose arbitrary JavaScript; it uses a token-authenticated loopback bridge with
 bounded actions such as inspect, click, type, press, wait, read, and screenshot.
 
-Run the update-control E2E demonstration while the beta client is open:
+Run the update-control E2E demonstration while Frontier is open:
 
 ```bash
 npm run drive:e2e
@@ -213,7 +213,7 @@ with playback controls in the agent activity attached to the chat response.
 ## Download boundary
 
 The global runtime clone uses a shallow partial sparse checkout restricted to
-`rapp_brainstem/`. The beta launcher uses a second shallow partial sparse
+`rapp_brainstem/`. Frontier uses a second shallow partial sparse
 checkout restricted to `beta/`. Neither checkout downloads `solutions/`.
 
 Both installers default to:
@@ -228,9 +228,9 @@ exist only for fork staging and release-candidate verification.
 Release procedure and source-only publication rules are documented in
 [`RELEASING.md`](RELEASING.md).
 
-## Beta limitations
+## Frontier limitations
 
-- This is an unsigned source-built beta, not an officially supported Microsoft
+- This is an unsigned source-built Frontier preview, not an officially supported Microsoft
   desktop application. Managed-device controls may block Electron or downloaded
   source.
 - Initial source installation still needs network access and may open a console
@@ -241,16 +241,16 @@ Release procedure and source-only publication rules are documented in
 
 ## Uninstall the launcher
 
-Removing the beta launcher does not remove the shared Brainstem or user data.
+Removing Frontier does not remove the shared Brainstem or user data.
 
 ```bash
 rm -rf ~/.brainstem/beta-launcher
 rm -f ~/.local/bin/brainstem-beta
-rm -rf "$HOME/Applications/RAPP Brainstem Beta.app"
+rm -rf "$HOME/Applications/RAPP Brainstem Frontier.app"
 rm -f "${XDG_DATA_HOME:-$HOME/.local/share}/applications/rapp-brainstem-beta.desktop"
 ```
 
-On Windows, remove the two **RAPP Brainstem Beta** shortcuts and delete:
+On Windows, remove the two **RAPP Brainstem Frontier** shortcuts and delete:
 
 ```text
 %USERPROFILE%\.brainstem\beta-launcher

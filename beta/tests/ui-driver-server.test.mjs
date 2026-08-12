@@ -88,11 +88,15 @@ test("walkthrough recording pads with visible recap cards, not dead air", () => 
   assert.match(source, /brainstem-beta-walkthrough-recap/);
   assert.match(
     uiDriverInternals.walkthroughRecapChapters("baseline").join(" "),
-    /Beta Brainstem → Hippocampus → Microsoft stack/,
+    /Frontier Brainstem → Hippocampus → Microsoft stack/,
   );
   assert.match(
     uiDriverInternals.walkthroughRecapChapters("stack-churn").join(" "),
     /STACK_CHURN_READY/,
+  );
+  assert.match(
+    uiDriverInternals.walkthroughRecapChapters("control-handoff").join(" "),
+    /same transcript/,
   );
 });
 

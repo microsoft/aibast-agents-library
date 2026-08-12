@@ -15,13 +15,13 @@ const appDir = path.join(
   betaDir,
   "release",
   "mac-arm64",
-  "RAPP Brainstem Beta.app",
+  "RAPP Brainstem Frontier.app",
 );
 const executable = path.join(
   appDir,
   "Contents",
   "MacOS",
-  "RAPP Brainstem Beta",
+  "RAPP Brainstem Frontier",
 );
 const resources = path.join(appDir, "Contents", "Resources");
 const unpackedModules = path.join(resources, "app.asar.unpacked", "node_modules");

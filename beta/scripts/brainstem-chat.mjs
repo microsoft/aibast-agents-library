@@ -26,7 +26,7 @@ function launchBeta() {
     process.platform === "win32" ? "launch.cmd" : "launch.sh",
   );
   if (!existsSync(launcher)) {
-    throw new Error(`RAPP Brainstem Beta launcher is missing at ${launcher}.`);
+    throw new Error(`RAPP Brainstem Frontier launcher is missing at ${launcher}.`);
   }
   const child = process.platform === "win32"
     ? spawn("cmd.exe", ["/d", "/c", launcher], {
@@ -66,7 +66,7 @@ async function waitForBridge(timeoutMs) {
     }
     await sleep(250);
   }
-  throw new Error(`RAPP Brainstem Beta is not ready: ${lastError?.message || "timeout"}`);
+  throw new Error(`RAPP Brainstem Frontier is not ready: ${lastError?.message || "timeout"}`);
 }
 
 async function main() {

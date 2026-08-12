@@ -47,7 +47,7 @@ async function waitForBridge(timeoutMs = 60000) {
     }
     await sleep(250);
   }
-  throw new Error(`RAPP Brainstem Beta is not ready: ${lastError?.message || "timeout"}`);
+  throw new Error(`RAPP Brainstem Frontier is not ready: ${lastError?.message || "timeout"}`);
 }
 
 function launchBeta() {
@@ -58,7 +58,7 @@ function launchBeta() {
   );
   if (!existsSync(launcher)) {
     throw new Error(
-      `RAPP Brainstem Beta is closed and its launcher is missing at ${launcher}.`,
+      `RAPP Brainstem Frontier is closed and its launcher is missing at ${launcher}.`,
     );
   }
   const child = process.platform === "win32"

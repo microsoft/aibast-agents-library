@@ -688,7 +688,7 @@ async function startWindowRecording(browserWindow, command, uploadUrl) {
         window.__brainstemBetaRecording
         && window.__brainstemBetaRecording.recorder.state !== "inactive"
       ) {
-        throw new Error("The RAPP Brainstem Beta window is already recording.");
+        throw new Error("The RAPP Brainstem Frontier window is already recording.");
       }
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: false,
@@ -877,13 +877,23 @@ function walkthroughRecapChapters(mode = "baseline") {
       "6 · Promotion — reusable skills stay; temporary tools disappear",
     ];
   }
+  if (mode === "control-handoff") {
+    return [
+      "1 · Direct control — a person sends the first visible Brainstem turn",
+      "2 · Repeat — a second direct turn stays in the same transcript",
+      "3 · Handoff — Brain Surgeon takes control without replacing the iframe",
+      "4 · Proof — all three request IDs and markers remain ordered",
+      "5 · Cleanup — the delegated temporary tool disappears and the lease clears",
+      "6 · Outcome — one chat surface, whichever intelligence is driving it",
+    ];
+  }
   return [
     "1 · Identity — one caller RAPPID and one private memory anchor",
     "2 · Composition — global + inherited + leaf + ordered overlays",
     "3 · Hotload — a single-file agent became a real tool for one turn",
     "4 · Evidence — the center Brainstem returned a testable result",
     "5 · Cleanup — the ephemeral worker disappeared automatically",
-    "6 · Promotion — Beta Brainstem → Hippocampus → Microsoft stack",
+    "6 · Promotion — Frontier Brainstem → Hippocampus → Microsoft stack",
   ];
 }
 
@@ -947,7 +957,7 @@ async function stopWindowRecording(browserWindow, command = {}) {
       delete window.__brainstemBetaLastRecording;
       return last;
     }
-    throw new Error("The RAPP Brainstem Beta window is not recording.");
+    throw new Error("The RAPP Brainstem Frontier window is not recording.");
   }.toString()})(${JSON.stringify({
     chapters: walkthroughRecapChapters(command.recapMode),
     minimumDurationMs,
@@ -1079,7 +1089,7 @@ async function startCapturedWindowRecording(
 ) {
   const existing = capturedRecordings.get(browserWindow);
   if (existing && !existing.stopping) {
-    throw new Error("The RAPP Brainstem Beta window is already recording.");
+    throw new Error("The RAPP Brainstem Frontier window is already recording.");
   }
   const maxDurationMs = Math.max(
     1000,
@@ -1257,7 +1267,7 @@ async function stopCapturedWindowRecording(browserWindow, command = {}) {
       lastCapturedRecordings.delete(browserWindow);
       return last;
     }
-    throw new Error("The RAPP Brainstem Beta window is not recording.");
+    throw new Error("The RAPP Brainstem Frontier window is not recording.");
   }
   const minimumDurationMs = Math.max(
     0,

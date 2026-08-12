@@ -1,6 +1,6 @@
-# Releasing RAPP Brainstem Beta
+# Releasing RAPP Brainstem Frontier
 
-RAPP Brainstem Beta follows Skill Recorder's source-only release pattern:
+RAPP Brainstem Frontier follows Skill Recorder's source-only release pattern:
 
 1. Publish an immutable annotated tag after the staging commit passes.
 2. Record the full release commit and installer hashes in the GitHub Release.
@@ -34,7 +34,7 @@ versioned product:
 version="0.1.0-beta.1"
 release_commit="<full-40-character-commit>"
 tag="brainstem-beta-v$version"
-git tag -a "$tag" "$release_commit" -m "RAPP Brainstem Beta v$version"
+git tag -a "$tag" "$release_commit" -m "RAPP Brainstem Frontier v$version"
 git push fork "$tag"
 ```
 
@@ -65,7 +65,7 @@ gh release create "$tag" \
   --repo kody-w/aibast-agents-library \
   --verify-tag \
   --prerelease \
-  --title "RAPP Brainstem Beta v$version" \
+  --title "RAPP Brainstem Frontier v$version" \
   --notes-file "<release-notes-file>"
 ```
 

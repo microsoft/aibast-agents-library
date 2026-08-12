@@ -7,7 +7,7 @@
     content="default-src 'self'; connect-src 'self' http://127.0.0.1:* http://localhost:*; frame-src http://127.0.0.1:* http://localhost:*; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self' data: http://127.0.0.1:* http://localhost:*; media-src http://127.0.0.1:* http://localhost:*;"
   >
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>RAPP Brainstem Beta</title>
+  <title>RAPP Brainstem Frontier</title>
   <style>
     :root {
       color-scheme: dark;
@@ -148,18 +148,6 @@
     .intro-footer small { color: #8c959f; line-height: 1.45; }
     .primary { border-color: #238636; background: #238636; font-weight: 700; }
     .primary:hover { border-color: #2ea043; background: #2ea043; }
-    #explorer-tab {
-      position: fixed; z-index: 14; top: 50%; left: 0;
-      display: flex; align-items: center; gap: 7px;
-      transform: translateY(-50%); padding: 14px 9px;
-      border: 1px solid #30363d; border-left: 0;
-      border-radius: 0 12px 12px 0; background: #1c1e22;
-      box-shadow: 4px 0 20px rgba(0,0,0,.45);
-      writing-mode: vertical-rl; letter-spacing: .06em; font-weight: 700;
-      transition: padding .15s, background .15s;
-    }
-    #explorer-tab:hover { padding-left: 13px; background: #23262c; }
-    body.explorer-open #explorer-tab { display: none; }
     #explorer {
       position: fixed; z-index: 15; top: 0; left: 0;
       display: flex; flex-direction: column;
@@ -429,9 +417,6 @@
       sandbox="allow-scripts allow-same-origin allow-forms allow-downloads allow-modals allow-popups"
     ></iframe>
   </main>
-  <button id="explorer-tab" type="button" title="Open live Brainstem agents folder">
-    🗂️ Live agents
-  </button>
   <aside id="explorer" aria-label="Live Brainstem agents Explorer">
     <header>
       <span aria-hidden="true">🗂️</span>

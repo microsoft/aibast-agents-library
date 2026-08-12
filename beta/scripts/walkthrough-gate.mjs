@@ -607,6 +607,67 @@ function main() {
       !String(report.explorer || "").includes("stack_churn_agent.py"),
     );
   }
+  if (report.scenario === "control-handoff") {
+    const turns = report.direct_turns || [];
+    const markers = [
+      "DIRECT_BRAINSTEM_READY_1",
+      "DIRECT_BRAINSTEM_READY_2",
+    ];
+    const requestIds = turns.map((turn) => turn.request_id);
+    requirement(
+      "two exact direct Brainstem turns completed",
+      turns.length === 2
+        && turns.every((turn, index) => (
+          String(turn.response || "").includes(markers[index])
+        )),
+    );
+    requirement(
+      "direct request IDs are distinct and ordered",
+      requestIds.length === 2
+        && requestIds.every(Number.isInteger)
+        && requestIds[0] < requestIds[1],
+      requestIds.join(", "),
+    );
+    const transcript = String(report.brainstem || "");
+    const firstMarker = transcript.indexOf(markers[0]);
+    const secondMarker = transcript.indexOf(markers[1]);
+    const surgeonMarker = transcript.indexOf("LEARNED_AND_TAUGHT:RAPP_READY");
+    requirement(
+      "visible transcript preserves direct-to-Surgeon order",
+      firstMarker >= 0
+        && firstMarker < secondMarker
+        && secondMarker < surgeonMarker,
+      `${firstMarker}, ${secondMarker}, ${surgeonMarker}`,
+    );
+    const before = report.route_telemetry?.before;
+    const after = report.route_telemetry?.after;
+    const events = (after?.events || []).filter(
+      (event) => event.sequence > Number(before?.sequence || 0),
+    );
+    const surgeonRequestIds = events
+      .filter((event) => event.type === "ephemeral-callback-end")
+      .map((event) => event.request_id)
+      .filter(Number.isInteger);
+    requirement(
+      "Brain Surgeon request follows both direct turns",
+      surgeonRequestIds.length >= 1
+        && surgeonRequestIds.every((requestId) => requestId > requestIds[1]),
+      surgeonRequestIds.join(", "),
+    );
+    requirement(
+      "control handoff keeps one mounted iframe and worker",
+      before?.navigation_count === after?.navigation_count
+        && before?.worker_count === 1
+        && after?.worker_count === 1,
+      `navigation ${before?.navigation_count} -> ${after?.navigation_count}; `
+        + `workers ${before?.worker_count} -> ${after?.worker_count}`,
+    );
+    requirement(
+      "control handoff releases the chat lease",
+      before?.chat_lease_count === 0 && after?.chat_lease_count === 0,
+      `${before?.chat_lease_count} -> ${after?.chat_lease_count}`,
+    );
+  }
   requirement(
     "ephemeral source is absent from final Explorer",
     !String(report.explorer || "").includes("five_minute_walkthrough_agent.py"),

@@ -51,6 +51,9 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     ".beta-agent-icon-button{display:grid!important;place-items:center;",
     "width:32px;height:30px;padding:0!important}",
     ".beta-agent-icon-button svg{width:16px;height:16px;pointer-events:none}",
+    "header .logo[data-beta-explorer-toggle]{cursor:pointer}",
+    "header .logo[data-beta-explorer-toggle]:focus-visible{outline:2px solid #58a6ff;",
+    "outline-offset:3px}",
     ".beta-frame-menu{position:relative}",
     ".beta-frame-menu #beta-app-panel{display:none;position:absolute;",
     "top:calc(100% + 10px);right:0;width:min(340px,calc(100vw - 32px));",
@@ -135,7 +138,7 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     if (!status) return;
     status.dataset.phase = phase;
     const lines = [
-      update.message || "Check GitHub for the latest RAPP Brainstem Beta.",
+      update.message || "Check GitHub for the latest RAPP Brainstem Frontier.",
       update.detail,
       update.source ? "Source: " + update.source : "",
       update.guidance,
@@ -173,7 +176,25 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     const brainLogo = document.querySelector("header .logo");
     if (brainLogo) {
       brainLogo.title = "we are above that";
-      brainLogo.setAttribute("aria-label", "we are above that");
+      brainLogo.setAttribute(
+        "aria-label",
+        "we are above that — toggle live agents",
+      );
+      brainLogo.setAttribute("role", "button");
+      brainLogo.setAttribute("aria-expanded", "false");
+      brainLogo.tabIndex = 0;
+      if (!brainLogo.dataset.betaExplorerToggle) {
+        brainLogo.dataset.betaExplorerToggle = "1";
+        const toggleExplorer = () => {
+          window.parent.postMessage({ type: "rapp-beta:toggle-explorer" }, "*");
+        };
+        brainLogo.addEventListener("click", toggleExplorer);
+        brainLogo.addEventListener("keydown", (event) => {
+          if (!["Enter", " "].includes(event.key)) return;
+          event.preventDefault();
+          toggleExplorer();
+        });
+      }
     }
     let wrapper = document.querySelector(".beta-app-wrapper");
     let button = document.getElementById("beta-app-btn");
@@ -184,18 +205,18 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
       wrapper = document.createElement("div");
       wrapper.className = "beta-app-wrapper beta-frame-menu";
       wrapper.innerHTML = '<button class="icon-btn" id="beta-app-btn" '
-        + 'type="button" title="RAPP Brainstem Beta menu" aria-haspopup="true" '
+        + 'type="button" title="RAPP Brainstem Frontier menu" aria-haspopup="true" '
         + 'aria-expanded="false"><span class="icon"><svg viewBox="0 0 24 24" '
         + 'fill="currentColor" aria-hidden="true"><path d="M6 10a2 2 0 1 0 0 4 '
         + '2 2 0 0 0 0-4Zm6 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm6 0a2 2 0 1 0 '
         + '0 4 2 2 0 0 0 0-4Z"/></svg></span></button>'
-        + '<div id="beta-app-panel"><h3>RAPP Brainstem Beta</h3>'
+        + '<div id="beta-app-panel"><h3>RAPP Brainstem Frontier</h3>'
         + '<p class="beta-app-copy">Chat is the control surface. Agents can add '
         + 'capabilities and visibly operate this workspace while you watch.</p>'
         + '<button class="beta-panel-btn" id="beta-check-updates" type="button">'
         + 'Check for updates</button><div id="beta-update-status" '
         + 'data-phase="idle" role="status" aria-live="polite">Check GitHub for '
-        + 'the latest RAPP Brainstem Beta.</div><button class="beta-panel-btn '
+        + 'the latest RAPP Brainstem Frontier.</div><button class="beta-panel-btn '
         + 'primary" id="beta-install-update" type="button" hidden>'
         + 'Update and Restart</button></div>';
       const vscode = document.getElementById("vscode-link");
@@ -244,6 +265,9 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
       setBetaMenuOpen(true);
     } else if (event.data.type === "rapp-beta:update-state") {
       renderBetaUpdate(event.data.update, event.data.openPanel);
+    } else if (event.data.type === "rapp-beta:explorer-state") {
+      document.querySelector("header .logo")
+        ?.setAttribute("aria-expanded", String(Boolean(event.data.open)));
     }
   });
   async function requestParent(type, filename) {
@@ -251,7 +275,7 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     return new Promise((resolve, reject) => {
       const timeout = window.setTimeout(() => {
         window.removeEventListener("message", receive);
-        reject(new Error("Beta agent action timed out."));
+        reject(new Error("Frontier agent action timed out."));
       }, 30000);
       function receive(message) {
         if (
@@ -334,7 +358,7 @@ const state = {
   uiDriver: { phase: "starting", message: "Preparing visible AI controls..." },
   update: {
     phase: "idle",
-    message: "Check GitHub for the latest RAPP Brainstem Beta.",
+    message: "Check GitHub for the latest RAPP Brainstem Frontier.",
   },
   url: config.url,
 };
@@ -469,7 +493,7 @@ function createWindow() {
     height: 860,
     minWidth: 900,
     minHeight: 620,
-    title: "RAPP Brainstem Beta",
+    title: "RAPP Brainstem Frontier",
     backgroundColor: "#0d1117",
     webPreferences: {
       preload: path.join(dirname, "preload.cjs"),
@@ -527,7 +551,7 @@ async function handleCheckForUpdates({ openPanel = false } = {}) {
     if (!update.published) {
       return setUpdateState({
         phase: "current",
-        message: `No RAPP Brainstem Beta update is published on ${update.updateRef} yet.`,
+        message: `No RAPP Brainstem Frontier update is published on ${update.updateRef} yet.`,
         detail: `This source build remains on ${update.currentVersion} `
           + `(${shortCommit(update.currentCommit)}). The latest repository commit `
           + `(${shortCommit(update.latestCommit)}) has no beta/VERSION manifest.`,
@@ -537,7 +561,7 @@ async function handleCheckForUpdates({ openPanel = false } = {}) {
     if (!update.available) {
       return setUpdateState({
         phase: "current",
-        message: "RAPP Brainstem Beta is up to date.",
+        message: "RAPP Brainstem Frontier is up to date.",
         detail: `Version ${update.currentVersion} (${shortCommit(update.currentCommit)})`,
         source: `${update.repository}@${update.updateRef}`,
       });
@@ -557,7 +581,7 @@ async function handleCheckForUpdates({ openPanel = false } = {}) {
     availableUpdate = update;
     return setUpdateState({
       phase: "available",
-      message: `RAPP Brainstem Beta ${update.latestVersion} is available.`,
+      message: `RAPP Brainstem Frontier ${update.latestVersion} is available.`,
       detail: `Installed ${update.currentVersion} (${shortCommit(update.currentCommit)}); `
         + `latest ${update.latestVersion} (${shortCommit(update.latestCommit)}).`,
       source: `${update.repository}@${update.updateRef}`,
@@ -567,7 +591,7 @@ async function handleCheckForUpdates({ openPanel = false } = {}) {
   } catch (error) {
     return setUpdateState({
       phase: "error",
-      message: "RAPP Brainstem Beta could not check for updates.",
+      message: "RAPP Brainstem Frontier could not check for updates.",
       detail: String(error.message || error),
     });
   } finally {
@@ -587,7 +611,7 @@ async function handleInstallUpdate() {
   const update = availableUpdate;
   setUpdateState({
     phase: "applying",
-    message: `Installing RAPP Brainstem Beta ${update.latestVersion}...`,
+    message: `Installing RAPP Brainstem Frontier ${update.latestVersion}...`,
     detail: "The app will close, run the pinned installer, and reopen.",
   });
   try {
@@ -601,7 +625,7 @@ async function handleInstallUpdate() {
   } catch (error) {
     return setUpdateState({
       phase: "error",
-      message: "RAPP Brainstem Beta could not start the update.",
+      message: "RAPP Brainstem Frontier could not start the update.",
       detail: String(error.message || error),
     });
   }
@@ -691,7 +715,7 @@ function loadPendingUpdateResult() {
   if (result.success) {
     state.update = {
       phase: "success",
-      message: `RAPP Brainstem Beta updated to ${result.latestVersion}.`,
+      message: `RAPP Brainstem Frontier updated to ${result.latestVersion}.`,
       detail: `Installed commit: ${shortCommit(result.commit)}\n`
         + "The launcher and shared Brainstem source were refreshed.",
     };
@@ -700,7 +724,7 @@ function loadPendingUpdateResult() {
 
   state.update = {
     phase: "error",
-    message: "RAPP Brainstem Beta could not finish the update.",
+    message: "RAPP Brainstem Frontier could not finish the update.",
     detail: `${result.error || "Unknown updater error."}\n\nLog: ${
       result.logPath || "unavailable"
     }`,
@@ -839,7 +863,7 @@ async function startServices() {
     state.surgeon = result.authenticated
       ? {
           phase: "ready",
-          message: "GitHub Copilot Agent mode is ready inside the beta client.",
+          message: "GitHub Copilot Agent mode is ready inside Frontier.",
         }
       : {
           phase: "signed-out",

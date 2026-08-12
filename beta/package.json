@@ -38,7 +38,7 @@
   },
   "build": {
     "appId": "com.microsoft.aibast.rapp-brainstem-beta",
-    "productName": "RAPP Brainstem Beta",
+    "productName": "RAPP Brainstem Frontier",
     "directories": {
       "output": "release",
       "buildResources": "build"
@@ -85,12 +85,12 @@
       "entitlements": "build/entitlements.mac.plist",
       "entitlementsInherit": "build/entitlements.mac.plist",
       "extendInfo": {
-        "NSMicrophoneUsageDescription": "RAPP Brainstem Beta uses the microphone only when you explicitly enable voice mode."
+        "NSMicrophoneUsageDescription": "RAPP Brainstem Frontier uses the microphone only when you explicitly enable voice mode."
       },
       "artifactName": "${productName}-${version}-mac-${arch}.${ext}"
     },
     "dmg": {
-      "title": "RAPP Brainstem Beta ${version}",
+      "title": "RAPP Brainstem Frontier ${version}",
       "artifactName": "${productName}-${version}-mac-${arch}.${ext}"
     }
   }

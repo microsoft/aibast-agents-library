@@ -103,12 +103,12 @@ export class BrainstemProcess {
     const serverFile = path.join(this.config.brainstemDir, "brainstem.py");
     if (!existsSync(serverFile)) {
       throw new Error(
-        `Brainstem source is missing at ${this.config.brainstemDir}. Re-run the beta installer.`,
+        `Brainstem source is missing at ${this.config.brainstemDir}. Re-run the Frontier installer.`,
       );
     }
     if (!existsSync(this.config.python)) {
       throw new Error(
-        `Brainstem Python environment is missing at ${this.config.python}. Re-run the beta installer.`,
+        `Brainstem Python environment is missing at ${this.config.python}. Re-run the Frontier installer.`,
       );
     }
 
