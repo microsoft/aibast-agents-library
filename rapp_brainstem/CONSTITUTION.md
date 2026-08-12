@@ -44,6 +44,30 @@ The platform teaches the Microsoft AI stack one layer at a time:
 Each tier is self-contained and complete. Users advance when they choose
 to, not when we push them.
 
+### Learn, Teach, Keep
+
+RAPP accelerates both sides of durable AI literacy:
+
+1. **Learn AI by using it on real work.**
+2. **Teach AI immediately after learning** by turning the new understanding
+   into a visible, testable single-file capability.
+3. **Keep the skill for life** as a portable RAPP agent, frame history, and egg
+   that can follow the user across machines and tiers.
+
+The platform SHOULD teach by doing. It shows the plan, visible actions, agent
+source, tool calls, evidence, and result. A nontechnical user must be able to
+drive this loop through chat alone.
+
+Local learning is not a dead-end prototype. Once proven, the same RAPP/1
+organism can be cloned into Hippocampus and promoted into the appropriate
+Microsoft downstream experience—Copilot Studio, Microsoft Foundry, Microsoft
+365 Copilot, Teams, Scout/Work IQ, or a custom Azure application—without
+rewriting the skill or changing the chat contract.
+
+The beta's product path is documented in
+[`beta/GOLDEN_PATH.md`](../beta/GOLDEN_PATH.md). The beta may enrich the
+experience around the Brainstem, but it cannot replace or fork the kernel.
+
 ---
 
 ## Article III — Local First
@@ -172,7 +196,43 @@ Both paths are self-contained. Neither depends on the other. A user who starts w
 
 ---
 
-## Article IX — Amendments
+## Article IX — One Grail Kernel, One RAPP/1 Wire
+
+The Brainstem kernel is the RAPP/1 execution shape. Local, beta, Hippocampus,
+and future tiers MUST interoperate through the same wire:
+
+```text
+POST /chat
+{ user_input, session_id?, conversation_history? }
+
+{ response, agent_logs, session_id }
+```
+
+### Constitutional rules
+
+1. **Do not add routing fields to the chat envelope.** Identity, deployment,
+   stack selection, and tier placement are resolved outside the JSON body.
+2. **Do not invent management APIs in the kernel.** New behavior enters as an
+   agent, a RAPP/1 frame/egg, or orchestration around an unchanged Brainstem.
+3. **Hotloading remains file-native.** A runtime discovers ordinary
+   `*_agent.py` files from its configured `AGENTS_PATH` on every request.
+4. **Compositions are additive.** A tier may combine global agents with routed
+   agents by materializing one flat `AGENTS_PATH`; it MUST NOT fork the loader.
+5. **Tiers move the organism, not the contract.** A local organism can be
+   snapshotted, cloned into Hippocampus, diverge on lawful instance streams,
+   and reassimilate by RAPP/1 evidence without changing agent source or wire.
+6. **Protocol extensions use RAPP/1 primitives.** Identity is RAPPID; events are
+   frames; portable artifacts are eggs. A second competing envelope is drift.
+
+Any change to `brainstem.py` that creates a beta-only or tier-only protocol path
+violates this constitution.
+
+The beta implementation MUST keep its teaching, Explorer, Copilot, recording,
+routing, and deployment controls outside the Grail kernel.
+
+---
+
+## Article X — Amendments
 
 This constitution can be amended. The only rule: the change must serve
 the platform's purpose as a business-focused AI agent engine. If it
