@@ -187,15 +187,16 @@ fi
 
 if grep -q -- 'fetch --progress --filter=blob:none --depth 1 origin "$REPO_REF"' "$REPO_ROOT/beta/install.sh" \
    && grep -q 'sparse-checkout set beta' "$REPO_ROOT/beta/install.sh" \
-   && grep -q 'Mainline and beta share' "$REPO_ROOT/beta/install.sh" \
+   && grep -q 'Frontier and standard Brainstem share' "$REPO_ROOT/beta/install.sh" \
    && grep -q 'BRAINSTEM_BETA_COMMIT' "$REPO_ROOT/beta/install.sh"; then
     pass "beta installer is sparse and shares the global Brainstem"
 else
     fail "beta installer should stay small and reuse the global Brainstem"
 fi
 
-if grep -Fq 'Answer "Can AI do this?"' "$REPO_ROOT/beta/ui/index.html" \
-   && grep -q 'GitHub Copilot + VS Code' "$REPO_ROOT/beta/ui/index.html" \
+if grep -Fq 'Learn AI · teach AI · keep the skill' "$REPO_ROOT/beta/ui/index.html" \
+   && grep -Fq 'A customer asks, "Can AI do this process?"' "$REPO_ROOT/beta/ui/index.html" \
+   && grep -Fq 'VS Code remains optional.' "$REPO_ROOT/beta/ui/index.html" \
    && ! grep -q 'id="vscode"' "$REPO_ROOT/beta/ui/index.html"; then
     pass "beta first-run guide explains rapid customer use cases"
 else
