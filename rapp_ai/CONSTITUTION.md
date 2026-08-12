@@ -154,36 +154,42 @@ refactor/component        # Code improvement
 
 ---
 
-## Article VII — Deployment Contract
+## Article VII — RAPP/1 Deployment Contract
 
 The production deployment target is **Azure Functions (Flex Consumption)** with:
 
 - **Python 3.11** (required — 3.13+ breaks Azure Functions v4)
 - **Entra ID authentication** (preferred) or key-based (legacy via `USE_IDENTITY_BASED_STORAGE`)
 - **Remote build** (`func azure functionapp publish --build remote`)
-- **HTTP triggers**: `businessinsightbot_function` (main) + `copilot_studio_trigger` (Copilot Studio)
+- **Canonical wire**: one `chat` HTTP trigger, exposed as `/api/chat` by Azure
+  Functions' host prefix
+- **Operational health**: `/api/health`
 
 The main API contract:
 
 ```json
 // Request
-POST /api/businessinsightbot_function
+POST /api/chat
 {
   "user_input": "string",
-  "conversation_history": [],
-  "user_guid": "optional-guid"
+  "session_id": "optional-string",
+  "conversation_history": []
 }
 
 // Response
 {
-  "assistant_response": "formatted markdown |||VOICE||| concise voice text",
-  "voice_response": "concise voice text",
+  "response": "formatted markdown |||VOICE||| concise voice text",
   "agent_logs": "what agents did",
-  "user_guid": "the-user-guid"
+  "session_id": "the-session-id"
 }
 ```
 
-**Do not change this contract without updating all consumers.**
+Identity is resolved from authenticated principal → RAPPID outside the JSON
+body. The RAPPID's UUID mint anchor is retained internally as the user-specific
+memory key. Stack selection is bound to `session_id` and changed through chat.
+
+**No additional conversation or direct-agent endpoint may compete with this
+wire.** Copilot Studio, beta, local, and custom clients all use the same shape.
 
 ---
 
@@ -198,9 +204,32 @@ POST /api/businessinsightbot_function
 
 The default GUID (`c0p110t0-aaaa-bbbb-cccc-123456789abc`) is **intentionally invalid** — it's a guardrail against accidental database insertion. See CLAUDE.md for details.
 
+Agent-stack storage is a separate domain from memory. A caller RAPPID may own a
+tree of stack RAPPIDs; every stack under that caller shares the caller's
+UUID-backed memory. Neither domain is nested inside or confused with the other.
+
 ---
 
-## Article IX — What "Clean" Means
+## Article IX — Kernel Compliance and Portability
+
+1. Hippocampus MUST implement the RAPP/1 identity, frame, egg, and wire
+   primitives pinned to the authority repository.
+2. Agents remain single `*_agent.py` files and run unchanged locally or in
+   Azure.
+3. Runtime compositions combine global agents and selected stack agents into a
+   flat `AGENTS_PATH`; the Grail loader is not redefined.
+4. A beta organism snapshot MUST deploy into Hippocampus without translating
+   its agents, identity, session, memory, or chat envelope.
+5. Clones sharing a RAPPID may diverge on distinct instance streams and later
+   reassimilate by verified frames/eggs. Same-stream forks fail closed and
+   require owner-authorized re-genesis.
+6. Names, GUIDs, URLs, and self-asserted identity do not establish trust. Wild
+   twins prove identity through RAPPID, registered genesis, frame ancestry, and
+   signed registry/invite evidence.
+
+---
+
+## Article X — What "Clean" Means
 
 This repo follows the standards:
 
@@ -214,7 +243,7 @@ This repo follows the standards:
 
 ---
 
-## Article X — Community Contributions
+## Article XI — Community Contributions
 
 This repo welcomes contributions from community forks. When integrating external contributions:
 
@@ -233,7 +262,7 @@ This repo welcomes contributions from community forks. When integrating external
 
 ---
 
-## Article XI — Data Protection
+## Article XII — Data Protection
 
 ### Never commit:
 
