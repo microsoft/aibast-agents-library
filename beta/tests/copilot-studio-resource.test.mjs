@@ -13,7 +13,7 @@ const factoryResourceUrl = new URL(
 
 test("bundled parity deploy agent builds an explicit frozen agents package", async () => {
   const source = await readFile(resourceUrl, "utf8");
-  assert.match(source, /"version": "1\.0\.12"/);
+  assert.match(source, /"version": "1\.0\.14"/);
   assert.match(source, /BETA_DRAFT_ONLY = True/);
   assert.match(source, /self\.name = "CopilotStudioDeployBeta"/);
   assert.match(source, /relative\.parts\[0\] == "runtime"/);
@@ -22,6 +22,9 @@ test("bundled parity deploy agent builds an explicit frozen agents package", asy
   assert.match(source, /set targetTab to active tab of targetWindow/);
   assert.match(source, /reload targetTab/);
   assert.match(source, /node\.getAttribute\('href'\)\|\|node\.href/);
+  assert.match(source, /Copilot Studio Build view did not become ready/);
+  assert.match(source, /Copilot Studio Preview chat did not become ready/);
+  assert.match(source, /drop_exact_line/);
   assert.match(source, /package_init = packaged_basic_agent\.parent \/ "__init__\.py"/);
   assert.match(source, /package_init\.write_text\("", encoding="utf-8"\)/);
   assert.match(source, /Live publish is disabled in RAPP Brainstem Beta/);

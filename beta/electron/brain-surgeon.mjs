@@ -795,7 +795,7 @@ export class BrainSurgeon {
         ],
         bundled: "rar_kody_w_copilot_studio_parity_deploy_agent.py",
         toolName: "CopilotStudioDeployBeta",
-        minimumVersion: "1.0.12",
+        minimumVersion: "1.0.14",
         requiredMarker: "BETA_DRAFT_ONLY = True",
       },
       {

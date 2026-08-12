@@ -322,7 +322,7 @@ test("Brain Surgeon validates and injects bundled Copilot Studio agents", async 
     "rar_kody_w_copilot_studio_parity_deploy_agent.py",
     "rar_kody_w_factory_agent.py",
   ]);
-  assert.equal(first.active[0].version, "1.0.12");
+  assert.equal(first.active[0].version, "1.0.14");
   assert.equal(first.active[1].version, "1.0.4");
   assert.equal(first.active[0].tool_name, "CopilotStudioDeployBeta");
   assert.equal(first.active[1].tool_name, "RappCopilotStudioFactoryBeta");
@@ -348,11 +348,11 @@ test("deployment agent validation rejects stale filenames", () => {
   );
   assert.equal(
     brainSurgeonInternals.deploymentAgentSourceMatches(
-      '__manifest__ = {"version": "1.0.12"}\n'
+      '__manifest__ = {"version": "1.0.14"}\n'
         + 'BETA_DRAFT_ONLY = True\nself.name = "CopilotStudioDeployBeta"',
       {
         toolName: "CopilotStudioDeployBeta",
-        minimumVersion: "1.0.12",
+        minimumVersion: "1.0.14",
         requiredMarker: "BETA_DRAFT_ONLY = True",
       },
     ),

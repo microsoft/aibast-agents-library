@@ -49,7 +49,7 @@ except ModuleNotFoundError:
 __manifest__ = {
     "schema": "rapp-agent/1.0",
     "name": "@kody-w/copilot_studio_parity_deploy",
-    "version": "1.0.12",
+    "version": "1.0.14",
     "display_name": "Copilot Studio Parity Deploy",
     "description": (
         "Compiles caller-selected local RAPP agents into a provisioned, "
@@ -4008,6 +4008,11 @@ def _normalize_parity_value(value, rules: list[dict]) -> str:
             text = text.replace(source, target)
         elif kind == "collapse_blank_lines":
             text = re.sub(r"\n{2,}", "\n", text)
+        elif kind == "drop_exact_line":
+            value = rule.get("value")
+            text = "\n".join(
+                line for line in text.splitlines() if line != value
+            ).strip()
         elif kind == "redact_integer":
             prefix = rule.get("prefix")
             suffix = rule.get("suffix")
@@ -4047,6 +4052,14 @@ def _validate_normalizers(rules: list[dict]) -> None:
         elif kind == "collapse_blank_lines":
             if set(rule) != {"kind"}:
                 raise ValueError("collapse_blank_lines takes no parameters")
+        elif kind == "drop_exact_line":
+            if (
+                set(rule) != {"kind", "value"}
+                or not isinstance(rule.get("value"), str)
+                or not rule["value"]
+                or len(rule["value"]) > 500
+            ):
+                raise ValueError("invalid exact-line normalizer")
         elif kind == "redact_integer":
             if (
                 not isinstance(rule.get("prefix"), str)
@@ -4413,27 +4426,45 @@ def _run_draft_edge_case_once(
         raise RuntimeError(
             "Edge did not return the dedicated Preview tab identity"
         ) from error
-    time.sleep(10)
     account = os.getenv("RAPP_STUDIO_EDGE_ACCOUNT") or _active_pac_user()
-    if account:
-        _edge_javascript(
-            "(() => {"
-            "const choice=[...document.querySelectorAll('[role=button]')]"
-            f".find(e=>e.innerText.includes({json.dumps(account)}));"
-            "if(choice) choice.click(); return !!choice;})()",
-            target_window_id=target_window_id,
-            target_tab_id=target_tab_id,
-        )
-        time.sleep(8)
-    loaded_url = json.loads(
-        _edge_javascript(
-            "JSON.stringify(window.location.href)",
-            target_window_id=target_window_id,
-            target_tab_id=target_tab_id,
-        )
-    )
-    parsed_url = urllib.parse.urlparse(loaded_url)
     expected_route = f"/environments/{environment}/agents/{agent_id}"
+    build_deadline = time.time() + 180
+    loaded_url = None
+    while time.time() < build_deadline:
+        if account:
+            _edge_javascript(
+                "(() => {"
+                "const choice=[...document.querySelectorAll('[role=button]')]"
+                f".find(e=>e.innerText.includes({json.dumps(account)}));"
+                "if(choice) choice.click(); return !!choice;})()",
+                target_window_id=target_window_id,
+                target_tab_id=target_tab_id,
+            )
+        state = json.loads(_edge_javascript(
+            "JSON.stringify({"
+            "url:window.location.href,"
+            "preview:[...document.querySelectorAll('button')]"
+            ".some(e=>e.innerText.trim()==='Preview'),"
+            "textLength:document.body?.innerText?.length||0"
+            "})",
+            target_window_id=target_window_id,
+            target_tab_id=target_tab_id,
+        ))
+        loaded_url = state["url"]
+        parsed_url = urllib.parse.urlparse(loaded_url)
+        if (
+            parsed_url.netloc == "copilotstudio.preview.microsoft.com"
+            and expected_route in parsed_url.path
+            and state["preview"]
+            and state["textLength"] > 100
+        ):
+            break
+        time.sleep(2)
+    else:
+        raise RuntimeError(
+            "Copilot Studio Build view did not become ready within 180 seconds"
+        )
+    parsed_url = urllib.parse.urlparse(loaded_url)
     if (
         parsed_url.netloc != "copilotstudio.preview.microsoft.com"
         or expected_route not in parsed_url.path
@@ -4442,7 +4473,7 @@ def _run_draft_edge_case_once(
             "Edge Preview loaded a different Copilot Studio target: "
             + loaded_url
         )
-    _edge_javascript(
+    preview_clicked = _edge_javascript(
         "(() => {"
         "const b=[...document.querySelectorAll('button')]"
         ".find(e=>e.innerText.trim()==='Preview');"
@@ -4450,14 +4481,30 @@ def _run_draft_edge_case_once(
         target_window_id=target_window_id,
         target_tab_id=target_tab_id,
     )
-    time.sleep(8)
+    if preview_clicked != "true":
+        raise RuntimeError("Copilot Studio Preview button was not clickable")
+    chat_deadline = time.time() + 180
+    while time.time() < chat_deadline:
+        chat_ready = _edge_javascript(
+            "Boolean(document.querySelector("
+            "\"textarea[aria-label='Chat message input']\"))",
+            target_window_id=target_window_id,
+            target_tab_id=target_tab_id,
+        )
+        if chat_ready == "true":
+            break
+        time.sleep(2)
+    else:
+        raise RuntimeError(
+            "Copilot Studio Preview chat did not become ready within 180 seconds"
+        )
     _edge_javascript(
         "document.querySelector(\"button[aria-label='New chat']\")?.click();"
         "'new'",
         target_window_id=target_window_id,
         target_tab_id=target_tab_id,
     )
-    time.sleep(4)
+    time.sleep(2)
     _edge_javascript(
         "(() => {"
         "const i=document.querySelector("
