@@ -289,7 +289,7 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     )
     assert "two short messages" in guide
     assert "personal, on-device training AI" in guide
-    assert "Hard mode — literal browser construction" in guide
+    assert "Manual mode — literal browser construction" in guide
     assert "Production replacement seams" in guide
     assert "Failure recovery" in guide
     assert "Evidence gates" in guide
@@ -319,7 +319,11 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert 'href="FIELD-GUIDE.md"' not in quest
     assert 'href="evidence-report.html"' in quest
     assert 'href="VISUAL-EVIDENCE-AUDIT.md"' not in quest
-    assert quest.count("data-copy-target=") == 7
+    assert quest.count("data-copy-target=") == 8
+    assert "Install RAPP Brainstem Frontier" in quest
+    assert "Open Frontier installer" in quest
+    assert "Download Windows install.cmd" in quest
+    assert "beta/install.sh | bash" in quest
     assert "Download Brainstem SKILL.md" in quest
     assert "Download Copilot-only SKILL.md" in quest
     assert quest.count('download="SKILL.md"') == 2
@@ -333,7 +337,7 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "<strong>Workshop mission:</strong>" in quest
     assert "non-technical sales professionals into AI superheroes" in quest
     assert "Before you begin" in quest
-    assert quest.count('class="learn-step"') == 8
+    assert quest.count('class="learn-step"') == 9
     assert "Prove the solution locally" in quest
     assert "Create the reviewed Draft" in quest
     assert "Confirm the Draft in Copilot Studio Preview" in quest
@@ -363,7 +367,7 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "manual-tutorial.html" in quest
     assert "Watch assisted film" not in quest
     assert "copilot-assisted-walkthrough.gif" not in quest
-    assert "Open standalone Hard-mode guide" in quest
+    assert "Open standalone Manual-mode guide" in quest
     assert "Attach the Brainstem skill" in personless
     assert "drag `SKILL.md` into the" in personless
     assert "Give me Demo Journey using Easy Mode and test it for me." in personless

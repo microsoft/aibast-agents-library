@@ -5,12 +5,13 @@ on:
     - cron: '20 5 * * *'  # 5:20 AM UTC daily
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [main, easy-mode-copilot-chat-pilot]
     paths:
       - 'scripts/build_metrics.py'
       - 'scripts/sync_agent_discussions.py'
       - 'scripts/build_impact_report.py'
       - 'scripts/impact-report-requirements.txt'
+      - 'library.html'
       - 'metrics.html'
       - 'registry.json'
       - 'solutions/catalog.json'
@@ -39,9 +40,10 @@ jobs:
 
       - name: Synchronize AIBAST agent Discussions
         env:
-          DISCUSSIONS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DISCUSSIONS_TOKEN: ${{ secrets.DISCUSSIONS_TOKEN || secrets.GITHUB_TOKEN }}
           METRICS_OWNER: ${{ github.repository_owner }}
           METRICS_REPO: ${{ github.event.repository.name }}
+          METRICS_REF: ${{ github.ref_name }}
         run: python scripts/sync_agent_discussions.py
 
       - name: Collect public metrics
@@ -64,9 +66,10 @@ jobs:
         # they just stop advancing until an authorized run happens.
         env:
           GITHUB_TOKEN: ${{ secrets.METRICS_TOKEN || secrets.GITHUB_TOKEN }}
-          DISCUSSIONS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DISCUSSIONS_TOKEN: ${{ secrets.DISCUSSIONS_TOKEN || secrets.GITHUB_TOKEN }}
           METRICS_OWNER: ${{ github.repository_owner }}
           METRICS_REPO: ${{ github.event.repository.name }}
+          METRICS_REF: ${{ github.ref_name }}
         run: python scripts/build_metrics.py
 
       - name: Build weekly and monthly impact report
@@ -116,6 +119,7 @@ jobs:
           rows = workshops.get('rows', [])
           workshop_slugs = {row.get('slug') for row in rows}
           achievements = snapshot.get('achievements', {})
+          certification = snapshot.get('workshop_certification', {})
           achievement_totals = achievements.get('totals', {})
           achievement_profiles = achievements.get('profiles', [])
           achievement_workshop_rows = achievements.get('workshops', [])
@@ -417,6 +421,45 @@ jobs:
               ):
                   print('Achievement rollups do not reconcile', file=sys.stderr)
                   raise SystemExit(1)
+          if certification.get('status') in {'available', 'partial'}:
+              if certification.get('schema') != 'aibast-workshop-certification/1.0':
+                  print('Workshop certification schema is missing or unsupported', file=sys.stderr)
+                  raise SystemExit(1)
+              certification_rows = certification.get('workshops', [])
+              if len(certification_rows) != 51 or {
+                  row.get('slug') for row in certification_rows
+              } != workshop_slugs:
+                  print('Certification workshop rows must match the canonical 51-workshop scope', file=sys.stderr)
+                  raise SystemExit(1)
+              facilitator_keys = {
+                  'login', 'verified_cohorts', 'attendees_reported', 'workshops'
+              }
+              candidate_keys = {
+                  'login', 'qualified_modules', 'workshops'
+              }
+              if any(
+                  set(profile) != facilitator_keys
+                  for profile in certification.get('facilitators', [])
+              ):
+                  print('Facilitator certification profiles contain unsafe fields', file=sys.stderr)
+                  raise SystemExit(1)
+              if any(
+                  set(profile) != candidate_keys
+                  for profile in certification.get('candidates', [])
+              ):
+                  print('Candidate certification profiles contain unsafe fields', file=sys.stderr)
+                  raise SystemExit(1)
+              serialized_certification = json.dumps(certification)
+              for forbidden in (
+                  '"cohort_code"', '"achievement_issue_url"', '"msix"',
+                  '"email"', '"customer"', '"organization"', '"test_answer"'
+              ):
+                  if forbidden in serialized_certification.lower():
+                      print(
+                          f'Certification snapshot contains private/source field {forbidden}',
+                          file=sys.stderr,
+                      )
+                      raise SystemExit(1)
           PY
 
       - name: Upload shareable impact report

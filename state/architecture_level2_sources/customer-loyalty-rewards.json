@@ -1,0 +1,140 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "customer-loyalty-rewards",
+  "agent": "@aibast-agents-library/customer-loyalty-rewards",
+  "display_name": "Customer Loyalty and Rewards Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Bundled synthetic loyalty records",
+        "detail": "Fixed member, points, spend, engagement, tier, reward-catalog, preference, and earning records support deterministic review."
+      },
+      {
+        "name": "Rules and safety knowledge",
+        "detail": "Uploaded rules define persona routing, exact evidence anchors, synthetic labels, identifier handling, and prohibited side effects."
+      },
+      {
+        "name": "Approved catalog architecture",
+        "detail": "The curated one-pager names loyalty, CRM, marketing personas and Microsoft systems; it does not prove live connections."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Program health and liability analysis",
+        "detail": "Aggregates synthetic members, outstanding points, illustrative point value, spend, engagement, and tier distribution."
+      },
+      {
+        "name": "Informational points analysis",
+        "detail": "Explains synthetic balance, earned and redeemed totals, multiplier, illustrative value, and earning opportunities."
+      },
+      {
+        "name": "Review-only reward matching",
+        "detail": "Matches broad synthetic preferences and available balances to catalog options without creating offers or issuing benefits."
+      },
+      {
+        "name": "Tier structure and progress analysis",
+        "detail": "Compares thresholds, multipliers, perks, spend progress, remaining spend, and structural tradeoffs without changing status."
+      },
+      {
+        "name": "Persona-aligned request routing",
+        "detail": "Routes program, ledger, reward-option, and tier questions for Loyalty Program Director, CRM Manager, or Marketing Leader."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio conversational experience",
+        "detail": "Provides natural-language access through validated Draft agents with four skills, two knowledge files, and no configured tools."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs the single-file RAPP agent through local Brainstem chat and UI endpoints with synthetic-only operation routing."
+      },
+      {
+        "name": "Role-focused review responses",
+        "detail": "Presents evidence-first outputs for loyalty, CRM, and marketing reviewers with an explicit no-side-effect notice."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Synthetic Loyalty Program Dashboard",
+        "detail": "Reports member count, outstanding points and value, spend, engagement, tenure, and tier distribution for governance review."
+      },
+      {
+        "name": "Synthetic Points Summary",
+        "detail": "Reports tier, balance, illustrative value, earned and redeemed points, multiplier, and fixed earning examples."
+      },
+      {
+        "name": "Draft Reward Option Recommendations",
+        "detail": "Reports preference-matched catalog options and point costs as review-only concepts, not issued offers or rewards."
+      },
+      {
+        "name": "Synthetic Tier Analysis",
+        "detail": "Reports tier thresholds, multipliers, key perks, member progress, remaining spend, and top-tier status."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable CustomerLoyaltyRewardsAgent RAPP tool",
+      "detail": "Single-file BasicAgent exposes four deterministic read-only operations using bundled synthetic data and no credentials."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the four-skill conversational package; validated agents remain Draft and require explicit approval before publish."
+    },
+    {
+      "name": "Dynamics 365 CRM",
+      "detail": "Named by the approved catalog and deployment seam for consented CRM context; no live connector is configured."
+    },
+    {
+      "name": "Dynamics 365 ERP",
+      "detail": "Named by the approved catalog as a potential enterprise record seam; the synthetic package does not connect to it."
+    },
+    {
+      "name": "Microsoft Outlook",
+      "detail": "Named by the approved catalog as a review or communication surface; the agent never sends or schedules outreach."
+    },
+    {
+      "name": "Microsoft Teams",
+      "detail": "Named by the approved catalog as a collaboration surface; no message, approval, task, or member action is configured."
+    },
+    {
+      "name": "Approved read-only loyalty ledger",
+      "detail": "Documented production seam for authorized balance context; current demonstrations use fixed synthetic records only."
+    },
+    {
+      "name": "Authorized rewards workflow",
+      "detail": "Documented action seam requiring authentication, authorization, human approval, and audit; local demos perform no writes."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic-only evidence enforcement",
+      "detail": "Rejects non-synthetic data_source values, validates member IDs, and forbids browsing, enrichment, or invented records."
+    },
+    {
+      "name": "Four deterministic operations",
+      "detail": "Routes loyalty dashboard, points summary, reward recommendations, and tier analysis from natural-language intent."
+    },
+    {
+      "name": "Explicit no-side-effect boundary",
+      "detail": "Prohibits contact, enrollment, points or tier changes, offers, rewards, redemption, refunds, orders, and purchases."
+    },
+    {
+      "name": "Human authorization and approval gates",
+      "detail": "Production writes require authenticated tools, authorization checks, explicit human approval, and audit logging."
+    },
+    {
+      "name": "Persona and identifier controls",
+      "detail": "Limits framing to three approved personas and stops on unknown synthetic member identifiers instead of approximating."
+    },
+    {
+      "name": "Locked case and isolation validation",
+      "detail": "Records four passing persona-language cases with required evidence anchors and only the expected RAPP tool loaded."
+    },
+    {
+      "name": "Draft and publication control",
+      "detail": "Keeps validated Copilot Studio agents unpublished and makes publication a separate confirmation step."
+    }
+  ]
+}

@@ -8,6 +8,29 @@ AIBAST Agents Library is the stable Microsoft downstream for the RAPP (Rapid Age
 
 Philosophy: "engine, not experience" — this is infrastructure, not a consumer product. See `CONSTITUTION.md` for scope rules and governance.
 
+## Product Golden Path
+
+The durable beta product direction is documented in
+[`beta/GOLDEN_PATH.md`](beta/GOLDEN_PATH.md):
+
+- RAPP accelerates learning AI and teaching AI immediately after learning it.
+- The resulting skill is a portable single-file agent/RAPP capability that can
+  follow the user for life.
+- Chat is the control surface.
+- GitHub Copilot Brain Surgeon teaches by doing and visibly drives the beta.
+- An external AI can take over the visible Brainstem or Surgeon chat to keep a
+  user unstuck, then hand control back.
+- The beta combines global and routed agents in isolated hardlinked
+  `AGENTS_PATH` workers around an unchanged Grail kernel.
+- Screenshots, recordings, source Explorer, tool logs, and real `/chat` tests
+  make the learning observable.
+- Proven RAPP/1 artifacts promote into Hippocampus and the appropriate
+  Microsoft downstream platform without rewriting the skill or wire.
+
+Treat this as a product-lifetime invariant. Do not replace the visible
+teach-by-doing loop with hidden automation, require VS Code for the golden path,
+or add beta routing fields/endpoints to `brainstem.py`.
+
 ## Repository Layout
 
 - `rapp_brainstem/` — The core brainstem server (see `rapp_brainstem/CLAUDE.md` for deep internals)

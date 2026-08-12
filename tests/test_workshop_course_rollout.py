@@ -68,7 +68,14 @@ def valid_pages() -> dict[str, str]:
 <a href="../_shared/workshop-settings.html?return=quest.html">Workshop settings</a>
 <a href="field-guide.html">Field guide</a>
 <a href="evidence-report.html">Evidence report</a></header>
-<main><section data-easy-lane="brainstem">Brainstem lane</section>
+<main><section class="learn-step" id="workshop-step-1">
+<h3>Install RAPP Brainstem Frontier</h3>
+<a href="../../beta/">Open Frontier installer</a>
+<a href="../../beta/install.cmd" download>Download Windows install.cmd</a>
+<a href="../../beta/README.md" download>Download installation guide</a>
+{report_button("beta-install")}
+</section>
+<section data-easy-lane="brainstem">Brainstem lane</section>
 <section data-easy-lane="copilot">GitHub Copilot only lane</section>
 {reports}
 <article class="preview-case">
@@ -378,7 +385,7 @@ def test_rejects_manual_film_when_hard_capture_requires_reshoot(tmp_path):
 
     assert_failure(
         audit_fixture(tmp_path),
-        "exposes the manual film while one or more Hard captures require reshoot",
+        "exposes the manual film while one or more Manual captures require reshoot",
     )
 
 

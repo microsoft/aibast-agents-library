@@ -93,7 +93,7 @@ def test_fixed_points_and_runtime_awards_are_idempotent_and_private(
         "workshop-complete": 35,
         "hard-mode-complete": 50,
     }
-    assert ACHIEVEMENT_LABELS["hard-mode-complete"] == "Hard mode complete"
+    assert ACHIEVEMENT_LABELS["hard-mode-complete"] == "Manual mode complete"
 
     quest_script = scripts(achievement_pages["quest"])[-1]
     start = quest_script.index("const ACHIEVEMENT_PROFILE_KEY")

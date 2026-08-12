@@ -39,7 +39,7 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/customer-sentiment-churn/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/customer-sentiment-churn/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/customer-sentiment-churn/quest.html` |
+| Guided Easy/Manual quest | `solutions/customer-sentiment-churn/quest.html` |
 | Literal browser tutorial | `solutions/customer-sentiment-churn/manual-tutorial.html` |
 | Raw export manifest | `solutions/customer-sentiment-churn/export-manifest.json` |
 | Source bundle | `solutions/customer-sentiment-churn/exports/customer-sentiment-churn-source.zip` |

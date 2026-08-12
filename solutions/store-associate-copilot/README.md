@@ -29,7 +29,7 @@ inventory, apply promotions, send messages, process returns, or transact.
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/store-associate-copilot/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/store-associate-copilot/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/store-associate-copilot/quest.html` |
+| Guided Easy/Manual quest | `solutions/store-associate-copilot/quest.html` |
 | Literal browser tutorial | `solutions/store-associate-copilot/manual-tutorial.html` |
 | Raw export manifest | `solutions/store-associate-copilot/export-manifest.json` |
 | Source bundle | `solutions/store-associate-copilot/exports/store-associate-copilot-source.zip` |

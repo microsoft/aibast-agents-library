@@ -1,0 +1,116 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "underwriting-support",
+  "agent": "@aibast-agents-library/underwriting-support",
+  "display_name": "Underwriting Support Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic Submission Snapshot",
+        "detail": "Fixed fictional applications, applicants, coverage requests, statuses, scores, and assigned underwriters."
+      },
+      {
+        "name": "Underwriting Guidelines",
+        "detail": "Packaged limits, prohibited risks, document requirements, inspections, and specialty rules by line of business."
+      },
+      {
+        "name": "Rating and Loss Evidence",
+        "detail": "Illustrative rating factors, indicated premiums, loss history, and claims evidence for review without quoting."
+      },
+      {
+        "name": "Controls and Review Rules",
+        "detail": "Human authority, synthetic-data, no-advice, no-binding, no-pricing-action, and evidence-use boundaries."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Risk Evaluation",
+        "detail": "Compares risk scores and tiers to prioritize submissions while leaving judgment to an authorized underwriter."
+      },
+      {
+        "name": "Pricing Factor Review",
+        "detail": "Explains packaged rating factors and loss evidence as nonbinding analysis; it cannot quote or take pricing action."
+      },
+      {
+        "name": "Guideline Alignment",
+        "detail": "Checks stated limits, required evidence, inspections, and exceptions without inventing carrier rules or records."
+      },
+      {
+        "name": "Exception Preparation",
+        "detail": "Assembles exception facts and review paths without approving, declining, binding, or changing coverage."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Persona-Language Routing",
+        "detail": "Routes underwriter, pricing analyst, risk analyst, and senior underwriter requests to the matching review workflow."
+      },
+      {
+        "name": "Evidence-First Review Brief",
+        "detail": "Presents application IDs, material risks, source evidence, missing items, and the required human review path."
+      },
+      {
+        "name": "Explicit Decision Boundary",
+        "detail": "States that no quote, binder, approval, decline, policy change, pricing action, or coverage decision occurred."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Risk Queue Prioritization",
+        "detail": "Summarizes the synthetic submission queue by score, tier, status, and review complexity for human triage."
+      },
+      {
+        "name": "Guideline Exception Register",
+        "detail": "Reports stated exceptions, required documents, inspections, and missing evidence for controlled escalation."
+      },
+      {
+        "name": "Human Review Handoff",
+        "detail": "Documents actuarial, compliance, authority, or senior-underwriter review needed before any consequential action."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "risk_evaluation",
+      "detail": "Returns the synthetic submission queue, risk scores, tiers, statuses, and prioritization evidence."
+    },
+    {
+      "name": "pricing_recommendation",
+      "detail": "Reviews illustrative rating factors, indicated premium, and loss evidence without issuing a quote or price."
+    },
+    {
+      "name": "guideline_check",
+      "detail": "Checks packaged limits, required documents, inspections, and stated exceptions across synthetic applications."
+    },
+    {
+      "name": "exception_review",
+      "detail": "Prepares the exception queue and human review paths while confirming that no coverage decision was made."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic Data Isolation",
+      "detail": "Uses fixed fictional records only and does not browse for applicant, guideline, authority, loss, or pricing data."
+    },
+    {
+      "name": "Authorized Human Judgment",
+      "detail": "Authorized underwriters retain all risk, appetite, coverage, terms, and escalation judgment."
+    },
+    {
+      "name": "No Binding or Pricing Action",
+      "detail": "Cannot quote, bind, approve, decline, issue, modify, promise, or execute coverage, premium, or pricing actions."
+    },
+    {
+      "name": "Evidence Integrity",
+      "detail": "Rejects unknown record identifiers and requires authoritative carrier review when packaged evidence is absent."
+    },
+    {
+      "name": "Deterministic Case Validation",
+      "detail": "Four locked persona cases verify routing, evidence anchors, strict isolation, and the human-review boundary."
+    },
+    {
+      "name": "Read-Only Deployment",
+      "detail": "Has no live submission, rating, policy, approval, messaging, or record-changing connection."
+    }
+  ]
+}

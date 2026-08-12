@@ -172,6 +172,12 @@ def test_metrics_build_offline_without_prior_marks_remote_unavailable(tmp_path):
             "achievement_completion_rate",
         )
     )
+    certification = doc["workshop_certification"]
+    assert certification["status"] == "unavailable"
+    assert certification["facilitators"] == []
+    assert certification["candidates"] == []
+    assert len(certification["workshops"]) == 51
+    assert all(value is None for value in certification["totals"].values())
     ecosystem = doc["ecosystem"]
     assert ecosystem["status"] == "unavailable"
     assert ecosystem["sources"]["rar"]["status"] == "excluded"
@@ -192,6 +198,11 @@ def test_offline_mode_makes_zero_network_calls(monkeypatch, tmp_path):
     monkeypatch.setattr(build_metrics, "fetch_jsdelivr", fail_network)
     monkeypatch.setattr(build_metrics, "fetch_workshop_feedback", fail_network)
     monkeypatch.setattr(build_metrics, "fetch_achievement_progress", fail_network)
+    monkeypatch.setattr(
+        build_metrics,
+        "fetch_workshop_certification",
+        fail_network,
+    )
     monkeypatch.setattr(build_metrics, "fetch_rar_source", fail_network)
     monkeypatch.setattr(
         sys,
@@ -454,7 +465,6 @@ def test_achievement_claim_parser_requires_exact_canonical_fields_and_mapping():
     }
     valid = achievement_claim_body(
         achievements=build_metrics.ACHIEVEMENT_ORDER,
-        extra="This optional prose is ignored and never persisted.\n",
     )
 
     assert build_metrics.parse_achievement_claim(valid, catalog) == {
@@ -465,6 +475,7 @@ def test_achievement_claim_parser_requires_exact_canonical_fields_and_mapping():
     }
     invalid = (
         "\n" + valid,
+        valid + "This optional prose is not part of the canonical shape.\n",
         valid.replace("aibast-achievement-progress/1.0", "wrong/1.0"),
         valid.replace(
             "- Workshop: `account-intelligence`",
@@ -690,9 +701,10 @@ def test_achievement_progress_union_scores_every_explicit_badge_once_and_is_idem
     assert bob["workshop_completions"] == 1
     assert bob["hard_completions"] == 1
     assert bob["points"] == 150
-    assert result["coverage"]["diagnostics"]["accepted_issues"] == 6
+    assert result["coverage"]["diagnostics"]["accepted_issues"] == 5
     assert result["coverage"]["diagnostics"]["accepted_achievements"] == 12
-    assert result["coverage"]["diagnostics"]["duplicate_achievements"] == 5
+    assert result["coverage"]["diagnostics"]["duplicate_achievements"] == 4
+    assert result["coverage"]["diagnostics"]["invalid_issues"] == 1
     account = next(
         row
         for row in result["workshops"]
@@ -2065,7 +2077,7 @@ def test_metrics_page_binds_workshop_adoption_schema():
         "Verified badges",
         "Verified starts",
         "Workshop completions",
-        "Hard completions",
+        "Manual completions",
         "Completion rate",
         "Public achievement leaderboard",
         "Workshop achievement completion",
@@ -2149,9 +2161,7 @@ def test_metrics_page_binds_workshop_adoption_schema():
     assert "Repository stars" in html
     assert "AIBAST distribution, engagement, and learning impact" in html
     assert "label: 'Most upvoted'" in html
-    assert "label: 'Most acquired'" in html
     assert "t.agent_upvotes" in html
-    assert "t.agent_acquisitions" in html
     assert "Array.isArray(M.agent_metrics) ? M.agent_metrics : []" in html
     assert "const advertisedWorkshopAgents = new Set(" in html
     assert "row.catalog_kind !== 'solution'" in html
@@ -2176,8 +2186,8 @@ def test_metrics_page_binds_workshop_adoption_schema():
     assert "M.file_metrics || {}" in html
     assert "Array.isArray(metrics.rows)" in html
     assert "FILE_LEDGER_PAGE_SIZE = 50" in html
-    assert "t.skill_downloads" in html
-    assert "Skill downloads" in html
+    assert "Agent downloads" in html
+    assert "Skill downloads" not in html
     assert "Skill (SKILL.md)" in html
     assert "const DEFAULT_OWNER = 'microsoft'" in html
     assert "DEFAULT_REPO = 'aibast-agents-library'" in html

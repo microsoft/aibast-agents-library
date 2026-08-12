@@ -39,7 +39,7 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/claims-processing/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/claims-processing/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/claims-processing/quest.html` |
+| Guided Easy/Manual quest | `solutions/claims-processing/quest.html` |
 | Literal browser tutorial | `solutions/claims-processing/manual-tutorial.html` |
 | Raw export manifest | `solutions/claims-processing/export-manifest.json` |
 | Source bundle | `solutions/claims-processing/exports/claims-processing-source.zip` |

@@ -334,7 +334,7 @@ METRICS = (
     },
     {
         "id": "achievement_hard_completions",
-        "label": "Hard-mode completions",
+        "label": "Manual-mode completions",
         "section": "Learning impact",
         "path": ("achievements", "totals", "hard_completions"),
         "source": "achievements",
@@ -352,7 +352,7 @@ METRICS = (
     },
     {
         "id": "achievement_hard_completion_rate",
-        "label": "Hard-mode completion rate",
+        "label": "Manual-mode completion rate",
         "section": "Learning impact",
         "path": ("achievements", "totals", "hard_completion_rate"),
         "source": "achievements",

@@ -768,13 +768,13 @@
       "This is a floor and an event sum, not people, users, or unique usage",
       "These sources use mixed measurement windows",
       "one person or action can create multiple events",
-      "Agent rating upvotes and signed-in acquisitions are Discussion signals shown separately and are never added to usage events",
+      "Agent upvotes are shown separately and are never added to usage events",
       "RAR is intentionally excluded from these counts"
     ],
     "agent_upvote_phrases": [
-      "Agent Discussions provide two traceable counters",
+      "Agent upvotes require a signed-in GitHub account",
       "GitHub permits one active upvote per account",
-      "Acquisition signals are not substituted for observable CDN or release file transfers"
+      "agent downloads are counted separately from GitHub Release assets"
     ],
     "forbidden_upvote_phrases": [
       "Community upvotes",
@@ -829,12 +829,6 @@
       "metric": "upvotes",
       "unit": "agent upvotes"
     },
-    "agent_acquisition_board": {
-      "id": "most_acquired",
-      "label": "Most acquired",
-      "metric": "acquisitions",
-      "unit": "signed-in acquisitions"
-    },
     "agent_metrics_fields": [
       "name",
       "display_name",
@@ -843,9 +837,7 @@
       "category",
       "stack",
       "upvotes",
-      "acquisitions",
-      "upvote_discussion_url",
-      "acquisition_discussion_url"
+      "upvote_discussion_url"
     ],
     "admin_setup_href": "docs/metrics-admin-setup.html",
     "admin_guidance": [

@@ -279,7 +279,7 @@ def test_removes_release_review_when_coverage_falls(tmp_path):
             )
         )
         manual_frames.append(
-            {"file": f"{step:02d}-step.png", "label": f"Hard step {step}"}
+            {"file": f"{step:02d}-step.png", "label": f"Manual step {step}"}
         )
     for index in range(3):
         case_id = f"EXTRA-{index + 1:02d}"

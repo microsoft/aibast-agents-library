@@ -87,7 +87,7 @@ No credentials, tokens, customer data, or patient information included: yes/no
 - One locked persona case and one uploadable skill exist per operation.
 - Exactly two synthetic manual knowledge files are included.
 - All four locked cases passed a strict single-agent isolation capture.
-- Real Easy- and Hard-mode browser evidence, a Draft Copilot Studio source
+- Real Easy- and Manual-mode browser evidence, a Draft Copilot Studio source
   package, tutorials, and an export bundle are included.
 - No publication, live connector, customer data, or production write is
   included.
@@ -103,7 +103,7 @@ No credentials, tokens, customer data, or patient information included: yes/no
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/care-gap-closure/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/care-gap-closure/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/care-gap-closure/quest.html` |
+| Guided Easy/Manual quest | `solutions/care-gap-closure/quest.html` |
 | Literal browser tutorial | `solutions/care-gap-closure/manual-tutorial.html` |
 | Raw export manifest | `solutions/care-gap-closure/export-manifest.json` |
 | Source bundle | `solutions/care-gap-closure/exports/care-gap-closure-source.zip` |

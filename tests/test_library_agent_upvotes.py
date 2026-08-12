@@ -73,6 +73,52 @@ def test_library_scripts_parse_with_node():
     assert result.returncode == 0, result.stderr
 
 
+def test_toolbar_only_links_agent_library_and_industry_workshops():
+    text = library_text()
+    nav = text[
+        text.index('<nav class="nav" aria-label="Primary navigation">'):
+        text.index("</nav>", text.index('<nav class="nav" aria-label="Primary navigation">'))
+    ]
+
+    assert nav.count("<a ") == 2
+    assert ">Agent Library</a>" in nav
+    assert (
+        'href="library.html?view=solutions#workshops">'
+        "Industry Workshops</a>"
+    ) in nav
+    for removed in (
+        "Workshop settings",
+        "Guide",
+        "Achievements",
+        "Metrics",
+        "GitHub",
+        "toggle-theme",
+    ):
+        assert removed not in nav
+    assert '<div class="results-head" id="workshops">' in text
+
+
+def test_catalog_selector_only_shows_solutions_and_first_party():
+    text = library_text()
+    tabs = text[
+        text.index('<div class="tabs" role="tablist" aria-label="Library type">'):
+        text.index(
+            "</div>",
+            text.index('<div class="tabs" role="tablist" aria-label="Library type">'),
+        )
+    ]
+
+    assert tabs.count('data-action="view"') == 2
+    assert 'data-view="solutions">Industry solutions</button>' in tabs
+    assert 'data-view="first-party">Microsoft first-party</button>' in tabs
+    assert "Multi-agent stacks" not in tabs
+    assert "Building blocks" not in tabs
+    assert (
+        '["solutions", "first-party"].includes(params.get("view"))'
+        in text
+    )
+
+
 def test_example_prompts_open_direct_or_inherited_interactive_demo():
     result = run_library_node(
         """
@@ -120,13 +166,14 @@ console.log(JSON.stringify({
 def test_metrics_load_is_optional_and_builds_canonical_signal_map():
     text = library_text()
     assert (
-        "const [registry, metrics, catalog, exportInventory] = await Promise.all(["
+        "const [registry, metrics, catalog, exportInventory, architectureLevel2] = await Promise.all(["
         in text
     )
     assert "state/metrics.json${stamp}" in text
     assert "${SITE}state/metrics.json${stamp}" in text
     assert "solutions/catalog.json${stamp}" in text
     assert "state/copilot_studio_solution_exports.json${stamp}" in text
+    assert "state/architecture_level2.json${stamp}" in text
     assert (
         "state.agentSignals = buildAgentSignalMap(metrics, state.agents);"
         in text
@@ -143,11 +190,10 @@ const available = buildAgentSignalMap({
     {
       name: "canonical-a",
       upvotes: 7,
-      acquisitions: 4,
+      downloads: 142,
       upvote_discussion_url: "https://github.com/microsoft/aibast-agents-library/discussions/1",
-      acquisition_discussion_url: "https://github.com/microsoft/aibast-agents-library/discussions/2"
     },
-    {name: "canonical-b", upvotes: null, acquisitions: 0},
+    {name: "canonical-b", upvotes: null, downloads: 0},
     {name: "not-in-registry", upvotes: 99}
   ]
 }, agents);
@@ -161,47 +207,79 @@ console.log(JSON.stringify({
     assert result["available"] == {
         "canonical-a": {
             "upvotes": 7,
-            "acquisitions": 4,
+            "downloads": 142,
             "upvoteUrl": (
                 "https://github.com/microsoft/"
                 "aibast-agents-library/discussions/1"
             ),
-            "acquisitionUrl": (
-                "https://github.com/microsoft/"
-                "aibast-agents-library/discussions/2"
-            ),
         },
         "canonical-b": {
             "upvotes": None,
-            "acquisitions": None,
+            "downloads": 0,
             "upvoteUrl": "",
-            "acquisitionUrl": "",
         },
         "canonical-c": {
             "upvotes": None,
-            "acquisitions": None,
+            "downloads": None,
             "upvoteUrl": "",
-            "acquisitionUrl": "",
         },
     }
     assert result["unavailable"] == {
         name: {
             "upvotes": None,
-            "acquisitions": None,
+            "downloads": None,
             "upvoteUrl": "",
-            "acquisitionUrl": "",
         }
         for name in ("canonical-a", "canonical-b", "canonical-c")
     }
 
 
-def test_card_and_detail_render_upvote_action_and_read_only_count():
+def test_staging_accepts_only_staging_discussion_urls():
+    result = run_library_node(
+        """
+const agents = [{name: "canonical-a"}];
+const signals = buildAgentSignalMap({
+  agent_metrics: [{
+    name: "canonical-a",
+    upvotes: 5,
+    downloads: 7,
+    upvote_discussion_url: "https://github.com/kody-w/aibast-agents-library/discussions/42"
+  }]
+}, agents);
+console.log(JSON.stringify({
+  signal: signals.get("canonical-a"),
+  productionUrl: canonicalDiscussionUrl(
+    "https://github.com/microsoft/aibast-agents-library/discussions/42"
+  )
+}));
+""",
+        hostname="kody-w.github.io",
+    )
+
+    assert result == {
+        "signal": {
+            "upvotes": 5,
+            "downloads": 7,
+            "upvoteUrl": (
+                "https://github.com/kody-w/"
+                "aibast-agents-library/discussions/42"
+            ),
+        },
+        "productionUrl": "",
+    }
+
+
+def test_card_shows_only_workshop_and_agent_actions():
     text = library_text()
     card = text[text.index("function agentCard"):text.index("function stackCard")]
     detail = text[text.index("function openAgent"):text.index("function openStack")]
 
-    assert "${agentUpvoteControl(agent)}" in card
+    assert ">View workshop</a>" in card
+    assert ">View agent</button>" in card
+    assert "${agentUpvoteControl(agent)}" not in card
+    assert "${agentDownloadCount(agent)}" not in card
     assert "${agentUpvoteControl(agent)}" in detail
+    assert "${agentDownloadCount(agent)}" in detail
     assert 'data-action="upvote-agent"' in text
     assert 'data-agent-name="${enc(agent.name)}"' in text
     assert "Aggregate upvotes unavailable" in text
@@ -219,20 +297,18 @@ const agent = {
 };
 state.agentSignals = new Map([[agent.name, {
   upvotes: null,
-  acquisitions: null,
+  downloads: null,
   upvoteUrl: "",
-  acquisitionUrl: ""
 }]]);
 const unavailable = agentUpvoteControl(agent);
 state.agentSignals = new Map([[agent.name, {
   upvotes: 12,
-  acquisitions: 3,
+  downloads: 142,
   upvoteUrl: "https://github.com/microsoft/aibast-agents-library/discussions/1",
-  acquisitionUrl: "https://github.com/microsoft/aibast-agents-library/discussions/2"
 }]]);
 const available = agentUpvoteControl(agent);
-const acquisition = agentAcquisitionControl(agent);
-console.log(JSON.stringify({unavailable, available, acquisition}));
+const downloads = agentDownloadCount(agent);
+console.log(JSON.stringify({unavailable, available, downloads}));
 """
     )
     assert ">—</span>" in result["unavailable"]
@@ -240,8 +316,14 @@ console.log(JSON.stringify({unavailable, available, acquisition}));
     assert 'disabled aria-disabled="true"' in result["unavailable"]
     assert ">12</span>" in result["available"]
     assert 'disabled aria-disabled="true"' not in result["available"]
-    assert "Record acquisition" in result["acquisition"]
-    assert ">3</span>" in result["acquisition"]
+    assert "↓ 142" in result["downloads"]
+
+
+def test_library_supports_top_downloaded_sort():
+    text = library_text()
+    assert '<option value="downloads">Top downloaded</option>' in text
+    assert 'downloads: (a, b) =>' in text
+    assert 'aggregateAgentSignal(a.agent.name, "downloads")' in text
 
 
 def test_agent_detail_downloads_python_file_instead_of_showing_one_liner():
@@ -253,6 +335,12 @@ def test_agent_detail_downloads_python_file_instead_of_showing_one_liner():
     assert ">Download agent.py</a>" in detail
     assert ">Download Copilot Studio solution</a>" in detail
     assert ">Deployment settings</a>" in detail
+    assert "Record acquisition" not in detail
+    assert "agentAcquisitionControl" not in detail
+    assert "releases/download" in text
+    assert "const AGENT_RELEASE" in text
+    assert 'href: `${AGENT_RELEASE}/${encodeURIComponent(filename)}`' in text
+    assert "curl -fsSL ${AGENT_RELEASE}/" in text
     assert "the imported agent remains unpublished" in detail
     assert "Copy install command" not in detail
     assert '<pre class="code">${esc(install)}</pre>' not in detail
@@ -260,10 +348,10 @@ def test_agent_detail_downloads_python_file_instead_of_showing_one_liner():
     result = run_library_node(
         """
 const direct = agentDownload({
-  _file: "agents/example_agent.py"
+  _install_filename: "example__aaaaaaaaaaaa_agent.py"
 });
 const renamed = agentDownload({
-  _file: "agents/orchestrator.py"
+  _install_filename: "orchestrator__bbbbbbbbbbbb_agent.py"
 });
 state.exportedSolutionSlugs = new Set(["account-intelligence"]);
 const solution = copilotSolutionDownloads({
@@ -274,12 +362,20 @@ console.log(JSON.stringify({direct, renamed, solution}));
     )
     assert result == {
         "direct": {
-            "href": "agents/example_agent.py",
-            "filename": "example_agent.py",
+            "href": (
+                "https://github.com/microsoft/aibast-agents-library/"
+                "releases/download/agent-downloads/"
+                "example__aaaaaaaaaaaa_agent.py"
+            ),
+            "filename": "example__aaaaaaaaaaaa_agent.py",
         },
         "renamed": {
-            "href": "agents/orchestrator.py",
-            "filename": "orchestrator_agent.py",
+            "href": (
+                "https://github.com/microsoft/aibast-agents-library/"
+                "releases/download/agent-downloads/"
+                "orchestrator__bbbbbbbbbbbb_agent.py"
+            ),
+            "filename": "orchestrator__bbbbbbbbbbbb_agent.py",
         },
         "solution": {
             "zip": (
@@ -325,7 +421,7 @@ console.log(JSON.stringify({
     }
 
 
-def test_upvote_and_acquisition_open_canonical_discussions():
+def test_upvote_opens_canonical_discussion():
     result = run_library_node(
         """
 const agent = {
@@ -336,21 +432,16 @@ const agent = {
 state.agents = [agent];
 state.agentSignals = new Map([[agent.name, {
   upvotes: 8,
-  acquisitions: 5,
-  upvoteUrl: "https://github.com/microsoft/aibast-agents-library/discussions/10",
-  acquisitionUrl: "https://github.com/microsoft/aibast-agents-library/discussions/11"
+  upvoteUrl: "https://github.com/microsoft/aibast-agents-library/discussions/10"
 }]]);
 openAgentUpvote(agent.name);
-const upvoteArgs = openArgs;
-openAgentSignal(agent.name, "acquisition");
-console.log(JSON.stringify({upvoteArgs, acquisitionArgs: openArgs}));
+console.log(JSON.stringify({upvoteArgs: openArgs}));
 """
     )
     url, target, features = result["upvoteArgs"]
     assert url.endswith("/discussions/10")
     assert target == "_blank"
     assert features == "noopener"
-    assert result["acquisitionArgs"][0].endswith("/discussions/11")
 
 
 def test_missing_discussion_url_disables_external_action():
@@ -364,19 +455,15 @@ const agent = {
 state.agents = [agent];
 state.agentSignals = new Map([[agent.name, {
   upvotes: null,
-  acquisitions: null,
-  upvoteUrl: "",
-  acquisitionUrl: ""
+  upvoteUrl: ""
 }]]);
 globalThis.openArgs = null;
 openAgentUpvote(agent.name);
-const upvoteArgs = openArgs;
-openAgentSignal(agent.name, "acquisition");
-console.log(JSON.stringify({upvoteArgs, acquisitionArgs: openArgs}));
+console.log(JSON.stringify({upvoteArgs: openArgs}));
 """
     )
 
-    assert result == {"upvoteArgs": None, "acquisitionArgs": None}
+    assert result == {"upvoteArgs": None}
 
 
 def test_upvote_action_stops_card_open_and_never_increments_count():
@@ -405,7 +492,8 @@ def test_upvote_action_stops_card_open_and_never_increments_count():
 
 def test_library_explains_public_agent_signal_and_snapshot_refresh():
     text = library_text()
-    assert "two stable public GitHub Discussions" in text
-    assert "signed-in acquisition" in text
-    assert "observable CDN and release file transfers" in text
+    assert "one public GitHub rating Discussion" in text
+    assert "Signed-in GitHub users" in text
+    assert "Upvotes are community preference" in text
+    assert "acquisition" not in text.lower()
     assert '<a href="achievements.html">Achievements</a>' in text

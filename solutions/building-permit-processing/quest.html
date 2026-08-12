@@ -50,9 +50,9 @@
     })();
     (() => {
       const engine =
-        localStorage.getItem("aibast:workshop-engine") === "brainstem"
-          ? "brainstem"
-          : "copilot";
+        localStorage.getItem("aibast:workshop-engine") === "copilot"
+          ? "copilot"
+          : "brainstem";
       document.documentElement.setAttribute("data-workshop-engine", engine);
     })();
   </script>
@@ -348,13 +348,13 @@
     <section class="hero">
       <p class="eyebrow">Evidence-grounded customer journey</p>
       <h1>Building Permit Processing Agent</h1>
-      <p class="lede">Use your globally configured Easy-mode harness, or reproduce every action directly in Hard mode.</p>
+      <p class="lede">Use your globally configured Easy-mode harness, or reproduce every action directly in Manual mode.</p>
       <div class="notice"><strong>Workshop mission:</strong> Turn motivated, open-minded, non-technical sales professionals into AI superheroes who can match the practical output and problem-solving pace of technical peers who are not using AI, while staying evidence-grounded, governed, and honest about what the tools proved.</div>
       <div class="notice"><strong>Boundary:</strong> synthetic qualitative evidence only—not a customer KPI, measured production result, live connection, or publication approval.</div>
       <div class="feedback-notice"><strong>Found something inaccurate?</strong> Use <em>Report an issue</em> at that point. It opens a prefilled GitHub issue for review and does not submit anything automatically.</div>
       <div class="mode-switch" role="tablist">
         <button class="mode active" id="mode-tab-easy" data-mode="easy" role="tab" aria-controls="mode-panel-easy" aria-selected="true">Easy</button>
-        <button class="mode" id="mode-tab-hard" data-mode="hard" role="tab" aria-controls="mode-panel-hard" aria-selected="false">Hard</button>
+        <button class="mode" id="mode-tab-hard" data-mode="hard" role="tab" aria-controls="mode-panel-hard" aria-selected="false">Manual</button>
       </div>
     </section>
 
@@ -381,6 +381,32 @@
       </div>
     </section>
     <div class="achievements-toast" id="achievements-badge-toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+
+    <section class="learn-step" id="workshop-step-1">
+      <header class="learn-step-header"><span>1</span><div><p>Workshop setup</p><h3>Install RAPP Brainstem Frontier</h3></div><button class="button report-button" type="button" data-report-location="Workshop setup — step 1: install RAPP Brainstem Frontier" data-report-expected="RAPP Brainstem Frontier opens with the Brainstem connected and GitHub Copilot Brain Surgeon visible." data-report-evidence="">Report an issue</button></header>
+      <div class="learn-step-body">
+        <p>Start every workshop in RAPP Brainstem Frontier. It provides the visible Brainstem, GitHub Copilot Brain Surgeon, live agent Explorer, recordings, and the one-click Copilot Studio path used by the guided exercises.</p>
+        <div class="action-panel">
+          <strong>Install and launch</strong>
+          <ol>
+            <li>Open the dedicated Frontier installer and choose your operating system.</li>
+            <li>On macOS or Linux, copy and run the command below. On Windows 11, download <code>install.cmd</code> and double-click it.</li>
+            <li>Launch <strong>RAPP Brainstem Frontier</strong> from Applications, Launchpad, the app menu, or the Windows Desktop/Start Menu shortcut.</li>
+            <li>Wait for <strong>connected</strong>, then complete GitHub device login if the app asks.</li>
+          </ol>
+          <div class="prompt-heading"><strong>macOS or Linux</strong><button class="button primary" type="button" data-copy-target="beta-install-command">Copy install command</button></div>
+          <pre class="prompt-block" id="beta-install-command">curl -fsSL https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/install.sh | bash</pre>
+          <div class="detail-actions">
+            <a class="button primary" href="../../beta/">Open Frontier installer</a>
+            <a class="button" href="../../beta/install.cmd" download>Download Windows install.cmd</a>
+            <a class="button" href="../../beta/README.md" download>Download installation guide</a>
+          </div>
+        </div>
+        <div class="expected-panel"><strong>Expected result</strong><p>The RAPP Brainstem Frontier window is open, the center Brainstem shows <strong>connected</strong>, the blue Brainstem icon opens the live agents Explorer, and the GitHub Copilot Brain Surgeon panel can be opened.</p></div>
+        <label class="step-complete"><input type="checkbox" data-checkpoint="beta-installed" data-achievements-group="onboarding" data-achievements-path="shared"><span>I installed and opened RAPP Brainstem Frontier.</span></label>
+      </div>
+    </section>
 
     <section class="path" data-path="easy" id="mode-panel-easy" role="tabpanel" aria-labelledby="mode-tab-easy">
       <div class="module-summary">
@@ -411,8 +437,8 @@
       <div class="easy-lane" data-easy-lane="brainstem">
         <div class="notice"><strong>Brainstem lane:</strong> Brainstem is the learner’s personal, on-device training AI working alongside Copilot. It persists the workshop, loads the generic engine, and continues every handoff.</div>
 
-      <article class="learn-step" id="brainstem-step-1">
-        <header class="learn-step-header"><span>1</span><div><p>Prepare your Copilot</p><h3>Download and attach the Brainstem skill</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 1: attach skill" data-report-expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat." data-report-evidence="">Report an issue</button></header>
+      <article class="learn-step" id="brainstem-step-2">
+        <header class="learn-step-header"><span>2</span><div><p>Prepare your Copilot</p><h3>Download and attach the Brainstem skill</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 2: attach skill" data-report-expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>This file fixes the workshop to Brainstem. Copilot remains the work surface while the learner&#x27;s on-device training AI persists state, loads the generic workshop engine, and continues every handoff.</p>
           <div class="action-panel"><strong>Do this</strong><ol><li>Download the lane-specific <code>SKILL.md</code>.</li><li>Open GitHub Copilot Chat in VS Code.</li><li>Select <strong>Agent mode</strong>.</li><li>Drag the downloaded file into the chat.</li></ol><a class="button primary" href="../../skills/aibast-easy-mode-brainstem/SKILL.md" download="SKILL.md">Download Brainstem SKILL.md</a></div>
@@ -421,8 +447,8 @@
         </div>
       </article>
 
-      <article class="learn-step" id="brainstem-step-2">
-        <header class="learn-step-header"><span>2</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test Building Permit Processing</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 2: local proof" data-report-expected="Brainstem reports the generic AIBAST Workshop Engine and BuildingPermitProcessingAgent loaded, with 5/5 locked local cases passed." data-report-evidence="">Report an issue</button></header>
+      <article class="learn-step" id="brainstem-step-3">
+        <header class="learn-step-header"><span>3</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test Building Permit Processing</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 3: local proof" data-report-expected="Brainstem reports the generic AIBAST Workshop Engine and BuildingPermitProcessingAgent loaded, with 5/5 locked local cases passed." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>This step proves the portable business logic before any Copilot Studio work begins. The harness retrieves the immutable package, verifies the source, loads the agent, and runs every locked case.</p>
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="brainstem-build-prompt">Copy message</button></div>
@@ -432,8 +458,8 @@
         </div>
       </article>
 
-      <article class="learn-step" id="brainstem-step-3">
-        <header class="learn-step-header"><span>3</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 3: Draft deployment" data-report-expected="Draft Building Permit Manual Build; model Claude Sonnet 4.6; 2 knowledge files; 7 skills; published false." data-report-evidence="">Report an issue</button></header>
+      <article class="learn-step" id="brainstem-step-4">
+        <header class="learn-step-header"><span>4</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 4: Draft deployment" data-report-expected="Draft Building Permit Manual Build; model Claude Sonnet 4.6; 2 knowledge files; 7 skills; published false." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>The harness now uses the verified Microsoft Copilot Studio plugin to reuse or create the source-controlled Draft, synchronize the reviewed instructions and assets, validate the PAC project, and leave publication off.</p>
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="brainstem-deploy-prompt">Copy message</button></div>
@@ -447,8 +473,8 @@
       <div class="easy-lane" data-easy-lane="copilot">
         <div class="comparison-note"><strong>Skeptic comparison — Copilot-only lane:</strong> GitHub Copilot carries the same harness directly in the active session. The skill still discovers every asset and runs every gate; there is no persistent Brainstem engine between turns.</div>
 
-      <article class="learn-step" id="copilot-step-1">
-        <header class="learn-step-header"><span>1</span><div><p>Prepare your Copilot</p><h3>Download and attach the Copilot-only skill</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 1: attach skill" data-report-expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat." data-report-evidence="">Report an issue</button></header>
+      <article class="learn-step" id="copilot-step-2">
+        <header class="learn-step-header"><span>2</span><div><p>Prepare your Copilot</p><h3>Download and attach the Copilot-only skill</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 2: attach skill" data-report-expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>This file fixes the workshop to GitHub Copilot alone. The skill carries the same discovery, testing, deployment, and validation contract directly in the active Copilot session and bootstraps the official Microsoft Copilot Studio plugin.</p>
           <div class="action-panel"><strong>Do this</strong><ol><li>Download the lane-specific <code>SKILL.md</code>.</li><li>Open GitHub Copilot Chat in VS Code.</li><li>Select <strong>Agent mode</strong>.</li><li>Drag the downloaded file into the chat.</li></ol><a class="button primary" href="../../skills/aibast-easy-mode-copilot/SKILL.md" download="SKILL.md">Download Copilot-only SKILL.md</a></div>
@@ -457,8 +483,8 @@
         </div>
       </article>
 
-      <article class="learn-step" id="copilot-step-2">
-        <header class="learn-step-header"><span>2</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test Building Permit Processing</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 2: local proof" data-report-expected="Copilot reports the verified mcs-assistant plugin and PAC CLI, an isolated workspace, a verified source hash, and 5/5 locked local cases passed." data-report-evidence="">Report an issue</button></header>
+      <article class="learn-step" id="copilot-step-3">
+        <header class="learn-step-header"><span>3</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test Building Permit Processing</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 3: local proof" data-report-expected="Copilot reports the verified mcs-assistant plugin and PAC CLI, an isolated workspace, a verified source hash, and 5/5 locked local cases passed." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>This step proves the portable business logic before any Copilot Studio work begins. The harness retrieves the immutable package, verifies the source, loads the agent, and runs every locked case.</p>
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="copilot-build-prompt">Copy message</button></div>
@@ -468,8 +494,8 @@
         </div>
       </article>
 
-      <article class="learn-step" id="copilot-step-3">
-        <header class="learn-step-header"><span>3</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 3: Draft deployment" data-report-expected="Draft Building Permit Manual Build; model Claude Sonnet 4.6; 2 knowledge files; 7 skills; published false." data-report-evidence="">Report an issue</button></header>
+      <article class="learn-step" id="copilot-step-4">
+        <header class="learn-step-header"><span>4</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 4: Draft deployment" data-report-expected="Draft Building Permit Manual Build; model Claude Sonnet 4.6; 2 knowledge files; 7 skills; published false." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>The harness now uses the verified Microsoft Copilot Studio plugin to reuse or create the source-controlled Draft, synchronize the reviewed instructions and assets, validate the PAC project, and leave publication off.</p>
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="copilot-deploy-prompt">Copy message</button></div>
@@ -480,8 +506,8 @@
       </article>
       </div>
 
-      <section class="learn-step" id="easy-step-4">
-        <header class="learn-step-header"><span>4</span><div><p>Verify the real experience</p><h3>Confirm the Draft in Copilot Studio Preview</h3></div></header>
+      <section class="learn-step" id="easy-step-5">
+        <header class="learn-step-header"><span>5</span><div><p>Verify the real experience</p><h3>Confirm the Draft in Copilot Studio Preview</h3></div></header>
         <div class="learn-step-body">
           <p>The harness already runs these checks automatically. Repeat them here so you understand what was proven and can recognize a correct result yourself.</p>
           <div class="preview-intro"><ol><li>Open the validated Draft.</li><li>Select <strong>Preview</strong>.</li><li>Choose <strong>New chat</strong> before each case.</li><li>Paste the exact prompt.</li><li>Compare the answer with the required and forbidden markers.</li></ol><div><a class="button primary" href="https://copilotstudio.preview.microsoft.com/environments/ee67a404-325c-e726-a18a-886fe708ca0b/agents/0d89cb6b-4276-46f9-b453-478b2ddde265" target="_blank" rel="noopener">Open the Copilot Studio Draft ↗</a></div></div>
@@ -594,14 +620,14 @@ Statutory due-back date: 2026-08-28 (21-day statutory target from intake).</pre>
 
     <section class="path" data-path="hard" id="mode-panel-hard" role="tabpanel" aria-labelledby="mode-tab-hard" hidden>
       <section class="card hard-overview">
-        <p class="eyebrow">Hard mode · literal browser construction</p>
+        <p class="eyebrow">Manual mode · literal browser construction</p>
         <h2>Build Building Permit Processing Agent manually on this page.</h2>
         <p class="lede">No PAC CLI, YAML import, plugin architect, or nested tutorial frame. Perform one action per real browserfilm frame, compare the screenshot, and stop at Draft.</p>
         <div class="notice"><strong>Synthetic disclosure:</strong> this is qualitative workflow evidence using packaged synthetic inputs. It is not a customer KPI or a live-system result.</div>
         <div class="feedback-notice"><strong>Found something inaccurate?</strong> Use <em>Report an issue</em> on that step. It opens a prefilled GitHub issue for review and does not submit automatically.</div>
         <!-- No pending evidence. -->
         <div class="hard-actions">
-          <a class="button" href="manual-tutorial.html" target="_blank" rel="noopener">Open standalone Hard-mode guide ↗</a>
+          <a class="button" href="manual-tutorial.html" target="_blank" rel="noopener">Open standalone Manual-mode guide ↗</a>
           <a class="button primary" href="exports/building-permit-processing-source.zip">Download source bundle</a>
           <a class="button primary" href="exports/building-permit-processing-copilot-studio-solution.zip" download>Download Copilot Studio solution</a><a class="button" href="exports/building-permit-processing-deployment-settings.json" download>Deployment settings</a><a class="button" href="exports/building-permit-processing-solution-export.json" download>Export details</a>
         </div>
@@ -610,11 +636,11 @@ Statutory due-back date: 2026-08-28 (21-day statutory target from intake).</pre>
       <section class="hard-progress-card" aria-labelledby="hard-progress-label">
         <div class="hard-progress-heading">
           <strong id="hard-progress-label">0 of 24 complete</strong>
-          <p>Hard-mode progress is saved on this device and contributes to the same achievement profile.</p>
+          <p>Manual-mode progress is saved on this device and contributes to the same achievement profile.</p>
         </div>
         <div class="progress" aria-hidden="true"><span id="hard-progress-bar"></span></div>
         <p class="muted" id="hard-progress-toast" role="status" aria-live="polite" aria-atomic="true"></p>
-        <nav class="hard-toc" aria-label="Hard-mode tutorial actions"><a href="#step-1">1. Create a blank Copilot Studio agent</a>
+        <nav class="hard-toc" aria-label="Manual-mode tutorial actions"><a href="#step-1">1. Create a blank Copilot Studio agent</a>
 <a href="#step-2">2. Name the manual agent</a>
 <a href="#step-3">3. Enter the full global instruction policy</a>
 <a href="#step-4">4. Save the instruction changes</a>
@@ -642,7 +668,7 @@ Statutory due-back date: 2026-08-28 (21-day statutory target from intake).</pre>
 
       <h2>Build and verify</h2>
       <article class="step" id="step-1">
-        <header><span>1</span><div><h3>Create a blank Copilot Studio agent</h3><p>Step 1 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 1: Create a blank Copilot Studio agent" data-report-expected="A blank Copilot Studio agent is visible in the captured Draft workspace." data-report-evidence="solutions/building-permit-processing/screenshots/manual/01-create-blank-agent.jpg">Report an issue</button></header>
+        <header><span>1</span><div><h3>Create a blank Copilot Studio agent</h3><p>Step 1 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 1: Create a blank Copilot Studio agent" data-report-expected="A blank Copilot Studio agent is visible in the captured Draft workspace." data-report-evidence="solutions/building-permit-processing/screenshots/manual/01-create-blank-agent.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Create a blank Copilot Studio agent</span></div>
@@ -657,7 +683,7 @@ Statutory due-back date: 2026-08-28 (21-day statutory target from intake).</pre>
         </div>
       </article>
 <article class="step" id="step-2">
-        <header><span>2</span><div><h3>Name the manual agent</h3><p>Step 2 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 2: Name the manual agent" data-report-expected="The page header shows the recorded manual build name: Building Permit Manual Build." data-report-evidence="solutions/building-permit-processing/screenshots/manual/02-name-agent.jpg">Report an issue</button></header>
+        <header><span>2</span><div><h3>Name the manual agent</h3><p>Step 2 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 2: Name the manual agent" data-report-expected="The page header shows the recorded manual build name: Building Permit Manual Build." data-report-evidence="solutions/building-permit-processing/screenshots/manual/02-name-agent.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-2">Copy agent name</button><pre class="copy-source" id="hard-copy-2" hidden>Building Permit Manual Build</pre></div><span>Name the manual agent</span></div>
@@ -672,7 +698,7 @@ Statutory due-back date: 2026-08-28 (21-day statutory target from intake).</pre>
         </div>
       </article>
 <article class="step" id="step-3">
-        <header><span>3</span><div><h3>Enter the full global instruction policy</h3><p>Step 3 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 3: Enter the full global instruction policy" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/building-permit-processing/screenshots/manual/03-enter-instructions.jpg">Report an issue</button></header>
+        <header><span>3</span><div><h3>Enter the full global instruction policy</h3><p>Step 3 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 3: Enter the full global instruction policy" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/building-permit-processing/screenshots/manual/03-enter-instructions.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-3">Copy instructions</button><pre class="copy-source" id="hard-copy-3" hidden># Building Permit Manual Build - Global Instructions
@@ -786,7 +812,7 @@ until they pass separate governance review and require explicit human approval.
         </div>
       </article>
 <article class="step" id="step-4">
-        <header><span>4</span><div><h3>Save the instruction changes</h3><p>Step 4 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 4: Save the instruction changes" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/building-permit-processing/screenshots/manual/04-save-instructions.jpg">Report an issue</button></header>
+        <header><span>4</span><div><h3>Save the instruction changes</h3><p>Step 4 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 4: Save the instruction changes" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/building-permit-processing/screenshots/manual/04-save-instructions.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Save the instruction changes</span></div>
@@ -801,7 +827,7 @@ until they pass separate governance review and require explicit human approval.
         </div>
       </article>
 <article class="step" id="step-5">
-        <header><span>5</span><div><h3>Open the knowledge-source picker</h3><p>Step 5 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 5: Open the knowledge-source picker" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/building-permit-processing/screenshots/manual/05-open-knowledge-upload.jpg">Report an issue</button></header>
+        <header><span>5</span><div><h3>Open the knowledge-source picker</h3><p>Step 5 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 5: Open the knowledge-source picker" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/building-permit-processing/screenshots/manual/05-open-knowledge-upload.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Open the knowledge-source picker</span></div>
@@ -816,7 +842,7 @@ until they pass separate governance review and require explicit human approval.
         </div>
       </article>
 <article class="step" id="step-6">
-        <header><span>6</span><div><h3>Upload the synthetic permit records</h3><p>Step 6 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 6: Upload the synthetic permit records" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/building-permit-processing/screenshots/manual/06-select-records-file.jpg">Report an issue</button></header>
+        <header><span>6</span><div><h3>Upload the synthetic permit records</h3><p>Step 6 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 6: Upload the synthetic permit records" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/building-permit-processing/screenshots/manual/06-select-records-file.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Upload the synthetic permit records</span></div>
@@ -831,7 +857,7 @@ until they pass separate governance review and require explicit human approval.
         </div>
       </article>
 <article class="step" id="step-7">
-        <header><span>7</span><div><h3>Wait for Dataverse ingestion</h3><p>Step 7 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 7: Wait for Dataverse ingestion" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/07-records-file-added.jpg">Report an issue</button></header>
+        <header><span>7</span><div><h3>Wait for Dataverse ingestion</h3><p>Step 7 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 7: Wait for Dataverse ingestion" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/07-records-file-added.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Wait for Dataverse ingestion</span></div>
@@ -846,7 +872,7 @@ until they pass separate governance review and require explicit human approval.
         </div>
       </article>
 <article class="step" id="step-8">
-        <header><span>8</span><div><h3>Upload the rules and schedules</h3><p>Step 8 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 8: Upload the rules and schedules" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/building-permit-processing/screenshots/manual/08-select-rules-file.jpg">Report an issue</button></header>
+        <header><span>8</span><div><h3>Upload the rules and schedules</h3><p>Step 8 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 8: Upload the rules and schedules" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/building-permit-processing/screenshots/manual/08-select-rules-file.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Upload the rules and schedules</span></div>
@@ -861,7 +887,7 @@ until they pass separate governance review and require explicit human approval.
         </div>
       </article>
 <article class="step" id="step-9">
-        <header><span>9</span><div><h3>Verify both knowledge sources</h3><p>Step 9 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 9: Verify both knowledge sources" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/building-permit-processing/screenshots/manual/09-two-knowledge-files-added.jpg">Report an issue</button></header>
+        <header><span>9</span><div><h3>Verify both knowledge sources</h3><p>Step 9 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 9: Verify both knowledge sources" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/building-permit-processing/screenshots/manual/09-two-knowledge-files-added.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Verify both knowledge sources</span></div>
@@ -876,7 +902,7 @@ until they pass separate governance review and require explicit human approval.
         </div>
       </article>
 <article class="step" id="step-10">
-        <header><span>10</span><div><h3>Open the SKILL.md uploader</h3><p>Step 10 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 10: Open the SKILL.md uploader" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 7 skills." data-report-evidence="solutions/building-permit-processing/screenshots/manual/10-open-skill-upload.jpg">Report an issue</button></header>
+        <header><span>10</span><div><h3>Open the SKILL.md uploader</h3><p>Step 10 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 10: Open the SKILL.md uploader" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 7 skills." data-report-evidence="solutions/building-permit-processing/screenshots/manual/10-open-skill-upload.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Open the SKILL.md uploader</span></div>
@@ -891,7 +917,7 @@ until they pass separate governance review and require explicit human approval.
         </div>
       </article>
 <article class="step" id="step-11">
-        <header><span>11</span><div><h3>Add backlog and complaint-risk logic</h3><p>Step 11 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 11: Add backlog and complaint-risk logic" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/11-add-backlog-skill.jpg">Report an issue</button></header>
+        <header><span>11</span><div><h3>Add backlog and complaint-risk logic</h3><p>Step 11 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 11: Add backlog and complaint-risk logic" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/11-add-backlog-skill.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add backlog and complaint-risk logic</span></div>
@@ -906,7 +932,7 @@ until they pass separate governance review and require explicit human approval.
         </div>
       </article>
 <article class="step" id="step-12">
-        <header><span>12</span><div><h3>Add intake triage and routing</h3><p>Step 12 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 12: Add intake triage and routing" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/12-add-intake-skill.jpg">Report an issue</button></header>
+        <header><span>12</span><div><h3>Add intake triage and routing</h3><p>Step 12 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 12: Add intake triage and routing" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/12-add-intake-skill.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add intake triage and routing</span></div>
@@ -921,7 +947,7 @@ until they pass separate governance review and require explicit human approval.
         </div>
       </article>
 <article class="step" id="step-13">
-        <header><span>13</span><div><h3>Add proactive applicant updates</h3><p>Step 13 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 13: Add proactive applicant updates" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/13-add-applicant-updates-skill.jpg">Report an issue</button></header>
+        <header><span>13</span><div><h3>Add proactive applicant updates</h3><p>Step 13 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 13: Add proactive applicant updates" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/13-add-applicant-updates-skill.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add proactive applicant updates</span></div>
@@ -936,7 +962,7 @@ until they pass separate governance review and require explicit human approval.
         </div>
       </article>
 <article class="step" id="step-14">
-        <header><span>14</span><div><h3>Add permit status and zoning detail</h3><p>Step 14 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 14: Add permit status and zoning detail" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/14-add-permit-status-skill.jpg">Report an issue</button></header>
+        <header><span>14</span><div><h3>Add permit status and zoning detail</h3><p>Step 14 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 14: Add permit status and zoning detail" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/14-add-permit-status-skill.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add permit status and zoning detail</span></div>
@@ -951,7 +977,7 @@ until they pass separate governance review and require explicit human approval.
         </div>
       </article>
 <article class="step" id="step-15">
-        <header><span>15</span><div><h3>Add the review checklist</h3><p>Step 15 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 15: Add the review checklist" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 7 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/building-permit-processing/screenshots/manual/15-add-checklist-skill.jpg">Report an issue</button></header>
+        <header><span>15</span><div><h3>Add the review checklist</h3><p>Step 15 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 15: Add the review checklist" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 7 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/building-permit-processing/screenshots/manual/15-add-checklist-skill.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add the review checklist</span></div>
@@ -966,7 +992,7 @@ until they pass separate governance review and require explicit human approval.
         </div>
       </article>
 <article class="step" id="step-16">
-        <header><span>16</span><div><h3>Diagnose a SKILL.md validation failure</h3><p>Step 16 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 16: Diagnose a SKILL.md validation failure" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 7 skills." data-report-evidence="solutions/building-permit-processing/screenshots/manual/16-inspector-skill-validation-error.jpg">Report an issue</button></header>
+        <header><span>16</span><div><h3>Diagnose a SKILL.md validation failure</h3><p>Step 16 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 16: Diagnose a SKILL.md validation failure" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 7 skills." data-report-evidence="solutions/building-permit-processing/screenshots/manual/16-inspector-skill-validation-error.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Diagnose a SKILL.md validation failure</span></div>
@@ -981,7 +1007,7 @@ until they pass separate governance review and require explicit human approval.
         </div>
       </article>
 <article class="step" id="step-17">
-        <header><span>17</span><div><h3>Correct and add inspector coverage</h3><p>Step 17 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 17: Correct and add inspector coverage" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/17-retry-inspector-skill.jpg">Report an issue</button></header>
+        <header><span>17</span><div><h3>Correct and add inspector coverage</h3><p>Step 17 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 17: Correct and add inspector coverage" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/17-retry-inspector-skill.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Correct and add inspector coverage</span></div>
@@ -996,7 +1022,7 @@ until they pass separate governance review and require explicit human approval.
         </div>
       </article>
 <article class="step" id="step-18">
-        <header><span>18</span><div><h3>Add deterministic fee estimates</h3><p>Step 18 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 18: Add deterministic fee estimates" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/18-add-fee-skill.jpg">Report an issue</button></header>
+        <header><span>18</span><div><h3>Add deterministic fee estimates</h3><p>Step 18 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 18: Add deterministic fee estimates" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/18-add-fee-skill.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add deterministic fee estimates</span></div>
@@ -1011,7 +1037,7 @@ until they pass separate governance review and require explicit human approval.
         </div>
       </article>
 <article class="step" id="step-19">
-        <header><span>19</span><div><h3>Review the available model choices</h3><p>Step 19 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 19: Review the available model choices" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 7 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/building-permit-processing/screenshots/manual/19-open-model-picker.jpg">Report an issue</button></header>
+        <header><span>19</span><div><h3>Review the available model choices</h3><p>Step 19 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 19: Review the available model choices" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 7 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/building-permit-processing/screenshots/manual/19-open-model-picker.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Review the available model choices</span></div>
@@ -1026,7 +1052,7 @@ until they pass separate governance review and require explicit human approval.
         </div>
       </article>
 <article class="step" id="step-20">
-        <header><span>20</span><div><h3>Match the Easy-mode model</h3><p>Step 20 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 20: Match the Easy-mode model" data-report-expected="The model picker or inventory shows Claude Sonnet 4.6, matching the recorded evidence." data-report-evidence="solutions/building-permit-processing/screenshots/manual/20-select-sonnet-model.jpg">Report an issue</button></header>
+        <header><span>20</span><div><h3>Match the Easy-mode model</h3><p>Step 20 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 20: Match the Easy-mode model" data-report-expected="The model picker or inventory shows Claude Sonnet 4.6, matching the recorded evidence." data-report-evidence="solutions/building-permit-processing/screenshots/manual/20-select-sonnet-model.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Match the Easy-mode model</span></div>
@@ -1041,7 +1067,7 @@ until they pass separate governance review and require explicit human approval.
         </div>
       </article>
 <article class="step" id="step-21">
-        <header><span>21</span><div><h3>Audit every skill description</h3><p>Step 21 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 21: Audit every skill description" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 7 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/building-permit-processing/screenshots/manual/21-review-all-skills.jpg">Report an issue</button></header>
+        <header><span>21</span><div><h3>Audit every skill description</h3><p>Step 21 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 21: Audit every skill description" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 7 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/building-permit-processing/screenshots/manual/21-review-all-skills.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Audit every skill description</span></div>
@@ -1056,7 +1082,7 @@ until they pass separate governance review and require explicit human approval.
         </div>
       </article>
 <article class="step" id="step-22">
-        <header><span>22</span><div><h3>Open Preview</h3><p>Step 22 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 22: Open Preview" data-report-expected="A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass." data-report-evidence="solutions/building-permit-processing/screenshots/manual/22-open-preview.jpg">Report an issue</button></header>
+        <header><span>22</span><div><h3>Open Preview</h3><p>Step 22 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 22: Open Preview" data-report-expected="A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass." data-report-evidence="solutions/building-permit-processing/screenshots/manual/22-open-preview.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Open Preview</span></div>
@@ -1071,7 +1097,7 @@ until they pass separate governance review and require explicit human approval.
         </div>
       </article>
 <article class="step" id="step-23">
-        <header><span>23</span><div><h3>Run the canonical backlog prompt</h3><p>Step 23 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 23: Run the canonical backlog prompt" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/23-run-canonical-prompt.jpg">Report an issue</button></header>
+        <header><span>23</span><div><h3>Run the canonical backlog prompt</h3><p>Step 23 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 23: Run the canonical backlog prompt" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/23-run-canonical-prompt.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Run the canonical backlog prompt</span></div>
@@ -1086,7 +1112,7 @@ until they pass separate governance review and require explicit human approval.
         </div>
       </article>
 <article class="step" id="step-24">
-        <header><span>24</span><div><h3>Verify the same permit and decision</h3><p>Step 24 of 24</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 24: Verify the same permit and decision" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/24-verify-preview-result.jpg">Report an issue</button></header>
+        <header><span>24</span><div><h3>Verify the same permit and decision</h3><p>Step 24 of 24</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 24: Verify the same permit and decision" data-report-expected="The captured Copilot Studio screen shows completion of this named action; make no claim beyond the screenshot." data-report-evidence="solutions/building-permit-processing/screenshots/manual/24-verify-preview-result.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Verify the same permit and decision</span></div>
@@ -1101,12 +1127,12 @@ until they pass separate governance review and require explicit human approval.
         </div>
       </article>
 
-      <h2 id="hard-troubleshooting">Hard-mode troubleshooting</h2>
+      <h2 id="hard-troubleshooting">Manual-mode troubleshooting</h2>
       <section class="card hard-troubleshooting">
         <details open><summary>A screenshot or browserfilm frame is missing</summary><p>Stop. Do not invent, recreate, or substitute an image. Capture the real frame, update the browserfilm manifest, and regenerate without <code>--allow-pending</code>.</p></details>
         <details><summary>A knowledge file is still processing</summary><p>Wait for ingestion to finish before Preview. A partial answer is not evidence.</p></details>
         <details><summary>A skill upload fails</summary><p>Use the linked raw <code>SKILL.md</code>. Fix the reviewed source deliberately; do not silently skip the action.</p></details>
-        <details><summary>The model differs from Easy mode</summary><p>Record the substitution and stop the parity claim until Easy and Hard use the same reviewed model.</p></details>
+        <details><summary>The model differs from Easy mode</summary><p>Record the substitution and stop the parity claim until Easy and Manual use the same reviewed model.</p></details>
         <details><summary>The Preview answer misses an identifier</summary><p>Mark the recorded case failed, inspect instructions and inventory, then replay the exact prompt in a fresh conversation.</p></details>
         <details><summary>Should I publish?</summary><p>No. Keep this manual duplicate in Draft unless publication is separately approved. Do not choose Publish as part of this tutorial.</p></details>
       </section>
@@ -1118,7 +1144,7 @@ until they pass separate governance review and require explicit human approval.
 
       const ACHIEVEMENT_PROFILE_KEY = "aibast:achievement-profile:v1";
       const ACHIEVEMENT_WORKSHOP_SLUG = "building-permit-processing";
-      const ACHIEVEMENT_BADGES = Object.freeze([{"id":"started","label":"Started","points":5},{"id":"local-proof","label":"Local proof","points":15},{"id":"draft-builder","label":"Draft builder","points":20},{"id":"preview-proven","label":"Preview proven","points":25},{"id":"workshop-complete","label":"Workshop complete","points":35},{"id":"hard-mode-complete","label":"Hard mode complete","points":50}]);
+      const ACHIEVEMENT_BADGES = Object.freeze([{"id":"started","label":"Started","points":5},{"id":"local-proof","label":"Local proof","points":15},{"id":"draft-builder","label":"Draft builder","points":20},{"id":"preview-proven","label":"Preview proven","points":25},{"id":"workshop-complete","label":"Workshop complete","points":35},{"id":"hard-mode-complete","label":"Manual mode complete","points":50}]);
       const ACHIEVEMENT_BADGE_IDS = new Set(ACHIEVEMENT_BADGES.map((badge) => badge.id));
 
       function emptyAchievementProfile() {
@@ -1411,7 +1437,7 @@ until they pass separate governance review and require explicit human approval.
         }
         if (hardProgressToast) {
           hardProgressToast.textContent = complete
-            ? "Hard mode complete. The achievement is saved in this device's achievement profile."
+            ? "Manual mode complete. The achievement is saved in this device's achievement profile."
             : "";
         }
         renderAchievementPanel(profile, activeMode);
@@ -1440,7 +1466,7 @@ until they pass separate governance review and require explicit human approval.
         const checked = mode === "hard" ? hardChecked : easyChecked;
         const total = mode === "hard" ? hardTotal : easyRequired.length;
         achievementProgressLabel.textContent =
-          `${checked} of ${total} ${mode === "hard" ? "Hard steps" : "Easy checkpoints"} complete`;
+          `${checked} of ${total} ${mode === "hard" ? "Manual steps" : "Easy checkpoints"} complete`;
         achievementProgressBar.style.width = total ? `${(checked / total) * 100}%` : "0%";
         achievementBadgeList.replaceChildren();
         const earned = ACHIEVEMENT_BADGES.filter(

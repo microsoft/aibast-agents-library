@@ -36,7 +36,7 @@ The local agent uses fictional records and produces decision support only. It do
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/permit-license-management/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/permit-license-management/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/permit-license-management/quest.html` |
+| Guided Easy/Manual quest | `solutions/permit-license-management/quest.html` |
 | Literal browser tutorial | `solutions/permit-license-management/manual-tutorial.html` |
 | Raw export manifest | `solutions/permit-license-management/export-manifest.json` |
 | Source bundle | `solutions/permit-license-management/exports/permit-license-management-source.zip` |

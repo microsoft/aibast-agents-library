@@ -9,7 +9,13 @@ WORKFLOW = ROOT / ".github/workflows/workshop-feedback.yml"
 METRICS_WORKFLOW = ROOT / ".github/workflows/metrics.yml"
 
 
-def run_signal_classifier(body="", labels=()):
+def run_signal_classifier(
+    body="",
+    labels=(),
+    *,
+    action="opened",
+    state="open",
+):
     workflow = WORKFLOW.read_text(encoding="utf-8")
     script = workflow.split("script: |", 1)[1].split(
         "\n\n      - name: Dispatch metrics compilation", 1
@@ -17,7 +23,14 @@ def run_signal_classifier(body="", labels=()):
     harness = f"""
 const calls = [];
 const context = {{
-  payload: {{ issue: {{ body: {json.dumps(body)}, labels: {json.dumps(list(labels))} }} }},
+  payload: {{
+    action: {json.dumps(action)},
+    issue: {{
+      body: {json.dumps(body)},
+      labels: {json.dumps(list(labels))},
+      state: {json.dumps(state)}
+    }}
+  }},
   repo: {{ owner: "owner", repo: "repo" }},
   issue: {{ number: 42 }}
 }};
@@ -27,7 +40,9 @@ const github = {{
       getLabel: async (args) => calls.push(["getLabel", args]),
       createLabel: async (args) => calls.push(["createLabel", args]),
       removeLabel: async (args) => calls.push(["removeLabel", args]),
-      addLabels: async (args) => calls.push(["addLabels", args])
+      addLabels: async (args) => calls.push(["addLabels", args]),
+      createComment: async (args) => calls.push(["createComment", args]),
+      update: async (args) => calls.push(["update", args])
     }}
   }}
 }};
@@ -55,11 +70,13 @@ const github = {{
 def test_workshop_feedback_workflow_detects_structured_signal():
     text = WORKFLOW.read_text(encoding="utf-8")
     assert "issues:" in text
-    assert "types: [opened, edited, closed, reopened]" in text
+    assert "types: [opened, edited, closed, reopened, labeled, unlabeled]" in text
     assert "actions: write" in text
     assert "issues: write" in text
     assert "<!-- aibast-workshop-feedback:v1 -->" in text
     assert "<!-- aibast-achievement-progress:v1 -->" in text
+    assert "<!-- aibast-workshop-cohort:v1 -->" in text
+    assert "<!-- aibast-badge-qualification:v1 -->" in text
     assert "<!-- aibast-agent-upvote:v1 -->" not in text
     assert "aibast-achievements-achievement" not in text
     assert "||" in text
@@ -67,9 +84,16 @@ def test_workshop_feedback_workflow_detects_structured_signal():
     assert "needs-triage" in text
     assert "agent-upvote" not in text
     assert "achievement-progress" in text
+    assert "workshop-cohort" in text
+    assert "badge-qualification" in text
+    assert "needs-private-review" in text
+    assert "cohort-verified" in text
+    assert "badge-qualified" in text
     assert "createLabel" in text
     assert "addLabels" in text
     assert "removeLabel" in text
+    assert "createComment" in text
+    assert 'state: "closed"' in text
     job_header = text.split("jobs:", 1)[1].split("runs-on:", 1)[0]
     assert "if:" not in job_header
 
@@ -91,12 +115,13 @@ def test_signal_classification_fails_closed_and_reconciles_removed_markers():
     text = WORKFLOW.read_text(encoding="utf-8")
 
     assert 'id: process-signal' in text
-    assert 'const isWorkshopFeedback = body.includes("<!-- aibast-workshop-feedback:v1 -->")' in text
-    assert "const hasCurrentMarker = isWorkshopFeedback || isAchievementProgress;" in text
-    assert "const hasManagedLabel = currentNames.some((name) => managedNames.has(name));" in text
+    assert 'const isWorkshopFeedback = body.startsWith("<!-- aibast-workshop-feedback:v1 -->")' in text
+    assert "const markerCount = [" in text
+    assert "const hasCurrentMarker = markerCount > 0;" in text
+    assert "automaticallyManagedNames.has(name)" in text
     assert "if (!hasCurrentMarker && !hasManagedLabel)" in text
     assert "return false;" in text
-    assert ": [];" in text
+    assert "? []" in text
     assert "if (labels.length)" in text
     assert "return true;" in text
     assert "if: steps.process-signal.outputs.result == 'true'" in text
@@ -130,6 +155,170 @@ def test_signal_classifier_behavior_is_fail_closed_and_removal_safe():
     ]
 
 
+def test_valid_achievement_signal_is_acknowledged_and_closed():
+    body = """<!-- aibast-achievement-progress:v1 -->
+## Workshop achievement progress
+
+- Schema: `aibast-achievement-progress/1.0`
+- Workshop: `account-intelligence`
+- Agent: `@aibast-agents-library/account-intelligence`
+- Achievements: started
+- Source: https://example.test/quest.html
+"""
+    result = run_signal_classifier(body=body)
+    assert result["result"] is True
+    assert [call[0] for call in result["calls"]] == [
+        "getLabel",
+        "addLabels",
+        "createComment",
+        "update",
+    ]
+    assert result["calls"][1][1]["labels"] == ["achievement-progress"]
+    assert result["calls"][-1][1]["state"] == "closed"
+
+
+def test_placeholder_cohort_signal_stays_open_for_correction():
+    body = """<!-- aibast-workshop-cohort:v1 -->
+## Public workshop cohort trigger
+
+- Schema: `aibast-workshop-cohort/1.0`
+- Workshop: `account-intelligence`
+- Agent: `@aibast-agents-library/account-intelligence`
+- Cohort code: `REPLACE-WITH-PUBLIC-CODE`
+- Session date: `YYYY-MM-DD`
+- Attendee count: `REPLACE-WITH-NUMBER`
+- Private facilitator form submitted: `yes`
+- Public progress consent: `yes`
+"""
+    result = run_signal_classifier(body=body)
+    assert [call[0] for call in result["calls"]] == [
+        "getLabel",
+        "addLabels",
+        "createComment",
+    ]
+    assert result["calls"][1][1]["labels"] == ["needs-triage"]
+
+
+def test_valid_cohort_signal_gets_private_review_gate_and_closes():
+    body = """<!-- aibast-workshop-cohort:v1 -->
+## Public workshop cohort trigger
+
+- Schema: `aibast-workshop-cohort/1.0`
+- Workshop: `account-intelligence`
+- Agent: `@aibast-agents-library/account-intelligence`
+- Cohort code: `AIBAST-20260811-DEMO`
+- Session date: `2026-08-11`
+- Attendee count: `24`
+- Private facilitator form submitted: `yes`
+- Public progress consent: `yes`
+"""
+    result = run_signal_classifier(body=body)
+    assert result["calls"][2][0] == "addLabels"
+    assert result["calls"][2][1]["labels"] == [
+        "workshop-cohort",
+        "needs-private-review",
+    ]
+    assert result["calls"][-1][0] == "update"
+    assert result["calls"][-1][1]["state"] == "closed"
+
+
+def test_private_field_in_public_issue_is_rejected_and_left_open():
+    body = """<!-- aibast-workshop-cohort:v1 -->
+## Public workshop cohort trigger
+
+- Schema: `aibast-workshop-cohort/1.0`
+- Workshop: `account-intelligence`
+- Agent: `@aibast-agents-library/account-intelligence`
+- Cohort code: `AIBAST-20260811-DEMO`
+- Session date: `2026-08-11`
+- Attendee count: `24`
+- Private facilitator form submitted: `yes`
+- Public progress consent: `yes`
+- MSIX: `123456`
+"""
+    result = run_signal_classifier(body=body)
+    assert result["calls"][1][0] == "addLabels"
+    assert result["calls"][1][1]["labels"] == ["needs-triage"]
+    assert all(call[0] != "update" for call in result["calls"])
+
+
+def test_unbulleted_private_field_and_unknown_workshop_are_not_closed():
+    valid = """<!-- aibast-workshop-cohort:v1 -->
+## Public workshop cohort trigger
+
+- Schema: `aibast-workshop-cohort/1.0`
+- Workshop: `account-intelligence`
+- Agent: `@aibast-agents-library/account-intelligence`
+- Cohort code: `AIBAST-20260811-DEMO`
+- Session date: `2026-08-11`
+- Attendee count: `24`
+- Private facilitator form submitted: `yes`
+- Public progress consent: `yes`
+"""
+    for body in (
+        valid + "Email: person@example.test\n",
+        valid + "* Email: person@example.test\n",
+        valid + "+ MSIX: 123456\n",
+        valid + "1. Token: secret\n",
+        valid + "> Email: person@example.test\n",
+        valid + "• Customer: Contoso\n",
+        valid + "Email:person@example.test\n",
+        valid + "* MSIX:123456\n",
+        valid + "**Email**: person@example.test\n",
+        valid + "`MSIX`: 123456\n",
+        valid + "<strong>Customer</strong>: Contoso\n",
+        valid + "&bull; Email: person@example.test\n",
+        valid + "&lt;strong&gt;Email&lt;/strong&gt;: person@example.test\n",
+        valid + "&#8226; MSIX: 123456\n",
+        valid + "&#x2022; Token: secret\n",
+        valid + "Email&colon; person@example.test\n",
+        valid + "F\u200Boo: hidden\n",
+        valid + "<!-- Email: person@example.test -->\n",
+        valid.replace(
+            "- Workshop: `account-intelligence`",
+            "- Workshop: `not-a-workshop`",
+        ),
+    ):
+        result = run_signal_classifier(body=body)
+        assert all(call[0] != "update" for call in result["calls"])
+        labels = [
+            call[1]["labels"]
+            for call in result["calls"]
+            if call[0] == "addLabels"
+        ]
+        assert labels == [["needs-triage"]]
+
+
+def test_reviewer_labels_are_never_automatically_removed():
+    body = """<!-- aibast-badge-qualification:v1 -->
+## Public badge qualification trigger
+
+- Schema: `aibast-badge-qualification/1.0`
+- Workshop: `account-intelligence`
+- Agent: `@aibast-agents-library/account-intelligence`
+- Cohort code: `AIBAST-20260811-DEMO`
+- Achievement progress issue: `https://github.com/microsoft/aibast-agents-library/issues/123`
+- Private qualification form submitted: `yes`
+- Public profile consent: `yes`
+"""
+    result = run_signal_classifier(
+        body=body,
+        labels=(
+            {"name": "badge-qualification"},
+            {"name": "needs-private-review"},
+            {"name": "badge-qualified"},
+        ),
+        action="labeled",
+        state="closed",
+    )
+    removed = [
+        call[1]["name"]
+        for call in result["calls"]
+        if call[0] == "removeLabel"
+    ]
+    assert "badge-qualified" not in removed
+
+
 def test_marker_removal_clears_stale_managed_labels_before_dispatch():
     text = WORKFLOW.read_text(encoding="utf-8")
 
@@ -137,7 +326,8 @@ def test_marker_removal_clears_stale_managed_labels_before_dispatch():
     success_position = text.index("return true;")
     dispatch_position = text.index("await github.rest.actions.createWorkflowDispatch")
     assert remove_position < success_position < dispatch_position
-    assert "if (!managedNames.has(name) || selectedNames.includes(name)) continue;" in text
+    assert "!automaticallyManagedNames.has(name)" in text
+    assert "selectedNames.includes(name)" in text
 
 
 def test_metrics_dispatch_cannot_retrigger_from_snapshot_state_commits():
@@ -159,9 +349,13 @@ def test_metrics_workflow_compiles_issues_from_its_own_repository():
 
     assert "METRICS_OWNER: ${{ github.repository_owner }}" in collect_step
     assert "METRICS_REPO: ${{ github.event.repository.name }}" in collect_step
+    assert "METRICS_REF: ${{ github.ref_name }}" in collect_step
     assert "run: python scripts/build_metrics.py" in collect_step
     assert "METRICS_OWNER: microsoft" not in collect_step
-    assert "DISCUSSIONS_TOKEN: ${{ secrets.GITHUB_TOKEN }}" in text
+    assert (
+        "DISCUSSIONS_TOKEN: "
+        "${{ secrets.DISCUSSIONS_TOKEN || secrets.GITHUB_TOKEN }}"
+    ) in text
     assert "discussions: write" in text
     assert "python scripts/sync_agent_discussions.py" in text
 
@@ -169,9 +363,9 @@ def test_metrics_workflow_compiles_issues_from_its_own_repository():
 def test_workflow_applies_signal_specific_labels_and_descriptions():
     text = WORKFLOW.read_text(encoding="utf-8")
 
-    assert 'const isAchievementProgress = body.includes("<!-- aibast-achievement-progress:v1 -->")' in text
+    assert 'const isAchievementProgress = body.startsWith("<!-- aibast-achievement-progress:v1 -->")' in text
     assert '? ["achievement-progress"]' in text
-    assert '? ["workshop-feedback", "needs-triage"]' in text
+    assert ': ["workshop-feedback", "needs-triage"];' in text
     assert "Structured feedback submitted from an AIBAST workshop." in text
     assert "Opt-in public workshop achievement progress sync." in text
     assert "agent-upvote" not in text
@@ -181,10 +375,16 @@ def test_workflow_applies_signal_specific_labels_and_descriptions():
 def test_achievement_progress_gets_only_achievement_label_without_changing_other_signal_labels():
     text = WORKFLOW.read_text(encoding="utf-8")
 
-    assert "const selectedNames = isAchievementProgress" in text
+    assert ": isAchievementProgress" in text
     assert '? ["achievement-progress"]' in text
-    assert '? ["workshop-feedback", "needs-triage"]' in text
-    assert 'const managedNames = new Set(Object.keys(definitions));' in text
+    assert ': ["workshop-feedback", "needs-triage"];' in text
+    assert "const automaticallyManagedNames = new Set([" in text
+    assert '"cohort-verified"' not in text.split(
+        "const automaticallyManagedNames = new Set([", 1
+    )[1].split("]);", 1)[0]
+    assert '"badge-qualified"' not in text.split(
+        "const automaticallyManagedNames = new Set([", 1
+    )[1].split("]);", 1)[0]
 
 
 def test_metrics_workflow_reads_issues_and_verifies_achievement_profiles_and_scoring():
@@ -205,6 +405,12 @@ def test_metrics_workflow_reads_issues_and_verifies_achievement_profiles_and_sco
     assert "Achievement completion rates do not reconcile" in text
     assert "Achievement profiles contain unexpected or privacy-unsafe fields" in text
     assert "Achievement point total does not reconcile" in text
+    assert "snapshot.get('workshop_certification', {})" in text
+    assert "aibast-workshop-certification/1.0" in text
+    assert "Facilitator certification profiles contain unsafe fields" in text
+    assert "Candidate certification profiles contain unsafe fields" in text
+    assert '"cohort_code"' in text
+    assert '"achievement_issue_url"' in text
     assert "aibast-achievements/1.0" not in text
 
 

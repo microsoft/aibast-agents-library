@@ -58,6 +58,33 @@ else
     fail "install.sh should clone microsoft/aibast-agents-library"
 fi
 
+if grep -q -- 'git clone --progress --filter=blob:none --sparse --depth 1' "$REPO_ROOT/install.sh" \
+   && grep -q 'sparse-checkout set rapp_brainstem' "$REPO_ROOT/install.sh"; then
+    pass "install.sh downloads only the Brainstem subtree"
+else
+    fail "install.sh should use a shallow partial sparse clone"
+fi
+
+if grep -q 'run_with_heartbeat "Creating Python virtual environment"' "$REPO_ROOT/install.sh" \
+   && grep -q 'run_with_heartbeat "Installing Python dependencies"' "$REPO_ROOT/install.sh"; then
+    pass "install.sh reports progress for long Python setup steps"
+else
+    fail "install.sh should show Python setup progress"
+fi
+
+if grep -q -- '--no-launch' "$REPO_ROOT/install.sh"; then
+    pass "install.sh supports runtime-only setup for the beta launcher"
+else
+    fail "install.sh should support --no-launch"
+fi
+
+if grep -q 'brainstem_source_ready' "$REPO_ROOT/install.sh" \
+   && grep -q 'repair_brainstem_source' "$REPO_ROOT/install.sh"; then
+    pass "install.sh repairs an incomplete sparse checkout"
+else
+    fail "install.sh should repair missing Brainstem source"
+fi
+
 echo ""
 
 # ── install.ps1 tests ────────────────────────────────────────────────────────
@@ -74,6 +101,33 @@ if grep -q '\.brainstem' "$REPO_ROOT/install.ps1"; then
     pass "install.ps1 targets ~/.brainstem"
 else
     fail "install.ps1 should target ~/.brainstem"
+fi
+
+if grep -q -- 'git clone --progress --filter=blob:none --sparse --depth 1' "$REPO_ROOT/install.ps1" \
+   && grep -q 'sparse-checkout set rapp_brainstem' "$REPO_ROOT/install.ps1"; then
+    pass "install.ps1 downloads only the Brainstem subtree"
+else
+    fail "install.ps1 should use a shallow partial sparse clone"
+fi
+
+if grep -q 'winget progress will appear below' "$REPO_ROOT/install.ps1" \
+   && grep -q 'pip progress will appear below' "$REPO_ROOT/install.ps1"; then
+    pass "install.ps1 reports progress for long Python setup steps"
+else
+    fail "install.ps1 should show Python setup progress"
+fi
+
+if grep -q -- '--no-launch' "$REPO_ROOT/install.ps1"; then
+    pass "install.ps1 supports runtime-only setup for the beta launcher"
+else
+    fail "install.ps1 should support --no-launch"
+fi
+
+if grep -q 'Test-BrainstemSourceReady' "$REPO_ROOT/install.ps1" \
+   && grep -q 'Repair-BrainstemSource' "$REPO_ROOT/install.ps1"; then
+    pass "install.ps1 repairs an incomplete sparse checkout"
+else
+    fail "install.ps1 should repair missing Brainstem source"
 fi
 
 BOOTSTRAP_BOMS=$("$PYTHON_BIN" - "$REPO_ROOT" <<'PY'
@@ -107,6 +161,46 @@ if grep -q 'FRESH_SHIPPED' "$REPO_ROOT/install.sh" \
     pass "repair installs preserve fresh bundled agents"
 else
     fail "repair installs should restore only custom agents"
+fi
+
+echo ""
+
+# ── beta launcher tests ───────────────────────────────────────────────────────
+
+echo "--- beta launcher ---"
+
+if [ -f "$REPO_ROOT/beta/install.sh" ] \
+   && [ -f "$REPO_ROOT/beta/install.cmd" ] \
+   && [ -f "$REPO_ROOT/beta/package.json" ]; then
+    pass "beta launcher release files exist"
+else
+    fail "beta launcher release files are incomplete"
+fi
+
+if bash -n "$REPO_ROOT/beta/install.sh" \
+   && grep -q 'microsoft/aibast-agents-library.git' "$REPO_ROOT/beta/install.sh" \
+   && ! grep -q 'kody-w/rapp-installer' "$REPO_ROOT/beta/install.sh"; then
+    pass "beta installer uses the canonical AIBAST source"
+else
+    fail "beta installer source or syntax is invalid"
+fi
+
+if grep -q -- 'fetch --progress --filter=blob:none --depth 1 origin "$REPO_REF"' "$REPO_ROOT/beta/install.sh" \
+   && grep -q 'sparse-checkout set beta' "$REPO_ROOT/beta/install.sh" \
+   && grep -q 'Frontier and standard Brainstem share' "$REPO_ROOT/beta/install.sh" \
+   && grep -q 'BRAINSTEM_BETA_COMMIT' "$REPO_ROOT/beta/install.sh"; then
+    pass "beta installer is sparse and shares the global Brainstem"
+else
+    fail "beta installer should stay small and reuse the global Brainstem"
+fi
+
+if grep -Fq 'Learn AI · teach AI · keep the skill' "$REPO_ROOT/beta/ui/index.html" \
+   && grep -Fq 'A customer asks, "Can AI do this process?"' "$REPO_ROOT/beta/ui/index.html" \
+   && grep -Fq 'VS Code remains optional.' "$REPO_ROOT/beta/ui/index.html" \
+   && ! grep -q 'id="vscode"' "$REPO_ROOT/beta/ui/index.html"; then
+    pass "beta first-run guide explains rapid customer use cases"
+else
+    fail "beta launcher should include customer-use-case onboarding"
 fi
 
 echo ""
@@ -326,6 +420,14 @@ if [ -f "$REPO_ROOT/docs/install.sh" ] && grep -q "brainstem" "$REPO_ROOT/docs/i
     pass "docs/install.sh exists for GitHub Pages curl"
 else
     fail "docs/install.sh missing (needed for curl one-liner via GitHub Pages)"
+fi
+
+if cmp -s "$REPO_ROOT/install.sh" "$REPO_ROOT/docs/install.sh" \
+   && cmp -s "$REPO_ROOT/install.ps1" "$REPO_ROOT/docs/install.ps1" \
+   && cmp -s "$REPO_ROOT/install.cmd" "$REPO_ROOT/docs/install.cmd"; then
+    pass "installer mirrors are byte-identical"
+else
+    fail "docs installer mirrors must match root installers"
 fi
 
 if [ ! -f "$REPO_ROOT/docs/copilot-install.html" ]; then

@@ -1,0 +1,128 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "account-intelligence",
+  "agent": "@aibast-agents-library/account-intelligence",
+  "display_name": "Account Intelligence Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Bundled synthetic account evidence",
+        "detail": "Fixed account, stakeholder, activity, news, competitor, adoption, and risk records support deterministic demonstrations."
+      },
+      {
+        "name": "Operating rules and evidence anchors",
+        "detail": "Uploaded rules define calculations, routing, required headings, synthetic labels, and prohibited actions for all six operations."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Account evidence consolidation",
+        "detail": "Combines firmographic, adoption, engagement, support, and recent-activity evidence into a unified account overview."
+      },
+      {
+        "name": "Stakeholder and relationship analysis",
+        "detail": "Maps buying roles, influence, sentiment, engagement, champions, and relationship gaps from the fixed evidence snapshot."
+      },
+      {
+        "name": "Competitive positioning analysis",
+        "detail": "Compares synthetic competitor activity, relationship depth, product fit, pricing, implementation, advantages, and threats."
+      },
+      {
+        "name": "Deal risk and mitigation analysis",
+        "detail": "Explains synthetic deal risks, severity, candidate mitigations, and a computed win-probability indicator without forecast writes."
+      },
+      {
+        "name": "Messaging and briefing preparation",
+        "detail": "Drafts persona-aligned talking points, objection handling, executive summaries, and pre-meeting checklists for human review."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio conversational experience",
+        "detail": "Provides natural-language access for account executives, sales directors, and customer-success managers in a Draft agent."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs the single-file RAPP agent through the local Brainstem chat and UI endpoints with synthetic-only routing."
+      },
+      {
+        "name": "Evidence-first review outputs",
+        "detail": "Presents synthetic snapshot, cited evidence, analysis, draft preparation, and an explicit approval gate in reviewable responses."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Account health and activity overview",
+        "detail": "Reports account attributes, health score, engagement, adoption, support sentiment, renewal risk, and recent synthetic activity."
+      },
+      {
+        "name": "Deal risk and competitive review",
+        "detail": "Summarizes competitor signals, positioning considerations, deal risks, mitigation options, and synthetic planning indicators."
+      },
+      {
+        "name": "Executive pre-meeting briefing",
+        "detail": "Compiles opportunity, account health, stakeholder, competition, risk, and checklist views for meeting and account planning."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable RAPP Account Intelligence Agent",
+      "detail": "Single-file AccountIntelligenceAgent implements six read-only operations with bundled synthetic data and no credentials."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the natural-language agent package; the validated solution remains Draft and requires explicit approval before publish."
+    },
+    {
+      "name": "Dynamics 365 Sales",
+      "detail": "Approved production seam for account and relationship context; it is not connected in the current synthetic package."
+    },
+    {
+      "name": "SharePoint",
+      "detail": "Approved production seam for account plans and references; the current package instead uses bundled synthetic knowledge files."
+    },
+    {
+      "name": "Microsoft Teams",
+      "detail": "Approved collaboration and meeting-preparation seam; no message, meeting, task, or customer action is configured."
+    },
+    {
+      "name": "Approved business-intelligence source",
+      "detail": "Dedicated approved connection reference may replace synthetic evidence only after review; none is configured in the package."
+    },
+    {
+      "name": "Foundation model selected by deployment environment",
+      "detail": "The deployment environment supplies the model used for conversational routing and response generation."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Fixed synthetic evidence policy",
+      "detail": "Uses only bundled allow-listed evidence and forbids browsing, enrichment, substitution, or invention of missing facts."
+    },
+    {
+      "name": "Six deterministic operations",
+      "detail": "Routes account overview, stakeholder map, competitive intel, value messaging, risk assessment, and executive briefing requests."
+    },
+    {
+      "name": "Evidence-first response contract",
+      "detail": "Separates recorded evidence from computed indicators and labels exact names, values, scores, and projections as synthetic."
+    },
+    {
+      "name": "Human approval gates",
+      "detail": "Requires authorized account-owner and relevant legal, privacy, sales, customer-success, and commercial review before external use."
+    },
+    {
+      "name": "Read-only governance boundary",
+      "detail": "Prevents CRM writes, outreach, tasks, meetings, alerts, proposals, pricing approvals, forecast changes, and customer communication."
+    },
+    {
+      "name": "Locked demo and isolation validation",
+      "detail": "Maintains one persona-language case per operation and records six passing captures with only AccountIntelligenceAgent loaded."
+    },
+    {
+      "name": "Draft and publication control",
+      "detail": "Keeps Copilot Studio artifacts in Draft, validates before push, and makes publication a separate user-approved step."
+    }
+  ]
+}

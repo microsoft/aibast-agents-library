@@ -348,7 +348,8 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     assert "aibast:workshop-engine" in quest
     assert "data-easy-lane-button" not in quest
     assert "Workshop settings" in quest
-    assert quest.count("data-copy-target=") == 16
+    assert quest.count("data-copy-target=") == 17
+    assert "Install RAPP Brainstem Frontier" in quest
     assert "Download Brainstem SKILL.md" in quest
     assert "Download Copilot-only SKILL.md" in quest
     assert quest.count('download="SKILL.md"') == 2
@@ -378,7 +379,7 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     assert "Raw resources" not in quest
     assert "<iframe" not in quest
     assert 'class="path" data-path="hard"' in quest
-    assert "Open standalone Hard-mode guide" in quest
+    assert "Open standalone Manual-mode guide" in quest
     assert manual_tutorial.count(
         'data-copy-target="hard-copy-'
     ) == 7
@@ -393,12 +394,12 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
         "| Pass | 4 |",
         "| Partial | 15 |",
         "| Fail | 7 |",
-        "Nine Hard-mode screenshots are byte-for-byte identical",
+        "Nine Manual-mode screenshots are byte-for-byte identical",
         "grounding files are not present",
         "All 26 source screenshots are low-resolution legacy captures",
         "2560×1440",
         "use AI upscaling as a substitute",
-        "Do not present the current Hard-mode run as proven end to end",
+        "Do not present the current Manual-mode run as proven end to end",
     ):
         assert marker in visual_audit
 

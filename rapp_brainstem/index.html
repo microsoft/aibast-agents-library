@@ -1195,7 +1195,7 @@
         <div class="panel-status" id="voice-panel-status"></div>
       </div>
     </div>
-    <a class="icon-btn" href="vscode://file/$HOME/.brainstem/src/rapp_brainstem" id="vscode-link" title="Open in VS Code">
+    <a class="icon-btn" href="vscode://file/$HOME/.brainstem/src/rapp_brainstem" id="vscode-link" target="_blank" rel="noopener noreferrer" title="Open in VS Code">
       <span class="icon"><svg viewBox="0 0 16 16"><path d="M14.85 3.22l-3.07-1.56a.75.75 0 00-.82.12L5.8 6.56 3.16 4.58a.5.5 0 00-.64.05l-.86.74a.5.5 0 00-.004.72L3.87 8l-2.22 1.92a.5.5 0 00.003.72l.86.74a.5.5 0 00.64.05L5.8 9.44l5.16 4.78a.75.75 0 00.82.12l3.07-1.56a.75.75 0 00.42-.67V3.89a.75.75 0 00-.42-.67zM11 10.93L7.3 8 11 5.07v5.86z"/></svg></span>
     </a>
   </div>
@@ -2345,6 +2345,16 @@
 
   // ── Input ──
   const input = document.getElementById('input');
+  const prefilledPrompt = new URLSearchParams(window.location.search).get('prompt');
+  if (prefilledPrompt) {
+    input.value = prefilledPrompt.slice(0, 4000);
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+    input.focus();
+    const cleanUrl = new URL(window.location.href);
+    cleanUrl.searchParams.delete('prompt');
+    history.replaceState(null, '', cleanUrl.pathname + cleanUrl.search + cleanUrl.hash);
+  }
   input.addEventListener('input', () => {
     input.style.height = 'auto';
     input.style.height = Math.min(input.scrollHeight, 120) + 'px';

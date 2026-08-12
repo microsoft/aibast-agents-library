@@ -28,7 +28,7 @@ concepts, and incentive scenarios only; it contacts nobody and changes no cart.
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/cart-abandonment-recovery/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/cart-abandonment-recovery/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/cart-abandonment-recovery/quest.html` |
+| Guided Easy/Manual quest | `solutions/cart-abandonment-recovery/quest.html` |
 | Literal browser tutorial | `solutions/cart-abandonment-recovery/manual-tutorial.html` |
 | Raw export manifest | `solutions/cart-abandonment-recovery/export-manifest.json` |
 | Source bundle | `solutions/cart-abandonment-recovery/exports/cart-abandonment-recovery-source.zip` |

@@ -211,6 +211,13 @@ EOF
     | "$PYTHON_BIN" -c 'import json,sys; d=json.load(sys.stdin); assert "error" in d' \
     && ok "/chat rejects bad input as JSON" || bad "/chat error contract"
 
+git -C "$FAKE_HOME/.brainstem/src" config --bool core.sparseCheckout | grep -qx true \
+    && ok "installer uses sparse checkout" || bad "sparse checkout not enabled"
+[ "$(git -C "$FAKE_HOME/.brainstem/src" config --get remote.origin.partialclonefilter)" = "blob:none" ] \
+    && ok "installer filters non-Brainstem blobs" || bad "partial clone filter not configured"
+test ! -e "$FAKE_HOME/.brainstem/src/solutions" \
+    && ok "solution bundles excluded from install" || bad "solution bundles leaked into install"
+
 if [ "$SCENARIO" = "upgrade" ]; then
     test -f "$FAKE_HOME/.brainstem/src/rapp_brainstem/agents/preflight_custom_agent.py" \
         && ok "custom agent survived upgrade" || bad "custom agent lost in upgrade"

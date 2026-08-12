@@ -36,7 +36,7 @@ The local agent uses fictional records and produces decision support only. It do
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/utility-billing-assistance/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/utility-billing-assistance/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/utility-billing-assistance/quest.html` |
+| Guided Easy/Manual quest | `solutions/utility-billing-assistance/quest.html` |
 | Literal browser tutorial | `solutions/utility-billing-assistance/manual-tutorial.html` |
 | Raw export manifest | `solutions/utility-billing-assistance/export-manifest.json` |
 | Source bundle | `solutions/utility-billing-assistance/exports/utility-billing-assistance-source.zip` |

@@ -1,0 +1,140 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "patient-intake",
+  "agent": "@aibast-agents-library/patient-intake",
+  "display_name": "Patient Intake and Scheduling Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Fixed synthetic patient-access records",
+        "detail": "Fixed fictional patients, forms, coverage evidence, visits, providers, dates, and candidate slots enable deterministic demos."
+      },
+      {
+        "name": "Patient-intake review and privacy rules",
+        "detail": "Rules require minimum-necessary synthetic data, separate source evidence from decisions, and prohibit live data and autonomous action."
+      },
+      {
+        "name": "Operation skills and locked evidence anchors",
+        "detail": "Four skills define routing, evidence contracts, unknown-ID stops, safety notices, and staff-review gates."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Intake readiness assessment",
+        "detail": "Summarizes forms, language, and missing items for authorized staff review without changing patient records."
+      },
+      {
+        "name": "Coverage evidence transcription",
+        "detail": "Transcribes payer evidence and follow-up without deciding eligibility, network status, referrals, benefits, or patient cost."
+      },
+      {
+        "name": "Candidate appointment availability review",
+        "detail": "Shows candidate provider slots for staff review; nothing is held, reserved, booked, rescheduled, or canceled."
+      },
+      {
+        "name": "Pre-visit readiness synthesis",
+        "detail": "Combines visit context, missing items, coverage follow-up, and the required reviewer in a minimum-necessary draft."
+      },
+      {
+        "name": "Deterministic routing and fail-closed selection",
+        "detail": "Routes four read-only operations and rejects unknown patients or providers without substitution or invented evidence."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio conversational workspace",
+        "detail": "Offers a Draft Copilot Studio agent with four skills, two synthetic knowledge files, no web search, and no action tools."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs PatientIntakeAgent in local Brainstem chat with deterministic, synthetic-only routing."
+      },
+      {
+        "name": "Role-based staff review experience",
+        "detail": "Provides staff compact, evidence-first drafts with explicit privacy, source-system, and human-review boundaries."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Intake completeness review",
+        "detail": "Reports forms, preferred language, and outstanding synthetic intake items for staff confirmation."
+      },
+      {
+        "name": "Coverage evidence review",
+        "detail": "Reports payer evidence and follow-up while reserving verification and eligibility decisions for authorized staff."
+      },
+      {
+        "name": "Candidate availability report",
+        "detail": "Lists provider, date, time, and service candidates while stating no slot was reserved or booked."
+      },
+      {
+        "name": "Pre-visit readiness handoff",
+        "detail": "Summarizes visit context, unresolved intake and coverage items, and the authorized reviewer required before action."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable PatientIntakeAgent RAPP tool",
+      "detail": "Single-file Python agent provides four synthetic, read-only operations with no external calls or mutations."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Discovers the portable agent and exposes local chat, streaming, health, and agent endpoints."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the validated Draft package with two knowledge files and four skills; the unmanaged export remains unpublished."
+    },
+    {
+      "name": "Dynamics 365 patient-access workflow",
+      "detail": "Future governed intake seam; it is disconnected from this synthetic package and has no write permission."
+    },
+    {
+      "name": "SharePoint governed intake documents",
+      "detail": "Future controlled-document seam; the current package uses only bundled fictional knowledge."
+    },
+    {
+      "name": "Approved payer and referral source systems",
+      "detail": "Future least-privilege verification seam; the agent never verifies coverage, referrals, or eligibility."
+    },
+    {
+      "name": "Approved scheduling system",
+      "detail": "Future approval-gated scheduling seam; the agent shows candidate slots but never holds or books them."
+    },
+    {
+      "name": "Microsoft Teams staff approvals",
+      "detail": "Future human-approval seam; no messages, approval requests, scheduling, or record changes are configured."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Fixed synthetic and minimum-necessary evidence policy",
+      "detail": "Uses two fictional patient records and candidate slots; forbids live data, browsing, enrichment, substitution, or invention."
+    },
+    {
+      "name": "Four deterministic read-only operations",
+      "detail": "Routes intake, coverage, availability, and pre-visit requests to four bounded read-only handlers."
+    },
+    {
+      "name": "Privacy and clinical safety boundary",
+      "detail": "Protects live patient data and excludes diagnosis, treatment, medical necessity, authorization, and financial decisions."
+    },
+    {
+      "name": "Fail-closed identifier handling",
+      "detail": "Rejects unknown synthetic IDs and routes live-data or consequential requests to authorized staff without substitution."
+    },
+    {
+      "name": "Authorized staff review gate",
+      "detail": "Requires authorized patient-access or qualified reviewers to verify source systems and review every substantive output."
+    },
+    {
+      "name": "No scheduling or record mutation without approval",
+      "detail": "The agent never schedules or mutates records; any downstream action requires separate authorized human approval."
+    },
+    {
+      "name": "Locked validation and publication control",
+      "detail": "Four cases passed manual and preview validation; no web search or actions are enabled, and publication needs admin approval."
+    }
+  ]
+}

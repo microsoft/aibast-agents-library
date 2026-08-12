@@ -231,8 +231,6 @@
   <div class="hero-actions">
     <a class="hero-action primary" href="docs/rapp-guide.html">Open Production Guide</a>
     <a class="hero-action" href="library.html">Browse Agent Library</a>
-    <a class="hero-action" href="achievements.html">My achievements</a>
-    <a class="hero-action" href="metrics.html">Library Metrics</a>
   </div>
 </div>
 
@@ -281,7 +279,7 @@
           <h3>Run the one-liner</h3>
           <p>This is the only step. It installs Python, clones the repo, sets up a venv, authenticates, and launches.</p>
           <div class="cmd" id="brainstem-cmd" onclick="copyCmd(event, this)">curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash</div>
-          <p style="margin-top:6px;font-size:12px;color:#8b949e;">Windows: <code style="cursor:pointer" onclick="copyCmd(event, this)">irm https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/install.ps1 | iex</code></p>
+          <p style="margin-top:6px;font-size:12px;color:#8b949e;">Windows: <code id="brainstem-win-cmd" style="cursor:pointer" onclick="copyCmd(event, this)">irm https://microsoft.github.io/aibast-agents-library/install.ps1 | iex</code></p>
         </div>
       </div>
       <div class="install-download" id="install-download" style="margin-top:12px">
@@ -425,28 +423,56 @@
 
 <script>
   // ── Install widget ──
+  const publishedBase = (
+    location.protocol === 'https:' && location.hostname.endsWith('.github.io')
+      ? new URL('.', location.href).href
+      : 'https://microsoft.github.io/aibast-agents-library/'
+  );
+  function buildInstallCommands(hostname, base) {
+    const staging = hostname === 'kody-w.github.io';
+    const owner = staging ? 'kody-w' : 'microsoft';
+    const ref = staging ? 'easy-mode-copilot-chat-pilot' : 'main';
+    const repoUrl = `https://github.com/${owner}/aibast-agents-library.git`;
+    const versionUrl = `https://raw.githubusercontent.com/${owner}/aibast-agents-library/${ref}/rapp_brainstem/VERSION`;
+    const bashOverrides = staging
+      ? `BRAINSTEM_REPO_URL=${repoUrl} BRAINSTEM_REPO_REF=${ref} BRAINSTEM_VERSION_URL=${versionUrl} `
+      : '';
+    const powershellOverrides = staging
+      ? `$env:BRAINSTEM_REPO_URL='${repoUrl}'; $env:BRAINSTEM_REPO_REF='${ref}'; $env:BRAINSTEM_VERSION_URL='${versionUrl}'; `
+      : '';
+    return {
+      staging,
+      owner,
+      ref,
+      bash: `curl -fsSL ${base}install.sh | ${bashOverrides}bash`,
+      windows: `${powershellOverrides}irm ${base}install.ps1 | iex`,
+      macManual: `git clone --branch ${ref} ${repoUrl} ~/.brainstem/src && cd ~/.brainstem/src/rapp_brainstem && pip3 install -r requirements.txt && ./start.sh`,
+      windowsManual: `git clone --branch ${ref} ${repoUrl} %USERPROFILE%\\.brainstem\\src && cd %USERPROFILE%\\.brainstem\\src\\rapp_brainstem && pip install -r requirements.txt && python brainstem.py`
+    };
+  }
+  const installCommands = buildInstallCommands(location.hostname, publishedBase);
   const installs = {
     'macOS/Linux': {
       'one-liner': {
         comment: '# Works everywhere. Installs everything. 🧠',
-        cmd: 'curl -fsSL https://microsoft.github.io/aibast-agents-library/install.sh | bash',
+        cmd: installCommands.bash,
         hint: 'Works on macOS & Linux. Auto-installs Python 3.11 if missing.'
       },
       'manual': {
         comment: '# Clone, install deps, done.',
-        cmd: 'git clone https://github.com/microsoft/aibast-agents-library.git ~/.brainstem/src && cd ~/.brainstem/src/rapp_brainstem && pip3 install -r requirements.txt && ./start.sh',
+        cmd: installCommands.macManual,
         hint: 'Requires Python 3.11+ and Git already installed.'
       }
     },
     'Windows': {
       'one-liner': {
         comment: '# Factory Windows 11 ready. Installs everything via winget. 🧠',
-        cmd: 'irm https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/install.ps1 | iex',
+        cmd: installCommands.windows,
         hint: 'Run in PowerShell. Auto-installs Python, Git & GitHub CLI via winget.'
       },
       'manual': {
         comment: '# Clone, install deps, done.',
-        cmd: 'git clone https://github.com/microsoft/aibast-agents-library.git %USERPROFILE%\\.brainstem\\src && cd %USERPROFILE%\\.brainstem\\src\\rapp_brainstem && pip install -r requirements.txt && python brainstem.py',
+        cmd: installCommands.windowsManual,
         hint: 'Requires Python 3.11+ and Git already installed.'
       }
     }
@@ -455,13 +481,49 @@
   let currentOS = navigator.platform.includes('Win') ? 'Windows' : 'macOS/Linux';
   let currentTab = 'one-liner';
 
-  const downloads = {
-    'macOS/Linux': { href: 'install.command', label: '⬇ Download installer (.command)' },
-    'Windows':     { href: 'install.cmd',     label: '⬇ Download installer (.cmd)' }
-  };
+  function buildInstallerDownloads(commands) {
+    if (!commands.staging) {
+      return {
+        'macOS/Linux': {
+          href: 'install.command',
+          filename: 'install.command',
+          label: '⬇ Download installer (.command)'
+        },
+        'Windows': {
+          href: 'install.cmd',
+          filename: 'install.cmd',
+          label: '⬇ Download installer (.cmd)'
+        }
+      };
+    }
+    const macPayload = `#!/bin/bash\n${commands.bash}\n`;
+    const windowsPayload = [
+      '@echo off',
+      'powershell -NoProfile -ExecutionPolicy Bypass -Command "' + commands.windows + '"',
+      'if %ERRORLEVEL% neq 0 exit /b 1',
+      ''
+    ].join('\r\n');
+    return {
+      'macOS/Linux': {
+        href: URL.createObjectURL(new Blob([macPayload], { type: 'application/x-sh' })),
+        filename: 'install-staging.command',
+        label: '⬇ Download staging installer (.command)'
+      },
+      'Windows': {
+        href: URL.createObjectURL(new Blob([windowsPayload], { type: 'application/octet-stream' })),
+        filename: 'install-staging.cmd',
+        label: '⬇ Download staging installer (.cmd)'
+      }
+    };
+  }
+  const downloads = buildInstallerDownloads(installCommands);
 
   function renderInstall() {
     const data = installs[currentOS][currentTab];
+    document.getElementById('brainstem-cmd').textContent =
+      installs['macOS/Linux']['one-liner'].cmd;
+    document.getElementById('brainstem-win-cmd').textContent =
+      installs.Windows['one-liner'].cmd;
     document.getElementById('os-label').textContent = currentOS;
     document.getElementById('install-comment').textContent = data.comment;
     document.getElementById('install-cmd').textContent = data.cmd;
@@ -472,6 +534,7 @@
       const dl = downloads[currentOS];
       const link = document.getElementById('download-link');
       link.href = dl.href;
+      link.download = dl.filename;
       link.textContent = dl.label;
       dlDiv.style.display = '';
     } else {
@@ -528,12 +591,11 @@
     const label = document.getElementById('status-label');
     const btn = document.getElementById('open-btn');
     try {
-      const r = await fetch('http://localhost:7071/health', { signal: AbortSignal.timeout(3000) });
+      const r = await fetch('http://localhost:7071/health/public', { signal: AbortSignal.timeout(3000) });
       const d = await r.json();
       if (d.status === 'ok') {
         dot.className = 'dot online';
-        const agents = d.agents ? d.agents.length : 0;
-        label.textContent = `Brainstem running · ${d.model} · ${agents} agent${agents !== 1 ? 's' : ''}`;
+        label.textContent = `Brainstem running · v${d.version}`;
         btn.disabled = false;
       } else {
         dot.className = 'dot offline';

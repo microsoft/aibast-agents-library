@@ -45,7 +45,7 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/sales-qualification/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/sales-qualification/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/sales-qualification/quest.html` |
+| Guided Easy/Manual quest | `solutions/sales-qualification/quest.html` |
 | Literal browser tutorial | `solutions/sales-qualification/manual-tutorial.html` |
 | Raw export manifest | `solutions/sales-qualification/export-manifest.json` |
 | Source bundle | `solutions/sales-qualification/exports/sales-qualification-source.zip` |

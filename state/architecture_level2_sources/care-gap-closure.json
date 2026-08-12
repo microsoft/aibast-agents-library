@@ -1,0 +1,140 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "care-gap-closure",
+  "agent": "@aibast-agents-library/care-gap-closure",
+  "display_name": "Care Gap Closure Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic quality-measure evidence",
+        "detail": "Three fixed measures provide populations, source-recorded closure, review queues, dates, rates, and explicit evidence limitations."
+      },
+      {
+        "name": "Synthetic operational cohorts and outreach language",
+        "detail": "Bundled cohorts define aggregate counts, evidence barriers, draft handling routes, and one canonical unsent care-team contact template."
+      },
+      {
+        "name": "Clinical, privacy, and review controls",
+        "detail": "Packaged rules require minimum-necessary synthetic data, validated exclusions and preferences, limitations, and human approval."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Source-evidence gap analysis",
+        "detail": "Calculates records requiring evidence review and the largest queue without deciding eligibility, compliance, or clinical priority."
+      },
+      {
+        "name": "Operational cohort organization",
+        "detail": "Groups synthetic evidence-review work by source barrier and handling route while explicitly avoiding clinical risk scoring."
+      },
+      {
+        "name": "Privacy-aware outreach drafting",
+        "detail": "Produces neutral, unsent language that invites contact with the care team and prohibits claims that care is overdue or a person is eligible."
+      },
+      {
+        "name": "Qualitative source-completeness analysis",
+        "detail": "Calculates source-recorded closure rates and pairs each measure with its evidence date and reviewer limitation for validation."
+      },
+      {
+        "name": "Deterministic intent routing",
+        "detail": "Maps quality-manager, care-coordinator, and clinical-operations language to four bounded operations and fails closed on unknown identifiers."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot Studio conversational workspace",
+        "detail": "Provides a validated Draft experience with four skills and two synthetic knowledge files; web search is removed and publication is gated."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs the single-file CareGapClosureAgent through local chat and API routes with read-only, synthetic-only operation handling."
+      },
+      {
+        "name": "Role-based evidence review experience",
+        "detail": "Quality managers, care coordinators, and clinical operations leads receive evidence, limitations, and human review steps."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Source-evidence gap report",
+        "detail": "Shows each measure\u2019s population, source-recorded closure, review queue, and limitation without labeling people overdue or noncompliant."
+      },
+      {
+        "name": "Aggregate cohort review",
+        "detail": "Reports cohort counts, evidence barriers, and draft routes as operational triage for authorized quality and care-team review."
+      },
+      {
+        "name": "Outreach draft review",
+        "detail": "Presents the canonical unsent message, eligibility prohibition, privacy checks, and approval route before any authorized operator may act."
+      },
+      {
+        "name": "Qualitative quality dashboard",
+        "detail": "Reports source-recorded closure rates, dates, and limitations as completeness signals, not verified performance or compliance."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "CareGapClosureAgent portable RAPP tool",
+      "detail": "Single-file Python BasicAgent implements four deterministic, read-only operations over fixed synthetic measures and cohorts."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server discovers the portable tool and exposes chat, streaming, health, and tool-routing endpoints."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the validated Draft package with four operation skills and two synthetic knowledge files; publishing requires separate approval."
+    },
+    {
+      "name": "Deployment-selected foundation model",
+      "detail": "The host model routes natural-language requests and composes responses from bounded agent or skill evidence."
+    },
+    {
+      "name": "Dynamics 365 care-coordination workflow",
+      "detail": "Documented future governed seam for care-coordination context; the current package has no live connection or write permission."
+    },
+    {
+      "name": "Microsoft Teams review and approval",
+      "detail": "Documented future seam for clinician and care-team collaboration; no message, approval request, or external action is sent."
+    },
+    {
+      "name": "Approved quality and clinical source systems",
+      "detail": "Future least-privilege seam for validated measure definitions, exclusions, claims, labs, attribution, and evidence; none is connected now."
+    },
+    {
+      "name": "Authorized outreach workflow",
+      "detail": "Future downstream seam for approved operators after consent, preference, accessibility, privacy, and clinical review; the agent only drafts."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic-only privacy boundary",
+      "detail": "Uses aggregate fictional measures and cohorts, never requests live patient data, and limits outputs to minimum-necessary synthetic fields."
+    },
+    {
+      "name": "Four independently routable operations",
+      "detail": "Gap analysis, cohort review, outreach drafting, and quality dashboard requests remain bounded, deterministic, and separately reviewable."
+    },
+    {
+      "name": "Fail-closed evidence handling",
+      "detail": "Unknown measure identifiers return no match rather than substituting another record, browsing, enriching, or inventing evidence."
+    },
+    {
+      "name": "Evidence limitations and uncertainty",
+      "detail": "Every substantive output identifies synthetic evidence, preserves limitations, and avoids unsupported eligibility or compliance conclusions."
+    },
+    {
+      "name": "Clinician and care-team review gates",
+      "detail": "Quality reviewers validate measures, clinicians own clinical interpretation, and authorized care-team operators approve downstream action."
+    },
+    {
+      "name": "No autonomous outreach or clinical decision",
+      "detail": "Prevents diagnosis, treatment advice, eligibility decisions, risk scoring, outreach, scheduling, authorization, and record changes."
+    },
+    {
+      "name": "Locked validation and publication control",
+      "detail": "Four strict-isolation cases and four Studio previews passed; the package remains Draft and unpublished until separately authorized."
+    }
+  ]
+}

@@ -39,7 +39,7 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/fraud-detection-alert/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/fraud-detection-alert/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/fraud-detection-alert/quest.html` |
+| Guided Easy/Manual quest | `solutions/fraud-detection-alert/quest.html` |
 | Literal browser tutorial | `solutions/fraud-detection-alert/manual-tutorial.html` |
 | Raw export manifest | `solutions/fraud-detection-alert/export-manifest.json` |
 | Source bundle | `solutions/fraud-detection-alert/exports/fraud-detection-alert-source.zip` |

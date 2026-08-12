@@ -1,0 +1,136 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "ask-hr",
+  "agent": "@aibast-agents-library/ask-hr",
+  "display_name": "Ask HR Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Fixed synthetic employee records",
+        "detail": "Fictional profiles provide roles, managers, tenure, leave balances, health plans, dependents, and benefits values for safe demos."
+      },
+      {
+        "name": "Published synthetic policy snapshot",
+        "detail": "Bundled time-off, parental-leave, remote-work, health-plan, holiday, enrollment, and allowance rules ground each response."
+      },
+      {
+        "name": "Privacy and authorization guidance",
+        "detail": "Packaged rules define minimum disclosure, prohibited sensitive inference, human verification duties, and no-action boundaries."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Leave-balance explanation",
+        "detail": "Returns the selected fictional profile's leave balances, accrual, holidays, notice rule, blackout period, and rollover limit."
+      },
+      {
+        "name": "Time-off draft projection",
+        "detail": "Echoes supplied dates and calculates projected vacation balance while keeping the request Not Submitted and notification-free."
+      },
+      {
+        "name": "Parental-leave policy explanation",
+        "detail": "Explains the published example without requesting family or medical details and routes eligibility confirmation to authorized HR."
+      },
+      {
+        "name": "Health-plan policy explanation",
+        "detail": "Summarizes fictional coverage and enrollment rules without recommending a plan or deciding benefits eligibility."
+      },
+      {
+        "name": "Remote-work policy guidance",
+        "detail": "Presents the published allowance and support terms without inferring caregiver, disability, medical, or family status."
+      },
+      {
+        "name": "Benefits snapshot synthesis",
+        "detail": "Combines leave, health, remote-work, and equipment facts without estimating salary, compensation, medical value, or eligibility."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Microsoft Copilot Studio conversation",
+        "detail": "Hosts the validated Draft agent with six skills and two synthetic knowledge files; web search is removed and publish is gated."
+      },
+      {
+        "name": "Teams and Microsoft 365 Copilot access",
+        "detail": "Provides the cited employee, manager, and HR operations conversational entry points when approved production controls are configured."
+      },
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "Runs the single-file AskHRAgent through local chat and UI endpoints with deterministic, synthetic-only operation routing."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Leave and time-off review",
+        "detail": "Shows balances, notice rules, requested dates, projected balance, manager reference, and explicit draft-only status for review."
+      },
+      {
+        "name": "Policy and benefits verification view",
+        "detail": "Summarizes policy evidence and clearly identifies what authorized HR, benefits staff, or managers must verify."
+      },
+      {
+        "name": "Acceptance and publication evidence",
+        "detail": "Records six passing persona cases, package integrity, Draft status, unpublished state, and the separate publication approval gate."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable AskHRAgent RAPP tool",
+      "detail": "Single-file Python BasicAgent implements six deterministic, read-only operations over bundled synthetic HR evidence."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server discovers AskHRAgent and exposes conversational chat, streaming, health, and tool-routing endpoints."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the six-skill conversational package in Draft; explicit authorized approval is required before publication."
+    },
+    {
+      "name": "Microsoft Teams and Microsoft 365 Copilot",
+      "detail": "Cited user experience surfaces for approved deployments; the synthetic package sends no messages or notifications."
+    },
+    {
+      "name": "Approved HRIS and benefits systems",
+      "detail": "Cited production seams for identity-scoped employee and benefits data; no live connection exists in the packaged demonstration."
+    },
+    {
+      "name": "Approved policy knowledge source",
+      "detail": "Cited production seam for governed HR policy content; the current package uses two fixed synthetic knowledge files instead."
+    },
+    {
+      "name": "Authorized HR reviewer workflow",
+      "detail": "Cited human workflow for eligibility, exceptions, approvals, and transactions; the agent only explains or prepares drafts."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Fixed synthetic evidence boundary",
+      "detail": "Uses only bundled fictional records and policies and forbids browsing, live HR claims, substitution, enrichment, or invention."
+    },
+    {
+      "name": "Employee privacy and data minimization",
+      "detail": "Limits profile details to the question and never exposes another profile or matches fictional records to real employees."
+    },
+    {
+      "name": "Sensitive-inference prohibition",
+      "detail": "Prevents inference of pregnancy, caregiver status, disability, medical condition, family status, leave reason, or health risk."
+    },
+    {
+      "name": "Authorized human decision gates",
+      "detail": "Keeps eligibility, plan selection, exceptions, approvals, employment decisions, and individualized determinations with authorized staff."
+    },
+    {
+      "name": "No external side effects",
+      "detail": "Prevents submissions, notifications, HR-record changes, live form population, manager contact, enrollment, and approvals."
+    },
+    {
+      "name": "Deterministic routing and validation",
+      "detail": "Six natural-language cases verify one bounded operation each, exact evidence anchors, safety wording, and strict tool isolation."
+    },
+    {
+      "name": "Draft and publication control",
+      "detail": "Manual and synchronized Copilot Studio packages remain Draft and unpublished until an explicit authorized publish decision."
+    }
+  ]
+}

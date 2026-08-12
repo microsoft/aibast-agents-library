@@ -36,7 +36,7 @@ The local agent uses fictional records and produces decision support only. It do
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/energy-regulatory-reporting/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/energy-regulatory-reporting/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/energy-regulatory-reporting/quest.html` |
+| Guided Easy/Manual quest | `solutions/energy-regulatory-reporting/quest.html` |
 | Literal browser tutorial | `solutions/energy-regulatory-reporting/manual-tutorial.html` |
 | Raw export manifest | `solutions/energy-regulatory-reporting/export-manifest.json` |
 | Source bundle | `solutions/energy-regulatory-reporting/exports/energy-regulatory-reporting-source.zip` |

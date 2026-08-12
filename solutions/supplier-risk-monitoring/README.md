@@ -37,7 +37,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload one `SKILL.md` fi
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/supplier-risk-monitoring/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/supplier-risk-monitoring/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/supplier-risk-monitoring/quest.html` |
+| Guided Easy/Manual quest | `solutions/supplier-risk-monitoring/quest.html` |
 | Literal browser tutorial | `solutions/supplier-risk-monitoring/manual-tutorial.html` |
 | Raw export manifest | `solutions/supplier-risk-monitoring/export-manifest.json` |
 | Source bundle | `solutions/supplier-risk-monitoring/exports/supplier-risk-monitoring-source.zip` |

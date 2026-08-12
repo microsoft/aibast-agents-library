@@ -37,7 +37,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload one `SKILL.md` fi
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/maintenance-scheduling/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/maintenance-scheduling/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/maintenance-scheduling/quest.html` |
+| Guided Easy/Manual quest | `solutions/maintenance-scheduling/quest.html` |
 | Literal browser tutorial | `solutions/maintenance-scheduling/manual-tutorial.html` |
 | Raw export manifest | `solutions/maintenance-scheduling/export-manifest.json` |
 | Source bundle | `solutions/maintenance-scheduling/exports/maintenance-scheduling-source.zip` |

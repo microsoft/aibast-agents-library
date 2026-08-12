@@ -39,7 +39,7 @@ Upload the two Markdown files in `manual/knowledge/`, then upload one `SKILL.md`
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/underwriting-support/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/underwriting-support/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/underwriting-support/quest.html` |
+| Guided Easy/Manual quest | `solutions/underwriting-support/quest.html` |
 | Literal browser tutorial | `solutions/underwriting-support/manual-tutorial.html` |
 | Raw export manifest | `solutions/underwriting-support/export-manifest.json` |
 | Source bundle | `solutions/underwriting-support/exports/underwriting-support-source.zip` |

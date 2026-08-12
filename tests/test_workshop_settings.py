@@ -18,19 +18,23 @@ QUEST = ROOT / "solutions/time-entry-billing/quest.html"
 MANUAL = ROOT / "solutions/time-entry-billing/manual-tutorial.html"
 
 
-def test_global_workshop_settings_default_to_copilot_and_persist():
+def test_global_workshop_settings_default_to_brainstem_and_persist():
     text = SETTINGS.read_text(encoding="utf-8")
     assert THEME_SCRIPT in text
     assert THEME_PREFERENCE_SCRIPT in text
     assert THEME_VARIABLES in text
     assert DARK_THEME_VARIABLES in text
     assert 'const key = "aibast:workshop-engine"' in text
-    assert '? "brainstem"' in text
-    assert ': "copilot"' in text
+    assert '? "copilot"' in text
+    assert ': "brainstem"' in text
     assert 'value="copilot"' in text
     assert 'value="brainstem"' in text
     assert "GitHub Copilot only" in text
     assert "GitHub Copilot + Brainstem" in text
+    copilot_option = text.split('value="copilot"', 1)[1].split("</label>", 1)[0]
+    brainstem_option = text.split('value="brainstem"', 1)[1].split("</label>", 1)[0]
+    assert '<span class="recommended">Default</span>' not in copilot_option
+    assert '<span class="recommended">Default</span>' in brainstem_option
     assert "applies to every AIBAST workshop" in text
     assert "localStorage.setItem(key" in text
     assert 'const theme = explicit || stored || "light"' in text
@@ -69,12 +73,14 @@ global.localStorage = {{
   setItem: (key, value) => stored[key] = value,
 }};
 {script}
+const initial = form.elements.engine.value;
 form.elements.engine.value = "brainstem";
 listeners.submit({{ preventDefault: () => {{}} }});
 console.log(JSON.stringify({{
   href: back.href,
   assigned: assigned[0],
   stored: stored["aibast:workshop-engine"],
+  initial,
 }}));
 """
     script_path = tmp_path / "workshop-settings-harness.js"
@@ -96,6 +102,7 @@ def test_workshop_settings_accept_valid_relative_return_and_persist(tmp_path):
         "href": expected,
         "assigned": expected,
         "stored": "brainstem",
+        "initial": "brainstem",
     }
 
 
@@ -112,6 +119,7 @@ def test_workshop_settings_reject_hostile_returns(tmp_path):
         assert result["href"] == fallback
         assert result["assigned"] == fallback
         assert result["stored"] == "brainstem"
+        assert result["initial"] == "brainstem"
 
 
 def test_quest_renders_only_the_global_engine_and_links_settings():
@@ -145,7 +153,7 @@ def test_hard_mode_renders_the_complete_manual_tutorial_natively():
     for token in ("aibast-hard-mode-height", "data-embedded", "postMessage"):
         assert token not in quest
         assert token not in manual
-    assert "Open standalone Hard-mode guide" in quest
+    assert "Open standalone Manual-mode guide" in quest
 
 
 def test_new_html_scripts_parse(tmp_path):

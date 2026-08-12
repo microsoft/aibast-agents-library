@@ -45,7 +45,7 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/license-renewal-expansion/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/license-renewal-expansion/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/license-renewal-expansion/quest.html` |
+| Guided Easy/Manual quest | `solutions/license-renewal-expansion/quest.html` |
 | Literal browser tutorial | `solutions/license-renewal-expansion/manual-tutorial.html` |
 | Raw export manifest | `solutions/license-renewal-expansion/export-manifest.json` |
 | Source bundle | `solutions/license-renewal-expansion/exports/license-renewal-expansion-source.zip` |

@@ -56,7 +56,7 @@ customer KPIs, measured operational results, or commitments.
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/product-line-optimization/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/product-line-optimization/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/product-line-optimization/quest.html` |
+| Guided Easy/Manual quest | `solutions/product-line-optimization/quest.html` |
 | Literal browser tutorial | `solutions/product-line-optimization/manual-tutorial.html` |
 | Raw export manifest | `solutions/product-line-optimization/export-manifest.json` |
 | Source bundle | `solutions/product-line-optimization/exports/product-line-optimization-source.zip` |

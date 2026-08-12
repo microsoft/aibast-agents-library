@@ -1,0 +1,132 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "deal-progression",
+  "agent": "@aibast-agents-library/deal-progression",
+  "display_name": "Deal Progression Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic pipeline snapshot",
+        "detail": "Bundled opportunity, stage, value, owner, activity-gap, champion, blocker, and rep-capacity evidence supports portable demos."
+      },
+      {
+        "name": "Stage benchmarks and blocker playbooks",
+        "detail": "Healthy stage-duration benchmarks and blocker-specific diagnoses, actions, timing, and suggested resources drive deterministic analysis."
+      },
+      {
+        "name": "Approved operating rules and skills",
+        "detail": "Two knowledge files and six operation skills define evidence use, response anchors, prohibited actions, and approval gates."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Pipeline health classification",
+        "detail": "Classifies active opportunities as on track, at risk, or stalled and summarizes value, stage age, and root causes."
+      },
+      {
+        "name": "Stalled-deal diagnosis",
+        "detail": "Compares stage age with benchmarks and explains momentum loss from engagement, champion, and blocker evidence."
+      },
+      {
+        "name": "Draft intervention planning",
+        "detail": "Builds reviewable week-by-week actions, candidate owners, timing, planning objectives, and suggested resources."
+      },
+      {
+        "name": "Acceleration scenario comparison",
+        "detail": "Compares pull-forward options and quick wins while labeling all timing and value projections as synthetic scenarios."
+      },
+      {
+        "name": "Capacity-aware task mapping",
+        "detail": "Maps candidate follow-up work against synthetic rep capacity without creating assignments, alerts, or workflows."
+      },
+      {
+        "name": "Leadership synthesis",
+        "detail": "Condenses pipeline findings, root causes, draft actions, and synthetic planning targets for human review."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Copilot conversational review",
+        "detail": "Copilot Studio provides the natural-language surface for selecting one of six bounded review operations."
+      },
+      {
+        "name": "Account executive workspace",
+        "detail": "Account executives can inspect stalled-deal evidence and draft intervention plans before any customer or CRM action."
+      },
+      {
+        "name": "Sales director workspace",
+        "detail": "Sales directors review pipeline health, acceleration scenarios, candidate task mappings, and leadership summaries."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Pipeline Health Summary",
+        "detail": "Reports active pipeline value, status distribution, stage-age measures, critical stalled deals, and root causes."
+      },
+      {
+        "name": "Stalled Deal Deep-Dive",
+        "detail": "Reports deal-level stage, benchmark variance, last contact, champion status, blocker, and diagnosis evidence."
+      },
+      {
+        "name": "Draft Task Assignment Plan",
+        "detail": "Reports candidate tasks, rep capacity, deadlines, monitoring ideas, and accountability cadence for manager review."
+      },
+      {
+        "name": "Executive Summary",
+        "detail": "Reports pipeline findings, immediate review priorities, process ideas, and explicitly synthetic planning targets."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Portable DealProgressionAgent RAPP tool",
+      "detail": "A single Python BasicAgent exposes six deterministic operations and runs locally with bundled synthetic evidence."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the conversational agent, uploaded knowledge, operation skills, and draft-before-publish authoring workflow."
+    },
+    {
+      "name": "Dynamics 365 Sales",
+      "detail": "Approved production connection seam for opportunity and activity context; the packaged route remains synthetic and read-only."
+    },
+    {
+      "name": "SharePoint",
+      "detail": "Approved production connection seam for sales playbooks; current package uses uploaded synthetic knowledge files."
+    },
+    {
+      "name": "Microsoft Teams",
+      "detail": "Supports manager-led follow-up after review; the agent does not send messages, alerts, assignments, or customer outreach."
+    },
+    {
+      "name": "Foundation model selected by deployment environment",
+      "detail": "The deployment environment supplies the model used to interpret requests and present bounded tool results."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Explicit operation routing",
+      "detail": "A fixed enum dispatches pipeline health, stalled deals, action plans, acceleration, task mapping, or executive summary."
+    },
+    {
+      "name": "Synthetic-only source enforcement",
+      "detail": "The portable tool rejects non-synthetic data_source values and forbids browsing, enrichment, or invented records."
+    },
+    {
+      "name": "Read-only evidence boundary",
+      "detail": "Every successful result states that no CRM write, task, alert, pricing approval, forecast change, or outreach occurred."
+    },
+    {
+      "name": "Human approval gates",
+      "detail": "Authorized owners and leaders review tasks, deadlines, forecasts, and communications; specialist review remains mandatory where applicable."
+    },
+    {
+      "name": "Locked six-case validation",
+      "detail": "One deterministic persona case per operation verifies routing, required evidence anchors, and prohibited side-effect claims."
+    },
+    {
+      "name": "Draft and publish separation",
+      "detail": "Copilot Studio push and validation stop in Draft; publication and external actions require explicit user confirmation."
+    }
+  ]
+}

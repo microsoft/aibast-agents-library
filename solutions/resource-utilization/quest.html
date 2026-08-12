@@ -50,9 +50,9 @@
     })();
     (() => {
       const engine =
-        localStorage.getItem("aibast:workshop-engine") === "brainstem"
-          ? "brainstem"
-          : "copilot";
+        localStorage.getItem("aibast:workshop-engine") === "copilot"
+          ? "copilot"
+          : "brainstem";
       document.documentElement.setAttribute("data-workshop-engine", engine);
     })();
   </script>
@@ -348,13 +348,13 @@
     <section class="hero">
       <p class="eyebrow">Evidence-grounded customer journey</p>
       <h1>Resource Utilization Agent</h1>
-      <p class="lede">Use your globally configured Easy-mode harness, or reproduce every action directly in Hard mode.</p>
+      <p class="lede">Use your globally configured Easy-mode harness, or reproduce every action directly in Manual mode.</p>
       <div class="notice"><strong>Workshop mission:</strong> Turn motivated, open-minded, non-technical sales professionals into AI superheroes who can match the practical output and problem-solving pace of technical peers who are not using AI, while staying evidence-grounded, governed, and honest about what the tools proved.</div>
       <div class="notice"><strong>Boundary:</strong> synthetic qualitative evidence only—not a customer KPI, measured production result, live connection, or publication approval.</div>
       <div class="feedback-notice"><strong>Found something inaccurate?</strong> Use <em>Report an issue</em> at that point. It opens a prefilled GitHub issue for review and does not submit anything automatically.</div>
       <div class="mode-switch" role="tablist">
         <button class="mode active" id="mode-tab-easy" data-mode="easy" role="tab" aria-controls="mode-panel-easy" aria-selected="true">Easy</button>
-        <button class="mode" id="mode-tab-hard" data-mode="hard" role="tab" aria-controls="mode-panel-hard" aria-selected="false">Hard</button>
+        <button class="mode" id="mode-tab-hard" data-mode="hard" role="tab" aria-controls="mode-panel-hard" aria-selected="false">Manual</button>
       </div>
     </section>
 
@@ -381,6 +381,32 @@
       </div>
     </section>
     <div class="achievements-toast" id="achievements-badge-toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+
+    <section class="learn-step" id="workshop-step-1">
+      <header class="learn-step-header"><span>1</span><div><p>Workshop setup</p><h3>Install RAPP Brainstem Frontier</h3></div><button class="button report-button" type="button" data-report-location="Workshop setup — step 1: install RAPP Brainstem Frontier" data-report-expected="RAPP Brainstem Frontier opens with the Brainstem connected and GitHub Copilot Brain Surgeon visible." data-report-evidence="">Report an issue</button></header>
+      <div class="learn-step-body">
+        <p>Start every workshop in RAPP Brainstem Frontier. It provides the visible Brainstem, GitHub Copilot Brain Surgeon, live agent Explorer, recordings, and the one-click Copilot Studio path used by the guided exercises.</p>
+        <div class="action-panel">
+          <strong>Install and launch</strong>
+          <ol>
+            <li>Open the dedicated Frontier installer and choose your operating system.</li>
+            <li>On macOS or Linux, copy and run the command below. On Windows 11, download <code>install.cmd</code> and double-click it.</li>
+            <li>Launch <strong>RAPP Brainstem Frontier</strong> from Applications, Launchpad, the app menu, or the Windows Desktop/Start Menu shortcut.</li>
+            <li>Wait for <strong>connected</strong>, then complete GitHub device login if the app asks.</li>
+          </ol>
+          <div class="prompt-heading"><strong>macOS or Linux</strong><button class="button primary" type="button" data-copy-target="beta-install-command">Copy install command</button></div>
+          <pre class="prompt-block" id="beta-install-command">curl -fsSL https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/install.sh | bash</pre>
+          <div class="detail-actions">
+            <a class="button primary" href="../../beta/">Open Frontier installer</a>
+            <a class="button" href="../../beta/install.cmd" download>Download Windows install.cmd</a>
+            <a class="button" href="../../beta/README.md" download>Download installation guide</a>
+          </div>
+        </div>
+        <div class="expected-panel"><strong>Expected result</strong><p>The RAPP Brainstem Frontier window is open, the center Brainstem shows <strong>connected</strong>, the blue Brainstem icon opens the live agents Explorer, and the GitHub Copilot Brain Surgeon panel can be opened.</p></div>
+        <label class="step-complete"><input type="checkbox" data-checkpoint="beta-installed" data-achievements-group="onboarding" data-achievements-path="shared"><span>I installed and opened RAPP Brainstem Frontier.</span></label>
+      </div>
+    </section>
 
     <section class="path" data-path="easy" id="mode-panel-easy" role="tabpanel" aria-labelledby="mode-tab-easy">
       <div class="module-summary">
@@ -411,8 +437,8 @@
       <div class="easy-lane" data-easy-lane="brainstem">
         <div class="notice"><strong>Brainstem lane:</strong> Brainstem is the learner’s personal, on-device training AI working alongside Copilot. It persists the workshop, loads the generic engine, and continues every handoff.</div>
 
-      <article class="learn-step" id="brainstem-step-1">
-        <header class="learn-step-header"><span>1</span><div><p>Prepare your Copilot</p><h3>Download and attach the Brainstem skill</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 1: attach skill" data-report-expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat." data-report-evidence="">Report an issue</button></header>
+      <article class="learn-step" id="brainstem-step-2">
+        <header class="learn-step-header"><span>2</span><div><p>Prepare your Copilot</p><h3>Download and attach the Brainstem skill</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 2: attach skill" data-report-expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>This file fixes the workshop to Brainstem. Copilot remains the work surface while the learner&#x27;s on-device training AI persists state, loads the generic workshop engine, and continues every handoff.</p>
           <div class="action-panel"><strong>Do this</strong><ol><li>Download the lane-specific <code>SKILL.md</code>.</li><li>Open GitHub Copilot Chat in VS Code.</li><li>Select <strong>Agent mode</strong>.</li><li>Drag the downloaded file into the chat.</li></ol><a class="button primary" href="../../skills/aibast-easy-mode-brainstem/SKILL.md" download="SKILL.md">Download Brainstem SKILL.md</a></div>
@@ -421,8 +447,8 @@
         </div>
       </article>
 
-      <article class="learn-step" id="brainstem-step-2">
-        <header class="learn-step-header"><span>2</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test Resource Utilization</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 2: local proof" data-report-expected="Brainstem reports the generic AIBAST Workshop Engine and ResourceUtilizationAgent loaded, with 5/5 locked local cases passed." data-report-evidence="">Report an issue</button></header>
+      <article class="learn-step" id="brainstem-step-3">
+        <header class="learn-step-header"><span>3</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test Resource Utilization</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 3: local proof" data-report-expected="Brainstem reports the generic AIBAST Workshop Engine and ResourceUtilizationAgent loaded, with 5/5 locked local cases passed." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>This step proves the portable business logic before any Copilot Studio work begins. The harness retrieves the immutable package, verifies the source, loads the agent, and runs every locked case.</p>
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="brainstem-build-prompt">Copy message</button></div>
@@ -432,8 +458,8 @@
         </div>
       </article>
 
-      <article class="learn-step" id="brainstem-step-3">
-        <header class="learn-step-header"><span>3</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 3: Draft deployment" data-report-expected="Draft Resource Utilization Manual; model Claude Sonnet 4.6; 2 knowledge files; 5 skills; published false." data-report-evidence="">Report an issue</button></header>
+      <article class="learn-step" id="brainstem-step-4">
+        <header class="learn-step-header"><span>4</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 4: Draft deployment" data-report-expected="Draft Resource Utilization Manual; model Claude Sonnet 4.6; 2 knowledge files; 5 skills; published false." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>The harness now uses the verified Microsoft Copilot Studio plugin to reuse or create the source-controlled Draft, synchronize the reviewed instructions and assets, validate the PAC project, and leave publication off.</p>
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="brainstem-deploy-prompt">Copy message</button></div>
@@ -447,8 +473,8 @@
       <div class="easy-lane" data-easy-lane="copilot">
         <div class="comparison-note"><strong>Skeptic comparison — Copilot-only lane:</strong> GitHub Copilot carries the same harness directly in the active session. The skill still discovers every asset and runs every gate; there is no persistent Brainstem engine between turns.</div>
 
-      <article class="learn-step" id="copilot-step-1">
-        <header class="learn-step-header"><span>1</span><div><p>Prepare your Copilot</p><h3>Download and attach the Copilot-only skill</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 1: attach skill" data-report-expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat." data-report-evidence="">Report an issue</button></header>
+      <article class="learn-step" id="copilot-step-2">
+        <header class="learn-step-header"><span>2</span><div><p>Prepare your Copilot</p><h3>Download and attach the Copilot-only skill</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 2: attach skill" data-report-expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>This file fixes the workshop to GitHub Copilot alone. The skill carries the same discovery, testing, deployment, and validation contract directly in the active Copilot session and bootstraps the official Microsoft Copilot Studio plugin.</p>
           <div class="action-panel"><strong>Do this</strong><ol><li>Download the lane-specific <code>SKILL.md</code>.</li><li>Open GitHub Copilot Chat in VS Code.</li><li>Select <strong>Agent mode</strong>.</li><li>Drag the downloaded file into the chat.</li></ol><a class="button primary" href="../../skills/aibast-easy-mode-copilot/SKILL.md" download="SKILL.md">Download Copilot-only SKILL.md</a></div>
@@ -457,8 +483,8 @@
         </div>
       </article>
 
-      <article class="learn-step" id="copilot-step-2">
-        <header class="learn-step-header"><span>2</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test Resource Utilization</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 2: local proof" data-report-expected="Copilot reports the verified mcs-assistant plugin and PAC CLI, an isolated workspace, a verified source hash, and 5/5 locked local cases passed." data-report-evidence="">Report an issue</button></header>
+      <article class="learn-step" id="copilot-step-3">
+        <header class="learn-step-header"><span>3</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test Resource Utilization</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 3: local proof" data-report-expected="Copilot reports the verified mcs-assistant plugin and PAC CLI, an isolated workspace, a verified source hash, and 5/5 locked local cases passed." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>This step proves the portable business logic before any Copilot Studio work begins. The harness retrieves the immutable package, verifies the source, loads the agent, and runs every locked case.</p>
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="copilot-build-prompt">Copy message</button></div>
@@ -468,8 +494,8 @@
         </div>
       </article>
 
-      <article class="learn-step" id="copilot-step-3">
-        <header class="learn-step-header"><span>3</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 3: Draft deployment" data-report-expected="Draft Resource Utilization Manual; model Claude Sonnet 4.6; 2 knowledge files; 5 skills; published false." data-report-evidence="">Report an issue</button></header>
+      <article class="learn-step" id="copilot-step-4">
+        <header class="learn-step-header"><span>4</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 4: Draft deployment" data-report-expected="Draft Resource Utilization Manual; model Claude Sonnet 4.6; 2 knowledge files; 5 skills; published false." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>The harness now uses the verified Microsoft Copilot Studio plugin to reuse or create the source-controlled Draft, synchronize the reviewed instructions and assets, validate the PAC project, and leave publication off.</p>
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="copilot-deploy-prompt">Copy message</button></div>
@@ -480,8 +506,8 @@
       </article>
       </div>
 
-      <section class="learn-step" id="easy-step-4">
-        <header class="learn-step-header"><span>4</span><div><p>Verify the real experience</p><h3>Confirm the Draft in Copilot Studio Preview</h3></div></header>
+      <section class="learn-step" id="easy-step-5">
+        <header class="learn-step-header"><span>5</span><div><p>Verify the real experience</p><h3>Confirm the Draft in Copilot Studio Preview</h3></div></header>
         <div class="learn-step-body">
           <p>The harness already runs these checks automatically. Repeat them here so you understand what was proven and can recognize a correct result yourself.</p>
           <div class="preview-intro"><ol><li>Open the validated Draft.</li><li>Select <strong>Preview</strong>.</li><li>Choose <strong>New chat</strong> before each case.</li><li>Paste the exact prompt.</li><li>Compare the answer with the required and forbidden markers.</li></ol><div><a class="button primary" href="https://copilotstudio.preview.microsoft.com/environments/ee67a404-325c-e726-a18a-886fe708ca0b/agents/92e50540-5dd8-49ff-898e-ab716c930b04" target="_blank" rel="noopener">Open the Copilot Studio Draft ↗</a></div></div>
@@ -588,14 +614,14 @@
 
     <section class="path" data-path="hard" id="mode-panel-hard" role="tabpanel" aria-labelledby="mode-tab-hard" hidden>
       <section class="card hard-overview">
-        <p class="eyebrow">Hard mode · literal browser construction</p>
+        <p class="eyebrow">Manual mode · literal browser construction</p>
         <h2>Build Resource Utilization Agent manually on this page.</h2>
         <p class="lede">No PAC CLI, YAML import, plugin architect, or nested tutorial frame. Perform one action per real browserfilm frame, compare the screenshot, and stop at Draft.</p>
         <div class="notice"><strong>Synthetic disclosure:</strong> this is qualitative workflow evidence using packaged synthetic inputs. It is not a customer KPI or a live-system result.</div>
         <div class="feedback-notice"><strong>Found something inaccurate?</strong> Use <em>Report an issue</em> on that step. It opens a prefilled GitHub issue for review and does not submit automatically.</div>
         <!-- No pending evidence. -->
         <div class="hard-actions">
-          <a class="button" href="manual-tutorial.html" target="_blank" rel="noopener">Open standalone Hard-mode guide ↗</a>
+          <a class="button" href="manual-tutorial.html" target="_blank" rel="noopener">Open standalone Manual-mode guide ↗</a>
           <a class="button primary" href="exports/resource-utilization-source.zip">Download source bundle</a>
           <a class="button primary" href="exports/resource-utilization-copilot-studio-solution.zip" download>Download Copilot Studio solution</a><a class="button" href="exports/resource-utilization-deployment-settings.json" download>Deployment settings</a><a class="button" href="exports/resource-utilization-solution-export.json" download>Export details</a>
         </div>
@@ -604,11 +630,11 @@
       <section class="hard-progress-card" aria-labelledby="hard-progress-label">
         <div class="hard-progress-heading">
           <strong id="hard-progress-label">0 of 20 complete</strong>
-          <p>Hard-mode progress is saved on this device and contributes to the same achievement profile.</p>
+          <p>Manual-mode progress is saved on this device and contributes to the same achievement profile.</p>
         </div>
         <div class="progress" aria-hidden="true"><span id="hard-progress-bar"></span></div>
         <p class="muted" id="hard-progress-toast" role="status" aria-live="polite" aria-atomic="true"></p>
-        <nav class="hard-toc" aria-label="Hard-mode tutorial actions"><a href="#step-1">1. Create a blank Copilot Studio agent</a>
+        <nav class="hard-toc" aria-label="Manual-mode tutorial actions"><a href="#step-1">1. Create a blank Copilot Studio agent</a>
 <a href="#step-2">2. Name Resource Utilization Manual</a>
 <a href="#step-3">3. Enter the reviewed global instructions</a>
 <a href="#step-4">4. Save the instruction policy</a>
@@ -632,7 +658,7 @@
 
       <h2>Build and verify</h2>
       <article class="step" id="step-1">
-        <header><span>1</span><div><h3>Create a blank Copilot Studio agent</h3><p>Step 1 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 1: Create a blank Copilot Studio agent" data-report-expected="A blank Copilot Studio agent is visible in the captured Draft workspace." data-report-evidence="solutions/resource-utilization/screenshots/manual/01-create-blank-agent.jpg">Report an issue</button></header>
+        <header><span>1</span><div><h3>Create a blank Copilot Studio agent</h3><p>Step 1 of 20</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 1: Create a blank Copilot Studio agent" data-report-expected="A blank Copilot Studio agent is visible in the captured Draft workspace." data-report-evidence="solutions/resource-utilization/screenshots/manual/01-create-blank-agent.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Create a blank Copilot Studio agent</span></div>
@@ -647,7 +673,7 @@
         </div>
       </article>
 <article class="step" id="step-2">
-        <header><span>2</span><div><h3>Name Resource Utilization Manual</h3><p>Step 2 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 2: Name Resource Utilization Manual" data-report-expected="The page header shows the recorded manual build name: Resource Utilization Manual." data-report-evidence="solutions/resource-utilization/screenshots/manual/02-name-agent.jpg">Report an issue</button></header>
+        <header><span>2</span><div><h3>Name Resource Utilization Manual</h3><p>Step 2 of 20</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 2: Name Resource Utilization Manual" data-report-expected="The page header shows the recorded manual build name: Resource Utilization Manual." data-report-evidence="solutions/resource-utilization/screenshots/manual/02-name-agent.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-2">Copy agent name</button><pre class="copy-source" id="hard-copy-2" hidden>Resource Utilization Manual</pre></div><span>Name Resource Utilization Manual</span></div>
@@ -662,7 +688,7 @@
         </div>
       </article>
 <article class="step" id="step-3">
-        <header><span>3</span><div><h3>Enter the reviewed global instructions</h3><p>Step 3 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 3: Enter the reviewed global instructions" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/resource-utilization/screenshots/manual/03-enter-instructions.jpg">Report an issue</button></header>
+        <header><span>3</span><div><h3>Enter the reviewed global instructions</h3><p>Step 3 of 20</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 3: Enter the reviewed global instructions" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/resource-utilization/screenshots/manual/03-enter-instructions.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-3">Copy instructions</button><pre class="copy-source" id="hard-copy-3" hidden># Resource Utilization Agent — Global Instructions
@@ -741,7 +767,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-4">
-        <header><span>4</span><div><h3>Save the instruction policy</h3><p>Step 4 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 4: Save the instruction policy" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/resource-utilization/screenshots/manual/04-save-instructions.jpg">Report an issue</button></header>
+        <header><span>4</span><div><h3>Save the instruction policy</h3><p>Step 4 of 20</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 4: Save the instruction policy" data-report-expected="The reviewed manual/GLOBAL-INSTRUCTIONS.md policy is visible or saved without unrecorded edits." data-report-evidence="solutions/resource-utilization/screenshots/manual/04-save-instructions.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Save the instruction policy</span></div>
@@ -756,7 +782,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-5">
-        <header><span>5</span><div><h3>Remove default web search</h3><p>Step 5 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 5: Remove default web search" data-report-expected="The captured inventory no longer lists the default web-search capability." data-report-evidence="solutions/resource-utilization/screenshots/manual/05-remove-web-search.jpg">Report an issue</button></header>
+        <header><span>5</span><div><h3>Remove default web search</h3><p>Step 5 of 20</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 5: Remove default web search" data-report-expected="The captured inventory no longer lists the default web-search capability." data-report-evidence="solutions/resource-utilization/screenshots/manual/05-remove-web-search.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Remove default web search</span></div>
@@ -771,7 +797,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-6">
-        <header><span>6</span><div><h3>Add knowledge: aibast_resource-pipeline-and-workforce-rules.md</h3><p>Step 6 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 6: Add knowledge: aibast_resource-pipeline-and-workforce-rules.md" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/resource-utilization/screenshots/manual/06-add-aibast-resource-pipeline-and-workforce-rules.jpg">Report an issue</button></header>
+        <header><span>6</span><div><h3>Add knowledge: aibast_resource-pipeline-and-workforce-rules.md</h3><p>Step 6 of 20</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 6: Add knowledge: aibast_resource-pipeline-and-workforce-rules.md" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/resource-utilization/screenshots/manual/06-add-aibast-resource-pipeline-and-workforce-rules.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add knowledge: aibast_resource-pipeline-and-workforce-rules.md</span></div>
@@ -786,7 +812,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-7">
-        <header><span>7</span><div><h3>Add knowledge: aibast_resource-synthetic-roster.md</h3><p>Step 7 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 7: Add knowledge: aibast_resource-synthetic-roster.md" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/resource-utilization/screenshots/manual/07-add-aibast-resource-synthetic-roster.jpg">Report an issue</button></header>
+        <header><span>7</span><div><h3>Add knowledge: aibast_resource-synthetic-roster.md</h3><p>Step 7 of 20</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 7: Add knowledge: aibast_resource-synthetic-roster.md" data-report-expected="The captured Knowledge inventory reflects the reviewed files; the evidence records 2 knowledge sources." data-report-evidence="solutions/resource-utilization/screenshots/manual/07-add-aibast-resource-synthetic-roster.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add knowledge: aibast_resource-synthetic-roster.md</span></div>
@@ -801,7 +827,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-8">
-        <header><span>8</span><div><h3>Add skill: bench-analysis</h3><p>Step 8 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 8: Add skill: bench-analysis" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/resource-utilization/screenshots/manual/08-add-bench-analysis.jpg">Report an issue</button></header>
+        <header><span>8</span><div><h3>Add skill: bench-analysis</h3><p>Step 8 of 20</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 8: Add skill: bench-analysis" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/resource-utilization/screenshots/manual/08-add-bench-analysis.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: bench-analysis</span></div>
@@ -816,7 +842,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-9">
-        <header><span>9</span><div><h3>Add skill: capacity-forecast</h3><p>Step 9 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 9: Add skill: capacity-forecast" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/resource-utilization/screenshots/manual/09-add-capacity-forecast.jpg">Report an issue</button></header>
+        <header><span>9</span><div><h3>Add skill: capacity-forecast</h3><p>Step 9 of 20</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 9: Add skill: capacity-forecast" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/resource-utilization/screenshots/manual/09-add-capacity-forecast.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: capacity-forecast</span></div>
@@ -831,7 +857,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-10">
-        <header><span>10</span><div><h3>Add skill: staffing-recommendation</h3><p>Step 10 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 10: Add skill: staffing-recommendation" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/resource-utilization/screenshots/manual/10-add-staffing-recommendation.jpg">Report an issue</button></header>
+        <header><span>10</span><div><h3>Add skill: staffing-recommendation</h3><p>Step 10 of 20</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 10: Add skill: staffing-recommendation" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/resource-utilization/screenshots/manual/10-add-staffing-recommendation.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: staffing-recommendation</span></div>
@@ -846,7 +872,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-11">
-        <header><span>11</span><div><h3>Add skill: utilization-dashboard</h3><p>Step 11 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 11: Add skill: utilization-dashboard" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/resource-utilization/screenshots/manual/11-add-utilization-dashboard.jpg">Report an issue</button></header>
+        <header><span>11</span><div><h3>Add skill: utilization-dashboard</h3><p>Step 11 of 20</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 11: Add skill: utilization-dashboard" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/resource-utilization/screenshots/manual/11-add-utilization-dashboard.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: utilization-dashboard</span></div>
@@ -861,7 +887,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-12">
-        <header><span>12</span><div><h3>Add skill: workforce-plan</h3><p>Step 12 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 12: Add skill: workforce-plan" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/resource-utilization/screenshots/manual/12-add-workforce-plan.jpg">Report an issue</button></header>
+        <header><span>12</span><div><h3>Add skill: workforce-plan</h3><p>Step 12 of 20</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 12: Add skill: workforce-plan" data-report-expected="The captured skill inventory reflects the reviewed uploads; the evidence records 5 skills." data-report-evidence="solutions/resource-utilization/screenshots/manual/12-add-workforce-plan.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Add skill: workforce-plan</span></div>
@@ -876,7 +902,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-13">
-        <header><span>13</span><div><h3>Review model, skills, knowledge, and safety boundaries</h3><p>Step 13 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 13: Review model, skills, knowledge, and safety boundaries" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 5 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/resource-utilization/screenshots/manual/13-review-inventory.jpg">Report an issue</button></header>
+        <header><span>13</span><div><h3>Review model, skills, knowledge, and safety boundaries</h3><p>Step 13 of 20</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 13: Review model, skills, knowledge, and safety boundaries" data-report-expected="The screenshot visibly confirms Claude Sonnet 4.6, 5 rendered skills, and no tools. Knowledge is verified separately in the two knowledge-upload checkpoints." data-report-evidence="solutions/resource-utilization/screenshots/manual/13-review-inventory.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Review model, skills, knowledge, and safety boundaries</span></div>
@@ -891,7 +917,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-14">
-        <header><span>14</span><div><h3>Open a fresh Preview conversation</h3><p>Step 14 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 14: Open a fresh Preview conversation" data-report-expected="A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass." data-report-evidence="solutions/resource-utilization/screenshots/manual/14-open-preview.jpg">Report an issue</button></header>
+        <header><span>14</span><div><h3>Open a fresh Preview conversation</h3><p>Step 14 of 20</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 14: Open a fresh Preview conversation" data-report-expected="A fresh Preview surface or its recorded qualitative result is visible; only the evidence file defines a pass." data-report-evidence="solutions/resource-utilization/screenshots/manual/14-open-preview.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Open a fresh Preview conversation</span></div>
@@ -906,7 +932,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-15">
-        <header><span>15</span><div><h3>Pass RU-01: Operations Leader</h3><p>Step 15 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 15: Pass RU-01: Operations Leader" data-report-expected="The captured Preview evidence records RU-01 with the recorded identifiers Firm utilization, Bench, Utilization by Level; do not infer results beyond it." data-report-evidence="solutions/resource-utilization/screenshots/manual/15-ru-01.jpg">Report an issue</button></header>
+        <header><span>15</span><div><h3>Pass RU-01: Operations Leader</h3><p>Step 15 of 20</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 15: Pass RU-01: Operations Leader" data-report-expected="The captured Preview evidence records RU-01 with the recorded identifiers Firm utilization, Bench, Utilization by Level; do not infer results beyond it." data-report-evidence="solutions/resource-utilization/screenshots/manual/15-ru-01.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-15">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-15" hidden>Where are we under target today, and which parts of the workforce are sitting available?</pre></div><span>Pass RU-01: Operations Leader</span></div>
@@ -921,7 +947,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-16">
-        <header><span>16</span><div><h3>Pass RU-02: Resource Manager</h3><p>Step 16 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 16: Pass RU-02: Resource Manager" data-report-expected="The captured Preview evidence records RU-02 with the recorded identifiers Upcoming Project Endings, Pipeline Demand, Total roles in pipeline; do not infer results beyond it." data-report-evidence="solutions/resource-utilization/screenshots/manual/16-ru-02.jpg">Report an issue</button></header>
+        <header><span>16</span><div><h3>Pass RU-02: Resource Manager</h3><p>Step 16 of 20</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 16: Pass RU-02: Resource Manager" data-report-expected="The captured Preview evidence records RU-02 with the recorded identifiers Upcoming Project Endings, Pipeline Demand, Total roles in pipeline; do not infer results beyond it." data-report-evidence="solutions/resource-utilization/screenshots/manual/16-ru-02.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-16">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-16" hidden>What capacity is coming free, and how does it line up with the opportunities expected over the next quarter?</pre></div><span>Pass RU-02: Resource Manager</span></div>
@@ -936,7 +962,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-17">
-        <header><span>17</span><div><h3>Pass RU-03: Finance Director</h3><p>Step 17 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 17: Pass RU-03: Finance Director" data-report-expected="The captured Preview evidence records RU-03 with the recorded identifiers David Okafor, Robert Garcia, Skill Inventory on Bench; do not infer results beyond it." data-report-evidence="solutions/resource-utilization/screenshots/manual/17-ru-03.jpg">Report an issue</button></header>
+        <header><span>17</span><div><h3>Pass RU-03: Finance Director</h3><p>Step 17 of 20</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 17: Pass RU-03: Finance Director" data-report-expected="The captured Preview evidence records RU-03 with the recorded identifiers David Okafor, Robert Garcia, Skill Inventory on Bench; do not infer results beyond it." data-report-evidence="solutions/resource-utilization/screenshots/manual/17-ru-03.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-17">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-17" hidden>Show me who is on the bench, the skills we are carrying, and the cost exposure we need to address.</pre></div><span>Pass RU-03: Finance Director</span></div>
@@ -951,7 +977,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-18">
-        <header><span>18</span><div><h3>Pass RU-04: Resource Manager</h3><p>Step 18 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 18: Pass RU-04: Resource Manager" data-report-expected="The captured Preview evidence records RU-04 with the recorded identifiers Bench-to-Pipeline Matches, Unmatched Bench Resources, Robert Garcia; do not infer results beyond it." data-report-evidence="solutions/resource-utilization/screenshots/manual/18-ru-04.jpg">Report an issue</button></header>
+        <header><span>18</span><div><h3>Pass RU-04: Resource Manager</h3><p>Step 18 of 20</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 18: Pass RU-04: Resource Manager" data-report-expected="The captured Preview evidence records RU-04 with the recorded identifiers Bench-to-Pipeline Matches, Unmatched Bench Resources, Robert Garcia; do not infer results beyond it." data-report-evidence="solutions/resource-utilization/screenshots/manual/18-ru-04.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-18">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-18" hidden>Which available consultants fit the strongest pipeline needs, and who still needs another path?</pre></div><span>Pass RU-04: Resource Manager</span></div>
@@ -966,7 +992,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-19">
-        <header><span>19</span><div><h3>Pass RU-05: Operations Leader</h3><p>Step 19 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 19: Pass RU-05: Operations Leader" data-report-expected="The captured Preview evidence records RU-05 with the recorded identifiers D365 integration accelerator, Synthetic payback scenario, Innovation and Capability-Building Options; do not infer results beyond it." data-report-evidence="solutions/resource-utilization/screenshots/manual/19-ru-05.jpg">Report an issue</button></header>
+        <header><span>19</span><div><h3>Pass RU-05: Operations Leader</h3><p>Step 19 of 20</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 19: Pass RU-05: Operations Leader" data-report-expected="The captured Preview evidence records RU-05 with the recorded identifiers D365 integration accelerator, Synthetic payback scenario, Innovation and Capability-Building Options; do not infer results beyond it." data-report-evidence="solutions/resource-utilization/screenshots/manual/19-ru-05.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong><button class="button copy-button" type="button" data-copy-target="hard-copy-19">Copy Preview prompt</button><pre class="copy-source" id="hard-copy-19" hidden>Give me an upskilling and internal-innovation plan for the people we cannot place directly, including the business case.</pre></div><span>Pass RU-05: Operations Leader</span></div>
@@ -981,7 +1007,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 <article class="step" id="step-20">
-        <header><span>20</span><div><h3>Confirm Draft and stop before publish</h3><p>Step 20 of 20</p></div><button class="button report-button" type="button" data-report-location="Hard mode — step 20: Confirm Draft and stop before publish" data-report-expected="The agent remains Draft and no Publish action is taken." data-report-evidence="solutions/resource-utilization/screenshots/manual/20-confirm-draft.jpg">Report an issue</button></header>
+        <header><span>20</span><div><h3>Confirm Draft and stop before publish</h3><p>Step 20 of 20</p></div><button class="button report-button" type="button" data-report-location="Manual mode — step 20: Confirm Draft and stop before publish" data-report-expected="The agent remains Draft and no Publish action is taken." data-report-evidence="solutions/resource-utilization/screenshots/manual/20-confirm-draft.jpg">Report an issue</button></header>
         <div class="step-body">
           <div class="instruction-grid">
             <div class="instruction"><div class="instruction-heading"><strong>Action</strong></div><span>Confirm Draft and stop before publish</span></div>
@@ -996,12 +1022,12 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         </div>
       </article>
 
-      <h2 id="hard-troubleshooting">Hard-mode troubleshooting</h2>
+      <h2 id="hard-troubleshooting">Manual-mode troubleshooting</h2>
       <section class="card hard-troubleshooting">
         <details open><summary>A screenshot or browserfilm frame is missing</summary><p>Stop. Do not invent, recreate, or substitute an image. Capture the real frame, update the browserfilm manifest, and regenerate without <code>--allow-pending</code>.</p></details>
         <details><summary>A knowledge file is still processing</summary><p>Wait for ingestion to finish before Preview. A partial answer is not evidence.</p></details>
         <details><summary>A skill upload fails</summary><p>Use the linked raw <code>SKILL.md</code>. Fix the reviewed source deliberately; do not silently skip the action.</p></details>
-        <details><summary>The model differs from Easy mode</summary><p>Record the substitution and stop the parity claim until Easy and Hard use the same reviewed model.</p></details>
+        <details><summary>The model differs from Easy mode</summary><p>Record the substitution and stop the parity claim until Easy and Manual use the same reviewed model.</p></details>
         <details><summary>The Preview answer misses an identifier</summary><p>Mark the recorded case failed, inspect instructions and inventory, then replay the exact prompt in a fresh conversation.</p></details>
         <details><summary>Should I publish?</summary><p>No. Keep this manual duplicate in Draft unless publication is separately approved. Do not choose Publish as part of this tutorial.</p></details>
       </section>
@@ -1013,7 +1039,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
 
       const ACHIEVEMENT_PROFILE_KEY = "aibast:achievement-profile:v1";
       const ACHIEVEMENT_WORKSHOP_SLUG = "resource-utilization";
-      const ACHIEVEMENT_BADGES = Object.freeze([{"id":"started","label":"Started","points":5},{"id":"local-proof","label":"Local proof","points":15},{"id":"draft-builder","label":"Draft builder","points":20},{"id":"preview-proven","label":"Preview proven","points":25},{"id":"workshop-complete","label":"Workshop complete","points":35},{"id":"hard-mode-complete","label":"Hard mode complete","points":50}]);
+      const ACHIEVEMENT_BADGES = Object.freeze([{"id":"started","label":"Started","points":5},{"id":"local-proof","label":"Local proof","points":15},{"id":"draft-builder","label":"Draft builder","points":20},{"id":"preview-proven","label":"Preview proven","points":25},{"id":"workshop-complete","label":"Workshop complete","points":35},{"id":"hard-mode-complete","label":"Manual mode complete","points":50}]);
       const ACHIEVEMENT_BADGE_IDS = new Set(ACHIEVEMENT_BADGES.map((badge) => badge.id));
 
       function emptyAchievementProfile() {
@@ -1306,7 +1332,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         }
         if (hardProgressToast) {
           hardProgressToast.textContent = complete
-            ? "Hard mode complete. The achievement is saved in this device's achievement profile."
+            ? "Manual mode complete. The achievement is saved in this device's achievement profile."
             : "";
         }
         renderAchievementPanel(profile, activeMode);
@@ -1335,7 +1361,7 @@ These phrases are acceptance evidence for the fixed synthetic cases. Preserve th
         const checked = mode === "hard" ? hardChecked : easyChecked;
         const total = mode === "hard" ? hardTotal : easyRequired.length;
         achievementProgressLabel.textContent =
-          `${checked} of ${total} ${mode === "hard" ? "Hard steps" : "Easy checkpoints"} complete`;
+          `${checked} of ${total} ${mode === "hard" ? "Manual steps" : "Easy checkpoints"} complete`;
         achievementProgressBar.style.width = total ? `${(checked / total) * 100}%` : "0%";
         achievementBadgeList.replaceChildren();
         const earned = ACHIEVEMENT_BADGES.filter(

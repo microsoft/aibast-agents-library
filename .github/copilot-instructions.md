@@ -10,6 +10,24 @@ AIBAST Agents Library is the stable Microsoft downstream for the RAPP stack (see
 
 The repository also owns `agents/@aibast-agents-library/`, `registry.json`, `build_registry.py`, `rapp_ai/`, the production guide, and Microsoft governance files. These are not upstream Grail mirrors.
 
+## Product Golden Path
+
+Read [`beta/GOLDEN_PATH.md`](../beta/GOLDEN_PATH.md) before changing the beta.
+The beta is a chat-driven educational tool: users learn AI by watching GitHub
+Copilot build, hotload, run, test, explain, screenshot, and record real RAPP
+capabilities. External AIs can visibly drive the same Brainstem or Brain Surgeon
+chat to keep users unstuck.
+
+Preserve these invariants:
+
+- unchanged Grail `brainstem.py` and exact RAPP/1 chat wire;
+- global + routed agents composed into isolated hardlinked `AGENTS_PATH`
+  workers;
+- visible Explorer, Copilot Brain Surgeon, Brainstem execution, and evidence;
+- VS Code/terminal remain optional expert surfaces;
+- portable skills promote into Hippocampus and Microsoft downstream hosts
+  without rewriting the agent or chat contract.
+
 ### Brainstem internals
 
 `brainstem.py` is the single-file server containing auth, agent orchestration, the tool-calling loop, and all HTTP endpoints.

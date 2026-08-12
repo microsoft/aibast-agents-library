@@ -2,7 +2,7 @@ name: workshop feedback triage
 
 on:
   issues:
-    types: [opened, edited, closed, reopened]
+    types: [opened, edited, closed, reopened, labeled, unlabeled]
 
 permissions:
   actions: write
@@ -12,14 +12,29 @@ jobs:
   label:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
       - name: Reconcile structured community signal labels
         id: process-signal
         uses: actions/github-script@v7
         with:
           script: |
+            const fs = require("fs");
             const body = context.payload.issue.body || "";
-            const isWorkshopFeedback = body.includes("<!-- aibast-workshop-feedback:v1 -->");
-            const isAchievementProgress = body.includes("<!-- aibast-achievement-progress:v1 -->");
+            const isWorkshopFeedback = body.startsWith("<!-- aibast-workshop-feedback:v1 -->");
+            const isAchievementProgress = body.startsWith("<!-- aibast-achievement-progress:v1 -->");
+            const isWorkshopCohort = body.startsWith("<!-- aibast-workshop-cohort:v1 -->");
+            const isBadgeQualification = body.startsWith("<!-- aibast-badge-qualification:v1 -->");
+            const registry = JSON.parse(
+              fs.readFileSync("registry.json", "utf8")
+            );
+            const canonicalWorkshops = new Map();
+            for (const agent of registry.agents || []) {
+              const slug = agent?._solution?.package?.slug;
+              if (slug && agent.name) {
+                canonicalWorkshops.set(slug, agent.name);
+              }
+            }
             const definitions = {
               "workshop-feedback": {
                 name: "workshop-feedback",
@@ -35,23 +50,309 @@ jobs:
                 name: "achievement-progress",
                 color: "8250df",
                 description: "Opt-in public workshop achievement progress sync."
+              },
+              "workshop-cohort": {
+                name: "workshop-cohort",
+                color: "0969da",
+                description: "Public-safe facilitator cohort delivery trigger."
+              },
+              "badge-qualification": {
+                name: "badge-qualification",
+                color: "bf8700",
+                description: "Public-safe module badge qualification trigger."
+              },
+              "needs-private-review": {
+                name: "needs-private-review",
+                color: "fbca04",
+                description: "Requires matching against the private Microsoft Forms record."
+              },
+              "cohort-verified": {
+                name: "cohort-verified",
+                color: "1a7f37",
+                description: "Authorized reviewer verified the private facilitator cohort record."
+              },
+              "badge-qualified": {
+                name: "badge-qualified",
+                color: "0e8a16",
+                description: "Authorized reviewer approved the private module qualification gate."
               }
             };
-            const managedNames = new Set(Object.keys(definitions));
+            const automaticallyManagedNames = new Set([
+              "workshop-feedback",
+              "needs-triage",
+              "achievement-progress",
+              "workshop-cohort",
+              "badge-qualification",
+              "needs-private-review"
+            ]);
             const currentNames = (context.payload.issue.labels || []).map((label) =>
               typeof label === "string" ? label : label.name
             );
-            const hasCurrentMarker = isWorkshopFeedback || isAchievementProgress;
-            const hasManagedLabel = currentNames.some((name) => managedNames.has(name));
+            const markerCount = [
+              isWorkshopFeedback,
+              isAchievementProgress,
+              isWorkshopCohort,
+              isBadgeQualification
+            ].filter(Boolean).length;
+            const hasCurrentMarker = markerCount > 0;
+            const hasManagedLabel = currentNames.some((name) =>
+              automaticallyManagedNames.has(name)
+            );
             if (!hasCurrentMarker && !hasManagedLabel) {
               return false;
             }
 
-            const selectedNames = isAchievementProgress
-              ? ["achievement-progress"]
-              : isWorkshopFeedback
-                  ? ["workshop-feedback", "needs-triage"]
-                  : [];
+            const unwrap = (raw) => {
+              const value = String(raw || "").trim();
+              if (
+                value.startsWith("`") &&
+                value.endsWith("`") &&
+                !value.slice(1, -1).includes("`")
+              ) {
+                return value.slice(1, -1);
+              }
+              return value;
+            };
+            const decodeHtmlEntities = (value) => String(value || "")
+              .replace(/&#x([0-9a-f]+);/gi, (_match, hex) =>
+                String.fromCodePoint(Number.parseInt(hex, 16))
+              )
+              .replace(/&#(\d+);/g, (_match, decimal) =>
+                String.fromCodePoint(Number.parseInt(decimal, 10))
+              )
+              .replace(
+                /&(lt|gt|amp|quot|apos|bull|nbsp);/gi,
+                (_match, name) => ({
+                  lt: "<",
+                  gt: ">",
+                  amp: "&",
+                  quot: '"',
+                  apos: "'",
+                  bull: "•",
+                  nbsp: " "
+                })[name.toLowerCase()]
+              );
+            const parseFields = (allowedNames) => {
+              const allowed = new Set(allowedNames);
+              const fields = new Map();
+              const lines = body.split(/\r?\n/);
+              for (let index = 0; index < lines.length; index += 1) {
+                const line = lines[index];
+                if (
+                  index > 0 &&
+                  (line.includes("<!--") || line.includes("-->"))
+                ) {
+                  return null;
+                }
+                const decodedLine = decodeHtmlEntities(line);
+                if (
+                /&(?:#[xX]?[0-9A-Fa-f]+|[A-Za-z][A-Za-z0-9]+);/.test(
+                  decodedLine
+                )
+                ) {
+                return null;
+                }
+                const normalizedLine = decodedLine
+                .normalize("NFKC")
+                .replace(/[\u200B-\u200D\uFEFF]/g, "")
+                .replace(/<[^>]*>/g, "")
+                .replace(/[`*_~]/g, "");
+                const fieldLike = normalizedLine.match(
+                /^\s*(?:>+\s*)?(?:(?:[-*+•]|\d+[.)])\s*)?([^:\n]{1,80}):\s*(.*)$/
+                );
+                if (!fieldLike) continue;
+                const match = line.match(/^- ([^:]+): (.+)$/);
+                if (
+                  !match ||
+                  !allowed.has(match[1]) ||
+                  fields.has(match[1])
+                ) {
+                  return null;
+                }
+                fields.set(match[1], unwrap(match[2]));
+              }
+              return fields.size === allowed.size ? fields : null;
+            };
+            const achievementFields = isAchievementProgress
+              ? parseFields([
+                  "Schema", "Workshop", "Agent", "Achievements",
+                  body.includes("- Source quest URL:")
+                    ? "Source quest URL"
+                    : "Source"
+                ])
+              : null;
+            const cohortFields = isWorkshopCohort
+              ? parseFields([
+                  "Schema", "Workshop", "Agent", "Cohort code",
+                  "Session date", "Attendee count",
+                  "Private facilitator form submitted",
+                  "Public progress consent"
+                ])
+              : null;
+            const qualificationFields = isBadgeQualification
+              ? parseFields([
+                  "Schema", "Workshop", "Agent", "Cohort code",
+                  "Achievement progress issue",
+                  "Private qualification form submitted",
+                  "Public profile consent"
+                ])
+              : null;
+            const cohortCodePattern =
+              /^[A-Z0-9](?:[A-Z0-9-]{4,38}[A-Z0-9])$/;
+            const issueUrlPattern = new RegExp(
+              `^https://github\\.com/${context.repo.owner}/${context.repo.repo}/issues/[1-9]\\d*$`
+            );
+            const exactBodyShape = (
+              marker,
+              heading,
+              fieldCount,
+              allowedExtraSets = [[]]
+            ) => {
+              const lines = body
+                .split(/\r?\n/)
+                .map((line) => line.trim())
+                .filter(Boolean);
+              if (lines[0] !== marker || lines[1] !== heading) return false;
+              const tail = lines.slice(2);
+              const fieldLines = tail.filter((line) => line.startsWith("- "));
+              const extras = tail.filter((line) => !line.startsWith("- "));
+              return (
+                fieldLines.length === fieldCount &&
+                allowedExtraSets.some((allowed) =>
+                  extras.length === allowed.length &&
+                  extras.every((line, index) => line === allowed[index])
+                )
+              );
+            };
+            const canonicalAgent = (fields) => (
+              fields
+                ? canonicalWorkshops.get(fields.get("Workshop"))
+                : null
+            );
+            const achievementOrder = [
+              "started",
+              "local-proof",
+              "draft-builder",
+              "preview-proven",
+              "workshop-completed",
+              "hard-mode-completed"
+            ];
+            const achievementIds = achievementFields
+              ? achievementFields.get("Achievements")
+                  .split(",")
+                  .map((value) => value.trim())
+              : [];
+            const achievementSet = new Set(achievementIds);
+            const sortedAchievementIds = [...achievementIds].sort(
+              (left, right) =>
+                achievementOrder.indexOf(left) -
+                achievementOrder.indexOf(right)
+            );
+            const achievementOrderValid =
+              achievementIds.length > 0 &&
+              achievementIds.length === achievementSet.size &&
+              achievementIds.every((value) =>
+                achievementOrder.includes(value)
+              ) &&
+              achievementIds.every(
+                (value, index) => value === sortedAchievementIds[index]
+              );
+            const achievementDependenciesValid =
+              (
+                achievementSet.size === 1 &&
+                achievementSet.has("started")
+              ) ||
+              (
+                achievementSet.has("started") &&
+                (
+                  !achievementSet.has("workshop-completed") ||
+                  [
+                    "local-proof",
+                    "draft-builder",
+                    "preview-proven"
+                  ].every((value) => achievementSet.has(value))
+                )
+              );
+            const validAchievement = achievementFields &&
+              achievementFields.get("Schema") ===
+                "aibast-achievement-progress/1.0" &&
+              exactBodyShape(
+                "<!-- aibast-achievement-progress:v1 -->",
+                "## Workshop achievement progress",
+                5,
+                [
+                  [],
+                  [
+                    "Opening this form does not sync anything. Submit the issue to sync these earned IDs. Resubmitting later merges newly earned IDs without duplicate score; the server computes the verified score. One public GitHub issue submission opts this account into a public verified profile.",
+                    "> Do not add credentials, tokens, customer data, or other sensitive information."
+                  ]
+                ]
+              ) &&
+              canonicalAgent(achievementFields) ===
+                achievementFields.get("Agent") &&
+              achievementOrderValid &&
+              achievementDependenciesValid &&
+              /^https?:\/\//.test(
+                achievementFields.get("Source") ||
+                achievementFields.get("Source quest URL") ||
+                ""
+              );
+            const validCohort = cohortFields &&
+              cohortFields.get("Schema") === "aibast-workshop-cohort/1.0" &&
+              exactBodyShape(
+                "<!-- aibast-workshop-cohort:v1 -->",
+                "## Public workshop cohort trigger",
+                8
+              ) &&
+              canonicalAgent(cohortFields) === cohortFields.get("Agent") &&
+              cohortCodePattern.test(cohortFields.get("Cohort code")) &&
+              !cohortFields.get("Cohort code").includes("REPLACE") &&
+              /^\d{4}-\d{2}-\d{2}$/.test(cohortFields.get("Session date")) &&
+              /^(?:[1-9]\d{0,3}|10000)$/.test(
+                cohortFields.get("Attendee count")
+              ) &&
+              cohortFields.get("Private facilitator form submitted")
+                .toLowerCase() === "yes" &&
+              cohortFields.get("Public progress consent").toLowerCase() ===
+                "yes";
+            const validQualification = qualificationFields &&
+              qualificationFields.get("Schema") ===
+                "aibast-badge-qualification/1.0" &&
+              exactBodyShape(
+                "<!-- aibast-badge-qualification:v1 -->",
+                "## Public badge qualification trigger",
+                7
+              ) &&
+              canonicalAgent(qualificationFields) ===
+                qualificationFields.get("Agent") &&
+              cohortCodePattern.test(
+                qualificationFields.get("Cohort code")
+              ) &&
+              !qualificationFields.get("Cohort code").includes("REPLACE") &&
+              issueUrlPattern.test(
+                qualificationFields.get("Achievement progress issue")
+              ) &&
+              qualificationFields.get("Private qualification form submitted")
+                .toLowerCase() === "yes" &&
+              qualificationFields.get("Public profile consent")
+                .toLowerCase() === "yes";
+            const validMarker = markerCount === 1 && (
+              isWorkshopFeedback ||
+              validAchievement ||
+              validCohort ||
+              validQualification
+            );
+            const selectedNames = !hasCurrentMarker
+              ? []
+              : !validMarker
+                  ? ["needs-triage"]
+              : isAchievementProgress
+                  ? ["achievement-progress"]
+                  : isWorkshopCohort
+                      ? ["workshop-cohort", "needs-private-review"]
+                      : isBadgeQualification
+                          ? ["badge-qualification", "needs-private-review"]
+                          : ["workshop-feedback", "needs-triage"];
             const labels = selectedNames.map((name) => definitions[name]);
 
             for (const label of labels) {
@@ -72,7 +373,10 @@ jobs:
             }
 
             for (const name of currentNames) {
-              if (!managedNames.has(name) || selectedNames.includes(name)) continue;
+              if (
+                !automaticallyManagedNames.has(name) ||
+                selectedNames.includes(name)
+              ) continue;
               try {
                 await github.rest.issues.removeLabel({
                   owner: context.repo.owner,
@@ -93,10 +397,46 @@ jobs:
                 labels: labels.map((label) => label.name)
               });
             }
+
+            const issueIsOpen = context.payload.issue.state === "open";
+            const shouldAcknowledge = ["opened", "edited", "reopened"].includes(
+              context.payload.action
+            ) && issueIsOpen;
+            if (shouldAcknowledge && hasCurrentMarker && !validMarker) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: "This structured submission was not processed because its schema is invalid, contains placeholders, or combines multiple signal markers. Correct the issue body and keep all private data out of GitHub."
+              });
+            }
+            const closeable = validMarker && (
+              validAchievement || validCohort || validQualification
+            );
+            if (shouldAcknowledge && closeable) {
+              const acknowledgement = validAchievement
+                ? "Achievement progress was accepted for strict server-side validation and public metrics aggregation."
+                : validCohort
+                    ? "Cohort delivery was stamped and queued for private Forms matching. It counts toward facilitator expertise only after an authorized reviewer applies `cohort-verified`."
+                    : "Badge qualification was stamped and queued for private Forms and module-test review. It counts only after an authorized reviewer applies `badge-qualified`.";
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: `${acknowledgement}\n\nThis issue is now closed as the processing acknowledgement. Closed issues remain in the public, state=all aggregation ledger.`
+              });
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                state: "closed",
+                state_reason: "completed"
+              });
+            }
             return true;
 
       - name: Dispatch metrics compilation on default branch
-        if: steps.process-signal.outputs.result == 'true'
+        if: steps.process-signal.outputs.result == 'true' && github.event.action != 'closed'
         uses: actions/github-script@v7
         with:
           script: |

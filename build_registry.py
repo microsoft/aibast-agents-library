@@ -29,6 +29,7 @@ from datetime import datetime, timezone
 AGENTS_DIR = Path("agents")
 REGISTRY_FILE = Path("registry.json")
 SOLUTIONS_FILE = Path("solutions.json")
+FIRST_PARTY_FILE = Path("first_party.json")
 ONEPAGER_CONTENT_FILE = Path("state/onepager_content.json")
 SOLUTION_COPY_FILE = Path("solutions/catalog.json")
 DEMO_CASES_DIR = Path("tests/demo_cases")
@@ -36,6 +37,128 @@ REQUIRED_MANIFEST_FIELDS = [
     "schema", "name", "version", "display_name",
     "description", "author", "tags", "category"
 ]
+REQUIRED_FIRST_PARTY_FIELDS = [
+    "id", "name", "product", "vertical", "deck_status",
+    "description", "use_cases", "doc_status", "overview_url", "source_slide"
+]
+FIRST_PARTY_SCHEMA = "aibast-first-party/1.0"
+FIRST_PARTY_DECK_STATUSES = {"GA", "Preview"}
+FIRST_PARTY_LIFECYCLES = {"Preview"}
+FIRST_PARTY_DOC_STATUSES = {"dedicated"}
+
+
+def load_first_party(errors: list) -> list:
+    """Microsoft first-party agents the field should evaluate before building custom.
+
+    first_party.json is authored, not derived: these agents ship inside
+    Dynamics 365, Microsoft 365 Copilot, and Agent 365, so they have no .py
+    file and no __manifest__ to scan. They stay out of the `agents` array
+    (which counts code this repo owns) and land in their own `first_party`
+    array so total_agents, catalog kinds, and the metrics snapshot stay honest.
+
+    Only current public Microsoft Learn links that document the exact
+    capability are published. Lifecycle is optional and appears only when the
+    current Learn page explicitly states it; source-deck lifecycle is retained
+    separately as deck_status and is never promoted to current lifecycle.
+    """
+    if not FIRST_PARTY_FILE.exists():
+        return []
+    try:
+        doc = json.loads(FIRST_PARTY_FILE.read_text(encoding="utf-8"))
+    except (ValueError, OSError) as e:
+        errors.append(f"{FIRST_PARTY_FILE}: cannot read ({e})")
+        return []
+
+    if doc.get("schema") != FIRST_PARTY_SCHEMA:
+        errors.append(
+            f"{FIRST_PARTY_FILE}: schema must be {FIRST_PARTY_SCHEMA}"
+        )
+    entries = doc.get("agents", [])
+    if not isinstance(entries, list):
+        errors.append(f"{FIRST_PARTY_FILE}: agents must be a list")
+        return []
+    if doc.get("count") != len(entries):
+        errors.append(
+            f"{FIRST_PARTY_FILE}: count {doc.get('count')} does not match "
+            f"{len(entries)} agents"
+        )
+
+    rows = []
+    seen = set()
+    for entry in entries:
+        if not isinstance(entry, dict):
+            errors.append(f"{FIRST_PARTY_FILE}: every agent must be an object")
+            continue
+        label = entry.get("id") or entry.get("name") or "<unnamed>"
+        missing = [f for f in REQUIRED_FIRST_PARTY_FIELDS if not entry.get(f)]
+        if missing:
+            errors.append(f"{FIRST_PARTY_FILE}:{label}: missing {', '.join(missing)}")
+            continue
+        if entry["id"] in seen:
+            errors.append(f"{FIRST_PARTY_FILE}:{label}: duplicate id")
+            continue
+        seen.add(entry["id"])
+        if entry["deck_status"] not in FIRST_PARTY_DECK_STATUSES:
+            errors.append(
+                f"{FIRST_PARTY_FILE}:{label}: deck_status must be one of "
+                f"{sorted(FIRST_PARTY_DECK_STATUSES)}"
+            )
+            continue
+        lifecycle = entry.get("lifecycle")
+        if lifecycle is not None:
+            if lifecycle not in FIRST_PARTY_LIFECYCLES:
+                errors.append(
+                    f"{FIRST_PARTY_FILE}:{label}: lifecycle must be one of "
+                    f"{sorted(FIRST_PARTY_LIFECYCLES)}"
+                )
+                continue
+            if not entry.get("lifecycle_source_url"):
+                errors.append(
+                    f"{FIRST_PARTY_FILE}:{label}: lifecycle requires "
+                    "lifecycle_source_url"
+                )
+                continue
+        if entry["doc_status"] not in FIRST_PARTY_DOC_STATUSES:
+            errors.append(
+                f"{FIRST_PARTY_FILE}:{label}: doc_status must be one of "
+                f"{sorted(FIRST_PARTY_DOC_STATUSES)}"
+            )
+            continue
+        urls = [
+            entry.get("overview_url"),
+            entry.get("configure_url"),
+            entry.get("lifecycle_source_url"),
+        ]
+        if any(
+            url is not None
+            and not url.startswith("https://learn.microsoft.com/")
+            for url in urls
+        ):
+            errors.append(
+                f"{FIRST_PARTY_FILE}:{label}: published URLs must use "
+                "https://learn.microsoft.com/"
+            )
+            continue
+        use_cases = entry["use_cases"]
+        if (
+            not isinstance(use_cases, list)
+            or len(use_cases) < 3
+            or any(not isinstance(value, str) or not value.strip() for value in use_cases)
+        ):
+            errors.append(
+                f"{FIRST_PARTY_FILE}:{label}: use_cases must contain at least "
+                "three non-empty strings"
+            )
+            continue
+
+        row = dict(entry)
+        row["_catalog_kind"] = "first_party"
+        row["_documented"] = True
+        row["_availability_label"] = lifecycle or "Available"
+        rows.append(row)
+
+    rows.sort(key=lambda r: (r["vertical"], r["name"]))
+    return rows
 
 
 def load_solutions() -> dict:
@@ -252,6 +375,7 @@ def build_registry():
 
     added_dates = git_added_dates()
     solutions = load_solutions()
+    first_party = load_first_party(errors)
     onepager_content = load_onepager_content()
     solution_copy = load_solution_copy()
     demo_cases = load_demo_cases()
@@ -287,6 +411,16 @@ def build_registry():
         manifest["_size_kb"] = round(len(raw) / 1024, 1)
         manifest["_lines"] = len(content.split('\n'))
         manifest["_sha256"] = hashlib.sha256(raw).hexdigest()
+        install_slug = re.sub(
+            r"[^a-z0-9]+",
+            "_",
+            manifest["name"].split("/", 1)[-1].lower(),
+        ).strip("_")
+        manifest["_install_prefix"] = f"{install_slug}__"
+        manifest["_install_filename"] = (
+            f"{manifest['_install_prefix']}"
+            f"{manifest['_sha256'][:12]}_agent.py"
+        )
         manifest["_stack"] = stack
         manifest["_stack_vertical"] = vertical
         manifest["_synthetic_data"] = bool(
@@ -453,12 +587,24 @@ def build_registry():
             ),
             "total_lines": sum(a["_lines"] for a in agents),
             "total_kb": round(sum(a["_size_kb"] for a in agents), 1),
+            "total_first_party": len(first_party),
+            "first_party_available": sum(
+                not a.get("lifecycle") for a in first_party
+            ),
+            "first_party_preview": sum(
+                a.get("lifecycle") == "Preview" for a in first_party
+            ),
+            "first_party_documented": sum(
+                a["_documented"] for a in first_party
+            ),
+            "first_party_products": sorted({a["product"] for a in first_party}),
             "publisher_list": sorted(publishers),
             "category_list": sorted(categories),
             "tier_counts": dict(sorted(tiers.items(), key=lambda kv: -kv[1])),
         },
         "stacks": stack_rows,
-        "agents": agents
+        "agents": agents,
+        "first_party": first_party
     }
 
     with open(REGISTRY_FILE, "w", encoding="utf-8") as f:
@@ -467,6 +613,12 @@ def build_registry():
     print(f"[OK] Registry built: {len(agents)} agents from {len(publishers)} publishers")
     print(f"  Categories: {', '.join(sorted(categories))}")
     print(f"  Publishers: {', '.join(sorted(publishers))}")
+    if first_party:
+        preview = sum(a.get("lifecycle") == "Preview" for a in first_party)
+        print(
+            f"  First-party agents: {len(first_party)} "
+            f"({preview} explicitly documented Preview)"
+        )
 
     if errors:
         print(f"\n[WARN] {len(errors)} validation errors:")

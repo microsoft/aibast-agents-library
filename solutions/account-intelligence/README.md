@@ -43,7 +43,7 @@ Single-file portable agent with allow-listed account routing, six deterministic 
 - **Facilitator-assisted Easy mode:** a facilitator or IT owner provides the
   supported Copilot Studio plugin and PAC CLI; the seller sends two short
   messages and reviews the six case and Draft gates.
-- **Hard mode:** a reviewer reconstructs the Draft in the browser and stops
+- **Manual mode:** a reviewer reconstructs the Draft in the browser and stops
   before Publish.
 
 ## Evidence boundary
@@ -60,7 +60,7 @@ All exact names, dates, counts, values, scores, percentages, pricing, ARR, margi
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/account-intelligence/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/account-intelligence/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/account-intelligence/quest.html` |
+| Guided Easy/Manual quest | `solutions/account-intelligence/quest.html` |
 | Literal browser tutorial | `solutions/account-intelligence/manual-tutorial.html` |
 | Raw export manifest | `solutions/account-intelligence/export-manifest.json` |
 | Source bundle | `solutions/account-intelligence/exports/account-intelligence-source.zip` |

@@ -1,0 +1,140 @@
+{
+  "schema": "aibast-architecture-l2/1.0",
+  "slug": "field-service-dispatch",
+  "agent": "@aibast-agents-library/field-service-dispatch",
+  "display_name": "Field Service Dispatch Agent",
+  "domains": {
+    "knowledge": [
+      {
+        "name": "Synthetic service-request snapshot",
+        "detail": "Fixed fictional requests record priority, type, zone, location, equipment, required certifications, estimated hours, and assignment status."
+      },
+      {
+        "name": "Synthetic technician and zone records",
+        "detail": "Fixed technician skills, status, location, capacity, efficiency, and experience combine with geographic-zone load and staffing records."
+      },
+      {
+        "name": "Dispatch rules and authorization controls",
+        "detail": "Bundled rules define filtering, priority order, capacity math, scoring, emergency selection, evidence anchors, and prohibited acts."
+      },
+      {
+        "name": "Approved production connection seams",
+        "detail": "Dynamics 365 Field Service, an approved telematics feed, and a Microsoft Teams notification flow are documented but not connected."
+      }
+    ],
+    "intelligence_processing": [
+      {
+        "name": "Service-request queue triage",
+        "detail": "Filters and prioritizes the synthetic request queue so managers can review critical, high, medium, and low work without changing jobs."
+      },
+      {
+        "name": "Zone load and capacity comparison",
+        "detail": "Calculates open requests, total estimated hours, remaining job slots, and utilization for dispatcher review before any rerouting."
+      },
+      {
+        "name": "Skill-matched candidate scoring",
+        "detail": "Requires all certifications and remaining capacity, then scores efficiency, zone fit, and availability to recommend a candidate for review."
+      },
+      {
+        "name": "Emergency response preparation",
+        "detail": "Identifies synthetic critical or emergency requests and lists certification-eligible responders in an approval-gated response draft."
+      },
+      {
+        "name": "Persona-led operation routing",
+        "detail": "Maps field manager, service director, dispatch coordinator, and emergency duty manager questions to one bounded read-only operation."
+      }
+    ],
+    "clients_user_interface": [
+      {
+        "name": "Portable Brainstem chat experience",
+        "detail": "The single-file RAPP agent exposes four independently routable operations through local Brainstem chat, streaming, and API surfaces."
+      },
+      {
+        "name": "Copilot Studio draft experience",
+        "detail": "Four skills and two synthetic knowledge files support natural-language preview while the validated pilot remains Draft and unpublished."
+      },
+      {
+        "name": "Evidence-first dispatcher review",
+        "detail": "Responses lead with synthetic evidence, explain uncertainty, identify the authorized reviewer, and end with the no-write boundary."
+      }
+    ],
+    "management_reporting": [
+      {
+        "name": "Dispatch dashboard",
+        "detail": "Reports prioritized requests, unassigned work, and available technicians while confirming no job, crew, route, or inventory changed."
+      },
+      {
+        "name": "Zone capacity review",
+        "detail": "Presents staffing, open requests, total hours, remaining slots, and utilization for review of travel, safety, labor, and SLA constraints."
+      },
+      {
+        "name": "Technician candidate recommendation",
+        "detail": "Shows the best certification-matched candidate, score, efficiency, and zone fit as a recommendation only; no technician is assigned."
+      },
+      {
+        "name": "Emergency response draft",
+        "detail": "Summarizes the emergency, location, equipment, estimate, and eligible responders for approval without notification or field action."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "FieldServiceDispatchAgent portable RAPP tool",
+      "detail": "Single-file Python BasicAgent implements four deterministic read-only operations over bundled synthetic records."
+    },
+    {
+      "name": "Brainstem runtime",
+      "detail": "Local-first RAPP server discovers the portable agent and exposes conversational chat, streaming, health, and tool-routing endpoints."
+    },
+    {
+      "name": "Microsoft Copilot Studio",
+      "detail": "Hosts the validated pilot, four skills, and two knowledge files; the agent remains Draft and publication requires confirmation."
+    },
+    {
+      "name": "Dynamics 365 Field Service",
+      "detail": "Approved least-privilege production seam for field-service records; the current package has no live read or write connection."
+    },
+    {
+      "name": "Approved telematics feed",
+      "detail": "Documented production seam for verified travel and location context; synthetic records are used until an approved connector exists."
+    },
+    {
+      "name": "Microsoft Teams notification flow",
+      "detail": "Documented human-review and notification seam; the package does not send messages, request approvals, or notify technicians."
+    },
+    {
+      "name": "Deployment-selected foundation model",
+      "detail": "The host model routes natural-language requests and composes responses from deterministic agent or skill evidence."
+    }
+  ],
+  "supporting_features": [
+    {
+      "name": "Synthetic-only evidence boundary",
+      "detail": "Every organization, person, identifier, measurement, status, score, and recommendation is fictional pilot evidence, not a live fact."
+    },
+    {
+      "name": "Four deterministic operations",
+      "detail": "Dispatch dashboard, route optimization, technician assignment, and emergency response remain independently callable and reviewable."
+    },
+    {
+      "name": "Fail-closed record handling",
+      "detail": "Unknown zones or request identifiers return no substituted records, and the agent does not browse or invent missing evidence."
+    },
+    {
+      "name": "Dispatcher review boundary",
+      "detail": "A human dispatcher applies safety, labor, SLA, emergency, and authorization procedures before any operational decision."
+    },
+    {
+      "name": "No autonomous dispatch or side effects",
+      "detail": "Never assigns, notifies, reroutes, or dispatches crews; changes jobs; contacts customers; stages inventory; or authorizes field action."
+    },
+    {
+      "name": "Controlled future-write pattern",
+      "detail": "Any later write tool must be separate, authenticated, role-authorized, current-state validated, explicitly confirmed, and immutably audited."
+    },
+    {
+      "name": "Locked validation and publication control",
+      "detail": "Four persona cases passed locked anchors; Copilot Studio validation and export do not authorize publication or production use."
+    }
+  ]
+}

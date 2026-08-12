@@ -13,7 +13,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="data:," rel="icon">
 <title>Library Metrics — AIBAST Agents Library</title>
-<meta name="description" content="AIBAST agent downloads, Discussion upvotes, signed-in acquisitions, workshop adoption, and verified achievements.">
+<meta name="description" content="AIBAST agent downloads, signed-in GitHub Discussion upvotes, workshop adoption, and verified achievements.">
 <meta property="og:title" content="AIBAST Library Metrics">
 <meta property="og:description" content="AIBAST agent distribution, Discussion signals, workshop adoption, and verified achievements.">
 <meta property="og:type" content="website">
@@ -1040,7 +1040,7 @@ footer {
     <h1 id="page-title">Public library metrics</h1>
     <p>Every number below belongs to the AIBAST library and comes from a public, verifiable API — GitHub traffic, releases, Discussions and opt-in issues, the jsDelivr CDN, and the AIBAST catalog. RAR is intentionally excluded from these counts. There is no private analytics or tracking pixel. Identity appears only in verified achievement profiles whose GitHub users explicitly opted into public display by submitting a claim.</p>
     <div class="upvote-note">
-      <p><b>Agent Discussions provide two traceable counters.</b> A native upvote on the rating Discussion records community preference; a native upvote on the parallel acquisition Discussion records one signed-in account's declared download, copy, or install. GitHub permits one active upvote per account on each Discussion. Acquisition signals are not substituted for observable CDN or release file transfers.</p>
+      <p><b>Agent upvotes require a signed-in GitHub account.</b> Each agent has one canonical rating Discussion, and GitHub permits one active upvote per account. Upvotes record community preference; agent downloads are counted separately from GitHub Release assets.</p>
       <a class="upvote-action" href="library.html">Browse agents</a>
     </div>
     <div class="impact-report-note">
@@ -1076,7 +1076,7 @@ footer {
     <p class="coverage-status" id="achievements-coverage" role="status" aria-live="polite" aria-atomic="true">Verified achievement coverage is loading.</p>
     <div class="card">
       <p class="coverage-note"><b>Verification scope.</b> GitHub verification confirms authenticated issue authorship and canonical claim format only; achievement completion remains self-reported and is not independently proven.</p>
-      <p class="coverage-note"><b>Verified public achievements</b> are server-scored from submitted public GitHub progress issues. Fixed achievement values are: started 5, local proof 15, draft builder 20, preview proven 25, workshop completed 35, and hard mode completed 50, for at most 150 points per workshop. Re-syncing unions explicitly claimed achievement IDs and never duplicates points. Missing prerequisite badges are not inferred.</p>
+      <p class="coverage-note"><b>Verified public achievements</b> are server-scored from submitted public GitHub progress issues. Fixed achievement values are: started 5, local proof 15, draft builder 20, preview proven 25, workshop completed 35, and manual mode completed 50, for at most 150 points per workshop. Re-syncing unions explicitly claimed achievement IDs and never duplicates points. Missing prerequisite badges are not inferred.</p>
       <p class="coverage-note"><b>Local self-paced achievements are different.</b> Progress on <a href="achievements.html">achievements.html</a> stays local until a person deliberately submits a verification issue. Submission explicitly opts that GitHub login into the public verified profile and leaderboard. Verified achievement points are never repository stars, agent upvotes, downloads, or workshop usage events, and they are not added to those metrics. Administrators can review the <a href="docs/metrics-admin-setup.html">achievement metrics setup and privacy checklist</a>.</p>
       <div class="achievements-grid">
         <section class="achievements-card" aria-labelledby="achievements-leaderboard-heading">
@@ -1085,7 +1085,7 @@ footer {
           <div class="table-scroll">
             <table id="achievements-leaderboard" aria-label="Verified public achievement profile leaderboard">
               <caption>Verified public achievement profiles ranked by points</caption>
-              <thead><tr><th scope="col">GitHub login</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Hard completions</th></tr></thead>
+              <thead><tr><th scope="col">GitHub login</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Manual completions</th></tr></thead>
               <tbody><tr><td colspan="6">Loading verified achievement profiles&hellip;</td></tr></tbody>
             </table>
           </div>
@@ -1096,7 +1096,7 @@ footer {
           <div class="table-scroll">
             <table id="achievements-workshop-table" aria-label="Verified per-workshop achievement completion">
               <caption>Canonical workshops ranked by verified achievement points</caption>
-              <thead><tr><th scope="col">Workshop</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Hard completions</th><th class="num" scope="col">Achievement completion</th></tr></thead>
+              <thead><tr><th scope="col">Workshop</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Manual completions</th><th class="num" scope="col">Achievement completion</th></tr></thead>
               <tbody><tr><td colspan="7">Loading verified workshop achievements&hellip;</td></tr></tbody>
             </table>
           </div>
@@ -1124,7 +1124,7 @@ footer {
     <div class="workshop-summary" id="workshop-summary" aria-live="polite"></div>
     <p class="coverage-status" id="workshop-coverage" role="status" aria-live="polite" aria-atomic="true">Workshop signal coverage is loading.</p>
     <div class="card">
-      <p class="coverage-note"><b>Workshop usage events</b> = counted GitHub popular-path page views + jsDelivr workshop file downloads + jsDelivr source-bundle downloads + public workshop feedback reports. This is a floor and an event sum, not people, users, or unique usage. These sources use mixed measurement windows, and one person or action can create multiple events. Agent rating upvotes and signed-in acquisitions are Discussion signals shown separately and are never added to usage events.</p>
+      <p class="coverage-note"><b>Workshop usage events</b> = counted GitHub popular-path page views + jsDelivr workshop file downloads + jsDelivr source-bundle downloads + public workshop feedback reports. This is a floor and an event sum, not people, users, or unique usage. These sources use mixed measurement windows, and one person or action can create multiple events. Agent upvotes are shown separately and are never added to usage events.</p>
       <p class="coverage-note">Views cover only observed GitHub top popular-path rows in the 14-day API window, not complete GitHub Pages analytics; an absent workshop is censored, not a verified zero, and path-level uniques can repeat across paths. Workshop downloads are limited to validated jsDelivr-visible files under <code>/solutions/&lt;slug&gt;/</code> and bundles at <code>/exports/&lt;slug&gt;-source.zip</code>. The repository-wide Total downloads KPI can include release-visible assets, but those are not assigned to workshops without a public workshop path. Raw GitHub and direct GitHub Pages fetches are uncounted.</p>
       <div class="workshop-controls">
         <p class="workshop-controls-label">Sort workshop rows by</p>
@@ -1509,14 +1509,12 @@ function renderKPIs() {
   const workshopTotals = (M.workshops || {}).totals || {};
   const achievementTotals = (M.achievements || {}).totals || {};
   const cards = [
-    { primary: true, label: 'AIBAST direct agent fetches', value: num(t.agent_file_downloads), sub: 'observable jsDelivr agent-file transfers · raw GitHub transfers are uncounted' },
+    { primary: true, label: 'Agent downloads', value: num(t.agent_file_downloads), sub: 'observable immutable agent.py release-asset transfers' },
     { primary: true, label: 'AIBAST repository downloads', value: num(t.downloads), sub: `${num(t.clones)} repository clones (includes this repo's own CI) · ${num(t.cdn_hits)} CDN hits · ${num(t.release_downloads)} release assets` },
     { primary: true, label: 'Verified achievement points', value: num(achievementTotals.points), sub: `${num(achievementTotals.participants)} opt-in public participants · ${num(achievementTotals.achievements)} badges · ${num(achievementTotals.starts)} starts · ${num(achievementTotals.workshop_completions)} workshop completions · ${num(achievementTotals.hard_completions)} hard completions` },
     { label: 'Agent upvotes', value: num(t.agent_upvotes), sub: 'native rating-Discussion upvotes · one active signal per GitHub account and agent' },
-    { label: 'Signed-in acquisitions', value: num(t.agent_acquisitions), sub: 'native acquisition-Discussion upvotes · declared downloads/copies/installs, separate from file transfers' },
     { label: 'Workshop usage events', value: num(workshopTotals.usage_events), sub: `${num(workshopTotals.workshops)} advertised workshops · public event-count floor, not users` },
     { label: 'Repository stars', value: num(r.stars), sub: `${num(r.forks)} forks · ${num(r.open_issues)} open issues · separate from agent upvotes` },
-    { label: 'Skill downloads', value: num(t.skill_downloads), sub: 'tracked SKILL.md files observed through jsDelivr per-file statistics' },
     { label: 'Installer fetches', value: num(t.installer_downloads), sub: 'install.sh / .ps1 / .cmd served over the CDN — raw.githubusercontent installs are uncounted' },
     { label: 'Agents', value: num(t.agents), sub: `${num(t.stacks)} stacks · ${num(t.verticals)} verticals` },
     { label: 'Catalog size', value: num(t.total_lines), sub: `lines of Python · ${num(t.total_kb)} KB across ${num(t.agents)} files` },
@@ -1543,7 +1541,7 @@ function renderAchievementPoints() {
     { label: 'Verified badges', value: totals.achievements },
     { label: 'Verified starts', value: totals.starts },
     { label: 'Workshop completions', value: totals.workshop_completions },
-    { label: 'Hard completions', value: totals.hard_completions },
+    { label: 'Manual completions', value: totals.hard_completions },
     { label: 'Completion rate', value: percent(totals.completion_rate), formatted: true },
     { label: 'Achievement completion', value: percent(totals.achievement_completion_rate), formatted: true }
   ];
@@ -1573,7 +1571,7 @@ function renderAchievementPoints() {
     : 'Profiles are public only after opt-in submission';
   const profileTable = $('achievements-leaderboard');
   profileTable.innerHTML = `<caption>Verified public achievement profiles ranked by points</caption>
-    <thead><tr><th scope="col">GitHub login</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Hard completions</th></tr></thead>
+    <thead><tr><th scope="col">GitHub login</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Manual completions</th></tr></thead>
     <tbody>${profiles.length ? profiles.map(profile => {
       const login = String(profile.login || '');
       const profileUrl = /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?$/.test(login)
@@ -1605,7 +1603,7 @@ function renderAchievementPoints() {
     : 'Canonical workshop achievement rows are unavailable';
   const workshopTable = $('achievements-workshop-table');
   workshopTable.innerHTML = `<caption>Canonical workshops ranked by verified achievement points</caption>
-    <thead><tr><th scope="col">Workshop</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Hard completions</th><th class="num" scope="col">Achievement completion</th></tr></thead>
+    <thead><tr><th scope="col">Workshop</th><th class="num" scope="col">Points</th><th class="num" scope="col">Badges</th><th class="num" scope="col">Starts</th><th class="num" scope="col">Workshop completions</th><th class="num" scope="col">Manual completions</th><th class="num" scope="col">Achievement completion</th></tr></thead>
     <tbody>${workshops.length ? workshops.map(row => {
       const slug = String(row.slug || '');
       const quest = /^[a-z0-9-]+$/.test(slug)
@@ -1815,16 +1813,9 @@ const AGENT_UPVOTE_BOARD = {
   metric: 'upvotes',
   unit: 'agent upvotes'
 };
-const AGENT_ACQUISITION_BOARD = {
-  id: 'most_acquired',
-  label: 'Most acquired',
-  metric: 'acquisitions',
-  unit: 'signed-in acquisitions'
-};
 const ALL_BOARDS = [
   BOARDS[0],
   AGENT_UPVOTE_BOARD,
-  AGENT_ACQUISITION_BOARD,
   ...BOARDS.slice(1)
 ];
 let activeBoard = 'most_downloaded';
@@ -1836,8 +1827,7 @@ function renderBoards() {
   const panel = $('board');
   panel.setAttribute('aria-labelledby', `tab-${activeBoard}`);
   const cfg = ALL_BOARDS.find(board => board.id === activeBoard);
-  const signalBoard = activeBoard === 'most_upvoted'
-    || activeBoard === 'most_acquired';
+  const signalBoard = activeBoard === 'most_upvoted';
   const advertisedWorkshopAgents = new Set(
     ((M.workshops || {}).rows || [])
       .map(row => row.agent_name)
@@ -1860,7 +1850,7 @@ function renderBoards() {
         .filter(eligibleAgent));
   if (!rows.length) {
     panel.innerHTML = activeBoard === 'most_downloaded'
-      ? '<div class="empty">No per-file CDN fetches recorded yet. Agent files pulled over <code>raw.githubusercontent.com</code> are not counted by any public API — only jsDelivr publishes per-file numbers.</div>'
+      ? '<div class="empty">No agent release-asset downloads have been recorded yet.</div>'
       : signalBoard
         ? '<div class="empty">No canonical Discussion signals are available in this snapshot yet.</div>'
         : '<div class="empty">No data recorded yet for this leaderboard.</div>';
@@ -1874,9 +1864,7 @@ function renderBoards() {
     const url = r.file ? `https://github.com/${OWNER}/${REPO}/blob/main/${encodeURI(r.file)}` : `https://github.com/${OWNER}/${REPO}`;
     const signalUrl = cfg.metric === 'upvotes'
       ? r.upvote_discussion_url
-      : cfg.metric === 'acquisitions'
-        ? r.acquisition_discussion_url
-        : '';
+      : '';
     const signalLink = /^https:\/\/github\.com\/[^/]+\/[^/]+\/discussions\/\d+$/.test(signalUrl || '')
       ? ` · <a href="${esc(signalUrl)}" target="_blank" rel="noopener">Discussion ↗</a>`
       : '';

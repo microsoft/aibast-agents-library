@@ -44,7 +44,7 @@ Upload both Markdown files in `manual/knowledge/`, then upload the 6 `SKILL.md` 
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/ask-hr/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/ask-hr/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/ask-hr/quest.html` |
+| Guided Easy/Manual quest | `solutions/ask-hr/quest.html` |
 | Literal browser tutorial | `solutions/ask-hr/manual-tutorial.html` |
 | Raw export manifest | `solutions/ask-hr/export-manifest.json` |
 | Source bundle | `solutions/ask-hr/exports/ask-hr-source.zip` |

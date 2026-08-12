@@ -538,7 +538,7 @@ def test_metrics_workflow_and_dashboard_publish_report_exports():
         "reports/impact-report.html",
         "reports/impact-report.pdf",
         "reports/impact-report-email.txt",
-        "Signed-in acquisitions",
+        "Agent downloads",
         "RAR is intentionally excluded from these counts",
     ):
         assert token in dashboard

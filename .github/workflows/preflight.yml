@@ -30,6 +30,7 @@ jobs:
         run: |
           bash -n install.sh
           bash -n install.command
+          bash -n beta/install.sh
           bash -n community_rapp/install.sh
           bash -n rapp_brainstem/start.sh
           bash -n tests/test_installer.sh
@@ -118,6 +119,19 @@ jobs:
       - name: Installer contracts
         run: bash tests/test_installer.sh
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+
+      - name: Beta desktop launcher contracts
+        working-directory: beta
+        env:
+          ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
+        run: |
+          npm ci --no-audit --no-fund
+          npm run check
+          npm test
+
       - name: AIBAST agent and registry contracts
         run: |
           python -m pip install -q "beautifulsoup4>=4.12.0"
@@ -151,6 +165,8 @@ jobs:
         include:
           - os: windows-latest
             scenario: fresh-nopip
+          - os: windows-latest
+            scenario: repair-fetch-failure
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -210,6 +226,61 @@ jobs:
           printf 'GITHUB_MODEL=auto\nPORT=7071\n# PREFLIGHT-ENV-MARKER\n' \
             > "$HOME/.brainstem/src/rapp_brainstem/.env"
 
+      - name: Seed incomplete checkout and fail first fetch
+        if: matrix.scenario == 'repair-fetch-failure'
+        shell: powershell
+        run: |
+          $source = Join-Path $HOME '.brainstem\src'
+          New-Item -ItemType Directory -Force -Path $source | Out-Null
+          git init $source
+          git -C $source config user.email preflight@localhost
+          git -C $source config user.name preflight
+          Set-Content -Path (Join-Path $source 'broken.txt') -Value 'missing runtime' -Encoding Ascii
+          git -C $source add broken.txt
+          git -C $source commit -m 'seed incomplete checkout'
+          git -C $source remote add origin https://github.com/microsoft/aibast-agents-library.git
+          $runtime = Join-Path $source 'rapp_brainstem'
+          New-Item -ItemType Directory -Force -Path (Join-Path $runtime 'agents') | Out-Null
+          New-Item -ItemType Directory -Force -Path (Join-Path $runtime '.brainstem_data\shared_memories') | Out-Null
+          Set-Content -Path (Join-Path $runtime 'soul.md') -Value 'REPAIR-SOUL-MARKER' -Encoding Ascii
+          Set-Content -Path (Join-Path $runtime '.env') -Value 'GITHUB_MODEL=auto', '# REPAIR-ENV-MARKER' -Encoding Ascii
+          @'
+          from agents.basic_agent import BasicAgent
+          class RepairCustomAgent(BasicAgent):
+              def __init__(self):
+                  self.name = 'RepairCustom'
+                  self.metadata = {
+                      'name': self.name,
+                      'description': 'repair marker agent',
+                      'parameters': {'type': 'object', 'properties': {}, 'required': []},
+                  }
+                  super().__init__(name=self.name, metadata=self.metadata)
+              def perform(self, **kwargs):
+                  return 'repair-marker'
+          '@ | Set-Content -Path (Join-Path $runtime 'agents\repair_custom_agent.py') -Encoding Ascii
+          Set-Content -Path (Join-Path $runtime '.copilot_token') -Value 'REPAIR-TOKEN-MARKER' -Encoding Ascii
+          Set-Content -Path (Join-Path $runtime '.copilot_session') -Value 'REPAIR-SESSION-MARKER' -Encoding Ascii
+          Set-Content -Path (Join-Path $runtime '.copilot_pending') -Value 'REPAIR-PENDING-MARKER' -Encoding Ascii
+          Set-Content -Path (Join-Path $runtime '.brainstem_model') -Value 'REPAIR-MODEL-MARKER' -Encoding Ascii
+          Set-Content -Path (Join-Path $runtime '.brainstem_book.json') -Value '{"marker":"REPAIR-BOOK-MARKER"}' -Encoding Ascii
+          Set-Content -Path (Join-Path $runtime '.brainstem_secret') -Value 'REPAIR-SECRET-MARKER' -Encoding Ascii
+          Set-Content -Path (Join-Path $runtime 'voice.zip') -Value 'REPAIR-VOICE-MARKER' -Encoding Ascii
+          Set-Content -Path (Join-Path $runtime '.brainstem_data\shared_memories\memory.json') -Value '{"marker":"REPAIR-DATA-MARKER"}' -Encoding Ascii
+
+          $realGit = (Get-Command git).Source
+          $shim = Join-Path $env:RUNNER_TEMP 'git-shim'
+          $marker = Join-Path $env:RUNNER_TEMP 'first-fetch-failed'
+          New-Item -ItemType Directory -Force -Path $shim | Out-Null
+          @"
+          @echo off
+          if /i "%~1"=="fetch" if not exist "$marker" (
+            type nul > "$marker"
+            exit /b 1
+          )
+          "$realGit" %*
+          "@ | Set-Content -Path (Join-Path $shim 'git.cmd') -Encoding Ascii
+          $shim | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
       - name: Block auth and remote-version endpoints
         if: runner.os != 'Windows'
         run: |
@@ -239,12 +310,61 @@ jobs:
         shell: powershell
         run: |
           $path = "$PWD\install.ps1"
-          $boot = "iex ([Text.Encoding]::UTF8.GetString([IO.File]::ReadAllBytes('$path')))"
-          $encoded = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($boot))
-          $command = "powershell -NoProfile -ExecutionPolicy Bypass -EncodedCommand $encoded > `"$env:RUNNER_TEMP\install.log`" 2>&1"
-          Start-Process cmd -ArgumentList '/c', $command
+          if ('${{ matrix.scenario }}' -eq 'repair-fetch-failure') {
+            $command = "powershell -NoProfile -ExecutionPolicy Bypass -File `"$path`" --no-launch > `"$env:RUNNER_TEMP\install.log`" 2>&1"
+            Start-Process cmd -ArgumentList '/c', $command -Wait
+          } else {
+            $boot = "iex ([Text.Encoding]::UTF8.GetString([IO.File]::ReadAllBytes('$path')))"
+            $encoded = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($boot))
+            $command = "powershell -NoProfile -ExecutionPolicy Bypass -EncodedCommand $encoded > `"$env:RUNNER_TEMP\install.log`" 2>&1"
+            Start-Process cmd -ArgumentList '/c', $command
+          }
+
+      - name: Assert repaired state and runtime
+        if: matrix.scenario == 'repair-fetch-failure'
+        shell: powershell
+        run: |
+          $runtime = Join-Path $HOME '.brainstem\src\rapp_brainstem'
+          if (-not (Test-Path (Join-Path $runtime 'brainstem.py'))) { throw 'brainstem.py missing after repair' }
+          if ((Get-Content (Join-Path $runtime 'soul.md') -Raw) -notmatch 'REPAIR-SOUL-MARKER') { throw 'soul lost' }
+          if ((Get-Content (Join-Path $runtime '.env') -Raw) -notmatch 'REPAIR-ENV-MARKER') { throw '.env lost' }
+          foreach ($pair in @(
+            @('.copilot_token', 'REPAIR-TOKEN-MARKER'),
+            @('.copilot_session', 'REPAIR-SESSION-MARKER'),
+            @('.copilot_pending', 'REPAIR-PENDING-MARKER'),
+            @('.brainstem_model', 'REPAIR-MODEL-MARKER'),
+            @('.brainstem_book.json', 'REPAIR-BOOK-MARKER'),
+            @('.brainstem_secret', 'REPAIR-SECRET-MARKER'),
+            @('voice.zip', 'REPAIR-VOICE-MARKER'),
+            @('.brainstem_data\shared_memories\memory.json', 'REPAIR-DATA-MARKER')
+          )) {
+            $path = Join-Path $runtime $pair[0]
+            if (-not (Test-Path $path)) { throw "$($pair[0]) lost" }
+            if ((Get-Content $path -Raw) -notmatch $pair[1]) { throw "$($pair[0]) marker lost" }
+          }
+          if (-not (Test-Path (Join-Path $runtime 'agents\repair_custom_agent.py'))) { throw 'custom agent lost' }
+
+          # The markers above prove that repair preserved private runtime files.
+          # Remove the intentionally invalid test credentials/config before boot;
+          # other matrix scenarios cover normal persisted authentication.
+          foreach ($stateFile in @(
+            '.copilot_token', '.copilot_session', '.copilot_pending',
+            '.brainstem_model', '.brainstem_secret', 'voice.zip'
+          )) {
+            Remove-Item (Join-Path $runtime $stateFile) -Force -ErrorAction SilentlyContinue
+          }
+
+          $python = Join-Path $HOME '.brainstem\venv\Scripts\python.exe'
+          Push-Location $runtime
+          try {
+            & $python -c "import brainstem; agents = brainstem.load_agents(); assert 'RepairCustom' in agents, agents"
+            if ($LASTEXITCODE -ne 0) { throw 'repaired runtime could not load the preserved custom agent' }
+          } finally {
+            Pop-Location
+          }
 
       - name: Wait for Brainstem and assert
+        if: matrix.scenario != 'repair-fetch-failure'
         shell: bash
         run: |
           set -uo pipefail
@@ -255,6 +375,8 @@ jobs:
               break
             fi
             if [ "$attempt" = 120 ]; then
+              tail -60 "$RUNNER_TEMP/server.log" 2>/dev/null || true
+              tail -60 "$RUNNER_TEMP/server-error.log" 2>/dev/null || true
               tail -60 "$RUNNER_TEMP/install.log" 2>/dev/null || true
               exit 1
             fi
@@ -273,6 +395,7 @@ jobs:
           curl -s -X POST http://localhost:7071/chat \
             -H 'Content-Type: application/json' -d '{}' \
             | python -c 'import json,sys; assert "error" in json.load(sys.stdin)'
+          test ! -e "$HOME/.brainstem/src/solutions"
 
       - name: Assert user files survived upgrade
         if: matrix.scenario == 'upgrade'
@@ -295,4 +418,161 @@ jobs:
         with:
           name: preflight-${{ matrix.os }}-${{ matrix.scenario }}
           path: ${{ runner.temp }}/install.*
+          if-no-files-found: ignore
+
+  installer-one-liner:
+    name: one-liner ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Fresh, upgrade, and current one-liner on macOS
+        if: runner.os == 'macOS'
+        shell: bash
+        env:
+          CANDIDATE_REPO: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name || github.repository }}
+          CANDIDATE_REF: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || github.ref_name }}
+          CANDIDATE_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          export HOME="$RUNNER_TEMP/one-liner-home"
+          export BRAINSTEM_REPO_URL="https://github.com/$CANDIDATE_REPO.git"
+          export BRAINSTEM_REPO_REF="$CANDIDATE_REF"
+          export BRAINSTEM_VERSION_URL="https://raw.githubusercontent.com/$CANDIDATE_REPO/$CANDIDATE_SHA/rapp_brainstem/VERSION"
+          installer="https://raw.githubusercontent.com/$CANDIDATE_REPO/$CANDIDATE_SHA/install.sh"
+          run_installer() {
+            curl -fsSL "$installer" | bash -s -- --no-launch
+          }
+
+          run_installer | tee "$RUNNER_TEMP/fresh-install.log"
+          test -x "$HOME/.local/bin/brainstem"
+          test -f "$HOME/.brainstem/src/rapp_brainstem/brainstem.py"
+          test ! -e "$HOME/.brainstem/src/solutions"
+          expected_runtime_tree="$(git rev-parse "$CANDIDATE_SHA:rapp_brainstem")"
+          installed_runtime_tree="$(
+            git -C "$HOME/.brainstem/src" rev-parse HEAD:rapp_brainstem
+          )"
+          test "$installed_runtime_tree" = "$expected_runtime_tree"
+
+          printf '0.0.0\n' > "$HOME/.brainstem/src/rapp_brainstem/VERSION"
+          printf '\nONE-LINER-SOUL-MARKER\n' >> "$HOME/.brainstem/src/rapp_brainstem/soul.md"
+          printf 'custom = true\n' > "$HOME/.brainstem/src/rapp_brainstem/agents/one_liner_custom_agent.py"
+          printf 'ONE-LINER-TOKEN\n' > "$HOME/.brainstem/src/rapp_brainstem/.copilot_token"
+          chmod 600 "$HOME/.brainstem/src/rapp_brainstem/.copilot_token"
+
+          run_installer | tee "$RUNNER_TEMP/upgrade-install.log"
+          grep -q ONE-LINER-SOUL-MARKER "$HOME/.brainstem/src/rapp_brainstem/soul.md"
+          test -f "$HOME/.brainstem/src/rapp_brainstem/agents/one_liner_custom_agent.py"
+          grep -q ONE-LINER-TOKEN "$HOME/.brainstem/src/rapp_brainstem/.copilot_token"
+          test "$(stat -f '%Lp' "$HOME/.brainstem/src/rapp_brainstem/.copilot_token")" = "600"
+
+          run_installer | tee "$RUNNER_TEMP/current-install.log"
+          grep -q "Framework updated" "$RUNNER_TEMP/current-install.log"
+          grep -q "runtime is ready" "$RUNNER_TEMP/current-install.log"
+
+          if [[ "$CANDIDATE_REPO/$CANDIDATE_REF" != "microsoft/aibast-agents-library/main" ]]; then
+            git -C "$HOME/.brainstem/src" fetch --filter=blob:none --quiet \
+              https://github.com/microsoft/aibast-agents-library.git main
+            production_tree="$(
+              git -C "$HOME/.brainstem/src" rev-parse FETCH_HEAD:rapp_brainstem
+            )"
+            if [[ "$production_tree" != "$expected_runtime_tree" ]]; then
+              git -C "$HOME/.brainstem/src" reset --hard --quiet FETCH_HEAD
+              printf '\nONE-LINER-SOUL-MARKER\n' >> "$HOME/.brainstem/src/rapp_brainstem/soul.md"
+              run_installer | tee "$RUNNER_TEMP/source-switch-install.log"
+              test "$(
+                git -C "$HOME/.brainstem/src" rev-parse HEAD:rapp_brainstem
+              )" = "$expected_runtime_tree"
+              grep -q "health/public" "$HOME/.brainstem/src/rapp_brainstem/brainstem.py"
+              grep -q ONE-LINER-SOUL-MARKER "$HOME/.brainstem/src/rapp_brainstem/soul.md"
+              test -f "$HOME/.brainstem/src/rapp_brainstem/agents/one_liner_custom_agent.py"
+              grep -q ONE-LINER-TOKEN "$HOME/.brainstem/src/rapp_brainstem/.copilot_token"
+            fi
+          fi
+
+      - name: Fresh, upgrade, and current one-liner on Windows
+        if: runner.os == 'Windows'
+        shell: powershell
+        env:
+          CANDIDATE_REPO: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name || github.repository }}
+          CANDIDATE_REF: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || github.ref_name }}
+          CANDIDATE_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $env:USERPROFILE = Join-Path $env:RUNNER_TEMP 'one-liner-home'
+          $env:BRAINSTEM_REPO_URL = "https://github.com/$env:CANDIDATE_REPO.git"
+          $env:BRAINSTEM_REPO_REF = $env:CANDIDATE_REF
+          $env:BRAINSTEM_VERSION_URL = "https://raw.githubusercontent.com/$env:CANDIDATE_REPO/$env:CANDIDATE_SHA/rapp_brainstem/VERSION"
+          New-Item -ItemType Directory -Force -Path $env:USERPROFILE | Out-Null
+          $installer = "https://raw.githubusercontent.com/$env:CANDIDATE_REPO/$env:CANDIDATE_SHA/install.ps1"
+
+          function Invoke-OneLiner([string]$LogPath) {
+            $content = (Invoke-WebRequest -Uri $installer -UseBasicParsing).Content
+            & ([scriptblock]::Create($content)) --no-launch *>&1 |
+              Tee-Object -FilePath $LogPath |
+              Write-Host
+          }
+
+          $runtime = Join-Path $env:USERPROFILE '.brainstem\src\rapp_brainstem'
+          Invoke-OneLiner (Join-Path $env:RUNNER_TEMP 'fresh-install.log')
+          if (-not (Test-Path (Join-Path $runtime 'brainstem.py'))) { throw 'fresh brainstem.py missing' }
+          if (Test-Path (Join-Path $env:USERPROFILE '.brainstem\src\solutions')) { throw 'sparse checkout included solutions' }
+          if (-not (Test-Path (Join-Path $env:USERPROFILE '.local\bin\brainstem.cmd'))) { throw 'brainstem.cmd missing' }
+          if (-not (Test-Path (Join-Path $env:USERPROFILE '.local\bin\brainstem.ps1'))) { throw 'brainstem.ps1 missing' }
+          $candidateTree = '{0}:rapp_brainstem' -f $env:CANDIDATE_SHA
+          $expectedRuntimeTree = (git rev-parse $candidateTree).Trim()
+          $installedRuntimeTree = (
+            git -C (Join-Path $env:USERPROFILE '.brainstem\src') rev-parse 'HEAD:rapp_brainstem'
+          ).Trim()
+          if ($installedRuntimeTree -ne $expectedRuntimeTree) {
+            throw "installed Brainstem tree $installedRuntimeTree instead of $expectedRuntimeTree"
+          }
+
+          Set-Content -Path (Join-Path $runtime 'VERSION') -Value '0.0.0' -Encoding Ascii
+          Add-Content -Path (Join-Path $runtime 'soul.md') -Value 'ONE-LINER-SOUL-MARKER'
+          Set-Content -Path (Join-Path $runtime 'agents\one_liner_custom_agent.py') -Value 'custom = true' -Encoding Ascii
+          Set-Content -Path (Join-Path $runtime '.copilot_token') -Value 'ONE-LINER-TOKEN' -Encoding Ascii
+
+          Invoke-OneLiner (Join-Path $env:RUNNER_TEMP 'upgrade-install.log')
+          if ((Get-Content (Join-Path $runtime 'soul.md') -Raw) -notmatch 'ONE-LINER-SOUL-MARKER') { throw 'soul marker lost' }
+          if (-not (Test-Path (Join-Path $runtime 'agents\one_liner_custom_agent.py'))) { throw 'custom agent lost' }
+          if ((Get-Content (Join-Path $runtime '.copilot_token') -Raw) -notmatch 'ONE-LINER-TOKEN') { throw 'token marker lost' }
+
+          $currentLog = Join-Path $env:RUNNER_TEMP 'current-install.log'
+          Invoke-OneLiner $currentLog
+          if ((Get-Content $currentLog -Raw) -notmatch 'Framework updated') { throw 'explicit source rerun did not refresh the requested ref' }
+          if ((Get-Content $currentLog -Raw) -notmatch 'runtime is ready') { throw 'current rerun did not finish ready' }
+
+          if ("$env:CANDIDATE_REPO/$env:CANDIDATE_REF" -ne 'microsoft/aibast-agents-library/main') {
+            $sourceRoot = Join-Path $env:USERPROFILE '.brainstem\src'
+            git -C $sourceRoot fetch --filter=blob:none --quiet https://github.com/microsoft/aibast-agents-library.git main
+            if ($LASTEXITCODE -ne 0) { throw 'could not fetch production source-switch fixture' }
+            $productionTree = (git -C $sourceRoot rev-parse 'FETCH_HEAD:rapp_brainstem').Trim()
+            if ($productionTree -ne $expectedRuntimeTree) {
+              git -C $sourceRoot reset --hard --quiet FETCH_HEAD
+              if ($LASTEXITCODE -ne 0) { throw 'could not stage production source tree' }
+              Add-Content -Path (Join-Path $runtime 'soul.md') -Value 'ONE-LINER-SOUL-MARKER'
+              Invoke-OneLiner (Join-Path $env:RUNNER_TEMP 'source-switch-install.log')
+              $switchedTree = (git -C $sourceRoot rev-parse 'HEAD:rapp_brainstem').Trim()
+              if ($switchedTree -ne $expectedRuntimeTree) { throw 'same-version source switch did not install candidate runtime' }
+              if ((Get-Content (Join-Path $runtime 'brainstem.py') -Raw) -notmatch 'health/public') { throw 'candidate readiness endpoint missing after source switch' }
+              if ((Get-Content (Join-Path $runtime 'soul.md') -Raw) -notmatch 'ONE-LINER-SOUL-MARKER') { throw 'soul marker lost during source switch' }
+              if (-not (Test-Path (Join-Path $runtime 'agents\one_liner_custom_agent.py'))) { throw 'custom agent lost during source switch' }
+              if ((Get-Content (Join-Path $runtime '.copilot_token') -Raw) -notmatch 'ONE-LINER-TOKEN') { throw 'token marker lost during source switch' }
+            }
+          }
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: one-liner-${{ matrix.os }}
+          path: ${{ runner.temp }}/*-install.log
           if-no-files-found: ignore

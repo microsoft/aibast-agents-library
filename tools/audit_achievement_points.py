@@ -268,7 +268,7 @@ def audit_public_pages(root: Path, failures: Failures) -> None:
         "github.event.repository.name",
         "repository.default_branch",
         "createWorkflowDispatch",
-        "types: [opened, edited, closed, reopened]",
+        "types: [opened, edited, closed, reopened, labeled, unlabeled]",
     ):
         source = metrics_workflow if token in metrics_workflow_tokens else workflow
         if token not in source:

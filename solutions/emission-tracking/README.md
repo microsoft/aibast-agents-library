@@ -36,7 +36,7 @@ The local agent uses fictional records and produces decision support only. It do
 | Copilot-only Easy Mode skill | `skills/aibast-easy-mode-copilot/SKILL.md` |
 | Personless Easy-mode guide | `solutions/emission-tracking/EASY-MODE-PERSONLESS.md` |
 | Copilot-only Easy-mode comparison | `solutions/emission-tracking/EASY-MODE-COPILOT-CHAT.md` |
-| Guided Easy/Hard quest | `solutions/emission-tracking/quest.html` |
+| Guided Easy/Manual quest | `solutions/emission-tracking/quest.html` |
 | Literal browser tutorial | `solutions/emission-tracking/manual-tutorial.html` |
 | Raw export manifest | `solutions/emission-tracking/export-manifest.json` |
 | Source bundle | `solutions/emission-tracking/exports/emission-tracking-source.zip` |

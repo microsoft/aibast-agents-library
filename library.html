@@ -717,6 +717,22 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+body.first-party-view .industry-selector,
+body.first-party-view .industry-blueprint,
+body.first-party-view .popular,
+body.first-party-view #readiness,
+body.first-party-view #sort,
+body.first-party-view .upvote-explainer {
+  display: none;
+}
+body.first-party-view .persona {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+}
+body.first-party-view .agent-card h2 {
+  font-size: 1.18rem;
+}
 .card-actions, .agent-upvote {
   display: flex;
   align-items: center;
@@ -730,6 +746,15 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   font-variant-numeric: tabular-nums;
   text-align: center;
 }
+.download-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--cp-text-muted);
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
 .detail-head .agent-upvote { margin-top: 12px; }
 .empty, .loading {
   grid-column: 1 / -1;
@@ -737,6 +762,19 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   color: var(--cp-text-muted);
   text-align: center;
 }
+.empty-path {
+  width: min(760px, 100%);
+  margin: 22px auto 0;
+  padding: 18px;
+  border: 1px solid var(--cp-border);
+  border-radius: 14px;
+  background: var(--cp-bg-elevated);
+  text-align: left;
+}
+.empty-path h4 { margin: 0 0 8px; }
+.empty-path ol { margin: 12px 0; padding-left: 22px; }
+.empty-path li { margin: 7px 0; }
+.empty-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
 .empty h3 {
   margin: 0 0 7px;
   color: var(--cp-text);
@@ -972,6 +1010,28 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   color: var(--cp-text-muted);
   font-size: 0.8rem;
 }
+.arch-level-heading {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 18px 0 10px;
+}
+.arch-level-heading span {
+  display: inline-grid;
+  min-width: 34px;
+  min-height: 24px;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--cp-accent);
+  color: var(--cp-accent-fg);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.05em;
+}
+.arch-level-heading h4 {
+  margin: 0;
+  font-size: 0.88rem;
+}
 .arch-flow {
   display: flex;
   align-items: stretch;
@@ -998,6 +1058,86 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   place-items: center;
   color: var(--cp-accent);
   font-weight: 850;
+}
+.arch-l2 {
+  overflow: hidden;
+  margin: 14px 0 26px;
+  border: 1px solid var(--cp-border);
+  border-radius: 12px;
+  background: var(--cp-surface);
+}
+.arch-l2-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(180px, 1fr));
+}
+.arch-l2-domain {
+  min-width: 0;
+  min-height: 286px;
+  padding: 14px;
+  border-right: 1px solid var(--cp-border);
+  border-top: 5px solid var(--cp-accent);
+}
+.arch-l2-domain:last-child { border-right: 0; }
+.arch-l2-domain:nth-child(2) { border-top-color: var(--cp-link); }
+.arch-l2-domain:nth-child(3) { border-top-color: var(--cp-success); }
+.arch-l2-domain:nth-child(4) { border-top-color: var(--cp-warning); }
+.arch-l2-domain h5 {
+  min-height: 34px;
+  margin: 0 0 11px;
+  font-size: 0.72rem;
+  line-height: 1.25;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.arch-l2-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.arch-l2-item {
+  padding: 9px;
+  border: 1px solid var(--cp-border);
+  border-radius: 8px;
+  background: var(--cp-surface-soft);
+}
+.arch-l2-item strong {
+  display: block;
+  font-size: 0.7rem;
+}
+.arch-l2-item span {
+  display: block;
+  margin-top: 3px;
+  color: var(--cp-text-muted);
+  font-size: 0.64rem;
+  line-height: 1.35;
+}
+.arch-l2-bands {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(260px, 0.55fr);
+  border-top: 1px solid var(--cp-border);
+  background: var(--cp-surface-soft);
+}
+.arch-l2-band {
+  min-width: 0;
+  padding: 13px 14px;
+}
+.arch-l2-band + .arch-l2-band {
+  border-left: 1px solid var(--cp-border);
+}
+.arch-l2-band h5 {
+  margin: 0 0 8px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.arch-l2-band .tool-chips { margin: 0; }
+.arch-l2-band p {
+  margin: 6px 0 0;
+  color: var(--cp-text-muted);
+  font-size: 0.66rem;
 }
 .capability-grid {
   display: grid;
@@ -1116,7 +1256,24 @@ footer {
   .detail-body { padding: 20px 18px 26px; }
   .detail-tabs, .architecture-body { padding-right: 18px; padding-left: 18px; }
   .capability-grid { grid-template-columns: 1fr; }
+  .arch-l2-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .arch-l2-domain:nth-child(2) { border-right: 0; }
+  .arch-l2-domain:nth-child(-n+2) { border-bottom: 1px solid var(--cp-border); }
+  .arch-l2-bands { grid-template-columns: 1fr; }
+  .arch-l2-band + .arch-l2-band {
+    border-top: 1px solid var(--cp-border);
+    border-left: 0;
+  }
   .modal-root { padding: 8px; }
+}
+@media (max-width: 620px) {
+  .arch-l2-grid { grid-template-columns: 1fr; }
+  .arch-l2-domain {
+    min-height: 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--cp-border);
+  }
+  .arch-l2-domain:last-child { border-bottom: 0; }
 }
 </style>
 </head>
@@ -1127,13 +1284,8 @@ footer {
     <span class="brand-copy">AI BAST Agent Library<small>Industry Solutions</small></span>
   </a>
   <nav class="nav" aria-label="Primary navigation">
-    <a class="keep-mobile" href="#library">Library</a>
-    <a href="solutions/_shared/workshop-settings.html?return=../../library.html">Workshop settings</a>
-    <a href="docs/rapp-guide.html">Guide</a>
-    <a href="achievements.html">Achievements</a>
-    <a href="metrics.html">Metrics</a>
-    <a href="https://github.com/microsoft/aibast-agents-library" target="_blank" rel="noopener">GitHub</a>
-    <button class="icon-button" type="button" data-action="toggle-theme" aria-label="Toggle color theme">◐</button>
+    <a class="keep-mobile" href="library.html" aria-current="page">Agent Library</a>
+    <a class="keep-mobile" href="library.html?view=solutions#workshops">Industry Workshops</a>
   </nav>
 </header>
 
@@ -1175,8 +1327,7 @@ footer {
     <div class="controls">
       <div class="tabs" role="tablist" aria-label="Library type">
         <button class="tab active" type="button" data-action="view" data-view="solutions">Industry solutions</button>
-        <button class="tab" type="button" data-action="view" data-view="stacks">Multi-agent stacks</button>
-        <button class="tab" type="button" data-action="view" data-view="templates">Building blocks</button>
+        <button class="tab" type="button" data-action="view" data-view="first-party">Microsoft first-party</button>
       </div>
       <div class="filters">
         <select class="field" id="industry" aria-label="Industry"><option value="">All industries</option></select>
@@ -1192,13 +1343,14 @@ footer {
           <option value="relevance">Best match</option>
           <option value="name">A-Z</option>
           <option value="demo">Demo-ready first</option>
+          <option value="downloads">Top downloaded</option>
         </select>
       </div>
     </div>
 
     <div class="active-filters" id="active-filters"></div>
-    <p class="upvote-explainer">Each AIBAST agent has two stable public GitHub Discussions: one for community preference and one for signed-in acquisition. GitHub's native upvote control counts one active signal per account. Acquisition signals remain separate from observable CDN and release file transfers, and neither signal is a repository star.</p>
-    <div class="results-head">
+    <p class="upvote-explainer">Each AIBAST agent has one public GitHub rating Discussion. Signed-in GitHub users can add one active upvote per agent. Upvotes are community preference—not a repository star, download count, security review, or production-readiness claim.</p>
+    <div class="results-head" id="workshops">
       <span id="result-count">Loading agents...</span>
       <span id="result-context"></span>
     </div>
@@ -1222,12 +1374,21 @@ const REPO = "aibast-agents-library";
 const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main`;
 const SITE = `https://${OWNER}.github.io/${REPO}/`;
 const BLOB = `https://github.com/${OWNER}/${REPO}/blob/main`;
+const DISTRIBUTION_OWNER = location.hostname.endsWith(".github.io")
+  ? location.hostname.split(".")[0]
+  : OWNER;
+const AGENT_RELEASE_TAG = DISTRIBUTION_OWNER === "kody-w"
+  ? "agent-downloads-staging"
+  : "agent-downloads";
+const AGENT_RELEASE = `https://github.com/${DISTRIBUTION_OWNER}/${REPO}/releases/download/${AGENT_RELEASE_TAG}`;
 const AGENT_DIR = "~/.brainstem/src/rapp_brainstem/agents";
 
 const state = {
   agents: [],
   stacks: [],
+  firstParty: [],
   stats: {},
+  architectureLevel2: new Map(),
   agentSignals: new Map(),
   advertisedSolutions: new Set(),
   exportedSolutionSlugs: new Set(),
@@ -1271,7 +1432,11 @@ const CATEGORY_ICONS = {
   b2b_sales: "↗", b2c_sales: "◎", energy: "⚡", financial_services: "◆",
   general: "✦", healthcare: "✚", human_resources: "◇", manufacturing: "⚙",
   professional_services: "§", retail_cpg: "▦", slg_government: "⌂",
-  software_digital_products: "⌘"
+  software_digital_products: "⌘", customer_service: "☎"
+};
+
+const FIRST_PARTY_VERTICALS = {
+  customer_service: "Customer Service & Contact Center"
 };
 const INDUSTRY_BLUEPRINTS = {
   b2b_sales: "Build a connected seller journey from account understanding and qualification through deal progression, proposals, forecasting, and renewal.",
@@ -1307,7 +1472,17 @@ const SYNONYMS = {
   compliance: ["regulatory", "audit", "risk"],
   manufacturing: ["plant", "production", "factory"],
   service: ["support", "case", "ticket"],
-  healthcare: ["patient", "clinical", "care"]
+  healthcare: ["patient", "clinical", "care"],
+  billing: ["invoice", "payment", "charge", "revenue"],
+  document: ["file", "pdf", "word", "content"],
+  knowledge: ["article", "search", "grounding", "faq"],
+  inventory: ["stock", "warehouse", "supply"],
+  maintenance: ["repair", "asset", "service"],
+  onboarding: ["intake", "enrollment", "registration"],
+  dispatch: ["routing", "assignment", "field service"],
+  forecast: ["prediction", "planning", "projection"],
+  summarize: ["summary", "synthesis", "brief"],
+  automate: ["automation", "workflow", "orchestration"]
 };
 const STACK_COPY = {
   "b2b_sales/account_intelligence": {
@@ -1334,13 +1509,17 @@ async function getJSON(paths) {
 
 async function init() {
   const stamp = `?t=${Date.now()}`;
-  const [registry, metrics, catalog, exportInventory] = await Promise.all([
+  const [registry, metrics, catalog, exportInventory, architectureLevel2] = await Promise.all([
     getJSON([`registry.json${stamp}`, `${RAW}/registry.json${stamp}`]),
     getJSON([`state/metrics.json${stamp}`, `${SITE}state/metrics.json${stamp}`]),
     getJSON([`solutions/catalog.json${stamp}`, `${RAW}/solutions/catalog.json${stamp}`]),
     getJSON([
       `state/copilot_studio_solution_exports.json${stamp}`,
       `${RAW}/state/copilot_studio_solution_exports.json${stamp}`
+    ]),
+    getJSON([
+      `state/architecture_level2.json${stamp}`,
+      `${RAW}/state/architecture_level2.json${stamp}`
     ])
   ]);
   if (!registry || !catalog) {
@@ -1349,12 +1528,16 @@ async function init() {
   }
   state.agents = registry.agents || [];
   state.stacks = registry.stacks || [];
+  state.firstParty = registry.first_party || [];
   state.stats = registry.stats || {};
   state.advertisedSolutions = new Set(Object.keys(catalog.solutions || {}));
   state.exportedSolutionSlugs = new Set(
     (exportInventory?.solutions || [])
       .filter(row => row?.status === "exported" && row?.settings_error == null)
       .map(row => row.slug)
+  );
+  state.architectureLevel2 = new Map(
+    Object.entries(architectureLevel2?.solutions || {})
   );
   state.agentSignals = buildAgentSignalMap(metrics, state.agents);
   restoreState();
@@ -1366,33 +1549,71 @@ async function init() {
 
   if (location.hash.startsWith("#agent/")) openAgent(dec(location.hash.slice(7)));
   if (location.hash.startsWith("#stack/")) openStack(dec(location.hash.slice(7)));
+  if (location.hash.startsWith("#first-party/")) openFirstParty(dec(location.hash.slice(13)));
 }
 
 function restoreState() {
   const params = new URLSearchParams(location.search);
   state.query = params.get("q") || "";
-  state.view = ["solutions", "stacks", "templates"].includes(params.get("view"))
+  state.view = ["solutions", "first-party"].includes(params.get("view"))
     ? params.get("view") : "solutions";
   $("search").value = state.query;
 }
 
 function renderStats() {
+  if (state.view === "first-party") {
+    $("stats").innerHTML = `
+      <span class="stat"><strong>${Number(state.stats.total_first_party || 0).toLocaleString()}</strong> first-party agents</span>
+      <span class="stat"><strong>${Number(state.stats.first_party_available || 0).toLocaleString()}</strong> available</span>
+      <span class="stat"><strong>${Number(state.stats.first_party_preview || 0).toLocaleString()}</strong> preview</span>
+      <span class="stat"><strong>${Number((state.stats.first_party_products || []).length).toLocaleString()}</strong> product groupings</span>`;
+    return;
+  }
   $("stats").innerHTML = `
     <span class="stat"><strong>${Number(state.stats.advertised_solutions || 0).toLocaleString()}</strong> solutions</span>
     <span class="stat"><strong>${Number(state.stats.total_verticals || 0).toLocaleString()}</strong> industries</span>
     <span class="stat"><strong>${Number(state.stats.source_verified_solutions || 0).toLocaleString()}</strong> slide-sourced</span>
-    <span class="stat"><strong>${Number(state.stats.solution_demo_videos || 0).toLocaleString()}</strong> demos</span>`;
+    <span class="stat"><strong>${Number(state.stats.solution_demo_videos || 0).toLocaleString()}</strong> demos</span>
+    <span class="stat"><strong>${Number(state.stats.total_first_party || 0).toLocaleString()}</strong> Microsoft 1P agents</span>`;
 }
 
 function buildFilters() {
+  const firstPartyView = state.view === "first-party";
   const solutions = solutionAgents();
-  fillSelect("industry", Object.entries(CATEGORY_NAMES)
-    .filter(([key]) => solutions.some(agent => agent.category === key))
-    .map(([value, label]) => ({ value, label })), "All industries");
-  fillSelect("persona", uniq(solutions.flatMap(agent => solutionOf(agent).personas || []))
-    .sort().map(value => ({ value, label: value })), "All personas");
-  fillSelect("system", uniq(solutions.flatMap(agent => microsoftTools(agent)))
-    .sort().map(value => ({ value, label: value })), "All Microsoft products");
+
+  const industries = firstPartyView
+    ? uniq(state.firstParty.map(agent => agent.vertical))
+        .map(value => ({ value, label: firstPartyVerticalName(value) }))
+        .sort((a, b) => a.label.localeCompare(b.label))
+    : Object.entries(CATEGORY_NAMES)
+        .filter(([key]) => solutions.some(agent => agent.category === key))
+        .map(([value, label]) => ({ value, label }));
+
+  const personas = (firstPartyView
+    ? uniq(state.firstParty.flatMap(agent => agent.personas || []))
+    : uniq(solutions.flatMap(agent => solutionOf(agent).personas || []))
+  ).sort().map(value => ({ value, label: value }));
+
+  const systems = (firstPartyView
+    ? uniq(state.firstParty.map(agent => agent.product))
+    : uniq(solutions.flatMap(agent => microsoftTools(agent)))
+  ).sort().map(value => ({ value, label: value }));
+
+  applyFilterOptions(
+    "industry",
+    industries,
+    firstPartyView ? "All solution areas" : "All industries"
+  );
+  applyFilterOptions("persona", personas, "All personas");
+  applyFilterOptions("system", systems, "All Microsoft products");
+}
+
+function applyFilterOptions(id, values, placeholder) {
+  const current = state[id];
+  fillSelect(id, values, placeholder);
+  const stillValid = current && values.some(item => item.value === current);
+  state[id] = stillValid ? current : "";
+  $(id).value = state[id];
 }
 
 function renderIndustryMenu() {
@@ -1563,6 +1784,54 @@ function normalize(value) {
     .replace(/[^a-z0-9]+/g, " ");
 }
 
+function stemSearchTerm(value) {
+  return value
+    .replace(/(ing|ments|ment|ations|ation|ers|er|ies|s)$/i, "")
+    .slice(0, 24);
+}
+
+function editDistance(left, right) {
+  if (left === right) return 0;
+  const previous = Array.from({ length: right.length + 1 }, (_value, i) => i);
+  for (let i = 1; i <= left.length; i += 1) {
+    let diagonal = previous[0];
+    previous[0] = i;
+    for (let j = 1; j <= right.length; j += 1) {
+      const above = previous[j];
+      previous[j] = Math.min(
+        previous[j] + 1,
+        previous[j - 1] + 1,
+        diagonal + (left[i - 1] === right[j - 1] ? 0 : 1)
+      );
+      diagonal = above;
+    }
+  }
+  return previous[right.length];
+}
+
+function searchTermScore(text, term) {
+  if (text.includes(term)) return 1;
+  const words = text.split(" ").filter(Boolean);
+  if (words.some(word => word.startsWith(term) || term.startsWith(word))) {
+    return 0.45;
+  }
+  const stem = stemSearchTerm(term);
+  if (stem.length >= 3 && words.some(word => stemSearchTerm(word) === stem)) {
+    return 0.55;
+  }
+  const maxDistance = term.length >= 7 ? 2 : term.length >= 4 ? 1 : 0;
+  if (
+    maxDistance &&
+    words.some(word =>
+      Math.abs(word.length - term.length) <= maxDistance
+      && editDistance(word, term) <= maxDistance
+    )
+  ) {
+    return 0.25;
+  }
+  return 0;
+}
+
 function queryTerms(query) {
   const base = normalize(query).split(" ")
     .filter(term => term.length > 1 && !STOP_WORDS.has(term));
@@ -1614,8 +1883,7 @@ function scoreAgent(agent, query) {
     if (!text) return;
     if (phrase.length > 2 && text.includes(phrase)) score += field.weight * 4;
     terms.forEach(term => {
-      if (text.includes(term)) score += field.weight;
-      if (text.split(" ").some(word => word.startsWith(term))) score += field.weight * 0.25;
+      score += field.weight * searchTermScore(text, term);
     });
   });
   if (agent._demo && agent._demo.case_count) score += 2;
@@ -1655,6 +1923,16 @@ function filteredAgents() {
     demo: (a, b) => Number(Boolean(b.agent._demo)) - Number(Boolean(a.agent._demo))
       || Number(Boolean(solutionOf(b.agent).has_demo_video)) - Number(Boolean(solutionOf(a.agent).has_demo_video))
       || shown(a.agent).localeCompare(shown(b.agent)),
+    downloads: (a, b) => {
+      const left = aggregateAgentSignal(a.agent.name, "downloads");
+      const right = aggregateAgentSignal(b.agent.name, "downloads");
+      if (left === null && right === null) {
+        return shown(a.agent).localeCompare(shown(b.agent));
+      }
+      if (left === null) return 1;
+      if (right === null) return -1;
+      return right - left || shown(a.agent).localeCompare(shown(b.agent));
+    },
   };
   rows.sort(sorters[state.sort] || sorters.relevance);
   return rows;
@@ -1673,7 +1951,79 @@ function filteredStacks() {
     .sort((a, b) => b.score - a.score || a.stack.display_name.localeCompare(b.stack.display_name));
 }
 
+function firstPartyVerticalName(vertical) {
+  return CATEGORY_NAMES[vertical] || FIRST_PARTY_VERTICALS[vertical] || pretty(vertical);
+}
+
+function filteredFirstParty() {
+  const query = normalize(state.query);
+  const terms = query ? queryTerms(query) : [];
+  return state.firstParty
+    .map(agent => {
+      const text = normalize([
+        agent.name, agent.deck_label, agent.product, agent.description,
+        agent.deck_description, (agent.use_cases || []).join(" "),
+        (agent.personas || []).join(" "), agent.lifecycle,
+        firstPartyVerticalName(agent.vertical)
+      ].filter(Boolean).join(" "));
+      const score = !terms.length ? 1 : terms.reduce((total, term) => total + (text.includes(term) ? 5 : 0), 0);
+      return { agent, score };
+    })
+    .filter(row => !terms.length || row.score > 0)
+    .filter(row => !state.industry || row.agent.vertical === state.industry)
+    .filter(row => !state.persona || (row.agent.personas || []).includes(state.persona))
+    .filter(row => !state.system || row.agent.product === state.system)
+    .sort((a, b) => b.score - a.score
+      || Number(a.agent.lifecycle === "Preview") - Number(b.agent.lifecycle === "Preview")
+      || a.agent.name.localeCompare(b.agent.name));
+}
+
+function firstPartyCard(agent) {
+  const availability = agent._availability_label || agent.lifecycle || "Available";
+  const badges = [
+    `<span class="badge ${availability === "Preview" ? "demo" : "proven"}">${esc(availability)}</span>`,
+    `<span class="badge stage-badge">Microsoft 1P</span>`
+  ];
+  return `
+    <article class="agent-card" tabindex="0" data-action="open-first-party" data-id="${enc(agent.id)}">
+      <div class="card-head">
+        <span class="agent-icon">${esc(CATEGORY_ICONS[agent.vertical] || "▣")}</span>
+        <div class="badges">${badges.join("")}</div>
+      </div>
+      <div class="card-body">
+        <div class="category">${esc(agent.product)}</div>
+        <h2>${esc(agent.name)}</h2>
+        <p class="what">${esc(agent.description)}</p>
+        <div class="card-foot">
+          <span class="persona" title="${esc(first(agent.personas, "Business user"))}">For ${esc(first(agent.personas, "Business user"))}</span>
+          <div class="card-actions">
+            <a class="button small" href="${esc(agent.overview_url)}" target="_blank" rel="noopener" data-action="stop">Microsoft Learn ↗</a>
+            <button class="button primary small" type="button" data-action="open-first-party" data-id="${enc(agent.id)}">View agent</button>
+          </div>
+        </div>
+      </div>
+    </article>`;
+}
+
 function render() {
+  const firstPartyView = state.view === "first-party";
+  document.body.classList.toggle("first-party-view", firstPartyView);
+  document.querySelector(".intro .eyebrow").textContent = firstPartyView
+    ? "Microsoft first-party catalog"
+    : "AI BAST Agent Library";
+  document.querySelector(".intro h1").textContent = firstPartyView
+    ? "Microsoft agents available today."
+    : "Choose an industry. Build the AI journey.";
+  document.querySelector(".intro p").textContent = firstPartyView
+    ? "Browse current publicly documented Microsoft first-party agents across Dynamics 365, Microsoft 365 Copilot, and Agent 365. Lifecycle is shown only when Microsoft Learn states it explicitly."
+    : "Start from proven solution patterns, run them safely with synthetic domain data, then connect customer systems and publish through Copilot Studio—or any downstream surface that can host the portable agent.";
+  document.querySelector(".brand-copy small").textContent = firstPartyView
+    ? "Microsoft First-Party"
+    : "Industry Solutions";
+  $("search").placeholder = firstPartyView
+    ? "Search first-party agents, products, use cases, or personas..."
+    : "Search: claims fraud, permit backlog, plant manager, Dynamics 365...";
+  renderStats();
   document.querySelectorAll(".tab").forEach(tab => {
     tab.classList.toggle("active", tab.dataset.view === state.view);
   });
@@ -1689,6 +2039,17 @@ function render() {
     $("result-context").textContent = state.query ? `matching "${state.query}"` : "";
     $("grid").classList.remove("journey-mode");
     $("grid").innerHTML = rows.length ? rows.map(stackCard).join("") : emptyState();
+    return;
+  }
+
+  if (state.view === "first-party") {
+    const rows = filteredFirstParty();
+    $("result-count").innerHTML = `<strong>${rows.length}</strong> Microsoft first-party agent${rows.length === 1 ? "" : "s"}`;
+    $("result-context").textContent = state.query
+      ? `matching "${state.query}"`
+      : "current publicly documented Microsoft capabilities";
+    $("grid").classList.remove("journey-mode");
+    $("grid").innerHTML = rows.length ? rows.map(row => firstPartyCard(row.agent)).join("") : emptyState();
     return;
   }
 
@@ -1731,29 +2092,22 @@ function buildAgentSignalMap(metrics, agents) {
   rows.forEach(row => {
     if (!row || typeof row.name !== "string") return;
     const upvotes = row.upvotes;
-    const acquisitions = row.acquisitions;
+    const downloads = row.downloads;
     const upvoteUrl = canonicalDiscussionUrl(row.upvote_discussion_url);
-    const acquisitionUrl = canonicalDiscussionUrl(
-      row.acquisition_discussion_url
-    );
     supplied.set(row.name, {
       upvotes: upvoteUrl && Number.isSafeInteger(upvotes) && upvotes >= 0
         ? upvotes : null,
-      acquisitions: acquisitionUrl
-        && Number.isSafeInteger(acquisitions)
-        && acquisitions >= 0
-        ? acquisitions : null,
-      upvoteUrl,
-      acquisitionUrl
+      downloads: Number.isSafeInteger(downloads) && downloads >= 0
+        ? downloads : null,
+      upvoteUrl
     });
   });
   return new Map(agents.map(agent => [
     agent.name,
     supplied.has(agent.name) ? supplied.get(agent.name) : {
       upvotes: null,
-      acquisitions: null,
-      upvoteUrl: "",
-      acquisitionUrl: ""
+      downloads: null,
+      upvoteUrl: ""
     }
   ]));
 }
@@ -1761,7 +2115,7 @@ function buildAgentSignalMap(metrics, agents) {
 function canonicalDiscussionUrl(value) {
   const url = typeof value === "string" ? value : "";
   const pattern = new RegExp(
-    `^https://github\\.com/${OWNER}/${REPO}/discussions/\\d+$`
+    `^https://github\\.com/${DISTRIBUTION_OWNER}/${REPO}/discussions/\\d+$`
   );
   return pattern.test(url) ? url : "";
 }
@@ -1790,43 +2144,29 @@ function agentUpvoteControl(agent) {
     </div>`;
 }
 
-function agentAcquisitionControl(agent) {
-  const count = aggregateAgentSignal(agent.name, "acquisitions");
-  const record = state.agentSignals.get(agent.name) || {};
-  const url = canonicalDiscussionUrl(record.acquisitionUrl);
-  const countText = count === null ? "—" : count.toLocaleString();
-  const countLabel = count === null
-    ? "Signed-in acquisitions unavailable"
-    : `${count.toLocaleString()} signed-in acquisition${count === 1 ? "" : "s"}`;
-  return `
-    <div class="agent-upvote">
-      <button class="button" type="button" data-action="record-agent-acquisition"
-        data-agent-name="${enc(agent.name)}"
-        ${url ? "" : 'disabled aria-disabled="true"'}
-        aria-label="${url ? "Open the canonical acquisition Discussion" : "Acquisition Discussion unavailable"} for ${esc(shown(agent))}">Record acquisition ↗</button>
-      <span class="upvote-count" aria-label="${esc(countLabel)}" title="${esc(countLabel)}">${countText}</span>
-    </div>`;
+function agentDownloadCount(agent) {
+  const count = aggregateAgentSignal(agent.name, "downloads");
+  if (count === null) return "";
+  const label = `${count.toLocaleString()} observed agent.py download${count === 1 ? "" : "s"}`;
+  return `<span class="download-count" aria-label="${esc(label)}" title="${esc(label)}">↓ ${count.toLocaleString()}</span>`;
 }
 
-function openAgentSignal(agentName, signal) {
+function openAgentSignal(agentName) {
   const agent = state.agents.find(item => item.name === agentName);
   if (!agent) return;
   const record = state.agentSignals.get(agentName) || {};
-  const url = canonicalDiscussionUrl(
-    signal === "acquisition"
-      ? record.acquisitionUrl
-      : record.upvoteUrl
-  );
+  const url = canonicalDiscussionUrl(record.upvoteUrl);
   if (!url) return;
   window.open(url, '_blank', 'noopener');
 }
 
 function openAgentUpvote(agentName) {
-  openAgentSignal(agentName, "upvote");
+  openAgentSignal(agentName);
 }
 
 function agentCard(agent) {
   const solution = solutionOf(agent);
+  const workshopUrl = workshopPackageFor(agent).quest_url || "";
   const tools = microsoftTools(agent).slice(0, 3);
   const persona = first(solution.personas, state.view === "templates" ? "Agent builder" : "Business user");
   const badges = [];
@@ -1859,7 +2199,7 @@ function agentCard(agent) {
         <div class="card-foot">
           <span class="persona">For ${esc(persona)}</span>
           <div class="card-actions">
-            ${agentUpvoteControl(agent)}
+            ${workshopUrl ? `<a class="button small" href="${esc(workshopUrl)}" data-action="stop">View workshop</a>` : ""}
             <button class="button primary small" type="button" data-action="open-agent" data-name="${enc(agent.name)}">View agent</button>
           </div>
         </div>
@@ -1913,7 +2253,13 @@ function renderSuggestions() {
     .filter(row => row.score >= Math.max(8, topScore * 0.5))
     .slice(0, 5);
   if (!rows.length) {
-    $("suggestions").classList.remove("visible");
+    const promptUrl = learnNewBrainstemUrl(query);
+    $("suggestions").innerHTML = `
+      <a class="suggestion" href="${esc(promptUrl)}" target="_blank" rel="noopener">
+        <div><strong>Create "${esc(query)}" with Learn New</strong><span>Open Brainstem with the request prefilled; review it, then press Send.</span></div>
+        <em>Build it</em>
+      </a>`;
+    $("suggestions").classList.add("visible");
     return;
   }
   $("suggestions").innerHTML = rows.map(row => `
@@ -1923,6 +2269,16 @@ function renderSuggestions() {
     </button>
   `).join("");
   $("suggestions").classList.add("visible");
+}
+
+function learnNewPrompt(query) {
+  return `Use Learn New to preview, create, self-test, and hot-load an agent for this unmet AIBAST library search: "${query}". Return the agent.py filename, what it does, a test prompt, and the VS Code Brain Surgeon repair steps if its behavior needs work.`;
+}
+
+function learnNewBrainstemUrl(query) {
+  const url = new URL("http://localhost:7071/");
+  url.searchParams.set("prompt", learnNewPrompt(query));
+  return url.toString();
 }
 
 function renderActiveFilters() {
@@ -1939,6 +2295,30 @@ function renderActiveFilters() {
 }
 
 function emptyState() {
+  const query = compact(state.query);
+  if (query) {
+    const promptUrl = learnNewBrainstemUrl(query);
+    return `
+      <div class="empty">
+        <h3>No library match for "${esc(query)}"</h3>
+        <p>Try a broader phrase, a different product, or build the missing capability locally.</p>
+        <div class="empty-actions" style="justify-content:center">
+          <button class="button" type="button" data-action="clear-all">Clear search and filters</button>
+          <a class="button" href="rapp_brainstem/agents/rar_rapp_learn_new_agent.py" download="rar_rapp_learn_new_agent.py">Download Learn New agent.py</a>
+          <a class="button primary" href="${esc(promptUrl)}" target="_blank" rel="noopener">Open Brainstem with this request ↗</a>
+        </div>
+        <div class="empty-path">
+          <h4>Teach the Brainstem to build what is missing</h4>
+          <ol>
+            <li>Open Brainstem. The search request is prefilled but is <strong>not sent automatically</strong>; review it and press Send.</li>
+            <li>Current AIBAST Brainstem includes Learn New. If it is missing, download the file above and drag it into the Brainstem window to hot-load it.</li>
+            <li>Learn New creates and self-tests the new <code>agent.py</code> locally.</li>
+            <li>If the result is not what you expected, export the Brainstem transcript, click the <strong>VS Code</strong> button, drag the transcript into Copilot Chat (Brain Surgeon), and ask it to test and fix the generated agent against <code>localhost:7071</code>.</li>
+          </ol>
+          <p>This keeps the failed search useful: first discover, then create, test, correct, and reuse.</p>
+        </div>
+      </div>`;
+  }
   return `
     <div class="empty">
       <h3>No agents found</h3>
@@ -1948,19 +2328,16 @@ function emptyState() {
 }
 
 function installCommand(agent) {
-  const file = agent._file || "";
-  const base = file.split("/").pop();
-  const target = base.endsWith("_agent.py") ? base : base.replace(/\.py$/, "_agent.py");
-  return `curl -fsSL ${RAW}/${encodeURI(file)} -o ${AGENT_DIR}/${target}`;
+  const filename = agent._install_filename || "";
+  return `curl -fsSL ${AGENT_RELEASE}/${encodeURIComponent(filename)} -o ${AGENT_DIR}/${filename}`;
 }
 
 function agentDownload(agent) {
-  const file = agent._file || "";
-  const base = file.split("/").pop();
-  const filename = base.endsWith("_agent.py")
-    ? base
-    : base.replace(/\.py$/, "_agent.py");
-  return {href: encodeURI(file), filename};
+  const filename = agent._install_filename || "";
+  return {
+    href: `${AGENT_RELEASE}/${encodeURIComponent(filename)}`,
+    filename,
+  };
 }
 
 function copilotSolutionDownloads(agent) {
@@ -1973,7 +2350,57 @@ function copilotSolutionDownloads(agent) {
   };
 }
 
-function architectureHTML(architecture, solution) {
+function architectureLevel2HTML(agentName) {
+  const architecture = state.architectureLevel2.get(agentName);
+  if (!architecture) return "";
+  const domains = [
+    ["knowledge", "Knowledge"],
+    ["intelligence_processing", "Intelligence layer / processing"],
+    ["clients_user_interface", "Clients / user interface"],
+    ["management_reporting", "Management / reporting"]
+  ];
+  const itemsHTML = items => `
+    <ul class="arch-l2-list">
+      ${(items || []).map(item => `
+        <li class="arch-l2-item">
+          <strong>${esc(item.name)}</strong>
+          <span>${esc(item.detail)}</span>
+        </li>
+      `).join("")}
+    </ul>`;
+  return `
+    <div class="arch-level-heading">
+      <span>L2</span>
+      <h4>Solution system view</h4>
+    </div>
+    <div class="arch-l2">
+      <div class="arch-l2-grid">
+        ${domains.map(([key, label]) => `
+          <section class="arch-l2-domain" aria-label="${esc(label)}">
+            <h5>${esc(label)}</h5>
+            ${itemsHTML(architecture.domains?.[key])}
+          </section>
+        `).join("")}
+      </div>
+      <div class="arch-l2-bands">
+        <section class="arch-l2-band" aria-label="Tools">
+          <h5>Tools</h5>
+          <div class="tool-chips">
+            ${(architecture.tools || []).map(item => `<span class="tool-chip" title="${esc(item.detail)}">${esc(item.name)}</span>`).join("")}
+          </div>
+          <p>Orchestration, connectors, APIs, and operational tools used by this solution.</p>
+        </section>
+        <section class="arch-l2-band" aria-label="Supporting features and foundation models">
+          <h5>Supporting features &amp; foundation models</h5>
+          <div class="tool-chips">
+            ${(architecture.supporting_features || []).map(item => `<span class="tool-chip" title="${esc(item.detail)}">${esc(item.name)}</span>`).join("")}
+          </div>
+        </section>
+      </div>
+    </div>`;
+}
+
+function architectureHTML(architecture, solution, agentName) {
   if (!architecture) return "";
   const flow = architecture.business_flow || [];
   const capabilities = architecture.capabilities || [];
@@ -1984,16 +2411,21 @@ function architectureHTML(architecture, solution) {
   const fieldGuideUrl = packageInfo.slug
     ? `solutions/${packageInfo.slug}/field-guide.html`
     : "";
-  const configuredEngine = localStorage.getItem("aibast:workshop-engine") === "brainstem"
-    ? "GitHub Copilot + Brainstem"
-    : "GitHub Copilot";
+  const configuredEngine = localStorage.getItem("aibast:workshop-engine") === "copilot"
+    ? "GitHub Copilot"
+    : "GitHub Copilot + Brainstem";
   return `
     <div class="architecture-body">
       <h3>Solution architecture</h3>
       <p>This blueprint preserves the portable Python agent as the business-logic source while Copilot Studio provides the default conversational and deployment surface.</p>
+      <div class="arch-level-heading">
+        <span>L1</span>
+        <h4>Business flow</h4>
+      </div>
       <div class="arch-flow">
         ${flow.map((node, index) => `${index ? `<span class="arch-arrow">→</span>` : ""}<div class="arch-node">${esc(node)}</div>`).join("")}
       </div>
+      ${architectureLevel2HTML(agentName)}
       <h3>Capability mapping</h3>
       <div class="capability-grid">
         ${capabilities.map(item => `
@@ -2005,8 +2437,13 @@ function architectureHTML(architecture, solution) {
         `).join("")}
       </div>
       <h3>Learn and build</h3>
-      <p>The workshop is the single entry point. It teaches the use case, runs the globally configured Easy harness, and keeps the complete manual Hard mode inline on the same page.</p>
+      <p>The workshop is the single entry point. Step one installs RAPP Brainstem Frontier; the remaining steps teach the use case, run the globally configured Easy harness, and keep the complete Manual mode inline on the same page.</p>
       <div class="capability-grid">
+        <article class="capability-card">
+          <code>Step 1</code>
+          <strong>Install RAPP Brainstem Frontier</strong>
+          <p>Open the guided installer, launch Frontier, confirm the Brainstem is connected, and use the visible Brain Surgeon for the workshop.</p>
+        </article>
         <article class="capability-card">
           <code>Guided Easy mode</code>
           <strong>${esc(configuredEngine)}</strong>
@@ -2014,8 +2451,8 @@ function architectureHTML(architecture, solution) {
         </article>
         <article class="capability-card">
           <code>Build it yourself</code>
-          <strong>Hard mode — inline manual tutorial</strong>
-          <p>Use the Hard tab inside the same workshop to reproduce every reviewed Copilot Studio action and Preview gate. No separate prompt or PAC command block is required here.</p>
+          <strong>Manual mode — inline manual tutorial</strong>
+          <p>Use the Manual tab inside the same workshop to reproduce every reviewed Copilot Studio action and Preview gate. No separate prompt or PAC command block is required here.</p>
         </article>
       </div>
       <div class="detail-actions">
@@ -2119,10 +2556,10 @@ function openAgent(name) {
               <a class="button primary" href="${esc(download.href)}" download="${esc(download.filename)}">Download agent.py</a>
               ${solutionDownloads ? `<a class="button" href="${esc(solutionDownloads.zip)}" download>Download Copilot Studio solution</a>` : ""}
               ${solutionDownloads ? `<a class="button" href="${esc(solutionDownloads.settings)}" download>Deployment settings</a>` : ""}
-              ${agentAcquisitionControl(agent)}
+              ${agentDownloadCount(agent)}
               <a class="button" href="${BLOB}/${encodeURI(agent._file)}" target="_blank" rel="noopener">View source ↗</a>
             </div>
-            <p class="detail-note">Download the portable Python file or import the unmanaged Copilot Studio solution manually. Map the supplied deployment settings before enabling integrations; the imported agent remains unpublished until an administrator explicitly publishes it. Use the acquisition Discussion once per GitHub account to add a traceable signed-in acquisition signal.</p>
+            <p class="detail-note">Download the portable Python file or import the unmanaged Copilot Studio solution manually. Map the supplied deployment settings before enabling integrations; the imported agent remains unpublished until an administrator explicitly publishes it.</p>
           </section>
         </div>
         <aside class="detail-aside">
@@ -2150,7 +2587,7 @@ function openAgent(name) {
             ${solution.source_verified ? `<div class="asset"><strong>Content source</strong><span>Approved AI BAST PowerPoint</span></div>` : ""}
             ${solution.package ? `<div class="workshop-launch">
               <strong>Hands-on workshop</strong>
-              <span>Use the guided Easy path or switch to the complete inline Hard mode from one focused learning page.</span>
+              <span>Use the guided Easy path or switch to the complete inline Manual mode from one focused learning page.</span>
               ${solution.package.quest_url ? `<a class="button primary" href="${esc(solution.package.quest_url)}">Open workshop</a>` : ""}
               ${solution.package.slug ? `<a class="button" href="solutions/${esc(solution.package.slug)}/field-guide.html">Open field guide</a>` : ""}
             </div>` : ""}
@@ -2170,7 +2607,7 @@ function openAgent(name) {
         </aside>
       </div>
       </div>
-      ${architecture ? `<div class="detail-panel" data-detail-panel="architecture">${architectureHTML(architecture, solution)}</div>` : ""}
+      ${architecture ? `<div class="detail-panel" data-detail-panel="architecture">${architectureHTML(architecture, solution, agent.name)}</div>` : ""}
     </div>
   `);
   location.hash = `agent/${enc(agent.name)}`;
@@ -2229,6 +2666,59 @@ function openStack(key) {
   location.hash = `stack/${enc(key)}`;
 }
 
+function openFirstParty(id) {
+  const agent = state.firstParty.find(item => item.id === id);
+  if (!agent) return;
+  const availability = agent._availability_label || agent.lifecycle || "Available";
+  const notes = [
+    ...(agent.capability_notes || []),
+    agent.configure_note
+  ].filter(Boolean);
+  openModal(`
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="first-party-title">
+      <button class="icon-button modal-close" type="button" data-action="close-modal" aria-label="Close">×</button>
+      <header class="detail-head">
+        <span class="detail-icon">${esc(CATEGORY_ICONS[agent.vertical] || "▣")}</span>
+        <div>
+          <div class="category">${esc(agent.product)} · ${esc(firstPartyVerticalName(agent.vertical))} · ${esc(availability)}</div>
+          <h2 id="first-party-title">${esc(agent.name)}</h2>
+          <p>${esc(agent.description)}</p>
+        </div>
+      </header>
+      <div class="detail-body">
+        <div>
+          <section class="detail-section">
+            <h3>Current use cases</h3>
+            <ul>${(agent.use_cases || []).map(item => `<li>${esc(item)}</li>`).join("")}</ul>
+          </section>
+          ${notes.length ? `
+          <section class="detail-section">
+            <h3>Notes</h3>
+            <ul>${notes.map(note => `<li>${esc(note)}</li>`).join("")}</ul>
+          </section>` : ""}
+        </div>
+        <aside class="detail-aside">
+          <section class="aside-block microsoft-panel">
+            <h3>Microsoft first-party</h3>
+            <p>This is a current publicly documented capability in ${esc(agent.product)}.</p>
+          </section>
+          <section class="aside-block">
+            <h3>Microsoft Learn</h3>
+            <a class="button full" href="${esc(agent.overview_url)}" target="_blank" rel="noopener">Overview ↗</a>
+            ${agent.configure_url ? `<a class="button full" href="${esc(agent.configure_url)}" target="_blank" rel="noopener">Configure ↗</a>` : ""}
+          </section>
+          ${(agent.personas || []).length ? `
+          <section class="aside-block">
+            <h3>Personas</h3>
+            <div class="tool-chips">${agent.personas.map(p => `<span class="tool-chip">${esc(p)}</span>`).join("")}</div>
+          </section>` : ""}
+        </aside>
+      </div>
+    </div>
+  `);
+  location.hash = `first-party/${enc(agent.id)}`;
+}
+
 function openModal(html) {
   $("modal-root").innerHTML = html;
   $("modal-root").classList.add("open");
@@ -2240,7 +2730,8 @@ function closeModal() {
   $("modal-root").classList.remove("open");
   $("modal-root").innerHTML = "";
   document.body.classList.remove("modal-open");
-  if (location.hash.startsWith("#agent/") || location.hash.startsWith("#stack/")) {
+  if (location.hash.startsWith("#agent/") || location.hash.startsWith("#stack/")
+    || location.hash.startsWith("#first-party/")) {
     history.replaceState(null, "", location.pathname + location.search);
   }
 }
@@ -2320,12 +2811,17 @@ document.addEventListener("click", event => {
     render();
   } else if (action === "view") {
     state.view = target.dataset.view;
+    if (state.view === "first-party") {
+      state.readiness = "";
+      state.sort = "relevance";
+    }
+    buildFilters();
     render();
   } else if (action === "industry-menu") {
     const industry = target.dataset.industry;
-    state.industry = state.industry === industry ? "" : industry;
-    $("industry").value = state.industry;
     state.view = "solutions";
+    state.industry = state.industry === industry ? "" : industry;
+    buildFilters();
     render();
   } else if (action === "clear-filter") {
     const key = target.dataset.filter;
@@ -2338,15 +2834,15 @@ document.addEventListener("click", event => {
     event.preventDefault();
     event.stopPropagation();
     openAgentUpvote(dec(target.dataset.agentName));
-  } else if (action === "record-agent-acquisition") {
-    event.preventDefault();
-    event.stopPropagation();
-    openAgentSignal(dec(target.dataset.agentName), "acquisition");
   } else if (action === "open-agent") {
     $("suggestions").classList.remove("visible");
     openAgent(dec(target.dataset.name));
   } else if (action === "open-stack") {
     openStack(dec(target.dataset.key));
+  } else if (action === "open-first-party") {
+    openFirstParty(dec(target.dataset.id));
+  } else if (action === "stop") {
+    event.stopPropagation();
   } else if (action === "copy") {
     copyText(dec(target.dataset.text));
   } else if (action === "detail-tab") {
