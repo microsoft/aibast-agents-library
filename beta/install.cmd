@@ -180,13 +180,15 @@ if errorlevel 1 goto :fail
 echo.
 echo [..] Installing Electron and the bundled GitHub Copilot CLI...
 set "npm_config_cache=%BETA_HOME%\npm-cache"
-call "%NODE_DIR%\npm.cmd" ci --prefix "%BETA_SOURCE%\beta" --no-audit --no-fund
+pushd "%BETA_SOURCE%\beta"
+call "%NODE_DIR%\npm.cmd" ci --no-audit --no-fund
 if errorlevel 1 goto :fail
-call "%NODE_DIR%\npm.cmd" --prefix "%BETA_SOURCE%\beta" run check
+call "%NODE_DIR%\npm.cmd" run check
 if errorlevel 1 goto :fail
 set "BRAINSTEM_BETA_RUNTIME_DIR=%BRAINSTEM_HOME%\src\rapp_brainstem"
-call "%NODE_DIR%\npm.cmd" --prefix "%BETA_SOURCE%\beta" test
+call "%NODE_DIR%\npm.cmd" test
 if errorlevel 1 goto :fail
+popd
 
 set "ELECTRON_EXE=%BETA_SOURCE%\beta\node_modules\electron\dist\electron.exe"
 if not exist "%ELECTRON_EXE%" (

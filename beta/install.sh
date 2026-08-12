@@ -246,11 +246,14 @@ install_desktop_dependencies() {
     local node_dir="$1"
     export PATH="$node_dir/bin:$PATH"
     export npm_config_cache="$BETA_HOME/npm-cache"
-    run_with_heartbeat "Installing Electron and bundled Copilot CLI" \
-        "$node_dir/bin/npm" ci --prefix "$BETA_SOURCE/beta" --no-audit --no-fund
-    "$node_dir/bin/npm" --prefix "$BETA_SOURCE/beta" run check
-    BRAINSTEM_BETA_RUNTIME_DIR="$BRAINSTEM_HOME/src/rapp_brainstem" \
-        "$node_dir/bin/npm" --prefix "$BETA_SOURCE/beta" test
+    (
+        cd "$BETA_SOURCE/beta"
+        run_with_heartbeat "Installing Electron and bundled Copilot CLI" \
+            "$node_dir/bin/npm" ci --no-audit --no-fund
+        "$node_dir/bin/npm" run check
+        BRAINSTEM_BETA_RUNTIME_DIR="$BRAINSTEM_HOME/src/rapp_brainstem" \
+            "$node_dir/bin/npm" test
+    )
 }
 
 write_launchers() {
