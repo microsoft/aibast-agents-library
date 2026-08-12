@@ -330,6 +330,53 @@ test("persistent route callback telemetry binds request ID and proof response", 
   }
 });
 
+test("active-agent deletion persists for stack and global sources", async () => {
+  const { root, manager } = fixture();
+  try {
+    await manager.installScopedAgent({
+      filename: "delete_me_agent.py",
+      source: "class DeleteMeAgent: pass\n",
+    });
+    const descriptor = manager.compositionDescriptor();
+    const materialized = manager.materializeComposition(descriptor);
+    manager.activeRoute = {
+      compositionHash: descriptor.compositionHash,
+      stackRappid: descriptor.stack.rappid,
+      url: "http://127.0.0.1:7000",
+    };
+    manager.workers.set(descriptor.compositionHash, {
+      activeRequests: 0,
+      agentDirectory: materialized.agentDirectory,
+      compositionDirectory: materialized.compositionDirectory,
+      process: { stop: async () => {} },
+      route: manager.activeRoute,
+    });
+
+    const scoped = await manager.removeActiveAgent({
+      filename: "delete_me_agent.py",
+    });
+    assert.match(scoped.scope, /^stack:/);
+    assert.equal(manager.loadStack(descriptor.stack.rappid).agents.length, 0);
+
+    const global = await manager.removeActiveAgent({
+      filename: "global_agent.py",
+    });
+    assert.equal(global.scope, "global");
+    assert.equal(
+      existsSync(path.join(root, "brainstem", "agents", "global_agent.py")),
+      false,
+    );
+    await assert.rejects(
+      () => manager.removeActiveAgent({
+        filename: "context_memory_agent.py",
+      }),
+      /generated from the beta identity/,
+    );
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
 test("inherited and overlay filename collisions fail closed", async () => {
   const { root, manager } = fixture();
   try {

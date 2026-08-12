@@ -4,6 +4,11 @@ contextBridge.exposeInMainWorld("brainstemBeta", {
   checkForUpdates: () => ipcRenderer.invoke("beta:check-for-updates"),
   getState: () => ipcRenderer.invoke("beta:get-state"),
   installUpdate: () => ipcRenderer.invoke("beta:install-update"),
+  deleteAgent: (filename) => ipcRenderer.invoke("beta:delete-agent", filename),
+  exportAgent: (filename) => ipcRenderer.invoke("beta:export-agent", filename),
+  installFrameBridge: () => (
+    ipcRenderer.invoke("beta:install-frame-bridge")
+  ),
   listAgentFiles: () => ipcRenderer.invoke("beta:list-agent-files"),
   readAgentFile: (filename, scope) => (
     ipcRenderer.invoke("beta:read-agent-file", filename, scope)

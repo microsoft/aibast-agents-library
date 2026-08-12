@@ -16,10 +16,6 @@ const agentViewerEmpty = document.getElementById("agent-viewer-empty");
 const agentViewerTab = document.getElementById("agent-viewer-tab");
 const explorerStatus = document.getElementById("explorer-status");
 const explorerOpenKey = "rapp-brainstem-beta-explorer-open-v1";
-const betaMenuPanel = document.getElementById("beta-menu-panel");
-const betaUpdateStatus = document.getElementById("beta-update-status");
-const betaInstallUpdate = document.getElementById("beta-install-update");
-
 let loadedUrl = null;
 let brainstemNavigationCount = 0;
 window.__brainstemBetaNavigationCount = 0;
@@ -34,10 +30,50 @@ let currentAgentScope = "global";
 let currentAgentRevision = null;
 let agentTreeSignature = null;
 let agentRefreshPromise = null;
+let openBetaMenuOnNextSync = false;
 
 frame.addEventListener("load", () => {
   brainstemNavigationCount += 1;
   window.__brainstemBetaNavigationCount = brainstemNavigationCount;
+  void window.brainstemBeta.installFrameBridge().then(() => {
+    syncBetaUpdate(latestState?.update, openBetaMenuOnNextSync);
+    openBetaMenuOnNextSync = false;
+  });
+});
+window.addEventListener("message", async (event) => {
+  const type = event.data?.type;
+  if (event.source !== frame.contentWindow) return;
+  if (type === "rapp-beta:check-updates") {
+    await window.brainstemBeta.checkForUpdates();
+    return;
+  }
+  if (type === "rapp-beta:install-update") {
+    await window.brainstemBeta.installUpdate();
+    return;
+  }
+  if (!["rapp-beta-delete-agent", "rapp-beta-export-agent"].includes(type)) return;
+  const requestId = String(event.data.requestId || "");
+  try {
+    const filename = String(event.data.filename || "");
+    const result = type === "rapp-beta-delete-agent"
+      ? await window.brainstemBeta.deleteAgent(filename)
+      : await window.brainstemBeta.exportAgent(filename);
+    event.source.postMessage({
+      type: `${type}-result`,
+      requestId,
+      ok: true,
+      result,
+    }, "*");
+    agentTreeSignature = null;
+    await refreshAgentExplorer();
+  } catch (cause) {
+    event.source.postMessage({
+      type: `${type}-result`,
+      requestId,
+      ok: false,
+      error: String(cause?.message || cause),
+    }, "*");
+  }
 });
 
 function setExplorerOpen(open) {
@@ -454,6 +490,20 @@ function restoreSurgeonHistory() {
   showSurgeonEmpty();
 }
 
+function clearSurgeonUi() {
+  hideSurgeonThinking();
+  surgeonLog.replaceChildren();
+  surgeonHistory = [];
+  surgeonCurrentAssistant = null;
+  surgeonBusy = false;
+  surgeonInput.value = "";
+  surgeonInput.style.height = "auto";
+  surgeonSend.disabled = false;
+  surgeonSend.textContent = "Build";
+  saveSurgeonHistory();
+  showSurgeonEmpty();
+}
+
 async function submitSurgeon() {
   const prompt = surgeonInput.value.trim();
   if (!prompt || surgeonBusy) return;
@@ -532,10 +582,7 @@ function handleSurgeonEvent(event) {
     hideSurgeonThinking();
     addSurgeonBubble("error", event.message || "Brain Surgeon failed.", false);
   } else if (event.type === "reset") {
-    surgeonLog.replaceChildren();
-    surgeonHistory = [];
-    saveSurgeonHistory();
-    showSurgeonEmpty();
+    clearSurgeonUi();
   }
 }
 
@@ -545,22 +592,16 @@ function betaUrl(raw) {
   return url.href;
 }
 
-function renderBetaUpdate(update) {
+function syncBetaUpdate(update, openPanel = false) {
   const value = update || {
     phase: "idle",
-    message: "Check GitHub for the latest beta.",
+    message: "Check GitHub for the latest RAPP Brainstem Beta.",
   };
-  betaUpdateStatus.dataset.phase = value.phase || "idle";
-  betaUpdateStatus.textContent = [
-    value.message,
-    value.detail,
-    value.source ? `Source: ${value.source}` : null,
-    value.guidance,
-  ].filter(Boolean).join("\n");
-  const busy = ["checking", "applying"].includes(value.phase);
-  document.getElementById("beta-check-updates").disabled = busy;
-  betaInstallUpdate.hidden = value.phase !== "available";
-  betaInstallUpdate.disabled = busy;
+  frame.contentWindow?.postMessage({
+    type: "rapp-beta:update-state",
+    update: value,
+    openPanel,
+  }, "*");
 }
 
 function render(state) {
@@ -576,7 +617,7 @@ function render(state) {
     frame.classList.add("ready");
     splash.classList.add("hidden");
     error.textContent = "";
-    renderBetaUpdate(state.update);
+    syncBetaUpdate(state.update);
     void refreshAgentExplorer();
     return;
   }
@@ -618,7 +659,16 @@ document.getElementById("surgeon-close").addEventListener(
   () => setSurgeonOpen(false),
 );
 document.getElementById("surgeon-new").addEventListener("click", async () => {
-  await window.brainstemBeta.surgeonReset();
+  clearSurgeonUi();
+  try {
+    await window.brainstemBeta.surgeonReset();
+  } catch (cause) {
+    addSurgeonBubble(
+      "error",
+      `Could not reset Brain Surgeon: ${String(cause?.message || cause)}`,
+      false,
+    );
+  }
 });
 surgeonSend.addEventListener("click", () => void submitSurgeon());
 surgeonInput.addEventListener("input", () => {
@@ -632,22 +682,6 @@ surgeonInput.addEventListener("keydown", (event) => {
   }
 });
 
-document.getElementById("beta-menu-toggle").addEventListener("click", () => {
-  betaMenuPanel.classList.toggle("open");
-});
-document.getElementById("beta-check-updates").addEventListener("click", () => {
-  betaMenuPanel.classList.add("open");
-  void window.brainstemBeta.checkForUpdates();
-});
-betaInstallUpdate.addEventListener("click", () => {
-  void window.brainstemBeta.installUpdate();
-});
-document.addEventListener("click", (event) => {
-  if (!event.target.closest("#beta-menu-wrap")) {
-    betaMenuPanel.classList.remove("open");
-  }
-});
-
 if (localStorage.getItem(introStorageKey) === "seen") {
   intro.classList.add("hidden");
 }
@@ -658,7 +692,8 @@ setExplorerOpen(localStorage.getItem(explorerOpenKey) === "open");
 setInterval(() => void refreshAgentExplorer(), 2000);
 window.brainstemBeta.onSurgeonEvent(handleSurgeonEvent);
 window.brainstemBeta.onOpenUpdate(() => {
-  betaMenuPanel.classList.add("open");
+  openBetaMenuOnNextSync = true;
+  syncBetaUpdate(latestState?.update, true);
 });
 window.brainstemBeta.onState(render);
 window.brainstemBeta.getState().then(render);

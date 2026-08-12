@@ -1,5 +1,5 @@
 import path from "node:path";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 import {
@@ -41,6 +41,265 @@ const startupFingerprint = betaSourceFingerprint(path.resolve(packageDir, ".."))
 const brainstemRuntimeFingerprint = runtimeDirectoryFingerprint(
   config.brainstemDir,
 );
+const BETA_FRAME_BRIDGE_SOURCE = `(() => {
+  if (window.__rappBetaFrameBridge) return true;
+  window.__rappBetaFrameBridge = true;
+  const style = document.createElement("style");
+  style.textContent = [
+    ".beta-agent-icon-button{display:grid!important;place-items:center;",
+    "width:32px;height:30px;padding:0!important}",
+    ".beta-agent-icon-button svg{width:16px;height:16px;pointer-events:none}",
+    ".beta-frame-menu{position:relative}",
+    ".beta-frame-menu #beta-app-panel{display:none;position:absolute;",
+    "top:calc(100% + 10px);right:0;width:min(340px,calc(100vw - 32px));",
+    "padding:14px;border:1px solid #30363d;border-radius:10px;",
+    "background:#161b22;box-shadow:0 16px 48px rgba(0,0,0,.5);z-index:80}",
+    ".beta-frame-menu #beta-app-panel.open{display:block}",
+    ".beta-frame-menu #beta-app-panel h3{margin:0 0 5px;font-size:14px}",
+    ".beta-frame-menu .beta-app-copy{margin:0 0 12px;color:#8b949e;",
+    "font-size:11px;line-height:1.45}",
+    ".beta-frame-menu .beta-panel-btn{width:100%;padding:8px 10px;",
+    "border:1px solid #30363d;border-radius:6px;background:#21262d;",
+    "color:#e6edf3;cursor:pointer;font:inherit;font-size:12px;font-weight:700}",
+    ".beta-frame-menu .beta-panel-btn:hover{border-color:#58a6ff;",
+    "background:#30363d}",
+    ".beta-frame-menu .beta-panel-btn.primary{margin-top:9px;",
+    "border-color:#238636;background:#238636}",
+    ".beta-frame-menu .beta-panel-btn[hidden]{display:none}",
+    ".beta-frame-menu #beta-update-status{margin-top:10px;padding:9px;",
+    "border:1px solid #30363d;border-radius:8px;background:#0d1117;",
+    "color:#8b949e;font-size:11px;line-height:1.4;white-space:pre-wrap}",
+    ".beta-frame-menu #beta-update-status[data-phase=checking],",
+    ".beta-frame-menu #beta-update-status[data-phase=applying]",
+    "{border-color:#9e6a03;color:#d29922}",
+    ".beta-frame-menu #beta-update-status[data-phase=current],",
+    ".beta-frame-menu #beta-update-status[data-phase=success]",
+    "{border-color:#238636;color:#3fb950}",
+    ".beta-frame-menu #beta-update-status[data-phase=available]",
+    "{border-color:#1f6feb;color:#58a6ff}",
+    ".beta-frame-menu #beta-update-status[data-phase=blocked],",
+    ".beta-frame-menu #beta-update-status[data-phase=error]",
+    "{border-color:#da3633;color:#ff7b72}",
+  ].join("");
+  document.head.appendChild(style);
+  const downloadIcon = '<svg viewBox="0 0 24 24" fill="none" '
+    + 'stroke="currentColor" stroke-width="2" stroke-linecap="round" '
+    + 'stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/>'
+    + '<path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>';
+  const trashIcon = '<svg viewBox="0 0 24 24" fill="none" '
+    + 'stroke="currentColor" stroke-width="2" stroke-linecap="round" '
+    + 'stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/>'
+    + '<path d="M8 6V4h8v2"/><path d="m19 6-1 15H6L5 6"/>'
+    + '<path d="M10 11v6M14 11v6"/></svg>';
+  function decorateAgentButtons(root = document) {
+    root.querySelectorAll(".export-btn").forEach((button) => {
+      const deleting = button.classList.contains("del-btn");
+      const iconKind = deleting ? "delete" : "download";
+      if (button.dataset.betaAgentIcon === iconKind) return;
+      button.dataset.betaAgentIcon = iconKind;
+      button.classList.add("beta-agent-icon-button");
+      button.innerHTML = deleting ? trashIcon : downloadIcon;
+      button.title = deleting ? "Delete agent" : "Download agent.py";
+      button.setAttribute(
+        "aria-label",
+        deleting ? "Delete agent" : "Download agent.py",
+      );
+    });
+  }
+  decorateAgentButtons();
+  const agentList = document.getElementById("agent-list-ul");
+  if (agentList) {
+    new MutationObserver(() => decorateAgentButtons(agentList)).observe(
+      agentList,
+      { childList: true, subtree: true },
+    );
+  }
+  function setBetaMenuOpen(open) {
+    const panel = document.getElementById("beta-app-panel");
+    const button = document.getElementById("beta-app-btn");
+    if (!panel || !button) return;
+    panel.classList.toggle("open", Boolean(open));
+    button.setAttribute("aria-expanded", String(Boolean(open)));
+  }
+  function renderBetaUpdate(update, openPanel = false) {
+    if (!update) return;
+    const phase = update.phase || "idle";
+    const status = document.getElementById("beta-update-status");
+    if (!status) return;
+    status.dataset.phase = phase;
+    const lines = [
+      update.message || "Check GitHub for the latest RAPP Brainstem Beta.",
+      update.detail,
+      update.source ? "Source: " + update.source : "",
+      update.guidance,
+    ].filter(Boolean);
+    const message = document.getElementById("beta-update-message");
+    if (message) {
+      message.textContent = lines[0] || "";
+      const detail = document.getElementById("beta-update-detail");
+      const source = document.getElementById("beta-update-source");
+      const guidance = document.getElementById("beta-update-guidance");
+      if (detail) detail.textContent = update.detail || "";
+      if (source) source.textContent = update.source
+        ? "Source: " + update.source
+        : "";
+      if (guidance) guidance.textContent = update.guidance || "";
+    } else {
+      status.textContent = lines.join("\\n");
+    }
+    const busy = phase === "checking" || phase === "applying";
+    const checkButton = document.getElementById("beta-check-updates");
+    if (checkButton) {
+      checkButton.disabled = busy;
+      checkButton.textContent = phase === "checking"
+        ? "Checking GitHub..."
+        : "Check for updates";
+    }
+    const installButton = document.getElementById("beta-install-update");
+    if (installButton) {
+      installButton.hidden = phase !== "available";
+      installButton.disabled = busy;
+    }
+    if (openPanel) setBetaMenuOpen(true);
+  }
+  function installBetaMenu() {
+    const brainLogo = document.querySelector("header .logo");
+    if (brainLogo) {
+      brainLogo.title = "we are above that";
+      brainLogo.setAttribute("aria-label", "we are above that");
+    }
+    let wrapper = document.querySelector(".beta-app-wrapper");
+    let button = document.getElementById("beta-app-btn");
+    let panel = document.getElementById("beta-app-panel");
+    if (!wrapper || !button || !panel) {
+      const controls = document.querySelector("header .controls");
+      if (!controls) return false;
+      wrapper = document.createElement("div");
+      wrapper.className = "beta-app-wrapper beta-frame-menu";
+      wrapper.innerHTML = '<button class="icon-btn" id="beta-app-btn" '
+        + 'type="button" title="RAPP Brainstem Beta menu" aria-haspopup="true" '
+        + 'aria-expanded="false"><span class="icon"><svg viewBox="0 0 24 24" '
+        + 'fill="currentColor" aria-hidden="true"><path d="M6 10a2 2 0 1 0 0 4 '
+        + '2 2 0 0 0 0-4Zm6 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm6 0a2 2 0 1 0 '
+        + '0 4 2 2 0 0 0 0-4Z"/></svg></span></button>'
+        + '<div id="beta-app-panel"><h3>RAPP Brainstem Beta</h3>'
+        + '<p class="beta-app-copy">Chat is the control surface. Agents can add '
+        + 'capabilities and visibly operate this workspace while you watch.</p>'
+        + '<button class="beta-panel-btn" id="beta-check-updates" type="button">'
+        + 'Check for updates</button><div id="beta-update-status" '
+        + 'data-phase="idle" role="status" aria-live="polite">Check GitHub for '
+        + 'the latest RAPP Brainstem Beta.</div><button class="beta-panel-btn '
+        + 'primary" id="beta-install-update" type="button" hidden>'
+        + 'Update and Restart</button></div>';
+      const vscode = document.getElementById("vscode-link");
+      controls.insertBefore(wrapper, vscode || null);
+      button = document.getElementById("beta-app-btn");
+      panel = document.getElementById("beta-app-panel");
+    }
+    document.body.classList.add("beta-app");
+    button.removeAttribute("onclick");
+    const checkButton = document.getElementById("beta-check-updates");
+    const installButton = document.getElementById("beta-install-update");
+    checkButton?.removeAttribute("onclick");
+    installButton?.removeAttribute("onclick");
+    if (!button.dataset.betaFrameBridge) {
+      button.dataset.betaFrameBridge = "1";
+      button.addEventListener("click", (event) => {
+        event.stopPropagation();
+        setBetaMenuOpen(!panel.classList.contains("open"));
+      });
+      checkButton?.addEventListener("click", (event) => {
+        event.stopPropagation();
+        renderBetaUpdate({
+          phase: "checking",
+          message: "Checking GitHub for updates...",
+        }, true);
+        window.parent.postMessage({ type: "rapp-beta:check-updates" }, "*");
+      });
+      installButton?.addEventListener("click", (event) => {
+        event.stopPropagation();
+        renderBetaUpdate({
+          phase: "applying",
+          message: "Preparing the update and restart...",
+        }, true);
+        window.parent.postMessage({ type: "rapp-beta:install-update" }, "*");
+      });
+      document.addEventListener("click", (event) => {
+        if (!event.target.closest(".beta-app-wrapper")) setBetaMenuOpen(false);
+      });
+    }
+    return true;
+  }
+  installBetaMenu();
+  window.addEventListener("message", (event) => {
+    if (event.source !== window.parent || !event.data) return;
+    if (event.data.type === "rapp-beta:open-update") {
+      setBetaMenuOpen(true);
+    } else if (event.data.type === "rapp-beta:update-state") {
+      renderBetaUpdate(event.data.update, event.data.openPanel);
+    }
+  });
+  async function requestParent(type, filename) {
+    const requestId = window.crypto.randomUUID();
+    return new Promise((resolve, reject) => {
+      const timeout = window.setTimeout(() => {
+        window.removeEventListener("message", receive);
+        reject(new Error("Beta agent action timed out."));
+      }, 30000);
+      function receive(message) {
+        if (
+          message.source !== window.parent
+          || message.data?.type !== type + "-result"
+          || message.data?.requestId !== requestId
+        ) return;
+        window.clearTimeout(timeout);
+        window.removeEventListener("message", receive);
+        resolve(message.data);
+      }
+      window.addEventListener("message", receive);
+      window.parent.postMessage({ type, requestId, filename }, "*");
+    });
+  }
+  document.addEventListener("click", async (event) => {
+    const button = event.target.closest?.(".export-btn");
+    if (!button) return;
+    const deleting = button.classList.contains("del-btn");
+    const filename = button.closest("li")
+      ?.querySelector(".agent-name")?.getAttribute("title");
+    if (!filename) return;
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    if (
+      deleting
+      && !window.confirm(\`Are you sure you want to remove \${filename}?\`)
+    ) return;
+    const original = button.innerHTML;
+    button.disabled = true;
+    button.textContent = deleting ? "Deleting..." : "Exporting...";
+    try {
+      const type = deleting
+        ? "rapp-beta-delete-agent"
+        : "rapp-beta-export-agent";
+      const response = await requestParent(type, filename);
+      if (!response.ok) throw new Error(response.error || "Agent action failed.");
+      if (deleting) {
+        await loadAgentsList();
+      } else if (!response.result?.canceled) {
+        window.alert(\`Exported \${filename} to \${response.result.path}\`);
+      }
+    } catch (error) {
+      window.alert(
+        (deleting ? "Delete failed: " : "Export failed: ")
+        + String(error?.message || error)
+      );
+    } finally {
+      button.disabled = false;
+      button.innerHTML = original;
+    }
+  }, true);
+  return true;
+})()`;
 const copilot = new CopilotRuntime({
   tokenFile: path.join(config.brainstemDir, ".copilot_token"),
   workingDirectory: config.brainstemDir,
@@ -488,6 +747,41 @@ function registerIpc() {
       scope: String(scope || "global"),
       content: routeManager.readActiveAgent(safeName),
     };
+  });
+  ipcMain.handle("beta:delete-agent", async (event, filename) => {
+    assertTrustedIpc(event);
+    const removed = await routeManager.removeActiveAgent({ filename });
+    const route = await routeManager.startDefault();
+    return { ...removed, active_route: route };
+  });
+  ipcMain.handle("beta:export-agent", async (event, filename) => {
+    assertTrustedIpc(event);
+    const safeName = path.basename(String(filename || ""));
+    const source = routeManager.readActiveAgent(safeName);
+    const downloads = app.getPath("downloads");
+    const extension = path.extname(safeName);
+    const stem = path.basename(safeName, extension);
+    let filePath = path.join(downloads, safeName);
+    let suffix = 1;
+    while (existsSync(filePath)) {
+      filePath = path.join(downloads, `${stem} (${suffix})${extension}`);
+      suffix += 1;
+    }
+    writeFileSync(filePath, source, { mode: 0o600 });
+    return {
+      canceled: false,
+      filename: safeName,
+      path: filePath,
+    };
+  });
+  ipcMain.handle("beta:install-frame-bridge", async (event) => {
+    assertTrustedIpc(event);
+    const frame = mainWindow?.webContents.mainFrame.framesInSubtree.find(
+      (candidate) => loopbackUrl(candidate.url),
+    );
+    if (!frame) return { installed: false };
+    await frame.executeJavaScript(BETA_FRAME_BRIDGE_SOURCE, true);
+    return { installed: true };
   });
   ipcMain.handle(
     "beta:check-for-updates",

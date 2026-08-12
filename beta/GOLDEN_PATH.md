@@ -4,6 +4,14 @@
 
 RAPP Brainstem is a useful educational engine that teaches by doing.
 
+### Ethos: We are above that
+
+**We are above that.** Brainstem sits above model choice, AI harnesses,
+prompting mechanics, and tool plumbing. It absorbs those implementation
+concerns into one outcome-driven control surface so people can describe what
+they need, watch the work happen, and get the result without becoming experts
+in the layers underneath.
+
 The story is simple:
 
 > RAPP helps accelerate not only learning AI, but teaching AI yourself right

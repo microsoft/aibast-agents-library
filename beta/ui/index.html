@@ -241,45 +241,6 @@
       padding: 5px 10px; border-top: 1px solid #26282d;
       background: #18191c; color: #6f747d; font-size: 10px;
     }
-    #beta-menu-wrap {
-      position: fixed; z-index: 13; top: 64px; right: 16px;
-      transition: right .28s cubic-bezier(.22,.9,.3,1);
-    }
-    body.surgeon-open #beta-menu-wrap {
-      right: calc(var(--surgeon-width) + 16px);
-    }
-    #beta-menu-toggle {
-      width: 38px; height: 34px; padding: 0;
-      border-radius: 9px; border-color: #30363d;
-      background: rgba(28,30,34,.95); font-size: 19px;
-      box-shadow: 0 8px 24px rgba(0,0,0,.35);
-    }
-    #beta-menu-panel {
-      display: none; width: min(360px, calc(100vw - 32px)); margin-top: 7px;
-      padding: 14px; border: 1px solid #30363d; border-radius: 12px;
-      background: rgba(22,27,34,.98); box-shadow: 0 16px 48px rgba(0,0,0,.5);
-    }
-    #beta-menu-panel.open { display: block; }
-    #beta-menu-panel h2 { margin: 0 0 5px; font-size: 14px; }
-    #beta-menu-panel p { margin: 0 0 12px; color: #8b949e; font-size: 11px; line-height: 1.45; }
-    #beta-check-updates,
-    #beta-install-update { width: 100%; font-weight: 700; }
-    #beta-install-update {
-      margin-top: 9px; border-color: #238636; background: #238636;
-    }
-    #beta-install-update[hidden] { display: none; }
-    #beta-update-status {
-      margin-top: 10px; padding: 9px; border: 1px solid #30363d;
-      border-radius: 8px; background: #0d1117; color: #8b949e;
-      font-size: 11px; line-height: 1.4; white-space: pre-wrap;
-    }
-    #beta-update-status[data-phase="checking"],
-    #beta-update-status[data-phase="applying"] { border-color: #9e6a03; color: #d29922; }
-    #beta-update-status[data-phase="current"],
-    #beta-update-status[data-phase="success"] { border-color: #238636; color: #3fb950; }
-    #beta-update-status[data-phase="available"] { border-color: #1f6feb; color: #58a6ff; }
-    #beta-update-status[data-phase="blocked"],
-    #beta-update-status[data-phase="error"] { border-color: #da3633; color: #ff7b72; }
     #surgeon-tab {
       position: fixed; z-index: 14; top: 50%; right: 0;
       display: flex; align-items: center; gap: 7px;
@@ -468,18 +429,6 @@
       sandbox="allow-scripts allow-same-origin allow-forms allow-downloads allow-modals allow-popups"
     ></iframe>
   </main>
-  <div id="beta-menu-wrap">
-    <button id="beta-menu-toggle" type="button" title="RAPP Brainstem Beta menu">⋯</button>
-    <div id="beta-menu-panel">
-      <h2>RAPP Brainstem Beta</h2>
-      <p>Beta controls stay outside the RAPP/1 kernel.</p>
-      <button id="beta-check-updates" type="button">Check for updates</button>
-      <div id="beta-update-status" data-phase="idle" role="status" aria-live="polite">
-        Check GitHub for the latest beta.
-      </div>
-      <button id="beta-install-update" type="button" hidden>Update and Restart</button>
-    </div>
-  </div>
   <button id="explorer-tab" type="button" title="Open live Brainstem agents folder">
     🗂️ Live agents
   </button>
@@ -524,7 +473,9 @@
         <span>Brain Surgeon · agent mode</span>
       </span>
       <span id="surgeon-model">Agent</span>
-      <button class="surgeon-head-btn" id="surgeon-new" type="button" title="New Copilot chat">+</button>
+      <button class="surgeon-head-btn" id="surgeon-new" type="button"
+        title="Clear and reset Brain Surgeon chat"
+        aria-label="Clear and reset Brain Surgeon chat">↺</button>
       <button class="surgeon-head-btn" id="surgeon-close" type="button" title="Hide Copilot">×</button>
     </header>
     <div id="surgeon-log" role="log" aria-live="polite"></div>

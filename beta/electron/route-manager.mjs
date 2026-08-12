@@ -593,6 +593,51 @@ export class BetaRouteManager {
     };
   }
 
+  async removeActiveAgent({ filename }) {
+    const safeName = safeAgentFilename(filename);
+    const active = this.activeAgentFiles().find(
+      (agent) => agent.filename === safeName,
+    );
+    if (!active) throw new Error(`Active agent not found: ${safeName}`);
+    if (active.scope === "memory") {
+      throw new Error(
+        `${safeName} is generated from the beta identity and cannot be deleted.`,
+      );
+    }
+    if (active.scope === "ephemeral") {
+      throw new Error(
+        `${safeName} is temporary and is removed automatically after its request.`,
+      );
+    }
+    if (active.scope === "global") {
+      const globalDirectory = path.resolve(
+        this.brainstemConfig.brainstemDir,
+        "agents",
+      );
+      const sourcePath = path.resolve(globalDirectory, safeName);
+      if (path.dirname(sourcePath) !== globalDirectory) {
+        throw new Error("Global agent path escaped the agents directory.");
+      }
+      if (!existsSync(sourcePath)) {
+        throw new Error(`Global agent source not found: ${safeName}`);
+      }
+      rmSync(sourcePath, { force: true });
+      this.recordTelemetry("global-agent-removed", {
+        filename: safeName,
+      });
+      return { removed: safeName, scope: active.scope };
+    }
+    if (active.scope.startsWith("stack:")) {
+      const stackRappid = active.scope.slice("stack:".length);
+      const result = await this.removeScopedAgent({
+        filename: safeName,
+        stackRappid,
+      });
+      return { ...result, scope: active.scope };
+    }
+    throw new Error(`Unsupported agent scope: ${active.scope}`);
+  }
+
   globalAgentEntries(memoryGuid) {
     const globalDirectory = path.join(this.brainstemConfig.brainstemDir, "agents");
     const entries = [];
