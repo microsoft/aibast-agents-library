@@ -70,6 +70,13 @@ test("Brain Surgeon keeps the full Copilot loop and RAPP delegation tools", asyn
       "stop_demo_recording",
     ],
   );
+  const stopRecording = config.tools.find(
+    (tool) => tool.name === "stop_demo_recording",
+  );
+  assert.deepEqual(
+    stopRecording.parameters.properties.recap_mode.enum,
+    ["baseline", "repeat-ephemeral", "stack-churn", "control-handoff"],
+  );
 });
 
 test("temporary agent filenames are normalized safely", () => {

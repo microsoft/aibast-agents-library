@@ -224,6 +224,10 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
       button = document.getElementById("beta-app-btn");
       panel = document.getElementById("beta-app-panel");
     }
+    button.title = "RAPP Brainstem Frontier menu";
+    button.setAttribute("aria-label", "RAPP Brainstem Frontier menu");
+    const menuHeading = panel.querySelector("h3");
+    if (menuHeading) menuHeading.textContent = "RAPP Brainstem Frontier";
     document.body.classList.add("beta-app");
     button.removeAttribute("onclick");
     const checkButton = document.getElementById("beta-check-updates");

@@ -593,7 +593,12 @@ export class BrainSurgeon {
             },
             recap_mode: {
               type: "string",
-              enum: ["baseline", "repeat-ephemeral", "stack-churn"],
+              enum: [
+                "baseline",
+                "repeat-ephemeral",
+                "stack-churn",
+                "control-handoff",
+              ],
             },
           },
         },
