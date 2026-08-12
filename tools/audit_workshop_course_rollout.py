@@ -469,10 +469,10 @@ def check_quest(
     ]
     if len(install_steps) != 1:
         failures.add(
-            f"{label}: expected exactly one workshop-step-1 beta install tutorial"
+            f"{label}: expected exactly one workshop-step-1 Frontier install tutorial"
         )
-    elif "Install RAPP Brainstem Beta" not in install_steps[0].text:
-        failures.add(f"{label}: workshop-step-1 does not install the beta client")
+    elif "Install RAPP Brainstem Frontier" not in install_steps[0].text:
+        failures.add(f"{label}: workshop-step-1 does not install Frontier")
     for required_href in (
         "../../beta/",
         "../../beta/install.cmd",

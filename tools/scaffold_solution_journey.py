@@ -3129,27 +3129,27 @@ def render_beta_install_step(ctx: JourneyContext) -> str:
     )
     return f"""
     <section class="learn-step" id="workshop-step-1">
-      <header class="learn-step-header"><span>1</span><div><p>Workshop setup</p><h3>Install RAPP Brainstem Beta</h3></div>{report_button(ctx, location="Workshop setup — step 1: install RAPP Brainstem Beta", expected="RAPP Brainstem Beta opens with the Brainstem connected and GitHub Copilot Brain Surgeon visible.")}</header>
+      <header class="learn-step-header"><span>1</span><div><p>Workshop setup</p><h3>Install RAPP Brainstem Frontier</h3></div>{report_button(ctx, location="Workshop setup — step 1: install RAPP Brainstem Frontier", expected="RAPP Brainstem Frontier opens with the Brainstem connected and GitHub Copilot Brain Surgeon visible.")}</header>
       <div class="learn-step-body">
-        <p>Start every workshop in the beta client. It provides the visible Brainstem, GitHub Copilot Brain Surgeon, live agent Explorer, recordings, and the one-click Copilot Studio path used by the guided exercises.</p>
+        <p>Start every workshop in RAPP Brainstem Frontier. It provides the visible Brainstem, GitHub Copilot Brain Surgeon, live agent Explorer, recordings, and the one-click Copilot Studio path used by the guided exercises.</p>
         <div class="action-panel">
           <strong>Install and launch</strong>
           <ol>
-            <li>Open the dedicated beta installer and choose your operating system.</li>
+            <li>Open the dedicated Frontier installer and choose your operating system.</li>
             <li>On macOS or Linux, copy and run the command below. On Windows 11, download <code>install.cmd</code> and double-click it.</li>
-            <li>Launch <strong>RAPP Brainstem Beta</strong> from Applications, Launchpad, the app menu, or the Windows Desktop/Start Menu shortcut.</li>
+            <li>Launch <strong>RAPP Brainstem Frontier</strong> from Applications, Launchpad, the app menu, or the Windows Desktop/Start Menu shortcut.</li>
             <li>Wait for <strong>connected</strong>, then complete GitHub device login if the app asks.</li>
           </ol>
           <div class="prompt-heading"><strong>macOS or Linux</strong><button class="button primary" type="button" data-copy-target="beta-install-command">Copy install command</button></div>
           <pre class="prompt-block" id="beta-install-command">{html.escape(install_command)}</pre>
           <div class="detail-actions">
-            <a class="button primary" href="../../beta/">Open beta installer</a>
+            <a class="button primary" href="../../beta/">Open Frontier installer</a>
             <a class="button" href="../../beta/install.cmd" download>Download Windows install.cmd</a>
             <a class="button" href="../../beta/README.md" download>Download installation guide</a>
           </div>
         </div>
-        <div class="expected-panel"><strong>Expected result</strong><p>The RAPP Brainstem Beta window is open, the center Brainstem shows <strong>connected</strong>, the live agents button is available, and the GitHub Copilot Brain Surgeon panel can be opened.</p></div>
-        <label class="step-complete"><input type="checkbox" data-checkpoint="beta-installed" data-achievements-group="onboarding" data-achievements-path="shared"><span>I installed and opened RAPP Brainstem Beta.</span></label>
+        <div class="expected-panel"><strong>Expected result</strong><p>The RAPP Brainstem Frontier window is open, the center Brainstem shows <strong>connected</strong>, the blue Brainstem icon opens the live agents Explorer, and the GitHub Copilot Brain Surgeon panel can be opened.</p></div>
+        <label class="step-complete"><input type="checkbox" data-checkpoint="beta-installed" data-achievements-group="onboarding" data-achievements-path="shared"><span>I installed and opened RAPP Brainstem Frontier.</span></label>
       </div>
     </section>"""
 

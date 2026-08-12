@@ -320,8 +320,8 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert 'href="evidence-report.html"' in quest
     assert 'href="VISUAL-EVIDENCE-AUDIT.md"' not in quest
     assert quest.count("data-copy-target=") == 8
-    assert "Install RAPP Brainstem Beta" in quest
-    assert "Open beta installer" in quest
+    assert "Install RAPP Brainstem Frontier" in quest
+    assert "Open Frontier installer" in quest
     assert "Download Windows install.cmd" in quest
     assert "beta/install.sh | bash" in quest
     assert "Download Brainstem SKILL.md" in quest

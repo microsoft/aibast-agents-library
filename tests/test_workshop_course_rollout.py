@@ -69,8 +69,8 @@ def valid_pages() -> dict[str, str]:
 <a href="field-guide.html">Field guide</a>
 <a href="evidence-report.html">Evidence report</a></header>
 <main><section class="learn-step" id="workshop-step-1">
-<h3>Install RAPP Brainstem Beta</h3>
-<a href="../../beta/">Open beta installer</a>
+<h3>Install RAPP Brainstem Frontier</h3>
+<a href="../../beta/">Open Frontier installer</a>
 <a href="../../beta/install.cmd" download>Download Windows install.cmd</a>
 <a href="../../beta/README.md" download>Download installation guide</a>
 {report_button("beta-install")}

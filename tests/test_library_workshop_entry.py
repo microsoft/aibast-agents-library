@@ -18,7 +18,7 @@ def test_library_routes_architecture_into_the_beta_workshop():
         "Open interactive demo",
         "Workshop settings",
         "Open field guide",
-        "Install RAPP Brainstem Beta",
+        "Install RAPP Brainstem Frontier",
         "function workshopPackageFor(",
         "function interactiveDemoUrl(",
         'localStorage.getItem("aibast:workshop-engine")',
