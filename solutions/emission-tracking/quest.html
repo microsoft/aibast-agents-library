@@ -382,6 +382,32 @@
     </section>
     <div class="achievements-toast" id="achievements-badge-toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
+
+    <section class="learn-step" id="workshop-step-1">
+      <header class="learn-step-header"><span>1</span><div><p>Workshop setup</p><h3>Install RAPP Brainstem Beta</h3></div><button class="button report-button" type="button" data-report-location="Workshop setup — step 1: install RAPP Brainstem Beta" data-report-expected="RAPP Brainstem Beta opens with the Brainstem connected and GitHub Copilot Brain Surgeon visible." data-report-evidence="">Report an issue</button></header>
+      <div class="learn-step-body">
+        <p>Start every workshop in the beta client. It provides the visible Brainstem, GitHub Copilot Brain Surgeon, live agent Explorer, recordings, and the one-click Copilot Studio path used by the guided exercises.</p>
+        <div class="action-panel">
+          <strong>Install and launch</strong>
+          <ol>
+            <li>Open the dedicated beta installer and choose your operating system.</li>
+            <li>On macOS or Linux, copy and run the command below. On Windows 11, download <code>install.cmd</code> and double-click it.</li>
+            <li>Launch <strong>RAPP Brainstem Beta</strong> from Applications, Launchpad, the app menu, or the Windows Desktop/Start Menu shortcut.</li>
+            <li>Wait for <strong>connected</strong>, then complete GitHub device login if the app asks.</li>
+          </ol>
+          <div class="prompt-heading"><strong>macOS or Linux</strong><button class="button primary" type="button" data-copy-target="beta-install-command">Copy install command</button></div>
+          <pre class="prompt-block" id="beta-install-command">curl -fsSL https://raw.githubusercontent.com/microsoft/aibast-agents-library/main/beta/install.sh | bash</pre>
+          <div class="detail-actions">
+            <a class="button primary" href="../../beta/">Open beta installer</a>
+            <a class="button" href="../../beta/install.cmd" download>Download Windows install.cmd</a>
+            <a class="button" href="../../beta/README.md" download>Download installation guide</a>
+          </div>
+        </div>
+        <div class="expected-panel"><strong>Expected result</strong><p>The RAPP Brainstem Beta window is open, the center Brainstem shows <strong>connected</strong>, the live agents button is available, and the GitHub Copilot Brain Surgeon panel can be opened.</p></div>
+        <label class="step-complete"><input type="checkbox" data-checkpoint="beta-installed" data-achievements-group="onboarding" data-achievements-path="shared"><span>I installed and opened RAPP Brainstem Beta.</span></label>
+      </div>
+    </section>
+
     <section class="path" data-path="easy" id="mode-panel-easy" role="tabpanel" aria-labelledby="mode-tab-easy">
       <div class="module-summary">
         <article>
@@ -411,8 +437,8 @@
       <div class="easy-lane" data-easy-lane="brainstem">
         <div class="notice"><strong>Brainstem lane:</strong> Brainstem is the learner’s personal, on-device training AI working alongside Copilot. It persists the workshop, loads the generic engine, and continues every handoff.</div>
 
-      <article class="learn-step" id="brainstem-step-1">
-        <header class="learn-step-header"><span>1</span><div><p>Prepare your Copilot</p><h3>Download and attach the Brainstem skill</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 1: attach skill" data-report-expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat." data-report-evidence="">Report an issue</button></header>
+      <article class="learn-step" id="brainstem-step-2">
+        <header class="learn-step-header"><span>2</span><div><p>Prepare your Copilot</p><h3>Download and attach the Brainstem skill</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 2: attach skill" data-report-expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>This file fixes the workshop to Brainstem. Copilot remains the work surface while the learner&#x27;s on-device training AI persists state, loads the generic workshop engine, and continues every handoff.</p>
           <div class="action-panel"><strong>Do this</strong><ol><li>Download the lane-specific <code>SKILL.md</code>.</li><li>Open GitHub Copilot Chat in VS Code.</li><li>Select <strong>Agent mode</strong>.</li><li>Drag the downloaded file into the chat.</li></ol><a class="button primary" href="../../skills/aibast-easy-mode-brainstem/SKILL.md" download="SKILL.md">Download Brainstem SKILL.md</a></div>
@@ -421,8 +447,8 @@
         </div>
       </article>
 
-      <article class="learn-step" id="brainstem-step-2">
-        <header class="learn-step-header"><span>2</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test Emissions Tracking</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 2: local proof" data-report-expected="Brainstem reports the generic AIBAST Workshop Engine and EmissionTrackingAgent loaded, with 4/4 locked local cases passed." data-report-evidence="">Report an issue</button></header>
+      <article class="learn-step" id="brainstem-step-3">
+        <header class="learn-step-header"><span>3</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test Emissions Tracking</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 3: local proof" data-report-expected="Brainstem reports the generic AIBAST Workshop Engine and EmissionTrackingAgent loaded, with 4/4 locked local cases passed." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>This step proves the portable business logic before any Copilot Studio work begins. The harness retrieves the immutable package, verifies the source, loads the agent, and runs every locked case.</p>
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="brainstem-build-prompt">Copy message</button></div>
@@ -432,8 +458,8 @@
         </div>
       </article>
 
-      <article class="learn-step" id="brainstem-step-3">
-        <header class="learn-step-header"><span>3</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 3: Draft deployment" data-report-expected="Draft Emissions Tracking Manual; model Claude Sonnet 4.6; 2 knowledge files; 4 skills; published false." data-report-evidence="">Report an issue</button></header>
+      <article class="learn-step" id="brainstem-step-4">
+        <header class="learn-step-header"><span>4</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="brainstem lane — step 4: Draft deployment" data-report-expected="Draft Emissions Tracking Manual; model Claude Sonnet 4.6; 2 knowledge files; 4 skills; published false." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>The harness now uses the verified Microsoft Copilot Studio plugin to reuse or create the source-controlled Draft, synchronize the reviewed instructions and assets, validate the PAC project, and leave publication off.</p>
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="brainstem-deploy-prompt">Copy message</button></div>
@@ -447,8 +473,8 @@
       <div class="easy-lane" data-easy-lane="copilot">
         <div class="comparison-note"><strong>Skeptic comparison — Copilot-only lane:</strong> GitHub Copilot carries the same harness directly in the active session. The skill still discovers every asset and runs every gate; there is no persistent Brainstem engine between turns.</div>
 
-      <article class="learn-step" id="copilot-step-1">
-        <header class="learn-step-header"><span>1</span><div><p>Prepare your Copilot</p><h3>Download and attach the Copilot-only skill</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 1: attach skill" data-report-expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat." data-report-evidence="">Report an issue</button></header>
+      <article class="learn-step" id="copilot-step-2">
+        <header class="learn-step-header"><span>2</span><div><p>Prepare your Copilot</p><h3>Download and attach the Copilot-only skill</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 2: attach skill" data-report-expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>This file fixes the workshop to GitHub Copilot alone. The skill carries the same discovery, testing, deployment, and validation contract directly in the active Copilot session and bootstraps the official Microsoft Copilot Studio plugin.</p>
           <div class="action-panel"><strong>Do this</strong><ol><li>Download the lane-specific <code>SKILL.md</code>.</li><li>Open GitHub Copilot Chat in VS Code.</li><li>Select <strong>Agent mode</strong>.</li><li>Drag the downloaded file into the chat.</li></ol><a class="button primary" href="../../skills/aibast-easy-mode-copilot/SKILL.md" download="SKILL.md">Download Copilot-only SKILL.md</a></div>
@@ -457,8 +483,8 @@
         </div>
       </article>
 
-      <article class="learn-step" id="copilot-step-2">
-        <header class="learn-step-header"><span>2</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test Emissions Tracking</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 2: local proof" data-report-expected="Copilot reports the verified mcs-assistant plugin and PAC CLI, an isolated workspace, a verified source hash, and 4/4 locked local cases passed." data-report-evidence="">Report an issue</button></header>
+      <article class="learn-step" id="copilot-step-3">
+        <header class="learn-step-header"><span>3</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test Emissions Tracking</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 3: local proof" data-report-expected="Copilot reports the verified mcs-assistant plugin and PAC CLI, an isolated workspace, a verified source hash, and 4/4 locked local cases passed." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>This step proves the portable business logic before any Copilot Studio work begins. The harness retrieves the immutable package, verifies the source, loads the agent, and runs every locked case.</p>
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="copilot-build-prompt">Copy message</button></div>
@@ -468,8 +494,8 @@
         </div>
       </article>
 
-      <article class="learn-step" id="copilot-step-3">
-        <header class="learn-step-header"><span>3</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 3: Draft deployment" data-report-expected="Draft Emissions Tracking Manual; model Claude Sonnet 4.6; 2 knowledge files; 4 skills; published false." data-report-evidence="">Report an issue</button></header>
+      <article class="learn-step" id="copilot-step-4">
+        <header class="learn-step-header"><span>4</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div><button class="button report-button" type="button" data-report-location="copilot lane — step 4: Draft deployment" data-report-expected="Draft Emissions Tracking Manual; model Claude Sonnet 4.6; 2 knowledge files; 4 skills; published false." data-report-evidence="">Report an issue</button></header>
         <div class="learn-step-body">
           <p>The harness now uses the verified Microsoft Copilot Studio plugin to reuse or create the source-controlled Draft, synchronize the reviewed instructions and assets, validate the PAC project, and leave publication off.</p>
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="copilot-deploy-prompt">Copy message</button></div>
@@ -480,8 +506,8 @@
       </article>
       </div>
 
-      <section class="learn-step" id="easy-step-4">
-        <header class="learn-step-header"><span>4</span><div><p>Verify the real experience</p><h3>Confirm the Draft in Copilot Studio Preview</h3></div></header>
+      <section class="learn-step" id="easy-step-5">
+        <header class="learn-step-header"><span>5</span><div><p>Verify the real experience</p><h3>Confirm the Draft in Copilot Studio Preview</h3></div></header>
         <div class="learn-step-body">
           <p>The harness already runs these checks automatically. Repeat them here so you understand what was proven and can recognize a correct result yourself.</p>
           <div class="preview-intro"><ol><li>Open the validated Draft.</li><li>Select <strong>Preview</strong>.</li><li>Choose <strong>New chat</strong> before each case.</li><li>Paste the exact prompt.</li><li>Compare the answer with the required and forbidden markers.</li></ol><div><a class="button primary" href="https://copilotstudio.preview.microsoft.com/environments/ee67a404-325c-e726-a18a-886fe708ca0b/agents/da67632d-5a52-48d6-a80b-3bb35c4d314a" target="_blank" rel="noopener">Open the Copilot Studio Draft ↗</a></div></div>

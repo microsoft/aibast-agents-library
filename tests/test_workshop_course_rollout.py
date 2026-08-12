@@ -68,7 +68,14 @@ def valid_pages() -> dict[str, str]:
 <a href="../_shared/workshop-settings.html?return=quest.html">Workshop settings</a>
 <a href="field-guide.html">Field guide</a>
 <a href="evidence-report.html">Evidence report</a></header>
-<main><section data-easy-lane="brainstem">Brainstem lane</section>
+<main><section class="learn-step" id="workshop-step-1">
+<h3>Install RAPP Brainstem Beta</h3>
+<a href="../../beta/">Open beta installer</a>
+<a href="../../beta/install.cmd" download>Download Windows install.cmd</a>
+<a href="../../beta/README.md" download>Download installation guide</a>
+{report_button("beta-install")}
+</section>
+<section data-easy-lane="brainstem">Brainstem lane</section>
 <section data-easy-lane="copilot">GitHub Copilot only lane</section>
 {reports}
 <article class="preview-case">

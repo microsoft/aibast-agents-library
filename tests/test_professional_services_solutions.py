@@ -348,7 +348,8 @@ def test_time_entry_easy_mode_is_literal_github_copilot_chat():
     assert "aibast:workshop-engine" in quest
     assert "data-easy-lane-button" not in quest
     assert "Workshop settings" in quest
-    assert quest.count("data-copy-target=") == 16
+    assert quest.count("data-copy-target=") == 17
+    assert "Install RAPP Brainstem Beta" in quest
     assert "Download Brainstem SKILL.md" in quest
     assert "Download Copilot-only SKILL.md" in quest
     assert quest.count('download="SKILL.md"') == 2

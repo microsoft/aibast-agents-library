@@ -462,6 +462,26 @@ def check_quest(
                 f"browserfilm frames {len(manual_frames)}"
             )
     metrics["quest_hard_steps"] = len(hard_steps)
+    install_steps = [
+        tag
+        for tag in parser.tags
+        if tag.attrs.get("id") == "workshop-step-1"
+    ]
+    if len(install_steps) != 1:
+        failures.add(
+            f"{label}: expected exactly one workshop-step-1 beta install tutorial"
+        )
+    elif "Install RAPP Brainstem Beta" not in install_steps[0].text:
+        failures.add(f"{label}: workshop-step-1 does not install the beta client")
+    for required_href in (
+        "../../beta/",
+        "../../beta/install.cmd",
+        "../../beta/README.md",
+    ):
+        if not has_href(parser, required_href):
+            failures.add(
+                f"{label}: beta install tutorial missing link {required_href}"
+            )
     if not has_href(parser, "manual-tutorial.html"):
         failures.add(f"{label}: missing standalone manual-tutorial.html link")
     if not has_href(parser, "field-guide.html"):
@@ -496,11 +516,11 @@ def check_quest(
     if locked_cases is None:
         failures.add(f"{label}: report-button total cannot be measured without locked cases")
     else:
-        expected_reports = 7 + len(locked_cases) + len(manual_frames)
+        expected_reports = 8 + len(locked_cases) + len(manual_frames)
         if len(report_buttons) != expected_reports:
             failures.add(
                 f"{label}: report buttons {len(report_buttons)} != "
-                f"7 + {len(locked_cases)} locked cases + "
+                f"8 + {len(locked_cases)} locked cases + "
                 f"{len(manual_frames)} native Manual steps ({expected_reports})"
             )
         if len(preview_prompts) != len(locked_cases):

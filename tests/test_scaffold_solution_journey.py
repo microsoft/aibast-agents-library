@@ -319,7 +319,11 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert 'href="FIELD-GUIDE.md"' not in quest
     assert 'href="evidence-report.html"' in quest
     assert 'href="VISUAL-EVIDENCE-AUDIT.md"' not in quest
-    assert quest.count("data-copy-target=") == 7
+    assert quest.count("data-copy-target=") == 8
+    assert "Install RAPP Brainstem Beta" in quest
+    assert "Open beta installer" in quest
+    assert "Download Windows install.cmd" in quest
+    assert "beta/install.sh | bash" in quest
     assert "Download Brainstem SKILL.md" in quest
     assert "Download Copilot-only SKILL.md" in quest
     assert quest.count('download="SKILL.md"') == 2
@@ -333,7 +337,7 @@ def test_scaffolds_complete_evidence_grounded_journey(tmp_path):
     assert "<strong>Workshop mission:</strong>" in quest
     assert "non-technical sales professionals into AI superheroes" in quest
     assert "Before you begin" in quest
-    assert quest.count('class="learn-step"') == 8
+    assert quest.count('class="learn-step"') == 9
     assert "Prove the solution locally" in quest
     assert "Create the reviewed Draft" in quest
     assert "Confirm the Draft in Copilot Studio Preview" in quest

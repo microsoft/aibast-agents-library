@@ -3088,8 +3088,8 @@ def render_lane_learning_steps(
         ctx.deployment.get("copilot_studio", {}).get("manual_skill_count", "reviewed"),
     )
     return f"""
-      <article class="learn-step" id="{prefix}-step-1">
-        <header class="learn-step-header"><span>1</span><div><p>Prepare your Copilot</p><h3>{html.escape(skill_title)}</h3></div>{report_button(ctx, location=f"{lane} lane — step 1: attach skill", expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat.")}</header>
+      <article class="learn-step" id="{prefix}-step-2">
+        <header class="learn-step-header"><span>2</span><div><p>Prepare your Copilot</p><h3>{html.escape(skill_title)}</h3></div>{report_button(ctx, location=f"{lane} lane — step 2: attach skill", expected="The lane-specific SKILL.md is attached in a fresh GitHub Copilot Agent-mode chat.")}</header>
         <div class="learn-step-body">
           <p>{html.escape(skill_explanation)}</p>
           <div class="action-panel"><strong>Do this</strong><ol><li>Download the lane-specific <code>SKILL.md</code>.</li><li>Open GitHub Copilot Chat in VS Code.</li><li>Select <strong>Agent mode</strong>.</li><li>Drag the downloaded file into the chat.</li></ol>{skill_download}</div>
@@ -3098,8 +3098,8 @@ def render_lane_learning_steps(
         </div>
       </article>
 
-      <article class="learn-step" id="{prefix}-step-2">
-        <header class="learn-step-header"><span>2</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test {html.escape(easy_mode_solution_name(ctx))}</h3></div>{report_button(ctx, location=f"{lane} lane — step 2: local proof", expected=local_expected)}</header>
+      <article class="learn-step" id="{prefix}-step-3">
+        <header class="learn-step-header"><span>3</span><div><p>Prove the solution locally</p><h3>Ask Easy Mode to build and test {html.escape(easy_mode_solution_name(ctx))}</h3></div>{report_button(ctx, location=f"{lane} lane — step 3: local proof", expected=local_expected)}</header>
         <div class="learn-step-body">
           <p>This step proves the portable business logic before any Copilot Studio work begins. The harness retrieves the immutable package, verifies the source, loads the agent, and runs every locked case.</p>
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="{prefix}-build-prompt">Copy message</button></div>
@@ -3109,8 +3109,8 @@ def render_lane_learning_steps(
         </div>
       </article>
 
-      <article class="learn-step" id="{prefix}-step-3">
-        <header class="learn-step-header"><span>3</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div>{report_button(ctx, location=f"{lane} lane — step 3: Draft deployment", expected=f"Draft {display_name}; model {model}; {knowledge_count} knowledge files; {skill_count} skills; published false.")}</header>
+      <article class="learn-step" id="{prefix}-step-4">
+        <header class="learn-step-header"><span>4</span><div><p>Create the reviewed Draft</p><h3>Deploy the already-tested solution to Copilot Studio</h3></div>{report_button(ctx, location=f"{lane} lane — step 4: Draft deployment", expected=f"Draft {display_name}; model {model}; {knowledge_count} knowledge files; {skill_count} skills; published false.")}</header>
         <div class="learn-step-body">
           <p>The harness now uses the verified Microsoft Copilot Studio plugin to reuse or create the source-controlled Draft, synchronize the reviewed instructions and assets, validate the PAC project, and leave publication off.</p>
           <div class="prompt-heading"><strong>Send this message</strong><button class="button primary" type="button" data-copy-target="{prefix}-deploy-prompt">Copy message</button></div>
@@ -3119,6 +3119,39 @@ def render_lane_learning_steps(
           <label class="step-complete"><input type="checkbox" data-checkpoint="{prefix}-draft" data-achievements-group="draft-builder" data-achievements-path="{prefix}"><span>I saw the Draft identity and unpublished state.</span></label>
         </div>
       </article>"""
+
+
+def render_beta_install_step(ctx: JourneyContext) -> str:
+    install_command = (
+        "curl -fsSL "
+        "https://raw.githubusercontent.com/microsoft/"
+        "aibast-agents-library/main/beta/install.sh | bash"
+    )
+    return f"""
+    <section class="learn-step" id="workshop-step-1">
+      <header class="learn-step-header"><span>1</span><div><p>Workshop setup</p><h3>Install RAPP Brainstem Beta</h3></div>{report_button(ctx, location="Workshop setup — step 1: install RAPP Brainstem Beta", expected="RAPP Brainstem Beta opens with the Brainstem connected and GitHub Copilot Brain Surgeon visible.")}</header>
+      <div class="learn-step-body">
+        <p>Start every workshop in the beta client. It provides the visible Brainstem, GitHub Copilot Brain Surgeon, live agent Explorer, recordings, and the one-click Copilot Studio path used by the guided exercises.</p>
+        <div class="action-panel">
+          <strong>Install and launch</strong>
+          <ol>
+            <li>Open the dedicated beta installer and choose your operating system.</li>
+            <li>On macOS or Linux, copy and run the command below. On Windows 11, download <code>install.cmd</code> and double-click it.</li>
+            <li>Launch <strong>RAPP Brainstem Beta</strong> from Applications, Launchpad, the app menu, or the Windows Desktop/Start Menu shortcut.</li>
+            <li>Wait for <strong>connected</strong>, then complete GitHub device login if the app asks.</li>
+          </ol>
+          <div class="prompt-heading"><strong>macOS or Linux</strong><button class="button primary" type="button" data-copy-target="beta-install-command">Copy install command</button></div>
+          <pre class="prompt-block" id="beta-install-command">{html.escape(install_command)}</pre>
+          <div class="detail-actions">
+            <a class="button primary" href="../../beta/">Open beta installer</a>
+            <a class="button" href="../../beta/install.cmd" download>Download Windows install.cmd</a>
+            <a class="button" href="../../beta/README.md" download>Download installation guide</a>
+          </div>
+        </div>
+        <div class="expected-panel"><strong>Expected result</strong><p>The RAPP Brainstem Beta window is open, the center Brainstem shows <strong>connected</strong>, the live agents button is available, and the GitHub Copilot Brain Surgeon panel can be opened.</p></div>
+        <label class="step-complete"><input type="checkbox" data-checkpoint="beta-installed" data-achievements-group="onboarding" data-achievements-path="shared"><span>I installed and opened RAPP Brainstem Beta.</span></label>
+      </div>
+    </section>"""
 
 
 def render_preview_case_cards(ctx: JourneyContext) -> str:
@@ -3488,6 +3521,8 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
     </section>
     <div class="achievements-toast" id="achievements-badge-toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
+    {render_beta_install_step(ctx)}
+
     <section class="path" data-path="easy" id="mode-panel-easy" role="tabpanel" aria-labelledby="mode-tab-easy">
       <div class="module-summary">
         <article>
@@ -3524,8 +3559,8 @@ def render_quest(ctx: JourneyContext, resources: list[Resource]) -> str:
         {render_lane_learning_steps(ctx, "copilot", copilot_skill_download)}
       </div>
 
-      <section class="learn-step" id="easy-step-4">
-        <header class="learn-step-header"><span>4</span><div><p>Verify the real experience</p><h3>Confirm the Draft in Copilot Studio Preview</h3></div></header>
+      <section class="learn-step" id="easy-step-5">
+        <header class="learn-step-header"><span>5</span><div><p>Verify the real experience</p><h3>Confirm the Draft in Copilot Studio Preview</h3></div></header>
         <div class="learn-step-body">
           <p>The harness already runs these checks automatically. Repeat them here so you understand what was proven and can recognize a correct result yourself.</p>
           <div class="preview-intro"><ol><li>Open the validated Draft.</li><li>Select <strong>Preview</strong>.</li><li>Choose <strong>New chat</strong> before each case.</li><li>Paste the exact prompt.</li><li>Compare the answer with the required and forbidden markers.</li></ol><div>{studio_button}</div></div>
