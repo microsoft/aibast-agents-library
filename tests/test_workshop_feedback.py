@@ -433,4 +433,4 @@ def test_generated_workshops_expose_contextual_beta_reports():
 
     manual_reports = manual.count('data-report-location=')
     assert manual_reports == 20
-    assert quest.count('data-report-location=') == 12 + manual_reports
+    assert quest.count('data-report-location=') == 13 + manual_reports
