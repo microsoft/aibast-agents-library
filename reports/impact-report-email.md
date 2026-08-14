@@ -1,8 +1,8 @@
-**Subject:** AIBAST weekly and monthly impact report - August 13, 2026
+**Subject:** AIBAST weekly and monthly impact report - August 14, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-08-13T05:55:47Z`
+**Snapshot:** `2026-08-14T05:53:56Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
