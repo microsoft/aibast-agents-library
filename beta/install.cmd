@@ -120,10 +120,9 @@ if exist "%BETA_SOURCE%\.git" (
   if errorlevel 1 goto :fail
 )
 if defined REPO_COMMIT (
-  set "ACTUAL_COMMIT="
-  for /f "delims=" %%H in ('"%GIT_EXE%" -C "%BETA_SOURCE%" rev-parse HEAD') do set "ACTUAL_COMMIT=%%H"
-  if /i not "!ACTUAL_COMMIT!"=="%REPO_COMMIT%" (
-    echo [X] Beta checkout resolved to !ACTUAL_COMMIT! instead of %REPO_COMMIT%.
+  "%GIT_EXE%" -C "%BETA_SOURCE%" reset --hard "%REPO_COMMIT%"
+  if errorlevel 1 (
+    echo [X] Beta checkout could not be pinned to %REPO_COMMIT%.
     goto :fail
   )
 )

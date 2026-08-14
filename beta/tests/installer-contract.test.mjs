@@ -69,7 +69,7 @@ test("beta installers use AIBAST as the canonical source", () => {
 
 test("Frontier is the primary customer-facing launcher identity", () => {
   assert.equal(packageJson.name, "@aibast/rapp-brainstem-frontier");
-  assert.equal(packageJson.version, "0.1.0-beta.4");
+  assert.equal(packageJson.version, "0.1.0-beta.5");
   for (const installer of [unix, windows]) {
     assert.match(installer, /brainstem-frontier/);
     assert.match(installer, /Frontier and standard Brainstem share/);
@@ -246,7 +246,7 @@ test("beta embeds the full GitHub Copilot Brain Surgeon loop", () => {
   assert.match(windows, /brainstem-walkthrough\.cmd/);
   assert.match(
     main,
-    /function emitState\(\)[\s\S]*?\n}\n\nfunction emitSurgeonEvent/,
+    /function emitState\(\)[\s\S]*?\r?\n}\r?\n\r?\nfunction emitSurgeonEvent/,
   );
 });
 

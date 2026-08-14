@@ -16,13 +16,14 @@ export function resolveBrainstemConfig({
   platform = process.platform,
   home = homedir(),
 } = {}) {
-  const brainstemHome = env.BRAINSTEM_HOME || path.join(home, ".brainstem");
+  const pathApi = platform === "win32" ? path.win32 : path.posix;
+  const brainstemHome = env.BRAINSTEM_HOME || pathApi.join(home, ".brainstem");
   const brainstemDir = env.BRAINSTEM_BETA_SOURCE_DIR
-    || path.join(brainstemHome, "src", "rapp_brainstem");
+    || pathApi.join(brainstemHome, "src", "rapp_brainstem");
   const python = env.BRAINSTEM_BETA_PYTHON
     || (platform === "win32"
-      ? path.join(brainstemHome, "venv", "Scripts", "python.exe")
-      : path.join(brainstemHome, "venv", "bin", "python"));
+      ? pathApi.join(brainstemHome, "venv", "Scripts", "python.exe")
+      : pathApi.join(brainstemHome, "venv", "bin", "python"));
   const port = Number.parseInt(
     env.BRAINSTEM_BETA_PORT || env.PORT || String(DEFAULT_PORT),
     10,
@@ -38,7 +39,7 @@ export function resolveBrainstemConfig({
     python,
     port,
     url: `http://127.0.0.1:${port}`,
-    logFile: path.join(brainstemHome, "logs", "beta-brainstem.log"),
+    logFile: pathApi.join(brainstemHome, "logs", "beta-brainstem.log"),
   };
 }
 

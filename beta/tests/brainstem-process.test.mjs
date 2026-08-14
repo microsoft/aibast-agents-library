@@ -17,13 +17,26 @@ test("beta launcher resolves the shared global Brainstem", () => {
   assert.equal(config.brainstemHome, "/tmp/example-home/.brainstem");
   assert.equal(
     config.brainstemDir,
-    path.join("/tmp/example-home/.brainstem", "src", "rapp_brainstem"),
+    path.posix.join("/tmp/example-home/.brainstem", "src", "rapp_brainstem"),
   );
   assert.equal(
     config.python,
-    path.join("/tmp/example-home/.brainstem", "venv", "bin", "python"),
+    path.posix.join("/tmp/example-home/.brainstem", "venv", "bin", "python"),
   );
   assert.equal(config.port, 7071);
+});
+
+test("beta launcher resolves Windows Brainstem paths", () => {
+  const config = resolveBrainstemConfig({
+    env: {},
+    platform: "win32",
+    home: "C:\\Users\\Example",
+  });
+  assert.equal(config.brainstemHome, "C:\\Users\\Example\\.brainstem");
+  assert.equal(
+    config.python,
+    "C:\\Users\\Example\\.brainstem\\venv\\Scripts\\python.exe",
+  );
 });
 
 test("beta launcher accepts authenticated and unauthenticated health", () => {
