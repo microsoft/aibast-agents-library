@@ -366,6 +366,19 @@ def validate_manifest(py_path: Path, manifest: dict) -> list:
     return errors
 
 
+def resolve_added_date(
+    py_path: Path,
+    name: str,
+    added_dates: dict,
+    previous: dict,
+):
+    """Preserve published dates when a shallow checkout has incomplete history."""
+    return (
+        previous.get(name, {}).get("_added_at")
+        or added_dates.get(py_path.as_posix())
+    )
+
+
 def build_registry():
     """Scan all agent .py files and build registry.json."""
     agents = []
@@ -426,9 +439,7 @@ def build_registry():
         manifest["_synthetic_data"] = bool(
             "synthetic" in content.lower() or "demo data" in content.lower()
         )
-        # git history first, last good registry second — a shallow CI checkout
-        # must not blank the date the catalog already published.
-        added = added_dates.get(py_path.as_posix()) or previous.get(name, {}).get("_added_at")
+        added = resolve_added_date(py_path, name, added_dates, previous)
         if added:
             manifest["_added_at"] = added
 
