@@ -2,7 +2,7 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-08-15T05:35:08Z`
+**Snapshot:** `2026-08-15T22:26:35Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
@@ -25,7 +25,7 @@
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| GitHub stars | 4 | Baseline pending | Baseline pending |
+| GitHub stars | 5 | Baseline pending | Baseline pending |
 | GitHub forks | 2 | Baseline pending | Baseline pending |
 | GitHub watchers | 0 | Baseline pending | Baseline pending |
 | Open GitHub issues | 9 | Baseline pending | Baseline pending |
