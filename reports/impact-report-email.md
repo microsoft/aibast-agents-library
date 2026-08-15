@@ -1,8 +1,8 @@
-**Subject:** AIBAST weekly and monthly impact report - August 14, 2026
+**Subject:** AIBAST weekly and monthly impact report - August 15, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-08-14T05:53:56Z`
+**Snapshot:** `2026-08-15T05:35:08Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
@@ -28,8 +28,8 @@
 | GitHub stars | 4 | Baseline pending | Baseline pending |
 | GitHub forks | 2 | Baseline pending | Baseline pending |
 | GitHub watchers | 0 | Baseline pending | Baseline pending |
-| Open GitHub issues | 7 | Baseline pending | Baseline pending |
-| Agent upvotes | 2 | Baseline pending | Baseline pending |
+| Open GitHub issues | 9 | Baseline pending | Baseline pending |
+| Agent upvotes | 3 | Baseline pending | Baseline pending |
 | Signed-in agent acquisitions | 0 | Baseline pending | Baseline pending |
 | Workshop usage events | 8 | Baseline pending | Baseline pending |
 | Workshop views (14-day top paths) | 8 | Baseline pending | Baseline pending |
