@@ -1001,17 +1001,9 @@ function Create-Env {
 }
 
 function Launch-Brainstem {
-    # Refresh from this installer's repo before launching (no-op if already current).
-    # Skip when a version is pinned — pulling main would move off the pinned tag.
-    if ((-not $PIN_VERSION) -and (Test-Path "$BRAINSTEM_HOME\src\.git")) {
-        Push-Location "$BRAINSTEM_HOME\src"
-        $prevEAP = $ErrorActionPreference
-        $ErrorActionPreference = 'Continue'
-        git remote set-url origin $REPO_URL 2>&1 | Out-Null
-        git pull --quiet origin $REPO_REF 2>&1 | Out-Null
-        $ErrorActionPreference = $prevEAP
-        Pop-Location
-    }
+    # Main/Install-Brainstem already handles source updates. Do not pull again here:
+    # legacy full checkouts can download unrelated library changes indefinitely even
+    # after the version check established that the Brainstem runtime is current.
 
     # Dependencies BEFORE auth: if they cannot be installed, fail now — not after
     # walking the user through a GitHub device-code authorization they can't use.

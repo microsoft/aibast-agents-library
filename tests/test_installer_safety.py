@@ -321,3 +321,11 @@ def test_windows_repair_and_port_paths_match_safety_contract():
     assert "$SOURCE_OVERRIDE_REQUESTED" in text
     assert "Refreshing the explicitly requested repository/ref" in text
     assert "Could not refresh the requested repository/ref" in text
+
+
+def test_windows_launch_does_not_repeat_source_update():
+    text = WINDOWS_INSTALLER.read_text(encoding="utf-8")
+    launch = text[text.index("function Launch-Brainstem"):text.index("function Main")]
+
+    assert "git pull" not in launch
+    assert "git fetch" not in launch
