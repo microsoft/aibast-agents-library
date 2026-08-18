@@ -64,6 +64,17 @@ briefly, do the task through the real interface, and turn force mode off when
 you hand control back. Never light it unless the user invoked it; it exists so
 the person always knows an AI, not a hand, is moving the interface.
 
+RAPPLICATION TWINS (hand off specialized long-running jobs — don't overshell
+yourself): for a long-running SPECIALIZED job (deploy this proven agent to
+Copilot Studio, push it to Scout, wrap it for Cowork), do NOT run it in this
+chat. Call list_rapplications to see the RAPP Store, then hatch_rapplication to
+hatch the right one as its OWN twin — a separate Brainstem worker on its own
+port that loops on the job autonomously and shows as its own tile in the herd,
+with its own steerable chat. You build on the Brainstem; twins deploy. Twins are
+driven only over /chat (never a new route); they are Draft-only for Copilot
+Studio and surface exactly one user-owned auth step (PAC device login) when
+needed. Hand off and let it run.
+
 SHOW MODE CLICK-THROUGH: show_mode_click_through walks the built-in Show Mode
 preview (record or import a task, approve the reconstructed steps, hotload the
 generated agent, test it in the center chat, confirm, promote) inside the visible
@@ -159,6 +170,7 @@ export class BrainSurgeon {
     copilotStudioAuth = null,
     routeManager = null,
     uiCommand,
+    twins = null,
     onEvent = () => {},
   } = {}) {
     this.runtime = runtime;
@@ -167,6 +179,7 @@ export class BrainSurgeon {
     this.copilotStudioAuth = copilotStudioAuth;
     this.routeManager = routeManager;
     this.uiCommand = uiCommand;
+    this.twins = twins;
     this.onEvent = onEvent;
     this.session = null;
     this.sessionUnsubscribe = null;
@@ -557,6 +570,48 @@ export class BrainSurgeon {
           },
         },
         handler: (args) => this.showModeClickThrough(args),
+      },
+      {
+        name: "list_rapplications",
+        description: "List RAPPlications available in the RAPP Store (specialized twins you can hatch to offload deploy/other long-running jobs). Returns id, name, summary, category, license, gated.",
+        defer: "never",
+        skipPermission: true,
+        parameters: { type: "object", properties: {} },
+        handler: async () => {
+          if (!this.twins) throw new Error("RAPPlication twins are unavailable.");
+          const list = await this.twins.list_store();
+          return JSON.stringify(
+            list.map((e) => ({
+              id: e.id, name: e.name, summary: e.summary, category: e.category,
+              license: e.license, gated: e.gated,
+            })),
+            null,
+            2,
+          );
+        },
+      },
+      {
+        name: "hatch_rapplication",
+        description: "Hatch a RAPPlication from the RAPP Store as its own twin — a separate Brainstem worker on its own port that runs the specialized job autonomously in the herd. Optionally pass an instruction to start its loop. Use for specialized long-running work (e.g. Copilot Studio auto-deploy) instead of running it in this chat.",
+        defer: "never",
+        skipPermission: true,
+        parameters: {
+          type: "object",
+          properties: {
+            store_id: { type: "string", description: "RAPP Store rapplication id (from list_rapplications)." },
+            instruction: { type: "string", description: "Optional first instruction to start the twin's autonomous loop." },
+          },
+          required: ["store_id"],
+        },
+        handler: async ({ store_id: storeId, instruction = null }) => {
+          if (!this.twins) throw new Error("RAPPlication twins are unavailable.");
+          const twin = await this.twins.hatch(storeId, instruction);
+          return JSON.stringify({
+            hatched: twin.id, name: twin.name, port: twin.port, url: twin.url,
+            rappid: twin.rappid, status: twin.status, license: twin.license,
+            note: "Running as its own twin in the herd; steer it in its tile chat if needed.",
+          }, null, 2);
+        },
       },
       {
         name: "capture_visible_brainstem",

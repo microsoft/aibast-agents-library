@@ -333,8 +333,12 @@
     }
     #surgeon-herd .hbar .t { font-weight: 650; font-size: 14px; }
     #surgeon-herd .hbar .sub { font-size: 11px; color: #8b8f98; }
+    #surgeon-herd .hbar .hstore {
+      margin-left: auto; background: #241d3d; border: 1px solid #3a2f5a; color: #cdbcff;
+      border-radius: 8px; padding: 6px 10px; font-size: 12.5px; max-width: 260px; cursor: pointer;
+    }
     #surgeon-herd .hbar .hnew {
-      margin-left: auto; background: #1a1c21; border: 1px solid #2a2d33;
+      background: #1a1c21; border: 1px solid #2a2d33;
       color: #d7dae0; border-radius: 8px; padding: 6px 12px; font-size: 12.5px;
     }
     #surgeon-herd .hbar .hnew:hover { border-color: #3d7cf0; }
@@ -380,6 +384,23 @@
     }
     .herd-tile .hcomp button:disabled { opacity: .5; }
     #surgeon .herd-header-btn.on { border-color: #3d7cf0; color: #e7e8ea; }
+    /* RAPPlication twin tiles — a real worker's own steerable UI + loop log. */
+    .herd-tile.twin { border-color: #3a2f5a; }
+    .herd-tile.twin .hh { background: #1b1730; border-bottom-color: #2f2650; }
+    .herd-tile.twin .twin-badge {
+      display: inline-flex; width: 20px; height: 20px; align-items: center; justify-content: center;
+      border-radius: 6px; background: #241d3d; border: 1px solid #3a2f5a; color: #b79cff; font-size: 12px; flex: none;
+    }
+    .herd-tile.twin .twin-meta {
+      padding: 5px 11px; font: 10.5px ui-monospace, Menlo, monospace; color: #8b8f98;
+      border-bottom: 1px solid #26282d; background: #141221; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .herd-tile.twin .twin-frame { flex: 1; width: 100%; border: 0; background: #0d1117; }
+    .herd-tile.twin .twin-loop {
+      max-height: 74px; overflow: auto; padding: 6px 9px; border-top: 1px solid #26282d; background: #100e1c;
+      font: 10.5px/1.5 ui-monospace, Menlo, monospace; color: #9a8fce; scrollbar-width: thin;
+    }
+    .herd-tile.twin .twin-loop div { white-space: pre-wrap; word-break: break-word; }
     .surgeon-empty {
       margin: auto 0; padding: 8px 6px; color: #9a9ea7;
       text-align: center; font-size: 13px; line-height: 1.7;

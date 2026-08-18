@@ -19,6 +19,8 @@ import { BrainSurgeon } from "./brain-surgeon.mjs";
 import { CopilotStudioAuthManager } from "./copilot-studio-auth.mjs";
 import { CopilotRuntime } from "./copilot-runtime.mjs";
 import { BetaRouteManager } from "./route-manager.mjs";
+import { RappStoreClient } from "./rapp-store.mjs";
+import { TwinManager } from "./twin-manager.mjs";
 import {
   allowsUiDriverMediaPermission,
   startUiDriverServer,
@@ -400,6 +402,22 @@ function emitSurgeonEvent(event) {
   }
 }
 
+// RAPPlication twins — specialized rapplications hatched from the RAPP Store as
+// concurrent long-lived workers on their own loopback ports, beside the
+// Brainstem chats in the herd. Kernel unchanged; driven only over /chat.
+const rappStore = new RappStoreClient();
+const twinManager = new TwinManager({
+  brainstemConfig: config,
+  betaHome,
+  routeManager,
+  storeClient: rappStore,
+  onEvent: (event) => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      mainWindow.webContents.send("beta:twin-event", structuredClone(event));
+    }
+  },
+});
+
 // Actions that actually DRIVE the one visible Brainstem (move the cursor, type,
 // hold the center chat, record, run the click-through). With several Brain
 // Surgeon chats live at once they share this single window, so these are
@@ -467,6 +485,11 @@ function ensureBrainSurgeon(sessionId = 1) {
       copilotStudioAuth,
       routeManager,
       uiCommand: executeUiCommand,
+      twins: {
+        hatch: (storeId, instruction) => twinManager.hatch(storeId, { instruction: instruction || null }),
+        list: () => twinManager.list(),
+        list_store: () => rappStore.list(),
+      },
       onEvent: (event) => emitSurgeonEvent({ ...event, sessionId: id }),
     });
     brainSurgeons.set(id, surgeon);
@@ -893,6 +916,30 @@ function registerIpc() {
     }
     return { ok: true };
   });
+  ipcMain.handle("beta:store-list", async (event) => {
+    assertTrustedIpc(event);
+    return rappStore.list();
+  });
+  ipcMain.handle("beta:twin-list", async (event) => {
+    assertTrustedIpc(event);
+    return twinManager.list();
+  });
+  ipcMain.handle("beta:twin-hatch", async (event, storeId, instruction) => {
+    assertTrustedIpc(event);
+    return twinManager.hatch(storeId, { instruction: instruction || null });
+  });
+  ipcMain.handle("beta:twin-chat", async (event, id, prompt) => {
+    assertTrustedIpc(event);
+    return twinManager.chat(id, prompt);
+  });
+  ipcMain.handle("beta:twin-run", async (event, id, instruction) => {
+    assertTrustedIpc(event);
+    return twinManager.run(id, instruction);
+  });
+  ipcMain.handle("beta:twin-close", async (event, id) => {
+    assertTrustedIpc(event);
+    return twinManager.close(id);
+  });
 }
 
 async function startServices() {
@@ -1009,6 +1056,7 @@ if (!hasLock) {
     shutdownStarted = true;
     Promise.allSettled([
       ...Array.from(brainSurgeons.values(), (surgeon) => surgeon.stop()),
+      twinManager.stopAll(),
       copilot.stop(),
       routeManager.stop(),
       uiDriver?.stop(),

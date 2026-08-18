@@ -64,6 +64,8 @@ test("Brain Surgeon keeps the full Copilot loop and RAPP delegation tools", asyn
       "drive_visible_brainstem",
       "set_ai_force_mode",
       "show_mode_click_through",
+      "list_rapplications",
+      "hatch_rapplication",
       "capture_visible_brainstem",
       "check_beta_updates",
       "clear_brainstem_chat",

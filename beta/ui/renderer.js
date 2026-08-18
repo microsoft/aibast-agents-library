@@ -11,6 +11,8 @@ const surgeonTabs = document.getElementById("surgeon-tabs");
 const surgeonHerdBtn = document.getElementById("surgeon-herd-btn");
 let surgeonHerdEl = null;
 let surgeonGridEl = null;
+// RAPPlication twins hatched into the herd (id -> {descriptor, tileEl}).
+const twins = new Map();
 const surgeonHistoryKey = "rapp-brainstem-beta-surgeon-sessions-v1";
 const surgeonOpenKey = "rapp-brainstem-beta-surgeon-open-v1";
 const explorer = document.getElementById("explorer");
@@ -704,6 +706,7 @@ function ensureSurgeonHerdDom() {
       </span>
       <span class="t">GitHub Copilot · Herd</span>
       <span class="sub">several agents, one Brainstem</span>
+      <select class="hstore" title="Hatch a RAPPlication from the RAPP Store"><option value="">◈ Hatch a RAPPlication…</option></select>
       <button class="hnew" type="button">+ New chat</button>
       <button class="hclose" type="button">Dock ▸</button>
     </div>
@@ -714,6 +717,30 @@ function ensureSurgeonHerdDom() {
   surgeonGridEl = herd.querySelector(".herd-grid");
   herd.querySelector(".hnew").addEventListener("click", () => newSurgeonSession());
   herd.querySelector(".hclose").addEventListener("click", exitSurgeonHerd);
+  const store = herd.querySelector(".hstore");
+  store.addEventListener("change", async () => {
+    const id = store.value;
+    store.value = "";
+    if (!id) return;
+    try { await window.brainstemBeta.twinHatch(id); }
+    catch (cause) { store.title = `Hatch failed: ${String(cause?.message || cause)}`; }
+  });
+  void populateStorePicker(store);
+}
+
+async function populateStorePicker(select) {
+  try {
+    const list = await window.brainstemBeta.storeList();
+    for (const entry of list) {
+      const option = document.createElement("option");
+      option.value = entry.id;
+      option.textContent = `◈ ${entry.name}${entry.gated ? " (gated)" : ""} — ${entry.category || entry.license || ""}`;
+      option.disabled = entry.gated;
+      select.appendChild(option);
+    }
+  } catch {
+    // store unavailable — the picker stays empty
+  }
 }
 
 function surgeonTileFor(session) {
@@ -782,6 +809,7 @@ function enterSurgeonHerd() {
     s.tileEl = null;
     surgeonGridEl.appendChild(surgeonTileFor(s));
   }
+  syncTwinTiles();
   surgeonHerdEl.classList.add("open");
   document.body.classList.add("surgeon-herd-open");
   surgeonHerd = true;
@@ -803,6 +831,104 @@ function exitSurgeonHerd() {
 function toggleSurgeonHerd() {
   if (surgeonHerd) exitSurgeonHerd();
   else enterSurgeonHerd();
+}
+
+// ── RAPPlication twin tiles in the herd ─────────────────────────────────
+// A twin is a real Brainstem worker on its own port; its tile renders that
+// worker's own steerable chat (iframe of its loopback UI) plus a live loop log.
+function twinTileFor(twin) {
+  const tile = document.createElement("div");
+  tile.className = "herd-tile twin";
+  tile.dataset.twinId = twin.id;
+  tile.innerHTML = `
+    <div class="hh">
+      <span class="twin-badge" title="RAPPlication twin — its own port &amp; loop">◈</span>
+      <span class="tt"></span>
+      <span class="hst">ready</span>
+      <span class="cl" title="Close twin">×</span>
+    </div>
+    <div class="twin-meta"></div>
+    <iframe class="twin-frame" title="twin" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+    <div class="twin-loop" aria-live="polite"></div>
+  `;
+  tile.querySelector(".cl").addEventListener("click", () => {
+    void window.brainstemBeta.twinClose(twin.id);
+  });
+  updateTwinTile(tile, twin);
+  return tile;
+}
+
+function updateTwinTile(tile, twin) {
+  tile.querySelector(".tt").textContent = twin.name || twin.storeId || twin.id;
+  const status = tile.querySelector(".hst");
+  status.textContent = twin.status || "";
+  status.className = `hst ${twin.status === "working" ? "working" : twin.status === "ready" ? "done" : ""}`;
+  const meta = tile.querySelector(".twin-meta");
+  meta.textContent = `:${twin.port} · ${twin.license || "unlicensed"}${twin.rappid ? " · " + twin.rappid.slice(0, 22) + "…" : ""}`;
+  const frame = tile.querySelector(".twin-frame");
+  const src = twin.url ? `${twin.url}/?beta=1` : "";
+  if (src && frame.dataset.src !== src) { frame.dataset.src = src; frame.src = src; }
+  const loop = tile.querySelector(".twin-loop");
+  loop.replaceChildren();
+  for (const entry of (twin.loopLog || []).slice(-6)) {
+    const line = document.createElement("div");
+    line.textContent = entry.line || entry;
+    loop.appendChild(line);
+  }
+}
+
+function syncTwinTiles() {
+  if (!surgeonGridEl) return;
+  for (const twin of twins.values()) {
+    if (!twin.tileEl || twin.tileEl.parentNode !== surgeonGridEl) {
+      twin.tileEl = twinTileFor(twin.descriptor);
+      surgeonGridEl.appendChild(twin.tileEl);
+    } else {
+      updateTwinTile(twin.tileEl, twin.descriptor);
+    }
+  }
+}
+
+function upsertTwin(descriptor) {
+  const existing = twins.get(descriptor.id);
+  if (existing) {
+    existing.descriptor = { ...existing.descriptor, ...descriptor };
+    if (existing.tileEl) updateTwinTile(existing.tileEl, existing.descriptor);
+  } else {
+    twins.set(descriptor.id, { descriptor, tileEl: null });
+  }
+}
+
+function handleTwinEvent(event) {
+  if (!event) return;
+  if (event.type === "twin-hatched") {
+    upsertTwin(event.twin);
+    if (!surgeonHerd) enterSurgeonHerd();   // twins live in the herd — show it
+    else syncTwinTiles();
+  } else if (event.type === "twin-status") {
+    upsertTwin(event.twin || { id: event.id, status: event.status });
+  } else if (event.type === "twin-log") {
+    const twin = twins.get(event.id);
+    if (twin) {
+      const log = (twin.descriptor.loopLog || []).concat([{ line: event.line }]).slice(-40);
+      twin.descriptor = { ...twin.descriptor, loopLog: log, status: event.status || twin.descriptor.status };
+      if (twin.tileEl) updateTwinTile(twin.tileEl, twin.descriptor);
+    }
+  } else if (event.type === "twin-closed") {
+    const twin = twins.get(event.id);
+    twin?.tileEl?.remove();
+    twins.delete(event.id);
+  }
+}
+
+async function refreshTwins() {
+  try {
+    const list = await window.brainstemBeta.twinList();
+    for (const twin of list) upsertTwin(twin);
+    if (surgeonHerd) syncTwinTiles();
+  } catch {
+    // twins unavailable — ignore
+  }
 }
 
 // ── running a turn (per session, parallel across sessions) ──
@@ -1030,6 +1156,8 @@ setSurgeonOpen(localStorage.getItem(surgeonOpenKey) !== "closed");
 setExplorerOpen(localStorage.getItem(explorerOpenKey) === "open");
 setInterval(() => void refreshAgentExplorer(), 2000);
 window.brainstemBeta.onSurgeonEvent(handleSurgeonEvent);
+window.brainstemBeta.onTwinEvent(handleTwinEvent);
+void refreshTwins();
 window.brainstemBeta.onOpenUpdate(() => {
   openBetaMenuOnNextSync = true;
   syncBetaUpdate(latestState?.update, true);
