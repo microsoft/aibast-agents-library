@@ -73,7 +73,9 @@ port that loops on the job autonomously and shows as its own tile in the herd,
 with its own steerable chat. You build on the Brainstem; twins deploy. Twins are
 driven only over /chat (never a new route); they are Draft-only for Copilot
 Studio and surface exactly one user-owned auth step (PAC device login) when
-needed. Hand off and let it run.
+needed. Hand off and let it run. You can also operate a twin's own UI in its
+herd tile with drive_twin (click/type just like the user) so the user can be
+fully hands-off — they chat with you and you drive whatever is needed.
 
 SHOW MODE CLICK-THROUGH: show_mode_click_through walks the built-in Show Mode
 preview (record or import a task, approve the reconstructed steps, hotload the
@@ -537,6 +539,48 @@ export class BrainSurgeon {
         }),
       },
       {
+        name: "drive_twin",
+        description: "Operate a RAPPlication twin's OWN UI in its herd tile — click, type, press, read, announce — with the animated cursor, exactly like the user would. This lets you manipulate the rapplication hands-off for the user (they just chat with you). The twin must be visible in the herd. For the twin's data itself you can also just POST to its /chat; use this to drive its visible interface.",
+        defer: "never",
+        skipPermission: true,
+        parameters: {
+          type: "object",
+          properties: {
+            twin_id: { type: "string", description: "The twin id (from list/hatch)." },
+            steps: {
+              type: "array",
+              minItems: 1,
+              maxItems: 40,
+              items: {
+                type: "object",
+                properties: {
+                  action: { type: "string", enum: ["announce", "click", "press", "read", "type", "wait"] },
+                  selector: { type: "string" },
+                  targetText: { type: "string" },
+                  text: { type: "string" },
+                  value: { type: "string" },
+                  key: { type: "string" },
+                  label: { type: "string" },
+                  optional: { type: "boolean" },
+                  timeoutMs: { type: "integer" },
+                  typingDelayMs: { type: "integer" },
+                  settleMs: { type: "integer" },
+                },
+                required: ["action"],
+              },
+            },
+            force_mode: { type: "boolean", description: "Light AI force mode while driving (only when the user asked for it)." },
+          },
+          required: ["twin_id", "steps"],
+        },
+        handler: ({ twin_id: twinId, steps, force_mode: forceMode = false }) => this.uiCommand({
+          action: "run",
+          twin: twinId,
+          steps,
+          ...(forceMode ? { forceMode: true } : {}),
+        }),
+      },
+      {
         name: "set_ai_force_mode",
         description: "Turn AI force mode on or off: the visible window's edges glow and a tag says an AI is driving. Hidden unless the user asks for it; it fades on its own when you go quiet.",
         defer: "never",
@@ -637,6 +681,25 @@ export class BrainSurgeon {
             hatched: twin.id, name: twin.name, port: twin.port, status: twin.status,
             note: "Copilot Studio deploy twin is looping on its own port. It stays in the herd; you are free for other work. It will surface a PAC device-login step if it needs one, and stays Draft-only.",
           }, null, 2);
+        },
+      },
+      {
+        name: "open_auth_window",
+        description: "Pop open a browser window for the user to sign in / confirm, for anything you CANNOT complete through force mode (e.g. a Microsoft identity or PAC device login). Identity auth is completed in the user's own browser — never capture or type their credentials. Use when a twin reports needs-auth, or when a step needs the user's real session.",
+        defer: "never",
+        skipPermission: true,
+        parameters: {
+          type: "object",
+          properties: {
+            url: { type: "string", description: "The auth/confirmation URL (https). For a paused twin you may pass its id instead." },
+            id: { type: "string", description: "A twin id whose pending auth URL should be opened." },
+            note: { type: "string", description: "Short note shown to the user about what to do." },
+          },
+        },
+        handler: async ({ url, id, note }) => {
+          if (!this.twins?.open_auth) throw new Error("Auth pop-out is unavailable.");
+          const result = await this.twins.open_auth({ url, id });
+          return JSON.stringify({ ...result, note: note || "Complete the sign-in in the browser window that opened; I'll continue when you're done." }, null, 2);
         },
       },
       {

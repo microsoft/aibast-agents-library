@@ -335,8 +335,20 @@
     #surgeon-herd .hbar .sub { font-size: 11px; color: #8b8f98; }
     #surgeon-herd .hbar .hstore {
       margin-left: auto; background: #241d3d; border: 1px solid #3a2f5a; color: #cdbcff;
-      border-radius: 8px; padding: 6px 10px; font-size: 12.5px; max-width: 260px; cursor: pointer;
+      border-radius: 8px; padding: 6px 10px; font-size: 12.5px; cursor: pointer;
     }
+    #surgeon-herd .hbar .hstore:hover { border-color: #6b5bb0; }
+    #surgeon-herd .store-picker {
+      position: absolute; top: 52px; right: 14px; z-index: 5; width: min(340px, 90%);
+      max-height: 60vh; overflow: auto; padding: 6px; border: 1px solid #3a2f5a; border-radius: 10px;
+      background: #16121f; box-shadow: 0 12px 40px rgba(0,0,0,.5); display: flex; flex-direction: column; gap: 3px;
+    }
+    #surgeon-herd .store-row {
+      text-align: left; padding: 8px 10px; border: 1px solid transparent; border-radius: 7px;
+      background: none; color: #d7cff0; font-size: 12.5px; cursor: pointer;
+    }
+    #surgeon-herd .store-row:hover { background: #241d3d; border-color: #3a2f5a; }
+    #surgeon-herd .store-row:disabled { opacity: .5; cursor: default; }
     #surgeon-herd .hbar .hnew {
       background: #1a1c21; border: 1px solid #2a2d33;
       color: #d7dae0; border-radius: 8px; padding: 6px 12px; font-size: 12.5px;
@@ -395,12 +407,36 @@
       padding: 5px 11px; font: 10.5px ui-monospace, Menlo, monospace; color: #8b8f98;
       border-bottom: 1px solid #26282d; background: #141221; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .herd-tile.twin .twin-frame { flex: 1; width: 100%; border: 0; background: #0d1117; }
+    .herd-tile.twin .twin-frame { flex: 1 1 auto; min-height: 0; width: 100%; height: 100%; border: 0; background: #0d1117; }
     .herd-tile.twin .twin-loop {
       max-height: 74px; overflow: auto; padding: 6px 9px; border-top: 1px solid #26282d; background: #100e1c;
       font: 10.5px/1.5 ui-monospace, Menlo, monospace; color: #9a8fce; scrollbar-width: thin;
     }
     .herd-tile.twin .twin-loop div { white-space: pre-wrap; word-break: break-word; }
+    .herd-tile.twin .hh .hst.auth { color: #e3b341; border-color: #6b5216; }
+    .herd-tile.twin .hh .twin-ui-toggle { display: inline-flex; gap: 2px; margin-left: 4px; }
+    .herd-tile.twin .hh .twin-ui-toggle[hidden] { display: none; }
+    .herd-tile.twin .hh .twin-ui-toggle button {
+      padding: 2px 7px; font-size: 10.5px; border: 1px solid #2f2650; border-radius: 6px;
+      background: #1b1730; color: #9a8fce; line-height: 1.3;
+    }
+    .herd-tile.twin .hh .twin-ui-toggle button.on { background: #2a2250; border-color: #6b5bb0; color: #e7deff; }
+    .herd-tile.twin .hh .tw-pop {
+      padding: 2px 6px; font-size: 12px; border: 1px solid #2f2650; border-radius: 6px;
+      background: #1b1730; color: #b79cff; line-height: 1; margin-left: 4px;
+    }
+    .herd-tile.twin .hh .tw-pop:hover { border-color: #6b5bb0; }
+    .herd-tile.twin .twin-signin {
+      display: block; margin: 0; padding: 8px 11px; border: 0; border-top: 1px solid #6b5216;
+      background: linear-gradient(180deg,#3a2e0f,#2a2109); color: #ffd479; font-weight: 700; font-size: 12px; cursor: pointer;
+    }
+    .herd-tile.twin .twin-signin[hidden] { display: none; }
+    /* mobile-first: at the small tile size the embedded UI shows its own mobile
+       layout (it carries viewport + @media); keep the frame the dominant area. */
+    @media (max-width: 640px) {
+      #surgeon-herd .herd-grid { grid-template-columns: 1fr; }
+      .herd-tile { height: min(88vh, 720px); }
+    }
     .surgeon-empty {
       margin: auto 0; padding: 8px 6px; color: #9a9ea7;
       text-align: center; font-size: 13px; line-height: 1.7;

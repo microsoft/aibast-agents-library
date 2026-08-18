@@ -7,6 +7,7 @@ import {
   BrowserWindow,
   ipcMain,
   Menu,
+  Notification,
   session,
   shell,
 } from "electron";
@@ -415,8 +416,139 @@ const twinManager = new TwinManager({
     if (mainWindow && !mainWindow.isDestroyed()) {
       mainWindow.webContents.send("beta:twin-event", structuredClone(event));
     }
+    if (event.type === "twin-needs-auth") notifyTwinNeedsAuth(event);
   },
 });
+
+// Twins pause at the one user-owned auth step (e.g. PAC device login). If the
+// user is multitasking off the window they must still know a twin needs them —
+// so we raise a native OS notification, and clicking it focuses the window and
+// pops open the auth page in the user's own browser (identity auth is completed
+// in their real session; the app never captures credentials).
+const twinAuthPrompts = new Map();   // twinId -> { url, code, note }
+
+function parseAuthPrompt(message) {
+  const text = String(message || "");
+  const url = (text.match(/https?:\/\/[^\s"')]+/) || [])[0]
+    || (/devicelogin|device code|microsoft/i.test(text) ? "https://microsoft.com/devicelogin" : null);
+  const code = (text.match(/\b[A-Z0-9]{4,5}-[A-Z0-9]{4,5}\b/) || [])[0] || null;
+  return { url, code };
+}
+
+function openExternalUrl(url) {
+  const value = String(url || "");
+  if (!/^https?:\/\//i.test(value)) throw new Error("Refusing to open a non-http(s) URL.");
+  return shell.openExternal(value);
+}
+
+function notifyTwinNeedsAuth(event) {
+  const twin = twinManager.list().find((t) => t.id === event.id);
+  const name = twin?.name || event.id || "A RAPPlication twin";
+  const { url, code } = parseAuthPrompt(event.message);
+  twinAuthPrompts.set(event.id, { url, code, note: event.message });
+  if (!Notification.isSupported()) return;
+  const notification = new Notification({
+    title: "A RAPP twin needs you to sign in",
+    body: `${name} paused for authentication${code ? ` — code ${code}` : ""}. Click to continue.`,
+    silent: false,
+  });
+  notification.on("click", () => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      if (mainWindow.isMinimized()) mainWindow.restore();
+      mainWindow.focus();
+      mainWindow.webContents.send("beta:twin-focus", { id: event.id });
+    }
+    if (url) openExternalUrl(url).catch(() => {});
+  });
+  notification.show();
+}
+
+// Pop a twin's own UI out into a phone-sized window — "mobile-first" literally —
+// so a RAPPlication is comfortable to use at a real small-screen size.
+// Walk the main window's frame tree to find the iframe hosting a twin's UI
+// (loaded from the twin's own loopback origin).
+function findTwinFrame(twinUrl) {
+  if (!mainWindow || mainWindow.isDestroyed() || !twinUrl) return null;
+  const prefix = String(twinUrl).replace(/\/+$/, "");
+  const walk = (frame) => {
+    const url = String(frame.url || "");
+    if (url === prefix || url.startsWith(prefix + "/") || url.startsWith(prefix + "?")) return frame;
+    for (const child of frame.frames || []) {
+      const found = walk(child);
+      if (found) return found;
+    }
+    return null;
+  };
+  return walk(mainWindow.webContents.mainFrame);
+}
+
+// Wipe the Grail chat in a twin's iframe and inject the rapplication's own
+// static UI in its place. The iframe is loaded from the twin's own origin, so
+// the injected UI's relative /chat hits the twin directly — no server, no proxy.
+// A tiny force-mode marker woven into every injected rapplication UI. Because
+// WE write the HTML into the frame, we can make any rapplication UI drivable /
+// "force-mode capable" — the AI drives it in-frame with the ui-driver's cursor,
+// and this flag lets the UI (or us) know it is under AI control. A rapplication
+// may also ship its own force-mode affordances; this never overrides them.
+const FORCE_MODE_BOOTSTRAP = "<script>window.__rappForceModeCapable=true;"
+  + "try{document.documentElement.setAttribute('data-rapp-force-mode','ready');}catch(e){}</script>";
+
+function instrumentRappUi(html) {
+  const marker = FORCE_MODE_BOOTSTRAP;
+  // Inject right after <head> when present, else prepend.
+  return /<head[^>]*>/i.test(html)
+    ? html.replace(/<head[^>]*>/i, (m) => m + marker)
+    : marker + html;
+}
+
+const injectedFrames = new WeakSet();   // avoid re-injecting the same frame
+
+async function injectFrameUi(frame, twinId) {
+  if (injectedFrames.has(frame)) return { ok: true, already: true };
+  const raw = twinManager.uiHtml(twinId);
+  if (!raw) return { ok: false, reason: "no custom UI" };
+  const html = instrumentRappUi(raw);
+  injectedFrames.add(frame);
+  await frame.executeJavaScript(
+    `(() => { const html = ${JSON.stringify(html)}; document.open(); document.write(html); document.close(); return true; })()`,
+    true,
+  );
+  return { ok: true, instrumented: true };
+}
+
+async function injectTwinUi(twinId) {
+  const twin = twinManager.list().find((t) => t.id === twinId);
+  if (!twin?.url) throw new Error(`No twin ${twinId}.`);
+  const frame = findTwinFrame(twin.url);
+  if (!frame) throw new Error(`Twin ${twinId} UI frame is not loaded yet.`);
+  return injectFrameUi(frame, twinId);
+}
+
+function popOutTwin(id) {
+  const twin = twinManager.list().find((t) => t.id === id);
+  if (!twin?.url) throw new Error(`No twin ${id}.`);
+  const win = new BrowserWindow({
+    width: 400,
+    height: 820,
+    title: twin.name || "RAPPlication",
+    backgroundColor: "#0d1117",
+    parent: mainWindow || undefined,
+    webPreferences: { contextIsolation: true, nodeIntegration: false, sandbox: true },
+  });
+  win.setMenuBarVisibility(false);
+  const raw = twinManager.uiHtml(id);
+  const html = raw ? instrumentRappUi(raw) : null;
+  win.webContents.on("did-finish-load", () => {
+    if (html) {
+      win.webContents.executeJavaScript(
+        `(() => { const h = ${JSON.stringify(html)}; document.open(); document.write(h); document.close(); return true; })()`,
+        true,
+      ).catch(() => {});
+    }
+  });
+  win.loadURL(`${twin.url}/?beta=1`);
+  return { ok: true };
+}
 
 // P2: hatch the Copilot Studio Factory + Deploy pipeline onto its OWN twin, and
 // kick its deploy loop asynchronously. The Brain Surgeon (and the main Brainstem
@@ -561,6 +693,11 @@ function ensureBrainSurgeon(sessionId = 1) {
         list: () => twinManager.list(),
         list_store: () => rappStore.list(),
         deploy_copilot_studio: (opts) => hatchCopilotStudioTwin(opts || {}),
+        open_auth: (opts) => {
+          const url = opts?.url || (opts?.id && twinAuthPrompts.get(opts.id)?.url);
+          if (!url) throw new Error("No auth URL to open.");
+          return openExternalUrl(url).then(() => ({ ok: true, opened: url }));
+        },
       },
       onEvent: (event) => emitSurgeonEvent({ ...event, sessionId: id }),
     });
@@ -600,6 +737,23 @@ function routeMainNavigation(event, raw) {
   if (externalUrl(raw)) void shell.openExternal(raw);
 }
 
+// A twin runs its own Brainstem worker on its own loopback port, and its UI is
+// shown in a herd-tile iframe — so twin worker URLs are allowed to load in
+// (sub)frames, alongside the active Brainstem. Both are loopback-only.
+function isTwinFrameUrl(raw) {
+  // Twin workers each run on their own loopback port and are shown in herd-tile
+  // iframes. The kernel trust boundary and the page CSP already confine
+  // everything to loopback, so any 127.0.0.1/localhost subframe is allowed
+  // (this covers every twin worker without racing tile creation).
+  try {
+    const url = new URL(raw);
+    return ["http:", "https:"].includes(url.protocol)
+      && ["127.0.0.1", "localhost"].includes(url.hostname);
+  } catch {
+    return false;
+  }
+}
+
 function routeFrameNavigation(details) {
   const raw = details?.url;
   if (!raw || raw === "about:blank") return;
@@ -610,7 +764,7 @@ function routeFrameNavigation(details) {
     }
     return;
   }
-  if (loopbackUrl(raw)) return;
+  if (loopbackUrl(raw) || isTwinFrameUrl(raw)) return;   // active Brainstem OR a twin worker
   details.preventDefault();
   if (externalUrl(raw)) void shell.openExternal(raw);
 }
@@ -649,6 +803,20 @@ function createWindow() {
   });
   win.webContents.on("will-navigate", routeMainNavigation);
   win.webContents.on("will-frame-navigate", routeFrameNavigation);
+  // When a twin's iframe finishes loading its Grail UI, inject the rapplication
+  // UI in place from MAIN (same path as the working pop-out). This avoids the
+  // renderer load→IPC round-trip that left the inline tile un-painted.
+  win.webContents.on("did-frame-finish-load", (_event, isMainFrame, frameProcessId, frameRoutingId) => {
+    if (isMainFrame) return;
+    let frame = null;
+    try { frame = win.webContents.mainFrame.framesInSubtree.find((f) => f.processId === frameProcessId && f.routingId === frameRoutingId); }
+    catch { frame = null; }
+    if (!frame) return;
+    const url = String(frame.url || "");
+    const twin = twinManager.list().find((t) => t.url && (url === `${t.url}/?beta=1` || url.startsWith(`${t.url}/`)));
+    if (!twin || !twinManager.uiHtml(twin.id)) return;
+    injectFrameUi(frame, twin.id).catch(() => {});
+  });
   win.on("closed", () => {
     mainWindow = null;
   });
@@ -1016,6 +1184,22 @@ function registerIpc() {
     assertTrustedIpc(event);
     return hatchCopilotStudioTwin(options || {});
   });
+  ipcMain.handle("beta:twin-popout", async (event, id) => {
+    assertTrustedIpc(event);
+    return popOutTwin(id);
+  });
+  ipcMain.handle("beta:twin-inject-ui", async (event, id) => {
+    assertTrustedIpc(event);
+    return injectTwinUi(id);
+  });
+  ipcMain.handle("beta:open-auth", async (event, options) => {
+    assertTrustedIpc(event);
+    const { url, id } = options || {};
+    const target = url || (id && twinAuthPrompts.get(id)?.url);
+    if (!target) throw new Error("No auth URL to open.");
+    await openExternalUrl(target);
+    return { ok: true, opened: target };
+  });
 }
 
 async function startServices() {
@@ -1084,6 +1268,10 @@ if (!hasLock) {
     loadPendingUpdateResult();
     mainWindow = createWindow();
     startUiDriverServer({
+      resolveTwinUrls: (id) => {
+        const twin = twinManager.list().find((t) => t.id === id);
+        return twin ? [twin.url].filter(Boolean) : [];
+      },
       window: mainWindow,
       brainstemHome: config.brainstemHome,
       loopbackUrl,

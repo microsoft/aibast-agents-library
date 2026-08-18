@@ -63,6 +63,18 @@ function brainstemFrame(window, loopbackUrl) {
     .find((frame) => loopbackUrl(frame.url));
 }
 
+// Find the iframe frame that hosts a given twin's UI (its custom-UI proxy origin
+// or its own Grail origin), so the AI can drive a rapplication's UI in-tile
+// exactly like the user — clicks, typing, the animated cursor, all in that tile.
+function twinFrame(window, twinUrls) {
+  const prefixes = (twinUrls || []).filter(Boolean).map((u) => String(u).replace(/\/+$/, ""));
+  if (!prefixes.length) return null;
+  return frameTree(window.webContents.mainFrame).find((frame) => {
+    const url = String(frame.url || "");
+    return prefixes.some((prefix) => url === prefix || url.startsWith(prefix + "/") || url.startsWith(prefix + "?"));
+  });
+}
+
 async function browserDriverCommand(command) {
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const state = window.__brainstemAiDriver ||= {};
@@ -1356,6 +1368,11 @@ function validateCommand(command) {
   return { ...command, action };
 }
 
+function twinTarget(command) {
+  const id = command && typeof command.twin === "string" ? command.twin.trim() : "";
+  return id || null;
+}
+
 // ── AI force mode ─────────────────────────────────────────────────────────
 // A hidden, opt-in visual state: while an AI is driving the visible window on
 // the user's behalf, the whole window's edges glow and a small tag says so.
@@ -1522,6 +1539,7 @@ export async function startUiDriverServer({
   env = process.env,
   routeTelemetry = () => null,
   runtimeFingerprint = null,
+  resolveTwinUrls = () => [],
 } = {}) {
   if (!window || typeof loopbackUrl !== "function") {
     throw new Error("The UI driver requires a BrowserWindow and loopback URL guard.");
@@ -1838,11 +1856,16 @@ export async function startUiDriverServer({
         return;
       }
 
-      const target = command.target === "shell"
-        ? window.webContents.mainFrame
-        : brainstemFrame(window, loopbackUrl);
+      const wantedTwin = twinTarget(command);
+      const target = wantedTwin
+        ? twinFrame(window, resolveTwinUrls(wantedTwin))
+        : (command.target === "shell"
+          ? window.webContents.mainFrame
+          : brainstemFrame(window, loopbackUrl));
       if (!target) {
-        throw new Error("The live Brainstem frontend is not loaded yet.");
+        throw new Error(wantedTwin
+          ? `Twin ${wantedTwin} UI is not visible in the herd yet — open the herd and its tile first.`
+          : "The live Brainstem frontend is not loaded yet.");
       }
       const source = `(${browserDriverCommand.toString()})(${JSON.stringify(command)})`;
       const result = await target.executeJavaScript(source, true);

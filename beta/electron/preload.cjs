@@ -23,6 +23,14 @@ contextBridge.exposeInMainWorld("brainstemBeta", {
   twinRun: (id, instruction) => ipcRenderer.invoke("beta:twin-run", id, instruction),
   twinClose: (id) => ipcRenderer.invoke("beta:twin-close", id),
   twinDeployCopilotStudio: (options) => ipcRenderer.invoke("beta:twin-deploy-copilot-studio", options),
+  twinPopOut: (id) => ipcRenderer.invoke("beta:twin-popout", id),
+  twinInjectUi: (id) => ipcRenderer.invoke("beta:twin-inject-ui", id),
+  openAuth: (options) => ipcRenderer.invoke("beta:open-auth", options),
+  onTwinFocus: (listener) => {
+    const wrapped = (_event, payload) => listener(payload);
+    ipcRenderer.on("beta:twin-focus", wrapped);
+    return () => ipcRenderer.removeListener("beta:twin-focus", wrapped);
+  },
   onTwinEvent: (listener) => {
     const wrapped = (_event, payload) => listener(payload);
     ipcRenderer.on("beta:twin-event", wrapped);

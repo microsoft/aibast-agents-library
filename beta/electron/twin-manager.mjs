@@ -54,7 +54,11 @@ export class TwinManager {
     this.onEvent = onEvent;
     this.twins = new Map();
     this.seq = 0;
+    this.maxTwins = 8;   // cap concurrent workers so a runaway can't exhaust the machine
     this.twinsRoot = path.join(betaHome, "twins");
+    // Clear stale twin dirs left by a crashed previous session (their workers,
+    // if any, are orphaned and will be reaped by the OS; we start clean).
+    try { rmSync(this.twinsRoot, { recursive: true, force: true }); } catch { /* ignore */ }
   }
 
   emit(event) {
@@ -72,6 +76,7 @@ export class TwinManager {
       status: twin.status,
       license: twin.license,
       uiUrl: twin.uiUrl,
+      hasCustomUi: Boolean(twin.uiHtml),
       loopLog: twin.loopLog.slice(-40),
       createdUtc: twin.createdUtc,
     };
@@ -85,6 +90,11 @@ export class TwinManager {
     const twin = this.twins.get(String(id));
     if (!twin) throw new Error(`No twin "${id}".`);
     return twin;
+  }
+
+  // The rapplication's own static UI HTML (to inject into its twin's iframe).
+  uiHtml(id) {
+    return this.twins.get(String(id))?.uiHtml || null;
   }
 
   #log(twin, line) {
@@ -136,6 +146,9 @@ export class TwinManager {
   // Shared core: compose an isolated AGENTS_PATH, start a dedicated worker on
   // its own loopback port, register it, and (optionally) kick its async loop.
   async #hatchComposed(spec, { instruction = null } = {}) {
+    if (this.twins.size >= this.maxTwins) {
+      throw new Error(`You have ${this.maxTwins} twins open — close one before hatching another.`);
+    }
     const id = `${twinSlug(spec.idBase)}-${++this.seq}`;
     const dir = path.join(this.twinsRoot, id);
     const agentsDir = path.join(dir, "agents");
@@ -192,6 +205,7 @@ export class TwinManager {
       dir,
       resourcePaths,
       worker,
+      uiHtml: null,
       loopLog: [],
       running: false,
     };
@@ -208,6 +222,20 @@ export class TwinManager {
     }
     this.#setStatus(twin, "ready");
     this.#log(twin, `Twin ready on ${url}`);
+
+    // If the rapplication ships its OWN UI (static HTML), fetch it and keep it.
+    // The tile loads the twin's Grail UI (same origin as the twin) and then
+    // wipes it and injects this HTML in its place — so the custom UI's relative
+    // /chat hits the twin directly (same origin, no server, no proxy, no CORS).
+    if (spec.uiUrl) {
+      try {
+        twin.uiHtml = await fetch(spec.uiUrl).then((r) => (r.ok ? r.text() : Promise.reject(new Error(`HTTP ${r.status}`))));
+        this.#log(twin, `Custom rapplication UI ready (${twin.uiHtml.length} bytes) — overrides the default Grail chat`);
+        this.emit({ type: "twin-status", id, status: twin.status, twin: this.descriptor(twin) });
+      } catch (error) {
+        this.#log(twin, `Custom UI unavailable (${error.message}); using the default Grail chat.`);
+      }
+    }
 
     if (instruction) {
       // Kick its autonomous loop, but DO NOT block on it — the caller (and the

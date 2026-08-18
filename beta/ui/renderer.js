@@ -706,7 +706,7 @@ function ensureSurgeonHerdDom() {
       </span>
       <span class="t">GitHub Copilot · Herd</span>
       <span class="sub">several agents, one Brainstem</span>
-      <select class="hstore" title="Hatch a RAPPlication from the RAPP Store"><option value="">◈ Hatch a RAPPlication…</option></select>
+      <button class="hstore" type="button" title="Hatch a RAPPlication from the RAPP Store">◈ Hatch a RAPPlication…</button>
       <button class="hnew" type="button">+ New chat</button>
       <button class="hclose" type="button">Dock ▸</button>
     </div>
@@ -718,28 +718,38 @@ function ensureSurgeonHerdDom() {
   herd.querySelector(".hnew").addEventListener("click", () => newSurgeonSession());
   herd.querySelector(".hclose").addEventListener("click", exitSurgeonHerd);
   const store = herd.querySelector(".hstore");
-  store.addEventListener("change", async () => {
-    const id = store.value;
-    store.value = "";
-    if (!id) return;
-    try { await window.brainstemBeta.twinHatch(id); }
-    catch (cause) { store.title = `Hatch failed: ${String(cause?.message || cause)}`; }
-  });
-  void populateStorePicker(store);
+  store.addEventListener("click", () => toggleStorePicker(herd));
 }
 
-async function populateStorePicker(select) {
+// A clickable (AI-drivable) list of RAPPlications from the store, so hatching
+// can be done by the user OR autonomously by the AI clicking an entry.
+let storePickerEl = null;
+async function toggleStorePicker(herd) {
+  if (storePickerEl) { storePickerEl.remove(); storePickerEl = null; return; }
+  const panel = document.createElement("div");
+  panel.className = "store-picker";
+  panel.textContent = "Loading the RAPP Store…";
+  herd.appendChild(panel);
+  storePickerEl = panel;
   try {
     const list = await window.brainstemBeta.storeList();
+    panel.replaceChildren();
     for (const entry of list) {
-      const option = document.createElement("option");
-      option.value = entry.id;
-      option.textContent = `◈ ${entry.name}${entry.gated ? " (gated)" : ""} — ${entry.category || entry.license || ""}`;
-      option.disabled = entry.gated;
-      select.appendChild(option);
+      const row = document.createElement("button");
+      row.type = "button";
+      row.className = "store-row";
+      row.dataset.storeId = entry.id;
+      row.textContent = `◈ ${entry.name}${entry.gated ? " (gated)" : ""} — ${entry.category || entry.license || ""}`;
+      row.disabled = entry.gated;
+      row.addEventListener("click", async () => {
+        panel.remove(); storePickerEl = null;
+        try { await window.brainstemBeta.twinHatch(entry.id); }
+        catch (cause) { /* surfaced via twin events */ void cause; }
+      });
+      panel.appendChild(row);
     }
   } catch {
-    // store unavailable — the picker stays empty
+    panel.textContent = "RAPP Store unavailable.";
   }
 }
 
@@ -836,6 +846,26 @@ function toggleSurgeonHerd() {
 // ── RAPPlication twin tiles in the herd ─────────────────────────────────
 // A twin is a real Brainstem worker on its own port; its tile renders that
 // worker's own steerable chat (iframe of its loopback UI) plus a live loop log.
+// Per-twin UI mode: "app" = the rapplication's own UI (via its proxy),
+// "chat" = the default Grail chat (the twin directly). Remembered per twin so a
+// user can always fall back to Grail.
+const twinUiModeKey = (id) => `rapp-brainstem-beta-twin-ui-${id}`;
+function twinUiMode(twin) {
+  if (!twin.hasCustomUi) return "chat";              // no custom UI → Grail only
+  try {
+    const saved = localStorage.getItem(twinUiModeKey(twin.id));
+    return saved === "chat" ? "chat" : "app";        // default to the custom app
+  } catch {
+    return "app";
+  }
+}
+// The iframe ALWAYS loads the twin's own Grail UI (same origin as the twin). In
+// "app" mode we then wipe it and inject the rapplication's static UI in place —
+// so its relative /chat hits the twin directly. No server, no proxy.
+function twinUiSrc(twin) {
+  return `${twin.url}/?beta=1`;
+}
+
 function twinTileFor(twin) {
   const tile = document.createElement("div");
   tile.className = "herd-tile twin";
@@ -844,15 +874,61 @@ function twinTileFor(twin) {
     <div class="hh">
       <span class="twin-badge" title="RAPPlication twin — its own port &amp; loop">◈</span>
       <span class="tt"></span>
+      <span class="twin-ui-toggle" role="group" aria-label="UI mode" hidden>
+        <button type="button" data-mode="app" title="The rapplication's own UI (⤢ pops it out full-size)">App</button>
+        <button type="button" data-mode="chat" title="The default Grail chat">Chat</button>
+      </span>
       <span class="hst">ready</span>
+      <button class="tw-pop" type="button" title="Pop out phone-sized">⤢</button>
       <span class="cl" title="Close twin">×</span>
     </div>
     <div class="twin-meta"></div>
-    <iframe class="twin-frame" title="twin" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+    <iframe class="twin-frame" title="twin" allow="clipboard-write"></iframe>
     <div class="twin-loop" aria-live="polite"></div>
+    <button class="twin-signin" type="button" hidden>Sign in to continue →</button>
   `;
+  tile.querySelector(".twin-signin").addEventListener("click", () => {
+    void window.brainstemBeta.openAuth({ id: twin.id });
+  });
   tile.querySelector(".cl").addEventListener("click", () => {
     void window.brainstemBeta.twinClose(twin.id);
+  });
+  tile.querySelector(".tw-pop").addEventListener("click", () => {
+    void window.brainstemBeta.twinPopOut(twin.id);
+  });
+  for (const button of tile.querySelectorAll(".twin-ui-toggle button")) {
+    button.addEventListener("click", () => {
+      try { localStorage.setItem(twinUiModeKey(twin.id), button.dataset.mode); } catch { /* ignore */ }
+      const frame = tile.querySelector(".twin-frame");
+      // Reload the twin's Grail UI; the load handler injects the app UI in app mode.
+      frame.dataset.injected = "";
+      frame.dataset.src = "";
+      const current = twins.get(twin.id);
+      if (current?.tileEl) updateTwinTile(current.tileEl, current.descriptor);
+    });
+  }
+  // Transient connection error while the worker warms up — retry once shortly.
+  tile.querySelector(".twin-frame").addEventListener("error", () => {
+    const current = twins.get(twin.id);
+    if (!current?.descriptor.url) return;
+    setTimeout(() => {
+      const frameEl = current.tileEl?.querySelector(".twin-frame");
+      if (!frameEl) return;
+      frameEl.dataset.src = ""; frameEl.dataset.injected = "";
+      updateTwinTile(current.tileEl, current.descriptor);
+    }, 1200);
+  });
+  // When the iframe loads the twin's Grail UI, inject the rapplication UI over it
+  // once (in "app" mode). document.write itself fires another 'load', so guard
+  // with a flag to avoid an infinite re-inject loop. Reloading restores Grail.
+  tile.querySelector(".twin-frame").addEventListener("load", () => {
+    const frameEl = tile.querySelector(".twin-frame");
+    if (frameEl.dataset.injected === "app") return;   // the document.write load — ignore
+    const current = twins.get(twin.id);
+    if (current && current.descriptor.hasCustomUi && twinUiMode(current.descriptor) === "app") {
+      frameEl.dataset.injected = "app";
+      window.brainstemBeta.twinInjectUi(twin.id).catch(() => { frameEl.dataset.injected = ""; });
+    }
   });
   updateTwinTile(tile, twin);
   return tile;
@@ -861,13 +937,30 @@ function twinTileFor(twin) {
 function updateTwinTile(tile, twin) {
   tile.querySelector(".tt").textContent = twin.name || twin.storeId || twin.id;
   const status = tile.querySelector(".hst");
-  status.textContent = twin.status || "";
-  status.className = `hst ${twin.status === "working" ? "working" : twin.status === "ready" ? "done" : ""}`;
+  const needsAuth = twin.status === "needs-auth";
+  status.textContent = needsAuth ? "sign in" : (twin.status || "");
+  status.className = `hst ${twin.status === "working" ? "working" : needsAuth ? "auth" : twin.status === "ready" ? "done" : ""}`;
   const meta = tile.querySelector(".twin-meta");
   meta.textContent = `:${twin.port} · ${twin.license || "unlicensed"}${twin.rappid ? " · " + twin.rappid.slice(0, 22) + "…" : ""}`;
+  // UI-mode toggle: shown only when the rapplication ships its own UI.
+  const toggle = tile.querySelector(".twin-ui-toggle");
+  const mode = twinUiMode(twin);
+  toggle.hidden = !twin.hasCustomUi;
+  for (const button of toggle.querySelectorAll("button")) {
+    button.classList.toggle("on", button.dataset.mode === mode);
+  }
   const frame = tile.querySelector(".twin-frame");
-  const src = twin.url ? `${twin.url}/?beta=1` : "";
-  if (src && frame.dataset.src !== src) { frame.dataset.src = src; frame.src = src; }
+  // Only point the iframe at the twin once its worker is actually listening —
+  // loading during "hatching" hits a not-yet-bound port (connection refused).
+  if (!twin.url || twin.status === "hatching") return;
+  const src = twinUiSrc(twin);
+  frame.title = src;                                   // readable for diagnostics
+  if (frame.dataset.src !== src) {
+    frame.dataset.src = src; frame.src = src;          // (re)load Grail; load handler injects if app mode
+  } else if (mode === "app" && twin.hasCustomUi && frame.dataset.injected !== "app") {
+    // already on the twin origin — inject without a reload
+    window.brainstemBeta.twinInjectUi(twin.id).then(() => { frame.dataset.injected = "app"; }).catch(() => {});
+  }
   const loop = tile.querySelector(".twin-loop");
   loop.replaceChildren();
   for (const entry of (twin.loopLog || []).slice(-6)) {
@@ -875,6 +968,7 @@ function updateTwinTile(tile, twin) {
     line.textContent = entry.line || entry;
     loop.appendChild(line);
   }
+  tile.querySelector(".twin-signin").hidden = !needsAuth;
 }
 
 function syncTwinTiles() {
@@ -1157,6 +1251,11 @@ setExplorerOpen(localStorage.getItem(explorerOpenKey) === "open");
 setInterval(() => void refreshAgentExplorer(), 2000);
 window.brainstemBeta.onSurgeonEvent(handleSurgeonEvent);
 window.brainstemBeta.onTwinEvent(handleTwinEvent);
+window.brainstemBeta.onTwinFocus?.(({ id }) => {
+  if (!surgeonHerd) enterSurgeonHerd(); else syncTwinTiles();
+  const twin = twins.get(id);
+  twin?.tileEl?.scrollIntoView({ behavior: "smooth", block: "center" });
+});
 void refreshTwins();
 window.brainstemBeta.onOpenUpdate(() => {
   openBetaMenuOnNextSync = true;
