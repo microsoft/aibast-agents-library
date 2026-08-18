@@ -109,9 +109,12 @@ test("released beta installs can pin the launcher and runtime to one commit", ()
   assert.match(windows, /--version "%REPO_COMMIT%"/);
   assert.match(windows, /GIT_CONFIG_KEY_0/);
   assert.match(windows, /set "ACTUAL_COMMIT_FILE=%TEMP%\\rapp-beta-commit-%RANDOM%-%RANDOM%\.txt"/);
-  assert.match(windows, /"%GIT_EXE%" -C "%BETA_SOURCE%" rev-parse HEAD > "%ACTUAL_COMMIT_FILE%"/);
-  assert.match(windows, /set \/p "ACTUAL_COMMIT="<"%ACTUAL_COMMIT_FILE%"/);
-  assert.match(windows, /del "%ACTUAL_COMMIT_FILE%" >nul 2>nul/);
+  assert.match(windows, /"%GIT_EXE%" -C "%BETA_SOURCE%" rev-parse HEAD > "!ACTUAL_COMMIT_FILE!"/);
+  assert.match(windows, /set \/p "ACTUAL_COMMIT="<"!ACTUAL_COMMIT_FILE!"/);
+  assert.match(windows, /del "!ACTUAL_COMMIT_FILE!" >nul 2>nul/);
+  // %ACTUAL_COMMIT_FILE% expands at block parse time (before the set runs) and
+  // breaks every pinned-commit install on Windows; the block must use !...!.
+  assert.doesNotMatch(windows, /rev-parse HEAD > "%ACTUAL_COMMIT_FILE%"/);
   assert.doesNotMatch(windows, /for \/f "delims=" %%H in \('.*rev-parse HEAD.*\)/);
 });
 
