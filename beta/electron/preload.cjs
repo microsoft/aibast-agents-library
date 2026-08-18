@@ -21,6 +21,7 @@ contextBridge.exposeInMainWorld("brainstemBeta", {
   twinHatch: (storeId, instruction) => ipcRenderer.invoke("beta:twin-hatch", storeId, instruction),
   twinChat: (id, prompt) => ipcRenderer.invoke("beta:twin-chat", id, prompt),
   twinRun: (id, instruction) => ipcRenderer.invoke("beta:twin-run", id, instruction),
+  twinLoop: (id, goal) => ipcRenderer.invoke("beta:twin-loop", id, goal),
   twinClose: (id) => ipcRenderer.invoke("beta:twin-close", id),
   twinDeployCopilotStudio: (options) => ipcRenderer.invoke("beta:twin-deploy-copilot-studio", options),
   twinPopOut: (id) => ipcRenderer.invoke("beta:twin-popout", id),

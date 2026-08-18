@@ -658,6 +658,28 @@ export class BrainSurgeon {
         },
       },
       {
+        name: "loop_brainstem_with_twin",
+        description: "Have the visible Brainstem loop with a hatched twin autonomously toward a goal — a genuine two-brain loop: the Brainstem plans each instruction over /chat, the twin executes it, the Brainstem reads the reply and plans the next, until the goal is met. Returns immediately; the back-and-forth streams into the twin's herd tile (labeled Brainstem ↔ the twin) so the user watches hands-off and can interject. Use when the user wants the Brainstem itself to drive a twin's work (not you). The twin must already be hatched (hatch_rapplication).",
+        defer: "never",
+        skipPermission: true,
+        parameters: {
+          type: "object",
+          properties: {
+            twin_id: { type: "string", description: "The twin id (from hatch_rapplication / list_rapplications' active list)." },
+            goal: { type: "string", description: "The goal for the Brainstem to drive the twin toward, in one or two sentences." },
+          },
+          required: ["twin_id", "goal"],
+        },
+        handler: async ({ twin_id: twinId, goal }) => {
+          if (!this.twins?.loop) throw new Error("Brainstem↔twin loop is unavailable.");
+          const result = await this.twins.loop(twinId, goal);
+          return JSON.stringify({
+            ...result,
+            note: "The Brainstem is now looping with the twin on its own; watch the twin's tile in the herd. It pauses for a PAC/identity sign-in if one is needed.",
+          }, null, 2);
+        },
+      },
+      {
         name: "deploy_to_copilot_studio",
         description: "Offload a Copilot Studio deployment to its OWN specialized twin (Factory + Deploy) that loops autonomously in the herd — instead of running the whole PAC/Factory/Deploy pipeline in this chat. Returns immediately; the twin drives doctor→plan→build→provision→push(Draft)→parity on its own port while you stay free for other work. Draft-only; it surfaces the one PAC device-login step if needed.",
         defer: "never",

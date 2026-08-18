@@ -44,10 +44,14 @@ function twinSlug(value) {
 }
 
 export class TwinManager {
-  constructor({ brainstemConfig, betaHome, routeManager = null, storeClient, onEvent = () => {} }) {
+  constructor({ brainstemConfig, betaHome, routeManager = null, storeClient, brainstemUrl = null, onEvent = () => {} }) {
     if (!brainstemConfig) throw new Error("TwinManager needs a brainstemConfig.");
     if (!storeClient) throw new Error("TwinManager needs a RAPP Store client.");
     this.brainstemConfig = brainstemConfig;
+    // Resolver for the *current* visible Brainstem's base URL — used when the
+    // Brainstem drives a two-brain loop with a twin. Defaults to the config URL;
+    // main passes () => state.url so a routed Brainstem is honored.
+    this.brainstemUrl = brainstemUrl || (() => this.brainstemConfig.url);
     this.betaHome = betaHome;
     this.routeManager = routeManager;
     this.store = storeClient;
@@ -301,6 +305,85 @@ export class TwinManager {
         }
         prompt = "Continue. If the task is complete, say DONE. If you need the user to sign in, say exactly what auth is required.";
       }
+    } finally {
+      twin.running = false;
+      this.#setStatus(twin, outcome === "needs-auth" ? "needs-auth" : "ready");
+    }
+    return this.descriptor(twin);
+  }
+
+  // Ask the visible Brainstem, over ITS /chat, for the next thing to say to the
+  // twin. A dedicated planner session keeps this control chatter out of the
+  // user's own Brainstem thread. Returns the Brainstem's raw text.
+  async #brainstemPlan(sessionId, prompt) {
+    const base = String(this.brainstemUrl() || "").replace(/\/$/, "");
+    if (!base) throw new Error("No Brainstem URL to plan with.");
+    const response = await fetch(`${base}/chat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_input: String(prompt || ""), session_id: sessionId }),
+    });
+    if (!response.ok) throw new Error(`Brainstem /chat returned HTTP ${response.status}.`);
+    const data = await response.json();
+    return String(data.response || data.assistant_response || data.result || "").trim();
+  }
+
+  // A GENUINE two-brain autonomous loop: the visible Brainstem plans each turn,
+  // the twin executes it, the Brainstem reads the result and plans the next —
+  // until it declares the goal met (or maxRounds). Unlike run() (which feeds the
+  // twin a canned "Continue"), here the real Brainstem is in the loop. Both sides
+  // are /chat only (canon: chat is the only wire); the host just relays. Every
+  // turn streams into the twin room as a twin-message, so the user watches the
+  // Brainstem <-> twin exchange unfold live and can interject at any time.
+  async loop(id, goal, options = {}) {
+    const { maxRounds = 6 } = options;
+    const twin = this.get(id);
+    if (twin.running) throw new Error(`Twin ${id} is already looping.`);
+    if (!String(goal || "").trim()) throw new Error("loop() needs a goal.");
+    twin.running = true;
+    this.#setStatus(twin, "working");
+    const planSession = `twin-loop-${id}`;
+    const twinName = twin.name || "the twin";
+    const brief =
+      `You are steering a specialist agent called "${twinName}" over chat to accomplish a goal for the user, hands-off. ` +
+      `Each turn you send ${twinName} ONE concrete instruction, read its reply, and decide the next step. ` +
+      `Goal: ${String(goal).trim()}`;
+    let outcome = "ready";
+    try {
+      // Opening move: the Brainstem's first instruction to the twin.
+      let instruction = await this.#brainstemPlan(planSession,
+        `${brief}\n\nReply with ONLY the first message to send to ${twinName} — a single concrete instruction, addressed to ${twinName}, no preamble.`);
+      for (let round = 0; round < maxRounds; round += 1) {
+        if (!instruction) break;
+        // The twin executes; its reply streams into the room as its own turn,
+        // the instruction as a "Brainstem" turn.
+        const reply = await this.chat(id, instruction, { author: "Brainstem" });
+        const twinText = String(reply.response || reply.assistant_response || reply.result || "").trim();
+        // The one user-owned step: pause the loop for the human to sign in.
+        if (/device\s*code|device login|sign in|authenticat|pac auth|not authenticated/i.test(twinText)) {
+          outcome = "needs-auth";
+          this.emit({ type: "twin-needs-auth", id, message: twinText.slice(0, 400) });
+          break;
+        }
+        // The Brainstem reads the twin's reply and plans the next move.
+        const plan = await this.#brainstemPlan(planSession,
+          `${twinName} replied:\n"""\n${twinText.slice(0, 4000)}\n"""\n\n` +
+          `If the goal is fully met, reply with exactly: DONE — <one short line on the result>. ` +
+          `Otherwise reply with ONLY the next single instruction to send to ${twinName} (addressed to it, no preamble).`);
+        if (/^\s*DONE\b/i.test(plan)) {
+          this.emit({ type: "twin-message", id, author: "Brainstem", role: "assistant", text: plan.trim() });
+          outcome = "done";
+          break;
+        }
+        instruction = plan;
+        if (round === maxRounds - 1) {
+          this.emit({ type: "twin-message", id, author: "Brainstem", role: "assistant",
+            text: `Paused after ${maxRounds} rounds — steer me or say continue to keep going.` });
+        }
+      }
+    } catch (error) {
+      this.emit({ type: "twin-message", id, author: "Brainstem", role: "error", text: `Loop error: ${error.message}` });
+      outcome = "ready";
     } finally {
       twin.running = false;
       this.#setStatus(twin, outcome === "needs-auth" ? "needs-auth" : "ready");

@@ -97,6 +97,31 @@ test("small view = a chat/work-log over the twin's /chat; the full custom UI pop
   assert.match(main, /document\.open\(\); document\.write/);
 });
 
+test("the Brainstem loops with a twin autonomously — a genuine two-brain loop", () => {
+  const tm = read("electron/twin-manager.mjs");
+  const main = read("electron/main.mjs");
+  const preload = read("electron/preload.cjs");
+  const surgeon = read("electron/brain-surgeon.mjs");
+  const renderer = read("ui/renderer.js");
+  const ui = read("ui/index.html");
+  // The loop plans over the visible Brainstem's /chat AND executes over the twin's /chat.
+  assert.match(tm, /async loop\(id, goal/);
+  assert.match(tm, /#brainstemPlan\(/);
+  assert.match(tm, /\$\{base\}\/chat/);                 // plans over the Brainstem /chat
+  assert.match(tm, /this\.chat\(id, instruction, \{ author: "Brainstem" \}\)/);  // twin executes; labeled Brainstem
+  assert.match(tm, /brainstemUrl/);
+  // main resolves the live Brainstem URL and exposes the loop over IPC + to the Surgeon.
+  assert.match(main, /brainstemUrl: \(\) => state\.url/);
+  assert.match(main, /beta:twin-loop/);
+  assert.match(main, /loop: \(id, goal\) =>/);
+  assert.match(preload, /twinLoop:/);
+  assert.match(surgeon, /name: "loop_brainstem_with_twin"/);
+  // the herd tile can start the loop, and it lights while looping.
+  assert.match(renderer, /brainstemBeta\.twinLoop/);
+  assert.match(renderer, /classList\.toggle\("looping"/);
+  assert.match(ui, /\.tw-loop/);
+});
+
 test("the AI can drive a twin's own UI in-tile (P3c)", () => {
   const server = read("electron/ui-driver-server.mjs");
   const surgeon = read("electron/brain-surgeon.mjs");

@@ -7,6 +7,7 @@ import {
   BrowserWindow,
   ipcMain,
   Menu,
+  nativeImage,
   Notification,
   session,
   shell,
@@ -38,6 +39,11 @@ import {
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 const packageDir = path.resolve(dirname, "..");
+// The blue-brain app icon (build/icon.png), used for the window, the dock, and
+// the taskbar so the running app never shows the default Electron icon. Packaged
+// builds pick up build/icon.icns / .ico / icons/ via package.json.
+const appIconFile = path.join(packageDir, "build", "icon.png");
+const appIcon = existsSync(appIconFile) ? nativeImage.createFromPath(appIconFile) : null;
 const uiFile = path.join(dirname, "..", "ui", "index.html");
 const uiUrl = pathToFileURL(uiFile).href;
 const config = resolveBrainstemConfig();
@@ -412,6 +418,9 @@ const twinManager = new TwinManager({
   betaHome,
   routeManager,
   storeClient: rappStore,
+  // The Brainstem that plans a two-brain loop is whichever one is live now
+  // (config URL, or a routed Brainstem once a route activates).
+  brainstemUrl: () => state.url,
   onEvent: (event) => {
     if (mainWindow && !mainWindow.isDestroyed()) {
       mainWindow.webContents.send("beta:twin-event", structuredClone(event));
@@ -692,6 +701,7 @@ function ensureBrainSurgeon(sessionId = 1) {
         hatch: (storeId, instruction) => twinManager.hatch(storeId, { instruction: instruction || null }),
         list: () => twinManager.list(),
         list_store: () => rappStore.list(),
+        loop: (id, goal) => { twinManager.loop(id, goal).catch(() => {}); return { ok: true, looping: id }; },
         deploy_copilot_studio: (opts) => hatchCopilotStudioTwin(opts || {}),
         open_auth: (opts) => {
           const url = opts?.url || (opts?.id && twinAuthPrompts.get(opts.id)?.url);
@@ -789,6 +799,7 @@ function createWindow() {
     minHeight: 620,
     title: "RAPP Brainstem Frontier",
     backgroundColor: "#0d1117",
+    ...(appIcon ? { icon: appIcon } : {}),
     webPreferences: {
       preload: path.join(dirname, "preload.cjs"),
       contextIsolation: true,
@@ -1162,6 +1173,14 @@ function registerIpc() {
     assertTrustedIpc(event);
     return twinManager.run(id, instruction);
   });
+  // The visible Brainstem loops with the twin autonomously (two-brain: Brainstem
+  // plans each turn, twin executes). Non-blocking — returns once kicked off; the
+  // exchange streams into the twin's tile so the user can watch and interject.
+  ipcMain.handle("beta:twin-loop", async (event, id, goal) => {
+    assertTrustedIpc(event);
+    twinManager.loop(id, goal).catch(() => {});   // errors surface as a twin-message in the room
+    return { ok: true, looping: id };
+  });
   ipcMain.handle("beta:twin-close", async (event, id) => {
     assertTrustedIpc(event);
     return twinManager.close(id);
@@ -1246,6 +1265,10 @@ if (!hasLock) {
   });
 
   app.whenReady().then(() => {
+    // Blue-brain dock icon in dev too (packaged builds get it from the bundle).
+    if (appIcon && !appIcon.isEmpty() && process.platform === "darwin" && app.dock) {
+      app.dock.setIcon(appIcon);
+    }
     session.defaultSession.setPermissionRequestHandler((webContents, permission, callback) => {
       callback(allowsUiDriverMediaPermission(webContents, permission));
     });

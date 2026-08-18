@@ -858,6 +858,7 @@ function twinTileFor(twin) {
       <span class="twin-badge" title="RAPPlication twin — its own port &amp; loop">◈</span>
       <span class="tt"></span>
       <span class="hst">ready</span>
+      <button class="tw-loop" type="button" title="Have the Brainstem loop with this twin toward a goal">⟳ Loop</button>
       <button class="tw-pop" type="button" title="Open the full rapplication UI">⤢ App</button>
       <span class="cl" title="Close twin">×</span>
     </div>
@@ -878,6 +879,16 @@ function twinTileFor(twin) {
   // ⤢ opens the full custom rapplication UI in a pop-out window.
   tile.querySelector(".tw-pop").addEventListener("click", () => {
     void window.brainstemBeta.twinPopOut(twin.id);
+  });
+  // ⟳ Loop hands the twin to the Brainstem: it plans each instruction, the twin
+  // executes, and the exchange streams into this transcript hands-off. The goal
+  // is whatever is in the composer (or a sensible default if it's empty).
+  tile.querySelector(".tw-loop").addEventListener("click", () => {
+    const box = tile.querySelector(".twin-comp textarea");
+    const goal = box.value.trim() || `Work autonomously toward what ${twin.name || "this rapplication"} is for, and tell me when it's done.`;
+    box.value = "";
+    box.style.height = "auto";
+    void window.brainstemBeta.twinLoop(twin.id, goal);
   });
   const textarea = tile.querySelector(".twin-comp textarea");
   const send = () => {
@@ -961,6 +972,9 @@ function updateTwinTile(tile, twin) {
   const needsAuth = twin.status === "needs-auth";
   status.textContent = needsAuth ? "sign in" : (twin.status || "");
   status.className = `hst ${twin.status === "working" ? "working" : needsAuth ? "auth" : twin.status === "ready" ? "done" : ""}`;
+  tile.classList.toggle("looping", twin.status === "working");   // ⟳ Loop lit while the Brainstem drives it
+  const loopBtn = tile.querySelector(".tw-loop");
+  if (loopBtn) loopBtn.disabled = twin.status === "working";
   const meta = tile.querySelector(".twin-meta");
   meta.textContent = `:${twin.port} · ${twin.license || "unlicensed"}${twin.rappid ? " · " + twin.rappid.slice(0, 22) + "…" : ""}`;
   tile.querySelector(".twin-signin").hidden = !needsAuth;
