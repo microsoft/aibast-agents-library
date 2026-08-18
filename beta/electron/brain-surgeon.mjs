@@ -55,6 +55,20 @@ demo the user can replay later, start recording before the workflow and stop
 recording after it; the video and final screenshot will be attached here.
 You can clear the visible Brainstem transcript and refresh its page through
 dedicated tools when troubleshooting or preparing a clean demonstration.
+
+AI FORCE MODE (hidden until asked for): when the user asks you to use "AI force
+mode" — or to drive, operate, or "telepathically" run the Brainstem for them
+while they watch — light the window edges first (set_ai_force_mode on, or pass
+force_mode: true to drive_visible_brainstem), narrate each visible action
+briefly, do the task through the real interface, and turn force mode off when
+you hand control back. Never light it unless the user invoked it; it exists so
+the person always knows an AI, not a hand, is moving the interface.
+
+SHOW MODE CLICK-THROUGH: show_mode_click_through walks the built-in Show Mode
+preview (record or import a task, approve the reconstructed steps, hotload the
+generated agent, test it in the center chat, confirm, promote) inside the visible
+window. Use mode "walk" to present it and mode "capture" to attach a screenshot
+of every step here — the same evidence used for the README and for training.
 `.trim();
 
 function cleanFilename(value) {
@@ -496,10 +510,53 @@ export class BrainSurgeon {
                 required: ["action"],
               },
             },
+            force_mode: {
+              type: "boolean",
+              description: "Light the window edges (AI force mode) while these steps run. Only when the user asked for it.",
+            },
           },
           required: ["steps"],
         },
-        handler: ({ steps }) => this.uiCommand({ action: "run", steps }),
+        handler: ({ steps, force_mode: forceMode = false }) => this.uiCommand({
+          action: "run",
+          steps,
+          ...(forceMode ? { forceMode: true } : {}),
+        }),
+      },
+      {
+        name: "set_ai_force_mode",
+        description: "Turn AI force mode on or off: the visible window's edges glow and a tag says an AI is driving. Hidden unless the user asks for it; it fades on its own when you go quiet.",
+        defer: "never",
+        skipPermission: true,
+        parameters: {
+          type: "object",
+          properties: {
+            on: { type: "boolean" },
+            label: { type: "string", description: "Optional short tag text (default: AI force mode · an AI is driving this Brainstem)." },
+          },
+          required: ["on"],
+        },
+        handler: ({ on, label }) => this.uiCommand({
+          action: "force_mode",
+          value: on ? "on" : "off",
+          ...(label ? { label } : {}),
+        }),
+      },
+      {
+        name: "show_mode_click_through",
+        description: "Walk the Show Mode click-through preview in the visible window: record or import a task, approve the reconstructed steps, hotload the generated agent, test it in the center chat, confirm, promote. mode walk presents it; mode capture also attaches a screenshot of every step.",
+        defer: "never",
+        skipPermission: true,
+        parameters: {
+          type: "object",
+          properties: {
+            mode: { type: "string", enum: ["walk", "capture"] },
+            pace_ms: { type: "integer", minimum: 300, maximum: 20000, description: "Dwell per step (default 1800 for walk, 900 for capture)." },
+            force_mode: { type: "boolean", description: "Light AI force mode while walking (only when the user asked for it)." },
+            from_step: { type: "string", description: "Optional step id to start from (see returned steps)." },
+          },
+        },
+        handler: (args) => this.showModeClickThrough(args),
       },
       {
         name: "capture_visible_brainstem",
@@ -1100,6 +1157,70 @@ export class BrainSurgeon {
         await this.releaseChatLease(chatLeaseToken);
       }
     }
+  }
+
+  async showModeClickThrough({
+    mode = "walk",
+    pace_ms: paceMs,
+    force_mode: forceMode = false,
+    from_step: fromStep,
+  } = {}) {
+    const capture = mode === "capture";
+    const pace = Math.max(300, Math.min(20000, Number(paceMs) || (capture ? 900 : 1800)));
+    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    const status = await this.uiCommand({ action: "tour", value: "status" });
+    if (!status?.available) {
+      throw new Error(status?.error || "The Show Mode click-through is not available in this window.");
+    }
+    if (forceMode) {
+      await this.uiCommand({
+        action: "force_mode",
+        value: "on",
+        label: "AI force mode · walking the Show Mode click-through",
+      });
+    }
+    const steps = status.steps || [];
+    const startIndex = fromStep ? Math.max(0, steps.indexOf(String(fromStep))) : 0;
+    const visited = [];
+    try {
+      for (let index = startIndex; index < steps.length; index += 1) {
+        const state = await this.uiCommand({
+          action: "tour",
+          value: "goto",
+          step: index,
+          settleMs: 800,
+          ...(forceMode ? { forceMode: true } : {}),
+        });
+        await sleep(pace);
+        const entry = { index, id: steps[index], running: Boolean(state?.running) };
+        if (capture) {
+          const shot = await this.uiCommand({ action: "screenshot" });
+          const screenshot = shot.screenshot || shot;
+          entry.screenshot = screenshot.path;
+          this.emit({
+            type: "artifact",
+            artifact: {
+              kind: "image",
+              url: screenshot.captureUrl,
+              path: screenshot.path,
+              alt: `Show Mode click-through · ${index + 1}/${steps.length} · ${steps[index]}`,
+            },
+          });
+        }
+        visited.push(entry);
+      }
+    } finally {
+      await this.uiCommand({ action: "tour", value: "stop" }).catch(() => {});
+      if (forceMode) {
+        await this.uiCommand({ action: "force_mode", value: "off" }).catch(() => {});
+      }
+    }
+    return JSON.stringify({
+      mode,
+      steps_total: steps.length,
+      visited,
+      note: "Preview only: the click-through paints ghost content over the real panes; nothing was recorded, analyzed, hotloaded, or sent.",
+    }, null, 2);
   }
 
   async captureVisibleBrainstem() {

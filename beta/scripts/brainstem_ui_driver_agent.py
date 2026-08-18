@@ -99,6 +99,17 @@ class BrainstemUiDriver(BasicAgent):
                 "enum": ["brainstem", "shell"],
                 "description": "Use brainstem unless operating the Electron wrapper.",
             },
+            "force_mode": {
+                "type": "boolean",
+                "description": (
+                    "AI force mode: light the whole window's edges while this action runs so "
+                    "the person can see an AI is driving. Only when the user asked for it."
+                ),
+            },
+            "step": {
+                "type": "string",
+                "description": "For action=tour with value=goto: the click-through step id or index.",
+            },
         }
         self.metadata = {
             "name": self.name,
@@ -117,6 +128,7 @@ class BrainstemUiDriver(BasicAgent):
                         "enum": [
                             "announce",
                             "click",
+                            "force_mode",
                             "inspect",
                             "press",
                             "read",
@@ -124,9 +136,15 @@ class BrainstemUiDriver(BasicAgent):
                             "screenshot",
                             "start_recording",
                             "stop_recording",
+                            "tour",
                             "type",
                             "wait",
                         ],
+                        "description": (
+                            "force_mode: value on|off|status lights or clears AI force mode. "
+                            "tour: value start|next|prev|goto|stop|status drives the Show Mode "
+                            "click-through preview in the shell."
+                        ),
                     },
                     "steps": {
                         "type": "array",
@@ -152,7 +170,12 @@ class BrainstemUiDriver(BasicAgent):
             "or completed workflow, call screenshot so you and the user can inspect "
             "what the real window shows. If recording, finish with stop_recording; it "
             "already includes the final screenshot. Do not click a destructive "
-            "confirmation unless the user's request authorizes that outcome."
+            "confirmation unless the user's request authorizes that outcome. "
+            "AI force mode is hidden until asked for: when the user tells you to use "
+            "AI force mode (or to drive the Brainstem for them while they watch), "
+            "send force_mode on first, pass force_mode=true on your run, and send "
+            "force_mode off when you hand control back. The Show Mode click-through "
+            "preview is driven with action tour (start, next, prev, goto+step, stop)."
         )
 
     def perform(self, action="", **kwargs):

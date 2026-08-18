@@ -308,6 +308,30 @@
     .surgeon-starters button.deploy-copilot-studio::before {
       content: "🚀"; margin-right: 8px;
     }
+    .surgeon-starters button.show-mode-preview {
+      border-color: #d0463a;
+      background: linear-gradient(135deg,#3a1614,#26191f);
+      color: #ffe9e6; font-weight: 800;
+      box-shadow: inset 3px 0 #ff6a5c;
+    }
+    .surgeon-starters button.show-mode-preview::before {
+      content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+      background: #ff5f52; margin-right: 9px; vertical-align: 1px;
+      box-shadow: 0 0 0 3px rgba(255,95,82,.25);
+    }
+    .intro-card .intro-show-mode {
+      display: flex; align-items: center; justify-content: space-between; gap: 14px;
+      margin-top: 12px; padding: 12px 14px; border: 1px solid #5a2320; border-radius: 8px;
+      background: linear-gradient(135deg,#2a1210,#1a1519);
+    }
+    .intro-card .intro-show-mode span { color: #f0c9c4; font-size: 13px; line-height: 1.5; }
+    .intro-card .intro-show-mode button {
+      flex: none; border-color: #d0463a; background: #3a1614; color: #ffe9e6; font-weight: 800;
+    }
+    .intro-card .intro-show-mode button::before {
+      content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+      background: #ff5f52; margin-right: 8px; vertical-align: 1px; box-shadow: 0 0 0 3px rgba(255,95,82,.25);
+    }
     .surgeon-message {
       max-width: 92%; padding: 10px 13px; border-radius: 12px;
       font-size: 13px; line-height: 1.55; white-space: pre-wrap;
@@ -543,8 +567,12 @@
             </ul>
           </article>
           <article class="intro-card wide">
-            <h2>Start with this prompt</h2>
-            <div class="prompt">I am working on a rapid customer proof. Interview me until you understand the business problem, users, inputs, expected outputs, constraints, and what would prove success. Then propose the smallest single-file RAPP agent set that can test the idea locally with synthetic or approved data. Build it, run it through Brainstem, show me the evidence, identify production gaps, and recommend whether the final experience belongs in Scout, Copilot Studio, Foundry, or custom code. Do not call the prototype production-ready.</div>
+            <h2>Start with this prompt — or show it instead</h2>
+            <div class="prompt" id="show-mode-interview-prompt">I am working on a rapid customer proof. Interview me until you understand the business problem, users, inputs, expected outputs, constraints, and what would prove success. Then propose the smallest single-file RAPP agent set that can test the idea locally with synthetic or approved data. Build it, run it through Brainstem, show me the evidence, identify production gaps, and recommend whether the final experience belongs in Scout, Copilot Studio, Foundry, or custom code. Do not call the prototype production-ready.</div>
+            <div class="intro-show-mode">
+              <span><strong>Can't describe it? Show it.</strong> Show Mode turns a live recording, a video, screenshots, or a transcript into an agent you test here first, then promote. Preview the click-through — nothing runs live.</span>
+              <button type="button" data-show-mode-tour="true">Show Mode click-through</button>
+            </div>
           </article>
         </div>
         <div class="intro-footer">
@@ -555,5 +583,6 @@
     </div>
   </section>
   <script src="renderer.js"></script>
+  <script src="show-mode-tour.js"></script>
 </body>
 </html>

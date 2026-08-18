@@ -347,6 +347,11 @@ function showSurgeonEmpty() {
     { label: "Check for beta updates while I watch" },
     { label: "Record a short autopilot demo of the current workflow" },
     {
+      label: "Show Mode: click-through preview",
+      className: "show-mode-preview",
+      tour: true,
+    },
+    {
       label: "Deploy loaded agents to Copilot Studio",
       className: "deploy-copilot-studio",
       prompt: [
@@ -393,7 +398,12 @@ function showSurgeonEmpty() {
     button.type = "button";
     button.textContent = starter.label;
     if (starter.className) button.classList.add(starter.className);
+    if (starter.tour) button.dataset.showModeTour = "true";
     button.addEventListener("click", () => {
+      if (starter.tour) {
+        window.dispatchEvent(new CustomEvent("rapp-beta:show-mode-tour"));
+        return;
+      }
       surgeonInput.value = starter.prompt || starter.label;
       void submitSurgeon();
     });

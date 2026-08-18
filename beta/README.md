@@ -124,6 +124,27 @@ To decode and add recordings created before this evidence index existed:
 npm run walkthrough:ingest
 ```
 
+## Show Mode — describe it, or show it
+
+Some customers can describe their process; some would rather show it. **Show
+Mode** (Frontier-tagged) turns a live recording, a video, a set of screenshots,
+or a transcript into a single-file agent you hotload and **test in your own
+Brainstem first**, then promote into Copilot Studio, Scout, Cowork, Foundry, or
+custom Azure code — the tested bytes are the bytes that ship.
+
+Open it from the **Show Mode: click-through preview** pill in the Brain Surgeon,
+from the first-run intro card, or as a shareable page at `/beta/show-mode.html`.
+The step-by-step walkthrough with screenshots is in
+[`docs/show-mode/`](docs/show-mode/README.md).
+
+An AI can drive the whole loop for a user through chat and let them watch. Ask
+the Brain Surgeon (or the center Brainstem) to "use AI force mode" to operate the
+Brainstem for you, or to `show_mode_click_through` — while it drives, the window
+edges glow and a tag reads *AI force mode · an AI is driving this Brainstem —
+you're watching*, so it is always clear an AI, not a hand, is at the controls.
+`npm run show-mode:capture` walks the preview and saves one screenshot per step
+(add `-- --force` to light force mode for a live demo).
+
 ## Install
 
 The dedicated GitHub Pages installer is published at `/beta/`. It resolves the
