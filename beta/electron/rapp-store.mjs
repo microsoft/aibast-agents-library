@@ -42,6 +42,9 @@ function normalizeEntry(entry) {
     eggUrl: entry.egg_url || null,
     publisher: entry.publisher || "",
     qualityTier: entry.quality_tier || "",
+    // Per-repo terms vary (MIT, source-available ARR, PolyForm-NC …) — surface
+    // the entry's own license so a twin/consumer honors it, never assume MIT.
+    license: entry.license || null,
     // A RAPPlication is specialized agents PLUS a specialized UI for its use
     // case; the twin tile renders this UI, bound to the twin's worker port.
     uiUrl: entry.ui_url || null,

@@ -18,7 +18,7 @@ function fakeStore({ agentBytes = AGENT, sha = AGENT_SHA, gated404 = false } = {
         singleton_filename: "demo_agent.py",
         singleton_url: "https://example/demo_agent.py",
         singleton_sha256: sha, singleton_bytes: agentBytes.length, quality_tier: "community",
-        ui_url: "https://example/demo/index.html", ui_filename: "index.html",
+        ui_url: "https://example/demo/index.html", ui_filename: "index.html", license: "MIT",
       },
       {
         id: "locked", name: "Locked", singleton_filename: "locked_agent.py",
@@ -49,6 +49,7 @@ test("loads the catalog and flags gated entries", async () => {
   assert.equal(list.find((e) => e.id === "locked").gated, true);
   // a RAPPlication carries its own UI (agents + specialized UI)
   assert.equal(list.find((e) => e.id === "demo").uiUrl, "https://example/demo/index.html");
+  assert.equal(list.find((e) => e.id === "demo").license, "MIT");
 });
 
 test("download verifies the pinned sha256 before returning source", async () => {

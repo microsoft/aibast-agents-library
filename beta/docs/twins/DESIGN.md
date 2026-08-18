@@ -2,6 +2,13 @@
 
 > Status: agreed direction (2026-08-18). Foundation (RAPP Store client) landed;
 > the rest is P0/P1/P2 below. Builds on the multi-chat herd (PR #175).
+>
+> **On-canon.** Checked against the RAPP spine (`kody-w/rapp-spine`) — see
+> [`COMPLIANCE.md`](COMPLIANCE.md). A herd of twins is **Leviathan sense (A)**
+> (one mind, many brainstem bodies); its canonical wire is
+> **`rapp-fleet-chat/1.0`** (signed twin-chat over `/chat`), the shippable unit
+> is the cartridge **`rapp-cart/1.0`**, and per Art. XXV **chat is the only
+> wire** — twins add **no new route**.
 
 ## The idea, in one paragraph
 
@@ -79,8 +86,8 @@ back to a plain chat over the worker's `/chat`.
 | Vision word | Existing beta mechanism |
 |---|---|
 | "own port / twin / brainstem loop" | `BetaRouteManager.startWorker(descriptor)` already allocates a loopback port and spawns a `BrainstemProcess` with a composed `AGENTS_PATH` (`route-manager.mjs:806`) |
-| "hatch a RAPPlication" | fetch `singleton_url` → verify `singleton_sha256` → `packageAgent` (RAPPID + egg, `:486`) → start a **dedicated, non-retired** worker |
-| "driven by the Brainstem, not the Surgeon" | the twin worker's own `/chat` loop (a small autonomous runner) drives the job; the Surgeon only calls `hatch_rapplication(store_id)` and hands off |
+| "hatch a RAPPlication" | insert its **`rapp-cart/1.0`** cartridge (the store's `singleton_url` `agent.py` + optional `egg_url` `.egg`): fetch → verify `singleton_sha256` → `packageAgent` (RAPPID + egg, `:486`) → start a **dedicated, non-retired** worker. Ports/twins stay under the hood, per the cartridge contract |
+| "driven by the Brainstem, not the Surgeon" | the twin worker's own `/chat` loop drives the job; the Brainstem coordinates the fleet via **`rapp-fleet-chat/1.0`** (signed twin-chat over `/chat`) — never an injected `/api/agent` route (the known RCE); the Surgeon only calls `hatch_rapplication(store_id)` and hands off |
 | "clone, diverge, reassimilate" twin story | already described in `GOLDEN_PATH.md` — a twin is a minted child RAPPID + its own snapshot |
 | "pull from the store autonomously" | the RAPP Store client (this PR's foundation) + a `hatch_rapplication` Surgeon tool |
 | "specialized UI per use case" | the tile renders the rapplication's own `ui_url` (from the store entry) bound to the twin's worker port — its use-case UI, not a generic chat |
@@ -143,10 +150,21 @@ hatch cs-deploy twin (own port)
 ## Invariants
 
 - `rapp_brainstem/brainstem.py` unchanged; twins are ordinary workers.
+- **Chat is the only wire** (Art. XXV): twins are driven only over `/chat`; the
+  fleet wire is `rapp-fleet-chat/1.0` (signed twin-chat); **no new route**, never
+  an `/api/agent`-style route (the known unauthenticated RCE).
+- Twin workers are **loopback-only** on their own `:7072+` ports; privileged
+  surfaces stay loopback-or-local-token (`rapp-kernel-boundary/1.0`).
+- The shippable unit is the **`rapp-cart/1.0`** cartridge (`agent.py` or `.egg`).
+- **RAPPID** is mint-once (`rapp/1` §6.2), not name-derived; read every legacy
+  form, emit only canonical, join on the hash, never rewrite identity in place.
+- **License**: honor each rapplication's own `license` (MIT / Apache-2.0 /
+  BSD-style / ARR / PolyForm-NC all appear in the store) — never assume MIT.
 - The Surgeon is not the deploy engine — it decides and hands off.
 - Store downloads are sha256-verified before they ever run.
 - Autonomous up to user-owned auth; Copilot Studio Draft-only; no secrets in
   chat/logs.
-- Gated rapplications (`gated_rapplications_note`) are honored, not bypassed.
+- Gated (`access: private`) rapplications are honored (auth-prompt), not bypassed.
 - A twin is self-driving but never a black box: its tile stays chat-interactive
   so the person can steer or stop it at any moment.
+- Re-crawl the spine before each twin PR (see `COMPLIANCE.md`).
