@@ -215,6 +215,10 @@ export class TwinManager {
         AGENTS_PATH: agentsDir,
         BRAINSTEM_BETA_ROUTED_WORKER: "1",
         BRAINSTEM_BETA_TWIN: id,
+        // A twin runs sha-pinned-but-still-third-party store code — it must ALWAYS
+        // bind loopback, never inherit the main Brainstem's LAN mode and expose
+        // itself on 0.0.0.0 (rapp-kernel-boundary/1.0: twins are loopback-only).
+        BRAINSTEM_LAN_MODE: "0",
       },
     });
 

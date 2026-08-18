@@ -130,3 +130,10 @@ test("the RAPP Store fails CLOSED when a singleton has no sha256 pin", () => {
   assert.match(store, /singleton_sha256|singletonSha256/);
   assert.match(store, /throw|reject/i);
 });
+
+test("twin workers are pinned to loopback regardless of ambient LAN mode (canon)", () => {
+  const tm = read("electron/twin-manager.mjs");
+  // a twin runs sha-pinned-but-third-party store code; it must never inherit the
+  // main brainstem's LAN mode and bind 0.0.0.0 (rapp-kernel-boundary/1.0).
+  assert.match(tm, /BRAINSTEM_LAN_MODE:\s*"0"/);
+});
