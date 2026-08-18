@@ -420,6 +420,85 @@ jobs:
           path: ${{ runner.temp }}/install.*
           if-no-files-found: ignore
 
+  frontier-installer:
+    # The Frontier release path: frontier.ps1 / frontier.sh download
+    # beta/install.cmd / beta/install.sh at the RELEASE COMMIT and run them
+    # with BRAINSTEM_BETA_COMMIT pinned. Nothing else in preflight executes
+    # those installers, which is how beta.4 and beta.5 both shipped a broken
+    # Windows install while CI was green. This job runs the candidate's own
+    # beta installer, commit-pinned, from an isolated home, and asserts the
+    # launcher checkout resolves to the exact candidate commit.
+    name: frontier installer ${{ matrix.os }}
+    needs: static
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    env:
+      CANDIDATE_REPO: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name || github.repository }}
+      CANDIDATE_REF: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || github.ref_name }}
+      CANDIDATE_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Frontier release-path install on Windows (commit-pinned beta\install.cmd)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $home_ = Join-Path $env:RUNNER_TEMP 'frontier-home'
+          New-Item -ItemType Directory -Force -Path $home_ | Out-Null
+          $env:USERPROFILE = $home_
+          $env:BRAINSTEM_BETA_HOME = Join-Path $home_ '.brainstem\beta-launcher'
+          $env:BRAINSTEM_BETA_REPO_URL = "https://github.com/$env:CANDIDATE_REPO.git"
+          $env:BRAINSTEM_BETA_REF = $env:CANDIDATE_REF
+          $env:BRAINSTEM_BETA_COMMIT = $env:CANDIDATE_SHA
+          $env:BRAINSTEM_BETA_BOOTSTRAP_URL = "https://raw.githubusercontent.com/$env:CANDIDATE_REPO/$env:CANDIDATE_SHA/install.ps1"
+          $env:BRAINSTEM_BETA_NO_LAUNCH = '1'
+          # Same shape as frontier.ps1: fetch the installer at the pinned commit and run it.
+          $installer = Join-Path $env:RUNNER_TEMP "rapp-frontier-$env:CANDIDATE_SHA.cmd"
+          Invoke-WebRequest "https://raw.githubusercontent.com/$env:CANDIDATE_REPO/$env:CANDIDATE_SHA/beta/install.cmd" -OutFile $installer -UseBasicParsing
+          & cmd.exe /d /c "`"$installer`"" 2>&1 | Tee-Object -FilePath (Join-Path $env:RUNNER_TEMP 'frontier-install.log')
+          if ($LASTEXITCODE -ne 0) { throw "Frontier installer exited with code $LASTEXITCODE" }
+          $src = Join-Path $env:BRAINSTEM_BETA_HOME 'src'
+          $resolved = (git -C $src rev-parse HEAD).Trim()
+          if ($resolved -ne $env:CANDIDATE_SHA) { throw "launcher checkout resolved to '$resolved' instead of $env:CANDIDATE_SHA" }
+          if (-not (Test-Path (Join-Path $src 'beta\package.json'))) { throw 'beta\package.json missing from launcher checkout' }
+          if (Test-Path (Join-Path $src 'solutions')) { throw 'solution bundles leaked into the launcher checkout' }
+          $log = Get-Content (Join-Path $env:RUNNER_TEMP 'frontier-install.log') -Raw
+          if ($log -match 'cannot find the path specified') { throw 'installer emitted "cannot find the path specified" — a redirect targeted an empty path' }
+          Write-Host "Frontier launcher checkout == $resolved (candidate) OK"
+
+      - name: Frontier release-path install on macOS (commit-pinned beta/install.sh)
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          set -euo pipefail
+          export HOME="$RUNNER_TEMP/frontier-home"; mkdir -p "$HOME"
+          export BRAINSTEM_BETA_HOME="$HOME/.brainstem/beta-launcher"
+          export BRAINSTEM_BETA_REPO_URL="https://github.com/$CANDIDATE_REPO.git"
+          export BRAINSTEM_BETA_REF="$CANDIDATE_REF"
+          export BRAINSTEM_BETA_COMMIT="$CANDIDATE_SHA"
+          export BRAINSTEM_BETA_NO_LAUNCH=1
+          curl -fsSL "https://raw.githubusercontent.com/$CANDIDATE_REPO/$CANDIDATE_SHA/beta/install.sh" \
+            | bash 2>&1 | tee "$RUNNER_TEMP/frontier-install.log"
+          test "${PIPESTATUS[1]}" = 0
+          resolved="$(git -C "$BRAINSTEM_BETA_HOME/src" rev-parse HEAD)"
+          test "$resolved" = "$CANDIDATE_SHA"
+          test -f "$BRAINSTEM_BETA_HOME/src/beta/package.json"
+          test ! -e "$BRAINSTEM_BETA_HOME/src/solutions"
+          echo "Frontier launcher checkout == $resolved (candidate) OK"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: frontier-installer-${{ matrix.os }}
+          path: ${{ runner.temp }}/frontier-install.log
+          if-no-files-found: ignore
+
   installer-one-liner:
     name: one-liner ${{ matrix.os }}
     strategy:

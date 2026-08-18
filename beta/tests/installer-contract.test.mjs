@@ -69,7 +69,7 @@ test("beta installers use AIBAST as the canonical source", () => {
 
 test("Frontier is the primary customer-facing launcher identity", () => {
   assert.equal(packageJson.name, "@aibast/rapp-brainstem-frontier");
-  assert.equal(packageJson.version, "0.1.0-beta.5");
+  assert.equal(packageJson.version, "0.1.0-beta.6");
   assert.equal(readFileSync(new URL("../VERSION", import.meta.url), "utf8").trim(), packageJson.version);
   for (const installer of [unix, windows]) {
     assert.match(installer, /brainstem-frontier/);
