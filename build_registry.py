@@ -426,9 +426,12 @@ def build_registry():
         manifest["_synthetic_data"] = bool(
             "synthetic" in content.lower() or "demo data" in content.lower()
         )
-        # git history first, last good registry second — a shallow CI checkout
-        # must not blank the date the catalog already published.
-        added = added_dates.get(py_path.as_posix()) or previous.get(name, {}).get("_added_at")
+        # The published date wins: an agent's "added" date is provenance the
+        # catalog already advertised and must not move when history is
+        # rewritten (squash, re-root). Git history only dates agents the
+        # last good registry has never seen; a shallow CI checkout blanks
+        # neither.
+        added = previous.get(name, {}).get("_added_at") or added_dates.get(py_path.as_posix())
         if added:
             manifest["_added_at"] = added
 

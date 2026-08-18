@@ -456,6 +456,9 @@ jobs:
           test -x "$HOME/.local/bin/brainstem"
           test -f "$HOME/.brainstem/src/rapp_brainstem/brainstem.py"
           test ! -e "$HOME/.brainstem/src/solutions"
+          # PR runs check out the merge commit at depth 1; fetch the candidate
+          # head so its tree is present before we compare against it.
+          git fetch --quiet --depth=1 "https://github.com/$CANDIDATE_REPO.git" "$CANDIDATE_SHA"
           expected_runtime_tree="$(git rev-parse "$CANDIDATE_SHA:rapp_brainstem")"
           installed_runtime_tree="$(
             git -C "$HOME/.brainstem/src" rev-parse HEAD:rapp_brainstem
@@ -527,6 +530,9 @@ jobs:
           if (Test-Path (Join-Path $env:USERPROFILE '.brainstem\src\solutions')) { throw 'sparse checkout included solutions' }
           if (-not (Test-Path (Join-Path $env:USERPROFILE '.local\bin\brainstem.cmd'))) { throw 'brainstem.cmd missing' }
           if (-not (Test-Path (Join-Path $env:USERPROFILE '.local\bin\brainstem.ps1'))) { throw 'brainstem.ps1 missing' }
+          # PR runs check out the merge commit at depth 1; fetch the candidate
+          # head so its tree is present before we compare against it.
+          git fetch --quiet --depth=1 ("https://github.com/{0}.git" -f $env:CANDIDATE_REPO) $env:CANDIDATE_SHA
           $candidateTree = '{0}:rapp_brainstem' -f $env:CANDIDATE_SHA
           $expectedRuntimeTree = (git rev-parse $candidateTree).Trim()
           $installedRuntimeTree = (

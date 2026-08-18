@@ -282,7 +282,7 @@ def test_quest_exposes_beta_course_shell_and_global_easy_lanes():
     assert "GitHub Copilot only" in quest
     assert "GitHub Copilot + Brainstem" in quest
     assert len(re.findall(r"<[^>]+\bdata-report-location=", quest)) == (
-        7 + len(cases) + len(manual_frames)
+        8 + len(cases) + len(manual_frames)  # 1 workshop-setup + 3+3 lane steps + 1 easy verdict
     )
     assert "aibast-workshop-feedback/1.0" in quest
     assert "Watch assisted film" not in quest
