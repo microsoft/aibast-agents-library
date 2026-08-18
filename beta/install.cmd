@@ -122,10 +122,10 @@ if exist "%BETA_SOURCE%\.git" (
 if defined REPO_COMMIT (
   set "ACTUAL_COMMIT="
   set "ACTUAL_COMMIT_FILE=%TEMP%\rapp-beta-commit-%RANDOM%-%RANDOM%.txt"
-  "%GIT_EXE%" -C "%BETA_SOURCE%" rev-parse HEAD > "%ACTUAL_COMMIT_FILE%"
+  "%GIT_EXE%" -C "%BETA_SOURCE%" rev-parse HEAD > "!ACTUAL_COMMIT_FILE!"
   if errorlevel 1 goto :cleanup_actual_commit
-  set /p "ACTUAL_COMMIT="<"%ACTUAL_COMMIT_FILE%"
-  del "%ACTUAL_COMMIT_FILE%" >nul 2>nul
+  set /p "ACTUAL_COMMIT="<"!ACTUAL_COMMIT_FILE!"
+  del "!ACTUAL_COMMIT_FILE!" >nul 2>nul
   set "ACTUAL_COMMIT_FILE="
   if /i not "!ACTUAL_COMMIT!"=="%REPO_COMMIT%" (
     echo [X] Beta checkout resolved to !ACTUAL_COMMIT! instead of %REPO_COMMIT%.
