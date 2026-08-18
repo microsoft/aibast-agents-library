@@ -149,7 +149,44 @@ All agents in this registry target:
 
 ---
 
-## Article IX — Amendments
+## Article IX — Position in the Microsoft Ecosystem
+
+RAPP Brainstem does not compete with Copilot Studio, Scout, Cowork, Foundry, or Azure. It maps into all of them. What sets it apart is *where the solution is locked in first*: on the local machine, before any tenant, trial, or subscription exists.
+
+### The use case
+
+Brainstem is built for the moment when all five of these are true at once:
+
+1. **You don't have access to the customer tenant.**
+2. **You don't have access to a trial instance.**
+3. **You only have your local machine.**
+4. **You need to learn all of AI yesterday.**
+5. **You need to show proof of value on the same call.**
+
+Every other surface in the stack assumes at least one of these is false — a tenant to deploy into, an environment to provision, a licence to activate, time to ramp. Brainstem assumes all five are true. It needs a laptop and a GitHub Copilot sign-in, and it produces working, inspectable evidence inside the meeting where the question was asked.
+
+### How it maps
+
+| The customer needs… | Brainstem proves it locally with… | It promotes to… |
+|---|---|---|
+| A governed agent with M365 reach and connectors | the same single-file agent, hotloaded and tested through `/chat` | **Microsoft Copilot Studio** (Draft first, publish is the customer's action) |
+| An agent working across their Teams, mail, calendar, and files | the same intent and steps, proven against local or synthetic data | **Scout** (on-device, WorkIQ) or **Cowork** (Microsoft 365 Copilot agent) |
+| Durable cloud execution and memory | the identical RAPP/1 wire and egg | **Hippocampus / Azure Functions** |
+| Managed models, runtime operations, and enterprise scale | the proven agent, unchanged | **Microsoft Foundry** |
+| End-user distribution | the proven agent, unchanged | **Microsoft 365 Copilot and Teams** |
+| A custom product experience | the proven agent as the engine | **Custom Azure applications** |
+
+Promotion changes the host and the governance level. It never changes the agent's intent, its single-file shape, or its chat contract (Article II). That is why a solution locked in locally on the first call is still the solution that ships.
+
+### What this means for the registry
+
+- Every agent here must be runnable on a laptop with no tenant and no keys beyond `requires_env` (Article VII) — that is the same-call proof requirement, not a convenience.
+- Every agent here should name the downstream surface it is intended to promote to, so the local proof and the production destination are one story.
+- Local first is not "local only": the local artifact is the artifact that promotes.
+
+---
+
+## Article X — Amendments
 
 This constitution can be amended by opening a PR that modifies `CONSTITUTION.md`. The spirit of this document is **simplicity**. Single file. Single principle. Single source of truth.
 

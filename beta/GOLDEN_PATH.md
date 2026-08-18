@@ -292,6 +292,25 @@ proven, the same RAPP/1 artifacts can move into:
 Promotion changes the host and governance level, not the agent's intent or chat
 contract.
 
+## The use case that sets Brainstem apart
+
+Frontier maps into every surface in the Microsoft stack, but it locks the
+solution in locally first. It exists for the call where all five of these are
+true at once:
+
+1. You don't have access to the customer tenant.
+2. You don't have access to a trial instance.
+3. You only have your local machine.
+4. You need to learn all of AI yesterday.
+5. You need to show proof of value on the same call.
+
+Copilot Studio, Scout, Cowork, Foundry, and Azure each assume at least one of
+those is false. Frontier assumes all five are true: a laptop and a GitHub
+Copilot sign-in are enough to build, hotload, test, record, and hand over a
+working single-file agent inside the meeting where the question was asked. The
+proven local artifact is then the artifact that promotes (see the downstream
+path above and `CONSTITUTION.md`, Article IX).
+
 ## Why AIBAST
 
 AIBAST is the tip of the spear in the customer's AI journey. The team is
