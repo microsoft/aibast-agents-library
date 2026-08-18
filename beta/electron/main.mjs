@@ -7,6 +7,8 @@ import {
   BrowserWindow,
   ipcMain,
   Menu,
+  nativeImage,
+  Notification,
   session,
   shell,
 } from "electron";
@@ -19,6 +21,8 @@ import { BrainSurgeon } from "./brain-surgeon.mjs";
 import { CopilotStudioAuthManager } from "./copilot-studio-auth.mjs";
 import { CopilotRuntime } from "./copilot-runtime.mjs";
 import { BetaRouteManager } from "./route-manager.mjs";
+import { RappStoreClient } from "./rapp-store.mjs";
+import { TwinManager } from "./twin-manager.mjs";
 import {
   allowsUiDriverMediaPermission,
   startUiDriverServer,
@@ -35,6 +39,11 @@ import {
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 const packageDir = path.resolve(dirname, "..");
+// The blue-brain app icon (build/icon.png), used for the window, the dock, and
+// the taskbar so the running app never shows the default Electron icon. Packaged
+// builds pick up build/icon.icns / .ico / icons/ via package.json.
+const appIconFile = path.join(packageDir, "build", "icon.png");
+const appIcon = existsSync(appIconFile) ? nativeImage.createFromPath(appIconFile) : null;
 const uiFile = path.join(dirname, "..", "ui", "index.html");
 const uiUrl = pathToFileURL(uiFile).href;
 const config = resolveBrainstemConfig();
@@ -350,7 +359,12 @@ let updateCheckInFlight = false;
 let updateMenuItem = null;
 let availableUpdate = null;
 let uiDriver = null;
-let brainSurgeon = null;
+// One GitHub Copilot Brain Surgeon SDK session per chat tab, keyed by the id the
+// renderer assigns. All share one runtime, one route manager, and one visible
+// Brainstem — "several agents, one brainstem" — and every event they emit is
+// tagged with its sessionId so the renderer routes it to the right tab/tile.
+const brainSurgeons = new Map();
+const MAX_BRAIN_SURGEONS = 12;
 
 const state = {
   brainstem: { phase: "starting", message: "Starting shared Brainstem..." },
@@ -395,7 +409,251 @@ function emitSurgeonEvent(event) {
   }
 }
 
-async function executeUiCommand(command) {
+// RAPPlication twins — specialized rapplications hatched from the RAPP Store as
+// concurrent long-lived workers on their own loopback ports, beside the
+// Brainstem chats in the herd. Kernel unchanged; driven only over /chat.
+const rappStore = new RappStoreClient();
+const twinManager = new TwinManager({
+  brainstemConfig: config,
+  betaHome,
+  routeManager,
+  storeClient: rappStore,
+  // The Brainstem that plans a two-brain loop is whichever one is live now
+  // (config URL, or a routed Brainstem once a route activates).
+  brainstemUrl: () => state.url,
+  onEvent: (event) => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      mainWindow.webContents.send("beta:twin-event", structuredClone(event));
+    }
+    if (event.type === "twin-needs-auth") notifyTwinNeedsAuth(event);
+  },
+});
+
+// Twins pause at the one user-owned auth step (e.g. PAC device login). If the
+// user is multitasking off the window they must still know a twin needs them —
+// so we raise a native OS notification, and clicking it focuses the window and
+// pops open the auth page in the user's own browser (identity auth is completed
+// in their real session; the app never captures credentials).
+const twinAuthPrompts = new Map();   // twinId -> { url, code, note }
+
+function parseAuthPrompt(message) {
+  const text = String(message || "");
+  const url = (text.match(/https?:\/\/[^\s"')]+/) || [])[0]
+    || (/devicelogin|device code|microsoft/i.test(text) ? "https://microsoft.com/devicelogin" : null);
+  const code = (text.match(/\b[A-Z0-9]{4,5}-[A-Z0-9]{4,5}\b/) || [])[0] || null;
+  return { url, code };
+}
+
+function openExternalUrl(url) {
+  const value = String(url || "");
+  if (!/^https?:\/\//i.test(value)) throw new Error("Refusing to open a non-http(s) URL.");
+  return shell.openExternal(value);
+}
+
+function notifyTwinNeedsAuth(event) {
+  const twin = twinManager.list().find((t) => t.id === event.id);
+  const name = twin?.name || event.id || "A RAPPlication twin";
+  const { url, code } = parseAuthPrompt(event.message);
+  twinAuthPrompts.set(event.id, { url, code, note: event.message });
+  if (!Notification.isSupported()) return;
+  const notification = new Notification({
+    title: "A RAPP twin needs you to sign in",
+    body: `${name} paused for authentication${code ? ` — code ${code}` : ""}. Click to continue.`,
+    silent: false,
+  });
+  notification.on("click", () => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      if (mainWindow.isMinimized()) mainWindow.restore();
+      mainWindow.focus();
+      mainWindow.webContents.send("beta:twin-focus", { id: event.id });
+    }
+    if (url) openExternalUrl(url).catch(() => {});
+  });
+  notification.show();
+}
+
+// Pop a twin's own UI out into a phone-sized window — "mobile-first" literally —
+// so a RAPPlication is comfortable to use at a real small-screen size.
+// Walk the main window's frame tree to find the iframe hosting a twin's UI
+// (loaded from the twin's own loopback origin).
+function findTwinFrame(twinUrl) {
+  if (!mainWindow || mainWindow.isDestroyed() || !twinUrl) return null;
+  const prefix = String(twinUrl).replace(/\/+$/, "");
+  const walk = (frame) => {
+    const url = String(frame.url || "");
+    if (url === prefix || url.startsWith(prefix + "/") || url.startsWith(prefix + "?")) return frame;
+    for (const child of frame.frames || []) {
+      const found = walk(child);
+      if (found) return found;
+    }
+    return null;
+  };
+  return walk(mainWindow.webContents.mainFrame);
+}
+
+// Wipe the Grail chat in a twin's iframe and inject the rapplication's own
+// static UI in its place. The iframe is loaded from the twin's own origin, so
+// the injected UI's relative /chat hits the twin directly — no server, no proxy.
+// A tiny force-mode marker woven into every injected rapplication UI. Because
+// WE write the HTML into the frame, we can make any rapplication UI drivable /
+// "force-mode capable" — the AI drives it in-frame with the ui-driver's cursor,
+// and this flag lets the UI (or us) know it is under AI control. A rapplication
+// may also ship its own force-mode affordances; this never overrides them.
+const FORCE_MODE_BOOTSTRAP = "<script>window.__rappForceModeCapable=true;"
+  + "try{document.documentElement.setAttribute('data-rapp-force-mode','ready');}catch(e){}</script>";
+
+function instrumentRappUi(html) {
+  const marker = FORCE_MODE_BOOTSTRAP;
+  // Inject right after <head> when present, else prepend.
+  return /<head[^>]*>/i.test(html)
+    ? html.replace(/<head[^>]*>/i, (m) => m + marker)
+    : marker + html;
+}
+
+const injectedFrames = new WeakSet();   // avoid re-injecting the same frame
+
+async function injectFrameUi(frame, twinId) {
+  if (injectedFrames.has(frame)) return { ok: true, already: true };
+  const raw = twinManager.uiHtml(twinId);
+  if (!raw) return { ok: false, reason: "no custom UI" };
+  const html = instrumentRappUi(raw);
+  injectedFrames.add(frame);
+  await frame.executeJavaScript(
+    `(() => { const html = ${JSON.stringify(html)}; document.open(); document.write(html); document.close(); return true; })()`,
+    true,
+  );
+  return { ok: true, instrumented: true };
+}
+
+async function injectTwinUi(twinId) {
+  const twin = twinManager.list().find((t) => t.id === twinId);
+  if (!twin?.url) throw new Error(`No twin ${twinId}.`);
+  const frame = findTwinFrame(twin.url);
+  if (!frame) throw new Error(`Twin ${twinId} UI frame is not loaded yet.`);
+  return injectFrameUi(frame, twinId);
+}
+
+function popOutTwin(id) {
+  const twin = twinManager.list().find((t) => t.id === id);
+  if (!twin?.url) throw new Error(`No twin ${id}.`);
+  const win = new BrowserWindow({
+    width: 400,
+    height: 820,
+    title: twin.name || "RAPPlication",
+    backgroundColor: "#0d1117",
+    parent: mainWindow || undefined,
+    webPreferences: { contextIsolation: true, nodeIntegration: false, sandbox: true },
+  });
+  win.setMenuBarVisibility(false);
+  const raw = twinManager.uiHtml(id);
+  const html = raw ? instrumentRappUi(raw) : null;
+  win.webContents.on("did-finish-load", () => {
+    if (html) {
+      win.webContents.executeJavaScript(
+        `(() => { const h = ${JSON.stringify(html)}; document.open(); document.write(h); document.close(); return true; })()`,
+        true,
+      ).catch(() => {});
+    }
+  });
+  win.loadURL(`${twin.url}/?beta=1`);
+  return { ok: true };
+}
+
+// P2: hatch the Copilot Studio Factory + Deploy pipeline onto its OWN twin, and
+// kick its deploy loop asynchronously. The Brain Surgeon (and the main Brainstem
+// chat) stays free for other work while this twin drives PAC / Factory / Deploy
+// on its own port — the deploy engine is unchanged, only WHERE it runs and WHO
+// drives it (a twin loop, not the visible Brainstem). Draft-only; the one
+// visible step is the user-owned PAC device login, which the twin surfaces.
+const COPILOT_STUDIO_TWIN_AGENTS = [
+  "rar_kody_w_factory_agent.py",
+  "rar_kody_w_copilot_studio_parity_deploy_agent.py",
+];
+const COPILOT_STUDIO_TWIN_RESOURCES = [
+  "hacker-news-memory-parity-cases.json",
+  "industry-agent-matrix.json",
+];
+
+function readCopilotStudioResource(name) {
+  const file = path.join(import.meta.dirname, "..", "resources", "copilot-studio", name);
+  if (!existsSync(file)) throw new Error(`Bundled Copilot Studio resource is missing: ${file}`);
+  return file;
+}
+
+async function hatchCopilotStudioTwin({ displayName = "Copilot Studio Draft", environment = null, agents = [] } = {}) {
+  const agentSources = [];
+  for (const filename of COPILOT_STUDIO_TWIN_AGENTS) {
+    agentSources.push({ filename, source: readFileSync(readCopilotStudioResource(filename), "utf8") });
+  }
+  // Include the selected business/industry agents to deploy (from the active
+  // composition), so the twin can build and parity-test them Draft-only.
+  const active = routeManager.activeAgentFiles();
+  for (const wanted of Array.isArray(agents) ? agents : []) {
+    const match = active.find((a) => a.filename === wanted);
+    if (match) {
+      try {
+        agentSources.push({ filename: match.filename, source: routeManager.readActiveAgent(match.filename) });
+      } catch {
+        // skip unreadable agent
+      }
+    }
+  }
+  const resources = COPILOT_STUDIO_TWIN_RESOURCES.map((name) => ({
+    name,
+    bytes: readFileSync(readCopilotStudioResource(name)),
+  }));
+  const parityCases = "hacker-news-memory-parity-cases.json";
+  const instruction = [
+    "You are a Copilot Studio deploy twin running on your own Brainstem worker.",
+    "Deploy the loaded business/industry agent(s) to a Draft in Microsoft Copilot Studio",
+    "using RappCopilotStudioFactoryBeta and CopilotStudioDeployBeta.",
+    `Target display name: ${displayName}.`,
+    environment ? `Target environment: ${environment}.` : "Ask which environment only if none is authenticated.",
+    "Run doctor, then plan and build. If PAC is NOT authenticated to that environment,",
+    "reply with exactly what PAC device login is required and STOP — do not guess credentials.",
+    "Otherwise provision, push as DRAFT, run parity against the parity cases",
+    `(${parityCases} in your working dir), and finalize.`,
+    "DRAFT-ONLY: never call release or publish; publishing is the user's manual action.",
+    "Never read or echo any client secret. Report the AgentId, environment, and the Copilot Studio Draft link.",
+    "Say DONE when the Draft is ready.",
+  ].join(" ");
+  // Non-blocking: hatch + kick the loop; return immediately so the Surgeon is free.
+  return twinManager.hatchLocal(
+    {
+      id: "copilot-studio-deploy",
+      name: `Copilot Studio Deploy · ${displayName}`,
+      agentSources,
+      resources,
+      license: "beta-bundled",
+    },
+    { instruction },
+  );
+}
+
+// Actions that actually DRIVE the one visible Brainstem (move the cursor, type,
+// hold the center chat, record, run the click-through). With several Brain
+// Surgeon chats live at once they share this single window, so these are
+// serialized through one "stage" so two chats never fight over it. Read-only
+// and quick-state actions (inspect, read, screenshot, telemetry, lease, force
+// mode) pass straight through — a background chat keeps doing its own file,
+// shell, build, and test work while another chat holds the stage.
+const UI_STAGE_ACTIONS = new Set([
+  "announce", "chat", "click", "press", "run",
+  "start_recording", "stop_recording", "surgeon_chat", "tour", "type",
+]);
+let uiStageChain = Promise.resolve();
+
+function executeUiCommand(command) {
+  const action = String(command?.action || "").toLowerCase();
+  if (!UI_STAGE_ACTIONS.has(action)) return rawUiCommand(command);
+  const run = () => rawUiCommand(command);
+  const result = uiStageChain.then(run, run);
+  // Keep the queue moving even if one driving command fails.
+  uiStageChain = result.then(() => {}, () => {});
+  return result;
+}
+
+async function rawUiCommand(command) {
   if (!uiDriver?.metadataPath) {
     throw new Error("The visible Brainstem control bridge is not ready.");
   }
@@ -418,19 +676,44 @@ async function executeUiCommand(command) {
   return payload.result;
 }
 
-function ensureBrainSurgeon() {
-  if (!brainSurgeon) {
-    brainSurgeon = new BrainSurgeon({
+function normalizeSurgeonId(sessionId) {
+  const id = Number.parseInt(sessionId, 10);
+  return Number.isFinite(id) && id > 0 ? id : 1;
+}
+
+function ensureBrainSurgeon(sessionId = 1) {
+  const id = normalizeSurgeonId(sessionId);
+  let surgeon = brainSurgeons.get(id);
+  if (!surgeon) {
+    if (brainSurgeons.size >= MAX_BRAIN_SURGEONS) {
+      throw new Error(
+        `You have ${MAX_BRAIN_SURGEONS} Copilot chats open — close one before opening another.`,
+      );
+    }
+    surgeon = new BrainSurgeon({
       runtime: copilot,
       brainstemUrl: config.url,
       checkForUpdates: () => handleCheckForUpdates({ openPanel: true }),
       copilotStudioAuth,
       routeManager,
       uiCommand: executeUiCommand,
-      onEvent: emitSurgeonEvent,
+      twins: {
+        hatch: (storeId, instruction) => twinManager.hatch(storeId, { instruction: instruction || null }),
+        list: () => twinManager.list(),
+        list_store: () => rappStore.list(),
+        loop: (id, goal) => { twinManager.loop(id, goal).catch(() => {}); return { ok: true, looping: id }; },
+        deploy_copilot_studio: (opts) => hatchCopilotStudioTwin(opts || {}),
+        open_auth: (opts) => {
+          const url = opts?.url || (opts?.id && twinAuthPrompts.get(opts.id)?.url);
+          if (!url) throw new Error("No auth URL to open.");
+          return openExternalUrl(url).then(() => ({ ok: true, opened: url }));
+        },
+      },
+      onEvent: (event) => emitSurgeonEvent({ ...event, sessionId: id }),
     });
+    brainSurgeons.set(id, surgeon);
   }
-  return brainSurgeon;
+  return surgeon;
 }
 
 function loopbackUrl(raw) {
@@ -464,6 +747,23 @@ function routeMainNavigation(event, raw) {
   if (externalUrl(raw)) void shell.openExternal(raw);
 }
 
+// A twin runs its own Brainstem worker on its own loopback port, and its UI is
+// shown in a herd-tile iframe — so twin worker URLs are allowed to load in
+// (sub)frames, alongside the active Brainstem. Both are loopback-only.
+function isTwinFrameUrl(raw) {
+  // Twin workers each run on their own loopback port and are shown in herd-tile
+  // iframes. The kernel trust boundary and the page CSP already confine
+  // everything to loopback, so any 127.0.0.1/localhost subframe is allowed
+  // (this covers every twin worker without racing tile creation).
+  try {
+    const url = new URL(raw);
+    return ["http:", "https:"].includes(url.protocol)
+      && ["127.0.0.1", "localhost"].includes(url.hostname);
+  } catch {
+    return false;
+  }
+}
+
 function routeFrameNavigation(details) {
   const raw = details?.url;
   if (!raw || raw === "about:blank") return;
@@ -474,7 +774,7 @@ function routeFrameNavigation(details) {
     }
     return;
   }
-  if (loopbackUrl(raw)) return;
+  if (loopbackUrl(raw) || isTwinFrameUrl(raw)) return;   // active Brainstem OR a twin worker
   details.preventDefault();
   if (externalUrl(raw)) void shell.openExternal(raw);
 }
@@ -499,6 +799,7 @@ function createWindow() {
     minHeight: 620,
     title: "RAPP Brainstem Frontier",
     backgroundColor: "#0d1117",
+    ...(appIcon ? { icon: appIcon } : {}),
     webPreferences: {
       preload: path.join(dirname, "preload.cjs"),
       contextIsolation: true,
@@ -832,14 +1133,77 @@ function registerIpc() {
       return handleInstallUpdate();
     },
   );
-  ipcMain.handle("beta:surgeon-send", async (event, prompt) => {
+  ipcMain.handle("beta:surgeon-send", async (event, sessionId, prompt) => {
     assertTrustedIpc(event);
-    return ensureBrainSurgeon().send(prompt);
+    return ensureBrainSurgeon(sessionId).send(prompt);
   });
-  ipcMain.handle("beta:surgeon-reset", async (event) => {
+  ipcMain.handle("beta:surgeon-reset", async (event, sessionId) => {
     assertTrustedIpc(event);
-    if (brainSurgeon) await brainSurgeon.reset();
+    const surgeon = brainSurgeons.get(normalizeSurgeonId(sessionId));
+    if (surgeon) await surgeon.reset();
     return { ok: true };
+  });
+  ipcMain.handle("beta:surgeon-close", async (event, sessionId) => {
+    assertTrustedIpc(event);
+    const id = normalizeSurgeonId(sessionId);
+    const surgeon = brainSurgeons.get(id);
+    if (surgeon) {
+      brainSurgeons.delete(id);
+      await surgeon.stop().catch(() => {});
+    }
+    return { ok: true };
+  });
+  ipcMain.handle("beta:store-list", async (event) => {
+    assertTrustedIpc(event);
+    return rappStore.list();
+  });
+  ipcMain.handle("beta:twin-list", async (event) => {
+    assertTrustedIpc(event);
+    return twinManager.list();
+  });
+  ipcMain.handle("beta:twin-hatch", async (event, storeId, instruction) => {
+    assertTrustedIpc(event);
+    return twinManager.hatch(storeId, { instruction: instruction || null });
+  });
+  ipcMain.handle("beta:twin-chat", async (event, id, prompt) => {
+    assertTrustedIpc(event);
+    return twinManager.chat(id, prompt, { author: "You" });
+  });
+  ipcMain.handle("beta:twin-run", async (event, id, instruction) => {
+    assertTrustedIpc(event);
+    return twinManager.run(id, instruction);
+  });
+  // The visible Brainstem loops with the twin autonomously (two-brain: Brainstem
+  // plans each turn, twin executes). Non-blocking — returns once kicked off; the
+  // exchange streams into the twin's tile so the user can watch and interject.
+  ipcMain.handle("beta:twin-loop", async (event, id, goal) => {
+    assertTrustedIpc(event);
+    twinManager.loop(id, goal).catch(() => {});   // errors surface as a twin-message in the room
+    return { ok: true, looping: id };
+  });
+  ipcMain.handle("beta:twin-close", async (event, id) => {
+    assertTrustedIpc(event);
+    return twinManager.close(id);
+  });
+  ipcMain.handle("beta:twin-deploy-copilot-studio", async (event, options) => {
+    assertTrustedIpc(event);
+    return hatchCopilotStudioTwin(options || {});
+  });
+  ipcMain.handle("beta:twin-popout", async (event, id) => {
+    assertTrustedIpc(event);
+    return popOutTwin(id);
+  });
+  ipcMain.handle("beta:twin-inject-ui", async (event, id) => {
+    assertTrustedIpc(event);
+    return injectTwinUi(id);
+  });
+  ipcMain.handle("beta:open-auth", async (event, options) => {
+    assertTrustedIpc(event);
+    const { url, id } = options || {};
+    const target = url || (id && twinAuthPrompts.get(id)?.url);
+    if (!target) throw new Error("No auth URL to open.");
+    await openExternalUrl(target);
+    return { ok: true, opened: target };
   });
 }
 
@@ -901,6 +1265,10 @@ if (!hasLock) {
   });
 
   app.whenReady().then(() => {
+    // Blue-brain dock icon in dev too (packaged builds get it from the bundle).
+    if (appIcon && !appIcon.isEmpty() && process.platform === "darwin" && app.dock) {
+      app.dock.setIcon(appIcon);
+    }
     session.defaultSession.setPermissionRequestHandler((webContents, permission, callback) => {
       callback(allowsUiDriverMediaPermission(webContents, permission));
     });
@@ -909,6 +1277,10 @@ if (!hasLock) {
     loadPendingUpdateResult();
     mainWindow = createWindow();
     startUiDriverServer({
+      resolveTwinUrls: (id) => {
+        const twin = twinManager.list().find((t) => t.id === id);
+        return twin ? [twin.url].filter(Boolean) : [];
+      },
       window: mainWindow,
       brainstemHome: config.brainstemHome,
       loopbackUrl,
@@ -956,7 +1328,8 @@ if (!hasLock) {
     if (shutdownStarted) return;
     shutdownStarted = true;
     Promise.allSettled([
-      brainSurgeon?.stop(),
+      ...Array.from(brainSurgeons.values(), (surgeon) => surgeon.stop()),
+      twinManager.stopAll(),
       copilot.stop(),
       routeManager.stop(),
       uiDriver?.stop(),

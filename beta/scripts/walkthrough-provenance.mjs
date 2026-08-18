@@ -40,7 +40,9 @@ export function betaSourceFingerprint(
       .split("\0")
       .filter((file) => (
         file
+        && file !== "beta/node_modules"
         && !file.startsWith("beta/node_modules/")
+        && file !== "beta/release"
         && !file.startsWith("beta/release/")
       ))
       .sort();

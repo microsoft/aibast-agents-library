@@ -55,6 +55,33 @@ demo the user can replay later, start recording before the workflow and stop
 recording after it; the video and final screenshot will be attached here.
 You can clear the visible Brainstem transcript and refresh its page through
 dedicated tools when troubleshooting or preparing a clean demonstration.
+
+AI FORCE MODE (hidden until asked for): when the user asks you to use "AI force
+mode" — or to drive, operate, or "telepathically" run the Brainstem for them
+while they watch — light the window edges first (set_ai_force_mode on, or pass
+force_mode: true to drive_visible_brainstem), narrate each visible action
+briefly, do the task through the real interface, and turn force mode off when
+you hand control back. Never light it unless the user invoked it; it exists so
+the person always knows an AI, not a hand, is moving the interface.
+
+RAPPLICATION TWINS (hand off specialized long-running jobs — don't overshell
+yourself): for a long-running SPECIALIZED job (deploy this proven agent to
+Copilot Studio, push it to Scout, wrap it for Cowork), do NOT run it in this
+chat. Call list_rapplications to see the RAPP Store, then hatch_rapplication to
+hatch the right one as its OWN twin — a separate Brainstem worker on its own
+port that loops on the job autonomously and shows as its own tile in the herd,
+with its own steerable chat. You build on the Brainstem; twins deploy. Twins are
+driven only over /chat (never a new route); they are Draft-only for Copilot
+Studio and surface exactly one user-owned auth step (PAC device login) when
+needed. Hand off and let it run. You can also operate a twin's own UI in its
+herd tile with drive_twin (click/type just like the user) so the user can be
+fully hands-off — they chat with you and you drive whatever is needed.
+
+SHOW MODE CLICK-THROUGH: show_mode_click_through walks the built-in Show Mode
+preview (record or import a task, approve the reconstructed steps, hotload the
+generated agent, test it in the center chat, confirm, promote) inside the visible
+window. Use mode "walk" to present it and mode "capture" to attach a screenshot
+of every step here — the same evidence used for the README and for training.
 `.trim();
 
 function cleanFilename(value) {
@@ -145,6 +172,7 @@ export class BrainSurgeon {
     copilotStudioAuth = null,
     routeManager = null,
     uiCommand,
+    twins = null,
     onEvent = () => {},
   } = {}) {
     this.runtime = runtime;
@@ -153,6 +181,7 @@ export class BrainSurgeon {
     this.copilotStudioAuth = copilotStudioAuth;
     this.routeManager = routeManager;
     this.uiCommand = uiCommand;
+    this.twins = twins;
     this.onEvent = onEvent;
     this.session = null;
     this.sessionUnsubscribe = null;
@@ -496,10 +525,204 @@ export class BrainSurgeon {
                 required: ["action"],
               },
             },
+            force_mode: {
+              type: "boolean",
+              description: "Light the window edges (AI force mode) while these steps run. Only when the user asked for it.",
+            },
           },
           required: ["steps"],
         },
-        handler: ({ steps }) => this.uiCommand({ action: "run", steps }),
+        handler: ({ steps, force_mode: forceMode = false }) => this.uiCommand({
+          action: "run",
+          steps,
+          ...(forceMode ? { forceMode: true } : {}),
+        }),
+      },
+      {
+        name: "drive_twin",
+        description: "Operate a RAPPlication twin's OWN UI in its herd tile — click, type, press, read, announce — with the animated cursor, exactly like the user would. This lets you manipulate the rapplication hands-off for the user (they just chat with you). The twin must be visible in the herd. For the twin's data itself you can also just POST to its /chat; use this to drive its visible interface.",
+        defer: "never",
+        skipPermission: true,
+        parameters: {
+          type: "object",
+          properties: {
+            twin_id: { type: "string", description: "The twin id (from list/hatch)." },
+            steps: {
+              type: "array",
+              minItems: 1,
+              maxItems: 40,
+              items: {
+                type: "object",
+                properties: {
+                  action: { type: "string", enum: ["announce", "click", "press", "read", "type", "wait"] },
+                  selector: { type: "string" },
+                  targetText: { type: "string" },
+                  text: { type: "string" },
+                  value: { type: "string" },
+                  key: { type: "string" },
+                  label: { type: "string" },
+                  optional: { type: "boolean" },
+                  timeoutMs: { type: "integer" },
+                  typingDelayMs: { type: "integer" },
+                  settleMs: { type: "integer" },
+                },
+                required: ["action"],
+              },
+            },
+            force_mode: { type: "boolean", description: "Light AI force mode while driving (only when the user asked for it)." },
+          },
+          required: ["twin_id", "steps"],
+        },
+        handler: ({ twin_id: twinId, steps, force_mode: forceMode = false }) => this.uiCommand({
+          action: "run",
+          twin: twinId,
+          steps,
+          ...(forceMode ? { forceMode: true } : {}),
+        }),
+      },
+      {
+        name: "set_ai_force_mode",
+        description: "Turn AI force mode on or off: the visible window's edges glow and a tag says an AI is driving. Hidden unless the user asks for it; it fades on its own when you go quiet.",
+        defer: "never",
+        skipPermission: true,
+        parameters: {
+          type: "object",
+          properties: {
+            on: { type: "boolean" },
+            label: { type: "string", description: "Optional short tag text (default: AI force mode · an AI is driving this Brainstem)." },
+          },
+          required: ["on"],
+        },
+        handler: ({ on, label }) => this.uiCommand({
+          action: "force_mode",
+          value: on ? "on" : "off",
+          ...(label ? { label } : {}),
+        }),
+      },
+      {
+        name: "show_mode_click_through",
+        description: "Walk the Show Mode click-through preview in the visible window: record or import a task, approve the reconstructed steps, hotload the generated agent, test it in the center chat, confirm, promote. mode walk presents it; mode capture also attaches a screenshot of every step.",
+        defer: "never",
+        skipPermission: true,
+        parameters: {
+          type: "object",
+          properties: {
+            mode: { type: "string", enum: ["walk", "capture"] },
+            pace_ms: { type: "integer", minimum: 300, maximum: 20000, description: "Dwell per step (default 1800 for walk, 900 for capture)." },
+            force_mode: { type: "boolean", description: "Light AI force mode while walking (only when the user asked for it)." },
+            from_step: { type: "string", description: "Optional step id to start from (see returned steps)." },
+          },
+        },
+        handler: (args) => this.showModeClickThrough(args),
+      },
+      {
+        name: "list_rapplications",
+        description: "List RAPPlications available in the RAPP Store (specialized twins you can hatch to offload deploy/other long-running jobs). Returns id, name, summary, category, license, gated.",
+        defer: "never",
+        skipPermission: true,
+        parameters: { type: "object", properties: {} },
+        handler: async () => {
+          if (!this.twins) throw new Error("RAPPlication twins are unavailable.");
+          const list = await this.twins.list_store();
+          return JSON.stringify(
+            list.map((e) => ({
+              id: e.id, name: e.name, summary: e.summary, category: e.category,
+              license: e.license, gated: e.gated,
+            })),
+            null,
+            2,
+          );
+        },
+      },
+      {
+        name: "hatch_rapplication",
+        description: "Hatch a RAPPlication from the RAPP Store as its own twin — a separate Brainstem worker on its own port that runs the specialized job autonomously in the herd. Optionally pass an instruction to start its loop. Use for specialized long-running work (e.g. Copilot Studio auto-deploy) instead of running it in this chat.",
+        defer: "never",
+        skipPermission: true,
+        parameters: {
+          type: "object",
+          properties: {
+            store_id: { type: "string", description: "RAPP Store rapplication id (from list_rapplications)." },
+            instruction: { type: "string", description: "Optional first instruction to start the twin's autonomous loop." },
+          },
+          required: ["store_id"],
+        },
+        handler: async ({ store_id: storeId, instruction = null }) => {
+          if (!this.twins) throw new Error("RAPPlication twins are unavailable.");
+          const twin = await this.twins.hatch(storeId, instruction);
+          return JSON.stringify({
+            hatched: twin.id, name: twin.name, port: twin.port, url: twin.url,
+            rappid: twin.rappid, status: twin.status, license: twin.license,
+            note: "Running as its own twin in the herd; steer it in its tile chat if needed.",
+          }, null, 2);
+        },
+      },
+      {
+        name: "loop_brainstem_with_twin",
+        description: "Have the visible Brainstem loop with a hatched twin autonomously toward a goal — a genuine two-brain loop: the Brainstem plans each instruction over /chat, the twin executes it, the Brainstem reads the reply and plans the next, until the goal is met. Returns immediately; the back-and-forth streams into the twin's herd tile (labeled Brainstem ↔ the twin) so the user watches hands-off and can interject. Use when the user wants the Brainstem itself to drive a twin's work (not you). The twin must already be hatched (hatch_rapplication).",
+        defer: "never",
+        skipPermission: true,
+        parameters: {
+          type: "object",
+          properties: {
+            twin_id: { type: "string", description: "The twin id (from hatch_rapplication / list_rapplications' active list)." },
+            goal: { type: "string", description: "The goal for the Brainstem to drive the twin toward, in one or two sentences." },
+          },
+          required: ["twin_id", "goal"],
+        },
+        handler: async ({ twin_id: twinId, goal }) => {
+          if (!this.twins?.loop) throw new Error("Brainstem↔twin loop is unavailable.");
+          const result = await this.twins.loop(twinId, goal);
+          return JSON.stringify({
+            ...result,
+            note: "The Brainstem is now looping with the twin on its own; watch the twin's tile in the herd. It pauses for a PAC/identity sign-in if one is needed.",
+          }, null, 2);
+        },
+      },
+      {
+        name: "deploy_to_copilot_studio",
+        description: "Offload a Copilot Studio deployment to its OWN specialized twin (Factory + Deploy) that loops autonomously in the herd — instead of running the whole PAC/Factory/Deploy pipeline in this chat. Returns immediately; the twin drives doctor→plan→build→provision→push(Draft)→parity on its own port while you stay free for other work. Draft-only; it surfaces the one PAC device-login step if needed.",
+        defer: "never",
+        skipPermission: true,
+        parameters: {
+          type: "object",
+          properties: {
+            display_name: { type: "string", description: "Copilot Studio display name for the Draft." },
+            environment: { type: "string", description: "Target Power Platform environment (optional; the twin asks/authenticates if omitted)." },
+            agents: {
+              type: "array",
+              items: { type: "string" },
+              description: "Filenames of the loaded business/industry agents to deploy (from list_active_agent_files).",
+            },
+          },
+        },
+        handler: async ({ display_name: displayName, environment = null, agents = [] } = {}) => {
+          if (!this.twins?.deploy_copilot_studio) throw new Error("Copilot Studio twins are unavailable.");
+          const twin = await this.twins.deploy_copilot_studio({ displayName, environment, agents });
+          return JSON.stringify({
+            hatched: twin.id, name: twin.name, port: twin.port, status: twin.status,
+            note: "Copilot Studio deploy twin is looping on its own port. It stays in the herd; you are free for other work. It will surface a PAC device-login step if it needs one, and stays Draft-only.",
+          }, null, 2);
+        },
+      },
+      {
+        name: "open_auth_window",
+        description: "Pop open a browser window for the user to sign in / confirm, for anything you CANNOT complete through force mode (e.g. a Microsoft identity or PAC device login). Identity auth is completed in the user's own browser — never capture or type their credentials. Use when a twin reports needs-auth, or when a step needs the user's real session.",
+        defer: "never",
+        skipPermission: true,
+        parameters: {
+          type: "object",
+          properties: {
+            url: { type: "string", description: "The auth/confirmation URL (https). For a paused twin you may pass its id instead." },
+            id: { type: "string", description: "A twin id whose pending auth URL should be opened." },
+            note: { type: "string", description: "Short note shown to the user about what to do." },
+          },
+        },
+        handler: async ({ url, id, note }) => {
+          if (!this.twins?.open_auth) throw new Error("Auth pop-out is unavailable.");
+          const result = await this.twins.open_auth({ url, id });
+          return JSON.stringify({ ...result, note: note || "Complete the sign-in in the browser window that opened; I'll continue when you're done." }, null, 2);
+        },
       },
       {
         name: "capture_visible_brainstem",
@@ -1100,6 +1323,70 @@ export class BrainSurgeon {
         await this.releaseChatLease(chatLeaseToken);
       }
     }
+  }
+
+  async showModeClickThrough({
+    mode = "walk",
+    pace_ms: paceMs,
+    force_mode: forceMode = false,
+    from_step: fromStep,
+  } = {}) {
+    const capture = mode === "capture";
+    const pace = Math.max(300, Math.min(20000, Number(paceMs) || (capture ? 900 : 1800)));
+    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    const status = await this.uiCommand({ action: "tour", value: "status" });
+    if (!status?.available) {
+      throw new Error(status?.error || "The Show Mode click-through is not available in this window.");
+    }
+    if (forceMode) {
+      await this.uiCommand({
+        action: "force_mode",
+        value: "on",
+        label: "AI force mode · walking the Show Mode click-through",
+      });
+    }
+    const steps = status.steps || [];
+    const startIndex = fromStep ? Math.max(0, steps.indexOf(String(fromStep))) : 0;
+    const visited = [];
+    try {
+      for (let index = startIndex; index < steps.length; index += 1) {
+        const state = await this.uiCommand({
+          action: "tour",
+          value: "goto",
+          step: index,
+          settleMs: 800,
+          ...(forceMode ? { forceMode: true } : {}),
+        });
+        await sleep(pace);
+        const entry = { index, id: steps[index], running: Boolean(state?.running) };
+        if (capture) {
+          const shot = await this.uiCommand({ action: "screenshot" });
+          const screenshot = shot.screenshot || shot;
+          entry.screenshot = screenshot.path;
+          this.emit({
+            type: "artifact",
+            artifact: {
+              kind: "image",
+              url: screenshot.captureUrl,
+              path: screenshot.path,
+              alt: `Show Mode click-through · ${index + 1}/${steps.length} · ${steps[index]}`,
+            },
+          });
+        }
+        visited.push(entry);
+      }
+    } finally {
+      await this.uiCommand({ action: "tour", value: "stop" }).catch(() => {});
+      if (forceMode) {
+        await this.uiCommand({ action: "force_mode", value: "off" }).catch(() => {});
+      }
+    }
+    return JSON.stringify({
+      mode,
+      steps_total: steps.length,
+      visited,
+      note: "Preview only: the click-through paints ghost content over the real panes; nothing was recorded, analyzed, hotloaded, or sent.",
+    }, null, 2);
   }
 
   async captureVisibleBrainstem() {

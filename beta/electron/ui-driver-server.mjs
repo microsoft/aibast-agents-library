@@ -63,6 +63,18 @@ function brainstemFrame(window, loopbackUrl) {
     .find((frame) => loopbackUrl(frame.url));
 }
 
+// Find the iframe frame that hosts a given twin's UI (its custom-UI proxy origin
+// or its own Grail origin), so the AI can drive a rapplication's UI in-tile
+// exactly like the user — clicks, typing, the animated cursor, all in that tile.
+function twinFrame(window, twinUrls) {
+  const prefixes = (twinUrls || []).filter(Boolean).map((u) => String(u).replace(/\/+$/, ""));
+  if (!prefixes.length) return null;
+  return frameTree(window.webContents.mainFrame).find((frame) => {
+    const url = String(frame.url || "");
+    return prefixes.some((prefix) => url === prefix || url.startsWith(prefix + "/") || url.startsWith(prefix + "?"));
+  });
+}
+
 async function browserDriverCommand(command) {
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const state = window.__brainstemAiDriver ||= {};
@@ -619,6 +631,9 @@ async function browserDriverCommand(command) {
       };
     }
     if (action === "wait") return waitFor(step);
+    if (action === "tour" || action === "force_mode") {
+      throw new Error(`Use ${action} as a top-level UI driver command, not inside run.`);
+    }
     if (action === "announce") {
       await announce(String(step.text || step.label || "AI is operating the Brainstem"), step.durationMs);
       return { announced: String(step.text || step.label || "") };
@@ -1319,6 +1334,7 @@ function validateCommand(command) {
     "announce",
     "chat",
     "click",
+    "force_mode",
     "inspect",
     "press",
     "read",
@@ -1331,6 +1347,7 @@ function validateCommand(command) {
     "set_chat_lease",
     "stop_recording",
     "surgeon_chat",
+    "tour",
     "type",
     "wait",
   ]);
@@ -1341,9 +1358,157 @@ function validateCommand(command) {
     if (!Array.isArray(command.steps) || command.steps.length < 1 || command.steps.length > 40) {
       throw new Error("UI driver runs require between 1 and 40 steps.");
     }
-    for (const step of command.steps) validateCommand(step);
+    for (const step of command.steps) {
+      const nested = validateCommand(step);
+      if (nested.action === "tour" || nested.action === "force_mode") {
+        throw new Error(`Use ${nested.action} as a top-level UI driver command, not inside run.`);
+      }
+    }
   }
   return { ...command, action };
+}
+
+function twinTarget(command) {
+  const id = command && typeof command.twin === "string" ? command.twin.trim() : "";
+  return id || null;
+}
+
+// ── AI force mode ─────────────────────────────────────────────────────────
+// A hidden, opt-in visual state: while an AI is driving the visible window on
+// the user's behalf, the whole window's edges glow and a small tag says so.
+// It is only ever lit by an explicit `force_mode` command or by a driver
+// command carrying `forceMode: true`, and it fades on its own after the AI
+// goes quiet, so it never lingers when a person is driving.
+const FORCE_MODE_IDLE_MS = 30000;
+const forceModeState = new WeakMap();
+
+async function setForceMode(browserWindow, on, options = {}) {
+  const source = `(${function forceModeOverlay(settings) {
+    const STYLE_ID = "brainstem-ai-force-mode-style";
+    const ID = "brainstem-ai-force-mode";
+    if (!document.getElementById(STYLE_ID)) {
+      const style = document.createElement("style");
+      style.id = STYLE_ID;
+      style.textContent = `
+        #${ID} { position: fixed; inset: 0; z-index: 2147483000; pointer-events: none; }
+        #${ID}[hidden] { display: none; }
+        #${ID} .brainstem-ai-force-edge { position: absolute; inset: 0;
+          box-shadow: inset 0 0 0 2px rgba(124,140,255,.9), inset 0 0 44px rgba(124,140,255,.30), inset 0 0 130px rgba(88,166,255,.16);
+          animation: brainstem-ai-force-breathe 2.4s ease-in-out infinite; }
+        #${ID} .brainstem-ai-force-tag { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%);
+          display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 999px;
+          border: 1px solid rgba(124,140,255,.75); background: rgba(10,12,32,.94); color: #c7ceff;
+          font: 700 11px/1 ui-sans-serif, system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase;
+          box-shadow: 0 6px 24px rgba(0,0,0,.45), 0 0 18px rgba(124,140,255,.35); white-space: nowrap; }
+        #${ID} .brainstem-ai-force-dot { width: 8px; height: 8px; border-radius: 50%; background: #9aa6ff;
+          box-shadow: 0 0 0 3px rgba(154,166,255,.25); animation: brainstem-ai-force-pulse 1.6s ease-in-out infinite; }
+        @keyframes brainstem-ai-force-breathe { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
+        @keyframes brainstem-ai-force-pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.35); } }
+        @media (prefers-reduced-motion: reduce) {
+          #${ID} .brainstem-ai-force-edge, #${ID} .brainstem-ai-force-dot { animation: none; }
+        }`;
+      document.head.appendChild(style);
+    }
+    let overlay = document.getElementById(ID);
+    if (!overlay) {
+      overlay = document.createElement("div");
+      overlay.id = ID;
+      overlay.dataset.brainstemAiDriver = "true";
+      overlay.setAttribute("role", "status");
+      overlay.setAttribute("aria-live", "polite");
+      overlay.innerHTML = '<div class="brainstem-ai-force-edge"></div>'
+        + '<div class="brainstem-ai-force-tag"><span class="brainstem-ai-force-dot"></span><span class="brainstem-ai-force-text"></span></div>';
+      document.body.appendChild(overlay);
+    }
+    overlay.querySelector(".brainstem-ai-force-text").textContent = String(
+      settings.label || "AI force mode · an AI is driving this Brainstem — you're watching",
+    ).slice(0, 120);
+    overlay.hidden = !settings.on;
+    return { forceMode: Boolean(settings.on) };
+  }.toString()})(${JSON.stringify({ on: Boolean(on), label: options.label || "" })})`;
+  const result = await browserWindow.webContents.mainFrame.executeJavaScript(source, true);
+  const state = forceModeState.get(browserWindow) || {};
+  clearTimeout(state.timer);
+  state.on = Boolean(on);
+  state.timer = null;
+  forceModeState.set(browserWindow, state);
+  return result;
+}
+
+function armForceModeIdle(browserWindow, idleMs = FORCE_MODE_IDLE_MS) {
+  const state = forceModeState.get(browserWindow);
+  if (!state?.on) return;
+  clearTimeout(state.timer);
+  state.timer = setTimeout(() => {
+    setForceMode(browserWindow, false).catch(() => {});
+  }, Math.max(1000, Math.min(10 * 60 * 1000, Number(idleMs) || FORCE_MODE_IDLE_MS)));
+  state.timer.unref?.();
+}
+
+function forceModeStatus(browserWindow) {
+  return { forceMode: Boolean(forceModeState.get(browserWindow)?.on) };
+}
+
+// ── Show Mode click-through (tour) ────────────────────────────────────────
+// Drives the Show Mode click-through preview that lives in the shell window
+// (ui/show-mode-tour.js) so an AI can walk it, pause on a step, and capture
+// evidence exactly as a person clicking Next would see it.
+async function runTourCommand(browserWindow, command) {
+  const source = `(${async function tourCommand(cmd) {
+    const tour = window.rappShowModeTour;
+    if (!tour) return { available: false, error: "Show Mode click-through is not loaded in this window." };
+    const value = String(cmd.value || "status").toLowerCase();
+    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    const indexOf = (ref) => {
+      if (ref === undefined || ref === null || ref === "") return -1;
+      const asNumber = Number(ref);
+      if (Number.isInteger(asNumber) && asNumber >= 0 && asNumber < tour.steps.length) return asNumber;
+      return tour.steps.indexOf(String(ref));
+    };
+    if (value === "start") tour.start(0);
+    else if (value === "next") tour.running ? tour.next() : tour.start(0);
+    else if (value === "prev") tour.prev();
+    else if (value === "stop") tour.stop();
+    else if (value === "goto") {
+      const index = indexOf(cmd.step);
+      if (index < 0) return { available: true, error: `Unknown tour step ${cmd.step}`, steps: tour.steps };
+      tour.start(index);
+    } else if (value !== "status") {
+      return { available: true, error: `Unsupported tour command ${value}`, steps: tour.steps };
+    }
+    if (value !== "status") {
+      await sleep(Math.max(0, Math.min(5000, Number(cmd.settleMs) || 750)));
+      // Let the compositor commit the new step before anyone captures the page.
+      await Promise.race([
+        new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))),
+        sleep(400),
+      ]);
+    }
+    return {
+      available: true,
+      running: Boolean(tour.running),
+      step: tour.step || null,
+      index: tour.steps.indexOf(tour.step),
+      total: tour.steps.length,
+      steps: tour.steps,
+    };
+  }.toString()})(${JSON.stringify(command)})`;
+  const value = String(command.value || "status").toLowerCase();
+  if (value !== "status") {
+    // The click-through is a presentation: keep painting while it runs so
+    // captures reflect the current step, and surface the window without
+    // stealing keyboard focus from wherever the person is typing.
+    try {
+      browserWindow.webContents.setBackgroundThrottling(value !== "stop");
+      if (value !== "stop" && !browserWindow.isFocused()) {
+        if (browserWindow.isMinimized()) browserWindow.restore();
+        browserWindow.moveTop?.();
+      }
+    } catch {
+      // best effort
+    }
+  }
+  return browserWindow.webContents.mainFrame.executeJavaScript(source, true);
 }
 
 function writeMetadata(metadataPath, metadata) {
@@ -1374,6 +1539,7 @@ export async function startUiDriverServer({
   env = process.env,
   routeTelemetry = () => null,
   runtimeFingerprint = null,
+  resolveTwinUrls = () => [],
 } = {}) {
   if (!window || typeof loopbackUrl !== "function") {
     throw new Error("The UI driver requires a BrowserWindow and loopback URL guard.");
@@ -1577,6 +1743,26 @@ export async function startUiDriverServer({
       heartbeat = setInterval(() => {
         if (!response.writableEnded) response.write(" ");
       }, 15000);
+      if (command.forceMode === true) {
+        await setForceMode(window, true, { label: command.forceLabel });
+      }
+      if (command.action === "force_mode") {
+        const wanted = String(command.value || "status").toLowerCase();
+        if (wanted === "on") await setForceMode(window, true, { label: command.label });
+        else if (wanted === "off") await setForceMode(window, false);
+        else if (wanted !== "status") {
+          throw new Error(`Unsupported force_mode value: ${wanted}`);
+        }
+        if (wanted === "on") armForceModeIdle(window, command.idleMs);
+        jsonResponse(response, 200, { ok: true, result: forceModeStatus(window) });
+        return;
+      }
+      if (command.action === "tour") {
+        const result = await runTourCommand(window, command);
+        armForceModeIdle(window, command.idleMs);
+        jsonResponse(response, 200, { ok: true, result });
+        return;
+      }
       if (
         command.action === "recording_status"
         && capturedRecordings.has(window)
@@ -1670,14 +1856,20 @@ export async function startUiDriverServer({
         return;
       }
 
-      const target = command.target === "shell"
-        ? window.webContents.mainFrame
-        : brainstemFrame(window, loopbackUrl);
+      const wantedTwin = twinTarget(command);
+      const target = wantedTwin
+        ? twinFrame(window, resolveTwinUrls(wantedTwin))
+        : (command.target === "shell"
+          ? window.webContents.mainFrame
+          : brainstemFrame(window, loopbackUrl));
       if (!target) {
-        throw new Error("The live Brainstem frontend is not loaded yet.");
+        throw new Error(wantedTwin
+          ? `Twin ${wantedTwin} UI is not visible in the herd yet — open the herd and its tile first.`
+          : "The live Brainstem frontend is not loaded yet.");
       }
       const source = `(${browserDriverCommand.toString()})(${JSON.stringify(command)})`;
       const result = await target.executeJavaScript(source, true);
+      armForceModeIdle(window, command.idleMs);
       jsonResponse(response, 200, { ok: true, result });
     } catch (error) {
       jsonResponse(response, 400, { ok: false, error: errorMessage(error) });
@@ -1727,6 +1919,9 @@ export async function startUiDriverServer({
 
 export const uiDriverInternals = {
   browserDriverCommand,
+  forceModeStatus,
+  runTourCommand,
+  setForceMode,
   startCapturedWindowRecording,
   startWindowRecording,
   stopCapturedWindowRecording,

@@ -13,8 +13,30 @@ contextBridge.exposeInMainWorld("brainstemBeta", {
   readAgentFile: (filename, scope) => (
     ipcRenderer.invoke("beta:read-agent-file", filename, scope)
   ),
-  surgeonReset: () => ipcRenderer.invoke("beta:surgeon-reset"),
-  surgeonSend: (prompt) => ipcRenderer.invoke("beta:surgeon-send", prompt),
+  surgeonReset: (sessionId = 1) => ipcRenderer.invoke("beta:surgeon-reset", sessionId),
+  surgeonSend: (sessionId, prompt) => ipcRenderer.invoke("beta:surgeon-send", sessionId, prompt),
+  surgeonClose: (sessionId) => ipcRenderer.invoke("beta:surgeon-close", sessionId),
+  storeList: () => ipcRenderer.invoke("beta:store-list"),
+  twinList: () => ipcRenderer.invoke("beta:twin-list"),
+  twinHatch: (storeId, instruction) => ipcRenderer.invoke("beta:twin-hatch", storeId, instruction),
+  twinChat: (id, prompt) => ipcRenderer.invoke("beta:twin-chat", id, prompt),
+  twinRun: (id, instruction) => ipcRenderer.invoke("beta:twin-run", id, instruction),
+  twinLoop: (id, goal) => ipcRenderer.invoke("beta:twin-loop", id, goal),
+  twinClose: (id) => ipcRenderer.invoke("beta:twin-close", id),
+  twinDeployCopilotStudio: (options) => ipcRenderer.invoke("beta:twin-deploy-copilot-studio", options),
+  twinPopOut: (id) => ipcRenderer.invoke("beta:twin-popout", id),
+  twinInjectUi: (id) => ipcRenderer.invoke("beta:twin-inject-ui", id),
+  openAuth: (options) => ipcRenderer.invoke("beta:open-auth", options),
+  onTwinFocus: (listener) => {
+    const wrapped = (_event, payload) => listener(payload);
+    ipcRenderer.on("beta:twin-focus", wrapped);
+    return () => ipcRenderer.removeListener("beta:twin-focus", wrapped);
+  },
+  onTwinEvent: (listener) => {
+    const wrapped = (_event, payload) => listener(payload);
+    ipcRenderer.on("beta:twin-event", wrapped);
+    return () => ipcRenderer.removeListener("beta:twin-event", wrapped);
+  },
   onSurgeonEvent: (listener) => {
     const wrapped = (_event, payload) => listener(payload);
     ipcRenderer.on("beta:surgeon-event", wrapped);
