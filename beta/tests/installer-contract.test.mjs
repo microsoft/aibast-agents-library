@@ -76,6 +76,10 @@ test("Frontier is the primary customer-facing launcher identity", () => {
   }
 });
 
+test("beta test gate uses Node discovery on every shell", () => {
+  assert.equal(packageJson.scripts.test, "node --test");
+});
+
 test("beta installers exclude the solution library", () => {
   assert.match(unix, /fetch --progress --filter=blob:none --depth 1 origin "\$REPO_REF"/);
   assert.match(unix, /sparse-checkout set beta tools\/rapp1/);
@@ -251,7 +255,7 @@ test("beta embeds the full GitHub Copilot Brain Surgeon loop", () => {
   assert.match(windows, /brainstem-walkthrough\.cmd/);
   assert.match(
     main,
-    /function emitState\(\)[\s\S]*?\n}\n\nfunction emitSurgeonEvent/,
+    /function emitState\(\)[\s\S]*?\r?\n}\r?\n\r?\nfunction emitSurgeonEvent/,
   );
 });
 

@@ -6,12 +6,8 @@ import ffprobeInstaller from "@ffprobe-installer/ffprobe";
 
 function unpackedPath(filePath) {
   return String(filePath || "").replace(
-    `${process.platform === "win32" ? "\\" : "/"}app.asar${
-      process.platform === "win32" ? "\\" : "/"
-    }`,
-    `${process.platform === "win32" ? "\\" : "/"}app.asar.unpacked${
-      process.platform === "win32" ? "\\" : "/"
-    }`,
+    /([\\/])app\.asar([\\/])/,
+    "$1app.asar.unpacked$2",
   );
 }
 
