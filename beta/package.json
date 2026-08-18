@@ -21,7 +21,7 @@
     "walkthrough:ingest": "node scripts/walkthrough-via-chat.mjs --ingest-existing",
     "walkthrough:repeat": "node scripts/walkthrough-via-chat.mjs --scenario repeat-ephemeral",
     "walkthrough:stack-churn": "node scripts/walkthrough-via-chat.mjs --scenario stack-churn",
-    "test": "node --test tests/*.test.mjs",
+    "test": "node --test",
     "dist:mac": "electron-builder --mac dmg zip --arm64 --publish never",
     "package:gate": "node scripts/package-gate.mjs"
   },

@@ -17,13 +17,40 @@ test("beta launcher resolves the shared global Brainstem", () => {
   assert.equal(config.brainstemHome, "/tmp/example-home/.brainstem");
   assert.equal(
     config.brainstemDir,
-    path.join("/tmp/example-home/.brainstem", "src", "rapp_brainstem"),
+    path.posix.join("/tmp/example-home/.brainstem", "src", "rapp_brainstem"),
   );
   assert.equal(
     config.python,
-    path.join("/tmp/example-home/.brainstem", "venv", "bin", "python"),
+    path.posix.join("/tmp/example-home/.brainstem", "venv", "bin", "python"),
+  );
+  assert.equal(
+    config.logFile,
+    path.posix.join("/tmp/example-home/.brainstem", "logs", "beta-brainstem.log"),
   );
   assert.equal(config.port, 7071);
+});
+
+test("beta launcher resolves Windows Brainstem paths on every host", () => {
+  const home = String.raw`C:\Users\example`;
+  const brainstemHome = path.win32.join(home, ".brainstem");
+  const config = resolveBrainstemConfig({
+    env: {},
+    platform: "win32",
+    home,
+  });
+  assert.equal(config.brainstemHome, brainstemHome);
+  assert.equal(
+    config.brainstemDir,
+    path.win32.join(brainstemHome, "src", "rapp_brainstem"),
+  );
+  assert.equal(
+    config.python,
+    path.win32.join(brainstemHome, "venv", "Scripts", "python.exe"),
+  );
+  assert.equal(
+    config.logFile,
+    path.win32.join(brainstemHome, "logs", "beta-brainstem.log"),
+  );
 });
 
 test("beta launcher accepts authenticated and unauthenticated health", () => {
