@@ -407,12 +407,45 @@
       padding: 5px 11px; font: 10.5px ui-monospace, Menlo, monospace; color: #8b8f98;
       border-bottom: 1px solid #26282d; background: #141221; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .herd-tile.twin .twin-frame { flex: 1 1 auto; min-height: 0; width: 100%; height: 100%; border: 0; background: #0d1117; }
-    .herd-tile.twin .twin-loop {
-      max-height: 74px; overflow: auto; padding: 6px 9px; border-top: 1px solid #26282d; background: #100e1c;
-      font: 10.5px/1.5 ui-monospace, Menlo, monospace; color: #9a8fce; scrollbar-width: thin;
+    .herd-tile.twin .tw-pop {
+      padding: 2px 8px; font-size: 11px; border: 1px solid #2f2650; border-radius: 6px;
+      background: #1b1730; color: #b79cff; line-height: 1.4; margin-left: 4px; cursor: pointer;
     }
-    .herd-tile.twin .twin-loop div { white-space: pre-wrap; word-break: break-word; }
+    .herd-tile.twin .tw-pop:hover { border-color: #6b5bb0; }
+    /* Small view: a Brain-Surgeon-style work log over the twin's /chat. */
+    .herd-tile.twin .twin-chat {
+      flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 12px 12px;
+      display: flex; flex-direction: column; gap: 8px;
+      scrollbar-width: thin; scrollbar-color: #33363c transparent; background: #0f1013;
+    }
+    .herd-tile.twin .tw-empty { margin: auto; color: #6e7681; font-size: 12px; }
+    .herd-tile.twin .tw-msg {
+      max-width: 92%; padding: 7px 11px; border-radius: 11px; font-size: 12.5px;
+      line-height: 1.5; word-break: break-word; white-space: pre-wrap;
+    }
+    .herd-tile.twin .tw-msg.activity {
+      align-self: flex-start; background: none; color: #8b8fce; padding: 1px 2px;
+      font: 11px/1.5 ui-monospace, Menlo, monospace; max-width: 100%;
+    }
+    .herd-tile.twin .tw-turn { display: flex; flex-direction: column; gap: 2px; max-width: 92%; }
+    .herd-tile.twin .tw-turn.self { align-self: flex-end; align-items: flex-end; }
+    .herd-tile.twin .tw-who { font-size: 9.5px; letter-spacing: .04em; text-transform: uppercase; color: #8b8f98; padding: 0 3px; }
+    .herd-tile.twin .tw-turn.self .tw-who { color: #7ea6ff; }
+    .herd-tile.twin .tw-msg.user { background: linear-gradient(180deg,#3d7cf0,#356fe0); color: #fff; border-bottom-right-radius: 4px; }
+    .herd-tile.twin .tw-msg.assistant { align-self: flex-start; background: #1c1e23; border: 1px solid #2a2d33; border-left: 2px solid #7c6bd0; color: #d7dae0; border-bottom-left-radius: 4px; }
+    .herd-tile.twin .tw-msg.error { align-self: flex-start; background: #2a1618; border: 1px solid #5a2626; color: #ff9a9a; }
+    .herd-tile.twin .twin-comp {
+      display: flex; gap: 7px; padding: 9px; border-top: 1px solid #26282d; background: #17181b;
+    }
+    .herd-tile.twin .twin-comp textarea {
+      flex: 1; resize: none; max-height: 80px; padding: 8px 10px;
+      border: 1px solid #2c2f35; border-radius: 9px; background: #1c1e23; color: #e7e8ea; font: 13px inherit;
+    }
+    .herd-tile.twin .twin-comp textarea:focus { outline: none; border-color: #7c6bd0; }
+    .herd-tile.twin .twin-comp .tw-send {
+      flex: none; width: 40px; border: none; border-radius: 9px; color: #fff; font-size: 15px;
+      background: linear-gradient(180deg,#7c6bd0,#5f4fb0); cursor: pointer;
+    }
     .herd-tile.twin .hh .hst.auth { color: #e3b341; border-color: #6b5216; }
     .herd-tile.twin .hh .twin-ui-toggle { display: inline-flex; gap: 2px; margin-left: 4px; }
     .herd-tile.twin .hh .twin-ui-toggle[hidden] { display: none; }

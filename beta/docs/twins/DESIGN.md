@@ -174,3 +174,18 @@ hatch cs-deploy twin (own port)
 - A twin is self-driving but never a black box: its tile stays chat-interactive
   so the person can steer or stop it at any moment.
 - Re-crawl the spine before each twin PR (see `COMPLIANCE.md`).
+
+
+## The twin tile: multiplayer chat small, full UI on pop-out (final)
+
+The herd twin tile is a **live multiplayer chat/work-log** over the twin's
+`/chat` — the Brainstem's autonomous loop, the Brain Surgeon, and the user all
+talking to the same rapplication in one transcript as it unfolds (each turn
+labeled by who sent it), with a composer to steer. It renders in the host's own
+DOM (always reliable) and looks like the Brain Surgeon chat. **⤢ App** pops out
+the full, specialized custom rapplication UI (the twin's own `ui_url`
+document.write'd into a top-level window — which renders perfectly). Both drive
+the same `/chat`; the small view is the lighter always-on surface, the pop-out
+is the comprehensive customer UI. (An earlier attempt to inject the custom UI
+into the inline tile iframe hit an inconsistent subframe render; the chat-log +
+pop-out split is the durable answer.)

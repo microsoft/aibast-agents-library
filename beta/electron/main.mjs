@@ -803,20 +803,6 @@ function createWindow() {
   });
   win.webContents.on("will-navigate", routeMainNavigation);
   win.webContents.on("will-frame-navigate", routeFrameNavigation);
-  // When a twin's iframe finishes loading its Grail UI, inject the rapplication
-  // UI in place from MAIN (same path as the working pop-out). This avoids the
-  // renderer load→IPC round-trip that left the inline tile un-painted.
-  win.webContents.on("did-frame-finish-load", (_event, isMainFrame, frameProcessId, frameRoutingId) => {
-    if (isMainFrame) return;
-    let frame = null;
-    try { frame = win.webContents.mainFrame.framesInSubtree.find((f) => f.processId === frameProcessId && f.routingId === frameRoutingId); }
-    catch { frame = null; }
-    if (!frame) return;
-    const url = String(frame.url || "");
-    const twin = twinManager.list().find((t) => t.url && (url === `${t.url}/?beta=1` || url.startsWith(`${t.url}/`)));
-    if (!twin || !twinManager.uiHtml(twin.id)) return;
-    injectFrameUi(frame, twin.id).catch(() => {});
-  });
   win.on("closed", () => {
     mainWindow = null;
   });
@@ -1170,7 +1156,7 @@ function registerIpc() {
   });
   ipcMain.handle("beta:twin-chat", async (event, id, prompt) => {
     assertTrustedIpc(event);
-    return twinManager.chat(id, prompt);
+    return twinManager.chat(id, prompt, { author: "You" });
   });
   ipcMain.handle("beta:twin-run", async (event, id, instruction) => {
     assertTrustedIpc(event);

@@ -245,37 +245,48 @@ export class TwinManager {
     return this.descriptor(twin);
   }
 
-  // The wire: POST /chat to the twin's own worker (loopback, single-flight).
-  async chat(id, prompt, { sessionId = null } = {}) {
+  // The wire: POST /chat to the twin's own worker (loopback). Every exchange is
+  // emitted as a twin-message so the tile shows a live MULTIPLAYER transcript —
+  // the Brainstem loop, the Brain Surgeon, and the user all talking to the same
+  // rapplication in one room. Default session is shared per twin ("the room").
+  async chat(id, prompt, { author = "you", sessionId = null } = {}) {
     const twin = this.get(id);
-    const body = { user_input: String(prompt || "") };
-    if (sessionId) body.session_id = sessionId;
-    const response = await fetch(`${twin.url}/chat`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
-    if (!response.ok) {
-      throw new Error(`Twin ${id} /chat returned HTTP ${response.status}.`);
+    const text = String(prompt || "");
+    this.emit({ type: "twin-message", id, author, role: "user", text });
+    const body = { user_input: text, session_id: sessionId || `twin-room-${id}` };
+    let data;
+    try {
+      const response = await fetch(`${twin.url}/chat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      if (!response.ok) throw new Error(`Twin ${id} /chat returned HTTP ${response.status}.`);
+      data = await response.json();
+    } catch (error) {
+      this.emit({ type: "twin-message", id, author: twin.name || "twin", role: "error", text: error.message });
+      throw error;
     }
-    return response.json();
+    const reply = String(data.response || data.assistant_response || data.result || "");
+    this.emit({ type: "twin-message", id, author: twin.name || "twin", role: "assistant", text: reply });
+    return data;
   }
 
   // A bounded autonomous loop driven by the Brainstem over /chat. P1 proves the
   // loop end-to-end; the specialized Copilot Studio deploy loop is P2.
-  async run(id, instruction, { maxRounds = 4 } = {}) {
+  async run(id, instruction, options = {}) {
+    const { maxRounds = 4 } = options;
     const twin = this.get(id);
     if (twin.running) throw new Error(`Twin ${id} is already looping.`);
     twin.running = true;
     this.#setStatus(twin, "working");
     let outcome = "ready";
+    const author = options.author || "Brainstem";
     try {
       let prompt = String(instruction || "");
       for (let round = 0; round < maxRounds; round += 1) {
-        this.#log(twin, `→ ${prompt}`.slice(0, 200));
-        const reply = await this.chat(id, prompt, { sessionId: `twin-loop-${id}` });
-        const text = String(reply.assistant_response || reply.response || reply.result || "").trim();
-        this.#log(twin, `← ${text}`.slice(0, 400));
+        const reply = await this.chat(id, prompt, { author });
+        const text = String(reply.response || reply.assistant_response || reply.result || "").trim();
         // The one visible, user-owned auth step (e.g. PAC device login). Pause
         // the loop here rather than spinning — the user completes it, then the
         // caller resumes with run() again.

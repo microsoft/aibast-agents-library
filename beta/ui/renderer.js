@@ -849,23 +849,6 @@ function toggleSurgeonHerd() {
 // Per-twin UI mode: "app" = the rapplication's own UI (via its proxy),
 // "chat" = the default Grail chat (the twin directly). Remembered per twin so a
 // user can always fall back to Grail.
-const twinUiModeKey = (id) => `rapp-brainstem-beta-twin-ui-${id}`;
-function twinUiMode(twin) {
-  if (!twin.hasCustomUi) return "chat";              // no custom UI → Grail only
-  try {
-    const saved = localStorage.getItem(twinUiModeKey(twin.id));
-    return saved === "chat" ? "chat" : "app";        // default to the custom app
-  } catch {
-    return "app";
-  }
-}
-// The iframe ALWAYS loads the twin's own Grail UI (same origin as the twin). In
-// "app" mode we then wipe it and inject the rapplication's static UI in place —
-// so its relative /chat hits the twin directly. No server, no proxy.
-function twinUiSrc(twin) {
-  return `${twin.url}/?beta=1`;
-}
-
 function twinTileFor(twin) {
   const tile = document.createElement("div");
   tile.className = "herd-tile twin";
@@ -874,18 +857,17 @@ function twinTileFor(twin) {
     <div class="hh">
       <span class="twin-badge" title="RAPPlication twin — its own port &amp; loop">◈</span>
       <span class="tt"></span>
-      <span class="twin-ui-toggle" role="group" aria-label="UI mode" hidden>
-        <button type="button" data-mode="app" title="The rapplication's own UI (⤢ pops it out full-size)">App</button>
-        <button type="button" data-mode="chat" title="The default Grail chat">Chat</button>
-      </span>
       <span class="hst">ready</span>
-      <button class="tw-pop" type="button" title="Pop out phone-sized">⤢</button>
+      <button class="tw-pop" type="button" title="Open the full rapplication UI">⤢ App</button>
       <span class="cl" title="Close twin">×</span>
     </div>
     <div class="twin-meta"></div>
-    <iframe class="twin-frame" title="twin" allow="clipboard-write"></iframe>
-    <div class="twin-loop" aria-live="polite"></div>
+    <div class="twin-chat" aria-live="polite"></div>
     <button class="twin-signin" type="button" hidden>Sign in to continue →</button>
+    <div class="twin-comp">
+      <textarea rows="1" placeholder="Message this twin to steer it…"></textarea>
+      <button type="button" class="tw-send" title="Send">➤</button>
+    </div>
   `;
   tile.querySelector(".twin-signin").addEventListener("click", () => {
     void window.brainstemBeta.openAuth({ id: twin.id });
@@ -893,45 +875,84 @@ function twinTileFor(twin) {
   tile.querySelector(".cl").addEventListener("click", () => {
     void window.brainstemBeta.twinClose(twin.id);
   });
+  // ⤢ opens the full custom rapplication UI in a pop-out window.
   tile.querySelector(".tw-pop").addEventListener("click", () => {
     void window.brainstemBeta.twinPopOut(twin.id);
   });
-  for (const button of tile.querySelectorAll(".twin-ui-toggle button")) {
-    button.addEventListener("click", () => {
-      try { localStorage.setItem(twinUiModeKey(twin.id), button.dataset.mode); } catch { /* ignore */ }
-      const frame = tile.querySelector(".twin-frame");
-      // Reload the twin's Grail UI; the load handler injects the app UI in app mode.
-      frame.dataset.injected = "";
-      frame.dataset.src = "";
-      const current = twins.get(twin.id);
-      if (current?.tileEl) updateTwinTile(current.tileEl, current.descriptor);
-    });
-  }
-  // Transient connection error while the worker warms up — retry once shortly.
-  tile.querySelector(".twin-frame").addEventListener("error", () => {
-    const current = twins.get(twin.id);
-    if (!current?.descriptor.url) return;
-    setTimeout(() => {
-      const frameEl = current.tileEl?.querySelector(".twin-frame");
-      if (!frameEl) return;
-      frameEl.dataset.src = ""; frameEl.dataset.injected = "";
-      updateTwinTile(current.tileEl, current.descriptor);
-    }, 1200);
+  const textarea = tile.querySelector(".twin-comp textarea");
+  const send = () => {
+    const text = textarea.value.trim();
+    if (!text) return;
+    textarea.value = "";
+    textarea.style.height = "auto";
+    void sendTwinMessage(twin.id, text);
+  };
+  tile.querySelector(".tw-send").addEventListener("click", send);
+  textarea.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && !event.shiftKey) { event.preventDefault(); send(); }
   });
-  // When the iframe loads the twin's Grail UI, inject the rapplication UI over it
-  // once (in "app" mode). document.write itself fires another 'load', so guard
-  // with a flag to avoid an infinite re-inject loop. Reloading restores Grail.
-  tile.querySelector(".twin-frame").addEventListener("load", () => {
-    const frameEl = tile.querySelector(".twin-frame");
-    if (frameEl.dataset.injected === "app") return;   // the document.write load — ignore
-    const current = twins.get(twin.id);
-    if (current && current.descriptor.hasCustomUi && twinUiMode(current.descriptor) === "app") {
-      frameEl.dataset.injected = "app";
-      window.brainstemBeta.twinInjectUi(twin.id).catch(() => { frameEl.dataset.injected = ""; });
-    }
+  textarea.addEventListener("input", () => {
+    textarea.style.height = "auto";
+    textarea.style.height = `${Math.min(textarea.scrollHeight, 80)}px`;
   });
   updateTwinTile(tile, twin);
   return tile;
+}
+
+// Small view = a Brain-Surgeon-style work log over the twin's /chat: the
+// autonomous loop's activity plus any messages the person (or the AI) sends to
+// steer it. The full custom rapplication UI opens on ⤢ (pop-out). Both drive the
+// same twin /chat — the small view is just a lighter, always-reliable surface.
+function renderTwinChat(tile, twin) {
+  const chatEl = tile.querySelector(".twin-chat");
+  if (!chatEl) return;
+  const entry = twins.get(twin.id);
+  const messages = [];
+  for (const line of (twin.loopLog || [])) {
+    messages.push({ role: "activity", content: String(line.line || line) });
+  }
+  for (const message of (entry?.chat || [])) messages.push(message);
+  const nearBottom = chatEl.scrollHeight - chatEl.scrollTop - chatEl.clientHeight < 40;
+  chatEl.replaceChildren();
+  if (!messages.length) {
+    const empty = document.createElement("div");
+    empty.className = "tw-empty";
+    empty.textContent = "Hatching…";
+    chatEl.appendChild(empty);
+  }
+  // A multiplayer transcript: the Brainstem loop, the Brain Surgeon, and you all
+  // talking to the same rapplication, each turn labeled by who sent it.
+  for (const message of messages.slice(-60)) {
+    if (message.role === "activity") {
+      const line = document.createElement("div");
+      line.className = "tw-msg activity";
+      line.textContent = message.content;
+      chatEl.appendChild(line);
+      continue;
+    }
+    const self = message.role === "user";
+    const wrap = document.createElement("div");
+    wrap.className = `tw-turn ${self ? "self" : ""} ${message.role}`;
+    if (message.author) {
+      const who = document.createElement("div");
+      who.className = "tw-who";
+      who.textContent = message.author;
+      wrap.appendChild(who);
+    }
+    const bubble = document.createElement("div");
+    bubble.className = `tw-msg ${message.role}`;
+    bubble.textContent = message.content;
+    wrap.appendChild(bubble);
+    chatEl.appendChild(wrap);
+  }
+  if (nearBottom) chatEl.scrollTop = chatEl.scrollHeight;
+}
+
+async function sendTwinMessage(id, text) {
+  // The exchange (your message + the twin's reply) arrives back as twin-message
+  // events and renders in the shared transcript — no local echo needed.
+  try { await window.brainstemBeta.twinChat(id, text); }
+  catch { /* surfaced as a twin-message error event */ }
 }
 
 function updateTwinTile(tile, twin) {
@@ -942,33 +963,8 @@ function updateTwinTile(tile, twin) {
   status.className = `hst ${twin.status === "working" ? "working" : needsAuth ? "auth" : twin.status === "ready" ? "done" : ""}`;
   const meta = tile.querySelector(".twin-meta");
   meta.textContent = `:${twin.port} · ${twin.license || "unlicensed"}${twin.rappid ? " · " + twin.rappid.slice(0, 22) + "…" : ""}`;
-  // UI-mode toggle: shown only when the rapplication ships its own UI.
-  const toggle = tile.querySelector(".twin-ui-toggle");
-  const mode = twinUiMode(twin);
-  toggle.hidden = !twin.hasCustomUi;
-  for (const button of toggle.querySelectorAll("button")) {
-    button.classList.toggle("on", button.dataset.mode === mode);
-  }
-  const frame = tile.querySelector(".twin-frame");
-  // Only point the iframe at the twin once its worker is actually listening —
-  // loading during "hatching" hits a not-yet-bound port (connection refused).
-  if (!twin.url || twin.status === "hatching") return;
-  const src = twinUiSrc(twin);
-  frame.title = src;                                   // readable for diagnostics
-  if (frame.dataset.src !== src) {
-    frame.dataset.src = src; frame.src = src;          // (re)load Grail; load handler injects if app mode
-  } else if (mode === "app" && twin.hasCustomUi && frame.dataset.injected !== "app") {
-    // already on the twin origin — inject without a reload
-    window.brainstemBeta.twinInjectUi(twin.id).then(() => { frame.dataset.injected = "app"; }).catch(() => {});
-  }
-  const loop = tile.querySelector(".twin-loop");
-  loop.replaceChildren();
-  for (const entry of (twin.loopLog || []).slice(-6)) {
-    const line = document.createElement("div");
-    line.textContent = entry.line || entry;
-    loop.appendChild(line);
-  }
   tile.querySelector(".twin-signin").hidden = !needsAuth;
+  renderTwinChat(tile, twin);
 }
 
 function syncTwinTiles() {
@@ -1007,6 +1003,13 @@ function handleTwinEvent(event) {
       const log = (twin.descriptor.loopLog || []).concat([{ line: event.line }]).slice(-40);
       twin.descriptor = { ...twin.descriptor, loopLog: log, status: event.status || twin.descriptor.status };
       if (twin.tileEl) updateTwinTile(twin.tileEl, twin.descriptor);
+    }
+  } else if (event.type === "twin-message") {
+    const entry = twins.get(event.id);
+    if (entry) {
+      entry.chat = entry.chat || [];
+      entry.chat.push({ author: event.author, role: event.role, content: event.text });
+      if (entry.tileEl) renderTwinChat(entry.tileEl, entry.descriptor);
     }
   } else if (event.type === "twin-closed") {
     const twin = twins.get(event.id);

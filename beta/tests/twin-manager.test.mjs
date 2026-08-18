@@ -43,15 +43,15 @@ test("main wires twins + store IPC and the Surgeon hatch tools", () => {
   assert.match(surgeon, /name: "list_rapplications"/);
 });
 
-test("the herd renders twin tiles bound to the worker port", () => {
+test("the herd renders a chat/work-log tile per twin", () => {
   const renderer = read("ui/renderer.js");
   const ui = read("ui/index.html");
   assert.match(renderer, /function twinTileFor/);
   assert.match(renderer, /handleTwinEvent/);
   assert.match(renderer, /twinClose/);
-  assert.match(renderer, /\$\{twin\.url\}\/\?beta=1/);   // iframe of the twin's own port
+  assert.match(renderer, /function renderTwinChat/);      // the work-log/chat transcript
   assert.match(ui, /herd-tile\.twin/);
-  assert.match(ui, /frame-src http:\/\/127\.0\.0\.1/);   // CSP allows the twin iframe
+  assert.match(ui, /\.twin-chat/);
 });
 
 test("the Copilot Studio deploy twin is composed from the bundled Factory + Deploy agents (P2)", () => {
@@ -71,29 +71,30 @@ test("the Copilot Studio deploy twin is composed from the bundled Factory + Depl
   assert.match(surgeon, /loops autonomously in the herd/);
 });
 
-test("custom UI is static HTML injected into the twin's own iframe — no server, no proxy (P3)", () => {
+test("small view = a chat/work-log over the twin's /chat; the full custom UI pops out (P3)", () => {
   const tm = read("electron/twin-manager.mjs");
   const main = read("electron/main.mjs");
   const renderer = read("ui/renderer.js");
   const ui = read("ui/index.html");
   const fs = require("node:fs");
-  // the proxy is gone entirely
+  // the proxy is gone; the twin keeps the rapplication's static UI HTML
   assert.ok(!fs.existsSync(path.join(root, "electron/twin-ui-proxy.mjs")), "twin-ui-proxy.mjs should be removed");
   assert.doesNotMatch(tm, /startTwinUiProxy|uiProxyUrl/);
-  // twin keeps the rapplication's static UI HTML and exposes hasCustomUi
   assert.match(tm, /twin\.uiHtml = await fetch/);
   assert.match(tm, /uiHtml\(id\)/);
   assert.match(tm, /hasCustomUi/);
   assert.match(tm, /maxTwins/);
-  // main wipes the Grail chat and injects the rapplication UI in place
-  assert.match(main, /function injectTwinUi/);
+  // the tile is a chat log with a composer, NOT an inline custom-UI iframe
+  assert.match(renderer, /function renderTwinChat/);
+  assert.match(renderer, /function sendTwinMessage/);
+  assert.match(renderer, /brainstemBeta\.twinChat\(id, text\)/);
+  assert.doesNotMatch(renderer, /twin-frame|twin-ui-toggle/);
+  assert.match(ui, /\.twin-chat/);
+  assert.match(ui, /\.twin-comp/);
+  // the full custom UI opens in the pop-out (which document.writes the UI)
+  assert.match(renderer, /brainstemBeta\.twinPopOut/);
+  assert.match(main, /function popOutTwin/);
   assert.match(main, /document\.open\(\); document\.write/);
-  assert.match(main, /beta:twin-inject-ui/);
-  // the tile iframe loads the twin's own origin, then injects on load in app mode
-  assert.match(renderer, /twinInjectUi/);
-  assert.match(renderer, /`\$\{twin\.url\}\/\?beta=1`/);
-  assert.match(renderer, /twin-ui-toggle/);
-  assert.match(ui, /twin-ui-toggle/);
 });
 
 test("the AI can drive a twin's own UI in-tile (P3c)", () => {
