@@ -22,6 +22,7 @@ contextBridge.exposeInMainWorld("brainstemBeta", {
   twinChat: (id, prompt) => ipcRenderer.invoke("beta:twin-chat", id, prompt),
   twinRun: (id, instruction) => ipcRenderer.invoke("beta:twin-run", id, instruction),
   twinClose: (id) => ipcRenderer.invoke("beta:twin-close", id),
+  twinDeployCopilotStudio: (options) => ipcRenderer.invoke("beta:twin-deploy-copilot-studio", options),
   onTwinEvent: (listener) => {
     const wrapped = (_event, payload) => listener(payload);
     ipcRenderer.on("beta:twin-event", wrapped);

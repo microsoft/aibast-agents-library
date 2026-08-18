@@ -1,8 +1,9 @@
 # RAPPlication twins in the herd — design
 
-> Status: agreed direction (2026-08-18). P0 (RAPP Store client) and P1 (twin
-> runtime + herd tile + hatch tool) landed and verified live; P2 (the Copilot
-> Studio deploy twin) is next. Builds on the multi-chat herd (PR #175).
+> Status: agreed direction (2026-08-18). P0 (store client), P1 (twin runtime +
+> herd tile + hatch tool), and P2 (the Copilot Studio deploy twin) landed and
+> verified live up to the user-owned PAC-auth boundary. Scout + Cowork twins
+> next. Builds on the multi-chat herd (PR #175).
 >
 > **On-canon.** Checked against the RAPP spine (`kody-w/rapp-spine`) — see
 > [`COMPLIANCE.md`](COMPLIANCE.md). A herd of twins is **Leviathan sense (A)**
@@ -145,8 +146,12 @@ hatch cs-deploy twin (own port)
   Brainstem/Surgeon can steer it at any time); a `hatch_rapplication(store_id)`
   Surgeon tool; prove the plumbing end-to-end with a benign store rapplication
   (hatch → own port → loop → tile → steer via chat → report), no auth.
-- **P2 — the Copilot Studio deploy twin:** the specialized loop above, with the
-  agreed auth boundary and a Draft link card; then Scout and Cowork twins.
+- **P2 — the Copilot Studio deploy twin (DONE up to auth boundary):** the
+  Factory + Deploy agents run on their OWN twin worker (`hatchLocal`), driven by
+  an async deploy loop (`deploy_to_copilot_studio` Surgeon tool) so the main
+  chat stays free; it pauses at the one user-owned PAC device-login step and is
+  Draft-only. Verified live: the twin ran the Factory doctor on its own port and
+  reached "PAC authenticated, ready to deploy". Scout + Cowork twins next.
 
 ## Invariants
 

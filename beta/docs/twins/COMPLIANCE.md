@@ -43,6 +43,17 @@ one mind, many bodies. We disambiguate by intent and never conflate the two.
 - **Kernel unchanged; twins driven over `/chat`; no new privileged route.** ✓
 - **RAPPID mint-once via UUID anchor** (`route-manager.mjs` `packageAgent`). ✓
 
+## Copilot Studio deploy twin (P2) — conformance
+
+The CS-deploy twin composes the bundled `RappCopilotStudioFactoryBeta` +
+`CopilotStudioDeployBeta` agents (unchanged, Draft-only markers) into an
+isolated worker and drives them over **/chat** (no new route) — the deploy
+engine is unchanged; only WHERE it runs (a twin) and WHO drives it (an async
+twin loop, not the visible Brainstem). It stays **Draft-only**, surfaces the one
+user-owned **PAC device-login** step and pauses there, and never reads/echoes a
+client secret. Same invariants as every twin: loopback-only, cartridge unit,
+mint-once RAPPID, honor license.
+
 ## Tracked drift (open, low-urgency — do not silently re-home)
 
 1. **RAPP/1 pin lag.** `beta/electron/rapp-protocol.mjs` pins

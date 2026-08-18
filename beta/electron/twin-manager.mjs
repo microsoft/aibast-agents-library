@@ -97,26 +97,68 @@ export class TwinManager {
     this.emit({ type: "twin-status", id: twin.id, status, twin: this.descriptor(twin) });
   }
 
-  // Hatch a RAPPlication from the store into its own long-lived worker.
-  async hatch(storeId, { instruction = null, createdUtc = null } = {}) {
+  // Hatch a RAPPlication FROM THE STORE into its own long-lived worker.
+  async hatch(storeId, { instruction = null } = {}) {
     const cartridge = await this.store.download(storeId);   // sha256-verified
-    const id = `${twinSlug(cartridge.id || storeId)}-${++this.seq}`;
-    const agentsDir = path.join(this.twinsRoot, id, "agents");
-    mkdirSync(agentsDir, { recursive: true });
     const filename = cartridge.filename && /_agent\.py$/.test(cartridge.filename)
       ? cartridge.filename
       : `${twinSlug(cartridge.id || storeId)}_agent.py`;
-    writeFileSync(path.join(agentsDir, filename), cartridge.source, { mode: 0o600 });
-    // Provenance: keep the pinned egg beside the agent (state-seeding is P2).
-    if (cartridge.egg) {
-      writeFileSync(path.join(this.twinsRoot, id, `${id}.egg`), cartridge.egg, { mode: 0o600 });
+    return this.#hatchComposed({
+      idBase: cartridge.id || storeId,
+      name: cartridge.entry?.name || cartridge.id || storeId,
+      storeId: cartridge.id || storeId,
+      agentSources: [{ filename, source: cartridge.source }],
+      egg: cartridge.egg || null,
+      resources: [],
+      license: cartridge.entry?.license || null,
+      uiUrl: cartridge.entry?.uiUrl || null,
+      note: `Verified ${filename} (sha256 ${cartridge.sha256.slice(0, 12)}…)`,
+    }, { instruction });
+  }
+
+  // Hatch a twin from LOCAL agent sources (e.g. the bundled Copilot Studio
+  // Factory + Deploy agents) — a Frontier-owned specialized twin, not a store
+  // pull. Same worker/port/loop machinery; nothing is downloaded.
+  async hatchLocal({
+    id: idBase = "twin",
+    name = idBase,
+    agentSources = [],
+    resources = [],
+    license = null,
+  } = {}, { instruction = null } = {}) {
+    if (!agentSources.length) throw new Error("hatchLocal needs at least one agent source.");
+    return this.#hatchComposed({
+      idBase, name, storeId: null, agentSources, egg: null, resources, license, uiUrl: null,
+      note: `Composed ${agentSources.map((a) => a.filename).join(", ")}`,
+    }, { instruction });
+  }
+
+  // Shared core: compose an isolated AGENTS_PATH, start a dedicated worker on
+  // its own loopback port, register it, and (optionally) kick its async loop.
+  async #hatchComposed(spec, { instruction = null } = {}) {
+    const id = `${twinSlug(spec.idBase)}-${++this.seq}`;
+    const dir = path.join(this.twinsRoot, id);
+    const agentsDir = path.join(dir, "agents");
+    mkdirSync(agentsDir, { recursive: true });
+    for (const agent of spec.agentSources) {
+      writeFileSync(path.join(agentsDir, agent.filename), agent.source, { mode: 0o600 });
+    }
+    if (spec.egg) writeFileSync(path.join(dir, `${id}.egg`), spec.egg, { mode: 0o600 });
+    // Materialize any resource files (e.g. parity cases / industry matrix) into
+    // the twin dir so its agents can read them locally.
+    const resourcePaths = {};
+    for (const resource of spec.resources || []) {
+      const target = path.join(dir, resource.name);
+      writeFileSync(target, resource.bytes, { mode: 0o600 });
+      resourcePaths[resource.name] = target;
     }
 
-    // Mint a mint-once RAPPID for the twin (route manager, UUID-anchor; §6.2).
+    // Mint a mint-once RAPPID from the first agent (UUID-anchor; rapp/1 §6.2).
     let rappid = null;
     try {
+      const first = spec.agentSources[0];
       rappid = this.routeManager?.packageAgent
-        ? this.routeManager.packageAgent({ filename, source: cartridge.source }).agent_rappid
+        ? this.routeManager.packageAgent({ filename: first.filename, source: first.source }).agent_rappid
         : null;
     } catch {
       rappid = null;
@@ -139,23 +181,23 @@ export class TwinManager {
 
     const twin = {
       id,
-      storeId: cartridge.id || storeId,
-      name: cartridge.entry?.name || cartridge.id || storeId,
+      storeId: spec.storeId,
+      name: spec.name,
       rappid,
       port,
       url,
       status: "hatching",
-      license: cartridge.entry?.license || null,
-      uiUrl: cartridge.entry?.uiUrl || null,
-      dir: path.join(this.twinsRoot, id),
+      license: spec.license,
+      uiUrl: spec.uiUrl,
+      dir,
+      resourcePaths,
       worker,
       loopLog: [],
-      createdUtc: createdUtc || null,
       running: false,
     };
     this.twins.set(id, twin);
     this.emit({ type: "twin-hatched", id, twin: this.descriptor(twin) });
-    this.#log(twin, `Verified ${filename} (sha256 ${cartridge.sha256.slice(0, 12)}…) — hatching on ${url}`);
+    this.#log(twin, `${spec.note} — hatching on ${url}`);
 
     try {
       await worker.start();
@@ -168,7 +210,8 @@ export class TwinManager {
     this.#log(twin, `Twin ready on ${url}`);
 
     if (instruction) {
-      // Kick its autonomous loop, but do not block hatch on it.
+      // Kick its autonomous loop, but DO NOT block on it — the caller (and the
+      // main Brainstem/Surgeon chat) stays free while the twin works.
       this.run(id, instruction).catch((error) => this.#log(twin, `Loop error: ${error.message}`));
     }
     return this.descriptor(twin);
@@ -197,6 +240,7 @@ export class TwinManager {
     if (twin.running) throw new Error(`Twin ${id} is already looping.`);
     twin.running = true;
     this.#setStatus(twin, "working");
+    let outcome = "ready";
     try {
       let prompt = String(instruction || "");
       for (let round = 0; round < maxRounds; round += 1) {
@@ -204,12 +248,23 @@ export class TwinManager {
         const reply = await this.chat(id, prompt, { sessionId: `twin-loop-${id}` });
         const text = String(reply.assistant_response || reply.response || reply.result || "").trim();
         this.#log(twin, `← ${text}`.slice(0, 400));
-        if (/\b(done|complete|finished|no further)\b/i.test(text) || !text) break;
-        prompt = "Continue. If the task is complete, say DONE.";
+        // The one visible, user-owned auth step (e.g. PAC device login). Pause
+        // the loop here rather than spinning — the user completes it, then the
+        // caller resumes with run() again.
+        if (/device\s*code|device login|sign in|authenticat|pac auth|not authenticated/i.test(text)) {
+          outcome = "needs-auth";
+          this.emit({ type: "twin-needs-auth", id, message: text.slice(0, 400) });
+          break;
+        }
+        if (/\b(done|complete|completed|finished|no further|draft (is )?ready)\b/i.test(text) || !text) {
+          outcome = "done";
+          break;
+        }
+        prompt = "Continue. If the task is complete, say DONE. If you need the user to sign in, say exactly what auth is required.";
       }
     } finally {
       twin.running = false;
-      if (twin.status === "working") this.#setStatus(twin, "ready");
+      this.#setStatus(twin, outcome === "needs-auth" ? "needs-auth" : "ready");
     }
     return this.descriptor(twin);
   }

@@ -418,6 +418,77 @@ const twinManager = new TwinManager({
   },
 });
 
+// P2: hatch the Copilot Studio Factory + Deploy pipeline onto its OWN twin, and
+// kick its deploy loop asynchronously. The Brain Surgeon (and the main Brainstem
+// chat) stays free for other work while this twin drives PAC / Factory / Deploy
+// on its own port — the deploy engine is unchanged, only WHERE it runs and WHO
+// drives it (a twin loop, not the visible Brainstem). Draft-only; the one
+// visible step is the user-owned PAC device login, which the twin surfaces.
+const COPILOT_STUDIO_TWIN_AGENTS = [
+  "rar_kody_w_factory_agent.py",
+  "rar_kody_w_copilot_studio_parity_deploy_agent.py",
+];
+const COPILOT_STUDIO_TWIN_RESOURCES = [
+  "hacker-news-memory-parity-cases.json",
+  "industry-agent-matrix.json",
+];
+
+function readCopilotStudioResource(name) {
+  const file = path.join(import.meta.dirname, "..", "resources", "copilot-studio", name);
+  if (!existsSync(file)) throw new Error(`Bundled Copilot Studio resource is missing: ${file}`);
+  return file;
+}
+
+async function hatchCopilotStudioTwin({ displayName = "Copilot Studio Draft", environment = null, agents = [] } = {}) {
+  const agentSources = [];
+  for (const filename of COPILOT_STUDIO_TWIN_AGENTS) {
+    agentSources.push({ filename, source: readFileSync(readCopilotStudioResource(filename), "utf8") });
+  }
+  // Include the selected business/industry agents to deploy (from the active
+  // composition), so the twin can build and parity-test them Draft-only.
+  const active = routeManager.activeAgentFiles();
+  for (const wanted of Array.isArray(agents) ? agents : []) {
+    const match = active.find((a) => a.filename === wanted);
+    if (match) {
+      try {
+        agentSources.push({ filename: match.filename, source: routeManager.readActiveAgent(match.filename) });
+      } catch {
+        // skip unreadable agent
+      }
+    }
+  }
+  const resources = COPILOT_STUDIO_TWIN_RESOURCES.map((name) => ({
+    name,
+    bytes: readFileSync(readCopilotStudioResource(name)),
+  }));
+  const parityCases = "hacker-news-memory-parity-cases.json";
+  const instruction = [
+    "You are a Copilot Studio deploy twin running on your own Brainstem worker.",
+    "Deploy the loaded business/industry agent(s) to a Draft in Microsoft Copilot Studio",
+    "using RappCopilotStudioFactoryBeta and CopilotStudioDeployBeta.",
+    `Target display name: ${displayName}.`,
+    environment ? `Target environment: ${environment}.` : "Ask which environment only if none is authenticated.",
+    "Run doctor, then plan and build. If PAC is NOT authenticated to that environment,",
+    "reply with exactly what PAC device login is required and STOP — do not guess credentials.",
+    "Otherwise provision, push as DRAFT, run parity against the parity cases",
+    `(${parityCases} in your working dir), and finalize.`,
+    "DRAFT-ONLY: never call release or publish; publishing is the user's manual action.",
+    "Never read or echo any client secret. Report the AgentId, environment, and the Copilot Studio Draft link.",
+    "Say DONE when the Draft is ready.",
+  ].join(" ");
+  // Non-blocking: hatch + kick the loop; return immediately so the Surgeon is free.
+  return twinManager.hatchLocal(
+    {
+      id: "copilot-studio-deploy",
+      name: `Copilot Studio Deploy · ${displayName}`,
+      agentSources,
+      resources,
+      license: "beta-bundled",
+    },
+    { instruction },
+  );
+}
+
 // Actions that actually DRIVE the one visible Brainstem (move the cursor, type,
 // hold the center chat, record, run the click-through). With several Brain
 // Surgeon chats live at once they share this single window, so these are
@@ -489,6 +560,7 @@ function ensureBrainSurgeon(sessionId = 1) {
         hatch: (storeId, instruction) => twinManager.hatch(storeId, { instruction: instruction || null }),
         list: () => twinManager.list(),
         list_store: () => rappStore.list(),
+        deploy_copilot_studio: (opts) => hatchCopilotStudioTwin(opts || {}),
       },
       onEvent: (event) => emitSurgeonEvent({ ...event, sessionId: id }),
     });
@@ -939,6 +1011,10 @@ function registerIpc() {
   ipcMain.handle("beta:twin-close", async (event, id) => {
     assertTrustedIpc(event);
     return twinManager.close(id);
+  });
+  ipcMain.handle("beta:twin-deploy-copilot-studio", async (event, options) => {
+    assertTrustedIpc(event);
+    return hatchCopilotStudioTwin(options || {});
   });
 }
 

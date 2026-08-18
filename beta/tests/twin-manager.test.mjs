@@ -51,3 +51,20 @@ test("the herd renders twin tiles bound to the worker port", () => {
   assert.match(ui, /herd-tile\.twin/);
   assert.match(ui, /frame-src http:\/\/127\.0\.0\.1/);   // CSP allows the twin iframe
 });
+
+test("the Copilot Studio deploy twin is composed from the bundled Factory + Deploy agents (P2)", () => {
+  const main = read("electron/main.mjs");
+  const surgeon = read("electron/brain-surgeon.mjs");
+  const src = read("electron/twin-manager.mjs");
+  // hatchLocal composes a twin from local agent sources (not a store pull)
+  assert.match(src, /async hatchLocal\(/);
+  assert.match(src, /twin-needs-auth/);                 // pauses at the one user-owned auth step
+  // main hatches the CS twin from the bundled deploy agents + resources
+  assert.match(main, /rar_kody_w_factory_agent\.py/);
+  assert.match(main, /rar_kody_w_copilot_studio_parity_deploy_agent\.py/);
+  assert.match(main, /function hatchCopilotStudioTwin/);
+  assert.match(main, /DRAFT-ONLY: never call release or publish/);
+  // the Surgeon offloads to the twin instead of running it inline
+  assert.match(surgeon, /name: "deploy_to_copilot_studio"/);
+  assert.match(surgeon, /loops autonomously in the herd/);
+});

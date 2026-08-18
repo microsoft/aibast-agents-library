@@ -614,6 +614,32 @@ export class BrainSurgeon {
         },
       },
       {
+        name: "deploy_to_copilot_studio",
+        description: "Offload a Copilot Studio deployment to its OWN specialized twin (Factory + Deploy) that loops autonomously in the herd — instead of running the whole PAC/Factory/Deploy pipeline in this chat. Returns immediately; the twin drives doctor→plan→build→provision→push(Draft)→parity on its own port while you stay free for other work. Draft-only; it surfaces the one PAC device-login step if needed.",
+        defer: "never",
+        skipPermission: true,
+        parameters: {
+          type: "object",
+          properties: {
+            display_name: { type: "string", description: "Copilot Studio display name for the Draft." },
+            environment: { type: "string", description: "Target Power Platform environment (optional; the twin asks/authenticates if omitted)." },
+            agents: {
+              type: "array",
+              items: { type: "string" },
+              description: "Filenames of the loaded business/industry agents to deploy (from list_active_agent_files).",
+            },
+          },
+        },
+        handler: async ({ display_name: displayName, environment = null, agents = [] } = {}) => {
+          if (!this.twins?.deploy_copilot_studio) throw new Error("Copilot Studio twins are unavailable.");
+          const twin = await this.twins.deploy_copilot_studio({ displayName, environment, agents });
+          return JSON.stringify({
+            hatched: twin.id, name: twin.name, port: twin.port, status: twin.status,
+            note: "Copilot Studio deploy twin is looping on its own port. It stays in the herd; you are free for other work. It will surface a PAC device-login step if it needs one, and stays Draft-only.",
+          }, null, 2);
+        },
+      },
+      {
         name: "capture_visible_brainstem",
         description: "Capture the real beta window and inspect the visible result.",
         defer: "never",
