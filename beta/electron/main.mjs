@@ -350,7 +350,12 @@ let updateCheckInFlight = false;
 let updateMenuItem = null;
 let availableUpdate = null;
 let uiDriver = null;
-let brainSurgeon = null;
+// One GitHub Copilot Brain Surgeon SDK session per chat tab, keyed by the id the
+// renderer assigns. All share one runtime, one route manager, and one visible
+// Brainstem — "several agents, one brainstem" — and every event they emit is
+// tagged with its sessionId so the renderer routes it to the right tab/tile.
+const brainSurgeons = new Map();
+const MAX_BRAIN_SURGEONS = 12;
 
 const state = {
   brainstem: { phase: "starting", message: "Starting shared Brainstem..." },
@@ -395,7 +400,30 @@ function emitSurgeonEvent(event) {
   }
 }
 
-async function executeUiCommand(command) {
+// Actions that actually DRIVE the one visible Brainstem (move the cursor, type,
+// hold the center chat, record, run the click-through). With several Brain
+// Surgeon chats live at once they share this single window, so these are
+// serialized through one "stage" so two chats never fight over it. Read-only
+// and quick-state actions (inspect, read, screenshot, telemetry, lease, force
+// mode) pass straight through — a background chat keeps doing its own file,
+// shell, build, and test work while another chat holds the stage.
+const UI_STAGE_ACTIONS = new Set([
+  "announce", "chat", "click", "press", "run",
+  "start_recording", "stop_recording", "surgeon_chat", "tour", "type",
+]);
+let uiStageChain = Promise.resolve();
+
+function executeUiCommand(command) {
+  const action = String(command?.action || "").toLowerCase();
+  if (!UI_STAGE_ACTIONS.has(action)) return rawUiCommand(command);
+  const run = () => rawUiCommand(command);
+  const result = uiStageChain.then(run, run);
+  // Keep the queue moving even if one driving command fails.
+  uiStageChain = result.then(() => {}, () => {});
+  return result;
+}
+
+async function rawUiCommand(command) {
   if (!uiDriver?.metadataPath) {
     throw new Error("The visible Brainstem control bridge is not ready.");
   }
@@ -418,19 +446,32 @@ async function executeUiCommand(command) {
   return payload.result;
 }
 
-function ensureBrainSurgeon() {
-  if (!brainSurgeon) {
-    brainSurgeon = new BrainSurgeon({
+function normalizeSurgeonId(sessionId) {
+  const id = Number.parseInt(sessionId, 10);
+  return Number.isFinite(id) && id > 0 ? id : 1;
+}
+
+function ensureBrainSurgeon(sessionId = 1) {
+  const id = normalizeSurgeonId(sessionId);
+  let surgeon = brainSurgeons.get(id);
+  if (!surgeon) {
+    if (brainSurgeons.size >= MAX_BRAIN_SURGEONS) {
+      throw new Error(
+        `You have ${MAX_BRAIN_SURGEONS} Copilot chats open — close one before opening another.`,
+      );
+    }
+    surgeon = new BrainSurgeon({
       runtime: copilot,
       brainstemUrl: config.url,
       checkForUpdates: () => handleCheckForUpdates({ openPanel: true }),
       copilotStudioAuth,
       routeManager,
       uiCommand: executeUiCommand,
-      onEvent: emitSurgeonEvent,
+      onEvent: (event) => emitSurgeonEvent({ ...event, sessionId: id }),
     });
+    brainSurgeons.set(id, surgeon);
   }
-  return brainSurgeon;
+  return surgeon;
 }
 
 function loopbackUrl(raw) {
@@ -832,13 +873,24 @@ function registerIpc() {
       return handleInstallUpdate();
     },
   );
-  ipcMain.handle("beta:surgeon-send", async (event, prompt) => {
+  ipcMain.handle("beta:surgeon-send", async (event, sessionId, prompt) => {
     assertTrustedIpc(event);
-    return ensureBrainSurgeon().send(prompt);
+    return ensureBrainSurgeon(sessionId).send(prompt);
   });
-  ipcMain.handle("beta:surgeon-reset", async (event) => {
+  ipcMain.handle("beta:surgeon-reset", async (event, sessionId) => {
     assertTrustedIpc(event);
-    if (brainSurgeon) await brainSurgeon.reset();
+    const surgeon = brainSurgeons.get(normalizeSurgeonId(sessionId));
+    if (surgeon) await surgeon.reset();
+    return { ok: true };
+  });
+  ipcMain.handle("beta:surgeon-close", async (event, sessionId) => {
+    assertTrustedIpc(event);
+    const id = normalizeSurgeonId(sessionId);
+    const surgeon = brainSurgeons.get(id);
+    if (surgeon) {
+      brainSurgeons.delete(id);
+      await surgeon.stop().catch(() => {});
+    }
     return { ok: true };
   });
 }
@@ -956,7 +1008,7 @@ if (!hasLock) {
     if (shutdownStarted) return;
     shutdownStarted = true;
     Promise.allSettled([
-      brainSurgeon?.stop(),
+      ...Array.from(brainSurgeons.values(), (surgeon) => surgeon.stop()),
       copilot.stop(),
       routeManager.stop(),
       uiDriver?.stop(),

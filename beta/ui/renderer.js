@@ -7,7 +7,11 @@ const surgeon = document.getElementById("surgeon");
 const surgeonLog = document.getElementById("surgeon-log");
 const surgeonInput = document.getElementById("surgeon-input");
 const surgeonSend = document.getElementById("surgeon-send");
-const surgeonHistoryKey = "rapp-brainstem-beta-surgeon-history-v1";
+const surgeonTabs = document.getElementById("surgeon-tabs");
+const surgeonHerdBtn = document.getElementById("surgeon-herd-btn");
+let surgeonHerdEl = null;
+let surgeonGridEl = null;
+const surgeonHistoryKey = "rapp-brainstem-beta-surgeon-sessions-v1";
 const surgeonOpenKey = "rapp-brainstem-beta-surgeon-open-v1";
 const explorer = document.getElementById("explorer");
 const agentTree = document.getElementById("agent-tree");
@@ -20,11 +24,11 @@ let loadedUrl = null;
 let brainstemNavigationCount = 0;
 window.__brainstemBetaNavigationCount = 0;
 let latestState = null;
-let surgeonBusy = false;
-let surgeonCurrentAssistant = null;
-let surgeonThinking = null;
-let surgeonHistory = [];
-const surgeonTools = [];
+// Multi-chat Brain Surgeon state (several independent Copilot chats).
+let surgeonSessions = [];
+let surgeonActiveId = 0;
+let surgeonSeq = 0;
+let surgeonHerd = false;
 let currentAgentFile = null;
 let currentAgentScope = "global";
 let currentAgentRevision = null;
@@ -305,135 +309,144 @@ async function openAgentFile(filename, revision = null, scope = "global") {
   }
 }
 
-function saveSurgeonHistory() {
-  localStorage.setItem(
-    surgeonHistoryKey,
-    JSON.stringify(surgeonHistory.slice(-80)),
-  );
+const SURGEON_STARTERS = [
+  { label: "Build and test an agent for this customer use case" },
+  { label: "Inspect this Brainstem and tell me what it can do" },
+  { label: "Check for beta updates while I watch" },
+  { label: "Record a short autopilot demo of the current workflow" },
+  { label: "Show Mode: click-through preview", className: "show-mode-preview", tour: true },
+  {
+    label: "Deploy loaded agents to Copilot Studio",
+    className: "deploy-copilot-studio",
+    prompt: [
+      "Run the beta one-click Copilot Studio deployment loop.",
+      "First call ensure_copilot_studio_deploy_agents,",
+      "copilot_studio_deployment_defaults, copilot_studio_auth_status,",
+      "and list_active_agent_files.",
+      "Record the protected parity_cases_path and industry_matrix_path",
+      "returned by ensure_copilot_studio_deploy_agents.",
+      "Present a concise numbered list of",
+      "currently loaded business/industry agents that can be selected.",
+      "Exclude BasicAgent, memory, RAR, UI-driver, Factory, Parity Deploy,",
+      "and other infrastructure-only agents from the general list. Also offer",
+      "a clearly labeled hello-world parity preset: HackerNews + ContextMemory",
+      "+ ManageMemory. The memory pair is allowed only for that preset and its",
+      "storage/infrastructure requirements must remain explicit. Ask me in this Brain Surgeon",
+      "chat which agents I want, the Copilot Studio display name, publisher",
+      "prefix, and target environment/profile. Do not continue until I answer.",
+      "If the selected user PAC profile is not authenticated to that exact",
+      "environment, call start_copilot_studio_login and show me the device",
+      "login instructions; poll only after I say sign-in is complete. Never",
+      "read, return, or use a client secret from local.settings.json.",
+      "After selection and login, use the visible Brainstem chat to drive",
+      "RappCopilotStudioFactoryBeta and CopilotStudioDeployBeta through",
+      "doctor, plan, build/deploy and provision. Copy the protected",
+      "parity_cases_path to",
+      "the deployment run as parity-cases.json before parity, then run",
+      "parity and finalize. Keep working autonomously and visibly until the",
+      "Draft is proven.",
+      "As soon as AgentId and EnvironmentId are known, call",
+      "show_copilot_studio_agent_link so this chat contains a clickable",
+      "Copilot Studio card for the exact agent. The beta is Draft-only:",
+      "never call release or publish. Show the exact AgentId, environment,",
+      "Draft parity evidence, and warning that live publication is a manual",
+      "user action in the linked Copilot Studio UI. Record the evidence and",
+      "return the Copilot Studio agent ID and URL. Do not stop at",
+      "instructions or hand work to VS Code.",
+    ].join(" "),
+  },
+];
+
+// ── Multi-chat Brain Surgeon ─────────────────────────────────────────────
+// Several independent GitHub Copilot conversations over the one visible
+// Brainstem: a tab per chat plus a herd grid to see them at once. Each session
+// owns its transcript node (.surgeon-session); in the dock only the active one
+// shows, in the herd each node is moved into its tile — it renders identically
+// either way. Every main-process event carries a sessionId so it lands in the
+// right chat. Ported from the vBrainstem Brain Surgeon (surgeon.js).
+
+function saveSurgeonSessions() {
+  try {
+    const data = surgeonSessions.map((s) => ({
+      id: s.id,
+      title: s.title,
+      history: (s.history || []).slice(-80),
+    }));
+    localStorage.setItem(
+      surgeonHistoryKey,
+      JSON.stringify({ active: surgeonActiveId, sessions: data }),
+    );
+  } catch {
+    // Over quota — keep the last few chats, trimmed.
+    try {
+      const data = surgeonSessions.slice(-4).map((s) => ({
+        id: s.id,
+        title: s.title,
+        history: (s.history || []).slice(-24),
+      }));
+      localStorage.setItem(
+        surgeonHistoryKey,
+        JSON.stringify({ active: surgeonActiveId, sessions: data }),
+      );
+    } catch {
+      // give up silently
+    }
+  }
 }
 
-function addSurgeonBubble(role, text, persist = true) {
+function activeSurgeon() {
+  return surgeonSessions.find((s) => s.id === surgeonActiveId) || null;
+}
+
+// ── per-session transcript rendering (scoped to session.logEl) ──
+function surgeonPlace(session, node) {
+  if (session.thinkEl && session.thinkEl.parentNode === session.logEl) {
+    session.logEl.insertBefore(node, session.thinkEl);
+  } else {
+    session.logEl.appendChild(node);
+  }
+  scrollSurgeon(session);
+}
+
+function scrollSurgeon(session) {
+  const scroller = session.logEl.closest(".htrans") || surgeonLog;
+  if (session.id === surgeonActiveId || session.tileEl) {
+    scroller.scrollTop = scroller.scrollHeight;
+  }
+}
+
+function addSurgeonBubble(session, role, text, persist = true) {
+  removeSurgeonEmpty(session);
   const bubble = document.createElement("div");
   bubble.className = `surgeon-message ${role}`;
   bubble.textContent = text || "";
-  surgeonLog.appendChild(bubble);
-  surgeonLog.scrollTop = surgeonLog.scrollHeight;
+  surgeonPlace(session, bubble);
   if (persist && ["user", "assistant"].includes(role)) {
-    surgeonHistory.push({ role, content: text || "" });
-    saveSurgeonHistory();
+    session.history.push({ role, content: text || "" });
+    saveSurgeonSessions();
   }
   return bubble;
 }
 
-function showSurgeonEmpty() {
-  if (surgeonHistory.length || surgeonLog.childElementCount) return;
-  const empty = document.createElement("div");
-  empty.className = "surgeon-empty";
-  empty.innerHTML = `
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M12 2c-2.3 0-3.6.9-4.3 2.1-.5-.1-1-.1-1.5-.1C3.4 4 2 5.6 2 8.2v.3C1 9 .5 9.9.5 11.2v2.1c0 2 1 3.4 2.8 4.2C5.1 18.9 8.2 20 12 20s6.9-1.1 8.7-2.5c1.8-.8 2.8-2.2 2.8-4.2v-2.1c0-1.3-.5-2.2-1.5-2.7v-.3C22 5.6 20.6 4 17.8 4c-.5 0-1 0-1.5.1C15.6 2.9 14.3 2 12 2Z"/>
-    </svg>
-    <h2>GitHub Copilot, in your Brainstem</h2>
-    The full Copilot agent loop: files, shell, tests, one-chat capability
-    injection, visible UI control, screenshots, and recorded demos.
-    <div class="surgeon-caps">
-      <span>run commands</span><span>read/write files</span><span>test Brainstem</span>
-    </div>
-    <div class="surgeon-starters"></div>
-  `;
-  const starters = [
-    { label: "Build and test an agent for this customer use case" },
-    { label: "Inspect this Brainstem and tell me what it can do" },
-    { label: "Check for beta updates while I watch" },
-    { label: "Record a short autopilot demo of the current workflow" },
-    {
-      label: "Show Mode: click-through preview",
-      className: "show-mode-preview",
-      tour: true,
-    },
-    {
-      label: "Deploy loaded agents to Copilot Studio",
-      className: "deploy-copilot-studio",
-      prompt: [
-        "Run the beta one-click Copilot Studio deployment loop.",
-        "First call ensure_copilot_studio_deploy_agents,",
-        "copilot_studio_deployment_defaults, copilot_studio_auth_status,",
-        "and list_active_agent_files.",
-        "Record the protected parity_cases_path and industry_matrix_path",
-        "returned by ensure_copilot_studio_deploy_agents.",
-        "Present a concise numbered list of",
-        "currently loaded business/industry agents that can be selected.",
-        "Exclude BasicAgent, memory, RAR, UI-driver, Factory, Parity Deploy,",
-        "and other infrastructure-only agents from the general list. Also offer",
-        "a clearly labeled hello-world parity preset: HackerNews + ContextMemory",
-        "+ ManageMemory. The memory pair is allowed only for that preset and its",
-        "storage/infrastructure requirements must remain explicit. Ask me in this Brain Surgeon",
-        "chat which agents I want, the Copilot Studio display name, publisher",
-        "prefix, and target environment/profile. Do not continue until I answer.",
-        "If the selected user PAC profile is not authenticated to that exact",
-        "environment, call start_copilot_studio_login and show me the device",
-        "login instructions; poll only after I say sign-in is complete. Never",
-        "read, return, or use a client secret from local.settings.json.",
-        "After selection and login, use the visible Brainstem chat to drive",
-        "RappCopilotStudioFactoryBeta and CopilotStudioDeployBeta through",
-        "doctor, plan, build/deploy and provision. Copy the protected",
-        "parity_cases_path to",
-        "the deployment run as parity-cases.json before parity, then run",
-        "parity and finalize. Keep working autonomously and visibly until the",
-        "Draft is proven.",
-        "As soon as AgentId and EnvironmentId are known, call",
-        "show_copilot_studio_agent_link so this chat contains a clickable",
-        "Copilot Studio card for the exact agent. The beta is Draft-only:",
-        "never call release or publish. Show the exact AgentId, environment,",
-        "Draft parity evidence, and warning that live publication is a manual",
-        "user action in the linked Copilot Studio UI. Record the evidence and",
-        "return the Copilot Studio agent ID and URL. Do not stop at",
-        "instructions or hand work to VS Code.",
-      ].join(" "),
-    },
-  ];
-  const list = empty.querySelector(".surgeon-starters");
-  for (const starter of starters) {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.textContent = starter.label;
-    if (starter.className) button.classList.add(starter.className);
-    if (starter.tour) button.dataset.showModeTour = "true";
-    button.addEventListener("click", () => {
-      if (starter.tour) {
-        window.dispatchEvent(new CustomEvent("rapp-beta:show-mode-tour"));
-        return;
-      }
-      surgeonInput.value = starter.prompt || starter.label;
-      void submitSurgeon();
-    });
-    list.appendChild(button);
-  }
-  surgeonLog.appendChild(empty);
-}
-
-function removeSurgeonEmpty() {
-  surgeonLog.querySelector(".surgeon-empty")?.remove();
-}
-
-function showSurgeonThinking() {
-  if (surgeonThinking) return;
-  surgeonThinking = document.createElement("div");
-  surgeonThinking.className = "surgeon-thinking";
-  surgeonThinking.innerHTML = `
+function showSurgeonThinking(session) {
+  if (session.thinkEl) return;
+  const think = document.createElement("div");
+  think.className = "surgeon-thinking";
+  think.innerHTML = `
     <span class="surgeon-dots"><span></span><span></span><span></span></span>
     <span>Copilot is working</span>
   `;
-  surgeonLog.appendChild(surgeonThinking);
-  surgeonLog.scrollTop = surgeonLog.scrollHeight;
+  session.logEl.appendChild(think);
+  session.thinkEl = think;
+  scrollSurgeon(session);
 }
 
-function hideSurgeonThinking() {
-  surgeonThinking?.remove();
-  surgeonThinking = null;
+function hideSurgeonThinking(session) {
+  session.thinkEl?.remove();
+  session.thinkEl = null;
 }
 
-function addSurgeonTool(toolName, toolCallId) {
+function addSurgeonTool(session, toolName, toolCallId) {
   const tool = document.createElement("div");
   tool.className = "surgeon-tool";
   tool.dataset.toolName = toolName;
@@ -448,13 +461,12 @@ function addSurgeonTool(toolName, toolCallId) {
   status.textContent = "running";
   head.append("⚙", name, status);
   tool.appendChild(head);
-  surgeonLog.appendChild(tool);
-  surgeonTools.push(tool);
-  surgeonLog.scrollTop = surgeonLog.scrollHeight;
+  surgeonPlace(session, tool);
+  session.tools.push(tool);
 }
 
-function finishSurgeonTool(toolName, toolCallId, success) {
-  const tool = [...surgeonTools].reverse().find(
+function finishSurgeonTool(session, toolName, toolCallId, success) {
+  const tool = [...session.tools].reverse().find(
     (candidate) => (
       candidate.dataset.active === "true"
       && (
@@ -470,7 +482,7 @@ function finishSurgeonTool(toolName, toolCallId, success) {
   status.style.color = success ? "#5cc271" : "#ff7b72";
 }
 
-function addSurgeonArtifact(artifact) {
+function addSurgeonArtifact(session, artifact) {
   if (!artifact?.url) return;
   const card = document.createElement("div");
   card.className = "surgeon-artifact";
@@ -494,118 +506,421 @@ function addSurgeonArtifact(artifact) {
   link.rel = "noopener noreferrer";
   link.textContent = artifact.alt || "Open artifact";
   card.appendChild(link);
-  surgeonLog.appendChild(card);
-  surgeonLog.scrollTop = surgeonLog.scrollHeight;
+  surgeonPlace(session, card);
 }
 
-function restoreSurgeonHistory() {
-  try {
-    const parsed = JSON.parse(localStorage.getItem(surgeonHistoryKey) || "[]");
-    surgeonHistory = Array.isArray(parsed) ? parsed.slice(-80) : [];
-  } catch {
-    surgeonHistory = [];
+// ── empty-state + starters (per session) ──
+function removeSurgeonEmpty(session) {
+  session.logEl.querySelector(".surgeon-empty")?.remove();
+}
+
+function renderSurgeonEmpty(session) {
+  if (session.history.length || session.logEl.querySelector(".surgeon-message, .surgeon-tool")) return;
+  const empty = document.createElement("div");
+  empty.className = "surgeon-empty";
+  empty.innerHTML = `
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 2c-2.3 0-3.6.9-4.3 2.1-.5-.1-1-.1-1.5-.1C3.4 4 2 5.6 2 8.2v.3C1 9 .5 9.9.5 11.2v2.1c0 2 1 3.4 2.8 4.2C5.1 18.9 8.2 20 12 20s6.9-1.1 8.7-2.5c1.8-.8 2.8-2.2 2.8-4.2v-2.1c0-1.3-.5-2.2-1.5-2.7v-.3C22 5.6 20.6 4 17.8 4c-.5 0-1 0-1.5.1C15.6 2.9 14.3 2 12 2Z"/>
+    </svg>
+    <h2>GitHub Copilot, in your Brainstem</h2>
+    The full Copilot agent loop: files, shell, tests, one-chat capability
+    injection, visible UI control, screenshots, and recorded demos. Open more
+    chats with <b>+</b> to build several agents at once on the same Brainstem.
+    <div class="surgeon-caps">
+      <span>run commands</span><span>read/write files</span><span>test Brainstem</span>
+    </div>
+    <div class="surgeon-starters"></div>
+  `;
+  const list = empty.querySelector(".surgeon-starters");
+  for (const starter of SURGEON_STARTERS) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = starter.label;
+    if (starter.className) button.classList.add(starter.className);
+    if (starter.tour) button.dataset.showModeTour = "true";
+    button.addEventListener("click", () => {
+      if (starter.tour) {
+        window.dispatchEvent(new CustomEvent("rapp-beta:show-mode-tour"));
+        return;
+      }
+      runSurgeon(session, starter.prompt || starter.label);
+    });
+    list.appendChild(button);
   }
-  for (const message of surgeonHistory) {
+  session.logEl.appendChild(empty);
+}
+
+// ── session lifecycle ──
+function newSurgeonSession(activate = true) {
+  const id = ++surgeonSeq;
+  const log = document.createElement("div");
+  log.className = "surgeon-session";
+  surgeonLog.appendChild(log);
+  const session = {
+    id,
+    defaultTitle: "New chat",
+    title: "New chat",
+    history: [],
+    running: false,
+    logEl: log,
+    tileEl: null,
+    streamEl: null,
+    thinkEl: null,
+    tools: [],
+  };
+  surgeonSessions.push(session);
+  renderSurgeonEmpty(session);
+  if (surgeonHerd) {
+    addSurgeonTile(session);
+    renderSurgeonTabs();
+  } else if (activate) {
+    setActiveSurgeon(id);
+    surgeonInput?.focus();
+  }
+  saveSurgeonSessions();
+  return session;
+}
+
+function restoreSurgeonSession(data) {
+  const log = document.createElement("div");
+  log.className = "surgeon-session";
+  surgeonLog.appendChild(log);
+  const session = {
+    id: data.id,
+    defaultTitle: "New chat",
+    title: data.title || "New chat",
+    history: Array.isArray(data.history) ? data.history : [],
+    running: false,
+    logEl: log,
+    tileEl: null,
+    streamEl: null,
+    thinkEl: null,
+    tools: [],
+  };
+  surgeonSessions.push(session);
+  if (surgeonSeq < session.id) surgeonSeq = session.id;
+  for (const message of session.history) {
     if (["user", "assistant"].includes(message.role)) {
-      addSurgeonBubble(message.role, String(message.content || ""), false);
+      const bubble = document.createElement("div");
+      bubble.className = `surgeon-message ${message.role}`;
+      bubble.textContent = String(message.content || "");
+      log.appendChild(bubble);
     }
   }
-  showSurgeonEmpty();
+  if (!session.history.length) renderSurgeonEmpty(session);
+  return session;
 }
 
-function clearSurgeonUi() {
-  hideSurgeonThinking();
-  surgeonLog.replaceChildren();
-  surgeonHistory = [];
-  surgeonCurrentAssistant = null;
-  surgeonBusy = false;
-  surgeonInput.value = "";
-  surgeonInput.style.height = "auto";
-  surgeonSend.disabled = false;
-  surgeonSend.textContent = "Build";
-  saveSurgeonHistory();
-  showSurgeonEmpty();
+function setActiveSurgeon(id) {
+  surgeonActiveId = id;
+  for (const s of surgeonSessions) {
+    s.logEl.style.display = s.id === id ? "" : "none";
+  }
+  renderSurgeonTabs();
+  syncSurgeonComposer();
+  const active = activeSurgeon();
+  if (active) scrollSurgeon(active);
 }
 
-async function submitSurgeon() {
-  const prompt = surgeonInput.value.trim();
-  if (!prompt || surgeonBusy) return;
-  removeSurgeonEmpty();
-  addSurgeonBubble("user", prompt);
-  surgeonInput.value = "";
-  surgeonInput.style.height = "auto";
-  surgeonBusy = true;
-  surgeonSend.disabled = true;
-  surgeonSend.textContent = "Working";
-  surgeonCurrentAssistant = null;
-  showSurgeonThinking();
+function closeSurgeonSession(id) {
+  const index = surgeonSessions.findIndex((s) => s.id === id);
+  if (index < 0) return;
+  const session = surgeonSessions[index];
+  session.tileEl?.remove();
+  session.logEl.remove();
+  surgeonSessions.splice(index, 1);
+  void window.brainstemBeta.surgeonClose(id);
+  if (!surgeonSessions.length) {
+    newSurgeonSession();
+    return;
+  }
+  const fallback = surgeonSessions[Math.max(0, index - 1)].id;
+  if (surgeonHerd) {
+    if (surgeonActiveId === id) surgeonActiveId = fallback;
+    renderSurgeonTabs();
+  } else if (surgeonActiveId === id) {
+    setActiveSurgeon(fallback);
+  } else {
+    renderSurgeonTabs();
+  }
+  saveSurgeonSessions();
+}
+
+function refreshSurgeon(session) {
+  renderSurgeonTabs();
+  updateSurgeonTile(session);
+  if (session.id === surgeonActiveId) syncSurgeonComposer();
+  saveSurgeonSessions();
+}
+
+function renderSurgeonTabs() {
+  if (!surgeonTabs) return;
+  surgeonTabs.replaceChildren();
+  for (const s of surgeonSessions) {
+    const tab = document.createElement("button");
+    tab.type = "button";
+    tab.className = `surgeon-tab${s.id === surgeonActiveId ? " active" : ""}`;
+    const title = s.title.length > 22 ? `${s.title.slice(0, 22)}…` : s.title;
+    tab.innerHTML = (s.running ? '<span class="sp"></span>' : "")
+      + `<span class="tt">${escapeHtml(title)}</span>`
+      + (surgeonSessions.length > 1 ? '<span class="cl" title="Close chat">×</span>' : "");
+    tab.addEventListener("click", (event) => {
+      if (event.target.classList.contains("cl")) {
+        event.stopPropagation();
+        closeSurgeonSession(s.id);
+      } else {
+        setActiveSurgeon(s.id);
+      }
+    });
+    surgeonTabs.appendChild(tab);
+  }
+  const add = document.createElement("button");
+  add.type = "button";
+  add.className = "surgeon-new";
+  add.textContent = "+";
+  add.title = "New Copilot chat (same Brainstem)";
+  add.addEventListener("click", () => newSurgeonSession());
+  surgeonTabs.appendChild(add);
+}
+
+function escapeHtml(value) {
+  const div = document.createElement("div");
+  div.textContent = value == null ? "" : String(value);
+  return div.innerHTML;
+}
+
+// ── herd view: every session as a live tile in a grid ──
+function ensureSurgeonHerdDom() {
+  if (surgeonHerdEl) return;
+  const herd = document.createElement("aside");
+  herd.id = "surgeon-herd";
+  herd.setAttribute("aria-label", "GitHub Copilot herd — several chats at once");
+  herd.innerHTML = `
+    <div class="hbar">
+      <span class="surgeon-badge">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+          <path d="M12 2c-2.3 0-3.6.9-4.3 2.1-.5-.1-1-.1-1.5-.1C3.4 4 2 5.6 2 8.2v.3C1 9 .5 9.9.5 11.2v2.1c0 2 1 3.4 2.8 4.2C5.1 18.9 8.2 20 12 20s6.9-1.1 8.7-2.5c1.8-.8 2.8-2.2 2.8-4.2v-2.1c0-1.3-.5-2.2-1.5-2.7v-.3C22 5.6 20.6 4 17.8 4c-.5 0-1 0-1.5.1C15.6 2.9 14.3 2 12 2Z"/>
+        </svg>
+      </span>
+      <span class="t">GitHub Copilot · Herd</span>
+      <span class="sub">several agents, one Brainstem</span>
+      <button class="hnew" type="button">+ New chat</button>
+      <button class="hclose" type="button">Dock ▸</button>
+    </div>
+    <div class="herd-grid"></div>
+  `;
+  document.body.appendChild(herd);
+  surgeonHerdEl = herd;
+  surgeonGridEl = herd.querySelector(".herd-grid");
+  herd.querySelector(".hnew").addEventListener("click", () => newSurgeonSession());
+  herd.querySelector(".hclose").addEventListener("click", exitSurgeonHerd);
+}
+
+function surgeonTileFor(session) {
+  const tile = document.createElement("div");
+  tile.className = "herd-tile";
+  tile.innerHTML = `
+    <div class="hh">
+      <span class="tt"></span>
+      <span class="hst">ready</span>
+      <span class="cl" title="Close chat">×</span>
+    </div>
+    <div class="htrans"></div>
+    <div class="hcomp">
+      <textarea rows="1" placeholder="Message this Copilot…"></textarea>
+      <button type="button" title="Send">➤</button>
+    </div>
+  `;
+  tile.querySelector(".htrans").appendChild(session.logEl);
+  session.logEl.style.display = "";
+  const textarea = tile.querySelector(".hcomp textarea");
+  const button = tile.querySelector(".hcomp button");
+  const send = () => {
+    const text = textarea.value.trim();
+    if (!text || session.running) return;
+    textarea.value = "";
+    textarea.style.height = "auto";
+    runSurgeon(session, text);
+  };
+  button.addEventListener("click", send);
+  textarea.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      send();
+    }
+  });
+  textarea.addEventListener("input", () => {
+    textarea.style.height = "auto";
+    textarea.style.height = `${Math.min(textarea.scrollHeight, 90)}px`;
+  });
+  tile.querySelector(".cl").addEventListener("click", () => closeSurgeonSession(session.id));
+  session.tileEl = tile;
+  updateSurgeonTile(session);
+  return tile;
+}
+
+function updateSurgeonTile(session) {
+  if (!session.tileEl) return;
+  session.tileEl.querySelector(".tt").textContent = session.title;
+  const status = session.tileEl.querySelector(".hst");
+  const state = session.running ? "working" : (session.history.length ? "done" : "ready");
+  status.textContent = state;
+  status.className = `hst ${state}`;
+  const button = session.tileEl.querySelector(".hcomp button");
+  if (button) button.disabled = session.running;
+}
+
+function addSurgeonTile(session) {
+  ensureSurgeonHerdDom();
+  surgeonGridEl.appendChild(surgeonTileFor(session));
+}
+
+function enterSurgeonHerd() {
+  ensureSurgeonHerdDom();
+  surgeonGridEl.replaceChildren();
+  for (const s of surgeonSessions) {
+    s.tileEl = null;
+    surgeonGridEl.appendChild(surgeonTileFor(s));
+  }
+  surgeonHerdEl.classList.add("open");
+  document.body.classList.add("surgeon-herd-open");
+  surgeonHerd = true;
+  surgeonHerdBtn?.classList.add("on");
+}
+
+function exitSurgeonHerd() {
+  surgeonHerd = false;
+  surgeonHerdEl?.classList.remove("open");
+  document.body.classList.remove("surgeon-herd-open");
+  surgeonHerdBtn?.classList.remove("on");
+  for (const s of surgeonSessions) {
+    s.tileEl = null;
+    surgeonLog.appendChild(s.logEl);
+  }
+  setActiveSurgeon(surgeonActiveId);
+}
+
+function toggleSurgeonHerd() {
+  if (surgeonHerd) exitSurgeonHerd();
+  else enterSurgeonHerd();
+}
+
+// ── running a turn (per session, parallel across sessions) ──
+async function runSurgeon(session, prompt) {
+  const text = String(prompt || "").trim();
+  if (!text || session.running) return;
+  removeSurgeonEmpty(session);
+  if (session.title === session.defaultTitle) session.title = text.slice(0, 40);
+  session.running = true;
+  session.streamEl = null;
+  addSurgeonBubble(session, "user", text);
+  showSurgeonThinking(session);
+  refreshSurgeon(session);
   try {
-    await window.brainstemBeta.surgeonSend(prompt);
+    await window.brainstemBeta.surgeonSend(session.id, text);
   } catch (cause) {
-    hideSurgeonThinking();
-    if (!surgeonCurrentAssistant) {
-      addSurgeonBubble(
-        "error",
-        String(cause?.message || cause || "Brain Surgeon failed."),
-        false,
-      );
+    hideSurgeonThinking(session);
+    if (!session.streamEl) {
+      addSurgeonBubble(session, "error", String(cause?.message || cause || "Brain Surgeon failed."), false);
     }
   } finally {
-    surgeonBusy = false;
-    surgeonSend.disabled = false;
-    surgeonSend.textContent = "Build";
+    session.running = false;
+    session.streamEl = null;
+    refreshSurgeon(session);
   }
+}
+
+function submitSurgeon() {
+  const prompt = surgeonInput.value.trim();
+  if (!prompt) return;
+  const session = activeSurgeon() || newSurgeonSession();
+  if (session.running) return;   // this chat is busy — open a new tab (+) to run in parallel
+  surgeonInput.value = "";
+  surgeonInput.style.height = "auto";
+  runSurgeon(session, prompt);
+}
+
+function syncSurgeonComposer() {
+  const session = activeSurgeon();
+  const busy = !!(session && session.running);
+  if (surgeonSend) {
+    surgeonSend.disabled = busy;
+    surgeonSend.textContent = busy ? "Working" : "Build";
+  }
+}
+
+// Reset the ACTIVE chat's transcript and its main-process session.
+function clearSurgeonUi() {
+  const session = activeSurgeon();
+  if (!session) return;
+  hideSurgeonThinking(session);
+  session.logEl.replaceChildren();
+  session.history = [];
+  session.title = session.defaultTitle;
+  session.streamEl = null;
+  session.tools = [];
+  session.running = false;
+  surgeonInput.value = "";
+  surgeonInput.style.height = "auto";
+  renderSurgeonEmpty(session);
+  refreshSurgeon(session);
 }
 
 function handleSurgeonEvent(event) {
   if (!event) return;
+  const session = surgeonSessions.find((s) => s.id === event.sessionId)
+    || surgeonSessions.find((s) => s.id === surgeonActiveId);
+  if (!session) return;
   if (event.type === "response-start") {
-    showSurgeonThinking();
+    showSurgeonThinking(session);
   } else if (event.type === "delta") {
-    hideSurgeonThinking();
-    if (!surgeonCurrentAssistant) {
-      surgeonCurrentAssistant = addSurgeonBubble("assistant", "", false);
-    }
-    surgeonCurrentAssistant.textContent += event.text || "";
-    surgeonLog.scrollTop = surgeonLog.scrollHeight;
+    hideSurgeonThinking(session);
+    if (!session.streamEl) session.streamEl = addSurgeonBubble(session, "assistant", "", false);
+    session.streamEl.textContent += event.text || "";
+    scrollSurgeon(session);
   } else if (event.type === "tool-start") {
-    hideSurgeonThinking();
-    addSurgeonTool(event.toolName || "tool", event.toolCallId);
-    showSurgeonThinking();
+    hideSurgeonThinking(session);
+    addSurgeonTool(session, event.toolName || "tool", event.toolCallId);
+    showSurgeonThinking(session);
   } else if (event.type === "tool-complete") {
-    finishSurgeonTool(
-      event.toolName || "tool",
-      event.toolCallId,
-      event.success !== false,
-    );
+    finishSurgeonTool(session, event.toolName || "tool", event.toolCallId, event.success !== false);
     void refreshAgentExplorer();
   } else if (event.type === "artifact") {
-    addSurgeonArtifact(event.artifact);
+    addSurgeonArtifact(session, event.artifact);
   } else if (event.type === "lease") {
-    addSurgeonBubble("assistant", event.message || "Temporary capability leased.", false);
+    addSurgeonBubble(session, "assistant", event.message || "Temporary capability leased.", false);
   } else if (event.type === "done") {
-    hideSurgeonThinking();
+    hideSurgeonThinking(session);
     const finalText = String(event.content || "").trim();
-    if (!surgeonCurrentAssistant) {
-      surgeonCurrentAssistant = addSurgeonBubble(
-        "assistant",
-        finalText || "(done)",
-        false,
-      );
+    if (!session.streamEl) {
+      session.streamEl = addSurgeonBubble(session, "assistant", finalText || "(done)", false);
     } else if (finalText) {
-      surgeonCurrentAssistant.textContent = finalText;
+      session.streamEl.textContent = finalText;
     }
-    surgeonHistory.push({
-      role: "assistant",
-      content: surgeonCurrentAssistant.textContent,
-    });
-    saveSurgeonHistory();
-    surgeonCurrentAssistant = null;
+    session.history.push({ role: "assistant", content: session.streamEl.textContent });
+    session.streamEl = null;
+    saveSurgeonSessions();
   } else if (event.type === "error") {
-    hideSurgeonThinking();
-    addSurgeonBubble("error", event.message || "Brain Surgeon failed.", false);
+    hideSurgeonThinking(session);
+    addSurgeonBubble(session, "error", event.message || "Brain Surgeon failed.", false);
   } else if (event.type === "reset") {
-    clearSurgeonUi();
+    // A main-process reset for this session — already cleared in clearSurgeonUi.
+  }
+}
+
+function initSurgeonSessions() {
+  let saved = null;
+  try {
+    saved = JSON.parse(localStorage.getItem(surgeonHistoryKey) || "null");
+  } catch {
+    saved = null;
+  }
+  if (saved && Array.isArray(saved.sessions) && saved.sessions.length) {
+    saved.sessions.forEach(restoreSurgeonSession);
+    const active = surgeonSessions.some((s) => s.id === saved.active) ? saved.active : surgeonSessions[0].id;
+    setActiveSurgeon(active);
+  } else {
+    newSurgeonSession();
   }
 }
 
@@ -678,17 +993,22 @@ document.getElementById("surgeon-close").addEventListener(
   () => setSurgeonOpen(false),
 );
 document.getElementById("surgeon-new").addEventListener("click", async () => {
+  const session = activeSurgeon();
   clearSurgeonUi();
   try {
-    await window.brainstemBeta.surgeonReset();
+    await window.brainstemBeta.surgeonReset(session ? session.id : 1);
   } catch (cause) {
-    addSurgeonBubble(
-      "error",
-      `Could not reset Brain Surgeon: ${String(cause?.message || cause)}`,
-      false,
-    );
+    if (session) {
+      addSurgeonBubble(
+        session,
+        "error",
+        `Could not reset Brain Surgeon: ${String(cause?.message || cause)}`,
+        false,
+      );
+    }
   }
 });
+surgeonHerdBtn.addEventListener("click", toggleSurgeonHerd);
 surgeonSend.addEventListener("click", () => void submitSurgeon());
 surgeonInput.addEventListener("input", () => {
   surgeonInput.style.height = "auto";
@@ -705,7 +1025,7 @@ if (localStorage.getItem(introStorageKey) === "seen") {
   intro.classList.add("hidden");
 }
 
-restoreSurgeonHistory();
+initSurgeonSessions();
 setSurgeonOpen(localStorage.getItem(surgeonOpenKey) !== "closed");
 setExplorerOpen(localStorage.getItem(explorerOpenKey) === "open");
 setInterval(() => void refreshAgentExplorer(), 2000);

@@ -1,0 +1,69 @@
+import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
+import { readFileSync } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import test from "node:test";
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const read = (r) => readFileSync(path.join(root, r), "utf8");
+const renderer = read("ui/renderer.js");
+const ui = read("ui/index.html");
+const preload = read("electron/preload.cjs");
+const main = read("electron/main.mjs");
+
+test("renderer models several Copilot chats as tabs + a herd grid", () => {
+  execFileSync(process.execPath, ["--check", path.join(root, "ui/renderer.js")]);
+  assert.match(renderer, /let surgeonSessions = \[\]/);
+  assert.match(renderer, /function newSurgeonSession/);
+  assert.match(renderer, /function closeSurgeonSession/);
+  assert.match(renderer, /function renderSurgeonTabs/);
+  assert.match(renderer, /function enterSurgeonHerd/);
+  assert.match(renderer, /function exitSurgeonHerd/);
+  assert.match(renderer, /function toggleSurgeonHerd/);
+  // each event routes to its own session by id
+  assert.match(renderer, /surgeonSessions\.find\(\(s\) => s\.id === event\.sessionId\)/);
+  // sends and resets carry the session id
+  assert.match(renderer, /brainstemBeta\.surgeonSend\(session\.id, text\)/);
+  assert.match(renderer, /brainstemBeta\.surgeonClose\(/);
+  // clearSurgeonUi survives (installer-contract depends on it) but is per-session
+  assert.match(renderer, /function clearSurgeonUi\(\)/);
+});
+
+test("the shell has the tab strip, herd button, and herd width rule", () => {
+  assert.match(ui, /id="surgeon-tabs"/);
+  assert.match(ui, /id="surgeon-herd-btn"/);
+  assert.match(ui, /Herd view — chat with several Copilots at once/);
+  assert.match(ui, /\.surgeon-session/);
+  assert.match(ui, /body\.surgeon-herd-open main/);
+  // the log is a plain scroll container; sessions carry the flex/gap/padding
+  assert.match(ui, /\.surgeon-session \{\s*display: flex;/);
+});
+
+test("preload and main key Brain Surgeon by session id", () => {
+  assert.match(preload, /surgeonSend: \(sessionId, prompt\)/);
+  assert.match(preload, /surgeonClose:/);
+  assert.match(preload, /beta:surgeon-close/);
+  assert.match(main, /const brainSurgeons = new Map\(\)/);
+  assert.match(main, /ensureBrainSurgeon\(sessionId\)\.send\(prompt\)/);
+  assert.match(main, /emitSurgeonEvent\(\{ \.\.\.event, sessionId: id \}\)/);
+  assert.match(main, /beta:surgeon-close/);
+});
+
+test("the one visible Brainstem is a shared stage: driving is serialized, reads pass through", () => {
+  assert.match(main, /const UI_STAGE_ACTIONS = new Set\(/);
+  assert.match(main, /let uiStageChain = Promise\.resolve\(\)/);
+  assert.match(main, /async function rawUiCommand/);
+  // read-only / quick-state actions must NOT be in the serialized set
+  for (const action of ["inspect", "read", "screenshot", "route_telemetry", "set_chat_lease", "force_mode"]) {
+    assert.doesNotMatch(
+      main,
+      new RegExp(`UI_STAGE_ACTIONS[\\s\\S]*?"${action}"[\\s\\S]*?\\]\\)`),
+      `${action} should pass through, not hold the stage`,
+    );
+  }
+  // driving actions must be serialized
+  for (const action of ["chat", "click", "type", "run", "drive", "tour"].filter((a) => a !== "drive")) {
+    assert.match(main, new RegExp(`UI_STAGE_ACTIONS[\\s\\S]*?"${action}"`), `${action} should hold the stage`);
+  }
+});

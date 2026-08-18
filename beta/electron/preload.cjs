@@ -13,8 +13,9 @@ contextBridge.exposeInMainWorld("brainstemBeta", {
   readAgentFile: (filename, scope) => (
     ipcRenderer.invoke("beta:read-agent-file", filename, scope)
   ),
-  surgeonReset: () => ipcRenderer.invoke("beta:surgeon-reset"),
-  surgeonSend: (prompt) => ipcRenderer.invoke("beta:surgeon-send", prompt),
+  surgeonReset: (sessionId = 1) => ipcRenderer.invoke("beta:surgeon-reset", sessionId),
+  surgeonSend: (sessionId, prompt) => ipcRenderer.invoke("beta:surgeon-send", sessionId, prompt),
+  surgeonClose: (sessionId) => ipcRenderer.invoke("beta:surgeon-close", sessionId),
   onSurgeonEvent: (listener) => {
     const wrapped = (_event, payload) => listener(payload);
     ipcRenderer.on("beta:surgeon-event", wrapped);
