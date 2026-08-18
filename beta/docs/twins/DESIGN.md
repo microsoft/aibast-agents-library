@@ -1,7 +1,8 @@
 # RAPPlication twins in the herd — design
 
-> Status: agreed direction (2026-08-18). Foundation (RAPP Store client) landed;
-> the rest is P0/P1/P2 below. Builds on the multi-chat herd (PR #175).
+> Status: agreed direction (2026-08-18). P0 (RAPP Store client) and P1 (twin
+> runtime + herd tile + hatch tool) landed and verified live; P2 (the Copilot
+> Studio deploy twin) is next. Builds on the multi-chat herd (PR #175).
 >
 > **On-canon.** Checked against the RAPP spine (`kody-w/rapp-spine`) — see
 > [`COMPLIANCE.md`](COMPLIANCE.md). A herd of twins is **Leviathan sense (A)**
@@ -134,10 +135,10 @@ hatch cs-deploy twin (own port)
 
 ## Phasing
 
-- **P0 — foundation (this PR):** RAPP Store client — fetch `index.json`, expose
+- **P0 — foundation (DONE):** RAPP Store client — fetch `index.json`, expose
   the catalog, resolve an id → its sha256-pinned singleton (+ egg), verify the
   hash on download. Auth-free, unit-tested, verified against the live 22 entries.
-- **P1 — twin runtime + tile:** a twin registry that hatches a rapplication into
+- **P1 — twin runtime + tile (DONE):** a twin registry that hatches a rapplication into
   a concurrent long-lived worker on its own port; a twin-tile kind in the herd
   (renders the rapplication's own `ui_url` bound to the worker port; status,
   port, live loop log, **and its own chat composer** so the person or the
