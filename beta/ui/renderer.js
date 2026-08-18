@@ -744,13 +744,24 @@ async function toggleStorePicker(herd) {
       row.addEventListener("click", async () => {
         panel.remove(); storePickerEl = null;
         try { await window.brainstemBeta.twinHatch(entry.id); }
-        catch (cause) { /* surfaced via twin events */ void cause; }
+        catch (cause) { flashHerdError(herd, `Couldn't hatch ${entry.name}: ${cause?.message || cause}`); }
       });
       panel.appendChild(row);
     }
   } catch {
     panel.textContent = "RAPP Store unavailable.";
   }
+}
+
+// A transient, dismissable error banner in the herd — so a swallowed hatch
+// failure (maxTwins cap, sha256 mismatch, HTTP error) is actually seen.
+function flashHerdError(herd, message) {
+  const el = document.createElement("div");
+  el.className = "herd-error";
+  el.textContent = message;
+  el.addEventListener("click", () => el.remove());
+  herd.appendChild(el);
+  setTimeout(() => el.remove(), 8000);
 }
 
 function surgeonTileFor(session) {
@@ -941,9 +952,14 @@ function renderTwinChat(tile, twin) {
       chatEl.appendChild(line);
       continue;
     }
-    const self = message.role === "user";
+    // Align by WHO spoke, not the wire role: only the human ("You") is self
+    // (right, blue). The Brainstem/Surgeon are drivers — distinct, left-aligned —
+    // so a loop reads as a conversation, not the user talking to themselves.
+    const author = message.author || "";
+    const self = author.toLowerCase() === "you";
+    const driver = !self && /brainstem|surgeon/i.test(author);
     const wrap = document.createElement("div");
-    wrap.className = `tw-turn ${self ? "self" : ""} ${message.role}`;
+    wrap.className = `tw-turn ${self ? "self" : ""} ${driver ? "driver" : ""}`.replace(/\s+/g, " ").trim();
     if (message.author) {
       const who = document.createElement("div");
       who.className = "tw-who";
@@ -951,7 +967,8 @@ function renderTwinChat(tile, twin) {
       wrap.appendChild(who);
     }
     const bubble = document.createElement("div");
-    bubble.className = `tw-msg ${message.role}`;
+    const kind = message.role === "error" ? "error" : self ? "user" : driver ? "driver" : "assistant";
+    bubble.className = `tw-msg ${kind}`;
     bubble.textContent = message.content;
     wrap.appendChild(bubble);
     chatEl.appendChild(wrap);
@@ -1010,7 +1027,10 @@ function handleTwinEvent(event) {
     if (!surgeonHerd) enterSurgeonHerd();   // twins live in the herd — show it
     else syncTwinTiles();
   } else if (event.type === "twin-status") {
-    upsertTwin(event.twin || { id: event.id, status: event.status });
+    // Only UPDATE a twin we already know — never let a late status (e.g. from a
+    // loop's finally after close()) resurrect a dismissed tile. Creation is
+    // reserved for twin-hatched.
+    if (twins.has(event.id)) upsertTwin(event.twin || { id: event.id, status: event.status });
   } else if (event.type === "twin-log") {
     const twin = twins.get(event.id);
     if (twin) {
@@ -1023,6 +1043,7 @@ function handleTwinEvent(event) {
     if (entry) {
       entry.chat = entry.chat || [];
       entry.chat.push({ author: event.author, role: event.role, content: event.text });
+      if (entry.chat.length > 200) entry.chat.splice(0, entry.chat.length - 200);   // bound long-lived memory
       if (entry.tileEl) renderTwinChat(entry.tileEl, entry.descriptor);
     }
   } else if (event.type === "twin-closed") {

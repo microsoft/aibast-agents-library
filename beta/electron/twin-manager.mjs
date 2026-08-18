@@ -43,6 +43,25 @@ function twinSlug(value) {
     .slice(0, 40) || "twin";
 }
 
+// A twin needs the user only for a genuine, user-owned sign-in — match an auth
+// REQUEST, not incidental auth vocabulary in an otherwise normal answer (so a
+// reply like "users authenticate with their org account" doesn't abort a loop).
+const NEEDS_AUTH_RE = /\b(please sign in|sign in (?:to continue|required|and continue|first)|device login|device code|run device login|not authenticated|authentication (?:required|needed)|authenticate (?:first|to continue)|pac auth login|you (?:need|must) to (?:sign in|authenticate)|requires? (?:you to )?(?:sign in|authenticate))\b/i;
+
+// Completion detection for a twin's own reply (run()): not fooled by negation
+// ("I am not done") and never treats an empty reply as success.
+function saysDone(text) {
+  const t = String(text || "").trim();
+  if (!t) return false;
+  if (/\b(?:not|isn'?t|cannot|can'?t|won'?t|unable to|couldn'?t|never|no longer)\s+(?:\w+\s+){0,3}(?:done|complete|completed|finished)\b/i.test(t)) return false;
+  return /\b(done|complete|completed|finished|no further (?:action|steps)|draft (?:is )?ready)\b/i.test(t);
+}
+
+// The planner is told to answer "DONE — …"; accept it at the start of the reply
+// or on its own line (tolerating a short preamble) so completion isn't missed
+// and the "DONE — …" line is never forwarded to the twin as an instruction.
+const planIsDone = (plan) => /(^|\n)\s*DONE\b/i.test(String(plan || ""));
+
 export class TwinManager {
   constructor({ brainstemConfig, betaHome, routeManager = null, storeClient, brainstemUrl = null, onEvent = () => {} }) {
     if (!brainstemConfig) throw new Error("TwinManager needs a brainstemConfig.");
@@ -60,8 +79,10 @@ export class TwinManager {
     this.seq = 0;
     this.maxTwins = 8;   // cap concurrent workers so a runaway can't exhaust the machine
     this.twinsRoot = path.join(betaHome, "twins");
-    // Clear stale twin dirs left by a crashed previous session (their workers,
-    // if any, are orphaned and will be reaped by the OS; we start clean).
+    // Clear stale twin dirs left by a crashed previous session. NOTE: this only
+    // removes directories — it does NOT reap an orphaned worker process from a
+    // hard-killed prior session (that stays until the OS reclaims its port); we
+    // just start this session's bookkeeping clean.
     try { rmSync(this.twinsRoot, { recursive: true, force: true }); } catch { /* ignore */ }
   }
 
@@ -107,6 +128,7 @@ export class TwinManager {
   }
 
   #setStatus(twin, status) {
+    if (twin.closed) return;   // a closed twin must not re-emit and resurrect its tile
     twin.status = status;
     this.emit({ type: "twin-status", id: twin.id, status, twin: this.descriptor(twin) });
   }
@@ -257,7 +279,16 @@ export class TwinManager {
     const twin = this.get(id);
     const text = String(prompt || "");
     this.emit({ type: "twin-message", id, author, role: "user", text });
-    const body = { user_input: text, session_id: sessionId || `twin-room-${id}` };
+    // The kernel /chat is STATELESS — session_id does not accumulate turns
+    // server-side; conversation_history is the only continuity mechanism. Carry a
+    // per-twin room history so the loop, the Surgeon, and the user all build on
+    // prior turns instead of speaking to a memoryless twin each time.
+    if (!Array.isArray(twin.roomHistory)) twin.roomHistory = [];
+    const body = {
+      user_input: text,
+      session_id: sessionId || `twin-room-${id}`,
+      conversation_history: twin.roomHistory.slice(-40),
+    };
     let data;
     try {
       const response = await fetch(`${twin.url}/chat`, {
@@ -272,6 +303,8 @@ export class TwinManager {
       throw error;
     }
     const reply = String(data.response || data.assistant_response || data.result || "");
+    twin.roomHistory.push({ role: "user", content: text }, { role: "assistant", content: reply });
+    if (twin.roomHistory.length > 80) twin.roomHistory.splice(0, twin.roomHistory.length - 80);
     this.emit({ type: "twin-message", id, author: twin.name || "twin", role: "assistant", text: reply });
     return data;
   }
@@ -286,24 +319,32 @@ export class TwinManager {
     this.#setStatus(twin, "working");
     let outcome = "ready";
     const author = options.author || "Brainstem";
+    const task = String(instruction || "").trim();
     try {
-      let prompt = String(instruction || "");
+      let prompt = task;
       for (let round = 0; round < maxRounds; round += 1) {
+        if (twin.closed) break;
         const reply = await this.chat(id, prompt, { author });
+        if (twin.closed) break;
         const text = String(reply.response || reply.assistant_response || reply.result || "").trim();
         // The one visible, user-owned auth step (e.g. PAC device login). Pause
-        // the loop here rather than spinning — the user completes it, then the
-        // caller resumes with run() again.
-        if (/device\s*code|device login|sign in|authenticat|pac auth|not authenticated/i.test(text)) {
+        // only on a genuine auth REQUEST — completion is checked first so a
+        // finished reply that merely mentions sign-in isn't hijacked.
+        if (saysDone(text)) { outcome = "done"; break; }
+        if (NEEDS_AUTH_RE.test(text)) {
           outcome = "needs-auth";
           this.emit({ type: "twin-needs-auth", id, message: text.slice(0, 400) });
           break;
         }
-        if (/\b(done|complete|completed|finished|no further|draft (is )?ready)\b/i.test(text) || !text) {
-          outcome = "done";
+        if (!text) {   // an empty reply is a failure, not success
+          this.emit({ type: "twin-message", id, author, role: "error", text: "Twin returned an empty reply; stopping." });
+          outcome = "ready";
           break;
         }
-        prompt = "Continue. If the task is complete, say DONE. If you need the user to sign in, say exactly what auth is required.";
+        // The twin now carries room memory (chat()), so restate the task rather
+        // than a bare "Continue" to a memoryless worker.
+        prompt = `Continue toward this task: ${task.slice(0, 300)}\n` +
+          `If it is complete, reply DONE. If you need the user to sign in, say exactly what auth is required.`;
       }
     } finally {
       twin.running = false;
@@ -315,13 +356,15 @@ export class TwinManager {
   // Ask the visible Brainstem, over ITS /chat, for the next thing to say to the
   // twin. A dedicated planner session keeps this control chatter out of the
   // user's own Brainstem thread. Returns the Brainstem's raw text.
-  async #brainstemPlan(sessionId, prompt) {
+  async #brainstemPlan(sessionId, prompt, history = []) {
     const base = String(this.brainstemUrl() || "").replace(/\/$/, "");
     if (!base) throw new Error("No Brainstem URL to plan with.");
     const response = await fetch(`${base}/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user_input: String(prompt || ""), session_id: sessionId }),
+      // The planner is stateless too — carry its running transcript so it never
+      // loses the goal or what it already told the twin (see chat()).
+      body: JSON.stringify({ user_input: String(prompt || ""), session_id: sessionId, conversation_history: history.slice(-40) }),
     });
     if (!response.ok) throw new Error(`Brainstem /chat returned HTTP ${response.status}.`);
     const data = await response.json();
@@ -339,7 +382,12 @@ export class TwinManager {
     const { maxRounds = 6 } = options;
     const twin = this.get(id);
     if (twin.running) throw new Error(`Twin ${id} is already looping.`);
-    if (!String(goal || "").trim()) throw new Error("loop() needs a goal.");
+    const goalText = String(goal || "").trim();
+    if (!goalText) {   // surface, don't throw-then-swallow (the caller's .catch would hide it)
+      this.emit({ type: "twin-message", id, author: "Brainstem", role: "error",
+        text: "I need a goal to loop on — tell me what to have the twin do." });
+      return this.descriptor(twin);
+    }
     twin.running = true;
     this.#setStatus(twin, "working");
     const planSession = `twin-loop-${id}`;
@@ -347,42 +395,56 @@ export class TwinManager {
     const brief =
       `You are steering a specialist agent called "${twinName}" over chat to accomplish a goal for the user, hands-off. ` +
       `Each turn you send ${twinName} ONE concrete instruction, read its reply, and decide the next step. ` +
-      `Goal: ${String(goal).trim()}`;
+      `Goal: ${goalText}`;
+    // The planner's own running transcript — passed as conversation_history every
+    // turn so the stateless kernel never loses the goal or what it already sent.
+    const planHistory = [];
+    const plan = async (prompt) => {
+      const reply = await this.#brainstemPlan(planSession, prompt, planHistory);
+      planHistory.push({ role: "user", content: prompt }, { role: "assistant", content: reply });
+      return reply;
+    };
     let outcome = "ready";
     try {
       // Opening move: the Brainstem's first instruction to the twin.
-      let instruction = await this.#brainstemPlan(planSession,
+      let instruction = await plan(
         `${brief}\n\nReply with ONLY the first message to send to ${twinName} — a single concrete instruction, addressed to ${twinName}, no preamble.`);
       for (let round = 0; round < maxRounds; round += 1) {
-        if (!instruction) break;
+        if (twin.closed || !instruction) break;
         // The twin executes; its reply streams into the room as its own turn,
         // the instruction as a "Brainstem" turn.
         const reply = await this.chat(id, instruction, { author: "Brainstem" });
+        if (twin.closed) break;
         const twinText = String(reply.response || reply.assistant_response || reply.result || "").trim();
-        // The one user-owned step: pause the loop for the human to sign in.
-        if (/device\s*code|device login|sign in|authenticat|pac auth|not authenticated/i.test(twinText)) {
+        // Pause only on a genuine, user-owned auth REQUEST.
+        if (NEEDS_AUTH_RE.test(twinText)) {
           outcome = "needs-auth";
           this.emit({ type: "twin-needs-auth", id, message: twinText.slice(0, 400) });
           break;
         }
-        // The Brainstem reads the twin's reply and plans the next move.
-        const plan = await this.#brainstemPlan(planSession,
+        // The Brainstem reads the twin's reply and plans the next move — the goal
+        // is restated (belt-and-suspenders) alongside the forwarded history.
+        const next = await plan(
+          `Goal (unchanged): ${goalText}\n\n` +
           `${twinName} replied:\n"""\n${twinText.slice(0, 4000)}\n"""\n\n` +
           `If the goal is fully met, reply with exactly: DONE — <one short line on the result>. ` +
           `Otherwise reply with ONLY the next single instruction to send to ${twinName} (addressed to it, no preamble).`);
-        if (/^\s*DONE\b/i.test(plan)) {
-          this.emit({ type: "twin-message", id, author: "Brainstem", role: "assistant", text: plan.trim() });
+        if (twin.closed) break;
+        if (planIsDone(next)) {
+          this.emit({ type: "twin-message", id, author: "Brainstem", role: "assistant", text: next.trim() });
           outcome = "done";
           break;
         }
-        instruction = plan;
+        instruction = next;
         if (round === maxRounds - 1) {
           this.emit({ type: "twin-message", id, author: "Brainstem", role: "assistant",
             text: `Paused after ${maxRounds} rounds — steer me or say continue to keep going.` });
         }
       }
     } catch (error) {
-      this.emit({ type: "twin-message", id, author: "Brainstem", role: "error", text: `Loop error: ${error.message}` });
+      if (!twin.closed) {
+        this.emit({ type: "twin-message", id, author: "Brainstem", role: "error", text: `Loop error: ${error.message}` });
+      }
       outcome = "ready";
     } finally {
       twin.running = false;
@@ -392,16 +454,18 @@ export class TwinManager {
   }
 
   async close(id) {
-    const twin = this.twins.get(String(id));
-    if (!twin) return { ok: true };
-    this.twins.delete(String(id));
-    await twin.worker.stop().catch(() => {});
-    try {
-      rmSync(twin.dir, { recursive: true, force: true });
-    } catch {
-      // best effort
+    const key = String(id);
+    const twin = this.twins.get(key);
+    // Signal any in-flight loop/run to stop BEFORE teardown so its next status
+    // emit can't resurrect the tile after we remove it.
+    if (twin) { twin.closed = true; twin.running = false; }
+    this.twins.delete(key);
+    if (twin?.worker) await twin.worker.stop().catch(() => {});
+    if (twin?.dir) {
+      try { rmSync(twin.dir, { recursive: true, force: true }); } catch { /* best effort */ }
     }
-    this.emit({ type: "twin-closed", id: twin.id });
+    // Always emit — even for an already-absent id — so a stale tile is dismissable.
+    this.emit({ type: "twin-closed", id: key });
     return { ok: true };
   }
 

@@ -134,7 +134,12 @@ export class RappStoreClient {
       throw error;
     }
     const digest = sha256Hex(bytes);
-    if (entry.singletonSha256 && digest !== entry.singletonSha256) {
+    // Fail CLOSED: never return an unpinned singleton for hatching. A gated 404
+    // is already handled above; a body that downloads MUST carry a valid pin.
+    if (!/^[0-9a-f]{64}$/.test(entry.singletonSha256 || "")) {
+      throw new Error(`Refusing to hatch "${entry.id}": the store has no valid singleton_sha256 pin (fail-closed).`);
+    }
+    if (digest !== entry.singletonSha256) {
       throw new Error(
         `Refusing to hatch "${entry.id}": singleton sha256 mismatch `
         + `(store pins ${entry.singletonSha256}, downloaded ${digest}).`,
