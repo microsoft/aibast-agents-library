@@ -1,0 +1,56 @@
+name: Build Frontier Store
+
+on:
+  push:
+    paths:
+      - 'beta/frontier/rapplications/**'
+      - 'beta/frontier/build_store.py'
+      - 'beta/frontier/store/index.json'
+      - '.github/workflows/build-frontier-store.yml'
+  pull_request:
+    paths:
+      - 'beta/frontier/rapplications/**'
+      - 'beta/frontier/build_store.py'
+      - 'beta/frontier/store/index.json'
+
+permissions:
+  contents: write
+
+jobs:
+  build-frontier-store:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # The store index pins sha256 of each rapplication's bytes. If a
+      # rapplication file changed without a matching build_store.py rebuild,
+      # the committed pins no longer match the bytes on main and every
+      # hatch/install fails closed. Rebuild and fail on any drift.
+      - name: Rebuild the Frontier store index
+        run: python beta/frontier/build_store.py
+
+      # On a PR, drift is a hard failure: the author must rebuild before merge.
+      - name: Fail if the committed store index drifted (PRs)
+        if: github.event_name == 'pull_request'
+        run: |
+          if ! git diff --quiet -- beta/frontier/store/index.json; then
+            echo "::error::beta/frontier/store/index.json is out of date with the rapplication bytes."
+            echo "Run: python beta/frontier/build_store.py  and commit the result."
+            git --no-pager diff -- beta/frontier/store/index.json
+            exit 1
+          fi
+          echo "Store index is in sync with the rapplication bytes."
+
+      # On main, self-heal: commit the rebuild rather than sit broken. This runs
+      # only on main pushes, so it is never blocked by the PR fail-step above.
+      - name: Commit a rebuilt index on main
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "RAPP Store Bot"
+          git config user.email "rapp-bot@users.noreply.github.com"
+          git add beta/frontier/store/index.json
+          git diff --cached --quiet || git commit -m "Auto-build Frontier store index [skip ci]"
+          git push

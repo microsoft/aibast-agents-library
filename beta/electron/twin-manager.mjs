@@ -18,6 +18,9 @@ import net from "node:net";
 import path from "node:path";
 
 import { BrainstemProcess } from "./brainstem-process.mjs";
+import { readEgg, verifyEgg } from "./rapp-protocol.mjs";
+
+const AGENT_FILE = /^[A-Za-z0-9_.-]+_agent\.py$/;
 
 function allocatePort() {
   return new Promise((resolve, reject) => {
@@ -101,6 +104,7 @@ export class TwinManager {
       status: twin.status,
       license: twin.license,
       uiUrl: twin.uiUrl,
+      preferredView: twin.preferredView || "full",
       hasCustomUi: Boolean(twin.uiHtml),
       loopLog: twin.loopLog.slice(-40),
       createdUtc: twin.createdUtc,
@@ -147,8 +151,64 @@ export class TwinManager {
       egg: cartridge.egg || null,
       resources: [],
       license: cartridge.entry?.license || null,
-      uiUrl: cartridge.entry?.uiUrl || null,
-      note: `Verified ${filename} (sha256 ${cartridge.sha256.slice(0, 12)}…)`,
+      uiUrl: null,
+      uiHtml: cartridge.uiHtml || null,   // sha-verified by the store client, or null
+      preferredView: cartridge.entry?.preferredView || "full",
+      note: `Verified ${filename} (sha256 ${cartridge.sha256.slice(0, 12)}…)`
+        + (cartridge.uiNote ? ` — ${cartridge.uiNote}` : ""),
+    }, { instruction });
+  }
+
+  // Hatch a twin from a LOCAL .egg the user dropped on the window. Fail-closed:
+  // the egg must pass the rapp/1-egg verifier before a single byte is used.
+  // Contract: variant "rapplication"; agents/*_agent.py become the twin's
+  // AGENTS_PATH; an optional ui.html becomes the custom rapplication UI
+  // (injected same-origin over the twin's Grail chat); every other file is
+  // materialized into the twin dir as a local resource. Nothing is fetched.
+  async hatchEgg({ bytes, filename = "dropped.egg" } = {}, { instruction = null } = {}) {
+    const blob = bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes || []);
+    if (!blob.length) throw new Error("The dropped egg is empty.");
+    const [ok, law, reason] = verifyEgg(blob);
+    if (!ok) throw new Error(`Refusing to hatch ${filename}: egg failed verification (${law}: ${reason}).`);
+    const { manifest, files } = readEgg(blob);
+    if (manifest.variant !== "rapplication") {
+      throw new Error(`Refusing to hatch ${filename}: variant "${manifest.variant}" is not a rapplication egg.`);
+    }
+    const agentSources = [];
+    const resources = [];
+    let uiHtml = null;
+    const seenBasenames = new Set();
+    for (const [name, data] of Object.entries(files)) {
+      const base = name.split("/").pop();
+      if (seenBasenames.has(base)) {
+        throw new Error(`Refusing to hatch ${filename}: two egg entries flatten to the same file name "${base}".`);
+      }
+      seenBasenames.add(base);
+      if (/_agent\.py$/.test(base)) {
+        agentSources.push({ filename: base, source: Buffer.from(data).toString("utf8") });
+      } else if (base === "ui.html") {
+        uiHtml = Buffer.from(data).toString("utf8");
+      } else {
+        resources.push({ name: base, bytes: Buffer.from(data) });
+      }
+    }
+    if (!agentSources.length) {
+      throw new Error(`Refusing to hatch ${filename}: the egg carries no *_agent.py engine.`);
+    }
+    const slugSource = manifest.payload?.name
+      || (manifest.rappid || "").split(":").pop()?.split("/").pop()
+      || filename.replace(/\.egg$/i, "");
+    return this.#hatchComposed({
+      idBase: slugSource,
+      name: manifest.payload?.name || slugSource,
+      storeId: null,
+      agentSources,
+      egg: Buffer.from(blob),
+      resources,
+      license: manifest.payload?.license || null,
+      uiUrl: null,
+      uiHtml,
+      note: `Hatched from ${filename} (rapp/1-egg verified, ${agentSources.length} agent${agentSources.length === 1 ? "" : "s"})`,
     }, { instruction });
   }
 
@@ -175,11 +235,26 @@ export class TwinManager {
     if (this.twins.size >= this.maxTwins) {
       throw new Error(`You have ${this.maxTwins} twins open — close one before hatching another.`);
     }
+    const agentSources = [];
+    const seenAgentFilenames = new Set();
+    for (const agent of spec.agentSources) {
+      const supplied = String(agent.filename || "");
+      const filename = path.basename(supplied);
+      if (supplied !== filename || /[\\/]/.test(supplied)
+          || !AGENT_FILE.test(filename) || filename === "basic_agent.py") {
+        throw new Error(`Refusing to hatch "${spec.name}": agent filename must be a safe *_agent.py basename.`);
+      }
+      if (seenAgentFilenames.has(filename)) {
+        throw new Error(`Refusing to hatch "${spec.name}": duplicate agent filename "${filename}".`);
+      }
+      seenAgentFilenames.add(filename);
+      agentSources.push({ ...agent, filename });
+    }
     const id = `${twinSlug(spec.idBase)}-${++this.seq}`;
     const dir = path.join(this.twinsRoot, id);
     const agentsDir = path.join(dir, "agents");
     mkdirSync(agentsDir, { recursive: true });
-    for (const agent of spec.agentSources) {
+    for (const agent of agentSources) {
       writeFileSync(path.join(agentsDir, agent.filename), agent.source, { mode: 0o600 });
     }
     if (spec.egg) writeFileSync(path.join(dir, `${id}.egg`), spec.egg, { mode: 0o600 });
@@ -195,7 +270,7 @@ export class TwinManager {
     // Mint a mint-once RAPPID from the first agent (UUID-anchor; rapp/1 §6.2).
     let rappid = null;
     try {
-      const first = spec.agentSources[0];
+      const first = agentSources[0];
       rappid = this.routeManager?.packageAgent
         ? this.routeManager.packageAgent({ filename: first.filename, source: first.source }).agent_rappid
         : null;
@@ -232,6 +307,7 @@ export class TwinManager {
       status: "hatching",
       license: spec.license,
       uiUrl: spec.uiUrl,
+      preferredView: spec.preferredView || "full",
       dir,
       resourcePaths,
       worker,
@@ -257,15 +333,13 @@ export class TwinManager {
     // The tile loads the twin's Grail UI (same origin as the twin) and then
     // wipes it and injects this HTML in its place — so the custom UI's relative
     // /chat hits the twin directly (same origin, no server, no proxy, no CORS).
-    if (spec.uiUrl) {
-      try {
-        twin.uiHtml = await fetch(spec.uiUrl).then((r) => (r.ok ? r.text() : Promise.reject(new Error(`HTTP ${r.status}`))));
-        this.#log(twin, `Custom rapplication UI ready (${twin.uiHtml.length} bytes) — overrides the default Grail chat`);
-        this.emit({ type: "twin-status", id, status: twin.status, twin: this.descriptor(twin) });
-      } catch (error) {
-        this.#log(twin, `Custom UI unavailable (${error.message}); using the default Grail chat.`);
-      }
+    if (spec.uiHtml) {
+      twin.uiHtml = spec.uiHtml;
+      this.#log(twin, `Custom rapplication UI verified and ready (${twin.uiHtml.length} bytes) — overrides the default Grail chat`);
+      this.emit({ type: "twin-status", id, status: twin.status, twin: this.descriptor(twin) });
     }
+    // A bare ui_url is never fetched here: executable UI reaches a twin only
+    // sha-verified through the store client, or carried inside a verified egg.
 
     if (instruction) {
       // Kick its autonomous loop, but DO NOT block on it — the caller (and the

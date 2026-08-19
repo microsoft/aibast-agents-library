@@ -1,1 +1,7 @@
 /reports/*.pdf binary
+
+# Frontier rapplication files are sha256-pinned in the store index and
+# re-verified against GitHub raw bytes — EOL conversion would break the pin
+# on a Windows checkout (autocrlf). Keep them byte-identical everywhere.
+beta/frontier/rapplications/** -text
+beta/frontier/store/index.json -text

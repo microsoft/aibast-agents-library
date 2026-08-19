@@ -21,7 +21,7 @@ import { BrainSurgeon } from "./brain-surgeon.mjs";
 import { CopilotStudioAuthManager } from "./copilot-studio-auth.mjs";
 import { CopilotRuntime } from "./copilot-runtime.mjs";
 import { BetaRouteManager } from "./route-manager.mjs";
-import { RappStoreClient } from "./rapp-store.mjs";
+import { isAllowedStoreSourceUrl, RappStoreClient, STORE_SOURCES } from "./rapp-store.mjs";
 import { TwinManager } from "./twin-manager.mjs";
 import {
   allowsUiDriverMediaPermission,
@@ -412,7 +412,76 @@ function emitSurgeonEvent(event) {
 // RAPPlication twins — specialized rapplications hatched from the RAPP Store as
 // concurrent long-lived workers on their own loopback ports, beside the
 // Brainstem chats in the herd. Kernel unchanged; driven only over /chat.
-const rappStore = new RappStoreClient();
+// RAR library source selection: AIBAST (default) / public RAR / a custom
+// RAR-compliant catalog URL. Persisted per install; the active client backs
+// BOTH the store browser and twin hatching. `rappStore` is a stable facade so
+// everything that holds a reference follows the toggle.
+const storeSourceFile = path.join(betaHome, "store-source.json");
+function loadStoreSource() {
+  try {
+    const saved = JSON.parse(readFileSync(storeSourceFile, "utf8"));
+    if (saved && isAllowedStoreSourceUrl(saved.url)) return saved;
+  } catch { /* first run */ }
+  return { key: "aibast", url: STORE_SOURCES.aibast.url };
+}
+let storeSource = loadStoreSource();
+let activeStoreClient = new RappStoreClient({ url: storeSource.url });
+function setStoreSource({ key, url }) {
+  const target = STORE_SOURCES[key]?.url || url;
+  // https everywhere — with a loopback exception so a local-first / air-gapped
+  // RAR served on this machine works (never plain http to another host).
+  if (!isAllowedStoreSourceUrl(target)) {
+    throw new Error("A RAR source must be an https catalog URL (or http on this machine's loopback).");
+  }
+  storeSource = { key: STORE_SOURCES[key] ? key : "custom", url: target };
+  activeStoreClient = new RappStoreClient({ url: target });
+  try { writeFileSync(storeSourceFile, JSON.stringify(storeSource, null, 2), { mode: 0o600 }); } catch { /* best effort */ }
+  return { ...storeSource };
+}
+const rappStore = {
+  list: (...a) => activeStoreClient.list(...a),
+  load: (...a) => activeStoreClient.load(...a),
+  resolve: (...a) => activeStoreClient.resolve(...a),
+  download: (...a) => activeStoreClient.download(...a),
+};
+
+// Install a sha-verified agent.py from the active RAR source into the MAIN
+// Brainstem via its own loopback /agents/import — the kernel hot-loads agents
+// from disk on every /chat, so the agent is usable immediately, no restart.
+async function installAgentToBrainstem(storeId) {
+  const cartridge = await rappStore.download(storeId);   // fail-closed sha256
+  const filename = cartridge.filename && cartridge.filename.endsWith(".py")
+    ? cartridge.filename
+    : `${String(storeId).replace(/[^a-z0-9_]+/gi, "_")}_agent.py`;
+  const form = new FormData();
+  form.append("file", new Blob([cartridge.source], { type: "text/x-python" }), filename);
+  form.append("sha256", cartridge.sha256);
+  const base = state.url || config.url;
+  const r = await fetch(`${base}/agents/import`, { method: "POST", body: form });
+  const body = await r.json().catch(() => ({}));
+  // The kernel answers 200 WITH an {error} body when the uploaded file fails
+  // to load as an agent (it may even have restored the previous file) — a 200
+  // alone is not success.
+  if (!r.ok || body.error) throw new Error(body.error || `Brainstem refused the import (HTTP ${r.status}).`);
+  // With a route active, state.url is an ephemeral composed worker whose
+  // AGENTS_PATH is disposable — also persist the agent into the active stack
+  // so it survives that worker retiring.
+  let persisted = "brainstem agents dir";
+  if (routeManager?.activeRoute) {
+    try {
+      await routeManager.installScopedAgent({ filename, source: cartridge.source });
+      persisted = "active stack (scoped install)";
+    } catch (error) {
+      persisted = `hot-loaded only — scoped persist failed: ${error.message}`;
+    }
+  }
+  // The kernel may rename (secure_filename, *_agent.py) — report the name it
+  // actually saved when it tells us, so the UI never claims a name the
+  // Brainstem doesn't have.
+  const savedMatch = /Agent\s+(\S+?\.py)\s+imported/i.exec(body.message || "");
+  const savedName = body.agent || body.name || (savedMatch && savedMatch[1]) || filename;
+  return { ok: true, filename: savedName, requested: filename, agent: savedName, sha256: cartridge.sha256, persisted };
+}
 const twinManager = new TwinManager({
   brainstemConfig: config,
   betaHome,
@@ -533,12 +602,45 @@ async function injectTwinUi(twinId) {
   return injectFrameUi(frame, twinId);
 }
 
+// A small host-injected view toggle (declared): the pop-out opens with the full
+// desktop real estate by default (a rapplication with a lot of UI shouldn't be
+// mashed into a phone column), and the user can flip it to a centered mobile
+// column any time. A rapplication may declare preferred_view:"mobile" to start
+// narrow. This is the ONLY thing the host adds to the popped-out frame.
+const VIEW_TOGGLE = (startMobile) => `
+<style id="__rappViewStyle">
+  html[data-rapp-view="mobile"] body { max-width: 480px !important; margin: 0 auto !important;
+    box-shadow: 0 0 0 100vmax rgba(0,0,0,.25); }
+  #__rappViewToggle { position: fixed; top: 8px; right: 8px; z-index: 2147483647;
+    font: 600 11px Inter,system-ui,sans-serif; background: rgba(22,27,34,.9); color: #c8c9cc;
+    border: 1px solid #30363d; border-radius: 7px; padding: 4px 9px; cursor: pointer; }
+  #__rappViewToggle:hover { color: #e6edf3; border-color: #58a6ff; }
+</style>
+<script>
+  (function(){
+    document.documentElement.dataset.rappView = ${startMobile ? '"mobile"' : '"full"'};
+    var b = document.createElement("button");
+    b.id = "__rappViewToggle";
+    function label(){ b.textContent = document.documentElement.dataset.rappView === "mobile" ? "⤢ Full width" : "▭ Mobile view"; }
+    b.addEventListener("click", function(){
+      document.documentElement.dataset.rappView = document.documentElement.dataset.rappView === "mobile" ? "full" : "mobile";
+      label();
+    });
+    label();
+    (document.body || document.documentElement).appendChild(b);
+  })();
+</script>`;
+
 function popOutTwin(id) {
   const twin = twinManager.list().find((t) => t.id === id);
   if (!twin?.url) throw new Error(`No twin ${id}.`);
+  const startMobile = twin.preferredView === "mobile";
   const win = new BrowserWindow({
-    width: 400,
-    height: 820,
+    // Use the real estate by default; resizable back down to a phone column.
+    width: startMobile ? 460 : 1180,
+    height: 860,
+    minWidth: 380,
+    minHeight: 480,
     title: twin.name || "RAPPlication",
     backgroundColor: "#0d1117",
     parent: mainWindow || undefined,
@@ -546,7 +648,7 @@ function popOutTwin(id) {
   });
   win.setMenuBarVisibility(false);
   const raw = twinManager.uiHtml(id);
-  const html = raw ? instrumentRappUi(raw) : null;
+  const html = raw ? instrumentRappUi(raw) + VIEW_TOGGLE(startMobile) : null;
   win.webContents.on("did-finish-load", () => {
     if (html) {
       win.webContents.executeJavaScript(
@@ -1153,6 +1255,15 @@ function registerIpc() {
     }
     return { ok: true };
   });
+  ipcMain.handle("beta:store-source", async (event, next) => {
+    assertTrustedIpc(event);
+    if (next) return setStoreSource(next);
+    return { ...storeSource, sources: Object.values(STORE_SOURCES).map((s) => ({ key: s.key, label: s.label, url: s.url })) };
+  });
+  ipcMain.handle("beta:store-install-agent", async (event, storeId) => {
+    assertTrustedIpc(event);
+    return installAgentToBrainstem(storeId);
+  });
   ipcMain.handle("beta:store-list", async (event) => {
     assertTrustedIpc(event);
     return rappStore.list();
@@ -1160,6 +1271,14 @@ function registerIpc() {
   ipcMain.handle("beta:twin-list", async (event) => {
     assertTrustedIpc(event);
     return twinManager.list();
+  });
+  ipcMain.handle("beta:twin-hatch-egg", async (event, payload) => {
+    assertTrustedIpc(event);
+    const bytes = payload?.bytes instanceof Uint8Array ? payload.bytes : new Uint8Array(payload?.bytes || []);
+    return twinManager.hatchEgg(
+      { bytes, filename: String(payload?.filename || "dropped.egg") },
+      { instruction: payload?.instruction || null },
+    );
   });
   ipcMain.handle("beta:twin-hatch", async (event, storeId, instruction) => {
     assertTrustedIpc(event);

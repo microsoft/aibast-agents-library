@@ -728,28 +728,107 @@ async function toggleStorePicker(herd) {
   if (storePickerEl) { storePickerEl.remove(); storePickerEl = null; return; }
   const panel = document.createElement("div");
   panel.className = "store-picker";
-  panel.textContent = "Loading the RAPP Store…";
   herd.appendChild(panel);
   storePickerEl = panel;
+  await renderStorePicker(panel, herd);
+}
+
+// The RAR library browser: a source toggle (AIBAST RAR by default → public
+// RAR → any custom RAR-compliant catalog URL) over a list of sha-pinned
+// agents. Each row hatches as a twin, or installs straight into the running
+// Brainstem (hot-loaded by the kernel — usable on the very next message).
+async function renderStorePicker(panel, herd) {
+  panel.textContent = "Loading the RAR library…";
+  let source = { key: "aibast", url: "", sources: [] };
+  try { source = await window.brainstemBeta.storeSource(); } catch { /* defaults */ }
+  const head = document.createElement("div");
+  head.className = "store-sources";
+  const mkTab = (label, active, onPick, title) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "store-source-tab" + (active ? " active" : "");
+    b.textContent = label;
+    if (title) b.title = title;
+    b.addEventListener("click", onPick);
+    head.appendChild(b);
+  };
+  for (const src of (source.sources || [])) {
+    mkTab(src.label, source.key === src.key, async () => {
+      try { await window.brainstemBeta.storeSource({ key: src.key }); await renderStorePicker(panel, herd); }
+      catch (cause) { flashHerdError(herd, `Couldn't switch source: ${cause?.message || cause}`); }
+    }, src.url);
+  }
+  // Custom source: an in-DOM input row (window.prompt() is unsupported in
+  // Electron renderers — it throws — so a dialog can never be the mechanism).
+  const customRow = document.createElement("div");
+  customRow.className = "store-custom-row";
+  customRow.style.display = "none";
+  const customInput = document.createElement("input");
+  customInput.type = "text";
+  customInput.placeholder = "https://… RAR catalog (rapp-store index.json, or a sha-pinned registry.json)";
+  customInput.value = source.key === "custom" ? source.url : "";
+  const customGo = document.createElement("button");
+  customGo.type = "button";
+  customGo.textContent = "Use";
+  const applyCustom = async () => {
+    const url = customInput.value.trim();
+    if (!url) return;
+    try { await window.brainstemBeta.storeSource({ key: "custom", url }); await renderStorePicker(panel, herd); }
+    catch (cause) { flashHerdError(herd, `Couldn't use that source: ${cause?.message || cause}`); }
+  };
+  customGo.addEventListener("click", applyCustom);
+  customInput.addEventListener("keydown", (event) => { if (event.key === "Enter") applyCustom(); });
+  customRow.append(customInput, customGo);
+  mkTab(source.key === "custom" ? "Custom ✓" : "Custom…", source.key === "custom", () => {
+    customRow.style.display = customRow.style.display === "none" ? "flex" : "none";
+    if (customRow.style.display === "flex") customInput.focus();
+  }, source.key === "custom" ? source.url : "Point the browser at your own RAR catalog");
+
   try {
     const list = await window.brainstemBeta.storeList();
-    panel.replaceChildren();
-    for (const entry of list) {
-      const row = document.createElement("button");
-      row.type = "button";
+    panel.replaceChildren(head, customRow);
+    // A yanked rapplication is pulled from the shelf without a code release —
+    // the client drops it so nobody can hatch/install a recalled entry.
+    const live = list.filter((entry) => !entry.yanked);
+    if (!live.length) { panel.append("This RAR source lists no agents."); return; }
+    for (const entry of live) {
+      const row = document.createElement("div");
       row.className = "store-row";
       row.dataset.storeId = entry.id;
-      row.textContent = `◈ ${entry.name}${entry.gated ? " (gated)" : ""} — ${entry.category || entry.license || ""}`;
-      row.disabled = entry.gated;
-      row.addEventListener("click", async () => {
+      const hatch = document.createElement("button");
+      hatch.type = "button";
+      hatch.className = "store-hatch";
+      hatch.textContent = `◈ ${entry.name}${entry.gated ? " (gated)" : ""} — ${entry.category || entry.license || ""}`;
+      hatch.title = "Hatch as a twin (its own worker + tile)";
+      hatch.disabled = entry.gated;
+      hatch.addEventListener("click", async () => {
         panel.remove(); storePickerEl = null;
         try { await window.brainstemBeta.twinHatch(entry.id); }
         catch (cause) { flashHerdError(herd, `Couldn't hatch ${entry.name}: ${cause?.message || cause}`); }
       });
+      const install = document.createElement("button");
+      install.type = "button";
+      install.className = "store-install";
+      install.textContent = "⇣ Install";
+      install.title = "Install this agent.py into the running Brainstem (hot-loaded, usable immediately)";
+      install.disabled = entry.gated;
+      install.addEventListener("click", async () => {
+        install.disabled = true; install.textContent = "…";
+        try {
+          const r = await window.brainstemBeta.storeInstallAgent(entry.id);
+          install.textContent = "✓ Installed";
+          flashHerdError(herd, `${entry.name} installed into the Brainstem as ${r.filename} — ready on your next message.`);
+        } catch (cause) {
+          install.disabled = false; install.textContent = "⇣ Install";
+          flashHerdError(herd, `Couldn't install ${entry.name}: ${cause?.message || cause}`);
+        }
+      });
+      row.append(hatch, install);
       panel.appendChild(row);
     }
-  } catch {
-    panel.textContent = "RAPP Store unavailable.";
+  } catch (cause) {
+    panel.replaceChildren(head, customRow);
+    panel.append(`This RAR source is unavailable: ${cause?.message || cause}`);
   }
 }
 
@@ -1301,3 +1380,61 @@ window.brainstemBeta.onOpenUpdate(() => {
 });
 window.brainstemBeta.onState(render);
 window.brainstemBeta.getState().then(render);
+
+
+// ---- Drag a .egg anywhere over the window to hatch it as a twin ------------
+// The egg is read in the renderer (bytes only, no path trust) and verified
+// fail-closed in the main process (rapp/1-egg verifier) before hatching.
+(() => {
+  if (!window.brainstemBeta?.twinHatchEgg) return;
+  let veil = null;
+  const showVeil = () => {
+    if (veil) return;
+    veil = document.createElement("div");
+    veil.style.cssText = "position:fixed;inset:0;z-index:9999;display:grid;place-items:center;"
+      + "background:rgba(13,17,23,.82);border:2px dashed #58a6ff;pointer-events:none;"
+      + "color:#e6edf3;font:600 15px Inter,system-ui,sans-serif;letter-spacing:.02em";
+    veil.textContent = "Drop the .egg to hatch a RAPPlication twin";
+    document.body.appendChild(veil);
+  };
+  let veilTimer = null;
+  const hideVeil = () => { clearTimeout(veilTimer); veilTimer = null; veil?.remove(); veil = null; };
+  const isEggDrag = (event) => Array.from(event.dataTransfer?.items || [])
+    .some((item) => item.kind === "file");
+  window.addEventListener("dragover", (event) => {
+    if (!isEggDrag(event)) return;
+    event.preventDefault();
+    showVeil();
+    // Self-healing: dragover stops firing the instant the drag moves onto the
+    // full-window cross-origin Brainstem iframe or the drag ends, and in both
+    // cases dragleave's relatedTarget is unreliable — a short quiet period is
+    // the only trustworthy end-of-drag signal, so the veil can never wedge.
+    clearTimeout(veilTimer);
+    veilTimer = setTimeout(hideVeil, 400);
+  });
+  window.addEventListener("dragleave", (event) => {
+    if (event.target === document.documentElement || !event.relatedTarget) hideVeil();
+  });
+  window.addEventListener("dragend", hideVeil);
+  window.addEventListener("drop", async (event) => {
+    hideVeil();
+    const file = Array.from(event.dataTransfer?.files || [])
+      .find((f) => /\.egg$/i.test(f.name));
+    if (!file) return;                       // not an egg — let other handlers live
+    event.preventDefault();
+    try {
+      const bytes = new Uint8Array(await file.arrayBuffer());
+      await window.brainstemBeta.twinHatchEgg({ bytes, filename: file.name });
+    } catch (error) {
+      // Never alert(): modal dialogs block the renderer. A dismissable toast.
+      const toastEl = document.createElement("div");
+      toastEl.style.cssText = "position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:9999;"
+        + "background:#2a1618;color:#ff9a9a;border:1px solid #5b2a2e;border-radius:9px;"
+        + "padding:10px 16px;font:600 13px Inter,system-ui,sans-serif;max-width:80%;cursor:pointer";
+      toastEl.textContent = `Could not hatch ${file.name}: ${error?.message || error}`;
+      toastEl.addEventListener("click", () => toastEl.remove());
+      document.body.appendChild(toastEl);
+      setTimeout(() => toastEl.remove(), 9000);
+    }
+  });
+})();

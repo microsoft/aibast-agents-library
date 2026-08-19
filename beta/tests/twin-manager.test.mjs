@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
@@ -19,6 +20,31 @@ test("twinSlug makes a safe agent-filename stem", () => {
 test("TwinManager requires a store client and brainstem config", () => {
   assert.throws(() => new TwinManager({ betaHome: "/x", storeClient: {} }), /brainstemConfig/);
   assert.throws(() => new TwinManager({ betaHome: "/x", brainstemConfig: {} }), /Store client/);
+});
+
+test("store hatch refuses a traversal filename before it can escape the twin agents directory", async (t) => {
+  const temporary = mkdtempSync(path.join(tmpdir(), "rapp-twin-hatch-"));
+  const betaHome = path.join(temporary, "home");
+  const escaped = path.join(temporary, "escaped_agent.py");
+  mkdirSync(betaHome);
+  t.after(() => rmSync(temporary, { recursive: true, force: true }));
+
+  const manager = new TwinManager({
+    betaHome,
+    brainstemConfig: {},
+    storeClient: {
+      download: async () => ({
+        id: "escape",
+        filename: "../../../../escaped_agent.py",
+        source: "VALUE = 'outside'\n",
+        sha256: "0".repeat(64),
+        entry: { name: "Escape" },
+      }),
+    },
+  });
+
+  await assert.rejects(() => manager.hatch("escape"), /safe \*_agent\.py basename/);
+  assert.equal(existsSync(escaped), false);
 });
 
 test("a twin is driven only over /chat — never a new route (canon)", () => {
@@ -80,7 +106,13 @@ test("small view = a chat/work-log over the twin's /chat; the full custom UI pop
   // the proxy is gone; the twin keeps the rapplication's static UI HTML
   assert.ok(!fs.existsSync(path.join(root, "electron/twin-ui-proxy.mjs")), "twin-ui-proxy.mjs should be removed");
   assert.doesNotMatch(tm, /startTwinUiProxy|uiProxyUrl/);
-  assert.match(tm, /twin\.uiHtml = await fetch/);
+  // The pin law hardening: a twin's custom UI is never fetched unverified at
+  // hatch time — it arrives sha-verified from the store client (cartridge
+  // .uiHtml) or inside a verified egg. The old `twin.uiHtml = await fetch`
+  // path must stay gone.
+  assert.doesNotMatch(tm, /uiHtml = await fetch/);
+  assert.match(tm, /spec\.uiHtml/);
+  assert.match(tm, /cartridge\.uiHtml/);
   assert.match(tm, /uiHtml\(id\)/);
   assert.match(tm, /hasCustomUi/);
   assert.match(tm, /maxTwins/);

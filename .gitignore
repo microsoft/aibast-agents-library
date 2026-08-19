@@ -15,3 +15,8 @@ node_modules/
 beta/release/
 browser-audit/mutation-runs/
 work/
+
+# Frontier rapplication live-state sidecars — real-run state (client tool names,
+# on-device paths, OS username). Written next to the engine at runtime; must
+# NEVER be committed (publishing boundary). They regenerate on demand.
+beta/frontier/rapplications/**/*_live_state.py
