@@ -450,6 +450,65 @@ with tempfile.TemporaryDirectory() as directory:
 `);
 });
 
+test("toasted skills keep identity and readable steps around the full loop", () => {
+  runPython(importStub + String.raw`
+import ast
+import os
+import tempfile
+
+home = tempfile.mkdtemp(prefix="toaster-loop-")
+os.environ["TOASTER_HOME"] = home
+module = load(
+    "frontier/rapplications/toaster/agents/toaster_agent.py",
+    "toaster_agent_loop",
+)
+
+skill_md = (
+    "---\n"
+    "name: example-sync-skill\n"
+    "description: Sync the example list and report drift numbers.\n"
+    "---\n\n"
+    "# Example sync\n\n"
+    "## Steps\n"
+    "1. Export the current CSV.\n"
+    "2. Run the drift report and read it aloud.\n"
+)
+
+toaster = module.ToasterAgent()
+
+# skill.md -> agent.py: the wrapper carries a __manifest__ with the
+# skill's own identity, not the generated class name.
+reply = toaster.perform(action="toast", skill_md=skill_md)
+agent_path = os.path.join(module.OUT, "example_sync_skill_agent.py")
+assert os.path.exists(agent_path), reply
+source = open(agent_path, encoding="utf-8").read()
+manifest = next(
+    ast.literal_eval(node.value)
+    for node in ast.parse(source).body
+    if isinstance(node, ast.Assign)
+    and getattr(node.targets[0], "id", "") == "__manifest__"
+)
+assert manifest["display_name"] == "example-sync-skill"
+assert manifest["description"].startswith("Sync the example list")
+
+# agent.py -> _skill.md: identity is stable (slug filename, frontmatter
+# name) and the steps are readable OUTSIDE the embedded block, so any AI
+# can follow the skill without decoding base64.
+reply = toaster.perform(action="export_skill", source=source)
+skill_path = os.path.join(module.OUT, "example_sync_skill_skill.md")
+assert os.path.exists(skill_path), reply
+toasted = open(skill_path, encoding="utf-8").read()
+assert "name: example-sync-skill" in toasted
+readable = toasted.split(module._EMBED_OPEN)[0]
+assert "Run the drift report and read it aloud." in readable
+
+# _skill.md -> agent.py: byte-exact deterministic layer.
+toaster.perform(action="untoast", skill_md=toasted)
+recovered = open(agent_path, encoding="utf-8").read()
+assert recovered == source
+`);
+});
+
 test("toaster exports one authoritative embedded block despite sentinel text", () => {
   runPython(importStub + String.raw`
 import base64

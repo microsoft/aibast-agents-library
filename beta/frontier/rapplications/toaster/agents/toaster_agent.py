@@ -132,11 +132,22 @@ def _agent_manifest(source):
 # The wrapper that turns a RAW skill.md (no Python) into a runnable agent.py.
 # The skill body rides as data; perform() hands the operator the skill's steps
 # to follow (buzzsaw pattern) — deterministic, and itself losslessly re-toastable.
+# The emitted __manifest__ preserves the skill's identity so export_skill
+# regenerates the same name and description on every trip around the loop,
+# instead of degrading to the generated class name.
 def _wrap_skill_as_agent(name, description, body):
     display_name = str(name or "skill")
     safe_description = str(description or display_name)[:900]
     cls = "".join(w.capitalize() for w in re.split(r"[^a-zA-Z0-9]+", display_name) if w) or "Skill"
     tool = cls + "Skill"
+    manifest = json.dumps({
+        "schema": "rapp-agent/1.0",
+        "name": "@toasted/" + _slug(display_name),
+        "version": "1.0.0",
+        "display_name": display_name,
+        "description": safe_description,
+        "tags": ["toasted-skill"],
+    }, indent=4)
     return f'''"""Toasted skill wrapper (RAPP deterministic layer).
 
 The original name, description, and instructions ride below only as data.
@@ -146,6 +157,8 @@ try:
     from agents.basic_agent import BasicAgent
 except Exception:
     from basic_agent import BasicAgent
+
+__manifest__ = {manifest}
 
 SKILL_NAME = {json.dumps(display_name)}
 SKILL_DESCRIPTION = {json.dumps(safe_description)}
@@ -175,6 +188,26 @@ class {tool}Agent(BasicAgent):
             + ("\\n\\n--- apply to ---\\n" + str(ctx) if ctx else "")
         )
 '''
+
+
+def _extract_skill_layer(source):
+    """Pull the toasted-skill constants out of a wrapper agent by AST (no exec)."""
+    layer = {}
+    try:
+        tree = ast.parse(source)
+    except SyntaxError:
+        return layer
+    for node in tree.body:
+        if (
+            isinstance(node, ast.Assign)
+            and len(node.targets) == 1
+            and getattr(node.targets[0], "id", None)
+            in ("SKILL_NAME", "SKILL_DESCRIPTION", "SKILL_MARKDOWN")
+            and isinstance(node.value, ast.Constant)
+            and isinstance(node.value.value, str)
+        ):
+            layer[node.targets[0].id] = node.value.value
+    return layer
 
 
 def _escape_embed_sentinels(value):
@@ -265,10 +298,17 @@ class ToasterAgent(BasicAgent):
         except SyntaxError as e:
             return f"That is not valid Python ({e}); nothing to export."
         info = _agent_manifest(source)
-        name = a.get("name") or info.get("display_name") or (info.get("name") or "").split("/")[-1] or info.get("tool_name") or "agent"
-        desc = info.get("description") or f"Toasted skill for {name}."
+        skill = _extract_skill_layer(source)
+        name = a.get("name") or skill.get("SKILL_NAME") or info.get("display_name") or (info.get("name") or "").split("/")[-1] or info.get("tool_name") or "agent"
+        desc = skill.get("SKILL_DESCRIPTION") or info.get("description") or f"Toasted skill for {name}."
         display_name = _escape_embed_sentinels(name)
         safe_desc = _escape_embed_sentinels(desc)
+        # A wrapper agent carries the original skill's instructions — render
+        # them readably so ANY AI can follow the toasted skill without decoding
+        # the embedded agent. Sentinel-escaped so the rendered body can never
+        # masquerade as the authoritative embedded block.
+        steps = _escape_embed_sentinels(skill["SKILL_MARKDOWN"]).strip() if skill.get("SKILL_MARKDOWN") else ""
+        steps_md = f"## Skill\n\n{steps}\n\n" if steps else ""
         b64 = base64.b64encode(source.encode("utf-8")).decode("ascii")
         # wrap base64 at 100 cols for readable diffs; whitespace is stripped on decode
         wrapped = "\n".join(b64[i:i + 100] for i in range(0, len(b64), 100))
@@ -278,6 +318,7 @@ class ToasterAgent(BasicAgent):
             f"# {display_name}\n\n{safe_desc}\n\n"
             f"## How to use\nRun this skill against your task. Its runnable RAPP agent is embedded below; "
             f"a RAPP Brainstem can convert it back to `agent.py` byte-for-byte.\n\n"
+            f"{steps_md}"
             f"## Embedded agent — RAPP deterministic layer (lossless)\n"
             f"{_EMBED_OPEN}\n{wrapped}\n{_EMBED_CLOSE}\n"
         )
