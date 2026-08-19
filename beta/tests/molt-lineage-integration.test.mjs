@@ -23,7 +23,10 @@ import {
 
 const betaRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const repositoryRoot = path.resolve(betaRoot, "..");
-const grailDirectory = path.join(repositoryRoot, "rapp_brainstem");
+// Installed launcher checkouts are sparse (beta + tools/rapp1 only); the Grail
+// lives in the shared Brainstem checkout the installer points at.
+const grailDirectory = process.env.BRAINSTEM_BETA_RUNTIME_DIR
+  || path.join(repositoryRoot, "rapp_brainstem");
 const grailContextPath = path.join(
   grailDirectory,
   "agents",
@@ -40,6 +43,7 @@ function integrationPython() {
   const candidates = [
     process.env.BRAINSTEM_BETA_PYTHON,
     path.join(homedir(), ".brainstem", "venv", "bin", "python"),
+    path.join(homedir(), ".brainstem", "venv", "Scripts", "python.exe"),
     path.join(grailDirectory, ".venv", "bin", "python"),
     "/usr/bin/python3",
   ].filter(Boolean);
