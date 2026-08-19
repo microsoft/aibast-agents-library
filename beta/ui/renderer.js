@@ -38,17 +38,27 @@ let agentTreeSignature = null;
 let agentRefreshPromise = null;
 let openBetaMenuOnNextSync = false;
 let pendingLineageReply = null;
+let loadedFrameUrl = null;
 
 function deliverPendingLineageReply() {
-  if (!pendingLineageReply) return;
+  if (
+    !pendingLineageReply
+    || pendingLineageReply.url !== loadedFrameUrl
+    || pendingLineageReply.sent
+  ) return;
+  pendingLineageReply.sent = true;
   frame.contentWindow?.postMessage({
     type: "rapp-beta:lineage-confirmation",
-    reply: pendingLineageReply,
+    confirmationId: pendingLineageReply.id,
+    reply: pendingLineageReply.reply,
   }, "*");
-  pendingLineageReply = null;
 }
 
 frame.addEventListener("load", () => {
+  loadedFrameUrl = loadedUrl;
+  if (pendingLineageReply?.url === loadedFrameUrl) {
+    pendingLineageReply.sent = false;
+  }
   brainstemNavigationCount += 1;
   window.__brainstemBetaNavigationCount = brainstemNavigationCount;
   void window.brainstemBeta.installFrameBridge().then(() => {
@@ -73,6 +83,15 @@ window.addEventListener("message", async (event) => {
     setExplorerOpen(!explorer.classList.contains("open"));
     return;
   }
+  if (type === "rapp-beta:lineage-confirmation-ack") {
+    if (
+      pendingLineageReply
+      && event.data.confirmationId === pendingLineageReply.id
+    ) {
+      pendingLineageReply = null;
+    }
+    return;
+  }
   if (type === "rapp-beta:lineage-chat") {
     const requestId = String(event.data.requestId || "");
     const previousUrl = loadedUrl;
@@ -81,8 +100,13 @@ window.addEventListener("message", async (event) => {
         event.data.message,
       );
       if (result?.intercepted && result.url && result.url !== previousUrl) {
-        pendingLineageReply = result.reply;
-        if (loadedUrl === result.url) {
+        pendingLineageReply = {
+          id: requestId,
+          reply: result.reply,
+          sent: false,
+          url: result.url,
+        };
+        if (loadedFrameUrl === result.url) {
           await window.brainstemBeta.installFrameBridge();
           deliverPendingLineageReply();
         }
@@ -1328,6 +1352,7 @@ function render(state) {
   if (state.brainstem.phase === "ready") {
     if (loadedUrl !== state.url) {
       loadedUrl = state.url;
+      loadedFrameUrl = null;
       frame.src = betaUrl(state.url);
     }
     frame.classList.add("ready");

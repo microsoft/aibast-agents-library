@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
 import {
   existsSync,
   mkdirSync,
@@ -14,7 +15,10 @@ import { fileURLToPath } from "node:url";
 import test from "node:test";
 
 import { LineageStore } from "../electron/lineage-store.mjs";
-import { BetaRouteManager } from "../electron/route-manager.mjs";
+import {
+  BetaRouteManager,
+  routeManagerInternals,
+} from "../electron/route-manager.mjs";
 
 
 const betaRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -80,6 +84,40 @@ function entryShape(descriptor) {
     scope: entry.scope,
     bytes: Buffer.from(entry.bytes || []),
   }));
+}
+
+function scanBrokenAgents(python, agentDirectory) {
+  const source = [
+    "import importlib.util",
+    "import os",
+    "import sys",
+    "brainstem_dir, agents_dir = sys.argv[1:3]",
+    "sys.path.insert(0, brainstem_dir)",
+    "spec = importlib.util.spec_from_file_location('_scan_brainstem', os.path.join(brainstem_dir, 'brainstem.py'))",
+    "brainstem = importlib.util.module_from_spec(spec)",
+    "spec.loader.exec_module(brainstem)",
+    "brainstem._register_shims()",
+    "spec = importlib.util.spec_from_file_location('_routed_context', os.path.join(agents_dir, 'context_memory_agent.py'))",
+    "context = importlib.util.module_from_spec(spec)",
+    "spec.loader.exec_module(context)",
+    "broken = context.scan_broken_agents(agents_dir)",
+    "if broken:",
+    "    sys.stderr.write(repr(broken))",
+    "    raise SystemExit(1)",
+  ].join("\n");
+  return spawnSync(
+    python,
+    ["-c", source, grailDirectory, agentDirectory],
+    {
+      cwd: grailDirectory,
+      encoding: "utf8",
+      env: {
+        ...process.env,
+        PYTHONDONTWRITEBYTECODE: "1",
+        PYTHONUTF8: "1",
+      },
+    },
+  );
 }
 
 test("HARD 1 — zero molts compose byte-for-byte identically to legacy passthrough", (t) => {
@@ -166,6 +204,15 @@ test("HARD 3 — raw Grail stays pristine while ContextMemory ring 1 composes", 
     ),
     routedRing1,
   );
+  const scan = scanBrokenAgents(
+    manager.brainstemConfig.python,
+    materializedRing.agentDirectory,
+  );
+  assert.equal(
+    scan.status,
+    0,
+    scan.stderr || scan.stdout || "ring-1 self-state scan reported a healthy routed agent as broken",
+  );
 
   const memoryMarker = "    def perform(self, **kwargs):";
   assert.equal(
@@ -235,6 +282,7 @@ test("HARD 4 — invalid live composition falls back to loadable baseline", (t) 
   assert.equal(brokenDescriptor.lineageOverlays.length, 1);
   const materialized = manager.materializeComposition(brokenDescriptor);
   assert.equal(materialized.fallbackFrom, brokenDescriptor.compositionHash);
+  assert.equal(materialized.fallbackStrategy, "baseline");
   assert.equal(
     fixture.store.getHead(global.ancestorRappid),
     global.ancestorRappid,
@@ -248,6 +296,88 @@ test("HARD 4 — invalid live composition falls back to loadable baseline", (t) 
   );
   assert.ok(validationSources.some((source) => source.includes("BROKEN")));
   assert.equal(validationSources.at(-1), fixture.sources["global_agent.py"]);
+});
+
+test("fail-safe prefers the last-good parent ring before pristine baseline", (t) => {
+  const fixture = minimalFixture(t, {
+    validator: (agentDirectory) => {
+      const source = readFileSync(
+        path.join(agentDirectory, "global_agent.py"),
+        "utf8",
+      );
+      return source.includes("ring two")
+        ? { ok: false, error: "ring two conflicts with the composed set" }
+        : { ok: true };
+    },
+  });
+  const global = fixture.store.baselineAncestors().find(
+    (item) => item.filename === "global_agent.py",
+  );
+  const ring1Source = "GLOBAL = 'ring one'\n";
+  const ring1 = fixture.store.appendRing(global.ancestorRappid, {
+    source: ring1Source,
+    parentRappid: global.ancestorRappid,
+    verified: true,
+    meta: { author: "test" },
+  });
+  fixture.store.setHead(global.ancestorRappid, ring1);
+  const manager = new BetaRouteManager(fixture.managerOptions);
+  manager.materializeComposition(manager.compositionDescriptor());
+
+  const ring2 = fixture.store.appendRing(global.ancestorRappid, {
+    source: "GLOBAL = 'ring two'\n",
+    parentRappid: ring1,
+    verified: true,
+    meta: { author: "test" },
+  });
+  fixture.store.setHead(global.ancestorRappid, ring2);
+  const failed = manager.compositionDescriptor();
+  const materialized = manager.materializeComposition(failed);
+  assert.equal(materialized.fallbackStrategy, "last-good");
+  assert.equal(fixture.store.getHead(global.ancestorRappid), ring1);
+  assert.equal(
+    readFileSync(
+      path.join(materialized.agentDirectory, "global_agent.py"),
+      "utf8",
+    ),
+    ring1Source,
+  );
+});
+
+test("an unrelated invalid scoped agent does not reset healthy lineage HEADs", async (t) => {
+  const fixture = minimalFixture(t, {
+    validator: (agentDirectory) => {
+      const broken = readdirSync(agentDirectory)
+        .filter((filename) => filename.endsWith(".py"))
+        .some((filename) => (
+          readFileSync(path.join(agentDirectory, filename), "utf8")
+            .includes("BROKEN_SCOPED")
+        ));
+      return broken
+        ? { ok: false, error: "unrelated scoped agent failed" }
+        : { ok: true };
+    },
+  });
+  const global = fixture.store.baselineAncestors().find(
+    (item) => item.filename === "global_agent.py",
+  );
+  const ring = fixture.store.appendRing(global.ancestorRappid, {
+    source: "GLOBAL = 'healthy molt'\n",
+    parentRappid: global.ancestorRappid,
+    verified: true,
+    meta: { author: "test" },
+  });
+  fixture.store.setHead(global.ancestorRappid, ring);
+  const manager = new BetaRouteManager(fixture.managerOptions);
+  manager.materializeComposition(manager.compositionDescriptor());
+  await manager.installScopedAgent({
+    filename: "broken_scoped_agent.py",
+    source: "BROKEN_SCOPED = True\n",
+  });
+
+  const fallback = manager.materializeComposition(manager.compositionDescriptor());
+  assert.equal(fallback.fallbackStrategy, "last-good");
+  assert.equal(fixture.store.getHead(global.ancestorRappid), ring);
 });
 
 test("HARD 5 — RAPP_MOLT_LINEAGE=0 forces pure baseline composition", (t) => {
@@ -338,5 +468,67 @@ test("independent twin AGENTS_PATH composition receives the same verified overla
   assert.equal(
     readFileSync(path.join(agentDirectory, "global_agent.py"), "utf8"),
     source,
+  );
+});
+
+test("a twin-specific overlay failure falls back locally without moving shared HEAD", (t) => {
+  const fixture = minimalFixture(t, {
+    validator: (agentDirectory) => {
+      const source = readFileSync(
+        path.join(agentDirectory, "global_agent.py"),
+        "utf8",
+      );
+      return source.includes("twin-only conflict")
+        ? { ok: false, error: "twin-only conflict" }
+        : { ok: true };
+    },
+  });
+  const global = fixture.store.baselineAncestors().find(
+    (item) => item.filename === "global_agent.py",
+  );
+  const ring = fixture.store.appendRing(global.ancestorRappid, {
+    source: "GLOBAL = 'twin-only conflict'\n",
+    parentRappid: global.ancestorRappid,
+    verified: true,
+    meta: { author: "test" },
+  });
+  fixture.store.setHead(global.ancestorRappid, ring);
+  const manager = new BetaRouteManager(fixture.managerOptions);
+  const agentDirectory = path.join(fixture.root, "twin-fallback", "agents");
+  mkdirSync(path.dirname(agentDirectory), { recursive: true });
+  manager.materializeExternalAgentSet([
+    {
+      filename: "global_agent.py",
+      source: fixture.sources["global_agent.py"],
+    },
+  ], agentDirectory);
+  assert.equal(
+    readFileSync(path.join(agentDirectory, "global_agent.py"), "utf8"),
+    fixture.sources["global_agent.py"],
+  );
+  assert.equal(fixture.store.getHead(global.ancestorRappid), ring);
+});
+
+test("packaged Frontier exposes the Molter gate outside app.asar", () => {
+  const packageJson = JSON.parse(readFileSync(
+    path.join(betaRoot, "package.json"),
+    "utf8",
+  ));
+  assert.ok(
+    packageJson.build.asarUnpack.includes(
+      "frontier/rapplications/molter/agents/molter_agent.py",
+    ),
+  );
+  assert.equal(
+    routeManagerInternals.unpackedAsarPath(
+      path.join("/Applications", "Frontier", "app.asar", "frontier", "molter.py"),
+    ),
+    path.join(
+      "/Applications",
+      "Frontier",
+      "app.asar.unpacked",
+      "frontier",
+      "molter.py",
+    ),
   );
 });

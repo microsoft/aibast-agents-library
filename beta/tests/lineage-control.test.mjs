@@ -85,8 +85,11 @@ test("renderer intercepts before Grail chat and main exposes the lineage IPC", (
   const main = readFileSync(path.join(betaRoot, "electron", "main.mjs"), "utf8");
   const preload = readFileSync(path.join(betaRoot, "electron", "preload.cjs"), "utf8");
   assert.match(renderer, /type === "rapp-beta:lineage-chat"/);
+  assert.match(renderer, /rapp-beta:lineage-confirmation-ack/);
+  assert.match(renderer, /pendingLineageReply\.url !== loadedFrameUrl/);
   assert.match(renderer, /brainstemBeta\.lineageCommand/);
   assert.match(main, /beta:lineage-command/);
+  assert.match(main, /rapp-beta:lineage-confirmation-ack/);
   assert.match(main, /target\.pathname === "\/chat\/stream"/);
   assert.match(preload, /lineageCommand:/);
 });

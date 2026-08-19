@@ -45,7 +45,7 @@ const CONTEXT_MEMORY_RING1_PATH = path.join(
   "rings",
   "context_memory_agent.ring1.py",
 );
-const MOLTER_AGENT_PATH = path.resolve(
+const MOLTER_AGENT_PATH = unpackedAsarPath(path.resolve(
   MODULE_DIRECTORY,
   "..",
   "frontier",
@@ -53,7 +53,7 @@ const MOLTER_AGENT_PATH = path.resolve(
   "molter",
   "agents",
   "molter_agent.py",
-);
+));
 const CONTEXT_MEMORY_RING1_BASELINE_SHA256 =
   "3f9ba4ec5c625d541380cbccfbe084479ce12cafc0cec4b55e3dd62128e32266";
 
@@ -114,6 +114,16 @@ function hardlinkOrCopy(source, destination) {
   }
 }
 
+function unpackedAsarPath(filePath) {
+  const marker = `${path.sep}app.asar${path.sep}`;
+  return filePath.includes(marker)
+    ? filePath.replace(
+        marker,
+        `${path.sep}app.asar.unpacked${path.sep}`,
+      )
+    : filePath;
+}
+
 function allocatePort() {
   return new Promise((resolve, reject) => {
     const server = net.createServer();
@@ -160,12 +170,40 @@ class RoutedManageMemoryAgent(ManageMemoryAgent):
 
 function routedContextMemoryMoltSource(source, memoryGuid) {
   const declaration = "class ContextMemoryAgent(BasicAgent):";
+  const baselineScanner = `def _defines_basic_agent_subclass(tree):
+    for node in ast.walk(tree):
+        if isinstance(node, ast.ClassDef):
+            for base in node.bases:
+                name = base.attr if isinstance(base, ast.Attribute) else getattr(base, "id", None)
+                if name == "BasicAgent":
+                    return True
+    return False`;
+  const routedScanner = `def _defines_basic_agent_subclass(tree):
+    imported_agent_bases = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.ImportFrom) and (node.module or "").startswith("agents."):
+            imported_agent_bases.update(alias.asname or alias.name for alias in node.names)
+    for node in ast.walk(tree):
+        if isinstance(node, ast.ClassDef):
+            for base in node.bases:
+                name = base.attr if isinstance(base, ast.Attribute) else getattr(base, "id", None)
+                if name == "BasicAgent" or name in imported_agent_bases:
+                    return True
+    return False`;
   if (source.split(declaration).length !== 2) {
     throw new Error(
       "ContextMemory ring source must define one direct BasicAgent subclass.",
     );
   }
+  if (source.split(baselineScanner).length !== 2) {
+    throw new Error(
+      "ContextMemory ring source must contain the verified ambient scanner.",
+    );
+  }
   const inlined = source.replace(
+    baselineScanner,
+    routedScanner,
+  ).replace(
     declaration,
     "class _ContextMemoryRing1(BasicAgent):",
   ).trimEnd();
@@ -357,6 +395,7 @@ export class BetaRouteManager {
     this.telemetrySequence = 0;
     this.activeRoute = null;
     this.validatedCompositions = new Set();
+    this.lastGoodDescriptor = null;
     this.lineageEnabled = lineageEnabled !== false;
     this.lineageStore = lineageStore || new LineageStore({
       brainstemDir: this.brainstemConfig.brainstemDir,
@@ -1050,7 +1089,10 @@ export class BetaRouteManager {
     return entries;
   }
 
-  compositionDescriptor({ ephemeralAgent = null } = {}) {
+  compositionDescriptor({
+    ephemeralAgent = null,
+    applyLineage = true,
+  } = {}) {
     const identity = this.identity();
     const stack = this.loadStack(identity.active_stack_rappid);
     const entries = this.globalAgentEntries(identity.memory_guid);
@@ -1078,7 +1120,7 @@ export class BetaRouteManager {
     const ephemeralNonce = ephemeralAgent ? randomUUID() : null;
     if (ephemeralAgent) entries.push(this.ephemeralAgentEntry(ephemeralAgent));
 
-    const resolvedEntries = entries.map((entry) => {
+    const resolvedEntries = applyLineage ? entries.map((entry) => {
       try {
         return this.resolveLineageEntry(entry, identity.memory_guid);
       } catch (error) {
@@ -1088,7 +1130,7 @@ export class BetaRouteManager {
         });
         return entry;
       }
-    });
+    }) : entries;
     const byFilename = new Map();
     for (const entry of resolvedEntries) {
       if (byFilename.has(entry.filename)) {
@@ -1256,33 +1298,83 @@ export class BetaRouteManager {
   }
 
   materializeComposition(descriptor, { allowLineageFallback = true } = {}) {
+    const lastGoodDescriptor = this.lastGoodDescriptor;
     try {
-      return {
+      const materialized = {
         ...this.materializeCompositionOnce(descriptor),
         descriptor,
       };
+      if (!descriptor.ephemeral) this.lastGoodDescriptor = descriptor;
+      return materialized;
     } catch (error) {
       if (!allowLineageFallback || !descriptor.lineageOverlays?.length) {
         throw error;
       }
-      for (const overlay of descriptor.lineageOverlays) {
-        this.lineageStore.rollbackToBaseline(overlay.ancestorRappid);
+      if (
+        lastGoodDescriptor
+        && lastGoodDescriptor.compositionHash !== descriptor.compositionHash
+      ) {
+        try {
+          const lastGood = this.materializeCompositionOnce(lastGoodDescriptor);
+          this.alignLineageHeads(descriptor, lastGoodDescriptor);
+          this.recordTelemetry("lineage-composition-fallback", {
+            error: String(error?.message || error),
+            rings: descriptor.lineageOverlays.map((overlay) => overlay.ringRappid),
+            strategy: "last-good",
+          });
+          return {
+            ...lastGood,
+            descriptor: lastGoodDescriptor,
+            fallbackFrom: descriptor.compositionHash,
+            fallbackStrategy: "last-good",
+          };
+        } catch {
+          // The prior artifact is no longer loadable; try pristine baseline next.
+        }
+      }
+      const fallbackDescriptor = this.compositionDescriptor({
+        ephemeralAgent: descriptor.ephemeralAgent,
+        applyLineage: false,
+      });
+      let fallback;
+      try {
+        fallback = this.materializeCompositionOnce(fallbackDescriptor);
+      } catch (fallbackError) {
+        throw new Error(
+          `${String(error?.message || error)}; pristine fallback also failed: `
+          + String(fallbackError?.message || fallbackError),
+        );
+      }
+      this.alignLineageHeads(descriptor, fallbackDescriptor);
+      if (!fallbackDescriptor.ephemeral) {
+        this.lastGoodDescriptor = fallbackDescriptor;
       }
       this.recordTelemetry("lineage-composition-fallback", {
         error: String(error?.message || error),
         rings: descriptor.lineageOverlays.map((overlay) => overlay.ringRappid),
+        strategy: "baseline",
       });
-      const fallbackDescriptor = this.compositionDescriptor({
-        ephemeralAgent: descriptor.ephemeralAgent,
-      });
-      const fallback = this.materializeComposition(
-        fallbackDescriptor,
-        { allowLineageFallback: false },
-      );
       return {
         ...fallback,
+        descriptor: fallbackDescriptor,
         fallbackFrom: descriptor.compositionHash,
+        fallbackStrategy: "baseline",
       };
+    }
+  }
+
+  alignLineageHeads(failedDescriptor, fallbackDescriptor) {
+    const fallbackHeads = new Map(
+      (fallbackDescriptor.lineageOverlays || []).map(
+        (overlay) => [overlay.ancestorRappid, overlay.ringRappid],
+      ),
+    );
+    for (const overlay of failedDescriptor.lineageOverlays || []) {
+      const target = fallbackHeads.get(overlay.ancestorRappid)
+        || overlay.ancestorRappid;
+      if (target !== overlay.ringRappid) {
+        this.lineageStore.setHead(overlay.ancestorRappid, target);
+      }
     }
   }
 
@@ -1334,14 +1426,13 @@ export class BetaRouteManager {
     } catch (error) {
       const overlays = resolved.filter((agent) => agent.lineage);
       if (!overlays.length) throw error;
-      for (const agent of overlays) {
-        this.lineageStore.rollbackToBaseline(agent.lineage.ancestorRappid);
-      }
+      const baseline = materialize(original);
       this.recordTelemetry("lineage-composition-fallback", {
         error: String(error?.message || error),
         rings: overlays.map((agent) => agent.lineage.ringRappid),
+        strategy: "twin-baseline",
       });
-      return materialize(original);
+      return baseline;
     }
   }
 
@@ -1736,7 +1827,10 @@ export class BetaRouteManager {
 }
 
 export const routeManagerInternals = {
+  routedContextMemoryMoltSource,
   safeAgentFilename,
   slugFromFilename,
   stackNameFromRappid,
+  unpackedAsarPath,
+  verifyMoltWithMolter,
 };

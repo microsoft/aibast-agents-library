@@ -284,8 +284,10 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
         ?.setAttribute("aria-expanded", String(Boolean(event.data.open)));
     } else if (event.data.type === "rapp-beta:lineage-confirmation") {
       const reply = String(event.data.reply || "");
+      let rendered = false;
       if (reply && typeof appendMsg === "function") {
         appendMsg("assistant", reply);
+        rendered = true;
       } else if (reply) {
         const chat = document.getElementById("chat");
         if (chat) {
@@ -298,7 +300,14 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
           chat.appendChild(wrap);
           chat.classList.add("has-messages");
           chat.scrollTop = chat.scrollHeight;
+          rendered = true;
         }
+      }
+      if (rendered) {
+        window.parent.postMessage({
+          type: "rapp-beta:lineage-confirmation-ack",
+          confirmationId: event.data.confirmationId,
+        }, "*");
       }
     }
   });
