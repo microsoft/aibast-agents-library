@@ -128,6 +128,10 @@ jobs:
         env:
           ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
         run: |
+          # Grail dry-load tests need the kernel's real dependencies; use the
+          # setup-python interpreter that installed requirements-dev.txt above,
+          # not the bare system python3.
+          export BRAINSTEM_BETA_PYTHON="$(command -v python)"
           npm ci --no-audit --no-fund
           npm run check
           npm test
