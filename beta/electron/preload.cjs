@@ -9,6 +9,9 @@ contextBridge.exposeInMainWorld("brainstemBeta", {
   installFrameBridge: () => (
     ipcRenderer.invoke("beta:install-frame-bridge")
   ),
+  lineageCommand: (message) => (
+    ipcRenderer.invoke("beta:lineage-command", message)
+  ),
   listAgentFiles: () => ipcRenderer.invoke("beta:list-agent-files"),
   readAgentFile: (filename, scope) => (
     ipcRenderer.invoke("beta:read-agent-file", filename, scope)

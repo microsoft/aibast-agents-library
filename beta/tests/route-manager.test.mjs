@@ -40,6 +40,9 @@ function fixture() {
       python: "/tmp/python",
     },
     owner: "microsoft",
+    lineageRoot: path.join(root, "lineage"),
+    seedLineageDefaults: false,
+    compositionValidator: () => true,
   });
   return { root, manager };
 }

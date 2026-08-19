@@ -1,9 +1,11 @@
+import { spawnSync } from "node:child_process";
 import { createHash, randomUUID } from "node:crypto";
 import {
   copyFileSync,
   chmodSync,
   existsSync,
   linkSync,
+  mkdtempSync,
   mkdirSync,
   readFileSync,
   readdirSync,
@@ -12,9 +14,15 @@ import {
   writeFileSync,
 } from "node:fs";
 import net from "node:net";
+import { tmpdir } from "node:os";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 import { BrainstemProcess } from "./brainstem-process.mjs";
+import {
+  LineageStore,
+  lineageStoreInternals,
+} from "./lineage-store.mjs";
 import {
   Hb,
   canonical,
@@ -31,6 +39,23 @@ const MEMORY_FILES = new Set([
   "context_memory_agent.py",
   "manage_memory_agent.py",
 ]);
+const MODULE_DIRECTORY = path.dirname(fileURLToPath(import.meta.url));
+const CONTEXT_MEMORY_RING1_PATH = path.join(
+  MODULE_DIRECTORY,
+  "rings",
+  "context_memory_agent.ring1.py",
+);
+const MOLTER_AGENT_PATH = path.resolve(
+  MODULE_DIRECTORY,
+  "..",
+  "frontier",
+  "rapplications",
+  "molter",
+  "agents",
+  "molter_agent.py",
+);
+const CONTEXT_MEMORY_RING1_BASELINE_SHA256 =
+  "3f9ba4ec5c625d541380cbccfbe084479ce12cafc0cec4b55e3dd62128e32266";
 
 function ensurePrivateDirectory(directory) {
   mkdirSync(directory, { recursive: true });
@@ -133,12 +158,187 @@ class RoutedManageMemoryAgent(ManageMemoryAgent):
 `;
 }
 
+function routedContextMemoryMoltSource(source, memoryGuid) {
+  const declaration = "class ContextMemoryAgent(BasicAgent):";
+  if (source.split(declaration).length !== 2) {
+    throw new Error(
+      "ContextMemory ring source must define one direct BasicAgent subclass.",
+    );
+  }
+  const inlined = source.replace(
+    declaration,
+    "class _ContextMemoryRing1(BasicAgent):",
+  ).trimEnd();
+  return `${inlined}
+
+
+class RoutedContextMemoryAgent(_ContextMemoryRing1):
+    def system_context(self):
+        self.storage_manager.set_memory_context(${JSON.stringify(memoryGuid)})
+        return super().system_context()
+
+    def perform(self, **kwargs):
+        kwargs["user_guid"] = ${JSON.stringify(memoryGuid)}
+        return super().perform(**kwargs)
+`;
+}
+
+function verifyMoltWithMolter({
+  python,
+  brainstemDir,
+  source,
+  molterPath = MOLTER_AGENT_PATH,
+} = {}) {
+  if (!python || !existsSync(python)) {
+    return { ok: false, error: `Python is unavailable at ${python || "(unset)"}.` };
+  }
+  if (!existsSync(molterPath)) {
+    return { ok: false, error: `Molter verify gate is unavailable at ${molterPath}.` };
+  }
+  const shimRoot = mkdtempSync(path.join(tmpdir(), "rapp-molt-verify-"));
+  const utilsDirectory = path.join(shimRoot, "utils");
+  mkdirSync(utilsDirectory, { recursive: true });
+  writeFileSync(path.join(utilsDirectory, "__init__.py"), "", { mode: 0o600 });
+  writeFileSync(
+    path.join(utilsDirectory, "azure_file_storage.py"),
+    [
+      "class AzureFileStorageManager:",
+      "    def __init__(self, *args, **kwargs):",
+      "        self.current_guid = None",
+      "    def set_memory_context(self, guid):",
+      "        self.current_guid = guid",
+      "    def read_json(self):",
+      "        return {}",
+      "",
+    ].join("\n"),
+    { mode: 0o600 },
+  );
+  const verifier = [
+    "import importlib.util",
+    "import sys",
+    "spec = importlib.util.spec_from_file_location('_frontier_molter_gate', sys.argv[1])",
+    "module = importlib.util.module_from_spec(spec)",
+    "spec.loader.exec_module(module)",
+    "ok, detail = module._verify(sys.stdin.read())",
+    "if not ok:",
+    "    sys.stderr.write(str(detail.get('lesson') or detail))",
+    "    raise SystemExit(1)",
+  ].join("\n");
+  try {
+    const pythonPath = [
+      shimRoot,
+      brainstemDir,
+      process.env.PYTHONPATH || "",
+    ].filter(Boolean).join(path.delimiter);
+    const result = spawnSync(python, ["-c", verifier, molterPath], {
+      encoding: "utf8",
+      env: {
+        ...process.env,
+        PYTHONPATH: pythonPath,
+        PYTHONUTF8: "1",
+      },
+      input: source,
+      maxBuffer: 1024 * 1024,
+      timeout: 30_000,
+    });
+    if (result.error) {
+      return { ok: false, error: result.error.message };
+    }
+    return result.status === 0
+      ? { ok: true }
+      : {
+          ok: false,
+          error: String(result.stderr || result.stdout || "Molter verification failed.").trim(),
+        };
+  } finally {
+    rmSync(shimRoot, { recursive: true, force: true });
+  }
+}
+
+const DRY_LOAD_SCRIPT = `
+import glob
+import importlib.util
+import os
+import sys
+
+brainstem_dir, agents_dir = sys.argv[1:3]
+os.environ["AGENTS_PATH"] = agents_dir
+sys.path.insert(0, brainstem_dir)
+spec = importlib.util.spec_from_file_location("_lineage_brainstem", os.path.join(brainstem_dir, "brainstem.py"))
+brainstem = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(brainstem)
+
+names = {}
+failures = []
+for filepath in sorted(glob.glob(os.path.join(agents_dir, "*_agent.py"))):
+    if os.path.basename(filepath) == "basic_agent.py":
+        continue
+    loaded = brainstem._load_agent_from_file(filepath)
+    if not loaded:
+        failures.append(f"{os.path.basename(filepath)} loaded no agents")
+        continue
+    for name in loaded:
+        if name in names:
+            failures.append(f"duplicate tool name {name!r} in {os.path.basename(filepath)} and {names[name]}")
+        else:
+            names[name] = os.path.basename(filepath)
+
+for item in brainstem._quarantine_snapshot():
+    failures.append(f"{item.get('file')}: {item.get('reason')}")
+if failures:
+    sys.stderr.write("\\n".join(failures))
+    raise SystemExit(1)
+`;
+
+function dryLoadAgentDirectory({
+  python,
+  brainstemDir,
+  agentDirectory,
+} = {}) {
+  if (!python || !existsSync(python)) {
+    return { ok: false, error: `Python is unavailable at ${python || "(unset)"}.` };
+  }
+  const brainstemFile = path.join(brainstemDir, "brainstem.py");
+  if (!existsSync(brainstemFile)) {
+    return { ok: false, error: `Grail kernel is unavailable at ${brainstemFile}.` };
+  }
+  const result = spawnSync(
+    python,
+    ["-c", DRY_LOAD_SCRIPT, brainstemDir, agentDirectory],
+    {
+      cwd: brainstemDir,
+      encoding: "utf8",
+      env: {
+        ...process.env,
+        AGENTS_PATH: agentDirectory,
+        PYTHONDONTWRITEBYTECODE: "1",
+        PYTHONUTF8: "1",
+      },
+      maxBuffer: 2 * 1024 * 1024,
+      timeout: 90_000,
+    },
+  );
+  if (result.error) return { ok: false, error: result.error.message };
+  return result.status === 0
+    ? { ok: true }
+    : {
+        ok: false,
+        error: String(result.stderr || result.stdout || "Grail dry-load failed.").trim(),
+      };
+}
+
 export class BetaRouteManager {
   constructor({
     betaHome,
     brainstemConfig,
     owner = process.env.BRAINSTEM_BETA_RAPP_OWNER || "microsoft",
     onActivate = () => {},
+    lineageRoot = process.env.RAPP_LINEAGE_HOME,
+    lineageStore = null,
+    lineageEnabled = process.env.RAPP_MOLT_LINEAGE !== "0",
+    seedLineageDefaults = true,
+    compositionValidator = null,
+    moltVerifier = null,
   } = {}) {
     this.betaHome = betaHome;
     this.brainstemConfig = brainstemConfig;
@@ -156,6 +356,25 @@ export class BetaRouteManager {
     this.telemetry = [];
     this.telemetrySequence = 0;
     this.activeRoute = null;
+    this.validatedCompositions = new Set();
+    this.lineageEnabled = lineageEnabled !== false;
+    this.lineageStore = lineageStore || new LineageStore({
+      brainstemDir: this.brainstemConfig.brainstemDir,
+      root: lineageRoot,
+      enabled: this.lineageEnabled,
+    });
+    this.compositionValidator = compositionValidator || ((agentDirectory) => (
+      dryLoadAgentDirectory({
+        python: this.brainstemConfig.python,
+        brainstemDir: this.brainstemConfig.brainstemDir,
+        agentDirectory,
+      })
+    ));
+    this.moltVerifier = moltVerifier || ((source) => verifyMoltWithMolter({
+      python: this.brainstemConfig.python,
+      brainstemDir: this.brainstemConfig.brainstemDir,
+      source,
+    }));
     for (const directory of [
       this.routingRoot,
       this.stackRoot,
@@ -166,6 +385,173 @@ export class BetaRouteManager {
     ]) {
       ensurePrivateDirectory(directory);
     }
+    if (this.lineageEnabled && seedLineageDefaults) {
+      this.seedContextMemoryRing1();
+    }
+  }
+
+  lineageIsEnabled() {
+    return this.lineageEnabled && process.env.RAPP_MOLT_LINEAGE !== "0";
+  }
+
+  seedContextMemoryRing1() {
+    try {
+      const baseline = this.lineageStore.baselineAncestors().find(
+        (candidate) => candidate.filename === "context_memory_agent.py",
+      );
+      if (!baseline) {
+        this.recordTelemetry("lineage-default-skipped", {
+          reason: "ContextMemory is not present in the Grail baseline.",
+        });
+        return null;
+      }
+      if (baseline.sha256 !== CONTEXT_MEMORY_RING1_BASELINE_SHA256) {
+        this.recordTelemetry("lineage-default-skipped", {
+          ancestor_rappid: baseline.ancestorRappid,
+          reason: "ContextMemory baseline bytes do not match the verified ring-1 parent.",
+        });
+        return null;
+      }
+      const source = readFileSync(CONTEXT_MEMORY_RING1_PATH, "utf8");
+      const ringRappid = lineageStoreInternals.ringRappidFor(
+        baseline.ancestorRappid,
+        baseline.ancestorRappid,
+        source,
+        baseline.filename,
+      );
+      if (
+        this.lineageStore.listRings(baseline.ancestorRappid)
+          .some((ring) => ring.ringRappid === ringRappid)
+      ) {
+        return ringRappid;
+      }
+      const verdict = this.moltVerifier(source);
+      if (verdict !== true && verdict?.ok !== true) {
+        this.recordTelemetry("lineage-default-skipped", {
+          ancestor_rappid: baseline.ancestorRappid,
+          reason: verdict?.error || "ContextMemory ring-1 failed the Molter verify gate.",
+        });
+        return null;
+      }
+      const appended = this.lineageStore.appendRing(
+        baseline.ancestorRappid,
+        {
+          source,
+          parentRappid: baseline.ancestorRappid,
+          verified: true,
+          meta: {
+            author: "frontier",
+            kind: "ambient-context/1.0",
+            policy: "mutable",
+            ring: 1,
+            verifiedBy: "molter._verify",
+          },
+        },
+      );
+      this.lineageStore.setHead(baseline.ancestorRappid, appended);
+      this.recordTelemetry("lineage-default-seeded", {
+        ancestor_rappid: baseline.ancestorRappid,
+        ring_rappid: appended,
+      });
+      return appended;
+    } catch (error) {
+      this.recordTelemetry("lineage-default-skipped", {
+        reason: String(error?.message || error),
+      });
+      return null;
+    }
+  }
+
+  baselineAncestor(filename) {
+    return this.lineageStore.baselineAncestors().find(
+      (candidate) => candidate.filename === filename,
+    ) || null;
+  }
+
+  resolveLineageEntry(entry, memoryGuid) {
+    if (!this.lineageIsEnabled() || entry.scope === "ephemeral") return entry;
+    const baseline = this.baselineAncestor(entry.filename);
+    if (!baseline) return entry;
+    const generatedContextMemory = (
+      entry.scope === "memory"
+      && entry.filename === "context_memory_agent.py"
+    );
+    if (!generatedContextMemory) {
+      const source = entry.objectPath
+        ? readFileSync(entry.objectPath, "utf8")
+        : Buffer.from(entry.bytes || []).toString("utf8");
+      if (source !== readFileSync(baseline.sourcePath, "utf8")) return entry;
+    }
+    const live = this.lineageStore.resolveLive(baseline.ancestorRappid);
+    if (!live || live.isBaseline) return entry;
+    const source = generatedContextMemory
+      ? routedContextMemoryMoltSource(live.source, memoryGuid)
+      : live.source;
+    const bytes = Buffer.from(source, "utf8");
+    if (!bytes.length || bytes.length > MAX_AGENT_BYTES) {
+      throw new Error(`Molt ring for ${entry.filename} exceeds the agent size limit.`);
+    }
+    return {
+      ...entry,
+      address: Hb("rapp/1:egg", bytes),
+      bytes,
+      objectPath: null,
+      lineage: {
+        ancestorRappid: baseline.ancestorRappid,
+        ringRappid: live.ringRappid,
+      },
+    };
+  }
+
+  resolveTwinLineageSource(filename, source) {
+    if (!this.lineageIsEnabled()) {
+      return { filename, source, lineage: null };
+    }
+    const baseline = this.baselineAncestor(filename);
+    if (
+      !baseline
+      || String(source) !== readFileSync(baseline.sourcePath, "utf8")
+    ) {
+      return { filename, source, lineage: null };
+    }
+    const live = this.lineageStore.resolveLive(baseline.ancestorRappid);
+    if (!live || live.isBaseline) {
+      return { filename, source, lineage: null };
+    }
+    return {
+      filename,
+      source: live.source,
+      lineage: {
+        ancestorRappid: baseline.ancestorRappid,
+        ringRappid: live.ringRappid,
+      },
+    };
+  }
+
+  rollbackLineage(ancestorRappid = null) {
+    this.lineageStore.rollbackToBaseline(ancestorRappid);
+    this.recordTelemetry("lineage-rollback", {
+      ancestor_rappid: ancestorRappid,
+      scope: ancestorRappid ? "locus" : "all",
+    });
+  }
+
+  restoreLineage(ancestorRappid = null) {
+    this.lineageStore.restore(ancestorRappid);
+    this.recordTelemetry("lineage-restore", {
+      ancestor_rappid: ancestorRappid,
+      scope: ancestorRappid ? "locus" : "all",
+    });
+  }
+
+  validateAgentDirectory(agentDirectory) {
+    const verdict = this.compositionValidator(agentDirectory);
+    if (verdict === true || verdict?.ok === true) return verdict;
+    throw new Error(
+      verdict?.error
+        ? `Composed agent set failed Grail dry-load: ${verdict.error}`
+        : "Composed agent set failed Grail dry-load.",
+    );
   }
 
   identity() {
@@ -692,8 +1078,19 @@ export class BetaRouteManager {
     const ephemeralNonce = ephemeralAgent ? randomUUID() : null;
     if (ephemeralAgent) entries.push(this.ephemeralAgentEntry(ephemeralAgent));
 
+    const resolvedEntries = entries.map((entry) => {
+      try {
+        return this.resolveLineageEntry(entry, identity.memory_guid);
+      } catch (error) {
+        this.recordTelemetry("lineage-overlay-skipped", {
+          error: String(error?.message || error),
+          filename: entry.filename,
+        });
+        return entry;
+      }
+    });
     const byFilename = new Map();
-    for (const entry of entries) {
+    for (const entry of resolvedEntries) {
       if (byFilename.has(entry.filename)) {
         throw new Error(
           `Agent composition collision for ${entry.filename}; `
@@ -731,6 +1128,10 @@ export class BetaRouteManager {
       selectedStacks,
       ephemeral: Boolean(ephemeralAgent),
       ephemeralNonce,
+      ephemeralAgent,
+      lineageOverlays: ordered
+        .filter((entry) => entry.lineage)
+        .map((entry) => ({ ...entry.lineage, filename: entry.filename })),
     };
   }
 
@@ -756,7 +1157,7 @@ export class BetaRouteManager {
     });
   }
 
-  materializeComposition(descriptor) {
+  materializeCompositionOnce(descriptor) {
     const compositionDirectory = path.join(
       this.compositionRoot,
       descriptor.compositionHash,
@@ -767,40 +1168,181 @@ export class BetaRouteManager {
       try {
         const manifest = JSON.parse(readFileSync(completeFile, "utf8"));
         if (this.compositionIsComplete(descriptor, agentDirectory, manifest)) {
+          if (!this.validatedCompositions.has(descriptor.compositionHash)) {
+            this.validateAgentDirectory(agentDirectory);
+            rmSync(path.join(agentDirectory, "__pycache__"), {
+              recursive: true,
+              force: true,
+            });
+            this.validatedCompositions.add(descriptor.compositionHash);
+          }
           return { compositionDirectory, agentDirectory };
         }
       } catch {}
     }
-    rmSync(compositionDirectory, { recursive: true, force: true });
-    ensurePrivateDirectory(agentDirectory);
+    const stagingDirectory = path.join(
+      this.compositionRoot,
+      `.${descriptor.compositionHash}.${process.pid}.${randomUUID()}.stage`,
+    );
+    const stagingAgentDirectory = path.join(stagingDirectory, "agents");
+    const stagingCompleteFile = path.join(stagingDirectory, "complete.json");
+    rmSync(stagingDirectory, { recursive: true, force: true });
+    ensurePrivateDirectory(stagingAgentDirectory);
     const links = [];
-    for (const entry of descriptor.entries) {
-      const destination = path.join(agentDirectory, entry.filename);
-      let method;
-      if (entry.scope === "ephemeral") {
-        writeFileSync(destination, entry.bytes, { mode: 0o600 });
-        method = "ephemeral";
-      } else {
-        method = hardlinkOrCopy(entry.objectPath, destination);
+    try {
+      for (const entry of descriptor.entries) {
+        const destination = path.join(stagingAgentDirectory, entry.filename);
+        let method;
+        if (entry.scope === "ephemeral" || entry.lineage) {
+          writeFileSync(destination, entry.bytes, { mode: 0o600 });
+          method = entry.lineage ? "molt" : "ephemeral";
+        } else {
+          method = hardlinkOrCopy(entry.objectPath, destination);
+        }
+        links.push({
+          filename: entry.filename,
+          method,
+          address: entry.address,
+          scope: entry.scope,
+        });
       }
-      links.push({
-        filename: entry.filename,
-        method,
-        address: entry.address,
-        scope: entry.scope,
+      this.validateAgentDirectory(stagingAgentDirectory);
+      rmSync(path.join(stagingAgentDirectory, "__pycache__"), {
+        recursive: true,
+        force: true,
       });
+      atomicWriteJson(stagingCompleteFile, {
+        schema: ROUTING_SCHEMA,
+        composition_hash: descriptor.compositionHash,
+        caller_rappid: descriptor.identity.caller_rappid,
+        memory_guid: descriptor.identity.memory_guid,
+        stack_rappid: descriptor.stack.rappid,
+        overlay_stack_rappids: descriptor.identity.overlay_stack_rappids,
+        stack_lineage: descriptor.selectedStacks.map((stack) => stack.rappid),
+        agents: links,
+      });
+
+      if (existsSync(compositionDirectory)) {
+        const existingManifest = existsSync(completeFile)
+          ? JSON.parse(readFileSync(completeFile, "utf8"))
+          : null;
+        if (
+          existingManifest
+          && this.compositionIsComplete(
+            descriptor,
+            agentDirectory,
+            existingManifest,
+          )
+        ) {
+          this.validateAgentDirectory(agentDirectory);
+          rmSync(stagingDirectory, { recursive: true, force: true });
+          this.validatedCompositions.add(descriptor.compositionHash);
+          return { compositionDirectory, agentDirectory };
+        }
+        if (this.workers.has(descriptor.compositionHash)) {
+          throw new Error(
+            "Refusing to replace an invalid composition while its worker is live.",
+          );
+        }
+        rmSync(compositionDirectory, { recursive: true, force: true });
+      }
+      renameSync(stagingDirectory, compositionDirectory);
+      this.validatedCompositions.add(descriptor.compositionHash);
+      return { compositionDirectory, agentDirectory };
+    } catch (error) {
+      rmSync(stagingDirectory, { recursive: true, force: true });
+      throw error;
     }
-    atomicWriteJson(completeFile, {
-      schema: ROUTING_SCHEMA,
-      composition_hash: descriptor.compositionHash,
-      caller_rappid: descriptor.identity.caller_rappid,
-      memory_guid: descriptor.identity.memory_guid,
-      stack_rappid: descriptor.stack.rappid,
-      overlay_stack_rappids: descriptor.identity.overlay_stack_rappids,
-      stack_lineage: descriptor.selectedStacks.map((stack) => stack.rappid),
-      agents: links,
+  }
+
+  materializeComposition(descriptor, { allowLineageFallback = true } = {}) {
+    try {
+      return {
+        ...this.materializeCompositionOnce(descriptor),
+        descriptor,
+      };
+    } catch (error) {
+      if (!allowLineageFallback || !descriptor.lineageOverlays?.length) {
+        throw error;
+      }
+      for (const overlay of descriptor.lineageOverlays) {
+        this.lineageStore.rollbackToBaseline(overlay.ancestorRappid);
+      }
+      this.recordTelemetry("lineage-composition-fallback", {
+        error: String(error?.message || error),
+        rings: descriptor.lineageOverlays.map((overlay) => overlay.ringRappid),
+      });
+      const fallbackDescriptor = this.compositionDescriptor({
+        ephemeralAgent: descriptor.ephemeralAgent,
+      });
+      const fallback = this.materializeComposition(
+        fallbackDescriptor,
+        { allowLineageFallback: false },
+      );
+      return {
+        ...fallback,
+        fallbackFrom: descriptor.compositionHash,
+      };
+    }
+  }
+
+  materializeExternalAgentSet(agentSources, agentDirectory) {
+    const original = agentSources.map((agent) => ({ ...agent }));
+    const resolved = original.map((agent) => {
+      try {
+        return this.resolveTwinLineageSource(agent.filename, agent.source);
+      } catch (error) {
+        this.recordTelemetry("lineage-overlay-skipped", {
+          error: String(error?.message || error),
+          filename: agent.filename,
+        });
+        return { ...agent, lineage: null };
+      }
     });
-    return { compositionDirectory, agentDirectory };
+    const materialize = (sources) => {
+      const stagingDirectory = `${agentDirectory}.${process.pid}.${randomUUID()}.stage`;
+      rmSync(stagingDirectory, { recursive: true, force: true });
+      ensurePrivateDirectory(stagingDirectory);
+      try {
+        for (const agent of sources) {
+          writeFileSync(
+            path.join(stagingDirectory, agent.filename),
+            agent.source,
+            { mode: 0o600 },
+          );
+        }
+        this.validateAgentDirectory(stagingDirectory);
+        rmSync(path.join(stagingDirectory, "__pycache__"), {
+          recursive: true,
+          force: true,
+        });
+        if (existsSync(agentDirectory)) {
+          throw new Error(
+            "Refusing to mutate an external AGENTS_PATH after publication.",
+          );
+        }
+        renameSync(stagingDirectory, agentDirectory);
+        return sources;
+      } catch (error) {
+        rmSync(stagingDirectory, { recursive: true, force: true });
+        throw error;
+      }
+    };
+
+    try {
+      return materialize(resolved);
+    } catch (error) {
+      const overlays = resolved.filter((agent) => agent.lineage);
+      if (!overlays.length) throw error;
+      for (const agent of overlays) {
+        this.lineageStore.rollbackToBaseline(agent.lineage.ancestorRappid);
+      }
+      this.recordTelemetry("lineage-composition-fallback", {
+        error: String(error?.message || error),
+        rings: overlays.map((agent) => agent.lineage.ringRappid),
+      });
+      return materialize(original);
+    }
   }
 
   async startWorker(descriptor) {
@@ -810,6 +1352,12 @@ export class BetaRouteManager {
       return existing.route;
     }
     const materialized = this.materializeComposition(descriptor);
+    const effectiveDescriptor = materialized.descriptor || descriptor;
+    const fallbackWorker = this.workers.get(effectiveDescriptor.compositionHash);
+    if (fallbackWorker) {
+      fallbackWorker.lastUsed = Date.now();
+      return fallbackWorker.route;
+    }
     const port = await allocatePort();
     const config = {
       ...this.brainstemConfig,
@@ -829,25 +1377,25 @@ export class BetaRouteManager {
     const route = {
       url: config.url,
       port,
-      compositionHash: descriptor.compositionHash,
-      callerRappid: descriptor.identity.caller_rappid,
-      memoryGuid: descriptor.identity.memory_guid,
-      stackRappid: descriptor.stack.rappid,
-      overlayStackRappids: descriptor.identity.overlay_stack_rappids,
-      stackLineage: descriptor.selectedStacks.map((stack) => stack.rappid),
+      compositionHash: effectiveDescriptor.compositionHash,
+      callerRappid: effectiveDescriptor.identity.caller_rappid,
+      memoryGuid: effectiveDescriptor.identity.memory_guid,
+      stackRappid: effectiveDescriptor.stack.rappid,
+      overlayStackRappids: effectiveDescriptor.identity.overlay_stack_rappids,
+      stackLineage: effectiveDescriptor.selectedStacks.map((stack) => stack.rappid),
       health: result.health,
     };
-    this.workers.set(descriptor.compositionHash, {
+    this.workers.set(effectiveDescriptor.compositionHash, {
       activeRequests: 0,
       agentDirectory: materialized.agentDirectory,
       compositionDirectory: materialized.compositionDirectory,
       process,
       route,
       lastUsed: Date.now(),
-      ephemeral: descriptor.ephemeral,
+      ephemeral: effectiveDescriptor.ephemeral,
     });
     this.recordTelemetry("worker-started", {
-      composition_hash: descriptor.compositionHash,
+      composition_hash: effectiveDescriptor.compositionHash,
       url: route.url,
       worker_count: this.workers.size,
     });
@@ -1108,20 +1656,20 @@ export class BetaRouteManager {
     }
     return this.withRouteLock("__lifecycle__", async () => {
       const route = await this.startWorker(descriptor);
-      const worker = this.workers.get(descriptor.compositionHash);
+      const worker = this.workers.get(route.compositionHash);
       if (worker) worker.activeRequests += 1;
       await this.activate(route);
       try {
         this.recordTelemetry("route-callback-start", {
           composition_fingerprint: this.compositionFingerprint(worker),
-          composition_hash: descriptor.compositionHash,
+          composition_hash: route.compositionHash,
           url: route.url,
         });
         const result = await callback(route);
         this.recordTelemetry("route-callback-end", {
           agent_logs_preview: String(result?.agentLogs || "").slice(0, 2000),
           composition_fingerprint: this.compositionFingerprint(worker),
-          composition_hash: descriptor.compositionHash,
+          composition_hash: route.compositionHash,
           request_id: result?.requestId || null,
           response_preview: String(result?.response || "").slice(0, 1000),
           url: route.url,
@@ -1129,7 +1677,7 @@ export class BetaRouteManager {
         return result;
       } catch (error) {
         this.recordTelemetry("route-callback-error", {
-          composition_hash: descriptor.compositionHash,
+          composition_hash: route.compositionHash,
           error: String(error?.message || error),
           url: route.url,
         });

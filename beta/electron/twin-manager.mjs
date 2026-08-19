@@ -253,9 +253,27 @@ export class TwinManager {
     const id = `${twinSlug(spec.idBase)}-${++this.seq}`;
     const dir = path.join(this.twinsRoot, id);
     const agentsDir = path.join(dir, "agents");
-    mkdirSync(agentsDir, { recursive: true });
-    for (const agent of agentSources) {
-      writeFileSync(path.join(agentsDir, agent.filename), agent.source, { mode: 0o600 });
+    mkdirSync(dir, { recursive: true });
+    let materializedAgentSources = agentSources;
+    try {
+      if (this.routeManager?.materializeExternalAgentSet) {
+        materializedAgentSources = this.routeManager.materializeExternalAgentSet(
+          agentSources,
+          agentsDir,
+        );
+      } else {
+        mkdirSync(agentsDir, { recursive: true });
+        for (const agent of agentSources) {
+          writeFileSync(
+            path.join(agentsDir, agent.filename),
+            agent.source,
+            { mode: 0o600 },
+          );
+        }
+      }
+    } catch (error) {
+      rmSync(dir, { recursive: true, force: true });
+      throw error;
     }
     if (spec.egg) writeFileSync(path.join(dir, `${id}.egg`), spec.egg, { mode: 0o600 });
     // Materialize any resource files (e.g. parity cases / industry matrix) into
@@ -270,7 +288,7 @@ export class TwinManager {
     // Mint a mint-once RAPPID from the first agent (UUID-anchor; rapp/1 §6.2).
     let rappid = null;
     try {
-      const first = agentSources[0];
+      const first = materializedAgentSources[0];
       rappid = this.routeManager?.packageAgent
         ? this.routeManager.packageAgent({ filename: first.filename, source: first.source }).agent_rappid
         : null;

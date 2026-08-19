@@ -37,6 +37,16 @@ let currentAgentRevision = null;
 let agentTreeSignature = null;
 let agentRefreshPromise = null;
 let openBetaMenuOnNextSync = false;
+let pendingLineageReply = null;
+
+function deliverPendingLineageReply() {
+  if (!pendingLineageReply) return;
+  frame.contentWindow?.postMessage({
+    type: "rapp-beta:lineage-confirmation",
+    reply: pendingLineageReply,
+  }, "*");
+  pendingLineageReply = null;
+}
 
 frame.addEventListener("load", () => {
   brainstemNavigationCount += 1;
@@ -45,6 +55,7 @@ frame.addEventListener("load", () => {
     syncBetaUpdate(latestState?.update, openBetaMenuOnNextSync);
     syncExplorerState();
     openBetaMenuOnNextSync = false;
+    deliverPendingLineageReply();
   });
 });
 window.addEventListener("message", async (event) => {
@@ -60,6 +71,36 @@ window.addEventListener("message", async (event) => {
   }
   if (type === "rapp-beta:toggle-explorer") {
     setExplorerOpen(!explorer.classList.contains("open"));
+    return;
+  }
+  if (type === "rapp-beta:lineage-chat") {
+    const requestId = String(event.data.requestId || "");
+    const previousUrl = loadedUrl;
+    try {
+      const result = await window.brainstemBeta.lineageCommand(
+        event.data.message,
+      );
+      if (result?.intercepted && result.url && result.url !== previousUrl) {
+        pendingLineageReply = result.reply;
+        if (loadedUrl === result.url) {
+          await window.brainstemBeta.installFrameBridge();
+          deliverPendingLineageReply();
+        }
+      }
+      event.source.postMessage({
+        type: "rapp-beta:lineage-chat-result",
+        requestId,
+        ok: true,
+        result,
+      }, "*");
+    } catch (cause) {
+      event.source.postMessage({
+        type: "rapp-beta:lineage-chat-result",
+        requestId,
+        ok: false,
+        error: String(cause?.message || cause),
+      }, "*");
+    }
     return;
   }
   if (!["rapp-beta-delete-agent", "rapp-beta-export-agent"].includes(type)) return;

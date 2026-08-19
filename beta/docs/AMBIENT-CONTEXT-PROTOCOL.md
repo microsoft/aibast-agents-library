@@ -64,12 +64,12 @@ Each layer is one agent contributing through `system_context()`.
 
 | Layer | Owner | Status | Injects |
 |-------|-------|--------|---------|
-| **Memory Recall** | `ContextMemory` | Shipping | `<memory>` — stored recollections from prior turns |
-| **Self-State / Proprioception** | `ContextMemory` | Shipping (flagship) | `<system_status>` — agents that failed to load |
+| **Memory Recall** | `ContextMemory` | Shipping in Grail ring 0 and Frontier ring 1 | `<memory>` — stored recollections from prior turns |
+| **Self-State / Proprioception** | `ContextMemory` | Shipping as the Frontier ring-1 molt (flagship) | `<system_status>` — agents that failed to load |
 | **Temporal** | (future) | Roadmap | time-of-day, fiscal period, activity mode |
 | **Intent Signals** | (future) | Roadmap | hints parsed from the query itself |
 | **User Profile** | (future) | Roadmap | accumulated preferences (brevity, technical level) |
-| **Operating Limits** | `ContextMemory` | Shipping | `<operating_context>` — per-reply tool-step budget, for adaptive pacing |
+| **Operating Limits** | `ContextMemory` | Shipping as the Frontier ring-1 molt | `<operating_context>` — per-reply tool-step budget, for adaptive pacing |
 | **Orientation** | (future) | Roadmap | synthesis of the above into directives |
 
 ### Memory Recall (shipping)
@@ -90,8 +90,11 @@ failures the kernel otherwise records nowhere. With this layer primed, the
 Brainstem can open its reply with "one of your agents is broken, and here is
 why" — it has felt its own stroke and says so, unprompted.
 
-Reference: `scan_broken_agents()` and `_self_status_block()` in
-`rapp_brainstem/agents/context_memory_agent.py`.
+Reference: `scan_broken_agents()` and `_self_status_block()` in the packaged
+`ContextMemory` ring-1 source at
+`beta/electron/rings/context_memory_agent.ring1.py`. Frontier composes that
+verified molt through [Molt Lineage](MOLT-LINEAGE-PROTOCOL.md); the Grail
+`rapp_brainstem/agents/context_memory_agent.py` file remains pristine ring 0.
 
 ### Operating Limits (shipping)
 
@@ -107,7 +110,17 @@ ceiling is unchanged; the *behavior* adapts. This is the pattern's answer to
 awareness of it does not.
 
 Reference: `_operating_context_block()` in
-`rapp_brainstem/agents/context_memory_agent.py`.
+`beta/electron/rings/context_memory_agent.ring1.py`, materialized only when
+`ContextMemory` HEAD points at ring 1.
+
+### ContextMemory lineage
+
+Ambient Context's additive self-state and operating-limit layers do not edit the
+Grail factory agent. `ContextMemory` ring 0 is the pristine Grail implementation
+and retains the original memory behavior. Frontier seeds a verified ring 1 that
+preserves that memory path and adds the two ambient layers. The Molt Lineage
+safe word moves HEAD back to ring 0 without touching memory data; restore moves
+HEAD forward to the latest verified ring.
 
 ### Roadmap layers (future)
 
@@ -140,7 +153,8 @@ Frontier behavior, opt-in, and never load-bearing for a single turn.
    as it would without that layer. In particular, **Memory Recall must never be
    broken** — it remains byte-for-byte the Grail behavior, and any new layer that
    shares an owner is wrapped so it can never disturb memory (the reference
-   returns memory exactly as Grail would even if self-state throws).
+   ring-1 implementation returns memory exactly as Grail would even if self-state
+   throws).
 
 3. **No kernel change.** Ambient Context uses only the two existing Grail seams —
    `system_context()` inbound and response fields (`voice_mode`) outbound. The
@@ -175,6 +189,8 @@ Ambient Context is a default, not a mandate. Do not add a layer when:
 - `beta/CONSTITUTION.md` — Article II (RAPP Organs and Senses; a Sense is the
   outbound direction of this pattern) and Article I (the sacred-three factory
   install, of which `ContextMemory` — the reference layer owner — is one).
+- `MOLT-LINEAGE-PROTOCOL.md` — the reversible overlay that keeps Grail
+  `ContextMemory` pristine at ring 0 and composes Ambient Context as ring 1.
 - `beta/docs/UI-AUTOSTEER-PROTOCOL.md` — the sibling Frontier protocol
   (`rapp-ui-autosteer/1.0`); Ambient Context surrounds the turn, Autosteer drives
   the app.

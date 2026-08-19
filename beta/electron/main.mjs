@@ -20,6 +20,7 @@ import { humanizeAgentName } from "./agent-display.mjs";
 import { BrainSurgeon } from "./brain-surgeon.mjs";
 import { CopilotStudioAuthManager } from "./copilot-studio-auth.mjs";
 import { CopilotRuntime } from "./copilot-runtime.mjs";
+import { executeLineageCommand } from "./lineage-control.mjs";
 import { BetaRouteManager } from "./route-manager.mjs";
 import { isAllowedStoreSourceUrl, RappStoreClient, STORE_SOURCES } from "./rapp-store.mjs";
 import { TwinManager } from "./twin-manager.mjs";
@@ -281,8 +282,99 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     } else if (event.data.type === "rapp-beta:explorer-state") {
       document.querySelector("header .logo")
         ?.setAttribute("aria-expanded", String(Boolean(event.data.open)));
+    } else if (event.data.type === "rapp-beta:lineage-confirmation") {
+      const reply = String(event.data.reply || "");
+      if (reply && typeof appendMsg === "function") {
+        appendMsg("assistant", reply);
+      } else if (reply) {
+        const chat = document.getElementById("chat");
+        if (chat) {
+          const wrap = document.createElement("div");
+          wrap.className = "msg assistant";
+          const bubble = document.createElement("div");
+          bubble.className = "bubble";
+          bubble.textContent = reply;
+          wrap.appendChild(bubble);
+          chat.appendChild(wrap);
+          chat.classList.add("has-messages");
+          chat.scrollTop = chat.scrollHeight;
+        }
+      }
     }
   });
+  const nativeFetch = window.fetch.bind(window);
+  async function requestLineageCommand(message) {
+    const requestId = window.crypto.randomUUID();
+    return new Promise((resolve, reject) => {
+      const timeout = window.setTimeout(() => {
+        window.removeEventListener("message", receive);
+        reject(new Error("Molt Lineage control timed out."));
+      }, 120000);
+      function receive(event) {
+        if (
+          event.source !== window.parent
+          || event.data?.type !== "rapp-beta:lineage-chat-result"
+          || event.data?.requestId !== requestId
+        ) return;
+        window.clearTimeout(timeout);
+        window.removeEventListener("message", receive);
+        if (event.data.ok) resolve(event.data.result);
+        else reject(new Error(event.data.error || "Molt Lineage control failed."));
+      }
+      window.addEventListener("message", receive);
+      window.parent.postMessage({
+        type: "rapp-beta:lineage-chat",
+        requestId,
+        message,
+      }, "*");
+    });
+  }
+  window.fetch = async function frontierFetch(resource, options = {}) {
+    let target;
+    try {
+      const raw = resource instanceof Request ? resource.url : String(resource);
+      target = new URL(raw, window.location.href);
+    } catch {
+      return nativeFetch(resource, options);
+    }
+    const isChat = options.method === "POST"
+      && (target.pathname === "/chat" || target.pathname === "/chat/stream");
+    if (!isChat || typeof options.body !== "string") {
+      return nativeFetch(resource, options);
+    }
+    let body;
+    try {
+      body = JSON.parse(options.body);
+    } catch {
+      return nativeFetch(resource, options);
+    }
+    if (typeof body.user_input !== "string") {
+      return nativeFetch(resource, options);
+    }
+    const result = await requestLineageCommand(body.user_input);
+    if (!result?.intercepted) {
+      return nativeFetch(resource, options);
+    }
+    if (target.pathname === "/chat/stream") {
+      const frame = "data: " + JSON.stringify({
+        type: "done",
+        response: result.reply,
+        agent_logs: "",
+        streamed: false,
+      }) + "\\n\\n";
+      return new Response(frame, {
+        status: 200,
+        headers: { "Content-Type": "text/event-stream; charset=utf-8" },
+      });
+    }
+    return new Response(JSON.stringify({
+      response: result.reply,
+      agent_logs: "",
+    }), {
+      status: 200,
+      headers: { "Content-Type": "application/json; charset=utf-8" },
+    });
+  };
   async function requestParent(type, filename) {
     const requestId = window.crypto.randomUUID();
     return new Promise((resolve, reject) => {
@@ -1220,6 +1312,14 @@ function registerIpc() {
     if (!frame) return { installed: false };
     await frame.executeJavaScript(BETA_FRAME_BRIDGE_SOURCE, true);
     return { installed: true };
+  });
+  ipcMain.handle("beta:lineage-command", async (event, message) => {
+    assertTrustedIpc(event);
+    return executeLineageCommand({
+      message,
+      routeManager,
+      env: process.env,
+    });
   });
   ipcMain.handle(
     "beta:check-for-updates",
