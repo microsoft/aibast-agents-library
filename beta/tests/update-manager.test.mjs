@@ -11,6 +11,7 @@ import test from "node:test";
 
 import {
   checkForUpdates,
+  compareBetaVersions,
   githubRawUrl,
   inferManagedBetaHome,
   parseGitHubRepository,
@@ -133,6 +134,80 @@ test("a branch without a beta manifest is not an update failure", async () => {
   } finally {
     rmSync(root, { recursive: true, force: true });
   }
+});
+
+function channelGit({ latestVersion }) {
+  return async (_cwd, args) => {
+    const command = args.join(" ");
+    if (command === "rev-parse --show-toplevel") return "__ROOT__";
+    if (command === "remote get-url origin") {
+      return "https://github.com/microsoft/aibast-agents-library.git\n";
+    }
+    if (command === "rev-parse HEAD") return `${CURRENT_COMMIT}\n`;
+    if (command === "status --porcelain --untracked-files=no") return "";
+    if (command.startsWith("fetch ")) return "";
+    if (command === "rev-parse FETCH_HEAD") return `${LATEST_COMMIT}\n`;
+    if (command === `show ${LATEST_COMMIT}:beta/VERSION`) {
+      return `${latestVersion}\n`;
+    }
+    throw new Error(`Unexpected git call: ${command}`);
+  };
+}
+
+async function channelCheck({ installedVersion, latestVersion }) {
+  const root = mkdtempSync(path.join(tmpdir(), "rapp-beta-update-"));
+  const packageDir = path.join(root, "beta");
+  mkdirSync(packageDir);
+  writeFileSync(path.join(packageDir, "VERSION"), `${installedVersion}\n`);
+  const base = channelGit({ latestVersion });
+  const runGit = async (cwd, args) => {
+    const result = await base(cwd, args);
+    return result === "__ROOT__" ? `${root}\n` : result;
+  };
+  try {
+    return await checkForUpdates({ packageDir, runGit });
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+}
+
+test("a channel serving an older version is never offered as an update", async () => {
+  const update = await channelCheck({
+    installedVersion: "0.1.0-beta.6",
+    latestVersion: "0.1.0-beta.4",
+  });
+  assert.equal(update.available, false);
+  assert.equal(update.channelBehind, true);
+  assert.equal(update.published, true);
+  assert.equal(update.latestVersion, "0.1.0-beta.4");
+});
+
+test("a same-version channel refresh and a newer channel are both updates", async () => {
+  const refresh = await channelCheck({
+    installedVersion: "0.1.0-beta.6",
+    latestVersion: "0.1.0-beta.6",
+  });
+  assert.equal(refresh.available, true);
+  assert.equal(refresh.channelBehind, false);
+
+  const newer = await channelCheck({
+    installedVersion: "0.1.0-beta.6",
+    latestVersion: "0.1.0-beta.7",
+  });
+  assert.equal(newer.available, true);
+  assert.equal(newer.channelBehind, false);
+});
+
+test("beta version ordering is prerelease-aware", () => {
+  assert.equal(compareBetaVersions("0.1.0-beta.6", "0.1.0-beta.4"), 1);
+  assert.equal(compareBetaVersions("0.1.0-beta.4", "0.1.0-beta.6"), -1);
+  assert.equal(compareBetaVersions("0.1.0-beta.10", "0.1.0-beta.9"), 1);
+  assert.equal(compareBetaVersions("0.1.0", "0.1.0-beta.7"), 1);
+  assert.equal(compareBetaVersions("0.1.0-beta.7", "0.1.0"), -1);
+  assert.equal(compareBetaVersions("0.1.1-beta.1", "0.1.0"), 1);
+  assert.equal(compareBetaVersions("0.1.0-beta.6", "0.1.0-beta.6"), 0);
+  assert.equal(compareBetaVersions("0.1.0-alpha.2", "0.1.0-beta.1"), -1);
+  assert.equal(compareBetaVersions("garbage", "0.1.0"), null);
 });
 
 test("managed installs resolve the portable Node and Electron runtimes", () => {

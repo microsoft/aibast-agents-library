@@ -1067,6 +1067,16 @@ async function handleCheckForUpdates({ openPanel = false } = {}) {
       });
     }
     if (!update.available) {
+      if (update.channelBehind) {
+        return setUpdateState({
+          phase: "current",
+          message: "This build is ahead of its update channel.",
+          detail: `Installed ${update.currentVersion} (${shortCommit(update.currentCommit)}); `
+            + `the channel serves ${update.latestVersion} (${shortCommit(update.latestCommit)}). `
+            + "Nothing to install.",
+          source: `${update.repository}@${update.updateRef}`,
+        });
+      }
       return setUpdateState({
         phase: "current",
         message: "RAPP Brainstem Frontier is up to date.",

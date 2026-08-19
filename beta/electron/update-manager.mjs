@@ -18,6 +18,36 @@ function asErrorMessage(error) {
   return String(error?.message || error);
 }
 
+export function compareBetaVersions(left, right) {
+  const parse = (value) => {
+    const [core, prerelease = null] = String(value || "").trim().split("-", 2);
+    const numbers = core.split(".").map((part) => Number.parseInt(part, 10));
+    if (numbers.length !== 3 || numbers.some(Number.isNaN)) return null;
+    return { numbers, prerelease };
+  };
+  const a = parse(left);
+  const b = parse(right);
+  if (!a || !b) return null;
+  for (let i = 0; i < 3; i += 1) {
+    if (a.numbers[i] !== b.numbers[i]) return Math.sign(a.numbers[i] - b.numbers[i]);
+  }
+  if (a.prerelease === b.prerelease) return 0;
+  if (a.prerelease === null) return 1;
+  if (b.prerelease === null) return -1;
+  const aParts = a.prerelease.split(".");
+  const bParts = b.prerelease.split(".");
+  for (let i = 0; i < Math.max(aParts.length, bParts.length); i += 1) {
+    const [x, y] = [aParts[i], bParts[i]];
+    if (x === undefined) return -1;
+    if (y === undefined) return 1;
+    const [xn, yn] = [Number.parseInt(x, 10), Number.parseInt(y, 10)];
+    const bothNumeric = String(xn) === x && String(yn) === y;
+    const order = bothNumeric ? Math.sign(xn - yn) : (x < y ? -1 : x > y ? 1 : 0);
+    if (order !== 0) return order;
+  }
+  return 0;
+}
+
 export function validateUpdateRef(value) {
   const ref = String(value || "").trim();
   const invalid = !UPDATE_REF_PATTERN.test(ref)
@@ -329,8 +359,18 @@ export async function checkForUpdates({
     }
   }
 
+  // A channel that serves an OLDER version than the installed build is never
+  // an update — offering it would be a silent downgrade (a stale staging main
+  // can lag the installed release). An unparseable version falls back to
+  // commit inequality; an equal version with a different commit is a
+  // same-version branch refresh and stays an update.
+  const versionOrder = compareBetaVersions(latestVersion, currentVersion);
+  const channelBehind = versionOrder !== null && versionOrder < 0;
   return {
-    available: Boolean(latestVersion) && currentCommit !== latestCommit,
+    available: Boolean(latestVersion)
+      && currentCommit !== latestCommit
+      && !channelBehind,
+    channelBehind,
     currentCommit,
     currentVersion,
     dirty,
