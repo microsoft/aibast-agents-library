@@ -80,6 +80,22 @@ test("safe-word interceptor honors custom baseline and restore words", async () 
   assert.deepEqual(calls, ["restore", "materialize"]);
 });
 
+test("restore reports a refused composition instead of claiming success", async () => {
+  const { manager } = managerFixture();
+  manager.lastLineageFallback = {
+    accepted: [],
+    rejected: ["rappid:@frontier/bad-ring:deadbeef"],
+    strategy: "last-good",
+  };
+  const result = await executeLineageCommand({
+    message: "restore",
+    routeManager: manager,
+  });
+  assert.equal(result.restored, false);
+  assert.notEqual(result.reply, lineageControlReplies.restore);
+  assert.match(result.reply, /could not activate.*last-good/i);
+});
+
 test("renderer intercepts before Grail chat and main exposes the lineage IPC", () => {
   const renderer = readFileSync(path.join(betaRoot, "ui", "renderer.js"), "utf8");
   const main = readFileSync(path.join(betaRoot, "electron", "main.mjs"), "utf8");

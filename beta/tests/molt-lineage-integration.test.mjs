@@ -58,6 +58,7 @@ function minimalFixture(t, { validator = () => true } = {}) {
     "context_memory_agent.py": "class ContextMemoryAgent: pass\n",
     "global_agent.py": "GLOBAL = 'baseline'\n",
     "manage_memory_agent.py": "class ManageMemoryAgent: pass\n",
+    "other_agent.py": "OTHER = 'baseline'\n",
   };
   for (const [filename, source] of Object.entries(sources)) {
     writeFileSync(path.join(agentsDirectory, filename), source);
@@ -295,7 +296,7 @@ test("HARD 4 — invalid live composition falls back to loadable baseline", (t) 
     fixture.sources["global_agent.py"],
   );
   assert.ok(validationSources.some((source) => source.includes("BROKEN")));
-  assert.equal(validationSources.at(-1), fixture.sources["global_agent.py"]);
+  assert.ok(validationSources.includes(fixture.sources["global_agent.py"]));
 });
 
 test("fail-safe prefers the last-good parent ring before pristine baseline", (t) => {
@@ -341,6 +342,73 @@ test("fail-safe prefers the last-good parent ring before pristine baseline", (t)
       "utf8",
     ),
     ring1Source,
+  );
+});
+
+test("fail-safe isolates a broken locus without rewinding a healthy sibling", (t) => {
+  const fixture = minimalFixture(t, {
+    validator: (agentDirectory) => {
+      const globalSource = readFileSync(
+        path.join(agentDirectory, "global_agent.py"),
+        "utf8",
+      );
+      return globalSource.includes("broken ring two")
+        ? { ok: false, error: "global ring two is incompatible" }
+        : { ok: true };
+    },
+  });
+  const baselines = new Map(
+    fixture.store.baselineAncestors().map(
+      (item) => [item.filename, item],
+    ),
+  );
+  const global = baselines.get("global_agent.py");
+  const other = baselines.get("other_agent.py");
+  const global1 = fixture.store.appendRing(global.ancestorRappid, {
+    source: "GLOBAL = 'ring one'\n",
+    parentRappid: global.ancestorRappid,
+    verified: true,
+    meta: { author: "test" },
+  });
+  const other1 = fixture.store.appendRing(other.ancestorRappid, {
+    source: "OTHER = 'ring one'\n",
+    parentRappid: other.ancestorRappid,
+    verified: true,
+    meta: { author: "test" },
+  });
+  fixture.store.setHead(global.ancestorRappid, global1);
+  fixture.store.setHead(other.ancestorRappid, other1);
+  const manager = new BetaRouteManager(fixture.managerOptions);
+  manager.materializeComposition(manager.compositionDescriptor());
+
+  const global2 = fixture.store.appendRing(global.ancestorRappid, {
+    source: "GLOBAL = 'broken ring two'\n",
+    parentRappid: global1,
+    verified: true,
+    meta: { author: "test" },
+  });
+  const other2Source = "OTHER = 'healthy ring two'\n";
+  const other2 = fixture.store.appendRing(other.ancestorRappid, {
+    source: other2Source,
+    parentRappid: other1,
+    verified: true,
+    meta: { author: "test" },
+  });
+  fixture.store.setHead(global.ancestorRappid, global2);
+  fixture.store.setHead(other.ancestorRappid, other2);
+
+  const fallback = manager.materializeComposition(manager.compositionDescriptor());
+  assert.equal(fallback.fallbackStrategy, "isolated");
+  assert.deepEqual(fallback.lineageAccepted, [other2]);
+  assert.deepEqual(fallback.lineageRejected, [global2]);
+  assert.equal(fixture.store.getHead(global.ancestorRappid), global1);
+  assert.equal(fixture.store.getHead(other.ancestorRappid), other2);
+  assert.equal(
+    readFileSync(
+      path.join(fallback.agentDirectory, "other_agent.py"),
+      "utf8",
+    ),
+    other2Source,
   );
 });
 
@@ -417,7 +485,7 @@ test("HARD 6 — composition validates in staging before one atomic publication"
   const fixture = minimalFixture(t, {
     validator: (agentDirectory) => {
       validations += 1;
-      assert.match(agentDirectory, /\.stage\/agents$/);
+      assert.match(agentDirectory, /\.dry-load-[^/]+\/agents$/);
       assert.equal(existsSync(targetDirectory), false);
       return { ok: true };
     },
@@ -438,6 +506,40 @@ test("HARD 6 — composition validates in staging before one atomic publication"
   );
   assert.equal(
     existsSync(path.join(materialized.agentDirectory, "__pycache__")),
+    false,
+  );
+});
+
+test("dry-load executes private copies and cannot rewrite publishable bytes", (t) => {
+  const fixture = minimalFixture(t, {
+    validator: (agentDirectory) => {
+      writeFileSync(
+        path.join(agentDirectory, "global_agent.py"),
+        "GLOBAL = 'mutated during import'\n",
+      );
+      writeFileSync(path.join(agentDirectory, "unexpected_agent.py"), "BAD = True\n");
+      return { ok: true };
+    },
+  });
+  const manager = new BetaRouteManager(fixture.managerOptions);
+  const descriptor = manager.compositionDescriptor();
+  const globalEntry = descriptor.entries.find(
+    (entry) => entry.filename === "global_agent.py",
+  );
+  const materialized = manager.materializeComposition(descriptor);
+  assert.equal(
+    readFileSync(
+      path.join(materialized.agentDirectory, "global_agent.py"),
+      "utf8",
+    ),
+    fixture.sources["global_agent.py"],
+  );
+  assert.equal(
+    readFileSync(globalEntry.objectPath, "utf8"),
+    fixture.sources["global_agent.py"],
+  );
+  assert.equal(
+    existsSync(path.join(materialized.agentDirectory, "unexpected_agent.py")),
     false,
   );
 });

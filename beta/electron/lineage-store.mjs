@@ -372,7 +372,7 @@ export class LineageStore {
     atomicWrite(this._headPath(ancestorRappid), `${ringRappid}\n`);
   }
 
-  resolveLive(ancestorRappid) {
+  resolveRing(ancestorRappid, ringRappid) {
     const baseline = this._baseline(ancestorRappid);
     if (!baseline) return null;
     const baselineResult = () => ({
@@ -384,7 +384,6 @@ export class LineageStore {
       return baselineResult();
     }
     try {
-      const ringRappid = this.getHead(ancestorRappid);
       if (!ringRappid || ringRappid === ancestorRappid) return baselineResult();
       const ring = this._readRing(ancestorRappid, ringRappid);
       if (
@@ -406,6 +405,13 @@ export class LineageStore {
     } catch {
       return baselineResult();
     }
+  }
+
+  resolveLive(ancestorRappid) {
+    return this.resolveRing(
+      ancestorRappid,
+      this.getHead(ancestorRappid),
+    );
   }
 
   rollbackToBaseline(ancestorRappid = null) {

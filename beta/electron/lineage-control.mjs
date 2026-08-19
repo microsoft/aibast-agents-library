@@ -44,11 +44,22 @@ export async function executeLineageCommand({
     routeManager.restoreLineage();
   }
   const route = await routeManager.startDefault();
+  const fallback = routeManager.lastLineageFallback || null;
+  let reply = command.action === "baseline" ? BASELINE_REPLY : RESTORE_REPLY;
+  if (command.action === "restore" && fallback?.rejected?.length) {
+    reply = fallback.accepted?.length
+      ? "Restored compatible verified molts, but kept last-good code for incompatible rings — your memories are intact."
+      : "Restore could not activate the latest verified molts; kept the last-good composition — your memories are intact.";
+  }
   return {
     intercepted: true,
     action: command.action,
-    reply: command.action === "baseline" ? BASELINE_REPLY : RESTORE_REPLY,
+    fallback,
+    reply,
     compositionHash: route.compositionHash,
+    restored: command.action === "restore"
+      ? !fallback?.rejected?.length
+      : undefined,
     url: route.url,
   };
 }

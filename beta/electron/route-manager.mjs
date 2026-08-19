@@ -396,6 +396,7 @@ export class BetaRouteManager {
     this.activeRoute = null;
     this.validatedCompositions = new Set();
     this.lastGoodDescriptor = null;
+    this.lastLineageFallback = null;
     this.lineageEnabled = lineageEnabled !== false;
     this.lineageStore = lineageStore || new LineageStore({
       brainstemDir: this.brainstemConfig.brainstemDir,
@@ -507,7 +508,7 @@ export class BetaRouteManager {
     ) || null;
   }
 
-  resolveLineageEntry(entry, memoryGuid) {
+  resolveLineageEntry(entry, memoryGuid, lineageHeads = null) {
     if (!this.lineageIsEnabled() || entry.scope === "ephemeral") return entry;
     const baseline = this.baselineAncestor(entry.filename);
     if (!baseline) return entry;
@@ -521,7 +522,12 @@ export class BetaRouteManager {
         : Buffer.from(entry.bytes || []).toString("utf8");
       if (source !== readFileSync(baseline.sourcePath, "utf8")) return entry;
     }
-    const live = this.lineageStore.resolveLive(baseline.ancestorRappid);
+    const live = lineageHeads?.has(baseline.ancestorRappid)
+      ? this.lineageStore.resolveRing(
+          baseline.ancestorRappid,
+          lineageHeads.get(baseline.ancestorRappid),
+        )
+      : this.lineageStore.resolveLive(baseline.ancestorRappid);
     if (!live || live.isBaseline) return entry;
     const source = generatedContextMemory
       ? routedContextMemoryMoltSource(live.source, memoryGuid)
@@ -591,6 +597,49 @@ export class BetaRouteManager {
         ? `Composed agent set failed Grail dry-load: ${verdict.error}`
         : "Composed agent set failed Grail dry-load.",
     );
+  }
+
+  assertAgentDirectoryMatches(agentDirectory, entries) {
+    const expected = new Map(
+      entries.map((entry) => [entry.filename, entry.address]),
+    );
+    const actual = readdirSync(agentDirectory, { withFileTypes: true })
+      .filter((entry) => entry.name !== "__pycache__");
+    if (
+      actual.length !== expected.size
+      || actual.some((entry) => !entry.isFile() || !expected.has(entry.name))
+    ) {
+      throw new Error("Composed agent set contains missing or unexpected files.");
+    }
+    for (const [filename, address] of expected) {
+      const bytes = readFileSync(path.join(agentDirectory, filename));
+      if (Hb("rapp/1:egg", bytes) !== address) {
+        throw new Error(
+          `Composed agent bytes changed during validation: ${filename}`,
+        );
+      }
+    }
+  }
+
+  validatePrivateAgentSet(agentDirectory, entries) {
+    this.assertAgentDirectoryMatches(agentDirectory, entries);
+    const validationRoot = mkdtempSync(
+      path.join(this.compositionRoot, ".dry-load-"),
+    );
+    const validationDirectory = path.join(validationRoot, "agents");
+    ensurePrivateDirectory(validationDirectory);
+    try {
+      for (const entry of entries) {
+        copyFileSync(
+          path.join(agentDirectory, entry.filename),
+          path.join(validationDirectory, entry.filename),
+        );
+      }
+      this.validateAgentDirectory(validationDirectory);
+    } finally {
+      rmSync(validationRoot, { recursive: true, force: true });
+    }
+    this.assertAgentDirectoryMatches(agentDirectory, entries);
   }
 
   identity() {
@@ -1092,6 +1141,7 @@ export class BetaRouteManager {
   compositionDescriptor({
     ephemeralAgent = null,
     applyLineage = true,
+    lineageHeads = null,
   } = {}) {
     const identity = this.identity();
     const stack = this.loadStack(identity.active_stack_rappid);
@@ -1122,7 +1172,11 @@ export class BetaRouteManager {
 
     const resolvedEntries = applyLineage ? entries.map((entry) => {
       try {
-        return this.resolveLineageEntry(entry, identity.memory_guid);
+        return this.resolveLineageEntry(
+          entry,
+          identity.memory_guid,
+          lineageHeads,
+        );
       } catch (error) {
         this.recordTelemetry("lineage-overlay-skipped", {
           error: String(error?.message || error),
@@ -1188,7 +1242,7 @@ export class BetaRouteManager {
     const expected = new Map(
       descriptor.entries.map((entry) => [entry.filename, entry]),
     );
-    return manifest.agents.every((agent) => {
+    const manifestMatches = manifest.agents.every((agent) => {
       const entry = expected.get(agent.filename);
       return Boolean(
         entry
@@ -1197,6 +1251,13 @@ export class BetaRouteManager {
         && existsSync(path.join(agentDirectory, agent.filename)),
       );
     });
+    if (!manifestMatches) return false;
+    try {
+      this.assertAgentDirectoryMatches(agentDirectory, descriptor.entries);
+      return true;
+    } catch {
+      return false;
+    }
   }
 
   materializeCompositionOnce(descriptor) {
@@ -1211,11 +1272,10 @@ export class BetaRouteManager {
         const manifest = JSON.parse(readFileSync(completeFile, "utf8"));
         if (this.compositionIsComplete(descriptor, agentDirectory, manifest)) {
           if (!this.validatedCompositions.has(descriptor.compositionHash)) {
-            this.validateAgentDirectory(agentDirectory);
-            rmSync(path.join(agentDirectory, "__pycache__"), {
-              recursive: true,
-              force: true,
-            });
+            this.validatePrivateAgentSet(
+              agentDirectory,
+              descriptor.entries,
+            );
             this.validatedCompositions.add(descriptor.compositionHash);
           }
           return { compositionDirectory, agentDirectory };
@@ -1248,11 +1308,10 @@ export class BetaRouteManager {
           scope: entry.scope,
         });
       }
-      this.validateAgentDirectory(stagingAgentDirectory);
-      rmSync(path.join(stagingAgentDirectory, "__pycache__"), {
-        recursive: true,
-        force: true,
-      });
+      this.validatePrivateAgentSet(
+        stagingAgentDirectory,
+        descriptor.entries,
+      );
       atomicWriteJson(stagingCompleteFile, {
         schema: ROUTING_SCHEMA,
         composition_hash: descriptor.compositionHash,
@@ -1276,7 +1335,7 @@ export class BetaRouteManager {
             existingManifest,
           )
         ) {
-          this.validateAgentDirectory(agentDirectory);
+          this.validatePrivateAgentSet(agentDirectory, descriptor.entries);
           rmSync(stagingDirectory, { recursive: true, force: true });
           this.validatedCompositions.add(descriptor.compositionHash);
           return { compositionDirectory, agentDirectory };
@@ -1316,18 +1375,14 @@ export class BetaRouteManager {
       ) {
         try {
           const lastGood = this.materializeCompositionOnce(lastGoodDescriptor);
-          this.alignLineageHeads(descriptor, lastGoodDescriptor);
-          this.recordTelemetry("lineage-composition-fallback", {
-            error: String(error?.message || error),
-            rings: descriptor.lineageOverlays.map((overlay) => overlay.ringRappid),
-            strategy: "last-good",
-          });
-          return {
-            ...lastGood,
-            descriptor: lastGoodDescriptor,
-            fallbackFrom: descriptor.compositionHash,
-            fallbackStrategy: "last-good",
-          };
+          const fallback = this.isolateLineageFallback(
+            descriptor,
+            lastGoodDescriptor,
+            lastGood,
+            "last-good",
+          );
+          this.recordLineageFallback(descriptor, error, fallback);
+          return fallback;
         } catch {
           // The prior artifact is no longer loadable; try pristine baseline next.
         }
@@ -1345,37 +1400,123 @@ export class BetaRouteManager {
           + String(fallbackError?.message || fallbackError),
         );
       }
-      this.alignLineageHeads(descriptor, fallbackDescriptor);
-      if (!fallbackDescriptor.ephemeral) {
-        this.lastGoodDescriptor = fallbackDescriptor;
-      }
-      this.recordTelemetry("lineage-composition-fallback", {
-        error: String(error?.message || error),
-        rings: descriptor.lineageOverlays.map((overlay) => overlay.ringRappid),
-        strategy: "baseline",
-      });
-      return {
-        ...fallback,
-        descriptor: fallbackDescriptor,
-        fallbackFrom: descriptor.compositionHash,
-        fallbackStrategy: "baseline",
-      };
+      const isolated = this.isolateLineageFallback(
+        descriptor,
+        fallbackDescriptor,
+        fallback,
+        "baseline",
+      );
+      this.recordLineageFallback(descriptor, error, isolated);
+      return isolated;
     }
   }
 
-  alignLineageHeads(failedDescriptor, fallbackDescriptor) {
+  sameNonLineageComposition(left, right) {
+    if (
+      left.ephemeral
+      || right.ephemeral
+      || left.identity.caller_rappid !== right.identity.caller_rappid
+      || left.identity.memory_guid !== right.identity.memory_guid
+      || left.stack.rappid !== right.stack.rappid
+      || left.entries.length !== right.entries.length
+    ) {
+      return false;
+    }
+    const rightEntries = new Map(
+      right.entries.map((entry) => [entry.filename, entry]),
+    );
+    return left.entries.every((entry) => {
+      const other = rightEntries.get(entry.filename);
+      if (!other || entry.scope !== other.scope) return false;
+      if (entry.lineage) {
+        return !other.lineage
+          || entry.lineage.ancestorRappid === other.lineage.ancestorRappid;
+      }
+      return !other.lineage && entry.address === other.address;
+    });
+  }
+
+  isolateLineageFallback(
+    failedDescriptor,
+    fallbackDescriptor,
+    fallbackMaterialized,
+    baseStrategy,
+  ) {
+    let bestDescriptor = fallbackDescriptor;
+    let bestMaterialized = fallbackMaterialized;
+    const failedHeads = new Map(
+      failedDescriptor.lineageOverlays.map(
+        (overlay) => [overlay.ancestorRappid, overlay],
+      ),
+    );
     const fallbackHeads = new Map(
       (fallbackDescriptor.lineageOverlays || []).map(
         (overlay) => [overlay.ancestorRappid, overlay.ringRappid],
       ),
     );
-    for (const overlay of failedDescriptor.lineageOverlays || []) {
-      const target = fallbackHeads.get(overlay.ancestorRappid)
-        || overlay.ancestorRappid;
-      if (target !== overlay.ringRappid) {
-        this.lineageStore.setHead(overlay.ancestorRappid, target);
+    const changed = [...failedHeads.values()]
+      .filter((overlay) => (
+        overlay.ringRappid
+        !== (fallbackHeads.get(overlay.ancestorRappid)
+          || overlay.ancestorRappid)
+      ))
+      .sort((left, right) => left.filename.localeCompare(right.filename));
+    const acceptedHeads = new Map(fallbackHeads);
+    for (const overlay of changed) {
+      if (!acceptedHeads.has(overlay.ancestorRappid)) {
+        acceptedHeads.set(overlay.ancestorRappid, overlay.ancestorRappid);
       }
     }
+
+    const accepted = [];
+    const rejected = [];
+    if (this.sameNonLineageComposition(failedDescriptor, fallbackDescriptor)) {
+      for (const overlay of changed) {
+        const trialHeads = new Map(acceptedHeads);
+        trialHeads.set(overlay.ancestorRappid, overlay.ringRappid);
+        const trialDescriptor = this.compositionDescriptor({
+          ephemeralAgent: failedDescriptor.ephemeralAgent,
+          lineageHeads: trialHeads,
+        });
+        try {
+          bestMaterialized = this.materializeCompositionOnce(trialDescriptor);
+          bestDescriptor = trialDescriptor;
+          acceptedHeads.set(overlay.ancestorRappid, overlay.ringRappid);
+          accepted.push(overlay.ringRappid);
+        } catch {
+          rejected.push(overlay.ringRappid);
+        }
+      }
+      for (const overlay of changed) {
+        this.lineageStore.setHead(
+          overlay.ancestorRappid,
+          acceptedHeads.get(overlay.ancestorRappid),
+        );
+      }
+    } else {
+      rejected.push(...changed.map((overlay) => overlay.ringRappid));
+    }
+    if (!bestDescriptor.ephemeral) this.lastGoodDescriptor = bestDescriptor;
+    return {
+      ...bestMaterialized,
+      descriptor: bestDescriptor,
+      fallbackFrom: failedDescriptor.compositionHash,
+      fallbackStrategy: accepted.length ? "isolated" : baseStrategy,
+      lineageAccepted: accepted,
+      lineageRejected: rejected,
+    };
+  }
+
+  recordLineageFallback(failedDescriptor, error, fallback) {
+    this.recordTelemetry("lineage-composition-fallback", {
+      accepted_rings: fallback.lineageAccepted,
+      error: String(error?.message || error),
+      rejected_rings: fallback.lineageRejected,
+      rings: failedDescriptor.lineageOverlays.map(
+        (overlay) => overlay.ringRappid,
+      ),
+      strategy: fallback.fallbackStrategy,
+    });
   }
 
   materializeExternalAgentSet(agentSources, agentDirectory) {
@@ -1403,11 +1544,16 @@ export class BetaRouteManager {
             { mode: 0o600 },
           );
         }
-        this.validateAgentDirectory(stagingDirectory);
-        rmSync(path.join(stagingDirectory, "__pycache__"), {
-          recursive: true,
-          force: true,
-        });
+        this.validatePrivateAgentSet(
+          stagingDirectory,
+          sources.map((agent) => ({
+            address: Hb(
+              "rapp/1:egg",
+              Buffer.from(agent.source, "utf8"),
+            ),
+            filename: agent.filename,
+          })),
+        );
         if (existsSync(agentDirectory)) {
           throw new Error(
             "Refusing to mutate an external AGENTS_PATH after publication.",
@@ -1437,6 +1583,7 @@ export class BetaRouteManager {
   }
 
   async startWorker(descriptor) {
+    this.lastLineageFallback = null;
     const existing = this.workers.get(descriptor.compositionHash);
     if (existing) {
       existing.lastUsed = Date.now();
@@ -1444,6 +1591,15 @@ export class BetaRouteManager {
     }
     const materialized = this.materializeComposition(descriptor);
     const effectiveDescriptor = materialized.descriptor || descriptor;
+    if (materialized.fallbackStrategy) {
+      this.lastLineageFallback = {
+        accepted: materialized.lineageAccepted || [],
+        effectiveCompositionHash: effectiveDescriptor.compositionHash,
+        rejected: materialized.lineageRejected || [],
+        requestedCompositionHash: descriptor.compositionHash,
+        strategy: materialized.fallbackStrategy,
+      };
+    }
     const fallbackWorker = this.workers.get(effectiveDescriptor.compositionHash);
     if (fallbackWorker) {
       fallbackWorker.lastUsed = Date.now();
