@@ -303,6 +303,10 @@ class ToasterAgent(BasicAgent):
         desc = skill.get("SKILL_DESCRIPTION") or info.get("description") or f"Toasted skill for {name}."
         display_name = _escape_embed_sentinels(name)
         safe_desc = _escape_embed_sentinels(desc)
+        # Frontmatter must stay single-line, but keep the FULL description —
+        # skill triggers ("use when ...") live in it and truncation would gut
+        # how other AIs decide to pick the skill up.
+        fm_desc = re.sub(r"\s+", " ", safe_desc).strip()[:1000]
         # A wrapper agent carries the original skill's instructions — render
         # them readably so ANY AI can follow the toasted skill without decoding
         # the embedded agent. Sentinel-escaped so the rendered body can never
@@ -313,7 +317,7 @@ class ToasterAgent(BasicAgent):
         # wrap base64 at 100 cols for readable diffs; whitespace is stripped on decode
         wrapped = "\n".join(b64[i:i + 100] for i in range(0, len(b64), 100))
         md = (
-            f"---\nname: {_slug(name)}\ndescription: {safe_desc[:200]}\n---\n\n"
+            f"---\nname: {_slug(name)}\ndescription: {fm_desc}\n---\n\n"
             f"<!-- toasted-skill/1.0 -->\n> {_AI_NOTE}\n\n"
             f"# {display_name}\n\n{safe_desc}\n\n"
             f"## How to use\nRun this skill against your task. Its runnable RAPP agent is embedded below; "
