@@ -9,28 +9,28 @@
   ],
   "coverage": {
     "achievements": {
-      "as_of": "2026-08-18T21:59:49Z",
+      "as_of": "2026-08-19T05:36:17Z",
       "status": "available"
     },
     "agent_acquisitions": {
-      "as_of": "2026-08-18T21:59:49Z",
+      "as_of": "2026-08-19T05:36:17Z",
       "status": "available"
     },
     "agent_upvotes": {
-      "as_of": "2026-08-18T21:59:49Z",
+      "as_of": "2026-08-19T05:36:17Z",
       "status": "available"
     },
     "file_downloads": {
-      "as_of": "2026-08-18T21:59:49Z",
+      "as_of": "2026-08-19T05:36:17Z",
       "status": "complete"
     },
     "traffic": {
-      "as_of": "2026-08-18T21:59:49Z",
-      "reason": null,
-      "status": "live"
+      "as_of": "2026-08-18T21:59:54Z",
+      "reason": "GitHub returned 403: Resource not accessible by personal access token",
+      "status": "carried_forward"
     },
     "workshops": {
-      "as_of": "2026-08-18T21:59:49Z",
+      "as_of": "2026-08-19T05:36:17Z",
       "status": "partial"
     }
   },
@@ -100,7 +100,7 @@
         "acquisitions": 0,
         "display_name": "Care Gap Closure Agent",
         "downloads": 0,
-        "upvotes": 0
+        "upvotes": 1
       },
       "@aibast-agents-library/cart-abandonment-recovery": {
         "acquisitions": 0,
@@ -484,7 +484,7 @@
         ],
         "section": "Reach and consumption",
         "source": "downloads",
-        "status": "available",
+        "status": "partial",
         "unit": "count",
         "value": 2518
       },
@@ -501,7 +501,7 @@
         ],
         "section": "Reach and consumption",
         "source": "traffic",
-        "status": "available",
+        "status": "partial",
         "unit": "count",
         "value": 2127
       },
@@ -515,7 +515,7 @@
         ],
         "section": "Reach and consumption",
         "source": "traffic",
-        "status": "available",
+        "status": "partial",
         "unit": "count",
         "value": 2127
       },
@@ -532,7 +532,7 @@
         ],
         "section": "Reach and consumption",
         "source": "traffic",
-        "status": "available",
+        "status": "partial",
         "unit": "count",
         "value": 379
       },
@@ -619,7 +619,7 @@
         ],
         "section": "Reach and consumption",
         "source": "traffic",
-        "status": "available",
+        "status": "partial",
         "unit": "count",
         "value": 275
       },
@@ -633,7 +633,7 @@
         ],
         "section": "Reach and consumption",
         "source": "traffic",
-        "status": "available",
+        "status": "partial",
         "unit": "count",
         "value": 37
       },
@@ -705,7 +705,7 @@
         "source": "agent_upvotes",
         "status": "available",
         "unit": "count",
-        "value": 3
+        "value": 4
       },
       {
         "id": "agent_acquisitions",
@@ -1107,7 +1107,7 @@
         "achievement_hard_completions": 0,
         "achievement_points": 0,
         "achievement_starts": 0,
-        "agent_upvotes": 0,
+        "agent_upvotes": 1,
         "bundle_downloads": 0,
         "display_name": "Care Gap Closure Agent",
         "feedback_reports": 0,
@@ -1702,7 +1702,7 @@
       }
     }
   },
-  "generated_at": "2026-08-18T21:59:49Z",
+  "generated_at": "2026-08-19T05:36:17Z",
   "links": {
     "email": "https://microsoft.github.io/aibast-agents-library/reports/impact-report-email.txt",
     "html": "https://microsoft.github.io/aibast-agents-library/reports/impact-report.html",
@@ -1802,7 +1802,7 @@
           "change": null,
           "change_percent": null,
           "status": "baseline_pending",
-          "value": 3
+          "value": 4
         },
         "agents": {
           "baseline": null,
@@ -2122,7 +2122,7 @@
           "change": null,
           "change_percent": null,
           "status": "baseline_unavailable",
-          "value": 3
+          "value": 4
         },
         "agents": {
           "baseline": 72,
@@ -2165,12 +2165,12 @@
           "value": 4
         },
         "git_clones": {
-          "baseline": null,
-          "calculation": "period_activity",
-          "change": 430,
-          "change_percent": null,
-          "status": "available",
-          "value": 430
+          "baseline": 1398,
+          "calculation": "snapshot_change",
+          "change": 729,
+          "change_percent": 52.1,
+          "status": "partial",
+          "value": 2127
         },
         "installer_downloads": {
           "baseline": 0,
@@ -2197,12 +2197,12 @@
           "value": 10
         },
         "page_views": {
-          "baseline": null,
-          "calculation": "period_activity",
-          "change": 188,
-          "change_percent": null,
-          "status": "available",
-          "value": 188
+          "baseline": 9,
+          "calculation": "snapshot_change",
+          "change": 370,
+          "change_percent": 4111.1,
+          "status": "partial",
+          "value": 379
         },
         "release_downloads": {
           "baseline": 0,
@@ -2247,10 +2247,10 @@
         "total_downloads": {
           "baseline": null,
           "calculation": "period_activity",
-          "change": 430,
+          "change": 0,
           "change_percent": null,
           "status": "partial",
-          "value": 430
+          "value": 0
         },
         "tracked_files": {
           "baseline": 5310,
@@ -2375,12 +2375,12 @@
         "workshop_usage": []
       },
       "name": "Weekly",
-      "observed_days": 8.4,
+      "observed_days": 8.7,
       "status": "complete"
     }
   },
   "repo": {
-    "as_of": "2026-08-18T21:59:49Z",
+    "as_of": "2026-08-19T05:36:17Z",
     "carried_forward": false,
     "created_at": "2025-10-17T16:17:53Z",
     "description": "Main repository for AI BAST Specialist Teal AI Agents Library",
@@ -2389,13 +2389,13 @@
     "name": "aibast-agents-library",
     "open_issues": 10,
     "owner": "microsoft",
-    "pushed_at": "2026-08-18T21:53:29Z",
+    "pushed_at": "2026-08-18T23:03:13Z",
     "site": "https://microsoft.github.io/aibast-agents-library/",
-    "size_kb": 5622573,
+    "size_kb": 5627274,
     "stars": 5,
     "url": "https://github.com/microsoft/aibast-agents-library",
     "watchers": 0
   },
   "schema": "aibast-impact-report/1.0",
-  "subject": "AIBAST weekly and monthly impact report - August 18, 2026"
+  "subject": "AIBAST weekly and monthly impact report - August 19, 2026"
 }

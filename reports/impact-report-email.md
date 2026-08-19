@@ -1,18 +1,18 @@
-**Subject:** AIBAST weekly and monthly impact report - August 18, 2026
+**Subject:** AIBAST weekly and monthly impact report - August 19, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-08-18T21:59:49Z`
+**Snapshot:** `2026-08-19T05:36:17Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 2,518 | +430 observed - partial | Baseline pending |
-| Git clones | 2,127 | +430 observed | Baseline pending |
+| AIBAST observed repository downloads | 2,518 | +0 observed - partial | Baseline pending |
+| Git clones | 2,127 | +729 (+52.1%) - partial | Baseline pending |
 | Clones excluding CI estimate | 2,127 | +729 (+52.1%) - partial | Baseline pending |
-| AIBAST repository and Pages views | 379 | +188 observed | Baseline pending |
+| AIBAST repository and Pages views | 379 | +370 (+4111.1%) - partial | Baseline pending |
 | jsDelivr file hits | 388 | +0 observed | Baseline pending |
 | Release asset downloads | 3 | +3 - partial | Baseline pending |
 | AIBAST direct agent file downloads | 3 | +3 - partial | Baseline pending |
@@ -29,7 +29,7 @@
 | GitHub forks | 4 | +2 (+100.0%) - partial | Baseline pending |
 | GitHub watchers | 0 | +0 (+0.0%) - partial | Baseline pending |
 | Open GitHub issues | 10 | +5 (+100.0%) - partial | Baseline pending |
-| Agent upvotes | 3 | Baseline unavailable | Baseline pending |
+| Agent upvotes | 4 | Baseline unavailable | Baseline pending |
 | Signed-in agent acquisitions | 0 | Baseline unavailable | Baseline pending |
 | Workshop usage events | 0 | +0 (+0.0%) - partial | Baseline pending |
 | Workshop views (14-day top paths) | Unavailable | Unavailable | Unavailable |
