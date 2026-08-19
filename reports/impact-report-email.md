@@ -2,17 +2,17 @@
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-08-19T05:36:17Z`
+**Snapshot:** `2026-08-19T17:32:13Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 2,518 | +0 observed - partial | Baseline pending |
-| Git clones | 2,127 | +729 (+52.1%) - partial | Baseline pending |
+| AIBAST observed repository downloads | 2,518 | +279 observed - partial | Baseline pending |
+| Git clones | 2,127 | +279 observed | Baseline pending |
 | Clones excluding CI estimate | 2,127 | +729 (+52.1%) - partial | Baseline pending |
-| AIBAST repository and Pages views | 379 | +370 (+4111.1%) - partial | Baseline pending |
+| AIBAST repository and Pages views | 379 | +132 observed | Baseline pending |
 | jsDelivr file hits | 388 | +0 observed | Baseline pending |
 | Release asset downloads | 3 | +3 - partial | Baseline pending |
 | AIBAST direct agent file downloads | 3 | +3 - partial | Baseline pending |
@@ -26,9 +26,9 @@
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
 | GitHub stars | 5 | +1 (+25.0%) - partial | Baseline pending |
-| GitHub forks | 4 | +2 (+100.0%) - partial | Baseline pending |
+| GitHub forks | 5 | +3 (+150.0%) - partial | Baseline pending |
 | GitHub watchers | 0 | +0 (+0.0%) - partial | Baseline pending |
-| Open GitHub issues | 10 | +5 (+100.0%) - partial | Baseline pending |
+| Open GitHub issues | 11 | +6 (+120.0%) - partial | Baseline pending |
 | Agent upvotes | 4 | Baseline unavailable | Baseline pending |
 | Signed-in agent acquisitions | 0 | Baseline unavailable | Baseline pending |
 | Workshop usage events | 0 | +0 (+0.0%) - partial | Baseline pending |
@@ -55,8 +55,8 @@
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| Tracked repository files | 5,506 | +196 (+3.7%) | Baseline pending |
-| Files covered by download observations | 5,506 | +199 (+3.7%) - partial | Baseline pending |
+| Tracked repository files | 5,507 | +197 (+3.7%) | Baseline pending |
+| Files covered by download observations | 5,507 | +200 (+3.8%) - partial | Baseline pending |
 | Catalog agents | 72 | +0 (+0.0%) | Baseline pending |
 | Tracked SKILL.md files | 234 | +0 (+0.0%) | Baseline pending |
 | Canonical workshops | 51 | +0 (+0.0%) | Baseline pending |
