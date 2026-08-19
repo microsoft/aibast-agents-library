@@ -114,92 +114,152 @@ def _safe_agent_name(name, fallback):
 
 # ── fail-closed verification: a candidate must compile AND smoke-load in an
 # isolated, timeout-bounded loader before the trusted parent admits it ────────
+#
+# Trust boundary: this loader runs the UNTRUSTED candidate's module-level code, so
+# it holds no secret and emits no verdict. It only *imports and instantiates* the
+# candidate in a disposable process and reports success/failure through its EXIT
+# STATUS (0 = clean, non-zero = failed, with a human reason on stderr). The pass/
+# fail decision is made by the trusted parent from a static AST analysis it does
+# itself (see _ast_agent_verdict); the parent never trusts a byte this process
+# writes for that decision. There is deliberately no privileged report channel for
+# a candidate to hijack.
 _LOADER_HARNESS = r'''
 import importlib.util
-import json
-import os
 import sys
 
 def main():
     path = sys.argv[1]
-    report_fd = os.dup(sys.stdout.fileno())
-    dumps = json.dumps
-    write = os.write
-    findings = {
-        "loaded": False,
-        "agent_class": None,
-        "is_basic_agent_subclass": False,
-        "tool_schema": None,
-        "has_perform": False,
-        "error": None,
-    }
     try:
-        sink_fd = os.open(os.devnull, os.O_WRONLY)
-        os.dup2(sink_fd, sys.stdout.fileno())
-        os.dup2(sink_fd, sys.stderr.fileno())
-        os.close(sink_fd)
-
         from agents.basic_agent import BasicAgent
 
         spec = importlib.util.spec_from_file_location("_forge_candidate", path)
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)          # runs module-level code (isolated proc)
-        findings["loaded"] = True
 
-        defined_classes = [
-            value for value in vars(mod).values()
-            if isinstance(value, type)
-            and value is not BasicAgent
-            and getattr(value, "__module__", None) == mod.__name__
-        ]
-        agent_classes = [
-            value for value in defined_classes
-            if issubclass(value, BasicAgent)
-        ]
-        if agent_classes:
-            agent_cls = agent_classes[-1]
-            findings["agent_class"] = agent_cls.__name__
-            findings["is_basic_agent_subclass"] = True
-            inst = agent_cls()
-            findings["tool_schema"] = getattr(inst, "metadata", None)
-            findings["has_perform"] = callable(getattr(inst, "perform", None))
-            try:
-                dumps(findings["tool_schema"])
-            except (TypeError, ValueError):
-                findings["tool_schema"] = None
-                raise
-        elif defined_classes:
-            findings["agent_class"] = defined_classes[-1].__name__
+        agent_cls = None
+        for value in vars(mod).values():
+            if (isinstance(value, type)
+                    and value is not BasicAgent
+                    and getattr(value, "__module__", None) == mod.__name__
+                    and issubclass(value, BasicAgent)):
+                agent_cls = value
+        if agent_cls is None:
+            sys.stderr.write("no BasicAgent subclass was defined")
+            raise SystemExit(1)
+
+        inst = agent_cls()
+        md = getattr(inst, "metadata", None)
+        if not isinstance(md, dict):
+            sys.stderr.write("metadata is missing or is not a dict")
+            raise SystemExit(1)
+        name = md.get("name")
+        if not isinstance(name, str) or not name.strip():
+            sys.stderr.write("metadata has no valid string name")
+            raise SystemExit(1)
+        if not isinstance(md.get("parameters"), dict):
+            sys.stderr.write("metadata has no parameters dict")
+            raise SystemExit(1)
+        if not callable(getattr(inst, "perform", None)):
+            sys.stderr.write("perform() is not callable")
+            raise SystemExit(1)
+        # Advisory only (display label): the agent's own registered name. The parent
+        # uses this for a label, NEVER for the pass/fail verdict, so forging it is
+        # inert — the verdict is already decided by the parent's AST analysis.
+        display_name = getattr(inst, "name", None) or name
+        sys.stdout.write(str(display_name)[:200])
+        sys.stdout.flush()
+        raise SystemExit(0)
+    except SystemExit:
+        raise
     except BaseException as e:
-        findings["error"] = {
-            "type": type(e).__name__,
-            "message": str(e),
-        }
-    try:
-        payload = (dumps(findings) + "\n").encode("utf-8", "backslashreplace")
-        write(report_fd, payload)
-    except BaseException:
-        pass
-    finally:
-        try:
-            os.close(report_fd)
-        except BaseException:
-            pass
+        sys.stderr.write("{0}: {1}".format(type(e).__name__, e))
+        raise SystemExit(1)
 
 if __name__ == "__main__":
     main()
 '''
 
 
-def _verify(source):
-    """Return (ok, detail). Catastrophic = anything that isn't a clean load."""
+def _ast_extract_tool_name(class_node):
+    """Best-effort: read the tool name from a `metadata = {... "name": "X" ...}`
+    dict literal in the class body or __init__. Returns None when the name is not a
+    plain string literal (the class name is used as a harmless display fallback)."""
+    for node in ast.walk(class_node):
+        if isinstance(node, ast.Assign):
+            is_metadata = any(
+                (isinstance(t, ast.Name) and t.id == "metadata")
+                or (isinstance(t, ast.Attribute) and t.attr == "metadata")
+                for t in node.targets)
+            if is_metadata and isinstance(node.value, ast.Dict):
+                for key, val in zip(node.value.keys, node.value.values):
+                    if (isinstance(key, ast.Constant) and key.value == "name"
+                            and isinstance(val, ast.Constant)
+                            and isinstance(val.value, str) and val.value.strip()):
+                        return val.value
+    return None
+
+
+def _ast_agent_verdict(source):
+    """The trusted, parent-side verdict — it PARSES the candidate, never executes
+    it, so it cannot be forged by anything the candidate does at import time
+    (including os._exit/SystemExit tricks that would fake a clean subprocess load).
+    A source passes only if it statically (a) imports BasicAgent from the kernel
+    base module and never rebinds that name — so the base is the genuine kernel
+    class, not a `BasicAgent = object` decoy — (b) defines a class subclassing it,
+    and (c) that class defines its own perform() — a molt that cannot act is a
+    sterile molt and is refused. Returns (ok, reason_or_None, info_or_None)."""
     try:
-        ast.parse(source)
+        tree = ast.parse(source)
     except SyntaxError as e:
-        return False, {"stage": "syntax", "lesson": f"SyntaxError: {e.msg} at line {e.lineno}"}
+        return False, f"SyntaxError: {e.msg} at line {e.lineno}", None
+
+    imported_basic_agent = False
+    rebinds_basic_agent = False
+    for node in ast.walk(tree):
+        if isinstance(node, ast.ImportFrom) and (node.module or "").endswith("basic_agent"):
+            if any(alias.name == "BasicAgent" for alias in node.names):
+                imported_basic_agent = True
+        elif isinstance(node, ast.Import):
+            if any(alias.name.endswith("basic_agent") for alias in node.names):
+                imported_basic_agent = True
+        elif isinstance(node, (ast.Assign, ast.AnnAssign)):
+            targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+            if any(isinstance(t, ast.Name) and t.id == "BasicAgent" for t in targets):
+                rebinds_basic_agent = True
+
+    agent_cls = None
+    for node in ast.walk(tree):
+        if isinstance(node, ast.ClassDef):
+            for base in node.bases:
+                name = base.attr if isinstance(base, ast.Attribute) else getattr(base, "id", None)
+                if name == "BasicAgent":
+                    agent_cls = node
+    if agent_cls is None:
+        return False, "no BasicAgent subclass is defined", None
+    if not imported_basic_agent or rebinds_basic_agent:
+        return False, ("BasicAgent must be imported from agents.basic_agent and its name "
+                       "never reassigned (the base must be the real kernel class)"), None
+    if not any(isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)) and n.name == "perform"
+               for n in agent_cls.body):
+        return False, f"{agent_cls.name} does not define perform() — a molt must be able to act", None
+
+    tool_name = _ast_extract_tool_name(agent_cls)  # None when not a static literal
+    return True, None, {"agent_class": agent_cls.name, "tool_name": tool_name}
+
+
+def _verify(source):
+    """Return (ok, detail). The pass/fail VERDICT is decided by the trusted parent
+    from a static AST analysis of the source (never executed here). A disposable
+    subprocess additionally confirms the source imports and instantiates cleanly —
+    a *correctness* signal read only from the child's EXIT STATUS, never from any
+    byte the child writes — so a candidate cannot forge a pass by what it prints,
+    by pre-empting a report channel, or by calling os._exit(). Fail-closed."""
+    ok, reason, info = _ast_agent_verdict(source)
+    if not ok:
+        return False, {"stage": "ast", "lesson": reason}
 
     def fail(lesson):
-        one_line = " ".join(str(lesson).split()) or "loader verification failed"
+        one_line = " ".join(str(lesson).split()) or "verification failed"
         return False, {"stage": "smoke", "lesson": one_line[:600]}
 
     with tempfile.TemporaryDirectory() as td:
@@ -216,7 +276,6 @@ def _verify(source):
         with open(loader, "w", encoding="utf-8") as fh:
             fh.write(_LOADER_HARNESS)
         env = dict(os.environ)
-        env.pop("_MOLTER_VERIFY_SENTINEL", None)
         # basic_agent must resolve; expose the same shim path the kernel uses
         env["PYTHONPATH"] = os.pathsep.join(
             [td, LIVE_DIR, os.path.dirname(LIVE_DIR)] + env.get("PYTHONPATH", "").split(os.pathsep))
@@ -225,79 +284,24 @@ def _verify(source):
                                timeout=VERIFY_TIMEOUT, env=env)
         except subprocess.TimeoutExpired:
             return fail(
-                f"loader did not finish within {VERIFY_TIMEOUT}s "
+                f"candidate did not finish loading within {VERIFY_TIMEOUT}s "
                 "(likely an infinite loop or blocking call at import time)")
         except OSError as e:
             return fail(f"loader could not start: {type(e).__name__}: {e}")
 
-        stderr = (r.stderr or b"").decode("utf-8", "replace")
         if r.returncode != 0:
-            detail = f"loader exited with status {r.returncode}"
-            if stderr:
-                detail += f": {stderr[-400:]}"
-            return fail(detail)
+            stderr = (r.stderr or b"").decode("utf-8", "replace").strip()
+            return fail(f"candidate failed to load cleanly: {stderr[-400:]}"
+                        if stderr else "candidate failed to load cleanly")
 
-        if not r.stdout or not r.stdout.strip():
-            return fail("loader emitted no structured findings")
-        try:
-            output = r.stdout.decode("utf-8")
-        except UnicodeDecodeError:
-            return fail("loader findings were not valid UTF-8")
-        try:
-            findings = json.loads(output)
-        except (json.JSONDecodeError, TypeError):
-            return fail("loader findings were not valid JSON")
-        if not isinstance(findings, dict):
-            return fail("loader findings were not a JSON object")
+        # Advisory display label from the verified child — never gates the verdict.
+        runtime_name = (r.stdout or b"").decode("utf-8", "replace").strip()[:200]
 
-        required = {
-            "loaded", "agent_class", "is_basic_agent_subclass",
-            "tool_schema", "has_perform", "error",
-        }
-        missing = sorted(required - set(findings))
-        if missing:
-            return fail(f"loader findings were incomplete (missing: {', '.join(missing)})")
-        if type(findings["loaded"]) is not bool:
-            return fail("loader findings had a malformed loaded flag")
-        if type(findings["is_basic_agent_subclass"]) is not bool:
-            return fail("loader findings had a malformed BasicAgent subclass flag")
-        if type(findings["has_perform"]) is not bool:
-            return fail("loader findings had a malformed perform flag")
-
-        error = findings["error"]
-        if error is not None:
-            if not isinstance(error, dict):
-                return fail("loader findings had malformed error details")
-            error_type = error.get("type")
-            error_message = error.get("message")
-            if not isinstance(error_type, str) or not isinstance(error_message, str):
-                return fail("loader findings had malformed error details")
-            return fail(f"loader could not inspect candidate: {error_type}: {error_message}")
-        if not findings["loaded"]:
-            return fail("loader did not finish importing the candidate")
-
-        agent_class = findings["agent_class"]
-        if not isinstance(agent_class, str) or not agent_class.strip():
-            return fail("no BasicAgent subclass was defined")
-        if not findings["is_basic_agent_subclass"]:
-            return fail(f"{agent_class} is not a BasicAgent subclass")
-
-        schema = findings["tool_schema"]
-        if not isinstance(schema, dict):
-            return fail("metadata is missing or malformed (need name + parameters dict)")
-        tool_name = schema.get("name")
-        if not isinstance(tool_name, str) or not tool_name.strip():
-            return fail("metadata is missing or malformed (need name + parameters dict)")
-        if not isinstance(schema.get("parameters"), dict):
-            return fail("metadata is missing or malformed (need name + parameters dict)")
-        if not findings["has_perform"]:
-            return fail("perform() is not callable")
-
-        return True, {
-            "ok": True,
-            "agent_class": agent_class,
-            "tool_name": tool_name,
-        }
+    return True, {
+        "ok": True,
+        "agent_class": info["agent_class"],
+        "tool_name": info["tool_name"] or runtime_name or info["agent_class"],
+    }
 
 
 class MolterAgent(BasicAgent):

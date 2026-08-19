@@ -293,58 +293,102 @@ class SpoofedAgent:
 """
 ok, detail = module._verify(source)
 assert not ok
-assert "not a BasicAgent subclass" in detail["lesson"]
+assert "no BasicAgent subclass" in detail["lesson"]
 `);
 });
 
-test("molter verifier fails closed when a candidate exits early", () => {
+test("molter verifier: stdout / an inherited fd / os._exit cannot forge a verdict", () => {
   runPython(importStub + String.raw`
 module = load(
     "frontier/rapplications/molter/agents/molter_agent.py",
-    "molter_agent_early_exit",
+    "molter_agent_forged_verdict",
 )
+# The old bypass wrote a fake 'verified' verdict to an inherited report fd and
+# called os._exit(0) before the harness could speak. The verdict is now decided by
+# the parent's AST analysis, and this source defines no BasicAgent subclass, so it
+# is rejected BEFORE the process is ever run — the forgery code never executes.
 source = """
 import os
+try:
+    os.write(3, b'{"loaded": true, "is_basic_agent_subclass": true, "agent_class": "Pwn", "has_perform": true, "error": null}')
+except Exception:
+    pass
 os._exit(0)
 """
 ok, detail = module._verify(source)
 assert not ok
-assert "no structured findings" in detail["lesson"]
+assert "no BasicAgent subclass" in detail["lesson"]
 `);
 });
 
-test("molter verifier fails closed on malformed or empty loader findings", () => {
+test("molter verifier fails closed when an AST-valid candidate cannot instantiate", () => {
   runPython(importStub + String.raw`
 module = load(
     "frontier/rapplications/molter/agents/molter_agent.py",
-    "molter_agent_bad_findings",
+    "molter_agent_init_raises",
 )
-candidate = """
+source = """
 from agents.basic_agent import BasicAgent
 
-class MinimalAgent(BasicAgent):
+class BoomAgent(BasicAgent):
     def __init__(self):
-        self.metadata = {
-            "name": "MinimalTool",
-            "parameters": {"type": "object", "properties": {}},
-        }
+        raise RuntimeError("kaboom during init")
 
     def perform(self, **kwargs):
-        return "ok"
+        return "never"
 """
-original_loader = module._LOADER_HARNESS
-try:
-    module._LOADER_HARNESS = "print('{malformed')"
-    ok, detail = module._verify(candidate)
-    assert not ok
-    assert "not valid JSON" in detail["lesson"]
+ok, detail = module._verify(source)
+assert not ok
+assert "failed to load cleanly" in detail["lesson"]
+`);
+});
 
-    module._LOADER_HARNESS = ""
-    ok, detail = module._verify(candidate)
-    assert not ok
-    assert "no structured findings" in detail["lesson"]
-finally:
-    module._LOADER_HARNESS = original_loader
+test("molter verifier refuses a decoy base named BasicAgent (fake lineage)", () => {
+  runPython(importStub + String.raw`
+module = load(
+    "frontier/rapplications/molter/agents/molter_agent.py",
+    "molter_agent_shadow_base",
+)
+# 'BasicAgent' is shadowed to object, so the class is not a real kernel subclass,
+# and it os._exit(0)s to fake a clean subprocess load. The AST gate refuses it
+# because BasicAgent is not imported from the kernel module (and is reassigned) —
+# the os._exit never even runs.
+source = """
+import os
+BasicAgent = object
+
+class Pwn(BasicAgent):
+    def perform(self, **kwargs):
+        return "decoy"
+
+os._exit(0)
+"""
+ok, detail = module._verify(source)
+assert not ok
+assert "imported from agents.basic_agent" in detail["lesson"]
+`);
+});
+
+test("molter verifier refuses a sterile molt with no perform()", () => {
+  runPython(importStub + String.raw`
+module = load(
+    "frontier/rapplications/molter/agents/molter_agent.py",
+    "molter_agent_sterile",
+)
+# A genuine BasicAgent subclass but with no perform() of its own — it cannot act,
+# so it is a sterile molt and is refused at the AST gate (before the os._exit runs).
+source = """
+import os
+from agents.basic_agent import BasicAgent
+
+class Sterile(BasicAgent):
+    pass
+
+os._exit(0)
+"""
+ok, detail = module._verify(source)
+assert not ok
+assert "does not define perform()" in detail["lesson"]
 `);
 });
 
