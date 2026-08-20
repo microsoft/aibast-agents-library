@@ -430,6 +430,107 @@ test("fail-safe prefers the last-good parent ring before pristine baseline", (t)
   );
 });
 
+function lastGoodHeadChangeFixture(t) {
+  const fixture = minimalFixture(t, {
+    validator: (agentDirectory) => {
+      const source = readFileSync(
+        path.join(agentDirectory, "global_agent.py"),
+        "utf8",
+      );
+      return source.includes("broken ring two")
+        ? { ok: false, error: "global ring two is incompatible" }
+        : { ok: true };
+    },
+  });
+  const baselines = new Map(
+    fixture.store.baselineAncestors().map(
+      (item) => [item.filename, item],
+    ),
+  );
+  const global = baselines.get("global_agent.py");
+  const other = baselines.get("other_agent.py");
+  const global1 = fixture.store.appendRing(global.ancestorRappid, {
+    source: "GLOBAL = 'ring one'\n",
+    verified: true,
+    meta: { author: "test" },
+  });
+  const other1 = fixture.store.appendRing(other.ancestorRappid, {
+    source: "OTHER = 'ring one'\n",
+    verified: true,
+    meta: { author: "test" },
+  });
+  fixture.store.setHead(global.ancestorRappid, global1);
+  fixture.store.setHead(other.ancestorRappid, other1);
+  const manager = new BetaRouteManager(fixture.managerOptions);
+  manager.materializeComposition(manager.compositionDescriptor());
+  const breakGlobal = () => {
+    const global2 = fixture.store.appendRing(global.ancestorRappid, {
+      source: "GLOBAL = 'broken ring two'\n",
+      parentRappid: global1,
+      verified: true,
+      meta: { author: "test" },
+    });
+    fixture.store.setHead(global.ancestorRappid, global2);
+    return manager.materializeComposition(manager.compositionDescriptor());
+  };
+  return {
+    ...fixture,
+    breakGlobal,
+    global,
+    global1,
+    manager,
+    other,
+    other1,
+  };
+}
+
+test("last-good fallback respects a per-locus rollback to baseline", (t) => {
+  const run = lastGoodHeadChangeFixture(t);
+  const report = run.manager.rollbackLineage(run.other.ancestorRappid);
+  assert.deepEqual(report.changed, [run.other.ancestorRappid]);
+
+  const fallback = run.breakGlobal();
+  assert.equal(fallback.fallbackStrategy, "last-good");
+  assert.equal(run.store.getHead(run.global.ancestorRappid), run.global1);
+  assert.equal(
+    readFileSync(
+      path.join(fallback.agentDirectory, run.other.filename),
+      "utf8",
+    ),
+    run.sources[run.other.filename],
+  );
+  assert.equal(
+    run.store.getHead(run.other.ancestorRappid),
+    run.other.ancestorRappid,
+  );
+});
+
+test("last-good fallback respects a locus pinned to baseline", (t) => {
+  const run = lastGoodHeadChangeFixture(t);
+  run.store.setLocusPolicy(run.other.ancestorRappid, "pinned");
+  const forced = run.manager.compositionDescriptor({
+    lineageHeads: new Map([[run.other.ancestorRappid, run.other1]]),
+  });
+  assert.equal(
+    forced.entries.find((entry) => entry.filename === run.other.filename)
+      .lineage,
+    undefined,
+    "pinning wins even when a fallback descriptor requests the retired ring",
+  );
+
+  const fallback = run.breakGlobal();
+  assert.equal(fallback.fallbackStrategy, "last-good");
+  assert.equal(run.store.getHead(run.global.ancestorRappid), run.global1);
+  assert.equal(
+    readFileSync(
+      path.join(fallback.agentDirectory, run.other.filename),
+      "utf8",
+    ),
+    run.sources[run.other.filename],
+  );
+  assert.equal(run.store.locusPolicy(run.other.ancestorRappid), "pinned");
+});
+
 test("fail-safe isolates a broken locus without rewinding a healthy sibling", (t) => {
   const fixture = minimalFixture(t, {
     validator: (agentDirectory) => {

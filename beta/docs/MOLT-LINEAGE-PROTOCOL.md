@@ -105,6 +105,12 @@ The kernel then loads the composed directory and neither knows nor cares which
 agents are molted. **Grail on disk is never touched.** Rollback is composition
 choosing an earlier ring; there is nothing to un-edit.
 
+Before the last-good tier reuses a cached descriptor, it reconciles every cached
+lineage entry with the selected environment's current HEAD, verified chain, and
+pin policy. A cached parent may remain as the fallback for a broken descendant,
+but rollback, pinning, branch movement, or corruption drops that cached ring and
+recomposes the fallback from the live store before any bytes are served.
+
 ## Benjamin Button — non-destructive time travel
 
 Because the log is append-only and `HEAD` is a pointer, an instance can move

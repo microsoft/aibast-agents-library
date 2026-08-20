@@ -1678,16 +1678,48 @@ export class BetaRouteManager {
         && this.sameRouteIdentity(lastGoodDescriptor, descriptor)
       ) {
         try {
-          const lastGood = this.materializeCompositionOnce(lastGoodDescriptor);
+          const reconciliation = this.reconcileLastGoodLineage(
+            lastGoodDescriptor,
+            descriptor,
+          );
+          const fallbackDescriptor = reconciliation
+            ? this.compositionDescriptor({
+                ephemeralAgent: descriptor.ephemeralAgent,
+                lineageHeads: reconciliation.heads,
+              })
+            : lastGoodDescriptor;
+          if (
+            reconciliation
+            && fallbackDescriptor.compositionHash === descriptor.compositionHash
+          ) {
+            throw new Error(
+              "Reconciled last-good lineage still resolves to the failed composition.",
+            );
+          }
+          const lastGood = this.materializeCompositionOnce(
+            fallbackDescriptor,
+            { fresh: Boolean(reconciliation) },
+          );
+          if (reconciliation) {
+            this.recordTelemetry("lineage-last-good-resynced", {
+              dropped: reconciliation.dropped,
+              fallback_composition_hash: fallbackDescriptor.compositionHash,
+              requested_composition_hash: descriptor.compositionHash,
+            });
+          }
           const fallback = this.isolateLineageFallback(
             descriptor,
-            lastGoodDescriptor,
+            fallbackDescriptor,
             lastGood,
             "last-good",
           );
           this.recordLineageFallback(descriptor, error, fallback);
           return fallback;
-        } catch {
+        } catch (lastGoodError) {
+          this.recordTelemetry("lineage-last-good-skipped", {
+            error: String(lastGoodError?.message || lastGoodError),
+            requested_composition_hash: descriptor.compositionHash,
+          });
           // The prior artifact is no longer loadable; try pristine baseline next.
         }
       }
@@ -1727,6 +1759,66 @@ export class BetaRouteManager {
       && canonical(left.identity.overlay_stack_rappids)
         === canonical(right.identity.overlay_stack_rappids)
     );
+  }
+
+  reconcileLastGoodLineage(lastGoodDescriptor, failedDescriptor) {
+    // A cached parent remains a valid fallback while the current verified HEAD
+    // descends from it. Rollback, pinning, branch changes, and corrupt chains
+    // revoke that endorsement and must be re-resolved from the live store.
+    const cachedHeads = new Map(
+      (lastGoodDescriptor.lineageOverlays || []).map(
+        (overlay) => [overlay.ancestorRappid, overlay.ringRappid],
+      ),
+    );
+    const ancestors = new Set([
+      ...cachedHeads.keys(),
+      ...(failedDescriptor.lineageOverlays || []).map(
+        (overlay) => overlay.ancestorRappid,
+      ),
+    ]);
+    const heads = new Map();
+    const dropped = [];
+    for (const ancestorRappid of ancestors) {
+      const cachedRing = cachedHeads.get(ancestorRappid) || ancestorRappid;
+      let effectiveRing = null;
+      let reason = null;
+      try {
+        effectiveRing = this.lineageStore.resolveLive(
+          ancestorRappid,
+          { env: this.lineageEnv },
+        )?.ringRappid || null;
+        if (
+          cachedRing !== ancestorRappid
+          && this.lineageStore.locusPolicy(ancestorRappid) === "pinned"
+        ) {
+          reason = "pinned";
+        } else {
+          const currentHead = this.lineageStore.getHead(
+            ancestorRappid,
+            { env: this.lineageEnv },
+          );
+          if (
+            !this.lineageStore.walk(ancestorRappid, currentHead)
+              .includes(cachedRing)
+          ) {
+            reason = "head-moved";
+          }
+        }
+      } catch {
+        reason = "unresolvable";
+      }
+      if (reason) {
+        dropped.push({
+          ancestor_rappid: ancestorRappid,
+          cached_ring: cachedRing,
+          effective_ring: effectiveRing,
+          reason,
+        });
+      } else {
+        heads.set(ancestorRappid, cachedRing);
+      }
+    }
+    return dropped.length ? { dropped, heads } : null;
   }
 
   quarantineCompositionFallback(descriptor, error, pristineError) {
