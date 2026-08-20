@@ -875,3 +875,62 @@ reply = agent.perform(action="untoast", skill_md=bad)
 assert "Refusing to untoast" in reply, reply
 `);
 });
+
+test("a grown capability survives the launcher clearing the twins root", () => {
+  runPython(importStub + String.raw`
+import os, shutil, tempfile
+
+home = tempfile.mkdtemp()
+twin = os.path.join(home, "twins", "molter-1", "agents")
+os.makedirs(twin)
+os.environ["MOLTER_HOME"] = os.path.join(home, "molter")
+os.environ["BRAINSTEM_BETA_TWIN"] = "molter-1"
+
+module = load(
+    "frontier/rapplications/molter/agents/molter_agent.py",
+    "molter_agent_rehydrate",
+)
+module.LIVE_DIR = twin
+module.HOME = os.environ["MOLTER_HOME"]
+module.MOLTS = os.path.join(module.HOME, "molts")
+module.STATE_FILE = os.path.join(module.HOME, "state.json")
+
+agent = module.MolterAgent()
+source = (
+    "from agents.basic_agent import BasicAgent\n\n"
+    "class InvoiceAgent(BasicAgent):\n"
+    "    def __init__(self):\n"
+    "        self.name = 'Invoice'\n"
+    "        self.metadata = {'name': 'Invoice', 'parameters': {'type': 'object', 'properties': {}}}\n"
+    "    def perform(self, **k):\n        return 'generation 7'\n"
+)
+gen, _meta = agent._record_molt(
+    "invoice", source, (True, {"ok": True, "tool_name": "Invoice"}),
+    "grown", None, "generation")
+agent._go_live("invoice", source, "Invoice", gen)
+assert os.listdir(twin) == ["invoice_agent.py"], os.listdir(twin)
+
+# TwinManager clears the shared twins root in its constructor, so a restart —
+# or simply opening a second Frontier window — deletes the live copy of every
+# grown capability. The generations are durable on device, so this must be
+# recoverable rather than a silent loss.
+shutil.rmtree(os.path.join(home, "twins"))
+os.makedirs(twin)
+assert os.listdir(twin) == [], "precondition: the capability is gone"
+
+reply = agent.perform(action="status")
+assert os.listdir(twin) == ["invoice_agent.py"], (
+    "the grown capability must come back", os.listdir(twin))
+assert "Restored after a restart" in reply, reply
+assert "invoice" in reply
+
+# Restored bytes are the archived generation, not a fresh catalog copy.
+with open(os.path.join(twin, "invoice_agent.py"), encoding="utf-8") as fh:
+    assert fh.read() == source
+
+# Idempotent: a second call restores nothing and says nothing.
+again = agent.perform(action="status")
+assert "Restored after a restart" not in again, again
+shutil.rmtree(home)
+`);
+});

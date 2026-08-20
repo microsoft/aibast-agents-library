@@ -457,6 +457,49 @@ class MolterAgent(BasicAgent):
         _save_state(st)
         return live_path
 
+    def _rehydrate_live(self):
+        """Reinstall every capability that state says is live but whose file is
+        missing from the twin's agents dir.
+
+        A twin's agents directory is disposable: the launcher clears the twins
+        root when it starts, so a restart — or simply opening a second Frontier
+        window — deletes the live copy of every grown capability. The generations
+        themselves are durable (each is archived under ~/.rapp/molter), so the
+        loss is recoverable; without this the capability silently vanishes while
+        status still reports the generation as live, which is the worst of both.
+
+        Returns the list of capabilities it restored. Never raises: a Brainstem
+        that cannot rehydrate must still answer."""
+        restored = []
+        try:
+            if self._is_sacred_brainstem(LIVE_DIR):
+                return restored           # never install into the sacred kernel
+            st = _load_state()
+        except Exception:
+            return restored
+        for slug, entry in (st.get("capabilities") or {}).items():
+            try:
+                gen = entry.get("live_generation")
+                filename = entry.get("live_file")
+                if gen is None or not filename:
+                    continue
+                live_path = os.path.join(LIVE_DIR, filename)
+                if os.path.exists(live_path):
+                    continue              # still there; nothing to do
+                archived = os.path.join(
+                    MOLTS, slug, f"gen-{int(gen):03d}", "agent.py")
+                with open(archived, "r", encoding="utf-8") as fh:
+                    source = fh.read()
+                tmp = live_path + ".tmp"
+                with open(tmp, "w", encoding="utf-8") as fh:
+                    fh.write(source)
+                os.replace(tmp, live_path)
+                os.chmod(live_path, 0o600)
+                restored.append(f"{slug} (generation {gen})")
+            except Exception:
+                continue                  # one unrecoverable capability is not fatal
+        return restored
+
     def _lessons(self, cap):
         st = _load_state()
         entry = st["capabilities"].get(_slug(cap), {})
@@ -466,14 +509,26 @@ class MolterAgent(BasicAgent):
     # ---- actions -----------------------------------------------------------
     def perform(self, **kw):
         action = (kw.get("action") or "").strip()
+        # Self-heal first: the twins root is cleared on launch, so a grown
+        # capability's live file may be gone even though its generation is
+        # durable on device. Restoring here means the capability survives a
+        # restart, and status can never claim a generation is live while its
+        # file is missing.
+        restored = self._rehydrate_live()
         try:
-            return {
+            result = {
                 "search_capability": self._search, "acquire": self._acquire,
                 "mutate": lambda a: self._forge(a, kind="mutation"),
                 "generate": lambda a: self._forge(a, kind="generation"),
                 "rollback": self._rollback, "molt_log": self._molt_log,
                 "status": self._status,
             }.get(action, lambda a: f"Unknown action '{action}'.")(kw)
+            # Tell the user when a grown capability had to be brought back, so a
+            # silent loss-and-recovery is visible rather than invisible.
+            if restored:
+                result = f"{result}\n\n[molter] Restored after a restart: " \
+                         + ", ".join(restored) + "."
+            return result
         except Exception as e:
             return f"Molter error: {type(e).__name__}: {e}"
 
