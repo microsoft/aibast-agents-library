@@ -1180,6 +1180,9 @@ class LethalMoltAgent(BasicAgent):
         ringRappid: legacyRing,
         parentRappid: legacyAncestor,
         ancestorRappid: legacyAncestor,
+        // The real pre-fix store always recorded the source digest; the
+        // migration refuses a ring whose digest it cannot verify.
+        sha256: lineageStoreInternals.sourceSha256(migratedSource),
         verified: true,
         createdAt: "2026-08-20T19:25:50.792Z",
         meta: {
