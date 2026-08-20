@@ -39,6 +39,8 @@ let agentRefreshPromise = null;
 let openBetaMenuOnNextSync = false;
 let pendingLineageReply = null;
 let loadedFrameUrl = null;
+const chatTypingEnabled = window.brainstemBeta.chatTypingEnabled !== false;
+const { createDelivery } = window.RappTypingDelivery;
 
 function deliverPendingLineageReply() {
   if (
@@ -482,17 +484,85 @@ function scrollSurgeon(session) {
   }
 }
 
-function addSurgeonBubble(session, role, text, persist = true) {
-  removeSurgeonEmpty(session);
+function createSurgeonBubble(role, text) {
   const bubble = document.createElement("div");
   bubble.className = `surgeon-message ${role}`;
   bubble.textContent = text || "";
+  return bubble;
+}
+
+function addSurgeonBubble(session, role, text, persist = true) {
+  removeSurgeonEmpty(session);
+  const bubble = createSurgeonBubble(role, text);
   surgeonPlace(session, bubble);
   if (persist && ["user", "assistant"].includes(role)) {
     session.history.push({ role, content: text || "" });
     saveSurgeonSessions();
   }
   return bubble;
+}
+
+function replaceSurgeonBubble(session, current, role, text) {
+  removeSurgeonEmpty(session);
+  const bubble = createSurgeonBubble(role, text);
+  if (current?.parentNode === session.logEl) {
+    current.replaceWith(bubble);
+    scrollSurgeon(session);
+  } else {
+    surgeonPlace(session, bubble);
+  }
+  return bubble;
+}
+
+function addSurgeonTypingBubble(session) {
+  const bubble = createSurgeonBubble("assistant", "");
+  bubble.classList.add("typing");
+  bubble.setAttribute("role", "status");
+  bubble.setAttribute("aria-live", "polite");
+  bubble.setAttribute("aria-label", "Brain Surgeon is typing…");
+  const dots = document.createElement("span");
+  dots.className = "surgeon-dots";
+  dots.setAttribute("aria-hidden", "true");
+  dots.append(
+    document.createElement("span"),
+    document.createElement("span"),
+    document.createElement("span"),
+  );
+  bubble.appendChild(dots);
+  removeSurgeonEmpty(session);
+  surgeonPlace(session, bubble);
+  return bubble;
+}
+
+function createSurgeonDelivery(session) {
+  return createDelivery({
+    onTyping: () => {
+      hideSurgeonThinking(session);
+      session.streamEl = addSurgeonTypingBubble(session);
+    },
+    onDeliver: (fullText) => {
+      hideSurgeonThinking(session);
+      const bubble = replaceSurgeonBubble(
+        session,
+        session.streamEl,
+        "assistant",
+        fullText,
+      );
+      session.streamEl = null;
+      session.history.push({ role: "assistant", content: bubble.textContent });
+      saveSurgeonSessions();
+    },
+    onError: (cause) => {
+      hideSurgeonThinking(session);
+      replaceSurgeonBubble(
+        session,
+        session.streamEl,
+        "error",
+        String(cause?.message || cause || "Brain Surgeon failed."),
+      );
+      session.streamEl = null;
+    },
+  });
 }
 
 function showSurgeonThinking(session) {
@@ -632,6 +702,7 @@ function newSurgeonSession(activate = true) {
     logEl: log,
     tileEl: null,
     streamEl: null,
+    delivery: null,
     thinkEl: null,
     tools: [],
   };
@@ -661,6 +732,7 @@ function restoreSurgeonSession(data) {
     logEl: log,
     tileEl: null,
     streamEl: null,
+    delivery: null,
     thinkEl: null,
     tools: [],
   };
@@ -693,6 +765,7 @@ function closeSurgeonSession(id) {
   const index = surgeonSessions.findIndex((s) => s.id === id);
   if (index < 0) return;
   const session = surgeonSessions[index];
+  session.delivery?.abort();
   session.tileEl?.remove();
   session.logEl.remove();
   surgeonSessions.splice(index, 1);
@@ -1215,6 +1288,8 @@ async function runSurgeon(session, prompt) {
   if (session.title === session.defaultTitle) session.title = text.slice(0, 40);
   session.running = true;
   session.streamEl = null;
+  session.delivery?.abort();
+  session.delivery = chatTypingEnabled ? createSurgeonDelivery(session) : null;
   addSurgeonBubble(session, "user", text);
   showSurgeonThinking(session);
   refreshSurgeon(session);
@@ -1222,11 +1297,15 @@ async function runSurgeon(session, prompt) {
     await window.brainstemBeta.surgeonSend(session.id, text);
   } catch (cause) {
     hideSurgeonThinking(session);
-    if (!session.streamEl) {
+    if (chatTypingEnabled) {
+      session.delivery?.fail(cause);
+    } else if (!session.streamEl) {
       addSurgeonBubble(session, "error", String(cause?.message || cause || "Brain Surgeon failed."), false);
     }
   } finally {
     session.running = false;
+    session.delivery?.abort();
+    session.delivery = null;
     session.streamEl = null;
     refreshSurgeon(session);
   }
@@ -1256,6 +1335,8 @@ function clearSurgeonUi() {
   const session = activeSurgeon();
   if (!session) return;
   hideSurgeonThinking(session);
+  session.delivery?.abort();
+  session.delivery = null;
   session.logEl.replaceChildren();
   session.history = [];
   session.title = session.defaultTitle;
@@ -1276,15 +1357,21 @@ function handleSurgeonEvent(event) {
   if (event.type === "response-start") {
     showSurgeonThinking(session);
   } else if (event.type === "delta") {
-    hideSurgeonThinking(session);
-    if (!session.streamEl) session.streamEl = addSurgeonBubble(session, "assistant", "", false);
-    session.streamEl.textContent += event.text || "";
-    scrollSurgeon(session);
+    if (chatTypingEnabled) {
+      session.delivery?.push(event.text || "");
+    } else {
+      hideSurgeonThinking(session);
+      if (!session.streamEl) session.streamEl = addSurgeonBubble(session, "assistant", "", false);
+      session.streamEl.textContent += event.text || "";
+      scrollSurgeon(session);
+    }
   } else if (event.type === "tool-start") {
+    session.delivery?.tool(event);
     hideSurgeonThinking(session);
     addSurgeonTool(session, event.toolName || "tool", event.toolCallId);
     showSurgeonThinking(session);
   } else if (event.type === "tool-complete") {
+    session.delivery?.tool(event);
     finishSurgeonTool(session, event.toolName || "tool", event.toolCallId, event.success !== false);
     void refreshAgentExplorer();
   } else if (event.type === "artifact") {
@@ -1294,17 +1381,25 @@ function handleSurgeonEvent(event) {
   } else if (event.type === "done") {
     hideSurgeonThinking(session);
     const finalText = String(event.content || "").trim();
-    if (!session.streamEl) {
-      session.streamEl = addSurgeonBubble(session, "assistant", finalText || "(done)", false);
-    } else if (finalText) {
-      session.streamEl.textContent = finalText;
+    if (chatTypingEnabled) {
+      session.delivery?.finish(finalText || (session.streamEl ? undefined : "(done)"));
+    } else {
+      if (!session.streamEl) {
+        session.streamEl = addSurgeonBubble(session, "assistant", finalText || "(done)", false);
+      } else if (finalText) {
+        session.streamEl.textContent = finalText;
+      }
+      session.history.push({ role: "assistant", content: session.streamEl.textContent });
+      session.streamEl = null;
+      saveSurgeonSessions();
     }
-    session.history.push({ role: "assistant", content: session.streamEl.textContent });
-    session.streamEl = null;
-    saveSurgeonSessions();
   } else if (event.type === "error") {
-    hideSurgeonThinking(session);
-    addSurgeonBubble(session, "error", event.message || "Brain Surgeon failed.", false);
+    if (chatTypingEnabled) {
+      session.delivery?.fail(event.message || "Brain Surgeon failed.");
+    } else {
+      hideSurgeonThinking(session);
+      addSurgeonBubble(session, "error", event.message || "Brain Surgeon failed.", false);
+    }
   } else if (event.type === "reset") {
     // A main-process reset for this session — already cleared in clearSurgeonUi.
   }

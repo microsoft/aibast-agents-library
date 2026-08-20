@@ -578,6 +578,15 @@
       border-left: 2px solid #3d7cf0; border-bottom-left-radius: 5px;
       background: #1c1e23;
     }
+    .surgeon-message.assistant.typing {
+      display: flex; align-items: center; min-width: 54px; min-height: 22px;
+      border: 1px solid #3a3d44; border-bottom-left-radius: 5px;
+      background: #303238;
+    }
+    .surgeon-message.typing .surgeon-dots { display: flex; align-items: center; }
+    .surgeon-message.typing .surgeon-dots span {
+      width: 6px; height: 6px; margin: 0 2px; background: #aeb2ba;
+    }
     .surgeon-message.error {
       align-self: flex-start; border: 1px solid #5a2626;
       background: #2a1618; color: #ff9a9a;
@@ -596,6 +605,11 @@
     @keyframes surgeon-bounce {
       0%,60%,100% { opacity: .3; transform: translateY(0); }
       30% { opacity: 1; transform: translateY(-3px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .surgeon-dots span {
+        animation: none; opacity: .65; transform: none;
+      }
     }
     .surgeon-tool {
       align-self: flex-start; width: min(92%, 390px);
@@ -817,6 +831,7 @@
       </div>
     </div>
   </section>
+  <script src="typing-delivery.js"></script>
   <script src="renderer.js"></script>
   <script src="show-mode-tour.js"></script>
 </body>

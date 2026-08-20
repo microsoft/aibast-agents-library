@@ -11,6 +11,7 @@ const renderer = read("ui/renderer.js");
 const ui = read("ui/index.html");
 const preload = read("electron/preload.cjs");
 const main = read("electron/main.mjs");
+const typingDelivery = read("ui/typing-delivery.js");
 
 test("renderer models several Copilot chats as tabs + a herd grid", () => {
   execFileSync(process.execPath, ["--check", path.join(root, "ui/renderer.js")]);
@@ -57,6 +58,25 @@ test("preload and main key Brain Surgeon by session id", () => {
   assert.match(main, /ensureBrainSurgeon\(sessionId\)\.send\(prompt\)/);
   assert.match(main, /emitSurgeonEvent\(\{ \.\.\.event, sessionId: id \}\)/);
   assert.match(main, /beta:surgeon-close/);
+});
+
+test("Brain Surgeon buffers replies behind an accessible typing bubble by default", () => {
+  assert.match(typingDelivery, /function createDelivery/);
+  assert.ok(
+    ui.indexOf('<script src="typing-delivery.js"></script>')
+      < ui.indexOf('<script src="renderer.js"></script>'),
+  );
+  assert.match(main, /process\.env\.RAPP_CHAT_TYPING !== "0"/);
+  assert.match(main, /--rapp-chat-typing=/);
+  assert.match(preload, /chatTypingEnabled/);
+  assert.match(renderer, /createSurgeonDelivery/);
+  assert.match(renderer, /session\.delivery\?\.push/);
+  assert.match(renderer, /session\.delivery\?\.finish/);
+  assert.match(renderer, /session\.delivery\?\.fail/);
+  assert.match(renderer, /aria-live", "polite"/);
+  assert.match(renderer, /Brain Surgeon is typing…/);
+  assert.match(ui, /\.surgeon-message\.assistant\.typing/);
+  assert.match(ui, /@media \(prefers-reduced-motion: reduce\)/);
 });
 
 test("the one visible Brainstem is a shared stage: driving is serialized, reads pass through", () => {

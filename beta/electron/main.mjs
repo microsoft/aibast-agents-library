@@ -54,6 +54,7 @@ const appIcon = existsSync(appIconFile) ? nativeImage.createFromPath(appIconFile
 const uiFile = path.join(dirname, "..", "ui", "index.html");
 const uiUrl = pathToFileURL(uiFile).href;
 const config = resolveBrainstemConfig();
+const chatTypingEnabled = process.env.RAPP_CHAT_TYPING !== "0";
 const startupFingerprint = betaSourceFingerprint(path.resolve(packageDir, ".."));
 const brainstemRuntimeFingerprint = runtimeDirectoryFingerprint(
   config.brainstemDir,
@@ -1026,6 +1027,9 @@ function createWindow() {
     ...(appIcon ? { icon: appIcon } : {}),
     webPreferences: {
       preload: path.join(dirname, "preload.cjs"),
+      additionalArguments: [
+        `--rapp-chat-typing=${chatTypingEnabled ? "1" : "0"}`,
+      ],
       contextIsolation: true,
       nodeIntegration: false,
       sandbox: true,
