@@ -1,37 +1,37 @@
-**Subject:** AIBAST weekly and monthly impact report - August 19, 2026
+**Subject:** AIBAST weekly and monthly impact report - August 20, 2026
 
 # AIBAST - Weekly & Monthly Impact
 
-**Snapshot:** `2026-08-19T17:32:13Z`
+**Snapshot:** `2026-08-20T05:33:26Z`
 **Site:** https://microsoft.github.io/aibast-agents-library/
 
 ## Reach and consumption
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| AIBAST observed repository downloads | 2,518 | +279 observed - partial | Baseline pending |
-| Git clones | 2,127 | +279 observed | Baseline pending |
-| Clones excluding CI estimate | 2,127 | +729 (+52.1%) - partial | Baseline pending |
-| AIBAST repository and Pages views | 379 | +132 observed | Baseline pending |
+| AIBAST observed repository downloads | 2,518 | +0 observed - partial | Baseline pending |
+| Git clones | 2,127 | +430 (+25.3%) - partial | Baseline pending |
+| Clones excluding CI estimate | 2,127 | +430 (+25.3%) - partial | Baseline pending |
+| AIBAST repository and Pages views | 379 | +188 (+98.4%) - partial | Baseline pending |
 | jsDelivr file hits | 388 | +0 observed | Baseline pending |
-| Release asset downloads | 3 | +3 - partial | Baseline pending |
-| AIBAST direct agent file downloads | 3 | +3 - partial | Baseline pending |
-| AIBAST skill file downloads | 0 | +0 (+0.0%) - partial | Baseline pending |
-| AIBAST installer file downloads | 0 | +0 (+0.0%) - partial | Baseline pending |
-| Unique cloners (14-day window) | 275 | +105 (+61.8%) snapshot change - partial | Baseline pending |
-| Unique visitors (14-day window) | 37 | +33 (+825.0%) snapshot change - partial | Baseline pending |
+| Release asset downloads | 3 | +3 | Baseline pending |
+| AIBAST direct agent file downloads | 3 | +3 | Baseline pending |
+| AIBAST skill file downloads | 0 | +0 (+0.0%) | Baseline pending |
+| AIBAST installer file downloads | 0 | +0 (+0.0%) | Baseline pending |
+| Unique cloners (14-day window) | 275 | +138 (+100.7%) snapshot change - partial | Baseline pending |
+| Unique visitors (14-day window) | 37 | +20 (+117.6%) snapshot change - partial | Baseline pending |
 
 ## Community engagement
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| GitHub stars | 5 | +1 (+25.0%) - partial | Baseline pending |
-| GitHub forks | 5 | +3 (+150.0%) - partial | Baseline pending |
-| GitHub watchers | 0 | +0 (+0.0%) - partial | Baseline pending |
-| Open GitHub issues | 11 | +6 (+120.0%) - partial | Baseline pending |
-| Agent upvotes | 4 | Baseline unavailable | Baseline pending |
-| Signed-in agent acquisitions | 0 | Baseline unavailable | Baseline pending |
-| Workshop usage events | 0 | +0 (+0.0%) - partial | Baseline pending |
+| GitHub stars | 5 | +1 (+25.0%) | Baseline pending |
+| GitHub forks | 5 | +3 (+150.0%) | Baseline pending |
+| GitHub watchers | 0 | +0 (+0.0%) | Baseline pending |
+| Open GitHub issues | 12 | +6 (+100.0%) | Baseline pending |
+| Agent upvotes | 4 | +4 | Baseline pending |
+| Signed-in agent acquisitions | 0 | +0 (+0.0%) | Baseline pending |
+| Workshop usage events | 0 | -8 (-100.0%) - partial | Baseline pending |
 | Workshop views (14-day top paths) | Unavailable | Unavailable | Unavailable |
 | Workshop file downloads | 0 | +0 (+0.0%) | Baseline pending |
 | Workshop bundle downloads | 0 | +0 (+0.0%) | Baseline pending |
@@ -41,22 +41,22 @@
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| Verified achievement participants | 1 | +1 - partial | Baseline pending |
-| Verified achievement points | 5 | +5 - partial | Baseline pending |
-| Verified achievements | 1 | +1 - partial | Baseline pending |
-| Workshop starts | 1 | +1 - partial | Baseline pending |
-| Workshop completions | 0 | +0 (+0.0%) - partial | Baseline pending |
-| Manual-mode completions | 0 | +0 (+0.0%) - partial | Baseline pending |
-| Workshop completion rate | 0.0% | +0.0 pp - partial | Baseline pending |
-| Manual-mode completion rate | 0.0% | +0.0 pp - partial | Baseline pending |
-| Achievement completion rate | 16.7% | +16.7 pp - partial | Baseline pending |
+| Verified achievement participants | 1 | +1 | Baseline pending |
+| Verified achievement points | 5 | +5 | Baseline pending |
+| Verified achievements | 1 | +1 | Baseline pending |
+| Workshop starts | 1 | +1 | Baseline pending |
+| Workshop completions | 0 | +0 (+0.0%) | Baseline pending |
+| Manual-mode completions | 0 | +0 (+0.0%) | Baseline pending |
+| Workshop completion rate | 0.0% | +0.0 pp | Baseline pending |
+| Manual-mode completion rate | 0.0% | +0.0 pp | Baseline pending |
+| Achievement completion rate | 16.7% | +16.7 pp | Baseline pending |
 
 ## Library footprint
 
 | Metric | Current | 7-day impact | 30-day impact |
 |---|---:|---:|---:|
-| Tracked repository files | 5,507 | +197 (+3.7%) | Baseline pending |
-| Files covered by download observations | 5,507 | +200 (+3.8%) - partial | Baseline pending |
+| Tracked repository files | 5,507 | +62 (+1.1%) | Baseline pending |
+| Files covered by download observations | 5,507 | +62 (+1.1%) | Baseline pending |
 | Catalog agents | 72 | +0 (+0.0%) | Baseline pending |
 | Tracked SKILL.md files | 234 | +0 (+0.0%) | Baseline pending |
 | Canonical workshops | 51 | +0 (+0.0%) | Baseline pending |
@@ -65,12 +65,21 @@
 
 ## Top weekly movers
 
+**Workshop usage**
+- Account Intelligence Agent: -8 (current 0)
+
 **Workshop achievement points**
 - Account Intelligence Agent: +5 (current 5)
 
 **Agent downloads**
 - Account Intelligence Agent: +1 (current 1)
 - Field Service Dispatch Agent: +1 (current 1)
+- Underwriting Support Agent: +1 (current 1)
+
+**Agent upvotes**
+- Account Intelligence Agent: +1 (current 1)
+- Building Permit Processing Agent: +1 (current 1)
+- Care Gap Closure Agent: +1 (current 1)
 - Underwriting Support Agent: +1 (current 1)
 
 ## Top monthly movers
