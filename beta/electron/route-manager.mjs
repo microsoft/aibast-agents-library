@@ -493,6 +493,7 @@ export class BetaRouteManager {
       );
       if (!baseline) {
         this.recordTelemetry("lineage-default-skipped", {
+          env: "default",
           reason: "ContextMemory is not present in the Grail baseline.",
         });
         return null;
@@ -500,6 +501,7 @@ export class BetaRouteManager {
       if (baseline.sha256 !== CONTEXT_MEMORY_RING1_BASELINE_SHA256) {
         this.recordTelemetry("lineage-default-skipped", {
           ancestor_rappid: baseline.ancestorRappid,
+          env: "default",
           reason: "ContextMemory baseline bytes do not match the verified ring-1 parent.",
         });
         return null;
@@ -524,6 +526,7 @@ export class BetaRouteManager {
       if (verdict !== true && verdict?.ok !== true) {
         this.recordTelemetry("lineage-default-skipped", {
           ancestor_rappid: baseline.ancestorRappid,
+          env: "default",
           reason: verdict?.error || "ContextMemory ring-1 failed the Molter verify gate.",
         });
         return null;
@@ -564,6 +567,7 @@ export class BetaRouteManager {
       return appended;
     } catch (error) {
       this.recordTelemetry("lineage-default-skipped", {
+        env: "default",
         reason: String(error?.message || error),
       });
       return null;
