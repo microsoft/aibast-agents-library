@@ -1373,10 +1373,10 @@ export class BrainSurgeon {
     const task = String(prompt || "").trim();
     if (!task) throw new Error("A Brainstem delegation prompt is required.");
     const delegate = async (route = null) => {
-      if (ephemeralAgent) await this.syncChatLeases();
       if (route?.url) {
         await this.waitForVisibleBrainstem();
       }
+      if (ephemeralAgent) await this.syncChatLeases();
       return this.uiCommand({
         action: "chat",
         value: task,
