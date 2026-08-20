@@ -997,3 +997,40 @@ test("a colliding user agent never evicts the pristine baseline agent", async (t
   );
   await manager.stop();
 });
+
+test("a known-bad composition is not re-validated on every request", async (t) => {
+  let validations = 0;
+  const countingValidator = (agentDirectory) => {
+    validations += 1;
+    return brokenScopedValidator(agentDirectory);
+  };
+  const fixture = minimalFixture(t, { validator: countingValidator });
+  const seeded = new BetaRouteManager(fixture.managerOptions);
+  const stack = seeded.loadStack(seeded.identity().active_stack_rappid);
+  stack.agents = [seeded.packageAgent({
+    filename: "broken_scoped_agent.py",
+    source: "BROKEN_SCOPED = True\n",
+  })];
+  seeded.saveStack(stack);
+
+  const manager = new BetaRouteManager(fixture.managerOptions);
+  manager.createWorkerProcess = fakeWorkerProcess;
+  await manager.startDefault();
+  const afterFirst = validations;
+  assert.ok(afterFirst > 0, "the first boot validates");
+
+  // Re-composing the same broken content must not spawn the dry-load again:
+  // compositionHash is content-addressed, so the verdict cannot have changed.
+  const descriptor = manager.compositionDescriptor({});
+  for (let i = 0; i < 5; i += 1) {
+    try {
+      manager.materializeCompositionOnce(descriptor);
+    } catch {}
+  }
+  assert.equal(
+    validations,
+    afterFirst,
+    "a remembered failure short-circuits the expensive validator",
+  );
+  await manager.stop();
+});

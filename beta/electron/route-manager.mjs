@@ -365,6 +365,10 @@ function dryLoadAgentDirectory({
       };
 }
 
+// A repaired environment (a missing dependency installed, a permission fixed)
+// does not change any composition hash, so the negative cache must expire.
+const COMPOSITION_FAILURE_TTL_MS = 60_000;
+
 function dryLoadFailureFilenames(error, candidateFilenames, excluded) {
   const found = new Map();
   const text = String(error?.message || error || "");
@@ -415,6 +419,12 @@ export class BetaRouteManager {
     this.telemetrySequence = 0;
     this.activeRoute = null;
     this.validatedCompositions = new Set();
+    // Negative cache. compositionHash is content-addressed, so the same hash is
+    // the same bytes and will fail the same way — re-running the whole fallback
+    // ladder (including a Python dry-load subprocess) on every request while a
+    // broken agent sits on disk is pure waste. TTL'd so a repaired environment
+    // recovers on its own rather than needing a restart.
+    this.failedCompositions = new Map();
     this.lastGoodDescriptor = null;
     this.lastLineageFallback = null;
     this.lineageEnabled = lineageEnabled !== false;
@@ -1353,6 +1363,26 @@ export class BetaRouteManager {
   }
 
   materializeCompositionOnce(descriptor) {
+    const hash = descriptor.compositionHash;
+    const remembered = this.failedCompositions.get(hash);
+    if (remembered) {
+      if (Date.now() - remembered.at < COMPOSITION_FAILURE_TTL_MS) {
+        throw new Error(remembered.message);
+      }
+      this.failedCompositions.delete(hash);
+    }
+    try {
+      return this._materializeCompositionOnce(descriptor);
+    } catch (error) {
+      this.failedCompositions.set(hash, {
+        at: Date.now(),
+        message: String(error?.message || error),
+      });
+      throw error;
+    }
+  }
+
+  _materializeCompositionOnce(descriptor) {
     const compositionDirectory = path.join(
       this.compositionRoot,
       descriptor.compositionHash,
