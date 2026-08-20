@@ -460,3 +460,35 @@ test("a stale catalog that cannot be revalidated fails closed for downloads but 
   await assert.rejects(store.client.download("demo"), /publisher unreachable/);
   assert.equal((await store.client.list()).length, 1, "browsing the cached list still works");
 });
+
+test("the store timeout covers a body that stalls after the headers arrived", async () => {
+  const catalog = {
+    schema: "rapp-store/1.0",
+    rapplications: [{
+      id: "stall",
+      name: "Stall",
+      version: "1.0.0",
+      singleton_filename: "stall_agent.py",
+      singleton_url: "singleton",
+      singleton_sha256: "b5bb9d8014a0f9b1d61e21e796d78dccdf1352f23cd32812f4850b878ae4944c",
+    }],
+  };
+  const client = new RappStoreClient({
+    url: "store",
+    timeoutMs: 50,
+    fetchImpl: async (url, { signal }) => {
+      if (url === "store") return { ok: true, status: 200, json: async () => catalog };
+      // Headers arrive at once; the body never does unless the caller aborts.
+      return {
+        ok: true,
+        status: 200,
+        arrayBuffer: () => new Promise((_resolve, reject) => {
+          signal.addEventListener("abort", () => reject(new Error("aborted: body stalled")), { once: true });
+        }),
+      };
+    },
+  });
+  const started = Date.now();
+  await assert.rejects(client.download("stall"), /aborted: body stalled/);
+  assert.ok(Date.now() - started < 2_000, "the stall is cut by the timeout, not by the test harness");
+});

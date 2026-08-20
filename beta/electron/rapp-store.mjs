@@ -164,21 +164,23 @@ export class RappStoreClient {
   }
 
   async #fetch(url, { asBytes = false } = {}) {
+    // The timeout covers the whole exchange, body included. It used to be
+    // cleared as soon as headers arrived, so a server that answered 200 and
+    // then stalled mid-body hung a hatch indefinitely.
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), this.timeoutMs);
-    let response;
     try {
-      response = await this.fetchImpl(url, { cache: "no-store", signal: controller.signal });
+      const response = await this.fetchImpl(url, { cache: "no-store", signal: controller.signal });
+      if (!response.ok) {
+        const error = new Error(`RAPP Store fetch failed: HTTP ${response.status} for ${url}`);
+        error.status = response.status;
+        throw error;
+      }
+      if (asBytes) return Buffer.from(await response.arrayBuffer());
+      return await response.json();
     } finally {
       clearTimeout(timer);
     }
-    if (!response.ok) {
-      const error = new Error(`RAPP Store fetch failed: HTTP ${response.status} for ${url}`);
-      error.status = response.status;
-      throw error;
-    }
-    if (asBytes) return Buffer.from(await response.arrayBuffer());
-    return response.json();
   }
 
   // Load and validate the catalog once (cached). Returns the parsed catalog.
