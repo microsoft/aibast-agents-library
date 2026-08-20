@@ -9,6 +9,7 @@ import {
   ipcMain,
   Menu,
   nativeImage,
+  net,
   Notification,
   session,
   shell,
@@ -549,7 +550,14 @@ function loadStoreSource() {
   return { key: "aibast", url: STORE_SOURCES.aibast.url };
 }
 let storeSource = loadStoreSource();
-let activeStoreClient = new RappStoreClient({ url: storeSource.url });
+// Chromium's network stack (net.fetch) honors the system / enterprise proxy
+// configuration the way the rest of the desktop does; Node's global fetch
+// does not read HTTP(S)_PROXY at all, which made Store browsing, acquisition,
+// and hatching fail on proxy-only networks where the installer had succeeded.
+const storeFetch = typeof net?.fetch === "function"
+  ? (url, init) => net.fetch(url, init)
+  : globalThis.fetch;
+let activeStoreClient = new RappStoreClient({ url: storeSource.url, fetchImpl: storeFetch });
 function setStoreSource({ key, url }) {
   const target = STORE_SOURCES[key]?.url || url;
   // https everywhere — with a loopback exception so a local-first / air-gapped
@@ -558,7 +566,7 @@ function setStoreSource({ key, url }) {
     throw new Error("A RAR source must be an https catalog URL (or http on this machine's loopback).");
   }
   storeSource = { key: STORE_SOURCES[key] ? key : "custom", url: target };
-  activeStoreClient = new RappStoreClient({ url: target });
+  activeStoreClient = new RappStoreClient({ url: target, fetchImpl: storeFetch });
   try { writeFileSync(storeSourceFile, JSON.stringify(storeSource, null, 2), { mode: 0o600 }); } catch { /* best effort */ }
   return { ...storeSource };
 }

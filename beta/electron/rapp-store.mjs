@@ -131,6 +131,12 @@ export class RappStoreClient {
     fetchImpl = globalThis.fetch,
     timeoutMs = 15000,
     appVersion = defaultAppVersion(),
+    // How long a loaded catalog may vouch for executable bytes before the
+    // release-control fields (yanked / deprecated / min_app_version) are
+    // re-read from the publisher. Browsing may show a slightly stale list;
+    // resolving or downloading something to RUN must not.
+    recallMaxAgeMs = 60_000,
+    now = () => Date.now(),
   } = {}) {
     if (typeof fetchImpl !== "function") {
       throw new Error("RappStoreClient needs a fetch implementation.");
@@ -139,7 +145,22 @@ export class RappStoreClient {
     this.fetchImpl = fetchImpl;
     this.timeoutMs = timeoutMs;
     this.appVersion = appVersion || null;
+    this.recallMaxAgeMs = recallMaxAgeMs;
+    this.now = now;
     this.catalog = null;
+    this.catalogLoadedAt = null;
+  }
+
+  catalogAgeMs() {
+    return this.catalogLoadedAt === null ? Infinity : this.now() - this.catalogLoadedAt;
+  }
+
+  // Re-read the catalog when the cached one is older than recallMaxAgeMs.
+  // Fails CLOSED: if the publisher cannot be reached, the caller does not get
+  // to proceed on a catalog that may predate a recall.
+  async revalidate() {
+    if (this.catalog && this.catalogAgeMs() <= this.recallMaxAgeMs) return this.catalog;
+    return this.load({ force: true });
   }
 
   async #fetch(url, { asBytes = false } = {}) {
@@ -163,6 +184,12 @@ export class RappStoreClient {
   // Load and validate the catalog once (cached). Returns the parsed catalog.
   async load({ force = false } = {}) {
     if (this.catalog && !force) return this.catalog;
+    const catalog = await this.#loadCatalog();
+    this.catalogLoadedAt = this.now();
+    return catalog;
+  }
+
+  async #loadCatalog() {
     const data = await this.#fetch(this.url);
     // Two RAR-compliant catalog shapes are accepted:
     //   * rapp-store/1.0 — rapplications[] with singleton_url + singleton_sha256
@@ -219,9 +246,13 @@ export class RappStoreClient {
     return (await this.load()).rapplications;
   }
 
+  // Anything that is about to RUN goes through here, so a publisher's recall
+  // reaches a launcher that loaded its catalog long ago — not only after a
+  // restart or a source switch.
   async resolve(id) {
     const wanted = String(id || "").trim().toLowerCase();
-    const entry = (await this.list()).find((e) => e.id.toLowerCase() === wanted);
+    const entry = (await this.revalidate()).rapplications
+      .find((e) => e.id.toLowerCase() === wanted);
     if (!entry) throw new Error(`No RAPPlication "${id}" in the RAPP Store.`);
     if (entry.yanked) {
       const error = new Error(

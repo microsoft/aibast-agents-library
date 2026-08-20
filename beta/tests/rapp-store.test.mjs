@@ -396,3 +396,67 @@ test("a download carries which catalog vouched for it", async () => {
   assert.equal(fromDefault.sha256, fromCustom.sha256);
   assert.equal(fromDefault.verified, fromCustom.verified);
 });
+
+// A launcher that loaded its catalog long ago must still honor a publisher's
+// recall before it RUNS anything — not only after a restart or a source switch.
+function recallStore({ recallMaxAgeMs = 60_000 } = {}) {
+  let clock = 1_000_000;
+  let yanked = false;
+  let catalogFetches = 0;
+  let failCatalog = false;
+  const entry = () => ({
+    id: "demo",
+    name: "Demo",
+    version: "1.0.0",
+    singleton_filename: "demo_agent.py",
+    singleton_url: "singleton",
+    singleton_sha256: "b5bb9d8014a0f9b1d61e21e796d78dccdf1352f23cd32812f4850b878ae4944c",
+    yanked,
+  });
+  const client = new RappStoreClient({
+    url: "store",
+    recallMaxAgeMs,
+    now: () => clock,
+    fetchImpl: async (url) => {
+      if (url === "store") {
+        catalogFetches += 1;
+        if (failCatalog) throw new Error("fetch failed: publisher unreachable");
+        return {
+          ok: true,
+          status: 200,
+          json: async () => ({ schema: "rapp-store/1.0", rapplications: [entry()] }),
+        };
+      }
+      return { ok: true, status: 200, arrayBuffer: async () => Buffer.from("foo\n") };
+    },
+  });
+  return {
+    client,
+    advance: (ms) => { clock += ms; },
+    yank: () => { yanked = true; },
+    failCatalog: () => { failCatalog = true; },
+    fetches: () => catalogFetches,
+  };
+}
+
+test("a recall reaches a launcher whose catalog was loaded long ago", async () => {
+  const store = recallStore();
+  await store.client.list();
+  assert.equal(store.fetches(), 1);
+  assert.equal((await store.client.download("demo")).id, "demo");
+  assert.equal(store.fetches(), 1, "within the recall window the cached catalog vouches");
+
+  store.yank();
+  store.advance(61_000);
+  await assert.rejects(store.client.download("demo"), (error) => error.code === "yanked");
+  assert.equal(store.fetches(), 2, "past the window the catalog is re-read before running anything");
+});
+
+test("a stale catalog that cannot be revalidated fails closed for downloads but still browses", async () => {
+  const store = recallStore();
+  await store.client.list();
+  store.advance(61_000);
+  store.failCatalog();
+  await assert.rejects(store.client.download("demo"), /publisher unreachable/);
+  assert.equal((await store.client.list()).length, 1, "browsing the cached list still works");
+});
