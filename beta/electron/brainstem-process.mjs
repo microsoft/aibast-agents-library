@@ -1,15 +1,52 @@
 import {
   closeSync,
+  createWriteStream,
   existsSync,
-  mkdirSync,
-  openSync,
 } from "node:fs";
 import { homedir } from "node:os";
 import path from "node:path";
 import { spawn } from "node:child_process";
+import { Writable } from "node:stream";
+import { finished, pipeline } from "node:stream/promises";
+
+import {
+  openPrivateAppendFile,
+  RedactingLineTransform,
+} from "./log-redaction.mjs";
 
 const DEFAULT_PORT = 7071;
 const START_TIMEOUT_MS = 90_000;
+const LOG_FLUSH_TIMEOUT_MS = 5_000;
+
+function settleWithin(promise, timeoutMs) {
+  return new Promise((resolve) => {
+    const timer = setTimeout(
+      () => resolve({ settled: false, error: null }),
+      timeoutMs,
+    );
+    promise.then(
+      () => {
+        clearTimeout(timer);
+        resolve({ settled: true, error: null });
+      },
+      (error) => {
+        clearTimeout(timer);
+        resolve({ settled: true, error });
+      },
+    );
+  });
+}
+
+class SharedLogSink extends Writable {
+  constructor(destination) {
+    super();
+    this.destination = destination;
+  }
+
+  _write(chunk, encoding, callback) {
+    this.destination.write(chunk, encoding, callback);
+  }
+}
 
 export function resolveBrainstemConfig({
   env = process.env,
@@ -91,7 +128,79 @@ export class BrainstemProcess {
     this.config = config;
     this.child = null;
     this.logFd = null;
+    this.logStream = null;
+    this.logFlushPromise = null;
     this.owned = false;
+  }
+
+  captureOutput(child) {
+    const pumps = [child.stdout, child.stderr].map((output) => (
+      pipeline(
+        output,
+        new RedactingLineTransform(),
+        new SharedLogSink(this.logStream),
+      )
+    ));
+    this.logFlushPromise = (async () => {
+      const results = await Promise.allSettled(pumps);
+      let finishError = null;
+      try {
+        if (!this.logStream.destroyed && !this.logStream.writableEnded) {
+          this.logStream.end();
+        }
+        await finished(this.logStream, { cleanup: true });
+      } catch (error) {
+        finishError = error;
+      }
+      const failed = results.find((result) => result.status === "rejected");
+      if (failed) throw failed.reason;
+      if (finishError) throw finishError;
+    })();
+    void this.logFlushPromise.catch(() => {});
+  }
+
+  async closeLog(child = null) {
+    let failure = null;
+    if (this.logFlushPromise) {
+      const timeoutMs = Number.isFinite(this.config.logFlushTimeoutMs)
+        ? Math.max(1, this.config.logFlushTimeoutMs)
+        : LOG_FLUSH_TIMEOUT_MS;
+      let outcome = await settleWithin(this.logFlushPromise, timeoutMs);
+      if (!outcome.settled) {
+        child?.stdout?.destroy();
+        child?.stderr?.destroy();
+        outcome = await settleWithin(
+          this.logFlushPromise,
+          Math.min(timeoutMs, 1_000),
+        );
+        if (!outcome.settled) {
+          this.logStream?.destroy();
+          await settleWithin(
+            this.logFlushPromise,
+            Math.min(timeoutMs, 1_000),
+          );
+        }
+        failure = new Error(
+          `Timed out flushing Brainstem output to ${this.config.logFile}.`,
+        );
+      } else {
+        failure = outcome.error;
+      }
+    } else if (this.logStream && !this.logStream.writableEnded) {
+      try {
+        this.logStream.end();
+        await finished(this.logStream, { cleanup: true });
+      } catch (error) {
+        failure = error;
+      }
+    }
+    this.logFlushPromise = null;
+    this.logStream = null;
+    if (this.logFd !== null) {
+      closeSync(this.logFd);
+      this.logFd = null;
+    }
+    if (failure) throw failure;
   }
 
   async start() {
@@ -113,21 +222,33 @@ export class BrainstemProcess {
       );
     }
 
-    mkdirSync(path.dirname(this.config.logFile), { recursive: true });
-    this.logFd = openSync(this.config.logFile, "a");
-    this.child = spawn(this.config.python, ["brainstem.py"], {
-      cwd: this.config.brainstemDir,
-      env: {
-        ...process.env,
-        ...(this.config.env || {}),
-        PORT: String(this.config.port),
-        BRAINSTEM_BETA_LAUNCHER: "1",
-        PYTHONUTF8: "1",
-      },
-      windowsHide: true,
-      shell: false,
-      stdio: ["ignore", this.logFd, this.logFd],
+    this.logFd = openPrivateAppendFile(this.config.logFile);
+    this.logStream = createWriteStream(this.config.logFile, {
+      fd: this.logFd,
+      autoClose: false,
     });
+    try {
+      this.child = spawn(this.config.python, ["brainstem.py"], {
+        cwd: this.config.brainstemDir,
+        env: {
+          ...process.env,
+          ...(this.config.env || {}),
+          PORT: String(this.config.port),
+          BRAINSTEM_BETA_LAUNCHER: "1",
+          PYTHONUTF8: "1",
+        },
+        windowsHide: true,
+        shell: false,
+        stdio: ["ignore", "pipe", "pipe"],
+      });
+      this.captureOutput(this.child);
+    } catch (error) {
+      this.logStream.destroy();
+      this.logStream = null;
+      closeSync(this.logFd);
+      this.logFd = null;
+      throw error;
+    }
     this.owned = true;
 
     const health = await waitForHealth(this.config.url, {
@@ -149,18 +270,25 @@ export class BrainstemProcess {
     this.child = null;
     this.owned = false;
 
-    if (child && child.exitCode === null) {
+    if (
+      child
+      && child.exitCode === null
+      && child.signalCode === null
+    ) {
       child.kill("SIGTERM");
       await Promise.race([
         new Promise((resolve) => child.once("exit", resolve)),
         new Promise((resolve) => setTimeout(resolve, 5_000)),
       ]);
-      if (child.exitCode === null) child.kill("SIGKILL");
+      if (child.exitCode === null && child.signalCode === null) {
+        child.kill("SIGKILL");
+        await Promise.race([
+          new Promise((resolve) => child.once("exit", resolve)),
+          new Promise((resolve) => setTimeout(resolve, 5_000)),
+        ]);
+      }
     }
 
-    if (this.logFd !== null) {
-      closeSync(this.logFd);
-      this.logFd = null;
-    }
+    await this.closeLog(child);
   }
 }

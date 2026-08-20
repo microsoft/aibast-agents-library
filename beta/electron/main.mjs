@@ -1,5 +1,6 @@
 import path from "node:path";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { homedir, tmpdir } from "node:os";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 import {
@@ -21,6 +22,10 @@ import { BrainSurgeon } from "./brain-surgeon.mjs";
 import { CopilotStudioAuthManager } from "./copilot-studio-auth.mjs";
 import { CopilotRuntime } from "./copilot-runtime.mjs";
 import { executeLineageCommand } from "./lineage-control.mjs";
+import {
+  createExportRedactionScript,
+  redactSensitiveValue,
+} from "./log-redaction.mjs";
 import { BetaRouteManager } from "./route-manager.mjs";
 import { isAllowedStoreSourceUrl, RappStoreClient, STORE_SOURCES } from "./rapp-store.mjs";
 import { TwinManager } from "./twin-manager.mjs";
@@ -52,9 +57,18 @@ const startupFingerprint = betaSourceFingerprint(path.resolve(packageDir, ".."))
 const brainstemRuntimeFingerprint = runtimeDirectoryFingerprint(
   config.brainstemDir,
 );
+const exportRedactionSource = createExportRedactionScript({
+  roots: [
+    config.brainstemDir,
+    config.brainstemHome,
+    homedir(),
+    tmpdir(),
+  ],
+});
 const BETA_FRAME_BRIDGE_SOURCE = `(() => {
   if (window.__rappBetaFrameBridge) return true;
   window.__rappBetaFrameBridge = true;
+  ${exportRedactionSource}
   const humanizeAgentName = ${humanizeAgentName.toString()};
   const style = document.createElement("style");
   style.textContent = [
@@ -588,10 +602,13 @@ const twinManager = new TwinManager({
   // (config URL, or a routed Brainstem once a route activates).
   brainstemUrl: () => state.url,
   onEvent: (event) => {
-    if (mainWindow && !mainWindow.isDestroyed()) {
-      mainWindow.webContents.send("beta:twin-event", structuredClone(event));
-    }
     if (event.type === "twin-needs-auth") notifyTwinNeedsAuth(event);
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      mainWindow.webContents.send(
+        "beta:twin-event",
+        structuredClone(redactSensitiveValue(event)),
+      );
+    }
   },
 });
 

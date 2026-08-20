@@ -19,6 +19,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { BrainstemProcess } from "./brainstem-process.mjs";
+import { redactSensitiveValue } from "./log-redaction.mjs";
 import {
   LineageStore,
   lineageStoreInternals,
@@ -736,7 +737,7 @@ export class BetaRouteManager {
       sequence: ++this.telemetrySequence,
       timestamp: new Date().toISOString(),
       type,
-      ...details,
+      ...redactSensitiveValue(details),
     };
     this.telemetry.push(event);
     if (this.telemetry.length > 500) this.telemetry.shift();

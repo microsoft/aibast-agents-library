@@ -18,6 +18,7 @@ import net from "node:net";
 import path from "node:path";
 
 import { BrainstemProcess } from "./brainstem-process.mjs";
+import { redactCredentialText } from "./log-redaction.mjs";
 import { readEgg, verifyEgg } from "./rapp-protocol.mjs";
 
 const AGENT_FILE = /^[A-Za-z0-9_.-]+_agent\.py$/;
@@ -127,8 +128,14 @@ export class TwinManager {
   }
 
   #log(twin, line) {
-    twin.loopLog.push({ at: new Date().toISOString(), line: String(line).slice(0, 600) });
-    this.emit({ type: "twin-log", id: twin.id, line, status: twin.status });
+    const safeLine = redactCredentialText(String(line)).slice(0, 600);
+    twin.loopLog.push({ at: new Date().toISOString(), line: safeLine });
+    this.emit({
+      type: "twin-log",
+      id: twin.id,
+      line: safeLine,
+      status: twin.status,
+    });
   }
 
   #setStatus(twin, status) {
