@@ -1073,10 +1073,23 @@ async function handleCheckForUpdates({ openPanel = false } = {}) {
           source: `${update.repository}@${update.updateRef}`,
         });
       }
+      if (!update.releasePublished) {
+        return setUpdateState({
+          phase: "current",
+          message: `RAPP Brainstem Frontier ${update.latestVersion} is staged on ${update.updateRef} but not released.`,
+          detail: `${update.releaseProblem}\n`
+            + `Installed ${update.currentVersion} (${shortCommit(update.currentCommit)}); `
+            + `channel head ${shortCommit(update.channelCommit)}.`,
+          source: `${update.repository}@${update.updateRef}`,
+          guidance: "Only the commit behind the annotated release tag is ever installed "
+            + "(RELEASING.md §2). Nothing to do until the release is tagged.",
+        });
+      }
       return setUpdateState({
         phase: "current",
         message: "RAPP Brainstem Frontier is up to date.",
-        detail: `Version ${update.currentVersion} (${shortCommit(update.currentCommit)})`,
+        detail: `Version ${update.currentVersion} (${shortCommit(update.currentCommit)}), `
+          + `the released commit behind ${update.releaseTag}.`,
         source: `${update.repository}@${update.updateRef}`,
       });
     }
@@ -1095,12 +1108,15 @@ async function handleCheckForUpdates({ openPanel = false } = {}) {
     availableUpdate = update;
     return setUpdateState({
       phase: "available",
-      message: `RAPP Brainstem Frontier ${update.latestVersion} is available.`,
+      message: update.sameVersion
+        ? `RAPP Brainstem Frontier ${update.latestVersion} can be re-aligned to its released commit.`
+        : `RAPP Brainstem Frontier ${update.latestVersion} is available.`,
       detail: `Installed ${update.currentVersion} (${shortCommit(update.currentCommit)}); `
-        + `latest ${update.latestVersion} (${shortCommit(update.latestCommit)}).`,
+        + `released ${update.latestVersion} (${shortCommit(update.latestCommit)}, ${update.releaseTag}).`,
       source: `${update.repository}@${update.updateRef}`,
       guidance: "Update and Restart refreshes the launcher and shared Brainstem "
-        + "from this exact GitHub commit.",
+        + "from the release tag's exact commit. If the install fails, the "
+        + "previous version is restored automatically.",
     });
   } catch (error) {
     return setUpdateState({
@@ -1236,12 +1252,29 @@ function loadPendingUpdateResult() {
     return;
   }
 
+  const rollback = result.rollback || null;
+  const restored = Boolean(rollback?.success);
+  let rollbackDetail = "No rollback was possible.";
+  if (restored) {
+    rollbackDetail = `Restored the previous version at ${shortCommit(rollback.commit)}.`;
+  } else if (rollback?.attempted) {
+    rollbackDetail = `Rolling back to ${shortCommit(rollback.commit)} also failed: ${
+      rollback.error || "unknown error"
+    }`;
+  } else if (rollback?.error) {
+    rollbackDetail = rollback.error;
+  }
   state.update = {
     phase: "error",
-    message: "RAPP Brainstem Frontier could not finish the update.",
-    detail: `${result.error || "Unknown updater error."}\n\nLog: ${
+    message: restored
+      ? "The update failed; the previous version was restored."
+      : "RAPP Brainstem Frontier could not finish the update.",
+    detail: `${result.error || "Unknown updater error."}\n\n${rollbackDetail}\n\nLog: ${
       result.logPath || "unavailable"
     }`,
+    ...(restored
+      ? {}
+      : { guidance: "Re-run the Frontier installer to repair this install." }),
   };
 }
 

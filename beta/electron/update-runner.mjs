@@ -70,7 +70,72 @@ function loadRequest(requestPath) {
   if (!COMMIT_PATTERN.test(request.commit || "")) {
     throw new Error("Update request has an invalid commit.");
   }
+  // Rollback staging is optional on the wire (older requests), but when it is
+  // present it must be coherent: a pinned previous commit and its installer.
+  if (request.rollbackInstallerPath !== undefined || request.rollbackCommit !== undefined) {
+    requireString(request, "rollbackInstallerPath");
+    if (!COMMIT_PATTERN.test(request.rollbackCommit || "")) {
+      throw new Error("Update request has an invalid rollback commit.");
+    }
+  }
   return request;
+}
+
+// Re-install the previously installed commit with ITS OWN installer, staged
+// by prepareUpdate before anything moved. Reports, never throws: the outcome
+// rides along in the result file so the reopened app can say what happened.
+function rollbackUpdate(request, logFd, failure) {
+  const outcome = {
+    attempted: false,
+    success: false,
+    commit: request.rollbackCommit || request.betaExpectedHead,
+    error: null,
+  };
+  if (!request.rollbackInstallerPath) {
+    outcome.error = "No rollback installer was staged with this update.";
+    return outcome;
+  }
+  if (!existsSync(request.rollbackInstallerPath)) {
+    outcome.error = `The staged rollback installer is missing at ${request.rollbackInstallerPath}.`;
+    return outcome;
+  }
+  outcome.attempted = true;
+  writeSync(
+    logFd,
+    `[..] Rolling back to ${outcome.commit} because: ${failure}\n`,
+  );
+  try {
+    const result = installUpdate(
+      {
+        ...request,
+        commit: outcome.commit,
+        installerPath: request.rollbackInstallerPath,
+        bootstrapUrl: request.rollbackBootstrapUrl,
+      },
+      logFd,
+    );
+    if (result.error) throw result.error;
+    if (result.status !== 0) {
+      throw new Error(
+        `The rollback installer exited with code ${result.status ?? "unknown"}.`,
+      );
+    }
+    const head = gitOutput(request, request.betaRepoRoot, ["rev-parse", "HEAD"])
+      .toLowerCase();
+    if (head !== outcome.commit) {
+      throw new Error(
+        `The launcher checkout is at ${head.slice(0, 8)} after the rollback, not ${
+          outcome.commit.slice(0, 8)
+        }.`,
+      );
+    }
+    outcome.success = true;
+    writeSync(logFd, `[OK] Rolled back to ${outcome.commit}\n`);
+  } catch (error) {
+    outcome.error = String(error?.message || error);
+    writeSync(logFd, `[X] Rollback failed: ${outcome.error}\n`);
+  }
+  return outcome;
 }
 
 function gitOutput(request, cwd, args) {
@@ -183,6 +248,7 @@ async function main() {
   const request = loadRequest(requestPath);
   const logFd = openSync(request.logPath, "a");
   let result;
+  let installStarted = false;
 
   try {
     writeSync(
@@ -202,6 +268,7 @@ async function main() {
       request.brainstemExpectedHead,
       "The shared Brainstem source",
     );
+    installStarted = true;
     const install = installUpdate(request, logFd);
     if (install.error) throw install.error;
     if (install.status !== 0) {
@@ -213,14 +280,25 @@ async function main() {
   } catch (error) {
     result = { success: false, error: String(error?.message || error) };
     writeSync(logFd, `[X] ${result.error}\n`);
+    // Only an installer that actually ran can have left the install half
+    // moved; a pre-flight refusal changed nothing and needs no rollback.
+    result.rollback = installStarted
+      ? rollbackUpdate(request, logFd, result.error)
+      : {
+          attempted: false,
+          success: false,
+          commit: request.rollbackCommit || request.betaExpectedHead,
+          error: "The installer did not run; nothing changed.",
+        };
   } finally {
     closeSync(logFd);
     writeResult(request, result);
     for (const temporaryPath of [
       request.installerPath,
+      request.rollbackInstallerPath,
       request.requestPath,
       request.runnerPath,
-    ]) {
+    ].filter(Boolean)) {
       try {
         rmSync(temporaryPath, { force: true });
       } catch {

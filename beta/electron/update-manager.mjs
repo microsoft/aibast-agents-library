@@ -368,31 +368,151 @@ export async function checkForUpdates({
     }
   }
 
+  // The branch tells us WHICH version the channel is on. The immutable release
+  // tag (RELEASING.md §2: annotated `brainstem-beta-v<version>`) tells us
+  // WHICH COMMIT of that version was actually published. Only the tag's commit
+  // is ever installed: a staging commit merged after the tag carries the same
+  // beta/VERSION but never went through the release gate, and an installed
+  // build sitting on the tag commit is up to date no matter how far the branch
+  // has moved since.
+  const release = latestVersion
+    ? await resolveReleaseTag({
+        latestVersion,
+        remote: remoteUrl === originUrl ? "origin" : remoteUrl,
+        repoRoot,
+        runGit,
+        gitOptions,
+      })
+    : {
+        tag: null,
+        commit: null,
+        annotated: false,
+        version: null,
+        published: false,
+        problem: null,
+      };
+
   // A channel that serves an OLDER version than the installed build is never
   // an update — offering it would be a silent downgrade (a stale staging main
   // can lag the installed release). An unparseable version falls back to
-  // commit inequality; an equal version with a different commit is a
-  // same-version branch refresh and stays an update.
+  // commit inequality.
   const versionOrder = compareBetaVersions(latestVersion, currentVersion);
   const channelBehind = versionOrder !== null && versionOrder < 0;
+  const sameVersion = versionOrder === 0;
   return {
-    available: Boolean(latestVersion)
-      && currentCommit !== latestCommit
+    available: release.published
+      && currentCommit !== release.commit
       && !channelBehind,
     channelBehind,
+    channelCommit: latestCommit,
     currentCommit,
     currentVersion,
     dirty,
     gitExecutable,
-    latestCommit,
+    // The commit an update installs: the release tag's, never the branch head.
+    latestCommit: release.published ? release.commit : latestCommit,
     latestVersion,
     packageDir: path.resolve(packageDir),
+    releaseAnnotated: release.annotated,
+    releaseCommit: release.commit,
+    releaseProblem: release.problem,
+    releasePublished: release.published,
+    releaseTag: release.tag,
     remoteUrl,
     repoRoot,
     repository: repository.slug,
     published: Boolean(latestVersion),
+    sameVersion,
     updateRef,
   };
+}
+
+export function releaseTagFor(version) {
+  return `brainstem-beta-v${String(version || "").trim()}`;
+}
+
+const MISSING_REMOTE_REF_PATTERN =
+  /couldn't find remote ref|remote ref .* not found|remote branch .* not found|fatal: invalid refspec/i;
+
+// Resolve the published commit for a channel version through its annotated
+// release tag. Fails CLOSED: no tag, a lightweight tag, or a tag whose
+// beta/VERSION disagrees with the channel all mean "not published" with a
+// reason the UI can show; only network/git failures are thrown.
+async function resolveReleaseTag({
+  latestVersion,
+  remote,
+  repoRoot,
+  runGit,
+  gitOptions,
+}) {
+  const tag = releaseTagFor(latestVersion);
+  const release = {
+    tag,
+    commit: null,
+    annotated: false,
+    version: null,
+    published: false,
+    problem: null,
+  };
+  try {
+    await runGit(
+      repoRoot,
+      [
+        "fetch",
+        "--quiet",
+        "--filter=blob:none",
+        "--depth",
+        "1",
+        remote,
+        `refs/tags/${tag}`,
+      ],
+      gitOptions,
+    );
+  } catch (error) {
+    const message = asErrorMessage(error);
+    if (!MISSING_REMOTE_REF_PATTERN.test(message)) throw error;
+    release.problem = `The release tag ${tag} is not published yet.`;
+    return release;
+  }
+  const kind = (
+    await runGit(repoRoot, ["cat-file", "-t", "FETCH_HEAD"], gitOptions)
+  ).trim();
+  release.annotated = kind === "tag";
+  const commit = (
+    await runGit(repoRoot, ["rev-parse", "FETCH_HEAD^{commit}"], gitOptions)
+  ).trim().toLowerCase();
+  if (!COMMIT_PATTERN.test(commit)) {
+    release.problem = `The release tag ${tag} does not resolve to a commit.`;
+    return release;
+  }
+  release.commit = commit;
+  if (!release.annotated) {
+    release.problem = `The release tag ${tag} is not an annotated tag (RELEASING.md requires git tag -a).`;
+    return release;
+  }
+  let taggedVersion = null;
+  try {
+    taggedVersion = (
+      await runGit(repoRoot, ["show", `${commit}:beta/VERSION`], gitOptions)
+    ).trim();
+  } catch (error) {
+    const message = asErrorMessage(error);
+    if (
+      !/beta\/VERSION/i.test(message)
+      || !/does not exist|exists on disk, but not in|path .* not in/i.test(message)
+    ) {
+      throw error;
+    }
+  }
+  release.version = taggedVersion;
+  if (taggedVersion !== latestVersion) {
+    release.problem = `The release tag ${tag} points at beta/VERSION ${
+      taggedVersion || "(missing)"
+    }, not ${latestVersion}.`;
+    return release;
+  }
+  release.published = true;
+  return release;
 }
 
 function waitForSpawn(child) {
@@ -499,18 +619,41 @@ export async function prepareUpdate({
   if (!installerSource.trim()) {
     throw new Error(`The update is missing ${installerRelative}.`);
   }
+  // Stage the rollback BEFORE anything moves: the installed commit's own
+  // installer, pinned to the installed commit. If the update fails half way
+  // (checkout moved, dependencies half-installed), the runner re-installs the
+  // previous version with it instead of leaving a launcher that cannot open.
+  let rollbackInstallerSource = "";
+  try {
+    rollbackInstallerSource = await runGit(
+      update.repoRoot,
+      ["show", `${update.currentCommit}:${installerRelative}`],
+      gitOptions,
+    );
+  } catch (error) {
+    throw new Error(
+      `Cannot stage a rollback installer from the installed commit ${
+        update.currentCommit.slice(0, 8)
+      }: ${asErrorMessage(error)}`,
+    );
+  }
+  if (!rollbackInstallerSource.trim()) {
+    throw new Error(`The installed commit is missing ${installerRelative}; refusing to update without a rollback.`);
+  }
 
   const cacheDir = path.join(managed.betaHome, "cache");
   mkdirSync(cacheDir, { recursive: true });
   const updateId = `${update.latestCommit}-${Date.now()}`;
   const extension = platform === "win32" ? "cmd" : "sh";
   const installerPath = path.join(cacheDir, `update-installer-${updateId}.${extension}`);
+  const rollbackInstallerPath = path.join(cacheDir, `rollback-installer-${updateId}.${extension}`);
   const runnerPath = path.join(cacheDir, `update-runner-${updateId}.mjs`);
   const requestPath = path.join(cacheDir, `update-request-${updateId}.json`);
   const resultPath = path.join(managed.betaHome, "update-result.json");
   const logPath = path.join(managed.betaHome, "update.log");
 
   writeFileSync(installerPath, installerSource, { mode: 0o700 });
+  writeFileSync(rollbackInstallerPath, rollbackInstallerSource, { mode: 0o700 });
   writeFileSync(
     runnerPath,
     readFileSync(path.join(update.packageDir, "electron", "update-runner.mjs")),
@@ -538,6 +681,8 @@ export async function prepareUpdate({
     remoteUrl: update.remoteUrl,
     requestPath,
     resultPath,
+    rollbackCommit: update.currentCommit,
+    rollbackInstallerPath,
     runnerPath,
     updateRef: update.updateRef,
   };
@@ -545,6 +690,11 @@ export async function prepareUpdate({
     request.bootstrapUrl = githubRawUrl(
       update.remoteUrl,
       update.latestCommit,
+      "install.ps1",
+    );
+    request.rollbackBootstrapUrl = githubRawUrl(
+      update.remoteUrl,
+      update.currentCommit,
       "install.ps1",
     );
   }
@@ -577,7 +727,12 @@ export async function prepareUpdate({
     await waitForSpawn(child);
     child.unref();
   } catch (error) {
-    for (const temporaryPath of [installerPath, runnerPath, requestPath]) {
+    for (const temporaryPath of [
+      installerPath,
+      rollbackInstallerPath,
+      runnerPath,
+      requestPath,
+    ]) {
       rmSync(temporaryPath, { force: true });
     }
     throw new Error(`Could not start the Frontier updater: ${asErrorMessage(error)}`);
