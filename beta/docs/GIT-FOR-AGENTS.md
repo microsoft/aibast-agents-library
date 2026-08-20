@@ -101,19 +101,24 @@ The proof found three boundaries worth preserving or fixing:
    can see that another file already registered that tool name, so it
    quarantines the later file. This disagreement is safe because Brainstem's
    per-file quarantine keeps the factory tool and process alive.
-2. **Foreign verification authority currently transfers.** Frame import parks
-   the live ref at baseline, but `activate` trusts only the
-   `Molt-Verified: yes` commit trailer. A verified foreign SHA therefore
-   activates before local verification. The implementation's "trust does not
-   transfer" promise is advisory, not enforced. The proof demonstrates this,
-   immediately reverts, and then uses an unverified transfer tip to prove local
-   refusal and re-verification.
-3. **Frames omit locus pathname metadata.** The path lives in bare-repository
-   Git config, which a bundle does not carry. Without repair, the receiver
-   looks for `agent.py` instead of `hello_rapp_agent.py`, and compose omits the
-   creature while still exiting zero. The proof detects the missing entry and
-   explicitly rebinds it before receiver verification. A durable git-molt fix
-   should reconstruct the one-file path from the imported baseline tree.
+2. **Foreign verification authority used to transfer — fixed.** Frame import
+   parked the live ref at baseline, but `activate` trusted only the
+   `Molt-Verified: yes` commit trailer, which travels inside the commit; a
+   ring verified on machine A activated on machine B before B's gate ever
+   ran (observed: receiver `activate` rc=0). The fix makes the verdict a
+   **local ref** (`refs/molt/verified/<ring>`) that `verify` writes and that
+   frames never carry; the trailer remains provenance (`log` marks it
+   `[foreign]`). The proof now asserts the spec: the receiver refuses the
+   foreign-verified ring until its own gate passes.
+3. **Frames omitted locus pathname metadata — fixed.** The path lived in
+   bare-repository Git config, which a bundle does not carry, so the receiver
+   looked for `agent.py` instead of `hello_rapp_agent.py` and compose omitted
+   the creature while still exiting zero. Frames now carry the path in a
+   metadata commit (`refs/molt/meta/<locus>`) and import restores it.
+
+Both fixes live in the vendored, pinned tool (`tools/git-molt/`, see its
+README) on the git-molt branch `fix/local-verdicts-and-frame-path` (51/51
+upstream tests); the upstream pull request is pending.
 
 Molter is also intentionally stricter than the kernel for an ordinary
 import-time exception: Brainstem would catch and skip that file, while Molter
@@ -182,8 +187,8 @@ OBSERVE final-secondary          pulse(status=unauthenticated agents=[ContextMem
 | pinned policy forces baseline | PASS | newer verified rings retained but baseline bytes composed; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
 | mutable policy restores evolution | PASS | newest verified safe bytes active again; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
 | frame exports full locus without changing live organism | PASS | frame written; unverified transfer tip recorded; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
-| foreign verified trailer currently transfers authority | PASS | SURPRISE: receiver activate rc=0 before local verification; reverted immediately; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
-| unverified transfer tip is parked and locally rebound | PASS | activate rc=1 (fatal: refusing to activate an unverified generation); SURPRISE: frame path metadata was missing and rebound to hello_rapp_agent.py; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
+| a foreign verified trailer does not transfer authority | PASS | receiver activate rc=1 before local verification (want non-zero); pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
+| unverified transfer tip is parked and the frame carried its path | PASS | activate rc=1 (fatal: refusing to activate an unverified generation); imported path=hello_rapp_agent.py; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
 | same gate admits creature into second organism | PASS | verified class=HelloRapp tool=HelloRapp; files=[basic_agent.py,context_memory_agent.py,hacker_news_agent.py,hello_rapp_agent.py,manage_memory_agent.py,rar_rapp_learn_new_agent.py]; marker=GIT_MOLT_TRANSFER_V4; loader=[[brainstem] Agent loaded: HelloRapp [brainstem] Agent loaded: HelloRapp [brainstem] Agent loaded: HelloRapp ]; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
 | Grail re-baseline preserves locus and rings | PASS | locus=hacker_news_agent.py unchanged; earlier verified ring 9da18d3ac32e retained; revert composed current factory marker; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |
 | tampered loose object is detected and contained | PASS | git fsck rc=3 (reported the active loose object as empty); compose rc=0 fell back to creature baseline; pulse(status=unauthenticated agents=[ContextMemory,HackerNews,HelloRapp,LearnNew,ManageMemory] quarantined=none); heartbeat=alive |

@@ -95,6 +95,7 @@ test("git-molt keeps two live Brainstem organisms healthy", {
   );
   assert.match(result.stdout, /## PASS\/FAIL table/);
   assert.match(result.stdout, /valid collision exposes gate\/kernel disagreement \| PASS/);
-  assert.match(result.stdout, /foreign verified trailer currently transfers authority \| PASS/);
+  assert.match(result.stdout, /a foreign verified trailer does not transfer authority \| PASS/);
+  assert.match(result.stdout, /unverified transfer tip is parked and the frame carried its path \| PASS/);
   assert.match(result.stdout, /Summary: \d+ claim\(s\), 0 failure\(s\)/);
 });
