@@ -20,13 +20,19 @@ import {
   resolveBrainstemConfig,
 } from "./brainstem-process.mjs";
 import {
+  lookupApproximateLocation,
+  openAmbient,
+} from "./ambient.mjs";
+import {
   resolveChatStreamMode,
 } from "./chat-stream-mode.mjs";
 import { humanizeAgentName } from "./agent-display.mjs";
 import { BrainSurgeon } from "./brain-surgeon.mjs";
 import {
   changeChatLook,
+  readAmbientSettings,
   readChatLookSettings,
+  writeAmbientSettings,
 } from "./chat-look-settings.mjs";
 import { CopilotStudioAuthManager } from "./copilot-studio-auth.mjs";
 import { CopilotRuntime } from "./copilot-runtime.mjs";
@@ -60,6 +66,7 @@ import "../ui/stream-follow.js";
 import "../ui/stream-render-pacing.js";
 import "../ui/chat-look.js";
 
+const hasLock = app.requestSingleInstanceLock();
 const {
   createTailFollower,
 } = globalThis.RappStreamFollow;
@@ -168,7 +175,12 @@ html[data-rapp-stream="smooth"] .typing span:nth-child(3) {
 `;
 const betaHome = process.env.BRAINSTEM_BETA_HOME
   || path.join(config.brainstemHome, "beta-launcher");
-const ledger = openLedger(betaHome);
+const ledger = hasLock ? openLedger(betaHome) : null;
+const ambient = hasLock
+  ? openAmbient(betaHome, {
+      deviceEnabled: process.env.RAPP_AMBIENT_DEVICE !== "0",
+    })
+  : null;
 const initialChatLook = readChatLookSettings({
   betaHome,
   env: process.env,
@@ -704,6 +716,8 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
         + '<button id="beta-chat-look-messages" type="button" data-look="messages">'
         + 'Messages</button><button id="beta-chat-look-business" type="button" '
         + 'data-look="business">Business</button></div></div>'
+        + '<button class="beta-panel-btn" id="beta-location-settings" type="button">'
+        + 'My location and ambient context</button>'
         + '<button class="beta-panel-btn" id="beta-check-updates" type="button">'
         + 'Check for updates</button><div id="beta-update-status" '
         + 'data-phase="idle" role="status" aria-live="polite">Check GitHub for '
@@ -723,8 +737,10 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     button.removeAttribute("onclick");
     const checkButton = document.getElementById("beta-check-updates");
     const installButton = document.getElementById("beta-install-update");
+    const locationButton = document.getElementById("beta-location-settings");
     checkButton?.removeAttribute("onclick");
     installButton?.removeAttribute("onclick");
+    locationButton?.removeAttribute("onclick");
     if (!button.dataset.betaFrameBridge) {
       button.dataset.betaFrameBridge = "1";
       button.addEventListener("click", (event) => {
@@ -746,6 +762,13 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
           message: "Preparing the update and restart...",
         }, true);
         window.parent.postMessage({ type: "rapp-beta:install-update" }, "*");
+      });
+      locationButton?.addEventListener("click", (event) => {
+        event.stopPropagation();
+        setBetaMenuOpen(false);
+        window.parent.postMessage({
+          type: "rapp-beta:open-ambient-settings",
+        }, "*");
       });
       for (const look of ["messages", "business"]) {
         document.getElementById("beta-chat-look-" + look)?.addEventListener(
@@ -1362,6 +1385,33 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
       }, "*");
     });
   }
+  async function requestAmbientRefresh() {
+    const requestId = window.crypto.randomUUID();
+    return new Promise((resolve, reject) => {
+      const timeout = window.setTimeout(() => {
+        window.removeEventListener("message", receive);
+        reject(new Error("Ambient context refresh timed out."));
+      }, 3000);
+      function receive(event) {
+        if (
+          event.source !== window.parent
+          || event.data?.type !== "rapp-beta:refresh-ambient-result"
+          || event.data?.requestId !== requestId
+        ) return;
+        window.clearTimeout(timeout);
+        window.removeEventListener("message", receive);
+        if (event.data.ok) resolve(event.data.result);
+        else reject(new Error(
+          event.data.error || "Ambient context refresh failed.",
+        ));
+      }
+      window.addEventListener("message", receive);
+      window.parent.postMessage({
+        type: "rapp-beta:refresh-ambient",
+        requestId,
+      }, "*");
+    });
+  }
   window.fetch = async function frontierFetch(resource, options = {}) {
     let target;
     try {
@@ -1413,6 +1463,11 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
       pathname: target.pathname,
       requestId: window.crypto.randomUUID(),
     };
+    try {
+      await requestAmbientRefresh();
+    } catch {
+      // Ambient context is additive; chat must remain fail-open.
+    }
     // Fail OPEN, always. This interceptor sits in front of every chat message,
     // so a lineage-control failure (main busy, handler throw, window teardown,
     // timeout) must never take the user's ordinary chat down with it — the layer
@@ -1556,6 +1611,142 @@ const state = {
   },
   url: config.url,
 };
+let navigatorLocation = null;
+let approximateLocation = null;
+let locationUnavailableReason = null;
+let locationLookupRevision = 0;
+let ambientDeviceTimer = null;
+let ambientManifestTimer = null;
+
+function refreshAmbientDevice() {
+  return ambient?.refreshDevice({
+    approximateLocation,
+    navigatorLocation,
+    settings: readAmbientSettings({ betaHome }),
+    unavailableReason: locationUnavailableReason,
+  });
+}
+
+function ambientState() {
+  return {
+    device: ambient?.readProvider("device") || null,
+    deviceEnabled: ambient?.deviceEnabled === true,
+    settings: readAmbientSettings({ betaHome }),
+  };
+}
+
+async function handleGeolocationUpdate(payload = {}) {
+  const revision = ++locationLookupRevision;
+  const lat = Number(payload.lat);
+  const lon = Number(payload.lon);
+  const validFix = Number.isFinite(lat)
+    && lat >= -90
+    && lat <= 90
+    && Number.isFinite(lon)
+    && lon >= -180
+    && lon <= 180;
+  if (validFix) {
+    const reportedAt = Date.parse(payload.at || "");
+    const now = Date.now();
+    navigatorLocation = {
+      accuracy_m: Number.isFinite(Number(payload.accuracy_m))
+        ? Math.max(0, Number(payload.accuracy_m))
+        : null,
+      at: Number.isFinite(reportedAt) && reportedAt <= now + 60000
+        ? new Date(reportedAt).toISOString()
+        : new Date(now).toISOString(),
+      label: payload.label ? String(payload.label).slice(0, 160) : null,
+      lat,
+      lon,
+    };
+    approximateLocation = null;
+    locationUnavailableReason = null;
+    return ambientStateAfterRefresh();
+  }
+
+  navigatorLocation = null;
+  locationUnavailableReason = String(
+    payload.reason || "navigator.geolocation unavailable",
+  ).slice(0, 160);
+  const settings = readAmbientSettings({ betaHome });
+  if (
+    ambient?.deviceEnabled === true
+    && settings.granularity !== "off"
+    && !settings.userLocation
+    && settings.approximateFallback
+  ) {
+    try {
+      const resolved = await lookupApproximateLocation({
+        fetchImpl: typeof net?.fetch === "function"
+          ? (url, options) => net.fetch(url, options)
+          : globalThis.fetch,
+        signal: AbortSignal.timeout(5000),
+      });
+      if (revision === locationLookupRevision) {
+        approximateLocation = {
+          ...resolved,
+          at: new Date().toISOString(),
+        };
+      }
+    } catch (error) {
+      if (revision === locationLookupRevision) {
+        approximateLocation = null;
+        locationUnavailableReason += `; approximate fallback failed: ${
+          String(error?.message || error).slice(0, 100)
+        }`;
+      }
+    }
+  }
+  return ambientStateAfterRefresh();
+}
+
+function ambientStateAfterRefresh() {
+  refreshAmbientDevice();
+  return ambientState();
+}
+
+function refreshAmbientBeforeTurn() {
+  const device = refreshAmbientDevice();
+  if (!device) ambient?.refreshManifest();
+  return ambientState();
+}
+
+function allowsAmbientGeolocation(webContents) {
+  const settings = readAmbientSettings({ betaHome });
+  return ambient?.deviceEnabled === true
+    && settings.granularity !== "off"
+    && webContents === mainWindow?.webContents;
+}
+
+function handleAmbientSettingsUpdate(payload = {}) {
+  const settings = writeAmbientSettings({
+    approximateFallback: payload.approximateFallback === true,
+    betaHome,
+    granularity: payload.granularity,
+    userLocation: payload.userLocation || null,
+  });
+  if (
+    settings.granularity === "off"
+    || settings.userLocation
+  ) {
+    locationLookupRevision += 1;
+    navigatorLocation = null;
+    approximateLocation = null;
+    locationUnavailableReason = settings.granularity === "off"
+      ? "location disabled"
+      : null;
+  } else if (!settings.approximateFallback) {
+    approximateLocation = null;
+  }
+  return ambientStateAfterRefresh();
+}
+
+ledger?.setOnWrite((_row, currentLedger) => {
+  ambient?.refreshLedger(currentLedger.describe());
+});
+ambient?.refreshLedger(ledger?.describe() || {});
+refreshAmbientBeforeTurn();
+
 const routeManager = new BetaRouteManager({
   betaHome,
   brainstemConfig: config,
@@ -1703,6 +1894,7 @@ const twinManager = new TwinManager({
   brainstemConfig: config,
   betaHome,
   ledger,
+  refreshAmbient: refreshAmbientBeforeTurn,
   routeManager,
   storeClient: rappStore,
   // The Brainstem that plans a two-brain loop is whichever one is live now
@@ -2064,6 +2256,19 @@ function recordTwinCompletion(twinId, payload) {
     ok: result.turns.length === 2,
     tools: result.tools.length,
   };
+}
+
+function ownedTwinForSender(event) {
+  const ownedTwinId = twinPopoutOwners.get(event.sender.id);
+  if (!ownedTwinId) return null;
+  const twin = twinManager.get(ownedTwinId);
+  if (
+    new URL(event.senderFrame.url).origin
+    !== new URL(twin.url).origin
+  ) {
+    throw new Error("Twin sender left its loopback origin.");
+  }
+  return ownedTwinId;
 }
 
 function ensureBrainSurgeon(sessionId = 1) {
@@ -2500,6 +2705,27 @@ function registerIpc() {
     assertTrustedIpc(event);
     return handleChatLookChange(nextLook);
   });
+  ipcMain.handle("beta:get-ambient-settings", (event) => {
+    assertTrustedIpc(event);
+    return ambientState();
+  });
+  ipcMain.handle("beta:refresh-ambient", (event) => {
+    const ownedTwinId = ownedTwinForSender(event);
+    if (!ownedTwinId) {
+      assertTrustedIpc(event);
+      return refreshAmbientBeforeTurn();
+    }
+    refreshAmbientBeforeTurn();
+    return { ok: true };
+  });
+  ipcMain.handle("beta:set-ambient-settings", (event, payload) => {
+    assertTrustedIpc(event);
+    return handleAmbientSettingsUpdate(payload);
+  });
+  ipcMain.handle("beta:update-geolocation", async (event, payload) => {
+    assertTrustedIpc(event);
+    return handleGeolocationUpdate(payload);
+  });
   ipcMain.handle("beta:list-agent-files", async (event) => {
     assertTrustedIpc(event);
     const identity = routeManager.identity();
@@ -2578,17 +2804,10 @@ function registerIpc() {
     return recordBrainstemCompletion(payload);
   });
   ipcMain.handle("beta:record-twin-turn", (event, twinId, payload) => {
-    const ownedTwinId = twinPopoutOwners.get(event.sender.id);
+    const ownedTwinId = ownedTwinForSender(event);
     if (ownedTwinId) {
       if (String(twinId || "") !== ownedTwinId) {
         throw new Error("Twin ledger sender does not own that twin.");
-      }
-      const twin = twinManager.get(ownedTwinId);
-      if (
-        new URL(event.senderFrame.url).origin
-        !== new URL(twin.url).origin
-      ) {
-        throw new Error("Twin ledger sender left its loopback origin.");
       }
       return recordTwinCompletion(ownedTwinId, payload);
     }
@@ -2631,6 +2850,7 @@ function registerIpc() {
   );
   ipcMain.handle("beta:surgeon-send", async (event, sessionId, prompt) => {
     assertTrustedIpc(event);
+    refreshAmbientBeforeTurn();
     const id = normalizeSurgeonId(sessionId);
     const requestId = randomUUID();
     const result = await ensureBrainSurgeon(sessionId).send(prompt);
@@ -2776,7 +2996,6 @@ async function startServices() {
   await Promise.allSettled([brainstemTask, copilotTask]);
 }
 
-const hasLock = app.requestSingleInstanceLock();
 if (!hasLock) {
   app.quit();
 } else {
@@ -2793,8 +3012,28 @@ if (!hasLock) {
       app.dock.setIcon(appIcon);
     }
     session.defaultSession.setPermissionRequestHandler((webContents, permission, callback) => {
+      if (permission === "geolocation") {
+        callback(allowsAmbientGeolocation(webContents));
+        return;
+      }
       callback(allowsUiDriverMediaPermission(webContents, permission));
     });
+    session.defaultSession.setPermissionCheckHandler(
+      (webContents, permission) => {
+        if (permission === "geolocation") {
+          return allowsAmbientGeolocation(webContents);
+        }
+        return allowsUiDriverMediaPermission(webContents, permission);
+      },
+    );
+    ambientManifestTimer = setInterval(
+      () => ambient?.refreshManifest(),
+      45000,
+    );
+    ambientDeviceTimer = setInterval(
+      () => refreshAmbientDevice(),
+      240000,
+    );
     registerIpc();
     installApplicationMenu();
     loadPendingUpdateResult();
@@ -2850,6 +3089,8 @@ if (!hasLock) {
     event.preventDefault();
     if (shutdownStarted) return;
     shutdownStarted = true;
+    clearInterval(ambientManifestTimer);
+    clearInterval(ambientDeviceTimer);
     Promise.allSettled([
       ...Array.from(brainSurgeons.values(), (surgeon) => surgeon.stop()),
       twinManager.stopAll(),
@@ -2857,7 +3098,7 @@ if (!hasLock) {
       routeManager.stop(),
       uiDriver?.stop(),
     ]).finally(() => {
-      ledger.close();
+      ledger?.close();
       shutdownComplete = true;
       app.quit();
     });

@@ -10,6 +10,7 @@ import {
 function installBridge(nativeFetch, { sink = "preload" } = {}) {
   const turns = [];
   const parentMessages = [];
+  let refreshCount = 0;
   const window = {
     crypto: { randomUUID: () => "twin-request" },
     fetch: nativeFetch,
@@ -17,6 +18,9 @@ function installBridge(nativeFetch, { sink = "preload" } = {}) {
     rappTwinLedger: {
       recordCompletedTurn: async (turn) => {
         turns.push(turn);
+      },
+      refreshAmbient: async () => {
+        refreshCount += 1;
       },
     },
     top: {
@@ -36,7 +40,14 @@ function installBridge(nativeFetch, { sink = "preload" } = {}) {
       window,
     },
   );
-  return { parentMessages, turns, window };
+  return {
+    get refreshCount() {
+      return refreshCount;
+    },
+    parentMessages,
+    turns,
+    window,
+  };
 }
 
 function controlledResponse() {
@@ -84,6 +95,7 @@ test("twin non-stream responses record only after the UI consumes completion", a
     },
   );
   assert.strictEqual(response, nativeResponse);
+  assert.equal(installed.refreshCount, 1);
   assert.equal(installed.turns.length, 0);
   assert.equal((await response.json()).response, "sunny");
   assert.equal(installed.turns.length, 1);

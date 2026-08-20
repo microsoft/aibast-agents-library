@@ -18,6 +18,39 @@ export function installTwinLedgerBridge({
     } catch {
       return null;
     }
+
+  }
+
+  async function refreshAmbient() {
+    if (sink !== "parent") {
+      return window.rappTwinLedger?.refreshAmbient?.();
+    }
+    const requestId = window.crypto.randomUUID();
+    return new Promise((resolve, reject) => {
+      const timeout = window.setTimeout(() => {
+        window.removeEventListener("message", receive);
+        reject(new Error("Ambient context refresh timed out."));
+      }, 3000);
+      function receive(event) {
+        if (
+          event.source !== window.top
+          || event.data?.type !== "rapp-beta:twin-refresh-ambient-result"
+          || event.data?.requestId !== requestId
+        ) return;
+        window.clearTimeout(timeout);
+        window.removeEventListener("message", receive);
+        if (event.data.ok) resolve(event.data.result);
+        else reject(new Error(
+          event.data.error || "Ambient context refresh failed.",
+        ));
+      }
+      window.addEventListener("message", receive);
+      window.top.postMessage({
+        type: "rapp-beta:twin-refresh-ambient",
+        requestId,
+        twinId,
+      }, "*");
+    });
   }
 
   function deliver(request, result) {
@@ -168,6 +201,11 @@ export function installTwinLedgerBridge({
     }
     if (typeof body.user_input !== "string") {
       return nativeFetch(resource, options);
+    }
+    try {
+      await refreshAmbient();
+    } catch {
+      // Ambient context is additive; twin chat must remain fail-open.
     }
     const response = await nativeFetch(resource, options);
     try {

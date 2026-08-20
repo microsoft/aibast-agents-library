@@ -21,6 +21,7 @@ contextBridge.exposeInMainWorld("brainstemBeta", {
   chatTypingEnabled,
   checkForUpdates: () => ipcRenderer.invoke("beta:check-for-updates"),
   getState: () => ipcRenderer.invoke("beta:get-state"),
+  getAmbientSettings: () => ipcRenderer.invoke("beta:get-ambient-settings"),
   installUpdate: () => ipcRenderer.invoke("beta:install-update"),
   deleteAgent: (filename) => ipcRenderer.invoke("beta:delete-agent", filename),
   exportAgent: (filename) => ipcRenderer.invoke("beta:export-agent", filename),
@@ -49,7 +50,14 @@ contextBridge.exposeInMainWorld("brainstemBeta", {
   recordTwinTurn: (twinId, payload) => (
     ipcRenderer.invoke("beta:record-twin-turn", twinId, payload)
   ),
+  refreshAmbient: () => ipcRenderer.invoke("beta:refresh-ambient"),
   setChatLook: (look) => ipcRenderer.invoke("beta:set-chat-look", look),
+  setAmbientSettings: (settings) => (
+    ipcRenderer.invoke("beta:set-ambient-settings", settings)
+  ),
+  updateGeolocation: (location) => (
+    ipcRenderer.invoke("beta:update-geolocation", location)
+  ),
   surgeonReset: (sessionId = 1) => ipcRenderer.invoke("beta:surgeon-reset", sessionId),
   surgeonSend: (sessionId, prompt) => ipcRenderer.invoke("beta:surgeon-send", sessionId, prompt),
   surgeonClose: (sessionId) => ipcRenderer.invoke("beta:surgeon-close", sessionId),

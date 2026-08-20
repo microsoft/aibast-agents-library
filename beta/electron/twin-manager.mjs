@@ -164,6 +164,7 @@ export class TwinManager {
     storeClient,
     brainstemUrl = null,
     ledger = null,
+    refreshAmbient = () => {},
     onEvent = () => {},
   }) {
     if (!brainstemConfig) throw new Error("TwinManager needs a brainstemConfig.");
@@ -176,6 +177,9 @@ export class TwinManager {
     this.betaHome = betaHome;
     this.routeManager = routeManager;
     this.ledger = ledger;
+    this.refreshAmbient = typeof refreshAmbient === "function"
+      ? refreshAmbient
+      : () => {};
     this.store = storeClient;
     this.onEvent = onEvent;
     this.twins = new Map();
@@ -575,6 +579,11 @@ export class TwinManager {
     };
     let data;
     try {
+      try {
+        await this.refreshAmbient();
+      } catch {
+        // Ambient context is additive; twin chat stays fail-open.
+      }
       const response = await fetch(`${twin.url}/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -684,6 +693,11 @@ export class TwinManager {
     if (!base) throw new Error("No Brainstem URL to plan with.");
     const userInput = String(prompt || "");
     const requestId = randomUUID();
+    try {
+      await this.refreshAmbient();
+    } catch {
+      // Ambient context is additive; planner chat stays fail-open.
+    }
     const response = await fetch(`${base}/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

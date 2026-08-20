@@ -10,4 +10,5 @@ contextBridge.exposeInMainWorld("rappTwinLedger", {
   recordCompletedTurn: (turn) => (
     ipcRenderer.invoke("beta:record-twin-turn", twinId, turn)
   ),
+  refreshAmbient: () => ipcRenderer.invoke("beta:refresh-ambient"),
 });

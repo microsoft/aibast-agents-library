@@ -423,6 +423,21 @@ function installBridge({
   const parent = {
     postMessage(message) {
       postedMessages.push(message);
+      if (message.type === "rapp-beta:refresh-ambient") {
+        queueMicrotask(() => {
+          const event = {
+            source: parent,
+            data: {
+              type: "rapp-beta:refresh-ambient-result",
+              requestId: message.requestId,
+              ok: true,
+              result: { device: "fresh" },
+            },
+          };
+          for (const listener of messageListeners) listener(event);
+        });
+        return;
+      }
       if (message.type !== "rapp-beta:lineage-chat") return;
       queueMicrotask(() => {
         const event = {

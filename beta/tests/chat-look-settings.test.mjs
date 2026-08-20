@@ -11,8 +11,10 @@ import test from "node:test";
 
 import {
   changeChatLook,
+  readAmbientSettings,
   readChatLookSettings,
   resolveChatTypingEnabled,
+  writeAmbientSettings,
   writeChatLookSettings,
 } from "../electron/chat-look-settings.mjs";
 
@@ -109,4 +111,71 @@ test("trusted IPC and both menus use the persistent chat look change", () => {
   assert.match(main, /beta-chat-look-messages/);
   assert.match(main, /rapp-beta:set-chat-look/);
   assert.match(preload, /setChatLook:/);
+});
+
+test("ambient location settings round-trip without discarding chat look", (t) => {
+  const betaHome = mkdtempSync(path.join(tmpdir(), "rapp-ambient-settings-"));
+  t.after(() => rmSync(betaHome, { recursive: true, force: true }));
+  writeChatLookSettings({ betaHome, chatLook: "business" });
+
+  assert.deepEqual(readAmbientSettings({ betaHome }), {
+    approximateFallback: false,
+    file: path.join(betaHome, "settings.json"),
+    granularity: "precise",
+    userLocation: null,
+  });
+  const saved = writeAmbientSettings({
+    approximateFallback: true,
+    betaHome,
+    granularity: "city",
+    userLocation: {
+      label: "home",
+      lat: 47.6062,
+      lon: -122.3321,
+    },
+  });
+  assert.deepEqual(saved.userLocation, {
+    accuracy_m: 0,
+    label: "home",
+    lat: 47.6062,
+    lon: -122.3321,
+  });
+  assert.equal(readChatLookSettings({ betaHome, env: {} }).chatLook, "business");
+  assert.deepEqual(readAmbientSettings({ betaHome }), saved);
+  assert.throws(
+    () => writeAmbientSettings({
+      betaHome,
+      granularity: "precise",
+      userLocation: { label: "bad", lat: 91, lon: -122 },
+    }),
+    /valid latitude/,
+  );
+  assert.throws(
+    () => writeAmbientSettings({
+      betaHome,
+      granularity: "precise",
+      userLocation: { label: "unresolved address" },
+    }),
+    /does not send labels or addresses to a geocoder/,
+  );
+  const redacted = writeAmbientSettings({
+    betaHome,
+    granularity: "precise",
+    userLocation: {
+      label: "password: precise-address",
+      lat: 47.6062,
+      lon: -122.3321,
+    },
+  });
+  assert.match(redacted.userLocation.label, /\[redacted:password\]/);
+  assert.doesNotMatch(
+    readFileSync(path.join(betaHome, "settings.json"), "utf8"),
+    /precise-address/,
+  );
+  if (process.platform !== "win32") {
+    assert.equal(
+      statSync(path.join(betaHome, "settings.json")).mode & 0o777,
+      0o600,
+    );
+  }
 });

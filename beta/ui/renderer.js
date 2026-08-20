@@ -9,6 +9,13 @@ const surgeonInput = document.getElementById("surgeon-input");
 const surgeonSend = document.getElementById("surgeon-send");
 const surgeonTabs = document.getElementById("surgeon-tabs");
 const surgeonHerdBtn = document.getElementById("surgeon-herd-btn");
+const ambientDialog = document.getElementById("ambient-settings");
+const ambientGranularity = document.getElementById("ambient-granularity");
+const ambientLocationLabel = document.getElementById("ambient-location-label");
+const ambientLocationLat = document.getElementById("ambient-location-lat");
+const ambientLocationLon = document.getElementById("ambient-location-lon");
+const ambientApproximate = document.getElementById("ambient-approximate");
+const ambientStatus = document.getElementById("ambient-settings-status");
 let surgeonHerdEl = null;
 let surgeonGridEl = null;
 // RAPPlication twins hatched into the herd (id -> {descriptor, tileEl}).
@@ -60,6 +67,155 @@ const {
   surgeonCss,
 } = window.RappChatLook;
 let currentChatLook = normalizeChatLook(window.brainstemBeta.chatLook);
+
+function describeAmbientState(value) {
+  if (!value?.deviceEnabled) {
+    return "Device context is disabled by RAPP_AMBIENT_DEVICE=0.";
+  }
+  const location = value.device?.data?.location;
+  if (!location) return "Device context is starting.";
+  const coordinates = Number.isFinite(location.lat)
+    && Number.isFinite(location.lon)
+    ? ` · ${location.lat}, ${location.lon}`
+    : "";
+  return [
+    `source=${location.source}`,
+    `detail=${location.granularity}`,
+    location.label ? `label=${location.label}` : "",
+  ].filter(Boolean).join(" · ") + coordinates;
+}
+
+function applyAmbientState(value, { updateForm = true } = {}) {
+  const settings = value?.settings || {};
+  if (updateForm) {
+    ambientGranularity.value = settings.granularity || "precise";
+    ambientApproximate.checked = settings.approximateFallback === true;
+    ambientLocationLabel.value = settings.userLocation?.label || "";
+    ambientLocationLat.value = settings.userLocation?.lat ?? "";
+    ambientLocationLon.value = settings.userLocation?.lon ?? "";
+  }
+  ambientStatus.textContent = describeAmbientState(value);
+  return value;
+}
+
+async function loadAmbientSettings({ updateForm = true } = {}) {
+  try {
+    return applyAmbientState(
+      await window.brainstemBeta.getAmbientSettings(),
+      { updateForm },
+    );
+  } catch (cause) {
+    ambientStatus.textContent =
+      `Could not read ambient settings: ${String(cause?.message || cause)}`;
+    return null;
+  }
+}
+
+function ambientSettingsPayload({ userLocation = undefined } = {}) {
+  const label = ambientLocationLabel.value.trim();
+  const lat = ambientLocationLat.value === ""
+    ? null
+    : Number(ambientLocationLat.value);
+  const lon = ambientLocationLon.value === ""
+    ? null
+    : Number(ambientLocationLon.value);
+  const inferredLocation = label || lat !== null || lon !== null
+    ? { label, lat, lon }
+    : null;
+  return {
+    approximateFallback: ambientApproximate.checked,
+    granularity: ambientGranularity.value,
+    userLocation: userLocation === undefined
+      ? inferredLocation
+      : userLocation,
+  };
+}
+
+async function saveAmbientSettings({ userLocation = undefined } = {}) {
+  ambientStatus.textContent = "Saving on-device ambient settings...";
+  try {
+    const value = await window.brainstemBeta.setAmbientSettings(
+      ambientSettingsPayload({ userLocation }),
+    );
+    return applyAmbientState(value);
+  } catch (cause) {
+    ambientStatus.textContent =
+      `Could not save ambient settings: ${String(cause?.message || cause)}`;
+    return null;
+  }
+}
+
+async function requestDeviceLocation({ clearSaved = false } = {}) {
+  let state = await loadAmbientSettings({ updateForm: false });
+  if (!state?.deviceEnabled || state.settings?.granularity === "off") return state;
+  if (clearSaved && state.settings?.userLocation) {
+    state = await saveAmbientSettings({ userLocation: null });
+    if (!state) return null;
+  } else if (state.settings?.userLocation) {
+    return state;
+  }
+  if (!navigator.geolocation) {
+    return applyAmbientState(await window.brainstemBeta.updateGeolocation({
+      reason: "navigator.geolocation is unavailable in this renderer",
+    }));
+  }
+  ambientStatus.textContent = "Requesting location from this device...";
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      void window.brainstemBeta.updateGeolocation({
+        accuracy_m: position.coords.accuracy,
+        at: new Date(position.timestamp).toISOString(),
+        lat: position.coords.latitude,
+        lon: position.coords.longitude,
+      }).then((value) => applyAmbientState(value, { updateForm: false }))
+        .catch((cause) => {
+          ambientStatus.textContent =
+            `Could not save device location: ${String(cause?.message || cause)}`;
+        });
+    },
+    (geolocationError) => {
+      void window.brainstemBeta.updateGeolocation({
+        reason: geolocationError?.message
+          || `navigator.geolocation error ${geolocationError?.code || "unknown"}`,
+      }).then((value) => applyAmbientState(value, { updateForm: false }))
+        .catch((cause) => {
+          ambientStatus.textContent =
+            `Could not report device location: ${String(cause?.message || cause)}`;
+        });
+    },
+    {
+      enableHighAccuracy: state.settings?.granularity === "precise",
+      maximumAge: 0,
+      timeout: 10000,
+    },
+  );
+  return state;
+}
+
+async function openAmbientSettings() {
+  await loadAmbientSettings();
+  if (typeof ambientDialog.showModal === "function") ambientDialog.showModal();
+  else ambientDialog.setAttribute("open", "");
+}
+
+async function maintainAmbientContext() {
+  try {
+    const value = applyAmbientState(
+      await window.brainstemBeta.refreshAmbient(),
+      { updateForm: false },
+    );
+    if (
+      value?.deviceEnabled
+      && !value.settings?.userLocation
+      && value.settings?.granularity !== "off"
+    ) void requestDeviceLocation();
+    return value;
+  } catch (cause) {
+    ambientStatus.textContent =
+      `Could not refresh ambient context: ${String(cause?.message || cause)}`;
+    return null;
+  }
+}
 
 function syncSurgeonMessageGroups(session) {
   const messages = session?.logEl?.querySelectorAll(
@@ -146,12 +302,35 @@ frame.addEventListener("load", () => {
 });
 window.addEventListener("message", async (event) => {
   const type = event.data?.type;
-  if (type === "rapp-beta:twin-ledger-turn") {
+  if ([
+    "rapp-beta:twin-ledger-turn",
+    "rapp-beta:twin-refresh-ambient",
+  ].includes(type)) {
     const twinId = String(event.data.twinId || "");
     const twinUrl = twins.get(twinId)?.descriptor?.url;
     try {
       if (!twinUrl || event.origin !== new URL(twinUrl).origin) return;
     } catch {
+      return;
+    }
+    if (type === "rapp-beta:twin-refresh-ambient") {
+      const requestId = String(event.data.requestId || "");
+      try {
+        const result = await window.brainstemBeta.refreshAmbient();
+        event.source.postMessage({
+          type: "rapp-beta:twin-refresh-ambient-result",
+          requestId,
+          ok: true,
+          result: { ok: Boolean(result) },
+        }, "*");
+      } catch (cause) {
+        event.source.postMessage({
+          type: "rapp-beta:twin-refresh-ambient-result",
+          requestId,
+          ok: false,
+          error: String(cause?.message || cause),
+        }, "*");
+      }
       return;
     }
     void window.brainstemBeta.recordTwinTurn(twinId, event.data.turn).catch(
@@ -181,6 +360,30 @@ window.addEventListener("message", async (event) => {
   }
   if (type === "rapp-beta:toggle-explorer") {
     setExplorerOpen(!explorer.classList.contains("open"));
+    return;
+  }
+  if (type === "rapp-beta:open-ambient-settings") {
+    await openAmbientSettings();
+    return;
+  }
+  if (type === "rapp-beta:refresh-ambient") {
+    const requestId = String(event.data.requestId || "");
+    try {
+      const result = await window.brainstemBeta.refreshAmbient();
+      event.source.postMessage({
+        type: "rapp-beta:refresh-ambient-result",
+        requestId,
+        ok: true,
+        result: { ok: Boolean(result) },
+      }, "*");
+    } catch (cause) {
+      event.source.postMessage({
+        type: "rapp-beta:refresh-ambient-result",
+        requestId,
+        ok: false,
+        error: String(cause?.message || cause),
+      }, "*");
+    }
     return;
   }
   if (type === "rapp-beta:ledger-turn") {
@@ -1863,6 +2066,37 @@ document.getElementById("surgeon-new").addEventListener("click", async () => {
     }
   }
 });
+document.getElementById("ambient-settings-close").addEventListener(
+  "click",
+  () => ambientDialog.close(),
+);
+document.getElementById("ambient-settings-save").addEventListener(
+  "click",
+  () => void saveAmbientSettings().then((value) => {
+    if (
+      value?.deviceEnabled
+      && !value.settings?.userLocation
+      && value.settings?.granularity !== "off"
+    ) void requestDeviceLocation();
+  }),
+);
+document.getElementById("ambient-use-device").addEventListener(
+  "click",
+  () => void requestDeviceLocation({ clearSaved: true }),
+);
+document.getElementById("ambient-clear-location").addEventListener(
+  "click",
+  () => {
+    ambientLocationLabel.value = "";
+    ambientLocationLat.value = "";
+    ambientLocationLon.value = "";
+    void saveAmbientSettings({ userLocation: null }).then((value) => {
+      if (value?.deviceEnabled && value.settings?.granularity !== "off") {
+        void requestDeviceLocation();
+      }
+    });
+  },
+);
 surgeonHerdBtn.addEventListener("click", toggleSurgeonHerd);
 surgeonSend.addEventListener("click", () => void submitSurgeon());
 surgeonInput.addEventListener("input", () => {
@@ -1929,6 +2163,8 @@ window.brainstemBeta.onOpenUpdate(() => {
 });
 window.brainstemBeta.onState(render);
 window.brainstemBeta.getState().then(render);
+void maintainAmbientContext();
+setInterval(() => void maintainAmbientContext(), 240000);
 
 
 // ---- Drag a .egg anywhere over the window to hatch it as a twin ------------

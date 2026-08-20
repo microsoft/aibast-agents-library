@@ -417,7 +417,7 @@ test("main, preload, and renderer keep completed Brainstem and Surgeon feeds exp
   assert.match(preload, /recordBrainstemTurn:/);
   assert.match(preload, /recordTwinTurn:/);
   assert.match(renderer, /type === "rapp-beta:ledger-turn"/);
-  assert.match(renderer, /type === "rapp-beta:twin-ledger-turn"/);
+  assert.match(renderer, /rapp-beta:twin-ledger-turn/);
   assert.match(main, /completedBrainstemRequests/);
   assert.match(renderer, /pendingLineageReply\.userInput/);
   assert.match(renderer, /brainstemBeta\.recordBrainstemTurn/);
