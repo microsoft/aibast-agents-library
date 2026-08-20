@@ -181,6 +181,7 @@ export class BrainstemProcess {
   constructor(config = resolveBrainstemConfig()) {
     this.config = config;
     this.child = null;
+    this.childError = null;
     this.logFd = null;
     this.logStream = null;
     this.logFlushPromise = null;
@@ -304,6 +305,7 @@ export class BrainstemProcess {
     });
     try {
       const spawnProcess = this.config.spawnImpl || spawn;
+      this.childError = null;
       this.child = spawnProcess(this.config.python, ["brainstem.py"], {
         cwd: this.config.brainstemDir,
         env: buildWorkerEnvironment(this.config),
@@ -311,7 +313,11 @@ export class BrainstemProcess {
         shell: false,
         stdio: ["ignore", "pipe", "pipe"],
       });
-      this.captureOutput(this.child);
+      const spawnedChild = this.child;
+      spawnedChild.on("error", (error) => {
+        if (this.child === spawnedChild) this.childError = error;
+      });
+      this.captureOutput(spawnedChild);
     } catch (error) {
       this.logStream.destroy();
       this.logStream = null;
@@ -322,7 +328,7 @@ export class BrainstemProcess {
     this.owned = true;
 
     const health = await waitForHealth(this.config.url, {
-      exited: () => this.hasExited(),
+      exited: () => Boolean(this.childError) || this.hasExited(),
     });
     const expectedBrainstemDir = canonicalFilesystemPath(
       this.config.brainstemDir,
@@ -334,11 +340,22 @@ export class BrainstemProcess {
     if (
       !health
       || !ownedHealthMatches
+      || this.childError
       || this.hasExited()
     ) {
+      const childError = this.childError;
       const exitCode = this.child?.exitCode;
       const signalCode = this.child?.signalCode;
       await this.stop();
+      if (childError) {
+        const detail = [childError.code, childError.message]
+          .filter(Boolean)
+          .join(": ");
+        throw new Error(
+          `Brainstem could not start: ${detail}. See ${this.config.logFile}.`,
+          { cause: childError },
+        );
+      }
       throw new Error(
         !ownedHealthMatches
           ? `Brainstem health on ${this.config.url} did not identify the owned source at ${expectedBrainstemDir}.`

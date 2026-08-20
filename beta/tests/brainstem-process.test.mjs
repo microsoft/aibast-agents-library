@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { EventEmitter } from "node:events";
 import { createServer } from "node:net";
 import { createServer as createHttpServer } from "node:http";
 import {
@@ -9,6 +10,7 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
+import { PassThrough } from "node:stream";
 import test from "node:test";
 
 import {
@@ -104,6 +106,50 @@ test("health wait stops when the child exits from a signal", async () => {
 
   assert.equal(result, null);
   assert.equal(calls, 1);
+});
+
+test("an asynchronous spawn error rejects start without crashing", async (t) => {
+  const root = mkdtempSync(path.join(tmpdir(), "frontier-spawn-error-"));
+  const sourceDir = path.join(root, "rapp_brainstem");
+  mkdirSync(sourceDir, { recursive: true });
+  writeFileSync(path.join(sourceDir, "brainstem.py"), "print('never runs')\n");
+  const child = new EventEmitter();
+  child.exitCode = null;
+  child.signalCode = null;
+  child.stdout = new PassThrough();
+  child.stderr = new PassThrough();
+  child.kill = () => false;
+  const failure = Object.assign(new Error("spawn fake-python EACCES"), {
+    code: "EACCES",
+  });
+  const brainstem = new BrainstemProcess({
+    brainstemDir: sourceDir,
+    logFile: path.join(root, "worker.log"),
+    ownPort: true,
+    port: 1,
+    portPreallocated: true,
+    python: process.execPath,
+    spawnImpl: () => {
+      queueMicrotask(() => {
+        child.exitCode = -13;
+        child.stdout.end();
+        child.stderr.end();
+        child.emit("error", failure);
+      });
+      return child;
+    },
+    url: "http://127.0.0.1:1",
+  });
+  t.after(async () => {
+    await brainstem.stop();
+    rmSync(root, { recursive: true, force: true });
+  });
+  const startedAt = Date.now();
+
+  await assert.rejects(brainstem.start(), /EACCES/);
+
+  assert.ok(Date.now() - startedAt < 2_000);
+  assert.equal(brainstem.owned, false);
 });
 
 test("health wait returns the first valid response", async () => {
