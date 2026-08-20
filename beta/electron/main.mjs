@@ -110,6 +110,18 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     ".beta-frame-menu #beta-update-status[data-phase=blocked],",
     ".beta-frame-menu #beta-update-status[data-phase=error]",
     "{border-color:#da3633;color:#ff7b72}",
+    ".beta-drive-feed{display:flex;flex-direction:column;align-items:center;gap:6px;",
+    "margin:7px 0;max-width:100%}",
+    ".beta-drive-step-card{max-width:min(760px,92%);overflow:hidden;",
+    "padding:5px 9px;border:1px solid #30363d;border-radius:999px;",
+    "background:#161b22;color:#8b949e;font:600 11px/1.25 ui-monospace,monospace;",
+    "text-overflow:ellipsis;white-space:nowrap}",
+    ".beta-drive-media-card{width:min(560px,92%);overflow:hidden;",
+    "border:1px solid #30363d;border-radius:10px;background:#0d1117}",
+    ".beta-drive-media-card img,.beta-drive-media-card video{display:block;",
+    "width:100%;max-height:320px;object-fit:contain}",
+    ".beta-drive-media-card a{display:block;padding:7px 9px;color:#58a6ff;",
+    "font-size:11px;text-decoration:none}",
   ].join("");
   document.head.appendChild(style);
   const downloadIcon = '<svg viewBox="0 0 24 24" fill="none" '
@@ -216,6 +228,63 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     });
     stampChatMessageHandles();
   }
+  function driveFeed() {
+    const chat = document.getElementById("chat");
+    if (!chat) return null;
+    let feed = document.getElementById("beta-drive-feed");
+    if (!feed) {
+      feed = document.createElement("div");
+      feed.id = "beta-drive-feed";
+      feed.className = "beta-drive-feed";
+      feed.dataset.brainstemAiDriver = "true";
+      chat.appendChild(feed);
+    }
+    return feed;
+  }
+  window.__rappBetaRenderDriveStep = (summary) => {
+    const feed = driveFeed();
+    const line = String(summary || "").replace(/\s+/g, " ").trim().slice(0, 220);
+    if (!feed || !line) return false;
+    const card = document.createElement("div");
+    card.className = "beta-drive-step-card";
+    card.dataset.driveStepCard = "true";
+    card.setAttribute("role", "status");
+    card.textContent = line;
+    feed.appendChild(card);
+    while (feed.querySelectorAll(".beta-drive-step-card").length > 20) {
+      feed.querySelector(".beta-drive-step-card")?.remove();
+    }
+    feed.parentElement.scrollTop = feed.parentElement.scrollHeight;
+    return true;
+  };
+  window.__rappBetaRenderDriveMedia = (artifact) => {
+    const feed = driveFeed();
+    if (!feed || !artifact?.url) return false;
+    const card = document.createElement("div");
+    card.className = "beta-drive-media-card";
+    const media = artifact.kind === "video"
+      ? document.createElement("video")
+      : document.createElement("img");
+    media.src = String(artifact.url);
+    if (artifact.kind === "video") {
+      media.controls = true;
+      media.preload = "metadata";
+    } else {
+      media.alt = String(artifact.alt || "Frontier capture");
+    }
+    const link = document.createElement("a");
+    link.href = String(artifact.url);
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = String(artifact.alt || "Open artifact");
+    card.append(media, link);
+    feed.appendChild(card);
+    while (feed.querySelectorAll(".beta-drive-media-card").length > 8) {
+      feed.querySelector(".beta-drive-media-card")?.remove();
+    }
+    feed.parentElement.scrollTop = feed.parentElement.scrollHeight;
+    return true;
+  };
   decorateAgentRows();
   const agentList = document.getElementById("agent-list-ul");
   if (agentList) {

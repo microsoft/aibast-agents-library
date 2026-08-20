@@ -543,7 +543,7 @@ function addSurgeonTool(session, toolName, toolCallId) {
   session.tools.push(tool);
 }
 
-function finishSurgeonTool(session, toolName, toolCallId, success) {
+function finishSurgeonTool(session, toolName, toolCallId, success, summary = null) {
   const tool = [...session.tools].reverse().find(
     (candidate) => (
       candidate.dataset.active === "true"
@@ -555,8 +555,10 @@ function finishSurgeonTool(session, toolName, toolCallId, success) {
   );
   if (!tool) return;
   tool.dataset.active = "false";
+  const name = tool.querySelector("strong");
   const status = tool.querySelector(".surgeon-tool-status");
-  status.textContent = success ? "done" : "failed";
+  if (summary) name.textContent = summary;
+  status.textContent = summary && success ? "" : (success ? "done" : "failed");
   status.style.color = success ? "#5cc271" : "#ff7b72";
 }
 
@@ -1321,7 +1323,13 @@ function handleSurgeonEvent(event) {
     addSurgeonTool(session, event.toolName || "tool", event.toolCallId);
     showSurgeonThinking(session);
   } else if (event.type === "tool-complete") {
-    finishSurgeonTool(session, event.toolName || "tool", event.toolCallId, event.success !== false);
+    finishSurgeonTool(
+      session,
+      event.toolName || "tool",
+      event.toolCallId,
+      event.success !== false,
+      event.summary || null,
+    );
     void refreshAgentExplorer();
   } else if (event.type === "artifact") {
     addSurgeonArtifact(session, event.artifact);

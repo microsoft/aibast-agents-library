@@ -162,6 +162,13 @@ async function browserDriverCommand(command, createHelpers) {
     return { cursor, label, pulse };
   }
 
+  function hideLabel(label = ensureUi().label) {
+    label.classList.remove("show");
+    setTimeout(() => {
+      if (!label.classList.contains("show")) label.textContent = "";
+    }, 180);
+  }
+
   // Keep the synthetic cursor visible while it moves, then clear the stage.
   const CURSOR_IDLE_HIDE_MS = 4000;
   function wakeCursor(cursor) {
@@ -191,6 +198,16 @@ async function browserDriverCommand(command, createHelpers) {
       || element?.value
       || "",
     ).replace(/\s+/g, " ").trim();
+  }
+
+  function pageTextForWait() {
+    const clone = document.body.cloneNode(true);
+    clone.querySelectorAll(".msg.user,[data-brainstem-ai-driver]").forEach(
+      (element) => element.remove(),
+    );
+    return String(clone.innerText || clone.textContent || "")
+      .replace(/\s+/g, " ")
+      .trim();
   }
   const { selectorFor } = helpers;
 
@@ -262,6 +279,55 @@ async function browserDriverCommand(command, createHelpers) {
         : { from: routeBefore, to: routeAfter },
       ...extra,
     };
+  }
+
+  function stepSummary(step, result) {
+    const action = String(step.action || "action").toLowerCase();
+    const verbs = {
+      announce: "announced",
+      chat: "sent",
+      click: "clicked",
+      expect: "checked",
+      inspect: "inspected",
+      press: "pressed",
+      read: "read",
+      surgeon_chat: "sent",
+      type: "typed",
+      wait: "waited for",
+    };
+    const h = result?.h
+      || result?.effect?.focus
+      || step.handle
+      || step.selector
+      || (action === "inspect" ? `@${frameName}` : "@page");
+    const effect = result?.effect || {};
+    const change = effect.added?.[0]
+      ? `added ${effect.added[0]}`
+      : effect.changed?.[0]
+        ? `changed ${effect.changed[0]}`
+        : effect.removed?.[0]
+          ? `removed ${effect.removed[0]}`
+          : effect.route
+            ? `route ${effect.route.to}`
+            : "";
+    return `▶ ${verbs[action] || action} ${h}${change ? ` → ${change}` : ""} ${
+      result?.ok === false ? "✗" : "✓"
+    }`.replace(/\s+/g, " ").trim().slice(0, 220);
+  }
+
+  function publishStep(step, result) {
+    const summary = stepSummary(step, result);
+    state.lastStep = summary;
+    window.__rappBetaRenderDriveStep?.(summary);
+    if (
+      ["click", "press", "type"].includes(String(step.action || "").toLowerCase())
+      && result
+      && typeof result === "object"
+      && !Array.isArray(result)
+    ) {
+      result.summary = summary;
+    }
+    return summary;
   }
 
   function conditionResult(condition, beforeSnapshot = null) {
@@ -337,7 +403,7 @@ async function browserDriverCommand(command, createHelpers) {
     label.style.transform = "translate(-50%, 4px)";
     label.classList.add("show");
     await sleep(Math.max(120, Number(durationMs) || 900));
-    label.classList.remove("show");
+    hideLabel(label);
   }
 
   async function pointAt(element, text) {
@@ -385,7 +451,7 @@ async function browserDriverCommand(command, createHelpers) {
     const after = currentOutline();
     const routeAfter = location.href;
     element.classList.remove("brainstem-ai-driver-target");
-    label.classList.remove("show");
+    hideLabel(label);
     return {
       ok: true,
       h,
@@ -453,7 +519,7 @@ async function browserDriverCommand(command, createHelpers) {
     const after = currentOutline();
     const routeAfter = location.href;
     element.classList.remove("brainstem-ai-driver-target");
-    ensureUi().label.classList.remove("show");
+    hideLabel();
     return {
       ok: true,
       h,
@@ -485,7 +551,7 @@ async function browserDriverCommand(command, createHelpers) {
       const textFound = !wantedText || (
         step.handle || step.selector
           ? Boolean(element)
-          : document.body.innerText.replace(/\s+/g, " ").includes(wantedText)
+          : pageTextForWait().includes(wantedText)
       );
       if ((!step.handle && !step.selector || element) && textFound) {
         return {
@@ -561,7 +627,7 @@ async function browserDriverCommand(command, createHelpers) {
     const after = currentOutline();
     const routeAfter = location.href;
     element.classList?.remove("brainstem-ai-driver-target");
-    ensureUi().label.classList.remove("show");
+    hideLabel();
     return {
       ok: true,
       h,
@@ -893,11 +959,17 @@ async function browserDriverCommand(command, createHelpers) {
       throw new Error("A UI driver run requires at least one step.");
     }
     const results = [];
-    for (const step of command.steps) results.push(await perform(step));
+    const summaries = [];
+    for (const step of command.steps) {
+      const result = await perform(step);
+      summaries.push(publishStep(step, result));
+      results.push(result);
+    }
     state.lastRun = Date.now();
-    return { results };
+    return { results, summaries };
   }
   const result = await perform(command);
+  publishStep(command, result);
   state.lastRun = Date.now();
   return result;
 }
@@ -1802,6 +1874,7 @@ export async function startUiDriverServer({
     || path.join(betaHome, "ui-driver.json");
   const captureDir = path.join(betaHome, "captures");
   const recordingDir = path.join(betaHome, "recordings");
+  const nodeHelpers = createUiDriverHelpers();
   const token = randomBytes(32).toString("hex");
   const artifactToken = randomBytes(32).toString("hex");
   const artifacts = new Map();
@@ -1811,6 +1884,23 @@ export async function startUiDriverServer({
   function publishArtifact(filePath, contentType, kind) {
     if (!existsSync(filePath)) {
       throw new Error(`UI driver artifact is missing: ${filePath}`);
+    }
+
+    function boundedResult(result, command) {
+      const limit = nodeHelpers.capNumber(
+        command.byteBudget ?? command.byte_budget,
+        512,
+        64 * 1024,
+        nodeHelpers.caps.budgetDefault,
+      );
+      const lastStep = Array.isArray(command.steps)
+        ? [...command.steps].reverse().find((step) => step?.handle)
+        : null;
+      const fitted = nodeHelpers.fitBudget(result, {
+        handle: command.handle || lastStep?.handle || "@page",
+        limit,
+      });
+      return fitted.truncated ? fitted.value : result;
     }
     const artifactId = randomBytes(18).toString("base64url");
     artifacts.set(artifactId, {
@@ -1887,6 +1977,25 @@ export async function startUiDriverServer({
         ? String(text?.fullText || "").slice(0, 2000)
         : caption,
     };
+  }
+
+  async function renderGrailMedia(artifact) {
+    const frame = brainstemFrame(window, loopbackUrl);
+    if (!frame || !artifact?.url) return false;
+    return frame.executeJavaScript(
+      `Boolean(window.__rappBetaRenderDriveMedia?.(${JSON.stringify(artifact)}))`,
+      true,
+    );
+  }
+
+  async function renderGrailStep(summary) {
+    const frame = brainstemFrame(window, loopbackUrl);
+    const line = String(summary || "").replace(/\s+/g, " ").trim().slice(0, 220);
+    if (!frame || !line) return false;
+    return frame.executeJavaScript(
+      `Boolean(window.__rappBetaRenderDriveStep?.(${JSON.stringify(line)}))`,
+      true,
+    );
   }
 
   const server = createServer(async (request, response) => {
@@ -2085,13 +2194,13 @@ export async function startUiDriverServer({
         ) || requestedCursor;
         jsonResponse(response, 200, {
           ok: true,
-          result: {
+          result: boundedResult({
             ...telemetry,
             chat_lease_count: chatLeaseCount,
             cursor,
             events,
             navigation_count: navigationCount,
-          },
+          }, command),
         });
         return;
       }
@@ -2138,19 +2247,36 @@ export async function startUiDriverServer({
         )
           ? await stopCapturedWindowRecording(window, command)
           : await stopWindowRecording(window, command);
+        const screenshot = await captureEvidence(command);
+        await renderGrailMedia({
+          alt: "Brainstem UI driver recording",
+          kind: "video",
+          url: recording?.url,
+        });
+        await renderGrailMedia({
+          alt: "Final Brainstem UI driver capture",
+          kind: "image",
+          url: screenshot.captureUrl,
+        });
         jsonResponse(response, 200, {
           ok: true,
           result: {
             recording,
-            screenshot: await captureEvidence(command),
+            screenshot,
           },
         });
         return;
       }
       if (command.action === "screenshot") {
+        const result = await captureEvidence(command);
+        await renderGrailMedia({
+          alt: "Brainstem UI driver capture",
+          kind: "image",
+          url: result.captureUrl,
+        });
         jsonResponse(response, 200, {
           ok: true,
-          result: await captureEvidence(command),
+          result,
         });
         return;
       }
@@ -2170,8 +2296,17 @@ export async function startUiDriverServer({
         JSON.stringify(command)
       }, ${createUiDriverHelpers.toString()})`;
       const result = await target.executeJavaScript(source, true);
+      if (wantedTwin || command.target === "shell") {
+        const summaries = Array.isArray(result?.summaries)
+          ? result.summaries.filter(Boolean)
+          : [result?.summary].filter(Boolean);
+        for (const summary of summaries) await renderGrailStep(summary);
+      }
       armForceModeIdle(window, command.idleMs);
-      jsonResponse(response, 200, { ok: true, result });
+      jsonResponse(response, 200, {
+        ok: true,
+        result: boundedResult(result, command),
+      });
     } catch (error) {
       jsonResponse(response, 400, { ok: false, error: errorMessage(error) });
     } finally {
