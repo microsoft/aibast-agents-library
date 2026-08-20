@@ -42,6 +42,9 @@ contextBridge.exposeInMainWorld("brainstemBeta", {
     ipcRenderer.invoke("beta:cards-load-custom-table")
   ),
   cardsPark: (card) => ipcRenderer.invoke("beta:cards-park", card),
+  cardsParkExisting: (id) => (
+    ipcRenderer.invoke("beta:cards-park-existing", id)
+  ),
   cardsRace: (id) => ipcRenderer.invoke("beta:cards-race", id),
   cardsUndo: (id) => ipcRenderer.invoke("beta:cards-undo", id),
   cardsWake: (id) => ipcRenderer.invoke("beta:cards-wake", id),

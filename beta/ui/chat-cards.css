@@ -109,6 +109,7 @@
   font: 12px/1.35 system-ui, sans-serif;
   transform: translateX(var(--swipe-x)) rotate(var(--swipe-tilt));
   transition: transform .18s ease, box-shadow .18s ease;
+  touch-action: pan-y;
   user-select: none;
 }
 
@@ -129,6 +130,19 @@
   font: 900 16px/1 ui-serif, Georgia, serif;
   text-align: center;
 }
+
+.chat-card-drag {
+  position: absolute;
+  z-index: 3;
+  top: 5px;
+  right: 7px;
+  padding: 2px 4px;
+  color: #625a4b;
+  cursor: grab;
+  font-size: 17px;
+  line-height: 1;
+}
+.chat-card-drag:active { cursor: grabbing; }
 
 .chat-card-face {
   box-sizing: border-box;
@@ -315,25 +329,47 @@
   transform-origin: 90% 100%;
 }
 .chat-card-discard.open .chat-card { display: block; }
-.chat-card-discard.open .chat-card:nth-of-type(2) { transform: rotate(-16deg); }
-.chat-card-discard.open .chat-card:nth-of-type(3) { transform: rotate(-8deg); }
-.chat-card-discard.open .chat-card:nth-of-type(4) { transform: rotate(0); }
-.chat-card-discard.open .chat-card:nth-of-type(5) { transform: rotate(8deg); }
-.chat-card-discard.open .chat-card:nth-of-type(6) { transform: rotate(16deg); }
+.chat-card-discard.open .chat-card {
+  transform:
+    translateX(var(--pile-offset))
+    rotate(var(--pile-angle));
+}
 .chat-card-discard .chat-card p,
 .chat-card-discard .chat-card-art,
 .chat-card-discard .chat-card-meta { display: none; }
 
 .chat-card-overflow {
+  position: absolute;
   z-index: 2;
-  align-self: end;
-  padding: 8px 12px;
+  bottom: 14px;
+  left: 20px;
+}
+.chat-card-overflow > button {
+  padding: 7px 10px;
   border: 1px solid rgba(255,255,255,.18);
-  border-radius: 999px;
+  border-radius: 8px;
   background: rgba(3,10,7,.7);
   color: #e7dfcc;
   font: 700 10px/1 system-ui, sans-serif;
 }
+.chat-card-overflow .chat-card {
+  position: absolute;
+  bottom: 38px;
+  left: 0;
+  display: none;
+  width: 120px;
+  height: 168px;
+  transform-origin: 10% 100%;
+}
+.chat-card-overflow.open .chat-card {
+  display: block;
+  transform:
+    translateX(var(--pile-offset))
+    rotate(var(--pile-angle));
+}
+.chat-card-overflow .chat-card p,
+.chat-card-overflow .chat-card-art,
+.chat-card-overflow .chat-card-meta { display: none; }
 
 .chat-card-toast {
   position: fixed;
@@ -364,7 +400,7 @@
 }
 .chat-card-surface.deal-fan .chat-card {
   margin-right: calc(var(--card-width) * -.55);
-  transform: rotate(calc((var(--seat, 1) - 6) * 2deg));
+  transform: rotate(var(--fan-angle));
 }
 .chat-card-surface.deal-seats .chat-card {
   animation: chat-card-seat .52s cubic-bezier(.2,.8,.2,1) both;

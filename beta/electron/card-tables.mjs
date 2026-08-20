@@ -190,3 +190,28 @@ export function readCustomTable(filePath) {
     table: validateCustomTable(value),
   };
 }
+
+export function resolveCustomTable(settings, {
+  read = readCustomTable,
+} = {}) {
+  if (
+    !settings?.on
+    || settings.table !== "custom"
+    || !settings.customTablePath
+  ) {
+    return { error: null, table: null };
+  }
+  try {
+    return {
+      error: null,
+      table: read(settings.customTablePath).table,
+    };
+  } catch (error) {
+    return {
+      error: `Could not load custom card table: ${String(
+        error?.message || error,
+      )}`,
+      table: null,
+    };
+  }
+}

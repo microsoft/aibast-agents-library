@@ -94,6 +94,12 @@ restore the original styling; the choice is saved in `settings.json`, with
 `RAPP_CHAT_LOOK=messages|business` as an override. The look is theming only and
 does not change reply delivery.
 
+The **April Fools: Card Table** is strictly opt-in and leaves Frontier unchanged
+while off. Enable it from the native **View → Chat Look** menu, with the exact
+chat message `april fools`, or with `RAPP_APRIL_FOOLS=1`; once enabled, the
+three-dot menu can turn it off. Park, wake, race, fold, shuffle, and theme saved
+chat cards without changing the Brainstem kernel; parked cards remain local.
+
 Delivery independently defaults to `RAPP_CHAT_STREAM=smooth`; use `raw` for the
 untouched kernel stream or `hold` for buffered delivery
 (`RAPP_CHAT_TYPING=1` remains a hold alias).

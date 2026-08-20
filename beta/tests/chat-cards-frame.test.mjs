@@ -23,6 +23,8 @@ test("card frame bridge exists only in enabled bridge source", () => {
   assert.match(source, /rapp-beta:card-capture/);
   assert.match(source, /rapp-beta:card-wake/);
   assert.match(source, /rapp-beta:card-parked/);
+  assert.match(source, /pendingRequestIds/);
+  assert.match(source, /__rappBetaDeferredCardCompletions/);
 });
 
 test("card capture and restore use the page sanitizer", () => {
@@ -38,7 +40,7 @@ test("wake history substitutes by prefix and clear stops future splicing", () =>
   const source = composeChatCardsFrameBridgeSource("", enabled);
   assert.match(
     source,
-    /activeHistory\s*\?\s*\[\.\.\.structuredClone\(activeHistory\), \.\.\.incomingHistory\]/,
+    /activeHistory\s*\?\s*\[\.\.\.wireHistory\(activeHistory\), \.\.\.incomingHistory\]/,
   );
   assert.match(source, /body\.conversation_history = effectiveHistory/);
   assert.match(source, /if \(\s*!internalClear[\s\S]*activeHistory = null/);
@@ -51,4 +53,7 @@ test("parking preserves an accepted delayed wire while kernel Clear runs", () =>
   assert.match(source, /controller\.abort\(originalSignal\?\.reason\)/);
   assert.match(source, /clearKernel\(\{ preservePending: true \}\)/);
   assert.match(source, /rapp-beta:card-pending-complete/);
+  assert.match(source, /rapp-beta:card-completion-ack/);
+  assert.match(source, /canonicalHistory/);
+  assert.match(source, /rapp-beta:card-detached/);
 });

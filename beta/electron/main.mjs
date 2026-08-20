@@ -36,7 +36,10 @@ import {
   readAprilFoolsSettings,
   registerChatCardIpc,
 } from "./chat-cards.mjs";
-import { readCustomTable } from "./card-tables.mjs";
+import {
+  readCustomTable,
+  resolveCustomTable,
+} from "./card-tables.mjs";
 import { CopilotStudioAuthManager } from "./copilot-studio-auth.mjs";
 import { CopilotRuntime } from "./copilot-runtime.mjs";
 import { executeLineageCommand } from "./lineage-control.mjs";
@@ -185,9 +188,7 @@ let chatLookOverridden = initialChatLook.chatLookOverridden;
 let chatTypingEnabled = chatStreamMode === "hold";
 let aprilFools = initialAprilFools.aprilFools;
 let aprilFoolsOverridden = initialAprilFools.aprilFoolsOverridden;
-let customCardTable = aprilFools.table === "custom" && aprilFools.customTablePath
-  ? readCustomTable(aprilFools.customTablePath).table
-  : null;
+let customCardTableState = resolveCustomTable(aprilFools);
 const chatCardStore = new ChatCardStore({ betaHome });
 const startupFingerprint = betaSourceFingerprint(path.resolve(packageDir, ".."));
 const brainstemRuntimeFingerprint = runtimeDirectoryFingerprint(
@@ -1440,7 +1441,8 @@ const MAX_BRAIN_SURGEONS = 12;
 const state = {
   aprilFools,
   aprilFoolsOverridden,
-  cardTable: customCardTable,
+  cardTable: customCardTableState.table,
+  cardTableError: customCardTableState.error,
   chatLook,
   chatLookOverridden,
   chatTypingEnabled,
@@ -1533,15 +1535,13 @@ function requestChatLookChange(nextLook) {
 }
 
 function applyEffectiveAprilFools(value) {
-  customCardTable = value.aprilFools.table === "custom"
-    && value.aprilFools.customTablePath
-    ? readCustomTable(value.aprilFools.customTablePath).table
-    : null;
+  customCardTableState = resolveCustomTable(value.aprilFools);
   aprilFools = value.aprilFools;
   aprilFoolsOverridden = value.aprilFoolsOverridden;
   state.aprilFools = aprilFools;
   state.aprilFoolsOverridden = aprilFoolsOverridden;
-  state.cardTable = customCardTable;
+  state.cardTable = customCardTableState.table;
+  state.cardTableError = customCardTableState.error;
   syncAprilFoolsMenu();
   emitState();
 }

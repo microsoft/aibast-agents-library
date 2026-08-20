@@ -1,11 +1,13 @@
 import assert from "node:assert/strict";
 import {
   existsSync,
+  mkdirSync,
   mkdtempSync,
   readFileSync,
   readdirSync,
   rmSync,
   statSync,
+  writeFileSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -114,13 +116,50 @@ test("race creates a pending contender and waking a winner folds its rival", (t)
   assert.equal(race.question, "Which answer wins?");
   assert.equal(race.source.status, "racing");
   assert.equal(race.contender.status, "racing");
+  assert.equal(race.source.raceId, race.contender.raceId);
+  assert.throws(
+    () => store.race(race.source.id),
+    /already in an unresolved race/,
+  );
   assert.equal(race.contender.turns.at(-1).pending, true);
   const completed = store.complete(race.contender.id, {
     reply: "The contender replied.",
     html: "<p>The contender replied.</p>",
+    requestId: "request-fixture-1",
+  });
+
+  test("a race winner folds only its paired rival", (t) => {
+    let raceSequence = 0;
+    const { store } = fixtureStore(t, {
+      raceIdFactory: () => `race-fixture-${++raceSequence}`,
+    });
+    const first = store.race(store.park(cardFixture("First race?")).id);
+    const second = store.race(store.park(cardFixture("Second race?")).id);
+
+    store.wake(first.source.id);
+    assert.equal(store.read(first.contender.id).status, "folded");
+    assert.equal(store.read(second.source.id).status, "racing");
+    assert.equal(store.read(second.contender.id).status, "racing");
+  });
+
+  test("a non-restorable transcript reports the reason instead of waking", (t) => {
+    const { store } = fixtureStore(t);
+    const card = store.park({
+      ...cardFixture(),
+      restorable: false,
+      restoreError: "Exact wire history was not observed.",
+    });
+    assert.equal(card.restorable, false);
+    assert.throws(() => store.wake(card.id), /wire history was not observed/);
   });
   assert.equal(completed.turns.at(-1).pending, undefined);
   assert.equal(completed.history.at(-1).content, "The contender replied.");
+  const duplicate = store.complete(race.contender.id, {
+    reply: "The contender replied.",
+    html: "<p>The contender replied.</p>",
+    requestId: "request-fixture-1",
+  });
+  assert.equal(duplicate.history.length, completed.history.length);
 
   store.wake(original.id);
   assert.equal(store.read(original.id).status, "primary");
@@ -131,6 +170,67 @@ test("race refuses a card whose last user turn is not a question", (t) => {
   const { store } = fixtureStore(t);
   const card = store.park(cardFixture("Build the answer."));
   assert.throws(() => store.race(card.id), /last user turn is a question/);
+});
+
+test("concurrent pending replies reconcile by request id", (t) => {
+  const { store } = fixtureStore(t);
+  const at = "2026-08-20T20:00:00.000Z";
+  const card = store.park({
+    title: "Concurrent card",
+    route: cardFixture().route,
+    turns: [
+      { role: "user", text: "First?", html: "", at, requestId: "request-1" },
+      {
+        role: "assistant",
+        text: "Waiting for reply...",
+        html: "",
+        at,
+        pending: true,
+        requestId: "request-1",
+      },
+      { role: "user", text: "Second?", html: "", at, requestId: "request-2" },
+      {
+        role: "assistant",
+        text: "Waiting for reply...",
+        html: "",
+        at,
+        pending: true,
+        requestId: "request-2",
+      },
+    ],
+    history: [
+      { role: "user", content: "First?", requestId: "request-1" },
+      { role: "user", content: "Second?", requestId: "request-2" },
+    ],
+  });
+
+  store.complete(card.id, {
+    reply: "Second answer.",
+    requestId: "request-2",
+  });
+  const completed = store.complete(card.id, {
+    reply: "First answer.",
+    requestId: "request-1",
+  });
+  assert.deepEqual(
+    completed.turns.map((turn) => [turn.text, turn.pending]),
+    [
+      ["First?", undefined],
+      ["First answer.", undefined],
+      ["Second?", undefined],
+      ["Second answer.", undefined],
+    ],
+  );
+  assert.deepEqual(
+    completed.history.map((message) => [message.role, message.content]),
+    [
+      ["user", "First?"],
+      ["assistant", "First answer."],
+      ["user", "Second?"],
+      ["assistant", "Second answer."],
+    ],
+  );
+  assert(completed.history.every((message) => !("requestId" in message)));
 });
 
 test("card store enforces turn and 256 KiB caps before writing", (t) => {
@@ -166,7 +266,26 @@ test("card store enforces turn and 256 KiB caps before writing", (t) => {
   );
 });
 
-test("card IPC is trusted and inert while April Fools mode is off", async (t) => {
+test("oversized or invalid on-disk cards are reported without hiding valid cards", (t) => {
+  const { betaHome, store } = fixtureStore(t);
+  const valid = store.park(cardFixture());
+  const invalidId = "card-invalid-oversized";
+  const directory = path.join(betaHome, "cards");
+  mkdirSync(directory, { recursive: true });
+  writeFileSync(
+    path.join(directory, `${invalidId}.json`),
+    " ".repeat(MAX_CHAT_CARD_BYTES + 1),
+  );
+
+  assert.throws(() => store.read(invalidId), /exceeds the 262144 byte limit/);
+  const cards = store.list();
+  assert(cards.some((card) => card.id === valid.id && card.restorable));
+  const unavailable = cards.find((card) => card.id === invalidId);
+  assert.equal(unavailable.restorable, false);
+  assert.match(unavailable.restoreError, /exceeds the 262144 byte limit/);
+});
+
+test("card IPC is inert off except identified durable completions", async (t) => {
   const { store } = fixtureStore(t);
   const handlers = new Map();
   let trusted = 0;
@@ -187,12 +306,45 @@ test("card IPC is trusted and inert while April Fools mode is off", async (t) =>
     "beta:cards-fold",
     "beta:cards-list",
     "beta:cards-park",
+    "beta:cards-park-existing",
     "beta:cards-race",
     "beta:cards-undo",
     "beta:cards-wake",
   ]);
   assert.throws(() => handlers.get("beta:cards-list")({}), /card table is off/);
+  const pending = store.park({
+    ...cardFixture(),
+    turns: [
+      ...cardFixture().turns.slice(0, 1),
+      {
+        role: "assistant",
+        text: "Waiting for reply...",
+        html: "",
+        at: "2026-08-20T20:00:00.000Z",
+        pending: true,
+        requestId: "request-off-1",
+      },
+    ],
+    history: [{
+      role: "user",
+      content: "What should we build?",
+      requestId: "request-off-1",
+    }],
+  });
+  const completedOff = handlers.get("beta:cards-complete")(
+    {},
+    pending.id,
+    {
+      reply: "Durable while off.",
+      requestId: "request-off-1",
+    },
+  );
+  assert.equal(completedOff.history.at(-1).content, "Durable while off.");
   enabled = true;
-  assert.deepEqual(handlers.get("beta:cards-list")({}), []);
-  assert.equal(trusted, 2);
+  assert.equal(
+    handlers.get("beta:cards-park-existing")({}, pending.id).status,
+    "parked",
+  );
+  assert.equal(handlers.get("beta:cards-list")({})[0].id, pending.id);
+  assert.equal(trusted, 4);
 });

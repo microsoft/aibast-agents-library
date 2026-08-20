@@ -127,6 +127,11 @@ test("visible UI driver accepts bounded v2 actions", () => {
           until: { snapshot_changed: true },
         },
         { action: "expect", handle: "@brainstem.send", state: "enabled" },
+        {
+          action: "swipe",
+          direction: "right",
+          handle: "@herd.card[card-fixture]",
+        },
       ],
     }).action,
     "run",
@@ -135,12 +140,24 @@ test("visible UI driver accepts bounded v2 actions", () => {
     "recording_status",
     "route_telemetry",
     "set_chat_lease",
+    "swipe",
   ]) {
     assert.equal(
       uiDriverInternals.validateCommand({ action }).action,
       action,
     );
   }
+  assert.equal(
+    uiDriverInternals.frameKeyForCommand({ action: "swipe" }),
+    "brainstem",
+  );
+  assert.equal(
+    uiDriverInternals.frameKeyForCommand({
+      action: "swipe",
+      target: "shell",
+    }),
+    "shell",
+  );
 });
 
 test("visible UI driver rejects unknown and unbounded commands", () => {

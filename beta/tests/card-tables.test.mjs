@@ -13,6 +13,7 @@ import {
   CARD_TABLE_THEMES,
   MAX_CUSTOM_TABLE_BYTES,
   readCustomTable,
+  resolveCustomTable,
   validateCustomTable,
 } from "../electron/card-tables.mjs";
 
@@ -80,4 +81,32 @@ test("custom table loader accepts only size-bounded local JSON", (t) => {
   const large = path.join(root, "large.json");
   writeFileSync(large, " ".repeat(MAX_CUSTOM_TABLE_BYTES + 1));
   assert.throws(() => readCustomTable(large), /limited to 65536 bytes/);
+});
+
+test("a stale custom table cannot break disabled mode", () => {
+  let reads = 0;
+  const disabled = resolveCustomTable({
+    on: false,
+    table: "custom",
+    customTablePath: "/deleted/table.json",
+  }, {
+    read() {
+      reads += 1;
+      throw new Error("should not read");
+    },
+  });
+  assert.deepEqual(disabled, { error: null, table: null });
+  assert.equal(reads, 0);
+
+  const enabled = resolveCustomTable({
+    on: true,
+    table: "custom",
+    customTablePath: "/deleted/table.json",
+  }, {
+    read() {
+      throw new Error("file is gone");
+    },
+  });
+  assert.equal(enabled.table, null);
+  assert.match(enabled.error, /file is gone/);
 });

@@ -5,9 +5,12 @@
     captureWaiters: new Map(),
     context: null,
     controller: null,
+    createdHerd: false,
     enabled: false,
     openedHerd: false,
+    primaryFrameGeneration: null,
     primaryId: null,
+    primaryRouteKey: null,
     refreshSequence: 0,
     timers: new Set(),
   };
@@ -49,6 +52,7 @@
     actionLabel,
     duration = 8000,
   } = {}) {
+    if (!SCRIPT_STATE.enabled) return null;
     document.querySelector(".chat-card-toast")?.remove();
     const toast = document.createElement("div");
     toast.className = "chat-card-toast";
@@ -120,24 +124,62 @@
     };
   }
 
+  function routeKey(state = SCRIPT_STATE.context?.state) {
+    return [
+      state?.brainstem?.callerRappid || "",
+      state?.brainstem?.compositionHash || "",
+    ].join("|");
+  }
+
+  function assertCardRoute(card) {
+    const current = routeKey();
+    const stored = [
+      card.route?.rappid || "",
+      card.route?.compositionHash || "",
+    ].join("|");
+    if (!card.route?.rappid || !card.route?.compositionHash || stored !== current) {
+      throw new Error(
+        "This card belongs to a different Brainstem route or composition and cannot be restored here.",
+      );
+    }
+  }
+
   async function persistCapture(capture) {
     if (!hasConversation(capture)) {
       throw new Error("There is no Brainstem conversation to park.");
     }
-    const existing = SCRIPT_STATE.primaryId
+    const boundToCurrentFrame = (
+      SCRIPT_STATE.primaryFrameGeneration
+        === SCRIPT_STATE.context.frameGeneration
+      && SCRIPT_STATE.primaryRouteKey === routeKey()
+    );
+    const existing = SCRIPT_STATE.primaryId && boundToCurrentFrame
       ? SCRIPT_STATE.cards.find((card) => card.id === SCRIPT_STATE.primaryId)
       : null;
+    if (!boundToCurrentFrame) SCRIPT_STATE.primaryId = null;
     const card = await SCRIPT_STATE.context.api.cardsPark({
       ...(existing || {}),
       ...(existing ? { id: existing.id } : {}),
       title: capture.title,
       route: routeForCapture(capture),
       turns: capture.turns,
-      history: capture.history,
+      history: capture.restorable
+        ? capture.history
+        : existing?.history || capture.history,
+      restorable: capture.restorable || existing?.restorable === true,
+      restoreError: capture.restorable || existing?.restorable === true
+        ? null
+        : capture.restoreError,
       table: existing?.table || { faceUp: true },
     });
-    postToFrame({ type: "rapp-beta:card-parked", id: card.id });
+    postToFrame({
+      type: "rapp-beta:card-parked",
+      id: card.id,
+      requestIds: capture.pendingRequestIds || [],
+    });
     SCRIPT_STATE.primaryId = null;
+    SCRIPT_STATE.primaryFrameGeneration = null;
+    SCRIPT_STATE.primaryRouteKey = null;
     return card;
   }
 
@@ -150,12 +192,29 @@
   }
 
   async function wakeCard(id) {
+    const requested = SCRIPT_STATE.cards.find((card) => card.id === id);
+    if (requested?.restorable === false) {
+      throw new Error(requested.restoreError || "This card cannot be restored.");
+    }
+    assertCardRoute(requested);
+    if (
+      SCRIPT_STATE.primaryId === id
+      && SCRIPT_STATE.primaryFrameGeneration
+        === SCRIPT_STATE.context.frameGeneration
+      && SCRIPT_STATE.primaryRouteKey === routeKey()
+    ) {
+      const winner = await SCRIPT_STATE.context.api.cardsWake(id);
+      await refreshCards();
+      return winner;
+    }
     if (SCRIPT_STATE.primaryId !== id) {
       const current = await requestCapture();
       if (hasConversation(current)) await persistCapture(current);
     }
     const card = await SCRIPT_STATE.context.api.cardsWake(id);
     SCRIPT_STATE.primaryId = card.id;
+    SCRIPT_STATE.primaryFrameGeneration = SCRIPT_STATE.context.frameGeneration;
+    SCRIPT_STATE.primaryRouteKey = routeKey();
     postToFrame({ type: "rapp-beta:card-wake", card });
     await refreshCards();
     showToast(`Woke "${card.title}".`);
@@ -163,9 +222,15 @@
   }
 
   async function foldCard(id) {
+    if (SCRIPT_STATE.primaryId === id) {
+      const current = await requestCapture();
+      if (hasConversation(current)) await persistCapture(current);
+    }
     const result = await SCRIPT_STATE.context.api.cardsFold(id);
     if (SCRIPT_STATE.primaryId === id) {
       SCRIPT_STATE.primaryId = null;
+      SCRIPT_STATE.primaryFrameGeneration = null;
+      SCRIPT_STATE.primaryRouteKey = null;
       postToFrame({ type: "rapp-beta:card-clear" });
     }
     await refreshCards();
@@ -181,10 +246,14 @@
   }
 
   async function raceCard(id) {
+    const source = SCRIPT_STATE.cards.find((card) => card.id === id);
+    assertCardRoute(source);
     const current = await requestCapture();
     if (hasConversation(current)) await persistCapture(current);
     const race = await SCRIPT_STATE.context.api.cardsRace(id);
-    SCRIPT_STATE.primaryId = null;
+    SCRIPT_STATE.primaryId = race.contender.id;
+    SCRIPT_STATE.primaryFrameGeneration = SCRIPT_STATE.context.frameGeneration;
+    SCRIPT_STATE.primaryRouteKey = routeKey();
     postToFrame({
       type: "rapp-beta:card-race",
       id: race.contender.id,
@@ -199,6 +268,7 @@
   }
 
   function cardCanRace(card) {
+    if (card.status === "racing") return false;
     const lastUser = [...(card.turns || [])]
       .reverse()
       .find((turn) => turn.role === "user");
@@ -217,6 +287,8 @@
     let pointerId = null;
     let startX = 0;
     let deltaX = 0;
+    let wheelDelta = 0;
+    let wheelTimer = null;
     const reset = () => {
       pointerId = null;
       deltaX = 0;
@@ -228,7 +300,11 @@
       if (event.target.closest("button,select,a,input")) return;
       pointerId = event.pointerId;
       startX = event.clientX;
-      tile.setPointerCapture?.(pointerId);
+      try {
+        tile.setPointerCapture?.(pointerId);
+      } catch {
+        // Synthetic UI-driver pointers do not belong to a native pointer stream.
+      }
       tile.classList.add("swiping");
     });
     tile.addEventListener("pointermove", (event) => {
@@ -248,16 +324,29 @@
       else if (movement <= -72) void foldCard(card.id).catch(showError);
     });
     tile.addEventListener("pointercancel", reset);
+    tile.addEventListener("wheel", (event) => {
+      if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
+      event.preventDefault();
+      wheelDelta += event.deltaX;
+      clearTimeout(wheelTimer);
+      wheelTimer = setTimeout(() => { wheelDelta = 0; }, 260);
+      if (Math.abs(wheelDelta) < 72) return;
+      const movement = wheelDelta;
+      wheelDelta = 0;
+      clearTimeout(wheelTimer);
+      if (movement > 0) void wakeCard(card.id).catch(showError);
+      else void foldCard(card.id).catch(showError);
+    }, { passive: false });
   }
 
-  function attachCardDrag(tile, card) {
-    tile.draggable = true;
-    tile.addEventListener("dragstart", (event) => {
+  function attachCardDrag(handle, tile, card) {
+    handle.draggable = true;
+    handle.addEventListener("dragstart", (event) => {
       event.dataTransfer.effectAllowed = "move";
       event.dataTransfer.setData("application/x-rapp-chat-card", card.id);
       tile.classList.add("dragging");
     });
-    tile.addEventListener("dragend", () => tile.classList.remove("dragging"));
+    handle.addEventListener("dragend", () => tile.classList.remove("dragging"));
   }
 
   function cardTile(card, { folded = false } = {}) {
@@ -267,12 +356,20 @@
     tile.dataset.drive = driveCard(card.id);
     tile.dataset.seat = card.table?.seat || "";
     tile.dataset.status = card.status;
+    const seat = Number(card.table?.seat) || 1;
+    tile.style.setProperty("--fan-angle", `${(seat - 6) * 2}deg`);
     tile.tabIndex = 0;
     tile.setAttribute("aria-label", `${card.title}, ${card.status} chat card`);
 
     const corner = document.createElement("span");
     corner.className = "chat-card-corner";
     corner.textContent = String(card.turns?.length || 0);
+    const drag = document.createElement("span");
+    drag.className = "chat-card-drag";
+    drag.dataset.drive = driveCard(card.id, "drag");
+    drag.title = "Drag this card onto the Brainstem";
+    drag.setAttribute("aria-label", `Drag ${card.title}`);
+    drag.textContent = "⠿";
     const face = document.createElement("div");
     face.className = "chat-card-face";
     const banner = document.createElement("div");
@@ -302,6 +399,10 @@
     wake.type = "button";
     wake.dataset.drive = driveCard(card.id, "wake");
     wake.textContent = "Wake";
+    wake.disabled = card.restorable === false;
+    wake.title = card.restorable === false
+      ? card.restoreError
+      : "Wake this chat in the Brainstem.";
     wake.addEventListener("click", () => void wakeCard(card.id).catch(showError));
     actions.appendChild(wake);
     if (!folded) {
@@ -328,9 +429,9 @@
       actions.append(race, fold);
     }
     face.append(banner, art, excerpt, meta, actions);
-    tile.append(corner, face);
+    tile.append(corner, drag, face);
     attachSwipe(tile, card);
-    attachCardDrag(tile, card);
+    attachCardDrag(drag, tile, card);
     tile.addEventListener("keydown", (event) => {
       if (event.key === "ArrowRight" || event.key === "Enter") {
         event.preventDefault();
@@ -381,8 +482,52 @@
     const button = pile.querySelector("button");
     button.textContent = `Discard pile · ${folded.length}`;
     pile.querySelectorAll(".chat-card.folded").forEach((card) => card.remove());
-    for (const card of folded.slice(0, 12)) {
-      pile.appendChild(cardTile(card, { folded: true }));
+    for (const [index, card] of folded.entries()) {
+      const tile = cardTile(card, { folded: true });
+      const spread = Math.min(8, 48 / Math.max(1, folded.length));
+      tile.style.setProperty(
+        "--pile-angle",
+        `${(index - ((folded.length - 1) / 2)) * spread}deg`,
+      );
+      tile.style.setProperty("--pile-offset", `${index * -7}px`);
+      pile.appendChild(tile);
+    }
+  }
+
+  function renderOverflow(surface, overflowCards) {
+    let pile = surface.querySelector(".chat-card-overflow");
+    if (!overflowCards.length) {
+      pile?.remove();
+      return;
+    }
+    if (!pile) {
+      pile = document.createElement("section");
+      pile.className = "chat-card-overflow";
+      const button = document.createElement("button");
+      button.type = "button";
+      button.dataset.drive = "cardTable.overflow";
+      button.addEventListener("click", () => {
+        pile.classList.toggle("open");
+        button.setAttribute(
+          "aria-expanded",
+          String(pile.classList.contains("open")),
+        );
+      });
+      pile.appendChild(button);
+      surface.appendChild(pile);
+    }
+    pile.querySelector("button").textContent =
+      `Overflow pile · ${overflowCards.length}`;
+    pile.querySelectorAll(".chat-card").forEach((card) => card.remove());
+    for (const [index, card] of overflowCards.entries()) {
+      const tile = cardTile(card);
+      const spread = Math.min(8, 48 / Math.max(1, overflowCards.length));
+      tile.style.setProperty(
+        "--pile-angle",
+        `${(index - ((overflowCards.length - 1) / 2)) * spread}deg`,
+      );
+      tile.style.setProperty("--pile-offset", `${index * 7}px`);
+      pile.appendChild(tile);
     }
   }
 
@@ -401,12 +546,7 @@
       }
       surface.appendChild(tile);
     }
-    if (active.length > 12) {
-      const overflow = document.createElement("div");
-      overflow.className = "chat-card-overflow";
-      overflow.textContent = `+${active.length - 12} cards in the pile`;
-      surface.appendChild(overflow);
-    }
+    renderOverflow(surface, active.slice(12));
     renderDiscard(surface, folded);
   }
 
@@ -607,11 +747,58 @@
       else waiter.reject(new Error(event.data.error || "Chat capture failed."));
       return;
     }
-    if (event.data?.type === "rapp-beta:card-pending-complete") {
-      void SCRIPT_STATE.context.api.cardsComplete(
-        event.data.id,
-        event.data.completion,
-      ).then(refreshCards).catch(showError);
+  }
+
+  function completionSaved(event) {
+    if (!SCRIPT_STATE.enabled) return;
+    if (
+      event.restoreInFrame
+      && SCRIPT_STATE.primaryId === event.id
+    ) {
+      postToFrame({
+        type: "rapp-beta:card-late-completion",
+        completion: event.completion,
+      });
+    }
+    void refreshCards().catch(showError);
+  }
+
+  function completionFailed(error) {
+    if (SCRIPT_STATE.enabled) showError(error);
+  }
+
+  function cardDetached(id) {
+    if (!SCRIPT_STATE.enabled || SCRIPT_STATE.primaryId !== id) return;
+    const detached = SCRIPT_STATE.cards.find((card) => card.id === id);
+    SCRIPT_STATE.primaryId = null;
+    SCRIPT_STATE.primaryFrameGeneration = null;
+    SCRIPT_STATE.primaryRouteKey = null;
+    if (detached) {
+      void SCRIPT_STATE.context.api.cardsParkExisting(detached.id)
+        .then(refreshCards)
+        .catch(showError);
+    }
+  }
+
+  function frameChanged({ generation } = {}) {
+    if (SCRIPT_STATE.context) {
+      SCRIPT_STATE.context.frameGeneration = generation;
+    }
+    if (
+      SCRIPT_STATE.primaryId
+      && SCRIPT_STATE.primaryFrameGeneration !== generation
+    ) {
+      const detached = SCRIPT_STATE.cards.find((card) => (
+        card.id === SCRIPT_STATE.primaryId
+      ));
+      SCRIPT_STATE.primaryId = null;
+      SCRIPT_STATE.primaryFrameGeneration = null;
+      SCRIPT_STATE.primaryRouteKey = null;
+      if (SCRIPT_STATE.enabled && detached) {
+        void SCRIPT_STATE.context.api.cardsParkExisting(detached.id)
+          .then(refreshCards)
+          .catch(showError);
+      }
     }
   }
 
@@ -639,22 +826,38 @@
     SCRIPT_STATE.openedHerd = document.body.classList.contains(
       "surgeon-herd-open",
     );
-    installStyles();
-    context.enterHerd();
-    const { grid, herd } = context.ensureHerd();
-    const surface = ensureSurface(herd, grid);
-    ensureControls(herd, surface);
-    ensureGrabHandle();
-    installDragTargets(herd);
-    window.addEventListener("message", receiveFrameMessage, {
-      signal: SCRIPT_STATE.controller.signal,
-    });
-    applyTheme();
-    await refreshCards();
+    SCRIPT_STATE.createdHerd = !context.hadHerdDom;
+    try {
+      installStyles();
+      context.enterHerd();
+      const { grid, herd } = context.ensureHerd();
+      const surface = ensureSurface(herd, grid);
+      ensureControls(herd, surface);
+      ensureGrabHandle();
+      installDragTargets(herd);
+      window.addEventListener("message", receiveFrameMessage, {
+        signal: SCRIPT_STATE.controller.signal,
+      });
+      applyTheme();
+      if (context.state.cardTableError) showError(context.state.cardTableError);
+      await refreshCards();
+      postToFrame({ type: "rapp-beta:card-ready" });
+      addTimer(() => postToFrame({ type: "rapp-beta:card-ready" }), 150);
+      addTimer(() => postToFrame({ type: "rapp-beta:card-ready" }), 600);
+    } catch (error) {
+      disable();
+      throw error;
+    }
   }
 
   function disable() {
-    if (!SCRIPT_STATE.enabled) return;
+    if (!SCRIPT_STATE.enabled) {
+      if (typeof document !== "undefined") {
+        removeStyles();
+        document.getElementById("__rappChatCardsScript")?.remove();
+      }
+      return;
+    }
     SCRIPT_STATE.enabled = false;
     SCRIPT_STATE.refreshSequence += 1;
     SCRIPT_STATE.controller?.abort();
@@ -679,15 +882,27 @@
       delete herd.dataset.cardTable;
     }
     removeStyles();
-    if (!SCRIPT_STATE.openedHerd) SCRIPT_STATE.context?.exitHerd();
+    document.getElementById("__rappChatCardsScript")?.remove();
+    if (SCRIPT_STATE.createdHerd) {
+      SCRIPT_STATE.context?.destroyHerd();
+    } else if (!SCRIPT_STATE.openedHerd) {
+      SCRIPT_STATE.context?.exitHerd();
+    }
     SCRIPT_STATE.cards = [];
+    SCRIPT_STATE.createdHerd = false;
     SCRIPT_STATE.context = null;
     SCRIPT_STATE.primaryId = null;
+    SCRIPT_STATE.primaryFrameGeneration = null;
+    SCRIPT_STATE.primaryRouteKey = null;
   }
 
   root.RappChatCards = Object.freeze({
+    cardDetached,
+    completionFailed,
+    completionSaved,
     disable,
     enabled: () => SCRIPT_STATE.enabled,
+    frameChanged,
     parkCurrent,
     refresh: refreshCards,
     sync: enable,

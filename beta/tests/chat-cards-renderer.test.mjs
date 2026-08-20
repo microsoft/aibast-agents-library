@@ -10,6 +10,10 @@ const cardsSource = readFileSync(
   new URL("../ui/chat-cards.js", import.meta.url),
   "utf8",
 );
+const cardsCss = readFileSync(
+  new URL("../ui/chat-cards.css", import.meta.url),
+  "utf8",
+);
 const shell = readFileSync(
   new URL("../ui/index.html", import.meta.url),
   "utf8",
@@ -19,9 +23,14 @@ test("mode off loads no card script, stylesheet, DOM, or listeners", async (t) =
   assert.doesNotMatch(shell, /chat-cards\.(?:js|css)/);
   assert.match(
     renderer,
-    /if \(state\.aprilFools\?\.on\) \{[\s\S]*syncChatCards\(state\)/,
+    /if \(state\.aprilFools\?\.on\) \{[\s\S]*syncChatCards\(state, cardsGeneration\)/,
   );
-  assert.match(renderer, /else if \(window\.RappChatCards\)/);
+  assert.match(
+    renderer,
+    /else if \(cardsWereRequested \|\| chatCardsLoader \|\| window\.RappChatCards\)/,
+  );
+  assert.match(cardsSource, /__rappChatCardsScript/);
+  assert.match(renderer, /generation !== chatCardsGeneration/);
 
   delete globalThis.RappChatCards;
   await import(`../ui/chat-cards.js?mode-off=${Date.now()}`);
@@ -46,6 +55,8 @@ test("cards support drag, threshold swipes, buttons, and keyboard paths", () => 
   assert.match(cardsSource, /application\/x-rapp-chat-card/);
   assert.match(cardsSource, /movement >= 72/);
   assert.match(cardsSource, /movement <= -72/);
+  assert.match(cardsSource, /pointermove/);
+  assert.match(cardsCss, /touch-action:\s*pan-y/);
   assert.match(cardsSource, /event\.key === "ArrowRight"/);
   assert.match(cardsSource, /event\.key === "ArrowLeft"/);
   assert.match(cardsSource, /event\.key\.toLowerCase\(\) === "r"/);
@@ -58,4 +69,7 @@ test("table UI includes all themes and four deal moves", () => {
   for (const deal of ["riffle", "fan", "deal-to-seats", "draw-one"]) {
     assert.match(cardsSource, new RegExp(`"${deal}"`));
   }
+  assert.match(cardsSource, /renderOverflow\(surface, active\.slice\(12\)\)/);
+  assert.doesNotMatch(cardsSource, /folded\.slice\(/);
+  assert.match(cardsSource, /if \(!SCRIPT_STATE\.enabled\) return null/);
 });
