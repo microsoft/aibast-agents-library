@@ -10,16 +10,27 @@ import {
 } from "../electron/video-tools.mjs";
 
 
-test("bundled ffmpeg and ffprobe binaries are executable", () => {
+test("resolved media tooling runs when it is present", () => {
+  // Media tooling is an opt-in organ (CONSTITUTION.md Article II), and lifecycle
+  // scripts are disabled so no binary is downloaded during the factory install.
+  // The contract is therefore: resolution always yields something spawnable, and
+  // whatever it resolves to MUST work if it is actually there. Requiring a
+  // bundled binary to exist would make the sacred one-liner fail on every clean
+  // machine, which is a worse failure than not having Show Mode.
   for (const executable of [
     resolveFfmpegExecutable({}),
     resolveFfprobeExecutable({}),
   ]) {
-    assert.equal(existsSync(executable), true, executable);
+    assert.ok(executable, "resolution must always yield a command");
     const result = spawnSync(executable, ["-version"], {
       encoding: "utf8",
       windowsHide: true,
     });
+    if (result.error && result.error.code === "ENOENT") {
+      // Not installed on this machine. Expected on a clean install; Show Mode
+      // prompts for the organ when the user first enables it.
+      continue;
+    }
     assert.equal(result.status, 0, result.stderr);
   }
   if (process.platform === "darwin" && process.arch === "arm64") {
