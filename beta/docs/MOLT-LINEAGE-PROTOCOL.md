@@ -58,8 +58,13 @@ the same rappid in both — on every device and in every environment.
   timeline, at its own cadence, under its own policy — memory pinned at ring 0
   while news molts daily, or the reverse; it is per-agent and per-use-case.
 - **HEAD.** The pointer, per gene locus, to the currently-live ring.
-- **Ancestor rappid.** The lineage primary key — the baseline agent's minted
-  `rappid`, identical across all instances (the cross-instance "same species" key).
+- **Ancestor rappid.** The lineage primary key, derived from the agent's stable
+  **name** alone — identical across all instances (the cross-instance "same
+  species" key). It deliberately does **not** include the baseline's content:
+  folding content in would make it a *version* key, so a routine Grail upgrade
+  would mint a new ancestor and silently orphan every molt the user had grown. A
+  lineage must survive its baseline being updated. The baseline's digest is still
+  recorded per locus and per ring as provenance.
 - **Ring rappid.** A per-generation id, hash-chained to its parent:
   `ring_rappid = mintRappid(parent_rappid + sha256(source) + ancestor_rappid)`.
   Because each ring cryptographically commits to its parent and its bytes, the

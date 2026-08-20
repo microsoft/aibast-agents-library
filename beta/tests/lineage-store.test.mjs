@@ -592,3 +592,98 @@ test("restore still fast-forwards when there is no displaced generation", (t) =>
   store.restore(alpha.ancestorRappid);
   assert.equal(store.getHead(alpha.ancestorRappid), ring);
 });
+
+test("a Grail upgrade does not orphan the user's lineage", (t) => {
+  const { store, root } = fixture(t);
+  const agentsDir = path.join(root, "brainstem", "agents");
+  const before = store.baselineAncestors().find(
+    (item) => item.filename === "alpha_agent.py",
+  );
+  const ring = store.appendRing(before.ancestorRappid, {
+    source: "ALPHA = 'my tweak'\n",
+    parentRappid: before.ancestorRappid,
+    verified: true,
+    meta: { author: "user" },
+  });
+  store.setHead(before.ancestorRappid, ring);
+  assert.equal(store.resolveLive(before.ancestorRappid).isBaseline, false);
+
+  // Grail ships a new version: the factory agent's bytes change. This is a
+  // routine upgrade and it must not cost the user their molts.
+  writeFileSync(path.join(agentsDir, "alpha_agent.py"), "ALPHA = 'baseline v2'\n");
+  const after = store.baselineAncestors().find(
+    (item) => item.filename === "alpha_agent.py",
+  );
+  assert.equal(
+    after.ancestorRappid,
+    before.ancestorRappid,
+    "locus identity must survive a baseline update",
+  );
+  assert.notEqual(after.sha256, before.sha256, "the baseline really did change");
+  assert.equal(
+    store.getHead(after.ancestorRappid),
+    ring,
+    "HEAD still points at the user's molt",
+  );
+  assert.equal(store.resolveLive(after.ancestorRappid).isBaseline, false);
+  assert.equal(store.listRings(after.ancestorRappid).length, 2, "history intact");
+
+  // ...and reverting now lands on the NEW baseline, which is the point.
+  store.rollbackToBaseline(after.ancestorRappid);
+  assert.equal(
+    store.resolveLive(after.ancestorRappid).source,
+    "ALPHA = 'baseline v2'\n",
+  );
+});
+
+test("a store written under the legacy content-derived id migrates, not orphans", (t) => {
+  const { store, root } = fixture(t);
+  const alpha = store.baselineAncestors().find(
+    (item) => item.filename === "alpha_agent.py",
+  );
+  // Forge a legacy locus: same shape, but keyed by an id that is not current.
+  const legacyAncestor = "rappid:@grail/alpha:" + "d".repeat(64);
+  const legacyDir = path.join(
+    store.root, lineageStoreInternals.filesystemSegment(legacyAncestor));
+  const legacyRing = "rappid:@frontier/alpha-ring:" + "e".repeat(64);
+  const ringDir = path.join(
+    legacyDir, "rings", lineageStoreInternals.filesystemSegment(legacyRing));
+  mkdirSync(ringDir, { recursive: true });
+  writeFileSync(path.join(legacyDir, "locus.json"), JSON.stringify({
+    schema: "molt-lineage/1.0",
+    ancestorRappid: legacyAncestor,
+    filename: "alpha_agent.py",
+  }));
+  writeFileSync(path.join(legacyDir, "HEAD"), legacyRing + "\n");
+  writeFileSync(path.join(ringDir, "source.py"), "ALPHA = 'grown before the fix'\n");
+  writeFileSync(path.join(ringDir, "meta.json"), JSON.stringify({
+    ringRappid: legacyRing,
+    parentRappid: legacyAncestor,
+    ancestorRappid: legacyAncestor,
+    verified: true,
+    createdAt: "2026-01-01T00:00:00.000Z",
+    meta: { author: "user" },
+  }));
+
+  // A fresh store must adopt that history rather than leave it stranded.
+  const reopened = new LineageStore({
+    brainstemDir: path.join(root, "brainstem"),
+    root: store.root,
+  });
+  const current = reopened.baselineAncestors().find(
+    (item) => item.filename === "alpha_agent.py",
+  );
+  assert.equal(current.ancestorRappid, alpha.ancestorRappid);
+  const live = reopened.resolveLive(current.ancestorRappid);
+  assert.equal(
+    live.source,
+    "ALPHA = 'grown before the fix'\n",
+    "the pre-fix molt survived migration and is live again",
+  );
+  assert.equal(live.isBaseline, false);
+  // Non-destructive: the legacy directory is set aside, never deleted.
+  assert.equal(existsSync(legacyDir), false);
+  assert.ok(existsSync(path.join(
+    store.root,
+    ".migrated-" + lineageStoreInternals.filesystemSegment(legacyAncestor))));
+});

@@ -102,12 +102,19 @@ function sourceSha256(source) {
   );
 }
 
-function ancestorRappidFor(filename, source) {
-  const baselineSha = sourceSha256(source);
-  const anchor = uuidFromDigest(H("rapp/1:molt-ancestor", {
-    filename,
-    sha256: baselineSha,
-  }));
+function ancestorRappidFor(filename, _source) {
+  // Locus identity is the identity of the AGENT, not of one version of it.
+  //
+  // This once folded the baseline's content digest into the id. That made a
+  // routine Grail upgrade — which changes a factory agent's bytes — mint a brand
+  // new ancestor, silently deactivating every molt the user had grown and
+  // orphaning their whole lineage with no error and no migration. A lineage has
+  // to survive its baseline being updated; that is what having a baseline is for.
+  //
+  // The baseline digest is still recorded per locus and per ring as provenance
+  // (see _ensureLocus and appendRing) — it just no longer defines the locus.
+  // `_source` is kept in the signature for call-site compatibility.
+  const anchor = uuidFromDigest(H("rapp/1:molt-ancestor", { filename }));
   return mintRappid("grail", slugFromFilename(filename), {
     uuidAnchor: anchor,
   }).rappid;
@@ -147,9 +154,81 @@ export class LineageStore {
     this.now = now;
   }
 
+  /** Re-key loci that were stored under the old content-derived ancestor id.
+   *
+   *  Before locus identity became version-stable, a locus was keyed by the
+   *  baseline's CONTENT — so a Grail upgrade orphaned the user's whole lineage.
+   *  Any store written by that build still has directories under the old id.
+   *  Rebuild them under the stable id, preserving each ring's source, verdict
+   *  and metadata, and re-point HEAD. Non-destructive: the old directory is
+   *  renamed aside, never deleted, so a bad migration can be inspected.
+   *
+   *  Runs at most once per process, and only when a legacy locus is present. */
+  _migrateLegacyLoci(current) {
+    if (this._migrated) return;
+    this._migrated = true;
+    let entries;
+    try {
+      entries = readdirSync(this.root, { withFileTypes: true });
+    } catch {
+      return;                       // no store yet: nothing to migrate
+    }
+    const wanted = new Map(current.map((b) => [b.filename, b]));
+    const live = new Set(current.map((b) => filesystemSegment(b.ancestorRappid)));
+    for (const entry of entries) {
+      if (!entry.isDirectory() || entry.name.startsWith(".")) continue;
+      if (live.has(entry.name)) continue;          // already on the stable id
+      const legacyDir = path.join(this.root, entry.name);
+      const locus = readJsonSafe(path.join(legacyDir, LOCUS_FILE));
+      const baseline = locus && wanted.get(locus.filename);
+      if (!baseline) continue;                     // not ours; leave it alone
+      try {
+        const legacyAncestor = locus.ancestorRappid;
+        const rings = readdirSync(path.join(legacyDir, "rings"), { withFileTypes: true })
+          .filter((d) => d.isDirectory() && !d.name.startsWith("."))
+          .map((d) => {
+            const meta = readJsonSafe(path.join(legacyDir, "rings", d.name, RING_META_FILE));
+            let source = null;
+            try {
+              source = readFileSync(
+                path.join(legacyDir, "rings", d.name, RING_SOURCE_FILE), "utf8");
+            } catch {}
+            return meta && typeof source === "string" ? { ...meta, source } : null;
+          })
+          .filter(Boolean)
+          .sort((l, r) => String(l.createdAt || "").localeCompare(String(r.createdAt || "")));
+
+        let legacyHead = null;
+        try {
+          legacyHead = readFileSync(path.join(legacyDir, HEAD_FILE), "utf8").trim();
+        } catch {}
+
+        // Re-append in order; appendRing mints correct ids under the new ancestor.
+        const remap = new Map([[legacyAncestor, baseline.ancestorRappid]]);
+        for (const ring of rings) {
+          const parent = remap.get(ring.parentRappid) || baseline.ancestorRappid;
+          const minted = this.appendRing(baseline.ancestorRappid, {
+            source: ring.source,
+            parentRappid: parent,
+            verified: ring.verified === true,
+            meta: { ...(ring.meta || {}), migrated_from: ring.ringRappid },
+          });
+          remap.set(ring.ringRappid, minted);
+        }
+        const newHead = legacyHead && remap.get(legacyHead);
+        if (newHead && newHead !== baseline.ancestorRappid) {
+          try { this.setHead(baseline.ancestorRappid, newHead); } catch {}
+        }
+        renameSync(legacyDir, path.join(this.root, `.migrated-${entry.name}`));
+      } catch {
+        // A locus that will not migrate is left exactly as it was.
+      }
+    }
+  }
+
   baselineAncestors() {
     const agentsDirectory = path.join(this.brainstemDir, "agents");
-    return readdirSync(agentsDirectory, { withFileTypes: true })
+    const list = readdirSync(agentsDirectory, { withFileTypes: true })
       .filter((entry) => (
         entry.isFile()
         && entry.name.endsWith("_agent.py")
@@ -166,6 +245,10 @@ export class LineageStore {
         };
       })
       .sort((left, right) => left.filename.localeCompare(right.filename));
+    if (!this._migrated) {
+      try { this._migrateLegacyLoci(list); } catch { this._migrated = true; }
+    }
+    return list;
   }
 
   _baseline(ancestorRappid) {
