@@ -30,6 +30,8 @@ import {
   canonical,
   mintRappid,
   packEgg,
+  readEgg,
+  verifyEgg,
 } from "./rapp-protocol.mjs";
 
 
@@ -1310,6 +1312,38 @@ export class BetaRouteManager {
     return { address, bytes, objectPath };
   }
 
+  cachePackagedAgent(agent) {
+    if (
+      !/^[0-9a-f]{64}$/.test(agent.egg_address)
+      || !/^[0-9a-f]{64}$/.test(agent.source_address)
+    ) {
+      throw new Error(`Agent package address is invalid: ${agent.filename}`);
+    }
+    const eggPath = path.join(this.eggRoot, `${agent.egg_address}.egg`);
+    const egg = readFileSync(eggPath);
+    if (Hb("rapp/1:egg", egg) !== agent.egg_address) {
+      throw new Error(`Agent egg bytes changed: ${agent.filename}`);
+    }
+    const [valid, law, reason] = verifyEgg(egg);
+    if (!valid) {
+      throw new Error(`Agent egg failed verification (${law}: ${reason})`);
+    }
+    const { manifest, files } = readEgg(egg);
+    if (manifest.rappid !== agent.agent_rappid || !files[agent.filename]) {
+      throw new Error(`Agent egg identity changed: ${agent.filename}`);
+    }
+    const sourceBytes = Buffer.from(files[agent.filename]);
+    const source = sourceBytes.toString("utf8");
+    if (!Buffer.from(source, "utf8").equals(sourceBytes)) {
+      throw new Error(`Agent egg source is not valid UTF-8: ${agent.filename}`);
+    }
+    const cached = this.cacheSource(source);
+    if (cached.address !== agent.source_address) {
+      throw new Error(`Agent egg source changed: ${agent.filename}`);
+    }
+    return cached;
+  }
+
   packageAgent({ filename, source, existingRappid = null }) {
     const safeName = safeAgentFilename(filename);
     const cached = this.cacheSource(source);
@@ -1610,10 +1644,10 @@ export class BetaRouteManager {
     }
     for (const selected of selectedStacks) {
       for (const agent of selected.agents) {
+        const cached = this.cachePackagedAgent(agent);
         entries.push({
           filename: agent.filename,
-          address: agent.source_address,
-          objectPath: agent.object_path,
+          ...cached,
           scope: `stack:${selected.rappid}`,
         });
       }

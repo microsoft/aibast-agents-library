@@ -1540,6 +1540,37 @@ test("the object store stays immutable under a published composition and heals a
   assert.equal(readFileSync(entry.objectPath, "utf8"), sources["global_agent.py"]);
 });
 
+test("a torn stack-agent object heals from its frozen egg", async (t) => {
+  const { managerOptions } = minimalFixture(t);
+  const manager = new BetaRouteManager({
+    ...managerOptions,
+    lineageEnabled: false,
+  });
+  const source = "SCOPED = 'pristine'\n";
+  const installed = await manager.installScopedAgent({
+    filename: "scoped_agent.py",
+    source,
+  });
+  writeFileSync(installed.agent.object_path, "SCOPED = ");
+
+  const fresh = new BetaRouteManager({
+    ...managerOptions,
+    lineageEnabled: false,
+  });
+  const materialized = fresh.materializeComposition(
+    fresh.compositionDescriptor(),
+  );
+
+  assert.equal(readFileSync(installed.agent.object_path, "utf8"), source);
+  assert.equal(
+    readFileSync(
+      path.join(materialized.agentDirectory, "scoped_agent.py"),
+      "utf8",
+    ),
+    source,
+  );
+});
+
 test("one transient validator failure does not demote a healthy ring", (t) => {
   // Review finding: the isolation trial for a single changed locus reproduces
   // the composition hash that just failed, and the 60s negative cache answered
