@@ -457,13 +457,16 @@ export async function launch({
       ...process.env,
       APPDATA: path.join(root, "appdata"),
       BRAINSTEM_BETA_E2E: "1",
-      // A never-shown window is fine on macOS and Windows, but on Linux the
-      // cross-origin Brainstem frame inside a hidden window never receives a
-      // viewport (every rect is 0x0, the composer is "not visible"). Under
-      // xvfb there IS a display — use it.
-      ...(process.platform === "linux" && process.env.DISPLAY
-        ? {}
-        : { BRAINSTEM_BETA_HEADLESS: "1" }),
+      // The window is SHOWN, on every platform. In a never-shown window the
+      // cross-origin Brainstem frame gets no viewport on CI machines (macOS,
+      // Windows and xvfb alike: every rect is 0x0, the composer is "not
+      // visible") even though the same hidden window lays out on a developer
+      // Mac. One mode everywhere is the only deterministic choice, and it is
+      // the mode a person uses. Set BRAINSTEM_BETA_E2E_HEADLESS=1 to opt back
+      // into a hidden window locally.
+      ...(process.env.BRAINSTEM_BETA_E2E_HEADLESS === "1"
+        ? { BRAINSTEM_BETA_HEADLESS: "1" }
+        : {}),
       BRAINSTEM_BETA_HOME: paths.betaHome,
       BRAINSTEM_BETA_OWN_PORT: "1",
       BRAINSTEM_BETA_PORT: String(configuredPort),
