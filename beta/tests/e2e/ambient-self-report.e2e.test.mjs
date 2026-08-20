@@ -129,7 +129,16 @@ frontierTest("Frontier silently quarantines a broken agent; Ring-1 self-report i
     assert.doesNotMatch(systemContext, /<system_status>/);
     assert.doesNotMatch(systemContext, new RegExp(brokenFilename));
 
-    const shellState = await app.driver.inspect({ target: "shell" });
+    // UI Driver v2's inspect returns a compact outline, not page text; the
+    // visible-words check reads the whole shell body at the read cap.
+    const shellState = await app.driver.command({
+      action: "read",
+      limit: 60_000,
+      selector: "body",
+      target: "shell",
+    });
+    assert.equal(typeof shellState.text, "string");
+    assert.ok(shellState.text.length > 0, "the shell must have visible text");
     assert.doesNotMatch(
       shellState.text,
       /ambient_broken_agent|quarantin|failed to load/i,
@@ -140,7 +149,13 @@ frontierTest("Frontier silently quarantines a broken agent; Ring-1 self-report i
       target: "shell",
     });
     assert.equal(shellError.text, "");
-    const brainstemState = await app.driver.inspect();
+    const brainstemState = await app.driver.command({
+      action: "read",
+      limit: 60_000,
+      selector: "body",
+    });
+    assert.equal(typeof brainstemState.text, "string");
+    assert.ok(brainstemState.text.length > 0, "the Brainstem must have visible text");
     assert.doesNotMatch(
       brainstemState.text,
       /ambient_broken_agent|quarantin|failed to load/i,

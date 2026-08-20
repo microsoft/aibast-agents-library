@@ -71,7 +71,9 @@ frontierTest("lineage words move HEADs and promote environments through the comp
       "Restored the latest verified molts",
     );
     assert.equal(readText(headPath), initialHead);
-    assert.equal(readText(priorHeadPath), initialHead);
+    // restore is the inverse of baseline and CONSUMES the displaced generation:
+    // a stale PRIOR_HEAD must never be able to move a newer live ring back.
+    assert.equal(existsSync(priorHeadPath), false);
     const restoreTelemetry = await app.driver.routeTelemetry({ trace: false });
     assert.notEqual(
       restoreTelemetry.active_route.url,
