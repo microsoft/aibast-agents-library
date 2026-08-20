@@ -340,11 +340,19 @@ test("card IPC is inert off except identified durable completions", async (t) =>
     },
   );
   assert.equal(completedOff.history.at(-1).content, "Durable while off.");
+  assert.throws(
+    () => handlers.get("beta:cards-complete")(
+      {},
+      pending.id,
+      { reply: "Unexpected.", requestId: "request-off-2" },
+    ),
+    /existing pending card/,
+  );
   enabled = true;
   assert.equal(
     handlers.get("beta:cards-park-existing")({}, pending.id).status,
     "parked",
   );
   assert.equal(handlers.get("beta:cards-list")({})[0].id, pending.id);
-  assert.equal(trusted, 4);
+  assert.equal(trusted, 5);
 });

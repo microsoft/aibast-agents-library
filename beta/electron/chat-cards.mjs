@@ -677,10 +677,22 @@ export function registerChatCardIpc({
   });
   ipcMain.handle("beta:cards-complete", (event, id, completion) => {
     trust(event);
-    if (!isEnabled?.() && !completion?.requestId) {
-      throw new Error(
-        "Only an identified pending card completion may persist while the table is off.",
-      );
+    if (!isEnabled?.()) {
+      const requestId = String(completion?.requestId || "");
+      const pending = store.read(id).turns.filter((turn) => (
+        turn.role === "assistant" && turn.pending
+      ));
+      const identified = requestId && pending.some((turn) => (
+        turn.requestId === requestId
+      ));
+      const singleUnbound = requestId
+        && pending.length === 1
+        && !pending[0].requestId;
+      if (!identified && !singleUnbound) {
+        throw new Error(
+          "Only the identified reply for an existing pending card may finish while the table is off.",
+        );
+      }
     }
     return store.complete(id, completion || {});
   });
