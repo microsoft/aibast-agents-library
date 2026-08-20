@@ -10,6 +10,7 @@ import { Writable } from "node:stream";
 import { finished, pipeline } from "node:stream/promises";
 
 import {
+  rotateLogIfLarge,
   openPrivateAppendFile,
   RedactingLineTransform,
 } from "./log-redaction.mjs";
@@ -222,6 +223,9 @@ export class BrainstemProcess {
       );
     }
 
+    rotateLogIfLarge(this.config.logFile, {
+      maxBytes: this.config.maxLogBytes ?? 5 * 1024 * 1024,
+    });
     this.logFd = openPrivateAppendFile(this.config.logFile);
     this.logStream = createWriteStream(this.config.logFile, {
       fd: this.logFd,

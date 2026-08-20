@@ -3,6 +3,9 @@ import {
   constants,
   mkdirSync,
   openSync,
+  renameSync,
+  rmSync,
+  statSync,
 } from "node:fs";
 import path from "node:path";
 import { Transform } from "node:stream";
@@ -241,6 +244,35 @@ export function createExportRedactionScript({ roots = [] } = {}) {
     "window.__rappFrontierExportRedaction = true;",
     "})();",
   ].join("\n");
+}
+
+// Persistent logs were never rotated: a worker log grew for the life of the
+// install (6.9 MB across 35 files on one developer machine, unbounded on a
+// chatty one). Rotate a log that has outgrown maxBytes before reopening it,
+// keeping `keep` predecessors (file.1, file.2, …). Returns true when rotated.
+export function rotateLogIfLarge(
+  filePath,
+  { maxBytes = 5 * 1024 * 1024, keep = 1 } = {},
+) {
+  let size;
+  try {
+    size = statSync(filePath).size;
+  } catch {
+    return false;
+  }
+  if (size <= maxBytes) return false;
+  for (let index = keep; index >= 1; index -= 1) {
+    const from = index === 1 ? filePath : `${filePath}.${index - 1}`;
+    const to = `${filePath}.${index}`;
+    try {
+      rmSync(to, { force: true });
+      renameSync(from, to);
+    } catch {
+      // A rotation that cannot complete must never stop the worker from
+      // starting; the next start tries again.
+    }
+  }
+  return true;
 }
 
 export function openPrivateAppendFile(

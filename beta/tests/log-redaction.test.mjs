@@ -26,6 +26,7 @@ import {
   openPrivateAppendFile,
   redactCredentialText,
   RedactingLineTransform,
+  rotateLogIfLarge,
   scrubDiagnosticValue,
 } from "../electron/log-redaction.mjs";
 import { BetaRouteManager } from "../electron/route-manager.mjs";
@@ -479,4 +480,28 @@ test("BrainstemProcess redacts both fake-kernel streams without burst loss", asy
     assert.equal(statSync(logFile).mode & 0o777, 0o600);
   }
   if (artifactRoot) console.log(`LOG_REDACTION_TEST_FILE=${logFile}`);
+});
+
+test("a log that outgrew its limit is rotated before reopening, keeping one predecessor", () => {
+  const root = mkdtempSync(path.join(tmpdir(), "rapp-log-rotate-"));
+  try {
+    const file = path.join(root, "worker.log");
+    writeFileSync(file, "x".repeat(2048));
+    assert.equal(rotateLogIfLarge(file, { maxBytes: 4096 }), false, "under the limit: untouched");
+    assert.equal(readFileSync(file, "utf8").length, 2048);
+
+    writeFileSync(file, "y".repeat(8192));
+    assert.equal(rotateLogIfLarge(file, { maxBytes: 4096 }), true);
+    assert.ok(!existsSync(file), "the live log is rotated away");
+    assert.equal(readFileSync(`${file}.1`, "utf8").length, 8192);
+
+    writeFileSync(file, "z".repeat(8192));
+    assert.equal(rotateLogIfLarge(file, { maxBytes: 4096 }), true);
+    assert.equal(readFileSync(`${file}.1`, "utf8")[0], "z", "the newest predecessor wins");
+    assert.ok(!existsSync(`${file}.2`), "only `keep` predecessors are retained");
+
+    assert.equal(rotateLogIfLarge(path.join(root, "absent.log")), false, "a missing log is not an error");
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
 });
