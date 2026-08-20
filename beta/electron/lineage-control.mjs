@@ -1,6 +1,18 @@
 const BASELINE_REPLY = "Reverted to Grail baseline — your memories are intact.";
 const RESTORE_REPLY = "Restored the latest verified molts — your memories are intact.";
 const DISABLED_REPLY = "Molt Lineage is turned off on this Brainstem (RAPP_MOLT_LINEAGE=0), so there is nothing to change — you are already running the Grail baseline.";
+const STANDARD_ENVIRONMENTS = new Set([
+  "default",
+  "dev",
+  "development",
+  "test",
+  "testing",
+  "qa",
+  "stage",
+  "staging",
+  "prod",
+  "production",
+]);
 
 function configuredWord(value, fallback) {
   const word = String(value || "").trim();
@@ -30,45 +42,55 @@ export function parseLineageCommand(message, env = process.env) {
   if (trimmed === environmentsWord) {
     return { action: "environments", original, word: environmentsWord };
   }
-  if (
-    trimmed === promoteWord
-    || trimmed.startsWith(`${promoteWord} `)
-  ) {
+  if (trimmed.startsWith(`${promoteWord} `)) {
     const args = trimmed.slice(promoteWord.length).trim().split(/\s+/)
       .filter(Boolean);
-    return args.length === 2
-      ? {
-          action: "promote",
-          original,
-          word: promoteWord,
-          fromEnv: args[0],
-          toEnv: args[1],
-        }
-      : {
-          action: "promote",
-          original,
-          word: promoteWord,
-          invalid: true,
-        };
+    if (args.length !== 2) return null;
+    return {
+      action: "promote",
+      original,
+      word: promoteWord,
+      fromEnv: args[0],
+      toEnv: args[1],
+    };
   }
-  if (trimmed === driftWord || trimmed.startsWith(`${driftWord} `)) {
+  if (trimmed.startsWith(`${driftWord} `)) {
     const args = trimmed.slice(driftWord.length).trim().split(/\s+/)
       .filter(Boolean);
-    return args.length === 1
-      ? {
-          action: "drift",
-          original,
-          word: driftWord,
-          env: args[0],
-        }
-      : {
-          action: "drift",
-          original,
-          word: driftWord,
-          invalid: true,
-        };
+    if (args.length !== 1) return null;
+    return {
+      action: "drift",
+      original,
+      word: driftWord,
+      env: args[0],
+    };
   }
   return null;
+}
+
+function commandUsesKnownEnvironments(command, routeManager) {
+  if (!["promote", "drift"].includes(command.action)) return true;
+  const requested = (
+    command.action === "promote"
+      ? [command.fromEnv, command.toEnv]
+      : [command.env]
+  ).map((name) => String(name || "").toLowerCase());
+  const unknown = requested.filter(
+    (name) => !STANDARD_ENVIRONMENTS.has(name),
+  );
+  if (!unknown.length) return true;
+  let report;
+  try {
+    report = routeManager.lineageEnvironments?.();
+  } catch {
+    return false;
+  }
+  const known = new Set(
+    (report?.loci || []).flatMap((locus) => (
+      locus.environments || []
+    )).map((entry) => String(entry.env || "").toLowerCase()),
+  );
+  return unknown.every((name) => known.has(name));
 }
 
 function disabledResult(action) {
@@ -188,14 +210,10 @@ export async function executeLineageCommand({
   if (!routeManager) {
     throw new Error("Molt Lineage control requires the Frontier route manager.");
   }
-  if (command.invalid) {
-    const usage = command.action === "promote"
-      ? `${command.word} <from> <to>`
-      : `${command.word} <environment>`;
+  if (!commandUsesKnownEnvironments(command, routeManager)) {
     return {
-      intercepted: true,
-      action: command.action,
-      reply: `Usage: ${usage}`,
+      intercepted: false,
+      message,
     };
   }
 
