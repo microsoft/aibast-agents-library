@@ -91,6 +91,7 @@ function fakeClock() {
     ClockDate,
     clearTimer,
     now: () => currentTime,
+    pending: () => tasks.size,
     runAll,
     setTimer,
   };
@@ -388,6 +389,49 @@ test("smooth bridge paces a large delta byte-equally before done", async () => {
     `smooth: ${deltas.length} delta chunks; byte-equality yes; `
       + `order ${events.at(-2).type}->${events.at(-1).type}`,
   );
+});
+
+test("smooth done flushes queued text before upstream EOF", async () => {
+  const upstream = controlledResponse();
+  const installed = installBridge({
+    chatStreamMode: "smooth",
+    nativeFetch: async () => upstream.response,
+  });
+  const wrapped = await installed.window.fetch(
+    "http://127.0.0.1:7071/chat/stream",
+    {
+      method: "POST",
+      body: JSON.stringify({ user_input: "hello" }),
+    },
+  );
+  const text = "terminal done flushes every queued word immediately";
+  const reader = wrapped.body.getReader();
+
+  upstream.enqueue(sse({ type: "delta", text }));
+  const first = await reader.read();
+  assert.ok(installed.clock.pending() > 0);
+  upstream.enqueue(sse({ type: "done", response: text }));
+  await nextTask();
+  const second = await reader.read();
+  const third = await reader.read();
+  const decoder = new TextDecoder();
+  const events = parseEvents(
+    decoder.decode(first.value)
+      + decoder.decode(second.value)
+      + decoder.decode(third.value),
+  );
+
+  assert.equal(
+    events.filter((event) => event.type === "delta")
+      .map((event) => event.text)
+      .join(""),
+    text,
+  );
+  assert.equal(events.at(-1).type, "done");
+  assert.equal(installed.clock.pending(), 0);
+  upstream.close();
+  assert.equal((await reader.read()).done, true);
+  console.log("smooth done flush: queued text emitted before upstream EOF");
 });
 
 test("smooth style and follow observers exist only in smooth mode", () => {
