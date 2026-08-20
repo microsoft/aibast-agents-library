@@ -25,6 +25,7 @@ const HEAD_FILE = "HEAD";
 const PRIOR_FILE = "PRIOR_HEAD";
 const DEFAULT_ENV = "default";
 const ENVIRONMENT_NAME = /^[a-z0-9][a-z0-9._-]{0,31}$/;
+const ATOMIC_WRITE_TEMP_SUFFIX = /(?:^|\.)\d+\.\d+\.tmp$/;
 const LOCUS_FILE = "locus.json";
 const RING_SOURCE_FILE = "source.py";
 const RING_META_FILE = "meta.json";
@@ -730,6 +731,7 @@ export class LineageStore {
         if (
           requested !== DEFAULT_ENV
           && ENVIRONMENT_NAME.test(requested)
+          && !ATOMIC_WRITE_TEMP_SUFFIX.test(requested)
           && normalizeEnvironment(requested) === requested
         ) {
           names.add(requested);

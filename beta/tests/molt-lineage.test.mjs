@@ -168,6 +168,14 @@ test("environments are HEADs, not copies: dev and prod pin into one shared ring 
     assert.equal(store.resolveLive(ancestor, { env: "prod" }).isBaseline, true);
     assert.equal(store.getHead(ancestor, { env: "prod" }), ancestor);
     assert.ok(store.setHead(ancestor, ancestor, { env: "prod" }));
+    writeFileSync(
+      path.join(
+        store.root,
+        filesystemSegment(ancestor),
+        "HEAD.47732.1787264941456.tmp",
+      ),
+      `${ancestor}\n`,
+    );
     assert.deepEqual(store.environments(ancestor), [
       { env: "default", head: ancestor, isBaseline: true },
       { env: "dev", head: r1, isBaseline: false },
