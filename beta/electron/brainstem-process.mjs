@@ -124,6 +124,22 @@ export async function waitForHealth(
   return null;
 }
 
+// The environment a worker kernel runs with. Bytecode caches are off: every
+// composition is its own directory, so each worker used to write its own
+// __pycache__ next to the agents — 40 of the 43 MB of one developer's
+// compositions directory was regenerable bytecode. The kernel's own modules
+// compile in milliseconds; nothing is lost. An explicit config.env still wins.
+export function buildWorkerEnvironment(config, baseEnv = process.env) {
+  return {
+    ...baseEnv,
+    PYTHONDONTWRITEBYTECODE: "1",
+    ...(config.env || {}),
+    PORT: String(config.port),
+    BRAINSTEM_BETA_LAUNCHER: "1",
+    PYTHONUTF8: "1",
+  };
+}
+
 export class BrainstemProcess {
   constructor(config = resolveBrainstemConfig()) {
     this.config = config;
@@ -232,15 +248,10 @@ export class BrainstemProcess {
       autoClose: false,
     });
     try {
-      this.child = spawn(this.config.python, ["brainstem.py"], {
+      const spawnProcess = this.config.spawnImpl || spawn;
+      this.child = spawnProcess(this.config.python, ["brainstem.py"], {
         cwd: this.config.brainstemDir,
-        env: {
-          ...process.env,
-          ...(this.config.env || {}),
-          PORT: String(this.config.port),
-          BRAINSTEM_BETA_LAUNCHER: "1",
-          PYTHONUTF8: "1",
-        },
+        env: buildWorkerEnvironment(this.config),
         windowsHide: true,
         shell: false,
         stdio: ["ignore", "pipe", "pipe"],

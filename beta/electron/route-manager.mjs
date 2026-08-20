@@ -10,6 +10,7 @@ import {
   readdirSync,
   renameSync,
   rmSync,
+  statSync,
   writeFileSync,
 } from "node:fs";
 import net from "node:net";
@@ -473,9 +474,119 @@ export class BetaRouteManager {
     ]) {
       ensurePrivateDirectory(directory);
     }
+    this.pruneRoutingArtifacts();
     if (this.lineageIsEnabled() && seedLineageDefaults) {
       this.seedContextMemoryRing1();
     }
+  }
+
+  // Retention. Compositions are content-addressed and regenerable (kilobytes
+  // of agent source each), worker logs rotate but were never pruned, and
+  // staging / dry-load residue survived crashes forever. Keep what a running
+  // app can still reach — live workers, the active route, the last-good set —
+  // plus the newest few, and drop the rest. Bytecode caches inside kept
+  // compositions are removed outright: workers no longer write them.
+  pruneRoutingArtifacts({
+    keepCompositions = 8,
+    keepWorkerLogs = 20,
+    maxWorkerLogAgeMs = 14 * 24 * 60 * 60 * 1000,
+    residueMaxAgeMs = 60 * 60 * 1000,
+    now = Date.now(),
+  } = {}) {
+    const report = {
+      compositionsRemoved: [],
+      residueRemoved: [],
+      pycacheRemoved: 0,
+      workerLogsRemoved: [],
+    };
+    const protectedHashes = new Set(this.workers.keys());
+    for (const hash of [
+      this.activeRoute?.compositionHash,
+      this.activeRoute?.transientCompositionHash,
+      this.lastGoodDescriptor?.compositionHash,
+    ]) {
+      if (hash) protectedHashes.add(hash);
+    }
+    const mtimeOf = (file) => {
+      try {
+        return statSync(file).mtimeMs;
+      } catch {
+        return 0;
+      }
+    };
+    let entries = [];
+    try {
+      entries = readdirSync(this.compositionRoot, { withFileTypes: true });
+    } catch {
+      return report;
+    }
+    const compositions = [];
+    for (const entry of entries) {
+      if (!entry.isDirectory()) continue;
+      const full = path.join(this.compositionRoot, entry.name);
+      if (entry.name.startsWith(".")) {
+        const age = now - mtimeOf(full);
+        if (age > residueMaxAgeMs) {
+          try { rmSync(full, { recursive: true, force: true }); } catch { continue; }
+          report.residueRemoved.push(entry.name);
+        }
+        continue;
+      }
+      if (!/^[0-9a-f]{64}$/.test(entry.name)) continue;
+      compositions.push({
+        hash: entry.name,
+        full,
+        mtime: mtimeOf(path.join(full, "complete.json")) || mtimeOf(full),
+      });
+    }
+    compositions.sort((left, right) => right.mtime - left.mtime);
+    compositions.forEach((composition, index) => {
+      if (protectedHashes.has(composition.hash) || index < keepCompositions) {
+        const pycache = path.join(composition.full, "agents", "__pycache__");
+        if (existsSync(pycache)) {
+          try {
+            rmSync(pycache, { recursive: true, force: true });
+            report.pycacheRemoved += 1;
+          } catch { /* a worker may be mid-import; try again next time */ }
+        }
+        return;
+      }
+      try { rmSync(composition.full, { recursive: true, force: true }); } catch { return; }
+      report.compositionsRemoved.push(composition.hash);
+    });
+    let logs = [];
+    try {
+      logs = readdirSync(this.workerLogRoot)
+        .filter((name) => /\.log(\.\d+)?$/.test(name))
+        .map((name) => ({ name, full: path.join(this.workerLogRoot, name) }))
+        .map((log) => ({ ...log, mtime: mtimeOf(log.full) }));
+    } catch {
+      logs = [];
+    }
+    logs.sort((left, right) => right.mtime - left.mtime);
+    logs.forEach((log, index) => {
+      const hash = log.name.split(".")[0];
+      if (protectedHashes.has(hash)) return;
+      if (index >= keepWorkerLogs || now - log.mtime > maxWorkerLogAgeMs) {
+        try { rmSync(log.full, { force: true }); } catch { return; }
+        report.workerLogsRemoved.push(log.name);
+      }
+    });
+    if (
+      report.compositionsRemoved.length
+      || report.residueRemoved.length
+      || report.pycacheRemoved
+      || report.workerLogsRemoved.length
+    ) {
+      this.recordTelemetry("routing-pruned", {
+        compositions_removed: report.compositionsRemoved.length,
+        residue_removed: report.residueRemoved.length,
+        pycache_removed: report.pycacheRemoved,
+        worker_logs_removed: report.workerLogsRemoved.length,
+        compositions_kept: compositions.length - report.compositionsRemoved.length,
+      });
+    }
+    return report;
   }
 
   lineageIsEnabled() {
@@ -2260,6 +2371,7 @@ export class BetaRouteManager {
         force: true,
       });
     }
+    this.pruneRoutingArtifacts();
     this.recordTelemetry("worker-stopped", {
       composition_hash: compositionHash,
       url: worker.route.url,
