@@ -143,6 +143,14 @@ frame.addEventListener("load", () => {
 window.addEventListener("message", async (event) => {
   const type = event.data?.type;
   if (event.source !== frame.contentWindow) return;
+  if (type === "rapp-beta:set-chat-look") {
+    try {
+      await window.brainstemBeta.setChatLook(event.data.look);
+    } catch (cause) {
+      window.alert(`Could not change chat look: ${String(cause?.message || cause)}`);
+    }
+    return;
+  }
   if (type === "rapp-beta:check-updates") {
     await window.brainstemBeta.checkForUpdates();
     return;
@@ -1678,6 +1686,7 @@ function syncBetaUpdate(update, openPanel = false) {
 
 function render(state) {
   latestState = state;
+  applyShellChatLook(state.chatLook, state.chatTypingEnabled);
   const surgeonState = state.surgeon || state.copilot;
   document.getElementById("surgeon-model").textContent =
     surgeonState?.phase === "ready" ? "Agent" : (surgeonState?.phase || "starting");

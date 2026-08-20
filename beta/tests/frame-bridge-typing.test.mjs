@@ -37,7 +37,7 @@ function extractExpression(startMarker, endMarker) {
 }
 
 const smoothStreamCss = vm.runInNewContext(
-  extractExpression("const smoothStreamCss =", ";\nconst chatLook ="),
+  extractExpression("const smoothStreamCss =", ";\nconst betaHome ="),
 );
 const bridgeExpression = extractExpression(
   "const BETA_FRAME_BRIDGE_SOURCE =",

@@ -7,9 +7,18 @@ const requestedStreamMode = streamArgument?.split("=", 2)[1];
 const chatStreamMode = ["smooth", "raw", "hold"].includes(requestedStreamMode)
   ? requestedStreamMode
   : "smooth";
+const chatLookArgument = process.argv.find((value) => (
+  value.startsWith("--rapp-chat-look=")
+));
+const chatLook = chatLookArgument?.split("=", 2)[1] === "business"
+  ? "business"
+  : "messages";
+const chatTypingEnabled = chatStreamMode === "hold";
 
 contextBridge.exposeInMainWorld("brainstemBeta", {
+  chatLook,
   chatStreamMode,
+  chatTypingEnabled,
   checkForUpdates: () => ipcRenderer.invoke("beta:check-for-updates"),
   getState: () => ipcRenderer.invoke("beta:get-state"),
   installUpdate: () => ipcRenderer.invoke("beta:install-update"),
@@ -34,6 +43,7 @@ contextBridge.exposeInMainWorld("brainstemBeta", {
   readAgentFile: (filename, scope) => (
     ipcRenderer.invoke("beta:read-agent-file", filename, scope)
   ),
+  setChatLook: (look) => ipcRenderer.invoke("beta:set-chat-look", look),
   surgeonReset: (sessionId = 1) => ipcRenderer.invoke("beta:surgeon-reset", sessionId),
   surgeonSend: (sessionId, prompt) => ipcRenderer.invoke("beta:surgeon-send", sessionId, prompt),
   surgeonClose: (sessionId) => ipcRenderer.invoke("beta:surgeon-close", sessionId),

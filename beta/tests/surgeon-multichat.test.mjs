@@ -66,9 +66,12 @@ test("Brain Surgeon keeps the accessible typing bubble for explicit hold mode", 
     ui.indexOf('<script src="typing-delivery.js"></script>')
       < ui.indexOf('<script src="renderer.js"></script>'),
   );
+  assert.match(main, /readChatLookSettings/);
   assert.match(main, /resolveChatStreamMode\(process\.env\)/);
   assert.match(main, /--rapp-chat-stream=/);
+  assert.match(main, /--rapp-chat-look=/);
   assert.match(preload, /chatStreamMode/);
+  assert.match(preload, /chatLook/);
   assert.match(renderer, /chatTypingEnabled = chatStreamMode === "hold"/);
   assert.match(renderer, /createSurgeonDelivery/);
   assert.match(renderer, /session\.delivery\?\.push/);

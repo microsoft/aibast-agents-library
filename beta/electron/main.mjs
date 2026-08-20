@@ -23,6 +23,10 @@ import {
 } from "./chat-stream-mode.mjs";
 import { humanizeAgentName } from "./agent-display.mjs";
 import { BrainSurgeon } from "./brain-surgeon.mjs";
+import {
+  changeChatLook,
+  readChatLookSettings,
+} from "./chat-look-settings.mjs";
 import { CopilotStudioAuthManager } from "./copilot-studio-auth.mjs";
 import { CopilotRuntime } from "./copilot-runtime.mjs";
 import { executeLineageCommand } from "./lineage-control.mjs";
@@ -146,10 +150,15 @@ html[data-rapp-stream="smooth"] .typing span:nth-child(3) {
   }
 }
 `;
-const chatLook = process.env.RAPP_CHAT_LOOK === "business"
-  ? "business"
-  : "messages";
-const chatTypingEnabled = chatStreamMode === "hold";
+const betaHome = process.env.BRAINSTEM_BETA_HOME
+  || path.join(config.brainstemHome, "beta-launcher");
+const initialChatLook = readChatLookSettings({
+  betaHome,
+  env: process.env,
+});
+let chatLook = initialChatLook.chatLook;
+let chatLookOverridden = initialChatLook.chatLookOverridden;
+let chatTypingEnabled = chatStreamMode === "hold";
 const startupFingerprint = betaSourceFingerprint(path.resolve(packageDir, ".."));
 const brainstemRuntimeFingerprint = runtimeDirectoryFingerprint(
   config.brainstemDir,
@@ -315,6 +324,14 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     ".beta-frame-menu .beta-panel-btn.primary{margin-top:9px;",
     "border-color:#238636;background:#238636}",
     ".beta-frame-menu .beta-panel-btn[hidden]{display:none}",
+    ".beta-frame-menu .beta-chat-look{display:flex;align-items:center;gap:8px;",
+    "margin:0 0 12px;padding:8px;border:1px solid #30363d;border-radius:8px;",
+    "background:#0d1117;color:#8b949e;font-size:11px}",
+    ".beta-frame-menu .beta-chat-look-options{display:flex;gap:4px;margin-left:auto}",
+    ".beta-frame-menu .beta-chat-look button{padding:4px 7px;border:1px solid #30363d;",
+    "border-radius:999px;background:#21262d;color:#8b949e;font:inherit;cursor:pointer}",
+    ".beta-frame-menu .beta-chat-look button[aria-pressed=true]{border-color:#58a6ff;",
+    "background:#1f6feb;color:#fff}",
     ".beta-frame-menu #beta-update-status{margin-top:10px;padding:9px;",
     "border:1px solid #30363d;border-radius:8px;background:#0d1117;",
     "color:#8b949e;font-size:11px;line-height:1.4;white-space:pre-wrap}",
@@ -347,6 +364,14 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
       message.classList.remove("rapp-group-last", "rapp-message-arrived");
     }
   }
+  function renderFrameChatLookControls() {
+    for (const look of ["messages", "business"]) {
+      document.getElementById("beta-chat-look-" + look)?.setAttribute(
+        "aria-pressed",
+        String(currentChatLook === look),
+      );
+    }
+  }
   function applyFrameChatLook(look, typingEnabled) {
     currentChatLook = normalizeChatLook(look);
     chatTypingEnabled = Boolean(typingEnabled);
@@ -358,6 +383,7 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     );
     if (currentChatLook === "messages") syncMessageGroups();
     else clearMessageMarkers();
+    renderFrameChatLookControls();
     return {
       chatLook: currentChatLook,
       chatTypingEnabled,
@@ -513,6 +539,11 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
         + '<div id="beta-app-panel"><h3>RAPP Brainstem Frontier</h3>'
         + '<p class="beta-app-copy">Chat is the control surface. Agents can add '
         + 'capabilities and visibly operate this workspace while you watch.</p>'
+        + '<div class="beta-chat-look" role="group" aria-label="Chat look">'
+        + '<span>Chat look ▸</span><div class="beta-chat-look-options">'
+        + '<button id="beta-chat-look-messages" type="button" data-look="messages">'
+        + 'Messages</button><button id="beta-chat-look-business" type="button" '
+        + 'data-look="business">Business</button></div></div>'
         + '<button class="beta-panel-btn" id="beta-check-updates" type="button">'
         + 'Check for updates</button><div id="beta-update-status" '
         + 'data-phase="idle" role="status" aria-live="polite">Check GitHub for '
@@ -556,10 +587,23 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
         }, true);
         window.parent.postMessage({ type: "rapp-beta:install-update" }, "*");
       });
+      for (const look of ["messages", "business"]) {
+        document.getElementById("beta-chat-look-" + look)?.addEventListener(
+          "click",
+          (event) => {
+            event.stopPropagation();
+            window.parent.postMessage({
+              type: "rapp-beta:set-chat-look",
+              look,
+            }, "*");
+          },
+        );
+      }
       document.addEventListener("click", (event) => {
         if (!event.target.closest(".beta-app-wrapper")) setBetaMenuOpen(false);
       });
     }
+    renderFrameChatLookControls();
     return true;
   }
   installBetaMenu();
@@ -960,8 +1004,6 @@ const copilot = new CopilotRuntime({
   workingDirectory: config.brainstemDir,
 });
 const copilotStudioAuth = new CopilotStudioAuthManager();
-const betaHome = process.env.BRAINSTEM_BETA_HOME
-  || path.join(config.brainstemHome, "beta-launcher");
 
 let mainWindow = null;
 let shutdownStarted = false;
@@ -978,6 +1020,9 @@ const brainSurgeons = new Map();
 const MAX_BRAIN_SURGEONS = 12;
 
 const state = {
+  chatLook,
+  chatLookOverridden,
+  chatTypingEnabled,
   brainstem: { phase: "starting", message: "Starting shared Brainstem..." },
   copilot: { phase: "starting", message: "Connecting bundled Copilot CLI..." },
   surgeon: {
@@ -1012,6 +1057,51 @@ function emitState() {
   if (mainWindow && !mainWindow.isDestroyed()) {
     mainWindow.webContents.send("beta:state", structuredClone(state));
   }
+}
+
+function syncChatLookMenu() {
+  const menu = Menu.getApplicationMenu();
+  for (const look of ["messages", "business"]) {
+    const item = menu?.getMenuItemById(`chat-look-${look}`);
+    if (item) item.checked = chatLook === look;
+  }
+}
+
+function applyEffectiveChatLook(value) {
+  chatLook = value.chatLook;
+  chatLookOverridden = value.chatLookOverridden;
+  chatTypingEnabled = chatStreamMode === "hold";
+  state.chatLook = chatLook;
+  state.chatLookOverridden = chatLookOverridden;
+  state.chatTypingEnabled = chatTypingEnabled;
+  syncChatLookMenu();
+  emitState();
+}
+
+async function applyChatLookToFrame() {
+  const frame = mainWindow?.webContents.mainFrame.framesInSubtree.find(
+    (candidate) => loopbackUrl(candidate.url),
+  );
+  if (!frame) return { installed: false };
+  await frame.executeJavaScript(frameBridgeInstallationSource(), true);
+  return { installed: true };
+}
+
+async function handleChatLookChange(nextLook) {
+  const value = changeChatLook({
+    apply: applyEffectiveChatLook,
+    betaHome,
+    chatLook: nextLook,
+    env: process.env,
+  });
+  await applyChatLookToFrame();
+  return structuredClone(value);
+}
+
+function requestChatLookChange(nextLook) {
+  void handleChatLookChange(nextLook).catch((error) => {
+    console.error(`Could not change chat look to ${nextLook}:`, error);
+  });
 }
 
 function emitSurgeonEvent(event) {
@@ -1514,6 +1604,7 @@ function createWindow() {
       preload: path.join(dirname, "preload.cjs"),
       additionalArguments: [
         `--rapp-chat-stream=${chatStreamMode}`,
+        `--rapp-chat-look=${chatLook}`,
       ],
       contextIsolation: true,
       nodeIntegration: false,
@@ -1694,9 +1785,30 @@ function installApplicationMenu() {
       { role: "selectAll" },
     ],
   };
+  const chatLookMenu = {
+    label: "Chat Look",
+    submenu: [
+      {
+        id: "chat-look-messages",
+        label: "Messages",
+        type: "radio",
+        checked: chatLook === "messages",
+        click: () => requestChatLookChange("messages"),
+      },
+      {
+        id: "chat-look-business",
+        label: "Business",
+        type: "radio",
+        checked: chatLook === "business",
+        click: () => requestChatLookChange("business"),
+      },
+    ],
+  };
   const viewMenu = {
     label: "View",
     submenu: [
+      chatLookMenu,
+      { type: "separator" },
       { role: "reload" },
       { role: "forceReload" },
       { role: "toggleDevTools" },
@@ -1742,6 +1854,7 @@ function installApplicationMenu() {
   updateMenuItem = Menu.getApplicationMenu()?.getMenuItemById(
     "check-for-updates",
   );
+  syncChatLookMenu();
 }
 
 function loadPendingUpdateResult() {
@@ -1796,6 +1909,10 @@ function registerIpc() {
   ipcMain.handle("beta:get-state", (event) => {
     assertTrustedIpc(event);
     return structuredClone(state);
+  });
+  ipcMain.handle("beta:set-chat-look", async (event, nextLook) => {
+    assertTrustedIpc(event);
+    return handleChatLookChange(nextLook);
   });
   ipcMain.handle("beta:list-agent-files", async (event) => {
     assertTrustedIpc(event);
@@ -1868,12 +1985,7 @@ function registerIpc() {
   });
   ipcMain.handle("beta:install-frame-bridge", async (event) => {
     assertTrustedIpc(event);
-    const frame = mainWindow?.webContents.mainFrame.framesInSubtree.find(
-      (candidate) => loopbackUrl(candidate.url),
-    );
-    if (!frame) return { installed: false };
-    await frame.executeJavaScript(frameBridgeInstallationSource(), true);
-    return { installed: true };
+    return applyChatLookToFrame();
   });
   ipcMain.handle("beta:lineage-command", async (event, message) => {
     assertTrustedIpc(event);
