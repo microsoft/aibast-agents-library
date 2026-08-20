@@ -539,7 +539,7 @@ export function registerChatCardIpc({
   });
 }
 
-function installAprilFoolsFrameToggle(settings) {
+function installAprilFoolsFrameBridge(settings) {
   const prior = window.__rappBetaAprilFoolsBridge;
   if (prior) {
     prior.update(settings);
@@ -547,9 +547,17 @@ function installAprilFoolsFrameToggle(settings) {
   }
 
   let current = settings;
+  let activeHistory = null;
+  let internalClear = false;
+  let lastRequest = null;
+  let nextRaceCardId = null;
+  const pendingRequests = new Map();
+  const upstreamFetch = window.fetch;
+
   function removeToggle() {
     document.getElementById("beta-april-fools-toggle")?.remove();
   }
+
   function renderToggle() {
     const panel = document.getElementById("beta-app-panel");
     if (!panel) return false;
@@ -574,28 +582,365 @@ function installAprilFoolsFrameToggle(settings) {
     button.textContent = `April Fools: Card Table ${current.on ? "✓" : ""}`.trim();
     return true;
   }
-  function receive(event) {
+
+  function sanitizedHtml(element) {
+    const container = document.createElement("div");
+    const sanitizer = typeof window.sanitizeMarkdownFragment === "function"
+      ? window.sanitizeMarkdownFragment
+      : null;
+    if (sanitizer) {
+      container.appendChild(sanitizer(String(element?.innerHTML || "")));
+    } else {
+      container.textContent = String(element?.textContent || "");
+    }
+    return container.innerHTML;
+  }
+
+  function replyHtml(text) {
+    const source = typeof window.marked?.parse === "function"
+      ? window.marked.parse(String(text || ""))
+      : String(text || "");
+    const holder = document.createElement("div");
+    if (typeof window.sanitizeMarkdownFragment === "function") {
+      holder.appendChild(window.sanitizeMarkdownFragment(source));
+    } else {
+      holder.textContent = String(text || "");
+    }
+    return holder.innerHTML;
+  }
+
+  function transcriptTurns() {
+    const now = new Date().toISOString();
+    return [...document.querySelectorAll(
+      "#chat .msg.user:not([data-rapp-provisional]), "
+        + "#chat .msg.assistant:not(.typing-indicator):not([data-rapp-provisional])",
+    )].map((message) => {
+      const bubble = message.querySelector(".bubble") || message;
+      return {
+        role: message.classList.contains("user") ? "user" : "assistant",
+        text: String(bubble.textContent || "").trim(),
+        html: sanitizedHtml(bubble),
+        at: now,
+      };
+    }).filter((turn) => turn.text);
+  }
+
+  function pendingHistory() {
+    const latest = [...pendingRequests.values()].at(-1);
+    if (latest) {
+      return [
+        ...latest.effectiveHistory,
+        { role: "user", content: latest.userInput },
+      ];
+    }
+    return activeHistory ? structuredClone(activeHistory) : [];
+  }
+
+  function captureCard() {
+    const turns = transcriptTurns();
+    const pending = [...pendingRequests.values()];
+    for (const request of pending) {
+      const alreadyRendered = turns.at(-1)?.role === "assistant";
+      if (!alreadyRendered) {
+        turns.push({
+          role: "assistant",
+          text: "Waiting for reply...",
+          html: "",
+          at: request.startedAt,
+          pending: true,
+        });
+      }
+    }
+    const model = document.getElementById("model-select")?.value || "auto";
+    return {
+      title: turns.find((turn) => turn.role === "user")?.text || "Parked chat",
+      turns,
+      history: lastRequest?.completedHistory
+        ? structuredClone(lastRequest.completedHistory)
+        : pendingHistory(),
+      model,
+      pending: pending.length > 0,
+    };
+  }
+
+  function markPendingForCard(cardId) {
+    activeHistory = null;
+    for (const request of pendingRequests.values()) {
+      request.parkedCardId = cardId;
+      request.preserveOnClear = true;
+    }
+  }
+
+  function clearKernel({ preservePending = false } = {}) {
+    if (preservePending) {
+      for (const request of pendingRequests.values()) {
+        request.preserveOnClear = true;
+      }
+    }
+    const clear = [...document.querySelectorAll("button")]
+      .find((button) => button.textContent.trim() === "Clear");
+    if (!clear) throw new Error("The Brainstem Clear button is unavailable.");
+    internalClear = true;
+    try {
+      clear.click();
+    } finally {
+      internalClear = false;
+    }
+  }
+
+  function renderTranscript(card) {
+    clearKernel();
+    lastRequest = null;
+    activeHistory = Array.isArray(card.history)
+      ? structuredClone(card.history)
+      : [];
+    const chat = document.getElementById("chat");
+    if (!chat) throw new Error("The Brainstem transcript is unavailable.");
+    for (const turn of card.turns || []) {
+      if (turn.pending) continue;
+      let message = null;
+      if (typeof window.appendMsg === "function") {
+        message = window.appendMsg(turn.role, turn.text);
+      } else {
+        message = document.createElement("div");
+        message.className = `msg ${turn.role}`;
+        const bubble = document.createElement("div");
+        bubble.className = "bubble";
+        bubble.textContent = turn.text;
+        message.appendChild(bubble);
+        chat.appendChild(message);
+      }
+      const bubble = message?.querySelector?.(".bubble");
+      if (bubble && turn.html) {
+        const holder = document.createElement("div");
+        holder.innerHTML = String(turn.html);
+        bubble.replaceChildren(
+          typeof window.sanitizeMarkdownFragment === "function"
+            ? window.sanitizeMarkdownFragment(holder.innerHTML)
+            : document.createTextNode(turn.text),
+        );
+      }
+    }
+    chat.classList.add("has-messages");
+    chat.scrollTop = chat.scrollHeight;
+    return true;
+  }
+
+  function prepareRace(cardId, question) {
+    clearKernel();
+    activeHistory = null;
+    nextRaceCardId = cardId;
+    const input = document.getElementById("input");
+    if (!input) throw new Error("The Brainstem composer is unavailable.");
+    input.value = String(question || "");
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+    input.focus();
+  }
+
+  function streamReply(text) {
+    let reply = "";
+    for (const frame of String(text || "").split(/\r?\n\r?\n/)) {
+      const data = frame.split(/\r?\n/)
+        .find((line) => line.startsWith("data:"));
+      if (!data) continue;
+      try {
+        const value = JSON.parse(data.slice(5).trim());
+        if (value.type === "done") {
+          reply = value.response == null ? reply : String(value.response);
+        }
+      } catch {
+        // Non-JSON keepalive and [DONE] frames do not carry a reply.
+      }
+    }
+    return reply;
+  }
+
+  async function responseReply(response, pathname) {
+    const text = await response.clone().text();
+    if (pathname === "/chat/stream") return streamReply(text);
+    try {
+      const value = JSON.parse(text);
+      return String(value.response || "");
+    } catch {
+      return "";
+    }
+  }
+
+  async function observeCompletion(request, response, pathname) {
+    try {
+      const reply = await responseReply(response, pathname);
+      if (!reply) return;
+      request.completedHistory = [
+        ...request.effectiveHistory,
+        { role: "user", content: request.userInput },
+        { role: "assistant", content: reply },
+      ];
+      lastRequest = request;
+      if (request.parkedCardId) {
+        window.parent.postMessage({
+          type: "rapp-beta:card-pending-complete",
+          id: request.parkedCardId,
+          completion: {
+            reply,
+            html: replyHtml(reply),
+            at: new Date().toISOString(),
+          },
+        }, "*");
+      }
+    } finally {
+      request.detachAbort?.();
+      pendingRequests.delete(request.id);
+    }
+  }
+
+  async function cardFetch(resource, options = {}) {
+    let target;
+    try {
+      const raw = resource instanceof Request ? resource.url : String(resource);
+      target = new URL(raw, window.location.href);
+    } catch {
+      return Reflect.apply(upstreamFetch, window, [resource, options]);
+    }
+    const method = String(
+      options.method || (resource instanceof Request ? resource.method : "GET"),
+    ).toUpperCase();
+    const isChat = method === "POST"
+      && (target.pathname === "/chat" || target.pathname === "/chat/stream")
+      && typeof options.body === "string";
+    if (!isChat) {
+      return Reflect.apply(upstreamFetch, window, [resource, options]);
+    }
+    let body;
+    try {
+      body = JSON.parse(options.body);
+    } catch {
+      return Reflect.apply(upstreamFetch, window, [resource, options]);
+    }
+    if (typeof body.user_input !== "string") {
+      return Reflect.apply(upstreamFetch, window, [resource, options]);
+    }
+
+    const incomingHistory = Array.isArray(body.conversation_history)
+      ? body.conversation_history
+      : [];
+    const effectiveHistory = activeHistory
+      ? [...structuredClone(activeHistory), ...incomingHistory]
+      : incomingHistory;
+    body.conversation_history = effectiveHistory;
+
+    const originalSignal = options.signal
+      || (resource instanceof Request ? resource.signal : null);
+    const controller = new AbortController();
+    const request = {
+      completedHistory: null,
+      effectiveHistory: structuredClone(effectiveHistory),
+      id: window.crypto.randomUUID(),
+      parkedCardId: nextRaceCardId,
+      preserveOnClear: Boolean(nextRaceCardId),
+      startedAt: new Date().toISOString(),
+      userInput: body.user_input,
+    };
+    nextRaceCardId = null;
+    const forwardAbort = () => {
+      if (!request.preserveOnClear) controller.abort(originalSignal?.reason);
+    };
+    if (originalSignal) {
+      if (originalSignal.aborted) forwardAbort();
+      else originalSignal.addEventListener("abort", forwardAbort, { once: true });
+      request.detachAbort = () => (
+        originalSignal.removeEventListener("abort", forwardAbort)
+      );
+    }
+    pendingRequests.set(request.id, request);
+    lastRequest = request;
+    const nextOptions = {
+      ...options,
+      body: JSON.stringify(body),
+      signal: controller.signal,
+    };
+    try {
+      const response = await Reflect.apply(
+        upstreamFetch,
+        window,
+        [resource, nextOptions],
+      );
+      void observeCompletion(request, response, target.pathname);
+      return response;
+    } catch (error) {
+      request.detachAbort?.();
+      pendingRequests.delete(request.id);
+      throw error;
+    }
+  }
+
+  function handleClear(event) {
+    const button = event.target?.closest?.("button");
     if (
-      event.source === window.parent
-      && event.data?.type === "rapp-beta:april-fools-state"
+      !internalClear
+      && button
+      && button.textContent.trim() === "Clear"
     ) {
+      activeHistory = null;
+      lastRequest = null;
+    }
+  }
+
+  function disable() {
+    removeToggle();
+    document.removeEventListener("click", handleClear, true);
+    window.removeEventListener("message", receive);
+    if (window.fetch === cardFetch) window.fetch = upstreamFetch;
+    activeHistory = null;
+    pendingRequests.clear();
+    delete window.__rappBetaAprilFoolsBridge;
+  }
+
+  function receive(event) {
+    if (event.source !== window.parent || !event.data) return;
+    if (event.data.type === "rapp-beta:april-fools-state") {
       current = event.data.aprilFools || current;
       if (!current.on) {
-        removeToggle();
-        window.removeEventListener("message", receive);
-        delete window.__rappBetaAprilFoolsBridge;
+        disable();
       } else {
         renderToggle();
       }
+      return;
+    }
+    if (event.data.type === "rapp-beta:card-capture") {
+      event.source.postMessage({
+        type: "rapp-beta:card-capture-result",
+        requestId: event.data.requestId,
+        ok: true,
+        card: captureCard(),
+      }, "*");
+      return;
+    }
+    if (event.data.type === "rapp-beta:card-parked") {
+      markPendingForCard(event.data.id);
+      clearKernel({ preservePending: true });
+      return;
+    }
+    if (event.data.type === "rapp-beta:card-wake") {
+      renderTranscript(event.data.card || {});
+      return;
+    }
+    if (event.data.type === "rapp-beta:card-race") {
+      prepareRace(event.data.id, event.data.question);
     }
   }
+
   const bridge = {
+    capture: captureCard,
+    disable,
+    renderTranscript,
     update(next) {
       current = next;
       renderToggle();
     },
   };
   window.__rappBetaAprilFoolsBridge = bridge;
+  window.fetch = cardFetch;
+  document.addEventListener("click", handleClear, true);
   window.addEventListener("message", receive);
   renderToggle();
   return true;
@@ -604,7 +949,7 @@ function installAprilFoolsFrameToggle(settings) {
 export function composeChatCardsFrameBridgeSource(checkpointSource, aprilFools) {
   const source = String(checkpointSource || "");
   if (!aprilFools?.on) return source;
-  return `${source}\n;(${installAprilFoolsFrameToggle.toString()})(${
+  return `${source}\n;(${installAprilFoolsFrameBridge.toString()})(${
     JSON.stringify(normalizeAprilFoolsSettings(aprilFools))
   });`;
 }
