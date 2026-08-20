@@ -225,10 +225,21 @@ test("HARD 3 — raw Grail stays pristine while ContextMemory ring 1 composes", 
     scan.stderr || scan.stdout || "ring-1 self-state scan reported a healthy routed agent as broken",
   );
 
+  // Compare in canonical LF: the Grail checkout may be CRLF on Windows while
+  // the ring is pinned -text. The marker must exist exactly once on each side
+  // or the comparison would pass vacuously on two tails that start at -1.
   const memoryMarker = "    def perform(self, **kwargs):";
+  const canonical = (text) => text.replaceAll("\r\n", "\n");
+  const ring1Lf = canonical(ring1);
+  const pristineLf = canonical(pristineBefore);
+  for (const [label, text] of [["ring 1", ring1Lf], ["the Grail", pristineLf]]) {
+    const first = text.indexOf(memoryMarker);
+    assert.notEqual(first, -1, `${label} must define perform()`);
+    assert.equal(text.indexOf(memoryMarker, first + 1), -1, `${label} must define perform() once`);
+  }
   assert.equal(
-    ring1.slice(ring1.indexOf(memoryMarker)),
-    pristineBefore.slice(pristineBefore.indexOf(memoryMarker)),
+    ring1Lf.slice(ring1Lf.indexOf(memoryMarker)),
+    pristineLf.slice(pristineLf.indexOf(memoryMarker)),
     "ring 1 must preserve perform/recall memory behavior byte-for-byte",
   );
   assert.equal(readFileSync(grailContextPath, "utf8"), pristineBefore);
