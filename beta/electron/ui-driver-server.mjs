@@ -83,6 +83,9 @@ async function browserDriverCommand(command, createHelpers) {
     cssEscape: (value) => CSS.escape(value),
     document,
   });
+  const frameName = command.twin
+    ? `twin:${command.twin}`
+    : (command.target === "shell" ? "shell" : "brainstem");
 
   function ensureUi() {
     let style = document.getElementById("brainstem-ai-driver-style");
@@ -210,6 +213,16 @@ async function browserDriverCommand(command, createHelpers) {
       || candidates.find((element) => normalizedText(element).toLowerCase().includes(wanted));
   }
 
+  function currentOutline(limit = helpers.caps.inspectDefault) {
+    const elements = [
+      ...document.querySelectorAll(
+        "button,a,input,textarea,select,[role='button'],[role='menuitem'],"
+        + "[tabindex],[data-drive][data-drive-outline='true']",
+      ),
+    ].filter((element) => visible(element) && !element.dataset.brainstemAiDriver);
+    return helpers.buildOutline(elements, { frame: frameName, limit });
+  }
+
   function labelText(step, fallback) {
     return String(step.label || fallback || "").trim();
   }
@@ -331,33 +344,36 @@ async function browserDriverCommand(command, createHelpers) {
     const wantedText = String(step.text || "").replace(/\s+/g, " ").trim();
     while (Date.now() < deadline) {
       let element = null;
-      if (step.selector) {
-        let matches;
+      if (step.handle || step.selector) {
         try {
-          matches = [...document.querySelectorAll(step.selector)];
+          const candidate = findElement(step);
+          if (
+            visible(candidate)
+            && (!wantedText || normalizedText(candidate).includes(wantedText))
+          ) {
+            element = candidate;
+          }
         } catch (error) {
-          throw new Error(`Invalid selector ${step.selector}: ${error.message}`);
+          if (error.name !== "UiDriverHandleNotFoundError") throw error;
         }
-        element = matches.find((candidate) => (
-          visible(candidate)
-          && (!wantedText || normalizedText(candidate).includes(wantedText))
-        ));
       }
       const textFound = !wantedText || (
-        step.selector
+        step.handle || step.selector
           ? Boolean(element)
           : document.body.innerText.replace(/\s+/g, " ").includes(wantedText)
       );
-      if ((!step.selector || element) && textFound) {
+      if ((!step.handle && !step.selector || element) && textFound) {
         return {
-          selector: element ? selectorFor(element) : null,
-          text: element ? normalizedText(element) : wantedText,
+          matched: true,
+          h: element ? selectorFor(element) : "@page",
         };
       }
       await sleep(100);
     }
     throw new Error(
-      `Timed out waiting for ${step.selector || JSON.stringify(wantedText) || "the page"}.`,
+      `Timed out waiting for ${
+        step.handle || step.selector || JSON.stringify(wantedText) || "the page"
+      }.`,
     );
   }
 
@@ -595,26 +611,23 @@ async function browserDriverCommand(command, createHelpers) {
       };
     }
     if (action === "inspect") {
-      const interactive = [
-        ...document.querySelectorAll(
-          "button,a,input,textarea,select,[role='button'],[role='menuitem'],[tabindex]",
-        ),
-      ]
-        .filter((element) => visible(element) && !element.dataset.brainstemAiDriver)
-        .slice(0, Math.max(1, Math.min(200, Number(step.limit) || 80)))
-        .map((element) => ({
-          h: selectorFor(element),
-          selector: selectorFor(element),
-          tag: element.localName,
-          text: normalizedText(element).slice(0, 180),
-          disabled: Boolean(element.disabled),
-        }));
-      return {
-        title: document.title,
-        url: location.href,
-        interactive,
-        text: document.body.innerText.replace(/\s+/g, " ").trim().slice(0, 4000),
-      };
+      const outline = currentOutline(step.limit);
+      state.outlineSnapshots ||= new Map();
+      const previous = step.since
+        ? state.outlineSnapshots.get(String(step.since))
+        : null;
+      if (step.since && !previous) {
+        const error = new Error(`Unknown UI outline snapshot: ${step.since}`);
+        error.name = "UiDriverSnapshotNotFoundError";
+        throw error;
+      }
+      state.outlineSnapshots.set(outline.snapshot, outline.rows);
+      while (state.outlineSnapshots.size > 20) {
+        state.outlineSnapshots.delete(state.outlineSnapshots.keys().next().value);
+      }
+      return previous
+        ? { ...outline, rows: helpers.diffRows(previous, outline.rows) }
+        : outline;
     }
     if (action === "read") {
       const element = step.handle || step.selector ? findElement(step) : document.body;
@@ -622,9 +635,18 @@ async function browserDriverCommand(command, createHelpers) {
         if (step.optional) return { skipped: true, reason: "target not found" };
         throw new Error(`UI target not found: ${step.handle || step.selector || step.targetText}`);
       }
+      const limit = helpers.capNumber(
+        step.limit,
+        1,
+        helpers.caps.readMax,
+        helpers.caps.readMax,
+      );
       return {
+        h: selectorFor(element),
         selector: selectorFor(element),
-        text: normalizedText(element).slice(0, Math.max(1, Number(step.limit) || 12000)),
+        text: helpers.capText(normalizedText(element), limit, {
+          tail: Boolean(step.tail),
+        }),
       };
     }
     if (action === "wait") return waitFor(step);
@@ -1353,6 +1375,17 @@ function validateCommand(command) {
   if (!allowed.has(action)) {
     throw new Error(`Unsupported UI driver action: ${action || "(empty)"}`);
   }
+  if (action === "inspect") {
+    if (
+      command.limit !== undefined
+      && (!Number.isInteger(command.limit) || command.limit < 1 || command.limit > 80)
+    ) {
+      throw new Error("UI driver inspect limit must be between 1 and 80.");
+    }
+    if (command.since !== undefined && typeof command.since !== "string") {
+      throw new Error("UI driver inspect since must be a snapshot string.");
+    }
+  }
   if (action === "run") {
     if (!Array.isArray(command.steps) || command.steps.length < 1 || command.steps.length > 40) {
       throw new Error("UI driver runs require between 1 and 40 steps.");
@@ -1577,7 +1610,7 @@ export async function startUiDriverServer({
       + `?token=${encodeURIComponent(artifactToken)}`;
   }
 
-  async function captureEvidence() {
+  async function captureEvidence(command = {}) {
     mkdirSync(captureDir, { recursive: true });
     const image = await window.webContents.capturePage();
     const outputPath = path.join(
@@ -1589,18 +1622,50 @@ export async function startUiDriverServer({
       ? image.resize({ width: 1280 })
       : image;
     const frame = brainstemFrame(window, loopbackUrl);
-    const visibleText = frame
+    const text = frame
       ? await frame.executeJavaScript(
-          "document.body.innerText.replace(/\\s+/g, ' ').trim().slice(0, 12000)",
+          `(${function screenshotText(options) {
+            const normalize = (value) => String(value || "").replace(/\s+/g, " ").trim();
+            const active = document.activeElement;
+            const activeHandle = active?.dataset?.drive
+              ? `@${active.dataset.drive}`
+              : (active?.id ? `#${active.id}` : "");
+            const lastStep = normalize(
+              window.__brainstemAiDriver?.lastStep
+              || document.querySelector("[data-drive-step-card]:last-of-type")?.textContent,
+            );
+            const caption = [
+              normalize(document.title),
+              activeHandle,
+              lastStep,
+            ].filter(Boolean).join(" · ").slice(0, 300);
+            let fullText = "";
+            if (options.includeText) {
+              const clone = document.body.cloneNode(true);
+              clone.querySelectorAll("[data-brainstem-ai-driver]").forEach(
+                (element) => element.remove(),
+              );
+              fullText = normalize(clone.innerText || clone.textContent).slice(0, 2000);
+            }
+            return { caption, fullText };
+          }.toString()})(${JSON.stringify({
+            includeText: command.includeText === true || command.include_text === true,
+          })})`,
           true,
         )
-      : "";
+      : { caption: "", fullText: "" };
+    const caption = String(text?.caption || "RAPP Brainstem Frontier capture").slice(0, 300);
+    const includeText = command.includeText === true || command.include_text === true;
     return {
+      caption,
       captureUrl: publishArtifact(outputPath, "image/png", "captures"),
       dataUrl: `data:image/jpeg;base64,${preview.toJPEG(72).toString("base64")}`,
       path: outputPath,
       size: image.getSize(),
-      visibleText,
+      ...(includeText ? { text: String(text?.fullText || "").slice(0, 2000) } : {}),
+      visibleText: includeText
+        ? String(text?.fullText || "").slice(0, 2000)
+        : caption,
     };
   }
 
@@ -1785,11 +1850,26 @@ export async function startUiDriverServer({
               true,
             )
           : null;
+        const telemetry = routeTelemetry() || {};
+        const allEvents = Array.isArray(telemetry.events) ? telemetry.events : [];
+        const requestedCursor = Math.max(0, Number(command.cursor) || 0);
+        const events = allEvents.filter((event, index) => {
+          const eventCursor = Number(event?.sequence ?? event?.cursor ?? (index + 1));
+          return !requestedCursor || eventCursor > requestedCursor;
+        }).slice(-20);
+        const cursor = Number(
+          events[events.length - 1]?.sequence
+          ?? events[events.length - 1]?.cursor
+          ?? telemetry.sequence
+          ?? requestedCursor,
+        ) || requestedCursor;
         jsonResponse(response, 200, {
           ok: true,
           result: {
-            ...routeTelemetry(),
+            ...telemetry,
             chat_lease_count: chatLeaseCount,
+            cursor,
+            events,
             navigation_count: navigationCount,
           },
         });
@@ -1842,7 +1922,7 @@ export async function startUiDriverServer({
           ok: true,
           result: {
             recording,
-            screenshot: await captureEvidence(),
+            screenshot: await captureEvidence(command),
           },
         });
         return;
@@ -1850,7 +1930,7 @@ export async function startUiDriverServer({
       if (command.action === "screenshot") {
         jsonResponse(response, 200, {
           ok: true,
-          result: await captureEvidence(),
+          result: await captureEvidence(command),
         });
         return;
       }
