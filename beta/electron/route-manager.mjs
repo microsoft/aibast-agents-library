@@ -500,6 +500,17 @@ export class BetaRouteManager {
       workerLogsRemoved: [],
     };
     const protectedHashes = new Set(this.workers.keys());
+    for (const worker of this.workers.values()) {
+      for (const directory of [
+        worker.compositionDirectory,
+        worker.retiredCompositionDirectory,
+      ]) {
+        const hash = directory
+          ? path.relative(this.compositionRoot, directory)
+          : "";
+        if (/^[0-9a-f]{64}$/.test(hash)) protectedHashes.add(hash);
+      }
+    }
     for (const hash of [
       this.activeRoute?.compositionHash,
       this.activeRoute?.transientCompositionHash,

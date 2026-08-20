@@ -139,6 +139,32 @@ test("compositions a running app can still reach are never pruned, however old",
   assert.ok(existsSync(path.join(betaHome, "logs", "workers", `${live}.log`)), "a live worker's log is never pruned");
 });
 
+test("a re-keyed worker keeps the composition directory it still serves", (t) => {
+  const { betaHome, options } = fixture(t);
+  const manager = new BetaRouteManager(options);
+  const servedHash = hashOf(300);
+  const defaultHash = hashOf(301);
+  const compositionDirectory = fakeComposition(
+    betaHome,
+    servedHash,
+    30 * DAY,
+  );
+  const agentDirectory = path.join(compositionDirectory, "agents");
+  const route = { compositionHash: defaultHash };
+  manager.workers.set(defaultHash, {
+    agentDirectory,
+    compositionDirectory,
+    retiredCompositionDirectory: compositionDirectory,
+    route,
+  });
+  manager.activeRoute = route;
+
+  manager.pruneRoutingArtifacts({ keepCompositions: 0 });
+
+  assert.ok(existsSync(compositionDirectory));
+  assert.ok(existsSync(path.join(agentDirectory, "global_agent.py")));
+});
+
 test("a fallback worker log is protected by its effective composition hash", async (t) => {
   const { betaHome, options } = fixture(t);
   const manager = new BetaRouteManager(options);
