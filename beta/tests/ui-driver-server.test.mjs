@@ -7,6 +7,7 @@ import {
 import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
+import vm from "node:vm";
 
 import {
   startUiDriverServer,
@@ -464,6 +465,105 @@ test("a control inside its own overlay is actionable: an ancestor hit is not an 
   const source = uiDriverInternals.browserDriverCommand.toString();
   assert.match(source, /!element\.contains\(top\)\s*&&\s*!top\.contains\(element\)/);
   assert.match(source, /occluded by \$\{selectorFor\(top\)/);
+});
+
+test("click scrolls an offscreen control before testing for occlusion", async () => {
+  const ids = new Map();
+  const classList = () => {
+    const names = new Set();
+    return {
+      add: (...values) => values.forEach((value) => names.add(value)),
+      contains: (value) => names.has(value),
+      remove: (...values) => values.forEach((value) => names.delete(value)),
+    };
+  };
+  const uiElement = (tag) => ({
+    classList: classList(),
+    dataset: {},
+    id: "",
+    localName: tag,
+    offsetWidth: 0,
+    style: {},
+    textContent: "",
+  });
+  let rect = { height: 32, left: 120, top: 2400, width: 180 };
+  let clicks = 0;
+  let scrolls = 0;
+  const target = {
+    classList: classList(),
+    click() {
+      clicks += 1;
+    },
+    contains: (element) => element === target,
+    dataset: { drive: "list.below" },
+    disabled: false,
+    focus() {},
+    getAttribute: () => null,
+    getBoundingClientRect: () => rect,
+    innerText: "Below the fold",
+    localName: "button",
+    scrollIntoView() {
+      scrolls += 1;
+      rect = { ...rect, top: 280 };
+    },
+  };
+  const footer = {
+    contains: () => false,
+    localName: "footer",
+  };
+  const append = (element) => {
+    if (element.id) ids.set(element.id, element);
+  };
+  const document = {
+    activeElement: target,
+    body: { appendChild: append },
+    createElement: uiElement,
+    elementFromPoint: () => (rect.top > 700 ? footer : target),
+    getElementById: (id) => ids.get(id) || null,
+    head: { appendChild: append },
+    querySelectorAll: () => [],
+  };
+  const helpers = {
+    buildOutline: () => ({ rows: [], snapshot: "steady" }),
+    caps: { inspectDefault: 60 },
+    diffOutlines: () => ({ added: [], changed: [], removed: [] }),
+    resolveSelector: () => target,
+    selectorFor: (element) => (
+      element === target ? "@list.below" : element?.localName || null
+    ),
+  };
+  const context = vm.createContext({
+    CSS: { escape: (value) => value },
+    clearTimeout() {},
+    document,
+    getComputedStyle: () => ({
+      display: "block",
+      opacity: "1",
+      pointerEvents: "auto",
+      visibility: "visible",
+    }),
+    innerHeight: 700,
+    innerWidth: 1000,
+    location: { href: "http://127.0.0.1:7071/" },
+    setTimeout(callback) {
+      callback();
+      return 1;
+    },
+    window: {},
+  });
+  const command = vm.runInContext(
+    `(${uiDriverInternals.browserDriverCommand.toString()})`,
+    context,
+  );
+
+  const result = await command(
+    { action: "click", selector: "#below" },
+    () => helpers,
+  );
+
+  assert.equal(result.ok, true);
+  assert.equal(clicks, 1);
+  assert.equal(scrolls, 1);
 });
 
 test("a frame script is abandoned when its frame navigates, and the queue moves on", async () => {

@@ -325,8 +325,9 @@ async function browserDriverCommand(command, createHelpers) {
       return "pointer-events is none";
     }
     const rect = element.getBoundingClientRect();
-    const x = Math.max(0, Math.min(innerWidth - 1, rect.left + rect.width / 2));
-    const y = Math.max(0, Math.min(innerHeight - 1, rect.top + rect.height / 2));
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    if (x < 0 || x >= innerWidth || y < 0 || y >= innerHeight) return null;
     const top = document.elementFromPoint?.(x, y);
     // Occluded means something ELSE is on top. A hit on the element, on one
     // of its descendants, or on one of its own ancestors (a button inside the
@@ -507,6 +508,7 @@ async function browserDriverCommand(command, createHelpers) {
     const { cursor, label } = ensureUi();
     element.scrollIntoView({ block: "center", inline: "center", behavior: "smooth" });
     await sleep(220);
+    requireActionable(element);
     const rect = element.getBoundingClientRect();
     const x = Math.max(8, Math.min(innerWidth - 12, rect.left + rect.width / 2));
     const y = Math.max(8, Math.min(innerHeight - 12, rect.top + rect.height / 2));
