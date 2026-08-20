@@ -47,6 +47,11 @@ const CONTEXT_MEMORY_RING1_PATH = path.join(
   "rings",
   "context_memory_agent.ring1.py",
 );
+const CONTEXT_MEMORY_RING2_PATH = path.join(
+  MODULE_DIRECTORY,
+  "rings",
+  "context_memory_agent.ring2.py",
+);
 const MOLTER_AGENT_PATH = unpackedAsarPath(path.resolve(
   MODULE_DIRECTORY,
   "..",
@@ -498,7 +503,8 @@ export class BetaRouteManager {
     }
     this.pruneRoutingArtifacts();
     if (this.lineageIsEnabled() && seedLineageDefaults) {
-      this.seedContextMemoryRing1();
+      const ring1 = this.seedContextMemoryRing1();
+      if (typeof ring1 === "string") this.seedContextMemoryRing2(ring1);
     }
   }
 
@@ -724,6 +730,159 @@ export class BetaRouteManager {
       this.recordTelemetry("lineage-default-skipped", {
         env: "default",
         reason: String(error?.message || error),
+      });
+      return null;
+    }
+  }
+
+  seedContextMemoryRing2(parentRappid = null) {
+    if (!this.lineageIsEnabled()) {
+      const refusal = {
+        ok: false,
+        disabled: true,
+        refused: true,
+        reason: "Molt Lineage is disabled (RAPP_MOLT_LINEAGE=0).",
+      };
+      this.recordTelemetry("lineage-default-skipped", {
+        env: "default",
+        reason: refusal.reason,
+        ring: 2,
+      });
+      return refusal;
+    }
+    try {
+      const baseline = this.lineageStore.baselineAncestors().find(
+        (candidate) => candidate.filename === "context_memory_agent.py",
+      );
+      if (!baseline) {
+        this.recordTelemetry("lineage-default-skipped", {
+          env: "default",
+          reason: "ContextMemory is not present in the Grail baseline.",
+          ring: 2,
+        });
+        return null;
+      }
+      if (baseline.sha256 !== CONTEXT_MEMORY_RING1_BASELINE_SHA256) {
+        this.recordTelemetry("lineage-default-skipped", {
+          ancestor_rappid: baseline.ancestorRappid,
+          env: "default",
+          reason: "ContextMemory baseline bytes do not match the verified ring-2 lineage.",
+          ring: 2,
+        });
+        return null;
+      }
+      const ring1Source = readFileSync(CONTEXT_MEMORY_RING1_PATH, "utf8")
+        .replaceAll("\r\n", "\n");
+      const expectedParent = lineageStoreInternals.ringRappidFor(
+        baseline.ancestorRappid,
+        baseline.ancestorRappid,
+        ring1Source,
+        baseline.filename,
+      );
+      const parent = parentRappid || expectedParent;
+      if (
+        parent !== expectedParent
+        || !this.lineageStore.listRings(baseline.ancestorRappid)
+          .some((ring) => ring.ringRappid === parent)
+      ) {
+        this.recordTelemetry("lineage-default-skipped", {
+          ancestor_rappid: baseline.ancestorRappid,
+          env: "default",
+          reason: "ContextMemory ring-2 requires the verified ring-1 parent.",
+          ring: 2,
+        });
+        return null;
+      }
+      const source = readFileSync(CONTEXT_MEMORY_RING2_PATH, "utf8")
+        .replaceAll("\r\n", "\n");
+      const ringRappid = lineageStoreInternals.ringRappidFor(
+        baseline.ancestorRappid,
+        parent,
+        source,
+        baseline.filename,
+      );
+      const rings = this.lineageStore.listRings(baseline.ancestorRappid);
+      const currentHead = this.lineageStore.getHead(
+        baseline.ancestorRappid,
+        { env: "default" },
+      );
+      if (rings.some((ring) => ring.ringRappid === ringRappid)) {
+        return ringRappid;
+      }
+      if (currentHead !== parent) {
+        this.recordTelemetry("lineage-default-skipped", {
+          ancestor_rappid: baseline.ancestorRappid,
+          env: "default",
+          reason: "ContextMemory HEAD moved beyond ring 1; preserving the selected lineage.",
+          ring: 2,
+        });
+        return null;
+      }
+      const verdict = this.moltVerifier(source);
+      if (verdict !== true && verdict?.ok !== true) {
+        this.recordTelemetry("lineage-default-skipped", {
+          ancestor_rappid: baseline.ancestorRappid,
+          env: "default",
+          reason: verdict?.error || "ContextMemory ring-2 failed the Molter verify gate.",
+          ring: 2,
+        });
+        return null;
+      }
+      const appended = this.lineageStore.appendRing(
+        baseline.ancestorRappid,
+        {
+          source,
+          parentRappid: parent,
+          verified: true,
+          meta: {
+            author: "frontier",
+            kind: "ambient-context/1.0",
+            policy: "mutable",
+            ring: 2,
+            verifiedBy: "molter._verify",
+          },
+        },
+      );
+      const moved = this.lineageStore.setHead(
+        baseline.ancestorRappid,
+        appended,
+        { env: "default" },
+      );
+      if (moved !== true) {
+        this.recordTelemetry("lineage-default-skipped", {
+          ancestor_rappid: baseline.ancestorRappid,
+          env: "default",
+          reason: moved?.reason || "ContextMemory ring-2 HEAD write was refused.",
+          ring: 2,
+        });
+        return moved;
+      }
+      this.recordTelemetry("lineage-default-seeded", {
+        agent_rows: [agentLedgerRow({
+          filename: baseline.filename,
+          origin: "lineage",
+          rappid: appended,
+          source,
+          sourcePath: path.join(
+            this.lineageStore.root,
+            lineageStoreInternals.filesystemSegment(baseline.ancestorRappid),
+            "rings",
+            lineageStoreInternals.filesystemSegment(appended),
+            "source.py",
+          ),
+        })],
+        ancestor_rappid: baseline.ancestorRappid,
+        env: "default",
+        parent_rappid: parent,
+        ring: 2,
+        ring_rappid: appended,
+      });
+      return appended;
+    } catch (error) {
+      this.recordTelemetry("lineage-default-skipped", {
+        env: "default",
+        reason: String(error?.message || error),
+        ring: 2,
       });
       return null;
     }
@@ -2444,6 +2603,7 @@ export class BetaRouteManager {
       env: {
         AGENTS_PATH: materialized.agentDirectory,
         BRAINSTEM_BETA_ROUTED_WORKER: "1",
+        RAPP_AMBIENT_DIR: path.join(this.betaHome, "ambient"),
       },
     };
     const process = this.createWorkerProcess(config);
