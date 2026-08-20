@@ -128,30 +128,6 @@ test("race creates a pending contender and waking a winner folds its rival", (t)
     requestId: "request-fixture-1",
   });
 
-  test("a race winner folds only its paired rival", (t) => {
-    let raceSequence = 0;
-    const { store } = fixtureStore(t, {
-      raceIdFactory: () => `race-fixture-${++raceSequence}`,
-    });
-    const first = store.race(store.park(cardFixture("First race?")).id);
-    const second = store.race(store.park(cardFixture("Second race?")).id);
-
-    store.wake(first.source.id);
-    assert.equal(store.read(first.contender.id).status, "folded");
-    assert.equal(store.read(second.source.id).status, "racing");
-    assert.equal(store.read(second.contender.id).status, "racing");
-  });
-
-  test("a non-restorable transcript reports the reason instead of waking", (t) => {
-    const { store } = fixtureStore(t);
-    const card = store.park({
-      ...cardFixture(),
-      restorable: false,
-      restoreError: "Exact wire history was not observed.",
-    });
-    assert.equal(card.restorable, false);
-    assert.throws(() => store.wake(card.id), /wire history was not observed/);
-  });
   assert.equal(completed.turns.at(-1).pending, undefined);
   assert.equal(completed.history.at(-1).content, "The contender replied.");
   const duplicate = store.complete(race.contender.id, {
@@ -164,6 +140,33 @@ test("race creates a pending contender and waking a winner folds its rival", (t)
   store.wake(original.id);
   assert.equal(store.read(original.id).status, "primary");
   assert.equal(store.read(race.contender.id).status, "folded");
+});
+
+// These two were nested inside the race test above; Node cancels nested
+// subtests when the parent finishes first ("cancelledByParent" on Windows).
+test("a race winner folds only its paired rival", (t) => {
+  let raceSequence = 0;
+  const { store } = fixtureStore(t, {
+    raceIdFactory: () => `race-fixture-${++raceSequence}`,
+  });
+  const first = store.race(store.park(cardFixture("First race?")).id);
+  const second = store.race(store.park(cardFixture("Second race?")).id);
+
+  store.wake(first.source.id);
+  assert.equal(store.read(first.contender.id).status, "folded");
+  assert.equal(store.read(second.source.id).status, "racing");
+  assert.equal(store.read(second.contender.id).status, "racing");
+});
+
+test("a non-restorable transcript reports the reason instead of waking", (t) => {
+  const { store } = fixtureStore(t);
+  const card = store.park({
+    ...cardFixture(),
+    restorable: false,
+    restoreError: "Exact wire history was not observed.",
+  });
+  assert.equal(card.restorable, false);
+  assert.throws(() => store.wake(card.id), /wire history was not observed/);
 });
 
 test("race refuses a card whose last user turn is not a question", (t) => {
