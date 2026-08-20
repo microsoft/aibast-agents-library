@@ -87,6 +87,25 @@ test("health wait stops when the child exits", async () => {
   assert.equal(calls, 2);
 });
 
+test("health wait stops when the child exits from a signal", async () => {
+  const brainstem = new BrainstemProcess({});
+  brainstem.child = { exitCode: null, signalCode: "SIGKILL" };
+  let calls = 0;
+
+  const result = await waitForHealth("http://127.0.0.1:7071", {
+    timeoutMs: 5_000,
+    intervalMs: 1,
+    probe: async () => {
+      calls += 1;
+      return null;
+    },
+    exited: () => brainstem.hasExited(),
+  });
+
+  assert.equal(result, null);
+  assert.equal(calls, 1);
+});
+
 test("health wait returns the first valid response", async () => {
   const health = { status: "unauthenticated", version: "0.6.16", agents: [] };
   let calls = 0;

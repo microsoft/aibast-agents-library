@@ -187,6 +187,13 @@ export class BrainstemProcess {
     this.owned = false;
   }
 
+  hasExited(child = this.child) {
+    return Boolean(child) && (
+      child.exitCode !== null
+      || child.signalCode !== null
+    );
+  }
+
   captureOutput(child) {
     const pumps = [child.stdout, child.stderr].map((output) => (
       pipeline(
@@ -315,7 +322,7 @@ export class BrainstemProcess {
     this.owned = true;
 
     const health = await waitForHealth(this.config.url, {
-      exited: () => this.child?.exitCode !== null,
+      exited: () => this.hasExited(),
     });
     const expectedBrainstemDir = canonicalFilesystemPath(
       this.config.brainstemDir,
@@ -327,15 +334,21 @@ export class BrainstemProcess {
     if (
       !health
       || !ownedHealthMatches
-      || this.child?.exitCode !== null
-      || this.child?.signalCode !== null
+      || this.hasExited()
     ) {
       const exitCode = this.child?.exitCode;
+      const signalCode = this.child?.signalCode;
       await this.stop();
       throw new Error(
         !ownedHealthMatches
           ? `Brainstem health on ${this.config.url} did not identify the owned source at ${expectedBrainstemDir}.`
-          : `Brainstem did not become healthy${exitCode === null ? "" : ` (exit ${exitCode})`}. See ${this.config.logFile}.`,
+          : `Brainstem did not become healthy${
+              exitCode !== null
+                ? ` (exit ${exitCode})`
+                : signalCode
+                  ? ` (signal ${signalCode})`
+                  : ""
+            }. See ${this.config.logFile}.`,
       );
     }
 
@@ -349,15 +362,14 @@ export class BrainstemProcess {
 
     if (
       child
-      && child.exitCode === null
-      && child.signalCode === null
+      && !this.hasExited(child)
     ) {
       child.kill("SIGTERM");
       await Promise.race([
         new Promise((resolve) => child.once("exit", resolve)),
         new Promise((resolve) => setTimeout(resolve, 5_000)),
       ]);
-      if (child.exitCode === null && child.signalCode === null) {
+      if (!this.hasExited(child)) {
         child.kill("SIGKILL");
         await Promise.race([
           new Promise((resolve) => child.once("exit", resolve)),
