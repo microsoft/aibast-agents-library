@@ -32,6 +32,29 @@ export const STORE_SOURCES = {
   public: { key: "public", label: "Public RAR", url: DEFAULT_STORE_URL },
 };
 
+/** The catalogs this build trusts by default. A catalog supplies both the
+ *  singleton bytes AND the sha256 that "verifies" them, so a pin proves only
+ *  that a document is internally consistent — never who wrote it. The one
+ *  meaningful trust signal is which catalog the bytes came from, so that has to
+ *  travel with anything installed and be visible when it is not a default. */
+export const DEFAULT_STORE_URLS = Object.freeze([
+  DEFAULT_STORE_URL,
+  AIBAST_REGISTRY_URL,
+  FRONTIER_STORE_URL,
+]);
+
+export function isDefaultStoreUrl(url) {
+  return DEFAULT_STORE_URLS.includes(String(url || ""));
+}
+
+export function provenanceOf(url) {
+  const source = String(url || "");
+  return {
+    storeUrl: source,
+    trusted: isDefaultStoreUrl(source),
+  };
+}
+
 export function isAllowedStoreSourceUrl(url) {
   if (typeof url !== "string" || /\s/.test(url)) return false;
   return /^https:\/\/.+$/.test(url)
@@ -267,12 +290,18 @@ export class RappStoreClient {
         + `(store pins ${entry.singletonSha256}, downloaded ${digest}).`,
       );
     }
+    const provenance = provenanceOf(this.url);
     const result = {
       id: entry.id,
       filename: entry.singletonFilename,
       source: bytes.toString("utf8"),
       sha256: digest,
       verified: Boolean(entry.singletonSha256),
+      // Which catalog vouched for these bytes. Without this, a recall can never
+      // reach an installed agent and a repointed catalog is invisible after the
+      // fact — the pin alone cannot tell those cases apart.
+      storeUrl: provenance.storeUrl,
+      trustedSource: provenance.trusted,
       egg: null,
       eggNote: null,
       entry,

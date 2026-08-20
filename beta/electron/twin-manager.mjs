@@ -154,7 +154,18 @@ export class TwinManager {
       uiUrl: null,
       uiHtml: cartridge.uiHtml || null,   // sha-verified by the store client, or null
       preferredView: cartridge.entry?.preferredView || "full",
-      note: `Verified ${filename} (sha256 ${cartridge.sha256.slice(0, 12)}…)`
+      // Where these bytes came from, kept with the twin so a recall can find it
+      // and so a non-default catalog stays visible after the fact.
+      storeUrl: cartridge.storeUrl || null,
+      trustedSource: cartridge.trustedSource !== false,
+      note: (cartridge.trustedSource === false
+        // "Verified" must not read identically for a catalog the user pointed at
+        // themselves: the pin came from that same document, so it proves the
+        // bytes match what THAT catalog said — not who wrote them.
+        ? `Installed ${filename} from a custom catalog (${cartridge.storeUrl}) `
+          + `— bytes match that catalog's own pin (sha256 ${cartridge.sha256.slice(0, 12)}…), `
+          + "which vouches for consistency, not origin"
+        : `Verified ${filename} (sha256 ${cartridge.sha256.slice(0, 12)}…)`)
         + (cartridge.uiNote ? ` — ${cartridge.uiNote}` : ""),
     }, { instruction });
   }

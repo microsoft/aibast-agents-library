@@ -4,6 +4,7 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import {
+  DEFAULT_STORE_URL,
   isAllowedStoreSourceUrl,
   RappStoreClient,
   rappStoreInternals,
@@ -351,4 +352,47 @@ test("adapts an AIBAST-style registry into pinned store entries", async () => {
   assert.match(e.singletonUrl, /^https:\/\/raw\.githubusercontent\.com\/microsoft\/aibast-agents-library\/main\/agents\//);
   assert.equal(e.singletonFilename, "account_intelligence__aaaaaaaaaaaa_agent.py");
   assert.equal(e.gated, false);
+});
+
+test("a download carries which catalog vouched for it", async () => {
+  // A catalog supplies BOTH the bytes and the sha256 that "verifies" them, so a
+  // pin proves internal consistency, never origin. The only real trust signal is
+  // which catalog it was — so that must travel with the download.
+  const source = "AGENT = 'from the default catalog'\n";
+  const digest = createHash("sha256").update(Buffer.from(source)).digest("hex");
+  const index = {
+    schema: "rapp-store/1.0",
+    rapplications: [{
+      id: "demo",
+      singleton_filename: "demo_agent.py",
+      singleton_url: "https://example.invalid/demo_agent.py",
+      singleton_sha256: digest,
+    }],
+  };
+  const fetchImpl = async (url) => (
+    String(url).endsWith("demo_agent.py")
+      ? { ok: true, status: 200, arrayBuffer: async () => Buffer.from(source) }
+      : { ok: true, status: 200, json: async () => index }
+  );
+
+  const trusted = new RappStoreClient({ url: DEFAULT_STORE_URL, fetchImpl });
+  const fromDefault = await trusted.download("demo");
+  assert.equal(fromDefault.storeUrl, DEFAULT_STORE_URL);
+  assert.equal(fromDefault.trustedSource, true);
+
+  const custom = new RappStoreClient({
+    url: "https://someone-elses-catalog.invalid/index.json",
+    fetchImpl,
+  });
+  const fromCustom = await custom.download("demo");
+  assert.equal(fromCustom.storeUrl, "https://someone-elses-catalog.invalid/index.json");
+  assert.equal(
+    fromCustom.trustedSource,
+    false,
+    "a catalog the user pointed at must not be indistinguishable from a default",
+  );
+  // Both verified against their own catalog's pin — which is exactly the point:
+  // the pin cannot tell these two apart, only the provenance can.
+  assert.equal(fromDefault.sha256, fromCustom.sha256);
+  assert.equal(fromDefault.verified, fromCustom.verified);
 });
