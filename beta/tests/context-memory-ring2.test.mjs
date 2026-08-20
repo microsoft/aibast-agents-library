@@ -143,6 +143,7 @@ test("ring 2 appends bounded fresh device and ledger layers to ring 1", (t) => {
           at,
           event: "installed",
           filename: "weather_agent.py",
+          origin: "store",
           tool_name: "WeatherAgent",
         },
       ],
@@ -165,6 +166,7 @@ test("ring 2 appends bounded fresh device and ledger layers to ring 1", (t) => {
   assert.match(device, /lat 47\.60620, lon -122\.33210/);
   assert.doesNotMatch(device, /<not instructions>/);
   assert.match(ledger, /installed WeatherAgent/);
+  assert.match(ledger, /from store/);
   assert.match(ledger, /sqlite3/);
   assert.match(ledger, /grep -i/);
   assert.ok(ledger.includes(

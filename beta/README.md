@@ -27,6 +27,9 @@ Frontier and the regular installer use the same global runtime:
 |- src/rapp_brainstem/   shared server, agents, soul, auth, and memories
 |- venv/                 shared Python environment
 `- beta-launcher/
+   |- ambient/           fresh device + ledger context read by ContextMemory
+   |- ledger.sqlite      private, queryable turn/agent/tool history (WAL)
+   |- ledger.jsonl       grep-friendly mirror of the same redacted events
    |- routing/           RAPPID, stack, egg, object, and composition state
    |- recordings/        captured teaching demos
    `- src/               Frontier-only Electron, Copilot CLI, and launcher source
@@ -35,6 +38,29 @@ Frontier and the regular installer use the same global runtime:
 The regular installer may keep serving `http://localhost:7071`. Frontier uses
 isolated loopback workers and embeds their unchanged Brainstem UI between a
 live Explorer and GitHub Copilot Brain Surgeon.
+
+## Data sloshing
+
+Frontier keeps a private real-time ledger of completed Brainstem, twin, and
+Brain Surgeon turns, tool calls, installs, hatches, molts, removals, lineage
+changes, and source locations. It is ordinary SQLite plus a JSONL mirror, so
+people and agents can use `select *` or `grep` with standard SQLite/shell tools.
+Every write uses the same credential-redaction transform as worker logs.
+
+The **My location and ambient context** panel controls a small
+`ambient-context/1.0` device provider. A coordinate-backed user setting wins;
+otherwise Frontier asks `navigator.geolocation`. On macOS, Electron location
+normally remains `source: "unavailable"` without a platform location-provider
+key. An IP-based city estimate is available only after explicit opt-in, is
+labelled `ip-approximate`, and is off by default. City mode removes precise
+labels and coarsens coordinates; `RAPP_AMBIENT_DEVICE=0` disables the device
+provider.
+
+ContextMemory ring 2 reads only the fresh `ambient/*.json` files and adds
+bounded `<device_context>` and `<ledger>` layers through the existing
+`system_context()` hook. The Grail kernel and `/chat` wire remain unchanged;
+`RAPP_MOLT_LINEAGE=0` still composes pure Grail. Run the isolated real-worker
+proof with `node beta/scripts/data-sloshing-proof.mjs`.
 
 ## What it is for
 

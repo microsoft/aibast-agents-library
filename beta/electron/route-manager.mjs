@@ -63,6 +63,8 @@ const MOLTER_AGENT_PATH = unpackedAsarPath(path.resolve(
 ));
 const CONTEXT_MEMORY_RING1_BASELINE_SHA256 =
   "3f9ba4ec5c625d541380cbccfbe084479ce12cafc0cec4b55e3dd62128e32266";
+const CONTEXT_MEMORY_RING2_LEGACY_SHA256 =
+  "f1e1a3c7c0db5ed3eb74a7d4ad3a355b85e8fca2649c5840726877c9283c9cc9";
 
 function ensurePrivateDirectory(directory) {
   mkdirSync(directory, { recursive: true });
@@ -806,10 +808,24 @@ export class BetaRouteManager {
         baseline.ancestorRappid,
         { env: "default" },
       );
+      const legacyDefault = rings.find((ring) => (
+        ring.ringRappid === currentHead
+        && ring.parentRappid === parent
+        && ring.meta?.ring === 2
+        && ring.sha256 === CONTEXT_MEMORY_RING2_LEGACY_SHA256
+      ));
       if (rings.some((ring) => ring.ringRappid === ringRappid)) {
+        if (legacyDefault) {
+          const moved = this.lineageStore.setHead(
+            baseline.ancestorRappid,
+            ringRappid,
+            { env: "default" },
+          );
+          if (moved !== true) return moved;
+        }
         return ringRappid;
       }
-      if (currentHead !== parent) {
+      if (currentHead !== parent && !legacyDefault) {
         this.recordTelemetry("lineage-default-skipped", {
           ancestor_rappid: baseline.ancestorRappid,
           env: "default",
@@ -874,6 +890,7 @@ export class BetaRouteManager {
         ancestor_rappid: baseline.ancestorRappid,
         env: "default",
         parent_rappid: parent,
+        migrated_from: legacyDefault?.ringRappid || null,
         ring: 2,
         ring_rappid: appended,
       });

@@ -15,6 +15,7 @@ import test from "node:test";
 import {
   describe,
   inferAgentToolName,
+  ledgerInternals,
   openLedger,
   parseAgentLogs,
   recordCompletedTurn,
@@ -421,4 +422,24 @@ test("main, preload, and renderer keep completed Brainstem and Surgeon feeds exp
   assert.match(main, /completedBrainstemRequests/);
   assert.match(renderer, /pendingLineageReply\.userInput/);
   assert.match(renderer, /brainstemBeta\.recordBrainstemTurn/);
+});
+
+test("human ledger paths never quote a non-expanding home shortcut", () => {
+  const home = "/Users/Proof User";
+  const spaced = `${home}/Library/Application Support/RAPP/ledger.sqlite`;
+  assert.equal(
+    ledgerInternals.ledgerShellPath(spaced, {
+      home,
+      platform: "darwin",
+    }),
+    `"${spaced}"`,
+  );
+  const windows = "C:\\Users\\Proof User\\.brainstem\\beta-launcher\\ledger.sqlite";
+  assert.equal(
+    ledgerInternals.ledgerShellPath(windows, {
+      home: "C:\\Users\\Proof User",
+      platform: "win32",
+    }),
+    `"${windows}"`,
+  );
 });

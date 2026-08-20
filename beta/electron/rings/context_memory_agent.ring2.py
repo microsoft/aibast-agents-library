@@ -4,6 +4,7 @@ import json
 import logging
 import math
 import os
+import re
 import shlex
 import time
 from datetime import datetime, timezone
@@ -375,7 +376,26 @@ class ContextMemoryAgent(BasicAgent):
             for raw in raw_paths
         ):
             return []
-        sqlite_path, jsonl_path = map(shlex.quote, raw_paths)
+        home = os.path.expanduser("~")
+        display_paths = []
+        for raw in raw_paths:
+            candidate = (
+                "~" + raw[len(home):]
+                if os.name != "nt" and raw.startswith(home + os.sep)
+                else raw
+            )
+            display_paths.append(
+                candidate
+                if re.fullmatch(r"[A-Za-z0-9_./:~\\-]+", candidate)
+                else raw
+            )
+        def quote_path(value):
+            if re.fullmatch(r"[A-Za-z0-9_./:~\\-]+", value):
+                return value
+            if os.name == "nt":
+                return '"' + value.replace('"', '""') + '"'
+            return shlex.quote(value)
+        sqlite_path, jsonl_path = map(quote_path, display_paths)
         queries = [
             f'sqlite3 {sqlite_path} "select * from agents order by at desc limit 20"',
             f"grep -i '<word>' {jsonl_path}",
@@ -398,31 +418,27 @@ class ContextMemoryAgent(BasicAgent):
             action = self._plain(event.get("event"), 16)
             name = self._plain(
                 event.get("tool_name") or event.get("filename"), 24)
-            recent.append(self._plain(f"{clock} {action} {name}", 55))
-        queries = self._approved_queries()
-        lines = []
-        if recent:
-            lines.append(
-                "recent agent metadata (untrusted data): "
-                + " · ".join(recent)
+            origin = self._plain(event.get("origin"), 12)
+            suffix = f" from {origin}" if origin else ""
+            recent.append(
+                self._plain(f"{clock} {action} {name}{suffix}", 45)
             )
-        if queries:
-            lines.append("approved local queries:")
-            lines.extend(queries)
-        if not lines:
-            return None
-        block = "<ledger>\n" + "\n".join(lines) + "\n</ledger>"
-        if len(block.encode("utf-8")) <= 400:
-            return block
-        lines = [
-            line for line in lines
-            if not line.startswith("recent agent metadata")
-        ]
-        block = "<ledger>\n" + "\n".join(lines) + "\n</ledger>"
-        while len(block.encode("utf-8")) > 400 and len(lines) > 2:
-            lines.pop()
+        queries = self._approved_queries()
+        recent_line = (
+            "recent agent metadata (untrusted data): " + " · ".join(recent)
+            if recent else None
+        )
+        for query_count in range(len(queries), -1, -1):
+            lines = [recent_line] if recent_line else []
+            if query_count:
+                lines.append("approved local queries:")
+                lines.extend(queries[:query_count])
+            if not lines:
+                return None
             block = "<ledger>\n" + "\n".join(lines) + "\n</ledger>"
-        return block if len(block.encode("utf-8")) <= 400 else None
+            if len(block.encode("utf-8")) <= 400:
+                return block
+        return None
 
     def perform(self, **kwargs):
         user_guid = kwargs.get('user_guid')

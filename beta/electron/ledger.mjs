@@ -9,6 +9,7 @@ import {
 } from "node:fs";
 import { createHash } from "node:crypto";
 import path from "node:path";
+import { homedir } from "node:os";
 import { DatabaseSync } from "node:sqlite";
 
 import {
@@ -61,8 +62,25 @@ function optionalField(value) {
   return normalized === null ? null : String(normalized);
 }
 
-function shellQuote(value) {
-  return `"${String(value).replaceAll("\\", "\\\\").replaceAll("\"", "\\\"")}"`;
+function shellQuote(value, platform = process.platform) {
+  const text = String(value);
+  return platform === "win32"
+    ? `"${text.replaceAll("\"", "\"\"")}"`
+    : `"${text.replaceAll("\\", "\\\\").replaceAll("\"", "\\\"")}"`;
+}
+
+function ledgerShellPath(value, {
+  home = homedir(),
+  platform = process.platform,
+} = {}) {
+  const paths = platform === "win32" ? path.win32 : path;
+  const absolute = String(value);
+  const candidate = platform !== "win32"
+    && absolute.startsWith(`${home}${paths.sep}`)
+    ? `~${absolute.slice(home.length)}`
+    : absolute;
+  if (/^[A-Za-z0-9_./:~\\-]+$/.test(candidate)) return candidate;
+  return shellQuote(absolute, platform);
 }
 
 function pythonLexicalView(source) {
@@ -223,8 +241,8 @@ export function describe(betaHome, recentAgents = []) {
     mirror_path: mirrorPath,
     recent_agents: recentAgents.slice(0, AGENT_EVENT_LIMIT),
     query_lines: [
-      `sqlite3 ${shellQuote(databasePath)} "select * from agents order by at desc limit 20"`,
-      `grep -i '<word>' ${shellQuote(mirrorPath)}`,
+      `sqlite3 ${ledgerShellPath(databasePath)} "select * from agents order by at desc limit 20"`,
+      `grep -i '<word>' ${ledgerShellPath(mirrorPath)}`,
     ],
   };
 }
@@ -616,3 +634,7 @@ export class Ledger {
 export function openLedger(betaHome, options = {}) {
   return new Ledger(betaHome, options);
 }
+
+export const ledgerInternals = {
+  ledgerShellPath,
+};
