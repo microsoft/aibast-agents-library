@@ -327,10 +327,29 @@ export class TwinManager {
       seenAgentFilenames.add(filename);
       agentSources.push({ ...agent, filename });
     }
-    const id = `${twinSlug(spec.idBase)}-${++this.seq}`;
-    const dir = path.join(this.twinsRoot, id);
+    // Two launchers (or a launcher and a parallel session) may share one
+    // betaHome, and each starts its sequence at 0: the id is claimed by
+    // creating its directory atomically, and a taken name is skipped — never
+    // adopted — so owner.json can only ever describe the twin that lives there.
+    mkdirSync(this.twinsRoot, { recursive: true });
+    let id = null;
+    let dir = null;
+    for (let candidate = this.seq + 1; candidate < this.seq + 10000; candidate += 1) {
+      const candidateId = `${twinSlug(spec.idBase)}-${candidate}`;
+      const candidateDir = path.join(this.twinsRoot, candidateId);
+      try {
+        mkdirSync(candidateDir);
+      } catch (error) {
+        if (error?.code === "EEXIST") continue;
+        throw error;
+      }
+      this.seq = candidate;
+      id = candidateId;
+      dir = candidateDir;
+      break;
+    }
+    if (!id) throw new Error(`Refusing to hatch "${spec.name}": no free twin id.`);
     const agentsDir = path.join(dir, "agents");
-    mkdirSync(dir, { recursive: true });
     writeFileSync(
       path.join(dir, OWNER_FILE),
       JSON.stringify({ pid: process.pid, startedAt: new Date().toISOString() }),

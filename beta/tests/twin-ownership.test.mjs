@@ -4,7 +4,7 @@
 // said "live". Now only directories whose owner process is gone are reaped.
 import assert from "node:assert/strict";
 import { spawn, spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
@@ -67,4 +67,43 @@ test("a missing twins root is not an error", () => {
   const manager = new TwinManager({ betaHome: root, brainstemConfig: { url: "http://127.0.0.1:1" }, storeClient: {} });
   assert.deepEqual(manager.reapStaleTwinDirectories(), { removed: [], kept: [] });
   rmSync(root, { recursive: true, force: true });
+});
+
+test("a twin id taken by another live launcher is skipped, never adopted", async (t) => {
+  const root = mkdtempSync(path.join(tmpdir(), "rapp-twin-ownership-"));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  // Another launcher (a live pid that is not us) already owns twins/demo-1.
+  const liveOwner = spawn(process.execPath, ["-e", "setInterval(() => {}, 1000)"], { stdio: "ignore" });
+  t.after(() => { try { liveOwner.kill("SIGKILL"); } catch {} });
+  const foreignDir = path.join(root, "twins", "demo-1");
+  mkdirSync(path.join(foreignDir, "agents"), { recursive: true });
+  const foreignOwner = JSON.stringify({ pid: liveOwner.pid, startedAt: "2026-08-20T00:00:00Z" });
+  writeFileSync(path.join(foreignDir, "owner.json"), foreignOwner);
+  writeFileSync(path.join(foreignDir, "agents", "demo_agent.py"), "FOREIGN = True\n");
+
+  let claimedDir = null;
+  const manager = new TwinManager({
+    betaHome: root,
+    brainstemConfig: { url: "http://127.0.0.1:1" },
+    routeManager: {
+      materializeExternalAgentSet(agentSources, agentsDir) {
+        claimedDir = path.dirname(agentsDir);
+        throw new Error("stop here: the id was claimed, no worker is spawned in this test");
+      },
+    },
+    storeClient: {
+      download: async () => ({
+        id: "demo",
+        filename: "demo_agent.py",
+        source: "OURS = True\n",
+        sha256: "0".repeat(64),
+        entry: { name: "Demo", id: "demo" },
+      }),
+    },
+  });
+  await assert.rejects(() => manager.hatch("demo"), /stop here/);
+  assert.equal(path.basename(claimedDir), "demo-2", "the taken id demo-1 is skipped");
+  assert.equal(readFileSync(path.join(foreignDir, "owner.json"), "utf8"), foreignOwner, "the other launcher's owner.json is untouched");
+  assert.equal(readFileSync(path.join(foreignDir, "agents", "demo_agent.py"), "utf8"), "FOREIGN = True\n");
+  assert.ok(!existsSync(path.join(root, "twins", "demo-2")), "the failed hatch cleaned up only its own directory");
 });
