@@ -163,7 +163,7 @@ function createDom() {
     selector === ".msg.assistant.stream-arriving" ? chat.arriving : null
   );
   const footer = createElement("footer");
-  footer.getBoundingClientRect = () => ({ height: 112 });
+  footer.getBoundingClientRect = () => ({ height: 112.5 });
   byId.set("chat", chat);
 
   const document = {
@@ -454,7 +454,7 @@ test("smooth style and follow observers exist only in smooth mode", () => {
     smooth.dom.document.documentElement.style.getPropertyValue(
       "--rapp-stream-footer-clearance",
     ),
-    "112px",
+    "112.5px",
   );
   assert.ok(smooth.window.__rappSmoothTailFollow);
   assert.ok(
@@ -481,7 +481,7 @@ test("smooth style and follow observers exist only in smooth mode", () => {
       "",
     );
   }
-  console.log("smooth-only style, measured 112px clearance, and observers present");
+  console.log("smooth-only style, exact 112.5px clearance, and observers present");
 });
 
 test("raw bridge passes the native stream response through unchanged", async () => {

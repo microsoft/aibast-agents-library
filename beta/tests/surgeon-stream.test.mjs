@@ -59,6 +59,10 @@ test("Surgeon smooth mode uses the shared pacer and caret lifecycle", () => {
   assert.match(renderer, /streamFollower\.contentChanged\(\)/);
   assert.match(renderer, /streamFollower\?\.complete\(\)/);
   assert.match(renderer, /--rapp-surgeon-composer-clearance/);
+  assert.doesNotMatch(
+    renderer,
+    /Math\.ceil\(composer\.getBoundingClientRect\(\)\.height\)/,
+  );
   assert.match(renderer, /handleSurgeonUserScroll/);
   assert.match(renderer, /userIntentUntil/);
   assert.match(renderer, /surgeonLog\.addEventListener\("scroll"/);
