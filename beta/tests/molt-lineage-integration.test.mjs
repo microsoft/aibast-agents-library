@@ -187,7 +187,13 @@ test("HARD 3 — raw Grail stays pristine while ContextMemory ring 1 composes", 
   const contextEntry = ringDescriptor.entries.find(
     (entry) => entry.filename === "context_memory_agent.py",
   );
-  assert.ok(contextEntry.lineage, "Frontier should seed ContextMemory HEAD at ring 1");
+  assert.ok(
+    contextEntry.lineage,
+    "Frontier should seed ContextMemory HEAD at ring 1; lineage telemetry: "
+      + JSON.stringify(
+        manager.telemetry.filter((event) => String(event.type).startsWith("lineage-")),
+      ),
+  );
   const routedRing1 = Buffer.from(contextEntry.bytes).toString("utf8");
   assert.match(routedRing1, /def scan_broken_agents/);
   assert.match(routedRing1, /def _self_status_block/);
@@ -1033,4 +1039,50 @@ test("a known-bad composition is not re-validated on every request", async (t) =
     "a remembered failure short-circuits the expensive validator",
   );
   await manager.stop();
+});
+
+test("a CRLF ring source (Windows autocrlf checkout) still composes ring 1", (t) => {
+  // Found on the windows-latest installer job: beta/electron/rings/ was not
+  // pinned -text, the checkout handed the Frontier a CRLF ring-1, the LF-written
+  // scanner match in routedContextMemoryMoltSource silently failed, and the
+  // overlay was skipped — the user ran baseline while the seed said ring 1.
+  const { managerOptions, store } = minimalFixture(t);
+  const lf = readFileSync(ring1Path, "utf8");
+  assert.doesNotMatch(lf, /\r/, "the repository ring-1 must be LF");
+  const crlf = lf.replaceAll("\n", "\r\n");
+  const { routedContextMemoryMoltSource } = routeManagerInternals;
+  assert.equal(
+    routedContextMemoryMoltSource(crlf, "guid-1"),
+    routedContextMemoryMoltSource(lf, "guid-1"),
+    "CRLF and LF ring sources must produce the same routed molt",
+  );
+
+  const manager = new BetaRouteManager({
+    ...managerOptions,
+    moltVerifier: () => true,
+  });
+  const baseline = manager.baselineAncestor("context_memory_agent.py");
+  const ring = store.appendRing(baseline.ancestorRappid, {
+    source: crlf,
+    parentRappid: baseline.ancestorRappid,
+    verified: true,
+    meta: { author: "test", kind: "ambient-context/1.0", policy: "mutable", ring: 1 },
+  });
+  store.setHead(baseline.ancestorRappid, ring);
+
+  const descriptor = manager.compositionDescriptor();
+  const entry = descriptor.entries.find(
+    (candidate) => candidate.filename === "context_memory_agent.py",
+  );
+  assert.ok(
+    entry.lineage,
+    "a CRLF ring must still overlay; telemetry: " + JSON.stringify(manager.telemetry),
+  );
+  const routed = Buffer.from(entry.bytes).toString("utf8");
+  assert.match(routed, /class RoutedContextMemoryAgent\(_ContextMemoryRing1\):/);
+  assert.doesNotMatch(routed, /\r/, "the composed molt is canonical LF");
+  assert.deepEqual(
+    manager.telemetry.filter((event) => event.type === "lineage-overlay-skipped"),
+    [],
+  );
 });

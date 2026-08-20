@@ -5,3 +5,7 @@
 # on a Windows checkout (autocrlf). Keep them byte-identical everywhere.
 beta/frontier/rapplications/** -text
 beta/frontier/store/index.json -text
+
+# Frontier ring sources are matched and hashed byte-for-byte (lineage-store
+# canonicalizes CRLF, but the ring must still mean the same bytes everywhere).
+beta/electron/rings/** -text

@@ -168,7 +168,13 @@ class RoutedManageMemoryAgent(ManageMemoryAgent):
 `;
 }
 
-function routedContextMemoryMoltSource(source, memoryGuid) {
+function routedContextMemoryMoltSource(ringSource, memoryGuid) {
+  // Ring sources arrive from disk. A Windows autocrlf checkout (or a Windows
+  // editor) hands us CRLF bytes, and the multi-line scanner match below is
+  // written in LF — without canonicalizing first the match silently fails, the
+  // overlay is skipped, and the user runs baseline while status says ring 1.
+  // Same canonical form as lineage-store's sourceSha256 identity chokepoint.
+  const source = String(ringSource).replaceAll("\r\n", "\n");
   const declaration = "class ContextMemoryAgent(BasicAgent):";
   const baselineScanner = `def _defines_basic_agent_subclass(tree):
     for node in ast.walk(tree):
@@ -482,7 +488,10 @@ export class BetaRouteManager {
         });
         return null;
       }
-      const source = readFileSync(CONTEXT_MEMORY_RING1_PATH, "utf8");
+      // Store the ring in canonical LF form so the same molt has the same
+      // bytes on every platform, whatever line endings the checkout used.
+      const source = readFileSync(CONTEXT_MEMORY_RING1_PATH, "utf8")
+        .replaceAll("\r\n", "\n");
       const ringRappid = lineageStoreInternals.ringRappidFor(
         baseline.ancestorRappid,
         baseline.ancestorRappid,
