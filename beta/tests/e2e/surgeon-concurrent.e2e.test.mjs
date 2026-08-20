@@ -98,6 +98,31 @@ function modelScript() {
   };
 }
 
+// Pass-to-pass equality is about WHAT happened (the same commands, the same
+// outcomes, the same replies), not about the per-step effect diffs, whose
+// contents depend on what else repainted inside a settle window (a status
+// pill, the lease banner). Those are stripped before comparing.
+function comparableTrace(text) {
+  return text
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => {
+      const entry = JSON.parse(line);
+      const strip = (value) => {
+        if (Array.isArray(value)) return value.map(strip);
+        if (!value || typeof value !== "object") return value;
+        const out = {};
+        for (const [key, item] of Object.entries(value)) {
+          if (["effect", "summaries", "summary", "snapshot", "typed"].includes(key)) continue;
+          out[key] = strip(item);
+        }
+        return out;
+      };
+      return JSON.stringify(strip(entry));
+    })
+    .join("\n");
+}
+
 async function runConcurrentPass(run) {
   const app = await launch({
     modelScript: modelScript(),
@@ -216,7 +241,7 @@ async function runConcurrentPass(run) {
     const counts = leaseLog.map((entry) => entry.lease_count);
     assert.ok(counts.includes(2), `both leases must overlap; lease counts seen: ${JSON.stringify(counts)}`);
     assert.equal(counts.at(-1), 0, `every lease must be released; lease counts seen: ${JSON.stringify(counts)}`);
-    trace = app.trace.text();
+    trace = comparableTrace(app.trace.text());
   } finally {
     await app.stop();
   }
