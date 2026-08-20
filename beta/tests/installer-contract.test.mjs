@@ -186,7 +186,7 @@ test("chat can hot-load an animated driver for the real frontend", () => {
   assert.match(uiDriverAgent, /start_recording/);
   assert.match(uiDriverAgent, /stop_recording/);
   assert.match(renderer, /brainstemBeta\.checkForUpdates/);
-  assert.match(routeManager, /hardlinkOrCopy/);
+  assert.match(routeManager, /copyObject/); // objects are copied, never hardlinked, into compositions
   assert.match(routeManager, /AGENTS_PATH/);
   assert.match(routeManager, /ephemeralAgent/);
   assert.match(routeManager, /globalAgentEntries/);

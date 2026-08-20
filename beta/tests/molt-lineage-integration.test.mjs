@@ -1099,3 +1099,72 @@ test("a CRLF ring source (Windows autocrlf checkout) still composes ring 1", (t)
     [],
   );
 });
+
+test("the object store stays immutable under a published composition and heals a torn object", (t) => {
+  // Review finding: the Grail's learn agent rewrites files in its own agents
+  // directory (swarms). Published compositions used to hardlink objects, so
+  // that write went through into the content-addressed store and every later
+  // boot failed closed with no self-heal. Objects are copied now, and a torn
+  // or poisoned object is re-verified and rewritten on the next use.
+  const { managerOptions, sources } = minimalFixture(t);
+  const manager = new BetaRouteManager({ ...managerOptions, lineageEnabled: false });
+  const descriptor = manager.compositionDescriptor();
+  const materialized = manager.materializeComposition(descriptor);
+  const entry = descriptor.entries.find((candidate) => candidate.filename === "global_agent.py");
+  const published = path.join(materialized.agentDirectory, "global_agent.py");
+
+  writeFileSync(published, "GLOBAL = 'swarm rewrite'\n");
+  assert.equal(
+    readFileSync(entry.objectPath, "utf8"),
+    sources["global_agent.py"],
+    "a write into a published composition must not reach the object store",
+  );
+
+  writeFileSync(entry.objectPath, "GLOBAL = ");
+  const fresh = new BetaRouteManager({ ...managerOptions, lineageEnabled: false });
+  const healed = fresh.materializeComposition(fresh.compositionDescriptor());
+  assert.equal(
+    readFileSync(path.join(healed.agentDirectory, "global_agent.py"), "utf8"),
+    sources["global_agent.py"],
+    "a fresh process re-verifies the object and serves pristine bytes",
+  );
+  assert.equal(readFileSync(entry.objectPath, "utf8"), sources["global_agent.py"]);
+});
+
+test("one transient validator failure does not demote a healthy ring", (t) => {
+  // Review finding: the isolation trial for a single changed locus reproduces
+  // the composition hash that just failed, and the 60s negative cache answered
+  // it without running the validator again — one timed-out dry-load moved
+  // HEAD to baseline until the user typed the restore word.
+  let flakesLeft = 1;
+  const fixture = minimalFixture(t, {
+    validator: (agentDirectory) => {
+      const source = readFileSync(path.join(agentDirectory, "global_agent.py"), "utf8");
+      if (source.includes("ring one") && flakesLeft > 0) {
+        flakesLeft -= 1;
+        return { ok: false, error: "Grail dry-load timed out under load" };
+      }
+      return { ok: true };
+    },
+  });
+  const global = fixture.store.baselineAncestors().find(
+    (item) => item.filename === "global_agent.py",
+  );
+  const ring1Source = "GLOBAL = 'ring one'\n";
+  const ring1 = fixture.store.appendRing(global.ancestorRappid, {
+    source: ring1Source,
+    parentRappid: global.ancestorRappid,
+    verified: true,
+    meta: { author: "test" },
+  });
+  fixture.store.setHead(global.ancestorRappid, ring1);
+  const manager = new BetaRouteManager(fixture.managerOptions);
+  const materialized = manager.materializeComposition(manager.compositionDescriptor());
+  assert.equal(fixture.store.getHead(global.ancestorRappid), ring1, "HEAD survives one flake");
+  assert.equal(
+    readFileSync(path.join(materialized.agentDirectory, "global_agent.py"), "utf8"),
+    ring1Source,
+    "the ring is served once a fresh validation passes",
+  );
+  assert.equal(flakesLeft, 0, "the validator really was consulted again");
+});

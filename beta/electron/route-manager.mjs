@@ -4,7 +4,6 @@ import {
   copyFileSync,
   chmodSync,
   existsSync,
-  linkSync,
   mkdtempSync,
   mkdirSync,
   readFileSync,
@@ -105,14 +104,15 @@ function stackNameFromRappid(rappid) {
   return slug || "stack";
 }
 
-function hardlinkOrCopy(source, destination) {
-  try {
-    linkSync(source, destination);
-    return "hardlink";
-  } catch {
-    copyFileSync(source, destination);
-    return "copy";
-  }
+// Always a COPY, never a hardlink. A published composition is a directory a
+// running kernel (and its agents) may write into — the Grail's own learn agent
+// rewrites files in its agents directory to create swarms. With a hardlink that
+// write goes straight through into the content-addressed object store and
+// every later boot of every composition using that object fails closed. Agent
+// sources are kilobytes; the copy is free and the store stays immutable.
+function copyObject(source, destination) {
+  copyFileSync(source, destination);
+  return "copy";
 }
 
 function unpackedAsarPath(filePath) {
@@ -1003,8 +1003,24 @@ export class BetaRouteManager {
     }
     const address = Hb("rapp/1:egg", bytes);
     const objectPath = path.join(this.objectRoot, `${address}.py`);
-    if (!existsSync(objectPath)) {
-      writeFileSync(objectPath, bytes, { mode: 0o600 });
+    // The object store is content-addressed, so an object is only ever valid
+    // when its bytes still hash to its name. A torn write (crash, ENOSPC) or a
+    // write-through from a published composition (an agent rewriting a file
+    // in its own agents directory) used to poison the object for good: the
+    // exists-check skipped it forever and every later boot failed closed.
+    // Verify on reuse and rewrite atomically so the store heals itself.
+    let intact = false;
+    if (existsSync(objectPath)) {
+      try {
+        intact = Hb("rapp/1:egg", readFileSync(objectPath)) === address;
+      } catch {
+        intact = false;
+      }
+    }
+    if (!intact) {
+      const staging = `${objectPath}.${process.pid}.${randomUUID()}.tmp`;
+      writeFileSync(staging, bytes, { mode: 0o600 });
+      renameSync(staging, objectPath);
     }
     return { address, bytes, objectPath };
   }
@@ -1374,8 +1390,14 @@ export class BetaRouteManager {
     }
   }
 
-  materializeCompositionOnce(descriptor) {
+  materializeCompositionOnce(descriptor, { fresh = false } = {}) {
     const hash = descriptor.compositionHash;
+    // `fresh` bypasses the negative cache. The lineage isolation trial uses it:
+    // a decision to DEMOTE a ring must rest on a validation that actually ran,
+    // not on a remembered failure from seconds ago that may have been a
+    // transient (a timed-out dry-load under load) — otherwise one flake moves
+    // HEAD to baseline until the user types the restore word.
+    if (fresh) this.failedCompositions.delete(hash);
     const remembered = this.failedCompositions.get(hash);
     if (remembered) {
       if (Date.now() - remembered.at < COMPOSITION_FAILURE_TTL_MS) {
@@ -1433,7 +1455,7 @@ export class BetaRouteManager {
           writeFileSync(destination, entry.bytes, { mode: 0o600 });
           method = entry.lineage ? "molt" : "ephemeral";
         } else {
-          method = hardlinkOrCopy(entry.objectPath, destination);
+          method = copyObject(entry.objectPath, destination);
         }
         links.push({
           filename: entry.filename,
@@ -1710,7 +1732,7 @@ export class BetaRouteManager {
           lineageHeads: trialHeads,
         });
         try {
-          bestMaterialized = this.materializeCompositionOnce(trialDescriptor);
+          bestMaterialized = this.materializeCompositionOnce(trialDescriptor, { fresh: true });
           bestDescriptor = trialDescriptor;
           acceptedHeads.set(overlay.ancestorRappid, overlay.ringRappid);
           accepted.push(overlay.ringRappid);
