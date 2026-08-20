@@ -652,6 +652,30 @@ for label, prologue in lethal:
     assert not ok, f"{label} was accepted: {detail}"
     assert "terminate the Brainstem" in detail["lesson"], (label, detail)
 
+# The standard standalone idiom must NOT be refused: __name__ is the module
+# name under import, so the guard is False and the exit never runs. Every agent
+# in the public corpus carries this block — refusing it would reject the
+# ecosystem's dominant shape.
+guarded = """
+import sys
+from agents.basic_agent import BasicAgent
+
+class StandaloneAgent(BasicAgent):
+    def __init__(self):
+        self.name = "Standalone"
+        self.metadata = {"name": self.name, "parameters": {"type": "object", "properties": {}}}
+    def perform(self, **kwargs):
+        return "ok"
+
+def main():
+    return 0
+
+if __name__ == "__main__":
+    sys.exit(main())
+"""
+ok, detail = module._verify(guarded)
+assert ok, f"the standalone __main__ idiom was wrongly refused: {detail}"
+
 # The same call inside a function body is fine: it does not run at import.
 safe = """
 import sys

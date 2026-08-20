@@ -207,6 +207,18 @@ def _ast_extract_tool_name(class_node):
 _EXIT_CALLS = {("sys", "exit"), ("os", "_exit"), ("os", "abort"), ("os", "kill")}
 
 
+def _is_main_guard(test):
+    """True for `__name__ == "__main__"` (either operand order)."""
+    if not isinstance(test, ast.Compare) or len(test.ops) != 1:
+        return False
+    if not isinstance(test.ops[0], ast.Eq):
+        return False
+    sides = [test.left] + list(test.comparators)
+    names = {n.id for n in sides if isinstance(n, ast.Name)}
+    consts = {c.value for c in sides if isinstance(c, ast.Constant)}
+    return "__name__" in names and "__main__" in consts
+
+
 def _module_level_exit(tree):
     """Return a reason if the module body can terminate the interpreter on
     import, else None. Only module-level statements are inspected: code inside a
@@ -234,6 +246,13 @@ def _module_level_exit(tree):
     for node in tree.body:
         # A class or function definition only *defines* code; it does not run it.
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            continue
+        # `if __name__ == "__main__":` does not run on import — the loader sets
+        # __name__ to the module name. This is the standard idiom that lets an
+        # agent ALSO run standalone (`python3 my_agent.py '{...}'`), which is how
+        # a RAPP agent stays useful on hosts with no brainstem. Refusing it would
+        # reject the ecosystem's dominant shape.
+        if isinstance(node, ast.If) and _is_main_guard(node.test):
             continue
         found = offending(node)
         if found:
