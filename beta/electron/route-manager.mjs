@@ -2307,7 +2307,7 @@ export class BetaRouteManager {
       url: `http://127.0.0.1:${port}`,
       logFile: path.join(
         this.workerLogRoot,
-        `${descriptor.compositionHash}.log`,
+        `${effectiveDescriptor.compositionHash}.log`,
       ),
       env: {
         AGENTS_PATH: materialized.agentDirectory,

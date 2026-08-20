@@ -139,6 +139,50 @@ test("compositions a running app can still reach are never pruned, however old",
   assert.ok(existsSync(path.join(betaHome, "logs", "workers", `${live}.log`)), "a live worker's log is never pruned");
 });
 
+test("a fallback worker log is protected by its effective composition hash", async (t) => {
+  const { betaHome, options } = fixture(t);
+  const manager = new BetaRouteManager(options);
+  const requestedHash = hashOf(301);
+  const effectiveHash = hashOf(302);
+  const compositionDirectory = fakeComposition(betaHome, effectiveHash, 0);
+  const effectiveDescriptor = {
+    compositionHash: effectiveHash,
+    ephemeral: false,
+    identity: {
+      caller_rappid: "rappid:caller",
+      memory_guid: "memory-guid",
+      overlay_stack_rappids: [],
+    },
+    selectedStacks: [],
+    stack: { rappid: "rappid:stack" },
+  };
+  let workerConfig = null;
+  manager.materializeComposition = () => ({
+    agentDirectory: path.join(compositionDirectory, "agents"),
+    compositionDirectory,
+    descriptor: effectiveDescriptor,
+    fallbackStrategy: "baseline",
+  });
+  manager.createWorkerProcess = (config) => {
+    workerConfig = config;
+    return {
+      start: async () => ({ health: { status: "ok" } }),
+    };
+  };
+
+  const route = await manager.startWorker({
+    ...effectiveDescriptor,
+    compositionHash: requestedHash,
+  });
+  assert.equal(route.compositionHash, effectiveHash);
+  writeFileSync(workerConfig.logFile, "live fallback worker\n");
+
+  manager.pruneRoutingArtifacts({ keepWorkerLogs: 0 });
+
+  assert.equal(path.basename(workerConfig.logFile), `${effectiveHash}.log`);
+  assert.ok(existsSync(workerConfig.logFile));
+});
+
 test("worker logs are pruned by count and by age", (t) => {
   const { betaHome, options } = fixture(t);
   const manager = new BetaRouteManager(options);
