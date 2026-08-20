@@ -47,6 +47,10 @@ const chatStreamMode = ["smooth", "raw", "hold"].includes(
 const chatTypingEnabled = chatStreamMode === "hold";
 document.documentElement.dataset.rappStream = chatStreamMode;
 const { createDelivery } = window.RappTypingDelivery;
+const {
+  createStreamPacer,
+  setStreamArriving,
+} = window.RappStreamPacing;
 
 function deliverPendingLineageReply() {
   if (
@@ -571,6 +575,48 @@ function createSurgeonDelivery(session) {
   });
 }
 
+function createSurgeonPacer(session) {
+  return createStreamPacer({
+    onText: (text) => {
+      hideSurgeonThinking(session);
+      if (!session.streamEl) {
+        session.streamEl = addSurgeonBubble(session, "assistant", "", false);
+        setStreamArriving(session.streamEl, true);
+      }
+      session.streamEl.textContent += text;
+      scrollSurgeon(session);
+    },
+  });
+}
+
+function stopSurgeonPacer(session) {
+  session.pacer?.abort();
+  session.pacer = null;
+  setStreamArriving(session.streamEl, false);
+}
+
+function finishSurgeonStream(session, finalText) {
+  session.pacer?.finish();
+  session.pacer = null;
+  if (!session.streamEl) {
+    session.streamEl = addSurgeonBubble(
+      session,
+      "assistant",
+      finalText || "(done)",
+      false,
+    );
+  } else if (finalText) {
+    session.streamEl.textContent = finalText;
+  }
+  setStreamArriving(session.streamEl, false);
+  session.history.push({
+    role: "assistant",
+    content: session.streamEl.textContent,
+  });
+  session.streamEl = null;
+  saveSurgeonSessions();
+}
+
 function showSurgeonThinking(session) {
   if (session.thinkEl) return;
   const think = document.createElement("div");
@@ -709,6 +755,8 @@ function newSurgeonSession(activate = true) {
     tileEl: null,
     streamEl: null,
     delivery: null,
+    pacer: null,
+    errorShown: false,
     thinkEl: null,
     tools: [],
   };
@@ -739,6 +787,8 @@ function restoreSurgeonSession(data) {
     tileEl: null,
     streamEl: null,
     delivery: null,
+    pacer: null,
+    errorShown: false,
     thinkEl: null,
     tools: [],
   };
@@ -772,6 +822,7 @@ function closeSurgeonSession(id) {
   if (index < 0) return;
   const session = surgeonSessions[index];
   session.delivery?.abort();
+  session.pacer?.abort();
   session.tileEl?.remove();
   session.logEl.remove();
   surgeonSessions.splice(index, 1);
@@ -1295,7 +1346,12 @@ async function runSurgeon(session, prompt) {
   session.running = true;
   session.streamEl = null;
   session.delivery?.abort();
+  session.pacer?.abort();
   session.delivery = chatTypingEnabled ? createSurgeonDelivery(session) : null;
+  session.pacer = chatStreamMode === "smooth"
+    ? createSurgeonPacer(session)
+    : null;
+  session.errorShown = false;
   addSurgeonBubble(session, "user", text);
   showSurgeonThinking(session);
   refreshSurgeon(session);
@@ -1303,15 +1359,20 @@ async function runSurgeon(session, prompt) {
     await window.brainstemBeta.surgeonSend(session.id, text);
   } catch (cause) {
     hideSurgeonThinking(session);
-    if (chatTypingEnabled) {
+    if (session.errorShown) {
+      // The event handler already rendered the failure.
+    } else if (chatTypingEnabled) {
       session.delivery?.fail(cause);
-    } else if (!session.streamEl) {
+    } else {
+      stopSurgeonPacer(session);
       addSurgeonBubble(session, "error", String(cause?.message || cause || "Brain Surgeon failed."), false);
     }
   } finally {
     session.running = false;
     session.delivery?.abort();
+    session.pacer?.abort();
     session.delivery = null;
+    session.pacer = null;
     session.streamEl = null;
     refreshSurgeon(session);
   }
@@ -1342,7 +1403,9 @@ function clearSurgeonUi() {
   if (!session) return;
   hideSurgeonThinking(session);
   session.delivery?.abort();
+  session.pacer?.abort();
   session.delivery = null;
+  session.pacer = null;
   session.logEl.replaceChildren();
   session.history = [];
   session.title = session.defaultTitle;
@@ -1365,6 +1428,8 @@ function handleSurgeonEvent(event) {
   } else if (event.type === "delta") {
     if (chatTypingEnabled) {
       session.delivery?.push(event.text || "");
+    } else if (chatStreamMode === "smooth") {
+      session.pacer?.push(event.text || "");
     } else {
       hideSurgeonThinking(session);
       if (!session.streamEl) session.streamEl = addSurgeonBubble(session, "assistant", "", false);
@@ -1373,6 +1438,7 @@ function handleSurgeonEvent(event) {
     }
   } else if (event.type === "tool-start") {
     session.delivery?.tool(event);
+    session.pacer?.flush();
     hideSurgeonThinking(session);
     addSurgeonTool(session, event.toolName || "tool", event.toolCallId);
     showSurgeonThinking(session);
@@ -1381,14 +1447,18 @@ function handleSurgeonEvent(event) {
     finishSurgeonTool(session, event.toolName || "tool", event.toolCallId, event.success !== false);
     void refreshAgentExplorer();
   } else if (event.type === "artifact") {
+    session.pacer?.flush();
     addSurgeonArtifact(session, event.artifact);
   } else if (event.type === "lease") {
+    session.pacer?.flush();
     addSurgeonBubble(session, "assistant", event.message || "Temporary capability leased.", false);
   } else if (event.type === "done") {
     hideSurgeonThinking(session);
     const finalText = String(event.content || "").trim();
     if (chatTypingEnabled) {
       session.delivery?.finish(finalText || (session.streamEl ? undefined : "(done)"));
+    } else if (chatStreamMode === "smooth") {
+      finishSurgeonStream(session, finalText);
     } else {
       if (!session.streamEl) {
         session.streamEl = addSurgeonBubble(session, "assistant", finalText || "(done)", false);
@@ -1400,10 +1470,12 @@ function handleSurgeonEvent(event) {
       saveSurgeonSessions();
     }
   } else if (event.type === "error") {
+    session.errorShown = true;
     if (chatTypingEnabled) {
       session.delivery?.fail(event.message || "Brain Surgeon failed.");
     } else {
       hideSurgeonThinking(session);
+      stopSurgeonPacer(session);
       addSurgeonBubble(session, "error", event.message || "Brain Surgeon failed.", false);
     }
   } else if (event.type === "reset") {

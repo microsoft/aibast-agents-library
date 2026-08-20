@@ -212,9 +212,15 @@
     });
   }
 
+  function setStreamArriving(element, active) {
+    element?.classList?.toggle("stream-arriving", Boolean(active));
+    return element;
+  }
+
   root.RappStreamPacing = Object.freeze({
     createStreamPacer,
     createTextSplitter,
+    setStreamArriving,
     splitTextPieces,
   });
 })(globalThis);
