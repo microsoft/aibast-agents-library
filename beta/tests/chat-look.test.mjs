@@ -38,6 +38,17 @@ test("Messages styles carry the specified bubbles, tails, composer, and pop", ()
   assert.match(surgeonCss, /#surgeon-send::before/);
 });
 
+test("Messages pop never overrides the kernel stream reveal", () => {
+  assert.match(
+    grailFrameCss,
+    /\.msg\[data-rapp-arrived\]:not\(\.stream-arriving\) \.bubble/,
+  );
+  assert.doesNotMatch(
+    grailFrameCss,
+    /\.msg\[data-rapp-arrived\] \.bubble/,
+  );
+});
+
 test("Business resolves to no optional stylesheet data", () => {
   assert.equal(normalizeChatLook(), "messages");
   assert.equal(normalizeChatLook("MESSAGES"), "messages");

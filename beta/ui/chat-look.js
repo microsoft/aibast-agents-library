@@ -90,7 +90,7 @@ html[data-rapp-look="messages"] .typing-indicator .typing span:nth-child(2) {
 html[data-rapp-look="messages"] .typing-indicator .typing span:nth-child(3) {
   animation-delay: .4s;
 }
-html[data-rapp-look="messages"] .msg[data-rapp-arrived] .bubble {
+html[data-rapp-look="messages"] .msg[data-rapp-arrived]:not(.stream-arriving) .bubble {
   animation: rapp-messages-pop .16s ease-out both;
   transform-origin: 50% 100%;
 }
@@ -153,7 +153,7 @@ html[data-rapp-look="messages"] body.light-mode .agent-logs-wrapper .logs-label 
 }
 @media (prefers-reduced-motion: reduce) {
   html[data-rapp-look="messages"] .typing-indicator .typing span,
-  html[data-rapp-look="messages"] .msg[data-rapp-arrived] .bubble {
+  html[data-rapp-look="messages"] .msg[data-rapp-arrived]:not(.stream-arriving) .bubble {
     animation: none !important;
     opacity: 1;
     transform: none !important;
