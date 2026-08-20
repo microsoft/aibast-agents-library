@@ -444,9 +444,12 @@ test("restore cannot move a newer live ring back through stale PRIOR_HEAD", asyn
   const priorPath = path.join(locusDirectory, "PRIOR_HEAD");
   rmSync(headPath);
   mkdirSync(headPath);
+  // The fault: HEAD replaced by a directory. POSIX reports EISDIR/ENOTDIR; Windows
+  // refuses the same atomic rename with EPERM/EEXIST. The claim is the same on
+  // both: the write fails and the recovery point survives.
   assert.throws(
     () => store.setHead(alpha.ancestorRappid, newer),
-    /directory|EISDIR|ENOTDIR/i,
+    /directory|EISDIR|ENOTDIR|EPERM|EEXIST|EACCES|EBUSY/i,
   );
   assert.equal(
     readFileSync(priorPath, "utf8").trim(),
