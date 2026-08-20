@@ -65,6 +65,16 @@ Cards are files: `~/.brainstem/beta-launcher/cards/<id>.json` (0600), listed on 
 land in the ledger (`agents`-style event `card-parked` / `card-woken`) so the Brainstem can find
 them.
 
+## What a card looks like
+
+A parked card is a **static twin tile** — the same chrome a hatched rapplication tile has in the
+herd, with the conversation frozen inside it: the ◈ badge and name in the header, a status pill in
+the READY style (`PARKED` · `RACING` · `PRIMARY` · `FOLDED`), the mono meta line
+(`:<port> · <model or agent> · rappid:<…>`), the transcript's last lines in the same mono, and no
+composer — a single quiet line, *Wake to message*, where the composer would be. The card-table
+themes skin *around* this tile (felt, frames, seats); the tile itself stays the tile. Copy says
+"rapplication", never "RAPPlication".
+
 ## The moves (mode on)
 
 | Move | How | What happens |
