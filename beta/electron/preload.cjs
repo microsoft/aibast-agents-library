@@ -13,13 +13,41 @@ const chatLookArgument = process.argv.find((value) => (
 const chatLook = chatLookArgument?.split("=", 2)[1] === "business"
   ? "business"
   : "messages";
+const aprilFoolsArgument = process.argv.find((value) => (
+  value.startsWith("--rapp-april-fools=")
+));
+let aprilFools = { on: false, table: "poker", customTablePath: null };
+try {
+  aprilFools = JSON.parse(Buffer.from(
+    aprilFoolsArgument?.split("=", 2)[1] || "",
+    "base64url",
+  ).toString("utf8"));
+} catch {
+  // Invalid startup arguments retain the safe disabled default.
+}
 const chatTypingEnabled = chatStreamMode === "hold";
 
 contextBridge.exposeInMainWorld("brainstemBeta", {
+  aprilFools,
   chatLook,
   chatStreamMode,
   chatTypingEnabled,
   checkForUpdates: () => ipcRenderer.invoke("beta:check-for-updates"),
+  cardsComplete: (id, completion) => (
+    ipcRenderer.invoke("beta:cards-complete", id, completion || {})
+  ),
+  cardsFold: (id) => ipcRenderer.invoke("beta:cards-fold", id),
+  cardsList: () => ipcRenderer.invoke("beta:cards-list"),
+  cardsLoadCustomTable: () => (
+    ipcRenderer.invoke("beta:cards-load-custom-table")
+  ),
+  cardsPark: (card) => ipcRenderer.invoke("beta:cards-park", card),
+  cardsParkExisting: (id) => (
+    ipcRenderer.invoke("beta:cards-park-existing", id)
+  ),
+  cardsRace: (id) => ipcRenderer.invoke("beta:cards-race", id),
+  cardsUndo: (id) => ipcRenderer.invoke("beta:cards-undo", id),
+  cardsWake: (id) => ipcRenderer.invoke("beta:cards-wake", id),
   getState: () => ipcRenderer.invoke("beta:get-state"),
   installUpdate: () => ipcRenderer.invoke("beta:install-update"),
   deleteAgent: (filename) => ipcRenderer.invoke("beta:delete-agent", filename),
@@ -44,6 +72,7 @@ contextBridge.exposeInMainWorld("brainstemBeta", {
     ipcRenderer.invoke("beta:read-agent-file", filename, scope)
   ),
   setChatLook: (look) => ipcRenderer.invoke("beta:set-chat-look", look),
+  setAprilFools: (next) => ipcRenderer.invoke("beta:set-april-fools", next || {}),
   surgeonReset: (sessionId = 1) => ipcRenderer.invoke("beta:surgeon-reset", sessionId),
   surgeonSend: (sessionId, prompt) => ipcRenderer.invoke("beta:surgeon-send", sessionId, prompt),
   surgeonClose: (sessionId) => ipcRenderer.invoke("beta:surgeon-close", sessionId),

@@ -608,6 +608,55 @@ async function browserDriverCommand(command, createHelpers, commandId = null) {
     };
   }
 
+  async function swipeElement(element, step) {
+    requireActionable(element);
+    const h = selectorFor(element);
+    const before = currentOutline();
+    const routeBefore = location.href;
+    const direction = String(step.direction || "right").toLowerCase();
+    if (!["left", "right"].includes(direction)) {
+      throw new Error("Swipe direction must be left or right.");
+    }
+    const distance = Math.max(80, Math.min(400, Number(step.distance) || 110));
+    const description = labelText(step, `Swiping ${direction} on ${h}`);
+    const { x, y } = await pointAt(element, description);
+    const pointerId = 71;
+    const endX = x + (direction === "right" ? distance : -distance);
+    const dispatch = (type, clientX, buttons) => element.dispatchEvent(
+      new PointerEvent(type, {
+        bubbles: true,
+        buttons,
+        cancelable: true,
+        clientX,
+        clientY: y,
+        isPrimary: true,
+        pointerId,
+        pointerType: "touch",
+      }),
+    );
+    element.focus?.({ preventScroll: true });
+    dispatch("pointerdown", x, 1);
+    for (let stepIndex = 1; stepIndex <= 4; stepIndex += 1) {
+      dispatch("pointermove", x + ((endX - x) * stepIndex / 4), 1);
+      await sleep(24);
+    }
+    dispatch("pointerup", endX, 0);
+    await sleep(Math.max(260, Number(step.settleMs) || 520));
+    await waitUntil(step.until, before.snapshot);
+    const after = currentOutline();
+    const routeAfter = location.href;
+    element.classList?.remove("brainstem-ai-driver-target");
+    hideLabel();
+    return {
+      ok: true,
+      h,
+      direction,
+      distance,
+      swiped: h,
+      effect: effectBetween(before, after, routeBefore, routeAfter),
+    };
+  }
+
   function setControlValue(element, value) {
     if (element.isContentEditable) {
       element.textContent = value;
@@ -1099,6 +1148,7 @@ async function browserDriverCommand(command, createHelpers, commandId = null) {
       );
     }
     if (action === "click") return clickElement(element, step);
+    if (action === "swipe") return swipeElement(element, step);
     if (action === "type") return typeInto(element, step);
     throw new Error(`Unsupported UI driver action: ${action || "(empty)"}`);
   }
@@ -1815,6 +1865,7 @@ function validateCommand(command) {
     "set_chat_lease",
     "stop_recording",
     "surgeon_chat",
+    "swipe",
     "tour",
     "type",
     "wait",

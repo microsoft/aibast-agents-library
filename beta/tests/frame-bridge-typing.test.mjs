@@ -1,7 +1,10 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import vm from "node:vm";
 import test from "node:test";
+
+import { composeChatCardsFrameBridgeSource } from "../electron/chat-cards.mjs";
 
 await import("../ui/stream-follow.js");
 await import("../ui/stream-pacing.js");
@@ -74,6 +77,26 @@ function materializeBridgeSource(
     splitTextPieces,
   });
 }
+
+test("mode-off bridge source matches the recorded checkpoint hash", (t) => {
+  const checkpointSource = `window.__rappBetaChatLookConfig = ${JSON.stringify({
+    chatLook: "messages",
+    chatTypingEnabled: false,
+  })};\n${materializeBridgeSource("smooth")}`;
+  const hash = createHash("sha256").update(checkpointSource).digest("hex");
+  assert.equal(
+    hash,
+    "e215e578715c6c5e96a575a34c9463e611f0da21900eb2047b6ed10383b1a28d",
+  );
+  const disabled = composeChatCardsFrameBridgeSource(checkpointSource, {
+    on: false,
+    table: "poker",
+    customTablePath: null,
+  });
+  assert.equal(disabled, checkpointSource);
+  assert.equal(createHash("sha256").update(disabled).digest("hex"), hash);
+  t.diagnostic(`mode-off bridge source sha256: ${hash}`);
+});
 
 test("CRLF main.mjs extracts and materializes the frame bridge", () => {
   const crlfSource = mainSource.replaceAll("\n", "\r\n");
