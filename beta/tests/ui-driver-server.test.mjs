@@ -166,6 +166,70 @@ test("visible UI driver rejects unknown and unbounded commands", () => {
   );
 });
 
+test("visible UI driver bounds frame sleeps and typed input work", () => {
+  for (const command of [
+    { action: "announce", durationMs: 5_001 },
+    { action: "click", selector: "#send", settleMs: 5_001 },
+    { action: "press", key: "Enter", settleMs: 5_001 },
+    { action: "type", selector: "#input", typingDelayMs: 101, value: "x" },
+    {
+      action: "type",
+      selector: "#input",
+      typingDelayMs: 100,
+      value: "x".repeat(601),
+    },
+    {
+      action: "type",
+      selector: "#input",
+      typingDelayMs: 0,
+      value: "x".repeat((64 * 1024) + 1),
+    },
+    { action: "wait", selector: "#send", timeoutMs: 120_001 },
+    { action: "click", selector: "#send", until: {
+      handle: "@brainstem.send",
+      state: "enabled",
+      timeoutMs: 120_001,
+    } },
+    { action: "announce", frameTimeoutMs: 65 * 60 * 1000 + 1 },
+    { action: "wait", selector: "#send", timeoutMs: 10_000, frameTimeoutMs: 1000 },
+    {
+      action: "run",
+      steps: Array.from(
+        { length: 40 },
+        () => ({ action: "wait", selector: "#send", timeoutMs: 120_000 }),
+      ),
+    },
+  ]) {
+    assert.throws(
+      () => uiDriverInternals.validateCommand(command),
+      /must be|exceeds/,
+    );
+  }
+
+  const instantType = uiDriverInternals.validateCommand({
+    action: "type",
+    selector: "#input",
+    typingDelayMs: 0,
+    value: "x".repeat(64 * 1024),
+  });
+  assert.equal(instantType.typingDelayMs, 0);
+  assert.ok(
+    instantType.frameTimeoutMs >= 20_000
+      && instantType.frameTimeoutMs <= 65 * 60 * 1000,
+  );
+  assert.equal(
+    uiDriverInternals.boundedFrameTimeout(1e15),
+    65 * 60 * 1000,
+  );
+  const browserSource = uiDriverInternals.browserDriverCommand.toString();
+  assert.match(browserSource, /frameBudgetMs - 250/);
+  assert.match(browserSource, /exceeded its frame time budget/);
+  assert.match(
+    browserSource,
+    /if \(!delayMs\) \{[\s\S]*setControlValue\(element, nextValue\)/,
+  );
+});
+
 test("handles resolve exactly and fallback selectors stay anchored", () => {
   const body = fixtureElement({ tag: "body" });
   const panel = fixtureElement({ drive: "shell.panel", tag: "section" });
