@@ -717,6 +717,46 @@ test("a wedged frame command does not block the next command on the same frame",
   }
 });
 
+test("persisted UI driver trace errors cap caller-controlled text", async (t) => {
+  const root = mkdtempSync(path.join(tmpdir(), "ui-driver-trace-cap-"));
+  const betaHome = path.join(root, "beta-launcher");
+  t.after(() => rmSync(root, { force: true, recursive: true }));
+  const oversized = "x".repeat(100 * 1024);
+  const brainstem = {
+    executeJavaScript: async () => {
+      throw new Error(`UI target not found: ${oversized}`);
+    },
+    frames: [],
+    url: "http://127.0.0.1:7071/",
+  };
+  const mainFrame = {
+    executeJavaScript: async () => null,
+    frames: [brainstem],
+    url: "file:///frontier/index.html",
+  };
+  const driver = await startUiDriverServer({
+    brainstemHome: root,
+    env: { BRAINSTEM_BETA_HOME: betaHome },
+    loopbackUrl: (url) => url.startsWith("http://127.0.0.1:707"),
+    window: { webContents: { mainFrame } },
+  });
+  t.after(() => driver.stop());
+  const metadata = JSON.parse(readFileSync(driver.metadataPath, "utf8"));
+
+  const response = await postCommand(metadata, {
+    action: "read",
+    selector: oversized,
+  });
+
+  assert.equal(response.payload.ok, false);
+  const [trace] = readFileSync(metadata.tracePath, "utf8")
+    .trim()
+    .split("\n")
+    .map((line) => JSON.parse(line));
+  assert.ok(trace.effect.error.length <= 2000);
+  assert.ok(readFileSync(metadata.tracePath).byteLength < 5000);
+});
+
 test("the chat lease's aria-disabled marker does not make the send button unactionable for the driver", () => {
   const source = uiDriverInternals.browserDriverCommand.toString();
   assert.match(source, /rappChatLease === "locked"/);

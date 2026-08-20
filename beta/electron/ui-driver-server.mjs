@@ -2360,14 +2360,25 @@ export async function startUiDriverServer({
     const items = traceItems(result);
     const traces = items.map((item) => item?.__trace).filter(Boolean);
     const handles = items.map((item) => item?.h).filter(Boolean);
+    const traceText = (value) => (
+      value == null ? null : nodeHelpers.capText(value, 2000)
+    );
     const entry = {
       action: String(command?.action || ""),
-      handle: command?.handle || handles[handles.length - 1] || null,
-      effect: error ? { error: errorMessage(error) } : mergedEffect(items),
-      snapshot_before: traces[0]?.snapshot_before || command?.since || null,
-      snapshot_after: traces[traces.length - 1]?.snapshot_after
-        || result?.snapshot
-        || null,
+      handle: traceText(
+        command?.handle || handles[handles.length - 1] || null,
+      ),
+      effect: error
+        ? { error: traceText(errorMessage(error)) }
+        : mergedEffect(items),
+      snapshot_before: traceText(
+        traces[0]?.snapshot_before || command?.since || null,
+      ),
+      snapshot_after: traceText(
+        traces[traces.length - 1]?.snapshot_after
+          || result?.snapshot
+          || null,
+      ),
       // Lease transitions are the one fact about concurrency that polling a
       // banner cannot observe reliably (a "(2)" can last milliseconds); the
       // trace records the count the lock or unlock saw, so a test can assert
