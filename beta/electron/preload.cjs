@@ -1,9 +1,15 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
-const chatTypingEnabled = !process.argv.includes("--rapp-chat-typing=0");
+const streamArgument = process.argv.find((value) => (
+  value.startsWith("--rapp-chat-stream=")
+));
+const requestedStreamMode = streamArgument?.split("=", 2)[1];
+const chatStreamMode = ["smooth", "raw", "hold"].includes(requestedStreamMode)
+  ? requestedStreamMode
+  : "smooth";
 
 contextBridge.exposeInMainWorld("brainstemBeta", {
-  chatTypingEnabled,
+  chatStreamMode,
   checkForUpdates: () => ipcRenderer.invoke("beta:check-for-updates"),
   getState: () => ipcRenderer.invoke("beta:get-state"),
   installUpdate: () => ipcRenderer.invoke("beta:install-update"),

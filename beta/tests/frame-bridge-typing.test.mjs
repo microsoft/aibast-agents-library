@@ -3,46 +3,153 @@ import { readFileSync } from "node:fs";
 import vm from "node:vm";
 import test from "node:test";
 
+await import("../ui/stream-follow.js");
+await import("../ui/stream-pacing.js");
+
+const { createTailFollower } = globalThis.RappStreamFollow;
+const {
+  createStreamPacer,
+  createTextSplitter,
+  splitTextPieces,
+} = globalThis.RappStreamPacing;
 const mainSource = readFileSync(
   new URL("../electron/main.mjs", import.meta.url),
   "utf8",
 );
 
-function materializeBridgeSource(chatTypingEnabled) {
-  const declaration = "const BETA_FRAME_BRIDGE_SOURCE =";
-  const declarationStart = mainSource.indexOf(declaration);
+function extractExpression(startMarker, endMarker) {
+  const declarationStart = mainSource.indexOf(startMarker);
   const expressionStart = mainSource.indexOf("=", declarationStart) + 1;
-  const expressionEnd = mainSource.indexOf(";\nconst copilot =", expressionStart);
-  assert.ok(declarationStart >= 0 && expressionStart > 0 && expressionEnd > expressionStart);
-  return vm.runInNewContext(
-    mainSource.slice(expressionStart, expressionEnd),
-    {
-      chatTypingEnabled,
-      exportRedactionSource: "",
-      humanizeAgentName: (value) => String(value),
-    },
+  const expressionEnd = mainSource.indexOf(endMarker, expressionStart);
+  assert.ok(
+    declarationStart >= 0 && expressionStart > 0 && expressionEnd > expressionStart,
+    `could not extract ${startMarker}`,
   );
+  return mainSource.slice(expressionStart, expressionEnd);
 }
 
-function createElement() {
+const smoothStreamCss = vm.runInNewContext(extractExpression(
+  "const smoothStreamCss =",
+  ";\nconst startupFingerprint",
+));
+
+function materializeBridgeSource(chatStreamMode) {
+  const expression = extractExpression(
+    "const BETA_FRAME_BRIDGE_SOURCE =",
+    ";\nconst copilot =",
+  );
+  return vm.runInNewContext(expression, {
+    chatStreamMode,
+    createStreamPacer,
+    createTailFollower,
+    createTextSplitter,
+    exportRedactionSource: "",
+    humanizeAgentName: (value) => String(value),
+    smoothStreamCss,
+    splitTextPieces,
+  });
+}
+
+function fakeClock() {
+  let currentTime = 0;
+  let sequence = 0;
+  const tasks = new Map();
+
+  function setTimer(callback, delay) {
+    const id = ++sequence;
+    tasks.set(id, { at: currentTime + delay, callback, id });
+    return id;
+  }
+
+  function clearTimer(id) {
+    tasks.delete(id);
+  }
+
+  function runNext() {
+    const next = [...tasks.values()].sort(
+      (left, right) => left.at - right.at || left.id - right.id,
+    )[0];
+    if (!next) return false;
+    tasks.delete(next.id);
+    currentTime = next.at;
+    next.callback();
+    return true;
+  }
+
+  function runAll(limit = 10000) {
+    let count = 0;
+    while (runNext()) {
+      count += 1;
+      if (count > limit) throw new Error("Fake timer runaway.");
+    }
+  }
+
   return {
-    append: () => {},
-    appendChild: () => {},
-    classList: {
-      add: () => {},
-      contains: () => false,
-      toggle: () => {},
-    },
-    dataset: {},
-    querySelector: () => null,
-    querySelectorAll: () => [],
-    removeAttribute: () => {},
-    setAttribute: () => {},
-    style: {},
+    clearTimer,
+    pending: () => tasks.size,
+    runAll,
+    setTimer,
   };
 }
 
-function installBridge({ chatTypingEnabled = true, nativeFetch }) {
+function createDom() {
+  const byId = new Map();
+
+  function createElement(tagName = "div") {
+    const attributes = new Map();
+    const element = {
+      append: () => {},
+      appendChild(child) {
+        child.parentNode = element;
+        if (child.id) byId.set(child.id, child);
+      },
+      classList: {
+        add: () => {},
+        contains: () => false,
+        toggle: () => {},
+      },
+      dataset: {},
+      id: "",
+      parentNode: null,
+      querySelector: () => null,
+      querySelectorAll: () => [],
+      remove() {
+        if (element.id) byId.delete(element.id);
+        element.parentNode = null;
+      },
+      removeAttribute(name) {
+        attributes.delete(name);
+      },
+      setAttribute(name, value) {
+        attributes.set(name, String(value));
+      },
+      style: {},
+      tagName: String(tagName).toUpperCase(),
+      textContent: "",
+    };
+    return element;
+  }
+
+  const documentElement = createElement("html");
+  const head = createElement("head");
+  const body = createElement("body");
+  return {
+    addEventListener: () => {},
+    body,
+    createElement,
+    documentElement,
+    getElementById: (id) => byId.get(id) || null,
+    head,
+    querySelector: () => null,
+    querySelectorAll: () => [],
+  };
+}
+
+function installBridge({
+  chatStreamMode = "smooth",
+  clock = null,
+  nativeFetch,
+}) {
   const messageListeners = new Set();
   const parent = {
     postMessage(message) {
@@ -61,15 +168,7 @@ function installBridge({ chatTypingEnabled = true, nativeFetch }) {
       });
     },
   };
-  const document = {
-    addEventListener: () => {},
-    body: createElement(),
-    createElement,
-    getElementById: () => null,
-    head: createElement(),
-    querySelector: () => null,
-    querySelectorAll: () => [],
-  };
+  const document = createDom();
   const window = {
     addEventListener(type, listener) {
       if (type === "message") messageListeners.add(listener);
@@ -86,6 +185,7 @@ function installBridge({ chatTypingEnabled = true, nativeFetch }) {
     setTimeout,
   };
   const context = vm.createContext({
+    clearTimeout: clock?.clearTimer || clearTimeout,
     console,
     document,
     Error,
@@ -96,13 +196,14 @@ function installBridge({ chatTypingEnabled = true, nativeFetch }) {
     ReadableStream,
     Request,
     Response,
+    setTimeout: clock?.setTimer || setTimeout,
     TextDecoder,
     TextEncoder,
     URL,
     window,
   });
-  vm.runInContext(materializeBridgeSource(chatTypingEnabled), context);
-  return window;
+  vm.runInContext(materializeBridgeSource(chatStreamMode), context);
+  return { document, window };
 }
 
 function controlledResponse({
@@ -175,82 +276,108 @@ function nextTask() {
   return new Promise((resolve) => setTimeout(resolve, 0));
 }
 
-test("frame bridge emits zero bytes before completion, then replays ordered SSE", async () => {
+test("frame bridge installs only the smooth stream presentation", () => {
+  const noFetch = async () => new Response("ok");
+  const smooth = installBridge({ chatStreamMode: "smooth", nativeFetch: noFetch });
+  const raw = installBridge({ chatStreamMode: "raw", nativeFetch: noFetch });
+  const hold = installBridge({ chatStreamMode: "hold", nativeFetch: noFetch });
+
+  const style = smooth.document.getElementById("__rappStreamStyle");
+  assert.ok(style);
+  assert.match(style.textContent, /mask-image:\s*none !important/);
+  assert.match(style.textContent, /stream-arriving \.bubble::after/);
+  assert.doesNotMatch(style.textContent, /translateY/);
+  assert.equal(smooth.document.documentElement.dataset.rappStream, "smooth");
+  assert.equal(raw.document.documentElement.dataset.rappStream, "raw");
+  assert.equal(hold.document.documentElement.dataset.rappStream, "hold");
+  assert.equal(raw.document.getElementById("__rappStreamStyle"), null);
+  assert.equal(hold.document.getElementById("__rappStreamStyle"), null);
+});
+
+test("smooth mode paces a large delta with byte equality and event order", async () => {
+  const clock = fakeClock();
   const upstream = controlledResponse();
-  const window = installBridge({
+  const { window } = installBridge({
+    chatStreamMode: "smooth",
+    clock,
     nativeFetch: async () => upstream.response,
   });
   const wrapped = await window.fetch("http://127.0.0.1:7071/chat/stream", {
     method: "POST",
     body: JSON.stringify({ user_input: "hello" }),
   });
+  const firstText = `${"one two three four five ".repeat(40)}FIRST-END `;
+  const secondText = "second tail 🙂";
 
-  assert.notStrictEqual(wrapped, upstream.response);
-  assert.equal(wrapped.status, 202);
-  assert.equal(wrapped.statusText, "Accepted");
-  assert.equal(wrapped.headers.get("cache-control"), "no-cache, no-transform");
-  assert.equal(wrapped.headers.get("content-type"), "text/event-stream; charset=utf-8");
-  assert.equal(wrapped.headers.get("x-frontier-test"), "preserved");
-
-  const frames = [
-    sse({ type: "delta", text: "one" }),
-    sse({ type: "delta", text: " two" }),
-    sse({ type: "delta", text: " three" }),
-    sse({ type: "done", response: "one two three" }),
-  ];
-  const reader = wrapped.body.getReader();
-  const firstRead = reader.read();
-  let settled = false;
-  void firstRead.then(
-    () => { settled = true; },
-    () => { settled = true; },
-  );
-  for (const frame of frames) upstream.enqueue(frame);
+  upstream.enqueue(sse({ type: "delta", text: firstText }));
   await nextTask();
-
-  assert.equal(settled, false);
-  console.log("0 bytes before completion");
-
+  clock.runAll();
+  upstream.enqueue(sse({ type: "agent", logs: "tool complete" }));
+  upstream.enqueue(sse({ type: "delta", text: secondText }));
+  await nextTask();
+  clock.runAll();
+  upstream.enqueue(sse({
+    type: "done",
+    response: firstText + secondText,
+  }));
   upstream.close();
-  const replay = await readAll(reader, firstRead);
-  assert.equal(replay, frames.join(""));
+
+  const replay = await readAll(wrapped.body.getReader());
   const events = parseEvents(replay);
-  assert.deepEqual(
-    events.map((event) => event.type),
-    ["delta", "delta", "delta", "done"],
+  const deltas = events.filter((event) => event.type === "delta");
+  const agentIndex = events.findIndex((event) => event.type === "agent");
+  const firstSecondDelta = events.findIndex(
+    (event) => event.type === "delta" && event.text.includes("second"),
   );
-  assert.deepEqual(
-    events.filter((event) => event.type === "delta").map((event) => event.text),
-    ["one", " two", " three"],
+
+  assert.ok(deltas.length >= 12, `expected at least 12 chunks, got ${deltas.length}`);
+  assert.equal(
+    deltas.map((event) => event.text).join(""),
+    firstText + secondText,
   );
-  console.log("ordered replay: delta one -> delta two -> delta three -> done");
+  assert.ok(agentIndex > 0);
+  assert.ok(firstSecondDelta > agentIndex);
+  assert.equal(events.at(-1).type, "done");
+  console.log(
+    `smooth: ${deltas.length} delta chunks, byte-equality yes, order preserved`,
+  );
 });
 
-test("frame bridge flushes buffered SSE followed by an error event", async () => {
+test("smooth mode flushes queued text when done arrives", async () => {
+  const clock = fakeClock();
   const upstream = controlledResponse();
-  const window = installBridge({
+  const { window } = installBridge({
+    chatStreamMode: "smooth",
+    clock,
     nativeFetch: async () => upstream.response,
   });
   const wrapped = await window.fetch("http://127.0.0.1:7071/chat/stream", {
     method: "POST",
     body: JSON.stringify({ user_input: "hello" }),
   });
-  const reader = wrapped.body.getReader();
-  const firstRead = reader.read();
-  upstream.enqueue(sse({ type: "delta", text: "partial" }));
-  await nextTask();
-  upstream.error(new Error("upstream exploded"));
+  const text = "flush every queued word when terminal done arrives";
 
-  const events = parseEvents(await readAll(reader, firstRead));
-  assert.deepEqual(events.map((event) => event.type), ["delta", "error"]);
-  assert.equal(events[0].text, "partial");
-  assert.equal(events[1].error, "upstream exploded");
+  upstream.enqueue(sse({ type: "delta", text }));
+  await nextTask();
+  assert.ok(clock.pending() > 0);
+  upstream.enqueue(sse({ type: "done", response: text }));
+  upstream.close();
+
+  const events = parseEvents(await readAll(wrapped.body.getReader()));
+  assert.equal(
+    events.filter((event) => event.type === "delta")
+      .map((event) => event.text).join(""),
+    text,
+  );
+  assert.equal(events.at(-1).type, "done");
+  assert.equal(clock.pending(), 0);
+  console.log("smooth terminal flush: complete text before done");
 });
 
-test("frame bridge passes streaming responses through when typing delivery is off", async () => {
+test("raw mode passes the native streaming response through untouched", async () => {
   const upstream = controlledResponse();
-  const window = installBridge({
-    chatTypingEnabled: false,
+  const { window } = installBridge({
+    chatStreamMode: "raw",
     nativeFetch: async () => upstream.response,
   });
   const response = await window.fetch("http://127.0.0.1:7071/chat/stream", {
@@ -259,13 +386,73 @@ test("frame bridge passes streaming responses through when typing delivery is of
   });
 
   assert.strictEqual(response, upstream.response);
+  upstream.close();
+  console.log("raw: native response pass-through");
 });
 
-test("frame bridge leaves non-stream chat and unrelated fetches untouched", async () => {
+test("hold mode emits zero bytes before completion, then ordered replay", async () => {
+  const upstream = controlledResponse();
+  const { window } = installBridge({
+    chatStreamMode: "hold",
+    nativeFetch: async () => upstream.response,
+  });
+  const wrapped = await window.fetch("http://127.0.0.1:7071/chat/stream", {
+    method: "POST",
+    body: JSON.stringify({ user_input: "hello" }),
+  });
+  const frames = [
+    sse({ type: "delta", text: "one" }),
+    sse({ type: "delta", text: " two" }),
+    sse({ type: "done", response: "one two" }),
+  ];
+  const reader = wrapped.body.getReader();
+  const firstRead = reader.read();
+  let settled = false;
+  void firstRead.then(
+    () => { settled = true; },
+    () => { settled = true; },
+  );
+  frames.forEach((frame) => upstream.enqueue(frame));
+  await nextTask();
+
+  assert.equal(settled, false);
+  upstream.close();
+  assert.equal(await readAll(reader, firstRead), frames.join(""));
+  console.log("hold: 0 bytes before completion, ordered replay");
+});
+
+test("smooth mode flushes buffered frames followed by an upstream error", async () => {
+  const clock = fakeClock();
+  const upstream = controlledResponse();
+  const { window } = installBridge({
+    chatStreamMode: "smooth",
+    clock,
+    nativeFetch: async () => upstream.response,
+  });
+  const wrapped = await window.fetch("http://127.0.0.1:7071/chat/stream", {
+    method: "POST",
+    body: JSON.stringify({ user_input: "hello" }),
+  });
+
+  upstream.enqueue(sse({ type: "delta", text: "partial text" }));
+  await nextTask();
+  upstream.error(new Error("upstream exploded"));
+
+  const events = parseEvents(await readAll(wrapped.body.getReader()));
+  assert.equal(
+    events.filter((event) => event.type === "delta")
+      .map((event) => event.text).join(""),
+    "partial text",
+  );
+  assert.equal(events.at(-1).type, "error");
+  assert.equal(events.at(-1).error, "upstream exploded");
+});
+
+test("non-stream chat and unrelated fetches remain untouched", async () => {
   const chatResponse = new Response('{"response":"ok"}');
   const healthResponse = new Response('{"status":"ok"}');
   const responses = [chatResponse, healthResponse];
-  const window = installBridge({
+  const { window } = installBridge({
     nativeFetch: async () => responses.shift(),
   });
 
@@ -282,9 +469,10 @@ test("frame bridge leaves non-stream chat and unrelated fetches untouched", asyn
   );
 });
 
-test("aborting a buffered bridge response cancels the upstream stream", async () => {
+test("aborting a smooth response cancels the upstream stream", async () => {
   const upstream = controlledResponse();
-  const window = installBridge({
+  const { window } = installBridge({
+    chatStreamMode: "smooth",
     nativeFetch: async () => upstream.response,
   });
   const controller = new AbortController();

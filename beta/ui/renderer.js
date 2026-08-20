@@ -39,7 +39,13 @@ let agentRefreshPromise = null;
 let openBetaMenuOnNextSync = false;
 let pendingLineageReply = null;
 let loadedFrameUrl = null;
-const chatTypingEnabled = window.brainstemBeta.chatTypingEnabled !== false;
+const chatStreamMode = ["smooth", "raw", "hold"].includes(
+  window.brainstemBeta.chatStreamMode,
+)
+  ? window.brainstemBeta.chatStreamMode
+  : "smooth";
+const chatTypingEnabled = chatStreamMode === "hold";
+document.documentElement.dataset.rappStream = chatStreamMode;
 const { createDelivery } = window.RappTypingDelivery;
 
 function deliverPendingLineageReply() {

@@ -60,15 +60,16 @@ test("preload and main key Brain Surgeon by session id", () => {
   assert.match(main, /beta:surgeon-close/);
 });
 
-test("Brain Surgeon buffers replies behind an accessible typing bubble by default", () => {
+test("Brain Surgeon keeps the accessible typing bubble for explicit hold mode", () => {
   assert.match(typingDelivery, /function createDelivery/);
   assert.ok(
     ui.indexOf('<script src="typing-delivery.js"></script>')
       < ui.indexOf('<script src="renderer.js"></script>'),
   );
-  assert.match(main, /process\.env\.RAPP_CHAT_TYPING !== "0"/);
-  assert.match(main, /--rapp-chat-typing=/);
-  assert.match(preload, /chatTypingEnabled/);
+  assert.match(main, /resolveChatStreamMode\(process\.env\)/);
+  assert.match(main, /--rapp-chat-stream=/);
+  assert.match(preload, /chatStreamMode/);
+  assert.match(renderer, /chatTypingEnabled = chatStreamMode === "hold"/);
   assert.match(renderer, /createSurgeonDelivery/);
   assert.match(renderer, /session\.delivery\?\.push/);
   assert.match(renderer, /session\.delivery\?\.finish/);

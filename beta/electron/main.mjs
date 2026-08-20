@@ -18,6 +18,9 @@ import {
 import {
   resolveBrainstemConfig,
 } from "./brainstem-process.mjs";
+import {
+  resolveChatStreamMode,
+} from "./chat-stream-mode.mjs";
 import { humanizeAgentName } from "./agent-display.mjs";
 import { BrainSurgeon } from "./brain-surgeon.mjs";
 import { CopilotStudioAuthManager } from "./copilot-studio-auth.mjs";
@@ -43,6 +46,17 @@ import {
   betaSourceFingerprint,
   runtimeDirectoryFingerprint,
 } from "../scripts/walkthrough-provenance.mjs";
+import "../ui/stream-follow.js";
+import "../ui/stream-pacing.js";
+
+const {
+  createTailFollower,
+} = globalThis.RappStreamFollow;
+const {
+  createStreamPacer,
+  createTextSplitter,
+  splitTextPieces,
+} = globalThis.RappStreamPacing;
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 const packageDir = path.resolve(dirname, "..");
@@ -54,7 +68,75 @@ const appIcon = existsSync(appIconFile) ? nativeImage.createFromPath(appIconFile
 const uiFile = path.join(dirname, "..", "ui", "index.html");
 const uiUrl = pathToFileURL(uiFile).href;
 const config = resolveBrainstemConfig();
-const chatTypingEnabled = process.env.RAPP_CHAT_TYPING !== "0";
+const chatStreamMode = resolveChatStreamMode(process.env);
+const smoothStreamCss = `
+html[data-rapp-stream="smooth"] .msg.assistant .bubble.stream-mask {
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+html[data-rapp-stream="smooth"] .msg.assistant .bubble.stream-revealing {
+  animation: none !important;
+}
+html[data-rapp-stream="smooth"] #chat {
+  padding-bottom: var(--rapp-stream-footer-clearance, 24px) !important;
+  scroll-padding-bottom: var(--rapp-stream-footer-clearance, 24px);
+}
+html[data-rapp-stream="smooth"] .msg.assistant.stream-arriving {
+  animation: rappArrive 160ms ease-out both;
+}
+html[data-rapp-stream="smooth"] .msg,
+html[data-rapp-stream="smooth"] .msg .bubble {
+  transition: max-width 240ms ease;
+}
+html[data-rapp-stream="smooth"] .msg.assistant.stream-arriving .bubble::after {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 3px;
+  background: currentColor;
+  content: "";
+  vertical-align: -.14em;
+  animation: rappCaret 1s steps(1) infinite;
+}
+html[data-rapp-stream="smooth"] .typing span {
+  width: 8px;
+  height: 8px;
+  opacity: .25;
+  transform: none !important;
+  animation: rappPulse 1.4s ease-in-out infinite;
+  animation-delay: 0s;
+}
+html[data-rapp-stream="smooth"] .typing span:nth-child(2) {
+  animation-delay: .2s;
+}
+html[data-rapp-stream="smooth"] .typing span:nth-child(3) {
+  animation-delay: .4s;
+}
+@keyframes rappArrive {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes rappCaret {
+  0%, 49% { opacity: .72; }
+  50%, 100% { opacity: 0; }
+}
+@keyframes rappPulse {
+  0%, 100% { opacity: .25; }
+  50% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-rapp-stream="smooth"] .msg.assistant.stream-arriving,
+  html[data-rapp-stream="smooth"] .msg.assistant .bubble.stream-revealing,
+  html[data-rapp-stream="smooth"] .msg.assistant.stream-arriving .bubble::after,
+  html[data-rapp-stream="smooth"] .typing span {
+    animation: none !important;
+    transform: none !important;
+  }
+  html[data-rapp-stream="smooth"] .typing span {
+    opacity: .6;
+  }
+}
+`;
 const startupFingerprint = betaSourceFingerprint(path.resolve(packageDir, ".."));
 const brainstemRuntimeFingerprint = runtimeDirectoryFingerprint(
   config.brainstemDir,
@@ -72,6 +154,118 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
   window.__rappBetaFrameBridge = true;
   ${exportRedactionSource}
   const humanizeAgentName = ${humanizeAgentName.toString()};
+  const chatStreamMode = ${JSON.stringify(chatStreamMode)};
+  const splitTextPieces = ${splitTextPieces.toString()};
+  const createTextSplitter = ${createTextSplitter.toString()};
+  const createStreamPacer = ${createStreamPacer.toString()};
+  const createTailFollower = ${createTailFollower.toString()};
+  document.documentElement.dataset.rappStream = chatStreamMode;
+  if (chatStreamMode === "smooth") {
+    const streamStyle = document.createElement("style");
+    streamStyle.id = "__rappStreamStyle";
+    streamStyle.textContent = ${JSON.stringify(smoothStreamCss)};
+    document.head.appendChild(streamStyle);
+  }
+  function installSmoothTailFollow() {
+    const chat = document.getElementById("chat");
+    const footer = document.querySelector("footer");
+    if (!chat || !footer) return null;
+    const root = document.documentElement;
+    const follower = createTailFollower({
+      distanceFromBottom: () => (
+        chat.scrollHeight - chat.clientHeight - chat.scrollTop
+      ),
+      pinToBottom: () => {
+        chat.scrollTop = Math.max(0, chat.scrollHeight - chat.clientHeight);
+      },
+      thresholdPx: 80,
+    });
+    let arriving = null;
+    let userIntentUntil = 0;
+    const bubbleObserver = typeof ResizeObserver === "function"
+      ? new ResizeObserver(() => follower.contentChanged())
+      : null;
+
+    function measureFooter() {
+      const height = Math.ceil(footer.getBoundingClientRect().height);
+      root.style.setProperty(
+        "--rapp-stream-footer-clearance",
+        Math.max(0, height) + "px",
+      );
+      return height;
+    }
+
+    function syncStreamingBubble() {
+      const next = chat.querySelector(".msg.assistant.stream-arriving");
+      if (next !== arriving) {
+        bubbleObserver?.disconnect();
+        if (next) {
+          arriving = next;
+          bubbleObserver?.observe(next);
+          follower.start();
+        } else if (arriving) {
+          arriving = null;
+          follower.complete();
+        }
+      }
+      if (next) follower.contentChanged();
+    }
+
+    function markUserIntent(duration = 320) {
+      userIntentUntil = performance.now() + duration;
+    }
+
+    const mutationObserver = new MutationObserver(syncStreamingBubble);
+    mutationObserver.observe(chat, {
+      characterData: true,
+      childList: true,
+      subtree: true,
+    });
+    const footerObserver = typeof ResizeObserver === "function"
+      ? new ResizeObserver(() => {
+        measureFooter();
+        follower.contentChanged();
+      })
+      : null;
+    footerObserver?.observe(footer);
+    chat.addEventListener("wheel", () => markUserIntent(), { passive: true });
+    chat.addEventListener("touchstart", () => markUserIntent(500), {
+      passive: true,
+    });
+    chat.addEventListener("scroll", () => {
+      follower.handleScroll({
+        userInitiated: performance.now() <= userIntentUntil,
+      });
+    }, { passive: true });
+    document.addEventListener("keydown", (event) => {
+      const tag = event.target?.tagName?.toLowerCase();
+      if (["input", "textarea", "select"].includes(tag)
+          || event.target?.isContentEditable) return;
+      if ([
+        "ArrowDown",
+        "ArrowUp",
+        "End",
+        "Home",
+        "PageDown",
+        "PageUp",
+        " ",
+      ].includes(event.key)) {
+        markUserIntent();
+      }
+    });
+    window.addEventListener("resize", measureFooter);
+    const measuredFooterHeight = measureFooter();
+    syncStreamingBubble();
+    const installed = {
+      follower,
+      footerObserver,
+      measuredFooterHeight,
+      mutationObserver,
+    };
+    window.__rappSmoothTailFollow = installed;
+    return installed;
+  }
+  if (chatStreamMode === "smooth") installSmoothTailFollow();
   const style = document.createElement("style");
   style.textContent = [
     ".beta-agent-icon-button{display:grid!important;place-items:center;",
@@ -327,9 +521,8 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
       }
     }
   });
-  const chatTypingEnabled = ${JSON.stringify(chatTypingEnabled)};
   const nativeFetch = window.fetch.bind(window);
-  function bufferChatStreamResponse(response, signal) {
+  function holdChatStreamResponse(response, signal) {
     if (!response.body) return response;
     const reader = response.body.getReader();
     let stopped = false;
@@ -401,6 +594,123 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
       headers: response.headers,
     });
   }
+  function parseSseEvent(frame) {
+    const data = String(frame)
+      .split(/\\r?\\n/)
+      .filter((line) => line.startsWith("data:"))
+      .map((line) => line.slice(5).trimStart())
+      .join("\\n");
+    if (!data) return null;
+    try {
+      return JSON.parse(data);
+    } catch {
+      return null;
+    }
+  }
+  function deltaSseFrame(text) {
+    return "data: " + JSON.stringify({ type: "delta", text }) + "\\n\\n";
+  }
+  function errorSseFrame(cause) {
+    return "\\n\\ndata: " + JSON.stringify({
+      type: "error",
+      error: String(cause?.message || cause || "Response stream interrupted."),
+    }) + "\\n\\n";
+  }
+  function paceChatStreamResponse(response, signal) {
+    if (!response.body) return response;
+    const reader = response.body.getReader();
+    const encoder = new TextEncoder();
+    const decoder = new TextDecoder();
+    let stopped = false;
+    let abortHandler = null;
+    let pacer = null;
+
+    const body = new ReadableStream({
+      start(controller) {
+        pacer = createStreamPacer({
+          onText: (text) => controller.enqueue(encoder.encode(deltaSseFrame(text))),
+          onEvent: (frame) => controller.enqueue(encoder.encode(frame)),
+        });
+        abortHandler = () => {
+          if (stopped) return;
+          stopped = true;
+          const reason = signal?.reason instanceof Error
+            ? signal.reason
+            : Object.assign(new Error("The operation was aborted."), {
+              name: "AbortError",
+            });
+          pacer.abort();
+          void reader.cancel(reason).catch((cause) => {
+            console.warn("Frontier could not cancel the upstream chat stream.", cause);
+          });
+          controller.error(reason);
+        };
+        if (signal?.aborted) {
+          abortHandler();
+          return;
+        }
+        signal?.addEventListener("abort", abortHandler, { once: true });
+
+        void (async () => {
+          let buffer = "";
+          try {
+            while (true) {
+              const { value, done } = await reader.read();
+              if (done) break;
+              buffer += decoder.decode(value, { stream: true });
+              while (true) {
+                const separator = /\\r?\\n\\r?\\n/.exec(buffer);
+                if (!separator) break;
+                const end = separator.index + separator[0].length;
+                const frame = buffer.slice(0, end);
+                buffer = buffer.slice(end);
+                const event = parseSseEvent(frame);
+                if (event?.type === "delta" && typeof event.text === "string") {
+                  pacer.push(event.text);
+                  continue;
+                }
+                const terminal = event?.type === "done" || event?.type === "error";
+                pacer.event(frame, { terminal });
+                if (terminal) pacer.finish();
+              }
+            }
+            buffer += decoder.decode();
+            if (buffer) pacer.event(buffer);
+            pacer.finish();
+            if (stopped) return;
+            stopped = true;
+            controller.close();
+          } catch (cause) {
+            if (stopped || signal?.aborted) return;
+            if (buffer) pacer.event(buffer);
+            pacer.event(errorSseFrame(cause), { terminal: true });
+            pacer.finish();
+            stopped = true;
+            controller.close();
+          } finally {
+            signal?.removeEventListener("abort", abortHandler);
+            try {
+              reader.releaseLock();
+            } catch {
+              // Cancellation may release the reader first.
+            }
+          }
+        })();
+      },
+      cancel(reason) {
+        if (stopped) return undefined;
+        stopped = true;
+        pacer?.abort();
+        signal?.removeEventListener("abort", abortHandler);
+        return reader.cancel(reason);
+      },
+    });
+    return new Response(body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: response.headers,
+    });
+  }
   async function requestLineageCommand(message) {
     const requestId = window.crypto.randomUUID();
     return new Promise((resolve, reject) => {
@@ -440,16 +750,17 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     ).toUpperCase();
     const isChat = method === "POST"
       && (target.pathname === "/chat" || target.pathname === "/chat/stream");
-    const shouldBufferChatStream = chatTypingEnabled
+    const shouldWrapChatStream = chatStreamMode !== "raw"
       && method === "POST"
       && target.pathname === "/chat/stream";
     const requestSignal = options.signal
       || (resource instanceof Request ? resource.signal : null);
     const fetchNative = async () => {
       const response = await nativeFetch(resource, options);
-      return shouldBufferChatStream
-        ? bufferChatStreamResponse(response, requestSignal)
-        : response;
+      if (!shouldWrapChatStream) return response;
+      return chatStreamMode === "hold"
+        ? holdChatStreamResponse(response, requestSignal)
+        : paceChatStreamResponse(response, requestSignal);
     };
     if (!isChat || typeof options.body !== "string") {
       return fetchNative();
@@ -1115,7 +1426,7 @@ function createWindow() {
     webPreferences: {
       preload: path.join(dirname, "preload.cjs"),
       additionalArguments: [
-        `--rapp-chat-typing=${chatTypingEnabled ? "1" : "0"}`,
+        `--rapp-chat-stream=${chatStreamMode}`,
       ],
       contextIsolation: true,
       nodeIntegration: false,
