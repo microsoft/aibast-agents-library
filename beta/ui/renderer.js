@@ -146,6 +146,22 @@ frame.addEventListener("load", () => {
 });
 window.addEventListener("message", async (event) => {
   const type = event.data?.type;
+  if (type === "rapp-beta:twin-ledger-turn") {
+    const twinId = String(event.data.twinId || "");
+    const twinUrl = twins.get(twinId)?.descriptor?.url;
+    try {
+      if (!twinUrl || event.origin !== new URL(twinUrl).origin) return;
+    } catch {
+      return;
+    }
+    void window.brainstemBeta.recordTwinTurn(twinId, event.data.turn).catch(
+      (cause) => console.warn(
+        "Frontier could not persist the completed twin turn.",
+        cause,
+      ),
+    );
+    return;
+  }
   if (event.source !== frame.contentWindow) return;
   if (type === "rapp-beta:set-chat-look") {
     try {
@@ -167,11 +183,31 @@ window.addEventListener("message", async (event) => {
     setExplorerOpen(!explorer.classList.contains("open"));
     return;
   }
+  if (type === "rapp-beta:ledger-turn") {
+    void window.brainstemBeta.recordBrainstemTurn(event.data.turn).catch(
+      (cause) => console.warn(
+        "Frontier could not persist the completed Brainstem turn.",
+        cause,
+      ),
+    );
+    return;
+  }
   if (type === "rapp-beta:lineage-confirmation-ack") {
     if (
       pendingLineageReply
       && event.data.confirmationId === pendingLineageReply.id
     ) {
+      void window.brainstemBeta.recordBrainstemTurn({
+        agentLogs: "",
+        model: null,
+        requestId: pendingLineageReply.id,
+        response: pendingLineageReply.reply,
+        sessionId: null,
+        userInput: pendingLineageReply.userInput,
+      }).catch((cause) => console.warn(
+        "Frontier could not persist the delivered lineage reply.",
+        cause,
+      ));
       pendingLineageReply = null;
     }
     return;
@@ -188,6 +224,7 @@ window.addEventListener("message", async (event) => {
           id: requestId,
           reply: result.reply,
           sent: false,
+          userInput: String(event.data.message || ""),
           url: result.url,
         };
         if (loadedFrameUrl === result.url) {

@@ -1,4 +1,5 @@
 import path from "node:path";
+import { randomUUID } from "node:crypto";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir, tmpdir } from "node:os";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -31,11 +32,16 @@ import { CopilotStudioAuthManager } from "./copilot-studio-auth.mjs";
 import { CopilotRuntime } from "./copilot-runtime.mjs";
 import { executeLineageCommand } from "./lineage-control.mjs";
 import {
+  openLedger,
+  recordCompletedTurn,
+} from "./ledger.mjs";
+import {
   createExportRedactionScript,
   redactSensitiveValue,
 } from "./log-redaction.mjs";
 import { BetaRouteManager } from "./route-manager.mjs";
 import { isAllowedStoreSourceUrl, RappStoreClient, STORE_SOURCES } from "./rapp-store.mjs";
+import { createTwinLedgerBridgeSource } from "./twin-ledger-bridge.mjs";
 import { TwinManager } from "./twin-manager.mjs";
 import {
   allowsUiDriverMediaPermission,
@@ -162,6 +168,7 @@ html[data-rapp-stream="smooth"] .typing span:nth-child(3) {
 `;
 const betaHome = process.env.BRAINSTEM_BETA_HOME
   || path.join(config.brainstemHome, "beta-launcher");
+const ledger = openLedger(betaHome);
 const initialChatLook = readChatLookSettings({
   betaHome,
   env: process.env,
@@ -889,6 +896,106 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
       return null;
     }
   }
+  function postCompletedChat(request, result) {
+    const response = String(
+      result?.response || result?.assistant_response || result?.result || "",
+    );
+    if (!response) return;
+    window.parent.postMessage({
+      type: "rapp-beta:ledger-turn",
+      turn: {
+        agentLogs: result?.agent_logs || "",
+        model: result?.model || null,
+        requestId: request.requestId,
+        response,
+        sessionId: result?.session_id || request.body.session_id || null,
+        userInput: request.body.user_input,
+      },
+    }, "*");
+  }
+  function createChatCapture(request) {
+    const decoder = new TextDecoder();
+    let buffer = "";
+    let reported = false;
+    let terminal = null;
+    return {
+      abort() {
+        terminal = null;
+      },
+      finish() {
+        if (reported || !terminal) return;
+        reported = true;
+        postCompletedChat(request, terminal);
+      },
+      push(value) {
+        if (reported || terminal || !value) return;
+        buffer += decoder.decode(value, { stream: true });
+        while (true) {
+          const separator = /\\r?\\n\\r?\\n/.exec(buffer);
+          if (!separator) return;
+          const end = separator.index + separator[0].length;
+          const frame = buffer.slice(0, end);
+          buffer = buffer.slice(end);
+          const event = parseSseEvent(frame);
+          if (event?.type !== "done") continue;
+          terminal = event;
+          return;
+        }
+      },
+    };
+  }
+  function instrumentChatResponse(response, request) {
+    if (!response.ok) return response;
+    if (request.pathname === "/chat/stream" && response.body) {
+      const capture = createChatCapture(request);
+      const nativeGetReader = response.body.getReader.bind(response.body);
+      response.body.getReader = function frontierLedgerReader(...args) {
+        const reader = nativeGetReader(...args);
+        const nativeRead = reader.read.bind(reader);
+        const nativeCancel = reader.cancel.bind(reader);
+        reader.read = async function frontierLedgerRead() {
+          try {
+            const result = await nativeRead();
+            if (result.done) capture.finish();
+            else capture.push(result.value);
+            return result;
+          } catch (cause) {
+            capture.abort();
+            throw cause;
+          }
+        };
+        reader.cancel = function frontierLedgerCancel(reason) {
+          capture.abort();
+          return nativeCancel(reason);
+        };
+        return reader;
+      };
+      return response;
+    }
+    let reported = false;
+    const report = (result) => {
+      if (reported) return;
+      reported = true;
+      postCompletedChat(request, result);
+    };
+    const nativeJson = response.json.bind(response);
+    response.json = async function frontierLedgerJson() {
+      const result = await nativeJson();
+      report(result);
+      return result;
+    };
+    const nativeText = response.text.bind(response);
+    response.text = async function frontierLedgerText() {
+      const result = await nativeText();
+      try {
+        report(JSON.parse(result));
+      } catch {
+        // The native response remains authoritative when text is not JSON.
+      }
+      return result;
+    };
+    return response;
+  }
   function errorSseFrame(cause) {
     return "\\n\\ndata: " + JSON.stringify({
       type: "error",
@@ -1230,8 +1337,7 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
       headers: response.headers,
     });
   }
-  async function requestLineageCommand(message) {
-    const requestId = window.crypto.randomUUID();
+  async function requestLineageCommand(message, requestId = window.crypto.randomUUID()) {
     return new Promise((resolve, reject) => {
       const timeout = window.setTimeout(() => {
         window.removeEventListener("message", receive);
@@ -1274,8 +1380,17 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
       && target.pathname === "/chat/stream";
     const requestSignal = options.signal
       || (resource instanceof Request ? resource.signal : null);
+    let completion = null;
     const fetchNative = async () => {
-      const response = await nativeFetch(resource, options);
+      const nativeResponse = await nativeFetch(resource, options);
+      let response = nativeResponse;
+      if (completion) {
+        try {
+          response = instrumentChatResponse(nativeResponse, completion);
+        } catch {
+          response = nativeResponse;
+        }
+      }
       if (!shouldWrapChatStream) return response;
       return chatStreamMode === "hold"
         ? holdChatStreamResponse(response, requestSignal)
@@ -1293,13 +1408,21 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     if (typeof body.user_input !== "string") {
       return fetchNative();
     }
+    completion = {
+      body,
+      pathname: target.pathname,
+      requestId: window.crypto.randomUUID(),
+    };
     // Fail OPEN, always. This interceptor sits in front of every chat message,
     // so a lineage-control failure (main busy, handler throw, window teardown,
     // timeout) must never take the user's ordinary chat down with it — the layer
     // may substitute, never subtract. On any error we fall through to Grail.
     let result;
     try {
-      result = await requestLineageCommand(body.user_input);
+      result = await requestLineageCommand(
+        body.user_input,
+        completion.requestId,
+      );
     } catch {
       return fetchNative();
     }
@@ -1313,18 +1436,18 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
         agent_logs: "",
         streamed: false,
       }) + "\\n\\n";
-      return new Response(frame, {
+      return instrumentChatResponse(new Response(frame, {
         status: 200,
         headers: { "Content-Type": "text/event-stream; charset=utf-8" },
-      });
+      }), completion);
     }
-    return new Response(JSON.stringify({
+    return instrumentChatResponse(new Response(JSON.stringify({
       response: result.reply,
       agent_logs: "",
     }), {
       status: 200,
       headers: { "Content-Type": "application/json; charset=utf-8" },
-    });
+    }), completion);
   };
   async function requestParent(type, filename) {
     const requestId = window.crypto.randomUUID();
@@ -1412,6 +1535,8 @@ let uiDriver = null;
 // Brainstem — "several agents, one brainstem" — and every event they emit is
 // tagged with its sessionId so the renderer routes it to the right tab/tile.
 const brainSurgeons = new Map();
+const completedBrainstemRequests = new Set();
+const completedBrainstemRequestOrder = [];
 const MAX_BRAIN_SURGEONS = 12;
 
 const state = {
@@ -1434,6 +1559,7 @@ const state = {
 const routeManager = new BetaRouteManager({
   betaHome,
   brainstemConfig: config,
+  ledger,
   onActivate: async (route) => {
     state.url = route.url;
     state.brainstem = {
@@ -1558,6 +1684,7 @@ async function installAgentToBrainstem(storeId) {
     : `${String(storeId).replace(/[^a-z0-9_]+/gi, "_")}_agent.py`;
   const installed = await routeManager.installScopedAgent({
     filename,
+    origin: "store",
     source: cartridge.source,
   });
   const route = await routeManager.startDefault();
@@ -1575,6 +1702,7 @@ async function installAgentToBrainstem(storeId) {
 const twinManager = new TwinManager({
   brainstemConfig: config,
   betaHome,
+  ledger,
   routeManager,
   storeClient: rappStore,
   // The Brainstem that plans a two-brain loop is whichever one is live now
@@ -1597,6 +1725,7 @@ const twinManager = new TwinManager({
 // pops open the auth page in the user's own browser (identity auth is completed
 // in their real session; the app never captures credentials).
 const twinAuthPrompts = new Map();   // twinId -> { url, code, note }
+const twinPopoutOwners = new Map();  // webContents.id -> twinId
 
 function parseAuthPrompt(message) {
   const text = String(message || "");
@@ -1684,6 +1813,10 @@ async function injectFrameUi(frame, twinId) {
     `(() => { const html = ${JSON.stringify(html)}; document.open(); document.write(html); document.close(); return true; })()`,
     true,
   );
+  await frame.executeJavaScript(
+    createTwinLedgerBridgeSource({ sink: "parent", twinId }),
+    true,
+  );
   return { ok: true, instrumented: true };
 }
 
@@ -1737,18 +1870,33 @@ function popOutTwin(id) {
     title: twin.name || "RAPPlication",
     backgroundColor: "#0d1117",
     parent: mainWindow || undefined,
-    webPreferences: { contextIsolation: true, nodeIntegration: false, sandbox: true },
+    webPreferences: {
+      additionalArguments: [`--rapp-twin-id=${encodeURIComponent(id)}`],
+      contextIsolation: true,
+      nodeIntegration: false,
+      preload: path.join(dirname, "twin-preload.cjs"),
+      sandbox: true,
+    },
   });
+  const popoutWebContentsId = win.webContents.id;
+  twinPopoutOwners.set(popoutWebContentsId, id);
+  win.on("closed", () => twinPopoutOwners.delete(popoutWebContentsId));
   win.setMenuBarVisibility(false);
   const raw = twinManager.uiHtml(id);
   const html = raw ? instrumentRappUi(raw) + VIEW_TOGGLE(startMobile) : null;
   win.webContents.on("did-finish-load", () => {
-    if (html) {
-      win.webContents.executeJavaScript(
+    void (async () => {
+      if (html) {
+        await win.webContents.executeJavaScript(
         `(() => { const h = ${JSON.stringify(html)}; document.open(); document.write(h); document.close(); return true; })()`,
         true,
-      ).catch(() => {});
-    }
+        );
+      }
+      await win.webContents.executeJavaScript(
+        createTwinLedgerBridgeSource({ sink: "preload", twinId: id }),
+        true,
+      );
+    })().catch(() => {});
   });
   win.loadURL(`${twin.url}/?beta=1`);
   return { ok: true };
@@ -1856,6 +2004,68 @@ function normalizeSurgeonId(sessionId) {
   return Number.isFinite(id) && id > 0 ? id : 1;
 }
 
+function recordBrainstemCompletion(payload) {
+  if (!payload || typeof payload !== "object") {
+    return { ok: false, reason: "A completed turn payload is required." };
+  }
+  const requestId = payload.requestId ? String(payload.requestId) : null;
+  if (requestId && completedBrainstemRequests.has(requestId)) {
+    return { duplicate: true, ok: true, tools: 0 };
+  }
+  const result = recordCompletedTurn(ledger, {
+    agentLogs: String(payload.agentLogs || ""),
+    model: payload.model ? String(payload.model) : null,
+    requestId,
+    response: String(payload.response || ""),
+    sessionId: payload.sessionId ? String(payload.sessionId) : null,
+    surface: "brainstem",
+    userInput: String(payload.userInput || ""),
+  });
+  if (requestId && result.turns.length === 2) {
+    completedBrainstemRequests.add(requestId);
+    completedBrainstemRequestOrder.push(requestId);
+    if (completedBrainstemRequestOrder.length > 1000) {
+      completedBrainstemRequests.delete(completedBrainstemRequestOrder.shift());
+    }
+  }
+  return {
+    ok: result.turns.length === 2,
+    tools: result.tools.length,
+  };
+}
+
+function recordTwinCompletion(twinId, payload) {
+  const twin = twinManager.get(String(twinId || ""));
+  if (!payload || typeof payload !== "object") {
+    return { ok: false, reason: "A completed twin turn payload is required." };
+  }
+  if (payload.settledOnly === true) {
+    return {
+      molts: twinManager.mirrorMolts(twin).length,
+      ok: true,
+      settledOnly: true,
+      tools: 0,
+    };
+  }
+  const result = recordCompletedTurn(ledger, {
+    agentLogs: String(payload.agentLogs || ""),
+    model: payload.model ? String(payload.model) : null,
+    requestId: payload.requestId ? String(payload.requestId) : null,
+    response: String(payload.response || ""),
+    sessionId: payload.sessionId
+      ? String(payload.sessionId)
+      : `twin-ui-${twin.id}`,
+    surface: `twin:${twin.id}`,
+    userInput: String(payload.userInput || ""),
+  });
+  const molts = twinManager.mirrorMolts(twin);
+  return {
+    molts: molts.length,
+    ok: result.turns.length === 2,
+    tools: result.tools.length,
+  };
+}
+
 function ensureBrainSurgeon(sessionId = 1) {
   const id = normalizeSurgeonId(sessionId);
   let surgeon = brainSurgeons.get(id);
@@ -1865,6 +2075,7 @@ function ensureBrainSurgeon(sessionId = 1) {
         `You have ${MAX_BRAIN_SURGEONS} Copilot chats open — close one before opening another.`,
       );
     }
+
     surgeon = new BrainSurgeon({
       runtime: copilot,
       brainstemUrl: config.url,
@@ -2362,6 +2573,28 @@ function registerIpc() {
     assertTrustedIpc(event);
     return applyChatLookToFrame();
   });
+  ipcMain.handle("beta:record-brainstem-turn", (event, payload) => {
+    assertTrustedIpc(event);
+    return recordBrainstemCompletion(payload);
+  });
+  ipcMain.handle("beta:record-twin-turn", (event, twinId, payload) => {
+    const ownedTwinId = twinPopoutOwners.get(event.sender.id);
+    if (ownedTwinId) {
+      if (String(twinId || "") !== ownedTwinId) {
+        throw new Error("Twin ledger sender does not own that twin.");
+      }
+      const twin = twinManager.get(ownedTwinId);
+      if (
+        new URL(event.senderFrame.url).origin
+        !== new URL(twin.url).origin
+      ) {
+        throw new Error("Twin ledger sender left its loopback origin.");
+      }
+      return recordTwinCompletion(ownedTwinId, payload);
+    }
+    assertTrustedIpc(event);
+    return recordTwinCompletion(twinId, payload);
+  });
   ipcMain.handle("beta:lineage-command", async (event, message) => {
     assertTrustedIpc(event);
     return executeLineageCommand({
@@ -2398,7 +2631,17 @@ function registerIpc() {
   );
   ipcMain.handle("beta:surgeon-send", async (event, sessionId, prompt) => {
     assertTrustedIpc(event);
-    return ensureBrainSurgeon(sessionId).send(prompt);
+    const id = normalizeSurgeonId(sessionId);
+    const requestId = randomUUID();
+    const result = await ensureBrainSurgeon(sessionId).send(prompt);
+    recordCompletedTurn(ledger, {
+      requestId,
+      response: result.content,
+      sessionId: `surgeon-${id}`,
+      surface: "surgeon",
+      userInput: String(prompt || ""),
+    });
+    return result;
   });
   ipcMain.handle("beta:surgeon-reset", async (event, sessionId) => {
     assertTrustedIpc(event);
@@ -2614,6 +2857,7 @@ if (!hasLock) {
       routeManager.stop(),
       uiDriver?.stop(),
     ]).finally(() => {
+      ledger.close();
       shutdownComplete = true;
       app.quit();
     });

@@ -3,8 +3,11 @@ import {
   closeSync,
   existsSync,
   mkdirSync,
+  renameSync,
+  writeFileSync,
   writeSync,
 } from "node:fs";
+import { createHash } from "node:crypto";
 import path from "node:path";
 import { DatabaseSync } from "node:sqlite";
 
@@ -17,6 +20,18 @@ import {
 const AGENT_EVENT_LIMIT = 10;
 const LEDGER_JSONL = "ledger.jsonl";
 const LEDGER_SQLITE = "ledger.sqlite";
+const ROUTE_AGENT_EVENTS = new Map([
+  ["composition-quarantine", { event: "quarantined", origin: "lineage" }],
+  ["ephemeral-cleaned", { event: "removed", origin: "surgeon" }],
+  ["ephemeral-injected", { event: "installed", origin: "surgeon" }],
+  ["global-agent-removed", { event: "removed", origin: "surgeon" }],
+  ["lineage-default-seeded", { event: "molted", origin: "lineage" }],
+  ["lineage-promote", { event: "promoted", origin: "lineage" }],
+  ["lineage-restore", { event: "restored", origin: "lineage" }],
+  ["lineage-rollback", { event: "rolled_back", origin: "lineage" }],
+  ["stack-agent-installed", { event: "installed", origin: "surgeon" }],
+  ["stack-agent-removed", { event: "removed", origin: "surgeon" }],
+]);
 
 function privateMode(filePath) {
   if (process.platform !== "win32" && existsSync(filePath)) {
@@ -48,6 +63,156 @@ function optionalField(value) {
 
 function shellQuote(value) {
   return `"${String(value).replaceAll("\\", "\\\\").replaceAll("\"", "\\\"")}"`;
+}
+
+function pythonLexicalView(source) {
+  const text = String(source || "");
+  const strings = [];
+  let code = "";
+  let index = 0;
+  while (index < text.length) {
+    const current = text[index];
+    if (current === "#") {
+      while (index < text.length && text[index] !== "\n") index += 1;
+      continue;
+    }
+    if (current !== "\"" && current !== "'") {
+      code += current;
+      index += 1;
+      continue;
+    }
+    const quote = current;
+    const triple = text.slice(index, index + 3) === quote.repeat(3);
+    const openingLength = triple ? 3 : 1;
+    let cursor = index + openingLength;
+    let value = "";
+    let closed = false;
+    while (cursor < text.length) {
+      if (triple && text.slice(cursor, cursor + 3) === quote.repeat(3)) {
+        cursor += 3;
+        closed = true;
+        break;
+      }
+      if (!triple && text[cursor] === quote) {
+        cursor += 1;
+        closed = true;
+        break;
+      }
+      if (text[cursor] === "\\" && cursor + 1 < text.length) {
+        value += text[cursor + 1];
+        cursor += 2;
+        continue;
+      }
+      if (!triple && text[cursor] === "\n") break;
+      value += text[cursor];
+      cursor += 1;
+    }
+    if (!closed) {
+      code += current;
+      index += 1;
+      continue;
+    }
+    const token = `__RAPP_STRING_${strings.length}__`;
+    strings.push(value);
+    code += token;
+    code += "\n".repeat((value.match(/\n/g) || []).length);
+    index = cursor;
+  }
+  return { code, strings };
+}
+
+export function inferAgentToolName(source, filename = null) {
+  const lexical = pythonLexicalView(source);
+  const assigned = lexical.code.match(
+    /\bself\.name\s*=\s*[rRuUbBfF]*__RAPP_STRING_(\d+)__/,
+  );
+  const assignedName = assigned
+    ? lexical.strings[Number(assigned[1])]?.trim()
+    : null;
+  if (assignedName) return assignedName;
+  const metadataPattern =
+    /__RAPP_STRING_(\d+)__\s*:\s*[rRuUbBfF]*__RAPP_STRING_(\d+)__/g;
+  for (const match of lexical.code.matchAll(metadataPattern)) {
+    if (lexical.strings[Number(match[1])] !== "name") continue;
+    const metadataName = lexical.strings[Number(match[2])]?.trim();
+    if (metadataName) return metadataName;
+  }
+  const className = lexical.code.match(
+    /\bclass\s+([A-Za-z_][A-Za-z0-9_]*Agent)\b/,
+  );
+  if (className?.[1]) return className[1];
+  return filename
+    ? path.basename(filename, path.extname(filename))
+    : null;
+}
+
+export function parseAgentLogs(agentLogs) {
+  if (Array.isArray(agentLogs)) {
+    return agentLogs.flatMap((entry) => {
+      if (!entry || typeof entry !== "object") return [];
+      const toolName = entry.tool_name || entry.toolName || entry.name;
+      if (!toolName) return [];
+      return [{
+        tool_name: String(toolName),
+        ok: entry.ok !== false && entry.success !== false,
+        summary: String(entry.summary || entry.result || entry.content || ""),
+      }];
+    });
+  }
+  return String(agentLogs || "")
+    .split(/\r?\n/)
+    .flatMap((line) => {
+      const match = line.match(/^\[([^\]]+)]\s*(.*)$/);
+      if (!match || match[1] === "?") return [];
+      const summary = match[2].trim();
+      return [{
+        tool_name: match[1].trim(),
+        ok: !/^(?:ERROR|Error):/.test(summary),
+        summary: summary.slice(0, 2000),
+      }];
+    });
+}
+
+export function recordCompletedTurn(ledger, {
+  at = null,
+  agentLogs = "",
+  model = null,
+  requestId = null,
+  response,
+  sessionId = null,
+  surface,
+  userInput,
+} = {}) {
+  if (!ledger) return { tools: [], turns: [] };
+  const timestamp = at || ledger.now?.() || new Date().toISOString();
+  const turns = [
+    ledger.recordTurn({
+      at: timestamp,
+      sessionId,
+      surface,
+      role: "user",
+      content: userInput,
+      model,
+      requestId,
+    }),
+    ledger.recordTurn({
+      at: timestamp,
+      sessionId,
+      surface,
+      role: "assistant",
+      content: response,
+      model,
+      requestId,
+    }),
+  ].filter(Boolean);
+  const tools = parseAgentLogs(agentLogs)
+    .map((tool) => ledger.recordToolCall({
+      at: timestamp,
+      sessionId,
+      ...tool,
+    }))
+    .filter(Boolean);
+  return { tools, turns };
 }
 
 export function describe(betaHome, recentAgents = []) {
@@ -286,6 +451,65 @@ export class Ledger {
       sha256: requiredField(sha256, "sha256"),
       path: requiredField(sourcePath, "path"),
     }));
+  }
+
+  archiveAgentSource({ filename, source }) {
+    if (!this.database) return null;
+    try {
+      const safeName = path.basename(String(filename || "agent.py"));
+      const redacted = Buffer.from(
+        redactCredentialText(Buffer.from(source).toString("utf8")),
+        "utf8",
+      );
+      const digest = createHash("sha256").update(redacted).digest("hex");
+      const directory = path.join(this.betaHome, "ledger-sources", digest);
+      mkdirSync(directory, { recursive: true, mode: 0o700 });
+      if (process.platform !== "win32") chmodSync(directory, 0o700);
+      const sourcePath = path.join(directory, safeName);
+      if (!existsSync(sourcePath)) {
+        const temporary = `${sourcePath}.${process.pid}.tmp`;
+        writeFileSync(temporary, redacted, { mode: 0o600 });
+        renameSync(temporary, sourcePath);
+      }
+      privateMode(sourcePath);
+      return { path: sourcePath, sha256: digest };
+    } catch (error) {
+      this.#reportOnce(error);
+      return null;
+    }
+  }
+
+  recordRouteEvent(event) {
+    const mapping = ROUTE_AGENT_EVENTS.get(String(event?.type || ""));
+    if (!mapping) return [];
+    const hasAgentRows = Object.hasOwn(event, "agent_rows");
+    let rows = Array.isArray(event.agent_rows) ? event.agent_rows : [];
+    if (hasAgentRows && !rows.length) return [];
+    if (!hasAgentRows && !rows.length && Array.isArray(event.excluded_files)) {
+      rows = event.excluded_files;
+    }
+    if (!rows.length) rows = [event];
+    return rows
+      .map((row) => this.recordAgent({
+        at: event.timestamp || this.now(),
+        event: mapping.event,
+        filename: row.filename ?? event.filename ?? null,
+        toolName: row.tool_name ?? row.toolName ?? event.tool_name ?? null,
+        rappid: row.rappid
+          ?? row.agent_rappid
+          ?? row.ring_rappid
+          ?? event.rappid
+          ?? event.ring_rappid
+          ?? null,
+        sha256: row.sha256 ?? event.sha256 ?? null,
+        sourcePath: row.source_path
+          ?? row.sourcePath
+          ?? event.source_path
+          ?? null,
+        origin: row.origin ?? event.origin ?? mapping.origin,
+        detail: { ...event, agent_rows: undefined },
+      }))
+      .filter(Boolean);
   }
 
   recentAgentEvents(limit = AGENT_EVENT_LIMIT) {

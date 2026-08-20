@@ -14,7 +14,10 @@ import test from "node:test";
 
 import {
   describe,
+  inferAgentToolName,
   openLedger,
+  parseAgentLogs,
+  recordCompletedTurn,
 } from "../electron/ledger.mjs";
 
 
@@ -180,9 +183,14 @@ test("every persisted ledger field passes through credential redaction", (t) => 
     origin: "surgeon",
     detail: `password=${credential}`,
   });
+  const archived = ledger.archiveAgentSource({
+    filename: "credential_agent.py",
+    source: `TOKEN = "${credential}"\n`,
+  });
 
   const persisted = [
     readFileSync(ledger.mirrorPath, "utf8"),
+    readFileSync(archived.path, "utf8"),
     JSON.stringify(rows(
       ledger.databasePath,
       "SELECT content FROM turns UNION ALL SELECT summary FROM tools_called UNION ALL SELECT detail FROM agents",
@@ -193,6 +201,10 @@ test("every persisted ledger field passes through credential redaction", (t) => 
   assert.match(persisted, /\[redacted:token\]/);
   assert.match(persisted, /\[redacted:authorization\]/);
   assert.match(persisted, /\[redacted:password\]/);
+  assert.match(readFileSync(archived.path, "utf8"), /\[redacted:token\]/);
+  if (process.platform !== "win32") {
+    assert.equal(statSync(archived.path).mode & 0o777, 0o600);
+  }
 });
 
 test("ledger initialization and write failures are isolated and logged once", (t) => {
@@ -237,4 +249,176 @@ test("ledger initialization and write failures are isolated and logged once", (t
     ok: true,
   }), null);
   assert.equal(invalidRows.length, 1);
+});
+
+test("completed turns normalize tool logs and persist both roles at the terminal event", (t) => {
+  const betaHome = scratch(t, "rapp-ledger-complete-");
+  const ledger = openLedger(betaHome, {
+    now: () => "2026-08-20T20:14:00.000Z",
+  });
+  t.after(() => ledger.close());
+
+  assert.equal(
+    inferAgentToolName(
+      "class WeatherAgent:\n    def __init__(self):\n        self.name = \"Weather\"\n",
+      "weather_agent.py",
+    ),
+    "Weather",
+  );
+  assert.equal(
+    inferAgentToolName([
+      "TEMPLATE = '''",
+      "class GeneratedAgent:",
+      "    def __init__(self):",
+      "        self.name = \"{cls}\"",
+      "'''",
+      "class AgentMigration(BasicAgent):",
+      "    def __init__(self):",
+      "        self.name = \"AgentMigration\"",
+      "",
+    ].join("\n"), "agent_migration_agent.py"),
+    "AgentMigration",
+  );
+  assert.deepEqual(parseAgentLogs([
+    { tool_name: "ArrayTool", ok: true, summary: "array result" },
+  ]), [{
+    tool_name: "ArrayTool",
+    ok: true,
+    summary: "array result",
+  }]);
+  assert.deepEqual(
+    parseAgentLogs(
+      "[WeatherAgent] deterministic forecast\n"
+        + "[PinDrop] ERROR: destination refused\n"
+        + "continuation text",
+    ),
+    [
+      {
+        tool_name: "WeatherAgent",
+        ok: true,
+        summary: "deterministic forecast",
+      },
+      {
+        tool_name: "PinDrop",
+        ok: false,
+        summary: "ERROR: destination refused",
+      },
+    ],
+  );
+
+  const recorded = recordCompletedTurn(ledger, {
+    agentLogs: "[WeatherAgent] deterministic forecast",
+    model: "scripted",
+    requestId: "request-terminal",
+    response: "sunny",
+    sessionId: "session-terminal",
+    surface: "brainstem",
+    userInput: "what's the weather here",
+  });
+  assert.equal(recorded.turns.length, 2);
+  assert.equal(recorded.tools.length, 1);
+  assert.deepEqual(
+    rows(
+      ledger.databasePath,
+      "SELECT role, content FROM turns ORDER BY id",
+    ),
+    [
+      { role: "user", content: "what's the weather here" },
+      { role: "assistant", content: "sunny" },
+    ],
+  );
+});
+
+test("route lifecycle telemetry becomes complete agent and source rows", (t) => {
+  const betaHome = scratch(t, "rapp-ledger-routes-");
+  const ledger = openLedger(betaHome, {
+    now: () => "2026-08-20T20:15:00.000Z",
+  });
+  t.after(() => ledger.close());
+  const sourcePath = path.join(betaHome, "routing", "objects", "weather.py");
+
+  const installed = ledger.recordRouteEvent({
+    type: "stack-agent-installed",
+    timestamp: "2026-08-20T20:15:00.000Z",
+    filename: "weather_agent.py",
+    tool_name: "WeatherAgent",
+    rappid: "rappid:@microsoft/weather",
+    sha256: "weather-sha",
+    source_path: sourcePath,
+    origin: "store",
+  });
+  const removed = ledger.recordRouteEvent({
+    type: "stack-agent-removed",
+    timestamp: "2026-08-20T20:16:00.000Z",
+    filename: "weather_agent.py",
+    tool_name: "WeatherAgent",
+    rappid: "rappid:@microsoft/weather",
+    sha256: "weather-sha",
+    source_path: sourcePath,
+    origin: "store",
+  });
+  const noChange = ledger.recordRouteEvent({
+    type: "lineage-promote",
+    timestamp: "2026-08-20T20:17:00.000Z",
+    agent_rows: [],
+    changed: 0,
+  });
+  assert.equal(installed.length, 1);
+  assert.equal(removed.length, 1);
+  assert.equal(noChange.length, 0);
+  assert.deepEqual(
+    rows(
+      ledger.databasePath,
+      "SELECT event, tool_name, rappid, sha256, source_path, origin FROM agents ORDER BY id",
+    ),
+    [
+      {
+        event: "installed",
+        tool_name: "WeatherAgent",
+        rappid: "rappid:@microsoft/weather",
+        sha256: "weather-sha",
+        source_path: sourcePath,
+        origin: "store",
+      },
+      {
+        event: "removed",
+        tool_name: "WeatherAgent",
+        rappid: "rappid:@microsoft/weather",
+        sha256: "weather-sha",
+        source_path: sourcePath,
+        origin: "store",
+      },
+    ],
+  );
+  assert.equal(
+    rows(ledger.databasePath, "SELECT count(*) AS total FROM sources")[0].total,
+    1,
+  );
+});
+
+test("main, preload, and renderer keep completed Brainstem and Surgeon feeds explicit", () => {
+  const main = readFileSync(
+    new URL("../electron/main.mjs", import.meta.url),
+    "utf8",
+  );
+  const preload = readFileSync(
+    new URL("../electron/preload.cjs", import.meta.url),
+    "utf8",
+  );
+  const renderer = readFileSync(
+    new URL("../ui/renderer.js", import.meta.url),
+    "utf8",
+  );
+  assert.match(main, /ipcMain\.handle\("beta:record-brainstem-turn"/);
+  assert.match(main, /surface: "brainstem"/);
+  assert.match(main, /surface: "surgeon"/);
+  assert.match(main, /surface: `twin:\$\{twin\.id\}`/);
+  assert.match(main, /recordCompletedTurn\(ledger/);
+  assert.match(preload, /recordBrainstemTurn:/);
+  assert.match(preload, /recordTwinTurn:/);
+  assert.match(renderer, /type === "rapp-beta:ledger-turn"/);
+  assert.match(renderer, /type === "rapp-beta:twin-ledger-turn"/);
+  assert.match(main, /completedBrainstemRequests/);
+  assert.match(renderer, /pendingLineageReply\.userInput/);
+  assert.match(renderer, /brainstemBeta\.recordBrainstemTurn/);
 });

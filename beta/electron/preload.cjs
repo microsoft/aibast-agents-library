@@ -43,6 +43,12 @@ contextBridge.exposeInMainWorld("brainstemBeta", {
   readAgentFile: (filename, scope) => (
     ipcRenderer.invoke("beta:read-agent-file", filename, scope)
   ),
+  recordBrainstemTurn: (payload) => (
+    ipcRenderer.invoke("beta:record-brainstem-turn", payload)
+  ),
+  recordTwinTurn: (twinId, payload) => (
+    ipcRenderer.invoke("beta:record-twin-turn", twinId, payload)
+  ),
   setChatLook: (look) => ipcRenderer.invoke("beta:set-chat-look", look),
   surgeonReset: (sessionId = 1) => ipcRenderer.invoke("beta:surgeon-reset", sessionId),
   surgeonSend: (sessionId, prompt) => ipcRenderer.invoke("beta:surgeon-send", sessionId, prompt),

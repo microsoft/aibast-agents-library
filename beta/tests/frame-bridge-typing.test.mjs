@@ -414,12 +414,15 @@ function installBridge({
   chatStreamMode = "smooth",
   chatTypingEnabled = chatStreamMode === "hold",
   clock = fakeClock(),
+  lineageResult = { intercepted: false },
   nativeFetch,
 } = {}) {
   const messageListeners = new Set();
+  const postedMessages = [];
   const dom = createDom();
   const parent = {
     postMessage(message) {
+      postedMessages.push(message);
       if (message.type !== "rapp-beta:lineage-chat") return;
       queueMicrotask(() => {
         const event = {
@@ -428,7 +431,7 @@ function installBridge({
             type: "rapp-beta:lineage-chat-result",
             requestId: message.requestId,
             ok: true,
-            result: { intercepted: false },
+            result: lineageResult,
           },
         };
         for (const listener of messageListeners) listener(event);
@@ -491,7 +494,7 @@ function installBridge({
     renderedValue: html,
   });
   vm.runInContext(materializeBridgeSource(chatStreamMode), context);
-  return { clock, dom, window };
+  return { clock, dom, postedMessages, window };
 }
 
 function controlledResponse({
@@ -827,6 +830,173 @@ test("hold emits zero bytes before completion and replays ordered SSE", async ()
   const replay = decoder.decode(first.value) + remaining.join("");
   assert.equal(replay, frames.join(""));
   console.log("hold: 0 bytes before completion; ordered replay yes");
+});
+
+test("raw, smooth, and hold record only terminal Brainstem turns", async () => {
+  for (const chatStreamMode of ["raw", "smooth", "hold"]) {
+    const upstream = controlledResponse();
+    const installed = installBridge({
+      chatStreamMode,
+      nativeFetch: async () => upstream.response,
+    });
+    const response = await installed.window.fetch(
+      "http://127.0.0.1:7071/chat/stream",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          user_input: "what's the weather here",
+          session_id: "session-weather",
+        }),
+      },
+    );
+    const reading = readChunks(response.body.getReader());
+    upstream.enqueue(sse({ type: "delta", text: "sun" }));
+    await nextTask();
+    assert.equal(
+      installed.postedMessages.filter(
+        ({ type }) => type === "rapp-beta:ledger-turn",
+      ).length,
+      0,
+      `${chatStreamMode} persisted partial text`,
+    );
+    upstream.enqueue(sse({
+      type: "done",
+      response: "sunny",
+      session_id: "session-weather",
+      agent_logs: "[WeatherAgent] deterministic forecast",
+      model: "scripted",
+    }));
+    await nextTask();
+    assert.equal(
+      installed.postedMessages.filter(
+        ({ type }) => type === "rapp-beta:ledger-turn",
+      ).length,
+      0,
+      `${chatStreamMode} persisted before clean completion`,
+    );
+    upstream.close();
+    await nextTask();
+    if (chatStreamMode === "smooth") installed.clock.runAll();
+    await reading;
+    await nextTask();
+
+    const captured = installed.postedMessages.filter(
+      ({ type }) => type === "rapp-beta:ledger-turn",
+    );
+    assert.equal(captured.length, 1, `${chatStreamMode} terminal capture`);
+    assert.deepEqual(
+      JSON.parse(JSON.stringify(captured[0].turn)),
+      {
+        agentLogs: "[WeatherAgent] deterministic forecast",
+        model: "scripted",
+        requestId: "request-id",
+        response: "sunny",
+        sessionId: "session-weather",
+        userInput: "what's the weather here",
+      },
+    );
+  }
+});
+
+test("non-stream chat records after JSON completion without replacing the response", async () => {
+  const nativeResponse = new Response(JSON.stringify({
+    response: "complete",
+    session_id: "session-json",
+    agent_logs: "",
+    model: "scripted",
+  }), {
+    headers: { "Content-Type": "application/json" },
+  });
+  const installed = installBridge({
+    chatStreamMode: "raw",
+    nativeFetch: async () => nativeResponse,
+  });
+  const response = await installed.window.fetch(
+    "http://127.0.0.1:7071/chat",
+    {
+      method: "POST",
+      body: JSON.stringify({
+        user_input: "hello",
+        session_id: "session-json",
+      }),
+    },
+  );
+  assert.strictEqual(response, nativeResponse);
+  assert.equal(
+    installed.postedMessages.filter(
+      ({ type }) => type === "rapp-beta:ledger-turn",
+    ).length,
+    0,
+  );
+  assert.equal((await response.json()).response, "complete");
+  assert.equal(
+    installed.postedMessages.filter(
+      ({ type }) => type === "rapp-beta:ledger-turn",
+    ).length,
+    1,
+  );
+});
+
+test("lineage synthetic replies record only when consumed to completion", async () => {
+  const installed = installBridge({
+    chatStreamMode: "raw",
+    lineageResult: {
+      intercepted: true,
+      reply: "Restored the verified lineage.",
+      url: "http://127.0.0.1:7071",
+    },
+    nativeFetch: async () => {
+      throw new Error("An intercepted command must not reach native fetch.");
+    },
+  });
+  const response = await installed.window.fetch(
+    "http://127.0.0.1:7071/chat/stream",
+    {
+      method: "POST",
+      body: JSON.stringify({ user_input: "restore" }),
+    },
+  );
+  const reader = response.body.getReader();
+  const first = await reader.read();
+  assert.equal(first.done, false);
+  assert.equal(
+    installed.postedMessages.filter(
+      ({ type }) => type === "rapp-beta:ledger-turn",
+    ).length,
+    0,
+  );
+  assert.equal((await reader.read()).done, true);
+  const turns = installed.postedMessages.filter(
+    ({ type }) => type === "rapp-beta:ledger-turn",
+  );
+  assert.equal(turns.length, 1);
+  assert.equal(turns[0].turn.userInput, "restore");
+  assert.equal(turns[0].turn.response, "Restored the verified lineage.");
+
+  const canceled = installBridge({
+    chatStreamMode: "raw",
+    lineageResult: {
+      intercepted: true,
+      reply: "Not delivered.",
+    },
+    nativeFetch: async () => {
+      throw new Error("An intercepted command must not reach native fetch.");
+    },
+  });
+  const canceledResponse = await canceled.window.fetch(
+    "http://127.0.0.1:7071/chat/stream",
+    {
+      method: "POST",
+      body: JSON.stringify({ user_input: "baseline" }),
+    },
+  );
+  await canceledResponse.body.getReader().cancel();
+  assert.equal(
+    canceled.postedMessages.filter(
+      ({ type }) => type === "rapp-beta:ledger-turn",
+    ).length,
+    0,
+  );
 });
 
 test("frame bridge injects and removes Messages look without a reload", () => {
