@@ -25,20 +25,16 @@ failed.
 
 ## What ships in 0.1.0-beta.7
 
-Two surfaces implement this protocol, and they share **one identity scheme**:
-both mint ancestor and ring rappids through the same `rapp/1` derivations (the
-live store's, exported as `lineageStoreInternals`), so the same molt bytes mint
-the same rappid in both — on every device and in every environment.
+One live surface implements this protocol: `beta/electron/lineage-store.mjs`,
+wired through `route-manager.mjs`. The same per-locus store owns ring identity,
+the default and named-environment HEADs, fail-safe composition (last-good →
+baseline), the seeded ContextMemory ring 1, rollback/restore, fast-forward-only
+promotion, drift detection, and the hash-chained promotion journal. There is no
+parallel ALM store and no second identity or copy of a ring.
 
-- **Live routed lineage** — `beta/electron/lineage-store.mjs`, wired through
-  `route-manager.mjs`. This is what the running beta drives: the per-locus ring
-  store and HEAD, fail-safe composition (last-good → baseline), the seeded
-  ContextMemory ring 1, and the rollback/restore safewords.
-- **Enterprise ALM** (§ Enterprise ALM below) — `beta/electron/molt-lineage.mjs`,
-  a library layer over that same identity adding environment-scoped HEADs, gated
-  fast-forward promotion with named conflicts, drift detection, and the
-  hash-chained promotion journal. It ships as a library in this release for
-  integrators and tooling; the Frontier UI does not drive it yet.
+The running Frontier drives all of those operations through its existing chat
+and IPC lineage control surface. With no named environments or promotions, the
+plain `HEAD` / `PRIOR_HEAD` files and composed bytes are unchanged.
 
 ---
 
@@ -230,10 +226,26 @@ A molt made directly in production that dev never sees, then a dev promotion bui
 on a different base, must not "break at literally the worst time." Content-
 addressing is what prevents it: because `ring_rappid` is deterministic, the *same*
 molt has the *same* rappid in every environment, so divergence is detected exactly.
-This layer is implemented by `beta/electron/molt-lineage.mjs` over the live
-store's identity derivations (see *What ships in 0.1.0-beta.7*); in 0.1.0-beta.7
-it is a library surface — call it from tooling; the Frontier UI does not drive
-it yet.
+Enterprise ALM is part of the live `lineage-store.mjs`; the Frontier composes
+directly from the selected environment's HEAD.
+
+Each locus keeps one ring store and these pointers:
+
+```text
+<lineage-root>/<locus>/
+├── locus.json
+├── HEAD                         # default environment; unchanged legacy layout
+├── PRIOR_HEAD                   # default rollback inverse
+├── HEAD.<env>                   # named environment
+├── PRIOR_HEAD.<env>             # named rollback inverse
+├── promotions.json              # hash-chained promotion journal
+└── rings/<ring>/source.py + meta.json
+```
+
+`default` always maps to plain `HEAD`; no migration or rename occurs. Named
+environment labels are normalized to
+`[a-z0-9][a-z0-9._-]{0,31}`. `RAPP_LINEAGE_ENV` selects the environment used by
+composition and defaults to `default`.
 
 1. **Environments are HEADs, not copies.** dev, staging, and production each pin
    their own `HEAD` per gene locus into the *same* content-addressed ring store.
@@ -261,6 +273,28 @@ it yet.
    preserved as evidence — never appended over. The journal is not externally
    anchored in this release; deployments that must detect full-file deletion or
    truncation must persist the latest digest in an immutable audit sink.
+
+### Frontier controls
+
+The Brainstem chat interceptor recognizes exact commands before sending ordinary
+messages to Grail:
+
+- `baseline` and `restore` move the active environment's HEADs;
+- `environments` lists each locus and its default/named HEADs;
+- `promote <from> <to>` runs isolated, fleet-wide fast-forward promotion;
+- `drift <env>` compares that environment with `default`.
+
+The words are configurable with `RAPP_BASELINE_SAFEWORD`,
+`RAPP_RESTORE_WORD`, `RAPP_ENVIRONMENTS_WORD`, `RAPP_PROMOTE_WORD`, and
+`RAPP_DRIFT_WORD`. `RAPP_MOLT_LINEAGE=0` is checked at every invocation and
+every HEAD-writing path reports refusal without moving a pointer.
+
+Electron exposes the same ALM operations through `beta:lineage-command`,
+`beta:lineage-environments`, `beta:lineage-promote`, and
+`beta:lineage-drift`. The preload names are `lineageCommand`,
+`lineageEnvironments`, `lineagePromote`, and `lineageDrift`; command results
+retain the full report, including changed, unchanged, conflict, failure, and
+disabled state.
 
 ## Laws
 
