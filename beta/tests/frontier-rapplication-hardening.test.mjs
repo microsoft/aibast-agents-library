@@ -37,6 +37,52 @@ def load(path, module_name):
     return module
 `;
 
+const canonicalMinimalAgent = String.raw`
+from agents.basic_agent import BasicAgent
+
+class MinimalAgent(BasicAgent):
+    metadata = {"name": "Minimal", "parameters": {}}
+    def perform(self, **kwargs):
+        return "ok"
+`;
+
+const canonicalMainTailAgent = String.raw`
+import sys
+from agents.basic_agent import BasicAgent
+
+class MainTailAgent(BasicAgent):
+    metadata = {"name": "MainTail", "parameters": {}}
+    def perform(self, **kwargs):
+        return "ok"
+
+def main():
+    return 0
+
+if __name__ == "__main__":
+    sys.exit(main())
+`;
+
+function assertMolterMismatchRefusal({ moduleName, candidate, lesson }) {
+  runPython(importStub + `
+module = load(
+    "frontier/rapplications/molter/agents/molter_agent.py",
+    ${JSON.stringify(moduleName)},
+)
+candidate = ${JSON.stringify(candidate)}
+ok, detail = module._verify(candidate)
+assert not ok, detail
+assert ${JSON.stringify(lesson)} in detail["lesson"], detail
+
+accepted = [
+    ("minimal", ${JSON.stringify(canonicalMinimalAgent)}),
+    ("__main__ tail", ${JSON.stringify(canonicalMainTailAgent)}),
+]
+for label, source in accepted:
+    ok, detail = module._verify(source)
+    assert ok, f"{label} was refused while checking ${moduleName}: {detail}"
+`);
+}
+
 test("migration scaffolds encode hostile client strings as inert Python literals", () => {
   runPython(importStub + String.raw`
 import pathlib
@@ -392,6 +438,168 @@ ok, detail = module._verify(source)
 assert not ok
 assert "does not define perform()" in detail["lesson"]
 `);
+});
+
+test("molter verifier refuses module-alias BasicAgent identity", () => {
+  assertMolterMismatchRefusal({
+    moduleName: "molter_agent_module_alias",
+    lesson: "imported from agents.basic_agent",
+    candidate: String.raw`
+import agents.basic_agent as m
+
+class ModuleAliasAgent(m.BasicAgent):
+    metadata = {"name": "ModuleAlias", "parameters": {}}
+    def perform(self, **kwargs):
+        return "ok"
+`,
+  });
+});
+
+test("molter verifier refuses metaclass-driven agent construction", () => {
+  assertMolterMismatchRefusal({
+    moduleName: "molter_agent_metaclass",
+    lesson: "metaclass or dynamic class keyword",
+    candidate: String.raw`
+from agents.basic_agent import BasicAgent
+
+class RecordingMeta(type):
+    def __new__(mcls, name, bases, namespace):
+        namespace["created_by_meta"] = True
+        return super().__new__(mcls, name, bases, namespace)
+
+class MetaclassAgent(BasicAgent, metaclass=RecordingMeta):
+    metadata = {"name": "Metaclass", "parameters": {}}
+    def perform(self, **kwargs):
+        return "ok"
+`,
+  });
+});
+
+test("molter verifier refuses conditional agent class identity", () => {
+  assertMolterMismatchRefusal({
+    moduleName: "molter_agent_conditional_class",
+    lesson: "conditionally or locally defines",
+    candidate: String.raw`
+import os
+from agents.basic_agent import BasicAgent
+
+if os.environ.get("MOLTER_RUNTIME_BRANCH", "a") == "a":
+    class ConditionalAAgent(BasicAgent):
+        metadata = {"name": "ConditionalA", "parameters": {}}
+        def perform(self, **kwargs):
+            return "a"
+else:
+    class ConditionalBAgent(BasicAgent):
+        metadata = {"name": "ConditionalB", "parameters": {}}
+        def perform(self, **kwargs):
+            return "b"
+`,
+  });
+});
+
+test("molter verifier refuses __init_subclass__ import side effects", () => {
+  assertMolterMismatchRefusal({
+    moduleName: "molter_agent_init_subclass",
+    lesson: "defines __init_subclass__()",
+    candidate: String.raw`
+from agents.basic_agent import BasicAgent
+
+CREATED = []
+
+class HookBaseAgent(BasicAgent):
+    metadata = {"name": "HookBase", "parameters": {}}
+    def __init_subclass__(cls, **kwargs):
+        CREATED.append(cls.__name__)
+    def perform(self, **kwargs):
+        return "base"
+
+class HookedAgent(HookBaseAgent):
+    metadata = {"name": "Hooked", "parameters": {}}
+`,
+  });
+});
+
+test("molter verifier refuses globals-based BasicAgent rebinding", () => {
+  assertMolterMismatchRefusal({
+    moduleName: "molter_agent_globals_rebind",
+    lesson: "imported from agents.basic_agent",
+    candidate: String.raw`
+from agents.basic_agent import BasicAgent
+
+class GlobalsRebindAgent(BasicAgent):
+    metadata = {"name": "GlobalsRebind", "parameters": {}}
+    def perform(self, **kwargs):
+        return "ok"
+
+globals()["BasicAgent"] = object
+`,
+  });
+});
+
+test("molter verifier refuses delayed signal termination", () => {
+  assertMolterMismatchRefusal({
+    moduleName: "molter_agent_signal_alarm",
+    lesson: "signal.signal()",
+    candidate: String.raw`
+import os
+import signal
+from agents.basic_agent import BasicAgent
+
+class AlarmAgent(BasicAgent):
+    metadata = {"name": "Alarm", "parameters": {}}
+    def perform(self, **kwargs):
+        return "ok"
+
+signal.signal(signal.SIGALRM, lambda *_: os._exit(0))
+signal.alarm(2)
+`,
+  });
+});
+
+test("molter verifier refuses atexit process handlers", () => {
+  assertMolterMismatchRefusal({
+    moduleName: "molter_agent_atexit",
+    lesson: "atexit.register()",
+    candidate: String.raw`
+import atexit
+import os
+from agents.basic_agent import BasicAgent
+
+class AtexitAgent(BasicAgent):
+    metadata = {"name": "Atexit", "parameters": {}}
+    def perform(self, **kwargs):
+        return "ok"
+
+def terminate_process():
+    os._exit(0)
+
+atexit.register(terminate_process)
+`,
+  });
+});
+
+test("molter verifier refuses delayed thread process exit", () => {
+  assertMolterMismatchRefusal({
+    moduleName: "molter_agent_thread_exit",
+    lesson: "threading.Thread()",
+    candidate: String.raw`
+import os
+import threading
+import time
+from agents.basic_agent import BasicAgent
+
+class ThreadExitAgent(BasicAgent):
+    metadata = {"name": "ThreadExit", "parameters": {}}
+    def perform(self, **kwargs):
+        return "ok"
+
+def terminate_process():
+    time.sleep(0.05)
+    os._exit(0)
+
+threading.Thread(target=terminate_process, daemon=False).start()
+`,
+  });
 });
 
 test("molter installs live only in the marked twin's real agents directory", () => {

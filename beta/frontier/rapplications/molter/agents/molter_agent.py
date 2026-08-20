@@ -129,6 +129,7 @@ import sys
 
 def main():
     path = sys.argv[1]
+    expected_class = sys.argv[2]
     try:
         from agents.basic_agent import BasicAgent
 
@@ -136,15 +137,15 @@ def main():
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)          # runs module-level code (isolated proc)
 
-        agent_cls = None
-        for value in vars(mod).values():
-            if (isinstance(value, type)
-                    and value is not BasicAgent
-                    and getattr(value, "__module__", None) == mod.__name__
-                    and issubclass(value, BasicAgent)):
-                agent_cls = value
-        if agent_cls is None:
-            sys.stderr.write("no BasicAgent subclass was defined")
+        agent_cls = vars(mod).get(expected_class)
+        if (not isinstance(agent_cls, type)
+                or agent_cls is BasicAgent
+                or getattr(agent_cls, "__module__", None) != mod.__name__
+                or getattr(agent_cls, "__name__", None) != expected_class
+                or not issubclass(agent_cls, BasicAgent)):
+            sys.stderr.write(
+                "AST-selected class {0} did not resolve to that module's "
+                "BasicAgent subclass".format(expected_class))
             raise SystemExit(1)
 
         inst = agent_cls()
@@ -205,6 +206,14 @@ def _ast_extract_tool_name(class_node):
 # must stay safe to drag back into a plain Grail brainstem, so a candidate that
 # could exit during import is refused here — statically, before it ever runs.
 _EXIT_CALLS = {("sys", "exit"), ("os", "_exit"), ("os", "abort"), ("os", "kill")}
+_PROCESS_LIFECYCLE_CALLS = {
+    ("atexit", "register"),
+    ("signal", "alarm"),
+    ("signal", "setitimer"),
+    ("signal", "signal"),
+    ("threading", "Thread"),
+    ("threading", "Timer"),
+}
 
 
 def _is_main_guard(test):
@@ -220,15 +229,50 @@ def _is_main_guard(test):
 
 
 def _module_level_exit(tree):
-    """Return a reason if the module body can terminate the interpreter on
-    import, else None. Only module-level statements are inspected: code inside a
-    function or class body does not run at import time."""
+    """Return a reason if import-time code can terminate or mutate the process
+    lifecycle. Function bodies are inert, but decorators/defaults and class bodies
+    execute while the module is imported."""
+    def import_time_walk(root):
+        stack = [root]
+        while stack:
+            current = stack.pop()
+            yield current
+            if isinstance(current, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                args = current.args
+                children = (
+                    list(current.decorator_list)
+                    + list(args.defaults)
+                    + [value for value in args.kw_defaults if value is not None]
+                )
+                if current.returns is not None:
+                    children.append(current.returns)
+                all_args = (
+                    list(args.posonlyargs)
+                    + list(args.args)
+                    + list(args.kwonlyargs)
+                    + ([args.vararg] if args.vararg is not None else [])
+                    + ([args.kwarg] if args.kwarg is not None else [])
+                )
+                children.extend(
+                    arg.annotation for arg in all_args if arg.annotation is not None)
+                stack.extend(reversed(children))
+                continue
+            if isinstance(current, ast.Lambda):
+                stack.extend(reversed(
+                    list(current.args.defaults)
+                    + [value for value in current.args.kw_defaults
+                       if value is not None]))
+                continue
+            stack.extend(reversed(list(ast.iter_child_nodes(current))))
+
     def offending(node):
-        for sub in ast.walk(node):
+        for sub in import_time_walk(node):
             if isinstance(sub, ast.Call):
                 fn = sub.func
                 if isinstance(fn, ast.Attribute) and isinstance(fn.value, ast.Name):
                     if (fn.value.id, fn.attr) in _EXIT_CALLS:
+                        return f"{fn.value.id}.{fn.attr}()"
+                    if (fn.value.id, fn.attr) in _PROCESS_LIFECYCLE_CALLS:
                         return f"{fn.value.id}.{fn.attr}()"
                 if isinstance(fn, ast.Name) and fn.id in ("exit", "quit"):
                     return f"{fn.id}()"
@@ -244,9 +288,6 @@ def _module_level_exit(tree):
         return None
 
     for node in tree.body:
-        # A class or function definition only *defines* code; it does not run it.
-        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
-            continue
         # `if __name__ == "__main__":` does not run on import — the loader sets
         # __name__ to the module name. This is the standard idiom that lets an
         # agent ALSO run standalone (`python3 my_agent.py '{...}'`), which is how
@@ -266,46 +307,201 @@ def _ast_agent_verdict(source):
     (including os._exit/SystemExit tricks that would fake a clean subprocess load).
     A source passes only if it statically (a) imports BasicAgent from the kernel
     base module and never rebinds that name — so the base is the genuine kernel
-    class, not a `BasicAgent = object` decoy — (b) defines a class subclassing it,
-    and (c) that class defines its own perform() — a molt that cannot act is a
-    sterile molt and is refused. Returns (ok, reason_or_None, info_or_None)."""
+    class, not a `BasicAgent = object` decoy — (b) resolves an unconditional,
+    module-level subclass lineage, and (c) that lineage defines perform() — a molt
+    that cannot act is sterile and is refused. Returns
+    (ok, reason_or_None, info_or_None)."""
     try:
         tree = ast.parse(source)
     except SyntaxError as e:
         return False, f"SyntaxError: {e.msg} at line {e.lineno}", None
 
-    imported_basic_agent = False
-    rebinds_basic_agent = False
-    for node in ast.walk(tree):
-        if isinstance(node, ast.ImportFrom) and (node.module or "").endswith("basic_agent"):
-            if any(alias.name == "BasicAgent" for alias in node.names):
-                imported_basic_agent = True
-        elif isinstance(node, ast.Import):
-            if any(alias.name.endswith("basic_agent") for alias in node.names):
-                imported_basic_agent = True
-        elif isinstance(node, (ast.Assign, ast.AnnAssign)):
-            targets = node.targets if isinstance(node, ast.Assign) else [node.target]
-            if any(isinstance(t, ast.Name) and t.id == "BasicAgent" for t in targets):
-                rebinds_basic_agent = True
-
-    agent_cls = None
-    for node in ast.walk(tree):
-        if isinstance(node, ast.ClassDef):
-            for base in node.bases:
-                name = base.attr if isinstance(base, ast.Attribute) else getattr(base, "id", None)
-                if name == "BasicAgent":
-                    agent_cls = node
-    if agent_cls is None:
+    has_structural_agent = any(
+        isinstance(node, ast.ClassDef)
+        and any(
+            (isinstance(base, ast.Name) and base.id == "BasicAgent")
+            or (isinstance(base, ast.Attribute) and base.attr == "BasicAgent")
+            for base in node.bases)
+        for node in ast.walk(tree)
+    )
+    if not has_structural_agent:
         return False, "no BasicAgent subclass is defined", None
-    if not imported_basic_agent or rebinds_basic_agent:
+
+    def rebinds_name(target):
+        if isinstance(target, ast.Name):
+            return target.id == "BasicAgent"
+        if isinstance(target, (ast.Tuple, ast.List)):
+            return any(rebinds_name(item) for item in target.elts)
+        if isinstance(target, ast.Subscript):
+            value = target.value
+            key = target.slice
+            return (
+                isinstance(value, ast.Call)
+                and isinstance(value.func, ast.Name)
+                and value.func.id == "globals"
+                and not value.args
+                and not value.keywords
+                and isinstance(key, ast.Constant)
+                and key.value == "BasicAgent"
+            )
+        return False
+
+    def canonical_import(node):
+        return (
+            isinstance(node, ast.ImportFrom)
+            and node.level == 0
+            and node.module == "agents.basic_agent"
+            and any(alias.name == "BasicAgent" and alias.asname is None
+                    for alias in node.names)
+        )
+
+    def catches_import_error(handler):
+        caught = handler.type
+        if isinstance(caught, ast.Name):
+            return caught.id == "ImportError"
+        if isinstance(caught, ast.Tuple):
+            return any(isinstance(item, ast.Name) and item.id == "ImportError"
+                       for item in caught.elts)
+        return False
+
+    canonical_import_ids = set()
+    allowed_fallback_import_ids = set()
+    for statement in tree.body:
+        if canonical_import(statement):
+            canonical_import_ids.add(id(statement))
+            continue
+        if not isinstance(statement, ast.Try):
+            continue
+        canonical_import_ids.update(
+            id(item) for item in statement.body if canonical_import(item))
+        if not any(canonical_import(item) for item in statement.body):
+            continue
+        for handler in statement.handlers:
+            if not catches_import_error(handler):
+                continue
+            for handler_statement in handler.body:
+                for sub in ast.walk(handler_statement):
+                    if (isinstance(sub, ast.ImportFrom)
+                            and sub.level == 0
+                            and sub.module == "basic_agent"
+                            and any(alias.name == "BasicAgent"
+                                    and alias.asname is None
+                                    for alias in sub.names)):
+                        allowed_fallback_import_ids.add(id(sub))
+
+    imported_basic_agent = False
+    invalid_basic_agent_import = False
+    rebinds_basic_agent = False
+    top_level_definition_ids = {id(node) for node in tree.body}
+    for node in ast.walk(tree):
+        if isinstance(node, ast.ImportFrom):
+            for alias in node.names:
+                if alias.asname == "BasicAgent" and alias.name != "BasicAgent":
+                    rebinds_basic_agent = True
+                if alias.name != "BasicAgent":
+                    continue
+                if id(node) in canonical_import_ids and alias.asname is None:
+                    imported_basic_agent = True
+                elif id(node) in allowed_fallback_import_ids:
+                    continue
+                else:
+                    invalid_basic_agent_import = True
+        elif isinstance(node, ast.Import):
+            for alias in node.names:
+                if alias.name.endswith("basic_agent"):
+                    invalid_basic_agent_import = True
+                if alias.asname == "BasicAgent":
+                    rebinds_basic_agent = True
+        elif isinstance(node, (ast.Assign, ast.AnnAssign, ast.AugAssign, ast.NamedExpr)):
+            targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+            if any(rebinds_name(target) for target in targets):
+                rebinds_basic_agent = True
+        elif (isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))
+              and id(node) in top_level_definition_ids
+              and node.name == "BasicAgent"):
+            rebinds_basic_agent = True
+
+    if (not imported_basic_agent or invalid_basic_agent_import
+            or rebinds_basic_agent):
         return False, ("BasicAgent must be imported from agents.basic_agent and its name "
                        "never reassigned (the base must be the real kernel class)"), None
-    if not any(isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)) and n.name == "perform"
-               for n in agent_cls.body):
+
+    top_level_classes = [
+        node for node in tree.body if isinstance(node, ast.ClassDef)]
+    top_level_ids = {id(node) for node in top_level_classes}
+    for node in ast.walk(tree):
+        if (isinstance(node, ast.ClassDef) and id(node) not in top_level_ids
+                and any(isinstance(base, ast.Name) and base.id == "BasicAgent"
+                        for base in node.bases)):
+            return False, (
+                f"{node.name} conditionally or locally defines a BasicAgent subclass; "
+                "the agent class must be unconditional and module-level"), None
+
+    agent_classes = []
+    agent_classes_by_name = {}
+    known_bases = {"BasicAgent"}
+    for node in top_level_classes:
+        if any(isinstance(base, ast.Name) and base.id in known_bases
+               for base in node.bases):
+            agent_classes.append(node)
+            agent_classes_by_name[node.name] = node
+            known_bases.add(node.name)
+    if not agent_classes:
+        return False, "no BasicAgent subclass is defined", None
+
+    identity_decorators = set()
+    for node in tree.body:
+        if not isinstance(node, ast.FunctionDef):
+            continue
+        args = node.args
+        if (not node.decorator_list and len(args.posonlyargs) + len(args.args) == 1
+                and not args.vararg and not args.kwarg and not args.kwonlyargs
+                and not args.defaults and len(node.body) == 1
+                and isinstance(node.body[0], ast.Return)
+                and isinstance(node.body[0].value, ast.Name)):
+            parameter = (args.posonlyargs + args.args)[0].arg
+            if node.body[0].value.id == parameter:
+                identity_decorators.add(node.name)
+    for node in agent_classes:
+        if node.keywords:
+            return False, (
+                f"{node.name} uses a metaclass or dynamic class keyword; "
+                "class construction must stay statically verifiable"), None
+        if any(not isinstance(decorator, ast.Name)
+               or decorator.id not in identity_decorators
+               for decorator in node.decorator_list):
+            return False, (
+                f"{node.name} uses a decorator whose identity behavior "
+                "cannot be proven statically"), None
+        if any(isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef))
+               and item.name == "__init_subclass__" for item in node.body):
+            return False, (
+                f"{node.name} defines __init_subclass__(), which executes "
+                "during import-time class construction"), None
+
+    agent_cls = agent_classes[-1]
+    lineage = []
+    pending = [agent_cls]
+    seen = set()
+    while pending:
+        node = pending.pop()
+        if id(node) in seen:
+            continue
+        seen.add(id(node))
+        lineage.append(node)
+        pending.extend(
+            agent_classes_by_name[base.id]
+            for base in node.bases
+            if isinstance(base, ast.Name) and base.id in agent_classes_by_name)
+    if not any(
+            isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef))
+            and item.name == "perform"
+            for node in lineage for item in node.body):
         return False, f"{agent_cls.name} does not define perform() — a molt must be able to act", None
     exiting = _module_level_exit(tree)
     if exiting:
-        return False, (f"module-level {exiting} would terminate the Brainstem on import; "
+        return False, (f"module-level {exiting} can terminate the Brainstem or mutate "
+                       "its process lifecycle on import; "
                        "a molt must stay safe to load in a plain Grail brainstem"), None
 
     tool_name = _ast_extract_tool_name(agent_cls)  # None when not a static literal
@@ -345,8 +541,9 @@ def _verify(source):
         env["PYTHONPATH"] = os.pathsep.join(
             [td, LIVE_DIR, os.path.dirname(LIVE_DIR)] + env.get("PYTHONPATH", "").split(os.pathsep))
         try:
-            r = subprocess.run([sys.executable, loader, cand], capture_output=True,
-                               timeout=VERIFY_TIMEOUT, env=env)
+            r = subprocess.run(
+                [sys.executable, loader, cand, info["agent_class"]],
+                capture_output=True, timeout=VERIFY_TIMEOUT, env=env)
         except subprocess.TimeoutExpired:
             return fail(
                 f"candidate did not finish loading within {VERIFY_TIMEOUT}s "
