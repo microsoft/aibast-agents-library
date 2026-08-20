@@ -12,6 +12,15 @@ contextBridge.exposeInMainWorld("brainstemBeta", {
   lineageCommand: (message) => (
     ipcRenderer.invoke("beta:lineage-command", message)
   ),
+  lineageEnvironments: () => (
+    ipcRenderer.invoke("beta:lineage-environments")
+  ),
+  lineagePromote: (options) => (
+    ipcRenderer.invoke("beta:lineage-promote", options || {})
+  ),
+  lineageDrift: (env) => (
+    ipcRenderer.invoke("beta:lineage-drift", env)
+  ),
   listAgentFiles: () => ipcRenderer.invoke("beta:list-agent-files"),
   readAgentFile: (filename, scope) => (
     ipcRenderer.invoke("beta:read-agent-file", filename, scope)

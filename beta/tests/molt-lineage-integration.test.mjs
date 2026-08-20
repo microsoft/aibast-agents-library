@@ -155,6 +155,33 @@ test("HARD 1 — zero molts compose byte-for-byte identically to legacy passthro
   }
 });
 
+test("a named environment pinned to baseline composes byte-for-byte identically", (t) => {
+  const fixture = minimalFixture(t);
+  for (const baseline of fixture.store.baselineAncestors()) {
+    assert.equal(
+      fixture.store.setHead(
+        baseline.ancestorRappid,
+        baseline.ancestorRappid,
+        { env: "prod" },
+      ),
+      true,
+    );
+  }
+  const defaultManager = new BetaRouteManager({
+    ...fixture.managerOptions,
+    lineageEnv: "default",
+  });
+  const prodManager = new BetaRouteManager({
+    ...fixture.managerOptions,
+    lineageEnv: "prod",
+  });
+  const defaultDescriptor = defaultManager.compositionDescriptor();
+  const prodDescriptor = prodManager.compositionDescriptor();
+  assert.equal(prodDescriptor.compositionHash, defaultDescriptor.compositionHash);
+  assert.deepEqual(entryShape(prodDescriptor), entryShape(defaultDescriptor));
+  assert.deepEqual(prodDescriptor.lineageOverlays, []);
+});
+
 test("HARD 2 — Grail remains blind to Molt Lineage", () => {
   const brainstem = readFileSync(
     path.join(grailDirectory, "brainstem.py"),

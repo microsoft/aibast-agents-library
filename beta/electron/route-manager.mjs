@@ -404,6 +404,7 @@ export class BetaRouteManager {
     lineageRoot = process.env.RAPP_LINEAGE_HOME,
     lineageStore = null,
     lineageEnabled = process.env.RAPP_MOLT_LINEAGE !== "0",
+    lineageEnv = process.env.RAPP_LINEAGE_ENV || "default",
     seedLineageDefaults = true,
     compositionValidator = null,
     moltVerifier = null,
@@ -435,6 +436,7 @@ export class BetaRouteManager {
     this.lastGoodDescriptor = null;
     this.lastLineageFallback = null;
     this.lineageEnabled = lineageEnabled !== false;
+    this.lineageEnv = lineageStoreInternals.normalizeEnvironment(lineageEnv);
     this.lineageStore = lineageStore || new LineageStore({
       brainstemDir: this.brainstemConfig.brainstemDir,
       root: lineageRoot,
@@ -462,7 +464,7 @@ export class BetaRouteManager {
     ]) {
       ensurePrivateDirectory(directory);
     }
-    if (this.lineageEnabled && seedLineageDefaults) {
+    if (this.lineageIsEnabled() && seedLineageDefaults) {
       this.seedContextMemoryRing1();
     }
   }
@@ -472,6 +474,19 @@ export class BetaRouteManager {
   }
 
   seedContextMemoryRing1() {
+    if (!this.lineageIsEnabled()) {
+      const refusal = {
+        ok: false,
+        disabled: true,
+        refused: true,
+        reason: "Molt Lineage is disabled (RAPP_MOLT_LINEAGE=0).",
+      };
+      this.recordTelemetry("lineage-default-skipped", {
+        env: "default",
+        reason: refusal.reason,
+      });
+      return refusal;
+    }
     try {
       const baseline = this.lineageStore.baselineAncestors().find(
         (candidate) => candidate.filename === "context_memory_agent.py",
@@ -528,9 +543,22 @@ export class BetaRouteManager {
           },
         },
       );
-      this.lineageStore.setHead(baseline.ancestorRappid, appended);
+      const moved = this.lineageStore.setHead(
+        baseline.ancestorRappid,
+        appended,
+        { env: "default" },
+      );
+      if (moved !== true) {
+        this.recordTelemetry("lineage-default-skipped", {
+          ancestor_rappid: baseline.ancestorRappid,
+          env: "default",
+          reason: moved?.reason || "ContextMemory ring-1 HEAD write was refused.",
+        });
+        return moved;
+      }
       this.recordTelemetry("lineage-default-seeded", {
         ancestor_rappid: baseline.ancestorRappid,
+        env: "default",
         ring_rappid: appended,
       });
       return appended;
@@ -567,7 +595,10 @@ export class BetaRouteManager {
           baseline.ancestorRappid,
           lineageHeads.get(baseline.ancestorRappid),
         )
-      : this.lineageStore.resolveLive(baseline.ancestorRappid);
+      : this.lineageStore.resolveLive(
+          baseline.ancestorRappid,
+          { env: this.lineageEnv },
+        );
     if (!live || live.isBaseline) return entry;
     const source = generatedContextMemory
       ? routedContextMemoryMoltSource(live.source, memoryGuid)
@@ -599,7 +630,10 @@ export class BetaRouteManager {
     ) {
       return { filename, source, lineage: null };
     }
-    const live = this.lineageStore.resolveLive(baseline.ancestorRappid);
+    const live = this.lineageStore.resolveLive(
+      baseline.ancestorRappid,
+      { env: this.lineageEnv },
+    );
     if (!live || live.isBaseline) {
       return { filename, source, lineage: null };
     }
@@ -614,7 +648,10 @@ export class BetaRouteManager {
   }
 
   rollbackLineage(ancestorRappid = null) {
-    const report = this.lineageStore.rollbackToBaseline(ancestorRappid) || null;
+    const report = this.lineageStore.rollbackToBaseline(
+      ancestorRappid,
+      { env: this.lineageEnv },
+    ) || null;
     this.recordTelemetry("lineage-rollback", {
       ancestor_rappid: ancestorRappid,
       scope: ancestorRappid ? "locus" : "all",
@@ -627,7 +664,10 @@ export class BetaRouteManager {
   }
 
   restoreLineage(ancestorRappid = null) {
-    const report = this.lineageStore.restore(ancestorRappid) || null;
+    const report = this.lineageStore.restore(
+      ancestorRappid,
+      { env: this.lineageEnv },
+    ) || null;
     this.recordTelemetry("lineage-restore", {
       ancestor_rappid: ancestorRappid,
       scope: ancestorRappid ? "locus" : "all",
@@ -635,6 +675,98 @@ export class BetaRouteManager {
       changed: report?.changed?.length ?? null,
       unchanged: report?.unchanged?.length ?? null,
       failed: report?.failed?.length ?? null,
+    });
+    return report;
+  }
+
+  lineageEnvironments() {
+    if (!this.lineageIsEnabled()) {
+      return { disabled: true, loci: [] };
+    }
+    const loci = this.lineageStore.baselineAncestors().map((baseline) => ({
+      ancestorRappid: baseline.ancestorRappid,
+      filename: baseline.filename,
+      environments: this.lineageStore.environments(
+        baseline.ancestorRappid,
+      ),
+    }));
+    const report = { disabled: false, loci };
+    this.recordTelemetry("lineage-environments", {
+      loci: loci.length,
+    });
+    return report;
+  }
+
+  promoteLineage({
+    fromEnv = "default",
+    toEnv = "default",
+    actor = null,
+    utc = null,
+  } = {}) {
+    const sourceEnvironment =
+      lineageStoreInternals.normalizeEnvironment(fromEnv);
+    const targetEnvironment =
+      lineageStoreInternals.normalizeEnvironment(toEnv);
+    const report = this.lineageStore.promoteAll({
+      fromEnv: sourceEnvironment,
+      toEnv: targetEnvironment,
+      actor,
+      utc,
+    });
+    this.recordTelemetry("lineage-promote", {
+      changed: report.changed?.length ?? 0,
+      conflicts: report.conflicts?.length ?? 0,
+      disabled: Boolean(report.disabled),
+      failed: report.failed?.length ?? 0,
+      from_env: sourceEnvironment,
+      to_env: targetEnvironment,
+      unchanged: report.unchanged?.length ?? 0,
+    });
+    return {
+      ...report,
+      fromEnv: sourceEnvironment,
+      toEnv: targetEnvironment,
+    };
+  }
+
+  lineageDrift(env) {
+    const environment = lineageStoreInternals.normalizeEnvironment(env);
+    if (!this.lineageIsEnabled()) {
+      return {
+        disabled: true,
+        env: environment,
+        baseEnv: "default",
+        drifted: [],
+        loci: [],
+      };
+    }
+    const loci = this.lineageStore.baselineAncestors().map((baseline) => {
+      const expected = this.lineageStore.getHead(
+        baseline.ancestorRappid,
+        { env: "default" },
+      );
+      return {
+        ancestorRappid: baseline.ancestorRappid,
+        filename: baseline.filename,
+        ...this.lineageStore.detectDrift(
+          baseline.ancestorRappid,
+          environment,
+          expected,
+        ),
+      };
+    });
+    const drifted = loci.filter((locus) => locus.drifted);
+    const report = {
+      disabled: false,
+      env: environment,
+      baseEnv: "default",
+      drifted,
+      loci,
+    };
+    this.recordTelemetry("lineage-drift", {
+      base_env: "default",
+      drifted: drifted.length,
+      target_env: environment,
     });
     return report;
   }
@@ -733,10 +865,14 @@ export class BetaRouteManager {
   }
 
   recordTelemetry(type, details = {}) {
+    const lineageContext = String(type).startsWith("lineage-")
+      ? { env: this.lineageEnv }
+      : {};
     const event = {
       sequence: ++this.telemetrySequence,
       timestamp: new Date().toISOString(),
       type,
+      ...lineageContext,
       ...redactSensitiveValue(details),
     };
     this.telemetry.push(event);
@@ -1722,6 +1858,7 @@ export class BetaRouteManager {
         this.lineageStore.setHead(
           overlay.ancestorRappid,
           acceptedHeads.get(overlay.ancestorRappid),
+          { env: this.lineageEnv },
         );
       }
     } else {
