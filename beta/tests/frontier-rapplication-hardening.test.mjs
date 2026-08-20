@@ -2,8 +2,10 @@ import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import test from "node:test";
 
+import { testPython } from "./_python.mjs";
+
 function runPython(source) {
-  const result = spawnSync("python3", ["-c", source], {
+  const result = spawnSync(testPython(), ["-c", source], {
     cwd: new URL("..", import.meta.url),
     encoding: "utf8",
   });

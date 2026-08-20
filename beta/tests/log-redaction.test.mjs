@@ -29,6 +29,7 @@ import {
   scrubDiagnosticValue,
 } from "../electron/log-redaction.mjs";
 import { BetaRouteManager } from "../electron/route-manager.mjs";
+import { testPython } from "./_python.mjs";
 
 
 const GITHUB_TOKENS = [
@@ -74,6 +75,7 @@ function allocatePort() {
 
 function resolvePython() {
   const candidates = [
+    testPython(),
     process.env.PYTHON,
     process.platform === "win32" ? "python" : "python3",
     "python",
