@@ -2,8 +2,10 @@ import {
   closeSync,
   createWriteStream,
   existsSync,
+  realpathSync,
 } from "node:fs";
 import { homedir } from "node:os";
+import { createServer } from "node:net";
 import path from "node:path";
 import { spawn } from "node:child_process";
 import { Writable } from "node:stream";
@@ -74,10 +76,35 @@ export function resolveBrainstemConfig({
     brainstemHome,
     brainstemDir,
     python,
+    ownPort: env.BRAINSTEM_BETA_OWN_PORT === "1",
     port,
     url: `http://127.0.0.1:${port}`,
     logFile: paths.join(brainstemHome, "logs", "beta-brainstem.log"),
   };
+}
+
+export function allocateLoopbackPort() {
+  return new Promise((resolve, reject) => {
+    const server = createServer();
+    server.unref();
+    server.once("error", reject);
+    server.listen({
+      exclusive: true,
+      host: "127.0.0.1",
+      port: 0,
+    }, () => {
+      const address = server.address();
+      if (!address || typeof address === "string") {
+        server.close();
+        reject(new Error("Could not allocate a loopback port for Brainstem."));
+        return;
+      }
+      server.close((error) => {
+        if (error) reject(error);
+        else resolve(address.port);
+      });
+    });
+  });
 }
 
 export function isBrainstemHealth(value) {
@@ -88,6 +115,16 @@ export function isBrainstemHealth(value) {
     && typeof value.version === "string"
     && Array.isArray(value.agents),
   );
+}
+
+function canonicalFilesystemPath(value) {
+  let resolved;
+  try {
+    resolved = realpathSync(String(value));
+  } catch {
+    resolved = path.resolve(String(value));
+  }
+  return process.platform === "win32" ? resolved.toLowerCase() : resolved;
 }
 
 export async function probeHealth(url, timeoutMs = 1_500) {
@@ -204,7 +241,18 @@ export class BrainstemProcess {
   }
 
   async start() {
-    const existing = await probeHealth(this.config.url);
+    if (this.config.ownPort && !this.config.portPreallocated) {
+      const port = await allocateLoopbackPort();
+      this.config = {
+        ...this.config,
+        port,
+        url: `http://127.0.0.1:${port}`,
+      };
+    }
+
+    const existing = this.config.ownPort
+      ? null
+      : await probeHealth(this.config.url);
     if (existing) {
       this.owned = false;
       return { reused: true, health: existing, ...this.config };
@@ -254,11 +302,25 @@ export class BrainstemProcess {
     const health = await waitForHealth(this.config.url, {
       exited: () => this.child?.exitCode !== null,
     });
-    if (!health) {
+    const expectedBrainstemDir = canonicalFilesystemPath(
+      this.config.brainstemDir,
+    );
+    const ownedHealthMatches = !health || !this.config.ownPort || (
+      typeof health?.brainstem_dir === "string"
+      && canonicalFilesystemPath(health.brainstem_dir) === expectedBrainstemDir
+    );
+    if (
+      !health
+      || !ownedHealthMatches
+      || this.child?.exitCode !== null
+      || this.child?.signalCode !== null
+    ) {
       const exitCode = this.child?.exitCode;
       await this.stop();
       throw new Error(
-        `Brainstem did not become healthy${exitCode === null ? "" : ` (exit ${exitCode})`}. See ${this.config.logFile}.`,
+        !ownedHealthMatches
+          ? `Brainstem health on ${this.config.url} did not identify the owned source at ${expectedBrainstemDir}.`
+          : `Brainstem did not become healthy${exitCode === null ? "" : ` (exit ${exitCode})`}. See ${this.config.logFile}.`,
       );
     }
 

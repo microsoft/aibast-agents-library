@@ -484,11 +484,13 @@ let updateCheckInFlight = false;
 let updateMenuItem = null;
 let availableUpdate = null;
 let uiDriver = null;
+let e2eStopTimer = null;
 // One GitHub Copilot Brain Surgeon SDK session per chat tab, keyed by the id the
 // renderer assigns. All share one runtime, one route manager, and one visible
 // Brainstem — "several agents, one brainstem" — and every event they emit is
 // tagged with its sessionId so the renderer routes it to the right tab/tile.
 const brainSurgeons = new Map();
+const chatLeaseRegistry = new Set();
 const MAX_BRAIN_SURGEONS = 12;
 
 const state = {
@@ -917,6 +919,7 @@ function ensureBrainSurgeon(sessionId = 1) {
     surgeon = new BrainSurgeon({
       runtime: copilot,
       brainstemUrl: config.url,
+      chatLeaseRegistry,
       checkForUpdates: () => handleCheckForUpdates({ openPanel: true }),
       copilotStudioAuth,
       routeManager,
@@ -1608,6 +1611,16 @@ if (!hasLock) {
       emitState();
     });
     void startServices();
+    const e2eStopFile = process.env.BRAINSTEM_BETA_E2E_STOP_FILE;
+    if (e2eStopFile) {
+      e2eStopTimer = setInterval(() => {
+        if (!existsSync(e2eStopFile)) return;
+        clearInterval(e2eStopTimer);
+        e2eStopTimer = null;
+        app.quit();
+      }, 100);
+      e2eStopTimer.unref?.();
+    }
     const smokeExitMs = Number.parseInt(
       process.env.BRAINSTEM_BETA_SMOKE_EXIT_MS || "0",
       10,
@@ -1631,6 +1644,10 @@ if (!hasLock) {
     event.preventDefault();
     if (shutdownStarted) return;
     shutdownStarted = true;
+    if (e2eStopTimer) {
+      clearInterval(e2eStopTimer);
+      e2eStopTimer = null;
+    }
     Promise.allSettled([
       ...Array.from(brainSurgeons.values(), (surgeon) => surgeon.stop()),
       twinManager.stopAll(),

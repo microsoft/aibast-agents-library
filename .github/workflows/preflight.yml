@@ -160,6 +160,59 @@ jobs:
           python -m pip install -q -r rapp_ai/requirements.txt
           python -m pytest rapp_ai/tests -q
 
+  frontier-e2e:
+    needs: static
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            command: xvfb-run -a node --test tests/e2e
+          - os: macos-latest
+            command: node --test tests/e2e
+          - os: windows-latest
+            command: node --test tests/e2e
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+
+      - name: Create isolated Brainstem environment
+        shell: bash
+        run: |
+          VENV="$RUNNER_TEMP/frontier-e2e-venv"
+          python -m venv "$VENV"
+          if [ "$RUNNER_OS" = "Windows" ]; then
+            PYTHON="$VENV/Scripts/python.exe"
+          else
+            PYTHON="$VENV/bin/python"
+          fi
+          "$PYTHON" -m pip install -q -r rapp_brainstem/requirements.txt
+          printf 'BRAINSTEM_BETA_PYTHON=%s\n' "$PYTHON" >> "$GITHUB_ENV"
+
+      - name: Install Frontier test dependencies
+        working-directory: beta
+        env:
+          ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
+        run: |
+          npm ci --ignore-scripts
+          node node_modules/electron/install.js
+
+      - name: Run deterministic Frontier scenarios
+        working-directory: beta
+        shell: bash
+        env:
+          BRAINSTEM_BETA_E2E: '1'
+          BRAINSTEM_BETA_E2E_REQUIRED: '1'
+        run: ${{ matrix.command }}
+
   e2e:
     needs: static
     strategy:

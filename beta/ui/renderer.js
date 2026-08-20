@@ -911,6 +911,7 @@ function flashHerdError(herd, message) {
 function surgeonTileFor(session) {
   const tile = document.createElement("div");
   tile.className = "herd-tile";
+  tile.dataset.sessionId = String(session.id);
   tile.innerHTML = `
     <div class="hh">
       <span class="tt"></span>

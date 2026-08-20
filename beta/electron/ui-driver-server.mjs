@@ -405,9 +405,6 @@ async function browserDriverCommand(command) {
       if (!banner) {
         banner = document.createElement("div");
         banner.id = "brainstem-beta-chat-lease";
-        banner.textContent = `Brain Surgeon is using this chat (${
-          state.chatLeaseTokens.size
-        })`;
         Object.assign(banner.style, {
           position: "fixed",
           zIndex: "2147483645",
@@ -423,6 +420,9 @@ async function browserDriverCommand(command) {
         });
         document.body.appendChild(banner);
       }
+      banner.textContent = `Brain Surgeon is using this chat (${
+        state.chatLeaseTokens.size
+      })`;
       banner.hidden = !state.chatLeaseLocked;
       send.setAttribute(
         "aria-disabled",

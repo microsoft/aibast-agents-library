@@ -2003,6 +2003,7 @@ export class BetaRouteManager {
     const config = {
       ...this.brainstemConfig,
       port,
+      portPreallocated: true,
       url: `http://127.0.0.1:${port}`,
       logFile: path.join(
         this.workerLogRoot,
@@ -2011,6 +2012,10 @@ export class BetaRouteManager {
       env: {
         AGENTS_PATH: materialized.agentDirectory,
         BRAINSTEM_BETA_ROUTED_WORKER: "1",
+        BRAINSTEM_SOURCE_AGENTS_PATH: path.join(
+          this.brainstemConfig.brainstemDir,
+          "agents",
+        ),
       },
     };
     const process = this.createWorkerProcess(config);

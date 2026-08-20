@@ -155,3 +155,49 @@ ids the matrix lists (`#surgeon-send`, `#input`, `#send`, `#agent-tree`, …) an
 
 A matrix row is "covered" only when its scenario is linked in the `Existing tests` column and
 runs in CI; the matrix is regenerated from the suite's manifest, not edited by hand.
+
+## How to run and record
+
+The unit suite includes the harness contracts and skips Electron scenarios unless they are
+explicitly enabled:
+
+```bash
+cd beta
+npm test
+BRAINSTEM_BETA_E2E=1 node --test tests/e2e
+```
+
+In PowerShell, set `$env:BRAINSTEM_BETA_E2E = "1"` before the second command. Local Electron
+startup failures caused by a missing binary or display are reported as clean skips. CI installs
+the locked Electron binary explicitly, runs Linux under `xvfb-run`, and sets
+`BRAINSTEM_BETA_E2E_REQUIRED=1` so an unavailable Electron runtime fails the job instead.
+
+Cassette recording is a human-only operation against the developer's existing Copilot cache.
+Point the recorder at that cache, opt in explicitly, and drive only the scenario being captured:
+
+```bash
+cd beta
+RAPP_MODEL_ALLOW_RECORD=1 \
+RAPP_MODEL_REAL_CACHE="$HOME/.brainstem/src/rapp_brainstem/.copilot_session" \
+node --input-type=module <<'NODE'
+import path from "node:path";
+import { launch } from "./tests/e2e/harness/launch.mjs";
+
+const app = await launch({
+  modelMode: "record",
+  replayCassette: path.resolve("tests/e2e/fixtures/my-scenario.json"),
+  scenario: "record-my-scenario",
+});
+try {
+  await app.driver.command({ action: "chat", value: "the scenario prompt" });
+} finally {
+  await app.stop();
+}
+NODE
+```
+
+Record mode proxies `/models` and `/chat/completions` with the cached real token. It stores
+normalized requests plus the raw response body required for byte-faithful replay; authorization
+headers and cache credentials are never written. Treat recorded model text as reviewable data and
+inspect the cassette diff before committing it. Replay fails on an unknown fingerprint and reports
+the nearest entry plus a structural diff.

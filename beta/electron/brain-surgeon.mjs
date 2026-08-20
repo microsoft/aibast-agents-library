@@ -169,6 +169,7 @@ export class BrainSurgeon {
     runtime,
     brainstemUrl,
     checkForUpdates = null,
+    chatLeaseRegistry = null,
     copilotStudioAuth = null,
     routeManager = null,
     uiCommand,
@@ -178,6 +179,7 @@ export class BrainSurgeon {
     this.runtime = runtime;
     this.brainstemUrl = brainstemUrl;
     this.checkForUpdates = checkForUpdates;
+    this.chatLeaseRegistry = chatLeaseRegistry || new Set();
     this.copilotStudioAuth = copilotStudioAuth;
     this.routeManager = routeManager;
     this.uiCommand = uiCommand;
@@ -919,6 +921,7 @@ export class BrainSurgeon {
     this.sessionUnsubscribe = null;
     const leaseTokens = [...this.chatLeaseTokens];
     this.chatLeaseTokens.clear();
+    for (const token of leaseTokens) this.chatLeaseRegistry.delete(token);
     await Promise.allSettled(
       leaseTokens.map((token) => this.uiCommand({
         action: "set_chat_lease",
@@ -954,6 +957,7 @@ export class BrainSurgeon {
   async acquireChatLease() {
     const token = randomUUID();
     this.chatLeaseTokens.add(token);
+    this.chatLeaseRegistry.add(token);
     try {
       await this.uiCommand({
         action: "set_chat_lease",
@@ -961,17 +965,18 @@ export class BrainSurgeon {
         token,
       });
       this.routeManager?.recordTelemetry?.("chat-lease-acquired", {
-        lease_count: this.chatLeaseTokens.size,
+        lease_count: this.chatLeaseRegistry.size,
       });
       return token;
     } catch (error) {
       this.chatLeaseTokens.delete(token);
+      this.chatLeaseRegistry.delete(token);
       throw error;
     }
   }
 
   async syncChatLeases() {
-    for (const token of this.chatLeaseTokens) {
+    for (const token of this.chatLeaseRegistry) {
       await this.uiCommand({
         action: "set_chat_lease",
         locked: true,
@@ -979,19 +984,20 @@ export class BrainSurgeon {
       });
     }
     this.routeManager?.recordTelemetry?.("chat-lease-applied", {
-      lease_count: this.chatLeaseTokens.size,
+      lease_count: this.chatLeaseRegistry.size,
     });
   }
 
   async releaseChatLease(token) {
     this.chatLeaseTokens.delete(token);
+    this.chatLeaseRegistry.delete(token);
     await this.uiCommand({
       action: "set_chat_lease",
       locked: false,
       token,
     });
     this.routeManager?.recordTelemetry?.("chat-lease-released", {
-      lease_count: this.chatLeaseTokens.size,
+      lease_count: this.chatLeaseRegistry.size,
     });
   }
 

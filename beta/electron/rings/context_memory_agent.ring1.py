@@ -184,7 +184,10 @@ class ContextMemoryAgent(BasicAgent):
         """Self-state signal for Ambient Context: report any sibling *_agent.py
         that cannot load as a valid agent, so the Brainstem can proactively say
         one of its own agents is broken. Returns None when every agent is healthy."""
-        agents_dir = os.path.dirname(os.path.abspath(__file__))
+        agents_dir = (
+            os.environ.get("BRAINSTEM_SOURCE_AGENTS_PATH")
+            or os.path.dirname(os.path.abspath(__file__))
+        )
         broken = scan_broken_agents(agents_dir)
         if not broken:
             return None

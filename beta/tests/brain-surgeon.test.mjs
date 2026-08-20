@@ -221,6 +221,54 @@ test("concurrent delegations retain independent chat lease tokens", async () => 
   assert.equal(activeTokens.size, 0);
 });
 
+test("separate Surgeons reapply the shared lease registry after route swaps", async () => {
+  const registry = new Set();
+  const visibleTokens = new Set();
+  const uiCommand = async (command) => {
+    if (command.action === "set_chat_lease") {
+      if (command.locked) visibleTokens.add(command.token);
+      else visibleTokens.delete(command.token);
+      return {};
+    }
+    if (command.action === "wait") return {};
+    if (command.action === "chat") return { response: command.value };
+    return {};
+  };
+  const routeManager = {
+    withRoute: async (_options, callback) => {
+      visibleTokens.clear();
+      return callback({ url: "http://127.0.0.1:7081" });
+    },
+    recordTelemetry: () => {},
+  };
+  const first = new BrainSurgeon({
+    chatLeaseRegistry: registry,
+    routeManager,
+    runtime: {},
+    uiCommand,
+  });
+  const second = new BrainSurgeon({
+    chatLeaseRegistry: registry,
+    routeManager,
+    runtime: {},
+    uiCommand,
+  });
+
+  const firstToken = await first.acquireChatLease();
+  const secondToken = await second.acquireChatLease();
+  visibleTokens.clear();
+  await first.syncChatLeases();
+  assert.deepEqual(
+    [...visibleTokens].sort(),
+    [firstToken, secondToken].sort(),
+  );
+  await first.releaseChatLease(firstToken);
+  assert.equal(registry.has(firstToken), false);
+  assert.equal(registry.has(secondToken), true);
+  await second.releaseChatLease(secondToken);
+  assert.equal(registry.size, 0);
+});
+
 test("Brain Surgeon manages nested RAPPID stacks and visibly reloads selection", async () => {
   const calls = [];
   const routeManager = {
