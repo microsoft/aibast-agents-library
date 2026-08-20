@@ -1979,6 +1979,7 @@ function createWindow() {
     backgroundColor: "#0d1117",
     ...(appIcon ? { icon: appIcon } : {}),
     webPreferences: {
+      backgroundThrottling: false,
       preload: path.join(dirname, "preload.cjs"),
       additionalArguments: [
         `--rapp-chat-stream=${chatStreamMode}`,

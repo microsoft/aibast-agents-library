@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 
 await import("../ui/stream-render-pacing.js");
@@ -147,6 +148,41 @@ test("terminal drain completes within three hundred milliseconds", async () => {
   assert.equal(renders.at(-1)[1], text);
   assert.ok(frames.now() - startedAt <= 300);
   assert.equal(pacer.metrics().pendingPieces, 0);
+});
+
+test("terminal drain falls back when animation frames pause", async () => {
+  const renders = [];
+  let fallback = null;
+  let cancelledFrame = null;
+  const text = replyOfLength(800);
+  const pacer = createAdaptiveRenderPacer({
+    cancelFrame: (frame) => {
+      cancelledFrame = frame;
+    },
+    clearTimer() {},
+    now: () => 0,
+    onRender: (value) => renders.push(value),
+    requestFrame: () => 17,
+    setTimer: (callback, delay) => {
+      fallback = { callback, delay };
+      return 23;
+    },
+  });
+
+  pacer.push(text);
+  const drained = pacer.finish();
+  assert.equal(fallback?.delay, 300);
+  fallback.callback();
+  await drained;
+
+  assert.equal(renders.at(-1), text);
+  assert.equal(cancelledFrame, 17);
+  assert.equal(pacer.metrics().pendingPieces, 0);
+  const mainSource = readFileSync(
+    new URL("../electron/main.mjs", import.meta.url),
+    "utf8",
+  );
+  assert.match(mainSource, /backgroundThrottling:\s*false/);
 });
 
 test("abort cancels pending frames and keeps the shown prefix", async () => {
