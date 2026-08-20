@@ -89,10 +89,12 @@ it. When present, it is reloaded and its schema sent on **every** `/chat` reques
    loop up to **3 rounds** (`:2486`), then a final tool-less completion if still asking for
    tools (`:2555-2560`). SSE `done` carries `agent_logs: "\n".join(all_logs)` (`:2596`).
    (Non-stream `/chat` mirrors this: `:2307-2323`, `:2332`, `:2347`.)
-9. Grail UI: streamed deltas render into a provisional bubble; the `agent` SSE event only
-   stores the latest round's logs in a variable (`rapp_brainstem/index.html:2980-2981`,
-   no visible indicator); on `done` it commits `{role:'assistant', content}` to history
-   (`:1334-1337`) and renders **one** assistant bubble with a collapsed
+9. Frontier's frame bridge holds the upstream SSE until EOF, so Grail keeps its typing
+   indicator visible instead of rendering deltas progressively. On replay, the `agent` event
+   only stores the latest round's logs in a variable
+   (`rapp_brainstem/index.html:2980-2981`, no visible indicator); on `done` Grail commits
+   `{role:'assistant', content}` to history (`:1334-1337`) and renders **one** assistant
+   bubble with a collapsed
    "▶ agent called BrainstemUiDriver" disclosure containing the full `agent_logs`
    (`:3026`, `:3059` → `appendMsg` `:2453-2545`).
 
@@ -118,8 +120,9 @@ it. When present, it is reloaded and its schema sent on **every** `/chat` reques
    Frontier-side truncation; `grep -i 'compact|truncat'` over `session.js` finds nothing.
 6. SDK session events → `tool-start` / `tool-complete` (`brain-surgeon.mjs:854-874`) →
    `emitSurgeonEvent` → IPC `beta:surgeon-event` (`main.mjs:531-533`, `:936`) →
-   `handleSurgeonEvent` (`renderer.js:1271-1311`). Tool **results are never sent to the
-   renderer**; only name + running/done/failed.
+   `handleSurgeonEvent`. Tool rows remain live; `delta` text is buffered behind a typing
+   bubble and delivered on `done`. Tool **results are never sent to the renderer**; only
+   name + running/done/failed.
 7. Session is one persistent CLI session with `infiniteSessions` and `memory` enabled
    (`brain-surgeon.mjs:841-852`); every tool result stays in it for the life of the tab.
 
@@ -262,12 +265,21 @@ tile) shifts `nth-of-type` and silently retargets the path.
 
 ### Brainstem chat (Grail UI in the iframe) — Loop A
 
-- **During the turn:** a typing indicator (`rapp_brainstem/index.html:2547-2560`) and, if the
-  model streams prose, a provisional plain bubble. The `agent` SSE event is swallowed into a
-  variable (`:2980-2981`); **no per-tool indicator** exists mid-turn. The only on-page signs
-  of driving are the injected overlays: cursor/pulse/label (`ui-driver-server.mjs:82-155`),
-  the "Brain Surgeon is using this chat (n)" lease banner (`:404-426`), "REC  AUTOPILOT"
-  (`:993-1022`), recap cards (`:1024-1075`) and the force-mode glow (`:1395-1446`).
+- **During the turn:** Grail appends its typing indicator before sending
+  (`rapp_brainstem/index.html:2547-2564`). Frontier's `frontierFetch` wraps each
+  non-intercepted `POST /chat/stream` response and keeps every SSE byte in memory until the
+  upstream reader reaches EOF (`main.mjs`, `bufferChatStreamResponse`). Grail does not call
+  `ensureBubble()`—the function that removes the indicator on the first `delta`
+  (`rapp_brainstem/index.html:2945-2953`)—until that replay begins. The result is typing dots
+  for the whole model/tool turn, not a provisional token stream. The `agent` SSE event still
+  only feeds a variable (`:2980-2981`), so **no per-tool indicator** exists in this chat.
+  The injected cursor/pulse/label, lease banner, recording/recap cards, and force-mode glow
+  remain the live drive cues.
+- **At upstream EOF:** the bridge releases the original chunks in order, including the
+  terminal `done` event. Grail processes the burst, force-renders assembled markdown, and
+  commits the stable response; a mid-stream reader failure instead replays completed bytes
+  followed by a `type:"error"` SSE event. `RAPP_CHAT_TYPING=0` bypasses the wrapper and
+  restores native token-by-token rendering.
 - **On completion:** exactly **one** assistant bubble per `/chat` turn, regardless of how
   many driver calls ran (≤3 rounds): `appendMsg('assistant', finalText, finalLogs)`
   (`:3059`; non-stream `:2766`). If `finalLogs` is non-empty the bubble carries an
@@ -294,10 +306,16 @@ tile) shifts `nth-of-type` and silently retargets the path.
 ### Surgeon panel (shell) — Loop B
 
 - Per tool call: one `.surgeon-tool` row `⚙ <toolName> running` → `done`/`failed`
-  (`renderer.js:516-550`), thinking indicator around it (`:1283-1286`). Arguments and
+  (`renderer.js`, `addSurgeonTool` / `finishSurgeonTool`), kept live while the reply text is
+  buffered. Arguments and
   results are **never rendered** (they are never sent over IPC — `brain-surgeon.mjs:858-873`).
-- Assistant text streams into one `.surgeon-message.assistant` as plain `textContent` (no
-  markdown) (`:1278-1282`, `:485-496`).
+- On the first `delta`, `createDelivery` fires `onTyping` once and shows
+  `.surgeon-message.assistant.typing` with three dots, `aria-live="polite"`, and the label
+  "Brain Surgeon is typing…". Later deltas remain in memory. On `done`, the typing node is
+  replaced in one DOM operation by the complete plain-text assistant bubble; on `error`, it
+  is replaced by the error bubble (`renderer.js`, `createSurgeonDelivery` and
+  `handleSurgeonEvent`). With reduced motion the dots remain visible but do not bounce.
+  `RAPP_CHAT_TYPING=0` restores the old progressive `textContent` path.
 - `artifact` events render `<img>`/`<video controls>` cards with a link (`:552-577`) — only
   from `capture_visible_brainstem`, `stop_demo_recording`, and `show_mode_click_through
   capture` (`brain-surgeon.mjs:1375-1383`, `:1405-1413`, `:1436-1453`).
