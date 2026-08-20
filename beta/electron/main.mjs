@@ -51,17 +51,16 @@ import {
   runtimeDirectoryFingerprint,
 } from "../scripts/walkthrough-provenance.mjs";
 import "../ui/stream-follow.js";
-import "../ui/stream-pacing.js";
+import "../ui/stream-render-pacing.js";
 import "../ui/chat-look.js";
 
 const {
   createTailFollower,
 } = globalThis.RappStreamFollow;
 const {
-  createStreamPacer,
-  createTextSplitter,
-  splitTextPieces,
-} = globalThis.RappStreamPacing;
+  createAdaptiveRenderPacer,
+  splitRenderPieces,
+} = globalThis.RappStreamRenderPacing;
 const {
   applyLookStyles,
   grailFrameCss,
@@ -88,6 +87,17 @@ html[data-rapp-stream="smooth"] .msg.assistant .bubble.stream-mask {
   mask-image: none !important;
 }
 html[data-rapp-stream="smooth"] .msg.assistant .bubble.stream-revealing {
+  animation: none !important;
+}
+html[data-rapp-stream="smooth"] .rapp-provisional-hidden {
+  display: none !important;
+}
+html[data-rapp-stream="smooth"]
+  .response-slot[data-rapp-provisional-active="1"]
+  .msg.assistant:not([data-rapp-provisional="1"]) {
+  display: none !important;
+}
+html[data-rapp-stream="smooth"] .msg.assistant.rapp-final-handoff {
   animation: none !important;
 }
 html[data-rapp-stream="smooth"] #chat {
@@ -182,10 +192,9 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
   ${exportRedactionSource}
   const humanizeAgentName = ${humanizeAgentName.toString()};
   const chatStreamMode = ${JSON.stringify(chatStreamMode)};
-  const splitTextPieces = ${splitTextPieces.toString()};
-  const createTextSplitter = ${createTextSplitter.toString()};
-  const createStreamPacer = ${createStreamPacer.toString()};
   const createTailFollower = ${createTailFollower.toString()};
+  const splitRenderPieces = ${splitRenderPieces.toString()};
+  const createAdaptiveRenderPacer = ${createAdaptiveRenderPacer.toString()};
   document.documentElement.dataset.rappStream = chatStreamMode;
   if (chatStreamMode === "smooth") {
     const streamStyle = document.createElement("style");
@@ -731,30 +740,255 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
       return null;
     }
   }
-  function deltaSseFrame(text) {
-    return "data: " + JSON.stringify({ type: "delta", text }) + "\\n\\n";
-  }
   function errorSseFrame(cause) {
     return "\\n\\ndata: " + JSON.stringify({
       type: "error",
       error: String(cause?.message || cause || "Response stream interrupted."),
     }) + "\\n\\n";
   }
-  function paceChatStreamResponse(response, signal) {
+
+  function normalizeProvisionalMarkdown(text) {
+    return String(text || "").replace(
+      /^([ \\t]*)[\\u2022\\u2023\\u25AA\\u25CF]\\s+/gm,
+      "$1- ",
+    );
+  }
+
+  function bridgeSanitizeMarkdown(html) {
+    const allowedTags = new Set([
+      "A", "BLOCKQUOTE", "BR", "CODE", "COL", "COLGROUP", "DEL", "EM",
+      "H1", "H2", "H3", "H4", "H5", "H6", "HR", "LI", "OL", "P", "PRE",
+      "STRONG", "TABLE", "TBODY", "TD", "TH", "THEAD", "TR", "UL",
+    ]);
+    const forbiddenSubtrees = new Set([
+      "APPLET", "AUDIO", "BASE", "CANVAS", "EMBED", "FORM", "FRAME",
+      "FRAMESET", "IFRAME", "INPUT", "LINK", "META", "OBJECT", "PORTAL",
+      "SCRIPT", "SOURCE", "STYLE", "SVG", "TEMPLATE", "TEXTAREA", "TRACK",
+      "VIDEO",
+    ]);
+    const allowedAttributes = {
+      A: ["href", "title"],
+      COL: ["span"],
+      COLGROUP: ["span"],
+      OL: ["start"],
+      TD: ["align"],
+      TH: ["align", "scope"],
+    };
+    const parsed = new DOMParser().parseFromString(String(html || ""), "text/html");
+    const fragment = document.createDocumentFragment();
+
+    function safeUrl(value) {
+      const stripped = String(value || "")
+        .replace(/[\\u0000-\\u0020\\u007F-\\u00A0]/g, "")
+        .toLowerCase();
+      const match = stripped.match(/^([a-z][a-z0-9+.\\-]*):/);
+      return !match || ["http", "https", "mailto", "tel"].includes(match[1]);
+    }
+
+    function clean(node) {
+      if (node.nodeType === 3) return document.createTextNode(node.nodeValue);
+      if (node.nodeType !== 1) return null;
+      const tag = String(node.tagName || "").toUpperCase();
+      if (forbiddenSubtrees.has(tag)) return null;
+      if (!allowedTags.has(tag)) {
+        const unwrapped = document.createDocumentFragment();
+        for (const child of node.childNodes || []) {
+          const cleaned = clean(child);
+          if (cleaned) unwrapped.appendChild(cleaned);
+        }
+        return unwrapped;
+      }
+      const element = document.createElement(tag);
+      const allowed = allowedAttributes[tag] || [];
+      for (const attribute of node.attributes || []) {
+        const name = String(attribute.name || "").toLowerCase();
+        if (!allowed.includes(name)) continue;
+        if (name === "href" && !safeUrl(attribute.value)) continue;
+        element.setAttribute(name, attribute.value);
+      }
+      if (tag === "A" && element.getAttribute("href")) {
+        element.setAttribute("target", "_blank");
+        element.setAttribute("rel", "noopener noreferrer");
+      }
+      for (const child of node.childNodes || []) {
+        const cleaned = clean(child);
+        if (cleaned) element.appendChild(cleaned);
+      }
+      return element;
+    }
+
+    for (const child of parsed.body.childNodes || []) {
+      const cleaned = clean(child);
+      if (cleaned) fragment.appendChild(cleaned);
+    }
+    return fragment;
+  }
+
+  function createProvisionalScreenRenderer() {
+    const stats = {
+      finalHeight: null,
+      handoffCount: 0,
+      heightDelta: null,
+      provisionalHeight: null,
+      removeCount: 0,
+      renderCount: 0,
+      shownText: "",
+    };
+    window.__rappSmoothScreenStats = stats;
+    let bubble = null;
+    let handoffObserver = null;
+    let provisional = null;
+    let removed = false;
+    let responseSlot = null;
+    let typingIndicator = null;
+
+    window.__rappSmoothMarkdownCapabilities = {
+      marked: typeof window.marked?.parse === "function",
+      normalizeMd: typeof window.normalizeMd === "function",
+      sanitizer: typeof window.sanitizeMarkdownFragment === "function",
+    };
+
+    function availableTypingIndicator() {
+      const candidates = [
+        ...document.querySelectorAll("#chat .typing-indicator"),
+      ].reverse();
+      return candidates.find(
+        (candidate) => candidate.dataset.rappProvisionalClaimed !== "1",
+      ) || null;
+    }
+
+    function removeProvisional({ restoreTyping = true } = {}) {
+      if (removed) return false;
+      removed = true;
+      handoffObserver?.disconnect();
+      handoffObserver = null;
+      responseSlot?.removeAttribute("data-rapp-provisional-active");
+      if (typingIndicator) {
+        typingIndicator.classList.remove("rapp-provisional-hidden");
+        if (restoreTyping) {
+          delete typingIndicator.dataset.rappProvisionalClaimed;
+        }
+      }
+      if (provisional?.parentNode) provisional.remove();
+      stats.removeCount += provisional ? 1 : 0;
+      return true;
+    }
+
+    function findFinalBubble() {
+      if (!responseSlot) return null;
+      const candidates = responseSlot.querySelectorAll(
+        '.msg.assistant:not([data-rapp-provisional="1"])'
+          + ":not(.typing-indicator):not(.stream-arriving)",
+      );
+      return candidates[candidates.length - 1] || null;
+    }
+
+    function completeHandoff() {
+      if (removed) return;
+      const finalBubble = findFinalBubble();
+      if (!finalBubble) return;
+      stats.provisionalHeight = provisional?.getBoundingClientRect().height || 0;
+      finalBubble.classList.add("rapp-final-handoff");
+      finalBubble.classList.remove("rapp-message-arrived");
+      finalBubble.removeAttribute("data-rapp-arrived");
+      responseSlot.removeAttribute("data-rapp-provisional-active");
+      stats.finalHeight = finalBubble.getBoundingClientRect().height || 0;
+      stats.heightDelta = stats.finalHeight - stats.provisionalHeight;
+      stats.handoffCount += 1;
+      removeProvisional({ restoreTyping: false });
+    }
+
+    function ensureProvisional() {
+      if (provisional || removed) return provisional;
+      typingIndicator = availableTypingIndicator();
+      if (!typingIndicator) return null;
+      responseSlot = typingIndicator.closest(".response-slot")
+        || typingIndicator.parentElement;
+      if (!responseSlot) return null;
+      typingIndicator.dataset.rappProvisionalClaimed = "1";
+      typingIndicator.classList.add("rapp-provisional-hidden");
+      responseSlot.dataset.rappProvisionalActive = "1";
+
+      provisional = document.createElement("div");
+      provisional.className = "msg assistant stream-arriving";
+      provisional.dataset.rappProvisional = "1";
+      const avatar = typingIndicator.querySelector(".avatar")?.cloneNode(true);
+      if (avatar) provisional.appendChild(avatar);
+      const right = document.createElement("div");
+      bubble = document.createElement("div");
+      bubble.className = "bubble";
+      right.appendChild(bubble);
+      provisional.appendChild(right);
+      responseSlot.insertBefore(provisional, typingIndicator.nextSibling);
+
+      handoffObserver = new MutationObserver(completeHandoff);
+      handoffObserver.observe(responseSlot, { childList: true, subtree: true });
+      return provisional;
+    }
+
+    function render(text) {
+      const wrap = ensureProvisional();
+      if (!wrap || !bubble) return;
+      stats.renderCount += 1;
+      stats.shownText = text;
+      wrap.classList.toggle("wide", text.length > 1200);
+      const normalizer = typeof window.normalizeMd === "function"
+        ? window.normalizeMd
+        : normalizeProvisionalMarkdown;
+      const normalized = normalizer(text);
+      const markdown = typeof window.marked?.parse === "function"
+        ? window.marked.parse(normalized)
+        : null;
+      if (markdown === null) {
+        bubble.textContent = text;
+      } else {
+        const pageSanitizer = typeof window.sanitizeMarkdownFragment === "function"
+          ? window.sanitizeMarkdownFragment
+          : null;
+        bubble.replaceChildren(
+          pageSanitizer
+            ? pageSanitizer(markdown)
+            : bridgeSanitizeMarkdown(markdown),
+        );
+      }
+    }
+
+    const pacer = createAdaptiveRenderPacer({ onRender: render });
+    return Object.freeze({
+      abort: () => {
+        pacer.abort();
+        removeProvisional();
+      },
+      fail: () => {
+        pacer.abort();
+        removeProvisional();
+      },
+      finish: () => pacer.finish(),
+      metrics: pacer.metrics,
+      push: pacer.push,
+      stats,
+    });
+  }
+
+  function smoothChatStreamResponse(response, signal) {
     if (!response.body) return response;
     const reader = response.body.getReader();
     const encoder = new TextEncoder();
     const decoder = new TextDecoder();
+    const rawChunks = [];
+    const screen = createProvisionalScreenRenderer();
     let stopped = false;
+    let released = false;
     let abortHandler = null;
-    let pacer = null;
 
     const body = new ReadableStream({
       start(controller) {
-        pacer = createStreamPacer({
-          onText: (text) => controller.enqueue(encoder.encode(deltaSseFrame(text))),
-          onEvent: (frame) => controller.enqueue(encoder.encode(frame)),
-        });
+        function releaseKernelWire() {
+          if (released) return;
+          released = true;
+          for (const chunk of rawChunks.splice(0)) controller.enqueue(chunk);
+        }
+
         abortHandler = () => {
           if (stopped) return;
           stopped = true;
@@ -763,7 +997,7 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
             : Object.assign(new Error("The operation was aborted."), {
               name: "AbortError",
             });
-          pacer.abort();
+          screen.abort();
           void reader.cancel(reason).catch((cause) => {
             console.warn("Frontier could not cancel the upstream chat stream.", cause);
           });
@@ -781,6 +1015,11 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
             while (true) {
               const { value, done } = await reader.read();
               if (done) break;
+              if (released) {
+                controller.enqueue(value);
+                continue;
+              }
+              rawChunks.push(value);
               buffer += decoder.decode(value, { stream: true });
               while (true) {
                 const separator = /\\r?\\n\\r?\\n/.exec(buffer);
@@ -790,25 +1029,33 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
                 buffer = buffer.slice(end);
                 const event = parseSseEvent(frame);
                 if (event?.type === "delta" && typeof event.text === "string") {
-                  pacer.push(event.text);
+                  screen.push(event.text);
                   continue;
                 }
-                const terminal = event?.type === "done" || event?.type === "error";
-                pacer.event(frame, { terminal });
-                if (terminal) pacer.finish();
+                if (event?.type === "error") {
+                  screen.fail();
+                  releaseKernelWire();
+                  continue;
+                }
+                if (event?.type === "done") {
+                  await screen.finish();
+                  releaseKernelWire();
+                }
               }
             }
             buffer += decoder.decode();
-            if (buffer) pacer.event(buffer);
-            pacer.finish();
+            if (!released) {
+              screen.fail();
+              releaseKernelWire();
+            }
             if (stopped) return;
             stopped = true;
             controller.close();
           } catch (cause) {
             if (stopped || signal?.aborted) return;
-            if (buffer) pacer.event(buffer);
-            pacer.event(errorSseFrame(cause), { terminal: true });
-            pacer.finish();
+            screen.fail();
+            rawChunks.push(encoder.encode(errorSseFrame(cause)));
+            releaseKernelWire();
             stopped = true;
             controller.close();
           } finally {
@@ -824,7 +1071,7 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
       cancel(reason) {
         if (stopped) return undefined;
         stopped = true;
-        pacer?.abort();
+        screen.abort();
         signal?.removeEventListener("abort", abortHandler);
         return reader.cancel(reason);
       },
@@ -884,7 +1131,7 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
       if (!shouldWrapChatStream) return response;
       return chatStreamMode === "hold"
         ? holdChatStreamResponse(response, requestSignal)
-        : paceChatStreamResponse(response, requestSignal);
+        : smoothChatStreamResponse(response, requestSignal);
     };
     if (!isChat || typeof options.body !== "string") {
       return fetchNative();

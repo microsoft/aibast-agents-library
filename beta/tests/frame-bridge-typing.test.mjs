@@ -5,6 +5,7 @@ import test from "node:test";
 
 await import("../ui/stream-follow.js");
 await import("../ui/stream-pacing.js");
+await import("../ui/stream-render-pacing.js");
 await import("../ui/chat-look.js");
 
 const mainSource = readFileSync(
@@ -17,6 +18,10 @@ const {
   createTextSplitter,
   splitTextPieces,
 } = globalThis.RappStreamPacing;
+const {
+  createAdaptiveRenderPacer,
+  splitRenderPieces,
+} = globalThis.RappStreamRenderPacing;
 const {
   applyLookStyles,
   grailFrameCss,
@@ -49,6 +54,7 @@ function materializeBridgeSource(chatStreamMode) {
     applyLookStyles,
     chatStreamMode,
     createStreamPacer,
+    createAdaptiveRenderPacer,
     createTailFollower,
     createTextSplitter,
     exportRedactionSource: "",
@@ -59,6 +65,7 @@ function materializeBridgeSource(chatStreamMode) {
     markGroupLast,
     normalizeChatLook,
     smoothStreamCss,
+    splitRenderPieces,
     splitTextPieces,
   });
 }
@@ -96,6 +103,10 @@ function fakeClock() {
     }
   }
 
+  function requestFrame(callback) {
+    return setTimer(callback, 24);
+  }
+
   class ClockDate extends Date {
     static now() {
       return currentTime;
@@ -107,6 +118,7 @@ function fakeClock() {
     clearTimer,
     now: () => currentTime,
     pending: () => tasks.size,
+    requestFrame,
     runAll,
     setTimer,
   };
@@ -117,16 +129,49 @@ function createDom() {
   const mutationObservations = [];
   const resizeObservations = [];
 
+  function dataName(name) {
+    return name
+      .slice(5)
+      .replace(/-([a-z])/g, (_match, letter) => letter.toUpperCase());
+  }
+
+  function matches(element, selector) {
+    if (!element?.classList) return false;
+    if (selector === ".avatar") return element.classList.contains("avatar");
+    if (selector === ".bubble") return element.classList.contains("bubble");
+    if (selector === ".typing-indicator") {
+      return element.classList.contains("typing-indicator");
+    }
+    if (selector === ".msg.assistant.stream-arriving") {
+      return element.classList.contains("msg")
+        && element.classList.contains("assistant")
+        && element.classList.contains("stream-arriving");
+    }
+    if (selector.startsWith(".msg.assistant:not(")) {
+      return element.classList.contains("msg")
+        && element.classList.contains("assistant")
+        && element.dataset.rappProvisional !== "1"
+        && !element.classList.contains("typing-indicator")
+        && !element.classList.contains("stream-arriving");
+    }
+    return false;
+  }
+
   function createElement(tagName = "div") {
     const attributes = new Map();
     const listeners = new Map();
     const classes = new Set();
+    const children = [];
     const styleValues = new Map();
     const element = {
       append: () => {},
       appendChild(child) {
+        if (!child) return child;
+        child.parentNode?.removeChild?.(child);
+        children.push(child);
         child.parentNode = element;
         if (child.id) byId.set(child.id, child);
+        return child;
       },
       addEventListener(type, listener) {
         listeners.set(type, listener);
@@ -140,28 +185,109 @@ function createDom() {
           else classes.delete(value);
         },
       },
-      closest: () => null,
+      children,
+      childNodes: children,
+      cloneNode(deep = false) {
+        const clone = createElement(element.tagName);
+        clone.className = element.className;
+        clone.textContent = element.textContent;
+        if (deep) {
+          for (const child of children) clone.appendChild(child.cloneNode(true));
+        }
+        return clone;
+      },
+      closest(selector) {
+        let current = element;
+        while (current) {
+          if (
+            selector === ".response-slot"
+            && current.classList?.contains("response-slot")
+          ) return current;
+          current = current.parentNode;
+        }
+        return null;
+      },
       dataset: {},
       getAttribute: (name) => attributes.get(name) ?? null,
       getBoundingClientRect: () => ({ height: 0 }),
       id: "",
       isContentEditable: false,
       listeners,
+      get nextSibling() {
+        if (!element.parentNode) return null;
+        const siblings = element.parentNode.children || [];
+        return siblings[siblings.indexOf(element) + 1] || null;
+      },
+      nodeType: 1,
+      get parentElement() {
+        return element.parentNode;
+      },
       parentNode: null,
-      querySelector: () => null,
-      querySelectorAll: () => [],
+      querySelector(selector) {
+        return element.querySelectorAll(selector)[0] || null;
+      },
+      querySelectorAll(selector) {
+        const found = [];
+        function walk(node) {
+          for (const child of node.children || []) {
+            if (matches(child, selector)) found.push(child);
+            walk(child);
+          }
+        }
+        walk(element);
+        return found;
+      },
+      insertBefore(child, reference) {
+        child.parentNode?.removeChild?.(child);
+        const index = reference ? children.indexOf(reference) : -1;
+        if (index < 0) children.push(child);
+        else children.splice(index, 0, child);
+        child.parentNode = element;
+        return child;
+      },
       remove() {
+        element.parentNode?.removeChild?.(element);
         if (element.id) byId.delete(element.id);
       },
-      removeAttribute: (name) => attributes.delete(name),
-      setAttribute: (name, value) => attributes.set(name, String(value)),
+      removeAttribute(name) {
+        attributes.delete(name);
+        if (name.startsWith("data-")) delete element.dataset[dataName(name)];
+      },
+      removeChild(child) {
+        const index = children.indexOf(child);
+        if (index >= 0) children.splice(index, 1);
+        child.parentNode = null;
+        return child;
+      },
+      replaceChildren(...nextChildren) {
+        children.splice(0);
+        element.renderedValue = nextChildren[0]?.renderedValue || "";
+        element.renderedHistory.push(element.renderedValue);
+        for (const child of nextChildren) {
+          if (child?.nodeType) element.appendChild(child);
+        }
+      },
+      setAttribute(name, value) {
+        attributes.set(name, String(value));
+        if (name.startsWith("data-")) element.dataset[dataName(name)] = String(value);
+      },
       style: {
         getPropertyValue: (name) => styleValues.get(name) || "",
         setProperty: (name, value) => styleValues.set(name, String(value)),
       },
       tagName: String(tagName).toUpperCase(),
       textContent: "",
+      renderedHistory: [],
     };
+    Object.defineProperty(element, "className", {
+      get: () => [...classes].join(" "),
+      set(value) {
+        classes.clear();
+        for (const name of String(value || "").split(/\s+/).filter(Boolean)) {
+          classes.add(name);
+        }
+      },
+    });
     return element;
   }
 
@@ -173,10 +299,15 @@ function createDom() {
   chat.clientHeight = 400;
   chat.scrollHeight = 1000;
   chat.scrollTop = 600;
-  chat.arriving = null;
-  chat.querySelector = (selector) => (
-    selector === ".msg.assistant.stream-arriving" ? chat.arriving : null
-  );
+  const responseSlot = createElement("div");
+  responseSlot.className = "response-slot";
+  const typingIndicator = createElement("div");
+  typingIndicator.className = "msg assistant typing-indicator";
+  const avatar = createElement("div");
+  avatar.className = "avatar";
+  typingIndicator.appendChild(avatar);
+  responseSlot.appendChild(typingIndicator);
+  chat.appendChild(responseSlot);
   const footer = createElement("footer");
   footer.getBoundingClientRect = () => ({ height: 112.5 });
   byId.set("chat", chat);
@@ -185,6 +316,20 @@ function createDom() {
     addEventListener: () => {},
     body,
     createElement,
+    createDocumentFragment() {
+      const fragment = createElement("fragment");
+      fragment.nodeType = 11;
+      return fragment;
+    },
+    createTextNode(value) {
+      return {
+        cloneNode: () => document.createTextNode(value),
+        nodeType: 3,
+        nodeValue: String(value),
+        parentNode: null,
+        textContent: String(value),
+      };
+    },
     documentElement,
     getElementById: (id) => byId.get(id) || null,
     head,
@@ -192,13 +337,20 @@ function createDom() {
       if (selector === "footer") return footer;
       return null;
     },
-    querySelectorAll: () => [],
+    querySelectorAll(selector) {
+      if (selector === "#chat .typing-indicator") {
+        return chat.querySelectorAll(".typing-indicator");
+      }
+      return [];
+    },
   };
 
   class FakeMutationObserver {
     constructor(callback) {
       this.callback = callback;
     }
+
+    disconnect() {}
 
     observe(target, options) {
       mutationObservations.push({ observer: this, options, target });
@@ -224,7 +376,9 @@ function createDom() {
     document,
     footer,
     mutationObservations,
+    responseSlot,
     resizeObservations,
+    typingIndicator,
   };
 }
 
@@ -283,7 +437,14 @@ function installBridge({
     Error,
     Headers,
     MutationObserver: dom.FakeMutationObserver,
+    DOMParser: class {
+      parseFromString() {
+        return { body: { childNodes: [] } };
+      }
+    },
     performance: { now: clock.now },
+    requestAnimationFrame: clock.requestFrame,
+    cancelAnimationFrame: clock.clearTimer,
     ReadableStream,
     Request,
     ResizeObserver: dom.FakeResizeObserver,
@@ -294,6 +455,13 @@ function installBridge({
     TextEncoder,
     URL,
     window,
+  });
+  window.marked = {
+    parse: (text) => `rendered:${text}`,
+  };
+  window.sanitizeMarkdownFragment = (html) => ({
+    nodeType: 11,
+    renderedValue: html,
   });
   vm.runInContext(materializeBridgeSource(chatStreamMode), context);
   return { clock, dom, window };
@@ -376,7 +544,7 @@ function largeReply(length = 1600) {
   return phrase.repeat(Math.ceil(length / phrase.length)).slice(0, length);
 }
 
-test("smooth bridge paces a large delta byte-equally before done", async () => {
+test("smooth bridge renders provisionally while holding the kernel wire", async () => {
   const upstream = controlledResponse();
   const installed = installBridge({
     chatStreamMode: "smooth",
@@ -390,29 +558,99 @@ test("smooth bridge paces a large delta byte-equally before done", async () => {
     },
   );
   const text = largeReply();
-  upstream.enqueue(sse({ type: "delta", text }));
+  const frames = [
+    sse({ type: "delta", text }),
+    sse({ type: "agent", logs: "tool complete" }),
+    sse({ type: "done", response: text }),
+  ];
+  const reader = wrapped.body.getReader();
+  const firstRead = reader.read();
+  let kernelReadSettled = false;
+  void firstRead.then(
+    () => { kernelReadSettled = true; },
+    () => { kernelReadSettled = true; },
+  );
+
+  upstream.enqueue(frames[0]);
   await nextTask();
   installed.clock.runAll();
-  upstream.enqueue(sse({ type: "agent", logs: "tool complete" }));
-  upstream.enqueue(sse({ type: "done", response: text }));
-  upstream.close();
+  await nextTask();
 
-  const chunks = await readChunks(wrapped.body.getReader());
-  const events = parseEvents(chunks.join(""));
-  const deltas = events.filter((event) => event.type === "delta");
-  assert.ok(deltas.length >= 24, `expected >=24 chunks, got ${deltas.length}`);
-  assert.equal(deltas.map((event) => event.text).join(""), text);
-  assert.deepEqual(
-    events.slice(-2).map((event) => event.type),
-    ["agent", "done"],
+  const streamingStats = installed.window.__rappSmoothScreenStats;
+  const provisional = installed.dom.responseSlot.children.find(
+    (child) => child.dataset.rappProvisional === "1",
+  );
+  const bubble = provisional?.querySelector(".bubble");
+  assert.equal(kernelReadSettled, false);
+  assert.ok(
+    streamingStats.renderCount >= 40,
+    `expected >=40 renders, got ${streamingStats.renderCount}`,
+  );
+  assert.equal(streamingStats.shownText, text);
+  assert.equal(
+    installed.window.__rappSmoothMarkdownCapabilities.marked,
+    true,
+  );
+  assert.equal(
+    installed.window.__rappSmoothMarkdownCapabilities.sanitizer,
+    true,
+  );
+  assert.equal(
+    installed.window.__rappSmoothMarkdownCapabilities.normalizeMd,
+    false,
+  );
+  assert.ok(bubble);
+  assert.equal(bubble.renderedHistory.length, streamingStats.renderCount);
+  for (let index = 1; index < bubble.renderedHistory.length; index += 1) {
+    assert.ok(
+      bubble.renderedHistory[index].length
+        >= bubble.renderedHistory[index - 1].length,
+      `render ${index} regressed`,
+    );
+  }
+
+  upstream.enqueue(frames[1]);
+  upstream.enqueue(frames[2]);
+  upstream.close();
+  await nextTask();
+  installed.clock.runAll();
+  await nextTask();
+
+  const first = await firstRead;
+  const replay = new TextDecoder().decode(first.value) + (
+    await readChunks(reader)
+  ).join("");
+  assert.equal(replay, frames.join(""));
+
+  assert.ok(provisional);
+  provisional.getBoundingClientRect = () => ({ height: 180 });
+  const finalBubble = installed.dom.document.createElement("div");
+  finalBubble.className = "msg assistant";
+  finalBubble.getBoundingClientRect = () => ({ height: 172 });
+  installed.dom.responseSlot.appendChild(finalBubble);
+  const handoffObservation = installed.dom.mutationObservations.find(
+    ({ target }) => target === installed.dom.responseSlot,
+  );
+  assert.ok(handoffObservation);
+  handoffObservation.observer.callback();
+  handoffObservation.observer.callback();
+
+  const finalStats = installed.window.__rappSmoothScreenStats;
+  assert.equal(finalStats.handoffCount, 1);
+  assert.equal(finalStats.removeCount, 1);
+  assert.equal(finalStats.heightDelta, -8);
+  assert.equal(
+    installed.dom.responseSlot.children.includes(provisional),
+    false,
   );
   console.log(
-    `smooth: ${deltas.length} delta chunks; byte-equality yes; `
-      + `order ${events.at(-2).type}->${events.at(-1).type}`,
+    `smooth v2: 0 kernel bytes before terminal; `
+      + `${streamingStats.renderCount} monotonic provisional renders; `
+      + "byte-equality yes; handoff 1; removal 1; |height delta| 8px",
   );
 });
 
-test("smooth done flushes queued text before upstream EOF", async () => {
+test("smooth terminal event drains the screen and releases wire before EOF", async () => {
   const upstream = controlledResponse();
   const installed = installBridge({
     chatStreamMode: "smooth",
@@ -427,32 +665,34 @@ test("smooth done flushes queued text before upstream EOF", async () => {
   );
   const text = "terminal done flushes every queued word immediately";
   const reader = wrapped.body.getReader();
+  const firstRead = reader.read();
+  let settled = false;
+  void firstRead.then(() => { settled = true; });
 
-  upstream.enqueue(sse({ type: "delta", text }));
-  const first = await reader.read();
-  assert.ok(installed.clock.pending() > 0);
-  upstream.enqueue(sse({ type: "done", response: text }));
+  const deltaFrame = sse({ type: "delta", text });
+  const doneFrame = sse({ type: "done", response: text });
+  upstream.enqueue(deltaFrame);
   await nextTask();
-  const second = await reader.read();
-  const third = await reader.read();
-  const decoder = new TextDecoder();
-  const events = parseEvents(
-    decoder.decode(first.value)
-      + decoder.decode(second.value)
-      + decoder.decode(third.value),
-  );
+  assert.ok(installed.clock.pending() > 0);
+  assert.equal(settled, false);
+  upstream.enqueue(doneFrame);
+  await nextTask();
+  installed.clock.runAll();
+  await nextTask();
 
+  const first = await firstRead;
+  const second = await reader.read();
+  const replay = new TextDecoder().decode(first.value)
+    + new TextDecoder().decode(second.value);
+  assert.equal(replay, deltaFrame + doneFrame);
   assert.equal(
-    events.filter((event) => event.type === "delta")
-      .map((event) => event.text)
-      .join(""),
+    installed.window.__rappSmoothScreenStats.shownText,
     text,
   );
-  assert.equal(events.at(-1).type, "done");
   assert.equal(installed.clock.pending(), 0);
   upstream.close();
   assert.equal((await reader.read()).done, true);
-  console.log("smooth done flush: queued text emitted before upstream EOF");
+  console.log("smooth terminal drain: final screen and held wire released before EOF");
 });
 
 test("smooth style and follow observers exist only in smooth mode", () => {
@@ -620,6 +860,10 @@ test("smooth upstream error flushes queued text followed by error", async () => 
   const text = "partial words remain byte equal";
   upstream.enqueue(sse({ type: "delta", text }));
   await nextTask();
+  const provisional = installed.dom.responseSlot.children.find(
+    (child) => child.dataset.rappProvisional === "1",
+  );
+  assert.ok(provisional);
   upstream.error(new Error("upstream exploded"));
 
   const events = parseEvents((await readChunks(wrapped.body.getReader())).join(""));
@@ -631,6 +875,18 @@ test("smooth upstream error flushes queued text followed by error", async () => 
   );
   assert.equal(events.at(-1).type, "error");
   assert.equal(events.at(-1).error, "upstream exploded");
+  assert.equal(
+    installed.dom.responseSlot.children.includes(provisional),
+    false,
+  );
+  assert.equal(
+    installed.window.__rappSmoothScreenStats.removeCount,
+    1,
+  );
+  assert.equal(
+    installed.dom.typingIndicator.classList.contains("rapp-provisional-hidden"),
+    false,
+  );
 });
 
 test("aborting a smooth response cancels upstream", async () => {
@@ -649,10 +905,25 @@ test("aborting a smooth response cancels upstream", async () => {
     },
   );
   const read = wrapped.body.getReader().read();
+  upstream.enqueue(sse({ type: "delta", text: "visible before abort" }));
+  await nextTask();
+  const provisional = installed.dom.responseSlot.children.find(
+    (child) => child.dataset.rappProvisional === "1",
+  );
+  assert.ok(provisional);
 
   controller.abort();
 
   await assert.rejects(read, (cause) => cause?.name === "AbortError");
   assert.equal(upstream.canceled, true);
   assert.equal(upstream.cancelReason?.name, "AbortError");
+  assert.equal(installed.clock.pending(), 0);
+  assert.equal(
+    installed.dom.responseSlot.children.includes(provisional),
+    false,
+  );
+  assert.equal(
+    installed.window.__rappSmoothScreenStats.removeCount,
+    1,
+  );
 });
