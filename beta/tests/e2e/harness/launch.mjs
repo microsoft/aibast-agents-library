@@ -318,6 +318,13 @@ function homeSnapshot(root, { skipDescendants = [] } = {}) {
 
 export function snapshotProtectedHomes() {
   const brainstemRoot = path.join(homedir(), ".brainstem");
+  const betaHome = path.join(brainstemRoot, "beta-launcher");
+  // A live Frontier owning the real beta home keeps writing its worker logs
+  // and routing state while the suite runs. That churn is that app's, not the
+  // isolated child's — so when such an app is alive its volatile directories
+  // are excluded, and the snapshot records which pid it was so the before and
+  // after comparison stays honest (and fails if the owner changed).
+  const liveFrontier = liveFrontierPid(betaHome);
   return {
     brainstem: homeSnapshot(brainstemRoot, {
       // A developer-owned Brainstem may be running while the harness executes.
@@ -326,10 +333,28 @@ export function snapshotProtectedHomes() {
       skipDescendants: [
         path.join(brainstemRoot, "src"),
         path.join(brainstemRoot, "venv"),
+        ...(liveFrontier
+          ? [path.join(betaHome, "logs"), path.join(betaHome, "routing")]
+          : []),
       ],
     }),
+    liveFrontier,
     rapp: homeSnapshot(path.join(homedir(), ".rapp")),
   };
+}
+
+function liveFrontierPid(betaHome) {
+  try {
+    const metadata = JSON.parse(
+      readFileSync(path.join(betaHome, "ui-driver.json"), "utf8"),
+    );
+    const pid = Number(metadata?.pid);
+    if (!Number.isInteger(pid) || pid <= 0 || pid === process.pid) return null;
+    process.kill(pid, 0);
+    return pid;
+  } catch {
+    return null;
+  }
 }
 
 export function formatProtectedHomes(snapshot) {

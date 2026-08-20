@@ -28,7 +28,7 @@ macOS, Windows, and Linux.
 ```
  node --test beta/tests/e2e/**            ← one file per matrix area, node:test, no new runner
    │
-   ├─ harness/launch.mjs                  ← boots the Frontier headless in a throwaway root:
+   ├─ harness/launch.mjs                  ← boots the Frontier (window shown) in a throwaway root:
    │     BRAINSTEM_HOME, BRAINSTEM_BETA_HOME, RAPP_LINEAGE_HOME under mkdtemp;
    │     a COPY of rapp_brainstem/ as the Grail (never the user's);
    │     BRAINSTEM_BETA_OWN_PORT=1 → the app must own its kernel (never adopt :7071);
@@ -110,7 +110,7 @@ ids the matrix lists (`#surgeon-send`, `#input`, `#send`, `#agent-tree`, …) an
 | Tier | What | Model | Where it runs |
 |---|---|---|---|
 | T0 | the existing unit/integration suites (`npm test`) | none | every push (today) |
-| T1 | headless app + replay/scripted model, every matrix row that does not need the network | fake | every push, 3 OSes (`frontier-e2e` job; Linux under `xvfb-run`) |
+| T1 | shown app window + replay/scripted model, every matrix row that does not need the network | fake | every push, 3 OSes (`frontier-e2e` job; Linux under `xvfb-run`) |
 | T2 | network rows: store download from the real catalog, update check against the real tag, installer on a clean home | none (git/curl) | every push, already partly covered by preflight |
 | T3 | live-model smoke: 5 scenarios re-recorded weekly (cassette refresh) — catches prompt drift | real | nightly / manual, never gating |
 
@@ -157,6 +157,16 @@ A matrix row is "covered" only when its scenario is linked in the `Existing test
 runs in CI; the matrix is regenerated from the suite's manifest, not edited by hand.
 
 ## How to run and record
+
+The harness shows its window on every platform. In a never-shown window the
+cross-origin Brainstem frame gets no viewport on CI machines (macOS, Windows
+and xvfb alike — every rect 0x0, the composer "not visible"), even though the
+same hidden window lays out on a developer Mac; one mode everywhere is the
+deterministic choice, and it is the mode a person uses. Set
+`BRAINSTEM_BETA_E2E_HEADLESS=1` to opt back into a hidden window locally.
+When a live Frontier owns `~/.brainstem` on the machine running the suite, the
+boot scenario excludes that app's volatile `logs/` and `routing/` from its
+"user homes unchanged" comparison and says so.
 
 The unit suite includes the harness contracts and skips Electron scenarios unless they are
 explicitly enabled:
