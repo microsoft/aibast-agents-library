@@ -5,6 +5,7 @@ import test from "node:test";
 
 await import("../ui/stream-follow.js");
 await import("../ui/stream-pacing.js");
+await import("../ui/chat-look.js");
 
 const mainSource = readFileSync(
   new URL("../electron/main.mjs", import.meta.url),
@@ -16,6 +17,14 @@ const {
   createTextSplitter,
   splitTextPieces,
 } = globalThis.RappStreamPacing;
+const {
+  applyLookStyles,
+  grailFrameCss,
+  inferMessageSide,
+  markArrived,
+  markGroupLast,
+  normalizeChatLook,
+} = globalThis.RappChatLook;
 
 function extractExpression(startMarker, endMarker) {
   const declarationStart = mainSource.indexOf(startMarker);
@@ -28,21 +37,27 @@ function extractExpression(startMarker, endMarker) {
 }
 
 const smoothStreamCss = vm.runInNewContext(
-  extractExpression("const smoothStreamCss =", ";\nconst startupFingerprint"),
+  extractExpression("const smoothStreamCss =", ";\nconst chatLook ="),
 );
 const bridgeExpression = extractExpression(
   "const BETA_FRAME_BRIDGE_SOURCE =",
-  ";\nconst copilot =",
+  ";\n\nfunction frameBridgeInstallationSource",
 );
 
 function materializeBridgeSource(chatStreamMode) {
   return vm.runInNewContext(bridgeExpression, {
+    applyLookStyles,
     chatStreamMode,
     createStreamPacer,
     createTailFollower,
     createTextSplitter,
     exportRedactionSource: "",
+    grailFrameCss,
     humanizeAgentName: (value) => String(value),
+    inferMessageSide,
+    markArrived,
+    markGroupLast,
+    normalizeChatLook,
     smoothStreamCss,
     splitTextPieces,
   });
@@ -213,7 +228,9 @@ function createDom() {
 }
 
 function installBridge({
+  chatLook = "messages",
   chatStreamMode = "smooth",
+  chatTypingEnabled = chatStreamMode === "hold",
   clock = fakeClock(),
   nativeFetch,
 } = {}) {
@@ -237,6 +254,10 @@ function installBridge({
     },
   };
   const window = {
+    __rappBetaChatLookConfig: {
+      chatLook,
+      chatTypingEnabled,
+    },
     addEventListener: () => {},
     alert: () => {},
     clearTimeout: clock.clearTimer,
@@ -495,6 +516,48 @@ test("hold emits zero bytes before completion and replays ordered SSE", async ()
   const replay = decoder.decode(first.value) + remaining.join("");
   assert.equal(replay, frames.join(""));
   console.log("hold: 0 bytes before completion; ordered replay yes");
+});
+
+test("frame bridge injects and removes Messages look without a reload", () => {
+  const installed = installBridge({
+    chatLook: "messages",
+    nativeFetch: async () => new Response("ok"),
+  });
+  const { window } = installed;
+  const marker = window.__rappBetaFrameBridge;
+
+  assert.ok(window.document.getElementById("__rappChatLook"));
+  assert.equal(
+    window.document.documentElement.getAttribute("data-rapp-look"),
+    "messages",
+  );
+  console.log("inject: Messages style and html[data-rapp-look] present");
+
+  const applied = window.__rappBetaApplyChatLook("business", false);
+  assert.equal(applied.chatLook, "business");
+  assert.equal(applied.chatTypingEnabled, false);
+  assert.equal(window.__rappBetaFrameBridge, marker);
+  assert.equal(window.document.getElementById("__rappChatLook"), null);
+  assert.equal(
+    window.document.documentElement.getAttribute("data-rapp-look"),
+    null,
+  );
+  console.log("remove: Messages style and root attribute removed without reload");
+
+  const business = installBridge({
+    chatLook: "business",
+    chatTypingEnabled: false,
+    nativeFetch: async () => new Response("ok"),
+  });
+  assert.equal(
+    business.window.document.getElementById("__rappChatLook"),
+    null,
+  );
+  assert.equal(
+    business.window.document.documentElement.getAttribute("data-rapp-look"),
+    null,
+  );
+  console.log("business injects nothing");
 });
 
 test("smooth upstream error flushes queued text followed by error", async () => {

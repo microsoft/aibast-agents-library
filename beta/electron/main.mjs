@@ -48,6 +48,7 @@ import {
 } from "../scripts/walkthrough-provenance.mjs";
 import "../ui/stream-follow.js";
 import "../ui/stream-pacing.js";
+import "../ui/chat-look.js";
 
 const {
   createTailFollower,
@@ -57,6 +58,14 @@ const {
   createTextSplitter,
   splitTextPieces,
 } = globalThis.RappStreamPacing;
+const {
+  applyLookStyles,
+  grailFrameCss,
+  inferMessageSide,
+  markArrived,
+  markGroupLast,
+  normalizeChatLook,
+} = globalThis.RappChatLook;
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 const packageDir = path.resolve(dirname, "..");
@@ -137,6 +146,10 @@ html[data-rapp-stream="smooth"] .typing span:nth-child(3) {
   }
 }
 `;
+const chatLook = process.env.RAPP_CHAT_LOOK === "business"
+  ? "business"
+  : "messages";
+const chatTypingEnabled = chatStreamMode === "hold";
 const startupFingerprint = betaSourceFingerprint(path.resolve(packageDir, ".."));
 const brainstemRuntimeFingerprint = runtimeDirectoryFingerprint(
   config.brainstemDir,
@@ -150,7 +163,12 @@ const exportRedactionSource = createExportRedactionScript({
   ],
 });
 const BETA_FRAME_BRIDGE_SOURCE = `(() => {
-  if (window.__rappBetaFrameBridge) return true;
+  const requestedChatLook = window.__rappBetaChatLookConfig?.chatLook || "messages";
+  const requestedChatTyping = window.__rappBetaChatLookConfig?.chatTypingEnabled !== false;
+  if (window.__rappBetaFrameBridge) {
+    window.__rappBetaApplyChatLook?.(requestedChatLook, requestedChatTyping);
+    return true;
+  }
   window.__rappBetaFrameBridge = true;
   ${exportRedactionSource}
   const humanizeAgentName = ${humanizeAgentName.toString()};
@@ -266,6 +284,12 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     return installed;
   }
   if (chatStreamMode === "smooth") installSmoothTailFollow();
+  const normalizeChatLook = ${normalizeChatLook.toString()};
+  const applyLookStyles = ${applyLookStyles.toString()};
+  const inferMessageSide = ${inferMessageSide.toString()};
+  const markArrived = ${markArrived.toString()};
+  const markGroupLast = ${markGroupLast.toString()};
+  const grailFrameCss = ${JSON.stringify(grailFrameCss)};
   const style = document.createElement("style");
   style.textContent = [
     ".beta-agent-icon-button{display:grid!important;place-items:center;",
@@ -307,6 +331,61 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     "{border-color:#da3633;color:#ff7b72}",
   ].join("");
   document.head.appendChild(style);
+  let chatTypingEnabled = requestedChatTyping;
+  let currentChatLook = normalizeChatLook(requestedChatLook);
+  const chatRoot = document.getElementById("chat");
+  function frameMessages() {
+    return document.querySelectorAll("#chat .msg.user, #chat .msg.assistant");
+  }
+  function syncMessageGroups() {
+    markGroupLast(frameMessages(), inferMessageSide);
+  }
+  function clearMessageMarkers() {
+    for (const message of frameMessages()) {
+      message.removeAttribute("data-group-last");
+      message.removeAttribute("data-rapp-arrived");
+    }
+  }
+  function applyFrameChatLook(look, typingEnabled) {
+    currentChatLook = normalizeChatLook(look);
+    chatTypingEnabled = Boolean(typingEnabled);
+    applyLookStyles(
+      document,
+      currentChatLook,
+      grailFrameCss,
+      "__rappChatLook",
+    );
+    if (currentChatLook === "messages") syncMessageGroups();
+    else clearMessageMarkers();
+    return {
+      chatLook: currentChatLook,
+      chatTypingEnabled,
+    };
+  }
+  window.__rappBetaApplyChatLook = applyFrameChatLook;
+  if (chatRoot) {
+    new MutationObserver((records) => {
+      if (currentChatLook !== "messages") return;
+      for (const record of records) {
+        for (const node of record.addedNodes || []) {
+          if (node?.nodeType !== 1) continue;
+          const arrivals = [];
+          if (node.matches?.(".msg.assistant:not(.typing-indicator)")) {
+            arrivals.push(node);
+          }
+          const descendants = node.querySelectorAll?.(
+            ".msg.assistant:not(.typing-indicator)",
+          ) || [];
+          arrivals.push(
+            ...descendants,
+          );
+          for (const arrival of arrivals) markArrived(arrival);
+        }
+      }
+      syncMessageGroups();
+    }).observe(chatRoot, { childList: true, subtree: true });
+  }
+  applyFrameChatLook(requestedChatLook, requestedChatTyping);
   const downloadIcon = '<svg viewBox="0 0 24 24" fill="none" '
     + 'stroke="currentColor" stroke-width="2" stroke-linecap="round" '
     + 'stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/>'
@@ -868,6 +947,13 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
   }, true);
   return true;
 })()`;
+
+function frameBridgeInstallationSource() {
+  return `window.__rappBetaChatLookConfig = ${JSON.stringify({
+    chatLook,
+    chatTypingEnabled,
+  })};\n${BETA_FRAME_BRIDGE_SOURCE}`;
+}
 const copilot = new CopilotRuntime({
   tokenFile: path.join(config.brainstemDir, ".copilot_token"),
   workingDirectory: config.brainstemDir,
@@ -1785,7 +1871,7 @@ function registerIpc() {
       (candidate) => loopbackUrl(candidate.url),
     );
     if (!frame) return { installed: false };
-    await frame.executeJavaScript(BETA_FRAME_BRIDGE_SOURCE, true);
+    await frame.executeJavaScript(frameBridgeInstallationSource(), true);
     return { installed: true };
   });
   ipcMain.handle("beta:lineage-command", async (event, message) => {
