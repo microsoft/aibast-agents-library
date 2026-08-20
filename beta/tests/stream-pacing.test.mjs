@@ -1,6 +1,10 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
+import {
+  resolveChatStreamMode,
+} from "../electron/chat-stream-mode.mjs";
+
 await import("../ui/stream-pacing.js");
 
 const {
@@ -60,6 +64,24 @@ function textOfLength(length) {
   const phrase = "Smooth streaming keeps every word, emoji 🙂, and pause. ";
   return phrase.repeat(Math.ceil(length / phrase.length)).slice(0, length);
 }
+
+test("stream mode defaults smooth and keeps the typing flag as a hold alias", () => {
+  assert.equal(resolveChatStreamMode({}), "smooth");
+  assert.equal(resolveChatStreamMode({ RAPP_CHAT_STREAM: "raw" }), "raw");
+  assert.equal(resolveChatStreamMode({ RAPP_CHAT_STREAM: "hold" }), "hold");
+  assert.equal(resolveChatStreamMode({ RAPP_CHAT_STREAM: "unknown" }), "smooth");
+  assert.equal(
+    resolveChatStreamMode({
+      RAPP_CHAT_STREAM: "raw",
+      RAPP_CHAT_TYPING: "1",
+    }),
+    "hold",
+  );
+  assert.equal(
+    resolveChatStreamMode({ RAPP_CHAT_TYPING: "0" }),
+    "smooth",
+  );
+});
 
 test("splitter preserves text byte-for-byte with punctuation attached", () => {
   const text = "Hello, world!  This is smooth.\nNext line.";

@@ -6,17 +6,17 @@
     return pieces.join("") === text ? pieces : [text];
   }
 
-  function trailingFencePrefixLength(text) {
-    const match = String(text).match(/([`~]{1,2})$/u);
-    if (!match) return 0;
-    const marker = match[1];
-    return [...marker].every((character) => character === marker[0])
-      ? marker.length
-      : 0;
-  }
-
   function createTextSplitter() {
     let pending = "";
+
+    function trailingFencePrefixLength(text) {
+      const match = String(text).match(/([`~]{1,2})$/u);
+      if (!match) return 0;
+      const marker = match[1];
+      return [...marker].every((character) => character === marker[0])
+        ? marker.length
+        : 0;
+    }
 
     function push(value) {
       const text = pending + String(value ?? "");
