@@ -80,6 +80,105 @@ test("safe-word interceptor honors custom baseline and restore words", async () 
   assert.deepEqual(calls, ["restore", "materialize"]);
 });
 
+test("lineage commands round-trip the full wire result shape", async () => {
+  // The frame bridge forwards this result verbatim over postMessage and
+  // fabricates the /chat and /chat/stream responses from result.reply, so the
+  // exact shape IS the wire protocol.
+  const baselineRun = managerFixture();
+  const baseline = await executeLineageCommand({
+    message: "baseline",
+    routeManager: baselineRun.manager,
+  });
+  assert.deepEqual(baseline, {
+    intercepted: true,
+    action: "baseline",
+    fallback: null,
+    reply: lineageControlReplies.baseline,
+    compositionHash: "composed",
+    restored: undefined,
+    url: "http://127.0.0.1:7001",
+  });
+  assert.deepEqual(baselineRun.calls, ["baseline", "materialize"]);
+
+  const restoreRun = managerFixture();
+  const restored = await executeLineageCommand({
+    message: "restore",
+    routeManager: restoreRun.manager,
+  });
+  assert.equal(restored.intercepted, true);
+  assert.equal(restored.action, "restore");
+  assert.equal(restored.reply, lineageControlReplies.restore);
+  assert.equal(restored.restored, true);
+  assert.equal(restored.compositionHash, "composed");
+  assert.equal(restored.url, "http://127.0.0.1:7001");
+  assert.deepEqual(restoreRun.calls, ["restore", "materialize"]);
+});
+
+test("default safe words pass through untouched when custom words are configured", async () => {
+  const env = {
+    RAPP_BASELINE_SAFEWORD: "factory settings",
+    RAPP_RESTORE_WORD: "grow again",
+  };
+  const { calls, manager } = managerFixture();
+  const passed = await executeLineageCommand({
+    message: "restore",
+    routeManager: manager,
+    env,
+  });
+  assert.deepEqual(passed, { intercepted: false, message: "restore" });
+  assert.deepEqual(calls, [], "the default word must reach Grail untouched");
+
+  const reset = await executeLineageCommand({
+    message: " factory settings ",
+    routeManager: manager,
+    env,
+  });
+  assert.equal(reset.action, "baseline");
+  assert.equal(reset.reply, lineageControlReplies.baseline);
+  assert.deepEqual(calls, ["baseline", "materialize"]);
+});
+
+test("a partially compatible restore reports the kept-last-good compromise", async () => {
+  const { calls, manager } = managerFixture();
+  manager.lastLineageFallback = {
+    accepted: ["rappid:@frontier/good-ring:cafef00d"],
+    rejected: ["rappid:@frontier/bad-ring:deadbeef"],
+    strategy: "last-good",
+  };
+  const result = await executeLineageCommand({
+    message: "restore",
+    routeManager: manager,
+  });
+  assert.equal(result.intercepted, true);
+  assert.equal(result.restored, false);
+  assert.notEqual(result.reply, lineageControlReplies.restore);
+  assert.match(result.reply, /compatible verified molts.*incompatible rings/i);
+  assert.deepEqual(result.fallback, manager.lastLineageFallback);
+  assert.deepEqual(calls, ["restore", "materialize"]);
+});
+
+test("baseline never reports a partial restore even with fallback state", async () => {
+  const { manager } = managerFixture();
+  manager.lastLineageFallback = {
+    accepted: [],
+    rejected: ["rappid:@frontier/bad-ring:deadbeef"],
+    strategy: "last-good",
+  };
+  const result = await executeLineageCommand({
+    message: "baseline",
+    routeManager: manager,
+  });
+  assert.equal(result.reply, lineageControlReplies.baseline);
+  assert.equal(result.restored, undefined);
+});
+
+test("a safe word without the route manager is an error, not a silent pass", async () => {
+  await assert.rejects(
+    executeLineageCommand({ message: "restore" }),
+    /Frontier route manager/,
+  );
+});
+
 test("restore reports a refused composition instead of claiming success", async () => {
   const { manager } = managerFixture();
   manager.lastLineageFallback = {
@@ -108,4 +207,14 @@ test("renderer intercepts before Grail chat and main exposes the lineage IPC", (
   assert.match(main, /rapp-beta:lineage-confirmation-ack/);
   assert.match(main, /target\.pathname === "\/chat\/stream"/);
   assert.match(preload, /lineageCommand:/);
+  // The synthetic /chat/stream done-frame the bridge fabricates must keep the
+  // DOUBLE-escaped separator: the bridge lives inside a template literal, so
+  // only \\n\\n in main.mjs source puts the \n\n escape into the injected
+  // script and a real blank-line separator on the wire. A single-escaped
+  // newline breaks Grail's SSE parser ("stream ended without done").
+  assert.match(
+    main,
+    /const frame = "data: " \+ JSON\.stringify\(\{\s+type: "done",\s+response: result\.reply,\s+agent_logs: "",\s+streamed: false,\s+\}\) \+ "\\\\n\\\\n";/,
+  );
+  assert.match(main, /text\/event-stream/);
 });

@@ -21,24 +21,17 @@ import {
 } from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { mintRappid, rappidValid } from "./rapp-protocol.mjs";
+import { lineageStoreInternals } from "./lineage-store.mjs";
 
 const STORE_SCHEMA = "molt-lineage/1.0";
-const DEFAULT_OWNER = "molt-lineage"; // owner/slug are labels only; identity is the anchor digest
 const DEFAULT_ENV = "default";
+const JOURNAL_CORRUPT_REASON =
+  "promotion journal is corrupt (unreadable or not a JSON array) — refusing to trust or extend it";
+
+const { sourceSha256 } = lineageStoreInternals;
 
 function sha256Hex(str) {
   return createHash("sha256").update(String(str), "utf8").digest("hex");
-}
-
-// Deterministic label from an agent filename, e.g. context_memory_agent.py ->
-// "context-memory-agent". Only used as the cosmetic owner/slug on the rappid string;
-// the rappid's cryptographic identity comes solely from the anchor bytes.
-function slugForFilename(filename) {
-  const base = String(filename || "").replace(/\.py$/i, "");
-  let slug = base.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
-  if (!slug) slug = "agent";
-  return slug.slice(0, 100);
 }
 
 function hexOf(rappid) {
@@ -47,33 +40,23 @@ function hexOf(rappid) {
   return m ? m[1] : null;
 }
 
-// Ancestor rappid (ring 0): a stable identity for a baseline agent, derived only
-// from its pristine bytes, so the SAME Grail agent has the SAME ancestor rappid on
-// every device and in every environment (the cross-instance "same species" key).
-export function ancestorRappidFor(filename, baselineSource, owner = DEFAULT_OWNER) {
-  const anchor = createHash("sha256")
-    .update("molt-lineage/ancestor\n", "ascii")
-    .update(sha256Hex(baselineSource), "utf8")
-    .digest();
-  return mintRappid(owner, slugForFilename(filename), {
-    spkiDer: Uint8Array.from(anchor),
-  }).rappid;
+// Identity is UNIFIED with the live routed store: both derivations below delegate
+// to the exact rapp/1 functions lineage-store.mjs mints with, so the same molt
+// bytes mint the same rappid here and in the running app — the protocol's "the
+// same molt has the same rappid in every environment" invariant holds across
+// BOTH modules, not just within one.
+
+// Ancestor rappid (ring 0): a stable identity for a baseline agent, derived from
+// its filename + pristine bytes, so the SAME Grail agent has the SAME ancestor
+// rappid on every device and in every environment (the "same species" key).
+export function ancestorRappidFor(filename, baselineSource) {
+  return lineageStoreInternals.ancestorRappidFor(filename, baselineSource);
 }
 
-// Ring rappid: hash-chained to its parent and its bytes, so a ring cannot forge its
-// place in the lineage and the same molt has the same rappid everywhere.
-// anchor = sha256(parent_rappid \n sha256(source) \n ancestor_rappid).
-export function ringRappidFor(ancestorRappid, parentRappid, source, filename, owner = DEFAULT_OWNER) {
-  const anchor = createHash("sha256")
-    .update(String(parentRappid || ""), "utf8")
-    .update("\n", "ascii")
-    .update(sha256Hex(source), "utf8")
-    .update("\n", "ascii")
-    .update(String(ancestorRappid || ""), "utf8")
-    .digest();
-  return mintRappid(owner, slugForFilename(filename), {
-    spkiDer: Uint8Array.from(anchor),
-  }).rappid;
+// Ring rappid: hash-chained to its parent and its bytes, so a ring cannot forge
+// its place in the lineage and the same molt has the same rappid everywhere.
+export function ringRappidFor(ancestorRappid, parentRappid, source, filename) {
+  return lineageStoreInternals.ringRappidFor(ancestorRappid, parentRappid, source, filename);
 }
 
 function readJsonSafe(file) {
@@ -93,9 +76,8 @@ function writeJsonAtomic(file, value) {
 export class MoltLineageStore {
   // enabled=false is the kill-switch: every resolver returns null (pure Grail
   // passthrough) regardless of what is on disk.
-  constructor({ root, owner = DEFAULT_OWNER, enabled = true } = {}) {
+  constructor({ root, enabled = true } = {}) {
     this.root = root || path.join(os.homedir(), ".rapp", "lineage");
-    this.owner = owner;
     this.enabled = enabled !== false;
   }
 
@@ -117,7 +99,7 @@ export class MoltLineageStore {
   // baseline is a no-op. Returns the ancestor rappid, or null on any failure.
   registerAncestor(filename, baselineSource) {
     try {
-      const ancestorRappid = ancestorRappidFor(filename, baselineSource, this.owner);
+      const ancestorRappid = ancestorRappidFor(filename, baselineSource);
       const dir = this._ancestorDir(ancestorRappid);
       if (!dir) return null;
       mkdirSync(path.join(dir, "rings"), { recursive: true });
@@ -128,7 +110,7 @@ export class MoltLineageStore {
           schema: STORE_SCHEMA,
           ancestor_rappid: ancestorRappid,
           filename,
-          baseline_sha256: sha256Hex(baselineSource),
+          baseline_sha256: sourceSha256(baselineSource),
         });
       }
       const index = this._loadIndex();
@@ -161,7 +143,11 @@ export class MoltLineageStore {
       const ancestor = readJsonSafe(path.join(dir, "ancestor.json"));
       if (!ancestor) return null;
       const filename = ancestor.filename;
-      const ringRappid = ringRappidFor(ancestorRappid, parentRappid, source, filename, this.owner);
+      // First rings descend from the ancestor itself — the same parent convention
+      // the live routed store uses, so a first molt of the same bytes mints the
+      // same ring rappid in both modules.
+      const parent = parentRappid || ancestorRappid;
+      const ringRappid = ringRappidFor(ancestorRappid, parent, source, filename);
       const key = hexOf(ringRappid);
       if (!key) return null;
       const ringFile = path.join(dir, "rings", `${key}.json`);
@@ -171,9 +157,9 @@ export class MoltLineageStore {
           schema: STORE_SCHEMA,
           ring_rappid: ringRappid,
           ancestor_rappid: ancestorRappid,
-          parent_rappid: parentRappid,
+          parent_rappid: parent,
           filename,
-          sha256: sha256Hex(source),
+          sha256: sourceSha256(source),
           verified: verified === true,
           source,
           meta: meta && typeof meta === "object" ? meta : {},
@@ -195,9 +181,9 @@ export class MoltLineageStore {
       // ring rappid must re-derive from (parent, source, ancestor) — a tampered
       // ring fails to verify and is treated as absent (=> baseline).
       if (!ring || typeof ring.source !== "string") return null;
-      if (sha256Hex(ring.source) !== ring.sha256) return null;
+      if (sourceSha256(ring.source) !== ring.sha256) return null;
       const expected = ringRappidFor(
-        ancestorRappid, ring.parent_rappid, ring.source, ring.filename, this.owner);
+        ancestorRappid, ring.parent_rappid, ring.source, ring.filename);
       if (expected !== ringRappid) return null;
       return ring;
     } catch {
@@ -301,19 +287,31 @@ export class MoltLineageStore {
     }
   }
 
-  // Append-only, hash-chained promotion journal (one file per ancestor). Each entry
-  // commits to the previous entry's digest, so history cannot be rewritten without
-  // breaking the chain — the ALM audit trail the protocol's §5 requires.
+  // Append-only promotion journal (one file per ancestor). Each entry commits
+  // to the previous digest, detecting edits and reordering within the present
+  // log. Detecting full deletion or truncation requires an external anchor.
   _promotionsFile(ancestorRappid) {
     const dir = this._ancestorDir(ancestorRappid);
     return dir ? path.join(dir, "promotions.json") : null;
   }
 
+  // Journal state, distinguishing a MISSING journal (empty history — fine) from a
+  // CORRUPT one (present but unreadable / not a JSON array). Corruption is never
+  // repaired or overwritten here — the corrupt bytes are the evidence §5 exists
+  // to surface, so they are refused, not clobbered.
+  _promotionJournal(ancestorRappid) {
+    const file = this._promotionsFile(ancestorRappid);
+    if (!file) return { file: null, log: [], corrupt: false };
+    if (!existsSync(file)) return { file, log: [], corrupt: false };
+    const parsed = readJsonSafe(file);
+    if (!Array.isArray(parsed)) return { file, log: null, corrupt: true };
+    return { file, log: parsed, corrupt: false };
+  }
+
   _recordPromotion(ancestorRappid, entry) {
     try {
-      const file = this._promotionsFile(ancestorRappid);
-      if (!file) return null;
-      const log = readJsonSafe(file) || [];
+      const { file, log, corrupt } = this._promotionJournal(ancestorRappid);
+      if (!file || corrupt) return null;
       const prev = log.length ? log[log.length - 1].entry_sha256 : null;
       const record = { schema: STORE_SCHEMA, ...entry, prev_entry_sha256: prev };
       record.entry_sha256 = sha256Hex(JSON.stringify(record));
@@ -328,17 +326,27 @@ export class MoltLineageStore {
 
   listPromotions(ancestorRappid) {
     try {
-      const file = this._promotionsFile(ancestorRappid);
-      return (file && readJsonSafe(file)) || [];
+      const { log } = this._promotionJournal(ancestorRappid);
+      return log || [];
     } catch {
       return [];
     }
   }
 
   // Verify the promotion journal's hash chain end-to-end. A rewritten, reordered, or
-  // edited entry breaks the chain and is reported with its index.
+  // edited entry breaks the chain and is reported with its index; a journal that is
+  // not even a readable array is reported as corrupt, never as ok.
   verifyPromotions(ancestorRappid) {
-    const log = this.listPromotions(ancestorRappid);
+    let journal;
+    try {
+      journal = this._promotionJournal(ancestorRappid);
+    } catch {
+      return { ok: false, corrupt: true, reason: JOURNAL_CORRUPT_REASON };
+    }
+    if (journal.corrupt) {
+      return { ok: false, corrupt: true, reason: JOURNAL_CORRUPT_REASON };
+    }
+    const log = journal.log;
     let prev = null;
     for (let i = 0; i < log.length; i++) {
       const { entry_sha256, ...rest } = log[i] || {};
@@ -354,7 +362,10 @@ export class MoltLineageStore {
   // diverged (holds a ring not on fromEnv's path — a production-only molt the
   // promotion did not build on) it is a CONFLICT and is refused, never overwritten.
   // Every attempt — fast-forward, refusal, or failure — lands in the tamper-evident
-  // promotion journal (from/to ring rappids, envs, actor, UTC).
+  // promotion journal (from/to ring rappids, envs, actor, UTC). The one exception is
+  // fail-closed by construction: a CORRUPT journal refuses the promotion outright
+  // (no HEAD moves, `journal_corrupt: true`) and preserves the corrupt bytes as
+  // evidence instead of appending over them.
   promote(ancestorRappid, { fromEnv, toEnv, actor = null, utc = null } = {}) {
     const record = (outcome) => {
       this._recordPromotion(ancestorRappid, {
@@ -367,6 +378,16 @@ export class MoltLineageStore {
       return outcome;
     };
     try {
+      // §5 fail-closed: a corrupt journal cannot record this attempt, so no HEAD
+      // may move — a promotion the audit trail cannot witness must not happen.
+      // The refusal is NOT journaled (appending would clobber the evidence).
+      if (this._promotionJournal(ancestorRappid).corrupt) {
+        return {
+          ok: false,
+          journal_corrupt: true,
+          reason: JOURNAL_CORRUPT_REASON,
+        };
+      }
       const fromHead = this.head(ancestorRappid, fromEnv);
       const toHead = this.head(ancestorRappid, toEnv);
       if (!fromHead) return record({ ok: false, reason: "source environment has no live ring to promote" });

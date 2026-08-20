@@ -210,6 +210,45 @@ test("beta version ordering is prerelease-aware", () => {
   assert.equal(compareBetaVersions("garbage", "0.1.0"), null);
 });
 
+test("hyphenated prereleases keep their full tail in ordering", () => {
+  // split("-", 2) used to truncate everything after the second hyphen, so a
+  // hotfix build compared EQUAL to its base and the downgrade guard misjudged.
+  assert.equal(
+    compareBetaVersions("0.1.0-beta.7-hotfix.1", "0.1.0-beta.7"),
+    1,
+  );
+  assert.equal(
+    compareBetaVersions("0.1.0-beta.7", "0.1.0-beta.7-hotfix.1"),
+    -1,
+  );
+  assert.equal(
+    compareBetaVersions("0.1.0-beta.7-rc.2", "0.1.0-beta.7-rc.1"),
+    1,
+  );
+  assert.equal(
+    compareBetaVersions("0.1.0-beta.7-rc.1", "0.1.0-beta.7-rc.2"),
+    -1,
+  );
+  assert.equal(
+    compareBetaVersions("0.1.0-beta.7-hotfix.1", "0.1.0-beta.7-hotfix.1"),
+    0,
+  );
+  assert.equal(compareBetaVersions("0.1.0-beta.8", "0.1.0-beta.7-hotfix.1"), 1);
+  // Trailing junk in a core part is unparseable, not silently equal.
+  assert.equal(compareBetaVersions("0.1.0junk", "0.1.0"), null);
+  assert.equal(compareBetaVersions("0.1.0-", "0.1.0"), null);
+});
+
+test("a channel behind an installed hotfix build is never offered as an update", async () => {
+  const update = await channelCheck({
+    installedVersion: "0.1.0-beta.8-hotfix.1",
+    latestVersion: "0.1.0-beta.8",
+  });
+  assert.equal(update.available, false);
+  assert.equal(update.channelBehind, true);
+  assert.equal(update.published, true);
+});
+
 test("managed installs resolve the portable Node and Electron runtimes", () => {
   const betaHome = mkdtempSync(path.join(tmpdir(), "rapp-beta-managed-"));
   const repoRoot = path.join(betaHome, "src");

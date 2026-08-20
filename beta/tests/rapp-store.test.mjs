@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import {
@@ -105,6 +106,90 @@ test("a yanked rapplication cannot resolve or download even when addressed direc
   await assert.rejects(() => client.resolve("recalled"), recalled);
   await assert.rejects(() => client.download("recalled"), recalled);
   assert.equal(singletonFetches, 0);
+});
+
+test("a deprecated rapplication refuses install/hatch with its own named reason, distinct from yanked", async () => {
+  const catalog = {
+    schema: STORE_SCHEMA,
+    rapplications: [{
+      id: "sunset",
+      name: "Sunset",
+      deprecated: true,
+      singleton_filename: "sunset_agent.py",
+      singleton_url: "https://example/sunset_agent.py",
+      singleton_sha256: AGENT_SHA,
+    }],
+  };
+  let singletonFetches = 0;
+  const client = new RappStoreClient({
+    url: "store",
+    fetchImpl: async (url) => {
+      if (url === "store") {
+        return { ok: true, status: 200, json: async () => catalog };
+      }
+      singletonFetches += 1;
+      return { ok: true, status: 200, arrayBuffer: async () => Buffer.from(AGENT) };
+    },
+  });
+  const deprecated = (error) => (
+    error.code === "deprecated"
+    && /deprecated by its publisher/.test(error.message)
+    && !/yanked/.test(error.message)
+  );
+  await assert.rejects(() => client.resolve("sunset"), deprecated);
+  await assert.rejects(() => client.download("sunset"), deprecated);
+  assert.equal(singletonFetches, 0);
+  // Still visible to list() so the shelf can explain the deprecation.
+  assert.equal((await client.list())[0].deprecated, true);
+});
+
+test("min_app_version newer than the running launcher refuses to hatch; same-or-newer launcher hatches", async () => {
+  const catalog = {
+    schema: STORE_SCHEMA,
+    rapplications: [{
+      id: "needs-newer",
+      name: "Needs Newer",
+      min_app_version: "0.1.0-beta.9",
+      singleton_filename: "needs_newer_agent.py",
+      singleton_url: "https://example/needs_newer_agent.py",
+      singleton_sha256: AGENT_SHA,
+    }],
+  };
+  const fetchImpl = async (url) => {
+    if (url === "store") {
+      return { ok: true, status: 200, json: async () => catalog };
+    }
+    return { ok: true, status: 200, arrayBuffer: async () => Buffer.from(AGENT) };
+  };
+  const tooOld = new RappStoreClient({ url: "store", fetchImpl, appVersion: "0.1.0-beta.7" });
+  const needsUpdate = (error) => (
+    error.code === "min_app_version"
+    && /needs app version 0\.1\.0-beta\.9 or newer/.test(error.message)
+    && /this launcher is 0\.1\.0-beta\.7/.test(error.message)
+  );
+  await assert.rejects(() => tooOld.resolve("needs-newer"), needsUpdate);
+  await assert.rejects(() => tooOld.download("needs-newer"), needsUpdate);
+
+  const exact = new RappStoreClient({ url: "store", fetchImpl, appVersion: "0.1.0-beta.9" });
+  assert.equal((await exact.resolve("needs-newer")).id, "needs-newer");
+  const newer = new RappStoreClient({ url: "store", fetchImpl, appVersion: "0.1.0" });
+  assert.equal((await newer.download("needs-newer")).sha256, AGENT_SHA);
+});
+
+test("the enforced app version defaults to the launcher's own package.json", () => {
+  const pkg = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
+  const client = new RappStoreClient({ url: "store", fetchImpl: async () => ({}) });
+  assert.equal(client.appVersion, pkg.version);
+});
+
+test("store installs validate and persist before an atomic routed-worker swap", () => {
+  const main = readFileSync(new URL("../electron/main.mjs", import.meta.url), "utf8");
+  const start = main.indexOf("async function installAgentToBrainstem");
+  const end = main.indexOf("\nconst twinManager", start);
+  const install = main.slice(start, end);
+  assert.match(install, /routeManager\.installScopedAgent/);
+  assert.match(install, /routeManager\.startDefault/);
+  assert.doesNotMatch(install, /agents\/import|FormData|hot-loaded only/);
 });
 
 test("a yanked registry agent is also refused by the normalized client", async () => {

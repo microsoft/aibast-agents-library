@@ -9,9 +9,12 @@
 // unauthenticated fetch — the client surfaces that as a clear auth-needed error
 // instead of a silent miss.
 //
-// No Electron, no native deps: pure Node (global fetch + node:crypto), and the
-// fetch impl is injectable so it is unit-testable offline.
+// No Electron, no native deps: pure Node (global fetch + node:crypto/node:fs),
+// and the fetch impl is injectable so it is unit-testable offline.
 import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
+
+import { compareBetaVersions } from "./update-manager.mjs";
 
 export const DEFAULT_STORE_URL = "https://kody-w.github.io/RAPP_Store/index.json";
 export const AIBAST_REGISTRY_URL = "https://microsoft.github.io/aibast-agents-library/registry.json";
@@ -37,6 +40,20 @@ export function isAllowedStoreSourceUrl(url) {
 
 function sha256Hex(bytes) {
   return createHash("sha256").update(bytes).digest("hex");
+}
+
+// The running launcher's version, read from the app's own package.json (the same
+// version electron-builder stamps on the artifacts). Null when unavailable — a
+// library consumer without a launcher version skips min_app_version enforcement.
+function defaultAppVersion() {
+  try {
+    const pkg = JSON.parse(
+      readFileSync(new URL("../package.json", import.meta.url), "utf8"),
+    );
+    return typeof pkg.version === "string" && pkg.version ? pkg.version : null;
+  } catch {
+    return null;
+  }
 }
 
 // A gated entry references a private source; treat an explicit access flag OR a
@@ -74,8 +91,10 @@ function normalizeEntry(entry) {
     preferredView: entry.preferred_view === "mobile" ? "mobile" : "full",
     uiFilename: entry.ui_filename || null,
     gated: isGatedEntry(entry),
-    // Release-control fields the client honors: yanked entries remain visible
-    // to list() for recall messaging but resolve/download refuse them.
+    // Release-control fields the client honors: yanked and deprecated entries
+    // remain visible to list() for messaging but resolve/download refuse them
+    // (each with its own named code), and a min_app_version newer than the
+    // running launcher refuses to hatch until the app updates.
     yanked: Boolean(entry.yanked),
     deprecated: Boolean(entry.deprecated),
     minAppVersion: entry.min_app_version || null,
@@ -84,13 +103,19 @@ function normalizeEntry(entry) {
 }
 
 export class RappStoreClient {
-  constructor({ url = DEFAULT_STORE_URL, fetchImpl = globalThis.fetch, timeoutMs = 15000 } = {}) {
+  constructor({
+    url = DEFAULT_STORE_URL,
+    fetchImpl = globalThis.fetch,
+    timeoutMs = 15000,
+    appVersion = defaultAppVersion(),
+  } = {}) {
     if (typeof fetchImpl !== "function") {
       throw new Error("RappStoreClient needs a fetch implementation.");
     }
     this.url = url;
     this.fetchImpl = fetchImpl;
     this.timeoutMs = timeoutMs;
+    this.appVersion = appVersion || null;
     this.catalog = null;
   }
 
@@ -158,6 +183,8 @@ export class RappStoreClient {
             quality_tier: a.quality_tier || "",
             license: a.license || null,
             yanked: a.yanked,
+            deprecated: a.deprecated,
+            min_app_version: a.min_app_version,
           })),
       };
       return this.catalog;
@@ -178,6 +205,30 @@ export class RappStoreClient {
         `RAPPlication "${entry.id}" has been yanked (recalled); refusing to resolve or download it.`,
       );
       error.code = "yanked";
+      error.entry = entry;
+      throw error;
+    }
+    if (entry.deprecated) {
+      const error = new Error(
+        `RAPPlication "${entry.id}" is deprecated by its publisher; `
+        + "refusing to install or hatch it — pick its replacement from the store.",
+      );
+      error.code = "deprecated";
+      error.entry = entry;
+      throw error;
+    }
+    // min_app_version is a runtime-seam floor: an entry that needs a newer
+    // launcher must never hatch on an older one and break at runtime.
+    if (
+      entry.minAppVersion
+      && this.appVersion
+      && compareBetaVersions(entry.minAppVersion, this.appVersion) === 1
+    ) {
+      const error = new Error(
+        `RAPPlication "${entry.id}" needs app version ${entry.minAppVersion} or newer `
+        + `(this launcher is ${this.appVersion}) — update the app, then hatch it.`,
+      );
+      error.code = "min_app_version";
       error.entry = entry;
       throw error;
     }

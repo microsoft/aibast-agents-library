@@ -112,9 +112,15 @@ test("lineage-store hash-chains deterministic rings and detects tampering", (t) 
     source: sources["alpha_agent.py"],
     isBaseline: true,
   });
+  store.rollbackToBaseline(alpha.ancestorRappid);
+  assert.throws(
+    () => store.setHead(alpha.ancestorRappid, ringRappid),
+    /invalid or unverified molt ring/,
+  );
+  assert.equal(store.getHead(alpha.ancestorRappid), alpha.ancestorRappid);
 });
 
-test("lineage-store HEAD, unverified fallback, rollback, and restore are reversible", (t) => {
+test("lineage-store HEAD rejects unverified rings; rollback and restore are reversible", (t) => {
   const { store, sources } = fixture(t);
   const [alpha, context] = ["alpha_agent.py", "context_memory_agent.py"].map(
     (filename) => store.baselineAncestors().find(
@@ -128,8 +134,11 @@ test("lineage-store HEAD, unverified fallback, rollback, and restore are reversi
     verified: false,
     meta: { author: "test" },
   });
-  store.setHead(alpha.ancestorRappid, unverified);
-  assert.equal(store.getHead(alpha.ancestorRappid), unverified);
+  assert.throws(
+    () => store.setHead(alpha.ancestorRappid, unverified),
+    /invalid or unverified molt ring/,
+  );
+  assert.equal(store.getHead(alpha.ancestorRappid), alpha.ancestorRappid);
   assert.deepEqual(store.resolveLive(alpha.ancestorRappid), {
     ringRappid: alpha.ancestorRappid,
     source: sources["alpha_agent.py"],
@@ -186,4 +195,294 @@ test("lineage-store HEAD, unverified fallback, rollback, and restore are reversi
     )),
     true,
   );
+});
+
+test("re-appending an existing ring can promote it to verified", (t) => {
+  const { store } = fixture(t);
+  const alpha = store.baselineAncestors().find(
+    (item) => item.filename === "alpha_agent.py",
+  );
+  const frame = {
+    source: "ALPHA = 'candidate'\n",
+    parentRappid: alpha.ancestorRappid,
+    verified: false,
+    meta: { author: "test" },
+  };
+  const ring = store.appendRing(alpha.ancestorRappid, frame);
+  assert.equal(
+    store.listRings(alpha.ancestorRappid)
+      .find((candidate) => candidate.ringRappid === ring).verified,
+    false,
+  );
+
+  assert.equal(
+    store.appendRing(alpha.ancestorRappid, {
+      ...frame,
+      verified: true,
+      meta: { verifiedBy: "molter._verify" },
+    }),
+    ring,
+  );
+  const promoted = store.listRings(alpha.ancestorRappid)
+    .find((candidate) => candidate.ringRappid === ring);
+  assert.equal(promoted.verified, true);
+  assert.deepEqual(promoted.meta, {
+    author: "test",
+    verifiedBy: "molter._verify",
+  });
+  assert.doesNotThrow(() => store.setHead(alpha.ancestorRappid, ring));
+  assert.equal(store.resolveLive(alpha.ancestorRappid).ringRappid, ring);
+});
+
+test("a corrupt ring meta.json is skipped: restore and resolve stay fail-safe", (t) => {
+  const { store, sources } = fixture(t);
+  const alpha = store.baselineAncestors().find(
+    (item) => item.filename === "alpha_agent.py",
+  );
+  const firstSource = "ALPHA = 'verified one'\n";
+  const first = store.appendRing(alpha.ancestorRappid, {
+    source: firstSource,
+    parentRappid: alpha.ancestorRappid,
+    verified: true,
+    meta: { author: "test" },
+  });
+  const second = store.appendRing(alpha.ancestorRappid, {
+    source: "ALPHA = 'verified two'\n",
+    parentRappid: first,
+    verified: true,
+    meta: { author: "test" },
+  });
+  store.setHead(alpha.ancestorRappid, second);
+
+  writeFileSync(
+    path.join(ringDirectory(store, alpha.ancestorRappid, second), "meta.json"),
+    "{ truncated",
+  );
+  assert.deepEqual(
+    store.listRings(alpha.ancestorRappid).map((ring) => ring.ringRappid),
+    [alpha.ancestorRappid, first],
+    "a corrupt ring must be treated as absent, never thrown",
+  );
+  assert.deepEqual(store.resolveLive(alpha.ancestorRappid), {
+    ringRappid: alpha.ancestorRappid,
+    source: sources["alpha_agent.py"],
+    isBaseline: true,
+  });
+  assert.doesNotThrow(() => store.restore(null));
+  assert.equal(store.getHead(alpha.ancestorRappid), first);
+  assert.deepEqual(store.resolveLive(alpha.ancestorRappid), {
+    ringRappid: first,
+    source: firstSource,
+    isBaseline: false,
+  });
+  assert.equal(
+    store.verifyChain(alpha.ancestorRappid),
+    true,
+    "the corrupt ring is absent, so the surviving chain still verifies",
+  );
+
+  writeFileSync(
+    path.join(ringDirectory(store, alpha.ancestorRappid, first), "meta.json"),
+    "{ truncated",
+  );
+  assert.doesNotThrow(() => store.restore(null));
+  assert.equal(store.getHead(alpha.ancestorRappid), alpha.ancestorRappid);
+  assert.deepEqual(store.resolveLive(alpha.ancestorRappid), {
+    ringRappid: alpha.ancestorRappid,
+    source: sources["alpha_agent.py"],
+    isBaseline: true,
+  });
+});
+
+test("ring directory segments stay under Windows MAX_PATH on a realistic beta home", (t) => {
+  const { store } = fixture(t);
+  const alpha = store.baselineAncestors().find(
+    (item) => item.filename === "alpha_agent.py",
+  );
+  const ring = store.appendRing(alpha.ancestorRappid, {
+    source: "ALPHA = 'ring one'\n",
+    parentRappid: alpha.ancestorRappid,
+    verified: true,
+    meta: { author: "test" },
+  });
+  const segment = lineageStoreInternals.filesystemSegment(ring);
+  assert.match(segment, /^[0-9a-f]{32}$/);
+  assert.equal(
+    segment,
+    lineageStoreInternals.filesystemSegment(ring),
+    "the same rappid must always map to the same on-disk segment",
+  );
+
+  // Only the directory name shortens — full rappids stay inside the metadata.
+  const meta = JSON.parse(readFileSync(
+    path.join(ringDirectory(store, alpha.ancestorRappid, ring), "meta.json"),
+    "utf8",
+  ));
+  assert.equal(meta.ringRappid, ring);
+  assert.equal(meta.ancestorRappid, alpha.ancestorRappid);
+  const locus = JSON.parse(readFileSync(path.join(
+    store.root,
+    lineageStoreInternals.filesystemSegment(alpha.ancestorRappid),
+    "locus.json",
+  )));
+  assert.equal(locus.ancestorRappid, alpha.ancestorRappid);
+
+  // Deepest on-disk path (staging meta.json) for a realistic Windows beta
+  // home must clear stock MAX_PATH (260) with headroom — target < 200.
+  const realisticRoot =
+    "C:\\Users\\kodywildfeuer\\.brainstem\\beta-launcher\\lineage";
+  const deepest = [
+    realisticRoot,
+    lineageStoreInternals.filesystemSegment(alpha.ancestorRappid),
+    "rings",
+    `.${segment}.9999999.${Date.now()}.stage`,
+    "meta.json",
+  ].join("\\");
+  assert.ok(
+    deepest.length < 200,
+    `deepest store path must stay under 200 chars, got ${deepest.length}`,
+  );
+});
+
+test("a CRLF checkout mints the same identity as its LF form", (t) => {
+  const { store, sources } = fixture(t);
+  const lfAlpha = store.baselineAncestors().find(
+    (item) => item.filename === "alpha_agent.py",
+  );
+  const crlfRoot = mkdtempSync(path.join(tmpdir(), "rapp-lineage-crlf-"));
+  t.after(() => rmSync(crlfRoot, { recursive: true, force: true }));
+  const crlfBrainstem = path.join(crlfRoot, "brainstem");
+  mkdirSync(path.join(crlfBrainstem, "agents"), { recursive: true });
+  writeFileSync(
+    path.join(crlfBrainstem, "agents", "alpha_agent.py"),
+    sources["alpha_agent.py"].replaceAll("\n", "\r\n"),
+  );
+  const crlfStore = new LineageStore({
+    brainstemDir: crlfBrainstem,
+    root: path.join(crlfRoot, "lineage"),
+  });
+  const crlfAlpha = crlfStore.baselineAncestors()[0];
+  assert.equal(
+    crlfAlpha.ancestorRappid,
+    lfAlpha.ancestorRappid,
+    "git autocrlf must not fork the ancestor identity",
+  );
+  assert.equal(crlfAlpha.sha256, lfAlpha.sha256);
+  assert.equal(
+    lineageStoreInternals.sourceSha256("A = 1\r\nB = 2\r\n"),
+    lineageStoreInternals.sourceSha256("A = 1\nB = 2\n"),
+  );
+
+  const ringFrame = (source) => ({
+    source,
+    parentRappid: lfAlpha.ancestorRappid,
+    verified: true,
+    meta: { author: "test" },
+  });
+  const lfRing = store.appendRing(
+    lfAlpha.ancestorRappid,
+    ringFrame("ALPHA = 'ring one'\n"),
+  );
+  const crlfRing = crlfStore.appendRing(
+    crlfAlpha.ancestorRappid,
+    ringFrame("ALPHA = 'ring one'\r\n"),
+  );
+  assert.equal(
+    crlfRing,
+    lfRing,
+    "the same molt must have the same ring rappid on every platform",
+  );
+});
+
+test("kill switch gates HEAD WRITES too: safe words cannot silently move rings", (t) => {
+  const { store } = fixture(t);
+  const alpha = store.baselineAncestors().find(
+    (item) => item.filename === "alpha_agent.py",
+  );
+  const ring = store.appendRing(alpha.ancestorRappid, {
+    source: "ALPHA = 'molt'\n",
+    parentRappid: alpha.ancestorRappid,
+    verified: true,
+    meta: { author: "test" },
+  });
+  store.setHead(alpha.ancestorRappid, ring);
+
+  // Operator flips the kill switch. `baseline`/`restore` must NOT write HEAD —
+  // otherwise the moved HEADs survive and silently activate molts once the flag
+  // is cleared again.
+  const previous = process.env.RAPP_MOLT_LINEAGE;
+  process.env.RAPP_MOLT_LINEAGE = "0";
+  t.after(() => {
+    if (previous === undefined) delete process.env.RAPP_MOLT_LINEAGE;
+    else process.env.RAPP_MOLT_LINEAGE = previous;
+  });
+
+  const rollback = store.rollbackToBaseline(null);
+  assert.equal(rollback.disabled, true, "rollback reports the layer is off");
+  assert.deepEqual(rollback.changed, [], "no HEAD was moved");
+  const restored = store.restore(null);
+  assert.equal(restored.disabled, true, "restore reports the layer is off");
+  assert.deepEqual(restored.changed, [], "no HEAD was moved");
+
+  // HEAD is untouched, so clearing the flag restores the operator's real state.
+  assert.equal(store.getHead(alpha.ancestorRappid), ring);
+  delete process.env.RAPP_MOLT_LINEAGE;
+  assert.equal(store.resolveLive(alpha.ancestorRappid).ringRappid, ring);
+});
+
+test("a failing locus never aborts a fleet-wide rollback", (t) => {
+  const { store } = fixture(t);
+  const ancestors = store.baselineAncestors();
+  assert.ok(ancestors.length >= 2, "fixture needs multiple loci");
+  const failing = ancestors[0].ancestorRappid;
+
+  // One locus cannot have its HEAD written. The safe word must still land every
+  // other agent on baseline instead of throwing out mid-fleet and leaving them molted.
+  const realSetHead = store.setHead.bind(store);
+  store.setHead = (ancestorRappid, ringRappid) => {
+    if (ancestorRappid === failing) throw new Error("simulated HEAD write failure");
+    return realSetHead(ancestorRappid, ringRappid);
+  };
+
+  let report;
+  assert.doesNotThrow(() => { report = store.rollbackToBaseline(null); });
+  assert.equal(report.failed.length, 1, "the failing locus is reported, not hidden");
+  assert.equal(report.failed[0].ancestorRappid, failing);
+  assert.equal(
+    report.changed.length,
+    ancestors.length - 1,
+    "every healthy locus still reverted",
+  );
+});
+
+test("inspectLineage surfaces on-disk corruption that verifyChain does not answer for", (t) => {
+  const { store } = fixture(t);
+  const alpha = store.baselineAncestors().find(
+    (item) => item.filename === "alpha_agent.py",
+  );
+  const first = store.appendRing(alpha.ancestorRappid, {
+    source: "ALPHA = 'one'\n",
+    parentRappid: alpha.ancestorRappid,
+    verified: true,
+    meta: { author: "test" },
+  });
+  const second = store.appendRing(alpha.ancestorRappid, {
+    source: "ALPHA = 'two'\n",
+    parentRappid: first,
+    verified: true,
+    meta: { author: "test" },
+  });
+  store.setHead(alpha.ancestorRappid, first);
+  assert.equal(store.inspectLineage(alpha.ancestorRappid).healthy, true);
+
+  writeFileSync(
+    path.join(ringDirectory(store, alpha.ancestorRappid, second), "meta.json"),
+    "{ truncated",
+  );
+  const report = store.inspectLineage(alpha.ancestorRappid);
+  assert.equal(report.corruptRings, 1, "corruption is counted, not silently dropped");
+  assert.equal(report.healthy, false, "the locus is reported unhealthy");
+  // Composition stays fail-safe regardless: the reachable chain still verifies.
+  assert.equal(report.chainOk, true);
+  assert.equal(store.resolveLive(alpha.ancestorRappid).ringRappid, first);
 });

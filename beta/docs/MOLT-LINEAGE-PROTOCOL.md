@@ -17,6 +17,23 @@ instance grows is an **additive overlay** composed onto that immutable baseline 
 load time. If a change edits a baseline agent's bytes on disk, the pattern has
 failed.
 
+## What ships in 0.1.0-beta.7
+
+Two surfaces implement this protocol, and they share **one identity scheme**:
+both mint ancestor and ring rappids through the same `rapp/1` derivations (the
+live store's, exported as `lineageStoreInternals`), so the same molt bytes mint
+the same rappid in both — on every device and in every environment.
+
+- **Live routed lineage** — `beta/electron/lineage-store.mjs`, wired through
+  `route-manager.mjs`. This is what the running beta drives: the per-locus ring
+  store and HEAD, fail-safe composition (last-good → baseline), the seeded
+  ContextMemory ring 1, and the rollback/restore safewords.
+- **Enterprise ALM** (§ Enterprise ALM below) — `beta/electron/molt-lineage.mjs`,
+  a library layer over that same identity adding environment-scoped HEADs, gated
+  fast-forward promotion with named conflicts, drift detection, and the
+  hash-chained promotion journal. It ships as a library in this release for
+  integrators and tooling; the Frontier UI does not drive it yet.
+
 ---
 
 ## Definitions
@@ -182,6 +199,10 @@ A molt made directly in production that dev never sees, then a dev promotion bui
 on a different base, must not "break at literally the worst time." Content-
 addressing is what prevents it: because `ring_rappid` is deterministic, the *same*
 molt has the *same* rappid in every environment, so divergence is detected exactly.
+This layer is implemented by `beta/electron/molt-lineage.mjs` over the live
+store's identity derivations (see *What ships in 0.1.0-beta.7*); in 0.1.0-beta.7
+it is a library surface — call it from tooling; the Frontier UI does not drive
+it yet.
 
 1. **Environments are HEADs, not copies.** dev, staging, and production each pin
    their own `HEAD` per gene locus into the *same* content-addressed ring store.
@@ -201,9 +222,14 @@ molt has the *same* rappid in every environment, so divergence is detected exact
    against the *resulting* target composition at promotion time (in a staging
    materialization). A break surfaces before the production swap; "the worst time"
    becomes "the promotion refused, and here is why."
-5. **Tamper-evident audit trail.** Hash-chained rings plus an immutable promotion
-   record (from/to `ring_rappid`, environment, actor, UTC) give ALM a verifiable
-   history of every change that reached each environment.
+5. **Hash-chained audit trail.** Hash-chained rings plus append-only promotion
+   records (from/to `ring_rappid`, environment, actor, UTC) give ALM an
+   internally verifiable history of every change in the present journal. A
+   corrupt promotion record refuses every promotion outright (no HEAD moves),
+   verification reports the corruption instead of ok, and the corrupt bytes are
+   preserved as evidence — never appended over. The journal is not externally
+   anchored in this release; deployments that must detect full-file deletion or
+   truncation must persist the latest digest in an immutable audit sink.
 
 ## Laws
 

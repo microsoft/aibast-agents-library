@@ -82,6 +82,14 @@ test("Brain Surgeon driver opens an existing off-canvas panel without a visible 
   assert.match(source, /document\.body\.classList\.add\("surgeon-open"\)/);
 });
 
+test("synthetic cursor fades after the UI driver becomes idle", () => {
+  const source = uiDriverInternals.browserDriverCommand.toString();
+  assert.match(source, /const CURSOR_IDLE_HIDE_MS = 4000/);
+  assert.match(source, /clearTimeout\(state\.cursorIdleTimer\)/);
+  assert.match(source, /cursor\.style\.opacity = "0"/);
+  assert.match(source, /cursor\.style\.top = `\$\{y\}px`;\s+wakeCursor\(cursor\)/);
+});
+
 test("walkthrough recording pads with visible recap cards, not dead air", () => {
   const source = uiDriverInternals.stopWindowRecording.toString();
   assert.match(source, /minimumDurationMs/);

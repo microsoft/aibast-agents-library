@@ -394,20 +394,14 @@
       background: linear-gradient(180deg,#3d7cf0,#2f66d8); border: none; color: #fff;
       border-radius: 8px; padding: 6px 12px; font-size: 12.5px;
     }
-    /* Herd is a horizontal RAIL (STYLE-GUIDE §4: equal tiles side by side,
-       "several agents, one Brainstem"). Tiles never wrap off the bottom — they
-       line up and the rail scrolls horizontally, always full-height and legible. */
+    /* Herd is a GRID: tiles wrap into rows and the herd scrolls vertically,
+       so every chat stays on screen at once ("several agents, one Brainstem"). */
     #surgeon-herd .herd-grid {
-      flex: 1; min-height: 0; display: flex; align-items: stretch; gap: 12px;
-      padding: 14px; overflow-x: auto; overflow-y: hidden;
-      scrollbar-width: thin; scrollbar-color: #33363c transparent; scroll-snap-type: x proximity;
+      flex: 1; overflow: auto; display: grid; align-content: start; gap: 12px;
+      padding: 14px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     }
-    #surgeon-herd .herd-grid::-webkit-scrollbar { height: 9px; }
-    #surgeon-herd .herd-grid::-webkit-scrollbar-thumb { background: #33363c; border-radius: 6px; }
-    #surgeon-herd .herd-grid::-webkit-scrollbar-track { background: transparent; }
     .herd-tile {
-      flex: 0 0 clamp(320px, 33%, 400px); scroll-snap-align: start;
-      display: flex; flex-direction: column; min-height: 0;
+      display: flex; flex-direction: column; height: min(78vh, 640px);
       background: #141518; border: 1px solid #2a2c31; border-radius: 12px; overflow: hidden;
     }
     .herd-tile .hh {
@@ -515,7 +509,8 @@
     /* mobile-first: at the small tile size the embedded UI shows its own mobile
        layout (it carries viewport + @media); keep the frame the dominant area. */
     @media (max-width: 640px) {
-      .herd-tile { flex: 0 0 86vw; }
+      #surgeon-herd .herd-grid { grid-template-columns: 1fr; }
+      .herd-tile { height: min(88vh, 720px); }
     }
     .surgeon-empty {
       margin: auto 0; padding: 8px 6px; color: #9a9ea7;

@@ -154,6 +154,16 @@ async function browserDriverCommand(command) {
     return { cursor, label, pulse };
   }
 
+  // Keep the synthetic cursor visible while it moves, then clear the stage.
+  const CURSOR_IDLE_HIDE_MS = 4000;
+  function wakeCursor(cursor) {
+    cursor.style.opacity = "1";
+    if (state.cursorIdleTimer) clearTimeout(state.cursorIdleTimer);
+    state.cursorIdleTimer = setTimeout(() => {
+      cursor.style.opacity = "0";
+    }, CURSOR_IDLE_HIDE_MS);
+  }
+
   function visible(element) {
     if (!element) return false;
     const rect = element.getBoundingClientRect();
@@ -236,9 +246,9 @@ async function browserDriverCommand(command) {
     const rect = element.getBoundingClientRect();
     const x = Math.max(8, Math.min(innerWidth - 12, rect.left + rect.width / 2));
     const y = Math.max(8, Math.min(innerHeight - 12, rect.top + rect.height / 2));
-    cursor.style.opacity = "1";
     cursor.style.left = `${x}px`;
     cursor.style.top = `${y}px`;
+    wakeCursor(cursor);
     if (text) {
       label.textContent = text;
       label.style.left = `${Math.min(innerWidth - 370, x + 22)}px`;

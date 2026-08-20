@@ -272,7 +272,10 @@ test("HARD 4 — invalid live composition falls back to loadable baseline", (t) 
     verified: false,
     meta: { author: "test" },
   });
-  fixture.store.setHead(global.ancestorRappid, unverified);
+  assert.throws(
+    () => fixture.store.setHead(global.ancestorRappid, unverified),
+    /invalid or unverified molt ring/,
+  );
   const manager = new BetaRouteManager(fixture.managerOptions);
   assert.deepEqual(manager.compositionDescriptor().lineageOverlays, []);
 
@@ -416,7 +419,7 @@ test("fail-safe isolates a broken locus without rewinding a healthy sibling", (t
   );
 });
 
-test("an unrelated invalid scoped agent does not reset healthy lineage HEADs", async (t) => {
+test("an unrelated invalid scoped agent does not reset healthy lineage HEADs", (t) => {
   const fixture = minimalFixture(t, {
     validator: (agentDirectory) => {
       const broken = readdirSync(agentDirectory)
@@ -442,10 +445,14 @@ test("an unrelated invalid scoped agent does not reset healthy lineage HEADs", a
   fixture.store.setHead(global.ancestorRappid, ring);
   const manager = new BetaRouteManager(fixture.managerOptions);
   manager.materializeComposition(manager.compositionDescriptor());
-  await manager.installScopedAgent({
+  // Persisted broken content (written before the install gate existed) —
+  // today's installScopedAgent refuses this source outright.
+  const stack = manager.loadStack(manager.identity().active_stack_rappid);
+  stack.agents = [manager.packageAgent({
     filename: "broken_scoped_agent.py",
     source: "BROKEN_SCOPED = True\n",
-  });
+  })];
+  manager.saveStack(stack);
 
   const fallback = manager.materializeComposition(manager.compositionDescriptor());
   assert.equal(fallback.fallbackStrategy, "last-good");
@@ -489,7 +496,8 @@ test("HARD 6 — composition validates in staging before one atomic publication"
   const fixture = minimalFixture(t, {
     validator: (agentDirectory) => {
       validations += 1;
-      assert.match(agentDirectory, /\.dry-load-[^/]+\/agents$/);
+      // Separator-agnostic: Windows materializes backslash paths.
+      assert.match(agentDirectory, /\.dry-load-[^/\\]+[/\\]agents$/);
       assert.equal(existsSync(targetDirectory), false);
       return { ok: true };
     },
@@ -637,4 +645,355 @@ test("packaged Frontier exposes the Molter gate outside app.asar", () => {
       "molter.py",
     ),
   );
+});
+
+function brokenScopedValidator(agentDirectory) {
+  // Mirrors the Grail dry-load contract: stderr names each failing file.
+  const failures = readdirSync(agentDirectory)
+    .filter((filename) => filename.endsWith(".py"))
+    .filter((filename) => (
+      readFileSync(path.join(agentDirectory, filename), "utf8")
+        .includes("BROKEN_SCOPED")
+    ))
+    .map((filename) => `${filename} loaded no agents`);
+  return failures.length
+    ? { ok: false, error: failures.join("\n") }
+    : { ok: true };
+}
+
+function fakeWorkerProcess() {
+  return {
+    start: async () => ({ health: { status: "ok" } }),
+    stop: async () => {},
+  };
+}
+
+test("the install gate refuses a scoped agent that fails the Grail dry-load", async (t) => {
+  const fixture = minimalFixture(t, { validator: brokenScopedValidator });
+  const manager = new BetaRouteManager(fixture.managerOptions);
+  await assert.rejects(
+    () => manager.installScopedAgent({
+      filename: "broken_scoped_agent.py",
+      source: "BROKEN_SCOPED = True\n",
+    }),
+    /Refusing to install broken_scoped_agent\.py: .*loaded no agents/,
+  );
+  assert.equal(
+    manager.loadStack(manager.identity().active_stack_rappid).agents.length,
+    0,
+    "a refused install must persist nothing",
+  );
+  const refused = manager.telemetrySnapshot().events.find(
+    (event) => event.type === "stack-agent-install-refused",
+  );
+  assert.equal(refused.filename, "broken_scoped_agent.py");
+  assert.match(refused.lesson, /loaded no agents/);
+
+  const installed = await manager.installScopedAgent({
+    filename: "healthy_scoped_agent.py",
+    source: "HEALTHY_SCOPED = True\n",
+  });
+  assert.equal(installed.agent.filename, "healthy_scoped_agent.py");
+  const materialized = manager.materializeComposition(
+    manager.compositionDescriptor(),
+  );
+  assert.equal(materialized.fallbackStrategy, undefined);
+  assert.equal(
+    existsSync(path.join(materialized.agentDirectory, "healthy_scoped_agent.py")),
+    true,
+  );
+});
+
+test("boot with a persisted broken scoped agent and no last-good quarantines and boots", async (t) => {
+  const fixture = minimalFixture(t, { validator: brokenScopedValidator });
+  const seeded = new BetaRouteManager(fixture.managerOptions);
+  const stack = seeded.loadStack(seeded.identity().active_stack_rappid);
+  stack.agents = [seeded.packageAgent({
+    filename: "broken_scoped_agent.py",
+    source: "BROKEN_SCOPED = True\n",
+  })];
+  seeded.saveStack(stack);
+
+  // Fresh launch: no last-good descriptor, no lineage overlays, the pristine
+  // composition itself refuses to dry-load — the beta must still boot.
+  const manager = new BetaRouteManager(fixture.managerOptions);
+  manager.createWorkerProcess = fakeWorkerProcess;
+  const route = await manager.startDefault();
+  assert.ok(route.url);
+  assert.equal(manager.lastLineageFallback.strategy, "quarantine");
+  const worker = manager.workers.get(route.compositionHash);
+  assert.equal(
+    existsSync(path.join(worker.agentDirectory, "broken_scoped_agent.py")),
+    false,
+    "the broken agent must be excluded from the booted composition",
+  );
+  assert.equal(
+    existsSync(path.join(worker.agentDirectory, "global_agent.py")),
+    true,
+  );
+  const event = manager.telemetrySnapshot().events.find(
+    (candidate) => candidate.type === "composition-quarantine",
+  );
+  assert.deepEqual(
+    event.excluded_files.map((excluded) => excluded.filename),
+    ["broken_scoped_agent.py"],
+  );
+  assert.match(event.excluded_files[0].reason, /loaded no agents/);
+  // The user's persisted source stays untouched on disk for later repair.
+  const persisted = manager.loadStack(
+    manager.identity().active_stack_rappid,
+  ).agents;
+  assert.equal(persisted[0].filename, "broken_scoped_agent.py");
+  assert.equal(
+    readFileSync(persisted[0].object_path, "utf8"),
+    "BROKEN_SCOPED = True\n",
+  );
+  await manager.stop();
+});
+
+test("real Grail boot quarantines a persisted broken scoped agent and boots", async (t) => {
+  const root = mkdtempSync(path.join(tmpdir(), "rapp-boot-quarantine-"));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  const managerOptions = {
+    betaHome: path.join(root, "beta-home"),
+    brainstemConfig: {
+      brainstemDir: grailDirectory,
+      python: integrationPython(),
+    },
+    lineageRoot: path.join(root, "lineage"),
+    seedLineageDefaults: false,
+  };
+  const seeded = new BetaRouteManager(managerOptions);
+  const stack = seeded.loadStack(seeded.identity().active_stack_rappid);
+  stack.agents = [seeded.packageAgent({
+    filename: "broken_scoped_agent.py",
+    source: "raise RuntimeError('broken scoped agent import')\n",
+  })];
+  seeded.saveStack(stack);
+
+  const manager = new BetaRouteManager(managerOptions);
+  manager.createWorkerProcess = fakeWorkerProcess;
+  const route = await manager.startDefault();
+  assert.equal(manager.lastLineageFallback.strategy, "quarantine");
+  const worker = manager.workers.get(route.compositionHash);
+  assert.equal(
+    existsSync(path.join(worker.agentDirectory, "broken_scoped_agent.py")),
+    false,
+  );
+  const event = manager.telemetrySnapshot().events.find(
+    (candidate) => candidate.type === "composition-quarantine",
+  );
+  assert.deepEqual(
+    event.excluded_files.map((excluded) => excluded.filename),
+    ["broken_scoped_agent.py"],
+  );
+  await manager.stop();
+});
+
+test("ephemeral + lineage fallback teardown retires the effective worker and its composition", async (t) => {
+  const fixture = minimalFixture(t, {
+    validator: (agentDirectory) => {
+      const source = readFileSync(
+        path.join(agentDirectory, "global_agent.py"),
+        "utf8",
+      );
+      return source.includes("broken ring")
+        ? { ok: false, error: "broken ring conflicts with the composed set" }
+        : { ok: true };
+    },
+  });
+  const global = fixture.store.baselineAncestors().find(
+    (item) => item.filename === "global_agent.py",
+  );
+  const ring = fixture.store.appendRing(global.ancestorRappid, {
+    source: "GLOBAL = 'broken ring'\n",
+    parentRappid: global.ancestorRappid,
+    verified: true,
+    meta: { author: "test" },
+  });
+  fixture.store.setHead(global.ancestorRappid, ring);
+  const manager = new BetaRouteManager(fixture.managerOptions);
+  manager.createWorkerProcess = fakeWorkerProcess;
+
+  let fallbackWorker = null;
+  let fallbackDirectory = null;
+  await manager.withRoute({
+    ephemeralAgent: {
+      filename: "oneshot_agent.py",
+      source: "ONESHOT = True\n",
+    },
+  }, async (route) => {
+    fallbackWorker = manager.workers.get(route.compositionHash);
+    assert.ok(fallbackWorker, "the callback route must key the live worker");
+    fallbackDirectory = fallbackWorker.compositionDirectory;
+    assert.equal(
+      existsSync(path.join(fallbackWorker.agentDirectory, "oneshot_agent.py")),
+      true,
+      "the pristine ephemeral fallback must still carry the one-shot tool",
+    );
+  });
+
+  assert.equal(manager.lastLineageFallback.strategy, "baseline");
+  assert.notEqual(
+    manager.lastLineageFallback.effectiveCompositionHash,
+    manager.lastLineageFallback.requestedCompositionHash,
+  );
+  assert.equal(
+    existsSync(path.join(fallbackWorker.agentDirectory, "oneshot_agent.py")),
+    false,
+    "teardown must scrub the ephemeral tool from the effective worker",
+  );
+  assert.equal(fallbackWorker.retiredCompositionDirectory, fallbackDirectory);
+  const retiredManifest = JSON.parse(readFileSync(
+    path.join(fallbackDirectory, "complete.json"),
+    "utf8",
+  ));
+  assert.equal(retiredManifest.retired_ephemeral, true);
+  assert.ok(
+    retiredManifest.agents.every((agent) => agent.scope !== "ephemeral"),
+  );
+  assert.equal(
+    manager.activeRoute.compositionHash,
+    manager.compositionDescriptor().compositionHash,
+  );
+  await manager.stop();
+  assert.equal(
+    existsSync(fallbackDirectory),
+    false,
+    "the fallback ephemeral composition directory must not persist",
+  );
+});
+
+test("an explicit stack switch never resurrects the previous stack's last-good composition", async (t) => {
+  const fixture = minimalFixture(t, {
+    validator: (agentDirectory) => {
+      const source = readFileSync(
+        path.join(agentDirectory, "global_agent.py"),
+        "utf8",
+      );
+      return source.includes("broken ring")
+        ? { ok: false, error: "broken ring conflicts with the composed set" }
+        : { ok: true };
+    },
+  });
+  const manager = new BetaRouteManager(fixture.managerOptions);
+  const identity = manager.identity();
+  const stackA = await manager.createStack({
+    name: "previous",
+    parentRappid: identity.default_stack_rappid,
+  });
+  await manager.installScopedAgent({
+    filename: "stack_a_marker_agent.py",
+    source: "STACK_A_MARKER = True\n",
+    stackRappid: stackA.rappid,
+  });
+  await manager.selectStack({ stackRappid: stackA.rappid, overlayRappids: [] });
+  manager.materializeComposition(manager.compositionDescriptor());
+
+  const stackB = await manager.createStack({
+    name: "switched",
+    parentRappid: identity.default_stack_rappid,
+  });
+  await manager.installScopedAgent({
+    filename: "stack_b_marker_agent.py",
+    source: "STACK_B_MARKER = True\n",
+    stackRappid: stackB.rappid,
+  });
+  await manager.selectStack({ stackRappid: stackB.rappid, overlayRappids: [] });
+
+  const global = fixture.store.baselineAncestors().find(
+    (item) => item.filename === "global_agent.py",
+  );
+  const ring = fixture.store.appendRing(global.ancestorRappid, {
+    source: "GLOBAL = 'broken ring'\n",
+    parentRappid: global.ancestorRappid,
+    verified: true,
+    meta: { author: "test" },
+  });
+  fixture.store.setHead(global.ancestorRappid, ring);
+
+  const fallback = manager.materializeComposition(
+    manager.compositionDescriptor(),
+  );
+  assert.equal(fallback.fallbackStrategy, "baseline");
+  assert.equal(fallback.descriptor.stack.rappid, stackB.rappid);
+  assert.equal(
+    existsSync(path.join(fallback.agentDirectory, "stack_a_marker_agent.py")),
+    false,
+    "the previous stack's last-good composition must not be resurrected",
+  );
+  assert.equal(
+    existsSync(path.join(fallback.agentDirectory, "stack_b_marker_agent.py")),
+    true,
+    "the requested route's pristine baseline must be served",
+  );
+  assert.equal(
+    readFileSync(path.join(fallback.agentDirectory, "global_agent.py"), "utf8"),
+    fixture.sources["global_agent.py"],
+  );
+  assert.equal(
+    fixture.store.getHead(global.ancestorRappid),
+    global.ancestorRappid,
+  );
+});
+
+function duplicateToolNameValidator(agentDirectory) {
+  // Mirrors Grail's duplicate-tool-name failure, which names BOTH colliding
+  // files on one line — the pristine baseline agent and the newcomer.
+  const files = readdirSync(agentDirectory);
+  const collider = files.find((filename) => (
+    filename.endsWith(".py")
+    && readFileSync(path.join(agentDirectory, filename), "utf8")
+      .includes("COLLIDES_WITH_MEMORY")
+  ));
+  if (!collider) return { ok: true };
+  return {
+    ok: false,
+    error: `duplicate agent name 'ManageMemory': ${collider} conflicts with `
+      + "manage_memory_agent.py already registered",
+  };
+}
+
+test("a colliding user agent never evicts the pristine baseline agent", async (t) => {
+  const fixture = minimalFixture(t, { validator: duplicateToolNameValidator });
+  const seeded = new BetaRouteManager(fixture.managerOptions);
+  const stack = seeded.loadStack(seeded.identity().active_stack_rappid);
+  stack.agents = [seeded.packageAgent({
+    filename: "rogue_memory_agent.py",
+    source: "COLLIDES_WITH_MEMORY = True\n",
+  })];
+  seeded.saveStack(stack);
+
+  const manager = new BetaRouteManager(fixture.managerOptions);
+  manager.createWorkerProcess = fakeWorkerProcess;
+  const route = await manager.startDefault();
+  assert.ok(route.url, "the beta still boots");
+  const worker = manager.workers.get(route.compositionHash);
+
+  // The survival floor is inviolable: quarantining the baseline here would
+  // silently disable the user's memory — strictly worse than bare Grail.
+  assert.equal(
+    existsSync(path.join(worker.agentDirectory, "manage_memory_agent.py")),
+    true,
+    "the pristine baseline memory agent must survive the collision",
+  );
+  assert.equal(
+    existsSync(path.join(worker.agentDirectory, "context_memory_agent.py")),
+    true,
+    "the other sacred memory agent is untouched",
+  );
+  assert.equal(
+    existsSync(path.join(worker.agentDirectory, "rogue_memory_agent.py")),
+    false,
+    "the colliding newcomer is the one that goes",
+  );
+  const event = manager.telemetrySnapshot().events.find(
+    (candidate) => candidate.type === "composition-quarantine",
+  );
+  assert.deepEqual(
+    event.excluded_files.map((excluded) => excluded.filename),
+    ["rogue_memory_agent.py"],
+    "only the newcomer is recorded as quarantined",
+  );
+  await manager.stop();
 });

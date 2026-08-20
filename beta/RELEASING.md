@@ -35,7 +35,7 @@ version="0.1.0-beta.1"
 release_commit="<full-40-character-commit>"
 tag="brainstem-beta-v$version"
 git tag -a "$tag" "$release_commit" -m "RAPP Brainstem Frontier v$version"
-git push fork "$tag"
+git push upstream "$tag"
 ```
 
 Never move or reuse a published tag. Publish a new prerelease version instead.
@@ -62,7 +62,7 @@ Publish after preparing a temporary notes file outside the repository:
 
 ```sh
 gh release create "$tag" \
-  --repo kody-w/aibast-agents-library \
+  --repo microsoft/aibast-agents-library \
   --verify-tag \
   --prerelease \
   --title "RAPP Brainstem Frontier v$version" \
@@ -74,7 +74,7 @@ gh release create "$tag" \
 Use a clean temporary `HOME` and disable launch during installation:
 
 ```sh
-repo="kody-w/aibast-agents-library"
+repo="microsoft/aibast-agents-library"
 commit="<full-40-character-commit>"
 curl -fsSL "https://raw.githubusercontent.com/$repo/$commit/beta/install.sh" \
   | HOME="<isolated-home>" \

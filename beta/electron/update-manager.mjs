@@ -20,10 +20,19 @@ function asErrorMessage(error) {
 
 export function compareBetaVersions(left, right) {
   const parse = (value) => {
-    const [core, prerelease = null] = String(value || "").trim().split("-", 2);
-    const numbers = core.split(".").map((part) => Number.parseInt(part, 10));
-    if (numbers.length !== 3 || numbers.some(Number.isNaN)) return null;
-    return { numbers, prerelease };
+    // Split on the FIRST hyphen only. JS split's limit argument DISCARDS the
+    // remainder, so split("-", 2) would truncate "0.1.0-beta.7-hotfix.1" to
+    // prerelease "beta.7" and defeat the downgrade guard.
+    const text = String(value || "").trim();
+    const hyphenAt = text.indexOf("-");
+    const core = hyphenAt === -1 ? text : text.slice(0, hyphenAt);
+    const prerelease = hyphenAt === -1 ? null : text.slice(hyphenAt + 1);
+    if (prerelease === "") return null;
+    const parts = core.split(".");
+    if (parts.length !== 3 || parts.some((part) => !/^\d+$/.test(part))) {
+      return null;
+    }
+    return { numbers: parts.map((part) => Number.parseInt(part, 10)), prerelease };
   };
   const a = parse(left);
   const b = parse(right);

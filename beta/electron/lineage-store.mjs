@@ -43,12 +43,25 @@ function atomicWriteJson(filePath, value) {
   atomicWrite(filePath, `${JSON.stringify(value, null, 2)}\n`);
 }
 
-function readJson(filePath) {
-  return JSON.parse(readFileSync(filePath, "utf8"));
+function readJsonSafe(filePath) {
+  // A corrupt or unreadable JSON file is treated as absent: every lineage
+  // error must degrade to a bootable composition, never propagate a throw.
+  try {
+    return JSON.parse(readFileSync(filePath, "utf8"));
+  } catch {
+    return null;
+  }
 }
 
 function filesystemSegment(value) {
-  return encodeURIComponent(String(value));
+  // Directory names are a short, stable digest of the rappid — URI-encoding
+  // the full rappid (~100 chars per segment) pushes ring paths past the
+  // Windows MAX_PATH limit (260). Identity stays inside locus.json/meta.json;
+  // only the directory name shortens (same rappid -> same segment).
+  return Hb(
+    "rapp/1:lineage-segment",
+    Buffer.from(String(value), "utf8"),
+  ).slice(0, 32);
 }
 
 function slugFromFilename(filename) {
@@ -79,9 +92,12 @@ function uuidFromDigest(digest) {
 }
 
 function sourceSha256(source) {
+  // The single identity chokepoint. CRLF canonicalizes to LF so a git
+  // autocrlf checkout mints the same ancestor/ring rappids as an LF checkout
+  // — the same molt has the same rappid everywhere.
   return Hb(
     "rapp/1:molt-source",
-    Buffer.from(String(source), "utf8"),
+    Buffer.from(String(source).replaceAll("\r\n", "\n"), "utf8"),
   );
 }
 
@@ -197,10 +213,16 @@ export class LineageStore {
     const sourcePath = path.join(ringDirectory, RING_SOURCE_FILE);
     const metaPath = path.join(ringDirectory, RING_META_FILE);
     if (!existsSync(sourcePath) || !existsSync(metaPath)) return null;
-    return {
-      ...readJson(metaPath),
-      source: readFileSync(sourcePath, "utf8"),
-    };
+    const meta = readJsonSafe(metaPath);
+    if (!meta || typeof meta !== "object") return null;
+    try {
+      return {
+        ...meta,
+        source: readFileSync(sourcePath, "utf8"),
+      };
+    } catch {
+      return null;
+    }
   }
 
   _ringIsValid(ancestorRappid, ringRappid, ring = null) {
@@ -254,11 +276,10 @@ export class LineageStore {
     if (!existsSync(ringsDirectory)) return [baselineRing];
     const rings = readdirSync(ringsDirectory, { withFileTypes: true })
       .filter((entry) => entry.isDirectory() && !entry.name.startsWith("."))
-      .map((entry) => {
-        const metaPath = path.join(ringsDirectory, entry.name, RING_META_FILE);
-        return existsSync(metaPath) ? readJson(metaPath) : null;
-      })
-      .filter(Boolean)
+      .map((entry) => readJsonSafe(
+        path.join(ringsDirectory, entry.name, RING_META_FILE),
+      ))
+      .filter((meta) => meta && typeof meta.ringRappid === "string")
       .sort((left, right) => (
         String(left.createdAt || "").localeCompare(String(right.createdAt || ""))
         || left.ringRappid.localeCompare(right.ringRappid)
@@ -299,8 +320,22 @@ export class LineageStore {
     );
     const ringDirectory = this._ringDirectory(ancestorRappid, ringRappid);
     if (existsSync(ringDirectory)) {
-      if (!this._ringIsValid(ancestorRappid, ringRappid)) {
+      const existing = this._readRing(ancestorRappid, ringRappid);
+      if (!this._ringIsValid(ancestorRappid, ringRappid, existing)) {
         throw new Error(`Existing ring is corrupt: ${ringRappid}`);
+      }
+      if (verified === true && existing.verified !== true) {
+        const { source: _source, ...existingMeta } = existing;
+        atomicWriteJson(path.join(ringDirectory, RING_META_FILE), {
+          ...existingMeta,
+          verified: true,
+          meta: {
+            ...(existing.meta && typeof existing.meta === "object"
+              ? existing.meta
+              : {}),
+            ...(meta && typeof meta === "object" ? meta : {}),
+          },
+        });
       }
       return ringRappid;
     }
@@ -364,9 +399,13 @@ export class LineageStore {
     if (!baseline) throw new Error(`Unknown Grail ancestor: ${ancestorRappid}`);
     if (
       ringRappid !== ancestorRappid
-      && !this._readRing(ancestorRappid, ringRappid)
+      && !this._pathIsValid(
+        ancestorRappid,
+        ringRappid,
+        { requireVerified: true },
+      )
     ) {
-      throw new Error(`Unknown molt ring: ${ringRappid}`);
+      throw new Error(`Refusing invalid or unverified molt ring: ${ringRappid}`);
     }
     this._ensureLocus(baseline);
     atomicWrite(this._headPath(ancestorRappid), `${ringRappid}\n`);
@@ -414,18 +453,49 @@ export class LineageStore {
     );
   }
 
+  /** True when the overlay may serve or move rings at all. The kill switch must
+   *  gate WRITES as well as reads: otherwise HEADs move invisibly while the layer
+   *  is off and silently activate on the next boot once the flag is cleared. */
+  isEnabled() {
+    return this.enabled && process.env.RAPP_MOLT_LINEAGE !== "0";
+  }
+
+  /** Resolve the loci a fleet-wide command applies to, without letting an
+   *  unreadable Grail tree throw out of the command. */
+  _commandTargets(ancestorRappid) {
+    if (ancestorRappid) return [ancestorRappid];
+    try {
+      return this.baselineAncestors().map((baseline) => baseline.ancestorRappid);
+    } catch {
+      return [];
+    }
+  }
+
+  /** Move HEAD across loci, isolating each one. A single failing locus must never
+   *  abort the fleet and leave the rest molted — the whole point of the safe word
+   *  is that it always lands somewhere safe. Returns a report, never throws. */
+  _moveHeads(targets, pick) {
+    const changed = [];
+    const failed = [];
+    for (const target of targets) {
+      try {
+        this.setHead(target, pick(target));
+        changed.push(target);
+      } catch (error) {
+        failed.push({ ancestorRappid: target, error: String(error?.message || error) });
+      }
+    }
+    return { disabled: false, changed, failed };
+  }
+
   rollbackToBaseline(ancestorRappid = null) {
-    const targets = ancestorRappid
-      ? [ancestorRappid]
-      : this.baselineAncestors().map((baseline) => baseline.ancestorRappid);
-    for (const target of targets) this.setHead(target, target);
+    if (!this.isEnabled()) return { disabled: true, changed: [], failed: [] };
+    return this._moveHeads(this._commandTargets(ancestorRappid), (target) => target);
   }
 
   restore(ancestorRappid = null) {
-    const targets = ancestorRappid
-      ? [ancestorRappid]
-      : this.baselineAncestors().map((baseline) => baseline.ancestorRappid);
-    for (const target of targets) {
+    if (!this.isEnabled()) return { disabled: true, changed: [], failed: [] };
+    return this._moveHeads(this._commandTargets(ancestorRappid), (target) => {
       const latest = this.listRings(target)
         .filter((ring) => (
           ring.ringRappid !== target
@@ -437,8 +507,59 @@ export class LineageStore {
           )
         ))
         .sort(newestFirst)[0];
-      this.setHead(target, latest?.ringRappid || target);
+      return latest?.ringRappid || target;
+    });
+  }
+
+  /** Count ring directories on disk whose metadata will not parse. listRings
+   *  deliberately drops these so composition stays fail-safe, but an integrity
+   *  check must not inherit that blindness — otherwise the audit surface hides
+   *  exactly the corruption it exists to find. */
+  _corruptRingCount(ancestorRappid) {
+    const ringsDirectory = this._ringsDirectory(ancestorRappid);
+    if (!existsSync(ringsDirectory)) return 0;
+    return readdirSync(ringsDirectory, { withFileTypes: true })
+      .filter((entry) => entry.isDirectory() && !entry.name.startsWith("."))
+      .filter((entry) => {
+        const meta = readJsonSafe(
+          path.join(ringsDirectory, entry.name, RING_META_FILE),
+        );
+        return !meta || typeof meta.ringRappid !== "string";
+      })
+      .length;
+  }
+
+  /** Health report for a locus. verifyChain() answers only "does the reachable
+   *  chain verify" — deliberately, so unreachable corruption never breaks
+   *  composition. This surfaces the corruption that answer omits, so operators
+   *  (and the proprioception layer) can see rot on disk instead of inferring
+   *  health from a boolean that was never asked the question. */
+  inspectLineage(ancestorRappid) {
+    let corruptRings = 0;
+    try {
+      corruptRings = this._corruptRingCount(ancestorRappid);
+    } catch {
+      corruptRings = 0;
     }
+    let chainOk = false;
+    try {
+      chainOk = this.verifyChain(ancestorRappid);
+    } catch {
+      chainOk = false;
+    }
+    let head = null;
+    try {
+      head = this.getHead(ancestorRappid);
+    } catch {
+      head = null;
+    }
+    return {
+      ancestorRappid,
+      chainOk,
+      corruptRings,
+      healthy: chainOk && corruptRings === 0,
+      head,
+    };
   }
 
   verifyChain(ancestorRappid) {
@@ -515,4 +636,8 @@ export function restore(ancestorRappid = null) {
 
 export function verifyChain(ancestorRappid) {
   return configuredStore().verifyChain(ancestorRappid);
+}
+
+export function inspectLineage(ancestorRappid) {
+  return configuredStore().inspectLineage(ancestorRappid);
 }

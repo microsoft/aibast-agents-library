@@ -8,6 +8,7 @@ import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 
+import { lineageStoreInternals } from "../electron/lineage-store.mjs";
 import {
   ancestorRappidFor,
   MoltLineageStore,
@@ -35,6 +36,33 @@ test("rappids are deterministic: same molt has the same identity everywhere", ()
   // Different bytes, different parent, or different ancestor => different ring rappid.
   assert.notEqual(r1, ringRappidFor(a1, null, MOLT_2, "echo_agent.py"));
   assert.notEqual(r1, ringRappidFor(a1, r1, MOLT_1, "echo_agent.py"));
+});
+
+test("identity is unified with the wired lineage-store: same molt bytes, same rappid in both modules", () => {
+  // The ALM layer delegates to the exact derivations the live routed store
+  // mints with — the protocol's cross-environment identity invariant holds
+  // ACROSS modules, not just within one.
+  const ancestor = ancestorRappidFor("echo_agent.py", BASELINE);
+  assert.equal(
+    ancestor,
+    lineageStoreInternals.ancestorRappidFor("echo_agent.py", BASELINE),
+  );
+  const ring = ringRappidFor(ancestor, ancestor, MOLT_1, "echo_agent.py");
+  assert.equal(
+    ring,
+    lineageStoreInternals.ringRappidFor(ancestor, ancestor, MOLT_1, "echo_agent.py"),
+  );
+  // A first ring appended with no explicit parent descends from the ancestor —
+  // the live store's parent convention — so the stored ring carries the same
+  // rappid the running app would mint for the same first molt.
+  const { store, cleanup } = freshStore();
+  try {
+    const registered = store.registerAncestor("echo_agent.py", BASELINE);
+    assert.equal(registered, ancestor);
+    assert.equal(store.appendRing(ancestor, { source: MOLT_1, verified: true }), ring);
+  } finally {
+    cleanup();
+  }
 });
 
 test("passthrough by default: unknown agent, no HEAD, and kill-switch all resolve to baseline", () => {
@@ -172,7 +200,7 @@ test("the ALM scenario: a prod-only molt makes promotion a named CONFLICT, never
   }
 });
 
-test("every promotion attempt lands in a hash-chained, tamper-evident journal", () => {
+test("every promotion attempt lands in an internally verified hash chain", () => {
   const { store, root, cleanup } = freshStore();
   try {
     const ancestor = store.registerAncestor("echo_agent.py", BASELINE);
@@ -199,6 +227,45 @@ test("every promotion attempt lands in a hash-chained, tamper-evident journal", 
     tampered[0].actor = "mallory";
     writeFileSync(file, JSON.stringify(tampered));
     assert.deepEqual(store.verifyPromotions(ancestor), { ok: false, broken_at: 0 });
+  } finally {
+    cleanup();
+  }
+});
+
+test("a corrupt promotion journal fails closed: promote refuses to move HEAD and verify reports the corruption", () => {
+  const { store, root, cleanup } = freshStore();
+  try {
+    const ancestor = store.registerAncestor("echo_agent.py", BASELINE);
+    const r1 = store.appendRing(ancestor, { source: MOLT_1, verified: true });
+    assert.ok(store.setHead(ancestor, r1, "dev"));
+    const file = path.join(root, /:([0-9a-f]{64})$/.exec(ancestor)[1], "promotions.json");
+
+    // Truthy-non-array JSON ('{}') and truncated JSON are both corruption — the
+    // exact shapes that used to slip through as an empty journal and verify ok.
+    for (const corruptBytes of ["{}", "{ truncated"]) {
+      writeFileSync(file, corruptBytes);
+      const res = store.promote(ancestor, { fromEnv: "dev", toEnv: "prod", actor: "carol" });
+      assert.equal(res.ok, false);
+      assert.equal(res.journal_corrupt, true);
+      assert.match(res.reason, /journal is corrupt/);
+      // No HEAD moved: prod stays at baseline, the would-be fast-forward refused.
+      assert.equal(store.head(ancestor, "prod"), null);
+      assert.equal(store.resolveLive("echo_agent.py", "prod"), null);
+      // The audit check flags the corruption instead of reporting ok...
+      const verdict = store.verifyPromotions(ancestor);
+      assert.equal(verdict.ok, false);
+      assert.equal(verdict.corrupt, true);
+      // ...and the corrupt bytes are preserved as evidence, never appended over.
+      assert.equal(readFileSync(file, "utf8"), corruptBytes);
+      assert.deepEqual(store.listPromotions(ancestor), []);
+    }
+
+    // Restoring a valid journal restores promotion — fail-closed, not bricked.
+    rmSync(file);
+    const recovered = store.promote(ancestor, { fromEnv: "dev", toEnv: "prod", actor: "carol" });
+    assert.equal(recovered.ok, true);
+    assert.equal(store.head(ancestor, "prod"), r1);
+    assert.deepEqual(store.verifyPromotions(ancestor), { ok: true, entries: 1 });
   } finally {
     cleanup();
   }

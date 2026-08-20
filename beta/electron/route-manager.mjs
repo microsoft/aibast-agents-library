@@ -365,6 +365,25 @@ function dryLoadAgentDirectory({
       };
 }
 
+function dryLoadFailureFilenames(error, candidateFilenames, excluded) {
+  const found = new Map();
+  const text = String(error?.message || error || "");
+  if (!text.includes("Grail dry-load")) return found;
+  for (const line of text.split("\n")) {
+    for (const match of line.matchAll(/[A-Za-z0-9_.-]+_agent\.py/g)) {
+      const filename = path.basename(match[0]);
+      if (
+        candidateFilenames.has(filename)
+        && !excluded.has(filename)
+        && !found.has(filename)
+      ) {
+        found.set(filename, line.trim());
+      }
+    }
+  }
+  return found;
+}
+
 export class BetaRouteManager {
   constructor({
     betaHome,
@@ -391,6 +410,7 @@ export class BetaRouteManager {
     this.workerLogRoot = path.join(betaHome, "logs", "workers");
     this.workers = new Map();
     this.routeLocks = new Map();
+    this.stackOverrides = new Map();
     this.telemetry = [];
     this.telemetrySequence = 0;
     this.activeRoute = null;
@@ -574,19 +594,27 @@ export class BetaRouteManager {
   }
 
   rollbackLineage(ancestorRappid = null) {
-    this.lineageStore.rollbackToBaseline(ancestorRappid);
+    const report = this.lineageStore.rollbackToBaseline(ancestorRappid) || null;
     this.recordTelemetry("lineage-rollback", {
       ancestor_rappid: ancestorRappid,
       scope: ancestorRappid ? "locus" : "all",
+      disabled: Boolean(report?.disabled),
+      changed: report?.changed?.length ?? null,
+      failed: report?.failed?.length ?? null,
     });
+    return report;
   }
 
   restoreLineage(ancestorRappid = null) {
-    this.lineageStore.restore(ancestorRappid);
+    const report = this.lineageStore.restore(ancestorRappid) || null;
     this.recordTelemetry("lineage-restore", {
       ancestor_rappid: ancestorRappid,
       scope: ancestorRappid ? "locus" : "all",
+      disabled: Boolean(report?.disabled),
+      changed: report?.changed?.length ?? null,
+      failed: report?.failed?.length ?? null,
     });
+    return report;
   }
 
   validateAgentDirectory(agentDirectory) {
@@ -770,6 +798,8 @@ export class BetaRouteManager {
   }
 
   loadStack(rappid) {
+    const override = this.stackOverrides.get(rappid);
+    if (override) return override;
     const filePath = this.stackPath(rappid);
     if (!existsSync(filePath)) throw new Error(`Unknown stack RAPPID: ${rappid}`);
     return this.normalizeStack(
@@ -999,6 +1029,48 @@ export class BetaRouteManager {
     };
   }
 
+  validateScopedAgentInstall(candidateStack, packaged) {
+    // Fertility gate: a candidate composition containing the new agent must
+    // dry-load against the Grail kernel BEFORE the stack is persisted, so a
+    // broken install can never brick the next boot.
+    this.stackOverrides.set(candidateStack.rappid, candidateStack);
+    let entries;
+    try {
+      const descriptor = this.compositionDescriptor({ applyLineage: false });
+      entries = descriptor.entries.some(
+        (entry) => entry.filename === packaged.filename
+          && entry.scope === `stack:${candidateStack.rappid}`,
+      )
+        ? descriptor.entries
+        : [
+            ...this.globalAgentEntries(descriptor.identity.memory_guid),
+            {
+              address: packaged.source_address,
+              filename: packaged.filename,
+              objectPath: packaged.object_path,
+              scope: `stack:${candidateStack.rappid}`,
+            },
+          ];
+    } finally {
+      this.stackOverrides.delete(candidateStack.rappid);
+    }
+    const validationRoot = mkdtempSync(
+      path.join(this.compositionRoot, ".install-gate-"),
+    );
+    const validationDirectory = path.join(validationRoot, "agents");
+    ensurePrivateDirectory(validationDirectory);
+    try {
+      for (const entry of entries) {
+        const destination = path.join(validationDirectory, entry.filename);
+        if (entry.objectPath) copyFileSync(entry.objectPath, destination);
+        else writeFileSync(destination, entry.bytes, { mode: 0o600 });
+      }
+      this.validateAgentDirectory(validationDirectory);
+    } finally {
+      rmSync(validationRoot, { recursive: true, force: true });
+    }
+  }
+
   async installScopedAgent({ filename, source, stackRappid = null }) {
     const identity = this.identity();
     const stack = this.loadStack(
@@ -1011,10 +1083,24 @@ export class BetaRouteManager {
       source,
       existingRappid: previous?.agent_rappid || null,
     });
-    stack.agents = [
+    const agents = [
       ...stack.agents.filter((agent) => agent.filename !== packaged.filename),
       packaged,
     ].sort((left, right) => left.filename.localeCompare(right.filename));
+    try {
+      this.validateScopedAgentInstall({ ...stack, agents }, packaged);
+    } catch (error) {
+      const lesson = String(error?.message || error);
+      this.recordTelemetry("stack-agent-install-refused", {
+        filename: packaged.filename,
+        lesson,
+        stack_rappid: stack.rappid,
+      });
+      throw new Error(
+        `Refusing to install ${packaged.filename}: ${lesson}`,
+      );
+    }
+    stack.agents = agents;
     this.saveStack(stack);
     this.recordTelemetry("stack-agent-installed", {
       filename: packaged.filename,
@@ -1142,6 +1228,7 @@ export class BetaRouteManager {
     ephemeralAgent = null,
     applyLineage = true,
     lineageHeads = null,
+    excludeFilenames = null,
   } = {}) {
     const identity = this.identity();
     const stack = this.loadStack(identity.active_stack_rappid);
@@ -1169,8 +1256,13 @@ export class BetaRouteManager {
     }
     const ephemeralNonce = ephemeralAgent ? randomUUID() : null;
     if (ephemeralAgent) entries.push(this.ephemeralAgentEntry(ephemeralAgent));
+    // The composition-quarantine fallback tier re-composes without the files
+    // the Grail dry-load named, so user-added content can never brick boot.
+    const composedEntries = excludeFilenames?.size
+      ? entries.filter((entry) => !excludeFilenames.has(entry.filename))
+      : entries;
 
-    const resolvedEntries = applyLineage ? entries.map((entry) => {
+    const resolvedEntries = applyLineage ? composedEntries.map((entry) => {
       try {
         return this.resolveLineageEntry(
           entry,
@@ -1184,7 +1276,7 @@ export class BetaRouteManager {
         });
         return entry;
       }
-    }) : entries;
+    }) : composedEntries;
     const byFilename = new Map();
     for (const entry of resolvedEntries) {
       if (byFilename.has(entry.filename)) {
@@ -1366,12 +1458,14 @@ export class BetaRouteManager {
       if (!descriptor.ephemeral) this.lastGoodDescriptor = descriptor;
       return materialized;
     } catch (error) {
-      if (!allowLineageFallback || !descriptor.lineageOverlays?.length) {
-        throw error;
+      if (!allowLineageFallback) throw error;
+      if (!descriptor.lineageOverlays?.length) {
+        return this.quarantineCompositionFallback(descriptor, error, error);
       }
       if (
         lastGoodDescriptor
         && lastGoodDescriptor.compositionHash !== descriptor.compositionHash
+        && this.sameRouteIdentity(lastGoodDescriptor, descriptor)
       ) {
         try {
           const lastGood = this.materializeCompositionOnce(lastGoodDescriptor);
@@ -1395,9 +1489,10 @@ export class BetaRouteManager {
       try {
         fallback = this.materializeCompositionOnce(fallbackDescriptor);
       } catch (fallbackError) {
-        throw new Error(
-          `${String(error?.message || error)}; pristine fallback also failed: `
-          + String(fallbackError?.message || fallbackError),
+        return this.quarantineCompositionFallback(
+          descriptor,
+          error,
+          fallbackError,
         );
       }
       const isolated = this.isolateLineageFallback(
@@ -1409,6 +1504,100 @@ export class BetaRouteManager {
       this.recordLineageFallback(descriptor, error, isolated);
       return isolated;
     }
+  }
+
+  sameRouteIdentity(left, right) {
+    // The last-good fallback may only revive the SAME route: after an explicit
+    // stack or overlay switch, a failure on the new route must resolve to that
+    // route's pristine baseline, never a previously selected stack.
+    return (
+      left.identity.caller_rappid === right.identity.caller_rappid
+      && left.identity.memory_guid === right.identity.memory_guid
+      && left.stack.rappid === right.stack.rappid
+      && canonical(left.identity.overlay_stack_rappids)
+        === canonical(right.identity.overlay_stack_rappids)
+    );
+  }
+
+  quarantineCompositionFallback(descriptor, error, pristineError) {
+    // Final fail-safe tier: the pristine composition itself refuses to
+    // dry-load. Grail names each failing file on stderr — re-compose without
+    // those files (the sources on disk stay untouched) so the beta Brainstem
+    // always boots, and record what was quarantined and why.
+    const candidateFilenames = new Set(
+      descriptor.entries.map((entry) => entry.filename),
+    );
+    // The pristine Grail factory agents are the survival floor and must never be
+    // evicted. Grail's duplicate-tool-name error names BOTH colliding files, so
+    // without this guard a user agent that collides with a baseline tool name
+    // would quarantine the baseline agent too — silently disabling memory. A
+    // baseline agent is protected; the colliding newcomer is the one that goes.
+    const protectedFilenames = new Set(
+      descriptor.entries
+        .filter((entry) => entry.scope === "memory")
+        .map((entry) => entry.filename),
+    );
+    try {
+      for (const baseline of this.lineageStore.baselineAncestors()) {
+        protectedFilenames.add(baseline.filename);
+      }
+    } catch {
+      // Baseline manifest unreadable — fall back to the memory-scope guard only.
+    }
+    const excluded = new Map();
+    let lastError = pristineError;
+    for (let round = 0; round < candidateFilenames.size; round += 1) {
+      const failing = dryLoadFailureFilenames(
+        lastError,
+        candidateFilenames,
+        excluded,
+      );
+      for (const filename of [...failing.keys()]) {
+        if (protectedFilenames.has(filename)) failing.delete(filename);
+      }
+      if (!failing.size) break;
+      for (const [filename, reason] of failing) excluded.set(filename, reason);
+      try {
+        const fallbackDescriptor = this.compositionDescriptor({
+          ephemeralAgent: descriptor.ephemeralAgent,
+          applyLineage: false,
+          excludeFilenames: new Set(excluded.keys()),
+        });
+        const materialized = this.materializeCompositionOnce(fallbackDescriptor);
+        this.recordTelemetry("composition-quarantine", {
+          composition_hash: fallbackDescriptor.compositionHash,
+          error: String(error?.message || error),
+          excluded_files: [...excluded].map(([filename, reason]) => ({
+            filename,
+            reason,
+          })),
+          requested_composition_hash: descriptor.compositionHash,
+        });
+        if (!fallbackDescriptor.ephemeral) {
+          this.lastGoodDescriptor = fallbackDescriptor;
+        }
+        return {
+          ...materialized,
+          descriptor: fallbackDescriptor,
+          fallbackFrom: descriptor.compositionHash,
+          fallbackStrategy: "quarantine",
+          lineageAccepted: [],
+          lineageRejected: (descriptor.lineageOverlays || []).map(
+            (overlay) => overlay.ringRappid,
+          ),
+          quarantinedFiles: [...excluded.keys()],
+        };
+      } catch (quarantineError) {
+        lastError = quarantineError;
+      }
+    }
+    if (pristineError !== error) {
+      throw new Error(
+        `${String(error?.message || error)}; pristine fallback also failed: `
+        + String(pristineError?.message || pristineError),
+      );
+    }
+    throw error;
   }
 
   sameNonLineageComposition(left, right) {
@@ -1619,7 +1808,7 @@ export class BetaRouteManager {
         BRAINSTEM_BETA_ROUTED_WORKER: "1",
       },
     };
-    const process = new BrainstemProcess(config);
+    const process = this.createWorkerProcess(config);
     const result = await process.start();
     const route = {
       url: config.url,
@@ -1636,6 +1825,7 @@ export class BetaRouteManager {
       activeRequests: 0,
       agentDirectory: materialized.agentDirectory,
       compositionDirectory: materialized.compositionDirectory,
+      descriptor: effectiveDescriptor,
       process,
       route,
       lastUsed: Date.now(),
@@ -1647,6 +1837,10 @@ export class BetaRouteManager {
       worker_count: this.workers.size,
     });
     return route;
+  }
+
+  createWorkerProcess(config) {
+    return new BrainstemProcess(config);
   }
 
   async waitForWorkerIdle(worker, timeoutMs = 30000) {
@@ -1861,8 +2055,11 @@ export class BetaRouteManager {
       atomicWriteJson(retiredManifestPath, retiredManifest);
     }
 
-    const defaultDescriptor = this.compositionDescriptor();
-    this.materializeComposition(defaultDescriptor);
+    const requestedDefault = this.compositionDescriptor();
+    const materializedDefault = this.materializeComposition(requestedDefault);
+    // A composition fallback re-keys the worker under the EFFECTIVE hash the
+    // next materialization actually serves, never a hash that cannot compose.
+    const defaultDescriptor = materializedDefault.descriptor || requestedDefault;
     const previousDefault = this.workers.get(defaultDescriptor.compositionHash);
     if (previousDefault && previousDefault !== worker) {
       await this.waitForWorkerIdle(previousDefault);
@@ -1877,6 +2074,7 @@ export class BetaRouteManager {
     }
 
     this.workers.delete(descriptor.compositionHash);
+    worker.descriptor = defaultDescriptor;
     worker.ephemeral = false;
     worker.lastUsed = Date.now();
     worker.retiredCompositionDirectory = worker.compositionDirectory;
@@ -1932,7 +2130,12 @@ export class BetaRouteManager {
       } finally {
         if (worker) worker.activeRequests = Math.max(0, worker.activeRequests - 1);
         if (descriptor.ephemeral) {
-          await this.retireEphemeralWorker(descriptor);
+          // A composition fallback registers the worker under the EFFECTIVE
+          // descriptor's hash — retire that one so the fallback's ephemeral
+          // composition directory and manifest are actually cleaned up.
+          await this.retireEphemeralWorker(
+            worker?.descriptor?.ephemeral ? worker.descriptor : descriptor,
+          );
         }
       }
     });

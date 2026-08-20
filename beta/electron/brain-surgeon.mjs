@@ -997,11 +997,20 @@ export class BrainSurgeon {
 
   async installScopedAgent(agent) {
     const manager = this.requireRouteManager();
-    const installed = await manager.installScopedAgent({
-      filename: cleanFilename(agent?.filename),
-      source: String(agent?.source || ""),
-      stackRappid: agent?.stack_rappid || null,
-    });
+    let installed;
+    try {
+      installed = await manager.installScopedAgent({
+        filename: cleanFilename(agent?.filename),
+        source: String(agent?.source || ""),
+        stackRappid: agent?.stack_rappid || null,
+      });
+    } catch (error) {
+      // Fertility-gate refusal: nothing was persisted. Hand the dry-load
+      // failure back as a lesson so the Surgeon can fix the source and retry.
+      const lesson = String(error?.message || error);
+      if (!lesson.startsWith("Refusing to install")) throw error;
+      return JSON.stringify({ installed: false, lesson }, null, 2);
+    }
     const route = await manager.startDefault();
     return JSON.stringify({ ...installed, active_route: route }, null, 2);
   }

@@ -30,12 +30,21 @@ test("renderer models several Copilot chats as tabs + a herd grid", () => {
   assert.match(renderer, /function clearSurgeonUi\(\)/);
 });
 
-test("the shell has the tab strip, herd button, and herd width rule", () => {
+test("the shell has the tab strip, herd button, and wrapping herd grid", () => {
   assert.match(ui, /id="surgeon-tabs"/);
   assert.match(ui, /id="surgeon-herd-btn"/);
   assert.match(ui, /Herd view — chat with several Copilots at once/);
   assert.match(ui, /\.surgeon-session/);
   assert.match(ui, /body\.surgeon-herd-open main/);
+  assert.match(
+    ui,
+    /#surgeon-herd \.herd-grid \{[\s\S]*?display: grid;[\s\S]*?grid-template-columns: repeat\(auto-fill, minmax\(300px, 1fr\)\)/,
+  );
+  assert.match(
+    ui,
+    /@media \(max-width: 640px\) \{[\s\S]*?#surgeon-herd \.herd-grid \{ grid-template-columns: 1fr; \}/,
+  );
+  assert.doesNotMatch(ui, /#surgeon-herd \.herd-grid \{[\s\S]*?scroll-snap-type/);
   // the log is a plain scroll container; sessions carry the flex/gap/padding
   assert.match(ui, /\.surgeon-session \{\s*display: flex;/);
 });

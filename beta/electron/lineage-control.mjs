@@ -1,5 +1,6 @@
 const BASELINE_REPLY = "Reverted to Grail baseline — your memories are intact.";
 const RESTORE_REPLY = "Restored the latest verified molts — your memories are intact.";
+const DISABLED_REPLY = "Molt Lineage is turned off on this Brainstem (RAPP_MOLT_LINEAGE=0), so there is nothing to change — you are already running the Grail baseline.";
 
 function configuredWord(value, fallback) {
   const word = String(value || "").trim();
@@ -38,15 +39,30 @@ export async function executeLineageCommand({
   if (!routeManager) {
     throw new Error("Molt Lineage control requires the Frontier route manager.");
   }
-  if (command.action === "baseline") {
-    routeManager.rollbackLineage();
-  } else {
-    routeManager.restoreLineage();
+  const report = command.action === "baseline"
+    ? routeManager.rollbackLineage()
+    : routeManager.restoreLineage();
+  // The kill switch gates writes too, so nothing moved. Say so rather than
+  // claiming a change that did not happen.
+  if (report?.disabled) {
+    return {
+      intercepted: true,
+      action: command.action,
+      disabled: true,
+      fallback: null,
+      reply: DISABLED_REPLY,
+    };
   }
   const route = await routeManager.startDefault();
   const fallback = routeManager.lastLineageFallback || null;
   let reply = command.action === "baseline" ? BASELINE_REPLY : RESTORE_REPLY;
-  if (command.action === "restore" && fallback?.rejected?.length) {
+  if (report?.failed?.length) {
+    reply = command.action === "baseline"
+      ? "Reverted what I could to Grail baseline, but "
+        + `${report.failed.length} agent(s) could not be reverted — your memories are intact.`
+      : "Restored what I could, but "
+        + `${report.failed.length} agent(s) could not be updated — your memories are intact.`;
+  } else if (command.action === "restore" && fallback?.rejected?.length) {
     reply = fallback.accepted?.length
       ? "Restored compatible verified molts, but kept last-good code for incompatible rings — your memories are intact."
       : "Restore could not activate the latest verified molts; kept the last-good composition — your memories are intact.";
@@ -67,4 +83,5 @@ export async function executeLineageCommand({
 export const lineageControlReplies = {
   baseline: BASELINE_REPLY,
   restore: RESTORE_REPLY,
+  disabled: DISABLED_REPLY,
 };

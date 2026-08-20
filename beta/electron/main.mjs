@@ -360,7 +360,16 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     if (typeof body.user_input !== "string") {
       return nativeFetch(resource, options);
     }
-    const result = await requestLineageCommand(body.user_input);
+    // Fail OPEN, always. This interceptor sits in front of every chat message,
+    // so a lineage-control failure (main busy, handler throw, window teardown,
+    // timeout) must never take the user's ordinary chat down with it — the layer
+    // may substitute, never subtract. On any error we fall through to Grail.
+    let result;
+    try {
+      result = await requestLineageCommand(body.user_input);
+    } catch {
+      return nativeFetch(resource, options);
+    }
     if (!result?.intercepted) {
       return nativeFetch(resource, options);
     }
@@ -546,42 +555,29 @@ const rappStore = {
   download: (...a) => activeStoreClient.download(...a),
 };
 
-// Install a sha-verified agent.py from the active RAR source into the MAIN
-// Brainstem via its own loopback /agents/import — the kernel hot-loads agents
-// from disk on every /chat, so the agent is usable immediately, no restart.
+// Install a sha-verified agent.py through the routed composition gate. The
+// candidate must dry-load before the stack changes, then startDefault swaps the
+// worker atomically so a rejected store artifact never lands in AGENTS_PATH.
 async function installAgentToBrainstem(storeId) {
   const cartridge = await rappStore.download(storeId);   // fail-closed sha256
   const filename = cartridge.filename && cartridge.filename.endsWith(".py")
     ? cartridge.filename
     : `${String(storeId).replace(/[^a-z0-9_]+/gi, "_")}_agent.py`;
-  const form = new FormData();
-  form.append("file", new Blob([cartridge.source], { type: "text/x-python" }), filename);
-  form.append("sha256", cartridge.sha256);
-  const base = state.url || config.url;
-  const r = await fetch(`${base}/agents/import`, { method: "POST", body: form });
-  const body = await r.json().catch(() => ({}));
-  // The kernel answers 200 WITH an {error} body when the uploaded file fails
-  // to load as an agent (it may even have restored the previous file) — a 200
-  // alone is not success.
-  if (!r.ok || body.error) throw new Error(body.error || `Brainstem refused the import (HTTP ${r.status}).`);
-  // With a route active, state.url is an ephemeral composed worker whose
-  // AGENTS_PATH is disposable — also persist the agent into the active stack
-  // so it survives that worker retiring.
-  let persisted = "brainstem agents dir";
-  if (routeManager?.activeRoute) {
-    try {
-      await routeManager.installScopedAgent({ filename, source: cartridge.source });
-      persisted = "active stack (scoped install)";
-    } catch (error) {
-      persisted = `hot-loaded only — scoped persist failed: ${error.message}`;
-    }
-  }
-  // The kernel may rename (secure_filename, *_agent.py) — report the name it
-  // actually saved when it tells us, so the UI never claims a name the
-  // Brainstem doesn't have.
-  const savedMatch = /Agent\s+(\S+?\.py)\s+imported/i.exec(body.message || "");
-  const savedName = body.agent || body.name || (savedMatch && savedMatch[1]) || filename;
-  return { ok: true, filename: savedName, requested: filename, agent: savedName, sha256: cartridge.sha256, persisted };
+  const installed = await routeManager.installScopedAgent({
+    filename,
+    source: cartridge.source,
+  });
+  const route = await routeManager.startDefault();
+  const savedName = installed.agent.filename;
+  return {
+    ok: true,
+    filename: savedName,
+    requested: filename,
+    agent: savedName,
+    sha256: cartridge.sha256,
+    persisted: "active stack (scoped install)",
+    active_route: route,
+  };
 }
 const twinManager = new TwinManager({
   brainstemConfig: config,
