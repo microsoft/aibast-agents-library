@@ -1,6 +1,15 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
+const streamArgument = process.argv.find((value) => (
+  value.startsWith("--rapp-chat-stream=")
+));
+const requestedStreamMode = streamArgument?.split("=", 2)[1];
+const chatStreamMode = ["smooth", "raw", "hold"].includes(requestedStreamMode)
+  ? requestedStreamMode
+  : "smooth";
+
 contextBridge.exposeInMainWorld("brainstemBeta", {
+  chatStreamMode,
   checkForUpdates: () => ipcRenderer.invoke("beta:check-for-updates"),
   getState: () => ipcRenderer.invoke("beta:get-state"),
   installUpdate: () => ipcRenderer.invoke("beta:install-update"),

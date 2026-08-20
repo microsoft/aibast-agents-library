@@ -13,6 +13,7 @@ const renderer = read("ui/renderer.js");
 const ui = read("ui/index.html");
 const preload = read("electron/preload.cjs");
 const main = read("electron/main.mjs");
+const typingDelivery = read("ui/typing-delivery.js");
 
 test("renderer models several Copilot chats as tabs + a herd grid", () => {
   execFileSync(process.execPath, ["--check", path.join(root, "ui/renderer.js")]);
@@ -90,4 +91,24 @@ test("the shared driver bus serializes every caller once per visible frame", asy
   assert.equal(secondEntered, true);
   releaseSecond();
   assert.equal(queue.size, 0);
+});
+
+test("Brain Surgeon keeps the accessible typing bubble for explicit hold mode", () => {
+  assert.match(typingDelivery, /function createDelivery/);
+  assert.ok(
+    ui.indexOf('<script src="typing-delivery.js"></script>')
+      < ui.indexOf('<script src="renderer.js"></script>'),
+  );
+  assert.match(main, /resolveChatStreamMode\(process\.env\)/);
+  assert.match(main, /--rapp-chat-stream=/);
+  assert.match(preload, /chatStreamMode/);
+  assert.match(renderer, /chatTypingEnabled = chatStreamMode === "hold"/);
+  assert.match(renderer, /createSurgeonDelivery/);
+  assert.match(renderer, /session\.delivery\?\.push/);
+  assert.match(renderer, /session\.delivery\?\.finish/);
+  assert.match(renderer, /session\.delivery\?\.fail/);
+  assert.match(renderer, /aria-live", "polite"/);
+  assert.match(renderer, /Brain Surgeon is typing…/);
+  assert.match(ui, /\.surgeon-message\.assistant\.typing/);
+  assert.match(ui, /@media \(prefers-reduced-motion: reduce\)/);
 });

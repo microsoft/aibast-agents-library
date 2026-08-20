@@ -578,9 +578,57 @@
       border-left: 2px solid #3d7cf0; border-bottom-left-radius: 5px;
       background: #1c1e23;
     }
+    .surgeon-message.assistant.typing {
+      display: flex; align-items: center; min-width: 54px; min-height: 22px;
+      border: 1px solid #3a3d44; border-bottom-left-radius: 5px;
+      background: #303238;
+    }
+    .surgeon-message.typing .surgeon-dots { display: flex; align-items: center; }
+    .surgeon-message.typing .surgeon-dots span {
+      width: 6px; height: 6px; margin: 0 2px; background: #aeb2ba;
+    }
     .surgeon-message.error {
       align-self: flex-start; border: 1px solid #5a2626;
       background: #2a1618; color: #ff9a9a;
+    }
+    html[data-rapp-stream="smooth"] .surgeon-message {
+      transition: max-width 240ms ease;
+    }
+    html[data-rapp-stream="smooth"] #surgeon-log {
+      padding-bottom: var(--rapp-surgeon-composer-clearance, 0px);
+      scroll-padding-bottom: var(--rapp-surgeon-composer-clearance, 0px);
+    }
+    html[data-rapp-stream="smooth"] .surgeon-message.assistant.stream-arriving {
+      position: relative;
+      animation: surgeon-smooth-arrive 160ms ease-out both;
+    }
+    html[data-rapp-stream="smooth"] .surgeon-message.assistant.stream-arriving::after {
+      display: inline-block; width: 2px; height: 1em; margin-left: 3px;
+      background: currentColor; content: ""; vertical-align: -.14em;
+      animation: surgeon-stream-caret 1s steps(1) infinite;
+    }
+    html[data-rapp-stream="smooth"] .surgeon-thinking .surgeon-dots span {
+      width: 8px; height: 8px; opacity: .25; transform: none !important;
+      animation: surgeon-smooth-pulse 1.4s ease-in-out infinite;
+      animation-delay: 0s;
+    }
+    html[data-rapp-stream="smooth"] .surgeon-thinking .surgeon-dots span:nth-child(2) {
+      animation-delay: .2s;
+    }
+    html[data-rapp-stream="smooth"] .surgeon-thinking .surgeon-dots span:nth-child(3) {
+      animation-delay: .4s;
+    }
+    @keyframes surgeon-smooth-arrive {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes surgeon-stream-caret {
+      0%,49% { opacity: .72; }
+      50%,100% { opacity: 0; }
+    }
+    @keyframes surgeon-smooth-pulse {
+      0%,100% { opacity: .25; }
+      50% { opacity: 1; }
     }
     .surgeon-thinking {
       align-self: flex-start; display: flex; align-items: center; gap: 8px;
@@ -596,6 +644,19 @@
     @keyframes surgeon-bounce {
       0%,60%,100% { opacity: .3; transform: translateY(0); }
       30% { opacity: 1; transform: translateY(-3px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .surgeon-dots span {
+        animation: none; opacity: .65; transform: none;
+      }
+      html[data-rapp-stream="smooth"] .surgeon-message.assistant.stream-arriving,
+      html[data-rapp-stream="smooth"] .surgeon-message.assistant.stream-arriving::after,
+      html[data-rapp-stream="smooth"] .surgeon-thinking .surgeon-dots span {
+        animation: none !important; transform: none !important;
+      }
+      html[data-rapp-stream="smooth"] .surgeon-thinking .surgeon-dots span {
+        opacity: .6;
+      }
     }
     .surgeon-tool {
       align-self: flex-start; width: min(92%, 390px);
@@ -821,6 +882,9 @@
       </div>
     </div>
   </section>
+  <script src="stream-follow.js"></script>
+  <script src="stream-pacing.js"></script>
+  <script src="typing-delivery.js"></script>
   <script src="renderer.js"></script>
   <script src="show-mode-tour.js"></script>
 </body>

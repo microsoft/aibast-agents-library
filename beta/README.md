@@ -87,6 +87,13 @@ Brainstem execute it. VS Code and GitHub CLI remain available for experts, but
 they are no longer prerequisites for using GitHub Copilot as the Brainstem's
 builder.
 
+Reply delivery defaults to `RAPP_CHAT_STREAM=smooth`: both visible chats keep
+streaming, but Frontier paces text at a steady word-sized cadence, removes the
+Grail mask/wipe and bouncing dots, shows a quiet caret, and keeps the reply tail
+above the measured composer unless the user scrolls away.
+Use `raw` for the untouched kernel stream or `hold` for buffered delivery;
+`RAPP_CHAT_TYPING=1` remains an alias for `hold`.
+
 If the user gets stuck, another AI can visibly take over the same Brain Surgeon
 or Brainstem chat, perform the next steps in Frontier, show the evidence,
 and hand control back without losing context.
