@@ -13,7 +13,14 @@
 //
 // Unlike BetaRouteManager's single-active-composition model (workers retire on
 // activate), twins are kept alive concurrently in a registry until closed.
-import { mkdirSync, rmSync, writeFileSync } from "node:fs";
+import {
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
 import net from "node:net";
 import path from "node:path";
 
@@ -66,6 +73,26 @@ function saysDone(text) {
 // and the "DONE — …" line is never forwarded to the twin as an instruction.
 const planIsDone = (plan) => /(^|\n)\s*DONE\b/i.test(String(plan || ""));
 
+const OWNER_FILE = "owner.json";
+
+function readOwner(dir) {
+  try {
+    const owner = JSON.parse(readFileSync(path.join(dir, OWNER_FILE), "utf8"));
+    return Number.isInteger(owner?.pid) && owner.pid > 0 ? owner : null;
+  } catch {
+    return null;
+  }
+}
+
+function processAlive(pid) {
+  try {
+    process.kill(pid, 0);
+    return true;
+  } catch (error) {
+    return error?.code === "EPERM";
+  }
+}
+
 export class TwinManager {
   constructor({ brainstemConfig, betaHome, routeManager = null, storeClient, brainstemUrl = null, onEvent = () => {} }) {
     if (!brainstemConfig) throw new Error("TwinManager needs a brainstemConfig.");
@@ -83,11 +110,43 @@ export class TwinManager {
     this.seq = 0;
     this.maxTwins = 8;   // cap concurrent workers so a runaway can't exhaust the machine
     this.twinsRoot = path.join(betaHome, "twins");
-    // Clear stale twin dirs left by a crashed previous session. NOTE: this only
-    // removes directories — it does NOT reap an orphaned worker process from a
-    // hard-killed prior session (that stays until the OS reclaims its port); we
-    // just start this session's bookkeeping clean.
-    try { rmSync(this.twinsRoot, { recursive: true, force: true }); } catch { /* ignore */ }
+    // Clear stale twin dirs left by a crashed previous session — but only the
+    // ones nobody owns. The twins root is shared state under the beta home; a
+    // second launcher, a CLI, or a parallel session may be running its own twins
+    // in it right now, and wiping the whole root used to take their live
+    // generations away (and the Molter's installed capability with them).
+    // NOTE: this does NOT reap an orphaned worker process from a hard-killed
+    // prior session (that stays until the OS reclaims its port).
+    this.reapStaleTwinDirectories();
+  }
+
+  // A twin directory is stale when its recorded owner process is gone (or it
+  // predates ownership records). A directory owned by another live process on
+  // this machine is left alone and reported.
+  reapStaleTwinDirectories() {
+    let entries = [];
+    try {
+      entries = readdirSync(this.twinsRoot, { withFileTypes: true });
+    } catch {
+      return { removed: [], kept: [] };
+    }
+    const removed = [];
+    const kept = [];
+    for (const entry of entries) {
+      if (!entry.isDirectory()) continue;
+      const dir = path.join(this.twinsRoot, entry.name);
+      const owner = readOwner(dir);
+      if (owner && owner.pid !== process.pid && processAlive(owner.pid)) {
+        kept.push({ id: entry.name, pid: owner.pid });
+        continue;
+      }
+      try { rmSync(dir, { recursive: true, force: true }); } catch { /* best effort */ }
+      removed.push(entry.name);
+    }
+    for (const twin of kept) {
+      this.emit({ type: "twin-dir-kept", id: twin.id, ownerPid: twin.pid });
+    }
+    return { removed, kept };
   }
 
   emit(event) {
@@ -272,6 +331,11 @@ export class TwinManager {
     const dir = path.join(this.twinsRoot, id);
     const agentsDir = path.join(dir, "agents");
     mkdirSync(dir, { recursive: true });
+    writeFileSync(
+      path.join(dir, OWNER_FILE),
+      JSON.stringify({ pid: process.pid, startedAt: new Date().toISOString() }),
+      { mode: 0o600 },
+    );
     let materializedAgentSources = agentSources;
     try {
       if (this.routeManager?.materializeExternalAgentSet) {
