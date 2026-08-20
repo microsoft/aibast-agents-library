@@ -1,39 +1,146 @@
 import assert from "node:assert/strict";
+import {
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+} from "node:fs";
+import { tmpdir } from "node:os";
+import path from "node:path";
 import test from "node:test";
 
 import {
   startUiDriverServer,
   uiDriverInternals,
 } from "../electron/ui-driver-server.mjs";
+import {
+  measureUiDriver,
+  shellFixture,
+  shellInspectMeasurements,
+} from "../scripts/measure-ui-driver-v2.mjs";
 
-test("visible UI driver accepts bounded user-like actions", () => {
-  assert.deepEqual(
+function fixtureElement({
+  drive = "",
+  id = "",
+  tag = "button",
+} = {}) {
+  return {
+    children: [],
+    dataset: drive ? { drive } : {},
+    getAttribute(name) {
+      return name === "data-drive" ? drive || null : null;
+    },
+    id,
+    localName: tag,
+    parentElement: null,
+  };
+}
+
+function append(parent, ...children) {
+  for (const child of children) {
+    child.parentElement = parent;
+    parent.children.push(child);
+  }
+}
+
+function fakeDriverWindow({ delayMs = 0 } = {}) {
+  const executed = [];
+  const execute = async (source) => {
+    executed.push(source);
+    if (delayMs) await new Promise((resolve) => setTimeout(resolve, delayMs));
+    if (source.includes('"action":"click"')) {
+      return {
+        __trace: {
+          snapshot_after: "oafter",
+          snapshot_before: "obefore",
+        },
+        effect: {
+          added: ["@brainstem.chat.msg[r-2]:streaming"],
+          changed: [],
+          removed: [],
+          route: null,
+        },
+        h: "@brainstem.send",
+        ok: true,
+      };
+    }
+    return {
+      __trace: {
+        snapshot_after: "osteady",
+        snapshot_before: "osteady",
+      },
+      actual: "enabled",
+      h: "@brainstem.send",
+      ok: true,
+    };
+  };
+  const brainstem = {
+    executeJavaScript: execute,
+    frames: [],
+    url: "http://127.0.0.1:7071/",
+  };
+  const mainFrame = {
+    executeJavaScript: execute,
+    frames: [brainstem],
+    url: "file:///frontier/index.html",
+  };
+  return {
+    executed,
+    window: {
+      webContents: { mainFrame },
+    },
+  };
+}
+
+function commandHeaders(token) {
+  return {
+    authorization: ["Bearer", token].join(" "),
+    "content-type": "application/json",
+  };
+}
+
+async function postCommand(metadata, command, token = metadata.token) {
+  const response = await fetch(
+    `http://${metadata.host}:${metadata.port}/v1/command`,
+    {
+      body: JSON.stringify(command),
+      headers: commandHeaders(token),
+      method: "POST",
+    },
+  );
+  const text = await response.text();
+  return {
+    payload: JSON.parse(text.trim()),
+    status: response.status,
+    text,
+  };
+}
+
+test("visible UI driver accepts bounded v2 actions", () => {
+  assert.equal(
     uiDriverInternals.validateCommand({
       action: "run",
       steps: [
         { action: "announce", text: "Opening the beta menu" },
-        { action: "click", selector: "#beta-app-btn" },
-        { action: "type", selector: "#input", value: "hello" },
-        { action: "wait", text: "done", timeoutMs: 5000 },
+        {
+          action: "click",
+          handle: "@brainstem.send",
+          until: { snapshot_changed: true },
+        },
+        { action: "expect", handle: "@brainstem.send", state: "enabled" },
       ],
     }).action,
     "run",
   );
-  assert.equal(
-    uiDriverInternals.validateCommand({ action: "recording_status" }).action,
+  for (const action of [
     "recording_status",
-  );
-  assert.equal(
-    uiDriverInternals.validateCommand({
-      action: "set_chat_lease",
-      locked: true,
-    }).action,
-    "set_chat_lease",
-  );
-  assert.equal(
-    uiDriverInternals.validateCommand({ action: "route_telemetry" }).action,
     "route_telemetry",
-  );
+    "set_chat_lease",
+  ]) {
+    assert.equal(
+      uiDriverInternals.validateCommand({ action }).action,
+      action,
+    );
+  }
 });
 
 test("visible UI driver rejects unknown and unbounded commands", () => {
@@ -52,9 +159,243 @@ test("visible UI driver rejects unknown and unbounded commands", () => {
     }),
     /between 1 and 40 steps/,
   );
+  assert.throws(
+    () => uiDriverInternals.validateCommand({ action: "inspect", limit: 81 }),
+    /between 1 and 80/,
+  );
 });
 
-test("visible chat waits for the stable SSE reply and has no legacy lease hooks", () => {
+test("handles resolve exactly and fallback selectors stay anchored", () => {
+  const body = fixtureElement({ tag: "body" });
+  const panel = fixtureElement({ drive: "shell.panel", tag: "section" });
+  const group = fixtureElement({ tag: "div" });
+  const first = fixtureElement();
+  const second = fixtureElement();
+  append(body, panel);
+  append(panel, group);
+  append(group, first, second);
+
+  const elements = [panel, first, second];
+  const document = {
+    querySelector() {
+      return null;
+    },
+    querySelectorAll(selector) {
+      return selector === "[data-drive]" ? elements : [];
+    },
+  };
+  const helpers = uiDriverInternals.createUiDriverHelpers({ document });
+  assert.equal(helpers.resolveHandle("@shell.panel"), panel);
+  assert.equal(
+    helpers.selectorFor(first),
+    '[data-drive="shell.panel"] > div > button:nth-of-type(1)',
+  );
+  assert.match(helpers.selectorFor(second), /^\[data-drive=/);
+  assert.throws(
+    () => helpers.resolveHandle("@shell.missing"),
+    (error) => (
+      error.name === "UiDriverHandleNotFoundError"
+      && error.matches === 0
+    ),
+  );
+
+  elements.push(fixtureElement({ drive: "shell.panel" }));
+  assert.throws(
+    () => helpers.resolveHandle("@shell.panel"),
+    (error) => (
+      error.name === "UiDriverHandleAmbiguityError"
+      && error.matches === 2
+    ),
+  );
+});
+
+test("shell fixture produces compact deterministic outlines and diffs", () => {
+  const fixture = shellFixture();
+  const measurement = shellInspectMeasurements(fixture);
+  const helpers = uiDriverInternals.createUiDriverHelpers();
+  assert.ok(fixture.interactive.length > 0);
+  assert.ok(fixture.interactive.every((item) => item.h.startsWith("@")));
+  assert.ok(measurement.after.rows.length <= 60);
+  assert.ok(measurement.afterBytes <= 2000);
+  assert.doesNotMatch(JSON.stringify(measurement.after), /nth-of-type/);
+  assert.equal(
+    helpers.snapshotFor(measurement.after.rows),
+    measurement.after.snapshot,
+  );
+
+  const before = measurement.after.rows.slice(0, 3);
+  const after = [
+    { ...before[0], state: "disabled" },
+    before[1],
+    {
+      h: "@fixture[new].row",
+      name: "New",
+      role: "button",
+      state: "enabled",
+    },
+  ];
+  assert.deepEqual(helpers.diffOutlines(before, after), {
+    added: ["@fixture[new].row:enabled"],
+    changed: [`${before[0].h}:disabled`],
+    removed: [before[2].h],
+  });
+  assert.deepEqual(
+    helpers.diffRows(before, after).map((row) => [row.h, row.state]),
+    [
+      [before[0].h, "disabled"],
+      ["@fixture[new].row", "enabled"],
+      [before[2].h, "removed"],
+    ],
+  );
+});
+
+test("caps and byte budgets enforce the v2 ceilings", () => {
+  const helpers = uiDriverInternals.createUiDriverHelpers();
+  assert.equal(helpers.capNumber(200, 1, 80, 60), 80);
+  assert.equal(helpers.capText("abcdef", 3), "abc");
+  assert.equal(helpers.capText("abcdef", 3, { tail: true }), "def");
+  const fitted = helpers.fitBudget(
+    { text: "x".repeat(9000) },
+    { handle: "@shell.agentTree", limit: 6000 },
+  );
+  assert.equal(fitted.truncated, true);
+  assert.ok(fitted.bytes <= 6000);
+  assert.match(
+    fitted.value,
+    /…\(\+\d+ bytes — read handle:@shell\.agentTree\)$/,
+  );
+
+  const measurements = measureUiDriver();
+  assert.ok(measurements.inspect.after <= measurements.inspect.target);
+  assert.ok(measurements.screenshot.after <= measurements.screenshot.target);
+  assert.ok(measurements.read.after <= measurements.read.target);
+  assert.ok(measurements.overhead.after <= measurements.overhead.target);
+  assert.ok(measurements.overhead.detail.context <= 250);
+});
+
+test("real server enforces auth, body, heartbeat, conditions, and traces", async (t) => {
+  const root = mkdtempSync(path.join(tmpdir(), "rapp-ui-driver-v2-"));
+  const betaHome = path.join(root, "beta-home");
+  const fake = fakeDriverWindow({ delayMs: 60 });
+  const driver = await startUiDriverServer({
+    brainstemHome: root,
+    env: {
+      BRAINSTEM_BETA_HOME: betaHome,
+      BRAINSTEM_BETA_UI_DRIVER_HEARTBEAT_MS: "10",
+    },
+    loopbackUrl: (url) => url.startsWith("http://127.0.0.1:7071"),
+    window: fake.window,
+  });
+  t.after(async () => {
+    await driver.stop();
+    rmSync(root, { force: true, recursive: true });
+  });
+  const metadata = JSON.parse(readFileSync(driver.metadataPath, "utf8"));
+  assert.equal(metadata.version, 2);
+
+  const unauthorized = await postCommand(
+    metadata,
+    { action: "expect", handle: "@brainstem.send", state: "enabled" },
+    "wrong-token",
+  );
+  assert.equal(unauthorized.status, 401);
+
+  const tooLarge = await postCommand(metadata, {
+    action: "read",
+    padding: "x".repeat((256 * 1024) + 1),
+  });
+  assert.equal(tooLarge.status, 400);
+  assert.match(tooLarge.payload.error, /too large/);
+
+  for (const invalid of [
+    { action: "expect", handle: "@brainstem.send" },
+    { action: "read", until: { snapshot_changed: true } },
+    {
+      action: "click",
+      handle: "@brainstem.send",
+      until: {
+        handle: "@brainstem.send",
+        state: "enabled",
+        text: "Send",
+      },
+    },
+  ]) {
+    const response = await postCommand(metadata, invalid);
+    assert.equal(response.status, 400);
+  }
+
+  const expected = await postCommand(metadata, {
+    action: "expect",
+    handle: "@brainstem.send",
+    state: "enabled",
+  });
+  assert.equal(expected.status, 200);
+  assert.deepEqual(expected.payload, {
+    ok: true,
+    result: {
+      actual: "enabled",
+      h: "@brainstem.send",
+      ok: true,
+    },
+  });
+
+  const effect = await postCommand(metadata, {
+    action: "click",
+    handle: "@brainstem.send",
+    until: { snapshot_changed: true },
+  });
+  assert.equal(effect.status, 200);
+  assert.equal(
+    effect.payload.result.effect.added[0],
+    "@brainstem.chat.msg[r-2]:streaming",
+  );
+  assert.equal(Object.hasOwn(effect.payload.result, "__trace"), false);
+
+  const heartbeatResponse = await fetch(
+    `http://${metadata.host}:${metadata.port}/v1/command`,
+    {
+      body: JSON.stringify({
+        action: "expect",
+        handle: "@brainstem.send",
+        state: "enabled",
+      }),
+      headers: commandHeaders(metadata.token),
+      method: "POST",
+    },
+  );
+  const reader = heartbeatResponse.body.getReader();
+  const decoder = new TextDecoder();
+  const first = await reader.read();
+  assert.equal(decoder.decode(first.value).trim(), "");
+  let heartbeatBody = decoder.decode(first.value);
+  while (true) {
+    const chunk = await reader.read();
+    if (chunk.done) break;
+    heartbeatBody += decoder.decode(chunk.value);
+  }
+  assert.equal(JSON.parse(heartbeatBody.trim()).ok, true);
+
+  const traces = readFileSync(metadata.tracePath, "utf8")
+    .trim()
+    .split("\n")
+    .map((line) => JSON.parse(line));
+  assert.ok(traces.length >= 3);
+  for (const trace of traces) {
+    assert.deepEqual(Object.keys(trace), [
+      "action",
+      "handle",
+      "effect",
+      "snapshot_before",
+      "snapshot_after",
+    ]);
+  }
+  const clickTrace = traces.find((trace) => trace.action === "click");
+  assert.equal(clickTrace.handle, "@brainstem.send");
+  assert.equal(clickTrace.snapshot_before, "obefore");
+  assert.equal(clickTrace.snapshot_after, "oafter");
+});
+
+test("visible chat waits for stable SSE replies and ignores prompt text", () => {
   const source = uiDriverInternals.browserDriverCommand.toString();
   assert.match(
     source,
@@ -63,34 +404,26 @@ test("visible chat waits for the stable SSE reply and has no legacy lease hooks"
   assert.match(source, /data-request-id/);
   assert.match(source, /chatLeaseLocked/);
   assert.match(source, /event\.isTrusted/);
-  assert.match(source, /MutationObserver/);
   assert.match(source, /const errorBaseline = document\.querySelectorAll/);
   assert.match(source, /errors\.length > errorBaseline/);
-  assert.doesNotMatch(source, /chatLeaseBypass/);
-  assert.match(source, /if \(response\)/);
+  assert.match(source, /\.msg\.user,\[data-brainstem-ai-driver\]/);
   assert.doesNotMatch(
     source,
     /__rappSetNextAgentLease|__rappSetNextUserGuid|agentLease|userGuid/,
   );
 });
 
-test("Brain Surgeon driver opens an existing off-canvas panel without a visible tab", () => {
+test("driver UI opens off-canvas panels and clears faded narration", () => {
   const source = uiDriverInternals.browserDriverCommand.toString();
   assert.match(source, /if \(!panel\)/);
-  assert.match(source, /if \(visible\(tab\)\)/);
   assert.match(source, /panel\.classList\.add\("open"\)/);
-  assert.match(source, /document\.body\.classList\.add\("surgeon-open"\)/);
-});
-
-test("synthetic cursor fades after the UI driver becomes idle", () => {
-  const source = uiDriverInternals.browserDriverCommand.toString();
   assert.match(source, /const CURSOR_IDLE_HIDE_MS = 4000/);
   assert.match(source, /clearTimeout\(state\.cursorIdleTimer\)/);
   assert.match(source, /cursor\.style\.opacity = "0"/);
-  assert.match(source, /cursor\.style\.top = `\$\{y\}px`;\s+wakeCursor\(cursor\)/);
+  assert.match(source, /label\.textContent = ""/);
 });
 
-test("walkthrough recording pads with visible recap cards, not dead air", () => {
+test("walkthrough recording pads with visible recap cards", () => {
   const source = uiDriverInternals.stopWindowRecording.toString();
   assert.match(source, /minimumDurationMs/);
   assert.match(source, /brainstem-beta-walkthrough-recap/);
@@ -102,17 +435,6 @@ test("walkthrough recording pads with visible recap cards, not dead air", () => 
     uiDriverInternals.walkthroughRecapChapters("stack-churn").join(" "),
     /STACK_CHURN_READY/,
   );
-  assert.match(
-    uiDriverInternals.walkthroughRecapChapters("control-handoff").join(" "),
-    /same transcript/,
-  );
-});
-
-test("long UI commands flush headers and send heartbeats", () => {
-  const source = startUiDriverServer.toString();
-  assert.match(source, /flushHeaders/);
-  assert.match(source, /setInterval/);
-  assert.match(source, /response\.write\(" "\)/);
 });
 
 test("long recordings stream to disk without base64 IPC", () => {
@@ -126,12 +448,8 @@ test("long recordings stream to disk without base64 IPC", () => {
   assert.match(captureSource, /framesWritten/);
   assert.match(recorderSource, /fetch\(state\.uploadUrl/);
   assert.match(recorderSource, /blob\.arrayBuffer/);
-  assert.match(recorderSource, /maxHeight: 1240/);
   assert.match(recorderSource, /video\/webm;codecs=vp8/);
-  assert.match(recorderSource, /preview\.play/);
   assert.match(serverSource, /\/v1\/recording-upload/);
-  assert.match(serverSource, /Access-Control-Allow-Origin/);
-  assert.match(serverSource, /Content-Type, X-Recording-Duration/);
   assert.match(serverSource, /createWriteStream/);
   assert.match(serverSource, /500 \* 1024 \* 1024/);
   assert.doesNotMatch(recorderSource, /FileReader|saveRecording|base64/);

@@ -1541,6 +1541,7 @@ export class BrainSurgeon {
 
 export const brainSurgeonInternals = {
   cleanFilename,
+  compactDriverSummary,
   deploymentAgentSourceMatches,
   pythonManifestVersion,
   systemMessage: SURGEON_SYSTEM_MESSAGE,

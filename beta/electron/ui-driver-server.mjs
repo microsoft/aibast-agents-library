@@ -1942,92 +1942,96 @@ export async function startUiDriverServer({
   }`;
   const tracePath = path.join(logDir, `ui-driver-${traceRunId}.jsonl`);
   const frameQueue = createFrameQueue();
+  const heartbeatMs = Math.max(
+    10,
+    Number(env.BRAINSTEM_BETA_UI_DRIVER_HEARTBEAT_MS) || 15000,
+  );
   const token = randomBytes(32).toString("hex");
   const artifactToken = randomBytes(32).toString("hex");
   const artifacts = new Map();
   const sockets = new Set();
   let stopping = false;
 
+  function boundedResult(result, command) {
+    const limit = nodeHelpers.capNumber(
+      command.byteBudget ?? command.byte_budget,
+      512,
+      64 * 1024,
+      nodeHelpers.caps.budgetDefault,
+    );
+    const lastStep = Array.isArray(command.steps)
+      ? [...command.steps].reverse().find((step) => step?.handle)
+      : null;
+    const fitted = nodeHelpers.fitBudget(result, {
+      handle: command.handle || lastStep?.handle || "@page",
+      limit,
+    });
+    return fitted.truncated ? fitted.value : result;
+  }
+
+  function traceItems(result) {
+    return Array.isArray(result?.results) ? result.results : [result];
+  }
+
+  function mergedEffect(items) {
+    const effects = items.map((item) => item?.effect).filter(Boolean);
+    if (!effects.length) return null;
+    const merged = {
+      added: effects.flatMap((effect) => effect.added || []).slice(0, 5),
+      changed: effects.flatMap((effect) => effect.changed || []).slice(0, 5),
+      removed: effects.flatMap((effect) => effect.removed || []).slice(0, 5),
+      route: [...effects].reverse().find((effect) => effect.route)?.route || null,
+    };
+    const focus = [...effects].reverse().find((effect) => effect.focus)?.focus;
+    if (focus) merged.focus = focus;
+    const submit = [...effects].reverse().find((effect) => effect.submit)?.submit;
+    if (submit) merged.submit = submit;
+    return merged;
+  }
+
+  function appendCommandTrace(command, result, error = null) {
+    const items = traceItems(result);
+    const traces = items.map((item) => item?.__trace).filter(Boolean);
+    const handles = items.map((item) => item?.h).filter(Boolean);
+    const entry = {
+      action: String(command?.action || ""),
+      handle: command?.handle || handles[handles.length - 1] || null,
+      effect: error ? { error: errorMessage(error) } : mergedEffect(items),
+      snapshot_before: traces[0]?.snapshot_before || command?.since || null,
+      snapshot_after: traces[traces.length - 1]?.snapshot_after
+        || result?.snapshot
+        || null,
+    };
+    mkdirSync(logDir, { recursive: true });
+    appendFileSync(tracePath, `${JSON.stringify(entry)}\n`, {
+      encoding: "utf8",
+      mode: 0o600,
+    });
+  }
+
+  function stripTraceMetadata(value) {
+    if (Array.isArray(value)) {
+      value.forEach((item) => stripTraceMetadata(item));
+      return value;
+    }
+    if (!value || typeof value !== "object") return value;
+    delete value.__trace;
+    for (const item of Object.values(value)) stripTraceMetadata(item);
+    return value;
+  }
+
+  function commandResponse(response, command, result, { budget = false } = {}) {
+    appendCommandTrace(command, result);
+    const clean = stripTraceMetadata(result);
+    jsonResponse(response, 200, {
+      ok: true,
+      result: budget ? boundedResult(clean, command) : clean,
+    });
+  }
+
   function publishArtifact(filePath, contentType, kind) {
     if (!existsSync(filePath)) {
       throw new Error(`UI driver artifact is missing: ${filePath}`);
-    }
-
-    function boundedResult(result, command) {
-      const limit = nodeHelpers.capNumber(
-        command.byteBudget ?? command.byte_budget,
-        512,
-        64 * 1024,
-        nodeHelpers.caps.budgetDefault,
-      );
-      const lastStep = Array.isArray(command.steps)
-        ? [...command.steps].reverse().find((step) => step?.handle)
-        : null;
-      const fitted = nodeHelpers.fitBudget(result, {
-        handle: command.handle || lastStep?.handle || "@page",
-        limit,
-      });
-      return fitted.truncated ? fitted.value : result;
-    }
-
-    function traceItems(result) {
-      return Array.isArray(result?.results) ? result.results : [result];
-    }
-
-    function mergedEffect(items) {
-      const effects = items.map((item) => item?.effect).filter(Boolean);
-      if (!effects.length) return null;
-      const merged = {
-        added: effects.flatMap((effect) => effect.added || []).slice(0, 5),
-        changed: effects.flatMap((effect) => effect.changed || []).slice(0, 5),
-        removed: effects.flatMap((effect) => effect.removed || []).slice(0, 5),
-        route: [...effects].reverse().find((effect) => effect.route)?.route || null,
-      };
-      const focus = [...effects].reverse().find((effect) => effect.focus)?.focus;
-      if (focus) merged.focus = focus;
-      const submit = [...effects].reverse().find((effect) => effect.submit)?.submit;
-      if (submit) merged.submit = submit;
-      return merged;
-    }
-
-    function appendCommandTrace(command, result, error = null) {
-      const items = traceItems(result);
-      const traces = items.map((item) => item?.__trace).filter(Boolean);
-      const handles = items.map((item) => item?.h).filter(Boolean);
-      const entry = {
-        action: String(command?.action || ""),
-        handle: command?.handle || handles[handles.length - 1] || null,
-        effect: error ? { error: errorMessage(error) } : mergedEffect(items),
-        snapshot_before: traces[0]?.snapshot_before || command?.since || null,
-        snapshot_after: traces[traces.length - 1]?.snapshot_after
-          || result?.snapshot
-          || null,
-      };
-      mkdirSync(logDir, { recursive: true });
-      appendFileSync(tracePath, `${JSON.stringify(entry)}\n`, {
-        encoding: "utf8",
-        mode: 0o600,
-      });
-    }
-
-    function stripTraceMetadata(value) {
-      if (Array.isArray(value)) {
-        value.forEach((item) => stripTraceMetadata(item));
-        return value;
-      }
-      if (!value || typeof value !== "object") return value;
-      delete value.__trace;
-      for (const item of Object.values(value)) stripTraceMetadata(item);
-      return value;
-    }
-
-    function commandResponse(response, command, result, { budget = false } = {}) {
-      appendCommandTrace(command, result);
-      const clean = stripTraceMetadata(result);
-      jsonResponse(response, 200, {
-        ok: true,
-        result: budget ? boundedResult(clean, command) : clean,
-      });
     }
     const artifactId = randomBytes(18).toString("base64url");
     artifacts.set(artifactId, {
@@ -2264,7 +2268,7 @@ export async function startUiDriverServer({
       response.flushHeaders();
       heartbeat = setInterval(() => {
         if (!response.writableEnded) response.write(" ");
-      }, 15000);
+      }, heartbeatMs);
       releaseFrame = await frameQueue.enter(frameKeyForCommand(command));
       if (command.forceMode === true) {
         await setForceMode(window, true, { label: command.forceLabel });

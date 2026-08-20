@@ -85,6 +85,43 @@ test("Brain Surgeon keeps the full Copilot loop and RAPP delegation tools", asyn
     stopRecording.parameters.properties.recap_mode.enum,
     ["baseline", "repeat-ephemeral", "stack-churn", "control-handoff"],
   );
+  const inspect = config.tools.find(
+    (tool) => tool.name === "inspect_visible_brainstem",
+  );
+  assert.equal(inspect.parameters.properties.limit.maximum, 80);
+  assert.deepEqual(
+    inspect.parameters.properties.target.enum,
+    ["brainstem", "shell"],
+  );
+  assert.equal(inspect.parameters.properties.since.type, "string");
+  const drive = config.tools.find(
+    (tool) => tool.name === "drive_visible_brainstem",
+  );
+  assert.deepEqual(
+    drive.parameters.properties.target.enum,
+    ["brainstem", "shell"],
+  );
+  assert.equal(
+    drive.parameters.properties.steps.items.properties.handle.type,
+    "string",
+  );
+  assert.equal(
+    drive.parameters.properties.steps.items.properties.until.type,
+    "object",
+  );
+  assert.ok(
+    drive.parameters.properties.steps.items.properties.action.enum.includes("expect"),
+  );
+  const capture = config.tools.find(
+    (tool) => tool.name === "capture_visible_brainstem",
+  );
+  assert.equal(capture.parameters.properties.include_text.type, "boolean");
+  assert.equal(
+    brainSurgeonInternals.compactDriverSummary({
+      results: [{ summary: "▶ clicked @brainstem.send ✓" }],
+    }),
+    "▶ clicked @brainstem.send ✓",
+  );
 });
 
 test("temporary agent filenames are normalized safely", () => {
