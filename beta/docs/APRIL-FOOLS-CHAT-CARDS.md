@@ -1,4 +1,4 @@
-# Chat cards and the April Fools card table
+# Rappid dimension cards and the April Fools card table
 
 Kody, 2026-08-20 (four messages, one feature):
 
@@ -25,6 +25,12 @@ Kody, 2026-08-20 (four messages, one feature):
 > break anything or change anything with the default AI until April Fools mode is turned on and then
 > this is exposed (and they can quickly turn it back off at any time once the joke is over)."*
 
+**Name.** Kody: *"yes, these are rappid dimension cards."* A card is one **dimension** of a rappid
+creature — a conversation, a twin, an agent — frozen so it can be held, shuffled, woken, or sent
+to the registry. Below, "chat card" means a dimension card that holds a conversation; the schema
+is `rapp-dimension-card/1.0`; user-facing copy says **dimension card** (and "rapplication",
+lowercase).
+
 ## The one invariant
 
 **Off is off.** With April Fools mode off (the default), the Frontier is byte-for-byte the
@@ -46,7 +52,7 @@ A card is a parked dimension of the companion: one transcript plus everything ne
 
 ```json
 {
-  "schema": "rapp-chat-card/1.0",
+  "schema": "rapp-dimension-card/1.0",
   "id": "card-…",
   "title": "first user line, ≤ 60 chars",
   "createdAt": "…", "parkedAt": "…",
