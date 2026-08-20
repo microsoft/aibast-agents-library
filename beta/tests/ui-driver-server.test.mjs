@@ -465,3 +465,97 @@ test("a control inside its own overlay is actionable: an ancestor hit is not an 
   assert.match(source, /!element\.contains\(top\)\s*&&\s*!top\.contains\(element\)/);
   assert.match(source, /occluded by \$\{selectorFor\(top\)/);
 });
+
+test("a frame script is abandoned when its frame navigates, and the queue moves on", async () => {
+  const { executeInFrame, FrameGoneError } = uiDriverInternals;
+  const navigating = {
+    executeJavaScript: () => new Promise(() => {}),
+    frames: [],
+    url: "http://127.0.0.1:7071/",
+  };
+  const mainFrame = { executeJavaScript: () => null, frames: [navigating], url: "file:///frontier/index.html" };
+  const window = { webContents: { mainFrame } };
+  setTimeout(() => { navigating.url = "http://127.0.0.1:7072/"; }, 120);
+  const started = Date.now();
+  await assert.rejects(
+    executeInFrame(navigating, "1", { window, timeoutMs: 10_000 }),
+    (error) => error instanceof FrameGoneError && /navigated/.test(error.message) && error.retryable === true,
+  );
+  assert.ok(Date.now() - started < 2_000, "the abandoned script must not wait for the deadline");
+
+  const destroyed = {
+    executeJavaScript: () => new Promise(() => {}),
+    frames: [],
+    isDestroyed: () => false,
+    url: "http://127.0.0.1:7071/",
+  };
+  setTimeout(() => { destroyed.isDestroyed = () => true; }, 120);
+  await assert.rejects(
+    executeInFrame(destroyed, "1", { window: null, timeoutMs: 10_000 }),
+    (error) => error instanceof FrameGoneError && /destroyed/.test(error.message),
+  );
+
+  const slow = { executeJavaScript: () => new Promise(() => {}), frames: [], url: "http://127.0.0.1:7071/" };
+  await assert.rejects(
+    executeInFrame(slow, "1", { window: null, timeoutMs: 300 }),
+    /did not finish within/,
+  );
+});
+
+test("a wedged frame command does not block the next command on the same frame", async () => {
+  const root = mkdtempSync(path.join(tmpdir(), "ui-driver-wedge-"));
+  const betaHome = path.join(root, "beta-launcher");
+  let calls = 0;
+  const brainstem = {
+    executeJavaScript: () => {
+      calls += 1;
+      if (calls === 1) {
+        // The route swaps underneath the first command: Electron never settles it.
+        setTimeout(() => { brainstem.url = "http://127.0.0.1:7072/"; }, 150);
+        return new Promise(() => {});
+      }
+      return Promise.resolve({ h: "@brainstem.composer", ok: true, text: "ready" });
+    },
+    frames: [],
+    url: "http://127.0.0.1:7071/",
+  };
+  const mainFrame = { executeJavaScript: () => 0, frames: [brainstem], url: "file:///frontier/index.html" };
+  const driver = await startUiDriverServer({
+    brainstemHome: root,
+    env: { BRAINSTEM_BETA_HOME: betaHome, BRAINSTEM_BETA_UI_DRIVER_HEARTBEAT_MS: "10" },
+    loopbackUrl: (url) => url.startsWith("http://127.0.0.1:707"),
+    window: { webContents: { mainFrame } },
+  });
+  try {
+    const metadata = JSON.parse(readFileSync(path.join(betaHome, "ui-driver.json"), "utf8"));
+    const started = Date.now();
+    const [first, second] = await Promise.all([
+      postCommand(metadata, { action: "read", selector: "#input" }),
+      postCommand(metadata, { action: "read", selector: "#input" }),
+    ]);
+    // HTTP arrival order is not guaranteed, and the bus always answers 200 once
+    // its headers are flushed; the verdict lives in the payload. Exactly one
+    // command rode the navigating frame and was abandoned; the other ran on
+    // the new frame.
+    const payloads = [first.payload, second.payload];
+    const detail = JSON.stringify(payloads);
+    const abandoned = payloads.filter((payload) => payload.ok === false);
+    const served = payloads.filter((payload) => payload.ok === true);
+    assert.equal(abandoned.length, 1, detail);
+    assert.match(abandoned[0].error, /navigated/, detail);
+    assert.equal(served.length, 1, detail);
+    assert.equal(served[0].result?.text, "ready", detail);
+    assert.ok(Date.now() - started < 5_000, "the second command must not wait behind the wedged one");
+    assert.equal(calls, 2);
+  } finally {
+    await driver.stop();
+    rmSync(root, { force: true, recursive: true });
+  }
+});
+
+test("the chat lease's aria-disabled marker does not make the send button unactionable for the driver", () => {
+  const source = uiDriverInternals.browserDriverCommand.toString();
+  assert.match(source, /rappChatLease === "locked"/);
+  assert.match(source, /\(!leaseMarked && element\.getAttribute\?\.\("aria-disabled"\) === "true"\)/);
+  assert.match(source, /send\.dataset\.rappChatLease = "locked"/);
+});

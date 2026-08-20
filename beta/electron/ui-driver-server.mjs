@@ -77,6 +77,75 @@ function twinFrame(window, twinUrls) {
   });
 }
 
+// A frame script must never wedge the per-frame queue. Electron leaves the
+// executeJavaScript promise dangling when the frame navigates or is destroyed
+// mid-command (a route swap after a safe word, a reload, a twin closing), and
+// before v2 serialized commands per frame that only lost the one in-flight
+// command — with the queue it would block every later command on that frame.
+// So every frame script is raced against the frame going away and a deadline.
+const FRAME_SCRIPT_TIMEOUT_MS = 20000;
+const FRAME_SCRIPT_POLL_MS = 100;
+
+class FrameGoneError extends Error {
+  constructor(reason) {
+    super(`The target frame ${reason} before the command finished; retry against the new frame.`);
+    this.name = "FrameGoneError";
+    this.retryable = true;
+  }
+}
+
+function frameIsGone(frame, { window, startUrl }) {
+  try {
+    if (typeof frame.isDestroyed === "function" && frame.isDestroyed()) return "was destroyed";
+  } catch {
+    return "was destroyed";
+  }
+  let url;
+  try {
+    url = String(frame.url || "");
+  } catch {
+    return "was destroyed";
+  }
+  if (url !== startUrl) return "navigated";
+  if (window?.webContents?.mainFrame && !frameTree(window.webContents.mainFrame).includes(frame)) {
+    return "was detached";
+  }
+  return null;
+}
+
+async function executeInFrame(frame, source, { window = null, timeoutMs = FRAME_SCRIPT_TIMEOUT_MS } = {}) {
+  if (!frame) throw new Error("The live Brainstem frontend is not loaded yet.");
+  const startUrl = String(frame.url || "");
+  const deadline = Date.now() + Math.max(250, Number(timeoutMs) || FRAME_SCRIPT_TIMEOUT_MS);
+  let timer = null;
+  let settled = false;
+  const watchdog = new Promise((resolve, reject) => {
+    const check = () => {
+      if (settled) return;
+      const gone = frameIsGone(frame, { window, startUrl });
+      if (gone) {
+        reject(new FrameGoneError(gone));
+        return;
+      }
+      if (Date.now() >= deadline) {
+        reject(new Error(`The frame command did not finish within ${Math.round(Number(timeoutMs) / 1000)}s; the frame may be unresponsive.`));
+        return;
+      }
+      timer = setTimeout(check, FRAME_SCRIPT_POLL_MS);
+    };
+    timer = setTimeout(check, FRAME_SCRIPT_POLL_MS);
+  });
+  try {
+    return await Promise.race([
+      Promise.resolve().then(() => frame.executeJavaScript(source, true)),
+      watchdog,
+    ]);
+  } finally {
+    settled = true;
+    if (timer) clearTimeout(timer);
+  }
+}
+
 async function browserDriverCommand(command, createHelpers) {
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const state = window.__brainstemAiDriver ||= {};
@@ -243,9 +312,14 @@ async function browserDriverCommand(command, createHelpers) {
 
   function actionabilityReason(element) {
     if (!visible(element)) return "not visible";
+    // The chat lease marks the composer aria-disabled so a PERSON sees and
+    // feels the lock (its guard only blocks trusted events). The AI holding
+    // the lease drives through this very element, so the lease marker is not
+    // "disabled" for the driver — only a real disabled control is.
+    const leaseMarked = element.dataset?.rappChatLease === "locked";
     if (
       Boolean(element.disabled)
-      || element.getAttribute?.("aria-disabled") === "true"
+      || (!leaseMarked && element.getAttribute?.("aria-disabled") === "true")
     ) return "disabled";
     if (getComputedStyle(element).pointerEvents === "none") {
       return "pointer-events is none";
@@ -707,6 +781,8 @@ async function browserDriverCommand(command, createHelpers) {
         "aria-disabled",
         state.chatLeaseLocked ? "true" : "false",
       );
+      if (state.chatLeaseLocked) send.dataset.rappChatLease = "locked";
+      else delete send.dataset.rappChatLease;
       return {
         leaseCount: state.chatLeaseTokens.size,
         locked: state.chatLeaseLocked,
@@ -2123,20 +2199,22 @@ export async function startUiDriverServer({
   async function renderGrailMedia(artifact) {
     const frame = brainstemFrame(window, loopbackUrl);
     if (!frame || !artifact?.url) return false;
-    return frame.executeJavaScript(
+    return executeInFrame(
+      frame,
       `Boolean(window.__rappBetaRenderDriveMedia?.(${JSON.stringify(artifact)}))`,
-      true,
-    );
+      { timeoutMs: 5000, window },
+    ).catch(() => false);
   }
 
   async function renderGrailStep(summary) {
     const frame = brainstemFrame(window, loopbackUrl);
     const line = String(summary || "").replace(/\s+/g, " ").trim().slice(0, 220);
     if (!frame || !line) return false;
-    return frame.executeJavaScript(
+    return executeInFrame(
+      frame,
       `Boolean(window.__rappBetaRenderDriveStep?.(${JSON.stringify(line)}))`,
-      true,
-    );
+      { timeoutMs: 5000, window },
+    ).catch(() => false);
   }
 
   const server = createServer(async (request, response) => {
@@ -2319,10 +2397,11 @@ export async function startUiDriverServer({
           );
         const activeFrame = brainstemFrame(window, loopbackUrl);
         const chatLeaseCount = activeFrame
-          ? await activeFrame.executeJavaScript(
+          ? await executeInFrame(
+              activeFrame,
               "Number(window.__brainstemAiDriver?.chatLeaseTokens?.size || 0)",
-              true,
-            )
+              { timeoutMs: 5000, window },
+            ).catch(() => null)
           : null;
         const telemetry = routeTelemetry() || {};
         const allEvents = Array.isArray(telemetry.events) ? telemetry.events : [];
@@ -2351,9 +2430,10 @@ export async function startUiDriverServer({
         if (!frame) {
           throw new Error("The live Brainstem frontend is not loaded yet.");
         }
-        await frame.executeJavaScript(
+        await executeInFrame(
+          frame,
           "setTimeout(() => location.reload(), 25); true",
-          true,
+          { timeoutMs: 5000, window },
         );
         commandResponse(response, command, { refreshing: true });
         return;
@@ -2428,7 +2508,10 @@ export async function startUiDriverServer({
       const source = `(${browserDriverCommand.toString()})(${
         JSON.stringify(command)
       }, ${createUiDriverHelpers.toString()})`;
-      const result = await target.executeJavaScript(source, true);
+      const result = await executeInFrame(target, source, {
+        timeoutMs: command.frameTimeoutMs,
+        window,
+      });
       if (wantedTwin || command.target === "shell") {
         const summaries = Array.isArray(result?.summaries)
           ? result.summaries.filter(Boolean)
@@ -2500,6 +2583,8 @@ export const uiDriverInternals = {
   createFrameQueue,
   createUiDriverHelpers,
   frameKeyForCommand,
+  executeInFrame,
+  FrameGoneError,
   forceModeStatus,
   runTourCommand,
   setForceMode,
