@@ -539,3 +539,56 @@ test("a pinned locus never molts while its siblings molt freely", (t) => {
   );
   assert.equal(store.resolveLive(news.ancestorRappid).ringRappid, newsRing);
 });
+
+test("restore returns to where you were, not to whatever is newest", (t) => {
+  const { store } = fixture(t);
+  const alpha = store.baselineAncestors().find(
+    (item) => item.filename === "alpha_agent.py",
+  );
+  const first = store.appendRing(alpha.ancestorRappid, {
+    source: "ALPHA = 'one'\n",
+    parentRappid: alpha.ancestorRappid,
+    verified: true,
+    meta: { author: "test" },
+  });
+  const second = store.appendRing(alpha.ancestorRappid, {
+    source: "ALPHA = 'two'\n",
+    parentRappid: first,
+    verified: true,
+    meta: { author: "test" },
+  });
+
+  // The user deliberately parks on the OLDER generation.
+  store.setHead(alpha.ancestorRappid, first);
+  assert.equal(store.getHead(alpha.ancestorRappid), first);
+
+  // Safe word: back to factory.
+  store.rollbackToBaseline(alpha.ancestorRappid);
+  assert.equal(store.resolveLive(alpha.ancestorRappid).isBaseline, true);
+
+  // Restore must bring them back to where they actually were — fast-forwarding
+  // to `second` would silently discard a deliberate choice.
+  store.restore(alpha.ancestorRappid);
+  assert.equal(
+    store.getHead(alpha.ancestorRappid),
+    first,
+    "restore is the inverse of baseline, not a fast-forward",
+  );
+  assert.notEqual(store.getHead(alpha.ancestorRappid), second);
+});
+
+test("restore still fast-forwards when there is no displaced generation", (t) => {
+  const { store } = fixture(t);
+  const alpha = store.baselineAncestors().find(
+    (item) => item.filename === "alpha_agent.py",
+  );
+  const ring = store.appendRing(alpha.ancestorRappid, {
+    source: "ALPHA = 'only'\n",
+    parentRappid: alpha.ancestorRappid,
+    verified: true,
+    meta: { author: "test" },
+  });
+  // Never molted, never rolled back: restore adopts the newest verified ring.
+  store.restore(alpha.ancestorRappid);
+  assert.equal(store.getHead(alpha.ancestorRappid), ring);
+});

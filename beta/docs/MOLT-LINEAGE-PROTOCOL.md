@@ -113,6 +113,11 @@ through its entire growth history at will:
   to `ancestor_rappid` for the newborn baseline (O(1)).
 - **Forward / fork:** point `HEAD` at a later ring (grow up again) or branch a new
   ring from any past ring.
+- **Restore is the inverse of baseline, not a fast-forward.** A rollback records
+  the generation it displaced, so restoring returns the locus to exactly where it
+  was — a deliberately-parked older generation is never silently replaced by
+  whatever is newest. With nothing displaced, restore adopts the newest verified
+  ring.
 
 Newborn → super-advanced → newborn, within a single chat, every frame valid. It is
 reversible aging, and it is always available.

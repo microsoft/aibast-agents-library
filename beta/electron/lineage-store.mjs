@@ -21,6 +21,7 @@ import {
 
 const LINEAGE_SCHEMA = "molt-lineage/1.0";
 const HEAD_FILE = "HEAD";
+const PRIOR_FILE = "PRIOR_HEAD";
 const LOCUS_FILE = "locus.json";
 const RING_SOURCE_FILE = "source.py";
 const RING_META_FILE = "meta.json";
@@ -190,6 +191,21 @@ export class LineageStore {
 
   _headPath(ancestorRappid) {
     return path.join(this._locusDirectory(ancestorRappid), HEAD_FILE);
+  }
+
+  _priorHeadPath(ancestorRappid) {
+    return path.join(this._locusDirectory(ancestorRappid), PRIOR_FILE);
+  }
+
+  /** The generation a rollback displaced, so `restore` can be the true inverse
+   *  of `baseline` rather than a fast-forward to whatever is newest. */
+  _readPriorHead(ancestorRappid) {
+    try {
+      const value = readFileSync(this._priorHeadPath(ancestorRappid), "utf8").trim();
+      return rappidValid(value) ? value : null;
+    } catch {
+      return null;
+    }
   }
 
   _ensureLocus(baseline, policy = "mutable") {
@@ -536,7 +552,17 @@ export class LineageStore {
 
   rollbackToBaseline(ancestorRappid = null) {
     if (!this.isEnabled()) return { disabled: true, changed: [], failed: [] };
-    return this._moveHeads(this._commandTargets(ancestorRappid), (target) => target);
+    return this._moveHeads(this._commandTargets(ancestorRappid), (target) => {
+      // Remember where we were, so restore returns here instead of fast-
+      // forwarding to whatever ring happens to be newest.
+      try {
+        const current = this.getHead(target);
+        if (current && current !== target) {
+          atomicWrite(this._priorHeadPath(target), `${current}\n`);
+        }
+      } catch {}
+      return target;
+    });
   }
 
   restore(ancestorRappid = null) {
@@ -544,6 +570,16 @@ export class LineageStore {
     return this._moveHeads(this._commandTargets(ancestorRappid), (target) => {
       // Pinned loci stay at baseline: restore must not fight the pin.
       if (this.locusPolicy(target) === "pinned") return target;
+      // Prefer the generation the last rollback displaced — restore is the
+      // inverse of baseline, not a fast-forward.
+      const prior = this._readPriorHead(target);
+      if (
+        prior
+        && prior !== target
+        && this._pathIsValid(target, prior, { requireVerified: true })
+      ) {
+        return prior;
+      }
       const latest = this.listRings(target)
         .filter((ring) => (
           ring.ringRappid !== target
