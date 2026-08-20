@@ -223,6 +223,108 @@ async function browserDriverCommand(command, createHelpers) {
     return helpers.buildOutline(elements, { frame: frameName, limit });
   }
 
+  function actionabilityReason(element) {
+    if (!visible(element)) return "not visible";
+    if (
+      Boolean(element.disabled)
+      || element.getAttribute?.("aria-disabled") === "true"
+    ) return "disabled";
+    if (getComputedStyle(element).pointerEvents === "none") {
+      return "pointer-events is none";
+    }
+    const rect = element.getBoundingClientRect();
+    const x = Math.max(0, Math.min(innerWidth - 1, rect.left + rect.width / 2));
+    const y = Math.max(0, Math.min(innerHeight - 1, rect.top + rect.height / 2));
+    const top = document.elementFromPoint?.(x, y);
+    if (top && top !== element && !element.contains(top)) {
+      return `occluded by ${selectorFor(top) || top.localName || "another element"}`;
+    }
+    return null;
+  }
+
+  function requireActionable(element) {
+    const reason = actionabilityReason(element);
+    if (!reason) return;
+    const error = new Error(
+      `UI target ${selectorFor(element) || "(unknown)"} is not actionable: ${reason}.`,
+    );
+    error.name = "UiDriverActionabilityError";
+    error.reason = reason;
+    throw error;
+  }
+
+  function effectBetween(before, after, routeBefore, routeAfter, extra = {}) {
+    return {
+      ...helpers.diffOutlines(before.rows, after.rows, 5),
+      focus: selectorFor(document.activeElement),
+      route: routeBefore === routeAfter
+        ? null
+        : { from: routeBefore, to: routeAfter },
+      ...extra,
+    };
+  }
+
+  function conditionResult(condition, beforeSnapshot = null) {
+    if (condition?.snapshot_changed === true || condition?.snapshotChanged === true) {
+      const actual = currentOutline().snapshot;
+      return {
+        actual,
+        h: "@page",
+        matched: Boolean(beforeSnapshot && actual !== beforeSnapshot),
+      };
+    }
+    let element;
+    try {
+      element = findElement(condition || {});
+    } catch (error) {
+      if (error.name === "UiDriverHandleNotFoundError") {
+        return { actual: "missing", h: condition?.handle || null, matched: false };
+      }
+      throw error;
+    }
+    if (!element || !visible(element)) {
+      return { actual: "missing", h: condition?.handle || null, matched: false };
+    }
+    const h = selectorFor(element);
+    if (condition.state !== undefined) {
+      const actual = helpers.stateFor(element);
+      return {
+        actual,
+        h,
+        matched: actual === String(condition.state),
+      };
+    }
+    const actual = helpers.capText(normalizedText(element), helpers.caps.readMax);
+    return {
+      actual,
+      h,
+      matched: actual.includes(String(condition.text || "")),
+    };
+  }
+
+  async function waitUntil(condition, beforeSnapshot) {
+    if (!condition) return null;
+    const timeoutMs = Math.max(
+      100,
+      Math.min(120000, Number(condition.timeoutMs) || 10000),
+    );
+    const deadline = Date.now() + timeoutMs;
+    let result = conditionResult(condition, beforeSnapshot);
+    while (!result.matched && Date.now() < deadline) {
+      await sleep(100);
+      result = conditionResult(condition, beforeSnapshot);
+    }
+    if (!result.matched) {
+      const error = new Error(
+        `Timed out waiting for UI post-condition on ${result.h || "@page"}; `
+        + `actual was ${JSON.stringify(result.actual)}.`,
+      );
+      error.name = "UiDriverUntilTimeoutError";
+      throw error;
+    }
+    return result;
+  }
+
   function labelText(step, fallback) {
     return String(step.label || fallback || "").trim();
   }
@@ -261,9 +363,13 @@ async function browserDriverCommand(command, createHelpers) {
   }
 
   async function clickElement(element, step) {
+    requireActionable(element);
+    const h = selectorFor(element);
+    const before = currentOutline();
+    const routeBefore = location.href;
     const description = labelText(
       step,
-      `Clicking ${normalizedText(element) || selectorFor(element)}`,
+      `Clicking ${normalizedText(element) || h}`,
     );
     const { x, y } = await pointAt(element, description);
     const { label, pulse } = ensureUi();
@@ -275,11 +381,17 @@ async function browserDriverCommand(command, createHelpers) {
     element.focus({ preventScroll: true });
     element.click();
     await sleep(Math.max(260, Number(step.settleMs) || 520));
+    await waitUntil(step.until, before.snapshot);
+    const after = currentOutline();
+    const routeAfter = location.href;
     element.classList.remove("brainstem-ai-driver-target");
     label.classList.remove("show");
     return {
-      clicked: selectorFor(element),
+      ok: true,
+      h,
+      clicked: h,
       text: normalizedText(element),
+      effect: effectBetween(before, after, routeBefore, routeAfter),
     };
   }
 
@@ -316,6 +428,10 @@ async function browserDriverCommand(command, createHelpers) {
     ) {
       throw new Error("The requested UI target does not accept text.");
     }
+    requireActionable(element);
+    const h = selectorFor(element);
+    const before = currentOutline();
+    const routeBefore = location.href;
     const value = String(step.value ?? "");
     const description = labelText(step, "Typing in the Brainstem");
     await pointAt(element, description);
@@ -333,9 +449,18 @@ async function browserDriverCommand(command, createHelpers) {
     }
     element.dispatchEvent(new Event("change", { bubbles: true }));
     await sleep(Math.max(160, Number(step.settleMs) || 300));
+    await waitUntil(step.until, before.snapshot);
+    const after = currentOutline();
+    const routeAfter = location.href;
     element.classList.remove("brainstem-ai-driver-target");
     ensureUi().label.classList.remove("show");
-    return { typed: value.length, selector: selectorFor(element) };
+    return {
+      ok: true,
+      h,
+      typed: value.length,
+      selector: h,
+      effect: effectBetween(before, after, routeBefore, routeAfter),
+    };
   }
 
   async function waitFor(step) {
@@ -375,6 +500,81 @@ async function browserDriverCommand(command, createHelpers) {
         step.handle || step.selector || JSON.stringify(wantedText) || "the page"
       }.`,
     );
+  }
+
+  async function pressKey(element, step) {
+    requireActionable(element);
+    const h = selectorFor(element);
+    const before = currentOutline();
+    const routeBefore = location.href;
+    if (step.handle || step.selector) {
+      await pointAt(element, labelText(step, `Pressing ${step.key}`));
+    }
+    element.focus?.({ preventScroll: true });
+    const init = {
+      bubbles: true,
+      cancelable: true,
+      key: String(step.key || "Enter"),
+      code: String(step.code || ""),
+      altKey: Boolean(step.altKey),
+      ctrlKey: Boolean(step.ctrlKey),
+      metaKey: Boolean(step.metaKey),
+      shiftKey: Boolean(step.shiftKey),
+    };
+    const defaultAllowed = element.dispatchEvent(new KeyboardEvent("keydown", init));
+    element.dispatchEvent(new KeyboardEvent("keypress", init));
+    let submittedVia = null;
+    if (init.key === "Enter" && !defaultAllowed && !init.shiftKey) {
+      const handledButton = element.id === "input"
+        ? document.getElementById("send")
+        : element.id === "surgeon-input"
+          ? document.getElementById("surgeon-send")
+          : null;
+      submittedVia = handledButton ? selectorFor(handledButton) : "keydown-handler";
+    } else if (init.key === "Enter" && defaultAllowed && !init.shiftKey) {
+      const form = element.form || element.closest?.("form");
+      if (form?.requestSubmit) {
+        form.requestSubmit();
+        submittedVia = selectorFor(form);
+      } else {
+        const button = (
+          element.id === "input"
+            ? document.getElementById("send")
+            : element.id === "surgeon-input"
+              ? document.getElementById("surgeon-send")
+              : element.closest?.("form,[data-drive]")?.querySelector?.(
+                  "button[type='submit'],input[type='submit']",
+                )
+        );
+        if (button && !actionabilityReason(button)) {
+          button.click();
+          submittedVia = selectorFor(button);
+        } else if (element.matches?.("button,[role='button']")) {
+          element.click();
+          submittedVia = h;
+        }
+      }
+    }
+    element.dispatchEvent(new KeyboardEvent("keyup", init));
+    await sleep(Math.max(120, Number(step.settleMs) || 280));
+    await waitUntil(step.until, before.snapshot);
+    const after = currentOutline();
+    const routeAfter = location.href;
+    element.classList?.remove("brainstem-ai-driver-target");
+    ensureUi().label.classList.remove("show");
+    return {
+      ok: true,
+      h,
+      pressed: init.key,
+      selector: h,
+      effect: effectBetween(
+        before,
+        after,
+        routeBefore,
+        routeAfter,
+        submittedVia ? { submit: submittedVia } : {},
+      ),
+    };
   }
 
   async function perform(step) {
@@ -610,6 +810,14 @@ async function browserDriverCommand(command, createHelpers) {
           : null,
       };
     }
+    if (action === "expect") {
+      const result = conditionResult(step);
+      return {
+        ok: result.matched,
+        h: result.h,
+        actual: result.actual,
+      };
+    }
     if (action === "inspect") {
       const outline = currentOutline(step.limit);
       state.outlineSnapshots ||= new Map();
@@ -663,31 +871,14 @@ async function browserDriverCommand(command, createHelpers) {
         if (step.optional) return { skipped: true, reason: "target not found" };
         throw new Error(`UI target not found: ${step.handle || step.selector}`);
       }
-      if (step.handle || step.selector) {
-        await pointAt(element, labelText(step, `Pressing ${step.key}`));
-      }
-      element.focus?.({ preventScroll: true });
-      const init = {
-        bubbles: true,
-        cancelable: true,
-        key: String(step.key || "Enter"),
-        code: String(step.code || ""),
-        altKey: Boolean(step.altKey),
-        ctrlKey: Boolean(step.ctrlKey),
-        metaKey: Boolean(step.metaKey),
-        shiftKey: Boolean(step.shiftKey),
-      };
-      element.dispatchEvent(new KeyboardEvent("keydown", init));
-      element.dispatchEvent(new KeyboardEvent("keyup", init));
-      await sleep(Math.max(120, Number(step.settleMs) || 280));
-      element.classList?.remove("brainstem-ai-driver-target");
-      ensureUi().label.classList.remove("show");
-      return { pressed: init.key, selector: selectorFor(element) };
+      return pressKey(element, step);
     }
 
     const element = findElement(step);
-    if (!element || !visible(element)) {
-      if (step.optional) return { skipped: true, reason: "target not visible" };
+    const reason = element ? actionabilityReason(element) : "target not found";
+    if (!element || reason) {
+      if (step.optional) return { skipped: true, reason };
+      if (element) requireActionable(element);
       throw new Error(
         `Visible UI target not found: ${step.handle || step.selector || step.targetText || step.text || "(unspecified)"}`,
       );
@@ -1349,12 +1540,34 @@ async function abortCapturedWindowRecording(browserWindow) {
   await setCapturedRecordingIndicator(browserWindow, false).catch(() => {});
 }
 
+function validateCondition(condition, label) {
+  if (!condition || typeof condition !== "object" || Array.isArray(condition)) {
+    throw new Error(`UI driver ${label} must be an object.`);
+  }
+  if (condition.snapshot_changed === true || condition.snapshotChanged === true) {
+    return condition;
+  }
+  if (
+    typeof condition.handle !== "string"
+    && typeof condition.selector !== "string"
+  ) {
+    throw new Error(`UI driver ${label} requires a handle or selector.`);
+  }
+  const hasState = typeof condition.state === "string";
+  const hasText = typeof condition.text === "string";
+  if (hasState === hasText) {
+    throw new Error(`UI driver ${label} requires exactly one of state or text.`);
+  }
+  return condition;
+}
+
 function validateCommand(command) {
   const action = String(command.action || "").toLowerCase();
   const allowed = new Set([
     "announce",
     "chat",
     "click",
+    "expect",
     "force_mode",
     "inspect",
     "press",
@@ -1386,6 +1599,13 @@ function validateCommand(command) {
       throw new Error("UI driver inspect since must be a snapshot string.");
     }
   }
+  if (command.until !== undefined) {
+    if (!["click", "press", "type"].includes(action)) {
+      throw new Error("UI driver until is supported only for click, press, and type.");
+    }
+    validateCondition(command.until, "until");
+  }
+  if (action === "expect") validateCondition(command, "expect");
   if (action === "run") {
     if (!Array.isArray(command.steps) || command.steps.length < 1 || command.steps.length > 40) {
       throw new Error("UI driver runs require between 1 and 40 steps.");
