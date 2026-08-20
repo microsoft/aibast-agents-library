@@ -972,7 +972,7 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     return fragment;
   }
 
-  function createProvisionalScreenRenderer() {
+  function createProvisionalScreenRenderer({ typingIndicator: claimedIndicator = null } = {}) {
     const stats = {
       finalHeight: null,
       handoffCount: 0,
@@ -988,7 +988,13 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     let provisional = null;
     let removed = false;
     let responseSlot = null;
-    let typingIndicator = null;
+    // The indicator is claimed when the REQUEST is made (the kernel creates a
+    // slot + indicator synchronously before it calls fetch), not when the
+    // first delta lands — with two requests in flight, "newest unclaimed at
+    // first delta" is the OTHER request's slot.
+    let typingIndicator = claimedIndicator && claimedIndicator.isConnected !== false
+      ? claimedIndicator
+      : null;
 
     window.__rappSmoothMarkdownCapabilities = {
       marked: typeof window.marked?.parse === "function",
@@ -1048,7 +1054,9 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
 
     function ensureProvisional() {
       if (provisional || removed) return provisional;
-      typingIndicator = availableTypingIndicator();
+      if (!typingIndicator || typingIndicator.isConnected === false) {
+        typingIndicator = availableTypingIndicator();
+      }
       if (!typingIndicator) return null;
       responseSlot = typingIndicator.closest(".response-slot")
         || typingIndicator.parentElement;
@@ -1118,13 +1126,27 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     });
   }
 
-  function smoothChatStreamResponse(response, signal) {
-    if (!response.body) return response;
+  function claimTypingIndicatorForRequest() {
+    const candidates = [
+      ...document.querySelectorAll("#chat .typing-indicator"),
+    ].reverse();
+    const indicator = candidates.find(
+      (candidate) => candidate.dataset?.rappProvisionalClaimed !== "1",
+    ) || null;
+    if (indicator?.dataset) indicator.dataset.rappProvisionalClaimed = "1";
+    return indicator;
+  }
+
+  function smoothChatStreamResponse(response, signal, { typingIndicator = null } = {}) {
+    if (!response.body) {
+      if (typingIndicator) delete typingIndicator.dataset.rappProvisionalClaimed;
+      return response;
+    }
     const reader = response.body.getReader();
     const encoder = new TextEncoder();
     const decoder = new TextDecoder();
     const rawChunks = [];
-    const screen = createProvisionalScreenRenderer();
+    const screen = createProvisionalScreenRenderer({ typingIndicator });
     let stopped = false;
     let released = false;
     let abortHandler = null;
@@ -1275,11 +1297,20 @@ const BETA_FRAME_BRIDGE_SOURCE = `(() => {
     const requestSignal = options.signal
       || (resource instanceof Request ? resource.signal : null);
     const fetchNative = async () => {
-      const response = await nativeFetch(resource, options);
+      const claimed = shouldWrapChatStream && chatStreamMode !== "hold"
+        ? claimTypingIndicatorForRequest()
+        : null;
+      let response;
+      try {
+        response = await nativeFetch(resource, options);
+      } catch (error) {
+        if (claimed) delete claimed.dataset.rappProvisionalClaimed;
+        throw error;
+      }
       if (!shouldWrapChatStream) return response;
       return chatStreamMode === "hold"
         ? holdChatStreamResponse(response, requestSignal)
-        : smoothChatStreamResponse(response, requestSignal);
+        : smoothChatStreamResponse(response, requestSignal, { typingIndicator: claimed });
     };
     if (!isChat || typeof options.body !== "string") {
       return fetchNative();
